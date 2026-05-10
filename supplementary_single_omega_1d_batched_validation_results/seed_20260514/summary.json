@@ -1,0 +1,71 @@
+{
+  "ordering_checks": {
+    "basin_aware": {
+      "F_gt_D": true,
+      "D_gt_T": true,
+      "F_gt_D_gt_T": true,
+      "F": 2.1798864559973703,
+      "D": 2.105590702536348,
+      "T": 0.0
+    },
+    "geometric": {
+      "F_gt_D": true,
+      "D_gt_T": true,
+      "F_gt_D_gt_T": true,
+      "F": 3.9843754765806425,
+      "D": 2.8984780074854113,
+      "T": 1.4309874318610092
+    },
+    "temporal": {
+      "F_gt_D": true,
+      "D_gt_T": true,
+      "F_gt_D_gt_T": true,
+      "F": 5.088905456762905,
+      "D": 4.6084266234812254,
+      "T": 2.7400597959135693
+    },
+    "state_marginal": {
+      "F_gt_D": true,
+      "D_gt_T": true,
+      "F_gt_D_gt_T": true,
+      "F": 0.2614759284206897,
+      "D": 0.002322489351877072,
+      "T": 0.0
+    }
+  },
+  "survival": {
+    "D_degenerate": 1.0,
+    "T_trap": 1.0,
+    "F_flexible": 0.8086,
+    "S_sink_adjacent": 0.005977777777777778
+  },
+  "flags": {
+    "irreversible_sink_filtering_reproduced": true,
+    "survival_insufficient_reproduced": true,
+    "trajectory_feature_ordering_reproduced": true,
+    "noise_robustness_reproduced": true,
+    "state_marginal_poor_proxy_reproduced": true,
+    "feature_map_robustness_reproduced": true
+  },
+  "runtime_seconds": 5.908167600631714,
+  "workers": 18,
+  "dt": 0.01,
+  "steps": 650,
+  "trajectory_horizon": 6.5,
+  "trajectories_per_condition": 9000,
+  "noise_levels": [
+    0.05,
+    0.075,
+    0.1,
+    0.15,
+    0.2
+  ],
+  "starts": {
+    "D_degenerate": -5.0,
+    "T_trap": -1.5,
+    "F_flexible": 1.65,
+    "S_sink_adjacent": 3.2
+  },
+  "seed": 20260514,
+  "reconstruction_note": "Sanity-check reconstruction from supplementary text; exact original potential/code was not available."
+}

@@ -1,0 +1,28 @@
+# Local environments and bundled runtimes
+.venv/
+.tools/
+.uv-cache/
+.matplotlib-cache/
+
+# Python caches/build outputs
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Large/generated validation intermediates
+*_smoke_results/
+*smoke*/
+*_benchmark_results/
+*_calibration/
+*_push/
+*.tmp
+**/_*.csv
+**/fiber_reachability_graph_edges.csv
+**/fiber_reachability_graph_nodes.csv
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
