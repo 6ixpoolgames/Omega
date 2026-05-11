@@ -1,0 +1,173 @@
+{
+  "probe": "12_batch_com_audit_learned_diagnosis",
+  "status": "COMPLETE",
+  "runtime_seconds": 2299.076,
+  "workers": 18,
+  "n_traj": 3000,
+  "seed_count": 100,
+  "bootstrap_repeats": 300,
+  "probe_12a": {
+    "probe": "12A_com_formal_object_audit",
+    "status": "COMPLETE",
+    "runtime_seconds": 1530.348,
+    "n_traj": 3000,
+    "seed_count": 100,
+    "completed_alpha_T_rows": 9,
+    "COM_main_mean": {
+      "alpha": 0.49166666666666664,
+      "T": 1600.0,
+      "seed": 49.5,
+      "certified_node_fraction": 0.7841011273728827,
+      "certified_edge_fraction": 0.8739163477599472,
+      "certified_path_count": 360.38444444444445,
+      "certified_path_mass_survival_to_final_segment": 0.685327178343054,
+      "multi_step_transport_depth": 0.691118423432002,
+      "transport_survival_mean": 0.8739163477599472,
+      "viable_propagation_index": 0.25563489247051585,
+      "component_A_preservation": 1.0,
+      "component_B_preservation": 0.789257015018821,
+      "lower_rank_erasure_score": 0.1053714924905895,
+      "singleton_fraction": 0.45672234792069827,
+      "small_fiber_fraction": 0.7725186342357195,
+      "label_imbalance": 0.16382028399232001,
+      "macro_node_entropy": 2.0484088951038664,
+      "macro_path_entropy": 7.674879336132761,
+      "breadth_index": 0.6645401606709798,
+      "p_viable": 0.9989037037037038,
+      "Delta_viable_propagation_vs_product": 0.06779102547254544,
+      "Delta_viable_propagation_vs_shuffled": 0.06728829600924316,
+      "Delta_R": 0.3872361085882937,
+      "Delta_H_weighted": 0.3871033618287299
+    },
+    "threshold_sensitivity": {
+      "loose": 0.2568664744273156,
+      "main": 0.25563489247051585,
+      "strict": 0.25369398275161237
+    },
+    "controls_main_mean": {
+      "boundary_v2_regime_sequence": 0.6587876148097446,
+      "center_of_mass": 0.25563489247051585,
+      "joint_basin": 0.48486710286025886
+    },
+    "interpretation": "COM remains a coherent fiber-transport witness if main-threshold propagation is positive with component preservation and non-control separation.",
+    "files": [
+      "bootstrap_intervals.csv",
+      "com_certified_path_mass_by_alpha_T.png",
+      "com_certified_paths.csv",
+      "com_component_projections.csv",
+      "com_fiber_size_distribution.png",
+      "com_macro_nodes.csv",
+      "com_threshold_sensitivity.csv",
+      "com_transport_edges.csv",
+      "com_transport_graph_alpha_0525_T1500.png",
+      "com_vs_boundary_pseudorisk.png",
+      "com_vs_controls_summary.csv",
+      "component_preservation_by_segment.png",
+      "estimator_report.csv",
+      "summary.json",
+      "threshold_sensitivity_com.png"
+    ]
+  },
+  "probe_12b": {
+    "probe": "12B_learned_kappa_failure_diagnosis",
+    "status": "COMPLETE",
+    "runtime_seconds": 2227.032,
+    "kappas_diagnosed": [
+      "predictive_kmeans_k5",
+      "predictive_kmeans_k8",
+      "predictive_kmeans_k13",
+      "predictive_kmeans_k21",
+      "predictive_kmeans_no_COM_k8",
+      "predictive_kmeans_no_COM_k13"
+    ],
+    "failure_modes": {
+      "fiber_splitters": [
+        "predictive_kmeans_k13",
+        "predictive_kmeans_k21",
+        "predictive_kmeans_no_COM_k8",
+        "predictive_kmeans_no_COM_k13"
+      ],
+      "fiber_mergers": [
+        "predictive_kmeans_k5",
+        "predictive_kmeans_k8",
+        "predictive_kmeans_k13",
+        "predictive_kmeans_no_COM_k8",
+        "predictive_kmeans_no_COM_k13"
+      ],
+      "validation_overfits_or_high_validation_winners": [
+        "predictive_kmeans_k21",
+        "predictive_kmeans_no_COM_k13"
+      ],
+      "partial_quotients": [
+        "predictive_kmeans_k5",
+        "predictive_kmeans_k8"
+      ]
+    },
+    "key_finding": "Simple predictive k-means mostly fails by splitting COM fibers and inflating small-fiber/fragmentation structure; high-k validation winners do not translate into heldout COM-like propagation.",
+    "recommended_12c_method": "transition-aware balanced predictive clustering",
+    "files": [
+      "com_fiber_merging.csv",
+      "com_fiber_splitting.csv",
+      "com_fiber_splitting_by_kappa.png",
+      "component_B_preservation_by_label.png",
+      "component_failure_by_label.csv",
+      "estimator_report.csv",
+      "label_distribution_train_vs_test.png",
+      "learned_fiber_merging_by_kappa.png",
+      "learned_vs_com_anatomy_summary.csv",
+      "propagation_equivalence_error.csv",
+      "regularization_failure_modes.csv",
+      "singleton_fraction_train_vs_test.png",
+      "summary.json",
+      "train_test_label_drift.csv",
+      "within_label_propagation_variance.png"
+    ]
+  },
+  "probe_12c": {
+    "probe": "12C_improved_learner_smoke",
+    "status": "COMPLETE",
+    "runtime_seconds": 2299.072,
+    "learner_tested": "transition-aware balanced predictive clustering",
+    "best_improved_learner": {
+      "kappa": "transition_balanced_k21",
+      "k": 21,
+      "validation_predictive_loss": 4.259742651191353e-05,
+      "train_num_label_penalty": 1.1666666666666666e-05,
+      "train_singleton_fraction": 0.0,
+      "train_small_fiber_fraction": 0.0,
+      "train_label_imbalance": 0.12401703723081292,
+      "validation_num_label_penalty": 2.4305555555555554e-05,
+      "validation_singleton_fraction": 0.0,
+      "validation_small_fiber_fraction": 0.0,
+      "validation_label_imbalance": 0.1282690170415972,
+      "total_validation_loss": 0.019282949982751495
+    },
+    "best_improved_test_anatomy": {
+      "kappa": "transition_balanced_k21",
+      "num_label_penalty": 2.4305555555555554e-05,
+      "singleton_fraction": 0.0,
+      "small_fiber_fraction": 0.0,
+      "label_imbalance": 0.1512486914129928,
+      "COM_association": 0.4434616568776684,
+      "mean_future_viable_by_label_std": 0.29354352395090366,
+      "mean_future_depth_by_label_std": 0.29354352395090366
+    },
+    "interpretation": "The improved learner reduces the diagnosis to a smoke-level anatomy test; propagation scaling should wait until COM is formalized and transition labels are evaluated per trajectory.",
+    "files": [
+      "bootstrap_intervals.csv",
+      "component_preservation_comparison.png",
+      "estimator_report.csv",
+      "fragmentation_comparison.png",
+      "improved_label_anatomy.csv",
+      "improved_learner_test_propagation.csv",
+      "improved_learner_validation_loss.csv",
+      "improved_vs_com_ratio.png",
+      "improved_vs_kmeans_propagation.png",
+      "improved_vs_kmeans_vs_com.csv",
+      "label_anatomy_improved.png",
+      "quotient_simplicity_terms.csv",
+      "summary.json"
+    ]
+  },
+  "recommended_next_step": "Probe 13: Formal COM Fiber Transport Object"
+}

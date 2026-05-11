@@ -371,6 +371,67 @@ Interpretation:
 > Simple learned predictive quotients can see part of the signal, but COM
 > remains the stronger analytic coordinate in the current toy substrate.
 
+### Probe 12: COM Formalization + Learned-Kappa Diagnosis
+
+Goal: separate the COM witness from the learned-kappa failure mode.
+
+Run:
+
+- `N_TRAJ=3000`
+- `100` seeds
+- `300` bootstraps
+- 18 workers
+- alphas `0.45, 0.50, 0.525`
+- horizons `900, 1500, 2400`
+- runtime about 38.3 minutes.
+
+Probe 12A audited COM as a fiber-transport witness:
+
+```text
+COM viable propagation index:      0.2556
+COM delta vs shuffled:             +0.0673
+component B preservation:          0.7893
+lower-rank erasure:                0.1054
+singleton fraction:                0.4567
+```
+
+Threshold sensitivity was small:
+
+```text
+loose:  0.2569
+main:   0.2556
+strict: 0.2537
+```
+
+Control nuance:
+
+- `boundary_v2_regime_sequence` and `joint_basin` can score high in absolute
+  viable-propagation-index terms in the anatomy table;
+- their average deltas vs shuffled are negative;
+- COM remains the positive baseline-separated witness.
+
+Probe 12B diagnosed learned-kappa failures:
+
+- higher-k predictive k-means mostly splits COM fibers and inflates
+  small-fiber/fragmentation structure;
+- lower-k variants can merge distinct COM fibers;
+- `predictive_kmeans_k5` and `predictive_kmeans_k8` remain partial quotients,
+  not replacements;
+- `predictive_kmeans_k21` can win validation while failing the heldout
+  propagation/anatomy test.
+
+Probe 12C smoke-tested transition-aware balanced predictive clustering:
+
+- best smoke learner: `transition_balanced_k21`;
+- validation predictive loss: `4.26e-05`;
+- COM association: `0.443`;
+- useful as a direction, but not yet a propagation-scale replacement for COM.
+
+Interpretation:
+
+> COM remains the current witness. Learned-kappa work should be revised after
+> the COM fiber-transport object is formalized.
+
 ## Current Scientific Position
 
 What we can say:
@@ -391,6 +452,8 @@ horizons 900-2400
 - It is not merely high entropy.
 - A first learned-quotient test partially sees the signal but does not replace
   COM.
+- A follow-up diagnosis shows the simple learned route mostly fails by
+  splitting/merging COM fibers and by small-fiber inflation.
 - Controls behave differently:
   - `boundary_v2` is pseudo-risk/propagation-negative;
   - `joint_basin` can show local transport but usually fails multi-step
@@ -421,7 +484,7 @@ What we cannot say:
 
 ## Recommended Next Probes
 
-### Probe 12: Formal COM Fiber Transport Object
+### Probe 13: Formal COM Fiber Transport Object
 
 Goal: turn the current empirical object into a precise mathematical definition.
 
@@ -434,7 +497,7 @@ Tasks:
 - define viable propagation index and its limits;
 - prove which choices are estimator conventions versus object definitions.
 
-### Probe 13: Revised Learned Kappa Recovery
+### Probe 14: Revised Learned Kappa Recovery
 
 Question:
 
@@ -448,7 +511,7 @@ Controls:
 - basin-only kappas;
 - compression-regularized learned kappas.
 
-### Probe 14: Substrate Generalization
+### Probe 15: Substrate Generalization
 
 Question:
 

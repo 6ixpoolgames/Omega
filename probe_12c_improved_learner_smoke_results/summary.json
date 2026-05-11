@@ -1,0 +1,46 @@
+{
+  "probe": "12C_improved_learner_smoke",
+  "status": "COMPLETE",
+  "runtime_seconds": 2299.072,
+  "learner_tested": "transition-aware balanced predictive clustering",
+  "best_improved_learner": {
+    "kappa": "transition_balanced_k21",
+    "k": 21,
+    "validation_predictive_loss": 4.259742651191353e-05,
+    "train_num_label_penalty": 1.1666666666666666e-05,
+    "train_singleton_fraction": 0.0,
+    "train_small_fiber_fraction": 0.0,
+    "train_label_imbalance": 0.12401703723081292,
+    "validation_num_label_penalty": 2.4305555555555554e-05,
+    "validation_singleton_fraction": 0.0,
+    "validation_small_fiber_fraction": 0.0,
+    "validation_label_imbalance": 0.1282690170415972,
+    "total_validation_loss": 0.019282949982751495
+  },
+  "best_improved_test_anatomy": {
+    "kappa": "transition_balanced_k21",
+    "num_label_penalty": 2.4305555555555554e-05,
+    "singleton_fraction": 0.0,
+    "small_fiber_fraction": 0.0,
+    "label_imbalance": 0.1512486914129928,
+    "COM_association": 0.4434616568776684,
+    "mean_future_viable_by_label_std": 0.29354352395090366,
+    "mean_future_depth_by_label_std": 0.29354352395090366
+  },
+  "interpretation": "The improved learner reduces the diagnosis to a smoke-level anatomy test; propagation scaling should wait until COM is formalized and transition labels are evaluated per trajectory.",
+  "files": [
+    "bootstrap_intervals.csv",
+    "component_preservation_comparison.png",
+    "estimator_report.csv",
+    "fragmentation_comparison.png",
+    "improved_label_anatomy.csv",
+    "improved_learner_test_propagation.csv",
+    "improved_learner_validation_loss.csv",
+    "improved_vs_com_ratio.png",
+    "improved_vs_kmeans_propagation.png",
+    "improved_vs_kmeans_vs_com.csv",
+    "label_anatomy_improved.png",
+    "quotient_simplicity_terms.csv",
+    "summary.json"
+  ]
+}

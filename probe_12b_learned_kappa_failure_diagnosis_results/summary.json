@@ -1,0 +1,55 @@
+{
+  "probe": "12B_learned_kappa_failure_diagnosis",
+  "status": "COMPLETE",
+  "runtime_seconds": 2227.032,
+  "kappas_diagnosed": [
+    "predictive_kmeans_k5",
+    "predictive_kmeans_k8",
+    "predictive_kmeans_k13",
+    "predictive_kmeans_k21",
+    "predictive_kmeans_no_COM_k8",
+    "predictive_kmeans_no_COM_k13"
+  ],
+  "failure_modes": {
+    "fiber_splitters": [
+      "predictive_kmeans_k13",
+      "predictive_kmeans_k21",
+      "predictive_kmeans_no_COM_k8",
+      "predictive_kmeans_no_COM_k13"
+    ],
+    "fiber_mergers": [
+      "predictive_kmeans_k5",
+      "predictive_kmeans_k8",
+      "predictive_kmeans_k13",
+      "predictive_kmeans_no_COM_k8",
+      "predictive_kmeans_no_COM_k13"
+    ],
+    "validation_overfits_or_high_validation_winners": [
+      "predictive_kmeans_k21",
+      "predictive_kmeans_no_COM_k13"
+    ],
+    "partial_quotients": [
+      "predictive_kmeans_k5",
+      "predictive_kmeans_k8"
+    ]
+  },
+  "key_finding": "Simple predictive k-means mostly fails by splitting COM fibers and inflating small-fiber/fragmentation structure; high-k validation winners do not translate into heldout COM-like propagation.",
+  "recommended_12c_method": "transition-aware balanced predictive clustering",
+  "files": [
+    "com_fiber_merging.csv",
+    "com_fiber_splitting.csv",
+    "com_fiber_splitting_by_kappa.png",
+    "component_B_preservation_by_label.png",
+    "component_failure_by_label.csv",
+    "estimator_report.csv",
+    "label_distribution_train_vs_test.png",
+    "learned_fiber_merging_by_kappa.png",
+    "learned_vs_com_anatomy_summary.csv",
+    "propagation_equivalence_error.csv",
+    "regularization_failure_modes.csv",
+    "singleton_fraction_train_vs_test.png",
+    "summary.json",
+    "train_test_label_drift.csv",
+    "within_label_propagation_variance.png"
+  ]
+}

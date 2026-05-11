@@ -208,7 +208,87 @@ Decision:
 
 ### Current Recommended Next Step
 
-Probe 12 should formalize the COM fiber transport object:
+### Probe 12: COM Formalization + Learned-Kappa Diagnosis
+
+Script:
+
+- `probe_12_batch_com_audit_learned_diagnosis.py`
+
+Primary outputs:
+
+- `probe_12_batch_results/batch_summary.json`
+- `probe_12_batch_results/recommended_next_step.md`
+- `probe_12a_com_formal_object_audit_results/summary.json`
+- `probe_12b_learned_kappa_failure_diagnosis_results/summary.json`
+- `probe_12c_improved_learner_smoke_results/summary.json`
+
+Configuration:
+
+- `N_TRAJ=3000`
+- `seed_count=100`
+- `bootstrap_repeats=300`
+- `workers=18`
+- alphas: `0.45, 0.50, 0.525`
+- horizons: `900, 1500, 2400`
+- runtime about `38.3m`
+
+Probe 12A result:
+
+- COM main-threshold viable propagation index: `0.2556`.
+- COM delta viable propagation vs shuffled: `+0.0673`.
+- COM component-B preservation: `0.7893`.
+- COM lower-rank erasure: `0.1054`.
+- COM singleton fraction: `0.4567`.
+- COM threshold sensitivity was small:
+  - loose `0.2569`
+  - main `0.2556`
+  - strict `0.2537`
+
+Important control nuance:
+
+- `boundary_v2_regime_sequence` and `joint_basin` can have larger absolute
+  viable-propagation-index values in the 12A anatomy table, but their deltas vs
+  shuffled are negative on average. COM remains the positive baseline-separated
+  witness in this audit.
+
+Probe 12B result:
+
+- Simple predictive k-means failure modes:
+  - fiber splitters: `predictive_kmeans_k13`, `predictive_kmeans_k21`,
+    `predictive_kmeans_no_COM_k8`, `predictive_kmeans_no_COM_k13`;
+  - fiber mergers: `predictive_kmeans_k5`, `predictive_kmeans_k8`,
+    `predictive_kmeans_k13`, `predictive_kmeans_no_COM_k8`,
+    `predictive_kmeans_no_COM_k13`;
+  - validation winners/overfit risks: `predictive_kmeans_k21`,
+    `predictive_kmeans_no_COM_k13`;
+  - partial quotients: `predictive_kmeans_k5`, `predictive_kmeans_k8`.
+
+Probe 12C result:
+
+- Tested transition-aware balanced predictive clustering as a smoke test.
+- Best smoke learner: `transition_balanced_k21`.
+- Validation predictive loss: `4.26e-05`.
+- Test COM association: `0.443`.
+- Singleton and small-fiber fractions in the sampled-label smoke anatomy were
+  `0.0`, but this was not a full propagation-scale replacement test.
+
+Decision:
+
+- COM remains the current formal witness.
+- Learned-kappa work should not be scaled yet.
+- The next step should formalize COM fiber transport and then revisit learned
+  quotients with sequence/fiber-aware targets.
+
+Large local-only files:
+
+- Probe 12A generated full macro-node, transport-edge, certified-path, and
+  component-projection tables. They are retained locally but not tracked because
+  they are large generated anatomy files, including files above GitHub's normal
+  file-size limits.
+
+### Current Recommended Next Step
+
+Probe 13 should formalize the COM fiber transport object:
 
 ```text
 COM fiber transport object

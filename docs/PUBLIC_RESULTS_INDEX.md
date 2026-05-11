@@ -91,6 +91,44 @@ Result in one line:
   not recover COM as a strong coordinate and mostly underperformed or fragmented
   on heldout moderate perturbations.
 
+### Probe 12: COM Formalization + Learned-Kappa Diagnosis
+
+Directories:
+
+- `probe_12_batch_results/`
+- `probe_12a_com_formal_object_audit_results/`
+- `probe_12b_learned_kappa_failure_diagnosis_results/`
+- `probe_12c_improved_learner_smoke_results/`
+
+Primary files:
+
+- `probe_12_batch_results/batch_summary.json`
+- `probe_12_batch_results/recommended_next_step.md`
+- `probe_12a_com_formal_object_audit_results/summary.json`
+- `probe_12a_com_formal_object_audit_results/com_threshold_sensitivity.csv`
+- `probe_12a_com_formal_object_audit_results/com_vs_controls_summary.csv`
+- `probe_12b_learned_kappa_failure_diagnosis_results/summary.json`
+- `probe_12b_learned_kappa_failure_diagnosis_results/learned_vs_com_anatomy_summary.csv`
+- `probe_12c_improved_learner_smoke_results/summary.json`
+
+Reason retained:
+
+- Probe 12 separates the current COM witness from learned-kappa failure modes.
+  It is the strongest current bridge between empirical probes and formal object
+  definition.
+
+Large local-only files:
+
+- Probe 12A also writes full node, edge, path, and component-projection tables.
+  Those are retained locally but not tracked in Git because they are large
+  generated anatomy tables, including files above GitHub's normal size limits.
+
+Result in one line:
+
+- COM remains a positive fiber-transport witness; learned k-means mostly fails
+  by splitting/merging COM fibers and inflating small-fiber structure; the next
+  step is formal COM fiber transport, not scaling learned-kappa.
+
 ## Current Public Interpretation
 
 The current executable candidate is:
@@ -106,6 +144,13 @@ Probe 11 updates the interpretation:
 The COM object remains the stronger analytic coordinate. Simple learned
 predictive quotients can see part of the signal, but are not yet a replacement
 for COM.
+```
+
+Probe 12 updates the project direction:
+
+```text
+Formalize the COM fiber-transport witness before broadening the substrate or
+scaling learned-kappa methods.
 ```
 
 The important public caveat:
