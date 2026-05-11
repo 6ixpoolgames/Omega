@@ -6,6 +6,19 @@ but are not tracked as top-level result folders.
 
 ## Current Result Sets
 
+## Theory-Side Progenitor Drafts
+
+Directory:
+
+- `docs/progenitor_drafts/`
+
+Status:
+
+- early theoretical work and drafts only;
+- included for provenance;
+- not current validation results;
+- not a substitute for the executable probe outputs below.
+
 ### Probe 09: Robust Fiber Reachability
 
 Directory:

@@ -23,6 +23,7 @@ certified macro-fibers while preserving component information.
 - [Project manual](docs/OMEGA_PROJECT_MANUAL.md)
 - [Running log](docs/OMEGA_RUNNING_LOG.md)
 - [Public results index](docs/PUBLIC_RESULTS_INDEX.md)
+- [Progenitor drafts](docs/progenitor_drafts/README.md)
 
 ## Current Result Sets
 
@@ -39,6 +40,10 @@ The public tree keeps only the current/relevant compact results:
 
 Older exploratory outputs are summarized in the docs but not exposed as result
 folders in the current public tree.
+
+The `docs/progenitor_drafts/` folder contains early theory-side draft papers.
+They are included for provenance only and should not be read as current
+validation results.
 
 ## Important Caveat
 

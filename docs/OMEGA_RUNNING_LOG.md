@@ -6,6 +6,28 @@ run.
 
 ## 2026-05-11
 
+### Progenitor Drafts Added
+
+Added the early theory-side papers to:
+
+- `docs/progenitor_drafts/`
+
+Status:
+
+- drafts only;
+- early theoretical provenance;
+- not current validation results;
+- not final claims about the formal object.
+
+Included PDFs:
+
+- `intelligent_agency_under_computational_irreducibility.pdf`
+- `scaling_paper_v2.pdf`
+- `telos_2_0_draft.pdf`
+- `echo_rosetta_version.pdf`
+- `gradient_ethics.pdf`
+- `gradient_field_theory_of_value_v51.pdf`
+
 ### Repository Setup
 
 - Local repo pushed to GitHub:

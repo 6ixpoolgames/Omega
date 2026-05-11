@@ -62,11 +62,10 @@ Older papers and drafts motivate variants of:
   structure through lower-dimensional macro descriptions.
 
 Important caveat: the original papers are not all reproduced inside this repo.
-Some source PDFs/texts live in the local project folder outside Git, including
-`Omega Theory (Single).txt`, `Gradient_Field_Theory_of_Value-v51.pdf`,
-`gradient_ethics.pdf`, `intelligent_agency_under_computational_irreducibility.pdf`,
-`TELOS.pdf`, and related drafts. This repo contains executable probes and
-summaries, not the full theoretical corpus.
+Some source PDFs are now included under `docs/progenitor_drafts/` as early
+theoretical provenance. They are drafts only and should not be treated as
+current validation results, peer-reviewed claims, or final formal statements.
+Some text drafts still live only in the local project folder outside Git.
 
 ## Working Definitions
 
