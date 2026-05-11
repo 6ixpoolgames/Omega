@@ -1,27 +1,76 @@
-# Omega Validation Workspace
+# Omega Validation
 
-Local simulation and analysis harnesses for the Omega theory validation project.
-The current workflow is deliberately narrow: extract candidate mathematical
-objects, test them against shuffled/product/independent baselines, and classify
-signals without treating raw entropy as the success criterion.
+This repository contains the executable validation workspace for the Omega
+theory project.
+
+The current goal is modest and scientific:
+
+> extract candidate mathematical objects, test them against controls, and record
+> what survives.
+
+The strongest current toy-substrate candidate is:
+
+```text
+COM-like multi-step viable propagation through certified fibers
+```
+
+In plain terms: coupled futures are interesting here not because they are
+maximally entropic, but because viable structure can be propagated through
+certified macro-fibers while preserving component information.
+
+## Start Here
+
+- [Project manual](docs/OMEGA_PROJECT_MANUAL.md)
+- [Running log](docs/OMEGA_RUNNING_LOG.md)
+- [Public results index](docs/PUBLIC_RESULTS_INDEX.md)
+
+## Current Result Sets
+
+The public tree keeps only the current/relevant compact results:
+
+- `probe_09_robust_fiber_reachability_results/`
+- `probe_10_com_viable_propagation_robustness_extended_results/`
+- `probe_10_com_targeted_fragility_refinement_results/`
+
+Older exploratory outputs are summarized in the docs but not exposed as result
+folders in the current public tree.
+
+## Important Caveat
+
+This repository does not prove Omega as a scientific theory. The current results
+come from a local toy multifield substrate. They are evidence for a candidate
+formal object and for a workflow that can reject weaker alternatives.
 
 ## Environment
 
-Use the local virtual environment directly:
+Use the local virtual environment directly when working on the original machine:
 
 ```powershell
 .\.venv\Scripts\python.exe -c "import numpy, pandas, matplotlib; print('ready')"
 ```
 
-The project has been calibrated on local consumer hardware with a Ryzen 5900X
-and RTX 4070 Ti. Current CPU-heavy probes use 18 worker processes by default.
+For CPU-heavy probes, the calibrated default is:
 
-## Current Probe Line
+```text
+18 worker processes
+```
 
-- Probe 08a: multifield profile reconciliation.
-- Probe 08b: transport-dominant multifield validation.
-- Probe 09: robust fiber reachability with viable propagation as the primary
-  readout and breadth/entropy as secondary diagnostics.
+## Main Scripts
 
-Large raw graph dumps are intentionally excluded from Git. Compact summaries,
-tables, plots, and scripts are suitable for repository tracking.
+- `probe_09_robust_fiber_reachability.py`
+- `probe_10_com_viable_propagation_robustness.py`
+
+Historical scripts remain in the repository because they document how the
+current object was reached, but new work should normally start from Probe 09/10
+or from the next formalization probe described in the manual.
+
+## Current Next Step
+
+Recommended next probe:
+
+```text
+Probe 11: Formal COM Fiber Transport Object
+```
+
+The next step should define the object cleanly before broadening the substrate
+or adding learned kappas.
