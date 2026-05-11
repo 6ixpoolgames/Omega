@@ -150,7 +150,65 @@ Decision:
 
 ### Current Recommended Next Step
 
-Probe 11 should not be another broad run. It should formalize the object:
+Probe 11 was run as a learned predictive-kappa test before formalization.
+
+### Probe 11: Learned Predictive Kappa
+
+Script:
+
+- `probe_11_learned_predictive_kappa_revised.py`
+
+Primary outputs:
+
+- `probe_11_learned_predictive_kappa_revised_results/summary.json`
+- `probe_11_learned_predictive_kappa_revised_results/learned_kappa_validation_loss.csv`
+- `probe_11_learned_predictive_kappa_revised_results/learned_kappa_test_propagation.csv`
+- `probe_11_learned_predictive_kappa_revised_results/learned_vs_com_comparison.csv`
+- `probe_11_learned_predictive_kappa_revised_results/learned_label_anatomy.csv`
+
+Configuration:
+
+- `N_TRAJ=3000`
+- `seed_count=100`
+- `bootstrap_repeats=300`
+- `workers=18`
+- train variants: `25`
+- validation variants: `12`
+- test variants: `24`
+- alphas: train `0.45, 0.50`; test `0.525`
+- horizons: train `900, 1500`; test `1500, 2400`
+- runtime about `38.7m`
+
+GPU note:
+
+- CuPy is installed, but the local CUDA NVRTC runtime is unavailable
+  (`nvrtc*.dll` missing), so this run used CPU multiprocessing.
+
+Result:
+
+- Best learned kappa by validation: `predictive_kmeans_k21`.
+- Best learned validation total loss: `0.0129069`.
+- Best learned COM association: `0.468`.
+- Best learned mean test delta viable propagation vs shuffled: `-0.00228`.
+- COM mean test delta viable propagation vs shuffled: `+0.08495`.
+- Learned/COM viable-propagation ratio: about `-0.103`.
+- `predictive_kmeans_k5` and `predictive_kmeans_k8` were tagged as learned
+  propagation candidates in some rows, but the overall learned family remained
+  weaker than COM.
+- Higher-k learned quotients tended toward fragmentation and entropy-positive
+  pseudo-risk behavior.
+
+Decision:
+
+- A simple learned predictive quotient can see part of the viable-propagation
+  signal, but it does not replace COM.
+- COM remains the strongest analytic coordinate in the current toy substrate.
+- Learned quotient work should continue, but with a tighter object definition
+  and less leakage-prone primitive target design.
+
+### Current Recommended Next Step
+
+Probe 12 should formalize the COM fiber transport object:
 
 ```text
 COM fiber transport object
@@ -163,7 +221,7 @@ relationship between propagation and entropy
 
 Then run one of:
 
-1. learned-kappa recovery test;
+1. revised learned-kappa recovery against the formal object;
 2. independent toy substrate generalization;
 3. targeted noise/potential dependence map.
 

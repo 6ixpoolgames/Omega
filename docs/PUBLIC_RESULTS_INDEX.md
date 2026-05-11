@@ -63,6 +63,34 @@ Reason retained:
 - This is the higher-coverage COM-only refinement for the weaker perturbation
   families: noise, potential shape, and time discretization.
 
+### Probe 11: Learned Predictive Kappa
+
+Directory:
+
+- `probe_11_learned_predictive_kappa_revised_results/`
+
+Primary files:
+
+- `summary.json`
+- `learned_kappa_validation_loss.csv`
+- `learned_kappa_test_propagation.csv`
+- `learned_vs_com_comparison.csv`
+- `learned_vs_random_matched.csv`
+- `learned_label_anatomy.csv`
+- `bootstrap_intervals.csv`
+
+Reason retained:
+
+- Probe 11 is the first learned-quotient test. It asks whether a simple
+  predictive k-means quotient can discover viable propagation without being
+  handed COM bins as labels.
+
+Result in one line:
+
+- The learned quotients found partial propagation-positive structure, but did
+  not recover COM as a strong coordinate and mostly underperformed or fragmented
+  on heldout moderate perturbations.
+
 ## Current Public Interpretation
 
 The current executable candidate is:
@@ -70,6 +98,14 @@ The current executable candidate is:
 ```text
 COM-like multi-step viable propagation through certified fibers
 in the F,T attractive multifield toy substrate
+```
+
+Probe 11 updates the interpretation:
+
+```text
+The COM object remains the stronger analytic coordinate. Simple learned
+predictive quotients can see part of the signal, but are not yet a replacement
+for COM.
 ```
 
 The important public caveat:

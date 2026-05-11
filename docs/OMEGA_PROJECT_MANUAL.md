@@ -328,6 +328,49 @@ Interpretation:
 > sensitive to harder noise and potential-shape perturbations. Failures are
 > mostly component-preservation/erasure failures rather than estimator failures.
 
+### Probe 11: Learned Predictive Kappa
+
+Goal: test whether a simple learned quotient can discover viable propagation
+without being handed COM bins as labels.
+
+Run:
+
+- `N_TRAJ=3000`
+- `100` seeds
+- `300` bootstraps
+- 18 workers
+- train alphas `0.45, 0.50`
+- test alpha `0.525`
+- train horizons `900, 1500`
+- test horizons `1500, 2400`
+- train/validation/test variants: `25 / 12 / 24`
+
+Learned candidates:
+
+- `predictive_kmeans_k5`
+- `predictive_kmeans_k8`
+- `predictive_kmeans_k13`
+- `predictive_kmeans_k21`
+- `predictive_kmeans_no_COM_k8`
+- `predictive_kmeans_no_COM_k13`
+
+Result:
+
+- best validation quotient: `predictive_kmeans_k21`;
+- best learned COM association: about `0.468`;
+- best learned mean test delta viable propagation vs shuffled: about `-0.0023`;
+- COM mean test delta viable propagation vs shuffled: about `+0.0849`;
+- `predictive_kmeans_k5` and `predictive_kmeans_k8` showed partial
+  propagation-positive behavior, but the learned family did not recover COM as a
+  strong coordinate;
+- higher-k learned quotients tended toward fragmentation and entropy-positive
+  pseudo-risk behavior.
+
+Interpretation:
+
+> Simple learned predictive quotients can see part of the signal, but COM
+> remains the stronger analytic coordinate in the current toy substrate.
+
 ## Current Scientific Position
 
 What we can say:
@@ -346,6 +389,8 @@ horizons 900-2400
 - The object survives product/shuffled/independent baselines.
 - It survives a meaningful perturbation battery.
 - It is not merely high entropy.
+- A first learned-quotient test partially sees the signal but does not replace
+  COM.
 - Controls behave differently:
   - `boundary_v2` is pseudo-risk/propagation-negative;
   - `joint_basin` can show local transport but usually fails multi-step
@@ -361,18 +406,22 @@ What we cannot say:
 ## Known Risks
 
 - Toy substrate dependence.
-- Kappa design may be hand-aligned to the object.
+- Kappa design may be hand-aligned to the object; Probe 11 reduces but does not
+  eliminate this concern because simple learned quotients underperform COM.
 - Component preservation is currently entropy-ratio based and should be
   formalized more rigorously.
 - Product baseline is an approximation built from independent component
   profiles.
+- CuPy is installed locally, but the CUDA NVRTC runtime was unavailable during
+  Probe 11, so GPU acceleration is not currently usable without fixing the CUDA
+  runtime path/install.
 - Some result directories contain compact tracked summaries, while large raw
   per-seed/intermediate files are intentionally ignored.
 - Existing code is research-code quality, not library quality.
 
 ## Recommended Next Probes
 
-### Probe 11: Formal COM Fiber Transport Object
+### Probe 12: Formal COM Fiber Transport Object
 
 Goal: turn the current empirical object into a precise mathematical definition.
 
@@ -385,12 +434,12 @@ Tasks:
 - define viable propagation index and its limits;
 - prove which choices are estimator conventions versus object definitions.
 
-### Probe 12: Learned Kappa Recovery
+### Probe 13: Revised Learned Kappa Recovery
 
 Question:
 
 > Can a learned or constrained kappa rediscover COM-like propagation without
-> being handed center_of_mass?
+> being handed center_of_mass, after the COM fiber object is formalized?
 
 Controls:
 
@@ -399,14 +448,14 @@ Controls:
 - basin-only kappas;
 - compression-regularized learned kappas.
 
-### Probe 13: Substrate Generalization
+### Probe 14: Substrate Generalization
 
 Question:
 
 > Does COM-like viable propagation survive a different toy substrate, or is it
 > local to the current dynamics?
 
-Do not broaden until Probe 11 is formalized.
+Do not broaden until the COM fiber object is formalized.
 
 ## Maintenance Rule
 

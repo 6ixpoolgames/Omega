@@ -31,6 +31,7 @@ The public tree keeps only the current/relevant compact results:
 - `probe_09_robust_fiber_reachability_results/`
 - `probe_10_com_viable_propagation_robustness_extended_results/`
 - `probe_10_com_targeted_fragility_refinement_results/`
+- `probe_11_learned_predictive_kappa_revised_results/`
 
 Older exploratory outputs are summarized in the docs but not exposed as result
 folders in the current public tree.
@@ -59,6 +60,7 @@ For CPU-heavy probes, the calibrated default is:
 
 - `probe_09_robust_fiber_reachability.py`
 - `probe_10_com_viable_propagation_robustness.py`
+- `probe_11_learned_predictive_kappa_revised.py`
 
 Historical scripts remain in the repository because they document how the
 current object was reached, but new work should normally start from Probe 09/10
@@ -66,11 +68,13 @@ or from the next formalization probe described in the manual.
 
 ## Current Next Step
 
-Recommended next probe:
+Current latest probe:
 
 ```text
-Probe 11: Formal COM Fiber Transport Object
+Probe 11: Learned Predictive Kappa
 ```
 
-The next step should define the object cleanly before broadening the substrate
-or adding learned kappas.
+Probe 11 found partial learned propagation candidates, but did not recover COM
+as a strong learned coordinate. The next step should formalize the COM fiber
+transport object and tighten the learned quotient target before broadening the
+substrate.
