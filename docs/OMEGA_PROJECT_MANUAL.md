@@ -475,9 +475,9 @@ What we cannot say:
   formalized more rigorously.
 - Product baseline is an approximation built from independent component
   profiles.
-- CuPy is installed locally, but the CUDA NVRTC runtime was unavailable during
-  Probe 11, so GPU acceleration is not currently usable without fixing the CUDA
-  runtime path/install.
+- CuPy GPU execution works after prepending Torch's bundled CUDA 13 NVRTC DLL
+  directory to `PATH` and setting `CUPY_CACHE_DIR=.cupy-cache`. This is encoded
+  in `omega_env.bat` and `omega_env.ps1`.
 - Some result directories contain compact tracked summaries, while large raw
   per-seed/intermediate files are intentionally ignored.
 - Existing code is research-code quality, not library quality.

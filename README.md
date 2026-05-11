@@ -60,6 +60,11 @@ For CPU-heavy probes, the calibrated default is:
 18 worker processes
 ```
 
+For GPU/CuPy work on the original machine, use `omega_env.bat` or run
+`omega_env.ps1` with a PowerShell execution-policy bypass. The environment
+scripts add Torch's bundled CUDA 13 NVRTC DLL directory to `PATH` and point
+CuPy's kernel cache at `.cupy-cache/`.
+
 ## Main Scripts
 
 - `probe_09_robust_fiber_reachability.py`

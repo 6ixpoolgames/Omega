@@ -286,6 +286,36 @@ Large local-only files:
   they are large generated anatomy files, including files above GitHub's normal
   file-size limits.
 
+### GPU/CuPy Environment Fix
+
+CuPy initially imported but failed to execute kernels because it could not find
+`nvrtc*.dll`. The machine has a working NVIDIA driver and reports CUDA 13.0 via
+`nvidia-smi`, but no system CUDA Toolkit directory was present.
+
+Fix:
+
+- use the CUDA 13 NVRTC DLLs bundled with Torch at
+  `.venv\Lib\site-packages\torch\lib`;
+- prepend that directory to `PATH`;
+- set `CUPY_CACHE_DIR` to the workspace-local `.cupy-cache`.
+
+This is now encoded in:
+
+- `omega_env.bat`
+- `omega_env.ps1`
+
+Verification:
+
+```text
+cupy arange/sum executed on NVIDIA GeForce RTX 4070 Ti
+```
+
+PowerShell note:
+
+- direct `.\omega_env.ps1` may be blocked by Windows execution policy;
+- use `powershell -ExecutionPolicy Bypass -File omega_env.ps1` or use
+  `omega_env.bat`.
+
 ### Current Recommended Next Step
 
 Probe 13 should formalize the COM fiber transport object:
