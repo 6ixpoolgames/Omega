@@ -1,0 +1,115 @@
+{
+  "probe": "10_com_viable_propagation_robustness",
+  "status": "COMPLETE",
+  "runtime_seconds": 20174.981,
+  "workers": 18,
+  "n_traj": 10000,
+  "seed_count": 160,
+  "bootstrap_repeats": 800,
+  "perturbation_families_completed": [
+    "noise",
+    "potential_shape",
+    "reference",
+    "time_discretization"
+  ],
+  "variants_completed": 61,
+  "rows_completed": 549,
+  "reference_reproduction": [
+    {
+      "alpha": 0.45,
+      "T": 900,
+      "kappa": "center_of_mass",
+      "Delta_viable_propagation_vs_shuffled": 0.05705133826372644,
+      "category": "Robust propagation retained"
+    },
+    {
+      "alpha": 0.45,
+      "T": 1500,
+      "kappa": "center_of_mass",
+      "Delta_viable_propagation_vs_shuffled": 0.07219228485100959,
+      "category": "Robust propagation retained"
+    },
+    {
+      "alpha": 0.45,
+      "T": 2400,
+      "kappa": "center_of_mass",
+      "Delta_viable_propagation_vs_shuffled": 0.07812765808071676,
+      "category": "Robust propagation retained"
+    },
+    {
+      "alpha": 0.5,
+      "T": 900,
+      "kappa": "center_of_mass",
+      "Delta_viable_propagation_vs_shuffled": 0.06963481129388371,
+      "category": "Robust propagation retained"
+    },
+    {
+      "alpha": 0.5,
+      "T": 1500,
+      "kappa": "center_of_mass",
+      "Delta_viable_propagation_vs_shuffled": 0.0874748785920631,
+      "category": "Robust propagation retained"
+    },
+    {
+      "alpha": 0.5,
+      "T": 2400,
+      "kappa": "center_of_mass",
+      "Delta_viable_propagation_vs_shuffled": 0.0943710622382277,
+      "category": "Robust propagation retained"
+    },
+    {
+      "alpha": 0.525,
+      "T": 900,
+      "kappa": "center_of_mass",
+      "Delta_viable_propagation_vs_shuffled": 0.07447621208871288,
+      "category": "Robust propagation retained"
+    },
+    {
+      "alpha": 0.525,
+      "T": 1500,
+      "kappa": "center_of_mass",
+      "Delta_viable_propagation_vs_shuffled": 0.09512788053038743,
+      "category": "Robust propagation retained"
+    },
+    {
+      "alpha": 0.525,
+      "T": 2400,
+      "kappa": "center_of_mass",
+      "Delta_viable_propagation_vs_shuffled": 0.10209433747599447,
+      "category": "Robust propagation retained"
+    }
+  ],
+  "COM_overall_retention_rate": 0.9052823315118397,
+  "COM_retention_rate_by_family": {
+    "noise": 0.8777777777777778,
+    "potential_shape": 0.8888888888888888,
+    "reference": 1.0,
+    "time_discretization": 0.9444444444444444
+  },
+  "category_counts": {
+    "Robust propagation retained": 491,
+    "Component-erasing": 52,
+    "Propagation weakened but positive": 6
+  },
+  "files": [
+    "bootstrap_intervals.csv",
+    "com_retention_rate_by_family.png",
+    "component_preservation.csv",
+    "component_preservation_by_perturbation.png",
+    "control_kappa_comparison.png",
+    "delta_depth_by_perturbation.png",
+    "delta_viable_propagation_by_perturbation.png",
+    "entropy_vs_propagation_scatter.png",
+    "estimator_report.csv",
+    "perturbation_metadata.csv",
+    "propagation_deltas.csv",
+    "reference_reproduction.csv",
+    "reference_vs_perturbed_com.png",
+    "robustness_by_family.csv",
+    "robustness_by_variant.csv",
+    "secondary_entropy_diagnostics.csv",
+    "sink_noise_sensitivity.png",
+    "threshold_sensitivity.csv",
+    "threshold_sensitivity.png"
+  ]
+}
