@@ -406,7 +406,44 @@ Interpretation:
 
 ### Current Recommended Next Step
 
-Probe 13 should formalize the COM fiber transport object:
+Probe T0 added a quotient-light trajectory-space branch triage. It does not
+replace the COM object; it tells us which branch is worth probing if we explore
+trajectory geometry directly.
+
+Run:
+
+- script: `probe_T0_trajectory_space_branch_triage.py`
+- result directory: `probe_T0_trajectory_space_branch_triage_results/`
+- 18 workers
+- `15000` trajectories per condition/seed
+- `180` seeds
+- `200` bootstraps
+- runtime: about `8.4` minutes
+- GPU metric path used on `95.8%` of seed evaluations
+
+Result:
+
+```text
+concentration_collapse:          12
+component_balance:               12
+predictive_temporal_dependence:  11
+tube_thickness:                  11
+kernel_hazard_erosion:           10
+restoration:                     10
+```
+
+Interpretation:
+
+- concentration-collapse is the best first geometry branch by the script's
+  tie-break/recommendation logic;
+- component-balance is nearly as important because it is less redundant with raw
+  viability;
+- kernel erosion and restoration are heavily correlated with raw viability in
+  this setup, so they are useful diagnostics but weaker branch selectors;
+- recommended trajectory-space follow-up: `Probe T1: Viable Trajectory
+  Geometry`.
+
+The main scientific trunk still needs formal COM fiber transport:
 
 ```text
 COM fiber transport object

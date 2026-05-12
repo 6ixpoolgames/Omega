@@ -168,6 +168,34 @@ Result in one line:
   by splitting/merging COM fibers and inflating small-fiber structure; the next
   step is formal COM fiber transport, not scaling learned-kappa.
 
+### Probe T0: Trajectory-Space Branch Triage
+
+Directory:
+
+- `probe_T0_trajectory_space_branch_triage_results/`
+
+Primary files:
+
+- `summary.json`
+- `branch_scores.csv`
+- `trajectory_concentration.csv`
+- `component_balance.csv`
+- `predictive_temporal_dependence.csv`
+- `baseline_comparisons.csv`
+- `bootstrap_intervals.csv`
+
+Reason retained:
+
+- Probe T0 is the first quotient-light trajectory-space branch selector. It
+  asks which field-dynamics readouts are worth formalizing next without treating
+  the result as a validation claim.
+
+Result in one line:
+
+- The best trajectory-space follow-up is viable trajectory geometry:
+  concentration-collapse and component-balance scored highest, while
+  hazard/restoration mostly tracked raw viability.
+
 ## Current Public Interpretation
 
 The current executable candidate is:
@@ -190,6 +218,13 @@ Probe 12 updates the project direction:
 ```text
 Formalize the COM fiber-transport witness before broadening the substrate or
 scaling learned-kappa methods.
+```
+
+Probe T0 adds a parallel roadmap branch:
+
+```text
+If we pursue trajectory-space dynamics directly, start with viable trajectory
+geometry and keep component-balance as the main non-redundancy guardrail.
 ```
 
 The important public caveat:

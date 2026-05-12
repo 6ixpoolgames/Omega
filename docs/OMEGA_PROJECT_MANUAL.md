@@ -433,6 +433,42 @@ Interpretation:
 > COM remains the current witness. Learned-kappa work should be revised after
 > the COM fiber-transport object is formalized.
 
+### Probe T0: Trajectory-Space Branch Triage
+
+Goal: decide whether the trajectory-space pivot is worth a first formal probe,
+and if so which readout family should lead.
+
+Run:
+
+- `N_TRAJ=15000`
+- `180` seeds
+- `200` bootstraps
+- 18 workers
+- single worlds: open field, sink trap, rigid attractor, noise swamp
+- multifield corridor: `alpha=0.50, 0.525`, horizons `900, 1500`
+- controls: coupled, product, shuffled, time-shuffled, independent alpha-0
+- runtime about 8.4 minutes
+- GPU concentration path used on about `95.8%` of seed evaluations.
+
+Branch scores:
+
+```text
+concentration_collapse:          12
+component_balance:               12
+predictive_temporal_dependence:  11
+tube_thickness:                  11
+kernel_hazard_erosion:           10
+restoration:                     10
+```
+
+Interpretation:
+
+> The trajectory-space branch is worth one focused T1 probe, but this does not
+> supersede the COM fiber-transport trunk. The next trajectory-space target is
+> viable trajectory geometry: concentration-collapse as the lead geometry
+> readout, component-balance as the non-redundancy guardrail, and predictive
+> temporal dependence as a secondary diagnostic.
+
 ## Current Scientific Position
 
 What we can say:
@@ -455,6 +491,8 @@ horizons 900-2400
   COM.
 - A follow-up diagnosis shows the simple learned route mostly fails by
   splitting/merging COM fibers and by small-fiber inflation.
+- A quotient-light trajectory-space triage found a plausible parallel branch,
+  but only as roadmap evidence; it is not yet a validation result.
 - Controls behave differently:
   - `boundary_v2` is pseudo-risk/propagation-negative;
   - `joint_basin` can show local transport but usually fails multi-step

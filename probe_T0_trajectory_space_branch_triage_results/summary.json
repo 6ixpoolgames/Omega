@@ -1,0 +1,267 @@
+{
+  "probe": "T0_trajectory_space_branch_triage",
+  "status": "COMPLETE",
+  "runtime_seconds": 504.754,
+  "workers": 18,
+  "n_traj": 15000,
+  "seed_count": 180,
+  "bootstrap_repeats": 200,
+  "conditions": [
+    {
+      "kind": "multi",
+      "world": "F_T_attractive",
+      "condition": "coupled",
+      "alpha": 0.5,
+      "T": 900
+    },
+    {
+      "kind": "multi",
+      "world": "F_T_attractive",
+      "condition": "coupled",
+      "alpha": 0.5,
+      "T": 1500
+    },
+    {
+      "kind": "multi",
+      "world": "F_T_attractive",
+      "condition": "coupled",
+      "alpha": 0.525,
+      "T": 900
+    },
+    {
+      "kind": "multi",
+      "world": "F_T_attractive",
+      "condition": "coupled",
+      "alpha": 0.525,
+      "T": 1500
+    },
+    {
+      "kind": "multi",
+      "world": "F_T_attractive",
+      "condition": "independent_alpha0",
+      "alpha": 0.5,
+      "T": 900
+    },
+    {
+      "kind": "multi",
+      "world": "F_T_attractive",
+      "condition": "independent_alpha0",
+      "alpha": 0.5,
+      "T": 1500
+    },
+    {
+      "kind": "multi",
+      "world": "F_T_attractive",
+      "condition": "independent_alpha0",
+      "alpha": 0.525,
+      "T": 900
+    },
+    {
+      "kind": "multi",
+      "world": "F_T_attractive",
+      "condition": "independent_alpha0",
+      "alpha": 0.525,
+      "T": 1500
+    },
+    {
+      "kind": "multi",
+      "world": "F_T_attractive",
+      "condition": "product",
+      "alpha": 0.5,
+      "T": 900
+    },
+    {
+      "kind": "multi",
+      "world": "F_T_attractive",
+      "condition": "product",
+      "alpha": 0.5,
+      "T": 1500
+    },
+    {
+      "kind": "multi",
+      "world": "F_T_attractive",
+      "condition": "product",
+      "alpha": 0.525,
+      "T": 900
+    },
+    {
+      "kind": "multi",
+      "world": "F_T_attractive",
+      "condition": "product",
+      "alpha": 0.525,
+      "T": 1500
+    },
+    {
+      "kind": "multi",
+      "world": "F_T_attractive",
+      "condition": "shuffled",
+      "alpha": 0.5,
+      "T": 900
+    },
+    {
+      "kind": "multi",
+      "world": "F_T_attractive",
+      "condition": "shuffled",
+      "alpha": 0.5,
+      "T": 1500
+    },
+    {
+      "kind": "multi",
+      "world": "F_T_attractive",
+      "condition": "shuffled",
+      "alpha": 0.525,
+      "T": 900
+    },
+    {
+      "kind": "multi",
+      "world": "F_T_attractive",
+      "condition": "shuffled",
+      "alpha": 0.525,
+      "T": 1500
+    },
+    {
+      "kind": "multi",
+      "world": "F_T_attractive",
+      "condition": "time_shuffled",
+      "alpha": 0.5,
+      "T": 900
+    },
+    {
+      "kind": "multi",
+      "world": "F_T_attractive",
+      "condition": "time_shuffled",
+      "alpha": 0.5,
+      "T": 1500
+    },
+    {
+      "kind": "multi",
+      "world": "F_T_attractive",
+      "condition": "time_shuffled",
+      "alpha": 0.525,
+      "T": 900
+    },
+    {
+      "kind": "multi",
+      "world": "F_T_attractive",
+      "condition": "time_shuffled",
+      "alpha": 0.525,
+      "T": 1500
+    },
+    {
+      "kind": "single",
+      "world": "noise_swamp",
+      "condition": "noise_swamp",
+      "alpha": NaN,
+      "T": 900
+    },
+    {
+      "kind": "single",
+      "world": "open_field",
+      "condition": "open_field",
+      "alpha": NaN,
+      "T": 900
+    },
+    {
+      "kind": "single",
+      "world": "rigid_attractor",
+      "condition": "rigid_attractor",
+      "alpha": NaN,
+      "T": 900
+    },
+    {
+      "kind": "single",
+      "world": "sink_trap",
+      "condition": "sink_trap",
+      "alpha": NaN,
+      "T": 900
+    }
+  ],
+  "branch_scores": {
+    "concentration_collapse": 12.0,
+    "component_balance": 12.0,
+    "predictive_temporal_dependence": 11.0,
+    "tube_thickness": 11.0,
+    "kernel_hazard_erosion": 10.0,
+    "restoration": 10.0
+  },
+  "best_branch": {
+    "name": "concentration_collapse",
+    "why": "Highest branch-selection score across separation, stability, interpretability, non-redundancy, and compute practicality.",
+    "strongest_metric": "concentration_collapse",
+    "weakest_metric": "full conditional MI not attempted in T0",
+    "estimator_warnings": []
+  },
+  "non_redundancy": {
+    "most_correlated_with_p_viable": [
+      {
+        "branch": "kernel_hazard_erosion",
+        "metric": "kernel_erosion_slope",
+        "abs_corr_with_p_viable": 0.9999983641499579
+      },
+      {
+        "branch": "restoration",
+        "metric": "restoration_probability",
+        "abs_corr_with_p_viable": 0.9999975308589423
+      },
+      {
+        "branch": "restoration",
+        "metric": "post_perturbation_viability",
+        "abs_corr_with_p_viable": 0.9999635483538848
+      }
+    ],
+    "least_correlated_with_p_viable": [
+      {
+        "branch": "kernel_hazard_erosion",
+        "metric": "late_hazard",
+        "abs_corr_with_p_viable": 0.04448706412810461
+      },
+      {
+        "branch": "component_balance",
+        "metric": "component_prediction_balance",
+        "abs_corr_with_p_viable": 0.34689604456442164
+      },
+      {
+        "branch": "component_balance",
+        "metric": "component_erasure_proxy",
+        "abs_corr_with_p_viable": 0.3468960445644217
+      }
+    ],
+    "separates_similar_p_viable_regimes": [
+      "component_balance",
+      "predictive_temporal_dependence"
+    ]
+  },
+  "com_alignment": {
+    "strongest_aligned_readout": null,
+    "conflicting_readouts": [],
+    "interpretation": "T0 treats COM alignment as a diagnostic, not an optimization target."
+  },
+  "recommendation": "Probe T1: Viable Trajectory Geometry",
+  "gpu_usage_fraction": 0.9583333333333334,
+  "files": [
+    "baseline_comparisons.csv",
+    "bootstrap_intervals.csv",
+    "branch_score_radar.png",
+    "branch_scores.csv",
+    "com_metric_alignment.csv",
+    "com_metric_alignment.png",
+    "component_balance.csv",
+    "component_balance_by_condition.png",
+    "estimator_report.csv",
+    "kernel_erosion_by_world.png",
+    "kernel_erosion_profile.csv",
+    "prediction_advantage_by_world.png",
+    "predictive_temporal_dependence.csv",
+    "readout_correlation_matrix.png",
+    "readout_correlations.csv",
+    "restoration_by_world.png",
+    "restoration_profile.csv",
+    "summary.json",
+    "survival_hazard_by_world.png",
+    "trajectory_concentration.csv",
+    "trajectory_concentration_by_world.png",
+    "tube_thickness_by_world.png",
+    "tube_thickness_profile.csv",
+    "viability_hazard_profile.csv"
+  ]
+}

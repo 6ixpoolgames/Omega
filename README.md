@@ -39,6 +39,7 @@ The public tree keeps only the current/relevant compact results:
 - `probe_12a_com_formal_object_audit_results/`
 - `probe_12b_learned_kappa_failure_diagnosis_results/`
 - `probe_12c_improved_learner_smoke_results/`
+- `probe_T0_trajectory_space_branch_triage_results/`
 
 Older exploratory outputs are summarized in the docs but not exposed as result
 folders in the current public tree.
@@ -82,6 +83,7 @@ CuPy's kernel cache at `.cupy-cache/`.
 - `probe_10_com_viable_propagation_robustness.py`
 - `probe_11_learned_predictive_kappa_revised.py`
 - `probe_12_batch_com_audit_learned_diagnosis.py`
+- `probe_T0_trajectory_space_branch_triage.py`
 
 Historical scripts remain in the repository because they document how the
 current object was reached, but new work should normally start from Probe 09/10
@@ -92,10 +94,10 @@ or from the next formalization probe described in the manual.
 Current latest probe:
 
 ```text
-Probe 12: COM Formalization + Learned-Kappa Diagnosis
+Probe T0: Trajectory-Space Branch Triage
 ```
 
-Probe 12 found that COM remains a positive fiber-transport witness, while simple
-learned k-means mostly fails by splitting/merging COM fibers and inflating
-small-fiber structure. The recommended next step is formal COM fiber transport,
-not scaling learned-kappa yet.
+Probe T0 is a roadmap probe, not a theory-validation result. It found that a
+quotient-light trajectory-space branch is computationally viable and that the
+best next trajectory-space target is viable trajectory geometry, with
+concentration-collapse and component-balance as the most useful first readouts.
