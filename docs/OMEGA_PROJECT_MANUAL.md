@@ -65,6 +65,8 @@ Important caveat: the original papers are not all reproduced inside this repo.
 Some source PDFs are now included under `docs/progenitor_drafts/` as early
 theoretical provenance. They are drafts only and should not be treated as
 current validation results, peer-reviewed claims, or final formal statements.
+The current theory/status draft lives under `docs/current_theory/`. Active
+trajectory-space branch notes live under `docs/research_notes/trajectory_space/`.
 Some text drafts still live only in the local project folder outside Git.
 
 ## Working Definitions

@@ -28,6 +28,37 @@ Included PDFs:
 - `gradient_ethics.pdf`
 - `gradient_field_theory_of_value_v51.pdf`
 
+### Current Theory And Trajectory-Space Notes Added
+
+Added the current theory/status draft to:
+
+- `docs/current_theory/omega_signature_v0_1.pdf`
+
+Status:
+
+- current draft artifact;
+- not peer reviewed;
+- not a validation result by itself;
+- best current written entry point into the Omega claim ladder and COM witness.
+
+Added trajectory-space branch notes to:
+
+- `docs/research_notes/trajectory_space/trajectory_space_omega_research_note.pdf`
+- `docs/research_notes/trajectory_space/trajectory_space_omega_triage_note.pdf`
+
+Status:
+
+- draft research notes;
+- branch-selection/planning artifacts;
+- not replacements for the current COM fiber-transport witness.
+
+Framing decision:
+
+- `Project_Omega.pdf` is treated as a current theory/status draft.
+- The trajectory-space PDFs are treated as active research branch notes.
+- The earlier PDFs remain under `docs/progenitor_drafts/` as historical
+  provenance.
+
 ### Repository Setup
 
 - Local repo pushed to GitHub:

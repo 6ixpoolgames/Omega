@@ -23,6 +23,8 @@ certified macro-fibers while preserving component information.
 - [Project manual](docs/OMEGA_PROJECT_MANUAL.md)
 - [Running log](docs/OMEGA_RUNNING_LOG.md)
 - [Public results index](docs/PUBLIC_RESULTS_INDEX.md)
+- [Current theory draft](docs/current_theory/README.md)
+- [Trajectory-space research notes](docs/research_notes/trajectory_space/README.md)
 - [Progenitor drafts](docs/progenitor_drafts/README.md)
 
 ## Current Result Sets
@@ -44,6 +46,10 @@ folders in the current public tree.
 The `docs/progenitor_drafts/` folder contains early theory-side draft papers.
 They are included for provenance only and should not be read as current
 validation results.
+
+The `docs/current_theory/` folder contains the current Omega theory/status draft.
+The `docs/research_notes/trajectory_space/` folder contains planning notes for a
+possible quotient-light trajectory-space branch.
 
 ## Important Caveat
 

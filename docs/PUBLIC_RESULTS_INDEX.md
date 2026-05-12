@@ -19,6 +19,32 @@ Status:
 - not current validation results;
 - not a substitute for the executable probe outputs below.
 
+## Current Theory Draft
+
+Directory:
+
+- `docs/current_theory/`
+
+Status:
+
+- current draft/status artifact;
+- not peer reviewed;
+- not a validation result by itself;
+- intended as the main theory-side entry point for the current COM witness and
+  claim ladder.
+
+## Trajectory-Space Research Notes
+
+Directory:
+
+- `docs/research_notes/trajectory_space/`
+
+Status:
+
+- draft research notes;
+- planning/triage material for a possible trajectory-space branch;
+- not a replacement for the current COM fiber-transport witness.
+
 ### Probe 09: Robust Fiber Reachability
 
 Directory:
