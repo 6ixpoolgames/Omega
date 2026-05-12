@@ -369,6 +369,41 @@ PowerShell note:
 - use `powershell -ExecutionPolicy Bypass -File omega_env.ps1` or use
   `omega_env.bat`.
 
+### CPU/GPU Concurrent Stress Probe
+
+Added and ran:
+
+- `gpu_cpu_concurrent_stress_probe.py`
+
+Purpose:
+
+- validate that the workflow can run CPU NumPy work and GPU CuPy work at the
+  same time;
+- measure rough sustained dense-array throughput for future probe planning.
+
+Run:
+
+- duration: `180s`
+- CPU workload: NumPy matrix multiply, size `1400`
+- GPU workload: CuPy matrix multiply, size `4096`
+- environment: `omega_env.bat`
+
+Result:
+
+```text
+CPU NumPy: ~0.514 approximate TFLOP/s
+GPU CuPy:  ~21.596 approximate TFLOP/s
+GPU: NVIDIA GeForce RTX 4070 Ti
+```
+
+Interpretation:
+
+- the GPU path is viable for dense array kernels and pairwise/linear algebra
+  work;
+- CPU and GPU workloads can overlap in the same workflow;
+- simulation orchestration remains CPU/process-heavy unless explicitly rewritten
+  for GPU kernels.
+
 ### Current Recommended Next Step
 
 Probe 13 should formalize the COM fiber transport object:

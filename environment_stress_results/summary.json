@@ -1,0 +1,32 @@
+{
+  "probe": "gpu_cpu_concurrent_stress_probe",
+  "status": "COMPLETE",
+  "duration_requested_seconds": 180.0,
+  "wall_started": 1778583224.282928,
+  "cpu_threads_env": {
+    "OMP_NUM_THREADS": "12",
+    "OPENBLAS_NUM_THREADS": "12",
+    "MKL_NUM_THREADS": "12"
+  },
+  "workers": [
+    {
+      "worker": "cpu_numpy",
+      "loops": 16851,
+      "elapsed_seconds": 179.93069409999998,
+      "approx_tflops": 0.5139661604851221,
+      "checksum": -10.53291964515398,
+      "size": 1400
+    },
+    {
+      "worker": "gpu_cupy",
+      "device": "NVIDIA GeForce RTX 4070 Ti",
+      "loops": 28218,
+      "elapsed_seconds": 179.5786846000001,
+      "approx_tflops": 21.596396018332868,
+      "checksum": -8.529549694856556,
+      "size": 4096,
+      "free_mem_bytes": 11284774912,
+      "total_mem_bytes": 12877955072
+    }
+  ]
+}
