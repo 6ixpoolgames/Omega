@@ -224,6 +224,35 @@ Result in one line:
   component balance failed, noise/time-shuffle controls scored high, and rigid
   collapse exposed scale-invariance in the lead rank metric.
 
+### Probe T1F: Ordered Trajectory Structure Atlas
+
+Directory:
+
+- `probe_T1F_ordered_trajectory_structure_atlas_results/`
+
+Primary files:
+
+- `summary.json`
+- `readout_family_scores.csv`
+- `ordered_distinction_persistence.csv`
+- `temporal_dependence_proxy.csv`
+- `component_temporal_continuity.csv`
+- `minimal_recoverable_continuation.csv`
+- `false_positive_control_results.csv`
+- `null_deltas.csv`
+- `gpu_timing_diagnostics.csv`
+
+Reason retained:
+
+- Probe T1F is the stricter trajectory-native follow-up after T1. It asks
+  whether ordered distinction structure survives the T1 failure modes.
+
+Result in one line:
+
+- Ordered readouts are diagnostically useful and reject noise fakeout, but they
+  still fail endpoint/single-component false positives and the global component
+  continuity guardrail.
+
 ## Current Public Interpretation
 
 The current executable candidate is:
@@ -260,6 +289,13 @@ Probe T1 updates that branch:
 ```text
 Do not scale simple trajectory effective-rank geometry yet. Treat it as a
 diagnostic until the failure modes and component-erasure problem are understood.
+```
+
+Probe T1F updates it further:
+
+```text
+Demote the trajectory-native branch for now. Ordered distinction readouts are
+diagnostic, not yet object-defining.
 ```
 
 The important public caveat:

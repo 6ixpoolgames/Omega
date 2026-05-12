@@ -1,0 +1,73 @@
+{
+  "probe": "T1F_ordered_trajectory_structure_atlas",
+  "status": "COMPLETE",
+  "runtime_seconds": 1514.25,
+  "n_traj": 15000,
+  "seed_count": 180,
+  "bootstrap_repeats": 300,
+  "gpu_usage_fraction": 1.0,
+  "family_results": {
+    "component_conditioned_temporal_continuity": {
+      "score": 15.0,
+      "primary_metric": "component_continuity_balance"
+    },
+    "ordered_distinction_persistence": {
+      "score": 14.0,
+      "primary_metric": "early_to_late_neighbor_preservation"
+    },
+    "conditional_temporal_dependence_proxy": {
+      "score": 14.0,
+      "primary_metric": "time_shuffled_delta"
+    },
+    "minimal_recoverable_continuation": {
+      "score": 14.0,
+      "primary_metric": "continuation_profile_separation"
+    }
+  },
+  "best_readout_family": {
+    "family": "component_conditioned_temporal_continuity",
+    "primary_metric": "component_continuity_balance",
+    "null_separation": 3,
+    "false_positive_rejection": 0,
+    "component_continuity": 1,
+    "non_redundancy_vs_p_viable": 3,
+    "bootstrap_stability": 2,
+    "interpretability": 3,
+    "gpu_practicality": 3,
+    "family_score": 15,
+    "abs_corr_with_p_viable": 0.44170776165695047
+  },
+  "false_positive_rejection": {
+    "time_shuffled": {
+      "max_ordered_persistence": 0.3431352972984314,
+      "below_coupled_median": false
+    },
+    "rigid_collapse": {
+      "max_ordered_persistence": 0.518879771232605,
+      "below_coupled_median": false
+    },
+    "noise_fakeout": {
+      "max_ordered_persistence": 0.00946587324142456,
+      "below_coupled_median": true
+    },
+    "single_component_erasure": {
+      "max_ordered_persistence": 0.5971158444881439,
+      "below_coupled_median": false
+    },
+    "endpoint_fakeout": {
+      "max_ordered_persistence": 0.4882115125656128,
+      "below_coupled_median": false
+    }
+  },
+  "component_continuity_passed": false,
+  "correlation_with_p_viable": 0.44170776165695047,
+  "recommendation": "Demote trajectory-native branch; return to COM formalization or agent-relevant distinction/control probe.",
+  "next_probe": "COM_fiber_transport_formalization",
+  "estimator_warnings": [],
+  "gpu_diagnostics": {
+    "gpu_metric_batches": 81,
+    "mean_gpu_batch_seconds": 0.12574567901234568,
+    "max_gpu_temp_c": 49.0,
+    "thermal_throttle_events": 0
+  }
+}

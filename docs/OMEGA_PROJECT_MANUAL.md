@@ -519,6 +519,60 @@ Interpretation:
 > failure-mode/component-erasure atlas or a stronger temporal-order-sensitive
 > metric before scaling.
 
+### Probe T1F: Ordered Trajectory Structure Atlas
+
+Goal: test whether the trajectory-native branch survives after replacing
+generic geometry with ordered distinction structure.
+
+Run:
+
+- `N_TRAJ=15000`
+- `180` seeds
+- `300` bootstraps
+- 18 workers
+- alphas `0.45, 0.50, 0.525`
+- horizons `900, 1500, 2400`
+- conditions: coupled, product, shuffled, time-shuffled, independent alpha-0
+- false-positive controls: rigid collapse, noise fakeout, single-component
+  erasure, endpoint fakeout
+- runtime about 25.2 minutes
+- GPU usage fraction `1.0`
+- max GPU temperature `49 C`
+- no thermal throttle events.
+
+Family scores:
+
+```text
+component_conditioned_temporal_continuity: 15
+ordered_distinction_persistence:          14
+conditional_temporal_dependence_proxy:    14
+minimal_recoverable_continuation:         14
+```
+
+Guardrail result:
+
+```text
+component_continuity_passed: false
+false-positive rejection: failed
+best metric correlation with p_viable_T: 0.442
+```
+
+Important details:
+
+- The pivot fixed one T1 failure mode: noise fakeout scored near zero on ordered
+  persistence.
+- The pivot did not fix endpoint and single-component false positives.
+- Component-conditioned temporal continuity was the top scoring diagnostic, but
+  it still failed the global component-continuity threshold and did not reject
+  false positives strongly enough.
+
+Interpretation:
+
+> T1F demotes the trajectory-native branch for now. Ordered distinction readouts
+> are useful diagnostics, but not yet a candidate object. The better next move
+> is COM fiber-transport formalization or a separate agent-relevant
+> distinction/control probe.
+
 ## Current Scientific Position
 
 What we can say:
@@ -545,6 +599,9 @@ horizons 900-2400
   but only as roadmap evidence; it is not yet a validation result.
 - T1 then falsified the simple geometry-positive version of that branch under
   noise, time-shuffle, rigid-collapse, and component-erasure controls.
+- T1F tested a stricter ordered-structure pivot and still failed global
+  component/false-positive guardrails, so trajectory-native work is currently
+  diagnostic rather than object-defining.
 - Controls behave differently:
   - `boundary_v2` is pseudo-risk/propagation-negative;
   - `joint_basin` can show local transport but usually fails multi-step

@@ -504,6 +504,67 @@ Build a trajectory-geometry failure-mode/component-erasure atlas first, or
 return to the COM fiber-transport trunk as the stronger current object.
 ```
 
+### Probe T1F: Ordered Trajectory Structure Atlas
+
+Probe T1F pivoted from generic geometry to ordered distinction structure under
+viability filtering. It tested whether early trajectory distinctions retain
+later consequences without being explained by noise, time-shuffle,
+endpoint-fakeout, rigid collapse, or one-component erasure.
+
+Run:
+
+- script: `probe_T1F_ordered_trajectory_structure_atlas.py`
+- result directory: `probe_T1F_ordered_trajectory_structure_atlas_results/`
+- 18 workers
+- `15000` trajectories
+- `180` seeds
+- `300` bootstraps
+- alphas `0.45, 0.50, 0.525`
+- horizons `900, 1500, 2400`
+- runtime: about `25.2` minutes
+- grouped GPU metric batches: `81`
+- GPU usage fraction: `100%`
+- max GPU temperature observed by the script: `49 C`
+- thermal throttle events: `0`
+
+Family scores:
+
+```text
+component_conditioned_temporal_continuity: 15
+ordered_distinction_persistence:          14
+conditional_temporal_dependence_proxy:    14
+minimal_recoverable_continuation:         14
+```
+
+Guardrail result:
+
+```text
+component_continuity_passed: false
+false_positive_rejection score for all families: 0
+best metric correlation with p_viable_T: 0.442
+```
+
+Interpretation:
+
+- Ordered readouts are more informative than raw effective-rank geometry, but
+  they still do not pass the strict object criteria.
+- Coupled ordered persistence averaged about `0.359`; time-shuffled averaged
+  about `0.266`, and noise fakeout averaged near `0.000`, so the pivot did fix
+  the T1 noise-fakeout problem.
+- Endpoint fakeout averaged about `0.362`, and single-component erasure averaged
+  about `0.417`, so the ordered persistence readout still admits important
+  false positives.
+- Coupled component continuity averaged about `0.658`, but the minimum fell
+  below the required threshold, so the global component guardrail failed.
+
+Recommendation:
+
+```text
+Demote trajectory-native branch for now.
+Return to COM fiber-transport formalization, or pivot to an agent-relevant
+distinction/control probe.
+```
+
 ```text
 COM fiber transport object
 certified viable fiber node

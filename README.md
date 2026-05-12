@@ -41,6 +41,7 @@ The public tree keeps only the current/relevant compact results:
 - `probe_12c_improved_learner_smoke_results/`
 - `probe_T0_trajectory_space_branch_triage_results/`
 - `probe_T1_viable_trajectory_geometry_results/`
+- `probe_T1F_ordered_trajectory_structure_atlas_results/`
 
 Older exploratory outputs are summarized in the docs but not exposed as result
 folders in the current public tree.
@@ -86,6 +87,7 @@ CuPy's kernel cache at `.cupy-cache/`.
 - `probe_12_batch_com_audit_learned_diagnosis.py`
 - `probe_T0_trajectory_space_branch_triage.py`
 - `probe_T1_viable_trajectory_geometry.py`
+- `probe_T1F_ordered_trajectory_structure_atlas.py`
 
 Historical scripts remain in the repository because they document how the
 current object was reached, but new work should normally start from Probe 09/10
@@ -96,11 +98,12 @@ or from the next formalization probe described in the manual.
 Current latest probe:
 
 ```text
-Probe T1: Viable Trajectory Geometry
+Probe T1F: Ordered Trajectory Structure Atlas
 ```
 
-Probe T1 is a focused falsification pass for the trajectory-geometry branch. It
-did not support a simple geometry-positive claim: effective-rank geometry was
-weak against nulls, noise/time-shuffle controls scored high, and component
-balance failed. The recommended next step is a failure-mode/component-erasure
-atlas before any trajectory-geometry scaling claim.
+Probe T1F tested a stricter trajectory-native pivot after T1. Ordered and
+component-conditioned readouts were diagnostically interesting, but still failed
+the global component-continuity and false-positive guardrails. The current
+recommendation is to demote the trajectory-native branch for now and return to
+COM fiber-transport formalization or an agent-relevant distinction/control
+probe.
