@@ -1,0 +1,49 @@
+{
+  "probe": "T1_viable_trajectory_geometry",
+  "status": "COMPLETE",
+  "runtime_seconds": 1481.692,
+  "n_traj": 15000,
+  "seed_count": 180,
+  "bootstrap_repeats": 300,
+  "gpu_usage_fraction": 1.0,
+  "lead_result": {
+    "geometry_branch_supported": false,
+    "best_geometry_metric": "effective_rank",
+    "strongest_null_delta": {
+      "alpha": 0.45,
+      "T": 900,
+      "metric": "effective_rank",
+      "null": "independent_alpha0",
+      "delta": 0.0017256736755371094
+    },
+    "correlation_with_p_viable": 0.27136848395754143,
+    "component_balance_passed": false,
+    "temporal_fakeout_passed": false
+  },
+  "false_positive_controls": {
+    "rigid_collapse": {
+      "max_effective_rank": 3.1483845710754395,
+      "max_component_erasure_score": 0.6032079201676523,
+      "scores_below_coupled_median": false
+    },
+    "noise_fakeout": {
+      "max_effective_rank": 8.674246788024902,
+      "max_component_erasure_score": 0.6323079903308355,
+      "scores_below_coupled_median": false
+    },
+    "single_component_erasure": {
+      "max_effective_rank": 2.0493574142456055,
+      "max_component_erasure_score": 0.9880962315710748,
+      "scores_below_coupled_median": true
+    }
+  },
+  "recommendation": "Investigate lower-rank erasure before calling geometry positive.",
+  "next_probe": "component_erasure_atlas",
+  "estimator_warnings": [],
+  "gpu_diagnostics": {
+    "gpu_metric_batches": 72,
+    "mean_gpu_batch_seconds": 0.2132638888888889,
+    "max_gpu_temp_c": 52.0,
+    "thermal_throttle_events": 0
+  }
+}

@@ -469,6 +469,56 @@ Interpretation:
 > readout, component-balance as the non-redundancy guardrail, and predictive
 > temporal dependence as a secondary diagnostic.
 
+### Probe T1: Viable Trajectory Geometry
+
+Goal: falsify or support the T0 trajectory-geometry branch under clean
+false-positive controls.
+
+Run:
+
+- `N_TRAJ=15000`
+- `180` seeds
+- `300` bootstraps
+- 18 workers
+- alphas `0.45, 0.50, 0.525`
+- horizons `900, 1500, 2400`
+- conditions: coupled, product, shuffled, time-shuffled, independent alpha-0
+- false-positive controls: rigid collapse, noise fakeout, single-component
+  erasure
+- grouped GPU geometry batches, not seed-loop GPU calls
+- runtime about 24.7 minutes
+- GPU usage fraction `1.0`
+- max GPU temperature `52 C`
+- no thermal throttle events.
+
+Result:
+
+```text
+geometry_branch_supported: false
+effective_rank correlation with p_viable_T: 0.271
+component_balance_passed: false
+temporal_fakeout_passed: false
+strongest positive effective-rank null delta: +0.0017
+```
+
+Important failure modes:
+
+- `rigid_collapse` leaves effective rank nearly unchanged because rank is mostly
+  scale-invariant;
+- `noise_fakeout` scores higher effective rank than coupled, which means
+  unstructured variance can masquerade as geometry;
+- `time_shuffled` also scores high, so the current geometry readouts do not
+  enforce temporal order strongly enough;
+- `single_component_erasure` is detected correctly, but the coupled condition
+  itself has weak component balance.
+
+Interpretation:
+
+> T1 demotes simple effective-rank/collapse geometry from candidate object to
+> diagnostic. The trajectory-space branch may still be useful, but it needs a
+> failure-mode/component-erasure atlas or a stronger temporal-order-sensitive
+> metric before scaling.
+
 ## Current Scientific Position
 
 What we can say:
@@ -493,6 +543,8 @@ horizons 900-2400
   splitting/merging COM fibers and by small-fiber inflation.
 - A quotient-light trajectory-space triage found a plausible parallel branch,
   but only as roadmap evidence; it is not yet a validation result.
+- T1 then falsified the simple geometry-positive version of that branch under
+  noise, time-shuffle, rigid-collapse, and component-erasure controls.
 - Controls behave differently:
   - `boundary_v2` is pseudo-risk/propagation-negative;
   - `joint_basin` can show local transport but usually fails multi-step
@@ -520,6 +572,8 @@ What we cannot say:
 - Some result directories contain compact tracked summaries, while large raw
   per-seed/intermediate files are intentionally ignored.
 - Existing code is research-code quality, not library quality.
+- Probe T1 staged local trajectory samples under `_trajectory_samples/`; those
+  are intentionally untracked because they are large generated intermediates.
 
 ## Recommended Next Probes
 

@@ -40,6 +40,7 @@ The public tree keeps only the current/relevant compact results:
 - `probe_12b_learned_kappa_failure_diagnosis_results/`
 - `probe_12c_improved_learner_smoke_results/`
 - `probe_T0_trajectory_space_branch_triage_results/`
+- `probe_T1_viable_trajectory_geometry_results/`
 
 Older exploratory outputs are summarized in the docs but not exposed as result
 folders in the current public tree.
@@ -84,6 +85,7 @@ CuPy's kernel cache at `.cupy-cache/`.
 - `probe_11_learned_predictive_kappa_revised.py`
 - `probe_12_batch_com_audit_learned_diagnosis.py`
 - `probe_T0_trajectory_space_branch_triage.py`
+- `probe_T1_viable_trajectory_geometry.py`
 
 Historical scripts remain in the repository because they document how the
 current object was reached, but new work should normally start from Probe 09/10
@@ -94,10 +96,11 @@ or from the next formalization probe described in the manual.
 Current latest probe:
 
 ```text
-Probe T0: Trajectory-Space Branch Triage
+Probe T1: Viable Trajectory Geometry
 ```
 
-Probe T0 is a roadmap probe, not a theory-validation result. It found that a
-quotient-light trajectory-space branch is computationally viable and that the
-best next trajectory-space target is viable trajectory geometry, with
-concentration-collapse and component-balance as the most useful first readouts.
+Probe T1 is a focused falsification pass for the trajectory-geometry branch. It
+did not support a simple geometry-positive claim: effective-rank geometry was
+weak against nulls, noise/time-shuffle controls scored high, and component
+balance failed. The recommended next step is a failure-mode/component-erasure
+atlas before any trajectory-geometry scaling claim.

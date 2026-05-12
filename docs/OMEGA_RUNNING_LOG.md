@@ -445,6 +445,65 @@ Interpretation:
 
 The main scientific trunk still needs formal COM fiber transport:
 
+### Probe T1: Viable Trajectory Geometry
+
+Probe T1 tested the T0-selected branch directly. It asked whether viable
+trajectory geometry is non-degenerate, temporally structured, and
+component-preserving beyond survival, endpoint spread, noise, and lower-rank
+erasure.
+
+Run:
+
+- script: `probe_T1_viable_trajectory_geometry.py`
+- result directory: `probe_T1_viable_trajectory_geometry_results/`
+- 18 workers
+- `15000` trajectories
+- `180` seeds
+- `300` bootstraps
+- alphas `0.45, 0.50, 0.525`
+- horizons `900, 1500, 2400`
+- runtime: about `24.7` minutes
+- grouped GPU geometry batches: `72`
+- GPU usage fraction: `100%`
+- max GPU temperature observed by the script: `52 C`
+- thermal throttle events: `0`
+
+Result:
+
+```text
+geometry_branch_supported: false
+correlation effective_rank vs p_viable_T: 0.271
+component_balance_passed: false
+temporal_fakeout_passed: false
+strongest effective-rank null delta: +0.0017 vs independent_alpha0
+```
+
+False-positive controls:
+
+```text
+rigid_collapse: effective rank is nearly unchanged, exposing rank scale-invariance
+noise_fakeout: effective rank scores much higher than coupled
+single_component_erasure: correctly flags near-total component erasure
+```
+
+Interpretation:
+
+- Simple effective-rank/collapse geometry is not a sufficient Omega-positive
+  object.
+- The branch is not reducible to raw viability, but it fails stricter controls.
+- Time-shuffled/noise fakeouts show that geometry metrics can reward
+  unstructured variance or segment disorder.
+- Coupled runs show weak component balance, roughly `0.41-0.45` in the retained
+  table.
+
+Recommendation:
+
+```text
+Do not proceed to T2 scaling yet.
+Build a trajectory-geometry failure-mode/component-erasure atlas first, or
+return to the COM fiber-transport trunk as the stronger current object.
+```
+
 ```text
 COM fiber transport object
 certified viable fiber node

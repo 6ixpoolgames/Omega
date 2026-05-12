@@ -196,6 +196,34 @@ Result in one line:
   concentration-collapse and component-balance scored highest, while
   hazard/restoration mostly tracked raw viability.
 
+### Probe T1: Viable Trajectory Geometry
+
+Directory:
+
+- `probe_T1_viable_trajectory_geometry_results/`
+
+Primary files:
+
+- `summary.json`
+- `geometry_metrics.csv`
+- `temporal_geometry.csv`
+- `component_balance.csv`
+- `null_deltas.csv`
+- `metric_correlations.csv`
+- `bootstrap_intervals.csv`
+- `gpu_timing_diagnostics.csv`
+
+Reason retained:
+
+- Probe T1 is the direct falsification pass for the T0-selected
+  trajectory-geometry branch.
+
+Result in one line:
+
+- Simple effective-rank/collapse geometry did not survive the controls:
+  component balance failed, noise/time-shuffle controls scored high, and rigid
+  collapse exposed scale-invariance in the lead rank metric.
+
 ## Current Public Interpretation
 
 The current executable candidate is:
@@ -225,6 +253,13 @@ Probe T0 adds a parallel roadmap branch:
 ```text
 If we pursue trajectory-space dynamics directly, start with viable trajectory
 geometry and keep component-balance as the main non-redundancy guardrail.
+```
+
+Probe T1 updates that branch:
+
+```text
+Do not scale simple trajectory effective-rank geometry yet. Treat it as a
+diagnostic until the failure modes and component-erasure problem are understood.
 ```
 
 The important public caveat:
