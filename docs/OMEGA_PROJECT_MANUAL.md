@@ -1,6 +1,6 @@
 # Omega Project Manual
 
-Last updated: 2026-05-11
+Last updated: 2026-05-13
 
 Repository: https://github.com/6ixpoolgames/Omega
 
@@ -27,6 +27,7 @@ Project stance:
 4. Inspect the latest probe scripts:
    - `probe_09_robust_fiber_reachability.py`
    - `probe_10_com_viable_propagation_robustness.py`
+   - `probe_I0_invariant_stack_audit.py`
 5. Inspect compact summaries, not raw caches:
    - `probe_09_robust_fiber_reachability_results/summary.json`
    - `probe_10_com_viable_propagation_robustness_extended_results/summary.json`
@@ -573,6 +574,50 @@ Interpretation:
 > is COM fiber-transport formalization or a separate agent-relevant
 > distinction/control probe.
 
+### Probe I0: Invariant Stack Audit
+
+Goal: give the trajectory-native branch one longer stacked-invariant test before
+returning to COM formalization.
+
+Run:
+
+- `N_TRAJ=15000`
+- `180` seeds
+- `300` bootstraps
+- 18 workers
+- alphas `0.45, 0.50, 0.525`
+- horizons `900, 1500, 2400`
+- GPU metric path used throughout
+- runtime about 47.3 minutes.
+
+Invariants:
+
+- `I1_viability`
+- `I2_ordered_distinction_persistence`
+- `I3_component_non_erasure`
+- `I4_counterfactual_affordance_relevance`
+- `I5_minimal_recoverability`
+- `I6_horizon_coherence`
+
+Ablation:
+
+```text
+S1: retention 0.444, known rejection 0.556, holdout rejection 0.556
+S2: retention 0.111, known rejection 0.917, holdout rejection 0.833
+S3: retention 0.111, known rejection 1.000, holdout rejection 0.833
+S4: retention 0.000, known rejection 1.000, holdout rejection 0.944
+S5: retention 0.000, known rejection 1.000, holdout rejection 1.000
+S6: retention 0.000, known rejection 1.000, holdout rejection 1.000
+```
+
+Interpretation:
+
+> Probe I0 does not rescue the trajectory-native branch. The invariants become a
+> strong rejection filter, but not a coupled-object witness. The decisive
+> ablation pattern is that rejection improves while coupled retention collapses.
+> This makes the result useful as a falsification of the current
+> trajectory-stack attempt, not as support for a new trajectory object.
+
 ## Current Scientific Position
 
 What we can say:
@@ -602,6 +647,9 @@ horizons 900-2400
 - T1F tested a stricter ordered-structure pivot and still failed global
   component/false-positive guardrails, so trajectory-native work is currently
   diagnostic rather than object-defining.
+- I0 tested the stacked-invariant version of that branch and found an
+  overconstraint failure: strong false-positive rejection with zero coupled
+  retention in the best stacks.
 - Controls behave differently:
   - `boundary_v2` is pseudo-risk/propagation-negative;
   - `joint_basin` can show local transport but usually fails multi-step

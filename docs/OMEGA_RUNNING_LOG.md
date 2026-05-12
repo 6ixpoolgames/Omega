@@ -565,6 +565,74 @@ Return to COM fiber-transport formalization, or pivot to an agent-relevant
 distinction/control probe.
 ```
 
+### Probe I0: Invariant Stack Audit
+
+Probe I0 gave the trajectory-native branch a final longer validation pass. It
+tested whether a cumulative stack of single-Omega-like invariants could recover
+a stricter trajectory-native object without admitting the known T1/T1F
+false-positive controls.
+
+Run:
+
+- script: `probe_I0_invariant_stack_audit.py`
+- result directory: `probe_I0_invariant_stack_audit_results/`
+- 18 workers
+- `15000` trajectories
+- `180` seeds
+- `300` bootstraps
+- alphas `0.45, 0.50, 0.525`
+- horizons `900, 1500, 2400`
+- conditions: coupled, product, shuffled, time-shuffled, independent alpha-0
+- known controls: rigid collapse, noise fakeout, single-component erasure,
+  endpoint fakeout
+- holdouts: delayed trap, component-swap fakeout
+- runtime about `47.3` minutes
+- GPU metric usage fraction `1.0`
+- max GPU temperature `49 C`
+- thermal throttle events `0`
+
+Invariant scores:
+
+```text
+I1 viability:                           1
+I2 ordered distinction persistence:     2
+I3 component non-erasure:               3
+I4 counterfactual affordance relevance: 2
+I5 minimal recoverability:              1
+I6 horizon coherence:                   1
+```
+
+Ablation result:
+
+```text
+S1 retention 0.444, known rejection 0.556, holdout rejection 0.556
+S2 retention 0.111, known rejection 0.917, holdout rejection 0.833
+S3 retention 0.111, known rejection 1.000, holdout rejection 0.833
+S4 retention 0.000, known rejection 1.000, holdout rejection 0.944
+S5 retention 0.000, known rejection 1.000, holdout rejection 1.000
+S6 retention 0.000, known rejection 1.000, holdout rejection 1.000
+```
+
+Interpretation:
+
+- The stack behaves like a rejection filter, not an object witness.
+- Adding invariants monotonically improves false-positive rejection, but it also
+  removes the coupled condition.
+- The best apparent stack, S5, rejects all known controls and both holdouts, but
+  has `0.0` coupled retention. That is not a pass; it is overconstraint.
+- `I3_component_non_erasure` is the strongest individual invariant, but the
+  cumulative stack still fails to preserve the target object.
+- The holdouts are useful because they confirm the stack generalizes rejection,
+  but they do not rescue coupled retention.
+
+Decision:
+
+```text
+No trajectory-native invariant stack passed.
+Demote trajectory-native work from candidate-object status.
+Return to COM fiber-transport formalization.
+```
+
 ```text
 COM fiber transport object
 certified viable fiber node

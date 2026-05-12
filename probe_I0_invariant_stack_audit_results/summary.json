@@ -1,0 +1,62 @@
+{
+  "probe": "I0_invariant_stack_audit",
+  "status": "COMPLETE",
+  "runtime_seconds": 2838.395,
+  "n_traj": 15000,
+  "seed_count": 180,
+  "bootstrap_repeats": 300,
+  "gpu_usage_fraction": 1.0,
+  "invariant_scores": {
+    "I1_viability": 1,
+    "I2_ordered_distinction_persistence": 2,
+    "I3_component_non_erasure": 3,
+    "I4_counterfactual_affordance_relevance": 2,
+    "I5_minimal_recoverability": 1,
+    "I6_horizon_coherence": 1
+  },
+  "best_stack": {
+    "name": "S5",
+    "invariants": [
+      "I1_viability",
+      "I2_ordered_distinction_persistence",
+      "I3_component_non_erasure",
+      "I4_counterfactual_affordance_relevance",
+      "I5_minimal_recoverability"
+    ],
+    "known_false_positive_rejection_rate": 1.0,
+    "holdout_rejection_rate": 1.0,
+    "coupled_retention": 0.0,
+    "correlation_with_p_viable": 0.0,
+    "bootstrap_stability": 1.0,
+    "passes": false,
+    "strong_pass": false
+  },
+  "holdout_results": {
+    "delayed_trap": {
+      "viability_gate": 0.9988915637860083,
+      "ordered_persistence": 0.7931912873194691,
+      "component_non_erasure": 0.6596621019428514,
+      "counterfactual_affordance": 0.5755307513514565,
+      "minimal_recoverability": 0.6696668792628098,
+      "horizon_coherence": 0.8391362350533961
+    },
+    "component_swap_fakeout": {
+      "viability_gate": 0.9988915637860083,
+      "ordered_persistence": 0.37457606834208557,
+      "component_non_erasure": 0.16217808623059682,
+      "counterfactual_affordance": 0.3723961493713575,
+      "minimal_recoverability": 0.6777141108695005,
+      "horizon_coherence": 0.7750527275746332
+    }
+  },
+  "ablation_interpretation": "Stack results are threshold-derived from known controls only; holdouts are final generalization checks.",
+  "recommendation": "No stack passes; demote trajectory-native invariant branch and return to COM formalization.",
+  "next_probe": "COM_fiber_transport_formalization",
+  "estimator_warnings": [],
+  "gpu_diagnostics": {
+    "gpu_metric_batches": 99,
+    "mean_gpu_batch_seconds": 13.385420202020205,
+    "max_gpu_temp_c": 49.0,
+    "thermal_throttle_events": 0
+  }
+}

@@ -42,6 +42,7 @@ The public tree keeps only the current/relevant compact results:
 - `probe_T0_trajectory_space_branch_triage_results/`
 - `probe_T1_viable_trajectory_geometry_results/`
 - `probe_T1F_ordered_trajectory_structure_atlas_results/`
+- `probe_I0_invariant_stack_audit_results/`
 
 Older exploratory outputs are summarized in the docs but not exposed as result
 folders in the current public tree.
@@ -88,6 +89,7 @@ CuPy's kernel cache at `.cupy-cache/`.
 - `probe_T0_trajectory_space_branch_triage.py`
 - `probe_T1_viable_trajectory_geometry.py`
 - `probe_T1F_ordered_trajectory_structure_atlas.py`
+- `probe_I0_invariant_stack_audit.py`
 
 Historical scripts remain in the repository because they document how the
 current object was reached, but new work should normally start from Probe 09/10
@@ -98,12 +100,11 @@ or from the next formalization probe described in the manual.
 Current latest probe:
 
 ```text
-Probe T1F: Ordered Trajectory Structure Atlas
+Probe I0: Invariant Stack Audit
 ```
 
-Probe T1F tested a stricter trajectory-native pivot after T1. Ordered and
-component-conditioned readouts were diagnostically interesting, but still failed
-the global component-continuity and false-positive guardrails. The current
-recommendation is to demote the trajectory-native branch for now and return to
-COM fiber-transport formalization or an agent-relevant distinction/control
-probe.
+Probe I0 gave the trajectory-native branch a final stacked-invariant audit.
+The ablation result is informative but negative: added invariants improve
+known-control and holdout rejection, but coupled retention collapses to zero by
+the strongest stacks. The current recommendation is to demote the
+trajectory-native branch and return to COM fiber-transport formalization.

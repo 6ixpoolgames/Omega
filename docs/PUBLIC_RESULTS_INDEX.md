@@ -253,6 +253,35 @@ Result in one line:
   still fail endpoint/single-component false positives and the global component
   continuity guardrail.
 
+### Probe I0: Invariant Stack Audit
+
+Directory:
+
+- `probe_I0_invariant_stack_audit_results/`
+
+Primary files:
+
+- `summary.json`
+- `invariant_scores.csv`
+- `stack_ablation_results.csv`
+- `known_false_positive_rejection.csv`
+- `holdout_generalization.csv`
+- `threshold_sensitivity.csv`
+- `metric_correlations.csv`
+- `gpu_timing_diagnostics.csv`
+
+Reason retained:
+
+- Probe I0 is the final stacked-invariant audit of the trajectory-native branch.
+  It tests whether single-Omega-style invariants can jointly reject fakeouts
+  while retaining the coupled target condition.
+
+Result in one line:
+
+- The ablation is negative: stronger stacks reject known controls and holdouts,
+  but coupled retention collapses to zero, so the trajectory-native invariant
+  branch is demoted.
+
 ## Current Public Interpretation
 
 The current executable candidate is:
@@ -296,6 +325,13 @@ Probe T1F updates it further:
 ```text
 Demote the trajectory-native branch for now. Ordered distinction readouts are
 diagnostic, not yet object-defining.
+```
+
+Probe I0 closes the current trajectory-native attempt:
+
+```text
+The invariant stack rejects fakeouts by becoming too strict. It is not a viable
+object witness; return to COM fiber-transport formalization.
 ```
 
 The important public caveat:
