@@ -45,6 +45,18 @@ Status:
 - planning/triage material for a possible trajectory-space branch;
 - not a replacement for the current COM fiber-transport witness.
 
+## Primitive-Branch Research Notes
+
+Directory:
+
+- `docs/research_notes/primitive_branch/`
+
+Status:
+
+- active conceptual notes for the distinction/asymmetry/relation branch;
+- not validation results by themselves;
+- used to motivate DA0b relation-as-connection tests.
+
 ### Probe 09: Robust Fiber Reachability
 
 Directory:
@@ -425,6 +437,33 @@ Result in one line:
 - Full DAR is the best aggregate smoke world, but the relation-shuffled control
   is not rejected, so the primitive branch is not ready for main-scale
   validation.
+
+### Probe DA0b: Relational Connection and Closure
+
+Directory:
+
+- `probe_DA0b_relational_connection_closure_results/`
+
+Primary files:
+
+- `summary.json`
+- `relation_identity_persistence.csv`
+- `connection_predictivity.csv`
+- `relation_conditioned_lineage.csv`
+- `closure_without_lockin.csv`
+- `viable_slack_profile.csv`
+- `control_rejection.csv`
+- `world_rankings.csv`
+
+Reason retained:
+
+- Probe DA0b tests relation as persistent causal-history dependence rather than
+  generic coupling.
+
+Result in one line:
+
+- Random-stepwise relation is rejected, but lock-in and independent distinction
+  controls dominate key scores, so DA0b is not ready for main-scale validation.
 
 The important public caveat:
 

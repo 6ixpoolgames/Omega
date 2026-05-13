@@ -1,0 +1,59 @@
+{
+  "probe": "DA0b_relational_connection_closure",
+  "status": "COMPLETE",
+  "runtime_seconds": 215.384,
+  "n_traj": 3000,
+  "seed_count": 30,
+  "worlds": [
+    "W0_null_flat",
+    "W1_distinction_only",
+    "W2_asymmetry_only",
+    "W3_relation_only",
+    "W7_full_DAR",
+    "W8_full_random_relation_control",
+    "W9_full_symmetric_control",
+    "W10_noise_rich_control",
+    "W11_collapse_attractor_control",
+    "W12_stable_relation_weak_asymmetry",
+    "W13_stable_relation_strong_asymmetry",
+    "W14_random_stepwise_relation_weak_asymmetry",
+    "W15_random_stepwise_relation_strong_asymmetry",
+    "W16_fixed_but_permuted_relation",
+    "W17_delayed_relation_memory",
+    "W18_relation_lock_in"
+  ],
+  "best_world": "W18_relation_lock_in",
+  "relation_refinement_result": {
+    "relation_shuffled_rejected": true,
+    "random_stepwise_rejected": true,
+    "stable_relation_advantage": 0.03052601023467494,
+    "full_DAR_top_metric_count": 0,
+    "null_control_top_metric_count": 4
+  },
+  "full_DAR_profile": {
+    "p_viable": 0.9244444444444444,
+    "relation_identity_persistence": 0.0,
+    "connection_predictive_gain": 0.0,
+    "relation_shuffle_delta": 0.0,
+    "relation_lineage_survival_depth": 0.42645264541825945,
+    "closure_rate": 0.24947095573924938,
+    "recoverable_alternative_count": 2773.333333333333,
+    "lock_in_index": 0.0003608552891904517,
+    "closure_without_lock_in": 0.24937280895511021
+  },
+  "control_results": {
+    "random_stepwise_relation": true,
+    "fixed_but_permuted_relation": true,
+    "relation_lock_in": false,
+    "noise_rich_control": true,
+    "collapse_attractor_control": true,
+    "symmetric_transition_control": false,
+    "independent_sites_control": false
+  },
+  "recommendation": "DA0b does not yet cleanly isolate persistent relation; inspect controls before scaling.",
+  "next_probe": "DA0b_relation_metric_revision_or_branch_pause",
+  "estimator_warnings": [
+    "W0_null_flat",
+    "W11_collapse_attractor_control"
+  ]
+}

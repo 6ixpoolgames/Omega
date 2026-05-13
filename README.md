@@ -25,6 +25,7 @@ certified macro-fibers while preserving component information.
 - [Public results index](docs/PUBLIC_RESULTS_INDEX.md)
 - [Current theory draft](docs/current_theory/README.md)
 - [Trajectory-space research notes](docs/research_notes/trajectory_space/README.md)
+- [Primitive-branch research notes](docs/research_notes/primitive_branch/promising_connections_distinction_asymmetry_relation.md)
 - [Progenitor drafts](docs/progenitor_drafts/README.md)
 
 ## Current Result Sets
@@ -46,6 +47,7 @@ The public tree keeps only the current/relevant compact results:
 - `probe_I0b_invariant_threshold_dropout_audit_results/`
 - `probe_13b_fiber_transport_false_positive_refinement_results/`
 - `probe_DA0_distinction_asymmetry_relation_results/`
+- `probe_DA0b_relational_connection_closure_results/`
 
 Older exploratory outputs are summarized in the docs but not exposed as result
 folders in the current public tree.
@@ -97,6 +99,7 @@ CuPy's kernel cache at `.cupy-cache/`.
 - `probe_13_formal_fiber_transport_object_audit.py`
 - `probe_13b_fiber_transport_false_positive_refinement.py`
 - `probe_DA0_distinction_asymmetry_relation.py`
+- `probe_DA0b_relational_connection_closure.py`
 
 Historical scripts remain in the repository because they document how the
 current object was reached, but new work should normally start from Probe 09/10
@@ -107,11 +110,11 @@ or from the next formalization probe described in the manual.
 Current latest probe:
 
 ```text
-Probe DA0: Distinction / Asymmetry / Relation
+Probe DA0b: Relational Connection and Closure
 ```
 
-Probe DA0 opened a new primitive branch using small discrete worlds rather than
-the multifield simulator. The smoke result is not a clean pass: full_DAR is the
-best aggregate world, but it tops only one target metric and the random
-relation-shuffle control is not rejected on relational nonfactorization. Do not
-scale DA0 until the relation metric is tightened.
+Probe DA0b refined relation toward persistent causal-history dependence. It
+rejects random-stepwise and fixed-permuted relation controls, but still fails as
+a branch pass because relation lock-in and independent distinction dominate key
+scores. The next refinement should separate viable slack from lock-in and
+self-only lineage before scaling.

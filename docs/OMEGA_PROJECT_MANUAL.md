@@ -704,6 +704,13 @@ horizons 900-2400
   asymmetry, and relation. The smoke result made full_DAR the best aggregate
   world, but did not reject the relation-shuffled control, so DA0 needs relation
   metric refinement before scaling.
+- A primitive-branch theory addendum now frames relation as persistent
+  causal-history dependence and points toward connection-like transport,
+  closure, and viable slack.
+- Probe DA0b rejected random-stepwise relation, but failed overall because
+  relation lock-in and independent distinction still dominate key scores. DA0b
+  should not be scaled until viable slack and relation-conditioned lineage are
+  tightened.
 - Controls behave differently:
   - `boundary_v2` is pseudo-risk/propagation-negative;
   - `joint_basin` can show local transport but usually fails multi-step

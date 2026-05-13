@@ -867,6 +867,89 @@ Tighten the relation/nonfactorization readout or design DA1 around the strongest
 signal after inspecting DA0 profiles.
 ```
 
+### Primitive-Branch Theory Addendum
+
+Added:
+
+- `docs/research_notes/primitive_branch/promising_connections_distinction_asymmetry_relation.md`
+
+Working update:
+
+```text
+relation = persistent causal-history dependence
+```
+
+The addendum frames the primitive branch as connection-like transport of
+distinctions through asymmetric relations, with closure and viable slack as the
+next conceptual targets. It records the current negative controls:
+
+- noise/underconstraint has distinctions without durable relational transport;
+- rigid collapse/overconstraint has persistence without slack;
+- random relation has dependence without stable causal-history identity;
+- component-only channels can erase relational richness;
+- endpoint fakeouts preserve outcomes without preserving local transport.
+
+### Probe DA0b Smoke: Relational Connection and Closure
+
+Probe DA0b refined relation from generic nonfactorization toward persistent
+causal-history dependence.
+
+Run:
+
+- script: `probe_DA0b_relational_connection_closure.py`
+- result directory: `probe_DA0b_relational_connection_closure_results/`
+- smoke scale: `3000` trajectories, `30` seeds
+- horizons `{50, 100}`
+- `16` sites
+- 16 relation-focused worlds
+- 18 workers
+- runtime about `3.6` minutes
+
+Summary:
+
+```text
+best world: W18_relation_lock_in
+random_stepwise_rejected: true
+fixed_but_permuted_relation rejected: true
+relation_lock_in rejected: false
+symmetric_transition_control rejected: false
+independent_sites_control rejected: false
+stable_relation_advantage: 0.031
+full_DAR_top_metric_count: 0
+null_control_top_metric_count: 4
+```
+
+Full DAR profile:
+
+```text
+p_viable: 0.924
+relation_identity_persistence: 0.000
+connection_predictive_gain: 0.000
+relation_shuffle_delta: 0.000
+relation_lineage_survival_depth: 0.426
+closure_rate: 0.249
+recoverable_alternative_count: 2773.3
+lock_in_index: 0.00036
+closure_without_lock_in: 0.249
+```
+
+Interpretation:
+
+- DA0b fixes one DA0 failure: random-stepwise relation is now rejected.
+- The branch still does not pass because relation lock-in dominates closure and
+  independent distinction dominates viable slack.
+- Full DAR does not top any of the main R1-R4 metrics in this smoke.
+- The connection-predictivity metric is too sparse/zeroed for the current
+  worlds and needs revision before scaling.
+
+Decision:
+
+```text
+Do not run DA0b main yet.
+Revise viable slack and relation-conditioned lineage so lock-in and independent
+distinction cannot win by cheap persistence.
+```
+
 ```text
 COM fiber transport object
 certified viable fiber node
