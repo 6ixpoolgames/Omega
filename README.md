@@ -49,6 +49,7 @@ The public tree keeps only the current/relevant compact results:
 - `probe_DA0_distinction_asymmetry_relation_results/`
 - `probe_DA0b_relational_connection_closure_results/`
 - `probe_DA1_viable_slack_phase_sweep_results/`
+- `probe_DA1b_apparent_vs_viable_slack_results/`
 
 Older exploratory outputs are summarized in the docs but not exposed as result
 folders in the current public tree.
@@ -102,6 +103,7 @@ CuPy's kernel cache at `.cupy-cache/`.
 - `probe_DA0_distinction_asymmetry_relation.py`
 - `probe_DA0b_relational_connection_closure.py`
 - `probe_DA1_viable_slack_phase_sweep.py`
+- `probe_DA1b_apparent_vs_viable_slack.py`
 
 Historical scripts remain in the repository because they document how the
 current object was reached, but new work should normally start from Probe 09/10
@@ -115,8 +117,8 @@ Current latest probe:
 Probe DA1: Viable Slack Phase Sweep
 ```
 
-Probe DA1 tested the phase hypothesis directly. It found positive
-relation-lineage excess and closure without high lock-in at some phase points,
-but the best point was an extreme and lock-in/symmetric controls were still
-misclassified as viable-slack candidates. Do not run the DA1 main grid until
-the lock-in/control classification is tightened.
+Probe DA1b tested whether DA1's counted slack was viable or merely apparent.
+It rejected the prior lock-in and symmetric false positives under stricter
+future-distinct/asymmetry diagnostics, but the best point remained the extreme
+corner and was classified as apparent slack rather than viable slack. The next
+step is a DA1 world-design revision, not a larger grid.

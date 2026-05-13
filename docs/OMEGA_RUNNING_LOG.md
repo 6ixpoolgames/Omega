@@ -1032,6 +1032,88 @@ Tighten lock-in/control classification or redesign the phase world before
 scaling.
 ```
 
+### Probe DA1b Smoke: Apparent Slack vs Viable Slack
+
+Probe DA1b directly diagnosed DA1's false positives. It asked whether counted
+alternatives were actually viable slack or merely apparent alternatives produced
+by symmetry, lock-in, independent sites, or microstate multiplicity.
+
+Run:
+
+- script: `probe_DA1b_apparent_vs_viable_slack.py`
+- result directory: `probe_DA1b_apparent_vs_viable_slack_results/`
+- scale: `5000` trajectories, `50` seeds
+- horizons `{50, 100}`
+- `16` sites, `q=4`
+- 13 diagnostic targets only, no broad phase grid
+- 18 CPU workers
+- runtime about `10.8` minutes
+
+Best candidate:
+
+```text
+name: da1_extreme_best
+rho_relation_persistence: 1.0
+alpha_asymmetry_strength: 1.0
+lambda_constraint_pressure: 1.0
+classification: apparent_slack
+```
+
+Best profile:
+
+```text
+p_viable: 0.982
+closure_rate: 0.317
+raw_alternative_count: 4911.7
+future_distinct_alternative_count: 4627.9
+future_distinct_ratio: 0.942
+asymmetric_slack_delta: -0.0148
+relation_slack_excess: 0.0248
+dynamic_lock_in_index: 0.00000001
+post_perturbation_future_distinctness: 0.993
+```
+
+Diagnostic result:
+
+```text
+relation_lock_in_rejected: true
+symmetric_transition_rejected: true
+middle_candidate_beats_extreme: false
+future_distinct_slack_detected: true
+relation_slack_excess_positive: true
+asymmetric_slack_delta_positive: false
+```
+
+Control classifications:
+
+```text
+collapse_attractor_control: underconstrained
+independent_sites_control: apparent_slack
+noise_rich_control: apparent_slack
+random_stepwise_relation_control: apparent_slack
+relation_lock_in_control: apparent_slack
+symmetric_transition_control: apparent_slack
+```
+
+Interpretation:
+
+- DA1b improved the diagnostic surface: the previous lock-in and symmetric
+  false positives no longer pass as viable slack.
+- The strongest point remains the DA1 extreme corner, not a middle regime.
+- The extreme point has relation-conditioned signal and future-distinct
+  alternatives, but its asymmetry load-bearing delta is negative.
+- The current world family appears to create apparent slack more readily than
+  principled viable slack.
+
+Decision:
+
+```text
+Do not scale DA1/DA1b.
+Revise the DA1 world design before running another grid. The next probe should
+make asymmetry load-bearing by construction or explicitly reject the phase
+hypothesis for this world family.
+```
+
 ```text
 COM fiber transport object
 certified viable fiber node

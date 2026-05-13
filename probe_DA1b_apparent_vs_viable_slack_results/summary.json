@@ -1,0 +1,62 @@
+{
+  "probe": "DA1b_apparent_vs_viable_slack",
+  "status": "COMPLETE",
+  "runtime_seconds": 1.332,
+  "n_traj": 5000,
+  "seed_count": 50,
+  "targets": [
+    "collapse_attractor_control",
+    "da1_extreme_best",
+    "independent_sites_control",
+    "middle_r050_a050_l050",
+    "middle_r075_a050_l050",
+    "middle_r075_a075_l050",
+    "noise_rich_control",
+    "optional_r075_a050_l100",
+    "optional_r075_a100_l050",
+    "optional_r100_a050_l050",
+    "random_stepwise_relation_control",
+    "relation_lock_in_control",
+    "symmetric_transition_control"
+  ],
+  "best_candidate": {
+    "name": "da1_extreme_best",
+    "rho_relation_persistence": 1.0,
+    "alpha_asymmetry_strength": 1.0,
+    "lambda_constraint_pressure": 1.0,
+    "classification": "apparent_slack"
+  },
+  "diagnostic_result": {
+    "relation_lock_in_rejected": true,
+    "symmetric_transition_rejected": true,
+    "middle_candidate_beats_extreme": false,
+    "future_distinct_slack_detected": true,
+    "relation_slack_excess_positive": true,
+    "asymmetric_slack_delta_positive": false
+  },
+  "best_profile": {
+    "p_viable": 0.982344,
+    "closure_rate": 0.316967142679044,
+    "raw_alternative_count": 4911.72,
+    "future_distinct_alternative_count": 4627.9,
+    "future_distinct_ratio": 0.9422009528566107,
+    "asymmetric_slack_delta": -0.014814017756287903,
+    "relation_slack_excess": 0.024775487176635105,
+    "relation_shuffle_delta": 0.024775487176635105,
+    "dynamic_lock_in_index": 1.2389894337803122e-08,
+    "post_perturbation_future_distinctness": 0.9933399999999999
+  },
+  "control_results": {
+    "collapse_attractor_control": "underconstrained",
+    "independent_sites_control": "apparent_slack",
+    "noise_rich_control": "apparent_slack",
+    "random_stepwise_relation_control": "apparent_slack",
+    "relation_lock_in_control": "apparent_slack",
+    "symmetric_transition_control": "apparent_slack"
+  },
+  "recommendation": "DA1b rejects controls but the extreme remains strongest; rethink the middle-phase world design.",
+  "next_probe": "DA1_world_revision",
+  "estimator_warnings": [
+    "collapse_attractor_control"
+  ]
+}

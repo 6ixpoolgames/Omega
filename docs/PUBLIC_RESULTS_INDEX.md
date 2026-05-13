@@ -492,6 +492,36 @@ Result in one line:
 - Positive relation-lineage excess appears, but the best point is an extreme and
   controls are not classified correctly; DA1 should not be scaled yet.
 
+### Probe DA1b: Apparent Slack vs Viable Slack
+
+Directory:
+
+- `probe_DA1b_apparent_vs_viable_slack_results/`
+
+Primary files:
+
+- `summary.json`
+- `diagnostic_targets.csv`
+- `asymmetry_load_bearing.csv`
+- `relation_load_bearing.csv`
+- `future_distinct_alternatives.csv`
+- `dynamic_lock_in.csv`
+- `viable_slack_diagnostic_profile.csv`
+- `classification_results.csv`
+- `control_rejection.csv`
+
+Reason retained:
+
+- Probe DA1b diagnoses whether DA1's alternatives are asymmetric,
+  relation-conditioned, future-distinct viable slack, or merely apparent slack
+  from symmetry, lock-in, independent sites, or microstate multiplicity.
+
+Result in one line:
+
+- DA1b rejects the prior lock-in and symmetric false positives as viable slack,
+  but the extreme corner remains strongest and is itself classified as apparent
+  slack; revise the DA1 world design before scaling.
+
 The important public caveat:
 
 ```text

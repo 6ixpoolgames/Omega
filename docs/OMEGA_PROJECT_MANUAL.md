@@ -28,6 +28,7 @@ Project stance:
    - `probe_09_robust_fiber_reachability.py`
    - `probe_10_com_viable_propagation_robustness.py`
    - `probe_I0_invariant_stack_audit.py`
+   - `probe_DA1b_apparent_vs_viable_slack.py`
 5. Inspect compact summaries, not raw caches:
    - `probe_09_robust_fiber_reachability_results/summary.json`
    - `probe_10_com_viable_propagation_robustness_extended_results/summary.json`
@@ -715,6 +716,11 @@ horizons 900-2400
   relation-lineage excess with closure and alternatives, but the best point was
   an extreme and lock-in/symmetric controls still looked viable, so the phase
   map is not ready for main-scale validation.
+- Probe DA1b diagnosed apparent versus viable slack. It rejects the prior
+  lock-in and symmetric false positives under stricter future-distinct and
+  asymmetry diagnostics, but the extreme corner remains strongest and is
+  classified as apparent slack, not viable slack. DA1 needs a world-design
+  revision rather than a larger grid.
 - Controls behave differently:
   - `boundary_v2` is pseudo-risk/propagation-negative;
   - `joint_basin` can show local transport but usually fails multi-step
@@ -746,6 +752,16 @@ What we cannot say:
   are intentionally untracked because they are large generated intermediates.
 
 ## Recommended Next Probes
+
+### Primitive Branch: DA1 World-Design Revision
+
+Question:
+
+> Can the distinction/asymmetry/relation world be redesigned so asymmetry is
+> genuinely load-bearing and viable slack is not dominated by the extreme
+> corner?
+
+Do not scale DA1/DA1b until this is resolved.
 
 ### Probe 13: Formal COM Fiber Transport Object
 
