@@ -1,0 +1,43 @@
+{
+  "probe": "I0b_invariant_threshold_dropout_audit",
+  "status": "COMPLETE",
+  "used_existing_I0_outputs": true,
+  "runtime_seconds": 0.293,
+  "best_hard_stack": {
+    "threshold_family": "coupled_q10",
+    "stack": "S5",
+    "coupled_retention": 0.5333333333333333,
+    "known_rejection": 0.7222222222222222,
+    "holdout_rejection": 0.8333333333333334,
+    "balanced_score": 0.3209876543209877
+  },
+  "best_soft_stack": {
+    "rule": "I3_mandatory_plus_1_of_I2_I4_I5_I6",
+    "coupled_retention": 0.2222222222222222,
+    "known_rejection": 0.8055555555555556,
+    "holdout_rejection": 0.5,
+    "balanced_score": 0.08950617283950617
+  },
+  "pareto_result": {
+    "coupled_distinct_region": true,
+    "control_overlap": 0.2,
+    "interpretation": "coupled profiles show partial Pareto separation"
+  },
+  "dropout": {
+    "first_zero_retention_stack": "S4",
+    "main_dropout_invariant": "I2_ordered_distinction_persistence"
+  },
+  "i5_recoverability": {
+    "gate_ready": false,
+    "duplicates_viability": false,
+    "interpretation": "diagnostic only, not gate-ready"
+  },
+  "i6_horizon_coherence": {
+    "gate_ready": false,
+    "overstrict": false,
+    "interpretation": "diagnostic only, not gate-ready"
+  },
+  "trajectory_branch_reopened": false,
+  "recommendation": "Close trajectory-native invariant branch for now; proceed with Probe 13 formal fiber-transport audit.",
+  "next_probe": "Probe 13 formal fiber-transport audit"
+}

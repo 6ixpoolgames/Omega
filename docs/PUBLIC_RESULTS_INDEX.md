@@ -282,6 +282,34 @@ Result in one line:
   but coupled retention collapses to zero, so the trajectory-native invariant
   branch is demoted.
 
+### Probe I0b: Invariant Threshold and Dropout Audit
+
+Directory:
+
+- `probe_I0b_invariant_threshold_dropout_audit_results/`
+
+Primary files:
+
+- `summary.json`
+- `closure_recommendation.md`
+- `dropout_by_invariant.csv`
+- `threshold_family_sensitivity.csv`
+- `soft_stack_results.csv`
+- `pareto_profile_results.csv`
+- `coupled_vs_control_auc.csv`
+- `i5_recoverability_audit.csv`
+- `i6_horizon_coherence_audit.csv`
+
+Reason retained:
+
+- Probe I0b closes the I0 question cleanly by testing whether the failure was a
+  hard-threshold or strict-conjunction artifact.
+
+Result in one line:
+
+- Partial continuous/Pareto separation exists, but no hard or soft stack meets
+  the branch-reopen criteria; close trajectory-native invariants for now.
+
 ## Current Public Interpretation
 
 The current executable candidate is:
@@ -332,6 +360,13 @@ Probe I0 closes the current trajectory-native attempt:
 ```text
 The invariant stack rejects fakeouts by becoming too strict. It is not a viable
 object witness; return to COM fiber-transport formalization.
+```
+
+Probe I0b confirms that closure:
+
+```text
+Threshold relaxation recovers some coupled retention but loses control
+rejection; soft stacks do not rescue the branch.
 ```
 
 The important public caveat:

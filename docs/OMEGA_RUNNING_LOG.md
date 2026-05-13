@@ -633,6 +633,59 @@ Demote trajectory-native work from candidate-object status.
 Return to COM fiber-transport formalization.
 ```
 
+### Probe I0b: Invariant Threshold and Dropout Audit
+
+Probe I0b reused the existing Probe I0 estimator table and did not rerun
+simulation. It asked whether I0 failed because the hard thresholds or strict AND
+stacking were too severe.
+
+Run:
+
+- script: `probe_I0b_invariant_threshold_dropout_audit.py`
+- result directory: `probe_I0b_invariant_threshold_dropout_audit_results/`
+- reused `probe_I0_invariant_stack_audit_results/estimator_report.csv`
+- runtime under one second for the analysis step
+
+Key result:
+
+```text
+trajectory_branch_reopened: false
+best hard stack: S5 under coupled_q10 thresholds
+best hard coupled retention: 0.533
+best hard known rejection: 0.722
+best hard holdout rejection: 0.833
+best hard balanced score: 0.321
+best soft stack: I3 mandatory plus 1 of I2/I4/I5/I6
+best soft coupled retention: 0.222
+best soft known rejection: 0.806
+best soft holdout rejection: 0.500
+best soft balanced score: 0.090
+```
+
+Dropout:
+
+```text
+first zero-retention hard stack: S4
+main dropout invariant: I2 ordered distinction persistence
+```
+
+Interpretation:
+
+- Relaxed thresholds can recover coupled retention, but not enough
+  known-control rejection.
+- Soft stacks improve the tradeoff only weakly and miss the reopen retention
+  criterion.
+- Pareto profiles show partial separation, but not enough to treat the branch as
+  a recovered object.
+- I5 and I6 remain diagnostic only, not gate-ready.
+
+Decision:
+
+```text
+Close trajectory-native invariant branch for now.
+Proceed with Probe 13 formal fiber-transport audit.
+```
+
 ```text
 COM fiber transport object
 certified viable fiber node

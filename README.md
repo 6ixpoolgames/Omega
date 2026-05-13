@@ -43,6 +43,7 @@ The public tree keeps only the current/relevant compact results:
 - `probe_T1_viable_trajectory_geometry_results/`
 - `probe_T1F_ordered_trajectory_structure_atlas_results/`
 - `probe_I0_invariant_stack_audit_results/`
+- `probe_I0b_invariant_threshold_dropout_audit_results/`
 
 Older exploratory outputs are summarized in the docs but not exposed as result
 folders in the current public tree.
@@ -90,6 +91,8 @@ CuPy's kernel cache at `.cupy-cache/`.
 - `probe_T1_viable_trajectory_geometry.py`
 - `probe_T1F_ordered_trajectory_structure_atlas.py`
 - `probe_I0_invariant_stack_audit.py`
+- `probe_I0b_invariant_threshold_dropout_audit.py`
+- `probe_13_formal_fiber_transport_object_audit.py`
 
 Historical scripts remain in the repository because they document how the
 current object was reached, but new work should normally start from Probe 09/10
@@ -100,11 +103,11 @@ or from the next formalization probe described in the manual.
 Current latest probe:
 
 ```text
-Probe I0: Invariant Stack Audit
+Probe I0b: Invariant Threshold and Dropout Audit
 ```
 
-Probe I0 gave the trajectory-native branch a final stacked-invariant audit.
-The ablation result is informative but negative: added invariants improve
-known-control and holdout rejection, but coupled retention collapses to zero by
-the strongest stacks. The current recommendation is to demote the
-trajectory-native branch and return to COM fiber-transport formalization.
+Probe I0b reused the I0 estimator table to ask whether the I0 failure was only a
+threshold/conjunction artifact. It found partial continuous/Pareto separation,
+but no hard or soft stack met the reopen criteria. The current recommendation is
+to close the trajectory-native invariant branch for now and proceed with Probe
+13 formal fiber-transport audit.

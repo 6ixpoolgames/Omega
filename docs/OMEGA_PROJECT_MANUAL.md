@@ -618,6 +618,46 @@ Interpretation:
 > This makes the result useful as a falsification of the current
 > trajectory-stack attempt, not as support for a new trajectory object.
 
+### Probe I0b: Invariant Threshold and Dropout Audit
+
+Goal: determine whether Probe I0 failed because of overstrict thresholds or
+hard AND-stacking rather than because the trajectory-native invariant profile is
+insufficient.
+
+Run:
+
+- reused existing Probe I0 estimator outputs;
+- no simulation rerun;
+- analysis runtime under one second.
+
+Best hard threshold result:
+
+```text
+threshold family: coupled_q10
+stack: S5
+coupled retention: 0.533
+known rejection: 0.722
+holdout rejection: 0.833
+balanced score: 0.321
+```
+
+Best soft stack result:
+
+```text
+rule: I3 mandatory plus 1 of I2/I4/I5/I6
+coupled retention: 0.222
+known rejection: 0.806
+holdout rejection: 0.500
+balanced score: 0.090
+```
+
+Interpretation:
+
+> I0b confirms the branch closure. Relaxing thresholds recovers coupled
+> retention, but control rejection falls below the reopen criterion. Soft stacks
+> do not recover enough coupled retention. I5 and I6 remain diagnostics rather
+> than gate-ready invariants.
+
 ## Current Scientific Position
 
 What we can say:
@@ -650,6 +690,9 @@ horizons 900-2400
 - I0 tested the stacked-invariant version of that branch and found an
   overconstraint failure: strong false-positive rejection with zero coupled
   retention in the best stacks.
+- I0b checked whether this was merely threshold/conjunction overstrictness. It
+  found partial continuous separation, but no robust hard or soft profile that
+  met the branch-reopen criteria.
 - Controls behave differently:
   - `boundary_v2` is pseudo-risk/propagation-negative;
   - `joint_basin` can show local transport but usually fails multi-step
