@@ -465,6 +465,33 @@ Result in one line:
 - Random-stepwise relation is rejected, but lock-in and independent distinction
   controls dominate key scores, so DA0b is not ready for main-scale validation.
 
+### Probe DA1: Viable Slack Phase Sweep
+
+Directory:
+
+- `probe_DA1_viable_slack_phase_sweep_results/`
+
+Primary files:
+
+- `summary.json`
+- `phase_points.csv`
+- `phase_classification.csv`
+- `relation_lineage_excess.csv`
+- `closure_metrics.csv`
+- `recoverable_alternatives.csv`
+- `lock_in_metrics.csv`
+- `control_positions.csv`
+
+Reason retained:
+
+- Probe DA1 tests the explicit phase hypothesis that Omega-like structure may
+  live between underconstraint/noise and overconstraint/lock-in.
+
+Result in one line:
+
+- Positive relation-lineage excess appears, but the best point is an extreme and
+  controls are not classified correctly; DA1 should not be scaled yet.
+
 The important public caveat:
 
 ```text

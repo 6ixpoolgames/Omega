@@ -711,6 +711,10 @@ horizons 900-2400
   relation lock-in and independent distinction still dominate key scores. DA0b
   should not be scaled until viable slack and relation-conditioned lineage are
   tightened.
+- Probe DA1 tested viable slack as a phase hypothesis. It found positive
+  relation-lineage excess with closure and alternatives, but the best point was
+  an extreme and lock-in/symmetric controls still looked viable, so the phase
+  map is not ready for main-scale validation.
 - Controls behave differently:
   - `boundary_v2` is pseudo-risk/propagation-negative;
   - `joint_basin` can show local transport but usually fails multi-step

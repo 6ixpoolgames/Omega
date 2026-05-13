@@ -950,6 +950,88 @@ Revise viable slack and relation-conditioned lineage so lock-in and independent
 distinction cannot win by cheap persistence.
 ```
 
+### Probe DA1 Smoke: Viable Slack Phase Sweep
+
+Probe DA1 tested the stronger phase hypothesis directly:
+
+```text
+underconstraint -> noisy richness
+viable slack    -> relation-conditioned lineage plus closure plus alternatives
+overconstraint  -> lock-in
+```
+
+Run:
+
+- script: `probe_DA1_viable_slack_phase_sweep.py`
+- result directory: `probe_DA1_viable_slack_phase_sweep_results/`
+- smoke scale: `3000` trajectories, `30` seeds
+- horizons `{50, 100}`
+- `16` sites, `q=4`
+- 19 phase points plus fixed controls
+- 18 workers
+- worker phase runtime about `4.4` minutes; output rebuild after aggregation
+  fix took about `1.5` seconds
+
+Best phase point:
+
+```text
+rho_relation_persistence: 1.0
+alpha_asymmetry_strength: 1.0
+lambda_constraint_pressure: 1.0
+classification: viable_slack_candidate
+```
+
+Best profile:
+
+```text
+p_viable: 0.988
+lineage_survival_depth: 0.259
+relation_lineage_excess: 0.033
+closure_rate: 0.376
+recoverable_alternative_count: 2964.6
+lock_in_index: 0.000005
+```
+
+Phase result:
+
+```text
+middle_regime_detected: false
+best_point_is_extreme: true
+relation_lineage_excess_positive: true
+closure_without_lockin_detected: true
+controls_in_expected_regions: false
+```
+
+Control classifications:
+
+```text
+noise_rich_control: mixed_or_inconclusive
+collapse_attractor_control: underconstrained
+independent_sites_control: mixed_or_inconclusive
+symmetric_transition_control: viable_slack_candidate
+random_stepwise_relation_control: mixed_or_inconclusive
+relation_lock_in_control: viable_slack_candidate
+```
+
+Interpretation:
+
+- DA1 found a real positive signal: relation-lineage excess can become positive
+  while closure and alternatives remain nonzero.
+- The phase hypothesis did not pass because the best point is an extreme
+  `(1.0, 1.0, 1.0)`, not a middle regime.
+- Controls are not classified correctly: relation lock-in and symmetric
+  transition still look too good.
+- The lock-in index is under-penalizing deterministic relational closure in the
+  current world family.
+
+Decision:
+
+```text
+Do not run the DA1 main grid yet.
+Tighten lock-in/control classification or redesign the phase world before
+scaling.
+```
+
 ```text
 COM fiber transport object
 certified viable fiber node

@@ -1,0 +1,42 @@
+{
+  "probe": "DA1_viable_slack_phase_sweep",
+  "status": "COMPLETE",
+  "runtime_seconds": 1.451,
+  "n_traj": 3000,
+  "seed_count": 30,
+  "phase_points": 19,
+  "best_phase_point": {
+    "rho_relation_persistence": 1.0,
+    "alpha_asymmetry_strength": 1.0,
+    "lambda_constraint_pressure": 1.0,
+    "classification": "viable_slack_candidate"
+  },
+  "phase_hypothesis_result": {
+    "middle_regime_detected": false,
+    "best_point_is_extreme": true,
+    "relation_lineage_excess_positive": true,
+    "closure_without_lockin_detected": true,
+    "controls_in_expected_regions": false
+  },
+  "best_profile": {
+    "p_viable": 0.9882111111111112,
+    "lineage_survival_depth": 0.25862715127209546,
+    "relation_lineage_excess": 0.03326946112549281,
+    "closure_rate": 0.37557110653082953,
+    "recoverable_alternative_count": 2964.633333333333,
+    "lock_in_index": 5.073766730765122e-06
+  },
+  "control_results": {
+    "collapse_attractor_control": "underconstrained",
+    "independent_sites_control": "mixed_or_inconclusive",
+    "noise_rich_control": "mixed_or_inconclusive",
+    "random_stepwise_relation_control": "mixed_or_inconclusive",
+    "relation_lock_in_control": "viable_slack_candidate",
+    "symmetric_transition_control": "viable_slack_candidate"
+  },
+  "recommendation": "DA1 smoke does not yet establish a clean viable-slack phase; inspect phase map before scaling.",
+  "next_probe": "DA1_metric_or_world_revision",
+  "estimator_warnings": [
+    "collapse_attractor_control"
+  ]
+}

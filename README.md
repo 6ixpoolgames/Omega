@@ -48,6 +48,7 @@ The public tree keeps only the current/relevant compact results:
 - `probe_13b_fiber_transport_false_positive_refinement_results/`
 - `probe_DA0_distinction_asymmetry_relation_results/`
 - `probe_DA0b_relational_connection_closure_results/`
+- `probe_DA1_viable_slack_phase_sweep_results/`
 
 Older exploratory outputs are summarized in the docs but not exposed as result
 folders in the current public tree.
@@ -100,6 +101,7 @@ CuPy's kernel cache at `.cupy-cache/`.
 - `probe_13b_fiber_transport_false_positive_refinement.py`
 - `probe_DA0_distinction_asymmetry_relation.py`
 - `probe_DA0b_relational_connection_closure.py`
+- `probe_DA1_viable_slack_phase_sweep.py`
 
 Historical scripts remain in the repository because they document how the
 current object was reached, but new work should normally start from Probe 09/10
@@ -110,11 +112,11 @@ or from the next formalization probe described in the manual.
 Current latest probe:
 
 ```text
-Probe DA0b: Relational Connection and Closure
+Probe DA1: Viable Slack Phase Sweep
 ```
 
-Probe DA0b refined relation toward persistent causal-history dependence. It
-rejects random-stepwise and fixed-permuted relation controls, but still fails as
-a branch pass because relation lock-in and independent distinction dominate key
-scores. The next refinement should separate viable slack from lock-in and
-self-only lineage before scaling.
+Probe DA1 tested the phase hypothesis directly. It found positive
+relation-lineage excess and closure without high lock-in at some phase points,
+but the best point was an extreme and lock-in/symmetric controls were still
+misclassified as viable-slack candidates. Do not run the DA1 main grid until
+the lock-in/control classification is tightened.
