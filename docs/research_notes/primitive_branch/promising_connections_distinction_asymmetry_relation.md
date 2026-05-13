@@ -10,10 +10,41 @@ relation
 ```
 
 - **Distinction** gives difference: something can be this rather than that.
-- **Asymmetry** gives direction: differences are not neutral; some transitions,
-  histories, and continuations are favored or filtered.
+- **Asymmetry** gives consequence: order, direction, or history are not
+  equivalent; a difference changes what futures remain possible.
 - **Relation** gives dependence: distinctions do not evolve as isolated atoms;
-  their futures are shaped by structured interaction with other distinctions.
+  their futures are shaped by persistent causal-history dependence on other
+  distinctions.
+
+Short form:
+
+```text
+distinction = difference
+asymmetry   = consequence
+relation    = dependence
+```
+
+Important correction:
+
+```text
+Asymmetry is not merely directional bias.
+Asymmetry is history-changing consequence.
+```
+
+The DA1/DA1b sequence made this correction necessary. Those probes found
+future-distinct alternatives and relation-conditioned signal, but the
+asymmetry-ablation delta was negative. Directional transition bias therefore did
+not make asymmetry load-bearing.
+
+The next primitive target is non-commutative relational history:
+
+```text
+A then B is not equivalent to B then A.
+U_A U_B x != U_B U_A x
+```
+
+If interaction order does not change reachable futures, asymmetry is not doing
+real primitive work in this branch.
 
 The strongest current interpretation is that relation should not mean generic
 statistical coupling. DA0 showed that a random-stepwise relation control can

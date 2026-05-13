@@ -29,6 +29,7 @@ Project stance:
    - `probe_10_com_viable_propagation_robustness.py`
    - `probe_I0_invariant_stack_audit.py`
    - `probe_DA1b_apparent_vs_viable_slack.py`
+   - `probe_DA1c_noncommutative_relational_history.py`
 5. Inspect compact summaries, not raw caches:
    - `probe_09_robust_fiber_reachability_results/summary.json`
    - `probe_10_com_viable_propagation_robustness_extended_results/summary.json`
@@ -721,6 +722,11 @@ horizons 900-2400
   asymmetry diagnostics, but the extreme corner remains strongest and is
   classified as apparent slack, not viable slack. DA1 needs a world-design
   revision rather than a larger grid.
+- Probe DA1c implemented asymmetry as non-commutative relational history:
+  `A then B != B then A`. The smoke result still failed because the
+  no-relation non-commutative control ranked best, W5 had no positive
+  relation-conditioned excess, and asymmetry remained non-load-bearing. The DAR
+  world family should be paused or redesigned rather than scaled.
 - Controls behave differently:
   - `boundary_v2` is pseudo-risk/propagation-negative;
   - `joint_basin` can show local transport but usually fails multi-step
@@ -753,15 +759,17 @@ What we cannot say:
 
 ## Recommended Next Probes
 
-### Primitive Branch: DA1 World-Design Revision
+### Primitive Branch: DAR Pause Or Redesign
 
 Question:
 
-> Can the distinction/asymmetry/relation world be redesigned so asymmetry is
-> genuinely load-bearing and viable slack is not dominated by the extreme
-> corner?
+> Can the distinction/asymmetry/relation world be redesigned so relation and
+> non-commutative history are jointly load-bearing, rather than producing
+> history fakeouts or no-relation non-commutative signal?
 
-Do not scale DA1/DA1b until this is resolved.
+Do not scale DA1/DA1b/DA1c until this is resolved. A reasonable alternative is
+to return to formalizing the stronger COM/fiber witness instead of continuing
+to tune the DAR toy generator.
 
 ### Probe 13: Formal COM Fiber Transport Object
 

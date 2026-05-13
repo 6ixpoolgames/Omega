@@ -1114,6 +1114,105 @@ make asymmetry load-bearing by construction or explicitly reject the phase
 hypothesis for this world family.
 ```
 
+### Probe DA1c Smoke: Non-Commutative Relational History
+
+Probe DA1c revised the world design so asymmetry meant consequential
+non-equivalence across interaction history:
+
+```text
+A then B != B then A
+```
+
+The state was extended from visible distinctions `x_t` to `(x_t, h_t)`, where
+`h_t` is local relational memory. The probe compared non-commutative relational
+history against commutative, reversible, random-order, no-relation, lock-in,
+noise, collapse, and bias-only controls.
+
+Run:
+
+- script: `probe_DA1c_noncommutative_relational_history.py`
+- result directory: `probe_DA1c_noncommutative_relational_history_results/`
+- scale: `5000` trajectories, `50` seeds
+- horizons `{50, 100}`
+- `16` sites, `q=4`, memory states `m=4`
+- 12 worlds
+- 18 CPU workers
+- final valid runtime about `8.9` minutes
+
+Implementation note:
+
+- The first DA1c attempt was too expensive because every task ran full
+  diagnostics for every ablation and timed out at 20 minutes.
+- The implementation was revised so the base world keeps the full
+  5000-trajectory diagnostic while AB/BA, random-order, erasure, and shuffle
+  comparisons use coarse future-profile diagnostics.
+- A CSV field-order bug in the first output pass was fixed before the final
+  valid run; the retained result directory comes from the corrected run.
+
+Best world:
+
+```text
+W6_noncommutative_no_relation_control
+classification: history_fakeout
+```
+
+Best profile:
+
+```text
+p_viable: 0.9995
+order_sensitivity: 1.000
+history_mark_predictive_gain: 0.735
+history_erasure_delta: 0.988
+noncommutative_relation_lineage_excess: 0.000
+commutative_delta: 0.694
+random_order_delta: 0.651
+asymmetric_slack_delta: -0.0093
+future_distinct_ratio: 0.988
+dynamic_lock_in_index: 0.000
+```
+
+Primary result:
+
+```text
+noncommutative_history_passed: false
+asymmetry_load_bearing: false
+relation_load_bearing: false
+history_marks_load_bearing: false
+future_distinct_slack_detected: true
+lock_in_rejected: false
+```
+
+Control classifications:
+
+```text
+commutative_relation_history: history_fakeout
+bias_asymmetry_only: underconstrained
+noncommutative_no_relation_control: history_fakeout
+reversible_history_control: history_fakeout
+random_order_history_control: history_fakeout
+lock_in_history_control: history_fakeout
+noise_rich_control: history_fakeout
+collapse_attractor_control: underconstrained
+```
+
+Interpretation:
+
+- Non-commutative update order produces strong future distinction and history
+  signals.
+- The signal is not relation-conditioned: the no-relation non-commutative
+  control ranks best.
+- W5 does not show positive non-commutative relation lineage excess.
+- Asymmetry is still not load-bearing by the probe's own criterion.
+
+Decision:
+
+```text
+Do not run DA1c main scale.
+Pause or redesign the DAR world family. The next move should not be more
+sampling of this generator; it should either rethink the relation/history
+implementation or return to formalization of the stronger COM/fiber witness.
+```
+
 ```text
 COM fiber transport object
 certified viable fiber node

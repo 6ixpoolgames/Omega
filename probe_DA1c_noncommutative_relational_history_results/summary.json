@@ -1,0 +1,62 @@
+{
+  "probe": "DA1c_noncommutative_relational_history",
+  "status": "COMPLETE",
+  "runtime_seconds": 534.65,
+  "n_traj": 5000,
+  "seed_count": 50,
+  "worlds": [
+    "W0_null_flat",
+    "W10_noise_rich_control",
+    "W11_collapse_attractor_control",
+    "W1_distinction_only",
+    "W2_relation_without_history",
+    "W3_bias_asymmetry_only",
+    "W4_commutative_relation_history",
+    "W5_noncommutative_relation_history",
+    "W6_noncommutative_no_relation_control",
+    "W7_reversible_history_control",
+    "W8_random_order_history_control",
+    "W9_lock_in_history_control"
+  ],
+  "best_world": "W6_noncommutative_no_relation_control",
+  "primitive_definition_update_written": true,
+  "primary_result": {
+    "noncommutative_history_passed": false,
+    "asymmetry_load_bearing": false,
+    "relation_load_bearing": false,
+    "history_marks_load_bearing": false,
+    "future_distinct_slack_detected": true,
+    "lock_in_rejected": false
+  },
+  "best_profile": {
+    "p_viable": 0.999542,
+    "order_sensitivity": 1.0,
+    "history_mark_predictive_gain": 0.735371169904814,
+    "history_erasure_delta": 0.9881465116923341,
+    "noncommutative_relation_lineage_excess": 0.0,
+    "commutative_delta": 0.6941336207322354,
+    "random_order_delta": 0.6505251266799825,
+    "asymmetric_slack_delta": -0.009330987060402252,
+    "future_distinct_ratio": 0.9881465116923341,
+    "recoverable_alternative_count": 4938.47,
+    "dynamic_lock_in_index": 0.0
+  },
+  "control_results": {
+    "commutative_relation_history": "history_fakeout",
+    "bias_asymmetry_only": "underconstrained",
+    "noncommutative_no_relation_control": "history_fakeout",
+    "reversible_history_control": "history_fakeout",
+    "random_order_history_control": "history_fakeout",
+    "lock_in_history_control": "history_fakeout",
+    "noise_rich_control": "history_fakeout",
+    "collapse_attractor_control": "underconstrained"
+  },
+  "recommendation": "DA1c shows no load-bearing asymmetry; do not scale this DAR world family.",
+  "next_probe": "DAR_world_family_pause_or_redesign",
+  "estimator_warnings": [
+    "W0_null_flat",
+    "W11_collapse_attractor_control",
+    "W2_relation_without_history",
+    "W3_bias_asymmetry_only"
+  ]
+}

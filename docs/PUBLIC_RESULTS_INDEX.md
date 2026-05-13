@@ -522,6 +522,36 @@ Result in one line:
   but the extreme corner remains strongest and is itself classified as apparent
   slack; revise the DA1 world design before scaling.
 
+### Probe DA1c: Non-Commutative Relational History
+
+Directory:
+
+- `probe_DA1c_noncommutative_relational_history_results/`
+
+Primary files:
+
+- `summary.json`
+- `world_configurations.csv`
+- `order_sensitivity.csv`
+- `history_mark_load_bearing.csv`
+- `relation_conditioned_noncommutative_lineage.csv`
+- `asymmetry_load_bearing.csv`
+- `future_distinct_viable_slack.csv`
+- `dynamic_lock_in.csv`
+- `diagnostic_profile.csv`
+- `control_rejection.csv`
+
+Reason retained:
+
+- Probe DA1c tests the sharpened primitive definition in which asymmetry is
+  history-changing consequence: `A then B` must not be equivalent to `B then A`.
+
+Result in one line:
+
+- Non-commutative history creates signal, but the no-relation control ranks
+  best and W5 has no positive relation-conditioned excess; the DAR world family
+  should not be scaled without redesign.
+
 The important public caveat:
 
 ```text
