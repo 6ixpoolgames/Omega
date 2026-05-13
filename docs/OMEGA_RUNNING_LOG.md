@@ -686,6 +686,113 @@ Close trajectory-native invariant branch for now.
 Proceed with Probe 13 formal fiber-transport audit.
 ```
 
+### Probe 13 Smoke: Formal Fiber-Transport Audit
+
+Probe 13 was implemented as a formal fiber-transport audit and smoke-tested
+before a main run.
+
+Smoke result:
+
+```text
+COM base-null positive: true
+Probe 13 full pass: false
+mean viable propagation index: 0.373
+delta vs product: +0.163
+delta vs shuffled: +0.166
+delta vs time-shuffled: +0.043
+component balance: 0.714
+```
+
+Loose thread exposed:
+
+```text
+component_B_only passed
+time_shuffled_COM passed
+rigid_collapse scored very high
+endpoint_fakeout remained high
+delayed_trap remained high
+```
+
+Decision:
+
+```text
+Do not treat Probe 13 smoke as a frozen formal object.
+Run a targeted false-positive refinement before any main-scale formal audit.
+```
+
+### Probe 13b Smoke: Fiber-Transport False-Positive Refinement
+
+Probe 13b added only refinements directly forced by the Probe 13 smoke failures:
+
+- R1 bidirectional component necessity;
+- R2 temporal edge-order integrity;
+- R3 nondegenerate within-fiber realization diversity;
+- R4 late-horizon transport retention.
+
+Run:
+
+- script: `probe_13b_fiber_transport_false_positive_refinement.py`
+- result directory: `probe_13b_fiber_transport_false_positive_refinement_results/`
+- smoke scale: `1000` trajectories, `8` seeds, `50` bootstraps
+- alphas `{0.50}`
+- horizons `{900}`
+- 6 workers
+- runtime about `36` seconds
+
+Primary witness:
+
+```text
+base_signal_positive: true
+refined_fiber_transport_positive: false
+mean viable propagation index: 0.361
+delta vs product: +0.154
+delta vs shuffled: +0.147
+delta vs time-shuffled: +0.022
+component balance: 0.711
+component necessity min: -0.404
+edge order integrity: +0.068
+within-fiber nondegeneracy delta: -0.649
+late-to-early transport ratio: 1.283
+```
+
+Priority false positives:
+
+```text
+component_A_only: 0.002
+component_B_only: 0.765
+time_shuffled_COM: 0.334
+endpoint_fakeout: 0.338
+rigid_collapse: 0.999
+delayed_trap: 0.333
+```
+
+Refinement pass rates:
+
+```text
+R1 component necessity: 0.0
+R2 temporal edge-order: 1.0
+R3 within-fiber nondegeneracy: 0.0
+R4 late retention: 0.0
+```
+
+Interpretation:
+
+- COM remains base-null positive.
+- The refined formal object does not pass at smoke scale.
+- R1 fails because component-B-only carries more VPI than full COM.
+- R3 fails because the within-fiber diversity sketch is still more
+  collapse-like than the refinement permits.
+- R4 fails because delayed-trap vulnerability remains despite late/early
+  retention looking superficially acceptable.
+
+Decision:
+
+```text
+Do not run main-scale 13b as currently written.
+Either design a narrower targeted refinement for the blockers or pivot to the
+distinction/adjudication branch.
+```
+
 ```text
 COM fiber transport object
 certified viable fiber node

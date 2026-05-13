@@ -693,6 +693,13 @@ horizons 900-2400
 - I0b checked whether this was merely threshold/conjunction overstrictness. It
   found partial continuous separation, but no robust hard or soft profile that
   met the branch-reopen criteria.
+- Probe 13 smoke returned to COM/fiber formalization and confirmed a base-null
+  signal, but the first formal definition admitted component-only,
+  time-shuffled, rigid-collapse, endpoint, and delayed-trap false positives.
+- Probe 13b smoke tested minimal refinements for those false positives. COM
+  remained base-null positive, but failed the refined object via component
+  necessity, within-fiber nondegeneracy, and delayed-trap/late-retention
+  blockers.
 - Controls behave differently:
   - `boundary_v2` is pseudo-risk/propagation-negative;
   - `joint_basin` can show local transport but usually fails multi-step

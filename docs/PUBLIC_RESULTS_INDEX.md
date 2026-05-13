@@ -369,6 +369,34 @@ Threshold relaxation recovers some coupled retention but loses control
 rejection; soft stacks do not rescue the branch.
 ```
 
+### Probe 13b: Fiber-Transport False-Positive Refinement
+
+Directory:
+
+- `probe_13b_fiber_transport_false_positive_refinement_results/`
+
+Primary files:
+
+- `summary.json`
+- `refined_fiber_transport_summary.csv`
+- `component_necessity_results.csv`
+- `temporal_edge_order_integrity.csv`
+- `within_fiber_diversity.csv`
+- `late_horizon_transport_retention.csv`
+- `priority_false_positive_results.csv`
+- `ablation_results.csv`
+
+Reason retained:
+
+- Probe 13b records the targeted smoke refinement after Probe 13 found that the
+  formal fiber-transport definition still admitted key false positives.
+
+Result in one line:
+
+- COM remains base-null positive, but the refined object fails component
+  necessity, within-fiber nondegeneracy, and delayed-trap/late-retention
+  guardrails at smoke scale.
+
 The important public caveat:
 
 ```text

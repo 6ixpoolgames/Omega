@@ -1,0 +1,45 @@
+{
+  "probe": "13b_fiber_transport_false_positive_refinement",
+  "status": "COMPLETE",
+  "runtime_seconds": 36.248,
+  "n_traj": 1000,
+  "seed_count": 8,
+  "bootstrap_repeats": 50,
+  "primary_witness": {
+    "kappa": "center_of_mass",
+    "condition": "coupled",
+    "base_signal_positive": true,
+    "refined_fiber_transport_positive": false,
+    "mean_viable_propagation_index": 0.36121814808918384,
+    "delta_vs_product": 0.15356834243902584,
+    "delta_vs_shuffled": 0.14712539733857988,
+    "delta_vs_time_shuffled": 0.022097328162034212,
+    "component_balance": 0.7109665901919002,
+    "component_necessity_min": -0.40395539144095133,
+    "edge_order_integrity": 0.06825291246433433,
+    "within_fiber_nondegeneracy": -0.6493531074374914,
+    "late_horizon_retention": 1.2834214898179888
+  },
+  "priority_false_positives": {
+    "component_A_only": 0.0022571605735801376,
+    "component_B_only": 0.7651735395301351,
+    "time_shuffled_COM": 0.33419266573367956,
+    "endpoint_fakeout": 0.33845202848513545,
+    "rigid_collapse": 0.9989994162499594,
+    "delayed_trap": 0.3330212471865869
+  },
+  "refinement_interpretation": {
+    "blockers": [
+      "R1_component_necessity",
+      "R3_within_fiber_nondegeneracy",
+      "R4_late_horizon_retention"
+    ],
+    "R1_pass_rate": 0.0,
+    "R2_pass_rate": 1.0,
+    "R3_pass_rate": 0.0,
+    "R4_pass_rate": 0.0
+  },
+  "recommendation": "COM base signal remains useful, but refined pass fails at smoke scale; inspect blockers before any main run.",
+  "next_probe": "distinction_adjudication_or_targeted_refinement",
+  "estimator_warnings": []
+}
