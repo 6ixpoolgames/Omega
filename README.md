@@ -45,6 +45,7 @@ The public tree keeps only the current/relevant compact results:
 - `probe_I0_invariant_stack_audit_results/`
 - `probe_I0b_invariant_threshold_dropout_audit_results/`
 - `probe_13b_fiber_transport_false_positive_refinement_results/`
+- `probe_DA0_distinction_asymmetry_relation_results/`
 
 Older exploratory outputs are summarized in the docs but not exposed as result
 folders in the current public tree.
@@ -95,6 +96,7 @@ CuPy's kernel cache at `.cupy-cache/`.
 - `probe_I0b_invariant_threshold_dropout_audit.py`
 - `probe_13_formal_fiber_transport_object_audit.py`
 - `probe_13b_fiber_transport_false_positive_refinement.py`
+- `probe_DA0_distinction_asymmetry_relation.py`
 
 Historical scripts remain in the repository because they document how the
 current object was reached, but new work should normally start from Probe 09/10
@@ -105,11 +107,11 @@ or from the next formalization probe described in the manual.
 Current latest probe:
 
 ```text
-Probe 13b: Fiber Transport False-Positive Refinement
+Probe DA0: Distinction / Asymmetry / Relation
 ```
 
-Probe 13b smoke tested the minimal refinements forced by Probe 13's false
-positives. COM remains base-null positive, but the refined object fails
-component necessity, within-fiber nondegeneracy, and late/delayed-trap
-retention. Do not launch the main 13b run until those blockers are addressed or
-the project pivots to distinction/adjudication.
+Probe DA0 opened a new primitive branch using small discrete worlds rather than
+the multifield simulator. The smoke result is not a clean pass: full_DAR is the
+best aggregate world, but it tops only one target metric and the random
+relation-shuffle control is not rejected on relational nonfactorization. Do not
+scale DA0 until the relation metric is tightened.

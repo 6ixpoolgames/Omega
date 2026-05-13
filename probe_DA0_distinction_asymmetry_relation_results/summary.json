@@ -1,0 +1,53 @@
+{
+  "probe": "DA0_distinction_asymmetry_relation",
+  "status": "COMPLETE",
+  "runtime_seconds": 52.772,
+  "n_traj": 2000,
+  "seed_count": 20,
+  "worlds": [
+    "W0_null_flat",
+    "W1_distinction_only",
+    "W2_asymmetry_only",
+    "W3_relation_only",
+    "W4_distinction_asymmetry",
+    "W5_distinction_relation",
+    "W6_asymmetry_relation",
+    "W7_full_DAR",
+    "W8_full_random_relation_control",
+    "W9_full_symmetric_control",
+    "W10_noise_rich_control",
+    "W11_collapse_attractor_control"
+  ],
+  "primitive_ablation_result": {
+    "distinction_required": false,
+    "asymmetry_required": true,
+    "relation_required": false,
+    "full_DAR_best": true,
+    "full_DAR_top_metric_count": 1,
+    "null_control_top_metric_count": 2
+  },
+  "best_world": "W7_full_DAR",
+  "full_DAR_profile": {
+    "p_viable": 0.925,
+    "lineage_survival_depth": 0.2677034350012585,
+    "lineage_branching_entropy": 3.1930341547974237,
+    "time_reversal_asymmetry": 0.04039458205291974,
+    "relational_excess": 8.853922109864243,
+    "relation_shuffle_delta": 0.09562011279963445,
+    "structured_viable_richness": 17.345674383376796
+  },
+  "control_results": {
+    "noise_rich_control": true,
+    "collapse_attractor_control": true,
+    "relation_shuffled_control": false,
+    "symmetric_transition_control": true,
+    "independent_sites_control": true
+  },
+  "recommendation": "DA0 does not yet show a clean conjunction effect; inspect which primitive/control dominated before scaling.",
+  "next_probe": "DA0_metric_refinement_or_branch_pause",
+  "estimator_warnings": [
+    "W0_null_flat",
+    "W10_noise_rich_control",
+    "W11_collapse_attractor_control"
+  ]
+}

@@ -397,6 +397,35 @@ Result in one line:
   necessity, within-fiber nondegeneracy, and delayed-trap/late-retention
   guardrails at smoke scale.
 
+### Probe DA0: Distinction / Asymmetry / Relation
+
+Directory:
+
+- `probe_DA0_distinction_asymmetry_relation_results/`
+
+Primary files:
+
+- `summary.json`
+- `world_configurations.csv`
+- `dar_profile_by_world.csv`
+- `lineage_metrics.csv`
+- `asymmetry_metrics.csv`
+- `relation_metrics.csv`
+- `structured_richness.csv`
+- `ablation_results.csv`
+- `control_rejection.csv`
+
+Reason retained:
+
+- Probe DA0 is the first primitive-branch triage after trajectory-native and
+  formal fiber-transport routes failed to produce a clean object.
+
+Result in one line:
+
+- Full DAR is the best aggregate smoke world, but the relation-shuffled control
+  is not rejected, so the primitive branch is not ready for main-scale
+  validation.
+
 The important public caveat:
 
 ```text

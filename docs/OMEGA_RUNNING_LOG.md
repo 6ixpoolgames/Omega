@@ -793,6 +793,80 @@ Either design a narrower targeted refinement for the blockers or pivot to the
 distinction/adjudication branch.
 ```
 
+### Probe DA0 Smoke: Distinction / Asymmetry / Relation
+
+Probe DA0 opened a new first-principles branch using tiny discrete stochastic
+worlds. It intentionally avoided COM, kappas/fibers, learned representations,
+agents, rewards, and path signatures.
+
+Primitive mapping:
+
+- distinction: local alphabet size and persistence of distinguishable symbols;
+- asymmetry: directed transition bias/filtering;
+- relation: stable or shuffled graph dependence between sites.
+
+Run:
+
+- script: `probe_DA0_distinction_asymmetry_relation.py`
+- result directory: `probe_DA0_distinction_asymmetry_relation_results/`
+- smoke scale: `2000` trajectories, `20` seeds
+- horizons `{50, 100}`
+- `16` sites
+- 12 synthetic worlds from null/ablations through full DAR
+- runtime about `53` seconds
+
+Summary:
+
+```text
+best world: W7_full_DAR
+full_DAR_best: true
+full_DAR_top_metric_count: 1
+null_control_top_metric_count: 2
+distinction_required: false
+asymmetry_required: true
+relation_required: false
+```
+
+Full DAR profile:
+
+```text
+p_viable: 0.925
+lineage_survival_depth: 0.268
+lineage_branching_entropy: 3.193
+time_reversal_asymmetry: 0.040
+relational_excess: 8.854
+relation_shuffle_delta: 0.096
+structured_viable_richness: 17.346
+```
+
+Controls:
+
+```text
+noise_rich_control rejected: true
+collapse_attractor_control rejected: true
+relation_shuffled_control rejected: false
+symmetric_transition_control rejected: true
+independent_sites_control rejected: true
+```
+
+Interpretation:
+
+- Full DAR is the best aggregate world in this smoke.
+- The branch does not yet show a clean primitive conjunction effect.
+- Relation is the weak link: the random-stepwise relation control is not
+  rejected on relational nonfactorization.
+- Asymmetry behaves as intended against the symmetric control.
+- Noise/collapse controls are rejected on lineage survival, but some low
+  viability warnings remain expected for null/noise/collapse worlds.
+
+Decision:
+
+```text
+Do not scale DA0 main yet.
+Tighten the relation/nonfactorization readout or design DA1 around the strongest
+signal after inspecting DA0 profiles.
+```
+
 ```text
 COM fiber transport object
 certified viable fiber node

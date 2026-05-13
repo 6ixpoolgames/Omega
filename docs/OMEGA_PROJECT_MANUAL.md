@@ -700,6 +700,10 @@ horizons 900-2400
   remained base-null positive, but failed the refined object via component
   necessity, within-fiber nondegeneracy, and delayed-trap/late-retention
   blockers.
+- Probe DA0 opened a new discrete primitive branch around distinction,
+  asymmetry, and relation. The smoke result made full_DAR the best aggregate
+  world, but did not reject the relation-shuffled control, so DA0 needs relation
+  metric refinement before scaling.
 - Controls behave differently:
   - `boundary_v2` is pseudo-risk/propagation-negative;
   - `joint_basin` can show local transport but usually fails multi-step
