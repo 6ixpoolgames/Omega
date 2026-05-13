@@ -1,0 +1,68 @@
+{
+  "probe": "DA2_relational_edge_memory_world",
+  "status": "COMPLETE",
+  "runtime_seconds": 160.69,
+  "n_traj": 5000,
+  "seed_count": 50,
+  "revision": false,
+  "worlds": [
+    "W0_null_flat",
+    "W10_noise_rich_control",
+    "W11_collapse_attractor_control",
+    "W1_distinction_only",
+    "W2_no_relation",
+    "W3_local_memory_only",
+    "W4_relation_without_memory",
+    "W5_random_stepwise_relation_memory",
+    "W6_commutative_edge_memory",
+    "W7_reversible_edge_memory",
+    "W8_full_relational_edge_memory",
+    "W9_edge_memory_lock_in"
+  ],
+  "best_world": "W6_commutative_edge_memory",
+  "primary_result": {
+    "full_relational_edge_memory_passed": false,
+    "distinction_required": true,
+    "relation_required": true,
+    "edge_memory_required": true,
+    "asymmetry_required": false,
+    "local_history_fakeout_rejected": true,
+    "commutative_fakeout_rejected": false,
+    "random_relation_fakeout_rejected": true,
+    "lock_in_rejected": false
+  },
+  "best_profile": {
+    "p_viable": 1.0,
+    "edge_memory_predictive_gain": 0.09908605769230765,
+    "edge_memory_erasure_delta": 0.9993420000000001,
+    "edge_memory_shuffle_delta": -0.000572285714285674,
+    "relation_slack_excess": 0.0039887286324785795,
+    "order_sensitivity": 0.9999857142857143,
+    "noncommutative_asymmetry_delta": 0.0,
+    "future_distinct_ratio": 0.9993420000000001,
+    "recoverable_alternative_count": 4996.71,
+    "dynamic_lock_in_index": 0.0,
+    "branching_after_recovery": 1.0
+  },
+  "control_results": {
+    "no_relation": "underconstrained",
+    "local_memory_only": "underconstrained",
+    "relation_without_memory": "underconstrained",
+    "random_stepwise_relation_memory": "history_fakeout",
+    "commutative_edge_memory": "history_fakeout",
+    "reversible_edge_memory": "history_fakeout",
+    "edge_memory_lock_in": "underconstrained",
+    "noise_rich": "history_fakeout",
+    "collapse_attractor": "underconstrained"
+  },
+  "recommendation": "Relation may help, but non-commutative asymmetry is not load-bearing; revise edge order dynamics.",
+  "next_probe": "DA2_asymmetry_revision",
+  "estimator_warnings": [
+    "W0_null_flat",
+    "W11_collapse_attractor_control",
+    "W1_distinction_only",
+    "W2_no_relation",
+    "W3_local_memory_only",
+    "W4_relation_without_memory"
+  ]
+}

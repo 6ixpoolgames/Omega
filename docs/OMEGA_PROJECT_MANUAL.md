@@ -30,6 +30,7 @@ Project stance:
    - `probe_I0_invariant_stack_audit.py`
    - `probe_DA1b_apparent_vs_viable_slack.py`
    - `probe_DA1c_noncommutative_relational_history.py`
+   - `probe_DA2_relational_edge_memory_world.py`
 5. Inspect compact summaries, not raw caches:
    - `probe_09_robust_fiber_reachability_results/summary.json`
    - `probe_10_com_viable_propagation_robustness_extended_results/summary.json`
@@ -727,6 +728,11 @@ horizons 900-2400
   no-relation non-commutative control ranked best, W5 had no positive
   relation-conditioned excess, and asymmetry remained non-load-bearing. The DAR
   world family should be paused or redesigned rather than scaled.
+- Probe DA2 moved history onto persistent directed edge memory. The initial
+  smoke rejected local/no-relation fakeouts and relation-without-memory
+  fakeouts, but failed because commutative edge memory ranked best and
+  asymmetry was not required. One documented two-edge-support revision also
+  failed. Do not scale the current DAR edge-memory generator.
 - Controls behave differently:
   - `boundary_v2` is pseudo-risk/propagation-negative;
   - `joint_basin` can show local transport but usually fails multi-step
@@ -770,6 +776,12 @@ Question:
 Do not scale DA1/DA1b/DA1c until this is resolved. A reasonable alternative is
 to return to formalizing the stronger COM/fiber witness instead of continuing
 to tune the DAR toy generator.
+
+DA2 tested one stronger edge-memory redesign and one documented revision. Those
+results narrow the issue: local history can now be rejected, but the generator
+still cannot make non-commutative relational asymmetry necessary. Further DAR
+work should be treated as a new design problem, not as scale-up of the current
+world family.
 
 ### Probe 13: Formal COM Fiber Transport Object
 

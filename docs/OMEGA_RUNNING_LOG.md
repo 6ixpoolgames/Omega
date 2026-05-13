@@ -1213,6 +1213,115 @@ sampling of this generator; it should either rethink the relation/history
 implementation or return to formalization of the stronger COM/fiber witness.
 ```
 
+### Probe DA2 Smoke: Relational Edge-Memory World
+
+Probe DA2 redesigned the DAR world so memory lives on persistent directed
+relations rather than on local nodes. The aim was to prevent the DA1c failure
+mode where local/non-relational history faked distinction + asymmetry +
+relation.
+
+Run:
+
+- script: `probe_DA2_relational_edge_memory_world.py`
+- result directory: `probe_DA2_relational_edge_memory_world_results/`
+- scale: `5000` trajectories, `50` seeds
+- horizons `{50, 100}`
+- `16` sites, `q=4`, edge memory states `m=4`
+- 12 worlds
+- 18 CPU workers
+- valid runtime about `2.7` minutes after reducing diagnostic overhead
+
+Implementation notes:
+
+- An initial attempt exposed a shape bug in perturbation continuation for
+  smaller sampled trajectories; fixed by drawing random masks using the current
+  sample size rather than `cfg.n_traj`.
+- A second attempt exceeded the 20-minute cap because ablation future-ratio
+  calls were running full diagnostics. The simulation scale stayed at `5000`,
+  but relation estimation was moved to a fixed subsample and ablation
+  comparisons use coarse future-ratio diagnostics.
+
+Initial smoke result:
+
+```text
+best_world: W6_commutative_edge_memory
+full_relational_edge_memory_passed: false
+distinction_required: true
+relation_required: true
+edge_memory_required: true
+asymmetry_required: false
+local_history_fakeout_rejected: true
+commutative_fakeout_rejected: false
+random_relation_fakeout_rejected: true
+lock_in_rejected: false
+```
+
+Best profile:
+
+```text
+p_viable: 1.000
+edge_memory_predictive_gain: 0.0991
+edge_memory_erasure_delta: 0.9993
+edge_memory_shuffle_delta: -0.0006
+relation_slack_excess: 0.0040
+order_sensitivity: 1.000
+noncommutative_asymmetry_delta: 0.000
+future_distinct_ratio: 0.9993
+dynamic_lock_in_index: 0.000
+```
+
+Interpretation:
+
+- DA2 did improve over DA1c by killing the local/no-relation fakeout family.
+- The decisive failure was asymmetry: commutative edge memory ranked best, so
+  order-dependence was not necessary.
+- Edge-memory shuffle delta was slightly negative, meaning the current
+  future-distinct readout does not care about edge identity strongly enough.
+
+### Probe DA2 Revision: Two-Edge Relational Support
+
+Per the run instruction, one revision was made and tested before closing DA2.
+The revision changed only W8: its non-commutative update was made to require a
+second stable incoming edge, so the full world depended on two-edge relational
+support rather than a single edge channel.
+
+Run:
+
+- result directory: `probe_DA2_relational_edge_memory_world_revision_results/`
+- same smoke scale and worker count
+- runtime about `2.7` minutes
+
+Revision result:
+
+```text
+best_world: W6_commutative_edge_memory
+full_relational_edge_memory_passed: false
+distinction_required: false
+relation_required: false
+edge_memory_required: false
+asymmetry_required: false
+local_history_fakeout_rejected: true
+commutative_fakeout_rejected: false
+random_relation_fakeout_rejected: false
+lock_in_rejected: false
+```
+
+Interpretation:
+
+- The revision did not rescue W8.
+- W6 commutative edge memory still ranked best.
+- The two-edge support change weakened the mutual-necessity profile rather than
+  making relation/asymmetry cleaner.
+
+Decision:
+
+```text
+Do not run DA2 main scale.
+The current DAR edge-memory generator should pause. It rejects local history,
+but still cannot make non-commutative relational asymmetry uniquely
+load-bearing.
+```
+
 ```text
 COM fiber transport object
 certified viable fiber node

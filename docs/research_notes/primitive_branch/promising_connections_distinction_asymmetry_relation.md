@@ -115,6 +115,28 @@ viable slack     ->  structured, recoverable, relational possibility
 overconstraint   ->  lock-in / frozen order / brittle persistence
 ```
 
+## DA2 Update: Edge Memory Is Still Not Enough
+
+DA2 moved history from local nodes to persistent directed edges. This was the
+right next test after DA1c, because DA1c showed that local non-commutative
+history can fake the target.
+
+The result was still negative. The edge-memory world rejected local/no-relation
+fakeouts, but commutative edge memory ranked above the full non-commutative
+edge-memory world. A single revision requiring two-edge relational support also
+failed.
+
+Current implication:
+
+```text
+edge memory helps reject local history,
+but the current generator does not make non-commutative relational asymmetry
+uniquely load-bearing.
+```
+
+Further DAR work should therefore be a new world-design problem, not a larger
+run of DA1/DA2.
+
 ## DA Branch Implication
 
 The next primitive-branch work should focus on relation as a connection-like

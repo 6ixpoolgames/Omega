@@ -552,6 +552,38 @@ Result in one line:
   best and W5 has no positive relation-conditioned excess; the DAR world family
   should not be scaled without redesign.
 
+### Probe DA2: Relational Edge-Memory World
+
+Directory:
+
+- `probe_DA2_relational_edge_memory_world_results/`
+- `probe_DA2_relational_edge_memory_world_revision_results/`
+
+Primary files:
+
+- `summary.json`
+- `world_configurations.csv`
+- `edge_memory_load_bearing.csv`
+- `relation_load_bearing.csv`
+- `noncommutative_asymmetry_load_bearing.csv`
+- `future_distinct_viable_slack.csv`
+- `dynamic_lock_in.csv`
+- `primitive_mutual_necessity.csv`
+- `diagnostic_profile.csv`
+- `control_rejection.csv`
+
+Reason retained:
+
+- Probe DA2 tests the strongest DAR redesign so far: memory lives on persistent
+  directed edges, not local nodes, and viable alternatives are required to
+  depend on edge history.
+
+Result in one line:
+
+- Initial smoke rejected local/no-relation fakeouts but failed because
+  commutative edge memory ranked best; the single documented revision also
+  failed, so this DAR generator should not be scaled.
+
 The important public caveat:
 
 ```text

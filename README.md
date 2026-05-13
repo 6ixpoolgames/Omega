@@ -51,6 +51,8 @@ The public tree keeps only the current/relevant compact results:
 - `probe_DA1_viable_slack_phase_sweep_results/`
 - `probe_DA1b_apparent_vs_viable_slack_results/`
 - `probe_DA1c_noncommutative_relational_history_results/`
+- `probe_DA2_relational_edge_memory_world_results/`
+- `probe_DA2_relational_edge_memory_world_revision_results/`
 
 Older exploratory outputs are summarized in the docs but not exposed as result
 folders in the current public tree.
@@ -106,6 +108,7 @@ CuPy's kernel cache at `.cupy-cache/`.
 - `probe_DA1_viable_slack_phase_sweep.py`
 - `probe_DA1b_apparent_vs_viable_slack.py`
 - `probe_DA1c_noncommutative_relational_history.py`
+- `probe_DA2_relational_edge_memory_world.py`
 
 Historical scripts remain in the repository because they document how the
 current object was reached, but new work should normally start from Probe 09/10
@@ -116,11 +119,11 @@ or from the next formalization probe described in the manual.
 Current latest probe:
 
 ```text
-Probe DA1c: Non-Commutative Relational History
+Probe DA2: Relational Edge-Memory World
 ```
 
-Probe DA1c implemented asymmetry as non-commutative relational history rather
-than directional bias. The smoke result did not pass: the no-relation
-non-commutative control ranked best, W5 did not show positive
-relation-conditioned excess, and asymmetry remained non-load-bearing. Do not
-scale the DAR world family without a deeper redesign.
+Probe DA2 moved history from local sites onto persistent directed edges. The
+initial smoke rejected local/no-relation fakeouts, but failed because
+commutative edge memory ranked best and asymmetry was not required. One
+documented revision was also run; it did not rescue W8. Do not scale the DAR
+world family from this generator.
