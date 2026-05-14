@@ -36,6 +36,7 @@ Project stance:
    - `probe_DAX_G1_persistence_motif_anatomy_and_robustness.py`
    - `probe_DAX_G2_persistence_phase_map_minimal_rule_spaces.py`
    - `probe_DAX_G2b_control_adjusted_primitive_guardrail.py`
+   - `probe_DAX_G3_q3r1_guardrailed_phase_map.py`
 5. Inspect compact summaries, not raw caches:
    - `probe_09_robust_fiber_reachability_results/summary.json`
    - `probe_10_com_viable_propagation_robustness_extended_results/summary.json`
@@ -763,6 +764,10 @@ horizons 900-2400
   with relation/asymmetry load-bearing and non-emission composition signal:
   `q3r1_s1_0002`. It also demoted `q3r1_s5_0016` to emission-only despite strong
   relation/asymmetry load-bearing.
+- Probe DAX-G3 reproduced the q=3/r=1 branch under active guardrails. It found
+  9 control-adjusted positives and no remaining S7/S8 control leaks. This is a
+  pass but not a strong pass: composition-positive readouts exist, but they are
+  not yet cleanly unified with the strongest persistence/load-bearing rows.
 - Controls behave differently:
   - `boundary_v2` is pseudo-risk/propagation-negative;
   - `joint_basin` can show local transport but usually fails multi-step
@@ -839,6 +844,11 @@ DAX-G2b performed that revision and passed the guardrail. The next step is a
 focused q=3/r=1 guardrailed phase map, not a broad expansion to richer rule
 spaces. Composition should remain separately tracked because only one q=3/r=1
 candidate currently has a non-emission adjusted composition signal.
+
+DAX-G3 ran that focused q=3/r=1 map and reproduced the trunk. The correct next
+primitive-branch step is DAX-G4 motif ecology/mechanism anatomy inside q=3/r=1.
+Do not broaden rule space until the mechanism and composition overlap are
+understood.
 
 ### Probe 13: Formal COM Fiber Transport Object
 

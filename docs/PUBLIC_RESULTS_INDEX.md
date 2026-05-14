@@ -751,6 +751,41 @@ Result in one line:
   `q3r1_s1_0002` survived as control-adjusted positive with relation/asymmetry
   load-bearing and non-emission composition signal.
 
+### Probe DAX-G3: q=3/r=1 Guardrailed Phase Map
+
+Directory:
+
+- `probe_DAX_G3_q3r1_guardrailed_phase_map_results/`
+
+Primary files:
+
+- `summary.json`
+- `sampled_rule_manifest.csv`
+- `stage1_scan_metrics.csv`
+- `stage1_classification.csv`
+- `stage1_stratum_enrichment.csv`
+- `stage2_candidate_manifest.csv`
+- `stage2_raw_metrics.csv`
+- `matched_control_metrics.csv`
+- `control_adjusted_metrics.csv`
+- `reclassification_results.csv`
+- `control_leak_resolution.csv`
+- `motif_mechanism_report.csv`
+- `matched_control_fairness_audit.csv`
+- `ic_family_dependence.csv`
+- `spacetime_examples/`
+
+Reason retained:
+
+- Probe DAX-G3 tests whether q=3/r=1 contains a reproducible class of
+  guardrailed primitive-positive motifs rather than isolated G2b survivors.
+
+Result in one line:
+
+- q=3/r=1 reproduced under guardrails with 9 control-adjusted positives and no
+  remaining S7/S8 leaks, but did not reach strong-pass criteria because
+  composition and strongest persistence are not yet cleanly unified.
+
 The important public caveat:
 
 ```text

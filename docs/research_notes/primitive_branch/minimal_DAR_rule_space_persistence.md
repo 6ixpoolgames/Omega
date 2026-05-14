@@ -160,3 +160,30 @@ Current implication:
 q=3/r=1 is now justified as the next primitive-branch trunk,
 but the trunk should be guardrailed from the start.
 ```
+
+## DAX-G3 Update
+
+DAX-G3 ran the focused q=3/r=1 guardrailed phase map. The retained run sampled
+`2006` q=3/r=1 rules and evaluated `225` Stage 2 candidates under matched
+controls.
+
+Result:
+
+```text
+q3r1_trunk_reproduced: true
+strong_pass: false
+guardrails_remained_clean: true
+control_adjusted_positive_count: 9
+non_emission_composition_positive_count: 25
+remaining S7/S8 leaks: none
+```
+
+This means q=3/r=1 is no longer just a one-off G2b hit. It contains a
+reproducible control-adjusted-positive family.
+
+The result is still not a broad theory claim. The next question is mechanism:
+
+```text
+What are these motifs doing,
+and when does composition overlap with persistence/relation/asymmetry?
+```

@@ -58,6 +58,7 @@ The public tree keeps only the current/relevant compact results:
 - `probe_DAX_G1_persistence_motif_anatomy_and_robustness_results/`
 - `probe_DAX_G2_persistence_phase_map_minimal_rule_spaces_results/`
 - `probe_DAX_G2b_control_adjusted_primitive_guardrail_results/`
+- `probe_DAX_G3_q3r1_guardrailed_phase_map_results/`
 
 Older exploratory outputs are summarized in the docs but not exposed as result
 folders in the current public tree.
@@ -119,6 +120,7 @@ CuPy's kernel cache at `.cupy-cache/`.
 - `probe_DAX_G1_persistence_motif_anatomy_and_robustness.py`
 - `probe_DAX_G2_persistence_phase_map_minimal_rule_spaces.py`
 - `probe_DAX_G2b_control_adjusted_primitive_guardrail.py`
+- `probe_DAX_G3_q3r1_guardrailed_phase_map.py`
 
 Historical scripts remain in the repository because they document how the
 current object was reached, but new work should normally start from Probe 09/10
@@ -129,12 +131,12 @@ or from the next formalization probe described in the manual.
 Current latest probe:
 
 ```text
-Probe DAX-G2b: Control-Adjusted Primitive Guardrail
+Probe DAX-G3: q=3/r=1 Guardrailed Phase Map
 ```
 
-Probe DAX-G2b repaired the G2 interpretability guardrail by comparing candidates
-against matched center-only, neighbor-removed, symmetrized, symbol-phase,
-output-histogram, and stratum-null controls. The guardrail passed: symmetric and
-self-control leaks were resolved, and one q=3/r=1 candidate survived as
-control-adjusted positive with non-emission composition signal. The next step is
-a focused q=3/r=1 guardrailed phase map, not a broad expansion.
+Probe DAX-G3 tested whether q=3/r=1 contains a reproducible class of
+control-adjusted primitive-positive motifs. It passed, but not strongly:
+guardrails stayed clean, 9 candidates were control-adjusted positive, and 25 had
+non-emission composition-positive readouts. The strongest raw adjusted rows were
+often emission-only or local-phase/self fakeouts, so the next step is focused
+q=3/r=1 motif ecology rather than broader rule-space expansion.

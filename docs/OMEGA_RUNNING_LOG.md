@@ -1790,6 +1790,101 @@ Keep composition separate from persistence/load-bearing until more candidates
 show non-emission interaction structure.
 ```
 
+### DAX-G3: Focused q=3/r=1 Guardrailed Phase Map
+
+DAX-G3 tested whether the G2b q=3/r=1 survivor was an isolated accident or part
+of a reproducible class. It kept the G2b guardrails active from the start.
+
+Run:
+
+- script: `probe_DAX_G3_q3r1_guardrailed_phase_map.py`
+- result directory: `probe_DAX_G3_q3r1_guardrailed_phase_map_results/`
+- rule space: q=3, radius=1 only
+- sampled rules: `2006`
+- stage 2 candidates: `225`
+- stage 1: `T=256`, ring `256`, `64` seeds
+- stage 2 guardrail: `T=512`, ring `256`, `96` seeds
+- stratum nulls per candidate: `4`
+- workers: `18`
+- runtime: about `48.5` minutes
+
+Implementation note:
+
+- A larger half-scale run was attempted first, but it exceeded the two-hour
+  command cap near the end of guardrail evaluation. The retained run uses the
+  spec fallback more aggressively: quarter sampling, Stage 2 cap `120` plus
+  leaks/anchors, and `96` guardrail seeds.
+
+Primary result:
+
+```text
+q3r1_trunk_reproduced: true
+strong_pass: false
+guardrails_remained_clean: true
+control_adjusted_positive_count: 9
+relation_adjusted_positive_count: 161
+asymmetry_adjusted_positive_count: 145
+local_phase_fakeout_rejected_count: 99
+composition_adjusted_positive_count: 25
+non_emission_composition_positive_count: 25
+```
+
+Control leak result:
+
+```text
+S7 symmetric control leaks evaluated: 81
+S8 self-control leaks evaluated: 18
+remaining leaks: none
+```
+
+Best control-adjusted candidate by adjusted persistence:
+
+```text
+rule_id: q3g3_s1_00108
+stratum: S1_random_unbiased
+adjusted_persistence: 0.1303
+relation_load_bearing_adjusted: 0.1193
+asymmetry_load_bearing_adjusted: 0.1881
+local_phase_fakeout_rejected: true
+composition_adjusted_delta: 0.000
+dominant_interaction_outcome: collapse
+reclassification: control_adjusted_positive
+```
+
+Reproduced G2b anchor:
+
+```text
+rule_id: q3r1_s1_0002
+adjusted_persistence: 0.0167
+relation_load_bearing_adjusted: 0.0744
+asymmetry_load_bearing_adjusted: 0.1676
+local_phase_fakeout_rejected: true
+composition_adjusted_delta: 1.000
+dominant_interaction_outcome: new_motif
+reclassification: control_adjusted_positive
+```
+
+Important interpretation:
+
+- q=3/r=1 did reproduce a guardrailed primitive-positive family.
+- It did not reach the strong-pass threshold: there were 9
+  control-adjusted-positive candidates, not 10, and only a smaller overlap of
+  all desired properties.
+- The largest adjusted-persistence rows were often emission-only or local-phase
+  / self fakeouts. Raw adjusted persistence alone is not enough.
+- Composition is present as a non-emission signal in the broader candidate set,
+  but it is not yet cleanly unified with the strongest persistence candidates.
+
+Decision:
+
+```text
+q=3/r=1 becomes the current primitive-branch trunk.
+Next probe should be DAX-G4: q=3/r=1 motif ecology and mechanism anatomy.
+Do not broaden rule space yet.
+Keep composition separate from persistence/load-bearing until the overlap is
+cleaner.
+```
+
 ```text
 COM fiber transport object
 certified viable fiber node

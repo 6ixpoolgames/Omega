@@ -302,6 +302,28 @@ The result is still modest. It does not establish Omega, and it does not yet
 show a broad motif ecology. It does establish that q=3/r=1 deserves a focused
 guardrailed phase map.
 
+## DAX-G3 Update: Reproducible q=3/r=1 Family
+
+DAX-G3 confirms that q=3/r=1 contains more than an isolated survivor:
+
+```text
+control_adjusted_positive_count: 9
+guardrails_remained_clean: true
+remaining control leaks: none
+```
+
+The q=3/r=1 trunk is therefore live. But the result is not a strong pass because
+the strongest persistence/load-bearing rows and the clearest non-emission
+composition rows only partially overlap.
+
+Current implication:
+
+```text
+q=3/r=1 is the primitive-branch trunk;
+DAX-G4 should study motif ecology and mechanism inside q=3/r=1;
+do not broaden rule space yet.
+```
+
 ## DA Branch Implication
 
 The next primitive-branch work should focus on relation as a connection-like
