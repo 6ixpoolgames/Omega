@@ -584,6 +584,41 @@ Result in one line:
   commutative edge memory ranked best; the single documented revision also
   failed, so this DAR generator should not be scaled.
 
+### Probe DAX-R: Branching Connection Graph Validity
+
+Directory:
+
+- `probe_DAX_branching_connection_graph_validity_revised_results/`
+
+Primary files:
+
+- `summary.json`
+- `world_configurations.csv`
+- `transport_identity_accuracy.csv`
+- `path_specificity.csv`
+- `relation_ablation_delta.csv`
+- `self_vs_transport_lineage.csv`
+- `branching_future_distinct_transport.csv`
+- `loop_closure_without_lockin.csv`
+- `asymmetric_transport.csv`
+- `diagnostic_profile.csv`
+- `bootstrap_intervals.csv`
+- `lineage_cap_diagnostics.csv`
+- `merge_conflict_diagnostics.csv`
+- `graph_generation_report.csv`
+- `map_type_distribution.csv`
+
+Reason retained:
+
+- Probe DAX-R is a substrate-validity test for connection-like relation as an
+  admissibility criterion for coarse-graining `C` in `I_T^C(s) = H(F_T(s) / C)`.
+
+Result in one line:
+
+- W8 showed some path-specific and relation-ablation signal, but substrate
+  validity failed because local-memory fakeouts were not rejected, loop closure
+  was trivial, and lineage caps were frequent.
+
 The important public caveat:
 
 ```text

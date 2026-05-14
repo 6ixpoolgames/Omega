@@ -53,6 +53,7 @@ The public tree keeps only the current/relevant compact results:
 - `probe_DA1c_noncommutative_relational_history_results/`
 - `probe_DA2_relational_edge_memory_world_results/`
 - `probe_DA2_relational_edge_memory_world_revision_results/`
+- `probe_DAX_branching_connection_graph_validity_revised_results/`
 
 Older exploratory outputs are summarized in the docs but not exposed as result
 folders in the current public tree.
@@ -109,6 +110,7 @@ CuPy's kernel cache at `.cupy-cache/`.
 - `probe_DA1b_apparent_vs_viable_slack.py`
 - `probe_DA1c_noncommutative_relational_history.py`
 - `probe_DA2_relational_edge_memory_world.py`
+- `probe_DAX_branching_connection_graph_validity_revised.py`
 
 Historical scripts remain in the repository because they document how the
 current object was reached, but new work should normally start from Probe 09/10
@@ -119,11 +121,11 @@ or from the next formalization probe described in the manual.
 Current latest probe:
 
 ```text
-Probe DA2: Relational Edge-Memory World
+Probe DAX-R: Branching Connection Graph Validity
 ```
 
-Probe DA2 moved history from local sites onto persistent directed edges. The
-initial smoke rejected local/no-relation fakeouts, but failed because
-commutative edge memory ranked best and asymmetry was not required. One
-documented revision was also run; it did not rescue W8. Do not scale the DAR
-world family from this generator.
+Probe DAX-R reframed the primitive branch as a substrate/admissibility test for
+connection-like relation. It did not pass smoke: W8 showed some path-specific
+and relation-ablation signal, but failed substrate validity because local-memory
+fakeouts were not rejected, loop closure was trivial, and lineage caps were hit
+frequently. Do not proceed to viable-slack tests on this substrate.

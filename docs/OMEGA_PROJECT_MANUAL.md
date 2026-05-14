@@ -31,6 +31,7 @@ Project stance:
    - `probe_DA1b_apparent_vs_viable_slack.py`
    - `probe_DA1c_noncommutative_relational_history.py`
    - `probe_DA2_relational_edge_memory_world.py`
+   - `probe_DAX_branching_connection_graph_validity_revised.py`
 5. Inspect compact summaries, not raw caches:
    - `probe_09_robust_fiber_reachability_results/summary.json`
    - `probe_10_com_viable_propagation_robustness_extended_results/summary.json`
@@ -733,6 +734,11 @@ horizons 900-2400
   fakeouts, but failed because commutative edge memory ranked best and
   asymmetry was not required. One documented two-edge-support revision also
   failed. Do not scale the current DAR edge-memory generator.
+- Probe DAX-R connected the primitive branch to coarse-graining admissibility
+  for `I_T^C(s) = H(F_T(s) / C)`, then tested a branching connection graph as a
+  constructed relation substrate. It did not establish substrate validity:
+  local-memory fakeouts were not rejected, loop closure was trivial, and lineage
+  cap hits were frequent.
 - Controls behave differently:
   - `boundary_v2` is pseudo-risk/propagation-negative;
   - `joint_basin` can show local transport but usually fails multi-step
@@ -782,6 +788,12 @@ results narrow the issue: local history can now be rejected, but the generator
 still cannot make non-commutative relational asymmetry necessary. Further DAR
 work should be treated as a new design problem, not as scale-up of the current
 world family.
+
+DAX-R is the first explicit connection-admissibility framing. It should be read
+as a negative substrate-validity smoke, not an Omega validation. Passing a later
+DAX-style probe would mean only that a constructed connection substrate is valid
+enough for viable-slack tests; it would not show spontaneous emergence of
+connection-like relation.
 
 ### Probe 13: Formal COM Fiber Transport Object
 

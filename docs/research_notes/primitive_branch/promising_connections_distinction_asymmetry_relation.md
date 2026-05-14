@@ -137,6 +137,35 @@ uniquely load-bearing.
 Further DAR work should therefore be a new world-design problem, not a larger
 run of DA1/DA2.
 
+## DAX-R Update: Coarse-Graining Admissibility Framing
+
+DAX-R made the next conceptual move explicit. Instead of asking whether a DA
+world already displays viable slack, it asks whether relation can define an
+admissible coarse-graining for:
+
+```text
+I_T^C(s) = H(F_T(s) / C)
+```
+
+The new bridge note is:
+
+```text
+docs/research_notes/primitive_branch/connection_like_relation_as_coarse_graining_admissibility.md
+```
+
+The first DAX-R smoke was negative. It found some path-specific and
+relation-ablation signal, but did not establish a valid connection substrate:
+local-memory fakeouts were not rejected, loop closure was trivial, and lineage
+cap pressure was high.
+
+Current implication:
+
+```text
+connection-like relation remains the right admissibility target,
+but the first branching connection graph implementation is not yet a valid
+substrate for viable-slack tests.
+```
+
 ## DA Branch Implication
 
 The next primitive-branch work should focus on relation as a connection-like

@@ -1,0 +1,93 @@
+{
+  "probe": "DAX_R_branching_connection_graph_validity",
+  "status": "COMPLETE",
+  "runtime_seconds": 2.556,
+  "n_traj": 5000,
+  "seed_count": 50,
+  "worlds": [
+    "W0_null_flat",
+    "W1_distinction_only",
+    "W2_local_memory_only",
+    "W3_generic_coupling",
+    "W4_random_relation",
+    "W5_global_commutative_map",
+    "W6_symmetric_invertible_map",
+    "W7_lossy_lock_in",
+    "W8_full_branching_connection_graph",
+    "W9_noise_rich"
+  ],
+  "documentation": {
+    "bridge_note_written": true,
+    "bridge_note_path": "docs/research_notes/primitive_branch/connection_like_relation_as_coarse_graining_admissibility.md"
+  },
+  "graph_config": {
+    "n_nodes": 16,
+    "q": 4,
+    "mean_out_degree": 3,
+    "all_nodes_have_incoming": true,
+    "all_nodes_have_outgoing": true,
+    "all_nodes_in_loop": true
+  },
+  "map_mix": {
+    "invertible_permutation_fraction": 0.7,
+    "partial_fraction": 0.2,
+    "lossy_fraction": 0.1
+  },
+  "lineage_config": {
+    "max_active_lineages_per_node": 5,
+    "lineage_cap_hits": 1508950.065,
+    "fraction_steps_with_cap_hit": 0.742015
+  },
+  "best_world": "W4_random_relation",
+  "substrate_validity": {
+    "connection_substrate_valid": false,
+    "relation_transport_load_bearing": false,
+    "path_specificity_passed": true,
+    "relation_ablation_passed": true,
+    "local_memory_fakeout_rejected": false,
+    "generic_coupling_fakeout_rejected": true,
+    "random_relation_fakeout_rejected": true,
+    "commutative_fakeout_rejected": true,
+    "lock_in_rejected": true,
+    "asymmetric_transport_passed": true
+  },
+  "best_profile": {
+    "transport_identity_accuracy": 1.0,
+    "transport_survival_to_horizon": 1.0,
+    "path_specificity_delta": -0.01,
+    "relation_ablation_delta": 0.02,
+    "transport_over_self_delta": 0.75,
+    "future_distinct_transport_ratio": 0.39378,
+    "nontrivial_loop_closure_rate": 0.0,
+    "holonomy_diversity_proxy": 0.0,
+    "trivial_closure_rate": 1.0,
+    "lock_in_index": 0.15616739719999997,
+    "forward_reverse_delta": 1.0,
+    "asymmetric_branch_differentiation": 1.0,
+    "transport_conflict_rate": 1.0
+  },
+  "control_results": {
+    "distinction_only": "lock_in",
+    "local_memory_only": "lock_in",
+    "generic_coupling": "underconstrained",
+    "random_relation": "lock_in",
+    "global_commutative_map": "lock_in",
+    "symmetric_invertible_map": "lock_in",
+    "lossy_lock_in": "lock_in",
+    "noise_rich": "underconstrained"
+  },
+  "recommendation": "DAX-R does not establish substrate validity; do not proceed to viable slack on this substrate.",
+  "next_probe": "connection_substrate_redesign",
+  "estimator_warnings": [
+    "W0_null_flat",
+    "W1_distinction_only",
+    "W2_local_memory_only",
+    "W3_generic_coupling",
+    "W4_random_relation",
+    "W5_global_commutative_map",
+    "W6_symmetric_invertible_map",
+    "W7_lossy_lock_in",
+    "W8_full_branching_connection_graph",
+    "W9_noise_rich"
+  ]
+}

@@ -1322,6 +1322,100 @@ but still cannot make non-commutative relational asymmetry uniquely
 load-bearing.
 ```
 
+### DAX-R Smoke: Branching Connection Graph Validity
+
+DAX-R reframed the primitive branch as a substrate-validity problem. The bridge
+note added alongside the probe connects the primitive branch to the main Omega
+object:
+
+```text
+I_T^C(s) = H(F_T(s) / C)
+```
+
+where `C` is only admissible if it preserves connection-like transport of
+distinction-history through viable futures.
+
+Run:
+
+- bridge note:
+  `docs/research_notes/primitive_branch/connection_like_relation_as_coarse_graining_admissibility.md`
+- script: `probe_DAX_branching_connection_graph_validity_revised.py`
+- result directory:
+  `probe_DAX_branching_connection_graph_validity_revised_results/`
+- scale: `5000` trajectories, `50` seeds
+- horizons `{50, 100}`
+- branch probabilities `{0.10, 0.25}`
+- `16` nodes, `q=4`
+- mean out-degree `3`
+- lineage cap `5`
+- 10 worlds
+- 18 CPU workers
+- simulation runtime about `6.9` minutes; output rebuild after aggregation fix
+  took about `3` seconds
+
+Implementation note:
+
+- The initial simulation completed successfully but the first output aggregation
+  failed because grouped output tables had not rebuilt the interpretation label.
+  The labels were added to grouped outputs and the result artifacts were rebuilt
+  from the completed raw rows.
+
+Best world:
+
+```text
+W4_random_relation
+```
+
+Primary substrate result:
+
+```text
+connection_substrate_valid: false
+relation_transport_load_bearing: false
+path_specificity_passed: true
+relation_ablation_passed: true
+local_memory_fakeout_rejected: false
+generic_coupling_fakeout_rejected: true
+random_relation_fakeout_rejected: true
+commutative_fakeout_rejected: true
+lock_in_rejected: true
+asymmetric_transport_passed: true
+```
+
+Best profile:
+
+```text
+transport_identity_accuracy: 1.000
+transport_survival_to_horizon: 1.000
+path_specificity_delta: -0.010
+relation_ablation_delta: 0.020
+transport_over_self_delta: 0.750
+future_distinct_transport_ratio: 0.394
+nontrivial_loop_closure_rate: 0.000
+holonomy_diversity_proxy: 0.000
+trivial_closure_rate: 1.000
+lock_in_index: 0.156
+forward_reverse_delta: 1.000
+asymmetric_branch_differentiation: 1.000
+transport_conflict_rate: 1.000
+```
+
+Important W8 behavior:
+
+- W8 showed nonzero path-specificity and relation-ablation signal.
+- W8 transport identity accuracy decayed strongly by `T=100`.
+- W8 did not reject the local-memory/self-persistence fakeout.
+- Loop closure remained trivial rather than nontrivial and diverse.
+- Lineage cap hits were frequent, so estimator warnings apply broadly.
+
+Decision:
+
+```text
+DAX-R does not establish substrate validity.
+Do not proceed to viable-slack or adjudication tests on this substrate.
+Next work should redesign the connection substrate, especially lineage-cap
+handling, loop closure, and local-memory rejection.
+```
+
 ```text
 COM fiber transport object
 certified viable fiber node
