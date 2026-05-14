@@ -32,6 +32,7 @@ Project stance:
    - `probe_DA1c_noncommutative_relational_history.py`
    - `probe_DA2_relational_edge_memory_world.py`
    - `probe_DAX_branching_connection_graph_validity_revised.py`
+   - `probe_DAX_G0_minimal_DAR_rule_space_persistence.py`
 5. Inspect compact summaries, not raw caches:
    - `probe_09_robust_fiber_reachability_results/summary.json`
    - `probe_10_com_viable_propagation_robustness_extended_results/summary.json`
@@ -739,6 +740,10 @@ horizons 900-2400
   constructed relation substrate. It did not establish substrate validity:
   local-memory fakeouts were not rejected, loop closure was trivial, and lineage
   cap hits were frequent.
+- Probe DAX-G0 stopped hand-designing worlds and exhaustively audited all 256
+  elementary cellular automata as the smallest DAR-capable local rule space. It
+  found nontrivial persistence enriched among DAR-complete and DAR-asymmetric
+  rules, motivating a G1 motif-anatomy probe.
 - Controls behave differently:
   - `boundary_v2` is pseudo-risk/propagation-negative;
   - `joint_basin` can show local transport but usually fails multi-step
@@ -794,6 +799,12 @@ as a negative substrate-validity smoke, not an Omega validation. Passing a later
 DAX-style probe would mean only that a constructed connection substrate is valid
 enough for viable-slack tests; it would not show spontaneous emergence of
 connection-like relation.
+
+DAX-G0 is the first positive result in the primitive branch since the DA0-DA2
+failures. It is still modest: it shows that nontrivial persistence exists in a
+minimal exhaustible DAR-capable rule space and is enriched in the expected
+primitive classes. The correct next step is anatomy and robustness of detected
+motifs, not a theory claim.
 
 ### Probe 13: Formal COM Fiber Transport Object
 

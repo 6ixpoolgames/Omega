@@ -619,6 +619,37 @@ Result in one line:
   validity failed because local-memory fakeouts were not rejected, loop closure
   was trivial, and lineage caps were frequent.
 
+### Probe DAX-G0: Minimal DAR Rule-Space Persistence
+
+Directory:
+
+- `probe_DAX_G0_minimal_DAR_rule_space_persistence_results/`
+
+Primary files:
+
+- `summary.json`
+- `rule_table.csv`
+- `primitive_classification.csv`
+- `persistence_metrics_by_rule.csv`
+- `persistence_classification.csv`
+- `primitive_class_enrichment.csv`
+- `initial_condition_sensitivity.csv`
+- `motif_examples.csv`
+- `perturbation_diagnostics.csv`
+- `control_rule_summary.csv`
+- `example_spacetime_diagrams/`
+
+Reason retained:
+
+- Probe DAX-G0 is the first exhaustive minimal rule-space audit. It enumerates
+  all 256 elementary cellular automata instead of hand-designing a substrate.
+
+Result in one line:
+
+- Nontrivial persistence was detected and enriched among DAR-complete and
+  DAR-asymmetric ECA rules; this motivates motif anatomy and robustness, not an
+  Omega claim.
+
 The important public caveat:
 
 ```text

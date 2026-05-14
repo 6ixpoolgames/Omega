@@ -1,0 +1,56 @@
+{
+  "probe": "DAX_G0_minimal_DAR_rule_space_persistence",
+  "status": "COMPLETE",
+  "runtime_seconds": 64.506,
+  "rule_space": {
+    "q": 2,
+    "radius": 1,
+    "rule_count": 256,
+    "ring_size": 256,
+    "T": 256,
+    "n_seeds_per_ic": 64
+  },
+  "primary_result": {
+    "nontrivial_persistence_found": true,
+    "localized_persistence_rule_count": 4,
+    "transported_identity_rule_count": 142,
+    "emitter_or_generator_rule_count": 44,
+    "DAR_complete_enriched": true,
+    "DAR_asymmetric_enriched": true,
+    "metrics_select_static_or_chaos": false
+  },
+  "top_candidate_rules": [
+    145,
+    131,
+    62,
+    118,
+    109,
+    73,
+    230,
+    188,
+    54,
+    61,
+    163,
+    177
+  ],
+  "control_rule_results": {
+    "collapse_rules": 30,
+    "frozen_order_rules": 32,
+    "global_periodic_rules": 0,
+    "chaotic_rules": 2
+  },
+  "best_candidate_profile": {
+    "rule": 145,
+    "classification": "localized_persistence",
+    "localized_component_lifetime_max": 260.0,
+    "recurrence_up_to_shift": 0.8140055338541666,
+    "motif_material_turnover": 0.57952880859375,
+    "translation_velocity_estimate": -0.0022989908854166665,
+    "future_distinct_descendant_count": 16.0,
+    "frozen_order_index": 0.0625,
+    "chaos_index": 0.504433861805153
+  },
+  "recommendation": "G0 found transported identity enriched in DAR-complete rules; proceed to G1 motif anatomy.",
+  "next_probe": "DAX_G1_persistence_motif_anatomy_and_robustness",
+  "estimator_warnings": []
+}

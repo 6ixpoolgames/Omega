@@ -54,6 +54,7 @@ The public tree keeps only the current/relevant compact results:
 - `probe_DA2_relational_edge_memory_world_results/`
 - `probe_DA2_relational_edge_memory_world_revision_results/`
 - `probe_DAX_branching_connection_graph_validity_revised_results/`
+- `probe_DAX_G0_minimal_DAR_rule_space_persistence_results/`
 
 Older exploratory outputs are summarized in the docs but not exposed as result
 folders in the current public tree.
@@ -111,6 +112,7 @@ CuPy's kernel cache at `.cupy-cache/`.
 - `probe_DA1c_noncommutative_relational_history.py`
 - `probe_DA2_relational_edge_memory_world.py`
 - `probe_DAX_branching_connection_graph_validity_revised.py`
+- `probe_DAX_G0_minimal_DAR_rule_space_persistence.py`
 
 Historical scripts remain in the repository because they document how the
 current object was reached, but new work should normally start from Probe 09/10
@@ -121,11 +123,11 @@ or from the next formalization probe described in the manual.
 Current latest probe:
 
 ```text
-Probe DAX-R: Branching Connection Graph Validity
+Probe DAX-G0: Minimal DAR Rule-Space Persistence
 ```
 
-Probe DAX-R reframed the primitive branch as a substrate/admissibility test for
-connection-like relation. It did not pass smoke: W8 showed some path-specific
-and relation-ablation signal, but failed substrate validity because local-memory
-fakeouts were not rejected, loop closure was trivial, and lineage caps were hit
-frequently. Do not proceed to viable-slack tests on this substrate.
+Probe DAX-G0 exhaustively audited the 256 elementary cellular automata rules as
+the smallest DAR-capable local rule space. It found nontrivial persistence and
+transported-identity classes enriched among DAR-complete and DAR-asymmetric
+rules. This is promising as a rule-space result, not an Omega validation; the
+next step is motif anatomy and robustness.

@@ -1416,6 +1416,97 @@ Next work should redesign the connection substrate, especially lineage-cap
 handling, loop closure, and local-memory rejection.
 ```
 
+### DAX-G0: Minimal DAR Rule-Space Persistence
+
+DAX-G0 opened a more principled primitive-world route by exhaustively auditing
+the elementary cellular automata rule space rather than hand-designing another
+interesting substrate.
+
+Run:
+
+- research note:
+  `docs/research_notes/primitive_branch/minimal_DAR_rule_space_persistence.md`
+- script: `probe_DAX_G0_minimal_DAR_rule_space_persistence.py`
+- result directory:
+  `probe_DAX_G0_minimal_DAR_rule_space_persistence_results/`
+- rule space: all `256` elementary cellular automata
+- `q=2`, radius `1`
+- ring size `256`
+- horizon `T=256`
+- six initial-condition families
+- `64` seeds per initial-condition family
+- final retained run used `18` CPU workers across rules
+- runtime: about `65` seconds
+
+Hardware note:
+
+- The first completed G0 run was single-process and took about `501` seconds.
+- The retained run uses rule-level multiprocessing with 18 workers, which is the
+  appropriate hardware path for this workload.
+- GPU was not used because ECA motif/component analysis is dominated by many
+  small rule-level simulations and Python-side structure extraction, not dense
+  tensor kernels.
+
+Primary result:
+
+```text
+nontrivial_persistence_found: true
+localized_persistence_rule_count: 4
+transported_identity_rule_count: 142
+emitter_or_generator_rule_count: 44
+DAR_complete_enriched: true
+DAR_asymmetric_enriched: true
+metrics_select_static_or_chaos: false
+```
+
+Primitive enrichment:
+
+```text
+self_only_rules:                         -0.242 enrichment
+neighbor_dependent_symmetric_rules:      -0.192 enrichment
+neighbor_dependent_asymmetric_rules:     +0.070 enrichment
+irreversible_neighbor_dependent_rules:   -0.014 enrichment
+DAR_complete_rules:                      +0.032 enrichment
+DAR_asymmetric_rules:                    +0.102 enrichment
+```
+
+Top candidate rules:
+
+```text
+145, 131, 62, 118, 109, 73, 230, 188, 54, 61, 163, 177
+```
+
+Best candidate profile:
+
+```text
+rule: 145
+classification: localized_persistence
+localized_component_lifetime_max: 260.0
+recurrence_up_to_shift: 0.814
+motif_material_turnover: 0.580
+translation_velocity_estimate: -0.0023
+future_distinct_descendant_count: 16
+frozen_order_index: 0.063
+chaos_index: 0.504
+```
+
+Interpretation:
+
+- This is the first positive primitive-branch result after the DA/DAX custom
+  world failures.
+- The result is not that a handpicked rule works. The whole minimal ECA rule
+  space was audited.
+- Nontrivial persistence is enriched in DAR-complete and especially
+  DAR-asymmetric rules.
+- The metrics did not simply select static/frozen or chaotic controls.
+
+Decision:
+
+```text
+Proceed to DAX-G1: Persistence Motif Anatomy and Robustness.
+Treat G1 as diagnostic anatomy, not theory validation.
+```
+
 ```text
 COM fiber transport object
 certified viable fiber node

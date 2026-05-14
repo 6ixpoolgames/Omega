@@ -166,6 +166,33 @@ but the first branching connection graph implementation is not yet a valid
 substrate for viable-slack tests.
 ```
 
+## DAX-G0 Update: Exhaustive Minimal Rule-Space Audit
+
+DAX-G0 changed strategy. Instead of hand-designing another substrate, it
+exhaustively audited the elementary cellular automata rule space:
+
+```text
+q = 2
+radius = 1
+rule_count = 256
+```
+
+This is the smallest local rule space that can instantiate distinction,
+relation, and simple asymmetry/irreversibility.
+
+The first G0 result is promising but still modest:
+
+```text
+nontrivial persistence exists;
+DAR-complete rules are enriched for nontrivial persistence;
+DAR-asymmetric rules are more strongly enriched;
+metrics do not simply select static/frozen or chaotic controls.
+```
+
+The next step is motif anatomy and robustness. The result does not validate
+Omega, but it gives the primitive branch a cleaner empirical foothold than the
+custom DA/DAX worlds.
+
 ## DA Branch Implication
 
 The next primitive-branch work should focus on relation as a connection-like
