@@ -59,6 +59,7 @@ The public tree keeps only the current/relevant compact results:
 - `probe_DAX_G2_persistence_phase_map_minimal_rule_spaces_results/`
 - `probe_DAX_G2b_control_adjusted_primitive_guardrail_results/`
 - `probe_DAX_G3_q3r1_guardrailed_phase_map_results/`
+- `probe_DAX_G4_q3r1_motif_ecology_mechanism_results/`
 
 Older exploratory outputs are summarized in the docs but not exposed as result
 folders in the current public tree.
@@ -121,6 +122,7 @@ CuPy's kernel cache at `.cupy-cache/`.
 - `probe_DAX_G2_persistence_phase_map_minimal_rule_spaces.py`
 - `probe_DAX_G2b_control_adjusted_primitive_guardrail.py`
 - `probe_DAX_G3_q3r1_guardrailed_phase_map.py`
+- `probe_DAX_G4_q3r1_motif_ecology_mechanism.py`
 
 Historical scripts remain in the repository because they document how the
 current object was reached, but new work should normally start from Probe 09/10
@@ -131,12 +133,13 @@ or from the next formalization probe described in the manual.
 Current latest probe:
 
 ```text
-Probe DAX-G3: q=3/r=1 Guardrailed Phase Map
+Probe DAX-G4: q=3/r=1 Motif Ecology and Mechanism Anatomy
 ```
 
-Probe DAX-G3 tested whether q=3/r=1 contains a reproducible class of
-control-adjusted primitive-positive motifs. It passed, but not strongly:
-guardrails stayed clean, 9 candidates were control-adjusted positive, and 25 had
-non-emission composition-positive readouts. The strongest raw adjusted rows were
-often emission-only or local-phase/self fakeouts, so the next step is focused
-q=3/r=1 motif ecology rather than broader rule-space expansion.
+Probe DAX-G4 analyzed the full G3 Stage 2 q=3/r=1 candidate set rather than
+broadening rule space. It found interpretable motif families, nonempty invariant
+overlap, and 3 rules satisfying persistence + relation + asymmetry + local-phase
+rejection + non-emission composition. Composition overlaps validation but remains
+too sparse and too weakly aligned with strongest persistence to carry the main
+claim. The recommended next step is a q=3/r=1 detector freeze for
+persistence/relation/asymmetry, with composition tracked as a secondary branch.

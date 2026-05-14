@@ -324,6 +324,37 @@ DAX-G4 should study motif ecology and mechanism inside q=3/r=1;
 do not broaden rule space yet.
 ```
 
+## DAX-G4 Update: q=3/r=1 Has Ecology, But Composition Is Secondary
+
+DAX-G4 stayed inside the G3 q=3/r=1 Stage 2 set and analyzed motif families,
+fertile bands, mechanism summaries, invariant overlap, and the composition gap.
+
+Primary readout:
+
+```text
+analyzed_rule_count: 225
+motif_family_count: 11
+all_core_invariants_count: 3
+persistence_relation_asymmetry_count: 34
+composition_overlap_count: 3
+```
+
+This supports the trunk as a motif ecology rather than an isolated artifact.
+However, the strongest persistence/load-bearing family does not carry the
+strongest composition signal:
+
+```text
+strong_persistence_composition_overlap_count: 0
+```
+
+Current implication:
+
+```text
+The next validation step should freeze and prospectively test the
+persistence/relation/asymmetry detector.
+Composition remains a secondary tracked branch until its overlap improves.
+```
+
 ## DA Branch Implication
 
 The next primitive-branch work should focus on relation as a connection-like

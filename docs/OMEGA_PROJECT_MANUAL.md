@@ -768,6 +768,11 @@ horizons 900-2400
   9 control-adjusted positives and no remaining S7/S8 control leaks. This is a
   pass but not a strong pass: composition-positive readouts exist, but they are
   not yet cleanly unified with the strongest persistence/load-bearing rows.
+- Probe DAX-G4 anatomized the full G3 Stage 2 q=3/r=1 candidate set. It found
+  11 descriptive motif families, 3 all-core invariant overlaps, and a clear
+  composition gap: new-motif outcomes can persist, but composition does not
+  overlap the strongest persistence band. This supports a detector freeze for
+  persistence/relation/asymmetry while keeping composition secondary.
 - Controls behave differently:
   - `boundary_v2` is pseudo-risk/propagation-negative;
   - `joint_basin` can show local transport but usually fails multi-step
@@ -849,6 +854,14 @@ DAX-G3 ran that focused q=3/r=1 map and reproduced the trunk. The correct next
 primitive-branch step is DAX-G4 motif ecology/mechanism anatomy inside q=3/r=1.
 Do not broaden rule space until the mechanism and composition overlap are
 understood.
+
+DAX-G4 completed that anatomy pass. It found coherent descriptive families and
+nonempty invariant overlap, but composition remains sparse relative to the
+strongest persistence/load-bearing candidates. The next primitive-branch step is
+therefore DAX-G5: freeze the q=3/r=1 detector for persistence/relation/asymmetry
+and use held-out prediction or prospective sampling to test whether the fertile
+bands predict new validation positives. Composition should remain a tracked
+secondary readout until it earns a primary criterion.
 
 ### Probe 13: Formal COM Fiber Transport Object
 

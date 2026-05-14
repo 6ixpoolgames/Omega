@@ -786,6 +786,39 @@ Result in one line:
   remaining S7/S8 leaks, but did not reach strong-pass criteria because
   composition and strongest persistence are not yet cleanly unified.
 
+### Probe DAX-G4: q=3/r=1 Motif Ecology and Mechanism Anatomy
+
+Directory:
+
+- `probe_DAX_G4_q3r1_motif_ecology_mechanism_results/`
+
+Primary files:
+
+- `summary.json`
+- `analyzed_rule_manifest.csv`
+- `motif_family_assignments.csv`
+- `motif_family_summary.csv`
+- `fertile_band_bins.csv`
+- `fertile_band_summary.csv`
+- `mechanism_anatomy.csv`
+- `invariant_overlap_table.csv`
+- `composition_gap_audit.csv`
+- `new_motif_persistence_check.csv`
+- `validation_leaderboard.csv`
+- `discovery_leaderboard.csv`
+- `spacetime_examples/`
+
+Reason retained:
+
+- Probe DAX-G4 explains the q=3/r=1 trunk discovered in G3 rather than
+  broadening the search space.
+
+Result in one line:
+
+- The q=3/r=1 candidate set has interpretable motif families and 3 all-core
+  invariant overlaps, but composition remains too sparse and too weakly aligned
+  with strongest persistence to be a primary validation criterion.
+
 The important public caveat:
 
 ```text

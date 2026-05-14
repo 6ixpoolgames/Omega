@@ -1885,6 +1885,72 @@ Keep composition separate from persistence/load-bearing until the overlap is
 cleaner.
 ```
 
+## 2026-05-15: Probe DAX-G4 q=3/r=1 Motif Ecology and Mechanism Anatomy
+
+Script:
+
+```text
+probe_DAX_G4_q3r1_motif_ecology_mechanism.py
+```
+
+Result directory:
+
+```text
+probe_DAX_G4_q3r1_motif_ecology_mechanism_results/
+```
+
+G4 stayed inside q=3/r=1 and reused the G3 Stage 2 measurements. The new-motif
+persistence check reused G3's T=512, ring=256, N=96 measurements, which exceed
+the requested N=64 sanity check.
+
+Primary result:
+
+```text
+analyzed_rule_count: 225
+control_adjusted_positive_count: 9
+motif_family_count: 11
+families_identified: true
+fertile_bands_identified: true
+invariant_overlap_nonempty: true
+composition_gap_explained: true
+new_motif_outcomes_persistent: true
+```
+
+Invariant overlap:
+
+```text
+all_core_invariants_count: 3
+persistence_relation_asymmetry_count: 34
+composition_overlap_count: 3
+```
+
+Composition gap:
+
+```text
+new_motif_count: 7
+new_motif_persistent_count: 4
+strong_persistence_composition_overlap_count: 0
+```
+
+Interpretation:
+
+- q=3/r=1 contains a real descriptive motif ecology, not only isolated hits.
+- The 9 validation positives split across strong-persistence, weak-persistence,
+  and composition-overlap families.
+- Composition is not an emission-only artifact in this pass, but it is sparse
+  and does not overlap the strongest persistence band.
+- There are 25 near-validation persistence/relation/asymmetry rules that fail
+  composition, which makes persistence/relation/asymmetry the cleaner next
+  detector target.
+
+Decision:
+
+```text
+Proceed to DAX-G5 detector freeze for q=3/r=1 persistence/relation/asymmetry.
+Track composition as a secondary branch.
+Do not promote composition into the primary validation claim yet.
+```
+
 ```text
 COM fiber transport object
 certified viable fiber node

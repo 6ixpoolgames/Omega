@@ -187,3 +187,38 @@ The result is still not a broad theory claim. The next question is mechanism:
 What are these motifs doing,
 and when does composition overlap with persistence/relation/asymmetry?
 ```
+
+## DAX-G4 Update
+
+DAX-G4 answered that mechanism question descriptively by reanalyzing all `225`
+G3 Stage 2 q=3/r=1 candidates.
+
+Result:
+
+```text
+motif_family_count: 11
+control_adjusted_positive_count: 9
+all_core_invariants_count: 3
+persistence_relation_asymmetry_count: 34
+composition_overlap_count: 3
+```
+
+The ecology is not random: validation positives split into strong-persistence,
+weak-persistence, and composition-overlap families, while a larger
+near-validation class carries persistence/relation/asymmetry without
+composition.
+
+Composition remains real but secondary:
+
+```text
+new_motif_count: 7
+new_motif_persistent_count: 4
+strong_persistence_composition_overlap_count: 0
+```
+
+Current implication:
+
+```text
+Freeze q=3/r=1 persistence/relation/asymmetry as the next detector target.
+Track composition, but do not make it the primary validation criterion yet.
+```
