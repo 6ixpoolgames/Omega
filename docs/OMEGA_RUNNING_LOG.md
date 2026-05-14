@@ -1604,6 +1604,100 @@ the open problem is whether richer minimal spaces recover relation/asymmetry
 load-bearing and composition.
 ```
 
+### DAX-G2 Smoke: Persistence Phase Map Across Minimal Rule Spaces
+
+DAX-G2 tested the smallest principled expansions beyond ECA:
+
+```text
+q=3, radius=1  -> more distinction richness
+q=2, radius=2  -> more relation context
+```
+
+Run:
+
+- script: `probe_DAX_G2_persistence_phase_map_minimal_rule_spaces.py`
+- result directory:
+  `probe_DAX_G2_persistence_phase_map_minimal_rule_spaces_results/`
+- sampled rules:
+  - `350` q=3/r=1 rules
+  - `350` q=2/r=2 rules
+  - `33` ECA anchors
+- stage 1: `T=192`, ring `256`, `48` seeds
+- stage 2: `T=512`, ring `256`, `64` seeds
+- stage 2 cap: `90` rules
+- `18` CPU workers
+- runtime: about `3.1` minutes
+
+Hardware note:
+
+- GPU was not used. This workload is many small cellular automaton simulations
+  plus motif bookkeeping; process-level CPU parallelism is the right path.
+
+Primary smoke result:
+
+```text
+ECA_anchor confirmed motifs: 2
+q3_radius1 confirmed motifs: 6
+q2_radius2 confirmed motifs: 3
+
+q3_radius1 relation positives: 4
+q3_radius1 asymmetry positives: 5
+q3_radius1 composition positives: 4
+
+q2_radius2 relation positives: 2
+q2_radius2 asymmetry positives: 1
+q2_radius2 composition positives: 2
+```
+
+Best candidate:
+
+```text
+space: q3_radius1
+rule_id: q3r1_s5_0016
+stratum: S5_asymmetric_neighbor_dependent
+confirmed_fraction: 0.75
+recurrence_up_to_shift: 0.772
+material_turnover_rate: 0.234
+relation_dependence_delta: 0.0276
+asymmetry_dependence_delta: 0.0785
+post_perturbation_survival_rate: 1.000
+composition_outcome: emission
+frozen_order_index: 0.0157
+chaos_index: 0.101
+```
+
+Guardrail failure:
+
+```text
+controls_rejected: false
+q3_radius1 control leaks: 18
+q2_radius2 control leaks: 16
+```
+
+Interpretation:
+
+- The expanded spaces produced exactly the kind of missing-invariant hints G2
+  was designed to look for: q=3/r=1 especially shows persistence plus
+  relation/asymmetry positive deltas and nonzero interaction readouts.
+- The result is not interpretable as a pass because symmetric and self/control
+  strata leaked into persistence-positive classes.
+- The likely issue is that the current persistence classifier is too permissive
+  for expanded spaces; it allows symmetric transported/domain motifs to count
+  before asymmetry/load-bearing filters are applied.
+- The composition readout is also preliminary: several positives are broad
+  `emission` outcomes, not yet stable compositional motif algebra.
+
+Decision:
+
+```text
+Do not run the full G2 main pass yet.
+Run a DAX-G2 metric guardrail revision first:
+  tighten control rejection;
+  separate persistence from load-bearing persistence;
+  require control-adjusted relation/asymmetry deltas before composition claims;
+  then rerun the q=3/r=1 branch if controls are clean.
+```
+
 ```text
 COM fiber transport object
 certified viable fiber node

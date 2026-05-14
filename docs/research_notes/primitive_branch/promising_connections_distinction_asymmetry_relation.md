@@ -230,6 +230,44 @@ It does not yet establish load-bearing asymmetry or motif composition.
 The next primitive probe should be a phase map, not a claim escalation.
 ```
 
+## DAX-G2 Smoke Update: Phase Map Hints With Guardrail Failure
+
+DAX-G2 tested whether missing G1 invariants reappear under the smallest
+rule-space expansions:
+
+```text
+q=3/r=1: more distinction richness
+q=2/r=2: more relation context
+```
+
+The smoke result is the most encouraging primitive-branch signal since G0/G1:
+
+```text
+q3/r1 confirmed motifs: 6
+q3/r1 relation positives: 4
+q3/r1 asymmetry positives: 5
+q3/r1 composition positives: 4
+best q3/r1 candidate: q3r1_s5_0016
+```
+
+However, the result is not interpretable as a pass:
+
+```text
+controls_rejected: false
+symmetric/self-control leaks were common
+```
+
+This matters because relation/asymmetry/composition cannot be claimed if the
+same persistence classifier also admits symmetric or center-dominant controls.
+
+Current implication:
+
+```text
+q=3/r=1 deserves more attention,
+but only after a guardrail revision that distinguishes generic persistence from
+control-adjusted load-bearing persistence.
+```
+
 ## DA Branch Implication
 
 The next primitive-branch work should focus on relation as a connection-like

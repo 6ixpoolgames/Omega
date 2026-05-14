@@ -34,6 +34,7 @@ Project stance:
    - `probe_DAX_branching_connection_graph_validity_revised.py`
    - `probe_DAX_G0_minimal_DAR_rule_space_persistence.py`
    - `probe_DAX_G1_persistence_motif_anatomy_and_robustness.py`
+   - `probe_DAX_G2_persistence_phase_map_minimal_rule_spaces.py`
 5. Inspect compact summaries, not raw caches:
    - `probe_09_robust_fiber_reachability_results/summary.json`
    - `probe_10_com_viable_propagation_robustness_extended_results/summary.json`
@@ -751,6 +752,11 @@ horizons 900-2400
   remains enriched after filtering, but DAR-complete/DAR-asymmetric enrichment
   does not survive the stricter anatomy filter, and the motif-composition
   sidecar is negative.
+- Probe DAX-G2 ran a budgeted minimal-expansion smoke over q=3/r=1 and q=2/r=2
+  sampled cellular automata. Expanded spaces produced stronger missing-invariant
+  hints than ECA anchors, especially q=3/r=1, but symmetric/self-control strata
+  leaked into persistence classes. This blocks interpretation and makes the next
+  task a metric guardrail revision rather than a full phase-map scale-up.
 - Controls behave differently:
   - `boundary_v2` is pseudo-risk/propagation-negative;
   - `joint_basin` can show local transport but usually fails multi-step
@@ -817,6 +823,11 @@ it weakens the primitive-enrichment claim after stricter anatomy filtering. The
 correct next step is a DAX-G2 phase map across minimal rule spaces, with the
 explicit goal of testing whether relation/asymmetry load-bearing and
 composition reappear under richer but still principled conditions.
+
+DAX-G2 smoke found promising q=3/r=1 and q=2/r=2 hits, including nonzero
+composition readouts, but failed the control-rejection guardrail. The next
+primitive-branch step is not a larger run. It is a G2 metric guardrail revision
+that separates persistence from control-adjusted load-bearing persistence.
 
 ### Probe 13: Formal COM Fiber Transport Object
 

@@ -682,6 +682,40 @@ Result in one line:
   but DAR-complete/asymmetric enrichment disappears after anatomy filtering and
   the interaction-composition sidecar is negative.
 
+### Probe DAX-G2: Persistence Phase Map Across Minimal Rule Spaces
+
+Directory:
+
+- `probe_DAX_G2_persistence_phase_map_minimal_rule_spaces_results/`
+
+Primary files:
+
+- `summary.json`
+- `sampled_rule_manifest.csv`
+- `rule_space_scan_metrics.csv`
+- `stage1_persistence_classification.csv`
+- `stage1_stratum_enrichment.csv`
+- `stage2_candidate_rules.csv`
+- `stage2_motif_anatomy.csv`
+- `stage2_robustness.csv`
+- `stage2_primitive_load_bearing.csv`
+- `stage2_interaction_composition.csv`
+- `expanded_vs_ECA_comparison.csv`
+- `control_summary.csv`
+- `spacetime_examples/`
+
+Reason retained:
+
+- Probe DAX-G2 is the first minimal expansion beyond ECA: q=3/r=1 and q=2/r=2
+  sampled rule spaces, with ECA anchors.
+
+Result in one line:
+
+- Expanded spaces showed promising persistence, relation/asymmetry, and
+  interaction/composition hints, especially q=3/r=1, but symmetric/self-control
+  leakage blocks interpretation; this is a smoke result requiring metric
+  guardrail revision.
+
 The important public caveat:
 
 ```text

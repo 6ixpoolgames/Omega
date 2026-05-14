@@ -90,3 +90,38 @@ minimal rule space contains robust local persistence motifs;
 relation-dependence remains the live primitive signal;
 asymmetry and composition are not yet established by G1.
 ```
+
+## DAX-G2 Smoke Update
+
+DAX-G2 made the smallest principled expansion beyond ECA:
+
+```text
+q=3, radius=1
+q=2, radius=2
+```
+
+The budgeted smoke produced encouraging hits:
+
+```text
+q3/r1 confirmed motifs: 6
+q2/r2 confirmed motifs: 3
+q3/r1 relation positives: 4
+q3/r1 asymmetry positives: 5
+q3/r1 composition positives: 4
+```
+
+But the guardrail failed:
+
+```text
+controls_rejected: false
+q3/r1 control leaks: 18
+q2/r2 control leaks: 16
+```
+
+So G2 should be read as:
+
+```text
+minimal expansion is promising enough to continue;
+the current expanded-space persistence classifier is too permissive;
+full G2 scale-up should wait for a metric guardrail revision.
+```
