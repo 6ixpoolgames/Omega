@@ -193,6 +193,43 @@ The next step is motif anatomy and robustness. The result does not validate
 Omega, but it gives the primitive branch a cleaner empirical foothold than the
 custom DA/DAX worlds.
 
+## DAX-G1 Update: Robust Motifs, Narrower Primitive Claim
+
+DAX-G1 anatomized the G0 candidates across longer horizons, larger rings,
+perturbations, primitive ablations, and pair interactions.
+
+Result:
+
+```text
+confirmed robust motif rules: 169, 225, 73, 109
+motif type: emitter-like
+controls rejected: collapse, frozen, chaotic, identity/shift
+stable across horizon and ring size: true
+robust to light perturbation: true
+```
+
+This confirms that the G0 signal was not only static order, chaos, or a trivial
+identity/shift artifact.
+
+The important caution is that the stricter anatomy filter narrows the primitive
+interpretation:
+
+```text
+DAR-complete enrichment after filter: false
+DAR-asymmetric enrichment after filter: false
+relation-dependent enrichment after filter: true
+asymmetry-dependent enrichment after filter: false
+composition-positive interactions: 0
+```
+
+Implication:
+
+```text
+G1 supports robust local persistence in minimal rule space.
+It does not yet establish load-bearing asymmetry or motif composition.
+The next primitive probe should be a phase map, not a claim escalation.
+```
+
 ## DA Branch Implication
 
 The next primitive-branch work should focus on relation as a connection-like

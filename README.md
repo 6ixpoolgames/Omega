@@ -55,6 +55,7 @@ The public tree keeps only the current/relevant compact results:
 - `probe_DA2_relational_edge_memory_world_revision_results/`
 - `probe_DAX_branching_connection_graph_validity_revised_results/`
 - `probe_DAX_G0_minimal_DAR_rule_space_persistence_results/`
+- `probe_DAX_G1_persistence_motif_anatomy_and_robustness_results/`
 
 Older exploratory outputs are summarized in the docs but not exposed as result
 folders in the current public tree.
@@ -113,6 +114,7 @@ CuPy's kernel cache at `.cupy-cache/`.
 - `probe_DA2_relational_edge_memory_world.py`
 - `probe_DAX_branching_connection_graph_validity_revised.py`
 - `probe_DAX_G0_minimal_DAR_rule_space_persistence.py`
+- `probe_DAX_G1_persistence_motif_anatomy_and_robustness.py`
 
 Historical scripts remain in the repository because they document how the
 current object was reached, but new work should normally start from Probe 09/10
@@ -123,11 +125,11 @@ or from the next formalization probe described in the manual.
 Current latest probe:
 
 ```text
-Probe DAX-G0: Minimal DAR Rule-Space Persistence
+Probe DAX-G1: Persistence Motif Anatomy
 ```
 
-Probe DAX-G0 exhaustively audited the 256 elementary cellular automata rules as
-the smallest DAR-capable local rule space. It found nontrivial persistence and
-transported-identity classes enriched among DAR-complete and DAR-asymmetric
-rules. This is promising as a rule-space result, not an Omega validation; the
-next step is motif anatomy and robustness.
+Probe DAX-G1 anatomized the G0 persistence candidates. It confirmed four robust
+emitter-like motif rules and rejected collapse/frozen/chaotic/identity controls.
+The result is promising but narrower than G0: relation-dependence remains
+enriched after filtering, while DAR-complete and DAR-asymmetric enrichment does
+not survive the stricter anatomy filter.

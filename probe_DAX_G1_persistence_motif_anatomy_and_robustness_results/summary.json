@@ -1,0 +1,64 @@
+{
+  "probe": "DAX_G1_persistence_motif_anatomy_and_robustness",
+  "status": "COMPLETE",
+  "runtime_seconds": 999.131,
+  "candidate_rule_count": 32,
+  "control_rule_count": 22,
+  "confirmed_persistence_motif_count": 4,
+  "confirmed_rules": [
+    169,
+    225,
+    73,
+    109
+  ],
+  "top_confirmed_rule": {
+    "rule": 169,
+    "motif_type": "emitter",
+    "motif_period": 0.0,
+    "translation_velocity": -0.020403385162353516,
+    "recurrence_up_to_shift": 0.7690014839172363,
+    "material_turnover_rate": 0.24637524286905924,
+    "background_contrast": 1.0,
+    "post_perturbation_survival_rate": 1.0,
+    "future_distinct_descendant_count": 236.0,
+    "frozen_order_index": 0.07021077473958333,
+    "chaos_index": 0.265814926907487
+  },
+  "control_results": {
+    "collapse_controls_rejected": true,
+    "frozen_controls_rejected": true,
+    "chaotic_controls_rejected": true,
+    "identity_shift_controls_rejected": true
+  },
+  "primitive_association": {
+    "DAR_complete_enriched_after_filter": false,
+    "DAR_asymmetric_enriched_after_filter": false,
+    "relation_dependent_enriched_after_filter": true,
+    "asymmetry_dependent_enriched_after_filter": false
+  },
+  "robustness": {
+    "stable_across_T": true,
+    "stable_across_ring_size": true,
+    "robust_to_light_perturbation": true
+  },
+  "sidecars": {
+    "recoverability": {
+      "ran": true,
+      "robust_motif_count": 15,
+      "best_post_perturbation_survival_rate": 1.0
+    },
+    "primitive_load_bearing": {
+      "ran": true,
+      "relation_dependence_positive_count": 10,
+      "asymmetry_dependence_positive_count": 7
+    },
+    "interaction_composition": {
+      "ran": true,
+      "composition_positive_count": 0,
+      "stable_product_rate_best": 0.0
+    }
+  },
+  "recommendation": "G1 confirms multiple robust motif candidates; proceed to DAX-G2 phase map across minimal rule spaces.",
+  "next_probe": "DAX_G2_persistence_phase_map_across_minimal_rule_spaces",
+  "estimator_warnings": []
+}

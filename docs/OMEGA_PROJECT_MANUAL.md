@@ -1,6 +1,6 @@
 # Omega Project Manual
 
-Last updated: 2026-05-13
+Last updated: 2026-05-14
 
 Repository: https://github.com/6ixpoolgames/Omega
 
@@ -33,6 +33,7 @@ Project stance:
    - `probe_DA2_relational_edge_memory_world.py`
    - `probe_DAX_branching_connection_graph_validity_revised.py`
    - `probe_DAX_G0_minimal_DAR_rule_space_persistence.py`
+   - `probe_DAX_G1_persistence_motif_anatomy_and_robustness.py`
 5. Inspect compact summaries, not raw caches:
    - `probe_09_robust_fiber_reachability_results/summary.json`
    - `probe_10_com_viable_propagation_robustness_extended_results/summary.json`
@@ -744,6 +745,12 @@ horizons 900-2400
   elementary cellular automata as the smallest DAR-capable local rule space. It
   found nontrivial persistence enriched among DAR-complete and DAR-asymmetric
   rules, motivating a G1 motif-anatomy probe.
+- Probe DAX-G1 anatomized the G0 candidates and confirmed four robust
+  emitter-like persistence motifs across horizons, ring sizes, and light
+  perturbations. It also narrowed the primitive claim: relation-dependence
+  remains enriched after filtering, but DAR-complete/DAR-asymmetric enrichment
+  does not survive the stricter anatomy filter, and the motif-composition
+  sidecar is negative.
 - Controls behave differently:
   - `boundary_v2` is pseudo-risk/propagation-negative;
   - `joint_basin` can show local transport but usually fails multi-step
@@ -803,8 +810,13 @@ connection-like relation.
 DAX-G0 is the first positive result in the primitive branch since the DA0-DA2
 failures. It is still modest: it shows that nontrivial persistence exists in a
 minimal exhaustible DAR-capable rule space and is enriched in the expected
-primitive classes. The correct next step is anatomy and robustness of detected
-motifs, not a theory claim.
+primitive classes.
+
+DAX-G1 confirms that some of those motifs are robust individual structures, but
+it weakens the primitive-enrichment claim after stricter anatomy filtering. The
+correct next step is a DAX-G2 phase map across minimal rule spaces, with the
+explicit goal of testing whether relation/asymmetry load-bearing and
+composition reappear under richer but still principled conditions.
 
 ### Probe 13: Formal COM Fiber Transport Object
 

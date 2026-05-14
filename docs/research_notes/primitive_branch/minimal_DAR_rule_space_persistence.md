@@ -53,3 +53,40 @@ that the minimal DAR-capable rule space contains nontrivial persistence and that
 such persistence is enriched among relation-dependent and asymmetric or
 irreversible rules. It would motivate a follow-up anatomy probe, not a theory
 claim.
+
+## DAX-G1 Update
+
+DAX-G1 ran that anatomy probe. It confirmed four robust emitter-like persistence
+motif rules:
+
+```text
+169, 225, 73, 109
+```
+
+These rules survived horizon/ring-size checks and light perturbation, and the
+major collapse, frozen, chaotic, identity, and shift controls were rejected.
+
+The update is scientifically mixed. The persistence motifs look real, but the
+strong G0 enrichment story narrows under stricter filtering:
+
+```text
+DAR-complete enriched after filter: false
+DAR-asymmetric enriched after filter: false
+relation-dependent enriched after filter: true
+asymmetry-dependent enriched after filter: false
+```
+
+The interaction sidecar was also negative:
+
+```text
+composition-positive motifs: 0
+best stable product rate: 0.000
+```
+
+So the correct interpretation is:
+
+```text
+minimal rule space contains robust local persistence motifs;
+relation-dependence remains the live primitive signal;
+asymmetry and composition are not yet established by G1.
+```

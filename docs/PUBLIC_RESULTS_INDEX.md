@@ -650,6 +650,38 @@ Result in one line:
   DAR-asymmetric ECA rules; this motivates motif anatomy and robustness, not an
   Omega claim.
 
+### Probe DAX-G1: Persistence Motif Anatomy and Robustness
+
+Directory:
+
+- `probe_DAX_G1_persistence_motif_anatomy_and_robustness_results/`
+
+Primary files:
+
+- `summary.json`
+- `candidate_rule_set.csv`
+- `control_rule_set.csv`
+- `motif_anatomy_by_rule.csv`
+- `horizon_scale_robustness.csv`
+- `perturbation_response.csv`
+- `future_distinct_descendants.csv`
+- `primitive_load_bearing_sidecar.csv`
+- `motif_interaction_sidecar.csv`
+- `primitive_association_after_filter.csv`
+- `candidate_vs_control_summary.csv`
+- `spacetime_examples/`
+
+Reason retained:
+
+- Probe DAX-G1 anatomizes the G0 candidate motifs across longer horizons,
+  larger rings, perturbations, primitive ablations, and pair interactions.
+
+Result in one line:
+
+- G1 confirms four robust emitter-like motif rules and rejects major controls,
+  but DAR-complete/asymmetric enrichment disappears after anatomy filtering and
+  the interaction-composition sidecar is negative.
+
 The important public caveat:
 
 ```text

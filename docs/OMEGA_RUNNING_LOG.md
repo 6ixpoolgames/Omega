@@ -1507,6 +1507,103 @@ Proceed to DAX-G1: Persistence Motif Anatomy and Robustness.
 Treat G1 as diagnostic anatomy, not theory validation.
 ```
 
+### DAX-G1: Persistence Motif Anatomy and Robustness
+
+DAX-G1 took the G0 candidates and controls and asked whether the apparent
+persistence is identity-through-transformation rather than frozen order, chaos,
+collapse, or shift/identity triviality.
+
+Run:
+
+- script: `probe_DAX_G1_persistence_motif_anatomy_and_robustness.py`
+- result directory:
+  `probe_DAX_G1_persistence_motif_anatomy_and_robustness_results/`
+- candidates: G0 localized, transported-identity, and emitter/generator rules
+- controls: collapse, frozen/orderly, chaotic, identity/shift/complement rules
+- horizons: `T=256,512,1024`
+- ring sizes: `256,512`
+- eight initial-condition families including two G0 motif-focused seeds
+- `256` seeds per evaluation cell
+- `18` CPU workers
+- runtime: about `16.7` minutes
+
+Hardware note:
+
+- GPU was not used. This probe is dominated by many ECA simulations and
+  motif/component bookkeeping rather than dense numeric kernels. Rule/evaluation
+  multiprocessing is the correct path for this workload.
+
+Primary result:
+
+```text
+confirmed_persistence_motif_count: 4
+confirmed_rules: 169, 225, 73, 109
+top_confirmed_rule: 169
+stable_across_T: true
+stable_across_ring_size: true
+robust_to_light_perturbation: true
+collapse_controls_rejected: true
+frozen_controls_rejected: true
+chaotic_controls_rejected: true
+identity_shift_controls_rejected: true
+```
+
+Top confirmed profile:
+
+```text
+rule: 169
+motif_type: emitter
+recurrence_up_to_shift: 0.769
+material_turnover_rate: 0.246
+background_contrast: 1.000
+post_perturbation_survival_rate: 1.000
+future_distinct_descendant_count: 236
+frozen_order_index: 0.070
+chaos_index: 0.266
+```
+
+Primitive association after the stricter anatomy filter:
+
+```text
+DAR_complete_enriched_after_filter: false
+DAR_asymmetric_enriched_after_filter: false
+relation_dependent_enriched_after_filter: true
+asymmetry_dependent_enriched_after_filter: false
+```
+
+Sidecars:
+
+```text
+recoverability robust motif count: 15
+best post-perturbation survival rate: 1.000
+relation-dependence positive ablations: 10
+asymmetry-dependence positive ablations: 7
+composition-positive interactions: 0
+best stable product rate: 0.000
+```
+
+Interpretation:
+
+- G1 confirms that G0 was not merely selecting static, chaotic, collapse, or
+  identity/shift controls.
+- The strongest survivors look like emitter-like persistence motifs with
+  recurrence, turnover, contrast, and perturbation survival.
+- The stricter anatomy filter narrows the primitive claim: relation-dependence
+  remains weakly enriched, but DAR-complete and DAR-asymmetric enrichment do not
+  survive as a clean filtered result.
+- The interaction/composition sidecar is negative. At this stage the motifs are
+  robust individual structures, not evidence for compositional motif algebra.
+
+Decision:
+
+```text
+Proceed to DAX-G2 only as a phase-map/anatomy follow-up.
+Do not claim that G1 validates Omega or that DAR asymmetry is established.
+The live positive object is robust local persistence in minimal rule space;
+the open problem is whether richer minimal spaces recover relation/asymmetry
+load-bearing and composition.
+```
+
 ```text
 COM fiber transport object
 certified viable fiber node
