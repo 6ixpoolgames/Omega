@@ -35,6 +35,7 @@ Project stance:
    - `probe_DAX_G0_minimal_DAR_rule_space_persistence.py`
    - `probe_DAX_G1_persistence_motif_anatomy_and_robustness.py`
    - `probe_DAX_G2_persistence_phase_map_minimal_rule_spaces.py`
+   - `probe_DAX_G2b_control_adjusted_primitive_guardrail.py`
 5. Inspect compact summaries, not raw caches:
    - `probe_09_robust_fiber_reachability_results/summary.json`
    - `probe_10_com_viable_propagation_robustness_extended_results/summary.json`
@@ -757,6 +758,11 @@ horizons 900-2400
   hints than ECA anchors, especially q=3/r=1, but symmetric/self-control strata
   leaked into persistence classes. This blocks interpretation and makes the next
   task a metric guardrail revision rather than a full phase-map scale-up.
+- Probe DAX-G2b applied matched controls to the G2 positives. It resolved the
+  q=3/r=1 control leaks and left one clean q=3/r=1 control-adjusted positive
+  with relation/asymmetry load-bearing and non-emission composition signal:
+  `q3r1_s1_0002`. It also demoted `q3r1_s5_0016` to emission-only despite strong
+  relation/asymmetry load-bearing.
 - Controls behave differently:
   - `boundary_v2` is pseudo-risk/propagation-negative;
   - `joint_basin` can show local transport but usually fails multi-step
@@ -828,6 +834,11 @@ DAX-G2 smoke found promising q=3/r=1 and q=2/r=2 hits, including nonzero
 composition readouts, but failed the control-rejection guardrail. The next
 primitive-branch step is not a larger run. It is a G2 metric guardrail revision
 that separates persistence from control-adjusted load-bearing persistence.
+
+DAX-G2b performed that revision and passed the guardrail. The next step is a
+focused q=3/r=1 guardrailed phase map, not a broad expansion to richer rule
+spaces. Composition should remain separately tracked because only one q=3/r=1
+candidate currently has a non-emission adjusted composition signal.
 
 ### Probe 13: Formal COM Fiber Transport Object
 

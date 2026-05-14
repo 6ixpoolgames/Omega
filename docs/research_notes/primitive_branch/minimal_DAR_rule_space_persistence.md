@@ -125,3 +125,38 @@ minimal expansion is promising enough to continue;
 the current expanded-space persistence classifier is too permissive;
 full G2 scale-up should wait for a metric guardrail revision.
 ```
+
+## DAX-G2b Update
+
+DAX-G2b applied the needed matched-control guardrail. The q=3/r=1 control leaks
+were resolved, and one q=3/r=1 candidate survived as a clean
+control-adjusted-positive rule:
+
+```text
+q3r1_s1_0002
+```
+
+Profile:
+
+```text
+adjusted_persistence: 0.0734
+relation_load_bearing_adjusted: 0.0755
+asymmetry_load_bearing_adjusted: 0.1686
+local_phase_fakeout_rejected: true
+composition_adjusted_delta: 1.000
+dominant_interaction_outcome: new_motif
+```
+
+The previous headline candidate `q3r1_s5_0016` remains interesting for
+relation/asymmetry load-bearing, but its interaction signal is emission-only:
+
+```text
+reclassification: emission_only
+```
+
+Current implication:
+
+```text
+q=3/r=1 is now justified as the next primitive-branch trunk,
+but the trunk should be guardrailed from the start.
+```

@@ -716,6 +716,41 @@ Result in one line:
   leakage blocks interpretation; this is a smoke result requiring metric
   guardrail revision.
 
+### Probe DAX-G2b: Control-Adjusted Primitive Guardrail
+
+Directory:
+
+- `probe_DAX_G2b_control_adjusted_primitive_guardrail_results/`
+
+Primary files:
+
+- `summary.json`
+- `target_rule_manifest.csv`
+- `matched_control_manifest.csv`
+- `raw_candidate_metrics.csv`
+- `matched_control_metrics.csv`
+- `control_adjusted_metrics.csv`
+- `relation_guardrail_results.csv`
+- `asymmetry_guardrail_results.csv`
+- `local_phase_fakeout_results.csv`
+- `composition_guardrail_results.csv`
+- `reclassification_results.csv`
+- `control_leak_resolution.csv`
+- `matched_control_fairness_audit.csv`
+- `motif_mechanism_report.csv`
+- `ic_family_dependence.csv`
+
+Reason retained:
+
+- Probe DAX-G2b repairs the failed G2 guardrail by subtracting matched
+  persistence controls before interpreting q=3/r=1 positives.
+
+Result in one line:
+
+- The guardrail passed: q=3/r=1 symmetric/self leaks were resolved, and
+  `q3r1_s1_0002` survived as control-adjusted positive with relation/asymmetry
+  load-bearing and non-emission composition signal.
+
 The important public caveat:
 
 ```text

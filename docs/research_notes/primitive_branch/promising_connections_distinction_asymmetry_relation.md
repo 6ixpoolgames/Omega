@@ -268,6 +268,40 @@ but only after a guardrail revision that distinguishes generic persistence from
 control-adjusted load-bearing persistence.
 ```
 
+## DAX-G2b Update: q=3/r=1 Survives Guardrails
+
+DAX-G2b ran the guardrail revision. It compared G2 candidates to matched
+center-only, neighbor-removed, symmetrized, symbol-phase, output-histogram, and
+stratum-null controls.
+
+The result is the first primitive-branch pass for a minimal expanded rule space:
+
+```text
+guardrail_passed: true
+q3_control_leaks_resolved: true
+remaining_leaks: none
+```
+
+The clean q=3/r=1 survivor is:
+
+```text
+q3r1_s1_0002
+```
+
+It survives as relation/asymmetry load-bearing and not local-phase-only:
+
+```text
+relation_load_bearing_adjusted: 0.0755
+asymmetry_load_bearing_adjusted: 0.1686
+local_phase_fakeout_rejected: true
+composition_adjusted_delta: 1.000
+dominant_interaction_outcome: new_motif
+```
+
+The result is still modest. It does not establish Omega, and it does not yet
+show a broad motif ecology. It does establish that q=3/r=1 deserves a focused
+guardrailed phase map.
+
 ## DA Branch Implication
 
 The next primitive-branch work should focus on relation as a connection-like

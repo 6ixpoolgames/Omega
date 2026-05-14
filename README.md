@@ -57,6 +57,7 @@ The public tree keeps only the current/relevant compact results:
 - `probe_DAX_G0_minimal_DAR_rule_space_persistence_results/`
 - `probe_DAX_G1_persistence_motif_anatomy_and_robustness_results/`
 - `probe_DAX_G2_persistence_phase_map_minimal_rule_spaces_results/`
+- `probe_DAX_G2b_control_adjusted_primitive_guardrail_results/`
 
 Older exploratory outputs are summarized in the docs but not exposed as result
 folders in the current public tree.
@@ -117,6 +118,7 @@ CuPy's kernel cache at `.cupy-cache/`.
 - `probe_DAX_G0_minimal_DAR_rule_space_persistence.py`
 - `probe_DAX_G1_persistence_motif_anatomy_and_robustness.py`
 - `probe_DAX_G2_persistence_phase_map_minimal_rule_spaces.py`
+- `probe_DAX_G2b_control_adjusted_primitive_guardrail.py`
 
 Historical scripts remain in the repository because they document how the
 current object was reached, but new work should normally start from Probe 09/10
@@ -127,12 +129,12 @@ or from the next formalization probe described in the manual.
 Current latest probe:
 
 ```text
-Probe DAX-G2: Minimal Rule-Space Phase Map Smoke
+Probe DAX-G2b: Control-Adjusted Primitive Guardrail
 ```
 
-Probe DAX-G2 ran a budgeted phase-map smoke over q=3/r=1 and q=2/r=2 sampled
-cellular automata. Expanded spaces produced persistence, relation/asymmetry
-load-bearing positives, and nonzero interaction/composition readouts. However,
-symmetric/self-control strata leaked into persistence classes, so this is a
-promising smoke, not an interpretable pass. The next step is a G2 metric
-guardrail revision before any larger phase map.
+Probe DAX-G2b repaired the G2 interpretability guardrail by comparing candidates
+against matched center-only, neighbor-removed, symmetrized, symbol-phase,
+output-histogram, and stratum-null controls. The guardrail passed: symmetric and
+self-control leaks were resolved, and one q=3/r=1 candidate survived as
+control-adjusted positive with non-emission composition signal. The next step is
+a focused q=3/r=1 guardrailed phase map, not a broad expansion.

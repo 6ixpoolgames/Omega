@@ -1698,6 +1698,98 @@ Run a DAX-G2 metric guardrail revision first:
   then rerun the q=3/r=1 branch if controls are clean.
 ```
 
+### DAX-G2b: Control-Adjusted Primitive Load-Bearing Guardrail
+
+DAX-G2b repaired the failed G2 control guardrail by comparing each target rule
+against matched counterfactuals rather than raw persistence alone.
+
+Run:
+
+- script: `probe_DAX_G2b_control_adjusted_primitive_guardrail.py`
+- result directory:
+  `probe_DAX_G2b_control_adjusted_primitive_guardrail_results/`
+- target rules: `50`
+- matched controls: `765`
+- scale: `T=512`, ring `256`, `128` seeds
+- matched controls:
+  - center-only projection
+  - neighbor-removed projections
+  - left/right symmetrized rule
+  - q=3 symbol-phase-only control
+  - output-distribution-matched random control
+  - stratum-matched nulls
+- `18` CPU workers
+- runtime: about `14.6` minutes
+
+Primary result:
+
+```text
+guardrail_passed: true
+q3_control_leaks_resolved: true
+control_adjusted_positive_count: 6
+relation_adjusted_positive_count: 42
+asymmetry_adjusted_positive_count: 30
+local_phase_fakeout_rejected_count: 16
+composition_adjusted_positive_count: 2
+```
+
+Leak resolution:
+
+```text
+symmetric_control_leaks_resolved: true
+self_control_leaks_resolved: true
+remaining_leaks: none
+```
+
+Clean q=3/r=1 survivor:
+
+```text
+rule_id: q3r1_s1_0002
+stratum: S1_random_unbiased
+raw_persistence_score: 0.1695
+adjusted_persistence: 0.0734
+relation_load_bearing_adjusted: 0.0755
+asymmetry_load_bearing_adjusted: 0.1686
+local_phase_fakeout_rejected: true
+composition_adjusted_delta: 1.000
+dominant_interaction_outcome: new_motif
+reclassification: control_adjusted_positive
+```
+
+Important q=3/r=1 near miss:
+
+```text
+rule_id: q3r1_s5_0016
+relation_load_bearing_adjusted: 0.1475
+asymmetry_load_bearing_adjusted: 0.1253
+local_phase_fakeout_rejected: true
+composition_adjusted_delta: 0.000
+dominant_interaction_outcome: emission
+reclassification: emission_only
+```
+
+Interpretation:
+
+- G2b resolves the main G2 worry: the q=3/r=1 symmetric/self leaks are now
+  classified as fakeouts rather than positives.
+- At least one q=3/r=1 candidate survives matched controls with relation and
+  asymmetry load-bearing plus a non-emission composition readout.
+- The earlier headline candidate `q3r1_s5_0016` should be retained as a
+  load-bearing persistence candidate, but not as a composition candidate because
+  its interaction behavior is emission-only.
+- ECA anchors still look robust on persistence/relation, but they do not change
+  the G2b decision because the target question was whether q=3/r=1 survives the
+  expanded-space guardrail.
+
+Decision:
+
+```text
+Proceed to a focused q=3/r=1 guardrailed phase map.
+Do not broaden beyond q=3/r=1 yet.
+Keep composition separate from persistence/load-bearing until more candidates
+show non-emission interaction structure.
+```
+
 ```text
 COM fiber transport object
 certified viable fiber node
