@@ -773,6 +773,11 @@ horizons 900-2400
   composition gap: new-motif outcomes can persist, but composition does not
   overlap the strongest persistence band. This supports a detector freeze for
   persistence/relation/asymmetry while keeping composition secondary.
+- Probe DAX-G5 froze that detector and tested 5000 held-out q=3/r=1 rules. It
+  failed held-out prediction: fertile bands produced positives, but only 1.17x
+  the control rate, and the B4 high-chaos/high-frozen control band produced 4
+  primary positives. G3/G4 therefore describe a motif ecology, not yet a
+  validation-ready predictive detector.
 - Controls behave differently:
   - `boundary_v2` is pseudo-risk/propagation-negative;
   - `joint_basin` can show local transport but usually fails multi-step
@@ -862,6 +867,13 @@ therefore DAX-G5: freeze the q=3/r=1 detector for persistence/relation/asymmetry
 and use held-out prediction or prospective sampling to test whether the fertile
 bands predict new validation positives. Composition should remain a tracked
 secondary readout until it earns a primary criterion.
+
+DAX-G5 froze the detector and failed the held-out prediction test. This is an
+important negative result: q=3/r=1 still contains real motifs, but the G4 fertile
+bands are not predictive enough under the frozen detector. The next step should
+not be a larger G5 with tuned thresholds. It should be either a focused anatomy
+of the B4 leaks and fertile positives, or a narrower detector target that
+separates DAR-persistence from generic high-future-distinct persistence.
 
 ### Probe 13: Formal COM Fiber Transport Object
 

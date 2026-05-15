@@ -819,6 +819,41 @@ Result in one line:
   invariant overlaps, but composition remains too sparse and too weakly aligned
   with strongest persistence to be a primary validation criterion.
 
+### Probe DAX-G5: q=3/r=1 Detector Freeze and Held-Out Prediction
+
+Directory:
+
+- `probe_DAX_G5_q3r1_detector_freeze_heldout_prediction_results/`
+
+Primary files:
+
+- `summary.json`
+- `detector_freeze.json`
+- `heldout_rule_manifest.csv`
+- `heldout_stage1_scan_metrics.csv`
+- `heldout_stage1_classification.csv`
+- `heldout_stage2_candidate_manifest.csv`
+- `heldout_control_adjusted_metrics.csv`
+- `heldout_reclassification_results.csv`
+- `heldout_composition_secondary.csv`
+- `heldout_band_enrichment.csv`
+- `heldout_statistical_tests.csv`
+- `control_leak_report.csv`
+- `validation_leaderboard_heldout.csv`
+- `discovery_leaderboard_heldout.csv`
+- `spacetime_examples/`
+
+Reason retained:
+
+- Probe DAX-G5 is the frozen-detector held-out prediction test for the q=3/r=1
+  primitive branch.
+
+Result in one line:
+
+- G5 failed: fertile bands produced 7 primary positives versus 4 control
+  positives, only 1.17x enrichment, with all control positives coming from the
+  B4 high-chaos/high-frozen barren band.
+
 The important public caveat:
 
 ```text

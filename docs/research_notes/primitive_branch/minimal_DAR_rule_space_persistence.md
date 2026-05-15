@@ -222,3 +222,31 @@ Current implication:
 Freeze q=3/r=1 persistence/relation/asymmetry as the next detector target.
 Track composition, but do not make it the primary validation criterion yet.
 ```
+
+## DAX-G5 Update
+
+DAX-G5 froze the q=3/r=1 detector before held-out sampling and preregistered the
+claim boundary. It then sampled 5000 held-out q=3/r=1 rules across three fertile
+bands and four control/barren bands.
+
+Result:
+
+```text
+heldout_prediction_passed: false
+fertile_primary_positive_count: 7
+control_primary_positive_count: 4
+fertile_vs_control_enrichment: 1.17x
+control_leak_count: 4
+```
+
+This is a negative predictive-detector result. The frozen detector did find new
+held-out positives, but the rate was not meaningfully higher in fertile bands
+than controls, and B4 high-chaos/high-frozen barren rules leaked.
+
+Current implication:
+
+```text
+q=3/r=1 remains a real motif ecology,
+but G4 fertile bands are not validation-ready predictors.
+Do not rescue G5 by changing the frozen detector.
+```

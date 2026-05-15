@@ -1,0 +1,63 @@
+{
+  "detector_name": "q3r1_DAR_persistence_v1",
+  "frozen_before_heldout": true,
+  "primary_target": "DAR_persistence",
+  "primary_positive_definition": {
+    "adjusted_persistence": "> 0",
+    "relation_load_bearing_adjusted": "> 0",
+    "asymmetry_load_bearing_adjusted": "> 0",
+    "local_phase_fakeout_rejected": true,
+    "reclassification": "control_adjusted_positive"
+  },
+  "raw_persistence_score": "recurrence_up_to_shift * motif_material_turnover * background_contrast * (1 - frozen_order_index) * (1 - chaos_index)",
+  "adjusted_persistence": "raw_persistence_score - max(center_only_persistence, symbol_phase_only_persistence, output_distribution_matched_persistence, stratum_null_persistence_q90)",
+  "relation_load_bearing_adjusted": "raw_persistence_score - max(left_removed_score, right_removed_score, center_only_score)",
+  "asymmetry_load_bearing_adjusted": "raw_persistence_score - symmetrized_rule_score",
+  "local_phase_fakeout_rejected": "raw_persistence_score > symbol_phase_only_score AND future_distinct_descendant_count_raw > future_distinct_descendant_count_symbol_phase",
+  "composition_secondary": {
+    "tracked": true,
+    "primary_required": false,
+    "non_emission_composition_positive_definition": "composition_adjusted_delta > 0 AND dominant_interaction_outcome != emission_only"
+  },
+  "matched_controls": [
+    "center_only_projection",
+    "left_removed",
+    "right_removed",
+    "left_right_symmetrized_rule",
+    "symbol_phase_only_control",
+    "output_distribution_matched_random_control",
+    "stratum_matched_nulls"
+  ],
+  "heldout_fertile_bands": {
+    "F1_G4_top_S1_random_unbiased": "G4 top fertile band; q3/r1 S1 random-unbiased generator.",
+    "F2_high_relation_asymmetry_structural": "q3/r1 structurally relation-complete rules with relation_degree=2, depends_center=true, left_right_asymmetry>=0.35, output_entropy in [1.0, 1.585].",
+    "F3_near_validation_PRA_structural": "q3/r1 S4/S1-like relation-complete rules with depends_center=true, left_right_asymmetry>=0.20, output_entropy in [0.9, 1.585], not self-only."
+  },
+  "heldout_control_bands": {
+    "B1_S7_symmetric_matched": "q3/r1 symmetric-control generator with coarse output-entropy/activity matching.",
+    "B2_S8_self_only_matched": "q3/r1 self-only-control generator with coarse output-entropy/activity matching.",
+    "B3_output_distribution_matched_random": "q3/r1 random tables constrained to G4 fertile-like output entropy.",
+    "B4_high_chaos_high_frozen_barren": "q3/r1 high-entropy or quiescent-preserving barren band expected to overproduce chaos/frozen artifacts."
+  },
+  "stage1_candidate_criteria": {
+    "classification": [
+      "localized_persistence",
+      "transported_identity",
+      "emitter_or_generator",
+      "mixed"
+    ],
+    "stage1_score": "> 0",
+    "selection": "all candidate positives up to frozen per-band cap, with top stage1_score/relation_asymmetry_priority ordering only for runtime cap"
+  },
+  "success_criteria": {
+    "operational_pass": "fertile_primary_positive_rate >= 3x control_primary_positive_rate AND fertile_primary_positive_count >= 5 AND control_leak_count <= 1",
+    "strong_pass": "fertile_primary_positive_rate >= 5x control_primary_positive_rate AND fertile_primary_positive_count >= 10 AND control_leak_count == 0 AND at least two fertile bands independently produce positives"
+  },
+  "forbidden_changes_after_freeze": [
+    "metric definitions",
+    "thresholds",
+    "matched-control construction",
+    "candidate promotion criteria",
+    "fertile-band labels"
+  ]
+}

@@ -60,6 +60,7 @@ The public tree keeps only the current/relevant compact results:
 - `probe_DAX_G2b_control_adjusted_primitive_guardrail_results/`
 - `probe_DAX_G3_q3r1_guardrailed_phase_map_results/`
 - `probe_DAX_G4_q3r1_motif_ecology_mechanism_results/`
+- `probe_DAX_G5_q3r1_detector_freeze_heldout_prediction_results/`
 
 Older exploratory outputs are summarized in the docs but not exposed as result
 folders in the current public tree.
@@ -123,6 +124,7 @@ CuPy's kernel cache at `.cupy-cache/`.
 - `probe_DAX_G2b_control_adjusted_primitive_guardrail.py`
 - `probe_DAX_G3_q3r1_guardrailed_phase_map.py`
 - `probe_DAX_G4_q3r1_motif_ecology_mechanism.py`
+- `probe_DAX_G5_q3r1_detector_freeze_heldout_prediction.py`
 
 Historical scripts remain in the repository because they document how the
 current object was reached, but new work should normally start from Probe 09/10
@@ -133,13 +135,12 @@ or from the next formalization probe described in the manual.
 Current latest probe:
 
 ```text
-Probe DAX-G4: q=3/r=1 Motif Ecology and Mechanism Anatomy
+Probe DAX-G5: q=3/r=1 Detector Freeze and Held-Out Prediction
 ```
 
-Probe DAX-G4 analyzed the full G3 Stage 2 q=3/r=1 candidate set rather than
-broadening rule space. It found interpretable motif families, nonempty invariant
-overlap, and 3 rules satisfying persistence + relation + asymmetry + local-phase
-rejection + non-emission composition. Composition overlaps validation but remains
-too sparse and too weakly aligned with strongest persistence to carry the main
-claim. The recommended next step is a q=3/r=1 detector freeze for
-persistence/relation/asymmetry, with composition tracked as a secondary branch.
+Probe DAX-G5 froze the q=3/r=1 DAR-persistence detector before held-out
+sampling, then tested 5000 held-out q=3/r=1 rules across predeclared fertile and
+control bands. It did not pass: fertile bands produced 7 primary positives,
+controls produced 4, enrichment was only 1.17x, and the B4 barren/control band
+leaked. This means the G3/G4 ecology is descriptive but not yet a predictive
+validation detector.

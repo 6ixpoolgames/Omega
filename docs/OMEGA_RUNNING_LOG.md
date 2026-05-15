@@ -1951,6 +1951,89 @@ Track composition as a secondary branch.
 Do not promote composition into the primary validation claim yet.
 ```
 
+## 2026-05-15: Probe DAX-G5 q=3/r=1 Detector Freeze and Held-Out Prediction
+
+Script:
+
+```text
+probe_DAX_G5_q3r1_detector_freeze_heldout_prediction.py
+```
+
+Result directory:
+
+```text
+probe_DAX_G5_q3r1_detector_freeze_heldout_prediction_results/
+```
+
+G5 wrote the detector freeze and preregistration before held-out sampling:
+
+```text
+probe_DAX_G5_q3r1_detector_freeze_heldout_prediction_results/detector_freeze.json
+docs/research_notes/primitive_branch/q3r1_detector_freeze_v1.md
+docs/research_notes/primitive_branch/q3r1_G5_preregistration.md
+```
+
+Run:
+
+```text
+heldout rules: 5000
+fertile rules: 3000
+control rules: 2000
+workers: 18
+runtime: about 140.6 minutes
+stage2 cap: 50 per band
+```
+
+Primary result:
+
+```text
+heldout_prediction_passed: false
+fertile_primary_positive_count: 7
+control_primary_positive_count: 4
+fertile_primary_positive_rate: 0.00233
+control_primary_positive_rate: 0.00200
+fertile_vs_control_enrichment: 1.17x
+control_leak_count: 4
+fisher_exact_greater_p: 0.533
+```
+
+Band result:
+
+```text
+F1 G4 top S1 random-unbiased: 2 / 1000
+F2 high relation/asymmetry: 3 / 1000
+F3 near-validation PRA: 2 / 1000
+B1 S7 symmetric control: 0 / 500
+B2 S8 self-only control: 0 / 500
+B3 output-distribution matched random: 0 / 500
+B4 high-chaos/high-frozen barren: 4 / 500
+```
+
+Secondary composition:
+
+```text
+non_emission_composition_positive_count: 42
+new_motif_persistent_count: 4
+composition_overlap_with_primary_count: 0
+```
+
+Interpretation:
+
+- The frozen detector found held-out positives in every fertile band, but not at
+  a rate meaningfully above controls.
+- S7, S8, and output-distribution matched controls stayed clean.
+- The B4 high-chaos/high-frozen barren band produced 4 primary positives and
+  blocks the predictive-detector claim.
+- Composition remained secondary and did not overlap primary positives.
+
+Decision:
+
+```text
+G5 fails as a held-out predictive detector.
+Do not modify the frozen detector inside G5 to rescue the result.
+Return to mechanism/ecology analysis or redesign the detector target.
+```
+
 ```text
 COM fiber transport object
 certified viable fiber node

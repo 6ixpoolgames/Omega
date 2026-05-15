@@ -355,6 +355,33 @@ persistence/relation/asymmetry detector.
 Composition remains a secondary tracked branch until its overlap improves.
 ```
 
+## DAX-G5 Update: Frozen Detector Fails Held-Out Prediction
+
+DAX-G5 preregistered the claim boundary, froze the q=3/r=1 detector, and sampled
+5000 held-out q=3/r=1 rules.
+
+The result was negative:
+
+```text
+fertile_primary_positive_count: 7
+control_primary_positive_count: 4
+fertile_vs_control_enrichment: 1.17x
+control_leak_count: 4
+```
+
+The useful nuance is that S7 symmetric, S8 self-only, and output-distribution
+matched random controls stayed clean. The failure came from the broad B4
+high-chaos/high-frozen barren band.
+
+Current implication:
+
+```text
+The primitive branch has a q=3/r=1 ecology,
+but not yet a held-out predictive detector.
+The next move should analyze B4 leaks and fertile positives mechanistically
+instead of tuning thresholds post hoc.
+```
+
 ## DA Branch Implication
 
 The next primitive-branch work should focus on relation as a connection-like
