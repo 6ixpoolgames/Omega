@@ -4,6 +4,86 @@ This is the living operational log for the Omega validation workspace. Update it
 after every meaningful theory-side decision, probe implementation, or compute
 run.
 
+## 2026-05-16
+
+### Formal-Stack Recenter: Primitive Floor to Valuer-Level Omega
+
+New theory notes were added under:
+
+- `docs/research_notes/omega_theory/`
+- `docs/research_notes/primitive_branch/`
+
+New canonical entry points:
+
+- `docs/research_notes/omega_theory/formal_stack_v0.md`
+- `docs/research_notes/omega_theory/omega_glossary.md`
+- `docs/research_notes/omega_theory/omega_as_viable_value_bearing_trajectory_space.md`
+- `docs/research_notes/omega_theory/regenerative_filtering_slack_and_parasitic_modes.md`
+- `docs/research_notes/primitive_branch/relation_as_historical_binding.md`
+- `docs/research_notes/primitive_branch/omega_meets_fep.md`
+- `docs/research_notes/primitive_branch/valuerhood_as_recoverable_historical_identity.md`
+
+Current working stack:
+
+```text
+distinction
+-> asymmetry
+-> relation / causal continuity
+-> identity
+-> recoverability
+-> valuerhood
+-> viability
+-> Omega-compatible viability
+-> lushness of value-bearing trajectory space
+```
+
+Core thesis now tracked in the manual:
+
+```text
+Omega is the asymptotic compatibility structure of value-bearing trajectory
+space.
+```
+
+Interpretive update:
+
+- Relation is now treated as causal continuity through transformation, not
+  merely graph adjacency, neighbor dependence, coupling, or social relation.
+- Identity is organized causal continuity through change.
+- Recoverability is perturbation-continuability, not exact restoration.
+- A valuer is a bounded historical identity for which different continuations
+  asymmetrically affect recoverable continuability.
+- Viability is a gate; nested, compatible, value-bearing trajectory richness is
+  the target.
+
+Consequence for prior executable work:
+
+- COM fiber transport remains the strongest toy-substrate witness for viable
+  propagation and coarse-graining discipline.
+- Trajectory-space probes remain useful negative constraints and fakeout
+  anatomy.
+- CA, DAR, and DAX probes are now explicitly primitive-floor calibration unless
+  they include minimal valuerhood and recoverable continuability.
+- DAX-G5's failed held-out prediction is consistent with this boundary: it
+  describes motif ecology in a primitive rule space, not a validation-ready
+  Omega detector.
+
+Roadmap decision:
+
+```text
+The next Omega-proper validation family should be a minimal valuer-world
+benchmark, not another bare cellular or field-dynamics scale-up.
+```
+
+Probe V0 target:
+
+- construct minimal self-maintaining valuers;
+- include perturbation recovery, path consequence, and action or interaction
+  channels;
+- measure Omega-level predictors against survival, reward, reachability,
+  empowerment, and local-viability baselines;
+- include fakeout controls for stasis, clocks, lock-in, externally maintained
+  persistence, and high reachability without self-maintenance.
+
 ## 2026-05-11
 
 ### Progenitor Drafts Added

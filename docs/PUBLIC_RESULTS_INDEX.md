@@ -45,6 +45,26 @@ Status:
 - planning/triage material for a possible trajectory-space branch;
 - not a replacement for the current COM fiber-transport witness.
 
+## Omega-Theory Research Notes
+
+Directory:
+
+- `docs/research_notes/omega_theory/`
+
+Status:
+
+- current working theory notes;
+- not validation results by themselves;
+- used to keep the project level map stable after the primitive/FEP/valuerhood
+  bridge update.
+
+Key entry points:
+
+- `formal_stack_v0.md`
+- `omega_glossary.md`
+- `omega_as_viable_value_bearing_trajectory_space.md`
+- `regenerative_filtering_slack_and_parasitic_modes.md`
+
 ## Primitive-Branch Research Notes
 
 Directory:
@@ -53,9 +73,11 @@ Directory:
 
 Status:
 
-- active conceptual notes for the distinction/asymmetry/relation branch;
+- active conceptual notes for the distinction/asymmetry/relation branch and the
+  FEP/valuerhood bridge;
 - not validation results by themselves;
-- used to motivate DA0b relation-as-connection tests.
+- used to motivate primitive-floor probes and to define the handoff from
+  primitive causal continuity to minimal valuerhood.
 
 ### Probe 09: Robust Fiber Reachability
 

@@ -1,6 +1,6 @@
 # Omega Project Manual
 
-Last updated: 2026-05-14
+Last updated: 2026-05-16
 
 Repository: https://github.com/6ixpoolgames/Omega
 
@@ -24,7 +24,13 @@ Project stance:
 1. Read this file.
 2. Read `docs/OMEGA_RUNNING_LOG.md`.
 3. Read `README.md`.
-4. Inspect the latest probe scripts:
+4. Read the current formal-stack notes:
+   - `docs/research_notes/omega_theory/formal_stack_v0.md`
+   - `docs/research_notes/omega_theory/omega_glossary.md`
+   - `docs/research_notes/omega_theory/omega_as_viable_value_bearing_trajectory_space.md`
+   - `docs/research_notes/primitive_branch/omega_meets_fep.md`
+   - `docs/research_notes/primitive_branch/valuerhood_as_recoverable_historical_identity.md`
+5. Inspect the latest probe scripts:
    - `probe_09_robust_fiber_reachability.py`
    - `probe_10_com_viable_propagation_robustness.py`
    - `probe_I0_invariant_stack_audit.py`
@@ -37,11 +43,11 @@ Project stance:
    - `probe_DAX_G2_persistence_phase_map_minimal_rule_spaces.py`
    - `probe_DAX_G2b_control_adjusted_primitive_guardrail.py`
    - `probe_DAX_G3_q3r1_guardrailed_phase_map.py`
-5. Inspect compact summaries, not raw caches:
+6. Inspect compact summaries, not raw caches:
    - `probe_09_robust_fiber_reachability_results/summary.json`
    - `probe_10_com_viable_propagation_robustness_extended_results/summary.json`
    - `probe_10_com_targeted_fragility_refinement_results/summary.json`
-6. Preserve the running log after every meaningful run.
+7. Preserve the running log after every meaningful run.
 
 Use this Python executable locally:
 
@@ -61,6 +67,12 @@ The recurring conceptual thread is:
 
 > Omega is not raw entropy. Omega is viable propagation.
 
+The current formal correction is sharper:
+
+> Primitive probes calibrate distinction, asymmetry, and causal continuity.
+> Omega validation begins only once minimal valuers and value-bearing
+> trajectory space are in scope.
+
 Older papers and drafts motivate variants of:
 
 - viable futures;
@@ -77,9 +89,53 @@ theoretical provenance. They are drafts only and should not be treated as
 current validation results, peer-reviewed claims, or final formal statements.
 The current theory/status draft lives under `docs/current_theory/`. Active
 trajectory-space branch notes live under `docs/research_notes/trajectory_space/`.
+The current formal-stack and glossary notes live under
+`docs/research_notes/omega_theory/`. The primitive/FEP/valuerhood bridge notes
+live under `docs/research_notes/primitive_branch/`.
 Some text drafts still live only in the local project folder outside Git.
 
 ## Working Definitions
+
+### Current Formal Stack
+
+The current stack is:
+
+```text
+distinction
+-> asymmetry
+-> relation / causal continuity
+-> identity
+-> recoverability
+-> valuerhood
+-> viability
+-> Omega-compatible viability
+-> lushness of value-bearing trajectory space
+```
+
+Working thesis:
+
+```text
+Omega is the asymptotic compatibility structure of value-bearing trajectory
+space.
+```
+
+Important level boundary:
+
+- relation is causal continuity through transformation, not merely graph
+  adjacency or coupling;
+- identity is organized causal continuity through change;
+- recoverability is perturbation-continuability, not exact restoration;
+- a valuer is a bounded historical identity for which different continuations
+  asymmetrically affect recoverable continuability;
+- viability is the gate;
+- nested, compatible, value-bearing trajectory richness is the target.
+
+Consequence for empirical work:
+
+```text
+CA, DAR, DAX, and bare field probes are primitive-floor or fakeout-calibration
+probes unless they include explicit valuerhood and recoverable continuability.
+```
 
 ### Single Omega
 
@@ -778,6 +834,10 @@ horizons 900-2400
   the control rate, and the B4 high-chaos/high-frozen control band produced 4
   primary positives. G3/G4 therefore describe a motif ecology, not yet a
   validation-ready predictive detector.
+- The May 2026 formal-stack update recentered the project around valuerhood and
+  value-bearing trajectory space. This demotes CA/DAR/DAX-style probes to
+  primitive-floor calibration unless the tested world includes bounded
+  historical identities with recoverable continuability.
 - Controls behave differently:
   - `boundary_v2` is pseudo-risk/propagation-negative;
   - `joint_basin` can show local transport but usually fails multi-step
@@ -910,6 +970,28 @@ Question:
 > local to the current dynamics?
 
 Do not broaden until the COM fiber object is formalized.
+
+### Probe V0: Minimal Valuer-World Benchmark
+
+Question:
+
+> Given minimal self-maintaining valuers, do Omega-style predictors explain
+> persistence, collapse, recovery, pseudo-Omega trapping, and mutual corridor
+> preservation better than survival, reward, reachability, empowerment, or
+> local viability alone?
+
+Required ingredients:
+
+- bounded historical identities;
+- perturbation recovery;
+- path consequences for future continuability;
+- action or interaction channels;
+- slack, filtering, and failure/re-entry dynamics;
+- controls for stasis, clocks, lock-in, externally maintained persistence, and
+  high reachability without self-maintenance.
+
+This is the first probe family aimed at Omega proper rather than the primitive
+floor.
 
 ## Maintenance Rule
 

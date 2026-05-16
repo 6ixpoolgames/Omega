@@ -24,6 +24,8 @@ certified macro-fibers while preserving component information.
 - [Running log](docs/OMEGA_RUNNING_LOG.md)
 - [Public results index](docs/PUBLIC_RESULTS_INDEX.md)
 - [Current theory draft](docs/current_theory/README.md)
+- [Current formal stack](docs/research_notes/omega_theory/formal_stack_v0.md)
+- [Omega glossary](docs/research_notes/omega_theory/omega_glossary.md)
 - [Trajectory-space research notes](docs/research_notes/trajectory_space/README.md)
 - [Primitive-branch research notes](docs/research_notes/primitive_branch/promising_connections_distinction_asymmetry_relation.md)
 - [Progenitor drafts](docs/progenitor_drafts/README.md)
@@ -70,6 +72,8 @@ They are included for provenance only and should not be read as current
 validation results.
 
 The `docs/current_theory/` folder contains the current Omega theory/status draft.
+The `docs/research_notes/omega_theory/` folder contains the current working
+formal stack, glossary, and viable-value-bearing-trajectory-space notes.
 The `docs/research_notes/trajectory_space/` folder contains planning notes for a
 possible quotient-light trajectory-space branch.
 
@@ -132,7 +136,7 @@ or from the next formalization probe described in the manual.
 
 ## Current Next Step
 
-Current latest probe:
+Current latest empirical probe:
 
 ```text
 Probe DAX-G5: q=3/r=1 Detector Freeze and Held-Out Prediction
@@ -144,3 +148,15 @@ control bands. It did not pass: fertile bands produced 7 primary positives,
 controls produced 4, enrichment was only 1.17x, and the B4 barren/control band
 leaked. This means the G3/G4 ecology is descriptive but not yet a predictive
 validation detector.
+
+Current theory direction:
+
+```text
+primitive floor -> recoverable historical identity -> valuerhood -> Omega as
+compatible value-bearing trajectory space
+```
+
+The next validation family should move from bare rule-space dynamics toward a
+minimal valuer-world benchmark with perturbation recovery, action channels,
+slack/filtering dynamics, and explicit baselines for survival, reward,
+reachability, empowerment, and local viability.
