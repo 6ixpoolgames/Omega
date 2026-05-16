@@ -25,19 +25,21 @@ distinction:
   differences exist
 
 asymmetry:
-  different paths lead to different outcomes
+  different paths lead to different futures
 
 relation:
-  path-dependent histories bind states into coherent identity
+  futures remain conditioned by histories
 ```
 
 This corrects an ambiguity in earlier formulations. Relation is not first inter-agent relation. It is not primarily social coupling, spatial adjacency, graph connectivity, edge memory, or neighbor dependence. Those are implementations or later-scale expressions.
 
 At the primitive level:
 
-> Relation is historical binding: the way a process is related to its own path such that its states can count as the continuation of one identity.
+> Relation is historical conditioning: what can happen next depends on the path by which the present was reached.
 
-Without this intra-historical relation, there is no stable object for agency, valuerhood, or responsibility to attach to. A system would merely be a sequence of states, not a continuing process.
+Correlation between past and future is not enough. Correlation can be accidental, passive, or epiphenomenal. Relation means historical dependence: prior path structure constrains the future possibility space.
+
+When this historical conditioning coheres across time, it gives rise to identity. A system would otherwise be merely a sequence of states, not a continuing process.
 
 ## Inter-relation as recursive relation
 
@@ -88,7 +90,7 @@ The relevant object is therefore not a state, and not a raw trajectory, but an i
 
 A historical identity is:
 
-> a distinction-bearing path whose continuation depends on its path and remains recognizable through transformation.
+> a distinction-bearing path whose future remains conditioned by its history and whose continuation remains recognizable through transformation.
 
 ## Rejecting cheap persistence
 
@@ -160,7 +162,7 @@ The handoff is:
 
 ```text
 primitive substrate:
-  distinction, path consequence, historical relation
+  distinction, path consequence, historical conditioning
 
 FEP / active inference floor:
   bounded self-maintaining identity under perturbation
@@ -181,7 +183,7 @@ A minimal valuer can be defined without consciousness, explicit preferences, uti
 
 Proposed definition:
 
-> A valuer is a bounded, path-dependent history whose interactions contribute to maintaining or expanding its own recoverable continuability.
+> A valuer is a bounded, historically conditioned process whose interactions contribute to maintaining or expanding its own recoverable continuability.
 
 This requires:
 
@@ -259,6 +261,9 @@ paths:
 identity class:
   equivalence over histories, not exact state equality
 
+historical conditioning:
+  future morphisms available from an object depend on the path by which it was reached
+
 recoverability:
   perturbation followed by continuation remains within the identity class
 
@@ -328,10 +333,10 @@ distinction:
   differences exist
 
 asymmetry:
-  different paths lead to different outcomes
+  different paths lead to different futures
 
 relation:
-  path-dependent histories bind states into identity
+  futures remain conditioned by histories
 ```
 
 FEP describes the self-maintaining floor: bounded identities that remain continuable under perturbation.
