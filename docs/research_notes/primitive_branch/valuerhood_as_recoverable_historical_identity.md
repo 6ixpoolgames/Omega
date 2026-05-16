@@ -10,7 +10,7 @@ The previous notes established:
 
 ```text
 relation_as_historical_binding.md:
-  distinction, path consequence, and historical conditioning are the primitive floor
+  distinction, path consequence, and causal continuity are the primitive floor
 
 omega_meets_fep.md:
   Omega inherits the FEP / self-maintenance floor rather than replacing it
@@ -22,12 +22,12 @@ This note asks the next question:
 
 The answer proposed here is valuerhood.
 
-A valuer is not defined by consciousness, explicit preference, utility maximization, reward, or human-like goals. A valuer is a bounded, historically conditioned process whose interactions preserve or expand its recoverable continuability.
+A valuer is not defined by consciousness, explicit preference, utility maximization, reward, or human-like goals. A valuer is a bounded historical identity for which different continuations asymmetrically affect recoverable continuability.
 
 In compressed form:
 
 ```text
-valuerhood begins where recoverable historical identity participates in maintaining the conditions of its own continuation
+valuerhood begins where a recoverable historical identity has a stake-like asymmetry in its own continuation
 ```
 
 This is still below Omega proper. Omega concerns the trajectory-space consequences once valuers exist and interact under constraint.
@@ -36,25 +36,25 @@ This is still below Omega proper. Omega concerns the trajectory-space consequenc
 
 The primitive floor gives historical identity:
 
-> a distinction-bearing path whose future remains conditioned by its history and whose continuation remains recognizable through transformation.
+> a distinction-bearing process whose causal organization remains coherently continuous through transformation.
 
 But not every historical identity is a valuer.
 
-A passive structure may have a history. A clock may recur. A crystal may persist. A rock may endure. None of these necessarily participates in maintaining the conditions of its own continuability.
+A passive structure may have a history. A clock may recur. A crystal may persist. A rock may endure. None of these necessarily has continuations that asymmetrically affect its own recoverable continuability in the relevant way.
 
-Valuerhood begins when a historically conditioned process is not merely carried by dynamics, but interacts in ways that preserve or expand its own recoverable continuation.
+Valuerhood begins when a bounded historical identity has possible continuations that preserve, degrade, restore, or collapse its own recoverable continuation.
 
 Thus the bridge is:
 
 ```text
 historical identity:
-  a path remains coherently continuable through transformation
+  organized causal continuity remains coherent through transformation
 
 recoverable historical identity:
-  perturbation does not immediately erase that continuability
+  perturbation does not immediately erase continuability
 
 valuerhood:
-  the process interacts in ways that help maintain or expand that continuability
+  different continuations asymmetrically affect recoverable continuability
 ```
 
 This is the first point at which continuation and collapse become structurally non-equivalent for the process itself.
@@ -63,7 +63,7 @@ This is the first point at which continuation and collapse become structurally n
 
 Proposed definition:
 
-> A valuer is a bounded, historically conditioned process whose interactions preserve or expand its recoverable continuability.
+> A valuer is a bounded historical identity for which different continuations asymmetrically affect recoverable continuability.
 
 This definition has five components.
 
@@ -71,17 +71,17 @@ This definition has five components.
 1. boundary:
    the process is distinguishable enough from its environment for identity to be meaningful
 
-2. historical conditioning:
-   what can happen next depends on the path by which the present was reached
+2. causal continuity:
+   identity is organized through transformation rather than fixed constituents
 
 3. recoverability:
    perturbations do not immediately erase continuability
 
-4. self-maintaining interaction:
-   the process's interactions contribute to preserving or expanding continued identity
-
-5. path consequence:
+4. path consequence:
    different continuations change the future viability of the process
+
+5. self-maintaining interaction:
+   interaction with the environment can preserve, degrade, restore, or expand continued identity
 ```
 
 A valuer is therefore not merely something that persists. It is something for which its own continuation can be maintained, degraded, restored, or lost through the dynamics of its interaction with the world.
@@ -102,7 +102,7 @@ It is not identical to moral patienthood.
 
 Valuerhood is a structural precondition for value-bearing, not a completed ethics.
 
-The point is not that every valuer has rich subjective experience, moral status, or reflective agency. The point is that without a bounded recoverable history whose continuation can matter, there is no locus at which value-preservation constraints can attach.
+The point is not that every valuer has rich subjective experience, moral status, or reflective agency. The point is that without a bounded recoverable identity whose continuation can matter, there is no locus at which value-preservation constraints can attach.
 
 ## Boundary
 
@@ -132,21 +132,19 @@ interaction:
 
 Boundary is therefore not an extra moral premise. It is a condition for valuerhood to be definable.
 
-## Historical conditioning
+## Causal continuity
 
-A valuer is historically conditioned.
+A valuer is causally continuous.
 
 This means:
 
-> its future possibility space depends on the path by which its present was reached.
+> its identity is organized through transformation, not through fixed material sameness.
 
-This is stronger than saying that the past and future are correlated. Correlation can be passive or accidental. Historical conditioning means the past constrains future continuability.
+The vortex remains a vortex despite the churn of its constituents. An organism remains itself despite metabolism. A ship remains the same ship through repair when enough causal organization remains continuous. In each case, identity is not constituent identity; it is organized causal continuity.
 
-Two systems may appear similar at a moment but differ in their viable futures because their histories differ. Damage, learning, adaptation, depletion, repair, memory, and developmental path all matter because they alter what continuation is possible.
+This is stronger and more primitive than saying that the future is conditioned by the past. Historical conditioning is what causal continuity does once identity exists. Relation itself is the causal linkage that allows identity to be coherent through change.
 
-This makes valuerhood path-based rather than state-based.
-
-A valuer is not just a current configuration. It is a historically conditioned continuation process.
+A valuer is not just a current configuration. It is a causally continuous process whose future viability depends on how that organization continues.
 
 ## Recoverability
 
@@ -174,14 +172,14 @@ This is why recoverability is the FEP-like floor. The process resists dispersion
 
 ## Self-maintaining interaction
 
-A valuer must interact with its environment in ways that contribute to its own continuability.
+A valuer must be situated so that interaction with its environment can affect its continuability.
 
 This does not require deliberation. It does not require internal representation. It does not require explicit goals.
 
 At the minimal level, self-maintaining interaction means:
 
 ```text
-the process's coupling to its environment helps preserve or expand the process's recoverable continuation
+the process's coupling to its environment can preserve, degrade, restore, or expand the process's recoverable continuation
 ```
 
 Examples at increasing sophistication might include:
@@ -198,7 +196,7 @@ cooperative corridor formation
 
 The key distinction is between passive persistence and interaction-mediated continuation.
 
-A rock may endure, but its interactions do not generally function to preserve or expand its own recoverable continuability. A minimal organism, autopoietic system, or homeostatic agent does.
+A rock may endure, but its interactions do not generally function as an internally organized maintenance of recoverable continuability. A minimal organism, autopoietic system, or homeostatic agent does.
 
 ## Path consequence and proto-value
 
@@ -219,7 +217,7 @@ At this point, continuation and collapse are no longer neutral descriptions. The
 
 This is proto-value:
 
-> not value as preference, but value as the emergence of a locus for which continuation, degradation, recovery, and loss are distinguishable in the dynamics.
+> not value as preference, but value as the emergence of a locus for which continuation, degradation, recovery, and loss are dynamically non-equivalent.
 
 Omega proper begins from these loci.
 
@@ -229,7 +227,7 @@ The following distinctions are useful but not sharp metaphysical boundaries.
 
 ```text
 non-valuer:
-  a process whose persistence is passive, trivial, or not self-maintaining
+  a process whose persistence is passive, trivial, or not recoverably self-maintaining
 
 examples:
   inert stasis, simple clocks, passive rocks, random churn, terminal attractors
@@ -237,7 +235,7 @@ examples:
 
 ```text
 proto-valuer:
-  a bounded recoverable process whose interactions help maintain continuability,
+  a bounded recoverable identity whose continuations asymmetrically affect its own continuability,
   but without rich modeling or explicit action selection
 
 examples:
@@ -266,7 +264,7 @@ Omega does not require all valuers to be reflective. But the richer Omega questi
 
 Gradient Ethics begins one layer higher: it asks how value-bearing systems should preserve future reachability under uncertainty and irreversibility. The present note supplies the lower bridge: what kind of process can be a bearer of those constraints at all?
 
-On this framing, a valuer is not defined by consciousness, preference, or utility. It is a bounded, historically conditioned process whose interactions preserve or expand recoverable continuability. That preserves the Gradient Ethics intuition while weakening the metaphysical load: valuerhood is a structural precondition for value-bearing, not a completed ethics.
+On this framing, a valuer is not defined by consciousness, preference, or utility. It is a bounded historical identity for which different continuations asymmetrically affect recoverable continuability. That preserves the Gradient Ethics intuition while weakening the metaphysical load: valuerhood is a structural precondition for value-bearing, not a completed ethics.
 
 For the broader ethical consequences of this bridge, see [`gradient_ethics-2.pdf`](../../../gradient_ethics-2.pdf).
 
@@ -320,7 +318,7 @@ recoverable historical identity
 
 Minimal worlds can help test the primitive and valuerhood boundary, but they should not be asked to validate Omega directly.
 
-A cellular automaton motif may show persistence, path dependence, or recoverability-like behavior. That is useful floor calibration. But unless it is a bounded self-maintaining process whose interactions preserve or expand its recoverable continuability, it is not yet a valuer in the relevant sense.
+A cellular automaton motif may show persistence, causal continuity through turnover, or recoverability-like behavior. That is useful floor calibration. But unless it is a bounded self-maintaining identity whose continuations asymmetrically affect recoverable continuability, it is not yet a valuer in the relevant sense.
 
 The next empirical validation above the primitive floor should therefore involve systems with at least minimal self-maintenance:
 
@@ -339,8 +337,8 @@ The validation question should become:
 
 ## Final thesis
 
-Valuerhood begins where recoverable historical identity participates in maintaining the conditions of its own continuation.
+Valuerhood begins where a recoverable historical identity has a stake-like asymmetry in its own continuation.
 
-This does not require consciousness, preference, utility, or human-like agency. It requires boundary, historical conditioning, recoverability, self-maintaining interaction, and path consequence.
+This does not require consciousness, preference, utility, or human-like agency. It requires boundary, causal continuity, recoverability, path consequence, and interaction through which continuability can be preserved, degraded, restored, or lost.
 
 Omega begins above this bridge. It is the theory of value-bearing trajectory structure: which valuers and inter-valuer histories remain viable, recoverable, compatible, and rich under uncertainty.
