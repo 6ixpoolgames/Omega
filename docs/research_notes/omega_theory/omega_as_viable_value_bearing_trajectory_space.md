@@ -10,13 +10,13 @@ The preceding notes clarified the lower stack:
 
 ```text
 primitive floor:
-  distinction + path consequence + historical conditioning
+  distinction + path consequence + causal continuity
 
 agency floor:
   recoverable self-maintaining identity
 
 valuerhood:
-  bounded historically conditioned process preserving or expanding recoverable continuability
+  bounded historical identity whose continuations asymmetrically affect recoverable continuability
 ```
 
 This note returns to Omega proper.
@@ -62,7 +62,8 @@ Histories compose into higher-order histories. A valuer's path is a history. Int
 The recursive structure is:
 
 ```text
-state
+state/event
+  -> causal continuity
   -> history
   -> interacting histories
   -> higher-order history
@@ -76,7 +77,10 @@ A rough scale map:
 
 ```text
 primitive scale:
-  historical identities; futures remain conditioned by histories
+  causal continuity links differences across transformation
+
+identity scale:
+  organized causal continuity remains coherent through change
 
 organismic / agentic scale:
   valuers maintain recoverable continuability
@@ -126,7 +130,7 @@ A state can be useful for modeling, but it is not the fundamental object of Omeg
 The relevant starting objects are:
 
 ```text
-bounded histories
+bounded historical identities
 recoverable continuability
 valuer trajectory classes
 inter-history structures
@@ -134,7 +138,7 @@ inter-history structures
 
 From the valuerhood bridge:
 
-> A valuer is a bounded, historically conditioned process whose interactions preserve or expand its recoverable continuability.
+> A valuer is a bounded historical identity for which different continuations asymmetrically affect recoverable continuability.
 
 Omega asks what happens when such histories are embedded in a shared world with finite energy, uncertainty, irreversible loss, imperfect models, scale transformations, and other valuers.
 
@@ -156,6 +160,23 @@ Omega is not whatever survives.
 
 Survival is necessary because value cannot be instantiated where no valuer or value-bearing distinction can continue. But survival alone is insufficient.
 
+Viability should be indexed to identity, lineage, or field. It is not only literal individual persistence.
+
+```text
+direct viability:
+  an identity itself remains continuable
+
+recoverable viability:
+  perturbations do not erase access to the identity's continuable class
+
+lineage viability:
+  successor histories preserve enough causal organization or value-bearing capacity
+
+field viability:
+  the broader ecology or trajectory field remains capable of generating, sustaining,
+  repairing, and composing value-bearing histories
+```
+
 There are many ways to persist badly:
 
 ```text
@@ -168,8 +189,8 @@ local viability:
 trap viability:
   a system remains stable but loses recoverable futures
 
-parasitic viability:
-  one structure preserves itself by degrading the field around it
+parasitic persistence:
+  one structure preserves itself by exploiting an exposed slack niche
 
 lock-in viability:
   continuation is maintained by collapsing diversity and future option space
@@ -182,7 +203,8 @@ viability:
   the gate through which value-bearing histories must pass
 
 lushness:
-  the richness, diversity, depth, and composability of compatible value-bearing trajectory space
+  the horizon-dependent richness, diversity, depth, and composability of compatible
+  value-bearing trajectory space
 ```
 
 A sparse Omega may be physically possible. Physics may permit a thin set of long-lived trajectories. But if value exists where there are valuers and value-bearing distinctions, then richer compatible valuer trajectory space has greater value capacity.
@@ -218,8 +240,8 @@ locally viable trap:
 pseudo-Omega attractor:
   mimics robust persistence while degrading broader value-bearing reachability
 
-parasite trajectory:
-  expands itself while shrinking the recoverable futures of others
+parasitic mode:
+  extracts from host or field slack without contributing to regenerative continuability
 
 metastable corridor:
   remains viable over short horizons but collapses under scale, noise, or longer time
@@ -362,15 +384,41 @@ compatible interaction:
 
 This is the basis of mutual corridors.
 
+### Regenerative filtering under slack
+
+Omega compatibility is not purity. It is regenerative filtering under slack.
+
+Slack is surplus recoverable capacity that permits perturbation, exploration, mutation, repair, learning, turnover, local failure, and re-entry without collapse. Slack also exposes niches that can be exploited.
+
+A parasitic mode is not Omega-positive merely because it persists. It is an exploited slack niche. A system may remain Omega-compatible despite bounded parasitic load only insofar as its regenerative filters prevent that load from degrading nested recoverable continuability.
+
+Regenerative filtering includes:
+
+```text
+repair
+immune response
+error correction
+sanctions
+metabolism
+epistemic scrutiny
+corrigibility
+resource limits
+boundary maintenance
+cultural learning
+coordination norms
+```
+
+Pseudo-Omega begins when extraction captures or disables filtering, repair, epistemic, or coordination systems and becomes the organizing attractor.
+
 ## Inter-history structures
 
 Omega's nested structure is most visible in inter-history phenomena.
 
 ### Inter-relation
 
-Relation begins as historical conditioning: futures remain conditioned by histories.
+Relation begins as causal continuity across transformation.
 
-Inter-relation occurs when histories interact and the interaction itself becomes a path-dependent history.
+Inter-relation occurs when causally continuous histories interact and the interaction itself becomes a higher-order causally continuous history.
 
 ```text
 H_A interacts with H_B
@@ -408,7 +456,7 @@ Examples as abstract types:
 
 ```text
 coercive lock-in
-parasitic institutions
+metaparasitic institutions
 addiction loops
 paperclip-like optimizers
 cultic epistemic traps
@@ -465,7 +513,7 @@ Redemption matters because Omega is recoverability-oriented. A structure that ca
 
 ## Lushness and value capacity
 
-Lushness names the richness of Omega-compatible value-bearing trajectory space.
+Lushness names the horizon-dependent richness of Omega-compatible value-bearing trajectory space.
 
 It includes:
 
@@ -474,6 +522,7 @@ number of valuers
 variety of valuers
 depth of histories
 recoverability of histories
+lineage and legacy continuity
 composability among histories
 non-erasure across scale
 diversity of distinguishable viable futures
@@ -493,7 +542,7 @@ maximum empowerment for one agent
 maximum persistence of one structure
 ```
 
-Lushness is nested and compatibility-constrained.
+Lushness is nested, horizon-dependent, and compatibility-constrained.
 
 A future is not lush if it contains many agents whose futures are all trapped, coerced, epistemically broken, or sterile. A future is not lush if one immense structure persists by eliminating the possibility of future valuers. A future is not lush if it maximizes activity while destroying recoverability.
 
@@ -551,7 +600,7 @@ They can test:
 
 ```text
 persistence versus stasis
-historical conditioning
+causal continuity through turnover
 recoverability-like behavior
 clock and local-phase fakeouts
 symmetry and self-only fakeouts
@@ -560,7 +609,7 @@ identity-through-transformation
 
 They cannot validate Omega.
 
-A cellular automaton motif is not a valuer unless it is a bounded self-maintaining history whose interactions preserve or expand recoverable continuability. Most CA motifs are useful microscopes, not Omega candidates.
+A cellular automaton motif is not a valuer unless it is a bounded self-maintaining identity whose continuations asymmetrically affect recoverable continuability. Most CA motifs are useful microscopes, not Omega candidates.
 
 ### Valuer-level simulations
 
@@ -601,6 +650,7 @@ epistemic grounding
 scale consistency
 inter-history compatibility
 corridor preservation
+regenerative filtering
 pseudo-Omega detection
 ```
 
@@ -622,6 +672,7 @@ all valuers are equal or morally equivalent
 all agents should share one goal
 cellular automata motifs are Omega-like
 local survival is sufficient for Omega membership
+parasitic modes are Omega-positive
 ```
 
 The claim is structural:
