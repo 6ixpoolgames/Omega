@@ -1,4 +1,4 @@
-# Relation as Historical Binding
+# Relation as Causal Continuity
 
 A primitive revision of Omega
 
@@ -25,27 +25,47 @@ distinction:
   differences exist
 
 asymmetry:
-  different paths lead to different futures
+  different paths produce different consequences
 
 relation:
-  futures remain conditioned by histories
+  causal continuity links differences across transformation
 ```
 
-This corrects an ambiguity in earlier formulations. Relation is not first inter-agent relation. It is not primarily social coupling, spatial adjacency, graph connectivity, edge memory, or neighbor dependence. Those are implementations or later-scale expressions.
+This corrects an ambiguity in earlier formulations. Relation is not first inter-agent relation. It is not primarily social coupling, spatial adjacency, graph connectivity, edge memory, neighbor dependence, or even historical conditioning in the identity-level sense. Those are implementations, consequences, or higher-order expressions.
 
 At the primitive level:
 
-> Relation is historical conditioning: what can happen next depends on the path by which the present was reached.
+> Relation is causal continuity: the linkage by which one state, event, or configuration is continuous with another through transformation.
 
-Correlation between past and future is not enough. Correlation can be accidental, passive, or epiphenomenal. Relation means historical dependence: prior path structure constrains the future possibility space.
+This is more primitive than saying that the future is conditioned by the past. Historical conditioning is already relation doing identity-level work. Relation itself is the causal continuity that allows any such conditioning to exist.
 
-When this historical conditioning coheres across time, it gives rise to identity. A system would otherwise be merely a sequence of states, not a continuing process.
+A useful image is a vortex. The water molecules churn through it, but the vortex remains related to itself by causal continuity of organization. The identity is not the matter. The identity is the continuing relational pattern through material turnover.
+
+## Relation and identity
+
+Relation is more primitive than identity.
+
+Identity is what relation can become when causal continuity stabilizes into a coherent pattern through change.
+
+```text
+relation:
+  causal continuity links events/configurations across transformation
+
+identity:
+  a stable pattern of causal continuity remains coherent through transformation
+```
+
+The Ship of Theseus is not solved by choosing either material sameness or arbitrary naming. The ship is the historically continuous organization that preserves enough causal structure through replacement to remain the same identity class.
+
+Likewise, a flame, metabolism, vortex, organism, institution, or agent persists not because its constituents remain fixed, but because a causal organization remains coherent through constituent turnover.
+
+So identity is not primitive sameness. It is organized causal continuity.
 
 ## Inter-relation as recursive relation
 
 Inter-relation is not a separate primitive.
 
-Once histories exist, histories can interact. That interaction is itself path-dependent, and may become a higher-order history.
+Once histories exist, histories can interact. That interaction is itself causally continuous and path-dependent, and may become a higher-order history.
 
 ```text
 H_A = path-dependent history of A
@@ -54,19 +74,20 @@ H_B = path-dependent history of B
 interaction:
   H_A × H_B → H_AB
 
-where H_AB is itself a path-dependent history
+where H_AB is itself a causally continuous history
 ```
 
 Thus relation scales recursively:
 
 ```text
-state → history
+state/event → causal continuity
+causal continuity → history
 history → interacting histories
 interacting histories → higher-order history
 higher-order history → larger-scale identity
 ```
 
-This gives a principled bridge from primitive identity to ecology, agency, society, and Omega-compatible trajectories without adding new primitives.
+This gives a principled bridge from primitive relation to ecology, agency, society, and Omega-compatible trajectories without adding new primitives.
 
 ## Historical identity
 
@@ -76,7 +97,7 @@ A sequence of states is not yet an identity.
 X0 → X1 → X2 → ... → Xt
 ```
 
-It becomes a historical identity only when the states along the path are coherently bound as the continuation of the same process.
+It becomes a historical identity only when causal continuity across the path coheres as the continuation of the same process.
 
 Informally:
 
@@ -86,11 +107,13 @@ I(X0) ~ I(X1) ~ ... ~ I(Xt)
 
 The equivalence cannot be cheap. If everything maps to the same identity, the identity relation explains nothing. If only exact state equality counts, the identity is too brittle to survive transformation.
 
-The relevant object is therefore not a state, and not a raw trajectory, but an identity class of histories.
+The relevant object is therefore not a state, and not a raw trajectory, but an identity class of causally continuous histories.
 
 A historical identity is:
 
-> a distinction-bearing path whose future remains conditioned by its history and whose continuation remains recognizable through transformation.
+> a distinction-bearing process whose causal organization remains coherently continuous through transformation.
+
+This is the sense in which the vortex remains itself despite churn, and the organism remains itself despite metabolism.
 
 ## Rejecting cheap persistence
 
@@ -109,7 +132,7 @@ self-copy:
   persistence factors through isolated local recurrence
 
 local phase cycle:
-  persistence is carried by an internal symbol clock rather than history
+  persistence is carried by an internal symbol clock rather than causal-historical organization
 
 symmetry fakeout:
   apparent asymmetry disappears under symmetrization
@@ -121,7 +144,7 @@ noise:
   persistence is only distributional churn, not identity
 ```
 
-These are not useless phenomena. Clocks, cycles, and attractors can be components of living systems. The rejected object is clock-only identity: apparent persistence that factors entirely through a simple phase cycle with no recoverable historical depth.
+These are not useless phenomena. Clocks, cycles, and attractors can be components of living systems. The rejected object is clock-only identity: apparent persistence that factors entirely through a simple phase cycle with no recoverable causal-historical depth.
 
 The principled rejection criterion is:
 
@@ -134,11 +157,11 @@ clock fakeout:
   I(H_t) = f(phase_t)
 
 historical identity:
-  I(H_t) depends on the path H_t
+  I(H_t) depends on organized causal continuity across H_t
   and perturbation-continuation paths can preserve I without reducing to phase
 ```
 
-The key test is not whether something repeats. The key test is whether the identity remains continuable under path-dependent perturbation.
+The key test is not whether something repeats. The key test is whether identity remains continuable under perturbation while preserving organized causal continuity.
 
 ## Recoverability as the floor
 
@@ -162,7 +185,7 @@ The handoff is:
 
 ```text
 primitive substrate:
-  distinction, path consequence, historical conditioning
+  distinction, path consequence, causal continuity
 
 FEP / active inference floor:
   bounded self-maintaining identity under perturbation
@@ -183,7 +206,7 @@ A minimal valuer can be defined without consciousness, explicit preferences, uti
 
 Proposed definition:
 
-> A valuer is a bounded, historically conditioned process whose interactions contribute to maintaining or expanding its own recoverable continuability.
+> A valuer is a bounded historical identity for which different continuations asymmetrically affect recoverable continuability.
 
 This requires:
 
@@ -191,8 +214,8 @@ This requires:
 boundary:
   enough distinction between process and environment for identity to be meaningful
 
-historical identity:
-  continuity through transformation
+causal continuity:
+  identity is organized through transformation rather than fixed constituents
 
 recoverability:
   perturbations do not immediately erase continuability
@@ -253,16 +276,16 @@ objects:
   states, configurations, identities, or identity classes
 
 morphisms:
-  transitions, transformations, histories
+  transitions, transformations, causal continuities
 
 paths:
-  composed morphisms
+  composed morphisms / histories
 
 identity class:
-  equivalence over histories, not exact state equality
+  equivalence over causally continuous histories, not exact state equality
 
-historical conditioning:
-  future morphisms available from an object depend on the path by which it was reached
+causal continuity:
+  morphism-level linkage by which configurations remain related through transformation
 
 recoverability:
   perturbation followed by continuation remains within the identity class
@@ -310,7 +333,7 @@ They can test:
 ```text
 persistence versus stasis
 identity-through-transformation
-path dependence
+causal continuity through turnover
 recoverability under perturbation
 clock and local-phase fakeouts
 symmetry and self-only fakeouts
@@ -333,11 +356,13 @@ distinction:
   differences exist
 
 asymmetry:
-  different paths lead to different futures
+  different paths produce different consequences
 
 relation:
-  futures remain conditioned by histories
+  causal continuity links differences across transformation
 ```
+
+Identity is organized causal continuity through change.
 
 FEP describes the self-maintaining floor: bounded identities that remain continuable under perturbation.
 
