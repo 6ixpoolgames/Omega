@@ -13,10 +13,10 @@ distinction:
   differences exist
 
 asymmetry:
-  different paths lead to different futures
+  different paths produce different consequences
 
 relation:
-  futures remain conditioned by histories
+  causal continuity links differences across transformation
 ```
 
 This gives the minimum vocabulary for historical identity. But Omega should not try to derive all of agency from this floor. That descent quickly enters territory already developed by the Free Energy Principle, active inference, autopoiesis, and related self-maintenance frameworks.
@@ -37,11 +37,11 @@ A sequence of states is not yet an identity:
 X0 -> X1 -> X2 -> ... -> Xt
 ```
 
-A process becomes identity-like when its future remains conditioned by its history in a way that coherently binds the path into a continuable process.
+A process becomes identity-like when causal continuity across transformation coheres into a continuable pattern. A vortex is the guiding example: its constituents churn, but the causal organization remains continuous enough for the vortex to be the same process.
 
 This is historical identity:
 
-> a distinction-bearing path whose future remains conditioned by its history and whose continuation remains recognizable through transformation.
+> a distinction-bearing process whose causal organization remains coherently continuous through transformation.
 
 But historical identity alone is not enough. Stasis, clocks, cycles, attractors, and local phase memories can all mimic persistence. The floor relevant to agency is not mere persistence but recoverable historical identity:
 
@@ -80,7 +80,7 @@ Omega does not need to prove from first principles that such systems can exist. 
 
 Instead, Omega can take the following as its floor:
 
-> A valuer candidate is a bounded, historically conditioned process that maintains recoverable continuability under perturbation.
+> A valuer candidate is a bounded historical identity that maintains recoverable continuability under perturbation.
 
 ## What Omega does not try to prove
 
@@ -111,7 +111,7 @@ A valuer is not defined by consciousness, explicit preference, reward maximizati
 
 Proposed minimal definition:
 
-> A valuer is a bounded, historically conditioned process whose interactions contribute to maintaining or expanding its own recoverable continuability.
+> A valuer is a bounded historical identity for which different continuations asymmetrically affect recoverable continuability.
 
 This has five components:
 
@@ -119,8 +119,8 @@ This has five components:
 1. boundary:
    there is enough distinction between the process and its environment for identity to be meaningful
 
-2. historical conditioning:
-   the future of the process depends on the path by which its present was reached
+2. causal continuity:
+   identity is organized through transformation rather than fixed constituents
 
 3. recoverability:
    perturbations do not immediately destroy continuability
@@ -168,10 +168,10 @@ clock:
   repeats but compresses to phase
 
 local phase memory:
-  cycles but does not require historical depth
+  cycles but does not require causal-historical depth
 
 self-only recurrence:
-  persists without relational dependence
+  persists without relational organization
 
 lock-in:
   survives by collapsing future possibility
@@ -258,7 +258,7 @@ The stack is therefore:
 
 ```text
 primitive substrate:
-  distinction, path consequence, historical conditioning
+  distinction, path consequence, causal continuity
 
 recoverable historical identity:
   identity-through-transformation under perturbation
@@ -267,7 +267,7 @@ FEP / self-maintenance floor:
   bounded systems maintain continuability
 
 valuerhood:
-  self-maintaining histories whose interactions preserve or expand recoverable continuability
+  bounded historical identities whose continuations can preserve or degrade recoverable continuability
 
 Omega:
   viable, compatible, richly structured value-bearing trajectory space
@@ -282,7 +282,7 @@ They are useful for floor calibration:
 ```text
 What is persistence?
 What is a fakeout?
-What does path dependence look like?
+What does causal continuity through turnover look like?
 How do clocks, local phase cycles, stasis, and self-only recurrence fool detectors?
 What would recoverable historical identity require?
 ```
@@ -354,7 +354,7 @@ In compressed form:
 
 ```text
 primitive floor:
-  distinction + path consequence + historical conditioning
+  distinction + path consequence + causal continuity
 
 agency floor:
   recoverable self-maintaining identity
