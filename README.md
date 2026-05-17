@@ -3,6 +3,60 @@
 This repository is the executable validation workspace for the Omega theory
 project.
 
+## What Is Omega?
+
+Omega is an attempt to formalize a minimal axiology: a way to talk about value
+without starting from human preferences, rewards, utility functions, or moral
+rules.
+
+The working idea is simple:
+
+```text
+Some futures preserve the conditions for value-bearing histories to continue.
+Some futures collapse, trap, erase, or narrow those conditions.
+```
+
+Omega studies that difference.
+
+At the highest level, Omega asks:
+
+> Which possible trajectories preserve or expand recoverable, compatible,
+> value-bearing possibility across time and scale?
+
+This is not a claim that all persistence is good. A cancer, a paperclip
+maximizer, or a locked-in exploitative system can persist while destroying
+broader future possibility. Omega therefore cares about **recoverable,
+compatible, future-bearing structure**, not raw survival.
+
+The current formal stack is:
+
+```text
+distinction
+-> asymmetry
+-> relation / causal continuity
+-> identity
+-> recoverability
+-> valuerhood
+-> viable trajectory space
+-> Omega-compatible futures
+```
+
+In plainer terms:
+
+- distinctions can exist;
+- different paths can matter;
+- causal continuity lets histories form;
+- some histories become identities;
+- some identities can recover from disturbance;
+- some recoverable identities become valuers, because their possible
+  continuations matter to their own future continuability;
+- Omega asks which larger trajectory structures preserve and compose those
+  value-bearing possibilities.
+
+The project is not claiming this is proven. The point of this repo is to turn
+that idea into testable mathematical objects and let controls break them when
+they are too weak.
+
 The current stance is deliberately modest:
 
 > derive candidate mathematical objects, implement them, test them against
@@ -99,6 +153,15 @@ implementing `R1`. Do not add mixed generators, noise branching, embodied
 agents, multifield coupling, or GPU acceleration until the first three
 generator families are clean.
 
+Future result outputs should live under:
+
+```text
+results/val0_ct/<timestamp-or-run-id>/
+```
+
+Use `results/local_runs/` for ignored smoke, calibration, stress, or scratch
+outputs. Do not add new root-level `*_results` folders.
+
 ## Important Caveat
 
 This repository does not prove Omega as a scientific theory. At present it
@@ -139,35 +202,7 @@ CuPy's kernel cache at `.cupy-cache/`.
 The public tree keeps compact historical outputs that matter for provenance and
 failure analysis. They are no longer the current center:
 
-- `probe_09_robust_fiber_reachability_results/`
-- `probe_10_com_viable_propagation_robustness_extended_results/`
-- `probe_10_com_targeted_fragility_refinement_results/`
-- `probe_11_learned_predictive_kappa_revised_results/`
-- `probe_12_batch_results/`
-- `probe_12a_com_formal_object_audit_results/`
-- `probe_12b_learned_kappa_failure_diagnosis_results/`
-- `probe_12c_improved_learner_smoke_results/`
-- `probe_T0_trajectory_space_branch_triage_results/`
-- `probe_T1_viable_trajectory_geometry_results/`
-- `probe_T1F_ordered_trajectory_structure_atlas_results/`
-- `probe_I0_invariant_stack_audit_results/`
-- `probe_I0b_invariant_threshold_dropout_audit_results/`
-- `probe_13b_fiber_transport_false_positive_refinement_results/`
-- `probe_DA0_distinction_asymmetry_relation_results/`
-- `probe_DA0b_relational_connection_closure_results/`
-- `probe_DA1_viable_slack_phase_sweep_results/`
-- `probe_DA1b_apparent_vs_viable_slack_results/`
-- `probe_DA1c_noncommutative_relational_history_results/`
-- `probe_DA2_relational_edge_memory_world_results/`
-- `probe_DA2_relational_edge_memory_world_revision_results/`
-- `probe_DAX_branching_connection_graph_validity_revised_results/`
-- `probe_DAX_G0_minimal_DAR_rule_space_persistence_results/`
-- `probe_DAX_G1_persistence_motif_anatomy_and_robustness_results/`
-- `probe_DAX_G2_persistence_phase_map_minimal_rule_spaces_results/`
-- `probe_DAX_G2b_control_adjusted_primitive_guardrail_results/`
-- `probe_DAX_G3_q3r1_guardrailed_phase_map_results/`
-- `probe_DAX_G4_q3r1_motif_ecology_mechanism_results/`
-- `probe_DAX_G5_q3r1_detector_freeze_heldout_prediction_results/`
+- `results/historical_probes/`
 
 Historical scripts remain in the repository because they document how the
 current state was reached. New work should normally start from the VAL0-CT

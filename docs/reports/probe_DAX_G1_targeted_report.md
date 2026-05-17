@@ -8,7 +8,7 @@ Script:
 
 Result directory:
 
-- `probe_DAX_G1_persistence_motif_anatomy_and_robustness_results/`
+- `results/historical_probes/probe_DAX_G1_persistence_motif_anatomy_and_robustness_results/`
 
 ## Purpose
 

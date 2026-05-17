@@ -8,7 +8,7 @@ Script:
 
 Result directory:
 
-- `probe_DAX_G2_persistence_phase_map_minimal_rule_spaces_results/`
+- `results/historical_probes/probe_DAX_G2_persistence_phase_map_minimal_rule_spaces_results/`
 
 ## Purpose
 

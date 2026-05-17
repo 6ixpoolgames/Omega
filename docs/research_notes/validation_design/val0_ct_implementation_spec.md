@@ -958,7 +958,7 @@ omega/val0_ct/
   run_smoke.py
   summarize.py
 
-runs/val0_ct/<timestamp>/
+results/val0_ct/<timestamp-or-run-id>/
   config.json
   results.jsonl
   aggregate.csv
@@ -966,6 +966,21 @@ runs/val0_ct/<timestamp>/
 ```
 
 Adjust paths to match existing repository conventions.
+
+Repository convention as of 2026-05-17:
+
+```text
+tracked VAL0-CT outputs:
+  results/val0_ct/<timestamp-or-run-id>/
+
+ignored local smoke/calibration/stress outputs:
+  results/local_runs/
+
+historical archived probe outputs:
+  results/historical_probes/
+```
+
+Do not write new result folders into the repository root.
 
 ## Final implementation principle
 

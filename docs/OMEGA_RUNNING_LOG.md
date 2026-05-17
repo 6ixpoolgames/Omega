@@ -25,6 +25,30 @@ Reason:
 Historical report and log references were updated to point at the new script
 paths.
 
+### Root Result Folder Cleanup
+
+Moved tracked historical result folders into:
+
+- `results/historical_probes/`
+
+Moved ignored local smoke, calibration, stress, and scratch result folders into:
+
+- `results/local_runs/`
+
+Added:
+
+- `results/README.md`
+- `results/historical_probes/README.md`
+- `results/val0_ct/README.md`
+
+Future VAL0-CT outputs should be written under:
+
+```text
+results/val0_ct/<timestamp-or-run-id>/
+```
+
+Do not add new root-level `*_results` folders.
+
 ### Public Reorientation Around VAL0-CT
 
 The public-facing repository orientation was updated to make the Constructor
@@ -244,8 +268,8 @@ Script:
 
 Primary output:
 
-- `probe_09_robust_fiber_reachability_results/summary.json`
-- `probe_09_robust_fiber_reachability_results/viable_propagation_summary.csv`
+- `results/historical_probes/probe_09_robust_fiber_reachability_results/summary.json`
+- `results/historical_probes/probe_09_robust_fiber_reachability_results/viable_propagation_summary.csv`
 
 Configuration:
 
@@ -282,8 +306,8 @@ Script:
 
 Primary outputs:
 
-- `probe_10_com_viable_propagation_robustness_extended_results/summary.json`
-- `probe_10_com_targeted_fragility_refinement_results/summary.json`
+- `results/historical_probes/probe_10_com_viable_propagation_robustness_extended_results/summary.json`
+- `results/historical_probes/probe_10_com_targeted_fragility_refinement_results/summary.json`
 
 Contained run:
 
@@ -363,11 +387,11 @@ Script:
 
 Primary outputs:
 
-- `probe_11_learned_predictive_kappa_revised_results/summary.json`
-- `probe_11_learned_predictive_kappa_revised_results/learned_kappa_validation_loss.csv`
-- `probe_11_learned_predictive_kappa_revised_results/learned_kappa_test_propagation.csv`
-- `probe_11_learned_predictive_kappa_revised_results/learned_vs_com_comparison.csv`
-- `probe_11_learned_predictive_kappa_revised_results/learned_label_anatomy.csv`
+- `results/historical_probes/probe_11_learned_predictive_kappa_revised_results/summary.json`
+- `results/historical_probes/probe_11_learned_predictive_kappa_revised_results/learned_kappa_validation_loss.csv`
+- `results/historical_probes/probe_11_learned_predictive_kappa_revised_results/learned_kappa_test_propagation.csv`
+- `results/historical_probes/probe_11_learned_predictive_kappa_revised_results/learned_vs_com_comparison.csv`
+- `results/historical_probes/probe_11_learned_predictive_kappa_revised_results/learned_label_anatomy.csv`
 
 Configuration:
 
@@ -419,11 +443,11 @@ Script:
 
 Primary outputs:
 
-- `probe_12_batch_results/batch_summary.json`
-- `probe_12_batch_results/recommended_next_step.md`
-- `probe_12a_com_formal_object_audit_results/summary.json`
-- `probe_12b_learned_kappa_failure_diagnosis_results/summary.json`
-- `probe_12c_improved_learner_smoke_results/summary.json`
+- `results/historical_probes/probe_12_batch_results/batch_summary.json`
+- `results/historical_probes/probe_12_batch_results/recommended_next_step.md`
+- `results/historical_probes/probe_12a_com_formal_object_audit_results/summary.json`
+- `results/historical_probes/probe_12b_learned_kappa_failure_diagnosis_results/summary.json`
+- `results/historical_probes/probe_12c_improved_learner_smoke_results/summary.json`
 
 Configuration:
 
@@ -563,7 +587,7 @@ trajectory geometry directly.
 Run:
 
 - script: `scripts/historical_probes/probe_T0_trajectory_space_branch_triage.py`
-- result directory: `probe_T0_trajectory_space_branch_triage_results/`
+- result directory: `results/historical_probes/probe_T0_trajectory_space_branch_triage_results/`
 - 18 workers
 - `15000` trajectories per condition/seed
 - `180` seeds
@@ -605,7 +629,7 @@ erasure.
 Run:
 
 - script: `scripts/historical_probes/probe_T1_viable_trajectory_geometry.py`
-- result directory: `probe_T1_viable_trajectory_geometry_results/`
+- result directory: `results/historical_probes/probe_T1_viable_trajectory_geometry_results/`
 - 18 workers
 - `15000` trajectories
 - `180` seeds
@@ -664,7 +688,7 @@ endpoint-fakeout, rigid collapse, or one-component erasure.
 Run:
 
 - script: `scripts/historical_probes/probe_T1F_ordered_trajectory_structure_atlas.py`
-- result directory: `probe_T1F_ordered_trajectory_structure_atlas_results/`
+- result directory: `results/historical_probes/probe_T1F_ordered_trajectory_structure_atlas_results/`
 - 18 workers
 - `15000` trajectories
 - `180` seeds
@@ -725,7 +749,7 @@ false-positive controls.
 Run:
 
 - script: `scripts/historical_probes/probe_I0_invariant_stack_audit.py`
-- result directory: `probe_I0_invariant_stack_audit_results/`
+- result directory: `results/historical_probes/probe_I0_invariant_stack_audit_results/`
 - 18 workers
 - `15000` trajectories
 - `180` seeds
@@ -792,8 +816,8 @@ stacking were too severe.
 Run:
 
 - script: `scripts/historical_probes/probe_I0b_invariant_threshold_dropout_audit.py`
-- result directory: `probe_I0b_invariant_threshold_dropout_audit_results/`
-- reused `probe_I0_invariant_stack_audit_results/estimator_report.csv`
+- result directory: `results/historical_probes/probe_I0b_invariant_threshold_dropout_audit_results/`
+- reused `results/historical_probes/probe_I0_invariant_stack_audit_results/estimator_report.csv`
 - runtime under one second for the analysis step
 
 Key result:
@@ -882,7 +906,7 @@ Probe 13b added only refinements directly forced by the Probe 13 smoke failures:
 Run:
 
 - script: `scripts/historical_probes/probe_13b_fiber_transport_false_positive_refinement.py`
-- result directory: `probe_13b_fiber_transport_false_positive_refinement_results/`
+- result directory: `results/historical_probes/probe_13b_fiber_transport_false_positive_refinement_results/`
 - smoke scale: `1000` trajectories, `8` seeds, `50` bootstraps
 - alphas `{0.50}`
 - horizons `{900}`
@@ -958,7 +982,7 @@ Primitive mapping:
 Run:
 
 - script: `scripts/historical_probes/probe_DA0_distinction_asymmetry_relation.py`
-- result directory: `probe_DA0_distinction_asymmetry_relation_results/`
+- result directory: `results/historical_probes/probe_DA0_distinction_asymmetry_relation_results/`
 - smoke scale: `2000` trajectories, `20` seeds
 - horizons `{50, 100}`
 - `16` sites
@@ -1047,7 +1071,7 @@ causal-history dependence.
 Run:
 
 - script: `scripts/historical_probes/probe_DA0b_relational_connection_closure.py`
-- result directory: `probe_DA0b_relational_connection_closure_results/`
+- result directory: `results/historical_probes/probe_DA0b_relational_connection_closure_results/`
 - smoke scale: `3000` trajectories, `30` seeds
 - horizons `{50, 100}`
 - `16` sites
@@ -1113,7 +1137,7 @@ overconstraint  -> lock-in
 Run:
 
 - script: `scripts/historical_probes/probe_DA1_viable_slack_phase_sweep.py`
-- result directory: `probe_DA1_viable_slack_phase_sweep_results/`
+- result directory: `results/historical_probes/probe_DA1_viable_slack_phase_sweep_results/`
 - smoke scale: `3000` trajectories, `30` seeds
 - horizons `{50, 100}`
 - `16` sites, `q=4`
@@ -1191,7 +1215,7 @@ by symmetry, lock-in, independent sites, or microstate multiplicity.
 Run:
 
 - script: `scripts/historical_probes/probe_DA1b_apparent_vs_viable_slack.py`
-- result directory: `probe_DA1b_apparent_vs_viable_slack_results/`
+- result directory: `results/historical_probes/probe_DA1b_apparent_vs_viable_slack_results/`
 - scale: `5000` trajectories, `50` seeds
 - horizons `{50, 100}`
 - `16` sites, `q=4`
@@ -1281,7 +1305,7 @@ noise, collapse, and bias-only controls.
 Run:
 
 - script: `scripts/historical_probes/probe_DA1c_noncommutative_relational_history.py`
-- result directory: `probe_DA1c_noncommutative_relational_history_results/`
+- result directory: `results/historical_probes/probe_DA1c_noncommutative_relational_history_results/`
 - scale: `5000` trajectories, `50` seeds
 - horizons `{50, 100}`
 - `16` sites, `q=4`, memory states `m=4`
@@ -1373,7 +1397,7 @@ relation.
 Run:
 
 - script: `scripts/historical_probes/probe_DA2_relational_edge_memory_world.py`
-- result directory: `probe_DA2_relational_edge_memory_world_results/`
+- result directory: `results/historical_probes/probe_DA2_relational_edge_memory_world_results/`
 - scale: `5000` trajectories, `50` seeds
 - horizons `{50, 100}`
 - `16` sites, `q=4`, edge memory states `m=4`
@@ -1437,7 +1461,7 @@ support rather than a single edge channel.
 
 Run:
 
-- result directory: `probe_DA2_relational_edge_memory_world_revision_results/`
+- result directory: `results/historical_probes/probe_DA2_relational_edge_memory_world_revision_results/`
 - same smoke scale and worker count
 - runtime about `2.7` minutes
 
@@ -1491,7 +1515,7 @@ Run:
   `docs/research_notes/primitive_branch/connection_like_relation_as_coarse_graining_admissibility.md`
 - script: `scripts/historical_probes/probe_DAX_branching_connection_graph_validity_revised.py`
 - result directory:
-  `probe_DAX_branching_connection_graph_validity_revised_results/`
+  `results/historical_probes/probe_DAX_branching_connection_graph_validity_revised_results/`
 - scale: `5000` trajectories, `50` seeds
 - horizons `{50, 100}`
 - branch probabilities `{0.10, 0.25}`
@@ -1578,7 +1602,7 @@ Run:
   `docs/research_notes/primitive_branch/minimal_DAR_rule_space_persistence.md`
 - script: `scripts/historical_probes/probe_DAX_G0_minimal_DAR_rule_space_persistence.py`
 - result directory:
-  `probe_DAX_G0_minimal_DAR_rule_space_persistence_results/`
+  `results/historical_probes/probe_DAX_G0_minimal_DAR_rule_space_persistence_results/`
 - rule space: all `256` elementary cellular automata
 - `q=2`, radius `1`
 - ring size `256`
@@ -1667,7 +1691,7 @@ Run:
 
 - script: `scripts/historical_probes/probe_DAX_G1_persistence_motif_anatomy_and_robustness.py`
 - result directory:
-  `probe_DAX_G1_persistence_motif_anatomy_and_robustness_results/`
+  `results/historical_probes/probe_DAX_G1_persistence_motif_anatomy_and_robustness_results/`
 - candidates: G0 localized, transported-identity, and emitter/generator rules
 - controls: collapse, frozen/orderly, chaotic, identity/shift/complement rules
 - horizons: `T=256,512,1024`
@@ -1767,7 +1791,7 @@ Run:
 
 - script: `scripts/historical_probes/probe_DAX_G2_persistence_phase_map_minimal_rule_spaces.py`
 - result directory:
-  `probe_DAX_G2_persistence_phase_map_minimal_rule_spaces_results/`
+  `results/historical_probes/probe_DAX_G2_persistence_phase_map_minimal_rule_spaces_results/`
 - sampled rules:
   - `350` q=3/r=1 rules
   - `350` q=2/r=2 rules
@@ -1857,7 +1881,7 @@ Run:
 
 - script: `scripts/historical_probes/probe_DAX_G2b_control_adjusted_primitive_guardrail.py`
 - result directory:
-  `probe_DAX_G2b_control_adjusted_primitive_guardrail_results/`
+  `results/historical_probes/probe_DAX_G2b_control_adjusted_primitive_guardrail_results/`
 - target rules: `50`
 - matched controls: `765`
 - scale: `T=512`, ring `256`, `128` seeds
@@ -1948,7 +1972,7 @@ of a reproducible class. It kept the G2b guardrails active from the start.
 Run:
 
 - script: `scripts/historical_probes/probe_DAX_G3_q3r1_guardrailed_phase_map.py`
-- result directory: `probe_DAX_G3_q3r1_guardrailed_phase_map_results/`
+- result directory: `results/historical_probes/probe_DAX_G3_q3r1_guardrailed_phase_map_results/`
 - rule space: q=3, radius=1 only
 - sampled rules: `2006`
 - stage 2 candidates: `225`
@@ -2046,7 +2070,7 @@ scripts/historical_probes/probe_DAX_G4_q3r1_motif_ecology_mechanism.py
 Result directory:
 
 ```text
-probe_DAX_G4_q3r1_motif_ecology_mechanism_results/
+results/historical_probes/probe_DAX_G4_q3r1_motif_ecology_mechanism_results/
 ```
 
 G4 stayed inside q=3/r=1 and reused the G3 Stage 2 measurements. The new-motif
@@ -2112,13 +2136,13 @@ scripts/historical_probes/probe_DAX_G5_q3r1_detector_freeze_heldout_prediction.p
 Result directory:
 
 ```text
-probe_DAX_G5_q3r1_detector_freeze_heldout_prediction_results/
+results/historical_probes/probe_DAX_G5_q3r1_detector_freeze_heldout_prediction_results/
 ```
 
 G5 wrote the detector freeze and preregistration before held-out sampling:
 
 ```text
-probe_DAX_G5_q3r1_detector_freeze_heldout_prediction_results/detector_freeze.json
+results/historical_probes/probe_DAX_G5_q3r1_detector_freeze_heldout_prediction_results/detector_freeze.json
 docs/research_notes/primitive_branch/q3r1_detector_freeze_v1.md
 docs/research_notes/primitive_branch/q3r1_G5_preregistration.md
 ```

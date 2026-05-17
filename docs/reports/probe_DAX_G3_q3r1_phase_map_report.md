@@ -8,7 +8,7 @@ Script:
 
 Result directory:
 
-- `probe_DAX_G3_q3r1_guardrailed_phase_map_results/`
+- `results/historical_probes/probe_DAX_G3_q3r1_guardrailed_phase_map_results/`
 
 ## Purpose
 

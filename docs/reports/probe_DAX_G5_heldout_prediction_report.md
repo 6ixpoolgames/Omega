@@ -8,7 +8,7 @@ Script:
 
 Result directory:
 
-- `probe_DAX_G5_q3r1_detector_freeze_heldout_prediction_results/`
+- `results/historical_probes/probe_DAX_G5_q3r1_detector_freeze_heldout_prediction_results/`
 
 ## Purpose
 
@@ -19,7 +19,7 @@ bands predict held-out primary positives better than matched controls.
 
 Freeze and preregistration were written before held-out sampling:
 
-- `probe_DAX_G5_q3r1_detector_freeze_heldout_prediction_results/detector_freeze.json`
+- `results/historical_probes/probe_DAX_G5_q3r1_detector_freeze_heldout_prediction_results/detector_freeze.json`
 - `docs/research_notes/primitive_branch/q3r1_detector_freeze_v1.md`
 - `docs/research_notes/primitive_branch/q3r1_G5_preregistration.md`
 

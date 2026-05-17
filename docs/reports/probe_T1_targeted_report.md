@@ -4,7 +4,7 @@ Date: 2026-05-13
 
 Status: completed. This report is a targeted interpretation artifact for the
 Omega project record. It should be read alongside the retained machine outputs in
-`probe_T1_viable_trajectory_geometry_results/`.
+`results/historical_probes/probe_T1_viable_trajectory_geometry_results/`.
 
 ## Executive Decision
 
@@ -32,7 +32,7 @@ Script:
 
 Result directory:
 
-- `probe_T1_viable_trajectory_geometry_results/`
+- `results/historical_probes/probe_T1_viable_trajectory_geometry_results/`
 
 Scale:
 
@@ -310,24 +310,24 @@ proposed object must pass:
 
 Core retained outputs:
 
-- `probe_T1_viable_trajectory_geometry_results/summary.json`
-- `probe_T1_viable_trajectory_geometry_results/geometry_metrics.csv`
-- `probe_T1_viable_trajectory_geometry_results/null_deltas.csv`
-- `probe_T1_viable_trajectory_geometry_results/component_balance.csv`
-- `probe_T1_viable_trajectory_geometry_results/temporal_geometry.csv`
-- `probe_T1_viable_trajectory_geometry_results/gpu_timing_diagnostics.csv`
+- `results/historical_probes/probe_T1_viable_trajectory_geometry_results/summary.json`
+- `results/historical_probes/probe_T1_viable_trajectory_geometry_results/geometry_metrics.csv`
+- `results/historical_probes/probe_T1_viable_trajectory_geometry_results/null_deltas.csv`
+- `results/historical_probes/probe_T1_viable_trajectory_geometry_results/component_balance.csv`
+- `results/historical_probes/probe_T1_viable_trajectory_geometry_results/temporal_geometry.csv`
+- `results/historical_probes/probe_T1_viable_trajectory_geometry_results/gpu_timing_diagnostics.csv`
 
 Useful plots:
 
-- `probe_T1_viable_trajectory_geometry_results/effective_rank_by_condition.png`
-- `probe_T1_viable_trajectory_geometry_results/component_balance_by_condition.png`
-- `probe_T1_viable_trajectory_geometry_results/null_delta_forest_plot.png`
-- `probe_T1_viable_trajectory_geometry_results/metric_correlation_matrix.png`
+- `results/historical_probes/probe_T1_viable_trajectory_geometry_results/effective_rank_by_condition.png`
+- `results/historical_probes/probe_T1_viable_trajectory_geometry_results/component_balance_by_condition.png`
+- `results/historical_probes/probe_T1_viable_trajectory_geometry_results/null_delta_forest_plot.png`
+- `results/historical_probes/probe_T1_viable_trajectory_geometry_results/metric_correlation_matrix.png`
 
 Local-only untracked intermediates:
 
-- `probe_T1_viable_trajectory_geometry_results/_seed_manifest.csv`
-- `probe_T1_viable_trajectory_geometry_results/_trajectory_samples/`
+- `results/historical_probes/probe_T1_viable_trajectory_geometry_results/_seed_manifest.csv`
+- `results/historical_probes/probe_T1_viable_trajectory_geometry_results/_trajectory_samples/`
 
 Those intermediates are intentionally not tracked because they are generated
 workflow artifacts, not public-facing evidence.

@@ -43,3 +43,13 @@ R0-lookahead controls in structured task algebras?
 - Defer embodied agents, multifield coupling, noise branching, mixed generators,
   and GPU acceleration until the first smoke is clean.
 
+## Results Location
+
+Write future VAL0-CT outputs under:
+
+```text
+results/val0_ct/<timestamp-or-run-id>/
+```
+
+Use `results/local_runs/` for ignored smoke, calibration, stress, and scratch
+outputs. Do not create new root-level `*_results` folders.

@@ -8,7 +8,7 @@ Script:
 
 Result directory:
 
-- `probe_DAX_G2b_control_adjusted_primitive_guardrail_results/`
+- `results/historical_probes/probe_DAX_G2b_control_adjusted_primitive_guardrail_results/`
 
 ## Purpose
 

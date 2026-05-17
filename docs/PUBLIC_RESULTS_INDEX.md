@@ -117,7 +117,7 @@ rejected. The current active path is VAL0-CT.
 
 Directory:
 
-- `probe_09_robust_fiber_reachability_results/`
+- `results/historical_probes/probe_09_robust_fiber_reachability_results/`
 
 Primary files:
 
@@ -136,7 +136,7 @@ Reason retained:
 
 Directory:
 
-- `probe_10_com_viable_propagation_robustness_extended_results/`
+- `results/historical_probes/probe_10_com_viable_propagation_robustness_extended_results/`
 
 Primary files:
 
@@ -155,7 +155,7 @@ Reason retained:
 
 Directory:
 
-- `probe_10_com_targeted_fragility_refinement_results/`
+- `results/historical_probes/probe_10_com_targeted_fragility_refinement_results/`
 
 Primary files:
 
@@ -174,7 +174,7 @@ Reason retained:
 
 Directory:
 
-- `probe_11_learned_predictive_kappa_revised_results/`
+- `results/historical_probes/probe_11_learned_predictive_kappa_revised_results/`
 
 Primary files:
 
@@ -202,21 +202,21 @@ Result in one line:
 
 Directories:
 
-- `probe_12_batch_results/`
-- `probe_12a_com_formal_object_audit_results/`
-- `probe_12b_learned_kappa_failure_diagnosis_results/`
-- `probe_12c_improved_learner_smoke_results/`
+- `results/historical_probes/probe_12_batch_results/`
+- `results/historical_probes/probe_12a_com_formal_object_audit_results/`
+- `results/historical_probes/probe_12b_learned_kappa_failure_diagnosis_results/`
+- `results/historical_probes/probe_12c_improved_learner_smoke_results/`
 
 Primary files:
 
-- `probe_12_batch_results/batch_summary.json`
-- `probe_12_batch_results/recommended_next_step.md`
-- `probe_12a_com_formal_object_audit_results/summary.json`
-- `probe_12a_com_formal_object_audit_results/com_threshold_sensitivity.csv`
-- `probe_12a_com_formal_object_audit_results/com_vs_controls_summary.csv`
-- `probe_12b_learned_kappa_failure_diagnosis_results/summary.json`
-- `probe_12b_learned_kappa_failure_diagnosis_results/learned_vs_com_anatomy_summary.csv`
-- `probe_12c_improved_learner_smoke_results/summary.json`
+- `results/historical_probes/probe_12_batch_results/batch_summary.json`
+- `results/historical_probes/probe_12_batch_results/recommended_next_step.md`
+- `results/historical_probes/probe_12a_com_formal_object_audit_results/summary.json`
+- `results/historical_probes/probe_12a_com_formal_object_audit_results/com_threshold_sensitivity.csv`
+- `results/historical_probes/probe_12a_com_formal_object_audit_results/com_vs_controls_summary.csv`
+- `results/historical_probes/probe_12b_learned_kappa_failure_diagnosis_results/summary.json`
+- `results/historical_probes/probe_12b_learned_kappa_failure_diagnosis_results/learned_vs_com_anatomy_summary.csv`
+- `results/historical_probes/probe_12c_improved_learner_smoke_results/summary.json`
 
 Reason retained:
 
@@ -240,7 +240,7 @@ Result in one line:
 
 Directory:
 
-- `probe_T0_trajectory_space_branch_triage_results/`
+- `results/historical_probes/probe_T0_trajectory_space_branch_triage_results/`
 
 Primary files:
 
@@ -268,7 +268,7 @@ Result in one line:
 
 Directory:
 
-- `probe_T1_viable_trajectory_geometry_results/`
+- `results/historical_probes/probe_T1_viable_trajectory_geometry_results/`
 
 Primary files:
 
@@ -296,7 +296,7 @@ Result in one line:
 
 Directory:
 
-- `probe_T1F_ordered_trajectory_structure_atlas_results/`
+- `results/historical_probes/probe_T1F_ordered_trajectory_structure_atlas_results/`
 
 Primary files:
 
@@ -325,7 +325,7 @@ Result in one line:
 
 Directory:
 
-- `probe_I0_invariant_stack_audit_results/`
+- `results/historical_probes/probe_I0_invariant_stack_audit_results/`
 
 Primary files:
 
@@ -354,7 +354,7 @@ Result in one line:
 
 Directory:
 
-- `probe_I0b_invariant_threshold_dropout_audit_results/`
+- `results/historical_probes/probe_I0b_invariant_threshold_dropout_audit_results/`
 
 Primary files:
 
@@ -441,7 +441,7 @@ rejection; soft stacks do not rescue the branch.
 
 Directory:
 
-- `probe_13b_fiber_transport_false_positive_refinement_results/`
+- `results/historical_probes/probe_13b_fiber_transport_false_positive_refinement_results/`
 
 Primary files:
 
@@ -469,7 +469,7 @@ Result in one line:
 
 Directory:
 
-- `probe_DA0_distinction_asymmetry_relation_results/`
+- `results/historical_probes/probe_DA0_distinction_asymmetry_relation_results/`
 
 Primary files:
 
@@ -498,7 +498,7 @@ Result in one line:
 
 Directory:
 
-- `probe_DA0b_relational_connection_closure_results/`
+- `results/historical_probes/probe_DA0b_relational_connection_closure_results/`
 
 Primary files:
 
@@ -525,7 +525,7 @@ Result in one line:
 
 Directory:
 
-- `probe_DA1_viable_slack_phase_sweep_results/`
+- `results/historical_probes/probe_DA1_viable_slack_phase_sweep_results/`
 
 Primary files:
 
@@ -552,7 +552,7 @@ Result in one line:
 
 Directory:
 
-- `probe_DA1b_apparent_vs_viable_slack_results/`
+- `results/historical_probes/probe_DA1b_apparent_vs_viable_slack_results/`
 
 Primary files:
 
@@ -582,7 +582,7 @@ Result in one line:
 
 Directory:
 
-- `probe_DA1c_noncommutative_relational_history_results/`
+- `results/historical_probes/probe_DA1c_noncommutative_relational_history_results/`
 
 Primary files:
 
@@ -612,8 +612,8 @@ Result in one line:
 
 Directory:
 
-- `probe_DA2_relational_edge_memory_world_results/`
-- `probe_DA2_relational_edge_memory_world_revision_results/`
+- `results/historical_probes/probe_DA2_relational_edge_memory_world_results/`
+- `results/historical_probes/probe_DA2_relational_edge_memory_world_revision_results/`
 
 Primary files:
 
@@ -644,7 +644,7 @@ Result in one line:
 
 Directory:
 
-- `probe_DAX_branching_connection_graph_validity_revised_results/`
+- `results/historical_probes/probe_DAX_branching_connection_graph_validity_revised_results/`
 
 Primary files:
 
@@ -679,7 +679,7 @@ Result in one line:
 
 Directory:
 
-- `probe_DAX_G0_minimal_DAR_rule_space_persistence_results/`
+- `results/historical_probes/probe_DAX_G0_minimal_DAR_rule_space_persistence_results/`
 
 Primary files:
 
@@ -710,7 +710,7 @@ Result in one line:
 
 Directory:
 
-- `probe_DAX_G1_persistence_motif_anatomy_and_robustness_results/`
+- `results/historical_probes/probe_DAX_G1_persistence_motif_anatomy_and_robustness_results/`
 
 Primary files:
 
@@ -742,7 +742,7 @@ Result in one line:
 
 Directory:
 
-- `probe_DAX_G2_persistence_phase_map_minimal_rule_spaces_results/`
+- `results/historical_probes/probe_DAX_G2_persistence_phase_map_minimal_rule_spaces_results/`
 
 Primary files:
 
@@ -776,7 +776,7 @@ Result in one line:
 
 Directory:
 
-- `probe_DAX_G2b_control_adjusted_primitive_guardrail_results/`
+- `results/historical_probes/probe_DAX_G2b_control_adjusted_primitive_guardrail_results/`
 
 Primary files:
 
@@ -811,7 +811,7 @@ Result in one line:
 
 Directory:
 
-- `probe_DAX_G3_q3r1_guardrailed_phase_map_results/`
+- `results/historical_probes/probe_DAX_G3_q3r1_guardrailed_phase_map_results/`
 
 Primary files:
 
@@ -846,7 +846,7 @@ Result in one line:
 
 Directory:
 
-- `probe_DAX_G4_q3r1_motif_ecology_mechanism_results/`
+- `results/historical_probes/probe_DAX_G4_q3r1_motif_ecology_mechanism_results/`
 
 Primary files:
 
@@ -879,7 +879,7 @@ Result in one line:
 
 Directory:
 
-- `probe_DAX_G5_q3r1_detector_freeze_heldout_prediction_results/`
+- `results/historical_probes/probe_DAX_G5_q3r1_detector_freeze_heldout_prediction_results/`
 
 Primary files:
 

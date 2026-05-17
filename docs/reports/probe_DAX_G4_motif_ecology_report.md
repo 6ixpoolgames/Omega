@@ -8,7 +8,7 @@ Script:
 
 Result directory:
 
-- `probe_DAX_G4_q3r1_motif_ecology_mechanism_results/`
+- `results/historical_probes/probe_DAX_G4_q3r1_motif_ecology_mechanism_results/`
 
 ## Purpose
 

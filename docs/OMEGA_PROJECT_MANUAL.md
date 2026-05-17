@@ -42,9 +42,9 @@ Project stance:
    - trajectory-space scripts: `probe_T0`, `probe_T1`, `probe_T1F`, `probe_I0`, `probe_I0b`
    - primitive/DAX scripts: `probe_DA0` through `probe_DAX_G5`
 7. Inspect compact historical summaries, not raw caches:
-   - `probe_09_robust_fiber_reachability_results/summary.json`
-   - `probe_10_com_viable_propagation_robustness_extended_results/summary.json`
-   - `probe_10_com_targeted_fragility_refinement_results/summary.json`
+   - `results/historical_probes/probe_09_robust_fiber_reachability_results/summary.json`
+   - `results/historical_probes/probe_10_com_viable_propagation_robustness_extended_results/summary.json`
+   - `results/historical_probes/probe_10_com_targeted_fragility_refinement_results/summary.json`
 8. Preserve the running log after every meaningful run.
 
 Use this Python executable locally:
@@ -54,6 +54,52 @@ Use this Python executable locally:
 ```
 
 Use 18 worker processes for CPU-heavy runs unless deliberately stress testing.
+
+## Repository Layout Rules
+
+Keep the repository root uncluttered.
+
+Current root-level folders should stay limited to:
+
+- `docs/`
+- `scripts/`
+- `results/`
+- local/private or environment folders that are ignored
+
+Historical executable probes live under:
+
+- `scripts/historical_probes/`
+
+Historical compact result artifacts live under:
+
+- `results/historical_probes/`
+
+Future VAL0-CT outputs should use:
+
+```text
+results/val0_ct/<timestamp-or-run-id>/
+```
+
+with a compact structure such as:
+
+```text
+config.json
+results.jsonl
+aggregate.csv
+summary.md
+```
+
+Scratch, calibration, smoke, stress, and oversized local-only outputs should go
+under:
+
+```text
+results/local_runs/
+```
+
+and should remain ignored.
+
+Do not add new root-level `*_results` folders. If a historical script defaults
+to root-level output, override its output directory when rerunning it.
 
 ## Context From The Theory/Paper Side
 

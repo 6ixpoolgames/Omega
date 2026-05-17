@@ -7,7 +7,7 @@ the known T1/T1F fakeouts while still retaining the coupled multifield target.
 ## Run
 
 - Script: `scripts/historical_probes/probe_I0_invariant_stack_audit.py`
-- Results: `probe_I0_invariant_stack_audit_results/`
+- Results: `results/historical_probes/probe_I0_invariant_stack_audit_results/`
 - Scale: `15000` trajectories, `180` seeds, `300` bootstraps
 - CPU: 18 workers
 - GPU: used for metric batches throughout
