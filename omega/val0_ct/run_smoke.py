@@ -26,13 +26,21 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--num-constructors", type=int, default=2)
     parser.add_argument("--sample-size", type=int, default=256)
     parser.add_argument("--max-paths", type=int, default=512)
+    parser.add_argument("--families", type=str, nargs="+", default=list(FAMILIES))
+    parser.add_argument(
+        "--seed-counts",
+        type=str,
+        default=None,
+        help="Comma-separated family=count overrides, e.g. brittle_peak=150,lock_in_seeded=50",
+    )
+    parser.add_argument("--store-steps", action="store_true")
     parser.add_argument("--h", type=int, nargs="+", default=[1, 2, 4])
     parser.add_argument("--H", type=int, nargs="+", default=[4, 8])
     parser.add_argument("--T", type=int, nargs="+", default=[16, 32])
     return parser.parse_args()
 
 
-def _job(args: tuple[str, int, int, int, int, str, dict[str, int]]) -> dict[str, object]:
+def _job(args: tuple[str, int, int, int, int, str, dict[str, object]]) -> dict[str, object]:
     family, seed, h, H, T, policy, config = args
     algebra = generate_algebra(
         family,
@@ -49,7 +57,20 @@ def _job(args: tuple[str, int, int, int, int, str, dict[str, int]]) -> dict[str,
         sample_size=config["sample_size"],
         seed=seed + h * 10_000 + H * 1_000 + T * 100,
         max_paths=config["max_paths"],
+        store_steps=bool(config["store_steps"]),
     )
+
+
+def _parse_seed_counts(raw: str | None, families: list[str], default: int) -> dict[str, int]:
+    counts = {family: default for family in families}
+    if not raw:
+        return counts
+    for item in raw.split(","):
+        if not item.strip():
+            continue
+        family, value = item.split("=", 1)
+        counts[family.strip()] = int(value)
+    return counts
 
 
 def main() -> int:
@@ -57,9 +78,12 @@ def main() -> int:
     run_id = datetime.now().strftime("%Y%m%d_%H%M%S")
     out_dir = args.out or Path("results") / "val0_ct" / run_id
     out_dir.mkdir(parents=True, exist_ok=True)
+    families = list(args.families)
+    seed_counts = _parse_seed_counts(args.seed_counts, families, args.seeds)
     config = {
         "run_id": run_id,
-        "families": list(FAMILIES),
+        "families": families,
+        "seed_counts": seed_counts,
         "policies": list(POLICIES),
         "seeds": args.seeds,
         "workers": args.workers,
@@ -67,6 +91,7 @@ def main() -> int:
         "num_constructors": args.num_constructors,
         "sample_size": args.sample_size,
         "max_paths": args.max_paths,
+        "store_steps": args.store_steps,
         "h": args.h,
         "H": args.H,
         "T": args.T,
@@ -75,8 +100,8 @@ def main() -> int:
     (out_dir / "config.json").write_text(json.dumps(config, indent=2, sort_keys=True), encoding="utf-8")
     jobs = [
         (family, seed, h, H, T, policy, config)
-        for family in FAMILIES
-        for seed in range(args.seeds)
+        for family in families
+        for seed in range(seed_counts[family])
         for h in args.h
         for H in args.H
         for T in args.T

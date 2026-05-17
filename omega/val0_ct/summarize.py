@@ -35,6 +35,12 @@ def write_aggregate_csv(path: Path, rows: list[dict[str, object]]) -> list[dict[
                 "mean_r0_final": mean(float(item["r0_final"]) for item in items),
                 "mean_r1_fraction": mean(float(item["initial_r1"]["r1_fraction"]) for item in items),
                 "mean_r1_future_r0": mean(float(item["initial_r1"]["mean_future_r0"]) for item in items),
+                "mean_same_choice_rate": mean(float(item["R1_R0lookahead_same_choice_rate"]) for item in items),
+                "mean_score_gap": mean(float(item["R1_R0lookahead_score_gap"]) for item in items),
+                "mean_candidate_future_R0_variance": mean(float(item["candidate_future_R0_variance_mean"]) for item in items),
+                "mean_candidate_R1_fraction": mean(float(item["candidate_R1_fraction_mean"]) for item in items),
+                "mean_local_global_divergence": mean(float(item["local_global_divergence"]) for item in items),
+                "mean_P_family_reachability_delta": mean(float(item["P_family_reachability_delta"]) for item in items),
             }
         )
     with path.open("w", newline="", encoding="utf-8") as handle:
@@ -75,6 +81,25 @@ def write_summary(path: Path, config: dict[str, object], aggregate: list[dict[st
                 global_lhr=mean(float(row["mean_global_lhr"]) for row in rows),
                 local_lhr=mean(float(row["mean_local_lhr"]) for row in rows),
                 pseudo=mean(float(row["pseudo_omega_rate"]) for row in rows),
+            )
+        )
+    lines.extend(
+        [
+            "",
+            "## R1 / R0-Lookahead Diagnostics",
+            "",
+            "| family | policy | same-choice rate | score gap | candidate variance |",
+            "|---|---:|---:|---:|---:|",
+        ]
+    )
+    for (family, policy), rows in sorted(by_family_policy.items()):
+        lines.append(
+            "| {family} | {policy} | {same:.3f} | {gap:.3f} | {var:.3f} |".format(
+                family=family,
+                policy=policy,
+                same=mean(float(row["mean_same_choice_rate"]) for row in rows),
+                gap=mean(float(row["mean_score_gap"]) for row in rows),
+                var=mean(float(row["mean_candidate_future_R0_variance"]) for row in rows),
             )
         )
     lines.extend(
