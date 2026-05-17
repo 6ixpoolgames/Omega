@@ -4,7 +4,7 @@ Date: 2026-05-15
 
 Script:
 
-- `probe_DAX_G4_q3r1_motif_ecology_mechanism.py`
+- `scripts/historical_probes/probe_DAX_G4_q3r1_motif_ecology_mechanism.py`
 
 Result directory:
 

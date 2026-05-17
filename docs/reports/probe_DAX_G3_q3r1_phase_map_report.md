@@ -4,7 +4,7 @@ Date: 2026-05-14
 
 Script:
 
-- `probe_DAX_G3_q3r1_guardrailed_phase_map.py`
+- `scripts/historical_probes/probe_DAX_G3_q3r1_guardrailed_phase_map.py`
 
 Result directory:
 

@@ -4,7 +4,7 @@ Date: 2026-05-15
 
 Script:
 
-- `probe_DAX_G5_q3r1_detector_freeze_heldout_prediction.py`
+- `scripts/historical_probes/probe_DAX_G5_q3r1_detector_freeze_heldout_prediction.py`
 
 Result directory:
 

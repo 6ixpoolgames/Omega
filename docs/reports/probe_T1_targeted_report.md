@@ -28,7 +28,7 @@ the COM fiber-transport trunk as the stronger current object.
 
 Script:
 
-- `probe_T1_viable_trajectory_geometry.py`
+- `scripts/historical_probes/probe_T1_viable_trajectory_geometry.py`
 
 Result directory:
 

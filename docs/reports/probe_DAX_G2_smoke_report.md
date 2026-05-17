@@ -4,7 +4,7 @@ Date: 2026-05-14
 
 Script:
 
-- `probe_DAX_G2_persistence_phase_map_minimal_rule_spaces.py`
+- `scripts/historical_probes/probe_DAX_G2_persistence_phase_map_minimal_rule_spaces.py`
 
 Result directory:
 

@@ -4,7 +4,7 @@ Date: 2026-05-14
 
 Script:
 
-- `probe_DAX_G1_persistence_motif_anatomy_and_robustness.py`
+- `scripts/historical_probes/probe_DAX_G1_persistence_motif_anatomy_and_robustness.py`
 
 Result directory:
 

@@ -6,6 +6,25 @@ run.
 
 ## 2026-05-17
 
+### Root Script Cleanup
+
+Moved historical root-level Python probe scripts into:
+
+- `scripts/historical_probes/`
+
+Added:
+
+- `scripts/historical_probes/README.md`
+
+Reason:
+
+- keep the repository front page clean for public readers;
+- make VAL0-CT docs the obvious entry point;
+- preserve old scripts for provenance, reproducibility, and failure analysis.
+
+Historical report and log references were updated to point at the new script
+paths.
+
 ### Public Reorientation Around VAL0-CT
 
 The public-facing repository orientation was updated to make the Constructor
@@ -221,7 +240,7 @@ Entropy/breadth are secondary diagnostics.
 
 Script:
 
-- `probe_09_robust_fiber_reachability.py`
+- `scripts/historical_probes/probe_09_robust_fiber_reachability.py`
 
 Primary output:
 
@@ -259,7 +278,7 @@ Decision:
 
 Script:
 
-- `probe_10_com_viable_propagation_robustness.py`
+- `scripts/historical_probes/probe_10_com_viable_propagation_robustness.py`
 
 Primary outputs:
 
@@ -340,7 +359,7 @@ Probe 11 was run as a learned predictive-kappa test before formalization.
 
 Script:
 
-- `probe_11_learned_predictive_kappa_revised.py`
+- `scripts/historical_probes/probe_11_learned_predictive_kappa_revised.py`
 
 Primary outputs:
 
@@ -396,7 +415,7 @@ Decision:
 
 Script:
 
-- `probe_12_batch_com_audit_learned_diagnosis.py`
+- `scripts/historical_probes/probe_12_batch_com_audit_learned_diagnosis.py`
 
 Primary outputs:
 
@@ -504,7 +523,7 @@ PowerShell note:
 
 Added and ran:
 
-- `gpu_cpu_concurrent_stress_probe.py`
+- `scripts/historical_probes/gpu_cpu_concurrent_stress_probe.py`
 
 Purpose:
 
@@ -543,7 +562,7 @@ trajectory geometry directly.
 
 Run:
 
-- script: `probe_T0_trajectory_space_branch_triage.py`
+- script: `scripts/historical_probes/probe_T0_trajectory_space_branch_triage.py`
 - result directory: `probe_T0_trajectory_space_branch_triage_results/`
 - 18 workers
 - `15000` trajectories per condition/seed
@@ -585,7 +604,7 @@ erasure.
 
 Run:
 
-- script: `probe_T1_viable_trajectory_geometry.py`
+- script: `scripts/historical_probes/probe_T1_viable_trajectory_geometry.py`
 - result directory: `probe_T1_viable_trajectory_geometry_results/`
 - 18 workers
 - `15000` trajectories
@@ -644,7 +663,7 @@ endpoint-fakeout, rigid collapse, or one-component erasure.
 
 Run:
 
-- script: `probe_T1F_ordered_trajectory_structure_atlas.py`
+- script: `scripts/historical_probes/probe_T1F_ordered_trajectory_structure_atlas.py`
 - result directory: `probe_T1F_ordered_trajectory_structure_atlas_results/`
 - 18 workers
 - `15000` trajectories
@@ -705,7 +724,7 @@ false-positive controls.
 
 Run:
 
-- script: `probe_I0_invariant_stack_audit.py`
+- script: `scripts/historical_probes/probe_I0_invariant_stack_audit.py`
 - result directory: `probe_I0_invariant_stack_audit_results/`
 - 18 workers
 - `15000` trajectories
@@ -772,7 +791,7 @@ stacking were too severe.
 
 Run:
 
-- script: `probe_I0b_invariant_threshold_dropout_audit.py`
+- script: `scripts/historical_probes/probe_I0b_invariant_threshold_dropout_audit.py`
 - result directory: `probe_I0b_invariant_threshold_dropout_audit_results/`
 - reused `probe_I0_invariant_stack_audit_results/estimator_report.csv`
 - runtime under one second for the analysis step
@@ -862,7 +881,7 @@ Probe 13b added only refinements directly forced by the Probe 13 smoke failures:
 
 Run:
 
-- script: `probe_13b_fiber_transport_false_positive_refinement.py`
+- script: `scripts/historical_probes/probe_13b_fiber_transport_false_positive_refinement.py`
 - result directory: `probe_13b_fiber_transport_false_positive_refinement_results/`
 - smoke scale: `1000` trajectories, `8` seeds, `50` bootstraps
 - alphas `{0.50}`
@@ -938,7 +957,7 @@ Primitive mapping:
 
 Run:
 
-- script: `probe_DA0_distinction_asymmetry_relation.py`
+- script: `scripts/historical_probes/probe_DA0_distinction_asymmetry_relation.py`
 - result directory: `probe_DA0_distinction_asymmetry_relation_results/`
 - smoke scale: `2000` trajectories, `20` seeds
 - horizons `{50, 100}`
@@ -1027,7 +1046,7 @@ causal-history dependence.
 
 Run:
 
-- script: `probe_DA0b_relational_connection_closure.py`
+- script: `scripts/historical_probes/probe_DA0b_relational_connection_closure.py`
 - result directory: `probe_DA0b_relational_connection_closure_results/`
 - smoke scale: `3000` trajectories, `30` seeds
 - horizons `{50, 100}`
@@ -1093,7 +1112,7 @@ overconstraint  -> lock-in
 
 Run:
 
-- script: `probe_DA1_viable_slack_phase_sweep.py`
+- script: `scripts/historical_probes/probe_DA1_viable_slack_phase_sweep.py`
 - result directory: `probe_DA1_viable_slack_phase_sweep_results/`
 - smoke scale: `3000` trajectories, `30` seeds
 - horizons `{50, 100}`
@@ -1171,7 +1190,7 @@ by symmetry, lock-in, independent sites, or microstate multiplicity.
 
 Run:
 
-- script: `probe_DA1b_apparent_vs_viable_slack.py`
+- script: `scripts/historical_probes/probe_DA1b_apparent_vs_viable_slack.py`
 - result directory: `probe_DA1b_apparent_vs_viable_slack_results/`
 - scale: `5000` trajectories, `50` seeds
 - horizons `{50, 100}`
@@ -1261,7 +1280,7 @@ noise, collapse, and bias-only controls.
 
 Run:
 
-- script: `probe_DA1c_noncommutative_relational_history.py`
+- script: `scripts/historical_probes/probe_DA1c_noncommutative_relational_history.py`
 - result directory: `probe_DA1c_noncommutative_relational_history_results/`
 - scale: `5000` trajectories, `50` seeds
 - horizons `{50, 100}`
@@ -1353,7 +1372,7 @@ relation.
 
 Run:
 
-- script: `probe_DA2_relational_edge_memory_world.py`
+- script: `scripts/historical_probes/probe_DA2_relational_edge_memory_world.py`
 - result directory: `probe_DA2_relational_edge_memory_world_results/`
 - scale: `5000` trajectories, `50` seeds
 - horizons `{50, 100}`
@@ -1470,7 +1489,7 @@ Run:
 
 - bridge note:
   `docs/research_notes/primitive_branch/connection_like_relation_as_coarse_graining_admissibility.md`
-- script: `probe_DAX_branching_connection_graph_validity_revised.py`
+- script: `scripts/historical_probes/probe_DAX_branching_connection_graph_validity_revised.py`
 - result directory:
   `probe_DAX_branching_connection_graph_validity_revised_results/`
 - scale: `5000` trajectories, `50` seeds
@@ -1557,7 +1576,7 @@ Run:
 
 - research note:
   `docs/research_notes/primitive_branch/minimal_DAR_rule_space_persistence.md`
-- script: `probe_DAX_G0_minimal_DAR_rule_space_persistence.py`
+- script: `scripts/historical_probes/probe_DAX_G0_minimal_DAR_rule_space_persistence.py`
 - result directory:
   `probe_DAX_G0_minimal_DAR_rule_space_persistence_results/`
 - rule space: all `256` elementary cellular automata
@@ -1646,7 +1665,7 @@ collapse, or shift/identity triviality.
 
 Run:
 
-- script: `probe_DAX_G1_persistence_motif_anatomy_and_robustness.py`
+- script: `scripts/historical_probes/probe_DAX_G1_persistence_motif_anatomy_and_robustness.py`
 - result directory:
   `probe_DAX_G1_persistence_motif_anatomy_and_robustness_results/`
 - candidates: G0 localized, transported-identity, and emitter/generator rules
@@ -1746,7 +1765,7 @@ q=2, radius=2  -> more relation context
 
 Run:
 
-- script: `probe_DAX_G2_persistence_phase_map_minimal_rule_spaces.py`
+- script: `scripts/historical_probes/probe_DAX_G2_persistence_phase_map_minimal_rule_spaces.py`
 - result directory:
   `probe_DAX_G2_persistence_phase_map_minimal_rule_spaces_results/`
 - sampled rules:
@@ -1836,7 +1855,7 @@ against matched counterfactuals rather than raw persistence alone.
 
 Run:
 
-- script: `probe_DAX_G2b_control_adjusted_primitive_guardrail.py`
+- script: `scripts/historical_probes/probe_DAX_G2b_control_adjusted_primitive_guardrail.py`
 - result directory:
   `probe_DAX_G2b_control_adjusted_primitive_guardrail_results/`
 - target rules: `50`
@@ -1928,7 +1947,7 @@ of a reproducible class. It kept the G2b guardrails active from the start.
 
 Run:
 
-- script: `probe_DAX_G3_q3r1_guardrailed_phase_map.py`
+- script: `scripts/historical_probes/probe_DAX_G3_q3r1_guardrailed_phase_map.py`
 - result directory: `probe_DAX_G3_q3r1_guardrailed_phase_map_results/`
 - rule space: q=3, radius=1 only
 - sampled rules: `2006`
@@ -2021,7 +2040,7 @@ cleaner.
 Script:
 
 ```text
-probe_DAX_G4_q3r1_motif_ecology_mechanism.py
+scripts/historical_probes/probe_DAX_G4_q3r1_motif_ecology_mechanism.py
 ```
 
 Result directory:
@@ -2087,7 +2106,7 @@ Do not promote composition into the primary validation claim yet.
 Script:
 
 ```text
-probe_DAX_G5_q3r1_detector_freeze_heldout_prediction.py
+scripts/historical_probes/probe_DAX_G5_q3r1_detector_freeze_heldout_prediction.py
 ```
 
 Result directory:

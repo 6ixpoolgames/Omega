@@ -4,7 +4,7 @@ Date: 2026-05-14
 
 Script:
 
-- `probe_DAX_G2b_control_adjusted_primitive_guardrail.py`
+- `scripts/historical_probes/probe_DAX_G2b_control_adjusted_primitive_guardrail.py`
 
 Result directory:
 
