@@ -8,6 +8,16 @@ This glossary anchors the current terminology used across the Omega research not
 
 It is a working glossary, not a final formal system. Its purpose is to reduce definitional drift as the project moves between primitive theory, FEP/self-maintenance, valuerhood, Omega trajectory space, and empirical validation.
 
+Companion glossaries:
+
+```text
+public_terms_and_translations.md:
+  public-facing translations for internal terms
+
+historical_probe_terms.md:
+  older COM/fiber, trajectory-space, DA/DAR/DAX, and probe-result terminology
+```
+
 The guiding dependency chain is:
 
 ```text
@@ -20,8 +30,9 @@ distinction
   -> viability
   -> value-bearing trajectory space
   -> Omega compatibility
-  -> lushness
 ```
+
+Lushness is adjacent to this chain rather than identical to Omega. It names structured branching that propagates. Omega-compatible lushness is lushness filtered by recoverable value-bearing compatibility.
 
 The core correction in the current stack is that relation is more primitive than identity. Relation is causal continuity. Identity is organized causal continuity through change.
 
@@ -219,11 +230,11 @@ Omega-compatible viability is value-bearing viability compatible with the broade
 
 A trajectory is Omega-compatible only if its continuation does not irreversibly degrade the nested conditions under which value-bearing histories can continue.
 
-### Legacy
+### Legacy / lineage continuity
 
-Legacy is continuity through successor histories.
+Legacy is continuity through successor histories. The cleaner formal term is lineage continuity.
 
-Legacy preserves or transmits causal organization, value-bearing capacity, or recoverable continuability into successors.
+Lineage continuity preserves or transmits causal organization, value-bearing capacity, or recoverable continuability into successors.
 
 Legacy is not mere memory, influence, or trace. It is relevant when it preserves continuation-relevant structure such as knowledge, repair capacity, institutions, norms, lineages, ecological roles, or corridors.
 
@@ -274,6 +285,12 @@ Alpha-Omega:
   nested trajectory geometry from emergence to long-horizon compatible persistence
 ```
 
+### Proto-Omega
+
+Proto-Omega is an early precursor of Omega: reachable possibility that remains future-bearing across time.
+
+In VAL0-CT, proto-Omega is operationalized as future-bearing reachability in constructor-style task algebras. It is not full Omega, not valuerhood, and not a moral claim.
+
 ### Omega-compatible
 
 A history is Omega-compatible if its value-bearing continuation remains compatible with the nested recoverable continuability of broader value-bearing trajectory space.
@@ -282,20 +299,18 @@ Omega compatibility must be indexed to horizon, scale, and constraint set.
 
 ### Lushness
 
-Lushness is the horizon-dependent richness of distinguishable Omega-compatible value-bearing futures.
+Lushness is structured branching that propagates.
 
-Lushness includes:
+A future possibility space is lush when its branches are distinguishable, non-noise, and carry forward enough structure to enable further meaningful branching.
+
+Lushness is more primitive than Omega compatibility. Non-Omega trajectories can be lush: a runaway optimizer, cancerous growth, or destructive institution may generate structured propagating branches while degrading broader recoverable possibility.
 
 ```text
-variety of valuers
-depth of histories
-recoverability
-lineage and legacy continuity
-composability
-non-erasure across scale
-diversity of distinguishable viable futures
-capacity for repair, learning, and re-entry
-space for new value-bearing distinctions to emerge
+lushness:
+  structured branching that propagates
+
+Omega-compatible lushness:
+  structured branching that remains compatible with recoverable value-bearing continuability
 ```
 
 Lushness is not:
@@ -308,9 +323,8 @@ maximum raw path count
 maximum optimization pressure
 maximum empowerment for one agent
 maximum persistence of one structure
+mere noise branching
 ```
-
-Lushness is nested, horizon-dependent, and compatibility-constrained.
 
 ## Constraint and failure-mode layer
 
@@ -384,11 +398,23 @@ Parasitism is not Omega-positive. It is an exploited slack niche.
 
 A system may remain Omega-compatible despite bounded parasitic load only insofar as regenerative filters prevent that load from degrading nested recoverable continuability.
 
-### Pseudo-Omega
+### Pseudo-Omega / destructive lock-in
 
-Pseudo-Omega is a locally persistent or robust-looking structure that preserves itself by degrading nested recoverable value-bearing trajectory space.
+Pseudo-Omega is destructive lock-in: local success that collapses broader future possibility.
+
+A pseudo-Omega structure looks persistent, robust, optimized, or locally viable, but it preserves or expands itself by degrading nested recoverable value-bearing trajectory space.
 
 Pseudo-Omega begins when destructive modes capture or disable repair, filtering, epistemic, coordination, or regenerative systems and become organizing attractors.
+
+Plain-language examples:
+
+```text
+proxy optimization that destroys the real target
+self-preservation that removes correction or repair paths
+local control that collapses broader future options
+institutional persistence that destroys member recoverability
+lock-in that makes better futures unreachable
+```
 
 ### Event horizon
 
@@ -496,6 +522,10 @@ A system may remain Omega-compatible despite parasitic load. The compatible stru
 
 A lower-order structure may be a fakeout for a higher-level claim while remaining a valid component at its own level.
 
+### Lushness is not Omega by itself
+
+Lushness names structured propagation of branching possibilities. Omega compatibility filters that lushness for recoverable value-bearing continuability.
+
 ## Short dependency summary
 
 ```text
@@ -527,5 +557,5 @@ Omega-compatible:
   value-bearing viability compatible with the broader nested field
 
 lushness:
-  horizon-dependent richness of distinguishable Omega-compatible futures
+  structured branching that propagates
 ```
