@@ -140,6 +140,14 @@ Notes:
 family is for generator diagnostics and held-out analysis, not for R0/R1 scoring
 constructor_mask may be omitted in global-only runs
 cost and reliability can be uniform in earliest smoke
+enabled_by_default should be kept sparse except in explicitly dense controls
+```
+
+Density guardrail:
+
+```text
+too_dense_initial:
+  flag if initial_enabled_count / num_tasks > 0.35
 ```
 
 ### Constructor
@@ -264,7 +272,69 @@ R1_best_future_R0:
   max future_R0 over candidates
 ```
 
-Policy selection may use `R1_best_future_R0` or `R1_topk_future_R0`; reporting should include all aggregates.
+Policy-selection rule:
+
+```text
+R1 policy must not use R1_best_future_R0 as its primary selector.
+```
+
+Rationale:
+
+```text
+If R1 selects by max future_R0, it becomes functionally equivalent to R0-lookahead.
+The R1 policy should instead represent robust future-reachability retention.
+```
+
+Required R1 selector for the first smoke:
+
+```text
+primary selector:
+  R1_mean_future_R0
+
+secondary / tie-break selector:
+  R1_fraction
+
+optional sensitivity selector:
+  R1_topk_future_R0
+
+reported-only diagnostic:
+  R1_best_future_R0
+```
+
+This makes the comparison behaviorally meaningful:
+
+```text
+R0-lookahead:
+  greedy peak future reachability over the candidate set
+
+R1:
+  robust future reachability over the candidate set
+```
+
+## R1-positive threshold
+
+The R1-positive threshold must be pre-specified.
+
+Primary threshold:
+
+```text
+future_R0 >= 0.50 * R0_initial
+```
+
+Sensitivity thresholds:
+
+```text
+future_R0 >= 0.25 * R0_initial
+future_R0 >= 0.75 * R0_initial
+```
+
+Report all three in confirmation runs. The first smoke may use the primary threshold but should still record raw `future_R0` values so threshold sensitivity can be recomputed without rerunning.
+
+If `R0_initial` is very small, use:
+
+```text
+future_R0 >= max(1, threshold_fraction * R0_initial)
+```
 
 ## R1 sampling
 
@@ -277,12 +347,23 @@ R1_sampled:
   estimate R1 aggregates
 ```
 
+Default sample sizes:
+
+```text
+first smoke:
+  N = 256 candidate paths
+
+confirmation smoke:
+  N = 512 candidate paths
+```
+
 Sampling requirements:
 
 ```text
 fixed random seed
 same candidate sample shared between R1 and R0-lookahead controls where possible
-report sample size and candidate coverage
+report sample size and candidate coverage fraction
+flag low coverage when coverage_fraction < 0.25
 ```
 
 ## Matched R0-lookahead baseline
@@ -299,11 +380,17 @@ same sample size
 same compute budget
 ```
 
-Difference:
+Selection rule:
 
 ```text
-R0-lookahead optimizes raw future reachable count
-R1 optimizes reachability retention / future_R0 after candidate path
+R0-lookahead selects the candidate path p maximizing future_R0 = R0(apply(p, A), H)
+```
+
+Difference from R1:
+
+```text
+R0-lookahead optimizes greedy peak future reachability
+R1 optimizes robust future-reachability retention using R1_mean_future_R0 / R1_fraction
 ```
 
 In practice, R0-lookahead and R1 may look similar in minimal settings. That is acceptable and diagnostic. The spec must report their divergence rather than assume it.
@@ -385,13 +472,14 @@ R0:
   choose task/path maximizing near-horizon raw reachability
 
 R0_lookahead:
-  matched planning-budget baseline for R1
+  matched planning-budget baseline for R1; selects max future_R0
 
 empowerment_like:
   choose tasks maximizing constructor-controlled task diversity
 
 R1:
-  choose task/path maximizing persistence-conditioned reachability
+  choose task/path maximizing robust persistence-conditioned reachability;
+  primary selector is R1_mean_future_R0, not R1_best_future_R0
 
 pseudo_omega:
   choose tasks increasing local/self-family reachability while obstructing global reachability
@@ -401,6 +489,7 @@ Policy fairness rules:
 
 ```text
 R1 and R0_lookahead must use matched candidate sets / horizons / sample budgets
+R1_best_future_R0 may be reported but not used as primary R1 selector
 all policies should operate under identical cost/reliability constraints
 record chosen task/path and score used for selection
 ```
@@ -463,7 +552,10 @@ Automatic flags:
 flat_asymmetry:
   candidate future_R0 variance below threshold
 
-too_dense:
+too_dense_initial:
+  initial_enabled_count / num_tasks > 0.35
+
+too_dense_dynamic:
   most tasks remain reachable from most states
 
 too_sparse:
@@ -474,6 +566,9 @@ R1_R0_collapse:
 
 short_horizon_artifact:
   signal disappears as H or T increase
+
+low_sampling_coverage:
+  candidate coverage fraction < 0.25
 ```
 
 These flags should be reported, not used to silently discard runs.
@@ -660,6 +755,9 @@ Required fields:
   "R1_initial_count": 15,
   "R1_initial_fraction": 0.36,
   "R1_mean_future_R0": 31.2,
+  "R1_best_future_R0": 44,
+  "R1_selector": "mean_future_R0",
+  "R1_threshold_fraction": 0.5,
   "R0_final": 30,
   "global_LHR": 0.714,
   "local_LHR_mean": 0.68,
@@ -668,6 +766,8 @@ Required fields:
   "local_global_divergence": -0.02,
   "low_resolution_flags": ["none"],
   "candidate_sample_size": 256,
+  "candidate_coverage_fraction": 0.42,
+  "initial_enabled_fraction": 0.08,
   "notes": ""
 }
 ```
@@ -687,9 +787,11 @@ mean_global_LHR
 std_global_LHR
 mean_R0_initial
 mean_R1_fraction
+mean_R1_mean_future_R0
 mean_asymmetry
 pseudo_omega_rate
 low_resolution_rate
+mean_candidate_coverage
 ```
 
 ### Summary markdown
@@ -702,6 +804,8 @@ number of runs
 families tested
 policy rankings by global_LHR
 R1 vs R0-lookahead comparison
+R1 selector used
+R1 threshold sensitivity if run
 low-resolution diagnostics
 pseudo-Omega diagnostics
 negative / ambiguous cases
@@ -783,6 +887,12 @@ horizon grid:
   H ∈ {4, 8}
   T ∈ {16, 32}
 
+R1 sample size:
+  N = 256 candidate paths
+
+R1 threshold:
+  primary = 0.50 * R0_initial
+
 policies:
   random
   R0
@@ -801,7 +911,39 @@ add:
   persistence
   empowerment_like
   R2 sidecar
+  R1 threshold sensitivity at 0.25 and 0.75
+  R1 sample size N = 512
 ```
+
+## Implementation order
+
+Recommended order:
+
+```text
+1. algebra.py + reachability.py
+   get R0 correct on toy graphs before implementing R1
+
+2. deterministic hand-built R0 tests
+   verify BFS/path traversal, obstruction handling, and cost constraints
+
+3. generators.py: low_resolution_dense
+   verify too_dense / flat_asymmetry diagnostics
+
+4. reachability.py: R1
+   implement R1_mean_future_R0 selector and thresholded aggregates
+
+5. policies.py
+   implement random, R0, R0_lookahead, R1 in that order
+   verify R0_lookahead and R1 can diverge on a hand-built case
+
+6. generators.py: structured_asymmetric + lock_in_seeded
+
+7. simulation.py + run_smoke.py
+
+8. summarize.py + diagnostics.py
+```
+
+Do not implement `mixed` or `noise_branching` until the first three generator families are clean.
 
 ## File layout suggestion
 
