@@ -36,6 +36,14 @@ Lushness is adjacent to this chain rather than identical to Omega. It names stru
 
 The core correction in the current stack is that relation is more primitive than identity. Relation is causal continuity. Identity is organized causal continuity through change.
 
+## Onboarding description
+
+### Structural theory of value-bearing futures
+
+Omega is currently best introduced as a structural theory of value-bearing futures.
+
+The phrase means that Omega studies the structure of possible continuations in which value-bearing histories can remain recoverable, compatible, and richly continuable under constraint. It is meant as a clearer public-facing description than "minimal axiology," while preserving the connection to formal value theory, axiology, and alignment work on future-preserving reachability.
+
 ## Primitive layer
 
 ### Distinction

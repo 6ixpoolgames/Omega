@@ -8,6 +8,11 @@ and viable-trajectory-space notes. It is not a final theory statement and is not
 a validation result. Its purpose is to keep the project from drifting between
 levels while the next empirical tests are designed.
 
+Public-facing summary: Omega is a structural theory of value-bearing futures.
+It studies which possible continuations preserve, expand, trap, or collapse the
+conditions under which value-bearing histories can remain recoverably
+continuable.
+
 ## Core Correction
 
 The earlier executable probes were useful, but most of them operated below

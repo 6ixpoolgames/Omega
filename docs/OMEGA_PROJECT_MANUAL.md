@@ -19,6 +19,15 @@ Project stance:
 - controls and nulls before interpretation;
 - toy-substrate evidence must not be overstated as theory validation.
 
+Onboarding terminology:
+
+> Omega is best introduced as a structural theory of value-bearing futures.
+
+This phrase is clearer for general readers than "minimal axiology." It keeps
+the philosophical connection to formal value theory and axiology, while also
+being legible to alignment readers as a claim about future-preserving
+reachability, recoverability, and compatibility under constraint.
+
 ## How A New Codex Instance Should Start
 
 1. Read this file.

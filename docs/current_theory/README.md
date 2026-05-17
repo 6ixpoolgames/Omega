@@ -28,6 +28,11 @@ The current public-facing theory and validation front door is now:
 - `../research_notes/omega_theory/formal_stack_v0.md`
 - `../research_notes/omega_theory/omega_glossary.md`
 
+Public-facing terminology should introduce Omega as a structural theory of
+value-bearing futures: a proposed formal account of which possible
+continuations preserve, expand, trap, or collapse recoverable value-bearing
+trajectory space.
+
 ## How To Read It
 
 The included PDF summarizes an earlier COM witness and the relationship between

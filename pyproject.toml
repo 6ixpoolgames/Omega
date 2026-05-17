@@ -34,5 +34,5 @@ dev = [
 line-length = 100
 target-version = "py311"
 
-[tool.setuptools]
-py-modules = ["omega_multifield_kill_test"]
+[tool.setuptools.packages.find]
+include = ["omega*"]

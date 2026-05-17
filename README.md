@@ -5,9 +5,14 @@ project.
 
 ## What Is Omega?
 
-Omega is an attempt to formalize a minimal axiology: a way to talk about value
-without starting from human preferences, rewards, utility functions, or moral
-rules.
+Omega is a proposed **structural theory of value-bearing futures**: a way to
+study which possible trajectories preserve, expand, trap, or collapse the
+conditions under which value-bearing histories can continue.
+
+In philosophy terms, this sits near formal value theory and axiology. In AI
+alignment terms, it is closer to a structural account of future-preserving
+reachability than to reward modeling, preference learning, or utility
+maximization.
 
 The working idea is simple:
 
@@ -16,7 +21,8 @@ Some futures preserve the conditions for value-bearing histories to continue.
 Some futures collapse, trap, erase, or narrow those conditions.
 ```
 
-Omega studies that difference.
+Omega studies that difference without starting from human preferences, rewards,
+utility functions, or moral rules.
 
 At the highest level, Omega asks:
 

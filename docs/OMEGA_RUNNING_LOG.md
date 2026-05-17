@@ -2256,3 +2256,59 @@ Use the repo URL:
 ```text
 https://github.com/6ixpoolgames/Omega
 ```
+
+## 2026-05-17 - VAL0-CT bounded smoke implementation
+
+Implemented the first VAL0-CT constructor task algebra harness as
+`omega.val0_ct` and ran a bounded CPU smoke batch.
+
+Run artifact:
+
+```text
+results/val0_ct/20260517_223635/
+```
+
+Configuration:
+
+```text
+families: low_resolution_dense, structured_asymmetric, lock_in_seeded
+policies: random, R0, R0_lookahead, R1, pseudo_omega
+seeds: 20
+h: 1, 2, 4
+H: 4, 8
+T: 16, 32
+workers: 18
+num_tasks: 64
+sample_size: 256
+max_paths: 512
+rows: 3600
+elapsed: 1778.7 seconds
+```
+
+Important workflow result:
+
+```text
+An unbounded/exact 20-seed attempt hit a one-hour timeout before producing
+results. The completed run is therefore an explicitly bounded smoke, not an
+exhaustive path enumeration.
+```
+
+Aggregate read:
+
+- `low_resolution_dense` blurred R0/R1 as expected.
+- `structured_asymmetric` did not yet separate `R1` from matched
+  `R0_lookahead`; both averaged near 0.70 global LHR.
+- `lock_in_seeded` produced the intended pseudo-Omega diagnostic: the
+  `pseudo_omega` policy averaged low global LHR (~0.20), high local LHR
+  (~22.1), and 100% pseudo-Omega flag rate.
+- `R1` and `R0_lookahead` are currently almost indistinguishable, so the
+  harness is working but the R1 operational distinction is not yet sharp.
+
+Decision:
+
+```text
+Treat this as a workflow/harness validation and a successful pseudo-Omega
+negative diagnostic, not as a positive proto-Omega result. Next revision should
+focus on threshold calibration, R1 selector design, and structured generators
+that can distinguish robust future reachability from greedy peak lookahead.
+```

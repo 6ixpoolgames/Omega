@@ -2,6 +2,11 @@
 
 This folder contains current validation designs for the Omega project.
 
+Omega should be introduced to new readers as a structural theory of
+value-bearing futures. VAL0-CT is the current minimal executable precursor to
+that larger theory: it asks whether future-bearing reachability can be detected
+in constructor-style task space before making any claim about full Omega.
+
 The current public-facing validation target is **VAL0-CT**:
 
 ```text
