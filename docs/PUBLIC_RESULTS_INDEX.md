@@ -1,10 +1,35 @@
 # Public Results Index
 
-This repository intentionally exposes only the most relevant current result
-artifacts. Older exploratory outputs remain summarized in the manual/running log
-but are not tracked as top-level result folders.
+This repository intentionally exposes only the most relevant public artifacts.
+The current validation design is VAL0-CT, not the older COM/fiber or DAX probe
+branches.
 
-## Current Result Sets
+Older executable outputs remain tracked where they are useful for provenance,
+controls, and failure analysis. They should be read as historical result sets,
+not as the current validation center.
+
+## Current Validation Design
+
+Directory:
+
+- `docs/research_notes/validation_design/`
+
+Current entry points:
+
+- `README.md`
+- `val0_ct_implementation_spec.md`
+- `val0_constructor_task_algebra_probe.md`
+
+Status:
+
+- current implementation target;
+- single-field proto-Omega probe;
+- asks whether persistence-conditioned reachability `R1` predicts
+  long-horizon reachability retention better than raw reachability `R0` and
+  equal-budget `R0_lookahead` controls in generated task algebras;
+- not full Omega validation.
+
+## Public Theory Context
 
 ## Theory-Side Progenitor Drafts
 
@@ -30,8 +55,8 @@ Status:
 - current draft/status artifact;
 - not peer reviewed;
 - not a validation result by itself;
-- intended as the main theory-side entry point for the current COM witness and
-  claim ladder.
+- now historical relative to the Constructor Theory / VAL0-CT pivot;
+- useful as an earlier statement of the COM witness and claim ladder.
 
 ## Trajectory-Space Research Notes
 
@@ -43,7 +68,7 @@ Status:
 
 - draft research notes;
 - planning/triage material for a possible trajectory-space branch;
-- not a replacement for the current COM fiber-transport witness.
+- historical branch material after the VAL0-CT pivot.
 
 ## Omega-Theory Research Notes
 
@@ -62,8 +87,11 @@ Key entry points:
 
 - `formal_stack_v0.md`
 - `omega_glossary.md`
+- `deriving_omega_relevance_from_primitives.md`
+- `constructor_theory_and_omega_axiology.md`
 - `omega_as_viable_value_bearing_trajectory_space.md`
 - `regenerative_filtering_slack_and_parasitic_modes.md`
+- `progenitor_stack_as_pipeline.md`
 
 ## Primitive-Branch Research Notes
 
@@ -78,6 +106,12 @@ Status:
 - not validation results by themselves;
 - used to motivate primitive-floor probes and to define the handoff from
   primitive causal continuity to minimal valuerhood.
+
+## Historical Result Sets
+
+The sections below are historical result sets. They remain public because they
+document how weaker candidates were isolated, controlled, and in several cases
+rejected. The current active path is VAL0-CT.
 
 ### Probe 09: Robust Fiber Reachability
 
@@ -95,7 +129,7 @@ Primary files:
 
 Reason retained:
 
-- Probe 09 is where the current candidate object was isolated:
+- Probe 09 is where the historical COM/fiber candidate was isolated:
   `center_of_mass` multi-step viable propagation through certified fibers.
 
 ### Probe 10: COM Robustness, Extended Run
@@ -186,9 +220,9 @@ Primary files:
 
 Reason retained:
 
-- Probe 12 separates the current COM witness from learned-kappa failure modes.
-  It is the strongest current bridge between empirical probes and formal object
-  definition.
+- Probe 12 separates the historical COM witness from learned-kappa failure
+  modes. It remains useful evidence for viable propagation and coarse-graining
+  discipline, but it is not the current validation center.
 
 Large local-only files:
 

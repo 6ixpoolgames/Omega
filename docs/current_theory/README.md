@@ -1,6 +1,6 @@
-# Current Theory Draft
+# Current Theory Context
 
-This folder contains the current theory/status draft for the Omega validation
+This folder contains an earlier theory/status draft for the Omega validation
 program.
 
 Status:
@@ -8,36 +8,39 @@ Status:
 - draft artifact;
 - not peer reviewed;
 - not a validation result by itself;
-- should be read alongside the executable probes and result summaries.
+- should be read as historical context for the COM/fiber witness and earlier
+  claim ladder;
+- no longer the front door for the current validation pivot.
 
 ## Included Draft
 
 - `omega_signature_v0_1.pdf`
 
-## Current Formal Stack
+## Current Front Door
 
-The current working formal stack is summarized in:
+The current public-facing theory and validation front door is now:
 
+- `../research_notes/validation_design/README.md`
+- `../research_notes/validation_design/val0_ct_implementation_spec.md`
+- `../research_notes/validation_design/val0_constructor_task_algebra_probe.md`
+- `../research_notes/omega_theory/constructor_theory_and_omega_axiology.md`
+- `../research_notes/omega_theory/deriving_omega_relevance_from_primitives.md`
 - `../research_notes/omega_theory/formal_stack_v0.md`
 - `../research_notes/omega_theory/omega_glossary.md`
-- `../research_notes/omega_theory/omega_as_viable_value_bearing_trajectory_space.md`
 
 ## How To Read It
 
-This document is the best current written entry point into the theory-side
-framing of Omega. It summarizes the current COM witness, the claim ladder, and
-the relationship between theory aims and the executable probe results.
+The included PDF summarizes an earlier COM witness and the relationship between
+theory aims and the executable probe results at that stage.
 
-The current empirical evidence remains bounded. The COM witness is still the
-strongest toy-substrate object:
+That evidence remains bounded:
 
 ```text
 COM-like multi-step viable propagation through certified fibers
 in the F,T attractive multifield toy substrate
 ```
 
-The broader Omega object is now framed one level higher: nested, compatible,
-value-bearing trajectory space over minimal valuers. Earlier CA, DAR, DAX, and
-trajectory-space probes should be read as primitive-floor calibration,
-coarse-graining discipline, and fakeout anatomy unless they are extended with
-explicit valuerhood and recoverable continuability.
+The current pivot is VAL0-CT: a Constructor-Theory-style task algebra probe that
+tests whether persistence-conditioned reachability `R1` predicts long-horizon
+reachability retention better than raw reachability `R0` and matched
+`R0_lookahead` controls.

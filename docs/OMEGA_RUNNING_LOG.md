@@ -4,6 +4,57 @@ This is the living operational log for the Omega validation workspace. Update it
 after every meaningful theory-side decision, probe implementation, or compute
 run.
 
+## 2026-05-17
+
+### Public Reorientation Around VAL0-CT
+
+The public-facing repository orientation was updated to make the Constructor
+Theory / VAL0-CT pivot explicit.
+
+Updated entry points:
+
+- `README.md`
+- `OMEGA_EXPERIMENTAL_ROADMAP.md`
+- `docs/PUBLIC_RESULTS_INDEX.md`
+- `docs/OMEGA_PROJECT_MANUAL.md`
+- `docs/current_theory/README.md`
+- `docs/research_notes/validation_design/README.md`
+
+Current front-door statement:
+
+```text
+VAL0-CT is the current validation target.
+It tests whether persistence-conditioned reachability, R1, predicts
+long-horizon reachability retention better than raw reachability, R0, and
+equal-budget R0-lookahead controls in structured task algebras.
+```
+
+Public framing decision:
+
+- COM/fiber work is historical evidence for viable propagation and
+  coarse-graining discipline, not the current validation center.
+- Trajectory-space probes are negative constraints and fakeout anatomy.
+- CA/DAR/DAX probes calibrate the primitive floor rather than validating Omega
+  proper.
+- DAX-G5's failed held-out prediction is one of the reasons the project moved
+  to task-space validation.
+
+Next implementation target:
+
+```text
+Implement VAL0-CT smoke, CPU-first, using:
+  low_resolution_dense
+  structured_asymmetric
+  lock_in_seeded
+
+Compare:
+  random
+  R0
+  R0_lookahead
+  R1
+  pseudo_omega
+```
+
 ## 2026-05-16
 
 ### Formal-Stack Recenter: Primitive Floor to Valuer-Level Omega

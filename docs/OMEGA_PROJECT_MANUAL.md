@@ -1,6 +1,6 @@
 # Omega Project Manual
 
-Last updated: 2026-05-16
+Last updated: 2026-05-17
 
 Repository: https://github.com/6ixpoolgames/Omega
 
@@ -24,30 +24,28 @@ Project stance:
 1. Read this file.
 2. Read `docs/OMEGA_RUNNING_LOG.md`.
 3. Read `README.md`.
-4. Read the current formal-stack notes:
+4. Read the current validation-design notes:
+   - `docs/research_notes/validation_design/README.md`
+   - `docs/research_notes/validation_design/val0_ct_implementation_spec.md`
+   - `docs/research_notes/validation_design/val0_constructor_task_algebra_probe.md`
+5. Read the current theory-pivot notes:
+   - `docs/research_notes/omega_theory/constructor_theory_and_omega_axiology.md`
+   - `docs/research_notes/omega_theory/deriving_omega_relevance_from_primitives.md`
    - `docs/research_notes/omega_theory/formal_stack_v0.md`
    - `docs/research_notes/omega_theory/omega_glossary.md`
    - `docs/research_notes/omega_theory/omega_as_viable_value_bearing_trajectory_space.md`
    - `docs/research_notes/primitive_branch/omega_meets_fep.md`
    - `docs/research_notes/primitive_branch/valuerhood_as_recoverable_historical_identity.md`
-5. Inspect the latest probe scripts:
-   - `probe_09_robust_fiber_reachability.py`
-   - `probe_10_com_viable_propagation_robustness.py`
-   - `probe_I0_invariant_stack_audit.py`
-   - `probe_DA1b_apparent_vs_viable_slack.py`
-   - `probe_DA1c_noncommutative_relational_history.py`
-   - `probe_DA2_relational_edge_memory_world.py`
-   - `probe_DAX_branching_connection_graph_validity_revised.py`
-   - `probe_DAX_G0_minimal_DAR_rule_space_persistence.py`
-   - `probe_DAX_G1_persistence_motif_anatomy_and_robustness.py`
-   - `probe_DAX_G2_persistence_phase_map_minimal_rule_spaces.py`
-   - `probe_DAX_G2b_control_adjusted_primitive_guardrail.py`
-   - `probe_DAX_G3_q3r1_guardrailed_phase_map.py`
-6. Inspect compact summaries, not raw caches:
+6. Treat older probe scripts as historical unless deliberately revisiting a
+   branch:
+   - COM/fiber scripts: `probe_09` through `probe_13b`
+   - trajectory-space scripts: `probe_T0`, `probe_T1`, `probe_T1F`, `probe_I0`, `probe_I0b`
+   - primitive/DAX scripts: `probe_DA0` through `probe_DAX_G5`
+7. Inspect compact historical summaries, not raw caches:
    - `probe_09_robust_fiber_reachability_results/summary.json`
    - `probe_10_com_viable_propagation_robustness_extended_results/summary.json`
    - `probe_10_com_targeted_fragility_refinement_results/summary.json`
-7. Preserve the running log after every meaningful run.
+8. Preserve the running log after every meaningful run.
 
 Use this Python executable locally:
 
@@ -73,6 +71,12 @@ The current formal correction is sharper:
 > Omega validation begins only once minimal valuers and value-bearing
 > trajectory space are in scope.
 
+The current validation pivot is VAL0-CT:
+
+> Use constructor-style task algebras to test whether future-preserving
+> reachability `R1` predicts long-horizon reachability retention better than
+> raw reachability `R0` and equal-budget `R0_lookahead` controls.
+
 Older papers and drafts motivate variants of:
 
 - viable futures;
@@ -91,7 +95,8 @@ The current theory/status draft lives under `docs/current_theory/`. Active
 trajectory-space branch notes live under `docs/research_notes/trajectory_space/`.
 The current formal-stack and glossary notes live under
 `docs/research_notes/omega_theory/`. The primitive/FEP/valuerhood bridge notes
-live under `docs/research_notes/primitive_branch/`.
+live under `docs/research_notes/primitive_branch/`. Current validation-design
+notes live under `docs/research_notes/validation_design/`.
 Some text drafts still live only in the local project folder outside Git.
 
 ## Working Definitions
@@ -136,6 +141,25 @@ Consequence for empirical work:
 CA, DAR, DAX, and bare field probes are primitive-floor or fakeout-calibration
 probes unless they include explicit valuerhood and recoverable continuability.
 ```
+
+### Current Validation Target: VAL0-CT
+
+VAL0-CT is the current active validation design.
+
+It is not full Omega validation. It is a single-field proto-Omega test in
+constructor-style task algebras.
+
+Primary question:
+
+```text
+Does persistence-conditioned reachability, R1, predict long-horizon
+reachability retention better than raw reachability, R0, and matched
+R0-lookahead controls in structured task algebras?
+```
+
+VAL0-CT is now the recommended starting point for new implementation work.
+COM/fiber, trajectory-space, CA, DAR, and DAX work remain important historical
+provenance and failure analysis, but they are not the current front edge.
 
 ### Single Omega
 
@@ -728,8 +752,13 @@ Interpretation:
 What we can say:
 
 - We have not validated Omega as a scientific theory.
-- We have extracted an executable candidate object in a toy multifield substrate.
-- The best current object is:
+- The current validation target is VAL0-CT: a constructor-style task algebra
+  probe of persistence-conditioned reachability.
+- The main near-term empirical question is whether `R1` predicts long-horizon
+  reachability retention better than `R0` and equal-budget `R0_lookahead`
+  controls in structured task algebras.
+- Earlier work extracted an executable candidate object in a toy multifield
+  substrate:
 
 ```text
 COM-like multi-step viable propagation through certified fibers
@@ -738,9 +767,9 @@ alpha approximately 0.45-0.525
 horizons 900-2400
 ```
 
-- The object survives product/shuffled/independent baselines.
-- It survives a meaningful perturbation battery.
-- It is not merely high entropy.
+- That COM/fiber object survived product/shuffled/independent baselines.
+- It survived a meaningful perturbation battery.
+- It was not merely high entropy.
 - A first learned-quotient test partially sees the signal but does not replace
   COM.
 - A follow-up diagnosis shows the simple learned route mostly fails by
@@ -937,7 +966,8 @@ separates DAR-persistence from generic high-future-distinct persistence.
 
 ### Probe 13: Formal COM Fiber Transport Object
 
-Goal: turn the current empirical object into a precise mathematical definition.
+Historical goal: turn the COM/fiber empirical object into a precise
+mathematical definition.
 
 Tasks:
 
