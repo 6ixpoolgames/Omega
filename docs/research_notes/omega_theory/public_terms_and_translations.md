@@ -37,12 +37,35 @@ Avoid leading with unexplained internal terms when a clearer public phrase exist
 
 ## Core theory terms
 
+### Structural theory of value-bearing futures
+
+Public-facing phrase:
+
+```text
+structural theory of value-bearing futures
+```
+
+Internal relation:
+
+```text
+public front-door description for Omega
+```
+
+Plain meaning:
+
+Omega studies which possible continuations preserve, expand, trap, or collapse
+the conditions under which value-bearing histories can remain recoverably
+continuable.
+
+Use this phrase when introducing the whole project. Then use the shorter
+translations below for specific internal terms.
+
 ### Omega
 
 Public-facing phrase:
 
 ```text
-recoverable future-bearing possibility
+recoverable value-bearing possibility across time and scale
 ```
 
 Internal term:

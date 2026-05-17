@@ -23,10 +23,14 @@ Onboarding terminology:
 
 > Omega is best introduced as a structural theory of value-bearing futures.
 
-This phrase is clearer for general readers than "minimal axiology." It keeps
-the philosophical connection to formal value theory and axiology, while also
-being legible to alignment readers as a claim about future-preserving
-reachability, recoverability, and compatibility under constraint.
+This keeps the philosophical connection to formal value theory and axiology,
+while also being legible to alignment readers as a claim about
+future-preserving reachability, recoverability, and compatibility under
+constraint.
+
+Use `docs/research_notes/omega_theory/public_terms_and_translations.md` when
+writing public summaries. Use `docs/research_notes/omega_theory/omega_glossary.md`
+as the canonical internal definition anchor.
 
 ## How A New Codex Instance Should Start
 
@@ -42,6 +46,8 @@ reachability, recoverability, and compatibility under constraint.
    - `docs/research_notes/omega_theory/deriving_omega_relevance_from_primitives.md`
    - `docs/research_notes/omega_theory/formal_stack_v0.md`
    - `docs/research_notes/omega_theory/omega_glossary.md`
+   - `docs/research_notes/omega_theory/public_terms_and_translations.md`
+   - `docs/research_notes/omega_theory/historical_probe_terms.md`
    - `docs/research_notes/omega_theory/omega_as_viable_value_bearing_trajectory_space.md`
    - `docs/research_notes/primitive_branch/omega_meets_fep.md`
    - `docs/research_notes/primitive_branch/valuerhood_as_recoverable_historical_identity.md`
@@ -169,8 +175,11 @@ distinction
 -> valuerhood
 -> viability
 -> Omega-compatible viability
--> lushness of value-bearing trajectory space
 ```
+
+Lushness is adjacent to this chain rather than identical to Omega. It names
+structured branching that propagates. Omega-compatible lushness is lushness
+filtered by recoverable value-bearing compatibility.
 
 Working thesis:
 
@@ -188,7 +197,8 @@ Important level boundary:
 - a valuer is a bounded historical identity for which different continuations
   asymmetrically affect recoverable continuability;
 - viability is the gate;
-- nested, compatible, value-bearing trajectory richness is the target.
+- Omega compatibility is the target constraint;
+- lushness is a richness desideratum only after compatibility filtering.
 
 Consequence for empirical work:
 

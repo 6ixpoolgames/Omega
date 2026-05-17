@@ -103,6 +103,7 @@ Start here for the current pivot:
 - [Deriving Omega relevance from primitives](docs/research_notes/omega_theory/deriving_omega_relevance_from_primitives.md)
 - [Current formal stack](docs/research_notes/omega_theory/formal_stack_v0.md)
 - [Omega glossary](docs/research_notes/omega_theory/omega_glossary.md)
+- [Public terms and translations](docs/research_notes/omega_theory/public_terms_and_translations.md)
 
 ## How To Read The Older Results
 
@@ -130,6 +131,7 @@ Current interpretation:
 - [Current theory draft](docs/current_theory/README.md)
 - [Validation design notes](docs/research_notes/validation_design/README.md)
 - [Omega theory notes](docs/research_notes/omega_theory/)
+- [Public terms and translations](docs/research_notes/omega_theory/public_terms_and_translations.md)
 - [Primitive-branch notes](docs/research_notes/primitive_branch/README.md)
 - [Progenitor drafts](docs/progenitor_drafts/README.md)
 

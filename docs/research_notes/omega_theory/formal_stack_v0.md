@@ -38,8 +38,11 @@ distinction
   -> valuerhood
   -> viability
   -> Omega-compatible viability
-  -> lushness of value-bearing trajectory space
 ```
+
+Lushness is adjacent to this chain rather than identical to Omega. It names
+structured branching that propagates. Omega-compatible lushness is lushness
+filtered by recoverable value-bearing compatibility.
 
 ### Distinction
 
@@ -91,10 +94,16 @@ preserve broader recoverable continuability.
 
 ### Lushness
 
-Lushness is horizon-dependent richness of distinguishable Omega-compatible
-value-bearing futures. It is not raw entropy. It should include richness,
-depth, diversity, composability, and mutual corridor preservation under
-constraints.
+Lushness is structured branching that propagates.
+
+A future possibility space is lush when its branches are distinguishable,
+non-noise, and carry forward enough structure to enable further meaningful
+branching.
+
+Lushness is more primitive than Omega compatibility. Non-Omega trajectories can
+be lush if they generate structured propagating branches while degrading broader
+recoverable possibility. Omega-compatible lushness is lushness filtered by
+recoverable value-bearing compatibility.
 
 ## Empirical Consequence
 
