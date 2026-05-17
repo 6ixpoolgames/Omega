@@ -4,7 +4,7 @@ This repository is the executable validation workspace for the **Omega** theory 
 
 Omega is a research program for naturalized axiology: a way to reason about value-bearing possibility without beginning from human preferences, reward functions, utility functions, or moral rules.
 
-The repo contains theory notes, historical validation attempts, current validation designs, and executable probes.
+The repo contains theory notes, progenitor drafts, historical validation attempts, current validation designs, and executable probes.
 
 It does **not** prove Omega. It is a controlled workspace for turning the theory into testable mathematical objects and letting those objects fail when they are too weak.
 
@@ -63,6 +63,56 @@ This is why the project focuses on reachability, recoverability, destructive loc
 The current VAL0-CT probe is only the first step. It does not validate alignment. It tests the earliest precursor:
 
 > Can future-bearing reachability be detected and distinguished from raw reachability in constructor-style task space?
+
+## The broader theory pipeline
+
+The current Omega/VAL0-CT work is the downstream validation layer of a broader theory pipeline.
+
+The progenitor drafts are not merely old background. They supply the upstream physical, structural, normative, and control-theoretic layers that explain why future-bearing reachability is the right object to test.
+
+A useful map:
+
+```text
+ECHO
+  -> thermodynamic feasibility envelope for sustained information
+
+TELOS
+  -> persistence dynamics and observer-localized value gradients
+
+Gradient Field Theory / Cinfo
+  -> structural requirements for coherent value-bearing substrate
+
+Gradient Ethics
+  -> conditional normativity from preserving future reachability under uncertainty
+
+Constrained Reachability
+  -> operational control law for agents preserving viable futures
+
+Omega / Constructor Theory / VAL0-CT
+  -> empirical program for detecting proto-Omega structure in task space
+```
+
+In short:
+
+```text
+progenitor stack:
+  why future-bearing value substrate should exist and matter
+
+Omega derivation:
+  what the relevant structure is
+
+VAL0-CT:
+  first test of whether that structure has a detectable task-space precursor
+```
+
+Start here for the pipeline view:
+
+- [Progenitor stack as pipeline](docs/research_notes/omega_theory/progenitor_stack_as_pipeline.md)
+- [Progenitor drafts](docs/progenitor_drafts/README.md)
+- [Gradient Ethics draft](docs/progenitor_drafts/gradient_ethics.pdf)
+- [Gradient Field Theory draft](docs/progenitor_drafts/gradient_field_theory_of_value_v51.pdf)
+- [ECHO draft](docs/progenitor_drafts/echo_rosetta_version.pdf)
+- [TELOS draft](docs/progenitor_drafts/telos_2_0_draft.pdf)
 
 ## What is Omega?
 
@@ -232,38 +282,33 @@ Constructor Theory gives the physics of possibility.
 Omega gives the constraint structure of value-bearing possibility.
 ```
 
-## Progenitor stack: why the older drafts matter
+## How the progenitor drafts tie in
 
-The progenitor drafts are not merely historical background. They form the upstream pipeline that motivates the current validation program.
-
-A useful map:
+Each progenitor layer answers a different upstream question.
 
 ```text
-ECHO
-  -> thermodynamic feasibility envelope for sustained information
+ECHO:
+  What does sustained information processing physically cost?
 
-TELOS
-  -> persistence dynamics and observer-localized value gradients
+TELOS:
+  Where do persistence and observer-localized value gradients arise?
 
-Gradient Field Theory / Cinfo
-  -> structural requirements for coherent value-bearing substrate
+Gradient Field Theory / Cinfo:
+  What structural requirements must a coherent value-bearing substrate satisfy?
 
-Gradient Ethics
-  -> conditional normativity from preserving future reachability under uncertainty
+Gradient Ethics:
+  Why does preserving future reachability have conditional normative force for agents?
 
-Constrained Reachability
-  -> operational control law for agents preserving viable futures
+Constrained Reachability:
+  How should an agent act when reward, uncertainty, reachability, and irreversible loss interact?
 
-Omega / Constructor Theory / VAL0-CT
-  -> empirical program for detecting proto-Omega structure in task space
+VAL0-CT:
+  Can the predicted future-bearing reachability signature be detected in task-space dynamics?
 ```
 
-Read this way, VAL0-CT is not a detached toy experiment. It is the first constructor-theoretic validation probe for the downstream signature of the broader stack: **future-bearing reachability under constraint**.
+This is why the current probe is not just an isolated toy model. It is a deliberately narrow test of a downstream signature implied by the larger stack.
 
-Start with:
-
-- [Progenitor stack as pipeline](docs/research_notes/omega_theory/progenitor_stack_as_pipeline.md)
-- [Progenitor drafts](docs/progenitor_drafts/README.md)
+The progenitor stack does not prove Omega. It gives the current validation program its target.
 
 ## How to read the historical probes
 
@@ -300,11 +345,22 @@ Historical terminology is defined here:
 ### For a new reader
 
 1. [Public terms and translations](docs/research_notes/omega_theory/public_terms_and_translations.md)
-2. [Omega glossary](docs/research_notes/omega_theory/omega_glossary.md)
-3. [Deriving Omega relevance from primitives](docs/research_notes/omega_theory/deriving_omega_relevance_from_primitives.md)
-4. [Omega as viable value-bearing trajectory space](docs/research_notes/omega_theory/omega_as_viable_value_bearing_trajectory_space.md)
-5. [Constructor Theory and Omega axiology](docs/research_notes/omega_theory/constructor_theory_and_omega_axiology.md)
-6. [VAL0-CT validation design](docs/research_notes/validation_design/val0_constructor_task_algebra_probe.md)
+2. [Progenitor stack as pipeline](docs/research_notes/omega_theory/progenitor_stack_as_pipeline.md)
+3. [Omega glossary](docs/research_notes/omega_theory/omega_glossary.md)
+4. [Deriving Omega relevance from primitives](docs/research_notes/omega_theory/deriving_omega_relevance_from_primitives.md)
+5. [Omega as viable value-bearing trajectory space](docs/research_notes/omega_theory/omega_as_viable_value_bearing_trajectory_space.md)
+6. [Constructor Theory and Omega axiology](docs/research_notes/omega_theory/constructor_theory_and_omega_axiology.md)
+7. [VAL0-CT validation design](docs/research_notes/validation_design/val0_constructor_task_algebra_probe.md)
+
+### For the broader theory pipeline
+
+1. [Progenitor stack as pipeline](docs/research_notes/omega_theory/progenitor_stack_as_pipeline.md)
+2. [Progenitor drafts overview](docs/progenitor_drafts/README.md)
+3. [ECHO draft](docs/progenitor_drafts/echo_rosetta_version.pdf)
+4. [TELOS draft](docs/progenitor_drafts/telos_2_0_draft.pdf)
+5. [Gradient Field Theory draft](docs/progenitor_drafts/gradient_field_theory_of_value_v51.pdf)
+6. [Gradient Ethics draft](docs/progenitor_drafts/gradient_ethics.pdf)
+7. [Constrained Reachability context](docs/progenitor_drafts/intelligent_agency_under_computational_irreducibility.pdf)
 
 ### For implementation work
 
@@ -388,6 +444,7 @@ At present it contains:
 
 ```text
 theory notes and draft formalizations
+progenitor drafts that motivate the pipeline
 historical toy-substrate probes
 negative and ambiguous results
 current VAL0-CT validation design
