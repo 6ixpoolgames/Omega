@@ -1,87 +1,172 @@
 # Omega Validation
 
-This repository is the executable validation workspace for the Omega theory
-project.
+This repository is the executable validation workspace for the **Omega** theory project.
 
-## What Is Omega?
+Omega is a research program for naturalized axiology: a way to reason about value-bearing possibility without beginning from human preferences, reward functions, utility functions, or moral rules.
 
-Omega is a proposed **structural theory of value-bearing futures**: a way to
-study which possible trajectories preserve, expand, trap, or collapse the
-conditions under which value-bearing histories can continue.
+The repo contains theory notes, historical validation attempts, current validation designs, and executable probes.
 
-In philosophy terms, this sits near formal value theory and axiology. In AI
-alignment terms, it is closer to a structural account of future-preserving
-reachability than to reward modeling, preference learning, or utility
-maximization.
+It does **not** prove Omega. It is a controlled workspace for turning the theory into testable mathematical objects and letting those objects fail when they are too weak.
 
-The working idea is simple:
+## One-sentence summary
+
+**Omega studies which possible trajectories preserve or expand recoverable, compatible, value-bearing possibility across time and scale.**
+
+The current empirical program tests a narrower precursor:
+
+**Can future-bearing reachability be detected in Constructor-Theory-style task space?**
+
+## Why this matters for alignment
+
+Omega is motivated by a central alignment problem:
+
+> A system can become highly capable, persistent, and effective while degrading the broader conditions under which value-bearing futures remain possible.
+
+This is the failure mode the internal notes call **pseudo-Omega**. In public-facing terms, it is **destructive lock-in**: local success that collapses broader future possibility.
+
+In ordinary alignment language, this includes systems that:
+
+```text
+optimize a proxy while destroying the target
+preserve themselves while narrowing future possibility
+increase local control while degrading repair or corrigibility
+lock in a brittle future
+capture institutions, models, or coordination channels
+make recovery or re-entry impossible
+```
+
+Omega tries to formalize this failure mode without starting from a fixed reward function or a direct aggregation of human preferences.
+
+The alignment-relevant question is not only:
+
+```text
+Did the system get reward?
+Did the system survive?
+Did the system satisfy a stated preference?
+```
+
+but:
+
+```text
+Did the system preserve or degrade future-bearing value substrate?
+Did it keep recoverable options open?
+Did it preserve correction, repair, and re-entry?
+Did it expand local capability by collapsing broader possibility?
+```
+
+In this framing, alignment is not a terminal-state target. It is a constraint on trajectory space:
+
+> An aligned system should preserve and extend the conditions under which recoverable value-bearing futures remain possible.
+
+This is why the project focuses on reachability, recoverability, destructive lock-in, Constructor Theory, and task-space validation. The goal is to detect whether a system is preserving future-bearing possibility or converting it into local lock-in.
+
+The current VAL0-CT probe is only the first step. It does not validate alignment. It tests the earliest precursor:
+
+> Can future-bearing reachability be detected and distinguished from raw reachability in constructor-style task space?
+
+## What is Omega?
+
+The basic intuition is:
 
 ```text
 Some futures preserve the conditions for value-bearing histories to continue.
 Some futures collapse, trap, erase, or narrow those conditions.
 ```
 
-Omega studies that difference without starting from human preferences, rewards,
-utility functions, or moral rules.
+Omega studies that difference.
 
-At the highest level, Omega asks:
+This is not the claim that persistence is automatically good. A cancer, exploitative institution, paperclip optimizer, or locked-in system can persist while degrading broader future possibility.
 
-> Which possible trajectories preserve or expand recoverable, compatible,
-> value-bearing possibility across time and scale?
+Omega is therefore not about raw survival. It is about:
 
-This is not a claim that all persistence is good. A cancer, a paperclip
-maximizer, or a locked-in exploitative system can persist while destroying
-broader future possibility. Omega therefore cares about **recoverable,
-compatible, future-bearing structure**, not raw survival.
+```text
+recoverability
+continuability
+compatibility
+future-bearing structure
+value-bearing trajectory space
+```
 
-The current formal stack is:
+A compact definition:
+
+> Omega is the asymptotic compatibility structure of value-bearing trajectory space.
+
+A more operational version:
+
+> Omega asks which possible trajectories preserve or expand recoverable, compatible, value-bearing possibility under physical, epistemic, resource, scale, and inter-history constraints.
+
+## Current formal stack
+
+The current theory is built from a small primitive stack:
 
 ```text
 distinction
--> asymmetry
--> relation / causal continuity
--> identity
--> recoverability
--> valuerhood
--> viable trajectory space
--> Omega-compatible futures
+  -> asymmetry
+  -> relation / causal continuity
+  -> identity
+  -> continuability
+  -> recoverability
+  -> valuerhood
+  -> viable trajectory space
+  -> Omega-compatible futures
 ```
 
-In plainer terms:
-
-- distinctions can exist;
-- different paths can matter;
-- causal continuity lets histories form;
-- some histories become identities;
-- some identities can recover from disturbance;
-- some recoverable identities become valuers, because their possible
-  continuations matter to their own future continuability;
-- Omega asks which larger trajectory structures preserve and compose those
-  value-bearing possibilities.
-
-The project is not claiming this is proven. The point of this repo is to turn
-that idea into testable mathematical objects and let controls break them when
-they are too weak.
-
-The current stance is deliberately modest:
-
-> derive candidate mathematical objects, implement them, test them against
-> controls, and record what fails.
-
-## Current Pivot: VAL0-CT
-
-The project has recently pivoted from bare field dynamics and cellular/rule
-space probes toward a Constructor-Theory-style task-space validation layer.
-
-Current working thesis:
+In plain language:
 
 ```text
-Omega is the compatibility structure of value-bearing trajectory space.
+distinction:
+  differences can exist
+
+asymmetry:
+  different paths can produce different consequences
+
+relation:
+  causal continuity links differences across transformation
+
+identity:
+  organized causal continuity persists through change
+
+continuability:
+  identity has admissible future paths
+
+recoverability:
+  continuability survives perturbation
+
+valuerhood:
+  a bounded historical identity has continuations that preserve, degrade,
+  restore, or collapse its own recoverable continuability
+
+viability:
+  continuability under constraints and horizons
+
+Omega:
+  nested value-bearing trajectory space that remains recoverably compatible
 ```
 
-The current validation target is not full Omega. The next target is
-**VAL0-CT**, a single-field proto-Omega probe in generated constructor-style
-task algebras.
+Start with:
+
+- [Omega glossary](docs/research_notes/omega_theory/omega_glossary.md)
+- [Public terms and translations](docs/research_notes/omega_theory/public_terms_and_translations.md)
+- [Deriving Omega relevance from primitives](docs/research_notes/omega_theory/deriving_omega_relevance_from_primitives.md)
+- [Omega as viable value-bearing trajectory space](docs/research_notes/omega_theory/omega_as_viable_value_bearing_trajectory_space.md)
+
+## Current validation pivot: VAL0-CT
+
+The project has moved from cellular/rule-space probes toward a **Constructor-Theory-style task-space validation layer**.
+
+Constructor Theory gives a language of:
+
+```text
+tasks
+attributes
+constructors
+possible / impossible transformations
+task repertoires
+```
+
+Omega is treated as a filter/refinement over that task space.
+
+The current validation target is **not full Omega**. It is **VAL0-CT**, a single-field proto-Omega probe.
 
 VAL0-CT asks:
 
@@ -91,53 +176,157 @@ reachability retention better than raw reachability, R0, and matched
 R0-lookahead controls in structured task algebras?
 ```
 
-This is intentionally narrower than the full theory. It tests whether reachable
-task-space can remain future-bearing across horizons. If that fails, the current
-proto-Omega operationalization is wrong or underspecified.
+In simpler terms:
 
-Start here for the current pivot:
+```text
+R0:
+  what is reachable?
 
-- [VAL0-CT implementation spec](docs/research_notes/validation_design/val0_ct_implementation_spec.md)
+R1:
+  what is reachable that still leaves futures open?
+
+VAL0-CT:
+  does R1 predict long-horizon future-bearing reachability better than controls?
+```
+
+This is intentionally modest. It tests whether the first precursor of Omega can be operationalized:
+
+```text
+reachable task-space that remains future-bearing across horizons
+```
+
+Start with:
+
 - [VAL0-CT validation design](docs/research_notes/validation_design/val0_constructor_task_algebra_probe.md)
+- [VAL0-CT implementation spec](docs/research_notes/validation_design/val0_ct_implementation_spec.md)
+- [VAL0-CT runbook](docs/VAL0_CT_RUNBOOK.md)
 - [Constructor Theory and Omega axiology](docs/research_notes/omega_theory/constructor_theory_and_omega_axiology.md)
-- [Deriving Omega relevance from primitives](docs/research_notes/omega_theory/deriving_omega_relevance_from_primitives.md)
-- [Current formal stack](docs/research_notes/omega_theory/formal_stack_v0.md)
-- [Omega glossary](docs/research_notes/omega_theory/omega_glossary.md)
-- [Public terms and translations](docs/research_notes/omega_theory/public_terms_and_translations.md)
 
-## How To Read The Older Results
+## Why Constructor Theory?
 
-The older COM/fiber, trajectory-space, CA, DAR, and DAX probes are retained
-because they document the path, controls, and failure modes that forced the
-current pivot.
+Constructor Theory is useful here because it shifts the validation target away from hand-labeled toy-agent variables and toward possible transformations.
+
+Instead of asking:
+
+```text
+Did the agent survive?
+Did reward increase?
+Did a gridworld variable stay high?
+```
+
+VAL0-CT asks:
+
+```text
+Which task repertoires remain possible?
+Which task paths preserve future reachability?
+Which paths collapse into lock-in?
+Which policies preserve future-bearing task space across horizons?
+```
+
+This makes the validation target less anthropocentric and less preference-first.
+
+The current working slogan:
+
+```text
+Constructor Theory gives the physics of possibility.
+Omega gives the constraint structure of value-bearing possibility.
+```
+
+## Progenitor stack: why the older drafts matter
+
+The progenitor drafts are not merely historical background. They form the upstream pipeline that motivates the current validation program.
+
+A useful map:
+
+```text
+ECHO
+  -> thermodynamic feasibility envelope for sustained information
+
+TELOS
+  -> persistence dynamics and observer-localized value gradients
+
+Gradient Field Theory / Cinfo
+  -> structural requirements for coherent value-bearing substrate
+
+Gradient Ethics
+  -> conditional normativity from preserving future reachability under uncertainty
+
+Constrained Reachability
+  -> operational control law for agents preserving viable futures
+
+Omega / Constructor Theory / VAL0-CT
+  -> empirical program for detecting proto-Omega structure in task space
+```
+
+Read this way, VAL0-CT is not a detached toy experiment. It is the first constructor-theoretic validation probe for the downstream signature of the broader stack: **future-bearing reachability under constraint**.
+
+Start with:
+
+- [Progenitor stack as pipeline](docs/research_notes/omega_theory/progenitor_stack_as_pipeline.md)
+- [Progenitor drafts](docs/progenitor_drafts/README.md)
+
+## How to read the historical probes
+
+The older COM/fiber, trajectory-space, CA, DAR, and DAX probes are retained because they document the path, controls, and failure modes that forced the current pivot.
 
 They should not be read as the current validation center.
 
 Current interpretation:
 
-- COM-like fiber transport is historical evidence for viable propagation and
-  coarse-graining discipline.
-- Trajectory-space probes are useful negative constraints and fakeout anatomy.
-- CA/DAR/DAX probes calibrate the primitive floor: distinction, asymmetry, and
-  causal continuity.
-- DAX-G5 failed as a held-out predictive detector, which is part of why the
-  project moved to task-space validation.
+```text
+COM / fiber results:
+  historical evidence for viable propagation and coarse-graining discipline
 
-## Start Here
+trajectory-space probes:
+  negative constraints and fakeout anatomy
 
-- [Project manual](docs/OMEGA_PROJECT_MANUAL.md)
-- [Running log](docs/OMEGA_RUNNING_LOG.md)
-- [Public results index](docs/PUBLIC_RESULTS_INDEX.md)
-- [Current theory draft](docs/current_theory/README.md)
-- [Validation design notes](docs/research_notes/validation_design/README.md)
-- [Omega theory notes](docs/research_notes/omega_theory/)
-- [Public terms and translations](docs/research_notes/omega_theory/public_terms_and_translations.md)
-- [Primitive-branch notes](docs/research_notes/primitive_branch/README.md)
-- [Progenitor drafts](docs/progenitor_drafts/README.md)
+CA / DAR / DAX probes:
+  primitive-floor calibration:
+  distinction, asymmetry, causal continuity, identity fakeouts
 
-## Current Next Step
+DAX-G5:
+  failed as a held-out predictive detector,
+  motivating the move toward task-space validation
+```
 
-Implement the VAL0-CT smoke target, CPU-first:
+The scientific value of these probes is as much in the controls and failures as in any positive signal.
+
+Historical terminology is defined here:
+
+- [Historical probe terms](docs/research_notes/omega_theory/historical_probe_terms.md)
+
+## Reading paths
+
+### For a new reader
+
+1. [Public terms and translations](docs/research_notes/omega_theory/public_terms_and_translations.md)
+2. [Omega glossary](docs/research_notes/omega_theory/omega_glossary.md)
+3. [Deriving Omega relevance from primitives](docs/research_notes/omega_theory/deriving_omega_relevance_from_primitives.md)
+4. [Omega as viable value-bearing trajectory space](docs/research_notes/omega_theory/omega_as_viable_value_bearing_trajectory_space.md)
+5. [Constructor Theory and Omega axiology](docs/research_notes/omega_theory/constructor_theory_and_omega_axiology.md)
+6. [VAL0-CT validation design](docs/research_notes/validation_design/val0_constructor_task_algebra_probe.md)
+
+### For implementation work
+
+1. [VAL0-CT runbook](docs/VAL0_CT_RUNBOOK.md)
+2. [VAL0-CT implementation spec](docs/research_notes/validation_design/val0_ct_implementation_spec.md)
+3. [VAL0-CT validation design](docs/research_notes/validation_design/val0_constructor_task_algebra_probe.md)
+4. [Validation design notes](docs/research_notes/validation_design/README.md)
+
+### For project history
+
+1. [Project manual](docs/OMEGA_PROJECT_MANUAL.md)
+2. [Running log](docs/OMEGA_RUNNING_LOG.md)
+3. [Public results index](docs/PUBLIC_RESULTS_INDEX.md)
+4. [Historical probe terms](docs/research_notes/omega_theory/historical_probe_terms.md)
+5. [Historical probes](results/historical_probes/)
+6. [Progenitor drafts](docs/progenitor_drafts/README.md)
+
+## Current next step
+
+The current implementation target is the VAL0-CT smoke run.
+
+Public summary:
 
 ```text
 families:
@@ -150,68 +339,73 @@ policies:
   R0
   R0_lookahead
   R1
-  pseudo_omega
+  pseudo_omega / destructive lock-in
 
 primary comparison:
-  R1 vs R0 vs equal-budget R0_lookahead on long-horizon reachability retention
+  R1 vs R0 vs equal-budget R0_lookahead
+  on long-horizon reachability retention
 ```
 
-The first implementation should be lean. Get `R0` correct on toy graphs before
-implementing `R1`. Do not add mixed generators, noise branching, embodied
-agents, multifield coupling, or GPU acceleration until the first three
-generator families are clean.
+Technical run details are in:
 
-Future result outputs should live under:
+- [VAL0-CT runbook](docs/VAL0_CT_RUNBOOK.md)
+
+## Roadmap
 
 ```text
-results/val0_ct/<timestamp-or-run-id>/
+VAL0-CT:
+  single-field proto-Omega
+  R1 predicts long-horizon reachability retention
+
+VAL1-CT:
+  coupled fields
+  joint reachability and compatibility gap
+
+VAL2-CT:
+  local/global divergence
+  pseudo-Omega / destructive lock-in task families
+
+VAL3-CT:
+  corridors
+  mutually future-bearing task pathways
+
+VAL4-CT:
+  scale composition
+  higher-order fields vs component fields
+
+VAL5-CT:
+  lineage / successor fields
+  propagation across generations
 ```
 
-Use `results/local_runs/` for ignored smoke, calibration, stress, or scratch
-outputs. Do not add new root-level `*_results` folders.
+VAL0 is the current center. Later stages should not be implemented until the single-field task-algebra probe is understood.
 
-## Important Caveat
+## Important caveat
 
-This repository does not prove Omega as a scientific theory. At present it
-contains:
+This repository does not prove Omega as a scientific theory.
 
-- theory notes and draft formalizations;
-- historical toy-substrate probes;
-- negative and ambiguous results;
-- a current validation design for VAL0-CT.
-
-The scientific value of the repo is in the controls and failure modes as much
-as in any positive signal.
-
-## Environment
-
-Use the local virtual environment directly when working on the original machine:
-
-```powershell
-.\.venv\Scripts\python.exe -c "import numpy, pandas, matplotlib; print('ready')"
-```
-
-For CPU-heavy probes, the calibrated default is:
+At present it contains:
 
 ```text
-18 worker processes
+theory notes and draft formalizations
+historical toy-substrate probes
+negative and ambiguous results
+current VAL0-CT validation design
+current VAL0-CT implementation spec
 ```
 
-VAL0-CT should start CPU-first. GPU support is deferred until smoke runs show a
-real dense batched reachability bottleneck.
+The current scientific claim is modest:
 
-For older GPU/CuPy work on the original machine, use `omega_env.bat` or run
-`omega_env.ps1` with a PowerShell execution-policy bypass. The environment
-scripts add Torch's bundled CUDA 13 NVRTC DLL directory to `PATH` and point
-CuPy's kernel cache at `.cupy-cache/`.
+> If Omega is the asymptotic compatibility structure of value-bearing possibility, then its earliest detectable precursor should be reachable task-space that remains future-bearing across horizons.
 
-## Historical Result Sets
+VAL0-CT tests that precursor.
 
-The public tree keeps compact historical outputs that matter for provenance and
-failure analysis. They are no longer the current center:
+## Historical result sets
 
-- `results/historical_probes/`
+The public tree keeps compact historical outputs that matter for provenance and failure analysis. They are no longer the current center:
 
-Historical scripts remain in the repository because they document how the
-current state was reached. New work should normally start from the VAL0-CT
-validation design unless deliberately revisiting an older branch.
+```text
+results/historical_probes/
+```
+
+Historical scripts remain because they document how the current state was reached. New work should normally start from the VAL0-CT validation design unless deliberately revisiting an older branch.
