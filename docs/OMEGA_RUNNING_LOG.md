@@ -2312,3 +2312,85 @@ negative diagnostic, not as a positive proto-Omega result. Next revision should
 focus on threshold calibration, R1 selector design, and structured generators
 that can distinguish robust future reachability from greedy peak lookahead.
 ```
+
+## 2026-05-18 - VAL0-CT overnight divergence prep and timeout
+
+Pulled `docs/VAL0_CT_OVERNIGHT_BATCH_SPEC.md` and
+`docs/VAL0_CT_RUNBOOK.md`, then implemented the overnight calibration harness:
+
+- added `brittle_peak` and `structured_asymmetric_v2` generators;
+- added deterministic hand-built cases;
+- added R1/R0-lookahead same-choice, score-gap, candidate-variance, and
+  local/global audit diagnostics;
+- added per-family seed-count support to `run_smoke.py`;
+- disabled stored per-step traces by default to keep overnight JSONL size
+  manageable.
+
+Deterministic gate:
+
+```text
+results/val0_ct/deterministic_cases_overnight_prep_v2/
+```
+
+The brittle-peak hand case passed:
+
+```text
+R1 task: 1
+R0-lookahead task: 0
+same_choice: 0
+R1 global LHR: 0.929
+R0-lookahead global LHR: 0.857
+```
+
+Local calibration:
+
+```text
+results/local_runs/val0_ct_overnight_calibration/
+```
+
+Calibration read:
+
+- `brittle_peak`: R1 mean global LHR 0.477 vs R0-lookahead 0.416.
+- `structured_asymmetric_v2`: R1 mean global LHR 0.528 vs R0-lookahead 0.504.
+- `low_resolution_dense`: R1 and R0-lookahead remained nearly matched.
+- `lock_in_seeded`: pseudo-Omega retained the local/global split.
+
+Full overnight attempt:
+
+```text
+results/val0_ct/20260518_040447/
+```
+
+Attempted grid:
+
+```text
+brittle_peak=150 seeds
+structured_asymmetric_v2=100 seeds
+lock_in_seeded=50 seeds
+low_resolution_dense=50 seeds
+h = 1, 2, 4
+H = 4, 8, 16
+T = 16, 32, 64
+workers = 18
+sample_size = 256
+max_paths = 512
+```
+
+Outcome:
+
+```text
+Timed out at the 10-hour cap before normal completion.
+```
+
+No analyzable rows were produced because the runner buffered rows in memory
+until completion. This was a workflow defect. `run_smoke.py` has now been
+patched to stream JSONL rows as they complete, so future interrupted runs leave
+salvageable partial results.
+
+Recommended next run:
+
+```text
+Split the overnight grid into smaller family/horizon batches, or drop T=64 and
+H=16 for the main randomized sweep. Keep brittle_peak prioritized, because the
+deterministic and local calibration results show the desired separation geometry.
+```
