@@ -4,7 +4,7 @@ This repository is the executable validation workspace for the **Omega** theory 
 
 Omega is a research program for naturalized axiology: a way to reason about value-bearing possibility without beginning from human preferences, reward functions, utility functions, or moral rules.
 
-The repo contains theory notes, progenitor drafts, historical validation attempts, current validation designs, and executable probes.
+The repo contains theory notes, foundational theory drafts, historical validation attempts, current validation designs, and executable probes.
 
 It does **not** prove Omega. It is a controlled workspace for turning the theory into testable mathematical objects and letting those objects fail when they are too weak.
 
@@ -68,7 +68,7 @@ The current VAL0-CT probe is only the first step. It does not validate alignment
 
 The current Omega/VAL0-CT work is the downstream validation layer of a broader theory pipeline.
 
-The progenitor drafts are not merely old background. They supply the upstream physical, structural, normative, and control-theoretic layers that explain why future-bearing reachability is the right object to test.
+The **foundation stack** supplies the upstream physical, structural, normative, and control-theoretic layers that explain why future-bearing reachability is the right object to test.
 
 A useful map:
 
@@ -95,7 +95,7 @@ Omega / Constructor Theory / VAL0-CT
 In short:
 
 ```text
-progenitor stack:
+foundation stack:
   why future-bearing value substrate should exist and matter
 
 Omega derivation:
@@ -107,8 +107,8 @@ VAL0-CT:
 
 Start here for the pipeline view:
 
-- [Progenitor stack as pipeline](docs/research_notes/omega_theory/progenitor_stack_as_pipeline.md)
-- [Progenitor drafts](docs/progenitor_drafts/README.md)
+- [Foundation stack as pipeline](docs/research_notes/omega_theory/progenitor_stack_as_pipeline.md)
+- [Foundational theory drafts](docs/progenitor_drafts/README.md)
 - [Gradient Ethics draft](docs/progenitor_drafts/gradient_ethics.pdf)
 - [Gradient Field Theory draft](docs/progenitor_drafts/gradient_field_theory_of_value_v51.pdf)
 - [ECHO draft](docs/progenitor_drafts/echo_rosetta_version.pdf)
@@ -282,9 +282,9 @@ Constructor Theory gives the physics of possibility.
 Omega gives the constraint structure of value-bearing possibility.
 ```
 
-## How the progenitor drafts tie in
+## How the foundation stack ties in
 
-Each progenitor layer answers a different upstream question.
+Each foundation layer answers a different upstream question.
 
 ```text
 ECHO:
@@ -308,7 +308,7 @@ VAL0-CT:
 
 This is why the current probe is not just an isolated toy model. It is a deliberately narrow test of a downstream signature implied by the larger stack.
 
-The progenitor stack does not prove Omega. It gives the current validation program its target.
+The foundation stack does not prove Omega. It gives the current validation program its target.
 
 ## How to read the historical probes
 
@@ -345,7 +345,7 @@ Historical terminology is defined here:
 ### For a new reader
 
 1. [Public terms and translations](docs/research_notes/omega_theory/public_terms_and_translations.md)
-2. [Progenitor stack as pipeline](docs/research_notes/omega_theory/progenitor_stack_as_pipeline.md)
+2. [Foundation stack as pipeline](docs/research_notes/omega_theory/progenitor_stack_as_pipeline.md)
 3. [Omega glossary](docs/research_notes/omega_theory/omega_glossary.md)
 4. [Deriving Omega relevance from primitives](docs/research_notes/omega_theory/deriving_omega_relevance_from_primitives.md)
 5. [Omega as viable value-bearing trajectory space](docs/research_notes/omega_theory/omega_as_viable_value_bearing_trajectory_space.md)
@@ -354,8 +354,8 @@ Historical terminology is defined here:
 
 ### For the broader theory pipeline
 
-1. [Progenitor stack as pipeline](docs/research_notes/omega_theory/progenitor_stack_as_pipeline.md)
-2. [Progenitor drafts overview](docs/progenitor_drafts/README.md)
+1. [Foundation stack as pipeline](docs/research_notes/omega_theory/progenitor_stack_as_pipeline.md)
+2. [Foundational theory drafts overview](docs/progenitor_drafts/README.md)
 3. [ECHO draft](docs/progenitor_drafts/echo_rosetta_version.pdf)
 4. [TELOS draft](docs/progenitor_drafts/telos_2_0_draft.pdf)
 5. [Gradient Field Theory draft](docs/progenitor_drafts/gradient_field_theory_of_value_v51.pdf)
@@ -376,7 +376,7 @@ Historical terminology is defined here:
 3. [Public results index](docs/PUBLIC_RESULTS_INDEX.md)
 4. [Historical probe terms](docs/research_notes/omega_theory/historical_probe_terms.md)
 5. [Historical probes](results/historical_probes/)
-6. [Progenitor drafts](docs/progenitor_drafts/README.md)
+6. [Foundational theory drafts](docs/progenitor_drafts/README.md)
 
 ## Current next step
 
@@ -444,7 +444,7 @@ At present it contains:
 
 ```text
 theory notes and draft formalizations
-progenitor drafts that motivate the pipeline
+foundational theory drafts that motivate the pipeline
 historical toy-substrate probes
 negative and ambiguous results
 current VAL0-CT validation design
