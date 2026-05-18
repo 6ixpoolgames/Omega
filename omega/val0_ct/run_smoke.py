@@ -11,7 +11,7 @@ from pathlib import Path
 from .generators import generate_algebra
 from .policies import POLICIES
 from .simulation import run_condition
-from .summarize import write_aggregate_csv, write_jsonl, write_summary
+from .summarize import write_aggregate_csv, write_summary
 
 
 FAMILIES = ("low_resolution_dense", "structured_asymmetric", "lock_in_seeded")
@@ -109,13 +109,16 @@ def main() -> int:
     ]
     start = time.perf_counter()
     rows: list[dict[str, object]] = []
-    with concurrent.futures.ProcessPoolExecutor(max_workers=args.workers) as executor:
-        for row in executor.map(_job, jobs, chunksize=4):
-            rows.append(row)
+    results_path = out_dir / "results.jsonl"
+    with results_path.open("w", encoding="utf-8") as handle:
+        with concurrent.futures.ProcessPoolExecutor(max_workers=args.workers) as executor:
+            for row in executor.map(_job, jobs, chunksize=4):
+                rows.append(row)
+                handle.write(json.dumps(row, sort_keys=True) + "\n")
+                handle.flush()
     elapsed = time.perf_counter() - start
     config["elapsed_seconds"] = elapsed
     (out_dir / "config.json").write_text(json.dumps(config, indent=2, sort_keys=True), encoding="utf-8")
-    write_jsonl(out_dir / "results.jsonl", rows)
     aggregate = write_aggregate_csv(out_dir / "aggregate.csv", rows)
     write_summary(out_dir / "summary.md", config, aggregate)
     print(json.dumps({"out_dir": str(out_dir), "rows": len(rows), "elapsed_seconds": elapsed}, indent=2))
