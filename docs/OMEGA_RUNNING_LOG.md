@@ -2445,3 +2445,54 @@ Future long runs should use the runner's own wall-clock controls, interleaved
 job ordering, and checkpointing. External timeouts are now a last-resort guard,
 not the primary shutdown mechanism.
 ```
+
+## 2026-05-18 - VAL0-CT safe main breadth run
+
+After hardening the runner, completed the scoped breadth run:
+
+```text
+results/val0_ct/20260518_safe_main_h4h8_t16t32/
+```
+
+Scope:
+
+```text
+families:
+  brittle_peak=150 seeds
+  structured_asymmetric_v2=100 seeds
+  lock_in_seeded=50 seeds
+  low_resolution_dense=50 seeds
+
+h = 1, 2, 4
+H = 4, 8
+T = 16, 32
+workers = 18
+sample_size = 256
+max_paths = 512
+rows = 21000
+elapsed = 16181.9 seconds
+status = completed
+```
+
+Primary read:
+
+- `brittle_peak`: R1 mean global LHR 0.471 vs R0-lookahead 0.383.
+- `structured_asymmetric_v2`: R1 mean global LHR 0.496 vs R0-lookahead
+  0.432.
+- `low_resolution_dense`: R1 and R0-lookahead remained matched, as expected.
+- `lock_in_seeded`: pseudo-Omega retained low global LHR, high local LHR, and
+  1.000 pseudo-Omega flag rate.
+
+Horizon dependence:
+
+- R1 advantage concentrates at `h = 1` and `h = 2`.
+- At `h = 4`, same-choice rates rise and the R1/R0-lookahead difference mostly
+  collapses.
+
+Decision:
+
+```text
+This is a successful VAL0-CT calibration result for the R1/R0-lookahead
+distinction in generated brittle/robust task algebras. It remains a calibration
+result, not full Omega validation.
+```
