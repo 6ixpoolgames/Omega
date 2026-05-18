@@ -103,6 +103,81 @@ for ignored smoke, calibration, stress, or scratch outputs.
 
 Do not add new root-level `*_results` folders.
 
+## Long-run safety rules
+
+Long VAL0-CT runs must be scoped so that an interrupted run still leaves useful
+evidence.
+
+Use these runner controls for overnight or workday batches:
+
+```powershell
+--max-runtime-seconds <seconds>
+--shutdown-reserve-seconds 600
+--checkpoint-every 100
+--job-order interleaved
+--max-pending-multiplier 1
+```
+
+Required behavior:
+
+```text
+results.jsonl:
+  streams one completed row at a time
+
+aggregate.csv and summary.md:
+  refresh at checkpoints and at shutdown
+
+status.json:
+  records completed/submitted/cancelled/remaining jobs and completion fraction
+
+job-order interleaved:
+  prevents partial runs from containing only the first family in the grid
+```
+
+Do not rely on an external timeout to kill a batch. Give the runner its own
+wall-clock budget and reserve enough time for aggregation and shutdown.
+
+Recommended 22-hour allocation after the 10-hour timeout:
+
+```text
+Phase 0, 10-20 min:
+  deterministic gate and tiny streaming probe
+
+Phase 1, 5-7 h:
+  brittle_peak primary sweep
+  h = 1,2,4
+  H = 4,8
+  T = 16,32
+  seeds = 100-150
+
+Phase 2, 3-5 h:
+  structured_asymmetric_v2 confirmation
+  same h/H/T grid
+  seeds = 60-100
+
+Phase 3, 2-3 h:
+  lock_in_seeded local/global audit
+  same h/H/T grid
+  seeds = 40-60
+
+Phase 4, 1-2 h:
+  low_resolution_dense negative control
+  same h/H/T grid
+  seeds = 30-50
+
+Phase 5, remaining budget:
+  only add H = 16 or T = 64 to targeted bands that separated earlier
+```
+
+The scoping rule is:
+
+```text
+first breadth, then depth
+```
+
+Do not launch the full family x seed x h x H x T grid at once unless a prior
+calibration shows it can complete with at least 20% wall-clock margin.
+
 ## Recommended implementation order
 
 Follow the implementation spec order:

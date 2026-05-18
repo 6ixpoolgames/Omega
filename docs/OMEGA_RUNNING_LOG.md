@@ -2394,3 +2394,54 @@ Split the overnight grid into smaller family/horizon batches, or drop T=64 and
 H=16 for the main randomized sweep. Keep brittle_peak prioritized, because the
 deterministic and local calibration results show the desired separation geometry.
 ```
+
+## 2026-05-18 - VAL0-CT runner hardening
+
+Fixed the long-run harness failure exposed by the timed-out overnight attempt.
+
+Root cause:
+
+```text
+run_smoke.py used ordered result collection and normal-completion-only
+aggregation. A timeout before normal completion could leave only config.json.
+```
+
+Implemented fixes:
+
+- replaced ordered `executor.map` collection with bounded pending futures and
+  first-completed collection;
+- added `--max-runtime-seconds` and `--shutdown-reserve-seconds` so the runner
+  exits on its own clock instead of relying on an external timeout;
+- added streaming `results.jsonl` writes for every completed row;
+- added periodic checkpoint aggregation to `aggregate.csv` and `summary.md`;
+- added `status.json` with completed/submitted/cancelled/remaining counts;
+- added `--max-pending-multiplier` to prevent the whole grid from being in
+  flight at once;
+- added `--job-order interleaved` as the default so partial runs cover families
+  and horizons instead of only the first family in the submission order.
+
+Validation probes:
+
+```text
+results/local_runs/runner_normal_completion_probe/
+results/local_runs/runner_partial_exit_probe/
+results/local_runs/runner_interleaved_partial_probe/
+```
+
+The forced partial-exit probe produced durable partial outputs:
+
+```text
+status: partial_time_budget_stop
+completed rows: 67
+result files: results.jsonl, aggregate.csv, summary.md, status.json
+family coverage: brittle_peak, structured_asymmetric_v2, lock_in_seeded,
+low_resolution_dense
+```
+
+Operational consequence:
+
+```text
+Future long runs should use the runner's own wall-clock controls, interleaved
+job ordering, and checkpointing. External timeouts are now a last-resort guard,
+not the primary shutdown mechanism.
+```
