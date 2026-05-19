@@ -2496,3 +2496,78 @@ This is a successful VAL0-CT calibration result for the R1/R0-lookahead
 distinction in generated brittle/robust task algebras. It remains a calibration
 result, not full Omega validation.
 ```
+
+## 2026-05-19 - VAL0-CT targeted horizon confirmations
+
+After the safe breadth run, ran two targeted harder-horizon confirmations within
+the corrected 15-hour budget.
+
+### H16 T64 collapse-boundary run
+
+```text
+results/val0_ct/20260518_targeted_h16_t64/
+```
+
+Scope:
+
+```text
+h = 1, 2
+H = 16
+T = 64
+rows = 2500
+status = completed
+elapsed = 2260.7 seconds
+```
+
+Read:
+
+```text
+Global LHR collapsed to zero for every family and policy.
+```
+
+Decision:
+
+```text
+Treat T = 64 as over-hard for the current 64-task generators. This is a
+collapse-boundary diagnostic, not a useful R1/R0-lookahead comparison.
+```
+
+### H16 T32 confirmation run
+
+```text
+results/val0_ct/20260518_targeted_h16_t32/
+```
+
+Scope:
+
+```text
+h = 1, 2
+H = 16
+T = 32
+rows = 2500
+status = completed
+elapsed = 1955.4 seconds
+```
+
+Primary read:
+
+- `brittle_peak`: R1 mean global LHR 0.539 vs R0-lookahead 0.189.
+- `structured_asymmetric_v2`: R1 mean global LHR 0.577 vs R0-lookahead
+  0.289.
+- `low_resolution_dense`: R1 0.534 vs R0-lookahead 0.535, matched as expected.
+- `lock_in_seeded`: pseudo-Omega retained the destructive-lock-in diagnostic.
+
+Band-level read:
+
+- `brittle_peak`, `h=1`: R1 0.360 vs R0-lookahead 0.190.
+- `brittle_peak`, `h=2`: R1 0.719 vs R0-lookahead 0.188.
+- `structured_asymmetric_v2`, `h=1`: R1 0.412 vs R0-lookahead 0.313.
+- `structured_asymmetric_v2`, `h=2`: R1 0.742 vs R0-lookahead 0.265.
+
+Decision:
+
+```text
+This is the strongest current VAL0-CT calibration evidence that R1 can
+outperform equal-budget greedy peak reachability in generated brittle/robust
+task algebras. It remains calibration evidence, not full Omega validation.
+```
