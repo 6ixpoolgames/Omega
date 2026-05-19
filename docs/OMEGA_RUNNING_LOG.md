@@ -2746,3 +2746,91 @@ the present proxy does not yet explain R1's advantage over R0-lookahead.
 Revise toward path-variation / retained-depth collapse diagnostics before
 including brittleness in a held-out generalization run.
 ```
+
+## 2026-05-19 - VAL0-CT 12-hour held-out exploratory run
+
+Pulled `docs/VAL0_CT_12H_HELDOUT_EXPLORATORY_SPEC.md` and ran the scoped
+held-out exploration without changing R1 or scaling the failed brittleness
+sidecar.
+
+Main artifact:
+
+```text
+results/val0_ct/20260519_12h_heldout_exploratory/
+```
+
+Scope:
+
+```text
+unlabeled_structural = 150 seeds
+cost_brittle = 100 seeds
+delayed_robust = 100 seeds
+low_resolution_dense = 50 seeds
+lock_in_seeded = 50 seeds
+brittle_peak = 40 seeds
+structured_asymmetric_v2 = 40 seeds
+h = 1, 2
+H = 16
+T = 32
+rows = 5300
+elapsed = 5477.0 seconds
+status = completed
+```
+
+Read:
+
+- Anchors reproduced:
+  - `brittle_peak`: R1 0.547 vs R0-lookahead 0.176.
+  - `structured_asymmetric_v2`: R1 0.571 vs R0-lookahead 0.277.
+- Controls behaved:
+  - `low_resolution_dense`: R1 0.534 vs R0-lookahead 0.535.
+  - `lock_in_seeded / pseudo_omega`: global LHR 0.000, local LHR 22.400,
+    pseudo-Omega flag 1.000.
+- Held-out families did not show broad R1 generalization:
+  - `cost_brittle`: R1 0.576 vs R0-lookahead 0.664.
+  - `delayed_robust`: R1 0.614 vs R0-lookahead 0.740.
+  - `unlabeled_structural`: R1 0.398 vs R0-lookahead 0.440.
+
+Additional unlabeled-only extension:
+
+```text
+results/val0_ct/20260519_unlabeled_structural_extension/
+```
+
+Scope:
+
+```text
+unlabeled_structural = 300 seeds
+h = 1, 2
+H = 16
+T = 32
+rows = 3000
+elapsed = 1682.5 seconds
+status = completed
+```
+
+Combined unlabeled analysis:
+
+```text
+h = 1:
+  mean R1 advantage = -0.057
+  win rate = 0.23
+
+h = 2:
+  mean R1 advantage = -0.031
+  win rate = 0.26
+
+highest candidate-variance quintiles:
+  h = 1 mean R1 advantage = -0.027, win rate = 0.309
+  h = 2 mean R1 advantage = -0.006, win rate = 0.346
+```
+
+Decision:
+
+```text
+Do not claim held-out generator generalization yet. The best new hook is that
+candidate variance in unlabeled_structural moves R1 toward parity but not into a
+clean win. Future probes should classify unlabeled regimes by measured
+peak-retention / terminal-depth structure rather than adding more named
+brittle/robust generators.
+```
