@@ -16,6 +16,12 @@ def generate_algebra(
         return _brittle_peak(rng, seed, num_tasks, num_constructors)
     if family == "structured_asymmetric_v2":
         return _structured_asymmetric_v2(rng, seed, num_tasks, num_constructors)
+    if family == "cost_brittle":
+        return _cost_brittle(rng, seed, num_tasks, num_constructors)
+    if family == "delayed_robust":
+        return _delayed_robust(rng, seed, num_tasks, num_constructors)
+    if family == "unlabeled_structural":
+        return _unlabeled_structural(rng, seed, num_tasks, num_constructors)
     if family == "low_resolution_dense":
         return _low_resolution_dense(rng, seed, num_tasks, num_constructors)
     if family == "structured_asymmetric":
@@ -169,6 +175,188 @@ def _structured_asymmetric_v2(
         tasks=tuple(tasks),
         constructors=base.constructors,
         initial_state=base.initial_state,
+    )
+
+
+def _cost_brittle(
+    rng: random.Random,
+    seed: int,
+    num_tasks: int,
+    num_constructors: int,
+) -> TaskAlgebra:
+    """Held-out variant: brittle branch has high apparent reach but high task costs.
+
+    The current R0 implementation is not budget-aware yet, so this generator also
+    encodes the cost barrier as downstream obstruction/terminal sinks. The explicit
+    cost field is present for later budget-aware reachability.
+    """
+    initial = {0, 1}
+    brittle_start = 2
+    robust_start = max(18, int(num_tasks * 0.45))
+    sink_start = max(robust_start + 12, int(num_tasks * 0.75))
+    tasks: list[Task] = []
+    for task_id in range(num_tasks):
+        if task_id == 0:
+            family = "cost_brittle_root"
+            cost = 1.0
+            enables = set(range(brittle_start, min(robust_start, brittle_start + 16)))
+            obstructs: set[int] = set()
+        elif task_id == 1:
+            family = "low_cost_robust_root"
+            cost = 1.0
+            enables = set(range(robust_start, min(sink_start, robust_start + 6)))
+            obstructs = set()
+        elif brittle_start <= task_id < robust_start:
+            family = "cost_brittle"
+            cost = 3.0 + (task_id - brittle_start) / max(1, robust_start - brittle_start)
+            brittle_pool = list(range(brittle_start, robust_start))
+            sink_pool = list(range(sink_start, num_tasks))
+            enables = set(rng.sample(brittle_pool, min(len(brittle_pool), rng.randint(2, 5)))) - {task_id}
+            enables |= set(rng.sample(sink_pool, min(len(sink_pool), rng.randint(1, 3))))
+            robust_pool = list(range(robust_start, sink_start))
+            obstructs = set(rng.sample(robust_pool, min(len(robust_pool), rng.randint(3, 8))))
+        elif robust_start <= task_id < sink_start:
+            family = "low_cost_robust"
+            cost = 1.0
+            forward = [x for x in range(task_id + 1, min(sink_start, task_id + 5))]
+            enables = set(rng.sample(forward, min(len(forward), rng.randint(1, 3)))) if forward else set()
+            obstructs = set(rng.sample(range(sink_start, num_tasks), 1)) if rng.random() < 0.05 and sink_start < num_tasks else set()
+        else:
+            family = "terminal_cost_sink"
+            cost = 5.0
+            enables = set()
+            obstructs = set()
+        tasks.append(
+            Task(
+                id=task_id,
+                family=family,
+                cost=cost,
+                enabled_by_default=task_id in initial,
+                constructor_mask=tuple(range(num_constructors)),
+                enables=frozenset(enables),
+                obstructs=frozenset(obstructs),
+            )
+        )
+    return TaskAlgebra(
+        family="cost_brittle",
+        seed=seed,
+        tasks=tuple(tasks),
+        constructors=_constructors(num_tasks, num_constructors, initial),
+        initial_state=AlgebraState(frozenset(initial), frozenset(), frozenset()),
+    )
+
+
+def _delayed_robust(
+    rng: random.Random,
+    seed: int,
+    num_tasks: int,
+    num_constructors: int,
+) -> TaskAlgebra:
+    initial = {0, 1}
+    brittle_start = 2
+    delay_start = max(16, int(num_tasks * 0.32))
+    robust_start = max(delay_start + 8, int(num_tasks * 0.52))
+    sink_start = max(robust_start + 14, int(num_tasks * 0.78))
+    tasks: list[Task] = []
+    for task_id in range(num_tasks):
+        if task_id == 0:
+            family = "shallow_peak_root"
+            enables = set(range(brittle_start, min(delay_start, brittle_start + 12)))
+            obstructs: set[int] = set()
+        elif task_id == 1:
+            family = "delayed_robust_root"
+            enables = set(range(delay_start, min(robust_start, delay_start + 3)))
+            obstructs = set()
+        elif brittle_start <= task_id < delay_start:
+            family = "shallow_peak"
+            local_pool = list(range(brittle_start, delay_start))
+            sink_pool = list(range(sink_start, num_tasks))
+            enables = set(rng.sample(local_pool, min(len(local_pool), rng.randint(2, 5)))) - {task_id}
+            enables |= set(rng.sample(sink_pool, min(len(sink_pool), rng.randint(1, 2))))
+            obstructs = set(rng.sample(range(robust_start, sink_start), min(sink_start - robust_start, rng.randint(2, 5))))
+        elif delay_start <= task_id < robust_start:
+            family = "delay_bridge"
+            forward = [x for x in range(task_id + 1, min(robust_start, task_id + 4))]
+            enables = set(forward)
+            if task_id >= robust_start - 3:
+                enables |= set(range(robust_start, min(sink_start, robust_start + 6)))
+            obstructs = set()
+        elif robust_start <= task_id < sink_start:
+            family = "delayed_plateau"
+            forward = [x for x in range(task_id + 1, min(sink_start, task_id + 6))]
+            enables = set(rng.sample(forward, min(len(forward), rng.randint(1, 3)))) if forward else set()
+            if rng.random() < 0.35:
+                plateau = list(range(robust_start, sink_start))
+                enables.add(rng.choice(plateau))
+            enables.discard(task_id)
+            obstructs = set(rng.sample(range(sink_start, num_tasks), 1)) if rng.random() < 0.05 and sink_start < num_tasks else set()
+        else:
+            family = "terminal_sink"
+            enables = set()
+            obstructs = set()
+        tasks.append(
+            Task(
+                id=task_id,
+                family=family,
+                enabled_by_default=task_id in initial,
+                constructor_mask=tuple(range(num_constructors)),
+                enables=frozenset(enables),
+                obstructs=frozenset(obstructs),
+            )
+        )
+    return TaskAlgebra(
+        family="delayed_robust",
+        seed=seed,
+        tasks=tuple(tasks),
+        constructors=_constructors(num_tasks, num_constructors, initial),
+        initial_state=AlgebraState(frozenset(initial), frozenset(), frozenset()),
+    )
+
+
+def _unlabeled_structural(
+    rng: random.Random,
+    seed: int,
+    num_tasks: int,
+    num_constructors: int,
+) -> TaskAlgebra:
+    initial_count = max(4, num_tasks // 12)
+    initial = set(rng.sample(range(num_tasks), initial_count))
+    tasks: list[Task] = []
+    for task_id in range(num_tasks):
+        depth_bias = task_id / max(1, num_tasks - 1)
+        enable_width = rng.randint(1, 5 if depth_bias < 0.7 else 2)
+        forward_pool = [x for x in range(task_id + 1, min(num_tasks, task_id + rng.randint(4, 12)))]
+        global_pool = list(range(num_tasks))
+        if forward_pool and rng.random() < 0.75:
+            enables = set(rng.sample(forward_pool, min(len(forward_pool), enable_width)))
+        else:
+            enables = set(rng.sample(global_pool, min(len(global_pool), rng.randint(0, 3))))
+        enables.discard(task_id)
+        obstruction_rate = 0.08 + 0.32 * rng.random()
+        if rng.random() < obstruction_rate:
+            obstruct_count = rng.randint(1, 7)
+            obstruct_pool = [x for x in global_pool if x != task_id and x not in initial]
+            obstructs = set(rng.sample(obstruct_pool, min(len(obstruct_pool), obstruct_count)))
+        else:
+            obstructs = set()
+        cost = 1.0 + (2.0 * rng.random() if rng.random() < 0.35 else 0.0)
+        tasks.append(
+            Task(
+                id=task_id,
+                family="unlabeled",
+                cost=cost,
+                enabled_by_default=task_id in initial,
+                constructor_mask=tuple(range(num_constructors)),
+                enables=frozenset(enables),
+                obstructs=frozenset(obstructs),
+            )
+        )
+    return TaskAlgebra(
+        family="unlabeled_structural",
+        seed=seed,
+        tasks=tuple(tasks),
+        constructors=_constructors(num_tasks, num_constructors, initial),
+        initial_state=AlgebraState(frozenset(initial), frozenset(), frozenset()),
     )
 
 

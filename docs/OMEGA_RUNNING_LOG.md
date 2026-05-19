@@ -2571,3 +2571,98 @@ This is the strongest current VAL0-CT calibration evidence that R1 can
 outperform equal-budget greedy peak reachability in generated brittle/robust
 task algebras. It remains calibration evidence, not full Omega validation.
 ```
+
+## 2026-05-19 - VAL0-CT held-out Phase 1 scale probe
+
+Pulled `docs/VAL0_CT_HELDOUT_GENERALIZATION_SPEC.md` and implemented a small
+scale-readiness probe for held-out generator generalization.
+
+Implemented generator variants:
+
+- `cost_brittle`
+- `delayed_robust`
+- `unlabeled_structural`
+
+Deferred:
+
+```text
+reliability_brittle
+```
+
+Reason:
+
+```text
+The current R0/R1 implementation does not yet use reliability weighting, so a
+reliability_brittle run would be misleading unless reliability-sensitive
+reachability is implemented first.
+```
+
+Important caveat:
+
+```text
+cost_brittle is currently a structural proxy. Task costs are populated, but
+R0/R1 are not budget-aware yet, so the cost barrier is also encoded through
+downstream obstruction/sinks.
+```
+
+Tiny local sanity:
+
+```text
+results/local_runs/heldout_generator_tiny_sanity/
+```
+
+Phase 1 scale probe:
+
+```text
+results/val0_ct/20260519_heldout_phase1_scale_probe/
+```
+
+Scope:
+
+```text
+families:
+  brittle_peak
+  structured_asymmetric_v2
+  low_resolution_dense
+  cost_brittle
+  delayed_robust
+  unlabeled_structural
+
+seeds: 20 per family
+h = 1, 2
+H = 16
+T = 32
+rows = 1200
+elapsed = 1400.5 seconds
+status = completed
+```
+
+Operational read:
+
+```text
+The hardened runner is ready to scale into a 12-hour run.
+```
+
+At observed throughput, a 5,000-7,000 row Phase 2 run should fit comfortably
+inside 12 hours.
+
+Scientific read:
+
+- Known positive anchors reproduced:
+  - `brittle_peak`: R1 0.551 vs R0-lookahead 0.183.
+  - `structured_asymmetric_v2`: R1 0.563 vs R0-lookahead 0.282.
+- Negative control remained matched:
+  - `low_resolution_dense`: R1 0.532 vs R0-lookahead 0.531.
+- Held-out variants are mixed:
+  - `cost_brittle`: R1 0.582 vs R0-lookahead 0.662; R1 only wins at `h=2`.
+  - `delayed_robust`: R1 0.620 vs R0-lookahead 0.748.
+  - `unlabeled_structural`: R1 0.421 vs R0-lookahead 0.428 overall; weak R1 win at `h=2`.
+
+Recommendation:
+
+```text
+Scale next, but do not distribute compute evenly across all new variants.
+Prioritize anchors, low_resolution_dense, lock_in_seeded, and
+unlabeled_structural with structural post-classification. Treat cost_brittle and
+delayed_robust as generator-debug/calibration arms unless revised first.
+```
