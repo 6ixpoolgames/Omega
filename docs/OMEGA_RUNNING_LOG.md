@@ -2666,3 +2666,83 @@ Prioritize anchors, low_resolution_dense, lock_in_seeded, and
 unlabeled_structural with structural post-classification. Treat cost_brittle and
 delayed_robust as generator-debug/calibration arms unless revised first.
 ```
+
+## 2026-05-19 - VAL0-CT brittleness sidecar smoke
+
+Pulled `docs/VAL0_CT_BRITTLENESS_SIDECAR_SPEC.md` and implemented a
+diagnostic-only brittleness sidecar.
+
+3P constraint:
+
+```text
+principled:
+  brittleness = perturbation-sensitive structured reachability
+
+parsimonious:
+  sidecar only; no R1 or policy changes
+
+predictive:
+  test whether measured brittleness predicts R1 advantage
+```
+
+Implementation:
+
+- added `omega/val0_ct/brittleness.py`;
+- added `omega/val0_ct/run_brittleness_smoke.py`;
+- sidecar computes candidate structuredness, perturbation sensitivity,
+  candidate brittleness, R0-lookahead chosen brittleness, R1 chosen brittleness,
+  and chosen-brittleness gap;
+- stresses used: enabled drop, obstruction add, horizon extension;
+- cost/reliability stresses remain deferred.
+
+Important implementation correction:
+
+```text
+The first tiny smoke let low_resolution_dense look brittle because the metric
+was too close to raw reachability. Added a density penalty to structuredness.
+```
+
+Smoke artifact:
+
+```text
+results/val0_ct/20260519_brittleness_sidecar_smoke_v2/
+```
+
+Scope:
+
+```text
+families:
+  brittle_peak
+  structured_asymmetric_v2
+  low_resolution_dense
+  lock_in_seeded
+
+seeds: 8
+h = 1, 2
+H = 16
+T = 32
+candidate sample = 32
+stress samples = 4
+rows = 64
+elapsed = 1087.8 seconds
+```
+
+Result:
+
+- `low_resolution_dense` brittleness was suppressed to 0.000, which is good.
+- Positive anchors still showed R1 advantage:
+  - `brittle_peak`: mean R1 advantage 0.408.
+  - `structured_asymmetric_v2`: mean R1 advantage 0.322.
+- The key predictive sanity check failed:
+  - `brittle_peak` chosen-brittleness gap = -0.010.
+  - `structured_asymmetric_v2` chosen-brittleness gap = -0.017.
+  - brittleness/R1-advantage correlation was near zero or negative.
+
+Decision:
+
+```text
+Do not scale the current brittleness sidecar. It is a useful negative result:
+the present proxy does not yet explain R1's advantage over R0-lookahead.
+Revise toward path-variation / retained-depth collapse diagnostics before
+including brittleness in a held-out generalization run.
+```
