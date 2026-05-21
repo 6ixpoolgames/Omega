@@ -8,7 +8,7 @@ The Omega repository contains several historical probe branches whose terminolog
 
 This file defines older probe/result terms that are useful for provenance, controls, and failure analysis, but are no longer the current validation center.
 
-The current validation center is VAL0-CT. These terms mostly belong to earlier COM/fiber, trajectory-space, DA/DAR/DAX, and rule-space branches.
+The current validation center is VAL0-G. These terms mostly belong to earlier COM/fiber, trajectory-space, DA/DAR/DAX, rule-space, and VAL0-CT calibration branches.
 
 For public-facing writing, prefer plain-language explanations first, then introduce the internal term if needed.
 
@@ -377,6 +377,6 @@ fertile band:
 The current front door remains:
 
 ```text
-VAL0-CT:
-  future-bearing reachability in constructor-style task algebras
+VAL0-G:
+  neutral-grammar recoverable-continuation geometry in constructor-style task algebras
 ```

@@ -1,6 +1,6 @@
 # Omega Project Manual
 
-Last updated: 2026-05-17
+Last updated: 2026-05-21
 
 Repository: https://github.com/6ixpoolgames/Omega
 
@@ -38,6 +38,8 @@ as the canonical internal definition anchor.
 2. Read `docs/OMEGA_RUNNING_LOG.md`.
 3. Read `README.md`.
 4. Read the current validation-design notes:
+   - `docs/VAL0_G_NEUTRAL_GRAMMAR_GEOMETRY_ATLAS_SPEC.md`
+   - `docs/research_notes/validation_results/val0_ct_12h_unlabeled_geometry_battery_result.md`
    - `docs/research_notes/validation_design/README.md`
    - `docs/research_notes/validation_design/val0_ct_implementation_spec.md`
    - `docs/research_notes/validation_design/val0_constructor_task_algebra_probe.md`
@@ -95,6 +97,12 @@ Future VAL0-CT outputs should use:
 results/val0_ct/<timestamp-or-run-id>/
 ```
 
+Future VAL0-G outputs should use:
+
+```text
+results/val0_g/<timestamp-or-run-id>/
+```
+
 with a compact structure such as:
 
 ```text
@@ -132,11 +140,24 @@ The current formal correction is sharper:
 > Omega validation begins only once minimal valuers and value-bearing
 > trajectory space are in scope.
 
-The current validation pivot is VAL0-CT:
+The previous validation pivot was VAL0-CT:
 
 > Use constructor-style task algebras to test whether future-preserving
 > reachability `R1` predicts long-horizon reachability retention better than
 > raw reachability `R0` and equal-budget `R0_lookahead` controls.
+
+Current status:
+
+> VAL0-CT reproduced R1 advantages in designed anchors and kept dense controls
+> clean, but did not establish broad held-out or unlabeled generalization. The
+> project has therefore pivoted to VAL0-G: neutral grammar geometry discovery.
+
+The current validation pivot is VAL0-G:
+
+> Generate constructor-like task worlds from neutral transformation primitives
+> and ask whether asymmetric continuation dynamics produce measurable geometry
+> classes such as self-termination, brittle ridges, noisy fragments, lock-in,
+> and recoverable basins without hand-labeling outcomes.
 
 Older papers and drafts motivate variants of:
 
@@ -207,24 +228,54 @@ CA, DAR, DAX, and bare field probes are primitive-floor or fakeout-calibration
 probes unless they include explicit valuerhood and recoverable continuability.
 ```
 
-### Current Validation Target: VAL0-CT
+### Current Validation Target: VAL0-G
 
-VAL0-CT is the current active validation design.
+VAL0-G is the current active validation design.
 
-It is not full Omega validation. It is a single-field proto-Omega test in
+It is not full Omega validation. It is a single-field geometry-first test in
 constructor-style task algebras.
 
 Primary question:
 
 ```text
-Does persistence-conditioned reachability, R1, predict long-horizon
-reachability retention better than raw reachability, R0, and matched
-R0-lookahead controls in structured task algebras?
+Do neutral constructor-like task spaces generate measurable geometry classes
+where asymmetric continuation dynamics filter trajectories into
+self-terminating, brittle, noisy, lock-in, and recoverable regimes?
 ```
 
-VAL0-CT is now the recommended starting point for new implementation work.
-COM/fiber, trajectory-space, CA, DAR, and DAX work remain important historical
-provenance and failure analysis, but they are not the current front edge.
+VAL0-G is now the recommended starting point for new implementation work.
+VAL0-CT remains the preceding calibration layer. COM/fiber, trajectory-space,
+CA, DAR, and DAX work remain important historical provenance and failure
+analysis, but they are not the current front edge.
+
+### VAL0-CT Status
+
+VAL0-CT tested whether `R1` could serve as a minimal future-preserving
+reachability predictor.
+
+Current result:
+
+```text
+designed anchors:
+  R1 advantage reproduced
+
+low_resolution_dense:
+  clean control
+
+held-out named generators:
+  no broad R1 generalization
+
+unlabeled geometry battery:
+  global R1 advantage remained negative
+  corridor d8 did not survive scale as a robust predictor
+  candidate future-R0 variance was the best weak stratifier
+```
+
+Interpretation:
+
+> R1 remains useful as a probe and guardrail, but the project should not treat
+> policy victory as the object. The object is now recoverable-continuation
+> geometry itself.
 
 ### Single Omega
 
@@ -817,11 +868,14 @@ Interpretation:
 What we can say:
 
 - We have not validated Omega as a scientific theory.
-- The current validation target is VAL0-CT: a constructor-style task algebra
-  probe of persistence-conditioned reachability.
-- The main near-term empirical question is whether `R1` predicts long-horizon
-  reachability retention better than `R0` and equal-budget `R0_lookahead`
-  controls in structured task algebras.
+- The current validation target is VAL0-G: a neutral-grammar geometry atlas in
+  constructor-style task algebras.
+- The main near-term empirical question is whether neutral constructor-like
+  task spaces generate measurable recoverable-continuation geometries under
+  asymmetric transformation dynamics.
+- VAL0-CT remains the preceding calibration layer: R1 anchor wins reproduced,
+  dense controls stayed clean, but broad held-out or unlabeled generalization
+  was not established.
 - Earlier work extracted an executable candidate object in a toy multifield
   substrate:
 

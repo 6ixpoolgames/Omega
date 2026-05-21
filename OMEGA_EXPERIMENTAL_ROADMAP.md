@@ -1,6 +1,6 @@
 # Omega Experimental Roadmap
 
-Status: working roadmap after the Constructor Theory / VAL0-CT pivot.
+Status: working roadmap after the VAL0-CT result and VAL0-G geometry-first pivot.
 
 Stance: skeptically open. Treat Omega as a candidate formal object until it
 produces definitions, discriminators, and failure modes that survive controls.
@@ -8,28 +8,45 @@ produces definitions, discriminators, and failure modes that survive controls.
 ## 1. Current Position
 
 The current project center is no longer the early single-Omega entropy
-invariant or the COM/fiber witness.
+invariant, the COM/fiber witness, or a direct R1 victory claim.
 
 Current validation target:
 
 ```text
-VAL0-CT:
-  single-field proto-Omega validation in constructor-style task algebras
+VAL0-G:
+  neutral-grammar geometry atlas in constructor-style task algebras
 ```
 
 Primary question:
 
 ```text
-Does persistence-conditioned reachability, R1, predict long-horizon
-reachability retention better than raw reachability, R0, and matched
-R0-lookahead controls in structured task algebras?
+Do neutral constructor-like task spaces generate measurable geometry classes
+where asymmetric continuation dynamics filter trajectories into
+self-terminating, brittle, noisy, lock-in, and recoverable regimes?
 ```
 
 This is not full Omega validation. It is an intentionally narrow test for the
-earliest operational precursor:
+earliest geometry-level precursor:
 
 ```text
-reachable task-space that remains future-bearing across horizons
+task-space geometry that retains recoverable continuation across horizons
+```
+
+VAL0-CT remains important as the completed first task-space calibration layer:
+
+```text
+R1 anchor wins:
+  reproduced in designed brittle/robust regimes
+
+dense controls:
+  clean
+
+held-out named generators:
+  no broad R1 generalization
+
+unlabeled geometry battery:
+  corridor d8 did not survive scale as a robust predictor
+  candidate future-R0 variance was the best surviving hook
 ```
 
 ## 2. Why The Pivot Happened
@@ -61,11 +78,17 @@ CA/DAR/DAX work showed:
 - DAX-G5 failed held-out prediction, so that detector is descriptive rather
   than validation-ready.
 
-The pivot is therefore pragmatic:
+The first pivot was pragmatic:
 
 ```text
 move from bare dynamics to task-space structure before trying embodied valuers
 or multifield Omega.
+```
+
+The current pivot is also pragmatic:
+
+```text
+move from "does R1 win?" to "what recoverable-continuation geometries exist?"
 ```
 
 ## 3. Current Formal Spine
@@ -103,38 +126,32 @@ future-bearing reachability
 
 Follow:
 
-- `docs/research_notes/validation_design/val0_ct_implementation_spec.md`
-- `docs/research_notes/validation_design/val0_constructor_task_algebra_probe.md`
+- `docs/VAL0_G_NEUTRAL_GRAMMAR_GEOMETRY_ATLAS_SPEC.md`
 
 Implementation order:
 
 ```text
-1. algebra.py + reachability.py
-   get R0 correct on deterministic toy graphs
+1. neutral_grammar_v1 generator
+   sample worlds from neutral transformation primitives, not outcome labels
 
-2. hand-built R0/R1 divergence tests
-   prove R1 is not just a renamed R0-lookahead selector
+2. survival / descendant measurements
+   survival curve, descendant mass, branching reproduction, terminal probability
 
-3. generators.py
-   low_resolution_dense
-   structured_asymmetric
-   lock_in_seeded
+3. cut sensitivity k=1
+   distinguish ridge-like structures from basin-like structures
 
-4. policies.py
-   random
-   R0
-   R0_lookahead
-   R1
-   pseudo_omega
+4. neutral grammar smoke runner
+   25-50 neutral seeds plus dense/anchor guardrails
 
-5. simulation.py + run_smoke.py
+5. post-hoc geometry bins
+   classify by measured survival/filtering features only
 
-6. summarize.py + diagnostics.py
+6. atlas battery only after smoke passes
 ```
 
-Do not implement `mixed`, `noise_branching`, embodied agents, multifield
-coupling, or GPU acceleration until the first three generator families are
-clean.
+Do not implement embodied agents, multifield coupling, lineage, re-entry redesign,
+or GPU acceleration until the neutral grammar smoke shows non-degenerate
+geometry.
 
 ## 5. First Smoke Target
 
@@ -142,46 +159,42 @@ Recommended first smoke:
 
 ```text
 families:
-  low_resolution_dense
-  structured_asymmetric
-  lock_in_seeded
+  neutral_grammar_v1
+  low_resolution_dense guardrail
+  brittle_peak optional guardrail
 
 num_tasks:
-  64 or 128
+  64
 
 num_constructors:
-  2 or 4
+  2
 
 seeds:
-  20-50 per family
+  25-50 neutral
+  10-20 guardrail
 
 horizon grid:
-  h in {1, 2, 4}
-  H in {4, 8}
-  T in {16, 32}
+  h in {1, 2}
+  H = 16
+  T = 32
 
-R1 sample size:
-  N = 256 candidate paths
+measurement depths:
+  1, 2, 4, 8, 16
 
-R1 threshold:
-  primary = 0.50 * R0_initial
-
-policies:
-  random
-  R0
-  R0_lookahead
-  R1
-  pseudo_omega
+sample size:
+  256
 ```
 
 Primary report:
 
 ```text
-R1 vs R0 vs R0_lookahead on global long-horizon reachability retention
-low-resolution collapse diagnostics
-pseudo-Omega local/global divergence
-generator-family stability
-horizon-band sensitivity
+survival curve non-degeneracy
+descendant mass by depth
+branching reproduction
+terminal probability
+cut sensitivity k=1
+post-hoc geometry classes
+dense/flat guardrail behavior
 ```
 
 ## 6. Hardware / Workflow Baseline
@@ -192,7 +205,7 @@ Machine profile observed by Python:
 - calibrated heavy CPU profile: 18 worker processes
 - observed CPU usage target: about 80%
 
-VAL0-CT should be CPU-first.
+VAL0-G should be CPU-first.
 
 Reason:
 
@@ -207,36 +220,35 @@ GPU work is deferred until smoke runs show a dense fixed-size graph bottleneck.
 Success:
 
 ```text
-R1 preserves or predicts long-horizon reachability retention better than R0
-and equal-budget R0_lookahead in structured algebras.
+neutral_grammar_v1 produces non-degenerate survival curves.
 
-R1 does not spuriously outperform in low-resolution controls.
+Post-hoc geometry classes differ by dynamic filter ratio.
 
-pseudo-Omega cases show high local reachability with weaker global retention.
+Dense/flat controls remain identifiable.
+
+Cut sensitivity separates ridge-like from basin-like regions.
 ```
 
 Failure:
 
 ```text
-R1 adds no predictive value in structured algebras.
+all neutral worlds look flat/dense.
 
-R1 only tracks task count, degree, density, or planning budget.
+all neutral worlds self-terminate immediately.
 
-R1 is unstable across generator families.
+outcomes map directly to one generator knob.
 
-pseudo-Omega cases are not distinguishable from proto-Omega cases.
+survival metrics are non-degenerate but fail to separate filter ratios.
 ```
 
 Ambiguity:
 
 ```text
-R1 works only in hand-seeded algebras.
+geometry classes appear but are unstable across seeds.
 
-R1 collapses to R0 broadly.
+R1 selects some higher-survival classes, but only weakly.
 
-R2/R3 sidecars outperform R1 but are harder to interpret.
-
-The generator produces too many low-resolution cases.
+candidate variance remains the best predictor without a clearer mechanism.
 ```
 
 ## 8. Roadmap Beyond VAL0

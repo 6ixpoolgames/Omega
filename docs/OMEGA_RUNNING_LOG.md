@@ -4,6 +4,58 @@ This is the living operational log for the Omega validation workspace. Update it
 after every meaningful theory-side decision, probe implementation, or compute
 run.
 
+## 2026-05-21
+
+### Public Reorientation Around VAL0-G
+
+The public-facing repository orientation was updated after the VAL0-CT geometry
+battery.
+
+Current interpretation:
+
+```text
+VAL0-CT:
+  useful first task-space calibration layer
+  R1 anchor advantages reproduced
+  dense controls remained clean
+  broad held-out / unlabeled generalization not established
+
+VAL0-G:
+  current front edge
+  neutral grammar geometry atlas
+  asks whether recoverable-continuation geometries emerge without outcome labels
+```
+
+Reason for pivot:
+
+- the 12h unlabeled geometry battery completed cleanly and preserved guardrails;
+- corridor d8 did not survive scale as a robust predictor;
+- candidate future-R0 variance was the best surviving weak hook;
+- the project should now study geometry emergence directly rather than treating
+  R1 victory as the object.
+
+Updated entry points:
+
+- `README.md`
+- `OMEGA_EXPERIMENTAL_ROADMAP.md`
+- `docs/PUBLIC_RESULTS_INDEX.md`
+- `docs/OMEGA_PROJECT_MANUAL.md`
+- `docs/research_notes/validation_design/README.md`
+- `results/val0_ct/README.md`
+- `results/val0_g/README.md`
+
+Next implementation target:
+
+```text
+Implement neutral_grammar_v1 smoke:
+  survival curves
+  descendant mass
+  branching reproduction
+  terminal probability
+  cut sensitivity k=1
+  dense/flat guardrail
+```
+
 ## 2026-05-17
 
 ### Root Script Cleanup

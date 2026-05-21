@@ -16,6 +16,10 @@ The current empirical program tests a narrower precursor:
 
 **Can future-bearing reachability be detected in Constructor-Theory-style task space?**
 
+Current status, in one line:
+
+**VAL0-CT produced useful guardrails and negative results; the active pivot is now VAL0-G, a neutral-grammar geometry atlas for testing whether recoverable continuation geometries emerge without hand-labeled outcomes.**
+
 ## Why this matters for alignment
 
 Omega is motivated by a central alignment problem:
@@ -60,13 +64,13 @@ In this framing, alignment is not a terminal-state target. It is a constraint on
 
 This is why the project focuses on reachability, recoverability, destructive lock-in, Constructor Theory, and task-space validation. The goal is to detect whether a system is preserving future-bearing possibility or converting it into local lock-in.
 
-The current VAL0-CT probe is only the first step. It does not validate alignment. It tests the earliest precursor:
+The current validation program is still only a first step. It does not validate alignment. It tests the earliest precursor:
 
 > Can future-bearing reachability be detected and distinguished from raw reachability in constructor-style task space?
 
 ## The broader theory pipeline
 
-The current Omega/VAL0-CT work is the downstream validation layer of a broader theory pipeline.
+The current Omega/VAL0 task-space work is the downstream validation layer of a broader theory pipeline.
 
 The **foundation stack** supplies the upstream physical, structural, normative, and control-theoretic layers that explain why future-bearing reachability is the right object to test.
 
@@ -88,7 +92,7 @@ Gradient Ethics
 Constrained Reachability
   -> operational control law for agents preserving viable futures
 
-Omega / Constructor Theory / VAL0-CT
+Omega / Constructor Theory / VAL0
   -> empirical program for detecting proto-Omega structure in task space
 ```
 
@@ -103,6 +107,9 @@ Omega derivation:
 
 VAL0-CT:
   first test of whether that structure has a detectable task-space precursor
+
+VAL0-G:
+  current geometry-first follow-up using neutral task grammars
 ```
 
 Start here for the pipeline view:
@@ -200,7 +207,7 @@ Start with:
 - [Deriving Omega relevance from primitives](docs/research_notes/omega_theory/deriving_omega_relevance_from_primitives.md)
 - [Omega as viable value-bearing trajectory space](docs/research_notes/omega_theory/omega_as_viable_value_bearing_trajectory_space.md)
 
-## Current validation pivot: VAL0-CT
+## Current validation pivot: VAL0-G
 
 The project has moved from cellular/rule-space probes toward a **Constructor-Theory-style task-space validation layer**.
 
@@ -216,7 +223,7 @@ task repertoires
 
 Omega is treated as a filter/refinement over that task space.
 
-The current validation target is **not full Omega**. It is **VAL0-CT**, a single-field proto-Omega probe.
+The first task-space phase was **VAL0-CT**, a single-field proto-Omega probe.
 
 VAL0-CT asks:
 
@@ -245,8 +252,43 @@ This is intentionally modest. It tests whether the first precursor of Omega can 
 reachable task-space that remains future-bearing across horizons
 ```
 
+Current VAL0-CT status:
+
+```text
+anchor families:
+  R1 advantage reproduced in designed brittle/robust regimes
+
+dense controls:
+  remained clean
+
+held-out named generators:
+  no broad R1 generalization
+
+reachable-neighborhood geometry:
+  useful diagnostics, but corridor d8 did not survive scale as a robust predictor
+
+best remaining hook:
+  candidate future-R0 variance and h=2 cases move R1 toward parity,
+  but do not yet reveal a clear positive unlabeled regime
+```
+
+The active pivot is therefore **VAL0-G: Neutral Grammar Geometry Atlas**.
+
+VAL0-G asks:
+
+```text
+In neutral constructor-like task spaces, do measurable geometry classes emerge
+where asymmetric continuation dynamics filter trajectories into
+self-terminating, brittle, noisy, lock-in, and recoverable regimes?
+```
+
+This is not a policy-win test. R1 remains a probe, not the object. The primary object is the geometry of recoverable continuation in task-repertoire space.
+
 Start with:
 
+- [VAL0-G neutral grammar geometry atlas spec](docs/VAL0_G_NEUTRAL_GRAMMAR_GEOMETRY_ATLAS_SPEC.md)
+- [VAL0-CT 12h unlabeled geometry battery result](docs/research_notes/validation_results/val0_ct_12h_unlabeled_geometry_battery_result.md)
+- [VAL0-CT reachable-neighborhood geometry smoke result](docs/research_notes/validation_results/val0_ct_reachable_neighborhood_geometry_smoke_result.md)
 - [VAL0-CT validation design](docs/research_notes/validation_design/val0_constructor_task_algebra_probe.md)
 - [VAL0-CT implementation spec](docs/research_notes/validation_design/val0_ct_implementation_spec.md)
 - [VAL0-CT runbook](docs/VAL0_CT_RUNBOOK.md)
@@ -264,13 +306,14 @@ Did reward increase?
 Did a gridworld variable stay high?
 ```
 
-VAL0-CT asks:
+VAL0-CT and VAL0-G ask:
 
 ```text
 Which task repertoires remain possible?
 Which task paths preserve future reachability?
 Which paths collapse into lock-in?
-Which policies preserve future-bearing task space across horizons?
+Which geometries retain descendant mass across horizons?
+Which policies select those geometries?
 ```
 
 This makes the validation target less anthropocentric and less preference-first.
@@ -304,6 +347,9 @@ Constrained Reachability:
 
 VAL0-CT:
   Can the predicted future-bearing reachability signature be detected in task-space dynamics?
+
+VAL0-G:
+  Do neutral task grammars produce measurable recoverable-continuation geometries?
 ```
 
 This is why the current probe is not just an isolated toy model. It is a deliberately narrow test of a downstream signature implied by the larger stack.
@@ -350,7 +396,8 @@ Historical terminology is defined here:
 4. [Deriving Omega relevance from primitives](docs/research_notes/omega_theory/deriving_omega_relevance_from_primitives.md)
 5. [Omega as viable value-bearing trajectory space](docs/research_notes/omega_theory/omega_as_viable_value_bearing_trajectory_space.md)
 6. [Constructor Theory and Omega axiology](docs/research_notes/omega_theory/constructor_theory_and_omega_axiology.md)
-7. [VAL0-CT validation design](docs/research_notes/validation_design/val0_constructor_task_algebra_probe.md)
+7. [VAL0-G neutral grammar geometry atlas spec](docs/VAL0_G_NEUTRAL_GRAMMAR_GEOMETRY_ATLAS_SPEC.md)
+8. [VAL0-CT validation design](docs/research_notes/validation_design/val0_constructor_task_algebra_probe.md)
 
 ### For the broader theory pipeline
 
@@ -364,10 +411,11 @@ Historical terminology is defined here:
 
 ### For implementation work
 
-1. [VAL0-CT runbook](docs/VAL0_CT_RUNBOOK.md)
-2. [VAL0-CT implementation spec](docs/research_notes/validation_design/val0_ct_implementation_spec.md)
-3. [VAL0-CT validation design](docs/research_notes/validation_design/val0_constructor_task_algebra_probe.md)
-4. [Validation design notes](docs/research_notes/validation_design/README.md)
+1. [VAL0-G neutral grammar geometry atlas spec](docs/VAL0_G_NEUTRAL_GRAMMAR_GEOMETRY_ATLAS_SPEC.md)
+2. [VAL0-CT geometry battery runner](omega/val0_ct/run_geometry_battery.py)
+3. [VAL0-CT geometry sidecar](omega/val0_ct/geometry.py)
+4. [VAL0-CT runbook](docs/VAL0_CT_RUNBOOK.md)
+5. [Validation design notes](docs/research_notes/validation_design/README.md)
 
 ### For project history
 
@@ -380,38 +428,47 @@ Historical terminology is defined here:
 
 ## Current next step
 
-The current implementation target is the VAL0-CT smoke run.
+The current implementation target is the **VAL0-G neutral grammar smoke**.
 
 Public summary:
 
 ```text
-families:
-  low_resolution_dense
-  structured_asymmetric
-  lock_in_seeded
+implement:
+  neutral_grammar_v1
 
-policies:
-  random
-  R0
-  R0_lookahead
-  R1
-  pseudo_omega / destructive lock-in
+measure:
+  survival curves
+  descendant mass
+  branching reproduction
+  terminal probability
+  cut sensitivity
 
-primary comparison:
-  R1 vs R0 vs equal-budget R0_lookahead
-  on long-horizon reachability retention
+guardrails:
+  low_resolution_dense remains flat/dense
+  VAL0-CT anchors remain calibration-only
+
+defer:
+  re-entry redesign
+  local/global coupling unless cheap
+  full atlas scale
+  GPU
 ```
 
-Technical run details are in:
+Technical design is in:
 
-- [VAL0-CT runbook](docs/VAL0_CT_RUNBOOK.md)
+- [VAL0-G neutral grammar geometry atlas spec](docs/VAL0_G_NEUTRAL_GRAMMAR_GEOMETRY_ATLAS_SPEC.md)
 
 ## Roadmap
 
 ```text
 VAL0-CT:
-  single-field proto-Omega
-  R1 predicts long-horizon reachability retention
+  completed first task-space calibration layer
+  R1 anchor wins reproduced
+  held-out/generalized R1 claim not established
+
+VAL0-G:
+  active neutral-grammar geometry atlas
+  test whether recoverable continuation geometries emerge without outcome labels
 
 VAL1-CT:
   coupled fields
@@ -434,7 +491,7 @@ VAL5-CT:
   propagation across generations
 ```
 
-VAL0 is the current center. Later stages should not be implemented until the single-field task-algebra probe is understood.
+VAL0-G is the current center. Later stages should not be implemented until the neutral single-field geometry substrate is understood.
 
 ## Important caveat
 
@@ -447,15 +504,15 @@ theory notes and draft formalizations
 foundational theory drafts that motivate the pipeline
 historical toy-substrate probes
 negative and ambiguous results
-current VAL0-CT validation design
-current VAL0-CT implementation spec
+current VAL0-G neutral grammar spec
+VAL0-CT validation designs and results
 ```
 
 The current scientific claim is modest:
 
-> If Omega is the asymptotic compatibility structure of value-bearing possibility, then its earliest detectable precursor should be reachable task-space that remains future-bearing across horizons.
+> If Omega is the asymptotic compatibility structure of value-bearing possibility, then its earliest detectable precursor should be task-space geometry that retains recoverable continuation across horizons.
 
-VAL0-CT tests that precursor.
+VAL0-CT tested a first R1-based version of that precursor. VAL0-G now tests the geometry-first version.
 
 ## Historical result sets
 
@@ -465,4 +522,4 @@ The public tree keeps compact historical outputs that matter for provenance and 
 results/historical_probes/
 ```
 
-Historical scripts remain because they document how the current state was reached. New work should normally start from the VAL0-CT validation design unless deliberately revisiting an older branch.
+Historical scripts remain because they document how the current state was reached. New work should normally start from the VAL0-G neutral grammar spec unless deliberately revisiting an older branch.

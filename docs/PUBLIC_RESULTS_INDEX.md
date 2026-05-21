@@ -1,8 +1,9 @@
 # Public Results Index
 
 This repository intentionally exposes only the most relevant public artifacts.
-The current validation design is VAL0-CT, not the older COM/fiber or DAX probe
-branches.
+The current validation design is VAL0-G, a neutral-grammar geometry atlas for
+constructor-style task space. VAL0-CT remains the immediately preceding
+calibration layer, not the final validation center.
 
 Older executable outputs remain tracked where they are useful for provenance,
 controls, and failure analysis. They should be read as historical result sets,
@@ -12,22 +13,46 @@ not as the current validation center.
 
 Directory:
 
-- `docs/research_notes/validation_design/`
+- `docs/`
 
 Current entry points:
 
-- `README.md`
-- `val0_ct_implementation_spec.md`
-- `val0_constructor_task_algebra_probe.md`
+- `VAL0_G_NEUTRAL_GRAMMAR_GEOMETRY_ATLAS_SPEC.md`
+- `VAL0_CT_12H_UNLABELED_GEOMETRY_BATTERY_SPEC.md`
+- `VAL0_CT_REACHABLE_NEIGHBORHOOD_GEOMETRY_SPEC.md`
+- `research_notes/validation_design/val0_ct_implementation_spec.md`
+- `research_notes/validation_design/val0_constructor_task_algebra_probe.md`
 
 Status:
 
-- current implementation target;
-- single-field proto-Omega probe;
-- asks whether persistence-conditioned reachability `R1` predicts
-  long-horizon reachability retention better than raw reachability `R0` and
-  equal-budget `R0_lookahead` controls in generated task algebras;
+- current implementation target is VAL0-G neutral grammar smoke;
+- asks whether neutral constructor-like task spaces produce measurable
+  recoverable-continuation geometries without outcome labels;
+- VAL0-CT showed reproducible anchor wins and clean dense controls, but no
+  broad held-out R1 generalization;
+- the 12h unlabeled geometry battery demoted corridor d8 as a scaled predictor
+  and retained candidate future-R0 variance as the best weak hook;
 - not full Omega validation.
+
+## Current Validation Results
+
+Directory:
+
+- `docs/research_notes/validation_results/`
+- `results/val0_ct/`
+
+Current result notes:
+
+- `val0_ct_12h_unlabeled_geometry_battery_result.md`
+- `val0_ct_reachable_neighborhood_geometry_smoke_result.md`
+- `val0_ct_12h_heldout_exploratory_result.md`
+- `val0_ct_r1_calibration_result.md`
+
+Result in one line:
+
+- VAL0-CT is scientifically useful but not a validation win: R1 works in
+  designed anchors, dense controls are clean, held-out generalization is not
+  established, and the next move is geometry-first neutral grammar discovery.
 
 ## Public Theory Context
 
@@ -111,7 +136,7 @@ Status:
 
 The sections below are historical result sets. They remain public because they
 document how weaker candidates were isolated, controlled, and in several cases
-rejected. The current active path is VAL0-CT.
+rejected. The current active path is VAL0-G.
 
 ### Probe 09: Robust Fiber Reachability
 
