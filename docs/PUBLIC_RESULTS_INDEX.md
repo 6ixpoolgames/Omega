@@ -43,6 +43,7 @@ Directory:
 
 Current result notes:
 
+- `val0_g_neutral_grammar_stability_probe_result.md`
 - `val0_g_neutral_grammar_smoke_result.md`
 - `val0_ct_12h_unlabeled_geometry_battery_result.md`
 - `val0_ct_reachable_neighborhood_geometry_smoke_result.md`
@@ -51,10 +52,12 @@ Current result notes:
 
 Result in one line:
 
-- VAL0-G first smoke passed the minimal bar: neutral grammar worlds produced
-  multiple post-hoc geometry classes, including self-terminating, thin-ridge,
-  deep-corridor, and recoverable-basin-like regimes. This is not Omega
-  validation; it justifies a slightly larger geometry-stability probe.
+- VAL0-G first smoke and stability probe passed the minimal bar: neutral
+  grammar worlds produced multiple post-hoc geometry bins, coarse/full
+  signatures agreed, and bin counts were stable under a cap increase. This is
+  not Omega validation. The main remaining blocker is cap-censored high-mass
+  regions, so the next probe should improve measurement rather than scale
+  blindly.
 
 ## Public Theory Context
 

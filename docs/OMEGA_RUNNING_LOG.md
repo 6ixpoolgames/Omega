@@ -6,6 +6,67 @@ run.
 
 ## 2026-05-21
 
+### VAL0-G Neutral Grammar Stability Probe
+
+Implemented the second small VAL0-G forced-fit audit.
+
+Code changes:
+
+- added cap-hit fields through depth 32;
+- added `coarse` and `full` signature modes;
+- added downstream cut sensitivity alongside initial cut sensitivity;
+- added neutral bin labels alongside interpretive class names;
+- added signature, cap-hit, and cut-sensitivity summary outputs.
+
+Primary result:
+
+- `docs/research_notes/validation_results/val0_g_neutral_grammar_stability_probe_result.md`
+- `results/val0_g/20260521_neutral_grammar_stability_probe_cap2048/summary.md`
+
+Run shape:
+
+```text
+neutral_grammar_v1:
+  250 seeds
+
+guardrails:
+  low_resolution_dense: 50 seeds
+  brittle_peak: 50 seeds
+
+signature modes:
+  coarse
+  full
+
+rows:
+  700
+
+errors:
+  0
+
+max_states_per_depth:
+  2048
+```
+
+Interpretation:
+
+- multiple neutral bins appeared again;
+- coarse/full signatures agreed at `0.996` for neutral rows;
+- cap 512 vs 2048 did not collapse the neutral bin structure;
+- high-mass classes remain heavily cap-censored at d16/d32;
+- dense and brittle guardrails are cap-saturated and not semantically clean
+  under the current classifier;
+- downstream cut sensitivity adds useful information but should not yet be
+  treated as an ontology-level metric.
+
+Current read:
+
+```text
+VAL0-G remains on the right substrate.
+The main risk is measurement censoring, not obvious generator fine-tuning.
+Do not scale to a full atlas until cap-aware or sampled survival metrics are
+added.
+```
+
 ### VAL0-G Neutral Grammar Geometry Smoke
 
 Implemented the first VAL0-G smoke substrate:

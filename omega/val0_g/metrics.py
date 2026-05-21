@@ -1,13 +1,12 @@
 from __future__ import annotations
 
 import random
-from collections import deque
 from statistics import mean
 
-from .grammar import GrammarState, GrammarWorld, apply_task, state_signature, valid_tasks
+from .grammar import GrammarState, GrammarWorld, apply_task, valid_tasks
 
 
-DEPTHS = (1, 2, 4, 8, 16)
+DEPTHS = (1, 2, 4, 8, 16, 32)
 
 
 def geometry_metrics(
@@ -16,31 +15,53 @@ def geometry_metrics(
     rollout_samples: int,
     cut_samples: int,
     seed: int,
+    signature_mode: str = "coarse",
 ) -> dict[str, float | int]:
     rng = random.Random(seed)
-    states_by_depth = reachable_states_by_depth(world, DEPTHS, max_states_per_depth, rng)
+    states_by_depth = reachable_states_by_depth(world, DEPTHS, max_states_per_depth, rng, signature_mode)
     masses = {depth: len(states_by_depth.get(depth, ())) for depth in DEPTHS}
     nonterminal = {
         depth: sum(1 for state in states_by_depth.get(depth, ()) if valid_tasks(world, state))
         for depth in DEPTHS
     }
     survival_auc = sum(nonterminal[depth] / max(1, masses.get(1, 1)) for depth in DEPTHS) / len(DEPTHS)
-    survival_slope = (nonterminal[16] - nonterminal[1]) / 15.0
-    terminal_probs = terminal_probabilities(world, rollout_samples, (4, 8, 16), random.Random(seed + 100_000))
-    cut_ratio = cut_sensitivity(world, horizon=16, cut_samples=cut_samples, max_states_per_depth=max_states_per_depth, rng=random.Random(seed + 200_000))
+    survival_slope = (nonterminal[32] - nonterminal[1]) / 31.0
+    terminal_probs = terminal_probabilities(world, rollout_samples, (4, 8, 16, 32), random.Random(seed + 100_000))
+    initial_cut = cut_sensitivity(
+        world,
+        horizon=16,
+        cut_samples=cut_samples,
+        max_states_per_depth=max_states_per_depth,
+        rng=random.Random(seed + 200_000),
+        signature_mode=signature_mode,
+    )
+    downstream_cut = downstream_cut_sensitivity(
+        world,
+        base_states_by_depth=states_by_depth,
+        horizon=16,
+        cut_samples=cut_samples,
+        max_states_per_depth=max_states_per_depth,
+        rng=random.Random(seed + 300_000),
+        signature_mode=signature_mode,
+    )
     row: dict[str, float | int] = {
+        "signature_mode": signature_mode,
         "survival_auc": survival_auc,
         "survival_slope": survival_slope,
-        "cut_sensitivity_k1": cut_ratio,
+        "initial_cut_sensitivity_k1": initial_cut,
+        "downstream_cut_sensitivity_k1": downstream_cut,
+        "cut_sensitivity_k1": downstream_cut,
     }
     for depth in DEPTHS:
         row[f"survival_d{depth}"] = nonterminal[depth]
         row[f"descendant_mass_d{depth}"] = masses[depth]
-    for left, right in ((1, 2), (2, 4), (4, 8), (8, 16)):
+        row[f"cap_hit_d{depth}"] = int(masses[depth] >= max_states_per_depth)
+    for left, right in ((1, 2), (2, 4), (4, 8), (8, 16), (16, 32)):
         row[f"branching_B{left}"] = masses[right] / max(1, masses[left])
     for depth, value in terminal_probs.items():
         row[f"P_terminal_d{depth}"] = value
     row["posthoc_class"] = classify_geometry(row)
+    row["posthoc_bin_neutral"] = neutral_bin(row["posthoc_class"])
     return row
 
 
@@ -49,15 +70,16 @@ def reachable_states_by_depth(
     depths: tuple[int, ...],
     max_states_per_depth: int,
     rng: random.Random,
+    signature_mode: str = "coarse",
 ) -> dict[int, tuple[GrammarState, ...]]:
     target_depths = set(depths)
     max_depth = max(depths)
     states_by_depth: dict[int, list[GrammarState]] = {0: [world.initial_state]}
-    signatures_by_depth: dict[int, set[tuple[frozenset[int], frozenset[int], frozenset[int], int]]] = {0: {state_signature(world.initial_state)}}
+    signatures_by_depth: dict[int, set[tuple[object, ...]]] = {0: {_state_signature(world.initial_state, signature_mode)}}
     for depth in range(1, max_depth + 1):
         previous = states_by_depth.get(depth - 1, [])
         next_states: list[GrammarState] = []
-        next_signatures: set[tuple[frozenset[int], frozenset[int], frozenset[int], int]] = set()
+        next_signatures: set[tuple[object, ...]] = set()
         shuffled_previous = list(previous)
         rng.shuffle(shuffled_previous)
         for state in shuffled_previous:
@@ -68,7 +90,7 @@ def reachable_states_by_depth(
                     next_state = apply_task(world, state, task_id)
                 except ValueError:
                     continue
-                signature = state_signature(next_state)
+                signature = _state_signature(next_state, signature_mode)
                 if signature in next_signatures:
                     continue
                 next_signatures.add(signature)
@@ -113,8 +135,9 @@ def cut_sensitivity(
     cut_samples: int,
     max_states_per_depth: int,
     rng: random.Random,
+    signature_mode: str = "coarse",
 ) -> float:
-    base_mass = len(reachable_states_by_depth(world, (horizon,), max_states_per_depth, rng).get(horizon, ()))
+    base_mass = len(reachable_states_by_depth(world, (horizon,), max_states_per_depth, rng, signature_mode).get(horizon, ()))
     candidates = list(valid_tasks(world, world.initial_state))
     if not candidates or base_mass == 0:
         return 0.0
@@ -131,7 +154,46 @@ def cut_sensitivity(
             time=world.initial_state.time,
         )
         cut_world = GrammarWorld(world.family, world.seed, world.tasks, cut_state, world.params)
-        cut_mass = len(reachable_states_by_depth(cut_world, (horizon,), max_states_per_depth, rng).get(horizon, ()))
+        cut_mass = len(reachable_states_by_depth(cut_world, (horizon,), max_states_per_depth, rng, signature_mode).get(horizon, ()))
+        ratios.append(cut_mass / max(1, base_mass))
+    return mean(ratios) if ratios else 0.0
+
+
+def downstream_cut_sensitivity(
+    world: GrammarWorld,
+    base_states_by_depth: dict[int, tuple[GrammarState, ...]],
+    horizon: int,
+    cut_samples: int,
+    max_states_per_depth: int,
+    rng: random.Random,
+    signature_mode: str = "coarse",
+) -> float:
+    base_mass = len(base_states_by_depth.get(horizon, ()))
+    if base_mass == 0:
+        return 0.0
+    candidate_tasks: set[int] = set()
+    for depth in (4, 8):
+        states = list(base_states_by_depth.get(depth, ()))
+        rng.shuffle(states)
+        for state in states[: max(1, cut_samples * 8)]:
+            candidate_tasks.update(valid_tasks(world, state))
+    if not candidate_tasks:
+        return 0.0
+    candidates = sorted(candidate_tasks)
+    if len(candidates) > cut_samples:
+        candidates = rng.sample(candidates, cut_samples)
+    ratios: list[float] = []
+    for task_id in candidates:
+        cut_state = GrammarState(
+            enabled=world.initial_state.enabled,
+            disabled=frozenset(set(world.initial_state.disabled) | {task_id}),
+            completed=world.initial_state.completed,
+            irreversible=frozenset(set(world.initial_state.irreversible) | {task_id}),
+            capacity=world.initial_state.capacity,
+            time=world.initial_state.time,
+        )
+        cut_world = GrammarWorld(world.family, world.seed, world.tasks, cut_state, world.params)
+        cut_mass = len(reachable_states_by_depth(cut_world, (horizon,), max_states_per_depth, rng, signature_mode).get(horizon, ()))
         ratios.append(cut_mass / max(1, base_mass))
     return mean(ratios) if ratios else 0.0
 
@@ -156,3 +218,23 @@ def classify_geometry(row: dict[str, float | int]) -> str:
     if d16 > d1 and terminal < 0.45:
         return "deep_corridor_like"
     return "mixed_or_noise"
+
+
+def neutral_bin(posthoc_class: object) -> str:
+    return {
+        "self_terminating": "high_terminal_bin",
+        "thin_ridge": "high_mass_low_cut_bin",
+        "recoverable_basin_like": "high_mass_high_cut_bin",
+        "deep_corridor_like": "depth_persistent_bin",
+        "lush_branching_like": "high_branching_low_terminal_bin",
+        "flat_dense": "flat_dense_bin",
+        "mixed_or_noise": "mixed_or_noise_bin",
+    }.get(str(posthoc_class), "mixed_or_noise_bin")
+
+
+def _state_signature(state: GrammarState, signature_mode: str) -> tuple[object, ...]:
+    if signature_mode == "coarse":
+        return state.enabled, state.disabled, state.irreversible, state.capacity
+    if signature_mode == "full":
+        return state.enabled, state.disabled, state.completed, state.irreversible, state.capacity
+    raise ValueError(f"unknown signature mode: {signature_mode}")
