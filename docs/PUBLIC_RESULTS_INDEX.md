@@ -51,6 +51,7 @@ Current result notes:
 
 - `val0_g_neutral_grammar_stability_probe_result.md`
 - `val0_g_neutral_grammar_smoke_result.md`
+- `val1_mf_interference_audit_smoke_result.md`
 - `val1_mf_two_field_compatibility_smoke_result.md`
 - `val0_ct_12h_unlabeled_geometry_battery_result.md`
 - `val0_ct_reachable_neighborhood_geometry_smoke_result.md`
@@ -69,6 +70,11 @@ Result in one line:
   `mixed_or_censored_bin`, with joint cap hit rate 0.947. Naive joint
   enumeration worsened censoring, so the next probe should improve cap-aware or
   sampled compatibility measurement rather than scale this enumerator blindly.
+- VAL1-MF interference audit replaced raw joint enumeration with sampled
+  counterfactual ablations. It found measurable constructive/support-like
+  interference in 22/100 paired worlds, mostly driven by cross-enable and
+  cross-restore masks. It did not yet expose robust destructive or
+  pseudo-Omega-like interference.
 
 ## Public Theory Context
 

@@ -6,6 +6,66 @@ run.
 
 ## 2026-05-21
 
+### VAL1-MF Interference Audit Smoke
+
+Implemented the sampled counterfactual interference audit requested by
+`docs/VAL1_MF_INTERFERENCE_AUDIT_SPEC.md`.
+
+Code changes:
+
+- added `omega/val1_mf/run_interference_audit.py`;
+- reused the existing two-field generator;
+- added coupling masks for uncoupled, full, enable-only, obstruct-only,
+  restore-only, commit-only, and shared-capacity-only modes;
+- made sampled alive / terminal deltas primary;
+- retained raw joint enumeration only as a diagnostic.
+
+Primary result:
+
+- `docs/research_notes/validation_results/val1_mf_interference_audit_smoke_result.md`
+- `results/val1_mf/20260521_interference_audit_smoke/summary.md`
+
+Run shape:
+
+```text
+paired worlds:
+  100
+
+rollout_samples:
+  256
+
+horizon:
+  d16
+
+workers:
+  18
+
+elapsed:
+  17.0 seconds
+
+errors:
+  0
+```
+
+Interpretation:
+
+- sampled counterfactual measurement worked cleanly;
+- full coupling improved mean joint alive probability from 0.734 to 0.816;
+- `constructive_delta_bin` appeared in 22/100 rows;
+- one provisional `A_local_dominance_bin` row appeared;
+- no robust destructive or commit/obstruct-driven interference appeared;
+- diagnostic enumeration still capped often, but it was no longer the primary
+  evidence path.
+
+Current read:
+
+```text
+VAL1-MF now has a viable sampled interference measurement pattern.
+The visible object is constructive support/recovery, not yet destructive
+pseudo-Omega-like interference. The next probe should target destructive
+hazards with stricter alive/hazard metrics before scaling.
+```
+
 ### VAL1-MF Two-Field Compatibility Smoke
 
 Implemented the first minimal multifield compatibility smoke on top of VAL0-G.
