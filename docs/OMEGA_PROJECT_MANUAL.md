@@ -11,6 +11,20 @@ Its purpose is not to prove the theory by simulation. Its purpose is to extract
 candidate mathematical objects, make them operational, test them against nulls,
 and force clear failure modes.
 
+Current public posture:
+
+```text
+Lead with reachable futures and substrate design.
+Use Omega as the broader theory and long-term hypothesis.
+Do not present VAL0/VAL1 as validation of Omega.
+Frame VAL0/VAL1 as reconnaissance probes that exposed viability dynamics and
+substrate limitations.
+```
+
+Primary current design note:
+
+- `docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md`
+
 Project stance:
 
 - scientific and skeptical;
@@ -22,6 +36,20 @@ Project stance:
 Onboarding terminology:
 
 > Omega is best introduced as a structural theory of value-bearing futures.
+
+For the empirical repo, the front-door object is:
+
+```text
+reachable futures under viability and compatibility constraints
+```
+
+The current empirical question is:
+
+```text
+What minimal substrate resolution is required to distinguish generic viable
+continuation from trivial persistence, recoverability, local capture, and
+compatibility-preserving viable propagation?
+```
 
 This keeps the philosophical connection to formal value theory and axiology,
 while also being legible to alignment readers as a claim about
@@ -38,6 +66,8 @@ as the canonical internal definition anchor.
 2. Read `docs/OMEGA_RUNNING_LOG.md`.
 3. Read `README.md`.
 4. Read the current validation-design notes:
+   - `docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md`
+   - `docs/research_notes/validation_design/val_ecology_viability_reorientation.md`
    - `docs/VAL0_G_NEUTRAL_GRAMMAR_GEOMETRY_ATLAS_SPEC.md`
    - `docs/research_notes/validation_results/val0_ct_12h_unlabeled_geometry_battery_result.md`
    - `docs/research_notes/validation_design/README.md`
@@ -146,18 +176,29 @@ The previous validation pivot was VAL0-CT:
 > reachability `R1` predicts long-horizon reachability retention better than
 > raw reachability `R0` and equal-budget `R0_lookahead` controls.
 
-Current status:
+Reconnaissance status:
 
 > VAL0-CT reproduced R1 advantages in designed anchors and kept dense controls
-> clean, but did not establish broad held-out or unlabeled generalization. The
-> project has therefore pivoted to VAL0-G: neutral grammar geometry discovery.
+> clean, but did not establish broad held-out or unlabeled generalization.
 
-The current validation pivot is VAL0-G:
+VAL0-G then tested neutral grammar geometry:
 
 > Generate constructor-like task worlds from neutral transformation primitives
 > and ask whether asymmetric continuation dynamics produce measurable geometry
 > classes such as self-termination, brittle ridges, noisy fragments, lock-in,
 > and recoverable basins without hand-labeling outcomes.
+
+VAL1-MF then tested simple multifield coupling and sampled interference:
+
+> Naive joint enumeration worsened cap-censoring, while sampled counterfactual
+> deltas detected constructive support-like interference but not robust
+> destructive/capture dynamics.
+
+The current empirical pivot is now reachable-futures substrate design:
+
+> Build minimal substrates where reachable sets, viability kernels,
+> capture/recovery basins, and constructor candidates are native rather than
+> bolted onto task graphs.
 
 Older papers and drafts motivate variants of:
 
@@ -228,25 +269,26 @@ CA, DAR, DAX, and bare field probes are primitive-floor or fakeout-calibration
 probes unless they include explicit valuerhood and recoverable continuability.
 ```
 
-### Current Validation Target: VAL0-G
+### Current Validation Target: RFS0
 
-VAL0-G is the current active validation design.
+RFS0 is the current active validation design target.
 
-It is not full Omega validation. It is a single-field geometry-first test in
-constructor-style task algebras.
+It is not full Omega validation. It is a finite reachable-futures substrate
+intended to make reachability, viability, and capture/recovery exact before
+adding richer agency language.
 
 Primary question:
 
 ```text
-Do neutral constructor-like task spaces generate measurable geometry classes
-where asymmetric continuation dynamics filter trajectories into
-self-terminating, brittle, noisy, lock-in, and recoverable regimes?
+What minimal substrate resolution is required to distinguish generic viable
+continuation from trivial persistence, recoverability, local capture, and
+compatibility-preserving viable propagation?
 ```
 
-VAL0-G is now the recommended starting point for new implementation work.
-VAL0-CT remains the preceding calibration layer. COM/fiber, trajectory-space,
-CA, DAR, and DAX work remain important historical provenance and failure
-analysis, but they are not the current front edge.
+RFS0 is now the recommended starting point for new implementation work.
+VAL0-CT, VAL0-G, VAL1-MF, COM/fiber, trajectory-space, CA, DAR, and DAX work
+remain important historical provenance and failure analysis, but they are not
+the current front edge.
 
 ### VAL0-CT Status
 
@@ -1009,7 +1051,7 @@ What we cannot say:
   profiles.
 - CuPy GPU execution works after prepending Torch's bundled CUDA 13 NVRTC DLL
   directory to `PATH` and setting `CUPY_CACHE_DIR=.cupy-cache`. This is encoded
-  in `omega_env.bat` and `omega_env.ps1`.
+  in `scripts/setup/omega_env.bat` and `scripts/setup/omega_env.ps1`.
 - Some result directories contain compact tracked summaries, while large raw
   per-seed/intermediate files are intentionally ignored.
 - Existing code is research-code quality, not library quality.

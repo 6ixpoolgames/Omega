@@ -266,7 +266,7 @@ Reason for pivot:
 Updated entry points:
 
 - `README.md`
-- `OMEGA_EXPERIMENTAL_ROADMAP.md`
+- `docs/roadmaps/OMEGA_EXPERIMENTAL_ROADMAP.md`
 - `docs/PUBLIC_RESULTS_INDEX.md`
 - `docs/OMEGA_PROJECT_MANUAL.md`
 - `docs/research_notes/validation_design/README.md`
@@ -338,7 +338,7 @@ Theory / VAL0-CT pivot explicit.
 Updated entry points:
 
 - `README.md`
-- `OMEGA_EXPERIMENTAL_ROADMAP.md`
+- `docs/roadmaps/OMEGA_EXPERIMENTAL_ROADMAP.md`
 - `docs/PUBLIC_RESULTS_INDEX.md`
 - `docs/OMEGA_PROJECT_MANUAL.md`
 - `docs/current_theory/README.md`
@@ -809,8 +809,8 @@ Fix:
 
 This is now encoded in:
 
-- `omega_env.bat`
-- `omega_env.ps1`
+- `scripts/setup/omega_env.bat`
+- `scripts/setup/omega_env.ps1`
 
 Verification:
 
@@ -820,9 +820,9 @@ cupy arange/sum executed on NVIDIA GeForce RTX 4070 Ti
 
 PowerShell note:
 
-- direct `.\omega_env.ps1` may be blocked by Windows execution policy;
-- use `powershell -ExecutionPolicy Bypass -File omega_env.ps1` or use
-  `omega_env.bat`.
+- direct `.\scripts\setup\omega_env.ps1` may be blocked by Windows execution policy;
+- use `powershell -ExecutionPolicy Bypass -File scripts\setup\omega_env.ps1` or use
+  `scripts\setup\omega_env.bat`.
 
 ### CPU/GPU Concurrent Stress Probe
 
@@ -841,7 +841,7 @@ Run:
 - duration: `180s`
 - CPU workload: NumPy matrix multiply, size `1400`
 - GPU workload: CuPy matrix multiply, size `4096`
-- environment: `omega_env.bat`
+- environment: `scripts/setup/omega_env.bat`
 
 Result:
 

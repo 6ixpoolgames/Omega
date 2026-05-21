@@ -20,6 +20,7 @@ results/val0_g/<timestamp-or-run-id>/
 Commit compact, interpretable outputs that are useful for public audit.
 Keep scratch, calibration, and stress outputs in `results/local_runs/`.
 
-VAL0-G is the current front-edge validation substrate. It asks whether neutral
+VAL0-G is now a retained reconnaissance substrate. It asked whether neutral
 constructor-style task grammars produce measurable recoverable-continuation
-geometries before any claim about full Omega validation.
+geometries before any claim about full Omega validation. The current front edge
+has moved to reachable-futures substrate design under `results/rfs/`.

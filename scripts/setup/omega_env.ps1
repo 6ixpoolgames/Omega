@@ -1,4 +1,4 @@
-$workspace = Split-Path -Parent $MyInvocation.MyCommand.Path
+$workspace = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
 
 # Ryzen 5900X: 12 physical cores / 24 logical threads. These defaults keep
 # CPU numeric kernels parallel without oversubscribing every workload.

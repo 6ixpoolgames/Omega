@@ -1,24 +1,40 @@
-# Omega Validation
+# Omega / Reachable Futures Lab
 
-This repository is the executable validation workspace for the **Omega** theory project.
+This repository is the empirical workspace for the **Omega** theory project.
 
-Omega is a research program for naturalized axiology: a way to reason about value-bearing possibility without beginning from human preferences, reward functions, utility functions, or moral rules.
+The current empirical arm studies **reachable futures**: how abstract dynamical
+substrates preserve, lose, recover, compose, or capture future possibility under
+constraints.
 
-The repo contains theory notes, foundational theory drafts, historical validation attempts, current validation designs, and executable probes.
+The long-term Omega ambition is broader: a structural account of
+value-bearing futures and alignment-relevant failure modes that does not begin
+from reward functions, utility functions, fixed preference aggregation, or moral
+rules. The executable work in this repo is the narrower downstream effort:
+building minimal substrates where those ideas can become mathematically testable.
 
-It does **not** prove Omega. It is a controlled workspace for turning the theory into testable mathematical objects and letting those objects fail when they are too weak.
+This repo contains theory notes, progenitor drafts, historical validation
+attempts, current substrate-design notes, and executable probes.
+
+It does **not** prove Omega. It is a controlled workspace for turning the theory
+into testable mathematical objects, identifying substrate artifacts, and letting
+weak formulations fail.
 
 ## One-sentence summary
 
-**Omega studies which possible trajectories preserve or expand recoverable, compatible, value-bearing possibility across time and scale.**
+**We study reachable futures: which possible continuations remain viable,
+recoverable, composable, or become locally persistent while degrading broader
+future possibility.**
 
-The current empirical program tests a narrower precursor:
+The current empirical reset asks a narrower substrate question:
 
-**Can future-bearing reachability be detected in Constructor-Theory-style task space?**
+**What is the minimal substrate resolution needed to distinguish generic viable
+continuation from compatibility-preserving viable propagation, local capture,
+and trivial persistence?**
 
 Current status, in one line:
 
-**VAL0-CT produced useful guardrails and negative results; the active pivot is now VAL0-G, a neutral-grammar geometry atlas for testing whether recoverable continuation geometries emerge without hand-labeled outcomes.**
+**VAL0/VAL1 were useful reconnaissance probes; the active pivot is now substrate
+design for reachable futures of persistent transformation-capacity structures.**
 
 ## Why this matters for alignment
 
@@ -26,7 +42,10 @@ Omega is motivated by a central alignment problem:
 
 > A system can become highly capable, persistent, and effective while degrading the broader conditions under which value-bearing futures remain possible.
 
-This is the failure mode the internal notes call **pseudo-Omega**. In public-facing terms, it is **destructive lock-in**: local success that collapses broader future possibility.
+This is the failure mode the internal notes call **pseudo-Omega**. In
+public-facing terms, it is a **locally viable / globally degrading capture
+regime** or **destructive lock-in**: local success that collapses broader future
+possibility.
 
 In ordinary alignment language, this includes systems that:
 
@@ -62,15 +81,22 @@ In this framing, alignment is not a terminal-state target. It is a constraint on
 
 > An aligned system should preserve and extend the conditions under which recoverable value-bearing futures remain possible.
 
-This is why the project focuses on reachability, recoverability, destructive lock-in, Constructor Theory, and task-space validation. The goal is to detect whether a system is preserving future-bearing possibility or converting it into local lock-in.
+This is why the project focuses on reachability, viability, recoverability,
+destructive lock-in, Constructor Theory, and compositional substrate design. The
+goal is to detect whether a system is preserving future-bearing possibility or
+converting it into local capture.
 
-The current validation program is still only a first step. It does not validate alignment. It tests the earliest precursor:
+The current empirical program is still only a first step. It does not validate
+alignment. It asks what substrate is needed before the earliest precursor can be
+resolved:
 
-> Can future-bearing reachability be detected and distinguished from raw reachability in constructor-style task space?
+> Can reachable futures be measured well enough to distinguish mere viability
+> from recoverable, compatibility-preserving viability and local capture?
 
 ## The broader theory pipeline
 
-The current Omega/VAL0 task-space work is the downstream validation layer of a broader theory pipeline.
+The current reachable-futures substrate work is the downstream empirical layer
+of a broader theory pipeline.
 
 The **foundation stack** supplies the upstream physical, structural, normative, and control-theoretic layers that explain why future-bearing reachability is the right object to test.
 
@@ -92,8 +118,8 @@ Gradient Ethics
 Constrained Reachability
   -> operational control law for agents preserving viable futures
 
-Omega / Constructor Theory / VAL0
-  -> empirical program for detecting proto-Omega structure in task space
+Omega / Reachable Futures Lab
+  -> empirical program for minimal substrates that can resolve viable futures
 ```
 
 In short:
@@ -105,11 +131,11 @@ foundation stack:
 Omega derivation:
   what the relevant structure is
 
-VAL0-CT:
-  first test of whether that structure has a detectable task-space precursor
+VAL0/VAL1:
+  reconnaissance probes showing viability dynamics and substrate limitations
 
-VAL0-G:
-  current geometry-first follow-up using neutral task grammars
+RFS / constructor-futures reset:
+  current substrate-first program for reachable futures
 ```
 
 Start here for the pipeline view:
@@ -120,6 +146,12 @@ Start here for the pipeline view:
 - [Gradient Field Theory draft](docs/progenitor_drafts/gradient_field_theory_of_value_v51.pdf)
 - [ECHO draft](docs/progenitor_drafts/echo_rosetta_version.pdf)
 - [TELOS draft](docs/progenitor_drafts/telos_2_0_draft.pdf)
+
+Start here for the empirical reset:
+
+- [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
+- [Viability ecology reorientation](docs/research_notes/validation_design/val_ecology_viability_reorientation.md)
+- [Public terms and translations](docs/research_notes/omega_theory/public_terms_and_translations.md)
 
 ## What is Omega?
 
@@ -207,92 +239,87 @@ Start with:
 - [Deriving Omega relevance from primitives](docs/research_notes/omega_theory/deriving_omega_relevance_from_primitives.md)
 - [Omega as viable value-bearing trajectory space](docs/research_notes/omega_theory/omega_as_viable_value_bearing_trajectory_space.md)
 
-## Current validation pivot: VAL0-G
+## Current empirical pivot: reachable futures substrate design
 
-The project has moved from cellular/rule-space probes toward a **Constructor-Theory-style task-space validation layer**.
+The project has moved from task-graph probes toward a substrate-first program
+for **reachable futures**.
 
-Constructor Theory gives a language of:
+The current question is not:
 
 ```text
-tasks
-attributes
-constructors
-possible / impossible transformations
-task repertoires
+Did we find Omega?
 ```
 
-Omega is treated as a filter/refinement over that task space.
-
-The first task-space phase was **VAL0-CT**, a single-field proto-Omega probe.
-
-VAL0-CT asks:
+It is:
 
 ```text
-Does persistence-conditioned reachability, R1, predict long-horizon
-reachability retention better than raw reachability, R0, and matched
-R0-lookahead controls in structured task algebras?
+What minimal substrate can resolve the difference between:
+  generic viable continuation
+  trivial persistence
+  recoverable viability
+  constructive compatibility
+  local capture / destructive lock-in
+  constructor-level viable continuation
 ```
 
-In simpler terms:
+The mature external frameworks we are anchoring to are:
 
 ```text
-R0:
-  what is reachable?
+reachability analysis:
+  reachable sets, reachable tubes, reach-avoid structure
 
-R1:
-  what is reachable that still leaves futures open?
+viability theory:
+  viability kernels, capture basins, controlled invariant sets
 
+formal methods:
+  finite transition systems, safety/liveness, counterexamples
+
+Constructor Theory:
+  substrates, attributes, tasks, possible/impossible transformations,
+  constructors as repeatable transformation capacity
+
+process / compositional systems:
+  parallel and sequential composition, interfaces, coupled processes
+
+network robustness:
+  bottlenecks, cuts, redundancy, perturbation sensitivity
+```
+
+The historical VAL0/VAL1 probes remain useful, but they are now best read as
+reconnaissance:
+
+```text
 VAL0-CT:
-  does R1 predict long-horizon future-bearing reachability better than controls?
+  R1 anchor wins showed that future-retention reachability can beat myopic
+  reachability in designed task geometries, but broad held-out generalization
+  did not pass.
+
+VAL0-G:
+  neutral grammars produced stable viability regimes without outcome labels,
+  but high-mass regions remained cap-censored.
+
+VAL1-MF:
+  naive multifield enumeration worsened censoring.
+
+VAL1-MF interference audit:
+  sampled counterfactual deltas detected constructive support-like
+  interference, but not robust destructive/capture dynamics.
 ```
 
-This is intentionally modest. It tests whether the first precursor of Omega can be operationalized:
+Lesson:
 
 ```text
-reachable task-space that remains future-bearing across horizons
+viable continuation is easy to culture in nontrivial substrates;
+Omega-compatible discrimination is not yet demonstrated;
+the likely blocker is substrate resolution, not compute.
 ```
 
-Current VAL0-CT status:
+Current design files:
 
-```text
-anchor families:
-  R1 advantage reproduced in designed brittle/robust regimes
-
-dense controls:
-  remained clean
-
-held-out named generators:
-  no broad R1 generalization
-
-reachable-neighborhood geometry:
-  useful diagnostics, but corridor d8 did not survive scale as a robust predictor
-
-best remaining hook:
-  candidate future-R0 variance and h=2 cases move R1 toward parity,
-  but do not yet reveal a clear positive unlabeled regime
-```
-
-The active pivot is therefore **VAL0-G: Neutral Grammar Geometry Atlas**.
-
-VAL0-G asks:
-
-```text
-In neutral constructor-like task spaces, do measurable geometry classes emerge
-where asymmetric continuation dynamics filter trajectories into
-self-terminating, brittle, noisy, lock-in, and recoverable regimes?
-```
-
-This is not a policy-win test. R1 remains a probe, not the object. The primary object is the geometry of recoverable continuation in task-repertoire space.
-
-Start with:
-
-- [VAL0-G neutral grammar geometry atlas spec](docs/VAL0_G_NEUTRAL_GRAMMAR_GEOMETRY_ATLAS_SPEC.md)
-- [VAL0-CT 12h unlabeled geometry battery result](docs/research_notes/validation_results/val0_ct_12h_unlabeled_geometry_battery_result.md)
-- [VAL0-CT reachable-neighborhood geometry smoke result](docs/research_notes/validation_results/val0_ct_reachable_neighborhood_geometry_smoke_result.md)
-- [VAL0-CT validation design](docs/research_notes/validation_design/val0_constructor_task_algebra_probe.md)
-- [VAL0-CT implementation spec](docs/research_notes/validation_design/val0_ct_implementation_spec.md)
-- [VAL0-CT runbook](docs/VAL0_CT_RUNBOOK.md)
-- [Constructor Theory and Omega axiology](docs/research_notes/omega_theory/constructor_theory_and_omega_axiology.md)
+- [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
+- [Viability ecology reorientation](docs/research_notes/validation_design/val_ecology_viability_reorientation.md)
+- [VAL1-MF interference audit result](docs/research_notes/validation_results/val1_mf_interference_audit_smoke_result.md)
+- [Public results index](docs/PUBLIC_RESULTS_INDEX.md)
 
 ## Why Constructor Theory?
 
@@ -428,35 +455,33 @@ Historical terminology is defined here:
 
 ## Current next step
 
-The current implementation target is the **VAL0-G neutral grammar smoke**.
+The current implementation target is **RFS0**, a small finite reachable-futures
+substrate with exact reachability and viability measurements.
 
 Public summary:
 
 ```text
-implement:
-  neutral_grammar_v1
+define:
+  finite transition systems with explicit states, transformations,
+  admissibility constraints, and perturbations
 
 measure:
-  survival curves
-  descendant mass
-  branching reproduction
-  terminal probability
-  cut sensitivity
-
-guardrails:
-  low_resolution_dense remains flat/dense
-  VAL0-CT anchors remain calibration-only
+  reachable sets
+  viability kernels
+  capture / recovery basins
+  terminal hazards
+  future-space contraction under intervention
 
 defer:
-  re-entry redesign
-  local/global coupling unless cheap
-  full atlas scale
-  GPU
+  Omega-positive labels
+  full constructor agency
+  broad multifield scaling
+  GPU-heavy experiments
 ```
 
 Technical design is in:
 
-- [VAL0-G neutral grammar geometry atlas spec](docs/VAL0_G_NEUTRAL_GRAMMAR_GEOMETRY_ATLAS_SPEC.md)
+- [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
 
 ## Roadmap
 
@@ -467,31 +492,33 @@ VAL0-CT:
   held-out/generalized R1 claim not established
 
 VAL0-G:
-  active neutral-grammar geometry atlas
-  test whether recoverable continuation geometries emerge without outcome labels
+  completed neutral-grammar reconnaissance
+  showed stable viability regimes and cap-censoring limits
 
-VAL1-CT:
-  coupled fields
-  joint reachability and compatibility gap
+VAL1-MF:
+  completed first multifield reconnaissance
+  sampled deltas can detect constructive support-like interference
 
-VAL2-CT:
-  local/global divergence
-  pseudo-Omega / destructive lock-in task families
+RFS0:
+  active reset target
+  exact finite reachable-futures substrate with viability kernels and
+  capture/recovery basins
 
-VAL3-CT:
-  corridors
-  mutually future-bearing task pathways
+RFS1:
+  perturbation-recovery substrate
+  distinguish persistence from recoverability
 
-VAL4-CT:
-  scale composition
-  higher-order fields vs component fields
+RFS2:
+  coupled-process substrate
+  distinguish compatibility from capture and component erasure
 
-VAL5-CT:
-  lineage / successor fields
-  propagation across generations
+RFS3:
+  constructor-candidate substrate
+  persistent transformation-capacity structures with successor relations
 ```
 
-VAL0-G is the current center. Later stages should not be implemented until the neutral single-field geometry substrate is understood.
+Later stages should not be implemented until RFS0 has clean definitions,
+controls, and failure modes.
 
 ## Important caveat
 
@@ -504,15 +531,20 @@ theory notes and draft formalizations
 foundational theory drafts that motivate the pipeline
 historical toy-substrate probes
 negative and ambiguous results
-current VAL0-G neutral grammar spec
+current reachable-futures substrate reset
 VAL0-CT validation designs and results
 ```
 
 The current scientific claim is modest:
 
-> If Omega is the asymptotic compatibility structure of value-bearing possibility, then its earliest detectable precursor should be task-space geometry that retains recoverable continuation across horizons.
+> Viable continuation dynamics appear in our toy substrates, but
+> Omega-compatible subobjects have not been cleanly demonstrated. The next
+> empirical question is the minimal substrate resolution required to distinguish
+> compatibility-preserving viable propagation from generic viability, trivial
+> persistence, and local capture.
 
-VAL0-CT tested a first R1-based version of that precursor. VAL0-G now tests the geometry-first version.
+VAL0/VAL1 tested early versions of that precursor. The project is now resetting
+around reachable-futures substrate design.
 
 ## Historical result sets
 

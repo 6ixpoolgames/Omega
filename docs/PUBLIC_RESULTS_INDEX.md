@@ -1,10 +1,10 @@
 # Public Results Index
 
 This repository intentionally exposes only the most relevant public artifacts.
-The current validation design is VAL0-G / VAL1-MF: a neutral-grammar geometry
-substrate for constructor-style task space, followed by small multifield
-compatibility probes. VAL0-CT remains the immediately preceding calibration
-layer, not the final validation center.
+The current empirical posture is a reachable-futures substrate reset. VAL0-G
+and VAL1-MF are retained as recent reconnaissance probes: they showed useful
+viability dynamics and measurement limitations, but they are not the final
+validation center.
 
 Older executable outputs remain tracked where they are useful for provenance,
 controls, and failure analysis. They should be read as historical result sets,
@@ -18,6 +18,8 @@ Directory:
 
 Current entry points:
 
+- `REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md`
+- `research_notes/validation_design/val_ecology_viability_reorientation.md`
 - `VAL0_G_NEUTRAL_GRAMMAR_GEOMETRY_ATLAS_SPEC.md`
 - `VAL0_CT_12H_UNLABELED_GEOMETRY_BATTERY_SPEC.md`
 - `VAL0_CT_REACHABLE_NEIGHBORHOOD_GEOMETRY_SPEC.md`
@@ -26,12 +28,12 @@ Current entry points:
 
 Status:
 
-- current implementation target is cap-aware neutral grammar and multifield
-  compatibility measurement;
-- asks whether neutral constructor-like task spaces produce measurable
-  recoverable-continuation geometries without outcome labels;
-- VAL1-MF asks whether multiple neutral fields can create compatibility filters
-  without tuning toward desired bins;
+- current implementation target is substrate design for reachable futures;
+- asks what minimal substrate resolution is needed to distinguish generic
+  viable continuation from trivial persistence, recoverability, local capture,
+  and compatibility-preserving viable propagation;
+- VAL0-G and VAL1-MF are reconnaissance evidence for viability dynamics and
+  substrate limitations;
 - VAL0-CT showed reproducible anchor wins and clean dense controls, but no
   broad held-out R1 generalization;
 - the 12h unlabeled geometry battery demoted corridor d8 as a scaled predictor
@@ -60,6 +62,10 @@ Current result notes:
 
 Result in one line:
 
+- Current reset: the project is not claiming Omega validation. It is building a
+  more collaborator-legible empirical program around reachable sets, viability
+  kernels, capture/recovery basins, constructor candidates, and coupled-process
+  interference.
 - VAL0-G first smoke and stability probe passed the minimal bar: neutral
   grammar worlds produced multiple post-hoc geometry bins, coarse/full
   signatures agreed, and bin counts were stable under a cap increase. This is
@@ -77,6 +83,22 @@ Result in one line:
   pseudo-Omega-like interference.
 
 ## Public Theory Context
+
+The public-facing empirical language is now:
+
+```text
+reachable futures
+viability under constraints
+recoverability
+capture / recovery basins
+constructor candidates
+compatibility-preserving viable propagation
+locally viable / globally degrading capture regimes
+```
+
+The internal Omega language remains the broader theory frame. The progenitor
+drafts are included so collaborators can see that broader ambition, but current
+executable claims should be read through the substrate-design reset.
 
 ## Theory-Side Progenitor Drafts
 

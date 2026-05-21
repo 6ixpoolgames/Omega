@@ -35,7 +35,163 @@ A central concern is destructive lock-in: local success that collapses broader f
 
 Avoid leading with unexplained internal terms when a clearer public phrase exists.
 
+## Current public posture
+
+The empirical repo should now lead with:
+
+```text
+reachable futures
+viability
+recoverability
+capture / recovery basins
+constructor candidates
+compatibility-preserving viable propagation
+locally viable / globally degrading capture regimes
+```
+
+Use **Omega** for the wider theory and long-term hypothesis. Use established
+terms for current measurements.
+
+Recommended public framing:
+
+```text
+We study reachable futures in abstract dynamical substrates: when possible
+continuations remain viable, recoverable, composable, or become locally
+persistent while degrading broader future possibility.
+```
+
+Recommended ambition statement:
+
+```text
+The long-term Omega hypothesis is that value-bearing agency depends on
+compatibility-preserving viable propagation: reachable futures that preserve
+recoverability and remain compatible with other value-bearing continuations.
+The current repo is the empirical substrate program needed to test whether that
+object can be isolated.
+```
+
 ## Core theory terms
+
+### Reachable futures
+
+Public-facing phrase:
+
+```text
+reachable futures
+```
+
+Internal relation:
+
+```text
+the empirical object currently being studied
+```
+
+Plain meaning:
+
+Reachable futures are the possible continuations available from a state,
+process, or constructor candidate under a transition rule and constraint set.
+
+Established neighbors:
+
+```text
+reachable set
+reachable tube
+trajectory ensemble
+future reachable set
+```
+
+Use this as the front-door empirical phrase.
+
+### Viability
+
+Public-facing phrase:
+
+```text
+viability under constraints
+```
+
+Internal relation:
+
+```text
+viable continuation
+```
+
+Plain meaning:
+
+Viability means continuation remains admissible under the relevant constraints.
+It does not by itself imply Omega compatibility.
+
+Established neighbors:
+
+```text
+viability kernel
+controlled invariant set
+safe set
+admissible trajectory
+```
+
+### Compatibility-preserving viable propagation
+
+Public-facing phrase:
+
+```text
+compatibility-preserving viable propagation
+```
+
+Internal relation:
+
+```text
+Omega-compatible candidate
+```
+
+Plain meaning:
+
+Viable continuation that preserves recoverability and remains compatible with
+other relevant viable continuations.
+
+Use this instead of leading with "Omega-like" in empirical summaries.
+
+### Locally viable / globally degrading capture regime
+
+Public-facing phrase:
+
+```text
+locally viable / globally degrading capture regime
+```
+
+Internal relation:
+
+```text
+pseudo-Omega-like candidate
+```
+
+Plain meaning:
+
+A process remains locally viable, persistent, or expanding while degrading
+broader viable futures, repair paths, component support, or recoverability.
+
+Use this before introducing pseudo-Omega.
+
+### Constructor candidate
+
+Public-facing phrase:
+
+```text
+constructor candidate
+```
+
+Internal relation:
+
+```text
+persistent transformation-capacity structure
+```
+
+Plain meaning:
+
+A candidate persistent structure that can perform a class of transformations
+while retaining, or passing on, the capacity to perform them again.
+
+Use this carefully. It is stronger than "node", "state", or "task graph".
 
 ### Structural theory of value-bearing futures
 

@@ -20,6 +20,8 @@ Status:
 
 The current public-facing theory and validation front door is now:
 
+- `../REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md`
+- `../research_notes/validation_design/val_ecology_viability_reorientation.md`
 - `../VAL0_G_NEUTRAL_GRAMMAR_GEOMETRY_ATLAS_SPEC.md`
 - `../research_notes/validation_design/README.md`
 - `../research_notes/validation_results/val0_ct_12h_unlabeled_geometry_battery_result.md`
@@ -30,10 +32,10 @@ The current public-facing theory and validation front door is now:
 - `../research_notes/omega_theory/formal_stack_v0.md`
 - `../research_notes/omega_theory/omega_glossary.md`
 
-Public-facing terminology should introduce Omega as a structural theory of
-value-bearing futures: a proposed formal account of which possible
-continuations preserve, expand, trap, or collapse recoverable value-bearing
-trajectory space.
+Public-facing terminology should introduce the empirical repo through reachable
+futures and viability first. Omega remains the broader theory: a proposed formal
+account of which possible continuations preserve, expand, trap, or collapse
+recoverable value-bearing trajectory space.
 
 ## How To Read It
 
@@ -47,8 +49,8 @@ COM-like multi-step viable propagation through certified fibers
 in the F,T attractive multifield toy substrate
 ```
 
-The current pivot is VAL0-G: a neutral-grammar Constructor-Theory-style task
-algebra probe that tests whether recoverable-continuation geometries emerge
-without outcome labels. VAL0-CT remains the preceding calibration layer: it
-reproduced anchor wins and clean dense controls, but did not establish broad
-held-out or unlabeled R1 generalization.
+The current pivot is the reachable-futures substrate reset. VAL0-G and VAL1-MF
+are now reconnaissance evidence: they showed stable viability regimes,
+cap-censoring limits, and constructive support-like interference, but they did
+not demonstrate clean Omega-compatible subobjects. The active bottleneck is
+minimal substrate resolution.

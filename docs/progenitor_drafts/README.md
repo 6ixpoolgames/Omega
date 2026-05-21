@@ -24,6 +24,11 @@ The current empirical status of the project is tracked separately in:
 
 ## Relationship To Current Work
 
+These documents are still the broad theory-side source for the project. The
+current empirical repo is narrower and more cautious, but it is not a rejection
+of the larger theory. It is the attempt to build substrates where the theory can
+make contact with reproducible mathematical objects.
+
 These documents helped motivate the search for:
 
 - viable futures;
@@ -32,12 +37,25 @@ These documents helped motivate the search for:
 - agency under computational irreducibility;
 - multifield/fiber formulations.
 
-The current executable candidate object remains narrower:
+The current empirical reset is narrower:
 
 ```text
-COM-like multi-step viable propagation through certified fibers
-in the F,T attractive multifield toy substrate
+reachable futures under viability and compatibility constraints
 ```
 
-Any future public interpretation should distinguish these early drafts from the
-current validation artifacts.
+Near-term work asks what minimal substrate can distinguish generic viable
+continuation from trivial persistence, recoverability, local capture, and
+compatibility-preserving viable propagation.
+
+Any public interpretation should distinguish:
+
+```text
+the progenitor drafts:
+  broad theory ambition
+
+the empirical repo:
+  cautious substrate design and executable probes
+
+current status:
+  Omega is not validated; substrate resolution is the active bottleneck
+```

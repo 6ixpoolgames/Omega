@@ -6,6 +6,13 @@ Use this layout:
 
 ```text
 results/
+  rfs/
+    <timestamp-or-run-id>/
+      config.json
+      results.jsonl
+      aggregate.csv
+      summary.md
+
   val0_g/
     <timestamp-or-run-id>/
       config.json
@@ -30,7 +37,8 @@ results/
 ## Rules
 
 - New tracked validation results should live under a named branch folder such as
-  `results/val0_g/<run-id>/` or `results/val0_ct/<run-id>/`.
+  `results/rfs/<run-id>/`, `results/val0_g/<run-id>/`, or
+  `results/val0_ct/<run-id>/`.
 - Local smoke/calibration/stress outputs should live under `results/local_runs/`
   and stay ignored.
 - Historical result folders from the old root layout are archived under

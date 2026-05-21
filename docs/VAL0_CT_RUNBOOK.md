@@ -81,7 +81,7 @@ For CPU-heavy probes, the calibrated default on the original machine is:
 18 worker processes
 ```
 
-For older GPU/CuPy work on the original machine, use `omega_env.bat` or run `omega_env.ps1` with a PowerShell execution-policy bypass. The environment scripts add Torch's bundled CUDA 13 NVRTC DLL directory to `PATH` and point CuPy's kernel cache at `.cupy-cache/`.
+For older GPU/CuPy work on the original machine, use `scripts/setup/omega_env.bat` or run `scripts/setup/omega_env.ps1` with a PowerShell execution-policy bypass. The environment scripts add Torch's bundled CUDA 13 NVRTC DLL directory to `PATH` and point CuPy's kernel cache at `.cupy-cache/`.
 
 This GPU/CuPy setup is historical and should not be needed for VAL0-CT smoke runs.
 

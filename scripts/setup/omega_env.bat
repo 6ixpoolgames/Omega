@@ -1,5 +1,5 @@
 @echo off
-set "WORKSPACE=%~dp0"
+for %%I in ("%~dp0..\..") do set "WORKSPACE=%%~fI\"
 
 rem Ryzen 5900X: 12 physical cores / 24 logical threads.
 set "OMP_NUM_THREADS=12"

@@ -4,9 +4,18 @@ Canonical working definitions for the current theory stack
 
 ## Purpose
 
-This glossary anchors the current terminology used across the Omega research notes.
+This glossary anchors the internal terminology used across the Omega research
+notes.
 
-It is a working glossary, not a final formal system. Its purpose is to reduce definitional drift as the project moves between primitive theory, FEP/self-maintenance, valuerhood, Omega trajectory space, and empirical validation.
+It is a working glossary, not a final formal system. Its purpose is to reduce
+definitional drift as the project moves between primitive theory,
+FEP/self-maintenance, valuerhood, Omega trajectory space, and empirical
+validation.
+
+For public-facing empirical writing, prefer established terms from reachability,
+viability theory, formal methods, Constructor Theory, and compositional systems.
+Internal Omega terms should be introduced only after the measured object has
+been stated in those external terms.
 
 Companion glossaries:
 
@@ -36,6 +45,14 @@ Lushness is adjacent to this chain rather than identical to Omega. It names stru
 
 The core correction in the current stack is that relation is more primitive than identity. Relation is causal continuity. Identity is organized causal continuity through change.
 
+Current empirical posture:
+
+```text
+The empirical arm now studies reachable futures first.
+The near-term target is minimal substrate resolution, not a claim that Omega has
+already been detected.
+```
+
 ## Onboarding description
 
 ### Structural theory of value-bearing futures
@@ -43,6 +60,102 @@ The core correction in the current stack is that relation is more primitive than
 Omega is currently best introduced as a structural theory of value-bearing futures.
 
 The phrase means that Omega studies the structure of possible continuations in which value-bearing histories can remain recoverable, compatible, and richly continuable under constraint. It preserves the connection to formal value theory, axiology, and alignment work on future-preserving reachability.
+
+For collaborators entering through the empirical repo, the front-door phrase is:
+
+```text
+reachable futures under viability and compatibility constraints
+```
+
+The wider theory remains Omega. The empirical substrate program asks what
+minimal dynamical systems can resolve the distinctions Omega cares about.
+
+## External anchor layer
+
+### Reachable futures
+
+Reachable futures are the set or distribution of possible continuations
+available from a state, process, constructor candidate, or substrate under a
+transition rule and horizon.
+
+Established neighboring terms:
+
+```text
+reachable set
+reachable tube
+trajectory ensemble
+future reachable set
+```
+
+Reachable futures are not automatically good, valuable, or Omega-compatible.
+They are the empirical object whose structure must be classified.
+
+### Viability
+
+Viability means continuation remains admissible under a constraint set.
+
+Established neighboring terms:
+
+```text
+viability kernel
+controlled invariant set
+safe set
+admissible trajectory
+```
+
+Viability is necessary for Omega-compatible continuation, but it is not
+sufficient. A locally viable process may still degrade broader recoverability.
+
+### Capture basin / recovery basin
+
+A capture basin is the set of states from which a target or admissible region
+can be reached while respecting constraints.
+
+In this project, recovery or re-entry should usually be written in these terms:
+
+```text
+re-entry into a viable region
+recovery basin
+capture basin return
+repair path
+```
+
+### Constructor candidate
+
+A constructor candidate is a persistent transformation-capacity structure: a
+structure that can perform some class of transformations while retaining, or
+legitimately passing on, the capacity to perform them again.
+
+This is the empirical bridge from:
+
+```text
+states have futures
+```
+
+to:
+
+```text
+persistent transformation-capacity structures have futures
+```
+
+Do not call a toy structure a constructor unless repeatability and persistence
+are actually represented.
+
+### Compatibility-preserving viable propagation
+
+Compatibility-preserving viable propagation is the public empirical phrase for
+an Omega-compatible candidate.
+
+It means viable continuation that preserves recoverability and remains
+compatible with other relevant viable continuations, rather than surviving by
+erasing or capturing them.
+
+### Locally viable / globally degrading capture regime
+
+This is the public empirical phrase for a pseudo-Omega-like candidate.
+
+It means a local process remains viable, persistent, or expanding while reducing
+broader viable futures, repair paths, component support, or recoverability.
 
 ## Primitive layer
 
