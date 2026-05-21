@@ -43,6 +43,7 @@ Directory:
 
 Current result notes:
 
+- `val0_g_neutral_grammar_smoke_result.md`
 - `val0_ct_12h_unlabeled_geometry_battery_result.md`
 - `val0_ct_reachable_neighborhood_geometry_smoke_result.md`
 - `val0_ct_12h_heldout_exploratory_result.md`
@@ -50,9 +51,10 @@ Current result notes:
 
 Result in one line:
 
-- VAL0-CT is scientifically useful but not a validation win: R1 works in
-  designed anchors, dense controls are clean, held-out generalization is not
-  established, and the next move is geometry-first neutral grammar discovery.
+- VAL0-G first smoke passed the minimal bar: neutral grammar worlds produced
+  multiple post-hoc geometry classes, including self-terminating, thin-ridge,
+  deep-corridor, and recoverable-basin-like regimes. This is not Omega
+  validation; it justifies a slightly larger geometry-stability probe.
 
 ## Public Theory Context
 

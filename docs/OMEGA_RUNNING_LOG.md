@@ -6,6 +6,57 @@ run.
 
 ## 2026-05-21
 
+### VAL0-G Neutral Grammar Geometry Smoke
+
+Implemented the first VAL0-G smoke substrate:
+
+- `omega/val0_g/grammar.py`
+- `omega/val0_g/metrics.py`
+- `omega/val0_g/run_smoke.py`
+
+Primary result:
+
+- `docs/research_notes/validation_results/val0_g_neutral_grammar_smoke_result.md`
+- `results/val0_g/20260521_neutral_grammar_smoke_v2/summary.md`
+
+Run shape:
+
+```text
+neutral_grammar_v1:
+  50 seeds
+
+guardrails:
+  low_resolution_dense: 12 seeds
+  brittle_peak: 12 seeds
+
+rows:
+  74
+
+errors:
+  0
+```
+
+Interpretation:
+
+- initial calibration was too expansion-heavy and saturated depth-16 descendant
+  mass;
+- a minimal v2 calibration broadened lower-enable, higher-obstruction, decay,
+  and capacity-pressure regimes;
+- v2 produced multiple post-hoc measured geometry classes:
+  - `recoverable_basin_like`: 26 / 50 neutral rows;
+  - `self_terminating`: 16 / 50 neutral rows;
+  - `thin_ridge`: 6 / 50 neutral rows;
+  - `deep_corridor_like`: 2 / 50 neutral rows.
+
+Current read:
+
+```text
+VAL0-G passed minimal smoke.
+It does not validate Omega.
+It does justify a slightly larger stability probe with cap-hit reporting,
+depth 32 if cheap, and a better brittle/thin-ridge guardrail.
+```
+
 ### Public Reorientation Around VAL0-G
 
 The public-facing repository orientation was updated after the VAL0-CT geometry
