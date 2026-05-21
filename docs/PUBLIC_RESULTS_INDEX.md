@@ -1,9 +1,10 @@
 # Public Results Index
 
 This repository intentionally exposes only the most relevant public artifacts.
-The current validation design is VAL0-G, a neutral-grammar geometry atlas for
-constructor-style task space. VAL0-CT remains the immediately preceding
-calibration layer, not the final validation center.
+The current validation design is VAL0-G / VAL1-MF: a neutral-grammar geometry
+substrate for constructor-style task space, followed by small multifield
+compatibility probes. VAL0-CT remains the immediately preceding calibration
+layer, not the final validation center.
 
 Older executable outputs remain tracked where they are useful for provenance,
 controls, and failure analysis. They should be read as historical result sets,
@@ -25,9 +26,12 @@ Current entry points:
 
 Status:
 
-- current implementation target is VAL0-G neutral grammar smoke;
+- current implementation target is cap-aware neutral grammar and multifield
+  compatibility measurement;
 - asks whether neutral constructor-like task spaces produce measurable
   recoverable-continuation geometries without outcome labels;
+- VAL1-MF asks whether multiple neutral fields can create compatibility filters
+  without tuning toward desired bins;
 - VAL0-CT showed reproducible anchor wins and clean dense controls, but no
   broad held-out R1 generalization;
 - the 12h unlabeled geometry battery demoted corridor d8 as a scaled predictor
@@ -40,11 +44,14 @@ Directory:
 
 - `docs/research_notes/validation_results/`
 - `results/val0_ct/`
+- `results/val0_g/`
+- `results/val1_mf/`
 
 Current result notes:
 
 - `val0_g_neutral_grammar_stability_probe_result.md`
 - `val0_g_neutral_grammar_smoke_result.md`
+- `val1_mf_two_field_compatibility_smoke_result.md`
 - `val0_ct_12h_unlabeled_geometry_battery_result.md`
 - `val0_ct_reachable_neighborhood_geometry_smoke_result.md`
 - `val0_ct_12h_heldout_exploratory_result.md`
@@ -56,8 +63,12 @@ Result in one line:
   grammar worlds produced multiple post-hoc geometry bins, coarse/full
   signatures agreed, and bin counts were stable under a cap increase. This is
   not Omega validation. The main remaining blocker is cap-censored high-mass
-  regions, so the next probe should improve measurement rather than scale
-  blindly.
+  regions.
+- VAL1-MF two-field smoke passed as a workflow and measurement probe, but not as
+  a positive scaling result: 142/150 paired worlds landed in
+  `mixed_or_censored_bin`, with joint cap hit rate 0.947. Naive joint
+  enumeration worsened censoring, so the next probe should improve cap-aware or
+  sampled compatibility measurement rather than scale this enumerator blindly.
 
 ## Public Theory Context
 

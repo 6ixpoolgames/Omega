@@ -6,6 +6,63 @@ run.
 
 ## 2026-05-21
 
+### VAL1-MF Two-Field Compatibility Smoke
+
+Implemented the first minimal multifield compatibility smoke on top of VAL0-G.
+
+Code changes:
+
+- added `omega/val1_mf/coupled_grammar.py`;
+- added `omega/val1_mf/metrics.py`;
+- added `omega/val1_mf/run_smoke.py`;
+- added joint-state enumeration, rollout terminal estimates, compatibility
+  ratios, cap-hit reporting, and neutral compatibility bins.
+
+Primary result:
+
+- `docs/research_notes/validation_results/val1_mf_two_field_compatibility_smoke_result.md`
+- `results/val1_mf/20260521_two_field_compatibility_smoke_cap4096/summary.md`
+
+Run shape:
+
+```text
+paired worlds:
+  150
+
+workers:
+  18
+
+max_states_per_depth:
+  4096
+
+rollout_samples:
+  128
+
+elapsed:
+  about 79 seconds
+
+errors:
+  0
+```
+
+Interpretation:
+
+- the smoke completed cleanly and produced nondegenerate bins;
+- `mutual_collapse_bin`, `joint_viable_bin`, and `uncoupled_parallel_bin`
+  appeared in small non-censored counts;
+- the dominant outcome was still `mixed_or_censored_bin`: 142/150 rows;
+- aggregate joint cap hit rate was 0.947;
+- naive two-field enumeration did not solve the cap problem and likely worsened
+  it by multiplying reachable combinations.
+
+Current read:
+
+```text
+Do not scale this exact two-field enumerator.
+Multifield compatibility remains relevant, but the next probe should switch to
+sampled or cap-aware compatibility estimates before a long run.
+```
+
 ### VAL0-G Neutral Grammar Stability Probe
 
 Implemented the second small VAL0-G forced-fit audit.
