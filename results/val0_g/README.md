@@ -23,4 +23,4 @@ Keep scratch, calibration, and stress outputs in `results/local_runs/`.
 VAL0-G is now a retained reconnaissance substrate. It asked whether neutral
 constructor-style task grammars produce measurable recoverable-continuation
 geometries before any claim about full Omega validation. The current front edge
-has moved to reachable-futures substrate design under `results/rfs/`.
+has moved to reachable-futures substrate design under `results/rfs0/`.

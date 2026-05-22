@@ -1,11 +1,19 @@
-# RFS Results
+# RFS0 Results
 
-Retained outputs for the Reachable Futures Substrate program.
+Retained outputs for the first Reachable Futures Substrate program.
+
+Current retained result:
+
+- `20260522_strict_reachable_futures_small_smoke/`
+
+Read the paired result note first:
+
+- `docs/research_notes/validation_results/rfs0_strict_reachable_futures_small_smoke_result.md`
 
 Planned layout:
 
 ```text
-results/rfs/<timestamp-or-run-id>/
+results/rfs0/<timestamp-or-run-id>/
   config.json
   status.json
   results.jsonl

@@ -45,12 +45,14 @@ Status:
 Directory:
 
 - `docs/research_notes/validation_results/`
+- `results/rfs0/`
 - `results/val0_ct/`
 - `results/val0_g/`
 - `results/val1_mf/`
 
 Current result notes:
 
+- `rfs0_strict_reachable_futures_small_smoke_result.md`
 - `val0_g_neutral_grammar_stability_probe_result.md`
 - `val0_g_neutral_grammar_smoke_result.md`
 - `val1_mf_interference_audit_smoke_result.md`
@@ -66,6 +68,12 @@ Result in one line:
   more collaborator-legible empirical program around reachable sets, viability
   kernels, capture/recovery basins, constructor candidates, and coupled-process
   interference.
+- RFS0 strict small smoke passed as an exact measurement-floor and workflow
+  test: 108 systems completed with checkpointed outputs and zero errors.
+  Structured regimes produced sparse nonzero strict kernels in some cases, but
+  shuffled-admissibility and random-edge controls remain a serious control
+  risk. Treat this as prognostic evidence for substrate refinement, not
+  validation.
 - VAL0-G first smoke and stability probe passed the minimal bar: neutral
   grammar worlds produced multiple post-hoc geometry bins, coarse/full
   signatures agreed, and bin counts were stable under a cap increase. This is

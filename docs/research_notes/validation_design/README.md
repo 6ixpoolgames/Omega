@@ -87,7 +87,7 @@ results/val0_g/<timestamp-or-run-id>/
 Write future RFS outputs under:
 
 ```text
-results/rfs/<timestamp-or-run-id>/
+results/rfs0/<timestamp-or-run-id>/
 ```
 
 Use `results/local_runs/` for ignored smoke, calibration, stress, and scratch

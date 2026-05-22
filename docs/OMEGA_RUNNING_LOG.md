@@ -4,6 +4,93 @@ This is the living operational log for the Omega validation workspace. Update it
 after every meaningful theory-side decision, probe implementation, or compute
 run.
 
+## 2026-05-22
+
+### RFS0 Strict Reachable Futures Small Smoke
+
+Implemented the first RFS0 exact finite reachable-futures substrate batch from
+`docs/RFS0_STRICT_REACHABLE_FUTURES_BATCH_SPEC.md`.
+
+Code changes:
+
+- added `omega/rfs0/substrate.py`;
+- added `omega/rfs0/exact.py`;
+- added `omega/rfs0/run_strict_batch.py`;
+- added exact reachable sets, finite-horizon viability kernels, capture basins,
+  perturbation recovery rates, and strict-future contraction metrics;
+- added checkpointed JSONL/CSV/status/summary output after completed jobs;
+- added hard-cap timeout salvage that cancels unfinished work and writes partial
+  summaries.
+
+Primary result:
+
+- `docs/research_notes/validation_results/rfs0_strict_reachable_futures_small_smoke_result.md`
+- `results/rfs0/20260522_strict_reachable_futures_small_smoke/summary.md`
+
+Run shape:
+
+```text
+systems:
+  108
+
+regimes:
+  balanced, permissive, harsh, repair_rich, commit_rich, capacity_tight
+
+controls:
+  structured
+  dense_permissive_control
+  dead_control
+  random_edge_control
+  shuffled_admissibility_control
+  no_perturbation_control
+
+workers:
+  18
+
+elapsed:
+  about 6 seconds
+
+errors:
+  0
+```
+
+Timeout salvage test:
+
+```text
+cap:
+  1 second
+
+completed rows:
+  13
+
+status:
+  TIMED_OUT
+
+artifact status:
+  systems.jsonl, results.csv, summaries, status.json, and summary.md retained
+```
+
+Interpretation:
+
+- exact computation is cheap at this scale;
+- structured substrate produced sparse nonzero strict kernels in balanced,
+  repair-rich, and commit-rich regimes;
+- permissive regime and dense control are too large/trivial;
+- harsh and capacity-tight regimes collapse to zero strict viability;
+- random-edge and shuffled-admissibility controls remain too strong, so control
+  separation is not yet adequate;
+- contraction events exist, but expansion events are absent under the current
+  metric.
+
+Current read:
+
+```text
+RFS0 is promising as a measurement floor, but not ready for a longer validation
+run as-is. Next small probe should improve control separation, contraction
+geometry, and parameter resolution without loosening K_strict just to get more
+positives.
+```
+
 ## 2026-05-21
 
 ### VAL1-MF Interference Audit Smoke
