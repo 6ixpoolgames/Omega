@@ -6,20 +6,101 @@ Public design note for the empirical reset
 
 The empirical arm of Omega is resetting around substrate design.
 
-The object of interest is **reachable futures**: the structure of possible
-continuations available to a system, process, or constructor candidate under
-constraints.
+The object of interest is **reachable futures**: the structure of possible continuations available to a bounded process under neutral transformations.
 
 The current question is:
 
 ```text
-What is the minimal substrate resolution required to distinguish generic viable
-continuation from trivial persistence, recoverable viability, local capture,
-and compatibility-preserving viable propagation?
+Can bounded structures be derived from neutral transition systems, and do those
+structures have identity-preserving reachable futures that can be distinguished
+from trivial persistence, local capture, and control artifacts?
 ```
 
-This is narrower than the full Omega theory. It is the empirical foundation
-needed before stronger Omega claims would be meaningful.
+This is narrower than the full Omega theory. It is the empirical foundation needed before stronger Omega claims would be meaningful.
+
+## Minimal Formalism
+
+The primitive substrate is deliberately small:
+
+```text
+S = (X, ->)
+```
+
+where:
+
+```text
+X:
+  finite distinction space
+
+-> subset X x X:
+  neutral transformation relation
+```
+
+Everything else is derived.
+
+```text
+time:
+  chains of relation
+
+asymmetry:
+  non-equivalent reachable future sets
+
+capacity:
+  available future transformation space
+
+boundary:
+  scaled distinction over relations; a derived bounded-structure candidate
+
+identity:
+  continuity of a derived bounded structure through neutral transformations
+
+coherence:
+  preservation of identity-preserving reachable futures
+
+dissipation-like contraction:
+  loss of identity-preserving reachable futures
+
+viability:
+  nonempty or sufficiently rich identity-preserving futures
+
+recovery:
+  return to identity-continuity after perturbation
+```
+
+A full experiment can be written:
+
+```text
+Experiment = (X, -> ; E_sigma, ~=_sigma, H, P)
+```
+
+where the substrate is left of the semicolon and probe choices are right of it.
+
+```text
+E_sigma:
+  boundary / bounded-structure extraction rule at scale sigma
+
+~=_sigma:
+  structural continuity criterion
+
+H:
+  horizon
+
+P:
+  optional perturbation relation
+```
+
+The central measured object is:
+
+```text
+F_H^mu(x):
+  identity-preserving reachable futures of a derived bounded structure mu
+```
+
+See:
+
+```text
+docs/research_notes/omega_theory/minimal_reachable_futures_formalism.md
+```
 
 ## External Frameworks
 
@@ -46,16 +127,18 @@ process and compositional systems:
 
 network robustness:
   bottlenecks, cuts, redundancy, perturbation sensitivity
+
+Markov-blanket / boundary formalisms:
+  minimal inside/outside/interface decompositions for bounded processes
 ```
 
-Later layers may use computational mechanics, causal abstraction, and assembly
-or lineage measures, but they should not be the base substrate.
+Later layers may use computational mechanics, causal abstraction, and assembly or lineage measures, but they should not be the base substrate.
 
 ## Substrate Ladder
 
-### RFS0: finite reachable-futures substrate
+### RFS0 strict finite reachability: exact measurement floor
 
-Minimal exact transition system.
+Minimal exact transition system with explicit admissibility filters.
 
 ```text
 states
@@ -67,41 +150,86 @@ capture / recovery basins
 terminal hazards
 ```
 
+Status:
+
+```text
+completed first smoke; exact computation is cheap, but random-edge and
+shuffled-admissibility controls remain too strong.
+```
+
+Lesson:
+
+```text
+opaque admissibility is not enough; the next substrate must derive the bounded
+identity whose futures are being tracked.
+```
+
+### RFS-MB0: derived boundary / identity futures
+
+Derive bounded-structure candidates from `(X, ->)` and measure identity-preserving reachable futures.
+
+```text
+boundary extraction E_sigma
+structural continuity ~=_sigma
+identity-preserving future sets F_H^mu
+future contraction ratios
+control comparison against shuffled relations and random transitions
+```
+
 Goal:
 
 ```text
-make reachable futures and viability exact before adding agency language
+move from whole-graph futures to futures of derived bounded structures
 ```
 
-### RFS1: perturbation-recovery substrate
+### RFS-MB1: perturbation-recovery of identity-continuity
 
-Adds damage, repair, re-entry, and irreversible loss.
+Adds boundary perturbation, damage, recovery, and re-entry into identity-continuity.
 
 Goal:
 
 ```text
-distinguish raw persistence from recoverability
+distinguish raw identity persistence from recoverability
 ```
 
-### RFS2: coupled-process substrate
+### RFS-MB2: coupled bounded processes
 
-Adds multiple interacting components or fields.
+Studies multiple derived bounded structures in the same transition substrate.
 
 Goal:
 
 ```text
 distinguish compatibility, constructive support, destructive interference,
-capture, and component erasure
+capture, and component erasure as relations among identity-preserving futures
 ```
 
-### RFS3: constructor-candidate substrate
+The older internal term `multifield` should be treated as historical. Prefer:
 
-Adds persistent transformation-capacity structures with successor relations.
+```text
+coupled bounded processes
+multi-component transition systems
+composed processes
+```
+
+### RFS-MB3: scale hierarchy
+
+Studies nested or composable bounded structures across extraction scales.
 
 Goal:
 
 ```text
-move from "states have futures" to "persistent constructors have futures"
+represent fractal / scale-relative agency without assuming the whole field is
+the identity-bearing object
+```
+
+### RFS-MB4: constructor-candidate substrate
+
+Adds repeatable transformation capacity of bounded processes.
+
+Goal:
+
+```text
+move from identity-preserving futures to constructor-level futures
 ```
 
 ## Vocabulary Discipline
@@ -115,11 +243,13 @@ capture basin
 re-entry / recovery basin
 controlled invariant set
 transition system
+bounded process
+identity-preserving futures
+coupled bounded processes
 constructor candidate
 repeatable transformation capacity
 component preservation
 component erasure
-counterfactual coupling delta
 ```
 
 Use Omega terms only after the measured object is stated in public language.
@@ -141,7 +271,8 @@ What has been shown:
 ```text
 toy substrates can culture nontrivial viability dynamics
 neutral task grammars produced stable viability regimes
-sampled counterfactual multifield deltas can detect constructive support
+sampled counterfactual coupled-process deltas can detect constructive support
+strict finite reachability is exact and cheap at small scale
 ```
 
 What has not been shown:
@@ -149,15 +280,16 @@ What has not been shown:
 ```text
 clean Omega-compatible subobjects
 robust pseudo-Omega discrimination
+identity-preserving bounded-process futures
 constructor-level futures
 a general detector for value-bearing trajectory structure
 ```
 
-The likely blocker is substrate resolution, not compute.
+The likely blocker is substrate resolution and identity extraction, not compute.
 
 ## Relationship To The Broader Theory
 
-The progenitor drafts motivate the larger ambition:
+The foundational drafts motivate the larger ambition:
 
 ```text
 ECHO:
@@ -179,19 +311,17 @@ Omega:
   hypothesized compatibility structure of value-bearing reachable futures
 ```
 
-RFS0/RFS1/RFS2/RFS3 are not replacements for that theory. They are the empirical
-substrate ladder for testing whether the theory can attach to reproducible
-mathematical objects.
+RFS0/RFS-MB0/RFS-MB1/RFS-MB2/RFS-MB3/RFS-MB4 are not replacements for that theory. They are the empirical substrate ladder for testing whether the theory can attach to reproducible mathematical objects.
 
 ## Public Claim Boundary
 
 Allowed current claim:
 
 ```text
-We are developing minimal substrates for studying reachable futures and testing
-when viable continuation can be distinguished from trivial persistence,
-recoverability, constructive compatibility, destructive capture, and
-constructor-level persistence.
+We are developing minimal substrates for studying reachable futures of derived
+bounded structures and testing when identity-preserving continuation can be
+distinguished from trivial persistence, recoverability, constructive
+compatibility, destructive capture, and constructor-level persistence.
 ```
 
 Not yet allowed:
@@ -201,4 +331,5 @@ Omega is validated.
 Alignment is solved.
 Viability is identical to value.
 The current toy probes demonstrate full Omega compatibility.
+The extracted bounded structures are agents.
 ```
