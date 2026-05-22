@@ -16,11 +16,11 @@ It does **not** prove Omega. It is a controlled workspace for turning the theory
 
 The current empirical reset asks a narrower substrate question:
 
-**What is the minimal substrate resolution needed to distinguish generic viable continuation from compatibility-preserving viable propagation, local capture, and trivial persistence?**
+**Can bounded structures be derived from neutral transition systems, and do those structures have identity-preserving reachable futures that can be distinguished from trivial persistence, local capture, and control artifacts?**
 
 Current status, in one line:
 
-**VAL0/VAL1 were useful reconnaissance probes; the active pivot is now substrate design for reachable futures of persistent transformation-capacity structures.**
+**VAL0/VAL1 were useful reconnaissance probes; the active pivot is now a minimal reachable-futures formalism where bounded identities are derived from relational dynamics rather than inserted as state variables.**
 
 ## Why this matters for alignment
 
@@ -66,52 +66,91 @@ In this framing, alignment is not a terminal-state target. It is a constraint on
 
 The current empirical program is still only a first step. It does not validate alignment. It asks what substrate is needed before the earliest precursor can be resolved:
 
-> Can reachable futures be measured well enough to distinguish mere viability from recoverable, compatibility-preserving viability and local capture?
+> Can reachable futures be measured well enough to distinguish mere persistence from identity-preserving, recoverable, compatibility-preserving continuation and local capture?
 
-## Current empirical pivot: reachable futures substrate design
+## Current empirical pivot: minimal reachable-futures formalism
 
-The project has moved from task-graph probes toward a substrate-first program for **reachable futures**.
+The project has moved from task-graph probes toward a substrate-first program for **reachable futures of derived bounded structures**.
 
-The current question is not:
-
-```text
-Did we find Omega?
-```
-
-It is:
+The current primitive substrate is deliberately minimal:
 
 ```text
-What minimal substrate can resolve the difference between:
-  generic viable continuation
-  trivial persistence
-  recoverable viability
-  constructive compatibility
-  local capture / destructive lock-in
-  constructor-level viable continuation
+S = (X, ->)
+
+X:
+  finite distinction space
+
+-> subset X x X:
+  neutral transformation relation
 ```
 
-The mature external frameworks we are anchoring to are:
+Everything else is derived from this transition structure.
 
 ```text
-reachability analysis:
-  reachable sets, reachable tubes, reach-avoid structure
+time:
+  chains of relation
 
-viability theory:
-  viability kernels, capture basins, controlled invariant sets
+asymmetry:
+  non-equivalence of reachable future sets
 
-formal methods:
-  finite transition systems, safety/liveness, counterexamples
+capacity:
+  available future transformation space
 
-Constructor Theory:
-  substrates, attributes, tasks, possible/impossible transformations,
-  constructors as repeatable transformation capacity
+boundary:
+  scaled distinction over relations; a derived bounded-structure candidate
 
-process / compositional systems:
-  parallel and sequential composition, interfaces, coupled processes
+identity:
+  continuity of a derived bounded structure through neutral transformations
 
-network robustness:
-  bottlenecks, cuts, redundancy, perturbation sensitivity
+coherence:
+  preservation of identity-preserving reachable futures
+
+dissipation-like contraction:
+  loss of identity-preserving reachable futures
+
+viability:
+  nonempty or sufficiently rich identity-preserving futures
+
+recovery:
+  return to identity-continuity after perturbation
 ```
+
+The current experiment form is:
+
+```text
+Experiment = (X, -> ; E_sigma, ~=_sigma, H, P)
+```
+
+where:
+
+```text
+(X, ->):
+  primitive substrate
+
+E_sigma:
+  boundary / bounded-structure extraction rule at scale sigma
+
+~=_sigma:
+  structural continuity criterion
+
+H:
+  horizon
+
+P:
+  optional perturbation relation
+```
+
+The semicolon matters. The substrate is left of the semicolon. Probe choices are right of it.
+
+Current design files:
+
+- [Minimal reachable futures formalism](docs/research_notes/omega_theory/minimal_reachable_futures_formalism.md)
+- [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
+- [Viability ecology reorientation](docs/research_notes/validation_design/val_ecology_viability_reorientation.md)
+- [RFS0 strict reachable futures small smoke result](docs/research_notes/validation_results/rfs0_strict_reachable_futures_small_smoke_result.md)
+- [Public results index](docs/PUBLIC_RESULTS_INDEX.md)
+
+## Historical reconnaissance probes
 
 The historical VAL0/VAL1 probes remain useful, but they are now best read as reconnaissance:
 
@@ -131,22 +170,20 @@ VAL1-MF:
 VAL1-MF interference audit:
   sampled counterfactual deltas detected constructive support-like
   interference, but not robust destructive/capture dynamics.
+
+RFS0 strict small smoke:
+  exact finite reachability, strict viability kernels, capture basins, and
+  contraction metrics were cheap and computable, but random-edge and
+  shuffled-admissibility controls remained too strong.
 ```
 
 Lesson:
 
 ```text
 viable continuation is easy to culture in nontrivial substrates;
-Omega-compatible discrimination is not yet demonstrated;
-the likely blocker is substrate resolution, not compute.
+opaque admissibility and hand-designed viability variables are overfit risks;
+the next target is derived bounded identity, not richer hand-coded state fields.
 ```
-
-Current design files:
-
-- [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
-- [Viability ecology reorientation](docs/research_notes/validation_design/val_ecology_viability_reorientation.md)
-- [VAL1-MF interference audit result](docs/research_notes/validation_results/val1_mf_interference_audit_smoke_result.md)
-- [Public results index](docs/PUBLIC_RESULTS_INDEX.md)
 
 ## What is Omega?
 
@@ -181,54 +218,55 @@ A more operational version:
 
 ## Current formal stack
 
-The current theory is built from a small primitive stack:
+The current theory keeps the primitive layer small:
 
 ```text
 distinction
-  -> asymmetry
-  -> relation / causal continuity
-  -> identity
-  -> continuability
-  -> recoverability
-  -> valuerhood
-  -> viable trajectory space
-  -> Omega-compatible futures
+relation
+asymmetry
 ```
 
-In plain language:
+Plainly:
 
 ```text
 distinction:
-  differences can exist
-
-asymmetry:
-  different paths can produce different consequences
+  configurations can differ
 
 relation:
-  causal continuity links differences across transformation
+  neutral transformations connect configurations
+
+asymmetry:
+  transformations have non-equivalent future consequences
+```
+
+Then:
+
+```text
+boundary:
+  scaled distinction over relations
 
 identity:
-  organized causal continuity persists through change
+  maintained bounded structure through transformation
 
-continuability:
-  identity has admissible future paths
+capacity:
+  reachable future transformation space of that bounded identity
+
+coherence:
+  identity-preserving continuation
+
+dissipation-like behavior:
+  contraction of identity-preserving futures
 
 recoverability:
-  continuability survives perturbation
+  return to identity-continuity after perturbation
 
-valuerhood:
-  a bounded historical identity has continuations that preserve, degrade,
-  restore, or collapse its own recoverable continuability
-
-viability:
-  continuability under constraints and horizons
-
-Omega:
-  nested value-bearing trajectory space that remains recoverably compatible
+compatibility:
+  multiple bounded identities preserve reachable futures together
 ```
 
 Start with:
 
+- [Minimal reachable futures formalism](docs/research_notes/omega_theory/minimal_reachable_futures_formalism.md)
 - [Public terms and translations](docs/research_notes/omega_theory/public_terms_and_translations.md)
 - [Omega glossary](docs/research_notes/omega_theory/omega_glossary.md)
 - [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
@@ -289,8 +327,8 @@ reachable-futures probes ask:
 Which transformations remain possible?
 Which paths preserve future reachability?
 Which paths collapse into lock-in?
-Which geometries retain descendant possibility across horizons?
-Which policies or dynamics select those geometries?
+Which bounded structures retain reachable futures across horizons?
+Which coupled bounded processes preserve or erase one another's futures?
 ```
 
 This makes the validation target less anthropocentric and less preference-first.
@@ -306,18 +344,20 @@ Omega asks which possible transformations preserve value-bearing future possibil
 
 ### For a new reader
 
-1. [Public terms and translations](docs/research_notes/omega_theory/public_terms_and_translations.md)
-2. [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
-3. [Public results index](docs/PUBLIC_RESULTS_INDEX.md)
-4. [Omega glossary](docs/research_notes/omega_theory/omega_glossary.md)
-5. [Foundation stack as pipeline](docs/research_notes/omega_theory/progenitor_stack_as_pipeline.md)
+1. [Minimal reachable futures formalism](docs/research_notes/omega_theory/minimal_reachable_futures_formalism.md)
+2. [Public terms and translations](docs/research_notes/omega_theory/public_terms_and_translations.md)
+3. [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
+4. [Public results index](docs/PUBLIC_RESULTS_INDEX.md)
+5. [Omega glossary](docs/research_notes/omega_theory/omega_glossary.md)
+6. [Foundation stack as pipeline](docs/research_notes/omega_theory/progenitor_stack_as_pipeline.md)
 
 ### For implementation work
 
-1. [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
-2. [VAL0-G neutral grammar geometry atlas spec](docs/VAL0_G_NEUTRAL_GRAMMAR_GEOMETRY_ATLAS_SPEC.md)
-3. [VAL1-MF interference audit result](docs/research_notes/validation_results/val1_mf_interference_audit_smoke_result.md)
-4. [Validation design notes](docs/research_notes/validation_design/README.md)
+1. [Minimal reachable futures formalism](docs/research_notes/omega_theory/minimal_reachable_futures_formalism.md)
+2. [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
+3. [RFS0 strict reachable futures batch spec](docs/RFS0_STRICT_REACHABLE_FUTURES_BATCH_SPEC.md)
+4. [RFS0 strict reachable futures small smoke result](docs/research_notes/validation_results/rfs0_strict_reachable_futures_small_smoke_result.md)
+5. [Validation design notes](docs/research_notes/validation_design/README.md)
 
 ### For project history
 
@@ -330,32 +370,31 @@ Omega asks which possible transformations preserve value-bearing future possibil
 
 ## Current next step
 
-The current implementation target is **RFS0**, a small finite reachable-futures substrate with exact reachability and viability measurements.
+The current implementation target is **RFS-MB0**, a derived-boundary / identity-futures smoke.
 
 Public summary:
 
 ```text
 define:
-  finite transition systems with explicit states, transformations,
-  admissibility constraints, and perturbations
+  a finite transition substrate (X, ->)
+  boundary extraction rules E_sigma
+  structural continuity criteria ~=_sigma
 
 measure:
-  reachable sets
-  viability kernels
-  capture / recovery basins
-  terminal hazards
-  future-space contraction under intervention
+  derived bounded-structure candidates
+  identity-preserving reachable futures
+  identity-continuity survival curves
+  future contraction ratios
+  recovery after boundary perturbation
+  control comparison against shuffled relations and random transitions
 
 defer:
   Omega-positive labels
+  scalar energy or utility objectives
+  hand-designed viability vectors
   full constructor agency
-  broad multifield scaling
-  GPU-heavy experiments
+  broad coupled-process scaling
 ```
-
-Technical design is in:
-
-- [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
 
 ## Roadmap
 
@@ -370,28 +409,31 @@ VAL0-G:
   showed stable viability regimes and cap-censoring limits
 
 VAL1-MF:
-  completed first multifield reconnaissance
+  completed first multifield / coupled-process reconnaissance
   sampled deltas can detect constructive support-like interference
 
-RFS0:
+RFS0 strict finite reachability:
+  completed first exact measurement-floor smoke
+  showed sparse strict objects but insufficient control separation
+
+RFS-MB0:
   active reset target
-  exact finite reachable-futures substrate with viability kernels and
-  capture/recovery basins
+  derive bounded structures from (X, ->) and measure identity-preserving futures
 
-RFS1:
-  perturbation-recovery substrate
-  distinguish persistence from recoverability
+RFS-MB1:
+  perturbation and recovery of identity-continuity
 
-RFS2:
-  coupled-process substrate
-  distinguish compatibility from capture and component erasure
+RFS-MB2:
+  coupled bounded processes; compatibility, capture, erasure
 
-RFS3:
-  constructor-candidate substrate
-  persistent transformation-capacity structures with successor relations
+RFS-MB3:
+  scale hierarchy; nested or composable bounded structures
+
+RFS-MB4:
+  constructor candidates; repeatable transformation capacity of bounded processes
 ```
 
-Later stages should not be implemented until RFS0 has clean definitions, controls, and failure modes.
+Later stages should not be implemented until RFS-MB0 has clean definitions, controls, and failure modes.
 
 ## Important caveat
 
@@ -410,6 +452,6 @@ VAL0-CT validation designs and results
 
 The current scientific claim is modest:
 
-> Viable continuation dynamics appear in our toy substrates, but Omega-compatible subobjects have not been cleanly demonstrated. The next empirical question is the minimal substrate resolution required to distinguish compatibility-preserving viable propagation from generic viability, trivial persistence, and local capture.
+> Viable continuation dynamics appear in our toy substrates, but Omega-compatible subobjects have not been cleanly demonstrated. The next empirical question is whether bounded identities can be derived from neutral transition substrates and whether their identity-preserving reachable futures can distinguish compatibility-preserving continuation from trivial persistence, artifact, and local capture.
 
-VAL0/VAL1 tested early versions of that precursor. The project is now resetting around reachable-futures substrate design.
+VAL0/VAL1 tested early versions of that precursor. The project is now resetting around derived bounded structures and identity-preserving reachable futures.
