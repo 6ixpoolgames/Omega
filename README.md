@@ -20,7 +20,7 @@ The current empirical reset asks a narrower substrate question:
 
 Current status, in one line:
 
-**VAL0/VAL1 were useful reconnaissance probes; the active branch is now RFS-MB0 future-landscape detection, with detector v1.1 implemented and no aggregate scientific pass yet.**
+**VAL0/VAL1 were useful reconnaissance probes; the active branch is now RFS-MB0 future-landscape detection, with detector v1.1 plus long-horizon audit support implemented and no aggregate scientific pass yet.**
 
 ## Why this matters for alignment
 
@@ -145,6 +145,7 @@ Current design files:
 - [Future landscape pattern spec](docs/RFS_MB0_FUTURE_LANDSCAPE_PATTERN_SPEC.md)
 - [Future landscape detector v1 handoff](docs/RFS_MB0_FUTURE_LANDSCAPE_DETECTOR_V1_HANDOFF.md)
 - [Future landscape detector v1.1 smoke result](docs/research_notes/validation_results/rfs_mb0_future_landscape_detector_v1_1_smoke_result.md)
+- [Future landscape long-horizon audit result](docs/research_notes/validation_results/rfs_mb0_future_landscape_long_horizon_environment_audit_result.md)
 - [Future landscape detector v1 smoke result](docs/research_notes/validation_results/rfs_mb0_future_landscape_detector_v1_smoke_result.md)
 - [Minimal reachable futures formalism](docs/research_notes/omega_theory/minimal_reachable_futures_formalism.md)
 - [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
@@ -345,19 +346,22 @@ Omega asks which possible transformations preserve value-bearing future possibil
 ### For a new reader
 
 1. [Future landscape detector v1.1 smoke result](docs/research_notes/validation_results/rfs_mb0_future_landscape_detector_v1_1_smoke_result.md)
-2. [Public terms and translations](docs/research_notes/omega_theory/public_terms_and_translations.md)
-3. [Future landscape pattern spec](docs/RFS_MB0_FUTURE_LANDSCAPE_PATTERN_SPEC.md)
-4. [Public results index](docs/PUBLIC_RESULTS_INDEX.md)
-5. [Omega glossary](docs/research_notes/omega_theory/omega_glossary.md)
-6. [Foundation stack as pipeline](docs/research_notes/omega_theory/progenitor_stack_as_pipeline.md)
+2. [Future landscape long-horizon audit result](docs/research_notes/validation_results/rfs_mb0_future_landscape_long_horizon_environment_audit_result.md)
+3. [Public terms and translations](docs/research_notes/omega_theory/public_terms_and_translations.md)
+4. [Future landscape pattern spec](docs/RFS_MB0_FUTURE_LANDSCAPE_PATTERN_SPEC.md)
+5. [Public results index](docs/PUBLIC_RESULTS_INDEX.md)
+6. [Omega glossary](docs/research_notes/omega_theory/omega_glossary.md)
+7. [Foundation stack as pipeline](docs/research_notes/omega_theory/progenitor_stack_as_pipeline.md)
 
 ### For implementation work
 
 1. [Future landscape detector v1 handoff](docs/RFS_MB0_FUTURE_LANDSCAPE_DETECTOR_V1_HANDOFF.md)
 2. [Future landscape v1.1 code targets](docs/RFS_MB0_FUTURE_LANDSCAPE_V1_1_CODE_TARGETS.md)
 3. [Future landscape detector v1.1 smoke result](docs/research_notes/validation_results/rfs_mb0_future_landscape_detector_v1_1_smoke_result.md)
-4. [Minimal reachable futures formalism](docs/research_notes/omega_theory/minimal_reachable_futures_formalism.md)
-5. [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
+4. [Future landscape long-horizon audit spec](docs/RFS_MB0_FUTURE_LANDSCAPE_LONG_HORIZON_ENVIRONMENT_AUDIT.md)
+5. [Future landscape long-horizon audit result](docs/research_notes/validation_results/rfs_mb0_future_landscape_long_horizon_environment_audit_result.md)
+6. [Minimal reachable futures formalism](docs/research_notes/omega_theory/minimal_reachable_futures_formalism.md)
+7. [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
 
 ### For project history
 
@@ -370,9 +374,9 @@ Omega asks which possible transformations preserve value-bearing future possibil
 
 ## Current next step
 
-The current implementation target is **RFS-MB0 Future Landscape Detector v1.1**.
+The current implementation target is **RFS-MB0 Future Landscape Detector v1.1 with long-horizon audit diagnostics**.
 
-The detector v1.1 smoke passed as an implementation run, but not as a scientific gate. It keeps local profile candidates visible while preventing them from becoming family-level claims. The current result has zero aggregate structured families and zero degree-control aggregate probe-family passes.
+The detector v1.1 smoke and long-horizon audit passed as implementation runs, but not as a scientific gate. The detector keeps local profile candidates visible while preventing them from becoming family-level claims. The long-horizon audit extends the horizon grid through H1024 and suggests the current failure is not just an H16 cutoff. The current result has zero aggregate structured families and zero degree-control aggregate probe-family passes.
 
 Public summary:
 

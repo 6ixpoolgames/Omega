@@ -19,14 +19,15 @@ Use Omega as the broader theory and long-term hypothesis.
 Do not present VAL0/VAL1 as validation of Omega.
 Frame VAL0/VAL1 as reconnaissance probes that exposed viability dynamics and
 substrate limitations.
-Present RFS-MB0 detector v1.1 as the active empirical branch and state clearly
-that it has not passed the scientific gate.
+Present RFS-MB0 detector v1.1 plus the long-horizon audit layer as the active
+empirical branch and state clearly that it has not passed the scientific gate.
 ```
 
 Primary current design note:
 
 - `docs/RFS_MB0_FUTURE_LANDSCAPE_PATTERN_SPEC.md`
 - `docs/RFS_MB0_FUTURE_LANDSCAPE_DETECTOR_V1_HANDOFF.md`
+- `docs/RFS_MB0_FUTURE_LANDSCAPE_LONG_HORIZON_ENVIRONMENT_AUDIT.md`
 - `docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md`
 
 Project stance:
@@ -74,6 +75,7 @@ as the canonical internal definition anchor.
    - `docs/RFS_MB0_FUTURE_LANDSCAPE_DETECTOR_V1_HANDOFF.md`
    - `docs/RFS_MB0_FUTURE_LANDSCAPE_V1_1_CODE_TARGETS.md`
    - `docs/research_notes/validation_results/rfs_mb0_future_landscape_detector_v1_1_smoke_result.md`
+   - `docs/research_notes/validation_results/rfs_mb0_future_landscape_long_horizon_environment_audit_result.md`
    - `docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md`
    - `docs/research_notes/validation_design/val_ecology_viability_reorientation.md`
    - `docs/research_notes/validation_design/README.md`
@@ -213,10 +215,11 @@ The current empirical pivot is now RFS-MB0 future-landscape detection:
 Current detector status:
 
 ```text
-RFS-MB0 future-landscape detector v1.1:
+RFS-MB0 future-landscape detector v1.1 + long-horizon audit:
   implementation passed
   scientific gate not passed
   current result: zero aggregate structured families
+  long-horizon read: failure is not just an H16 cutoff
 ```
 
 Older papers and drafts motivate variants of:
@@ -1090,7 +1093,7 @@ What we cannot say:
 
 ## Recommended Next Probes
 
-### RFS-MB0.1: Degree-Control and Saturation-Matched Null Repair
+### RFS-MB0.1: Substrate/Environment Redesign and Window-Control Repair
 
 Question:
 
@@ -1100,18 +1103,25 @@ Question:
 Current status:
 
 ```text
-RFS-MB0 detector v1.1:
+RFS-MB0 detector v1.1 + long-horizon audit:
   implementation passed
   local false positives are exposed but do not promote aggregate claims
   no aggregate structured family passes yet
+  H1024 audit does not reveal delayed long-horizon onset
+  nominal structured families are saturation dominated
 ```
 
-Do not scale RFS-MB0 into long runs until this is addressed.
+Do not scale this exact RFS-MB0 substrate into longer runs until this is
+addressed.
 
 Required next changes:
 
+- revise environment families so candidate structured cases stay
+  non-saturated for meaningful windows;
 - add frontier-size-preserving nulls;
 - add saturation-matched nulls;
+- strengthen window-level controls before promoting early/pre-saturation
+  profile windows;
 - report family-level and probe-family-level ranks against controls;
 - require degree-control separation before assigning `structured_propagation`;
 - preserve v0/v1 outputs as historical baselines.

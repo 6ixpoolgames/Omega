@@ -7,33 +7,33 @@ from .probes import Probe
 from .substrate import LandscapeSystem, generate_system
 
 
-def null_distribution_by_h(system: LandscapeSystem, probe: Probe) -> dict[int, dict[object, int]]:
-    return null_bundle_distribution_by_h(system, probe, system.states[(system.seed + len(probe.name)) % len(system.states)])["degree"]
+def null_distribution_by_h(system: LandscapeSystem, probe: Probe, horizons: tuple[int, ...] = HORIZONS) -> dict[int, dict[object, int]]:
+    return null_bundle_distribution_by_h(system, probe, system.states[(system.seed + len(probe.name)) % len(system.states)], horizons)["degree"]
 
 
-def null_bundle_distribution_by_h(system: LandscapeSystem, probe: Probe, start: tuple[int, int, int, int]) -> dict[str, dict[int, dict[object, int]]]:
+def null_bundle_distribution_by_h(system: LandscapeSystem, probe: Probe, start: tuple[int, int, int, int], horizons: tuple[int, ...] = HORIZONS) -> dict[str, dict[int, dict[object, int]]]:
     degree_system = generate_system(system.seed + 919_191, "degree_preserving_control")
     random_system = generate_system(system.seed + 272_101, "random_relation_control")
     return {
-        "degree": _system_distribution_by_h(degree_system, probe, start),
-        "random": _system_distribution_by_h(random_system, probe, start),
-        "probe_marginal": _probe_marginal_distribution_by_h(system, probe, start),
-        "frontier_size": _probe_marginal_distribution_by_h(system, probe, start),
+        "degree": _system_distribution_by_h(degree_system, probe, start, horizons),
+        "random": _system_distribution_by_h(random_system, probe, start, horizons),
+        "probe_marginal": _probe_marginal_distribution_by_h(system, probe, start, horizons),
+        "frontier_size": _probe_marginal_distribution_by_h(system, probe, start, horizons),
     }
 
 
-def _system_distribution_by_h(null_system: LandscapeSystem, probe: Probe, start: tuple[int, int, int, int]) -> dict[int, dict[object, int]]:
+def _system_distribution_by_h(null_system: LandscapeSystem, probe: Probe, start: tuple[int, int, int, int], horizons: tuple[int, ...] = HORIZONS) -> dict[int, dict[object, int]]:
     if start not in null_system.edges:
         start = null_system.states[0]
-    return {h: signature_distribution(exact_frontier(null_system, start, h), probe) for h in HORIZONS}
+    return {h: signature_distribution(exact_frontier(null_system, start, h), probe) for h in horizons}
 
 
-def _probe_marginal_distribution_by_h(system: LandscapeSystem, probe: Probe, start: tuple[int, int, int, int]) -> dict[int, dict[object, int]]:
+def _probe_marginal_distribution_by_h(system: LandscapeSystem, probe: Probe, start: tuple[int, int, int, int], horizons: tuple[int, ...] = HORIZONS) -> dict[int, dict[object, int]]:
     full_counts = Counter(probe.fn(state) for state in system.states)
     signatures = sorted(full_counts, key=str)
     total = sum(full_counts.values())
     out = {}
-    for h in HORIZONS:
+    for h in horizons:
         observed_size = len(exact_frontier(system, start, h))
         if observed_size <= 0 or total <= 0:
             out[h] = {}
@@ -61,13 +61,13 @@ def null_systems(system: LandscapeSystem) -> dict[str, LandscapeSystem]:
     }
 
 
-def null_transition_metrics(system: LandscapeSystem, probe: Probe, start: tuple[int, int, int, int]) -> dict[str, dict[str, float]]:
+def null_transition_metrics(system: LandscapeSystem, probe: Probe, start: tuple[int, int, int, int], horizons: tuple[int, ...] = HORIZONS) -> dict[str, dict[str, float]]:
     from .landscape import transition_information_summary
 
     out = {}
     for null_name, null_system in null_systems(system).items():
         null_start = start if start in null_system.edges else null_system.states[0]
-        summary, _rows = transition_information_summary(null_system, null_start, probe)
+        summary, _rows = transition_information_summary(null_system, null_start, probe, horizons)
         out[null_name] = summary
     marginal_mi = 0.0
     out["probe_marginal"] = {

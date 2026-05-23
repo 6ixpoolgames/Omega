@@ -3397,3 +3397,54 @@ Read:
 Next:
 
 Keep v1.1 as the current detector discipline. Do not scale until there is either a non-saturating structured candidate family or stronger saturation/frontier-matched null machinery.
+
+## 2026-05-23 - RFS-MB0 future-landscape long-horizon environment audit
+
+Implemented the long-horizon audit from:
+
+```text
+docs/RFS_MB0_FUTURE_LANDSCAPE_LONG_HORIZON_ENVIRONMENT_AUDIT.md
+```
+
+Primary result note:
+
+```text
+docs/research_notes/validation_results/rfs_mb0_future_landscape_long_horizon_environment_audit_result.md
+```
+
+Primary run:
+
+```text
+results/rfs_mb0_future_landscape/20260523_long_horizon_100x/
+```
+
+Shape:
+
+```text
+systems: 33
+future profiles: 3696
+workers: 18
+horizon grid: 0 through 1024, sparse long-horizon schedule
+errors: 0
+status: COMPLETED
+elapsed: about 381 seconds
+```
+
+Implementation changes:
+
+- Added configurable horizon grids and custom horizons to the future-landscape runner.
+- Propagated horizon grids through profile, null, and transition-summary code.
+- Added horizon-local profile/null outputs, window summaries, saturation onset by family, viscosity diagnostics, and a compact long-horizon status file.
+
+Read:
+
+- Long horizons do not rescue the current substrate.
+- Aggregate structured family count remains 0.
+- Degree-preserving controls do not pass the aggregate gate.
+- Nominal structured/expanding families are saturation dominated.
+- The viscosity diagnostic does not support "H16 was simply too short"; transition information generally appears immediately.
+- Window-local early/pre-saturation candidates exist, but controls also show window-local candidates, so they are diagnostic only.
+
+Next:
+
+Do not run a longer overnight batch on this exact substrate. Keep the long-horizon machinery as a diagnostic layer, but move next effort toward substrate/environment redesign or stronger window-level controls.

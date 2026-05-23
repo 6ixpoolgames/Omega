@@ -72,9 +72,10 @@ earlier, neutral precursors to that object can be isolated.
 Current status sentence:
 
 ```text
-Detector v1.1 can measure neutral future landscapes and separate local profile
-candidates from aggregate claims, but it has not validated the target object:
-no non-control, non-saturated family currently earns an aggregate structure pass.
+Detector v1.1 plus the long-horizon audit layer can measure neutral future
+landscapes, separate local profile candidates from aggregate claims, and test
+whether H16 ended too early. It has not validated the target object: no
+non-control, non-saturated family currently earns an aggregate structure pass.
 ```
 
 ## Core theory terms

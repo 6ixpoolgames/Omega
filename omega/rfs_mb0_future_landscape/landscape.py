@@ -54,34 +54,36 @@ def future_profile(
     null_counts_by_h: dict[int, dict[object, int]] | None = None,
     null_bundle_counts_by_h: dict[str, dict[int, dict[object, int]]] | None = None,
     null_transition_summaries: dict[str, dict[str, float]] | None = None,
+    horizons: tuple[int, ...] = HORIZONS,
 ) -> tuple[dict[str, float | int | str], list[dict[str, float | int | str]], list[dict[str, float | int | str]]]:
-    reach_by_h = {h: reachable(system, start, h) for h in HORIZONS}
-    exact_by_h = {h: exact_frontier(system, start, h) for h in HORIZONS}
-    distributions = {h: signature_distribution(exact_by_h[h], probe) for h in HORIZONS}
-    entropies = {h: entropy_from_counts(distributions[h]) for h in HORIZONS}
-    support_sizes = {h: len(distributions[h]) for h in HORIZONS}
-    exact_counts = {h: len(exact_by_h[h]) for h in HORIZONS}
-    reach_counts = {h: len(reach_by_h[h]) for h in HORIZONS}
-    growth_rates = _growth_rates(reach_counts)
-    recurrence = recurrence_rate([frozenset(probe.fn(state) for state in exact_by_h[h]) for h in HORIZONS])
-    motif = motif_reuse([distributions[h] for h in HORIZONS])
-    compression = compression_proxy([distributions[h] for h in HORIZONS])
-    adjacent_similarity = _adjacent_distribution_similarity(distributions)
+    reach_by_h = {h: reachable(system, start, h) for h in horizons}
+    exact_by_h = {h: exact_frontier(system, start, h) for h in horizons}
+    distributions = {h: signature_distribution(exact_by_h[h], probe) for h in horizons}
+    entropies = {h: entropy_from_counts(distributions[h]) for h in horizons}
+    support_sizes = {h: len(distributions[h]) for h in horizons}
+    exact_counts = {h: len(exact_by_h[h]) for h in horizons}
+    reach_counts = {h: len(reach_by_h[h]) for h in horizons}
+    growth_rates = _growth_rates(reach_counts, horizons)
+    recurrence = recurrence_rate([frozenset(probe.fn(state) for state in exact_by_h[h]) for h in horizons])
+    motif = motif_reuse([distributions[h] for h in horizons])
+    compression = compression_proxy([distributions[h] for h in horizons])
+    adjacent_similarity = _adjacent_distribution_similarity(distributions, horizons)
     conditional_entropy = _conditional_entropy_proxy(entropies, adjacent_similarity)
-    transition_summary, transition_rows = transition_information_summary(system, start, probe)
-    saturation_horizon = _saturation_horizon(reach_counts)
-    collapse = int(saturation_horizon <= 2 and reach_counts[max(HORIZONS)] <= 4)
-    cycle = int(_cycle_indicator(exact_by_h))
+    transition_summary, transition_rows = transition_information_summary(system, start, probe, horizons)
+    saturation_horizon = _saturation_horizon(reach_counts, horizons)
+    max_horizon = max(horizons)
+    collapse = int(saturation_horizon <= 2 and reach_counts[max_horizon] <= 4)
+    cycle = int(_cycle_indicator(exact_by_h, horizons))
     js_values = {}
     kl_values = {}
-    for h in HORIZONS:
+    for h in horizons:
         null_counts = null_counts_by_h.get(h, {}) if null_counts_by_h else {}
         js_values[h] = js_divergence(distributions[h], null_counts) if null_counts else 0.0
         kl_values[h] = smoothed_kl(distributions[h], null_counts) if null_counts else 0.0
     null_bundle = _null_bundle_summary(distributions, null_bundle_counts_by_h or {})
     null_transition = _null_transition_summary(transition_summary, null_transition_summaries or {})
-    reach_saturation_fraction = reach_counts[max(HORIZONS)] / max(1, len(system.states))
-    exact_saturation_fraction = exact_counts[max(HORIZONS)] / max(1, len(system.states))
+    reach_saturation_fraction = reach_counts[max_horizon] / max(1, len(system.states))
+    exact_saturation_fraction = exact_counts[max_horizon] / max(1, len(system.states))
     profile = {
         "system_id": system.system_id,
         "family": system.family,
@@ -90,8 +92,11 @@ def future_profile(
         "probe_mode": probe.mode,
         "probe_family": probe.probe_family,
         "probe_arity": probe.arity,
-        "reach_H16": reach_counts[max(HORIZONS)],
-        "exact_H16": exact_counts[max(HORIZONS)],
+        "reach_H16": reach_counts.get(16, reach_counts[max_horizon]),
+        "exact_H16": exact_counts.get(16, exact_counts[max_horizon]),
+        "reach_Hmax": reach_counts[max_horizon],
+        "exact_Hmax": exact_counts[max_horizon],
+        "max_horizon": max_horizon,
         "growth_mean": sum(growth_rates.values()) / max(1, len(growth_rates)),
         "entropy_mean": sum(entropies.values()) / len(entropies),
         "signature_support_mean": sum(support_sizes.values()) / len(support_sizes),
@@ -127,7 +132,7 @@ def future_profile(
     )
     distribution_rows = []
     profile_rows = []
-    for h in HORIZONS:
+    for h in horizons:
         profile_rows.append(
             {
                 **{k: profile[k] for k in ("system_id", "family", "probe_name", "probe_mode", "probe_family", "profile_class", "control_relative_profile_class_v1")},
@@ -138,6 +143,10 @@ def future_profile(
                 "growth_rate": growth_rates.get(h, 0.0),
                 "signature_entropy": entropies[h],
                 "signature_support_size": support_sizes[h],
+                "reach_saturation_fraction_H": reach_counts[h] / max(1, len(system.states)),
+                "exact_saturation_fraction_H": exact_counts[h] / max(1, len(system.states)),
+                "signature_entropy_H": entropies[h],
+                "signature_support_size_H": support_sizes[h],
                 "conditional_entropy_proxy": conditional_entropy,
                 "JS_to_null": js_values[h],
                 "smoothed_KL_to_null": kl_values[h],
@@ -159,13 +168,13 @@ def future_profile(
     return profile, profile_rows + transition_rows, distribution_rows
 
 
-def transition_information_summary(system: LandscapeSystem, start: State, probe: Probe) -> tuple[dict[str, float], list[dict[str, float | int | str]]]:
+def transition_information_summary(system: LandscapeSystem, start: State, probe: Probe, horizons: tuple[int, ...] = HORIZONS) -> tuple[dict[str, float], list[dict[str, float | int | str]]]:
     rows = []
     mi_values = []
     conditional_values = []
     grammar_values = []
     motif_values = []
-    for h in HORIZONS:
+    for h in horizons:
         frontier = exact_frontier(system, start, h)
         joint_counts = _transition_joint_counts(system, frontier, probe)
         mi = mutual_information_from_joint(joint_counts)
@@ -252,11 +261,11 @@ def edge_deformations(system: LandscapeSystem, probe: Probe) -> list[dict[str, f
     return rows
 
 
-def _growth_rates(reach_counts: dict[int, int]) -> dict[int, float]:
+def _growth_rates(reach_counts: dict[int, int], horizons: tuple[int, ...] = HORIZONS) -> dict[int, float]:
     rates = {}
     previous_h = None
     previous_count = None
-    for h in HORIZONS:
+    for h in horizons:
         if previous_h is not None and previous_count is not None:
             rates[h] = (reach_counts[h] - previous_count) / max(1, h - previous_h)
         previous_h = h
@@ -270,8 +279,9 @@ def _null_bundle_summary(distributions: dict[int, dict[object, int]], null_bundl
     kl_means = []
     rank_wins = 0
     for null_name, by_h in sorted(null_bundle_counts_by_h.items()):
-        js_values = [js_divergence(distributions[h], by_h.get(h, {})) for h in HORIZONS]
-        kl_values = [smoothed_kl(distributions[h], by_h.get(h, {})) for h in HORIZONS]
+        horizons = tuple(sorted(distributions))
+        js_values = [js_divergence(distributions[h], by_h.get(h, {})) for h in horizons]
+        kl_values = [smoothed_kl(distributions[h], by_h.get(h, {})) for h in horizons]
         js_mean = sum(js_values) / len(js_values)
         kl_mean = sum(kl_values) / len(kl_values)
         output[f"null_JS_{null_name}"] = js_mean
@@ -322,10 +332,10 @@ def _null_transition_summary(transition_summary: dict[str, float], null_transiti
     return output
 
 
-def _adjacent_distribution_similarity(distributions: dict[int, dict[object, int]]) -> float:
+def _adjacent_distribution_similarity(distributions: dict[int, dict[object, int]], horizons: tuple[int, ...] = HORIZONS) -> float:
     values = []
     prev = None
-    for h in HORIZONS:
+    for h in horizons:
         current = distributions[h]
         if prev is not None:
             values.append(1.0 - js_divergence(current, prev))
@@ -338,17 +348,17 @@ def _conditional_entropy_proxy(entropies: dict[int, float], predictive_informati
     return max(0.0, entropy_mean - predictive_information)
 
 
-def _saturation_horizon(reach_counts: dict[int, int]) -> int:
-    final = reach_counts[max(HORIZONS)]
-    for h in HORIZONS:
+def _saturation_horizon(reach_counts: dict[int, int], horizons: tuple[int, ...] = HORIZONS) -> int:
+    final = reach_counts[max(horizons)]
+    for h in horizons:
         if reach_counts[h] == final:
             return h
-    return max(HORIZONS)
+    return max(horizons)
 
 
-def _cycle_indicator(exact_by_h: dict[int, frozenset[State]]) -> bool:
+def _cycle_indicator(exact_by_h: dict[int, frozenset[State]], horizons: tuple[int, ...] = HORIZONS) -> bool:
     seen: dict[frozenset[State], int] = {}
-    for h in HORIZONS:
+    for h in horizons:
         frontier = exact_by_h[h]
         if frontier in seen and h - seen[frontier] > 0 and len(frontier) <= 8:
             return True

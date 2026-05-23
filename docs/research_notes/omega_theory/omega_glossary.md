@@ -73,8 +73,9 @@ minimal dynamical systems can resolve the distinctions Omega cares about.
 Current implementation status:
 
 ```text
-RFS-MB0 detector v1.1 is implemented.
-It measures mechanically probed future-profile deformation.
+RFS-MB0 detector v1.1 and the long-horizon audit layer are implemented.
+They measure mechanically probed future-profile deformation through extended
+horizon grids.
 It has not passed the scientific gate because no non-control, non-saturated
 family currently earns an aggregate structure pass.
 ```

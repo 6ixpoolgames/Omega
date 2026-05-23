@@ -36,7 +36,8 @@ Status:
   matched-control artifacts without semantic labels;
 - detector v1.1 is implemented with local-vs-aggregate classification,
   mechanical probes, transition-level information measures, matched null
-  bundles, and saturation diagnostics;
+  bundles, saturation diagnostics, and long-horizon audit support through
+  H1024;
 - the current scientific gate is not passed because no non-control,
   non-saturated family receives aggregate `structured_propagation`;
 - VAL0-G and VAL1-MF are reconnaissance evidence for viability dynamics and
@@ -60,6 +61,7 @@ Directory:
 Current result notes:
 
 - `rfs_mb0_future_landscape_detector_v1_1_smoke_result.md`
+- `rfs_mb0_future_landscape_long_horizon_environment_audit_result.md`
 - `rfs_mb0_future_landscape_detector_v1_smoke_result.md`
 - `rfs_mb0_future_landscape_smoke_result.md`
 - `rfs_mb0_neutral_transform_reset_smoke_result.md`
@@ -79,12 +81,12 @@ Result in one line:
 - Current reset: the project is not claiming Omega validation. It is building a
   collaborator-legible empirical program around reachable-future landscapes,
   matched controls, and failure modes.
-- RFS-MB0 future-landscape detector v1.1 passed implementation checks: 33
-  systems, 3696 profiles, zero errors, local/aggregate class split, mechanical
-  probes, transition-level MI, conditional entropy, null bundles, and
-  saturation diagnostics. It did not pass the scientific gate: zero aggregate
-  structured families passed. The 39 degree-control local false positives are
-  now exposed but do not promote aggregate claims.
+- RFS-MB0 future-landscape detector v1.1 passed implementation checks, and the
+  long-horizon audit extended the horizon grid through H1024: 33 systems, 3696
+  profiles, zero errors. It did not pass the scientific gate: zero aggregate
+  structured families passed. The long-horizon read suggests the current
+  blocker is substrate/environment design and saturation handling, not merely
+  an H16 cutoff.
 - The earlier RFS-MB0 future-landscape v0 smoke was useful because it overcalled
   structure across random, degree, and coordinate-permutation controls. v1
   narrowed the failure to degree-preserving controls and saturation handling;

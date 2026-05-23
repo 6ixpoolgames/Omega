@@ -24,6 +24,14 @@ NULL_OR_CONTROL_FAMILIES = {
     "strict_probe_control",
 }
 
+HORIZON_GRIDS = {
+    "default": (0, 1, 2, 4, 8, 12, 16),
+    "dense_early": tuple(range(17)),
+    "long_5x": (0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 12, 16, 24, 32, 48, 64, 80),
+    "long_10x": (0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 12, 16, 24, 32, 48, 64, 80, 96, 128, 160),
+    "long_100x": (0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 12, 16, 24, 32, 48, 64, 80, 96, 128, 160, 224, 320, 512, 768, 1024),
+}
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run RFS-MB0 future landscape smoke.")
@@ -35,6 +43,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--workers", type=int, default=18)
     parser.add_argument("--max-runtime-seconds", type=int, default=900)
     parser.add_argument("--checkpoint-every", type=int, default=4)
+    parser.add_argument("--horizon-grid", choices=sorted(HORIZON_GRIDS), default="default")
+    parser.add_argument("--horizons", type=str, default="")
     return parser.parse_args()
 
 
@@ -42,6 +52,7 @@ def _run_one(job: dict[str, object]) -> dict[str, object]:
     started = time.perf_counter()
     system = generate_system(int(job["seed"]), str(job["family"]))
     probes = generate_probes(system, int(job["sigma"]))
+    horizons = tuple(int(value) for value in job["horizons"])
     start_count = int(job["start_samples"])
     starts = [system.states[(system.seed + i * 17) % len(system.states)] for i in range(start_count)]
     profiles = []
@@ -51,8 +62,8 @@ def _run_one(job: dict[str, object]) -> dict[str, object]:
     deformations = []
     for probe in probes:
         for start in starts:
-            null_bundle_by_h = null_bundle_distribution_by_h(system, probe, start)
-            null_transitions = null_transition_metrics(system, probe, start)
+            null_bundle_by_h = null_bundle_distribution_by_h(system, probe, start, horizons)
+            null_transitions = null_transition_metrics(system, probe, start, horizons)
             profile, rows, dist_rows = future_profile(
                 system,
                 start,
@@ -60,6 +71,7 @@ def _run_one(job: dict[str, object]) -> dict[str, object]:
                 null_bundle_by_h.get("degree", {}),
                 null_bundle_by_h,
                 null_transitions,
+                horizons,
             )
             profiles.append(profile)
             for row in rows:
@@ -81,6 +93,7 @@ def _run_one(job: dict[str, object]) -> dict[str, object]:
         "probe_family_counts_json": json.dumps(_probe_family_counts(probes), sort_keys=True),
         "sigma": int(job["sigma"]),
         "start_count": len(starts),
+        "horizons_json": json.dumps(horizons),
         "metadata_json": json.dumps(system.metadata, sort_keys=True),
         "job_elapsed_seconds": time.perf_counter() - started,
     }
@@ -104,6 +117,7 @@ def _probe_family_counts(probes: tuple[object, ...]) -> dict[str, int]:
 
 def _jobs(args: argparse.Namespace) -> list[dict[str, object]]:
     families = [item.strip() for item in args.families.split(",") if item.strip()]
+    horizons = _resolve_horizons(args)
     jobs = []
     for family in families:
         for seed_index in range(args.seeds_per_family):
@@ -113,9 +127,20 @@ def _jobs(args: argparse.Namespace) -> list[dict[str, object]]:
                     "family": family,
                     "sigma": args.sigma,
                     "start_samples": args.start_samples,
+                    "horizons": horizons,
                 }
             )
     return jobs
+
+
+def _resolve_horizons(args: argparse.Namespace) -> tuple[int, ...]:
+    if args.horizons.strip():
+        values = tuple(sorted({int(item.strip()) for item in args.horizons.split(",") if item.strip()}))
+    else:
+        values = HORIZON_GRIDS[args.horizon_grid]
+    if not values or values[0] != 0:
+        raise ValueError("horizon grid must include 0")
+    return values
 
 
 def _seed_for(family: str, seed_index: int) -> int:
@@ -418,6 +443,145 @@ def _matched_null_summary(rows: list[dict[str, object]]) -> list[dict[str, objec
     return out
 
 
+def _horizon_local_nulls(profile_rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    return [
+        {
+            "system_id": row["system_id"],
+            "family": row["family"],
+            "probe_name": row["probe_name"],
+            "probe_family": row["probe_family"],
+            "H": row["H"],
+            "JS_to_null_H": row["JS_to_null"],
+            "KL_to_null_H": row["smoothed_KL_to_null"],
+            "reach_saturation_fraction_H": row["reach_saturation_fraction_H"],
+            "exact_saturation_fraction_H": row["exact_saturation_fraction_H"],
+        }
+        for row in profile_rows
+    ]
+
+
+def _horizon_window_summary(profile_rows: list[dict[str, object]], transition_rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    transition_by_key = {
+        (row["system_id"], row["probe_name"], int(row["H"])): row
+        for row in transition_rows
+    }
+    grouped: dict[tuple[str, str, str], list[dict[str, object]]] = {}
+    for row in profile_rows:
+        h = int(row["H"])
+        windows = _windows_for_horizon(row, h)
+        transition = transition_by_key.get((row["system_id"], row["probe_name"], h), {})
+        merged = {**row, **transition}
+        for window in windows:
+            grouped.setdefault((str(row["family"]), str(row["probe_family"]), window), []).append(merged)
+    out = []
+    for (family, probe_family, window), items in sorted(grouped.items()):
+        summary = {
+            "family": family,
+            "probe_family": probe_family,
+            "window": window,
+            "n": len(items),
+            "mean_transition_MI_H": _mean([item.get("signature_transition_MI_by_h", 0.0) for item in items]),
+            "median_transition_MI_H": _median([item.get("signature_transition_MI_by_h", 0.0) for item in items]),
+            "mean_transition_conditional_entropy_H": _mean([item.get("signature_transition_conditional_entropy_by_h", 0.0) for item in items]),
+            "mean_transition_motif_reuse_H": _mean([item.get("signature_transition_motif_reuse_by_h", 0.0) for item in items]),
+            "mean_JS_to_null_H": _mean([item.get("JS_to_null", 0.0) for item in items]),
+            "mean_KL_to_null_H": _mean([item.get("smoothed_KL_to_null", 0.0) for item in items]),
+            "saturation_fraction": _mean([float(item.get("reach_saturation_fraction_H", 0.0)) >= 0.95 for item in items]),
+            "cycle_fraction": _mean([item.get("control_relative_profile_class_v1") == "cycle_like" for item in items]),
+        }
+        summary["aggregate_window_class_v1_2"] = _window_class(summary)
+        out.append(summary)
+    return out
+
+
+def _windows_for_horizon(row: dict[str, object], h: int) -> list[str]:
+    reach_sat = float(row.get("reach_saturation_fraction_H", 0.0))
+    windows = []
+    if h <= 4:
+        windows.append("early_window")
+    if reach_sat < 0.95:
+        windows.append("pre_saturation_window")
+    if 0.75 <= reach_sat < 0.95:
+        windows.append("near_saturation_window")
+    if reach_sat >= 0.95:
+        windows.append("post_saturation_window")
+    return windows or ["undetermined_window"]
+
+
+def _window_class(row: dict[str, object]) -> str:
+    if float(row["saturation_fraction"]) >= 0.50:
+        return "saturation_dominated_window"
+    if float(row["cycle_fraction"]) >= 0.50:
+        return "cycle_dominated_window"
+    if float(row["mean_transition_MI_H"]) > 0.25 and float(row["mean_JS_to_null_H"]) > 0.10:
+        return "structured_candidate_window"
+    if float(row["mean_JS_to_null_H"]) <= 0.05:
+        return "null_mimic_window"
+    return "underdetermined_window"
+
+
+def _saturation_onset_by_family(profile_rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    grouped: dict[str, list[dict[str, object]]] = {}
+    for row in profile_rows:
+        grouped.setdefault(str(row["family"]), []).append(row)
+    out = []
+    for family, items in sorted(grouped.items()):
+        horizons = sorted({int(item["H"]) for item in items})
+        mean_by_h = {
+            h: _mean([item["reach_saturation_fraction_H"] for item in items if int(item["H"]) == h])
+            for h in horizons
+        }
+        saturation = next((h for h in horizons if mean_by_h[h] >= 0.95), None)
+        max_non_sat = max((h for h in horizons if mean_by_h[h] < 0.95), default=0)
+        out.append(
+            {
+                "family": family,
+                "saturation_onset_H": saturation if saturation is not None else "",
+                "frontier_repeat_onset_H": "",
+                "max_non_saturated_H": max_non_sat,
+                "fast_saturation_flag": int(saturation is not None and saturation <= 16),
+                "mean_final_reach_saturation_fraction": mean_by_h[horizons[-1]],
+            }
+        )
+    return out
+
+
+def _viscosity_diagnostics(profile_rows: list[dict[str, object]], transition_rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    profile_by_key = {
+        (row["system_id"], row["probe_name"], int(row["H"])): row
+        for row in profile_rows
+    }
+    grouped: dict[tuple[str, str], list[dict[str, object]]] = {}
+    for row in transition_rows:
+        profile = profile_by_key.get((row["system_id"], row["probe_name"], int(row["H"])), {})
+        merged = {**profile, **row}
+        grouped.setdefault((str(row["family"]), str(row["probe_family"])), []).append(merged)
+    out = []
+    for (family, probe_family), items in sorted(grouped.items()):
+        positive_mi = [item for item in items if float(item.get("signature_transition_MI_by_h", 0.0)) > 0.05]
+        positive_js = [item for item in items if float(item.get("JS_to_null", 0.0)) > 0.05]
+        peak_mi = max(items, key=lambda item: float(item.get("signature_transition_MI_by_h", 0.0))) if items else {}
+        pre_sat_items = [item for item in items if float(item.get("reach_saturation_fraction_H", 0.0)) < 0.95]
+        peak_pre_sat = max((float(item.get("signature_transition_MI_by_h", 0.0)) for item in pre_sat_items), default=0.0)
+        first_mi_h = min((int(item["H"]) for item in positive_mi), default="")
+        out.append(
+            {
+                "family": family,
+                "probe_family": probe_family,
+                "first_nonzero_transition_MI_H": first_mi_h,
+                "first_positive_MI_delta_H": first_mi_h,
+                "first_positive_motif_delta_H": "",
+                "first_JS_separation_H": min((int(item["H"]) for item in positive_js), default=""),
+                "peak_MI_delta_H": peak_mi.get("H", ""),
+                "peak_motif_delta_H": "",
+                "peak_JS_H": max((int(item["H"]) for item in positive_js), default=""),
+                "peak_signal_before_saturation": peak_pre_sat,
+                "viscous_candidate_flag": int(isinstance(first_mi_h, int) and first_mi_h > 16 and peak_pre_sat > 0.05),
+            }
+        )
+    return out
+
+
 def _write_outputs(
     out_dir: Path,
     config: dict[str, object],
@@ -442,8 +606,14 @@ def _write_outputs(
     aggregate_family_classes = _aggregate_family_classes(profiles, aggregate_probe_family_classes)
     degree_false_positives = _degree_control_false_positives(aggregate_probe_family_classes)
     matched_null_summary = _matched_null_summary(profiles)
+    horizon_local_nulls = _horizon_local_nulls(profile_rows)
+    horizon_window_summary = _horizon_window_summary(profile_rows, transition_rows)
+    saturation_onset = _saturation_onset_by_family(profile_rows)
+    viscosity_diagnostics = _viscosity_diagnostics(profile_rows, transition_rows)
     _write_csv(out_dir / "results.csv", systems)
     _write_csv(out_dir / "future_profiles.csv", profile_rows)
+    _write_csv(out_dir / "horizon_local_profiles.csv", profile_rows)
+    _write_csv(out_dir / "horizon_local_nulls.csv", horizon_local_nulls)
     _write_csv(out_dir / "transition_information.csv", transition_rows)
     _write_csv(out_dir / "signature_distributions.csv", distributions)
     _write_csv(out_dir / "control_comparison.csv", family_summary)
@@ -457,6 +627,10 @@ def _write_outputs(
     _write_csv(out_dir / "aggregate_family_classes.csv", aggregate_family_classes)
     _write_csv(out_dir / "aggregate_probe_family_classes.csv", aggregate_probe_family_classes)
     _write_csv(out_dir / "degree_control_false_positives.csv", degree_false_positives)
+    _write_csv(out_dir / "horizon_window_summary.csv", horizon_window_summary)
+    _write_csv(out_dir / "aggregate_window_classes.csv", horizon_window_summary)
+    _write_csv(out_dir / "saturation_onset_by_family.csv", saturation_onset)
+    _write_csv(out_dir / "viscosity_diagnostics.csv", viscosity_diagnostics)
     _write_csv(out_dir / "deformation_summary.csv", deformation_summary)
     _write_csv(out_dir / "errors.csv", errors)
     status = {
@@ -470,7 +644,8 @@ def _write_outputs(
         "elapsed_seconds": time.perf_counter() - float(config["started_perf_counter"]),
     }
     (out_dir / "status.json").write_text(json.dumps(status, indent=2, sort_keys=True), encoding="utf-8")
-    _write_summary(out_dir, config, systems, profiles, class_summary, v1_class_summary, family_summary, divergence_summary, v1_divergence_summary, deformation_summary, probe_summary, null_bundle_summary, saturation_summary, aggregate_family_classes, aggregate_probe_family_classes, degree_false_positives, matched_null_summary, errors)
+    (out_dir / "long_horizon_status.json").write_text(json.dumps({**status, "horizons": config.get("resolved_horizons", [])}, indent=2, sort_keys=True), encoding="utf-8")
+    _write_summary(out_dir, config, systems, profiles, class_summary, v1_class_summary, family_summary, divergence_summary, v1_divergence_summary, deformation_summary, probe_summary, null_bundle_summary, saturation_summary, aggregate_family_classes, aggregate_probe_family_classes, degree_false_positives, matched_null_summary, horizon_window_summary, saturation_onset, viscosity_diagnostics, errors)
 
 
 def _write_summary(
@@ -491,6 +666,9 @@ def _write_summary(
     aggregate_probe_family_classes: list[dict[str, object]],
     degree_false_positives: list[dict[str, object]],
     matched_null_summary: list[dict[str, object]],
+    horizon_window_summary: list[dict[str, object]],
+    saturation_onset: list[dict[str, object]],
+    viscosity_diagnostics: list[dict[str, object]],
     errors: list[dict[str, object]],
 ) -> None:
     lines = [
@@ -509,6 +687,12 @@ def _write_summary(
         f"- Systems completed: {len(systems)}",
         f"- Future profiles completed: {len(profiles)}",
         f"- Errors: {len(errors)}",
+        "",
+        "## Horizon Grid",
+        "",
+        "```text",
+        ",".join(str(item) for item in config.get("resolved_horizons", [])),
+        "```",
         "",
         "## v0 Heuristic Class Counts",
         "",
@@ -559,6 +743,47 @@ def _write_summary(
                 local=float(row["local_candidate_fraction"]),
                 mi=float(row["mean_MI_delta_vs_null"]),
                 motif=float(row["mean_motif_delta_vs_null"]),
+            )
+        )
+    lines.extend(["", "## Saturation Onset", "", "| family | saturation onset H | max non-saturated H | fast saturation | final reach saturation |", "|---|---:|---:|---:|---:|"])
+    for row in saturation_onset:
+        lines.append(
+            "| {family} | {onset} | {max_h} | {fast} | {final:.3f} |".format(
+                family=row["family"],
+                onset=row["saturation_onset_H"],
+                max_h=row["max_non_saturated_H"],
+                fast=row["fast_saturation_flag"],
+                final=float(row["mean_final_reach_saturation_fraction"]),
+            )
+        )
+    lines.extend(["", "## Window-Level Classes", "", "| family | probe family | window | class | n | MI H | median MI H | motif reuse H | JS H | saturation | cycle |", "|---|---|---|---|---:|---:|---:|---:|---:|---:|---:|"])
+    for row in horizon_window_summary[:120]:
+        lines.append(
+            "| {family} | {probe} | {window} | {klass} | {n} | {mi:.3f} | {medmi:.3f} | {motif:.3f} | {js:.3f} | {sat:.3f} | {cycle:.3f} |".format(
+                family=row["family"],
+                probe=row["probe_family"],
+                window=row["window"],
+                klass=row["aggregate_window_class_v1_2"],
+                n=row["n"],
+                mi=float(row["mean_transition_MI_H"]),
+                medmi=float(row["median_transition_MI_H"]),
+                motif=float(row["mean_transition_motif_reuse_H"]),
+                js=float(row["mean_JS_to_null_H"]),
+                sat=float(row["saturation_fraction"]),
+                cycle=float(row["cycle_fraction"]),
+            )
+        )
+    lines.extend(["", "## Viscosity Diagnostics", "", "| family | probe family | first MI H | first JS H | peak MI H | peak pre-saturation signal | viscous |", "|---|---|---:|---:|---:|---:|---:|"])
+    for row in viscosity_diagnostics:
+        lines.append(
+            "| {family} | {probe} | {first_mi} | {first_js} | {peak_mi} | {peak:.3f} | {viscous} |".format(
+                family=row["family"],
+                probe=row["probe_family"],
+                first_mi=row["first_nonzero_transition_MI_H"],
+                first_js=row["first_JS_separation_H"],
+                peak_mi=row["peak_MI_delta_H"],
+                peak=float(row["peak_signal_before_saturation"]),
+                viscous=row["viscous_candidate_flag"],
             )
         )
     lines.extend(["", "## Control Comparison", "", "| family | n | reach H16 | exact H16 | entropy | predictive | recurrence | compression | collapse | cycle | JS null |", "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|"])
@@ -681,6 +906,8 @@ def _write_summary(
         )
     aggregate_passes = [row for row in aggregate_family_classes if row["aggregate_family_class_v1_1"] == "structured_propagation"]
     degree_passes = [row for row in degree_false_positives if int(row["aggregate_pass"])]
+    viscous_count = sum(int(row["viscous_candidate_flag"]) for row in viscosity_diagnostics)
+    fast_saturation_count = sum(int(row["fast_saturation_flag"]) for row in saturation_onset)
     gate_status = "passed" if aggregate_passes and not degree_passes else "not passed"
     lines.extend([
         "",
@@ -689,6 +916,13 @@ def _write_summary(
         f"- Scientific gate: {gate_status}",
         f"- Aggregate structured families: {len(aggregate_passes)}",
         f"- Degree-control aggregate probe-family passes: {len(degree_passes)}",
+        "",
+        "## Long-Horizon Gate Read",
+        "",
+        f"- Are we ending too early? {'possible' if viscous_count else 'not indicated by this run'}",
+        f"- Are signals only transient/pre-saturation? {'inspect window classes; saturated families are withheld' if horizon_window_summary else 'not measured'}",
+        f"- Are families saturation-dominated? {fast_saturation_count} families saturate within the measured grid",
+        f"- Are controls still clean at long horizons? {'yes at aggregate level' if not degree_passes else 'no'}",
         "",
         "## Claim Boundary",
         "",
@@ -724,6 +958,7 @@ def main() -> int:
     config = vars(args)
     config["run_id"] = run_id
     config["out"] = str(out_dir)
+    config["resolved_horizons"] = list(_resolve_horizons(args))
     config["started_perf_counter"] = time.perf_counter()
     config["status"] = "RUNNING"
     (out_dir / "config.json").write_text(json.dumps({k: v for k, v in config.items() if k != "started_perf_counter"}, indent=2, sort_keys=True), encoding="utf-8")
