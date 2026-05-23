@@ -79,7 +79,11 @@ def pairwise_metrics(system: MB0System, horizon: int) -> dict[str, int | float |
     exact_ab_count = len(exact_ab)
     min_singleton = min(a_count, b_count)
     exact_min_singleton = min(exact_a_count, exact_b_count)
+    nontrivial_a = {state for state in f_a if _nontrivial_endpoint(system.initial_state, state)}
+    nontrivial_b = {state for state in f_b if _nontrivial_endpoint(system.initial_state, state)}
     nontrivial_ab = {state for state in f_ab if _nontrivial_endpoint(system.initial_state, state)}
+    exact_nontrivial_a = {state for state in exact_a if _nontrivial_endpoint(system.initial_state, state)}
+    exact_nontrivial_b = {state for state in exact_b if _nontrivial_endpoint(system.initial_state, state)}
     exact_nontrivial_ab = {state for state in exact_ab if _nontrivial_endpoint(system.initial_state, state)}
     return {
         "H": horizon,
@@ -90,7 +94,11 @@ def pairwise_metrics(system: MB0System, horizon: int) -> dict[str, int | float |
         "exact_A_count": exact_a_count,
         "exact_B_count": exact_b_count,
         "exact_AB_count": exact_ab_count,
+        "nontrivial_A_count": len(nontrivial_a),
+        "nontrivial_B_count": len(nontrivial_b),
         "nontrivial_AB_count": len(nontrivial_ab),
+        "exact_nontrivial_A_count": len(exact_nontrivial_a),
+        "exact_nontrivial_B_count": len(exact_nontrivial_b),
         "exact_nontrivial_AB_count": len(exact_nontrivial_ab),
         "A_viable": int(a_count > 0),
         "B_viable": int(b_count > 0),

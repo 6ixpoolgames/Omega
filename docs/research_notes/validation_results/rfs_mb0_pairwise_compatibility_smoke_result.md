@@ -305,3 +305,188 @@ flatline_flag
 ```
 
 Do not add resource, reward, metabolism, or energy variables yet. The next mathematical object should be the horizon filtration of singleton and joint identity-preserving futures.
+
+## V3 Horizon-Filtration Addendum
+
+A second refinement note requested path-geometry diagnostics before any explicit cost machinery.
+
+The request was accepted. The runner now uses the horizon set:
+
+```text
+H = 0, 1, 2, 4, 8, 12, 16
+```
+
+and reports first-propagation and horizon-filtration diagnostics without adding weighted edges, energy, reward, resources, or optimization objectives.
+
+New per-system diagnostics include:
+
+```text
+first_A_H
+first_B_H
+first_AB_H
+first_exact_A_H
+first_exact_B_H
+first_exact_AB_H
+first_nontrivial_A_H
+first_nontrivial_B_H
+first_nontrivial_AB_H
+first_exact_nontrivial_A_H
+first_exact_nontrivial_B_H
+first_exact_nontrivial_AB_H
+joint_delay
+exact_joint_delay
+AB_flatline_all_H
+AB_saturates_early
+exact_nontrivial_AB_never
+stasis_like_geometry
+last_AB_change_H
+exact_H_growth_AB
+exact_H_growth_nontrivial_AB
+```
+
+New output artifacts include:
+
+```text
+geometry_summary.csv
+```
+
+and new Markdown sections:
+
+```text
+First Propagation Geometry
+Horizon Filtration By Regime
+```
+
+The filtration smoke was run at:
+
+```text
+results/rfs_mb0_pairwise/20260523_pairwise_filtration_smoke/
+```
+
+Run shape:
+
+```text
+systems: 315
+rows: 2205
+workers: 18
+errors: 0
+status: COMPLETED
+elapsed: about 50 seconds
+```
+
+## V3 Read
+
+The filtration layer passes as an instrumentation improvement.
+
+It exposes the geometry that was previously hidden by H16-only summaries. In particular:
+
+```text
+structured stasis_control:
+  first_nontrivial_AB_H = -1
+  first_exact_nontrivial_AB_H = -1
+  AB_saturates_early = 1
+  exact_nontrivial_AB_never = 1
+  stasis_like_geometry = 1
+```
+
+and:
+
+```text
+structured clock_control:
+  first_nontrivial_AB_H = -1
+  first_exact_nontrivial_AB_H = -1
+  AB_saturates_early = 1
+  exact_nontrivial_AB_never = 1
+```
+
+So the path-geometry diagnostics correctly separate trivial persistence from nontrivial propagation.
+
+However, the structured compatibility/capture regimes still do not provide the desired asymmetric signature:
+
+```text
+structured capture_A_over_B:
+  first_nontrivial_AB_H = 1
+  first_exact_nontrivial_AB_H = 1
+  joint_delay = 0
+  AB_saturates_early = 0
+
+structured capture_B_over_A:
+  first_nontrivial_AB_H = 1
+  first_exact_nontrivial_AB_H = 1
+  joint_delay = 0
+  AB_saturates_early = 0
+```
+
+The current capture generators produce immediate nontrivial joint propagation rather than delayed or constrained joint propagation.
+
+The structured pairwise-incompatible regime is still only moderately degraded:
+
+```text
+H1:
+  AB/min = 0.750
+  exact AB/min = 0.667
+
+H16:
+  AB/min = 0.640
+  exact AB/min = 0.625
+```
+
+This is a real distinction but still not a clean gate-pass.
+
+Random-edge controls remain adversarial and informative. Several random-edge regimes show sharp exact-joint collapse or apparent local contraction, so future structured signatures must beat those controls.
+
+## Gate Status
+
+Current suggested gate labels:
+
+```text
+Gate 2a:
+  pairwise machinery operational
+  status: passed
+
+Gate 2b:
+  trivial persistence / flatline exposed
+  status: passed as instrumentation
+
+Gate 2c:
+  horizon-filtration geometry reported
+  status: passed as instrumentation
+
+Gate 2d:
+  structured asymmetric local-preserving / joint-contracting signature
+  status: not passed
+
+Gate 2e:
+  signature survives random-edge and identity-shuffle controls
+  status: not passed
+```
+
+## V3 Recommendation
+
+Do not add cost machinery yet.
+
+The next revision should target the generator/continuity relation directly. The desired toy signature is:
+
+```text
+A-only and B-only continuations remain available
+joint continuations are delayed, bottlenecked, or sharply reduced
+the structured pattern separates from random-edge controls
+```
+
+The project should continue using path geometry as diagnostic language:
+
+```text
+horizon-filtration profile
+relational delay
+nontrivial propagation
+flatline / stasis-like persistence
+```
+
+and continue avoiding:
+
+```text
+cost score
+efficiency
+optimal path
+Omega metric
+```
