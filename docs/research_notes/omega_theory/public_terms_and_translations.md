@@ -72,8 +72,9 @@ earlier, neutral precursors to that object can be isolated.
 Current status sentence:
 
 ```text
-Detector v1 can measure neutral future landscapes, but it has not validated the
-target object: degree-preserving controls still produce false positives.
+Detector v1.1 can measure neutral future landscapes and separate local profile
+candidates from aggregate claims, but it has not validated the target object:
+no non-control, non-saturated family currently earns an aggregate structure pass.
 ```
 
 ## Core theory terms

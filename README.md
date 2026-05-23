@@ -20,7 +20,7 @@ The current empirical reset asks a narrower substrate question:
 
 Current status, in one line:
 
-**VAL0/VAL1 were useful reconnaissance probes; the active branch is now RFS-MB0 future-landscape detection, with detector v1 implemented and currently blocked by degree-preserving false positives.**
+**VAL0/VAL1 were useful reconnaissance probes; the active branch is now RFS-MB0 future-landscape detection, with detector v1.1 implemented and no aggregate scientific pass yet.**
 
 ## Why this matters for alignment
 
@@ -144,6 +144,7 @@ Current design files:
 
 - [Future landscape pattern spec](docs/RFS_MB0_FUTURE_LANDSCAPE_PATTERN_SPEC.md)
 - [Future landscape detector v1 handoff](docs/RFS_MB0_FUTURE_LANDSCAPE_DETECTOR_V1_HANDOFF.md)
+- [Future landscape detector v1.1 smoke result](docs/research_notes/validation_results/rfs_mb0_future_landscape_detector_v1_1_smoke_result.md)
 - [Future landscape detector v1 smoke result](docs/research_notes/validation_results/rfs_mb0_future_landscape_detector_v1_smoke_result.md)
 - [Minimal reachable futures formalism](docs/research_notes/omega_theory/minimal_reachable_futures_formalism.md)
 - [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
@@ -343,7 +344,7 @@ Omega asks which possible transformations preserve value-bearing future possibil
 
 ### For a new reader
 
-1. [Future landscape detector v1 smoke result](docs/research_notes/validation_results/rfs_mb0_future_landscape_detector_v1_smoke_result.md)
+1. [Future landscape detector v1.1 smoke result](docs/research_notes/validation_results/rfs_mb0_future_landscape_detector_v1_1_smoke_result.md)
 2. [Public terms and translations](docs/research_notes/omega_theory/public_terms_and_translations.md)
 3. [Future landscape pattern spec](docs/RFS_MB0_FUTURE_LANDSCAPE_PATTERN_SPEC.md)
 4. [Public results index](docs/PUBLIC_RESULTS_INDEX.md)
@@ -353,8 +354,8 @@ Omega asks which possible transformations preserve value-bearing future possibil
 ### For implementation work
 
 1. [Future landscape detector v1 handoff](docs/RFS_MB0_FUTURE_LANDSCAPE_DETECTOR_V1_HANDOFF.md)
-2. [Future landscape pattern spec](docs/RFS_MB0_FUTURE_LANDSCAPE_PATTERN_SPEC.md)
-3. [Future landscape detector v1 smoke result](docs/research_notes/validation_results/rfs_mb0_future_landscape_detector_v1_smoke_result.md)
+2. [Future landscape v1.1 code targets](docs/RFS_MB0_FUTURE_LANDSCAPE_V1_1_CODE_TARGETS.md)
+3. [Future landscape detector v1.1 smoke result](docs/research_notes/validation_results/rfs_mb0_future_landscape_detector_v1_1_smoke_result.md)
 4. [Minimal reachable futures formalism](docs/research_notes/omega_theory/minimal_reachable_futures_formalism.md)
 5. [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
 
@@ -369,9 +370,9 @@ Omega asks which possible transformations preserve value-bearing future possibil
 
 ## Current next step
 
-The current implementation target is **RFS-MB0 Future Landscape Detector v1**.
+The current implementation target is **RFS-MB0 Future Landscape Detector v1.1**.
 
-The detector v1 smoke passed as an implementation run, but not as a scientific gate. It corrected the broad v0 overcall by adding transition-level information, mechanical probes, matched nulls, and saturation handling. The remaining blocker is specific: degree-preserving controls still produce some `structured_propagation` profiles.
+The detector v1.1 smoke passed as an implementation run, but not as a scientific gate. It keeps local profile candidates visible while preventing them from becoming family-level claims. The current result has zero aggregate structured families and zero degree-control aggregate probe-family passes.
 
 Public summary:
 
@@ -421,12 +422,12 @@ RFS0 strict finite reachability:
 
 RFS-MB0:
   active future-landscape detector
-  v1 implemented; scientific gate blocked by degree-preserving false positives
+  v1.1 implemented; scientific gate not passed
 
 RFS-MB0.1:
   next target
-  add frontier-size and saturation-matched nulls; require family/probe-family
-  separation from degree controls
+  develop non-saturating structured candidates and stronger frontier/saturation
+  matched nulls
 
 RFS-MB1:
   only after MB0 control separation

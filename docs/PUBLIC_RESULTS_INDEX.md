@@ -34,10 +34,11 @@ Status:
 - asks whether horizon-indexed reachable-future profiles can distinguish
   structured future deformation from saturation, clocks, collapse, and
   matched-control artifacts without semantic labels;
-- detector v1 is implemented with mechanical probes, transition-level
-  information measures, matched null bundles, and saturation diagnostics;
-- the current scientific gate is not passed because degree-preserving controls
-  still produce some `structured_propagation` calls;
+- detector v1.1 is implemented with local-vs-aggregate classification,
+  mechanical probes, transition-level information measures, matched null
+  bundles, and saturation diagnostics;
+- the current scientific gate is not passed because no non-control,
+  non-saturated family receives aggregate `structured_propagation`;
 - VAL0-G and VAL1-MF are reconnaissance evidence for viability dynamics and
   substrate limitations;
 - VAL0-CT showed reproducible anchor wins and clean dense controls, but no
@@ -58,6 +59,7 @@ Directory:
 
 Current result notes:
 
+- `rfs_mb0_future_landscape_detector_v1_1_smoke_result.md`
 - `rfs_mb0_future_landscape_detector_v1_smoke_result.md`
 - `rfs_mb0_future_landscape_smoke_result.md`
 - `rfs_mb0_neutral_transform_reset_smoke_result.md`
@@ -77,14 +79,16 @@ Result in one line:
 - Current reset: the project is not claiming Omega validation. It is building a
   collaborator-legible empirical program around reachable-future landscapes,
   matched controls, and failure modes.
-- RFS-MB0 future-landscape detector v1 passed implementation checks: 33 systems,
-  3696 profiles, zero errors, mechanical probes, transition-level MI,
-  conditional entropy, null bundles, and saturation diagnostics. It did not
-  pass the scientific gate because degree-preserving controls still generated
-  39 `structured_propagation` profiles.
+- RFS-MB0 future-landscape detector v1.1 passed implementation checks: 33
+  systems, 3696 profiles, zero errors, local/aggregate class split, mechanical
+  probes, transition-level MI, conditional entropy, null bundles, and
+  saturation diagnostics. It did not pass the scientific gate: zero aggregate
+  structured families passed. The 39 degree-control local false positives are
+  now exposed but do not promote aggregate claims.
 - The earlier RFS-MB0 future-landscape v0 smoke was useful because it overcalled
   structure across random, degree, and coordinate-permutation controls. v1
-  narrows the failure to degree-preserving controls and saturation handling.
+  narrowed the failure to degree-preserving controls and saturation handling;
+  v1.1 prevents local false positives from becoming family-level claims.
 - RFS0 strict small smoke passed as an exact measurement-floor and workflow
   test: 108 systems completed with checkpointed outputs and zero errors.
   Structured regimes produced sparse nonzero strict kernels in some cases, but
@@ -486,7 +490,7 @@ The active implementation is:
 omega/rfs_mb0_future_landscape/
 ```
 
-The detector v1 question is:
+The detector v1.1 question is:
 
 ```text
 Does a future landscape contain structured propagation that survives matched
@@ -497,8 +501,8 @@ clock behavior, collapse, or probe artifacts?
 Current answer:
 
 ```text
-Not yet. Detector v1 narrows the problem but does not pass. Degree-preserving
-controls still produce false-positive structured profiles.
+Not yet. Detector v1.1 is methodologically cleaner but does not pass. Local
+false positives remain visible, while aggregate structure claims are withheld.
 ```
 
 Historical COM, trajectory-space, primitive-branch, and DAX results remain

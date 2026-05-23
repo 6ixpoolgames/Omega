@@ -120,6 +120,11 @@ def future_profile(
     profile["heuristic_profile_class_v0"] = profile_class(profile)
     profile["profile_class"] = profile["heuristic_profile_class_v0"]
     profile["control_relative_profile_class_v1"] = control_relative_profile_class(profile)
+    profile["local_profile_class_v1_1"] = (
+        "local_structured_candidate"
+        if profile["control_relative_profile_class_v1"] == "structured_propagation"
+        else str(profile["control_relative_profile_class_v1"])
+    )
     distribution_rows = []
     profile_rows = []
     for h in HORIZONS:

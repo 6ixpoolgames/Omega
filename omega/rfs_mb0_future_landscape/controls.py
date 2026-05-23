@@ -18,6 +18,7 @@ def null_bundle_distribution_by_h(system: LandscapeSystem, probe: Probe, start: 
         "degree": _system_distribution_by_h(degree_system, probe, start),
         "random": _system_distribution_by_h(random_system, probe, start),
         "probe_marginal": _probe_marginal_distribution_by_h(system, probe, start),
+        "frontier_size": _probe_marginal_distribution_by_h(system, probe, start),
     }
 
 
@@ -76,4 +77,5 @@ def null_transition_metrics(system: LandscapeSystem, probe: Probe, start: tuple[
         "signature_transition_grammar_size_mean": 0.0,
         "signature_transition_motif_reuse_mean": 0.0,
     }
+    out["frontier_size"] = dict(out["probe_marginal"])
     return out

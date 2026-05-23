@@ -7,12 +7,22 @@ import time
 from concurrent.futures import FIRST_COMPLETED, ProcessPoolExecutor, wait
 from datetime import datetime
 from pathlib import Path
-from statistics import mean
+from statistics import median, mean
 
 from .controls import null_bundle_distribution_by_h, null_transition_metrics
 from .landscape import edge_deformations, future_profile
 from .probes import generate_probes
 from .substrate import FAMILIES, generate_system
+
+NULL_OR_CONTROL_FAMILIES = {
+    "random_relation_control",
+    "degree_preserving_control",
+    "coordinate_permutation_control",
+    "phase_cycle_control",
+    "fixed_point_control",
+    "permissive_probe_control",
+    "strict_probe_control",
+}
 
 
 def parse_args() -> argparse.Namespace:
@@ -130,6 +140,17 @@ def _write_csv(path: Path, rows: list[dict[str, object]]) -> None:
 
 def _mean(values: list[object]) -> float:
     return mean(float(value) for value in values) if values else 0.0
+
+
+def _median(values: list[object]) -> float:
+    return median(float(value) for value in values) if values else 0.0
+
+
+def _lower_quartile(values: list[object]) -> float:
+    ordered = sorted(float(value) for value in values)
+    if not ordered:
+        return 0.0
+    return ordered[len(ordered) // 4]
 
 
 def _group(rows: list[dict[str, object]], keys: tuple[str, ...]) -> list[dict[str, object]]:
@@ -259,6 +280,144 @@ def _saturation_summary(rows: list[dict[str, object]]) -> list[dict[str, object]
     return out
 
 
+def _aggregate_probe_family_classes(rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    grouped: dict[tuple[str, str], list[dict[str, object]]] = {}
+    for row in rows:
+        grouped.setdefault((str(row["family"]), str(row["probe_family"])), []).append(row)
+    out = []
+    for (family, probe_family), items in sorted(grouped.items()):
+        summary = _aggregate_metrics(items)
+        summary["family"] = family
+        summary["probe_family"] = probe_family
+        summary["aggregate_probe_family_class_v1_1"] = _aggregate_probe_family_class(family, summary)
+        out.append(summary)
+    return out
+
+
+def _aggregate_family_classes(rows: list[dict[str, object]], probe_family_rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    grouped: dict[str, list[dict[str, object]]] = {}
+    passing_probe_counts: dict[str, int] = {}
+    for row in probe_family_rows:
+        if row["aggregate_probe_family_class_v1_1"] == "structured_propagation":
+            passing_probe_counts[str(row["family"])] = passing_probe_counts.get(str(row["family"]), 0) + 1
+    for row in rows:
+        grouped.setdefault(str(row["family"]), []).append(row)
+    out = []
+    for family, items in sorted(grouped.items()):
+        summary = _aggregate_metrics(items)
+        summary["family"] = family
+        summary["passing_probe_family_count"] = passing_probe_counts.get(family, 0)
+        summary["aggregate_family_class_v1_1"] = _aggregate_family_class(family, summary)
+        out.append(summary)
+    return out
+
+
+def _aggregate_metrics(items: list[dict[str, object]]) -> dict[str, object]:
+    local_candidate_flags = [int(item["local_profile_class_v1_1"] == "local_structured_candidate") for item in items]
+    null_mimic_flags = [int(item["control_relative_profile_class_v1"] == "null_mimic") for item in items]
+    mi_deltas = [item["MI_delta_vs_null"] for item in items]
+    motif_deltas = [item["signature_transition_motif_reuse_delta_vs_null"] for item in items]
+    return {
+        "n_profiles": len(items),
+        "local_candidate_fraction": _mean(local_candidate_flags),
+        "saturation_dominated_fraction": _mean([item["saturation_dominated"] for item in items]),
+        "null_mimic_fraction": _mean(null_mimic_flags),
+        "mean_transition_MI": _mean([item["signature_transition_MI_mean"] for item in items]),
+        "mean_MI_delta_vs_null": _mean(mi_deltas),
+        "median_MI_delta_vs_null": _median(mi_deltas),
+        "lower_quartile_MI_delta_vs_null": _lower_quartile(mi_deltas),
+        "mean_motif_delta_vs_null": _mean(motif_deltas),
+        "median_motif_delta_vs_null": _median(motif_deltas),
+        "lower_quartile_motif_delta_vs_null": _lower_quartile(motif_deltas),
+        "mean_JS_bundle": _mean([item["JS_to_null_bundle_mean"] for item in items]),
+        "mean_KL_bundle": _mean([item["KL_to_null_bundle_mean"] for item in items]),
+        "mean_reach_saturation_fraction": _mean([item["reach_saturation_fraction"] for item in items]),
+        "mean_exact_saturation_fraction": _mean([item["exact_saturation_fraction"] for item in items]),
+        "mean_signature_transition_motif_reuse": _mean([item["signature_transition_motif_reuse_mean"] for item in items]),
+        "mean_signature_transition_conditional_entropy": _mean([item["signature_transition_conditional_entropy_mean"] for item in items]),
+    }
+
+
+def _aggregate_probe_family_class(family: str, row: dict[str, object]) -> str:
+    if family in NULL_OR_CONTROL_FAMILIES:
+        return "control_local_candidates" if float(row["local_candidate_fraction"]) > 0 else "control_no_pass"
+    if float(row["saturation_dominated_fraction"]) >= 0.50 or float(row["mean_reach_saturation_fraction"]) >= 0.95:
+        return "saturation_dominated"
+    if (
+        float(row["local_candidate_fraction"]) >= 0.50
+        and float(row["mean_MI_delta_vs_null"]) > 0.05
+        and float(row["median_MI_delta_vs_null"]) > 0.0
+        and float(row["mean_motif_delta_vs_null"]) > 0.02
+    ):
+        return "structured_propagation"
+    if float(row["local_candidate_fraction"]) > 0:
+        return "local_only"
+    return "underdetermined"
+
+
+def _aggregate_family_class(family: str, row: dict[str, object]) -> str:
+    if family in NULL_OR_CONTROL_FAMILIES:
+        return "control_local_candidates" if float(row["local_candidate_fraction"]) > 0 else "control_no_pass"
+    if float(row["saturation_dominated_fraction"]) >= 0.50 or float(row["mean_reach_saturation_fraction"]) >= 0.95:
+        return "saturation_dominated"
+    if (
+        float(row["local_candidate_fraction"]) >= 0.50
+        and float(row["mean_MI_delta_vs_null"]) > 0.05
+        and float(row["median_MI_delta_vs_null"]) > 0.0
+        and float(row["mean_motif_delta_vs_null"]) > 0.02
+        and int(row.get("passing_probe_family_count", 0)) >= 2
+    ):
+        return "structured_propagation"
+    if int(row.get("passing_probe_family_count", 0)) == 1:
+        return "underdetermined_probe_concentrated"
+    if float(row["local_candidate_fraction"]) > 0:
+        return "local_only"
+    return "underdetermined"
+
+
+def _degree_control_false_positives(probe_family_rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    out = []
+    for row in probe_family_rows:
+        if row["family"] != "degree_preserving_control":
+            continue
+        out.append(
+            {
+                "family": row["family"],
+                "probe_family": row["probe_family"],
+                "local_false_positive_count": round(float(row["local_candidate_fraction"]) * int(row["n_profiles"])),
+                "local_false_positive_fraction": row["local_candidate_fraction"],
+                "aggregate_pass": int(row["aggregate_probe_family_class_v1_1"] == "structured_propagation"),
+            }
+        )
+    return out
+
+
+def _matched_null_summary(rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    null_names = sorted(set(
+        key[len("null_JS_") :]
+        for row in rows
+        for key in row
+        if key.startswith("null_JS_")
+    ))
+    grouped: dict[tuple[str, str], list[dict[str, object]]] = {}
+    for row in rows:
+        for null_name in null_names:
+            grouped.setdefault((str(row["family"]), null_name), []).append(row)
+    out = []
+    for (family, null_name), items in sorted(grouped.items()):
+        out.append(
+            {
+                "family": family,
+                "null_name": null_name,
+                "mean_JS": _mean([item.get(f"null_JS_{null_name}", 0.0) for item in items]),
+                "mean_KL": _mean([item.get(f"null_KL_{null_name}", 0.0) for item in items]),
+                "mean_MI_delta": _mean([item["MI_delta_vs_null"] for item in items]),
+                "mean_motif_delta": _mean([item["signature_transition_motif_reuse_delta_vs_null"] for item in items]),
+            }
+        )
+    return out
+
+
 def _write_outputs(
     out_dir: Path,
     config: dict[str, object],
@@ -279,6 +438,10 @@ def _write_outputs(
     probe_summary = _probe_summary(profiles)
     null_bundle_summary = _null_bundle_summary(profiles)
     saturation_summary = _saturation_summary(profiles)
+    aggregate_probe_family_classes = _aggregate_probe_family_classes(profiles)
+    aggregate_family_classes = _aggregate_family_classes(profiles, aggregate_probe_family_classes)
+    degree_false_positives = _degree_control_false_positives(aggregate_probe_family_classes)
+    matched_null_summary = _matched_null_summary(profiles)
     _write_csv(out_dir / "results.csv", systems)
     _write_csv(out_dir / "future_profiles.csv", profile_rows)
     _write_csv(out_dir / "transition_information.csv", transition_rows)
@@ -288,8 +451,12 @@ def _write_outputs(
     _write_csv(out_dir / "control_relative_profile_classes.csv", v1_class_summary)
     _write_csv(out_dir / "divergence_summary.csv", divergence_summary)
     _write_csv(out_dir / "null_bundle_summary.csv", null_bundle_summary)
+    _write_csv(out_dir / "matched_null_summary.csv", matched_null_summary)
     _write_csv(out_dir / "probe_summary.csv", probe_summary)
     _write_csv(out_dir / "saturation_summary.csv", saturation_summary)
+    _write_csv(out_dir / "aggregate_family_classes.csv", aggregate_family_classes)
+    _write_csv(out_dir / "aggregate_probe_family_classes.csv", aggregate_probe_family_classes)
+    _write_csv(out_dir / "degree_control_false_positives.csv", degree_false_positives)
     _write_csv(out_dir / "deformation_summary.csv", deformation_summary)
     _write_csv(out_dir / "errors.csv", errors)
     status = {
@@ -297,10 +464,13 @@ def _write_outputs(
         "systems_completed": len(systems),
         "profiles_completed": len(profiles),
         "errors": len(errors),
+        "degree_control_local_false_positive_count": sum(int(row["local_false_positive_count"]) for row in degree_false_positives),
+        "degree_control_probe_family_aggregate_passes": sum(int(row["aggregate_pass"]) for row in degree_false_positives),
+        "aggregate_structured_family_count": sum(1 for row in aggregate_family_classes if row["aggregate_family_class_v1_1"] == "structured_propagation"),
         "elapsed_seconds": time.perf_counter() - float(config["started_perf_counter"]),
     }
     (out_dir / "status.json").write_text(json.dumps(status, indent=2, sort_keys=True), encoding="utf-8")
-    _write_summary(out_dir, config, systems, profiles, class_summary, v1_class_summary, family_summary, divergence_summary, v1_divergence_summary, deformation_summary, probe_summary, null_bundle_summary, saturation_summary, errors)
+    _write_summary(out_dir, config, systems, profiles, class_summary, v1_class_summary, family_summary, divergence_summary, v1_divergence_summary, deformation_summary, probe_summary, null_bundle_summary, saturation_summary, aggregate_family_classes, aggregate_probe_family_classes, degree_false_positives, matched_null_summary, errors)
 
 
 def _write_summary(
@@ -317,6 +487,10 @@ def _write_summary(
     probe_summary: list[dict[str, object]],
     null_bundle_summary: list[dict[str, object]],
     saturation_summary: list[dict[str, object]],
+    aggregate_family_classes: list[dict[str, object]],
+    aggregate_probe_family_classes: list[dict[str, object]],
+    degree_false_positives: list[dict[str, object]],
+    matched_null_summary: list[dict[str, object]],
     errors: list[dict[str, object]],
 ) -> None:
     lines = [
@@ -356,6 +530,35 @@ def _write_summary(
                 passes=float(row["mean_control_relative_pass_count"]),
                 js=float(row["mean_JS_to_null_bundle_mean"]),
                 sat=float(row["mean_saturation_dominated"]),
+            )
+        )
+    lines.extend(["", "## v1.1 Aggregate Family Classes", "", "| family | aggregate class | n | local candidates | saturation | MI delta | median MI delta | motif delta | median motif delta | passing probe families |", "|---|---|---:|---:|---:|---:|---:|---:|---:|---:|"])
+    for row in aggregate_family_classes:
+        lines.append(
+            "| {family} | {klass} | {n} | {local:.3f} | {sat:.3f} | {mi:.3f} | {medmi:.3f} | {motif:.3f} | {medmotif:.3f} | {passing} |".format(
+                family=row["family"],
+                klass=row["aggregate_family_class_v1_1"],
+                n=row["n_profiles"],
+                local=float(row["local_candidate_fraction"]),
+                sat=float(row["saturation_dominated_fraction"]),
+                mi=float(row["mean_MI_delta_vs_null"]),
+                medmi=float(row["median_MI_delta_vs_null"]),
+                motif=float(row["mean_motif_delta_vs_null"]),
+                medmotif=float(row["median_motif_delta_vs_null"]),
+                passing=row["passing_probe_family_count"],
+            )
+        )
+    lines.extend(["", "## v1.1 Probe-Family Classes", "", "| family | probe family | aggregate class | n | local candidates | MI delta | motif delta |", "|---|---|---|---:|---:|---:|---:|"])
+    for row in aggregate_probe_family_classes:
+        lines.append(
+            "| {family} | {probe} | {klass} | {n} | {local:.3f} | {mi:.3f} | {motif:.3f} |".format(
+                family=row["family"],
+                probe=row["probe_family"],
+                klass=row["aggregate_probe_family_class_v1_1"],
+                n=row["n_profiles"],
+                local=float(row["local_candidate_fraction"]),
+                mi=float(row["mean_MI_delta_vs_null"]),
+                motif=float(row["mean_motif_delta_vs_null"]),
             )
         )
     lines.extend(["", "## Control Comparison", "", "| family | n | reach H16 | exact H16 | entropy | predictive | recurrence | compression | collapse | cycle | JS null |", "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|"])
@@ -399,6 +602,29 @@ def _write_summary(
                 mi=float(row["mean_MI_delta_vs_null"]),
                 motif=float(row["mean_motif_delta_vs_null"]),
                 passes=float(row["mean_control_relative_pass_count"]),
+            )
+        )
+    lines.extend(["", "## Degree-Control False Positive Audit", "", "| family | probe family | local false positives | local false positive fraction | aggregate pass |", "|---|---|---:|---:|---:|"])
+    for row in degree_false_positives:
+        lines.append(
+            "| {family} | {probe} | {count} | {fraction:.3f} | {passed} |".format(
+                family=row["family"],
+                probe=row["probe_family"],
+                count=row["local_false_positive_count"],
+                fraction=float(row["local_false_positive_fraction"]),
+                passed=row["aggregate_pass"],
+            )
+        )
+    lines.extend(["", "## Matched Null Summary", "", "| family | null | JS | KL | MI delta | motif delta |", "|---|---|---:|---:|---:|---:|"])
+    for row in matched_null_summary:
+        lines.append(
+            "| {family} | {null} | {js:.3f} | {kl:.3f} | {mi:.3f} | {motif:.3f} |".format(
+                family=row["family"],
+                null=row["null_name"],
+                js=float(row["mean_JS"]),
+                kl=float(row["mean_KL"]),
+                mi=float(row["mean_MI_delta"]),
+                motif=float(row["mean_motif_delta"]),
             )
         )
     lines.extend(["", "## Probe Enumeration Summary", "", "| probe family | mode | n | arity | transition MI | motif reuse |", "|---|---|---:|---:|---:|---:|"])
@@ -453,7 +679,26 @@ def _write_summary(
                 js=float(row["mean_JS_to_null_delta"]),
             )
         )
-    lines.extend(["", "## Claim Boundary", "", "This smoke reports mechanically generated future-landscape probes, transition-level information measures, matched null bundles, and control-relative classes only. It does not assign semantic roles or preferred outcomes.", "", "## Next Recommendation", "", "- Treat v1 structured_propagation as provisional only when it separates from matched nulls by the predeclared pass-count rule.", "- If v1 returns null_mimic or saturation_dominated, revise substrate/probes before increasing compute."])
+    aggregate_passes = [row for row in aggregate_family_classes if row["aggregate_family_class_v1_1"] == "structured_propagation"]
+    degree_passes = [row for row in degree_false_positives if int(row["aggregate_pass"])]
+    gate_status = "passed" if aggregate_passes and not degree_passes else "not passed"
+    lines.extend([
+        "",
+        "## Gate Status",
+        "",
+        f"- Scientific gate: {gate_status}",
+        f"- Aggregate structured families: {len(aggregate_passes)}",
+        f"- Degree-control aggregate probe-family passes: {len(degree_passes)}",
+        "",
+        "## Claim Boundary",
+        "",
+        "This smoke reports mechanically generated future-landscape probes, transition-level information measures, matched null bundles, local candidates, and aggregate classes only. It does not assign semantic roles or preferred outcomes.",
+        "",
+        "## Next Recommendation",
+        "",
+        "- Treat local_structured_candidate as diagnostic only.",
+        "- Do not scale until aggregate family classes separate from degree/frontier/saturation-matched controls.",
+    ])
     (out_dir / "summary.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 

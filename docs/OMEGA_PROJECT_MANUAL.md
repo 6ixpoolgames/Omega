@@ -19,7 +19,7 @@ Use Omega as the broader theory and long-term hypothesis.
 Do not present VAL0/VAL1 as validation of Omega.
 Frame VAL0/VAL1 as reconnaissance probes that exposed viability dynamics and
 substrate limitations.
-Present RFS-MB0 detector v1 as the active empirical branch and state clearly
+Present RFS-MB0 detector v1.1 as the active empirical branch and state clearly
 that it has not passed the scientific gate.
 ```
 
@@ -72,7 +72,8 @@ as the canonical internal definition anchor.
 4. Read the current validation-design notes:
    - `docs/RFS_MB0_FUTURE_LANDSCAPE_PATTERN_SPEC.md`
    - `docs/RFS_MB0_FUTURE_LANDSCAPE_DETECTOR_V1_HANDOFF.md`
-   - `docs/research_notes/validation_results/rfs_mb0_future_landscape_detector_v1_smoke_result.md`
+   - `docs/RFS_MB0_FUTURE_LANDSCAPE_V1_1_CODE_TARGETS.md`
+   - `docs/research_notes/validation_results/rfs_mb0_future_landscape_detector_v1_1_smoke_result.md`
    - `docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md`
    - `docs/research_notes/validation_design/val_ecology_viability_reorientation.md`
    - `docs/research_notes/validation_design/README.md`
@@ -212,10 +213,10 @@ The current empirical pivot is now RFS-MB0 future-landscape detection:
 Current detector status:
 
 ```text
-RFS-MB0 future-landscape detector v1:
+RFS-MB0 future-landscape detector v1.1:
   implementation passed
   scientific gate not passed
-  remaining blocker: degree-preserving false positives
+  current result: zero aggregate structured families
 ```
 
 Older papers and drafts motivate variants of:
@@ -311,7 +312,7 @@ omega/rfs_mb0_future_landscape/
 Latest result:
 
 ```text
-docs/research_notes/validation_results/rfs_mb0_future_landscape_detector_v1_smoke_result.md
+docs/research_notes/validation_results/rfs_mb0_future_landscape_detector_v1_1_smoke_result.md
 ```
 
 RFS-MB0 is now the recommended starting point for new implementation work.
@@ -1099,10 +1100,10 @@ Question:
 Current status:
 
 ```text
-RFS-MB0 detector v1:
+RFS-MB0 detector v1.1:
   implementation passed
-  random and saturated broad overcalls reduced
-  degree-preserving control still produces false positives
+  local false positives are exposed but do not promote aggregate claims
+  no aggregate structured family passes yet
 ```
 
 Do not scale RFS-MB0 into long runs until this is addressed.

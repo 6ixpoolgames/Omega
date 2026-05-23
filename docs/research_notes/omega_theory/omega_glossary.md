@@ -73,10 +73,10 @@ minimal dynamical systems can resolve the distinctions Omega cares about.
 Current implementation status:
 
 ```text
-RFS-MB0 detector v1 is implemented.
+RFS-MB0 detector v1.1 is implemented.
 It measures mechanically probed future-profile deformation.
-It has not passed the scientific gate because degree-preserving controls still
-produce false-positive structured profiles.
+It has not passed the scientific gate because no non-control, non-saturated
+family currently earns an aggregate structure pass.
 ```
 
 ## External anchor layer

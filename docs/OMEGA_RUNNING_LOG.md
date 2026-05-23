@@ -3351,3 +3351,49 @@ scientific gate: not passed
 main blocker: degree-preserving control false positives
 next target: frontier-size and saturation-matched null repair
 ```
+
+## 2026-05-23 - RFS-MB0 future-landscape detector v1.1 smoke
+
+Implemented the code-audit hardening targets from:
+
+```text
+docs/RFS_MB0_FUTURE_LANDSCAPE_V1_1_CODE_TARGETS.md
+```
+
+Run:
+
+```text
+results/rfs_mb0_future_landscape/20260523_detector_v1_1_smoke/
+```
+
+Shape:
+
+```text
+systems: 33
+future profiles: 3696
+workers: 18
+errors: 0
+status: COMPLETED
+elapsed: about 42 seconds
+```
+
+Changes:
+
+- Added local-vs-aggregate classification split.
+- Added `local_profile_class_v1_1`.
+- Added `aggregate_family_class_v1_1`.
+- Added `aggregate_probe_family_class_v1_1`.
+- Added explicit `frontier_size` matched-null output.
+- Added `aggregate_family_classes.csv`, `aggregate_probe_family_classes.csv`, `degree_control_false_positives.csv`, and `matched_null_summary.csv`.
+
+Read:
+
+- v1 still shows 39 local degree-control false positives.
+- v1.1 prevents those local hits from promoting aggregate claims.
+- Degree-control aggregate probe-family passes: 0.
+- Aggregate structured family count: 0.
+- Scientific gate remains not passed because no non-control, non-saturated family passes.
+
+Next:
+
+Keep v1.1 as the current detector discipline. Do not scale until there is either a non-saturating structured candidate family or stronger saturation/frontier-matched null machinery.
