@@ -3202,3 +3202,40 @@ clean win. Future probes should classify unlabeled regimes by measured
 peak-retention / terminal-depth structure rather than adding more named
 brittle/robust generators.
 ```
+## 2026-05-23 - RFS-MB0 neutral transform reset smoke
+
+Implemented the substrate reset from `docs/RFS_MB0_NEUTRAL_TRANSFORM_RESET_SPEC.md` as a new active MB0 branch:
+
+```text
+omega/rfs_mb0_neutral_transform/
+```
+
+This replaces continued development of the semantic `rfs_mb0_pairwise` toy substrate. The older branch remains workflow validation only.
+
+Run:
+
+```text
+results/rfs_mb0_neutral_transform/20260523_neutral_transform_reset_smoke/
+```
+
+Shape:
+
+```text
+systems: 50
+rows: 350
+workers: 18
+errors: 0
+status: COMPLETED
+```
+
+Read:
+
+- Neutral finite transform substrate implemented.
+- Derived singleton and pairwise signature filtrations computed across `H = 0,1,2,4,8,12,16`.
+- Phase/fixed/permissive/strict controls are identifiable.
+- Structured neutral contraction appears in `shared_constraint_conflict` and `anti_correlated_block_transforms`.
+- Random and degree-preserving controls still mimic contraction, so the scientific gate is not passed.
+
+Next:
+
+Improve control separation before scaling. Preserve neutrality; do not add cost/resource/semantic machinery yet.
