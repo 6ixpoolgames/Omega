@@ -1,14 +1,104 @@
 # Minimal Compatibility Roadmap
 
-Theory-side rationale for the RFS-MB0 pairwise compatibility probe
+Theory-side rationale and onboarding note for the RFS-MB0 pairwise compatibility probe.
 
-Status: working theory note
+Status: working theory note.
 
-## Guiding discipline
+Audience: an independent researcher encountering the current Omega validation program for the first time.
 
-The current goal is not to validate Omega directly.
+## 0. Executive summary
 
-The goal is to chisel toward the smallest mathematical object that could support Omega if such an object exists at all.
+Omega is not being treated as established.
+
+The project is trying to find the smallest mathematical object that could support the broader Omega intuition if that intuition is real at all.
+
+The current candidate minimal object is not value, agency, ethics, thermodynamics, active inference, or a field of moral concern.
+
+The current candidate minimal object is:
+
+```text
+joint identity-preserving reachable futures
+```
+
+The first empirical gate is pairwise:
+
+```text
+Given two derived bounded identities mu and nu,
+can they continue together?
+```
+
+The immediate comparison is:
+
+```text
+F_H^mu(x)
+F_H^nu(x)
+F_H^{mu,nu}(x)
+```
+
+where:
+
+```text
+F_H^mu(x):
+  futures reachable from x while preserving identity mu
+
+F_H^nu(x):
+  futures reachable from x while preserving identity nu
+
+F_H^{mu,nu}(x):
+  futures reachable from x while preserving mu and nu together
+```
+
+The first target distinction is:
+
+```text
+individual viability is not compatibility
+```
+
+The first local/global divergence signature is:
+
+```text
+one identity preserves or expands its own futures
+while joint compatibility contracts
+```
+
+This is intentionally modest. No full Omega claim follows from this. But if even this distinction cannot be made cleanly, heavier concepts such as lushness, valuerhood, agentic fields, topology, sheaves, or thermodynamics are premature.
+
+## 1. Why this note exists
+
+The Omega project has accumulated a large theoretical and experimental provenance:
+
+```text
+COM / fiber witnesses
+trajectory-space probes
+invariant stacks
+primitive distinction/asymmetry/relation probes
+DAX rule-space and motif probes
+constructor-task and grammar probes
+RFS reachable-futures reset
+```
+
+The older work is useful, but it also carries deprecated terminology and speculative scaffolding.
+
+The current phase is stricter:
+
+```text
+strip the theory down until only a minimal testable object remains
+```
+
+This note explains that minimal object and the roadmap around it.
+
+It should let a new researcher understand:
+
+```text
+what is being tested
+why it matters
+what is deliberately excluded
+what would count as progress
+what would count as failure
+where the broader Omega language may re-enter later
+```
+
+## 2. Guiding discipline
 
 The core discipline is:
 
@@ -19,21 +109,78 @@ predictive
 ```
 
 Principled:
-  every higher claim must be derived from declared primitives and probe machinery.
+
+```text
+every higher claim must be derived from declared primitives and probe machinery
+```
 
 Parsimonious:
-  do not introduce structure before it is forced by the object.
+
+```text
+do not introduce structure before it is forced by the object
+```
 
 Predictive:
-  the formalism must distinguish cases that weaker formalisms confuse.
 
-A beautiful theory that cannot survive fakeouts is not useful.
+```text
+the formalism must distinguish cases that weaker formalisms confuse
+```
 
-A minimal object that exposes a real distinction is valuable even if the broader theory must later be revised.
+A beautiful theory that cannot survive fakeouts is not useful. A minimal object that exposes a real distinction is valuable even if the broader theory must later be revised.
 
-## Starting point
+This note rejects premature use of:
 
-The current minimal substrate is:
+```text
+Omega scores
+value labels
+valuer labels
+agent labels
+thermodynamic costs
+active inference claims
+ethics claims
+full compatibility lattices
+topology / sheaves / cohomology
+lushness metrics
+```
+
+Those may become relevant later. They are not part of the first gate.
+
+## 3. The broad intuition, stated carefully
+
+The motivating intuition is:
+
+```text
+value exists only where there are valuers
+```
+
+A valuer cannot be a momentary state. A valuer requires some form of identity through time: a continuing locus for which different futures can matter.
+
+That is why identity is central.
+
+However, the current empirical arm should not begin by defining full valuerhood. Valuerhood is too semantically loaded.
+
+The minimal empirical arm should instead ask lower questions:
+
+```text
+Can bounded identity candidates be derived from neutral dynamics?
+Can identity-preserving futures be computed?
+Can individual continuation be separated from compatibility?
+```
+
+Only after those questions are answered should the project escalate toward:
+
+```text
+valuerhood
+active inference
+thermodynamic maintenance
+ethics
+Omega-compatible lushness
+agentic fields
+```
+
+## 4. Primitive substrate
+
+The primitive substrate is:
 
 ```text
 S = (X, ->)
@@ -45,61 +192,29 @@ where:
 X:
   finite distinction space
 
-->:
+-> subset X x X:
   neutral transition relation
 ```
 
-The substrate is intentionally austere.
+A state `x in X` is a distinguishable configuration.
 
-It does not contain:
+A transition `x -> y` is neutral. It is not intrinsically good, bad, valuable, agentic, coherent, viable, thermodynamic, Omega-compatible, or pseudo-Omega-like.
 
-```text
-value
-valuerhood
-agency
-reward
-utility
-preference
-energy
-thermodynamic cost
-free energy
-coherence score
-Omega label
-pseudo-Omega label
-moral status
-```
-
-Those may become interpretations or later constraints.
-
-They are not primitives.
-
-## Why identity is central
-
-The broader intuition is:
+A path is:
 
 ```text
-value exists only where there are valuers
+x0 -> x1 -> ... -> xt
 ```
 
-A valuer cannot be a momentary state.
-
-A valuer requires some form of identity through time: a continuing locus for which different futures can matter.
-
-Therefore the empirical arm must first ask whether bounded identities can be derived from neutral dynamics.
-
-But the current minimal program should not start by defining full valuerhood.
-
-It should start lower:
+Finite-horizon reachability is:
 
 ```text
-Can bounded identity candidates be derived?
-Can their identity-preserving futures be measured?
-Can individual continuation be separated from compatibility?
+Reach_H(x0) = { y in X : y is reachable from x0 in <= H steps }
 ```
 
-Only after this should the project escalate toward valuerhood, active inference, thermodynamics, or ethics.
+This is the substrate side. Everything else is probe-side and must be declared.
 
-## Derived identity extractor
+## 5. Derived identity extraction
 
 The probe-side extraction rule is written:
 
@@ -117,9 +232,7 @@ M_sigma:
   finite set of derived bounded-structure candidates
 ```
 
-`E_sigma` is not a hand-labeler.
-
-It should be a derived functional of the primitive substrate:
+`E_sigma` is not a hand-labeler. It should be a derived functional of the primitive substrate:
 
 ```text
 E_sigma = Extract_sigma(X, ->)
@@ -138,29 +251,65 @@ hand-coded viability labels
 post-hoc result classes
 ```
 
-At this stage, the admissible family of extractors remains an open research problem.
+At this stage, the admissible family of extractors remains an open research problem. That is acceptable. The first gate can still proceed if the extractor is declared, deterministic, simple, and fakeout-tested.
 
-That is acceptable.
-
-The first gate can still proceed if the extractor is declared, deterministic, simple, and fakeout-tested.
-
-## Identity-preserving futures
-
-For a candidate identity:
+A candidate identity is written:
 
 ```text
 mu in M_sigma
 ```
 
-let:
+A useful representation is:
 
 ```text
-A_mu(x0)
+mu = (supp_mu, sig_mu)
 ```
 
-be the token-continuity region for `mu` from initial state `x0` under the declared continuity relation.
+where:
 
-Define singleton identity-preserving futures:
+```text
+supp_mu(x):
+  support / region / components of the candidate in state x
+
+sig_mu(x):
+  relational signature of the candidate in state x
+```
+
+The support says where the candidate is expressed. The signature says what relational organization is being tracked.
+
+This is not yet a valuer, agent, organism, or Omega-relevant object. It is only a derived bounded-structure candidate.
+
+## 6. Identity continuity
+
+For the first gate, use token continuity only.
+
+Let:
+
+```text
+~=_sigma
+```
+
+be a declared continuity relation over candidate signatures.
+
+For token identity:
+
+```text
+sig_mu(x) ~=_sigma sig_mu(x0)
+```
+
+means candidate `mu` at state `x` remains continuation-equivalent to candidate `mu` at initial state `x0`.
+
+Define the token-continuity region:
+
+```text
+A_mu(x0) = { x in X : sig_mu(x) ~=_sigma sig_mu(x0) }
+```
+
+Lineage, churn, and successor identity are real issues. But they are deferred. The first gate asks whether token pairwise compatibility is useful at all.
+
+## 7. Singleton identity-preserving futures
+
+For a candidate identity `mu in M_sigma`, define:
 
 ```text
 F_H^mu(x0) =
@@ -169,17 +318,22 @@ F_H^mu(x0) =
       such that for all t, xt in A_mu(x0) }
 ```
 
-This asks:
+Plain meaning:
 
 ```text
-Can identity mu continue over horizon H?
+F_H^mu(x0):
+  futures reachable while preserving identity mu
 ```
 
-This is necessary but not sufficient.
+Minimal singleton viability is:
 
-A locally viable identity may still degrade broader compatibility.
+```text
+F_H^mu(x0) != empty
+```
 
-## Why singleton viability is too weak
+This is the formal floor. No richness threshold is part of the definition. Counts, diversity, redundancy, bottlenecks, recovery basins, and other summaries may be reported later as diagnostics. They are not the definition of viability.
+
+## 8. Why singleton viability is too weak
 
 Individual identity preservation can overcall positives.
 
@@ -200,21 +354,16 @@ parasite:
 
 singleton optimizer:
   one identity expands by erasing alternatives
+
+institutional capture:
+  an institution persists while member/correction futures contract
 ```
 
-Therefore the first step beyond singleton viability is not full Omega.
+Therefore the first step beyond singleton viability is not full Omega. It is pairwise compatibility.
 
-It is pairwise compatibility.
+## 9. Pairwise joint identity-preserving futures
 
-## Pairwise joint identity-preserving futures
-
-For two candidates:
-
-```text
-mu, nu in M_sigma
-```
-
-define:
+For two candidates `mu, nu in M_sigma`, define:
 
 ```text
 F_H^{mu,nu}(x0) =
@@ -226,15 +375,20 @@ F_H^{mu,nu}(x0) =
         xt in A_nu(x0) }
 ```
 
+Plain meaning:
+
+```text
+F_H^{mu,nu}(x0):
+  futures reachable while preserving mu and nu together
+```
+
 This asks:
 
 ```text
 Can identities mu and nu continue together over horizon H?
 ```
 
-This is the smallest compatibility object.
-
-It distinguishes:
+This is the smallest compatibility object. It distinguishes:
 
 ```text
 mu can continue alone
@@ -244,7 +398,28 @@ mu and nu can continue together
 
 The first validation gate is whether this distinction has diagnostic power.
 
-## Pairwise compatibility regimes
+## 10. Minimal order structure
+
+Pairwise joint futures satisfy:
+
+```text
+F_H^{mu,nu}(x0) subset F_H^mu(x0)
+F_H^{mu,nu}(x0) subset F_H^nu(x0)
+```
+
+Joint preservation is stricter than individual preservation.
+
+This is the only order-theoretic structure required for the first gate. Do not introduce full subset lattices yet.
+
+The eventual full extension may be:
+
+```text
+F_H^J(x), for J subset M_sigma
+```
+
+but the project has not earned that until pairwise compatibility proves useful.
+
+## 11. Pairwise compatibility regimes
 
 For a pair `(mu, nu)`, the basic regimes are:
 
@@ -267,11 +442,9 @@ pairwise incompatible:
   F_H^{mu,nu} empty
 ```
 
-Pairwise incompatibility is not the same as pseudo-Omega.
+Pairwise incompatibility is not the same as pseudo-Omega. It may be symmetric, accidental, resource-driven, or caused by a bad extractor.
 
-It may be symmetric, accidental, resource-driven, or caused by a bad extractor.
-
-## Local-preserving / joint-contracting regime
+## 12. Local-preserving / joint-contracting regime
 
 The old term `pseudo-Omega` should be deprecated in empirical outputs.
 
@@ -283,13 +456,7 @@ local-preserving / joint-contracting regime
 
 This is a special asymmetric failure pattern.
 
-For a transition or trajectory segment:
-
-```text
-tau: x -> ... -> y
-```
-
-compare:
+For a transition or trajectory segment `tau: x -> ... -> y`, compare:
 
 ```text
 F_H^mu(x)       vs F_H^mu(y)
@@ -311,11 +478,37 @@ Plain meaning:
 mu preserves itself while reducing compatibility with nu
 ```
 
-This is the first minimal local/global divergence pattern.
+This is the first minimal local/global divergence pattern. Do not call it Omega or pseudo-Omega in result claims.
 
-Do not call it Omega or pseudo-Omega in result claims.
+## 13. Relation to old terminology
 
-## Why not full lattice yet
+Old terminology is useful for provenance but should not dominate new empirical claims.
+
+Mapping:
+
+```text
+old: Omega-compatible
+new: compatibility-preserving continuation
+
+old: pseudo-Omega
+new: local-preserving / joint-contracting regime
+
+old: lushness
+new, later: structured branching that propagates
+
+old: agentic field
+new, later: higher-order compatibility structure over derived identities
+```
+
+Important distinction:
+
+```text
+non-compatible != pseudo-Omega-like
+```
+
+Pairwise incompatibility alone is broad. Local-preserving / joint-contracting is narrower and asymmetric.
+
+## 14. Why not full lattice yet
 
 The natural extension is to define joint futures for any subset:
 
@@ -323,17 +516,13 @@ The natural extension is to define joint futures for any subset:
 F_H^J(x), for J subset M_sigma
 ```
 
-This would induce an order structure over compatible identity sets.
-
-Eventually this may be the right mathematical image for the agentic field.
+This would induce an order structure over compatible identity sets. Eventually this may be the right mathematical image for the agentic field.
 
 But the project has not earned that step yet.
 
-The first gate is pairwise only.
+The first gate is pairwise only. If pairwise joint futures add no diagnostic information beyond singleton futures, then full lattices, topology, sheaves, cohomology, and field language are premature.
 
-If pairwise joint futures add no diagnostic information beyond singleton futures, then full lattices, topology, sheaves, cohomology, and field language are premature.
-
-## Why not topology yet
+## 15. Why not topology yet
 
 Topology and sheaf-like language may eventually become relevant if the project finds robust local-to-global compatibility failures, such as:
 
@@ -342,9 +531,7 @@ all pairs compatible
 but no triple/global joint continuation exists
 ```
 
-That would be a real gluing problem.
-
-But before asking whether local compatibility glues globally, the project must first show that pairwise compatibility itself is a meaningful object.
+That would be a real gluing problem. But before asking whether local compatibility glues globally, the project must first show that pairwise compatibility itself is a meaningful object.
 
 Therefore defer:
 
@@ -358,13 +545,11 @@ gluing obstructions
 
 until pairwise compatibility has been validated.
 
-## Why not churn yet
+## 16. Why not churn yet
 
 Real Omega-compatible continuation cannot require every identity token to persist forever.
 
-Regenerative churn, repair, reproduction, successor identity, and lineage continuity are essential later.
-
-But they add another degree of freedom:
+Regenerative churn, repair, reproduction, successor identity, and lineage continuity are essential later. But they add another degree of freedom:
 
 ```text
 mu token persists
@@ -376,32 +561,9 @@ versus:
 mu lineage continues through successor nu
 ```
 
-The first gate should use token continuity only.
+The first gate should use token continuity only. Lineage can be introduced only after token pairwise compatibility is understood.
 
-Lineage can be introduced only after token pairwise compatibility is understood.
-
-The likely roadmap is:
-
-```text
-RFS-MB0a:
-  singleton token futures
-
-RFS-MB0b:
-  pairwise token joint futures
-
-RFS-MB1:
-  perturbation and recovery
-
-RFS-MB1.5:
-  lineage / churn-compatible futures
-
-RFS-MB2:
-  coupled bounded-process compatibility and local/global divergence
-```
-
-The current probe is RFS-MB0b.
-
-## Why not richness thresholds yet
+## 17. Why not richness thresholds yet
 
 Existing theory notes distinguish lushness from raw entropy and raw path count.
 
@@ -415,19 +577,46 @@ The formal floor is:
 F_H != empty
 ```
 
-Counts, ratios, diversity, redundancy, bottlenecks, recovery basins, and future-profile diversity may be reported as diagnostics.
-
-They are not the definition.
+Counts, ratios, diversity, redundancy, bottlenecks, recovery basins, and future-profile diversity may be reported as diagnostics. They are not the definition.
 
 This prevents premature scalarization.
 
-## Roadmap
+## 18. Fakeout discipline
+
+The first pairwise probe should be judged by fakeouts, not by aesthetic positivity.
+
+Minimum fakeout families:
+
+```text
+stasis:
+  token persists, but compatibility dynamics are trivial
+
+clock:
+  phase recurrence mimics identity
+
+terminal attractor:
+  persistence by future-space collapse
+
+random branching:
+  raw reachability without structured compatibility
+
+component erasure:
+  one identity looks viable because another necessary identity is ignored
+
+parasite-host:
+  one identity preserves itself by degrading another
+
+mutual support:
+  both identities preserve each other or preserve joint compatibility
+```
+
+A good first probe does not need to solve all fakeouts. It needs to show whether pairwise joint futures are a sharper diagnostic than singleton futures.
+
+## 19. Roadmap
 
 ### Gate 0: exact reachable-futures floor
 
-Already underway through RFS0.
-
-Purpose:
+Question:
 
 ```text
 Can finite reachable futures, viability kernels, capture basins, and strict filters
@@ -519,7 +708,7 @@ to:
 can recover
 ```
 
-This should remain non-semantic: recovery means re-entry into identity-preserving or joint identity-preserving futures, not return to an exact state.
+Recovery means re-entry into identity-preserving or joint identity-preserving futures, not return to an exact state.
 
 ### Gate 4: lineage and churn
 
@@ -537,9 +726,7 @@ mu =>_sigma nu
 
 and lineage-compatible future sets.
 
-This is required for living systems, ecologies, institutions, and regenerative continuity.
-
-It is not required for the first pairwise smoke.
+This is required for living systems, ecologies, institutions, and regenerative continuity. It is not required for the first pairwise smoke.
 
 ### Gate 5: higher-order compatibility
 
@@ -582,9 +769,7 @@ What does it cost to maintain identity, compatibility, recovery, and generativit
 in a physical substrate?
 ```
 
-This is where ECHO / thermodynamic constraints may re-enter.
-
-Do not begin here.
+This is where ECHO / thermodynamic constraints may re-enter. Do not begin here.
 
 ### Gate 8: valuerhood and agency
 
@@ -594,11 +779,9 @@ Question:
 When does a bounded identity become a valuer or agent?
 ```
 
-This requires identity, continuability, recovery, self-maintenance, and asymmetric future consequence.
+This requires identity, continuability, recovery, self-maintenance, and asymmetric future consequence. It is outside the immediate empirical arm.
 
-It is outside the immediate empirical arm.
-
-## Expected first result classes
+## 20. Expected first result classes
 
 For the pairwise smoke, use modest result language:
 
@@ -634,7 +817,45 @@ valuer detected
 agent detected
 ```
 
-## Interpretive boundary
+## 21. Success and failure criteria
+
+A minimal success for Gate 2:
+
+```text
+pairwise joint futures expose at least one compatibility failure
+that singleton futures miss
+```
+
+A stronger success:
+
+```text
+mutual-support, pairwise-incompatible, and local-preserving / joint-contracting
+regimes separate from each other and from controls
+```
+
+A failure:
+
+```text
+pairwise futures add no diagnostic information beyond singleton futures
+```
+
+or:
+
+```text
+controls mimic structured regimes as easily as the intended generators
+```
+
+If Gate 2 fails, do not escalate. Revise:
+
+```text
+E_sigma
+~=_sigma
+substrate design
+candidate signatures
+controls
+```
+
+## 22. Interpretive boundary
 
 This roadmap treats the foundational papers as speculative provenance, not doctrine.
 
@@ -655,7 +876,30 @@ But the current empirical arm should not import those concepts as primitives.
 
 The new formalism is trying to resolve their handwaving by deriving the smallest testable objects from neutral dynamics.
 
-## Summary
+A later result may support the foundational stack. It may also revise or discard large parts of it. That is acceptable.
+
+## 23. Relation to the implementation spec
+
+The implementation companion is:
+
+```text
+docs/RFS_MB0_PAIRWISE_COMPATIBILITY_SMOKE_SPEC.md
+```
+
+That spec asks Codex to implement the first Gate 2 smoke:
+
+```text
+singleton futures
+pairwise joint futures
+structured regimes
+fakeout controls
+minimal classification bins
+checkpointed outputs
+```
+
+This theory note explains why that small probe matters and why heavier machinery is intentionally excluded.
+
+## 24. Summary
 
 The immediate next object is:
 
