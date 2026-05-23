@@ -39,6 +39,43 @@ def smoothed_kl(p_counts: dict[object, int], q_counts: dict[object, int], alpha:
     return _kl_probs(p, q)
 
 
+def mutual_information_from_joint(joint_counts: dict[tuple[object, object], int]) -> float:
+    total = sum(joint_counts.values())
+    if total <= 0:
+        return 0.0
+    left_counts: Counter[object] = Counter()
+    right_counts: Counter[object] = Counter()
+    for (left, right), count in joint_counts.items():
+        left_counts[left] += count
+        right_counts[right] += count
+    output = 0.0
+    for (left, right), count in joint_counts.items():
+        if count <= 0:
+            continue
+        p_joint = count / total
+        p_left = left_counts[left] / total
+        p_right = right_counts[right] / total
+        output += p_joint * math.log2(p_joint / (p_left * p_right))
+    return output
+
+
+def conditional_entropy_from_joint(joint_counts: dict[tuple[object, object], int]) -> float:
+    total = sum(joint_counts.values())
+    if total <= 0:
+        return 0.0
+    left_counts: Counter[object] = Counter()
+    for (left, _right), count in joint_counts.items():
+        left_counts[left] += count
+    output = 0.0
+    for (left, _right), count in joint_counts.items():
+        if count <= 0:
+            continue
+        p_joint = count / total
+        p_right_given_left = count / left_counts[left]
+        output -= p_joint * math.log2(p_right_given_left)
+    return output
+
+
 def compression_proxy(signature_counts_by_h: list[dict[object, int]]) -> float:
     total_tokens = sum(sum(counts.values()) for counts in signature_counts_by_h)
     if total_tokens <= 0:
@@ -93,6 +130,24 @@ def profile_class(row: dict[str, float | int | str]) -> str:
     return "underdetermined"
 
 
+def control_relative_profile_class(row: dict[str, float | int | str]) -> str:
+    if str(row.get("probe_mode", "")) == "permissive":
+        return "permissive_blur"
+    if str(row.get("probe_mode", "")) == "strict":
+        return "strict_fragmentation"
+    if int(row["collapse_indicator"]):
+        return "collapse_like"
+    if int(row["cycle_indicator"]):
+        return "cycle_like"
+    if int(row.get("saturation_dominated", 0)):
+        return "saturation_dominated"
+    if int(row.get("control_relative_pass_count", 0)) >= 3:
+        return "structured_propagation"
+    if str(row.get("heuristic_profile_class_v0", "")) == "structured_propagation":
+        return "null_mimic"
+    return "underdetermined"
+
+
 def _kl_probs(p: dict[object, float], q: dict[object, float]) -> float:
     output = 0.0
     for key, p_value in p.items():
@@ -100,4 +155,3 @@ def _kl_probs(p: dict[object, float], q: dict[object, float]) -> float:
         if p_value > 0 and q_value > 0:
             output += p_value * math.log2(p_value / q_value)
     return output
-

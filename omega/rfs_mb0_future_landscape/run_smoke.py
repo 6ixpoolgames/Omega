@@ -9,7 +9,7 @@ from datetime import datetime
 from pathlib import Path
 from statistics import mean
 
-from .controls import null_distribution_by_h
+from .controls import null_bundle_distribution_by_h, null_transition_metrics
 from .landscape import edge_deformations, future_profile
 from .probes import generate_probes
 from .substrate import FAMILIES, generate_system
@@ -36,14 +36,27 @@ def _run_one(job: dict[str, object]) -> dict[str, object]:
     starts = [system.states[(system.seed + i * 17) % len(system.states)] for i in range(start_count)]
     profiles = []
     profile_rows = []
+    transition_rows = []
     distributions = []
     deformations = []
     for probe in probes:
-        null_by_h = null_distribution_by_h(system, probe)
         for start in starts:
-            profile, rows, dist_rows = future_profile(system, start, probe, null_by_h)
+            null_bundle_by_h = null_bundle_distribution_by_h(system, probe, start)
+            null_transitions = null_transition_metrics(system, probe, start)
+            profile, rows, dist_rows = future_profile(
+                system,
+                start,
+                probe,
+                null_bundle_by_h.get("degree", {}),
+                null_bundle_by_h,
+                null_transitions,
+            )
             profiles.append(profile)
-            profile_rows.extend(rows)
+            for row in rows:
+                if row.get("row_kind") == "transition_information":
+                    transition_rows.append(row)
+                else:
+                    profile_rows.append(row)
             distributions.extend(dist_rows)
         deformations.extend(edge_deformations(system, probe))
     system_row = {
@@ -54,6 +67,9 @@ def _run_one(job: dict[str, object]) -> dict[str, object]:
         "n_edges": sum(len(targets) for targets in system.edges.values()),
         "transform_names_json": json.dumps(system.transform_names),
         "probe_count": len(probes),
+        "probe_names_json": json.dumps([probe.name for probe in probes]),
+        "probe_family_counts_json": json.dumps(_probe_family_counts(probes), sort_keys=True),
+        "sigma": int(job["sigma"]),
         "start_count": len(starts),
         "metadata_json": json.dumps(system.metadata, sort_keys=True),
         "job_elapsed_seconds": time.perf_counter() - started,
@@ -62,9 +78,18 @@ def _run_one(job: dict[str, object]) -> dict[str, object]:
         "system": system_row,
         "profiles": profiles,
         "profile_rows": profile_rows,
+        "transition_rows": transition_rows,
         "distributions": distributions,
         "deformations": deformations,
     }
+
+
+def _probe_family_counts(probes: tuple[object, ...]) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for probe in probes:
+        family = str(getattr(probe, "probe_family"))
+        counts[family] = counts.get(family, 0) + 1
+    return counts
 
 
 def _jobs(args: argparse.Namespace) -> list[dict[str, object]]:
@@ -125,8 +150,23 @@ def _group(rows: list[dict[str, object]], keys: tuple[str, ...]) -> list[dict[st
             "motif_reuse",
             "transition_motif_count_mean",
             "predictive_information",
+            "adjacent_distribution_similarity",
             "conditional_entropy_proxy",
             "compression_proxy",
+            "signature_reuse_fraction",
+            "signature_transition_MI_mean",
+            "signature_transition_conditional_entropy_mean",
+            "signature_transition_entropy_rate_proxy",
+            "signature_transition_grammar_size_mean",
+            "signature_transition_motif_reuse_mean",
+            "MI_delta_vs_null",
+            "signature_transition_motif_reuse_delta_vs_null",
+            "control_relative_pass_count",
+            "JS_to_null_bundle_mean",
+            "KL_to_null_bundle_mean",
+            "reach_saturation_fraction",
+            "exact_saturation_fraction",
+            "saturation_dominated",
             "saturation_horizon",
             "cycle_indicator",
             "collapse_indicator",
@@ -160,26 +200,96 @@ def _deformation_summary(rows: list[dict[str, object]]) -> list[dict[str, object
     return out
 
 
+def _probe_summary(rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    grouped: dict[tuple[str, str], list[dict[str, object]]] = {}
+    for row in rows:
+        grouped.setdefault((str(row["probe_family"]), str(row["probe_mode"])), []).append(row)
+    out = []
+    for (probe_family, probe_mode), items in sorted(grouped.items()):
+        out.append(
+            {
+                "probe_family": probe_family,
+                "probe_mode": probe_mode,
+                "n": len(items),
+                "mean_probe_arity": _mean([item["probe_arity"] for item in items]),
+                "mean_signature_transition_MI": _mean([item["signature_transition_MI_mean"] for item in items]),
+                "mean_signature_transition_motif_reuse": _mean([item["signature_transition_motif_reuse_mean"] for item in items]),
+            }
+        )
+    return out
+
+
+def _null_bundle_summary(rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    grouped: dict[str, list[dict[str, object]]] = {}
+    for row in rows:
+        grouped.setdefault(str(row["family"]), []).append(row)
+    out = []
+    for family, items in sorted(grouped.items()):
+        out.append(
+            {
+                "family": family,
+                "n": len(items),
+                "mean_null_JS_degree": _mean([item["null_JS_degree"] for item in items]),
+                "mean_null_JS_random": _mean([item["null_JS_random"] for item in items]),
+                "mean_null_JS_probe_marginal": _mean([item["null_JS_probe_marginal"] for item in items]),
+                "mean_MI_delta_vs_null": _mean([item["MI_delta_vs_null"] for item in items]),
+                "mean_motif_delta_vs_null": _mean([item["signature_transition_motif_reuse_delta_vs_null"] for item in items]),
+                "mean_control_relative_pass_count": _mean([item["control_relative_pass_count"] for item in items]),
+            }
+        )
+    return out
+
+
+def _saturation_summary(rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    grouped: dict[str, list[dict[str, object]]] = {}
+    for row in rows:
+        grouped.setdefault(str(row["family"]), []).append(row)
+    out = []
+    for family, items in sorted(grouped.items()):
+        out.append(
+            {
+                "family": family,
+                "n": len(items),
+                "mean_reach_saturation_fraction": _mean([item["reach_saturation_fraction"] for item in items]),
+                "mean_exact_saturation_fraction": _mean([item["exact_saturation_fraction"] for item in items]),
+                "mean_saturation_horizon": _mean([item["saturation_horizon"] for item in items]),
+                "saturation_dominated_fraction": _mean([item["saturation_dominated"] for item in items]),
+            }
+        )
+    return out
+
+
 def _write_outputs(
     out_dir: Path,
     config: dict[str, object],
     systems: list[dict[str, object]],
     profiles: list[dict[str, object]],
     profile_rows: list[dict[str, object]],
+    transition_rows: list[dict[str, object]],
     distributions: list[dict[str, object]],
     deformations: list[dict[str, object]],
     errors: list[dict[str, object]],
 ) -> None:
     class_summary = _group(profiles, ("family", "profile_class"))
+    v1_class_summary = _group(profiles, ("family", "control_relative_profile_class_v1"))
     family_summary = _group(profiles, ("family",))
     divergence_summary = _group(profiles, ("profile_class",))
+    v1_divergence_summary = _group(profiles, ("control_relative_profile_class_v1",))
     deformation_summary = _deformation_summary(deformations)
+    probe_summary = _probe_summary(profiles)
+    null_bundle_summary = _null_bundle_summary(profiles)
+    saturation_summary = _saturation_summary(profiles)
     _write_csv(out_dir / "results.csv", systems)
     _write_csv(out_dir / "future_profiles.csv", profile_rows)
+    _write_csv(out_dir / "transition_information.csv", transition_rows)
     _write_csv(out_dir / "signature_distributions.csv", distributions)
     _write_csv(out_dir / "control_comparison.csv", family_summary)
     _write_csv(out_dir / "profile_classes.csv", class_summary)
+    _write_csv(out_dir / "control_relative_profile_classes.csv", v1_class_summary)
     _write_csv(out_dir / "divergence_summary.csv", divergence_summary)
+    _write_csv(out_dir / "null_bundle_summary.csv", null_bundle_summary)
+    _write_csv(out_dir / "probe_summary.csv", probe_summary)
+    _write_csv(out_dir / "saturation_summary.csv", saturation_summary)
     _write_csv(out_dir / "deformation_summary.csv", deformation_summary)
     _write_csv(out_dir / "errors.csv", errors)
     status = {
@@ -190,7 +300,7 @@ def _write_outputs(
         "elapsed_seconds": time.perf_counter() - float(config["started_perf_counter"]),
     }
     (out_dir / "status.json").write_text(json.dumps(status, indent=2, sort_keys=True), encoding="utf-8")
-    _write_summary(out_dir, config, systems, profiles, class_summary, family_summary, divergence_summary, deformation_summary, errors)
+    _write_summary(out_dir, config, systems, profiles, class_summary, v1_class_summary, family_summary, divergence_summary, v1_divergence_summary, deformation_summary, probe_summary, null_bundle_summary, saturation_summary, errors)
 
 
 def _write_summary(
@@ -199,9 +309,14 @@ def _write_summary(
     systems: list[dict[str, object]],
     profiles: list[dict[str, object]],
     class_summary: list[dict[str, object]],
+    v1_class_summary: list[dict[str, object]],
     family_summary: list[dict[str, object]],
     divergence_summary: list[dict[str, object]],
+    v1_divergence_summary: list[dict[str, object]],
     deformation_summary: list[dict[str, object]],
+    probe_summary: list[dict[str, object]],
+    null_bundle_summary: list[dict[str, object]],
+    saturation_summary: list[dict[str, object]],
     errors: list[dict[str, object]],
 ) -> None:
     lines = [
@@ -221,13 +336,28 @@ def _write_summary(
         f"- Future profiles completed: {len(profiles)}",
         f"- Errors: {len(errors)}",
         "",
-        "## Future-Profile Class Counts",
+        "## v0 Heuristic Class Counts",
         "",
         "| family | class | n | entropy | predictive | recurrence | compression | JS null | KL null |",
         "|---|---|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for row in class_summary:
         lines.append(_profile_line(row, "family", "profile_class"))
+    lines.extend(["", "## v1 Control-Relative Class Counts", "", "| family | v1 class | n | transition MI | MI delta | motif delta | pass count | JS bundle | saturation |", "|---|---|---:|---:|---:|---:|---:|---:|---:|"])
+    for row in v1_class_summary:
+        lines.append(
+            "| {family} | {klass} | {n} | {mi:.3f} | {mid:.3f} | {motif:.3f} | {passes:.2f} | {js:.3f} | {sat:.3f} |".format(
+                family=row["family"],
+                klass=row["control_relative_profile_class_v1"],
+                n=row["n"],
+                mi=float(row["mean_signature_transition_MI_mean"]),
+                mid=float(row["mean_MI_delta_vs_null"]),
+                motif=float(row["mean_signature_transition_motif_reuse_delta_vs_null"]),
+                passes=float(row["mean_control_relative_pass_count"]),
+                js=float(row["mean_JS_to_null_bundle_mean"]),
+                sat=float(row["mean_saturation_dominated"]),
+            )
+        )
     lines.extend(["", "## Control Comparison", "", "| family | n | reach H16 | exact H16 | entropy | predictive | recurrence | compression | collapse | cycle | JS null |", "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|"])
     for row in family_summary:
         lines.append(
@@ -257,6 +387,57 @@ def _write_summary(
                 pred=float(row["mean_predictive_information"]),
             )
         )
+    lines.extend(["", "## Null Bundle Comparison", "", "| family | n | JS degree | JS random | JS probe marginal | MI delta | motif delta | pass count |", "|---|---:|---:|---:|---:|---:|---:|---:|"])
+    for row in null_bundle_summary:
+        lines.append(
+            "| {family} | {n} | {degree:.3f} | {random:.3f} | {marginal:.3f} | {mi:.3f} | {motif:.3f} | {passes:.2f} |".format(
+                family=row["family"],
+                n=row["n"],
+                degree=float(row["mean_null_JS_degree"]),
+                random=float(row["mean_null_JS_random"]),
+                marginal=float(row["mean_null_JS_probe_marginal"]),
+                mi=float(row["mean_MI_delta_vs_null"]),
+                motif=float(row["mean_motif_delta_vs_null"]),
+                passes=float(row["mean_control_relative_pass_count"]),
+            )
+        )
+    lines.extend(["", "## Probe Enumeration Summary", "", "| probe family | mode | n | arity | transition MI | motif reuse |", "|---|---|---:|---:|---:|---:|"])
+    for row in probe_summary:
+        lines.append(
+            "| {family} | {mode} | {n} | {arity:.1f} | {mi:.3f} | {motif:.3f} |".format(
+                family=row["probe_family"],
+                mode=row["probe_mode"],
+                n=row["n"],
+                arity=float(row["mean_probe_arity"]),
+                mi=float(row["mean_signature_transition_MI"]),
+                motif=float(row["mean_signature_transition_motif_reuse"]),
+            )
+        )
+    lines.extend(["", "## Saturation Warning", "", "| family | n | reach saturation | exact saturation | saturation horizon | dominated fraction |", "|---|---:|---:|---:|---:|---:|"])
+    for row in saturation_summary:
+        lines.append(
+            "| {family} | {n} | {reach:.3f} | {exact:.3f} | {h:.2f} | {dom:.3f} |".format(
+                family=row["family"],
+                n=row["n"],
+                reach=float(row["mean_reach_saturation_fraction"]),
+                exact=float(row["mean_exact_saturation_fraction"]),
+                h=float(row["mean_saturation_horizon"]),
+                dom=float(row["saturation_dominated_fraction"]),
+            )
+        )
+    lines.extend(["", "## Transition-Level Information Summary", "", "| v1 class | n | transition MI | conditional entropy | entropy-rate proxy | grammar size | motif reuse |", "|---|---:|---:|---:|---:|---:|---:|"])
+    for row in v1_divergence_summary:
+        lines.append(
+            "| {klass} | {n} | {mi:.3f} | {cond:.3f} | {rate:.3f} | {grammar:.1f} | {motif:.3f} |".format(
+                klass=row["control_relative_profile_class_v1"],
+                n=row["n"],
+                mi=float(row["mean_signature_transition_MI_mean"]),
+                cond=float(row["mean_signature_transition_conditional_entropy_mean"]),
+                rate=float(row["mean_signature_transition_entropy_rate_proxy"]),
+                grammar=float(row["mean_signature_transition_grammar_size_mean"]),
+                motif=float(row["mean_signature_transition_motif_reuse_mean"]),
+            )
+        )
     lines.extend(["", "## Deformation Summary", "", "| family | probe | n | entropy delta | growth delta | predictive delta | recurrence delta | compression delta | JS delta |", "|---|---|---:|---:|---:|---:|---:|---:|---:|"])
     for row in deformation_summary[:80]:
         lines.append(
@@ -272,7 +453,7 @@ def _write_summary(
                 js=float(row["mean_JS_to_null_delta"]),
             )
         )
-    lines.extend(["", "## Claim Boundary", "", "This smoke reports future-landscape profiles, neutral class labels, and null divergences only. It does not assign semantic roles or preferred outcomes.", "", "## Next Recommendation", "", "- Treat this as an instrumentation smoke unless structured_propagation separates from controls across multiple measures.", "- If classes collapse into controls, revise probes/detectors before increasing compute."])
+    lines.extend(["", "## Claim Boundary", "", "This smoke reports mechanically generated future-landscape probes, transition-level information measures, matched null bundles, and control-relative classes only. It does not assign semantic roles or preferred outcomes.", "", "## Next Recommendation", "", "- Treat v1 structured_propagation as provisional only when it separates from matched nulls by the predeclared pass-count rule.", "- If v1 returns null_mimic or saturation_dominated, revise substrate/probes before increasing compute."])
     (out_dir / "summary.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
@@ -304,6 +485,7 @@ def main() -> int:
     systems: list[dict[str, object]] = []
     profiles: list[dict[str, object]] = []
     profile_rows: list[dict[str, object]] = []
+    transition_rows: list[dict[str, object]] = []
     distributions: list[dict[str, object]] = []
     deformations: list[dict[str, object]] = []
     errors: list[dict[str, object]] = []
@@ -326,7 +508,7 @@ def main() -> int:
                 break
             done, _ = wait(futures, timeout=2.0, return_when=FIRST_COMPLETED)
             if not done:
-                _write_outputs(out_dir, config, systems, profiles, profile_rows, distributions, deformations, errors)
+                _write_outputs(out_dir, config, systems, profiles, profile_rows, transition_rows, distributions, deformations, errors)
                 continue
             for future in done:
                 job = futures.pop(future)
@@ -335,6 +517,7 @@ def main() -> int:
                     systems.append(payload["system"])
                     profiles.extend(payload["profiles"])
                     profile_rows.extend(payload["profile_rows"])
+                    transition_rows.extend(payload["transition_rows"])
                     distributions.extend(payload["distributions"])
                     deformations.extend(payload["deformations"])
                 except Exception as exc:  # noqa: BLE001
@@ -343,12 +526,12 @@ def main() -> int:
                     next_job = pending.pop(0)
                     futures[executor.submit(_run_one, next_job)] = next_job
             if len(systems) % max(1, args.checkpoint_every) == 0:
-                _write_outputs(out_dir, config, systems, profiles, profile_rows, distributions, deformations, errors)
+                _write_outputs(out_dir, config, systems, profiles, profile_rows, transition_rows, distributions, deformations, errors)
     finally:
         if not timed_out:
             executor.shutdown(wait=True, cancel_futures=False)
     config["status"] = "TIMED_OUT" if timed_out else "COMPLETED"
-    _write_outputs(out_dir, config, systems, profiles, profile_rows, distributions, deformations, errors)
+    _write_outputs(out_dir, config, systems, profiles, profile_rows, transition_rows, distributions, deformations, errors)
     (out_dir / "config.json").write_text(json.dumps({k: v for k, v in config.items() if k != "started_perf_counter"}, indent=2, sort_keys=True), encoding="utf-8")
     print(json.dumps({"out_dir": str(out_dir), "systems": len(systems), "profiles": len(profiles), "errors": len(errors), "status": config["status"]}, indent=2))
     return 0 if not errors else 1

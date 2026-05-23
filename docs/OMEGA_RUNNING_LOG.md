@@ -3278,3 +3278,51 @@ Read:
 Next:
 
 Do not scale this exact detector. Strengthen neutral matched controls and require structured-profile separation from those controls before spending larger compute.
+
+## 2026-05-23 - RFS-MB0 future-landscape detector v1 smoke
+
+Implemented the detector revision from `docs/RFS_MB0_FUTURE_LANDSCAPE_DETECTOR_V1_HANDOFF.md`.
+
+Updated branch:
+
+```text
+omega/rfs_mb0_future_landscape/
+```
+
+Run:
+
+```text
+results/rfs_mb0_future_landscape/20260523_detector_v1_smoke_conservative/
+```
+
+Shape:
+
+```text
+systems: 33
+future profiles: 3696
+workers: 18
+errors: 0
+status: COMPLETED
+elapsed: about 44 seconds
+```
+
+Changes:
+
+- Preserved v0 as `heuristic_profile_class_v0`.
+- Added `control_relative_profile_class_v1`.
+- Replaced hand-listed probes with mechanical `sigma = 2` probe generation.
+- Added transition-level signature MI, conditional entropy, entropy-rate proxy, grammar-size proxy, and motif-reuse proxy.
+- Added random / degree / probe-marginal null bundle outputs.
+- Added saturation diagnostics and conservative saturation handling.
+
+Read:
+
+- Implementation gate passed.
+- v1 correctly withholds saturated structured/relation families rather than calling them structured without saturation-matched nulls.
+- Random relation control is no longer called structured in the conservative run.
+- Degree-preserving control still produces 39 `structured_propagation` profiles.
+- Scientific gate remains unpassed, now for a narrower matched-control reason.
+
+Next:
+
+Do not scale yet. Add frontier-size-preserving and saturation-matched nulls, then require degree-control separation at the family/probe-family level.
