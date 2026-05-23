@@ -54,6 +54,10 @@ def _run_one(job: dict[str, object]) -> dict[str, object]:
 
 def _readout(row: dict[str, object]) -> str:
     class_bin = str(row["class_bin"])
+    if int(row["AB_count"]) > 0 and int(row["exact_AB_count"]) == 0:
+        return "no_exact_joint_persistence"
+    if int(row["flatline_flag"]):
+        return "flatline_joint_persistence"
     if class_bin in {"pairwise_incompatible", "pairwise_incompatible_like"}:
         return "singleton_overcall"
     if float(row["local_A_joint_contracting_rate"]) > 0 or (
@@ -117,10 +121,19 @@ def _group(rows: list[dict[str, object]], keys: tuple[str, ...]) -> list[dict[st
             "A_count",
             "B_count",
             "AB_count",
+            "exact_A_count",
+            "exact_B_count",
+            "exact_AB_count",
+            "nontrivial_AB_count",
+            "exact_nontrivial_AB_count",
             "AB_over_A",
             "AB_over_B",
             "joint_gap",
             "joint_gap_ratio",
+            "exact_joint_gap_ratio",
+            "nontrivial_joint_fraction",
+            "exact_nontrivial_joint_fraction",
+            "flatline_flag",
             "mean_A_delta",
             "mean_B_delta",
             "mean_AB_delta",
@@ -185,12 +198,12 @@ def _write_summary(out_dir: Path, config: dict[str, object], rows: list[dict[str
         "",
         "## H16 By Regime",
         "",
-        "| control | regime | n | A | B | AB | AB/min | A joint-contract | B joint-contract |",
-        "|---|---|---:|---:|---:|---:|---:|---:|---:|",
+        "| control | regime | n | A | B | AB | AB/min | exact AB | exact AB/min | nontriv AB | flatline | A joint-contract | B joint-contract |",
+        "|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for row in regime_summary:
         lines.append(
-            "| {control_type} | {regime} | {n} | {a:.1f} | {b:.1f} | {ab:.1f} | {ratio:.3f} | {la:.3f} | {lb:.3f} |".format(
+            "| {control_type} | {regime} | {n} | {a:.1f} | {b:.1f} | {ab:.1f} | {ratio:.3f} | {exact_ab:.1f} | {exact_ratio:.3f} | {nontriv:.1f} | {flatline:.3f} | {la:.3f} | {lb:.3f} |".format(
                 control_type=row["control_type"],
                 regime=row["regime"],
                 n=row["n"],
@@ -198,6 +211,10 @@ def _write_summary(out_dir: Path, config: dict[str, object], rows: list[dict[str
                 b=float(row["mean_B_count"]),
                 ab=float(row["mean_AB_count"]),
                 ratio=float(row["mean_joint_gap_ratio"]),
+                exact_ab=float(row["mean_exact_AB_count"]),
+                exact_ratio=float(row["mean_exact_joint_gap_ratio"]),
+                nontriv=float(row["mean_nontrivial_AB_count"]),
+                flatline=float(row["mean_flatline_flag"]),
                 la=float(row["mean_local_A_joint_contracting_rate"]),
                 lb=float(row["mean_local_B_joint_contracting_rate"]),
             )
@@ -207,13 +224,13 @@ def _write_summary(out_dir: Path, config: dict[str, object], rows: list[dict[str
             "",
             "## H16 Readouts",
             "",
-            "| control | readout | n | A | B | AB | AB/min |",
-            "|---|---|---:|---:|---:|---:|---:|",
+            "| control | readout | n | A | B | AB | AB/min | exact AB | nontriv AB | flatline |",
+            "|---|---|---:|---:|---:|---:|---:|---:|---:|---:|",
         ]
     )
     for row in readout_summary:
         lines.append(
-            "| {control_type} | {readout} | {n} | {a:.1f} | {b:.1f} | {ab:.1f} | {ratio:.3f} |".format(
+            "| {control_type} | {readout} | {n} | {a:.1f} | {b:.1f} | {ab:.1f} | {ratio:.3f} | {exact_ab:.1f} | {nontriv:.1f} | {flatline:.3f} |".format(
                 control_type=row["control_type"],
                 readout=row["readout"],
                 n=row["n"],
@@ -221,6 +238,9 @@ def _write_summary(out_dir: Path, config: dict[str, object], rows: list[dict[str
                 b=float(row["mean_B_count"]),
                 ab=float(row["mean_AB_count"]),
                 ratio=float(row["mean_joint_gap_ratio"]),
+                exact_ab=float(row["mean_exact_AB_count"]),
+                nontriv=float(row["mean_nontrivial_AB_count"]),
+                flatline=float(row["mean_flatline_flag"]),
             )
         )
     lines.extend(

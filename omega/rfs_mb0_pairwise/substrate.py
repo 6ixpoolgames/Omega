@@ -114,7 +114,7 @@ def _build_edges(
     states: Iterable[State], regime: str, control_type: str
 ) -> dict[State, tuple[State, ...]]:
     if control_type == "dead_control":
-        return {state: (_advance(state, _worse(state[0]), _worse(state[1]), -1, 1, -1),) for state in states}
+        return {state: (_advance(state, _decay_to_lost(state[0]), _decay_to_lost(state[1]), -1, 1, -1),) for state in states}
     if control_type == "permissive_control":
         return _permissive_edges(states)
     if regime == "stasis_control":
@@ -125,7 +125,8 @@ def _build_edges(
     out: dict[State, tuple[State, ...]] = {}
     for state in states:
         candidates: set[State] = set()
-        candidates.add(_advance(state, state[0], state[1], 0, 0, 0))
+        if regime in {"mutual_support", "independent_parallel", "terminal_lockin", "random_branching_control"}:
+            candidates.add(_advance(state, state[0], state[1], 0, 0, 0))
         if regime == "mutual_support":
             candidates.update(_mutual_support_next(state))
         elif regime == "independent_parallel":
@@ -313,6 +314,14 @@ def _worse(status: int) -> int:
     return min(DAMAGED, status + 1)
 
 
+def _decay_to_lost(status: int) -> int:
+    if status in DISCONTINUOUS:
+        return status
+    if status >= DAMAGED:
+        return LOST
+    return status + 1
+
+
 def _clamp(value: int, low: int, high: int) -> int:
     return max(low, min(high, value))
 
@@ -322,4 +331,3 @@ def _stable_bucket(state: State, seed: int, salt: int) -> int:
     for index, value in enumerate(state):
         total += (index + 3) * (value + 7) * 97
     return total % 5
-

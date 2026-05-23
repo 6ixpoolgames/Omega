@@ -27,6 +27,29 @@ def reachable(
     return frozenset(seen)
 
 
+def exact_frontier(
+    system: MB0System,
+    start: State,
+    horizon: int,
+    predicate=None,
+) -> frozenset[State]:
+    if predicate is not None and not predicate(start):
+        return frozenset()
+    frontier = {start}
+    if horizon == 0:
+        return frozenset(frontier)
+    for _ in range(horizon):
+        next_frontier: set[State] = set()
+        for state in frontier:
+            for target in system.edges[state]:
+                if predicate is None or predicate(target):
+                    next_frontier.add(target)
+        frontier = next_frontier
+        if not frontier:
+            break
+    return frozenset(frontier)
+
+
 def identity_predicates(system: MB0System):
     if system.control_type == "identity_shuffle_control":
         return (
@@ -45,23 +68,42 @@ def pairwise_metrics(system: MB0System, horizon: int) -> dict[str, int | float |
     f_a = reachable(system, system.initial_state, horizon, pred_a)
     f_b = reachable(system, system.initial_state, horizon, pred_b)
     f_ab = reachable(system, system.initial_state, horizon, pred_ab)
+    exact_a = exact_frontier(system, system.initial_state, horizon, pred_a)
+    exact_b = exact_frontier(system, system.initial_state, horizon, pred_b)
+    exact_ab = exact_frontier(system, system.initial_state, horizon, pred_ab)
     a_count = len(f_a)
     b_count = len(f_b)
     ab_count = len(f_ab)
+    exact_a_count = len(exact_a)
+    exact_b_count = len(exact_b)
+    exact_ab_count = len(exact_ab)
     min_singleton = min(a_count, b_count)
+    exact_min_singleton = min(exact_a_count, exact_b_count)
+    nontrivial_ab = {state for state in f_ab if _nontrivial_endpoint(system.initial_state, state)}
+    exact_nontrivial_ab = {state for state in exact_ab if _nontrivial_endpoint(system.initial_state, state)}
     return {
         "H": horizon,
         "reach_count": len(reach),
         "A_count": a_count,
         "B_count": b_count,
         "AB_count": ab_count,
+        "exact_A_count": exact_a_count,
+        "exact_B_count": exact_b_count,
+        "exact_AB_count": exact_ab_count,
+        "nontrivial_AB_count": len(nontrivial_ab),
+        "exact_nontrivial_AB_count": len(exact_nontrivial_ab),
         "A_viable": int(a_count > 0),
         "B_viable": int(b_count > 0),
         "AB_viable": int(ab_count > 0),
+        "exact_AB_viable": int(exact_ab_count > 0),
         "AB_over_A": ab_count / max(1, a_count),
         "AB_over_B": ab_count / max(1, b_count),
         "joint_gap": min_singleton - ab_count,
         "joint_gap_ratio": ab_count / max(1, min_singleton),
+        "exact_joint_gap_ratio": exact_ab_count / max(1, exact_min_singleton),
+        "nontrivial_joint_fraction": len(nontrivial_ab) / max(1, ab_count),
+        "exact_nontrivial_joint_fraction": len(exact_nontrivial_ab) / max(1, exact_ab_count),
+        "flatline_flag": int(len(nontrivial_ab) == 0 and ab_count > 0),
         "class_bin": classify(a_count, b_count, ab_count),
     }
 
@@ -73,6 +115,7 @@ def transition_deltas(system: MB0System, horizon: int) -> dict[str, int | float]
     base_a = len(reachable(system, initial, horizon, pred_a))
     base_b = len(reachable(system, initial, horizon, pred_b))
     base_ab = len(reachable(system, initial, horizon, pred_ab))
+    remaining_horizon = max(0, horizon - 1)
     targets = system.edges[initial]
     if not targets:
         return {
@@ -81,12 +124,15 @@ def transition_deltas(system: MB0System, horizon: int) -> dict[str, int | float]
             "mean_AB_delta": 0.0,
             "local_A_joint_contracting_rate": 0.0,
             "local_B_joint_contracting_rate": 0.0,
+            "max_A_delta_when_AB_contracts": 0,
+            "max_B_delta_when_AB_contracts": 0,
+            "min_AB_delta": 0,
         }
     deltas = []
     for target in targets:
-        a_delta = len(reachable(system, target, horizon, pred_a)) - base_a
-        b_delta = len(reachable(system, target, horizon, pred_b)) - base_b
-        ab_delta = len(reachable(system, target, horizon, pred_ab)) - base_ab
+        a_delta = len(reachable(system, target, remaining_horizon, pred_a)) - base_a
+        b_delta = len(reachable(system, target, remaining_horizon, pred_b)) - base_b
+        ab_delta = len(reachable(system, target, remaining_horizon, pred_ab)) - base_ab
         deltas.append((a_delta, b_delta, ab_delta))
     a_contracting = [(a, ab) for a, _b, ab in deltas if ab < 0]
     b_contracting = [(b, ab) for _a, b, ab in deltas if ab < 0]
@@ -120,3 +166,7 @@ def classify(a_count: int, b_count: int, ab_count: int) -> str:
     if joint_ratio < 0.75:
         return "pairwise_degraded"
     return "pairwise_compatible"
+
+
+def _nontrivial_endpoint(initial: State, endpoint: State) -> bool:
+    return endpoint[:5] != initial[:5]
