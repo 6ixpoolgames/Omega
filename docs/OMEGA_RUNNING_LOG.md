@@ -3448,3 +3448,60 @@ Read:
 Next:
 
 Do not run a longer overnight batch on this exact substrate. Keep the long-horizon machinery as a diagnostic layer, but move next effort toward substrate/environment redesign or stronger window-level controls.
+
+## 2026-05-23 - RFS-MB0 action-generated relation atlas v0 calibration
+
+Implemented the action-generated relation substrate spec:
+
+```text
+docs/RFS_MB0_ACTION_GENERATED_RELATION_SUBSTRATE_SPEC.md
+```
+
+Added:
+
+```text
+omega/rfs_mb0_future_landscape/relation_generator.py
+omega/rfs_mb0_future_landscape/run_relation_atlas.py
+```
+
+Primary result note:
+
+```text
+docs/research_notes/validation_results/rfs_mb0_action_generated_relation_atlas_v0_calibration_result.md
+```
+
+Primary run:
+
+```text
+results/rfs_mb0_relation_atlas/20260523_action_generated_v0_n5_calibration/
+```
+
+Shape:
+
+```text
+generated environments: 50
+middle-regime environments: 28
+future profiles: 8250
+horizon grid: long_10x
+workers: 18
+errors: 0
+status: COMPLETED
+elapsed: about 289 seconds
+atlas gate passes: 0
+```
+
+Read:
+
+- The neutral relation atlas generator works.
+- The generator produces a useful spread of environment classes without named positive families.
+- The n=5 calibration found many middle-regime environments.
+- No environment passed the aggregate atlas gate.
+- Local/window-level structured candidates appear, but do not promote under matched-null discipline.
+
+Operational note:
+
+The initial mixed n5/n6 calibration used 18 workers but drained into long n6 stragglers, leaving lower CPU utilization near the end and hitting the time limit at 49/50 environments. The runner now supports `--coordinate-counts` and `--max-state-count`; the n=5 rerun completed cleanly in about 4.8 minutes.
+
+Next:
+
+Keep the relation atlas branch. Use n=5 batches for fast parameter calibration, then target n=6 only after parameter trends identify stable middle-regime regions. Do not treat local/window candidates as positives until window-level controls and confirmatory splits are in place.

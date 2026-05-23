@@ -20,6 +20,7 @@ Current entry points:
 
 - `RFS_MB0_FUTURE_LANDSCAPE_PATTERN_SPEC.md`
 - `RFS_MB0_FUTURE_LANDSCAPE_DETECTOR_V1_HANDOFF.md`
+- `RFS_MB0_ACTION_GENERATED_RELATION_SUBSTRATE_SPEC.md`
 - `REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md`
 - `research_notes/validation_design/val_ecology_viability_reorientation.md`
 - `VAL0_G_NEUTRAL_GRAMMAR_GEOMETRY_ATLAS_SPEC.md`
@@ -61,6 +62,7 @@ Directory:
 Current result notes:
 
 - `rfs_mb0_future_landscape_detector_v1_1_smoke_result.md`
+- `rfs_mb0_action_generated_relation_atlas_v0_calibration_result.md`
 - `rfs_mb0_future_landscape_long_horizon_environment_audit_result.md`
 - `rfs_mb0_future_landscape_detector_v1_smoke_result.md`
 - `rfs_mb0_future_landscape_smoke_result.md`
@@ -87,6 +89,11 @@ Result in one line:
   structured families passed. The long-horizon read suggests the current
   blocker is substrate/environment design and saturation handling, not merely
   an H16 cutoff.
+- The action-generated relation atlas v0 calibration removes hand-named
+  positive families and generates neutral relation environments from primitive
+  parameters. The n=5 calibration completed 50 environments with 28
+  middle-regime environments and zero errors. It did not pass the scientific
+  gate: atlas gate passes remained 0.
 - The earlier RFS-MB0 future-landscape v0 smoke was useful because it overcalled
   structure across random, degree, and coordinate-permutation controls. v1
   narrowed the failure to degree-preserving controls and saturation handling;

@@ -76,6 +76,8 @@ as the canonical internal definition anchor.
    - `docs/RFS_MB0_FUTURE_LANDSCAPE_V1_1_CODE_TARGETS.md`
    - `docs/research_notes/validation_results/rfs_mb0_future_landscape_detector_v1_1_smoke_result.md`
    - `docs/research_notes/validation_results/rfs_mb0_future_landscape_long_horizon_environment_audit_result.md`
+   - `docs/RFS_MB0_ACTION_GENERATED_RELATION_SUBSTRATE_SPEC.md`
+   - `docs/research_notes/validation_results/rfs_mb0_action_generated_relation_atlas_v0_calibration_result.md`
    - `docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md`
    - `docs/research_notes/validation_design/val_ecology_viability_reorientation.md`
    - `docs/research_notes/validation_design/README.md`
@@ -131,6 +133,12 @@ Future RFS-MB0 future-landscape outputs should use:
 
 ```text
 results/rfs_mb0_future_landscape/<timestamp-or-run-id>/
+```
+
+Future RFS-MB0 relation-atlas outputs should use:
+
+```text
+results/rfs_mb0_relation_atlas/<timestamp-or-run-id>/
 ```
 
 Future VAL0-CT outputs, if deliberately revisited, should use:

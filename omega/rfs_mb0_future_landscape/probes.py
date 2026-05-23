@@ -18,6 +18,7 @@ class Probe:
 
 
 def generate_probes(system: LandscapeSystem, sigma: int = 2) -> tuple[Probe, ...]:
+    modulus = int(system.metadata.get("alphabet_size", system.metadata.get("modulus", MODULUS)))
     if system.family == "permissive_probe_control":
         return (Probe("probe_permissive_constant", "permissive", lambda _s: ("all",), "control_permissive", 0),)
     if system.family == "strict_probe_control":
@@ -54,7 +55,7 @@ def generate_probes(system: LandscapeSystem, sigma: int = 2) -> tuple[Probe, ...
                     Probe(
                         f"moddiff_{left}_{right}",
                         "pair_relation",
-                        lambda s, left=left, right=right: ((s[left] - s[right]) % MODULUS,),
+                        lambda s, left=left, right=right, modulus=modulus: ((s[left] - s[right]) % modulus,),
                         "pairwise_modular_difference",
                         2,
                     )
@@ -85,7 +86,7 @@ def generate_probes(system: LandscapeSystem, sigma: int = 2) -> tuple[Probe, ...
                         Probe(
                             f"triple_residue_{left}_{mid}_{right}",
                             "triple_relation",
-                            lambda s, left=left, mid=mid, right=right: ((s[left] + s[mid] + s[right]) % MODULUS,),
+                            lambda s, left=left, mid=mid, right=right, modulus=modulus: ((s[left] + s[mid] + s[right]) % modulus,),
                             "triple_residue",
                             3,
                         )

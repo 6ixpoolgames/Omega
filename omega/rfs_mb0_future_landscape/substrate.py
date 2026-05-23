@@ -4,7 +4,7 @@ import random
 from dataclasses import dataclass
 from typing import Callable, Iterable
 
-State = tuple[int, int, int, int]
+State = tuple[int, ...]
 Transform = Callable[[State], set[State]]
 
 MODULUS = 4
@@ -32,7 +32,7 @@ class LandscapeSystem:
     states: tuple[State, ...]
     edges: dict[State, tuple[State, ...]]
     transform_names: tuple[str, ...]
-    metadata: dict[str, int | str]
+    metadata: dict[str, float | int | str]
 
 
 def enumerate_states() -> tuple[State, ...]:
