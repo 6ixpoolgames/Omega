@@ -1,6 +1,6 @@
 # Omega Project Manual
 
-Last updated: 2026-05-21
+Last updated: 2026-05-23
 
 Repository: https://github.com/6ixpoolgames/Omega
 
@@ -14,15 +14,19 @@ and force clear failure modes.
 Current public posture:
 
 ```text
-Lead with reachable futures and substrate design.
+Lead with reachable futures and neutral future-landscape deformation.
 Use Omega as the broader theory and long-term hypothesis.
 Do not present VAL0/VAL1 as validation of Omega.
 Frame VAL0/VAL1 as reconnaissance probes that exposed viability dynamics and
 substrate limitations.
+Present RFS-MB0 detector v1 as the active empirical branch and state clearly
+that it has not passed the scientific gate.
 ```
 
 Primary current design note:
 
+- `docs/RFS_MB0_FUTURE_LANDSCAPE_PATTERN_SPEC.md`
+- `docs/RFS_MB0_FUTURE_LANDSCAPE_DETECTOR_V1_HANDOFF.md`
 - `docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md`
 
 Project stance:
@@ -40,15 +44,15 @@ Onboarding terminology:
 For the empirical repo, the front-door object is:
 
 ```text
-reachable futures under viability and compatibility constraints
+neutral future-landscape profiles under matched-null comparison
 ```
 
 The current empirical question is:
 
 ```text
-What minimal substrate resolution is required to distinguish generic viable
-continuation from trivial persistence, recoverability, local capture, and
-compatibility-preserving viable propagation?
+Can horizon-indexed reachable-future profiles distinguish structured future
+deformation from saturation, clocks, collapse, and matched-control artifacts
+without semantic labels?
 ```
 
 This keeps the philosophical connection to formal value theory and axiology,
@@ -66,13 +70,12 @@ as the canonical internal definition anchor.
 2. Read `docs/OMEGA_RUNNING_LOG.md`.
 3. Read `README.md`.
 4. Read the current validation-design notes:
+   - `docs/RFS_MB0_FUTURE_LANDSCAPE_PATTERN_SPEC.md`
+   - `docs/RFS_MB0_FUTURE_LANDSCAPE_DETECTOR_V1_HANDOFF.md`
+   - `docs/research_notes/validation_results/rfs_mb0_future_landscape_detector_v1_smoke_result.md`
    - `docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md`
    - `docs/research_notes/validation_design/val_ecology_viability_reorientation.md`
-   - `docs/VAL0_G_NEUTRAL_GRAMMAR_GEOMETRY_ATLAS_SPEC.md`
-   - `docs/research_notes/validation_results/val0_ct_12h_unlabeled_geometry_battery_result.md`
    - `docs/research_notes/validation_design/README.md`
-   - `docs/research_notes/validation_design/val0_ct_implementation_spec.md`
-   - `docs/research_notes/validation_design/val0_constructor_task_algebra_probe.md`
 5. Read the current theory-pivot notes:
    - `docs/research_notes/omega_theory/constructor_theory_and_omega_axiology.md`
    - `docs/research_notes/omega_theory/deriving_omega_relevance_from_primitives.md`
@@ -121,7 +124,13 @@ Historical compact result artifacts live under:
 
 - `results/historical_probes/`
 
-Future VAL0-CT outputs should use:
+Future RFS-MB0 future-landscape outputs should use:
+
+```text
+results/rfs_mb0_future_landscape/<timestamp-or-run-id>/
+```
+
+Future VAL0-CT outputs, if deliberately revisited, should use:
 
 ```text
 results/val0_ct/<timestamp-or-run-id>/
@@ -194,11 +203,20 @@ VAL1-MF then tested simple multifield coupling and sampled interference:
 > deltas detected constructive support-like interference but not robust
 > destructive/capture dynamics.
 
-The current empirical pivot is now reachable-futures substrate design:
+The current empirical pivot is now RFS-MB0 future-landscape detection:
 
-> Build minimal substrates where reachable sets, viability kernels,
-> capture/recovery basins, and constructor candidates are native rather than
-> bolted onto task graphs.
+> Build minimal neutral transition substrates, measure their horizon-indexed
+> reachable-future profiles, and ask whether structured future deformation
+> survives matched-null comparison without semantic labels.
+
+Current detector status:
+
+```text
+RFS-MB0 future-landscape detector v1:
+  implementation passed
+  scientific gate not passed
+  remaining blocker: degree-preserving false positives
+```
 
 Older papers and drafts motivate variants of:
 
@@ -269,23 +287,34 @@ CA, DAR, DAX, and bare field probes are primitive-floor or fakeout-calibration
 probes unless they include explicit valuerhood and recoverable continuability.
 ```
 
-### Current Validation Target: RFS0
+### Current Validation Target: RFS-MB0 Future Landscape
 
-RFS0 is the current active validation design target.
+RFS-MB0 future-landscape detection is the current active validation design target.
 
 It is not full Omega validation. It is a finite reachable-futures substrate
-intended to make reachability, viability, and capture/recovery exact before
-adding richer agency language.
+intended to measure neutral future-profile structure before adding richer
+agency, valuerhood, identity, or constructor language.
 
 Primary question:
 
 ```text
-What minimal substrate resolution is required to distinguish generic viable
-continuation from trivial persistence, recoverability, local capture, and
-compatibility-preserving viable propagation?
+Can horizon-indexed reachable-future profiles distinguish structured future
+deformation from saturation, clocks, collapse, and matched-control artifacts?
 ```
 
-RFS0 is now the recommended starting point for new implementation work.
+Implementation:
+
+```text
+omega/rfs_mb0_future_landscape/
+```
+
+Latest result:
+
+```text
+docs/research_notes/validation_results/rfs_mb0_future_landscape_detector_v1_smoke_result.md
+```
+
+RFS-MB0 is now the recommended starting point for new implementation work.
 VAL0-CT, VAL0-G, VAL1-MF, COM/fiber, trajectory-space, CA, DAR, and DAX work
 remain important historical provenance and failure analysis, but they are not
 the current front edge.
@@ -1059,6 +1088,32 @@ What we cannot say:
   are intentionally untracked because they are large generated intermediates.
 
 ## Recommended Next Probes
+
+### RFS-MB0.1: Degree-Control and Saturation-Matched Null Repair
+
+Question:
+
+> Can future-landscape structure survive controls that preserve degree,
+> frontier size, saturation profile, and probe-family marginals?
+
+Current status:
+
+```text
+RFS-MB0 detector v1:
+  implementation passed
+  random and saturated broad overcalls reduced
+  degree-preserving control still produces false positives
+```
+
+Do not scale RFS-MB0 into long runs until this is addressed.
+
+Required next changes:
+
+- add frontier-size-preserving nulls;
+- add saturation-matched nulls;
+- report family-level and probe-family-level ranks against controls;
+- require degree-control separation before assigning `structured_propagation`;
+- preserve v0/v1 outputs as historical baselines.
 
 ### Primitive Branch: DAR Pause Or Redesign
 

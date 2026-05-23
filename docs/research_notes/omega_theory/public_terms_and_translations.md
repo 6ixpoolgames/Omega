@@ -41,12 +41,11 @@ The empirical repo should now lead with:
 
 ```text
 reachable futures
-viability
-recoverability
-capture / recovery basins
-constructor candidates
-compatibility-preserving viable propagation
-locally viable / globally degrading capture regimes
+neutral future landscapes
+future-profile deformation
+matched-null comparison
+saturation diagnostics
+control-relative structure
 ```
 
 Use **Omega** for the wider theory and long-term hypothesis. Use established
@@ -55,9 +54,9 @@ terms for current measurements.
 Recommended public framing:
 
 ```text
-We study reachable futures in abstract dynamical substrates: when possible
-continuations remain viable, recoverable, composable, or become locally
-persistent while degrading broader future possibility.
+We study reachable futures in abstract dynamical substrates: how neutral
+transition relations deform the space of possible continuations across horizons,
+and whether that deformation survives matched controls.
 ```
 
 Recommended ambition statement:
@@ -66,8 +65,15 @@ Recommended ambition statement:
 The long-term Omega hypothesis is that value-bearing agency depends on
 compatibility-preserving viable propagation: reachable futures that preserve
 recoverability and remain compatible with other value-bearing continuations.
-The current repo is the empirical substrate program needed to test whether that
-object can be isolated.
+The current repo is the empirical substrate program needed to test whether
+earlier, neutral precursors to that object can be isolated.
+```
+
+Current status sentence:
+
+```text
+Detector v1 can measure neutral future landscapes, but it has not validated the
+target object: degree-preserving controls still produce false positives.
 ```
 
 ## Core theory terms
@@ -101,6 +107,64 @@ future reachable set
 ```
 
 Use this as the front-door empirical phrase.
+
+### Neutral future landscape
+
+Public-facing phrase:
+
+```text
+neutral future landscape
+```
+
+Internal relation:
+
+```text
+current RFS-MB0 empirical object
+```
+
+Plain meaning:
+
+A neutral future landscape is the horizon-indexed structure of reachable and
+exact-frontier futures induced by a transition relation before adding semantic
+labels such as agency, value, identity, or viability.
+
+Use this for the active RFS-MB0 branch.
+
+### Future-profile deformation
+
+Public-facing phrase:
+
+```text
+future-profile deformation
+```
+
+Plain meaning:
+
+Future-profile deformation means measurable change in reachable-future
+structure across horizons: reach counts, exact-frontier signatures, transition
+information, recurrence, motif reuse, divergence from nulls, and saturation.
+
+Use this instead of saying that the repo has found an Omega object.
+
+### Matched-null artifact
+
+Public-facing phrase:
+
+```text
+matched-control artifact
+```
+
+Plain meaning:
+
+A matched-control artifact is a profile that looks structured until compared
+with controls preserving relevant features such as degree, frontier size,
+saturation, or probe marginals.
+
+Current status:
+
+```text
+The active detector is blocked by degree-preserving control artifacts.
+```
 
 ### Viability
 

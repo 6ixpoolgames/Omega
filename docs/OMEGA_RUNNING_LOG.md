@@ -3326,3 +3326,28 @@ Read:
 Next:
 
 Do not scale yet. Add frontier-size-preserving and saturation-matched nulls, then require degree-control separation at the family/probe-family level.
+
+## 2026-05-23 - Public-facing status refresh
+
+Updated the front-facing repo documentation after the RFS-MB0 future-landscape detector v1 smoke.
+
+Files updated:
+
+```text
+README.md
+docs/PUBLIC_RESULTS_INDEX.md
+docs/OMEGA_PROJECT_MANUAL.md
+docs/research_notes/omega_theory/public_terms_and_translations.md
+docs/research_notes/omega_theory/omega_glossary.md
+```
+
+Current public posture:
+
+```text
+active branch: RFS-MB0 future-landscape detection
+implemented detector: v1
+implementation status: passed
+scientific gate: not passed
+main blocker: degree-preserving control false positives
+next target: frontier-size and saturation-matched null repair
+```

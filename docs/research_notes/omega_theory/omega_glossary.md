@@ -48,9 +48,9 @@ The core correction in the current stack is that relation is more primitive than
 Current empirical posture:
 
 ```text
-The empirical arm now studies reachable futures first.
-The near-term target is minimal substrate resolution, not a claim that Omega has
-already been detected.
+The empirical arm now studies neutral future landscapes first.
+The near-term target is matched-control separation of future-profile structure,
+not a claim that Omega has already been detected.
 ```
 
 ## Onboarding description
@@ -64,11 +64,20 @@ The phrase means that Omega studies the structure of possible continuations in w
 For collaborators entering through the empirical repo, the front-door phrase is:
 
 ```text
-reachable futures under viability and compatibility constraints
+neutral future landscapes under matched-null comparison
 ```
 
 The wider theory remains Omega. The empirical substrate program asks what
 minimal dynamical systems can resolve the distinctions Omega cares about.
+
+Current implementation status:
+
+```text
+RFS-MB0 detector v1 is implemented.
+It measures mechanically probed future-profile deformation.
+It has not passed the scientific gate because degree-preserving controls still
+produce false-positive structured profiles.
+```
 
 ## External anchor layer
 

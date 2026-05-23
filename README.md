@@ -16,11 +16,11 @@ It does **not** prove Omega. It is a controlled workspace for turning the theory
 
 The current empirical reset asks a narrower substrate question:
 
-**Can bounded structures be derived from neutral transition systems, and do those structures have identity-preserving reachable futures that can be distinguished from trivial persistence, local capture, and control artifacts?**
+**Can neutral transition systems produce future-landscape structure that survives matched-null comparison, rather than just reflecting saturation, clocks, collapse, or probe artifacts?**
 
 Current status, in one line:
 
-**VAL0/VAL1 were useful reconnaissance probes; the active pivot is now a minimal reachable-futures formalism where bounded identities are derived from relational dynamics rather than inserted as state variables.**
+**VAL0/VAL1 were useful reconnaissance probes; the active branch is now RFS-MB0 future-landscape detection, with detector v1 implemented and currently blocked by degree-preserving false positives.**
 
 ## Why this matters for alignment
 
@@ -66,11 +66,13 @@ In this framing, alignment is not a terminal-state target. It is a constraint on
 
 The current empirical program is still only a first step. It does not validate alignment. It asks what substrate is needed before the earliest precursor can be resolved:
 
-> Can reachable futures be measured well enough to distinguish mere persistence from identity-preserving, recoverable, compatibility-preserving continuation and local capture?
+> Can reachable futures be measured well enough to distinguish structured future deformation from saturation, trivial persistence, clocks, collapse, and matched-control artifacts?
 
-## Current empirical pivot: minimal reachable-futures formalism
+## Current empirical pivot: neutral future-landscape deformation
 
-The project has moved from task-graph probes toward a substrate-first program for **reachable futures of derived bounded structures**.
+The project has moved from task-graph probes and hand-defined bounded identities toward a substrate-first program for **neutral future landscapes**.
+
+The active empirical object is not an agent, valuer, identity, reward, or viability label. It is the deformation of reachable futures induced by a neutral transition relation.
 
 The current primitive substrate is deliberately minimal:
 
@@ -96,29 +98,28 @@ asymmetry:
 capacity:
   available future transformation space
 
-boundary:
-  scaled distinction over relations; a derived bounded-structure candidate
+future profile:
+  horizon-indexed reachable and exact-frontier signatures
 
-identity:
-  continuity of a derived bounded structure through neutral transformations
+future landscape deformation:
+  changes in reachability, signature distributions, recurrence, transition
+  information, and null-relative divergence across horizons
 
-coherence:
-  preservation of identity-preserving reachable futures
+saturation:
+  profiles dominated by exhaustion of the finite state space
 
-dissipation-like contraction:
-  loss of identity-preserving reachable futures
+controls:
+  random, degree-preserving, probe-marginal, fixed-point, cycle, permissive,
+  strict, and coordinate-permutation comparisons
 
-viability:
-  nonempty or sufficiently rich identity-preserving futures
-
-recovery:
-  return to identity-continuity after perturbation
+provisional structure:
+  only a control-relative class after matched-null comparison
 ```
 
 The current experiment form is:
 
 ```text
-Experiment = (X, -> ; E_sigma, ~=_sigma, H, P)
+Experiment = (X, -> ; Sigma, H, N)
 ```
 
 where:
@@ -127,27 +128,25 @@ where:
 (X, ->):
   primitive substrate
 
-E_sigma:
-  boundary / bounded-structure extraction rule at scale sigma
-
-~=_sigma:
-  structural continuity criterion
+Sigma:
+  mechanically generated neutral probe family
 
 H:
   horizon
 
-P:
-  optional perturbation relation
+N:
+  matched null bundle
 ```
 
-The semicolon matters. The substrate is left of the semicolon. Probe choices are right of it.
+The semicolon matters. The substrate is left of the semicolon. Probe and null choices are right of it.
 
 Current design files:
 
+- [Future landscape pattern spec](docs/RFS_MB0_FUTURE_LANDSCAPE_PATTERN_SPEC.md)
+- [Future landscape detector v1 handoff](docs/RFS_MB0_FUTURE_LANDSCAPE_DETECTOR_V1_HANDOFF.md)
+- [Future landscape detector v1 smoke result](docs/research_notes/validation_results/rfs_mb0_future_landscape_detector_v1_smoke_result.md)
 - [Minimal reachable futures formalism](docs/research_notes/omega_theory/minimal_reachable_futures_formalism.md)
 - [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
-- [Viability ecology reorientation](docs/research_notes/validation_design/val_ecology_viability_reorientation.md)
-- [RFS0 strict reachable futures small smoke result](docs/research_notes/validation_results/rfs0_strict_reachable_futures_small_smoke_result.md)
 - [Public results index](docs/PUBLIC_RESULTS_INDEX.md)
 
 ## Historical reconnaissance probes
@@ -327,8 +326,8 @@ reachable-futures probes ask:
 Which transformations remain possible?
 Which paths preserve future reachability?
 Which paths collapse into lock-in?
-Which bounded structures retain reachable futures across horizons?
-Which coupled bounded processes preserve or erase one another's futures?
+Which future profiles saturate, collapse, cycle, or survive matched controls?
+Which apparent structures disappear under degree-preserving or frontier-matched nulls?
 ```
 
 This makes the validation target less anthropocentric and less preference-first.
@@ -344,20 +343,20 @@ Omega asks which possible transformations preserve value-bearing future possibil
 
 ### For a new reader
 
-1. [Minimal reachable futures formalism](docs/research_notes/omega_theory/minimal_reachable_futures_formalism.md)
+1. [Future landscape detector v1 smoke result](docs/research_notes/validation_results/rfs_mb0_future_landscape_detector_v1_smoke_result.md)
 2. [Public terms and translations](docs/research_notes/omega_theory/public_terms_and_translations.md)
-3. [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
+3. [Future landscape pattern spec](docs/RFS_MB0_FUTURE_LANDSCAPE_PATTERN_SPEC.md)
 4. [Public results index](docs/PUBLIC_RESULTS_INDEX.md)
 5. [Omega glossary](docs/research_notes/omega_theory/omega_glossary.md)
 6. [Foundation stack as pipeline](docs/research_notes/omega_theory/progenitor_stack_as_pipeline.md)
 
 ### For implementation work
 
-1. [Minimal reachable futures formalism](docs/research_notes/omega_theory/minimal_reachable_futures_formalism.md)
-2. [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
-3. [RFS0 strict reachable futures batch spec](docs/RFS0_STRICT_REACHABLE_FUTURES_BATCH_SPEC.md)
-4. [RFS0 strict reachable futures small smoke result](docs/research_notes/validation_results/rfs0_strict_reachable_futures_small_smoke_result.md)
-5. [Validation design notes](docs/research_notes/validation_design/README.md)
+1. [Future landscape detector v1 handoff](docs/RFS_MB0_FUTURE_LANDSCAPE_DETECTOR_V1_HANDOFF.md)
+2. [Future landscape pattern spec](docs/RFS_MB0_FUTURE_LANDSCAPE_PATTERN_SPEC.md)
+3. [Future landscape detector v1 smoke result](docs/research_notes/validation_results/rfs_mb0_future_landscape_detector_v1_smoke_result.md)
+4. [Minimal reachable futures formalism](docs/research_notes/omega_theory/minimal_reachable_futures_formalism.md)
+5. [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
 
 ### For project history
 
@@ -370,26 +369,30 @@ Omega asks which possible transformations preserve value-bearing future possibil
 
 ## Current next step
 
-The current implementation target is **RFS-MB0**, a derived-boundary / identity-futures smoke.
+The current implementation target is **RFS-MB0 Future Landscape Detector v1**.
+
+The detector v1 smoke passed as an implementation run, but not as a scientific gate. It corrected the broad v0 overcall by adding transition-level information, mechanical probes, matched nulls, and saturation handling. The remaining blocker is specific: degree-preserving controls still produce some `structured_propagation` profiles.
 
 Public summary:
 
 ```text
 define:
   a finite transition substrate (X, ->)
-  boundary extraction rules E_sigma
-  structural continuity criteria ~=_sigma
+  mechanically generated neutral probes Sigma
+  matched null bundle N
 
 measure:
-  derived bounded-structure candidates
-  identity-preserving reachable futures
-  identity-continuity survival curves
-  future contraction ratios
-  recovery after boundary perturbation
-  control comparison against shuffled relations and random transitions
+  horizon-indexed reachable futures
+  exact-frontier signature distributions
+  transition-level signature mutual information
+  transition conditional entropy and motif reuse
+  JS/KL divergence from random, degree, and probe-marginal nulls
+  saturation diagnostics
+  conservative control-relative profile classes
 
 defer:
   Omega-positive labels
+  agent / valuer / identity claims
   scalar energy or utility objectives
   hand-designed viability vectors
   full constructor agency
@@ -417,14 +420,20 @@ RFS0 strict finite reachability:
   showed sparse strict objects but insufficient control separation
 
 RFS-MB0:
-  active reset target
-  derive bounded structures from (X, ->) and measure identity-preserving futures
+  active future-landscape detector
+  v1 implemented; scientific gate blocked by degree-preserving false positives
+
+RFS-MB0.1:
+  next target
+  add frontier-size and saturation-matched nulls; require family/probe-family
+  separation from degree controls
 
 RFS-MB1:
-  perturbation and recovery of identity-continuity
+  only after MB0 control separation
+  perturbation and recovery of future-profile structure
 
 RFS-MB2:
-  coupled bounded processes; compatibility, capture, erasure
+  coupled future landscapes; compatibility, capture, erasure
 
 RFS-MB3:
   scale hierarchy; nested or composable bounded structures
@@ -452,6 +461,6 @@ VAL0-CT validation designs and results
 
 The current scientific claim is modest:
 
-> Viable continuation dynamics appear in our toy substrates, but Omega-compatible subobjects have not been cleanly demonstrated. The next empirical question is whether bounded identities can be derived from neutral transition substrates and whether their identity-preserving reachable futures can distinguish compatibility-preserving continuation from trivial persistence, artifact, and local capture.
+> Reachable-future structure is measurable in neutral toy substrates, but Omega-compatible subobjects have not been demonstrated. The active empirical question is whether future-landscape deformation can be distinguished from saturation, clocks, collapse, and matched-control artifacts without introducing semantic labels.
 
-VAL0/VAL1 tested early versions of that precursor. The project is now resetting around derived bounded structures and identity-preserving reachable futures.
+VAL0/VAL1 tested earlier precursors. The project is now resetting around neutral future landscapes and control-relative detection.

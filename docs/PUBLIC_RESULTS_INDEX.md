@@ -1,10 +1,10 @@
 # Public Results Index
 
 This repository intentionally exposes only the most relevant public artifacts.
-The current empirical posture is a reachable-futures substrate reset. VAL0-G
-and VAL1-MF are retained as recent reconnaissance probes: they showed useful
-viability dynamics and measurement limitations, but they are not the final
-validation center.
+The current empirical posture is a neutral future-landscape substrate reset.
+VAL0-G and VAL1-MF are retained as recent reconnaissance probes: they showed
+useful viability dynamics and measurement limitations, but they are not the
+final validation center.
 
 Older executable outputs remain tracked where they are useful for provenance,
 controls, and failure analysis. They should be read as historical result sets,
@@ -18,6 +18,8 @@ Directory:
 
 Current entry points:
 
+- `RFS_MB0_FUTURE_LANDSCAPE_PATTERN_SPEC.md`
+- `RFS_MB0_FUTURE_LANDSCAPE_DETECTOR_V1_HANDOFF.md`
 - `REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md`
 - `research_notes/validation_design/val_ecology_viability_reorientation.md`
 - `VAL0_G_NEUTRAL_GRAMMAR_GEOMETRY_ATLAS_SPEC.md`
@@ -28,10 +30,14 @@ Current entry points:
 
 Status:
 
-- current implementation target is substrate design for reachable futures;
-- asks what minimal substrate resolution is needed to distinguish generic
-  viable continuation from trivial persistence, recoverability, local capture,
-  and compatibility-preserving viable propagation;
+- current implementation target is RFS-MB0 future-landscape detection;
+- asks whether horizon-indexed reachable-future profiles can distinguish
+  structured future deformation from saturation, clocks, collapse, and
+  matched-control artifacts without semantic labels;
+- detector v1 is implemented with mechanical probes, transition-level
+  information measures, matched null bundles, and saturation diagnostics;
+- the current scientific gate is not passed because degree-preserving controls
+  still produce some `structured_propagation` calls;
 - VAL0-G and VAL1-MF are reconnaissance evidence for viability dynamics and
   substrate limitations;
 - VAL0-CT showed reproducible anchor wins and clean dense controls, but no
@@ -52,6 +58,10 @@ Directory:
 
 Current result notes:
 
+- `rfs_mb0_future_landscape_detector_v1_smoke_result.md`
+- `rfs_mb0_future_landscape_smoke_result.md`
+- `rfs_mb0_neutral_transform_reset_smoke_result.md`
+- `rfs_mb0_pairwise_compatibility_smoke_result.md`
 - `rfs0_strict_reachable_futures_small_smoke_result.md`
 - `val0_g_neutral_grammar_stability_probe_result.md`
 - `val0_g_neutral_grammar_smoke_result.md`
@@ -65,9 +75,16 @@ Current result notes:
 Result in one line:
 
 - Current reset: the project is not claiming Omega validation. It is building a
-  more collaborator-legible empirical program around reachable sets, viability
-  kernels, capture/recovery basins, constructor candidates, and coupled-process
-  interference.
+  collaborator-legible empirical program around reachable-future landscapes,
+  matched controls, and failure modes.
+- RFS-MB0 future-landscape detector v1 passed implementation checks: 33 systems,
+  3696 profiles, zero errors, mechanical probes, transition-level MI,
+  conditional entropy, null bundles, and saturation diagnostics. It did not
+  pass the scientific gate because degree-preserving controls still generated
+  39 `structured_propagation` profiles.
+- The earlier RFS-MB0 future-landscape v0 smoke was useful because it overcalled
+  structure across random, degree, and coordinate-permutation controls. v1
+  narrows the failure to degree-preserving controls and saturation handling.
 - RFS0 strict small smoke passed as an exact measurement-floor and workflow
   test: 108 systems completed with checkpointed outputs and zero errors.
   Structured regimes produced sparse nonzero strict kernels in some cases, but
@@ -96,17 +113,17 @@ The public-facing empirical language is now:
 
 ```text
 reachable futures
-viability under constraints
-recoverability
-capture / recovery basins
-constructor candidates
-compatibility-preserving viable propagation
-locally viable / globally degrading capture regimes
+neutral future landscapes
+future-profile deformation
+matched-null comparison
+saturation diagnostics
+control-relative structure
 ```
 
 The internal Omega language remains the broader theory frame. The progenitor
 drafts are included so collaborators can see that broader ambition, but current
-executable claims should be read through the substrate-design reset.
+executable claims should be read through the RFS-MB0 detector status: useful
+instrumentation, no validation claim yet.
 
 ## Theory-Side Progenitor Drafts
 
@@ -188,7 +205,7 @@ Status:
 
 The sections below are historical result sets. They remain public because they
 document how weaker candidates were isolated, controlled, and in several cases
-rejected. The current active path is VAL0-G.
+rejected. The current active path is RFS-MB0 future-landscape detection.
 
 ### Probe 09: Robust Fiber Reachability
 
@@ -460,59 +477,33 @@ Result in one line:
 The current executable candidate is:
 
 ```text
-COM-like multi-step viable propagation through certified fibers
-in the F,T attractive multifield toy substrate
+control-relative structure in neutral future-landscape profiles
 ```
 
-Probe 11 updates the interpretation:
+The active implementation is:
 
 ```text
-The COM object remains the stronger analytic coordinate. Simple learned
-predictive quotients can see part of the signal, but are not yet a replacement
-for COM.
+omega/rfs_mb0_future_landscape/
 ```
 
-Probe 12 updates the project direction:
+The detector v1 question is:
 
 ```text
-Formalize the COM fiber-transport witness before broadening the substrate or
-scaling learned-kappa methods.
+Does a future landscape contain structured propagation that survives matched
+null comparison, rather than merely showing high reachability, saturation,
+clock behavior, collapse, or probe artifacts?
 ```
 
-Probe T0 adds a parallel roadmap branch:
+Current answer:
 
 ```text
-If we pursue trajectory-space dynamics directly, start with viable trajectory
-geometry and keep component-balance as the main non-redundancy guardrail.
+Not yet. Detector v1 narrows the problem but does not pass. Degree-preserving
+controls still produce false-positive structured profiles.
 ```
 
-Probe T1 updates that branch:
-
-```text
-Do not scale simple trajectory effective-rank geometry yet. Treat it as a
-diagnostic until the failure modes and component-erasure problem are understood.
-```
-
-Probe T1F updates it further:
-
-```text
-Demote the trajectory-native branch for now. Ordered distinction readouts are
-diagnostic, not yet object-defining.
-```
-
-Probe I0 closes the current trajectory-native attempt:
-
-```text
-The invariant stack rejects fakeouts by becoming too strict. It is not a viable
-object witness; return to COM fiber-transport formalization.
-```
-
-Probe I0b confirms that closure:
-
-```text
-Threshold relaxation recovers some coupled retention but loses control
-rejection; soft stacks do not rescue the branch.
-```
+Historical COM, trajectory-space, primitive-branch, and DAX results remain
+valuable as provenance and failure analysis. They are not the current validation
+center.
 
 ### Probe 13b: Fiber-Transport False-Positive Refinement
 
