@@ -78,6 +78,8 @@ as the canonical internal definition anchor.
    - `docs/research_notes/validation_results/rfs_mb0_future_landscape_long_horizon_environment_audit_result.md`
    - `docs/RFS_MB0_ACTION_GENERATED_RELATION_SUBSTRATE_SPEC.md`
    - `docs/research_notes/validation_results/rfs_mb0_action_generated_relation_atlas_v0_calibration_result.md`
+   - `docs/RFS_MB0_RELATION_ATLAS_5H_BATCH_RUN_SPEC.md`
+   - `docs/research_notes/validation_results/rfs_mb0_relation_atlas_5h_batch_result.md`
    - `docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md`
    - `docs/research_notes/validation_design/val_ecology_viability_reorientation.md`
    - `docs/research_notes/validation_design/README.md`

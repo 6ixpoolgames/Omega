@@ -36,6 +36,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--parameter-seed", type=int, default=20260523)
     parser.add_argument("--coordinate-counts", type=str, default="5,6")
     parser.add_argument("--max-state-count", type=int, default=1000)
+    parser.add_argument("--parameter-region-file", type=Path, default=None)
     parser.add_argument("--sigma", type=int, default=2)
     parser.add_argument("--start-samples", type=int, default=3)
     parser.add_argument("--workers", type=int, default=18)
@@ -53,6 +54,26 @@ def main() -> None:
     started = time.perf_counter()
     horizons = _resolve_horizons(args)
     jobs = _jobs(args)
+    if not jobs:
+        config = {
+            "parameter_samples": args.parameter_samples,
+            "seeds_per_parameter_set": args.seeds_per_parameter_set,
+            "parameter_seed": args.parameter_seed,
+            "sigma": args.sigma,
+            "start_samples": args.start_samples,
+            "workers": args.workers,
+            "max_runtime_seconds": args.max_runtime_seconds,
+            "checkpoint_every": args.checkpoint_every,
+            "horizon_grid": args.horizon_grid,
+            "resolved_horizons": list(horizons),
+            "job_count": 0,
+            "started_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+            "started_perf_counter": started,
+            "status": "NO_JOBS",
+        }
+        (out_dir / "config.json").write_text(json.dumps({k: v for k, v in config.items() if k != "started_perf_counter"}, indent=2, sort_keys=True), encoding="utf-8")
+        _write_outputs(out_dir, config, [], [], [], [], [], [], [{"job": "parameter_selection", "error": "no jobs matched filters"}])
+        return
     config = {
         "parameter_samples": args.parameter_samples,
         "seeds_per_parameter_set": args.seeds_per_parameter_set,
@@ -121,12 +142,14 @@ def main() -> None:
 
 def _jobs(args: argparse.Namespace) -> list[dict[str, object]]:
     coordinate_counts = {int(item.strip()) for item in args.coordinate_counts.split(",") if item.strip()}
-    raw_parameter_sets = sample_parameter_sets(args.parameter_samples * 3, args.parameter_seed)
+    regions = _load_parameter_regions(args.parameter_region_file)
+    raw_parameter_sets = sample_parameter_sets(max(args.parameter_samples * 20, 500), args.parameter_seed)
     parameter_sets = [
         params
         for params in raw_parameter_sets
         if params.coordinate_count in coordinate_counts
         and params.alphabet_size ** params.coordinate_count <= args.max_state_count
+        and _matches_regions(params, regions)
     ][: args.parameter_samples]
     horizons = _resolve_horizons(args)
     jobs = []
@@ -143,6 +166,41 @@ def _jobs(args: argparse.Namespace) -> list[dict[str, object]]:
                 }
             )
     return jobs
+
+
+def _load_parameter_regions(path: Path | None) -> list[dict[str, object]]:
+    if path is None:
+        return []
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if isinstance(payload, dict):
+        regions = payload.get("regions", [])
+    else:
+        regions = payload
+    if not isinstance(regions, list):
+        raise ValueError("parameter region file must contain a list or {'regions': [...]}")
+    return [region for region in regions if isinstance(region, dict)]
+
+
+def _matches_regions(params: RelationParams, regions: list[dict[str, object]]) -> bool:
+    if not regions:
+        return True
+    values = params.__dict__
+    for region in regions:
+        matched = True
+        for key, allowed in region.items():
+            if key in {"name", "source", "score", "n_environments", "middle_regime_rate"}:
+                continue
+            value = values.get(key)
+            if isinstance(allowed, list):
+                if value not in allowed:
+                    matched = False
+                    break
+            elif value != allowed:
+                matched = False
+                break
+        if matched:
+            return True
+    return False
 
 
 def _resolve_horizons(args: argparse.Namespace) -> tuple[int, ...]:

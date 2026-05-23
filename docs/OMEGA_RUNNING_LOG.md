@@ -3505,3 +3505,63 @@ The initial mixed n5/n6 calibration used 18 workers but drained into long n6 str
 Next:
 
 Keep the relation atlas branch. Use n=5 batches for fast parameter calibration, then target n=6 only after parameter trends identify stable middle-regime regions. Do not treat local/window candidates as positives until window-level controls and confirmatory splits are in place.
+
+## 2026-05-23 - RFS-MB0 relation atlas 5-hour batch
+
+Ran the staged relation-atlas batch from:
+
+```text
+docs/RFS_MB0_RELATION_ATLAS_5H_BATCH_RUN_SPEC.md
+```
+
+Added/used:
+
+```text
+omega/rfs_mb0_future_landscape/run_relation_atlas_batch.py
+```
+
+Primary result note:
+
+```text
+docs/research_notes/validation_results/rfs_mb0_relation_atlas_5h_batch_result.md
+```
+
+Local summary:
+
+```text
+results/rfs_mb0_relation_atlas/5h_batch_summary.md
+```
+
+Shape:
+
+```text
+wall clock used: about 8367 seconds
+generated environments: 1140
+middle-regime environments: 674
+atlas gate passes: 0
+errors: 0 across completed stages
+```
+
+Stages:
+
+```text
+A: existing trend mining
+B: 200 broad n=5 environments, 120 middle-regime
+C: 300 targeted fresh-seed n=5 environments, 162 middle-regime
+D: 40 targeted n=6 environments, 24 middle-regime
+E: 200 window/null stress rows, aggregate gate remains blocker
+C2: 600 extra targeted n=5 environments, 368 middle-regime
+```
+
+Read:
+
+- The relation atlas now has stable middle-regime parameter trend evidence.
+- Stage B suggests out-degree 2 and reversibility fraction 0.25 are especially useful for middle-regime environment shape.
+- Targeted fresh-seed n=5 runs reproduced middle-regime environments.
+- Limited n=6 transfer also produced middle-regime environments.
+- No generated environment passed the aggregate atlas gate.
+- Window-level candidates remain diagnostics only.
+
+Next:
+
+Freeze a small environment-shape-selected parameter region and run a confirmatory fresh-seed split. Improve per-null window stress reporting before promoting any window-local candidate.

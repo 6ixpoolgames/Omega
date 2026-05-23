@@ -63,6 +63,7 @@ Current result notes:
 
 - `rfs_mb0_future_landscape_detector_v1_1_smoke_result.md`
 - `rfs_mb0_action_generated_relation_atlas_v0_calibration_result.md`
+- `rfs_mb0_relation_atlas_5h_batch_result.md`
 - `rfs_mb0_future_landscape_long_horizon_environment_audit_result.md`
 - `rfs_mb0_future_landscape_detector_v1_smoke_result.md`
 - `rfs_mb0_future_landscape_smoke_result.md`
@@ -94,6 +95,10 @@ Result in one line:
   parameters. The n=5 calibration completed 50 environments with 28
   middle-regime environments and zero errors. It did not pass the scientific
   gate: atlas gate passes remained 0.
+- The 5-hour relation-atlas batch expanded this to 1140 generated environments,
+  674 middle-regime environments, targeted n=5 fresh-seed follow-up, and limited
+  n=6 transfer. It still did not pass the scientific gate: atlas gate passes
+  remained 0.
 - The earlier RFS-MB0 future-landscape v0 smoke was useful because it overcalled
   structure across random, degree, and coordinate-permutation controls. v1
   narrowed the failure to degree-preserving controls and saturation handling;
