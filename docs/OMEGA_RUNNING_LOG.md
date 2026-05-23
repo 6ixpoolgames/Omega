@@ -3239,3 +3239,42 @@ Read:
 Next:
 
 Improve control separation before scaling. Preserve neutrality; do not add cost/resource/semantic machinery yet.
+
+## 2026-05-23 - RFS-MB0 future-landscape pattern smoke
+
+Implemented the next substrate reset from `docs/RFS_MB0_FUTURE_LANDSCAPE_PATTERN_SPEC.md`:
+
+```text
+omega/rfs_mb0_future_landscape/
+```
+
+This branch treats the object of interest as neutral deformation of reachable futures. It computes future-profile maps from finite states, neutral relations, exact frontiers, horizon reachability, and probe-signature distributions.
+
+Run:
+
+```text
+results/rfs_mb0_future_landscape/20260523_future_landscape_smoke/
+```
+
+Shape:
+
+```text
+systems: 33
+future profiles: 672
+workers: 18
+errors: 0
+status: COMPLETED
+elapsed: about 2.9 seconds
+```
+
+Read:
+
+- Implementation and output schema passed.
+- Graceful status/checkpoint behavior passed.
+- Collapse, cycle, permissive, and strict controls separate cleanly.
+- `structured_propagation` also labels random, degree-preserving, and coordinate-permutation controls.
+- Scientific gate is not passed yet because the structured class boundary is too broad.
+
+Next:
+
+Do not scale this exact detector. Strengthen neutral matched controls and require structured-profile separation from those controls before spending larger compute.
