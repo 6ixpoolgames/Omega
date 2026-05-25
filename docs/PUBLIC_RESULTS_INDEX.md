@@ -1115,6 +1115,28 @@ Result in one line:
   carry the same metrics, so the current recommendation is to downgrade
   path-process work and focus on support/distribution deformation taxonomy.
 
+### RFS-MB0 Support/Distribution Taxonomy Smoke
+
+Directory:
+
+- `results/rfs_mb0_relation_atlas/20260525_support_distribution_taxonomy_smoke/`
+
+Primary retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_support_distribution_taxonomy_smoke_result.md`
+
+Reason retained:
+
+- This is the first branch-B support/distribution run after path metrics were
+  downgraded to an open thread.
+
+Result in one line:
+
+- The taxonomy workflow is operational and found a small set of support/mixed
+  deformation candidate rows, but matched-control equivalence and probe limits
+  still dominate; the next step is broader support/distribution regime mapping,
+  not path-process escalation.
+
 The important public caveat:
 
 ```text

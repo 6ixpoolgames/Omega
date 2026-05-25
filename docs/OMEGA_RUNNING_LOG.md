@@ -4026,3 +4026,60 @@ matched_control_also_passes: 56 rows
 Interpretation:
 
 The probe-resolution bottleneck is real. Existing low-resolution probes remain too collision-prone for path-language metrics. Medium-resolution coordinate/composite probes reduce collision enough to keep as calibrated diagnostics, but matched controls still frequently show the same path metrics. Recommendation: branch B, downgrade path-process for now and focus near-term empirical work on support/distribution deformation taxonomy.
+
+## 2026-05-25 - RFS-MB0 support/distribution taxonomy smoke
+
+Pulled:
+
+```text
+docs/RFS_MB0_SUPPORT_DISTRIBUTION_DEFORMATION_TAXONOMY_SPEC.md
+```
+
+Added:
+
+```text
+omega/rfs_mb0_future_landscape/run_support_distribution_taxonomy.py
+```
+
+Primary result note:
+
+```text
+docs/research_notes/validation_results/rfs_mb0_support_distribution_taxonomy_smoke_result.md
+```
+
+Local output:
+
+```text
+results/rfs_mb0_relation_atlas/20260525_support_distribution_taxonomy_smoke/
+```
+
+Run shape:
+
+```text
+workers requested: 18
+jobs requested: 288
+jobs completed: 288
+metric rows completed: 11088
+errors: 0
+candidate environments selected: 8
+start_samples: 3, 8
+horizons: 0, 1, 2, 4, 8, 12, 16
+promotion_enabled: false
+wall_clock_seconds: 30.5
+```
+
+Headline:
+
+```text
+matched_control_equivalent: 92 candidate summary rows
+probe_collision_limited: 12
+support_ceiling_limited: 7
+mixed_support_distribution_candidate: 7
+support_deformation_candidate: 2
+identity_like_control: 4
+underdetermined: 4
+```
+
+Interpretation:
+
+The support/distribution taxonomy workflow is operational. Most rows are still explained by matched-control equivalence or probe/floor-ceiling limits, but a small set of support and mixed deformation candidates remains. Continue this branch by broadening parameter/regime coverage; keep path metrics as an open thread, not the current driver.
