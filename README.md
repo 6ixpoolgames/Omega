@@ -148,6 +148,7 @@ Current design files:
 - [Future landscape long-horizon audit result](docs/research_notes/validation_results/rfs_mb0_future_landscape_long_horizon_environment_audit_result.md)
 - [Action-generated relation atlas v0 calibration result](docs/research_notes/validation_results/rfs_mb0_action_generated_relation_atlas_v0_calibration_result.md)
 - [Relation atlas 5-hour batch result](docs/research_notes/validation_results/rfs_mb0_relation_atlas_5h_batch_result.md)
+- [Relation atlas repaired batch result](docs/research_notes/validation_results/rfs_mb0_relation_atlas_repaired_batch_result.md)
 - [Future landscape detector v1 smoke result](docs/research_notes/validation_results/rfs_mb0_future_landscape_detector_v1_smoke_result.md)
 - [Minimal reachable futures formalism](docs/research_notes/omega_theory/minimal_reachable_futures_formalism.md)
 - [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
@@ -351,11 +352,12 @@ Omega asks which possible transformations preserve value-bearing future possibil
 2. [Future landscape long-horizon audit result](docs/research_notes/validation_results/rfs_mb0_future_landscape_long_horizon_environment_audit_result.md)
 3. [Action-generated relation atlas v0 calibration result](docs/research_notes/validation_results/rfs_mb0_action_generated_relation_atlas_v0_calibration_result.md)
 4. [Relation atlas 5-hour batch result](docs/research_notes/validation_results/rfs_mb0_relation_atlas_5h_batch_result.md)
-5. [Public terms and translations](docs/research_notes/omega_theory/public_terms_and_translations.md)
-6. [Future landscape pattern spec](docs/RFS_MB0_FUTURE_LANDSCAPE_PATTERN_SPEC.md)
-7. [Public results index](docs/PUBLIC_RESULTS_INDEX.md)
-8. [Omega glossary](docs/research_notes/omega_theory/omega_glossary.md)
-9. [Foundation stack as pipeline](docs/research_notes/omega_theory/progenitor_stack_as_pipeline.md)
+5. [Relation atlas repaired batch result](docs/research_notes/validation_results/rfs_mb0_relation_atlas_repaired_batch_result.md)
+6. [Public terms and translations](docs/research_notes/omega_theory/public_terms_and_translations.md)
+7. [Future landscape pattern spec](docs/RFS_MB0_FUTURE_LANDSCAPE_PATTERN_SPEC.md)
+8. [Public results index](docs/PUBLIC_RESULTS_INDEX.md)
+9. [Omega glossary](docs/research_notes/omega_theory/omega_glossary.md)
+10. [Foundation stack as pipeline](docs/research_notes/omega_theory/progenitor_stack_as_pipeline.md)
 
 ### For implementation work
 
@@ -368,8 +370,10 @@ Omega asks which possible transformations preserve value-bearing future possibil
 7. [Action-generated relation atlas v0 calibration result](docs/research_notes/validation_results/rfs_mb0_action_generated_relation_atlas_v0_calibration_result.md)
 8. [Relation atlas 5-hour batch spec](docs/RFS_MB0_RELATION_ATLAS_5H_BATCH_RUN_SPEC.md)
 9. [Relation atlas 5-hour batch result](docs/research_notes/validation_results/rfs_mb0_relation_atlas_5h_batch_result.md)
-10. [Minimal reachable futures formalism](docs/research_notes/omega_theory/minimal_reachable_futures_formalism.md)
-11. [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
+10. [Relation atlas batch-runner repair spec](docs/RFS_MB0_RELATION_ATLAS_BATCH_RUNNER_REPAIR_SPEC.md)
+11. [Relation atlas repaired batch result](docs/research_notes/validation_results/rfs_mb0_relation_atlas_repaired_batch_result.md)
+12. [Minimal reachable futures formalism](docs/research_notes/omega_theory/minimal_reachable_futures_formalism.md)
+13. [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
 
 ### For project history
 

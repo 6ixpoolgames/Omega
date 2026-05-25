@@ -133,6 +133,20 @@ def future_profile(
     distribution_rows = []
     profile_rows = []
     for h in horizons:
+        per_null_h = {}
+        for null_name, by_h in sorted((null_bundle_counts_by_h or {}).items()):
+            null_counts = by_h.get(h, {})
+            per_null_h[f"JS_to_null_{null_name}"] = js_divergence(distributions[h], null_counts) if null_counts else 0.0
+            per_null_h[f"KL_to_null_{null_name}"] = smoothed_kl(distributions[h], null_counts) if null_counts else 0.0
+        per_null_h.update(
+            {
+                key: value
+                for key, value in profile.items()
+                if key.startswith(("MI_delta_vs_null_", "motif_delta_vs_null_"))
+            }
+        )
+        per_null_h["MI_delta_vs_null"] = profile["MI_delta_vs_null"]
+        per_null_h["signature_transition_motif_reuse_delta_vs_null"] = profile["signature_transition_motif_reuse_delta_vs_null"]
         profile_rows.append(
             {
                 **{k: profile[k] for k in ("system_id", "family", "probe_name", "probe_mode", "probe_family", "profile_class", "control_relative_profile_class_v1")},
@@ -150,6 +164,7 @@ def future_profile(
                 "conditional_entropy_proxy": conditional_entropy,
                 "JS_to_null": js_values[h],
                 "smoothed_KL_to_null": kl_values[h],
+                **per_null_h,
             }
         )
         total = sum(distributions[h].values())
@@ -318,8 +333,15 @@ def _null_transition_summary(transition_summary: dict[str, float], null_transiti
         output["signature_transition_motif_reuse_delta_vs_null"] = 0.0
         output["control_relative_pass_count"] = 0
         return output
-    mi_nulls = [summary.get("signature_transition_MI_mean", 0.0) for summary in null_transition_summaries.values()]
-    motif_nulls = [summary.get("signature_transition_motif_reuse_mean", 0.0) for summary in null_transition_summaries.values()]
+    mi_nulls = []
+    motif_nulls = []
+    for null_name, summary in sorted(null_transition_summaries.items()):
+        mi_null = summary.get("signature_transition_MI_mean", 0.0)
+        motif_null = summary.get("signature_transition_motif_reuse_mean", 0.0)
+        mi_nulls.append(mi_null)
+        motif_nulls.append(motif_null)
+        output[f"MI_delta_vs_null_{null_name}"] = transition_summary["signature_transition_MI_mean"] - mi_null
+        output[f"motif_delta_vs_null_{null_name}"] = transition_summary["signature_transition_motif_reuse_mean"] - motif_null
     recurrence_nulls = [summary.get("recurrence_rate", 0.0) for summary in null_transition_summaries.values()]
     mi_delta = transition_summary["signature_transition_MI_mean"] - max(mi_nulls)
     motif_delta = transition_summary["signature_transition_motif_reuse_mean"] - max(motif_nulls)

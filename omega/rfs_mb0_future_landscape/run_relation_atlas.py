@@ -37,6 +37,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--coordinate-counts", type=str, default="5,6")
     parser.add_argument("--max-state-count", type=int, default=1000)
     parser.add_argument("--parameter-region-file", type=Path, default=None)
+    parser.add_argument("--parameter-region-mode", choices=("any", "core_only", "all"), default="any")
     parser.add_argument("--sigma", type=int, default=2)
     parser.add_argument("--start-samples", type=int, default=3)
     parser.add_argument("--workers", type=int, default=18)
@@ -53,7 +54,7 @@ def main() -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
     started = time.perf_counter()
     horizons = _resolve_horizons(args)
-    jobs = _jobs(args)
+    jobs, selection = _jobs(args)
     if not jobs:
         config = {
             "parameter_samples": args.parameter_samples,
@@ -67,6 +68,7 @@ def main() -> None:
             "horizon_grid": args.horizon_grid,
             "resolved_horizons": list(horizons),
             "job_count": 0,
+            **selection,
             "started_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
             "started_perf_counter": started,
             "status": "NO_JOBS",
@@ -86,6 +88,7 @@ def main() -> None:
         "horizon_grid": args.horizon_grid,
         "resolved_horizons": list(horizons),
         "job_count": len(jobs),
+        **selection,
         "started_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "started_perf_counter": started,
         "status": "RUNNING",
@@ -137,10 +140,11 @@ def main() -> None:
             executor.shutdown(wait=True, cancel_futures=False)
     if config["status"] == "RUNNING":
         config["status"] = "COMPLETED"
+    (out_dir / "config.json").write_text(json.dumps({k: v for k, v in config.items() if k != "started_perf_counter"}, indent=2, sort_keys=True), encoding="utf-8")
     _write_outputs(out_dir, config, systems, shapes, profiles, profile_rows, transition_rows, distributions, errors)
 
 
-def _jobs(args: argparse.Namespace) -> list[dict[str, object]]:
+def _jobs(args: argparse.Namespace) -> tuple[list[dict[str, object]], dict[str, object]]:
     coordinate_counts = {int(item.strip()) for item in args.coordinate_counts.split(",") if item.strip()}
     regions = _load_parameter_regions(args.parameter_region_file)
     raw_parameter_sets = sample_parameter_sets(max(args.parameter_samples * 20, 500), args.parameter_seed)
@@ -149,7 +153,7 @@ def _jobs(args: argparse.Namespace) -> list[dict[str, object]]:
         for params in raw_parameter_sets
         if params.coordinate_count in coordinate_counts
         and params.alphabet_size ** params.coordinate_count <= args.max_state_count
-        and _matches_regions(params, regions)
+        and _matches_regions(params, regions, args.parameter_region_mode)
     ][: args.parameter_samples]
     horizons = _resolve_horizons(args)
     jobs = []
@@ -165,7 +169,14 @@ def _jobs(args: argparse.Namespace) -> list[dict[str, object]]:
                     "horizons": horizons,
                 }
             )
-    return jobs
+    selection = {
+        "parameter_region_mode": args.parameter_region_mode,
+        "raw_parameter_candidates": len(raw_parameter_sets),
+        "filtered_parameter_sets": len(parameter_sets),
+        "jobs_created": len(jobs),
+        "requested_parameter_samples": args.parameter_samples,
+    }
+    return jobs, selection
 
 
 def _load_parameter_regions(path: Path | None) -> list[dict[str, object]]:
@@ -181,14 +192,27 @@ def _load_parameter_regions(path: Path | None) -> list[dict[str, object]]:
     return [region for region in regions if isinstance(region, dict)]
 
 
-def _matches_regions(params: RelationParams, regions: list[dict[str, object]]) -> bool:
+def _matches_regions(params: RelationParams, regions: list[dict[str, object]], mode: str = "any") -> bool:
     if not regions:
         return True
+    if mode == "core_only":
+        regions = [region for region in regions if region.get("core") is True or region.get("name") == "shape_selected_core" or str(region.get("name", "")).startswith("shape_selected_core_")]
+        if not regions:
+            return False
+    if mode == "all":
+        constraints: dict[str, set[object]] = {}
+        for region in regions:
+            for key, allowed in region.items():
+                if key in {"name", "source", "score", "n_environments", "middle_regime_rate", "core"}:
+                    continue
+                constraints.setdefault(key, set()).update(allowed if isinstance(allowed, list) else [allowed])
+        values = params.__dict__
+        return all(values.get(key) in allowed for key, allowed in constraints.items())
     values = params.__dict__
     for region in regions:
         matched = True
         for key, allowed in region.items():
-            if key in {"name", "source", "score", "n_environments", "middle_regime_rate"}:
+            if key in {"name", "source", "score", "n_environments", "middle_regime_rate", "core"}:
                 continue
             value = values.get(key)
             if isinstance(allowed, list):
@@ -343,6 +367,12 @@ def _write_outputs(
         "errors": len(errors),
         "atlas_gate_pass_count": sum(1 for row in detector_summary if row["atlas_gate_class"] == "structured_propagation"),
         "elapsed_seconds": time.perf_counter() - float(config["started_perf_counter"]),
+        "parameter_region_mode": config.get("parameter_region_mode", "any"),
+        "raw_parameter_candidates": config.get("raw_parameter_candidates", 0),
+        "filtered_parameter_sets": config.get("filtered_parameter_sets", 0),
+        "jobs_created": config.get("jobs_created", 0),
+        "jobs_completed": len(systems),
+        "requested_parameter_samples": config.get("requested_parameter_samples", 0),
     }
     (out_dir / "relation_atlas_status.json").write_text(json.dumps(status, indent=2, sort_keys=True), encoding="utf-8")
     _write_summary(out_dir, config, status, shape_classes, middle, detector_summary, matched_nulls, window_summary, errors)

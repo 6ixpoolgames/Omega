@@ -3565,3 +3565,73 @@ Read:
 Next:
 
 Freeze a small environment-shape-selected parameter region and run a confirmatory fresh-seed split. Improve per-null window stress reporting before promoting any window-local candidate.
+
+## 2026-05-23 - RFS-MB0 relation atlas repaired due-diligence batch
+
+Implemented and ran the batch-runner repair spec:
+
+```text
+docs/RFS_MB0_RELATION_ATLAS_BATCH_RUNNER_REPAIR_SPEC.md
+```
+
+Primary result note:
+
+```text
+docs/research_notes/validation_results/rfs_mb0_relation_atlas_repaired_batch_result.md
+```
+
+Local summary:
+
+```text
+results/rfs_mb0_relation_atlas/repaired_batch_summary.md
+```
+
+Repairs:
+
+- Added `--parameter-region-mode any|core_only|all`.
+- Added requested vs matched parameter/job counts to config and status.
+- Added interaction trend mining.
+- Added core and broad region files.
+- Added per-null window kill table.
+- Added localized candidate reproducibility diagnostics.
+
+Run shape:
+
+```text
+wall clock used: about 8830 seconds
+generated environments: 1040
+middle-regime environments: 871
+atlas gate passes: 0
+errors: 0
+```
+
+Stage read:
+
+```text
+B broad n=5: 300 environments, 176 middle-regime
+C core_only n=5: 660/672 jobs completed before time cutoff, 620 middle-regime
+D core_only n=6: 80 environments, 75 middle-regime
+E window/null stress: 200 candidate windows, 1200 null-specific rows
+```
+
+Null-kill read:
+
+```text
+degree_preserving_rewire: 200/200 candidate windows survived
+out_degree_preserving_random: 200/200 survived
+constraint_shuffled: 56/200 survived
+asymmetry_shuffled: 37/200 survived
+roughness_resampled: 56/200 survived
+frontier_or_probe_marginal: 0/200 survived
+```
+
+Interpretation:
+
+- Current window candidates are not merely degree/out-degree artifacts.
+- They are still killed by frontier/probe-marginal diagnostics and often by constraint/asymmetry/roughness shuffles.
+- Localized reproducibility remains 0 under repaired diagnostics.
+- Scientific gate remains not passed.
+
+Next:
+
+Either refine the probe/frontier null if it is too blunt, or treat the current relation-atlas candidate windows as local artifacts and move to a new substrate/detector family. Keep the repaired runner as the standard due-diligence layer.
