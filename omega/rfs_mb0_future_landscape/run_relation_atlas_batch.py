@@ -41,6 +41,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--stage-c-samples", type=int, default=150)
     parser.add_argument("--stage-c-seeds", type=int, default=2)
     parser.add_argument("--stage-d-samples", type=int, default=40)
+    parser.add_argument("--start-samples", type=int, default=3)
     parser.add_argument("--selection-mode", choices=("stratified", "top_k", "random_seeded"), default="stratified")
     parser.add_argument("--stress-sample-count", type=int, default=200)
     parser.add_argument("--confirmatory-region-file", type=Path, default=None)
@@ -81,6 +82,8 @@ def main() -> None:
                 "--max-state-count", "300",
                 "--horizon-grid", "long_10x",
                 "--workers", str(args.workers),
+                "--start-samples", str(args.start_samples),
+                "--null-replicates", str(args.null_replicates),
                 "--max-runtime-seconds", str(min(5400, _time_left(started, args.global_wall_clock_seconds) - 900)),
             ],
         )
@@ -108,6 +111,8 @@ def main() -> None:
                 "--max-state-count", "300",
                 "--horizon-grid", "long_10x",
                 "--workers", str(args.workers),
+                "--start-samples", str(args.start_samples),
+                "--null-replicates", str(args.null_replicates),
                 "--max-runtime-seconds", str(min(5400, _time_left(started, args.global_wall_clock_seconds) - 900)),
                 "--parameter-seed", "20260524",
             ],
@@ -131,6 +136,8 @@ def main() -> None:
                 "--max-state-count", "1000",
                 "--horizon-grid", "long_5x",
                 "--workers", str(args.workers),
+                "--start-samples", str(args.start_samples),
+                "--null-replicates", str(args.null_replicates),
                 "--max-runtime-seconds", str(min(3600, _time_left(started, args.global_wall_clock_seconds) - 900)),
                 "--parameter-seed", "20260525",
             ],
@@ -150,6 +157,7 @@ def main() -> None:
         stage_e_dir / "window_stress_selection_summary.csv",
         args.selection_mode,
         args.stress_sample_count,
+        args.null_replicates,
     )
     write_frontier_probe_decomposition(kill_rows, stage_e_dir / "frontier_probe_null_decomposition.csv")
     write_null_replicate_summary(kill_rows, stage_e_dir / "null_replicate_summary.csv", args.null_replicates)
@@ -336,7 +344,7 @@ def write_n6_transfer_summary(stage_c: Path, stage_d: Path, out_path: Path) -> N
     out_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
-def write_window_stress(run_dir: Path, csv_path: Path, md_path: Path, selection_path: Path, selection_mode: str, sample_count: int) -> list[dict[str, object]]:
+def write_window_stress(run_dir: Path, csv_path: Path, md_path: Path, selection_path: Path, selection_mode: str, sample_count: int, null_replicates: int) -> list[dict[str, object]]:
     windows = _read_csv(run_dir / "relation_atlas_window_summary.csv")
     detector = {row["environment_id"]: row for row in _read_csv(run_dir / "relation_atlas_detector_summary.csv")}
     shapes = {row["environment_id"]: row for row in _read_csv(run_dir / "environment_shape_summary.csv")}
@@ -375,10 +383,15 @@ def write_window_stress(run_dir: Path, csv_path: Path, md_path: Path, selection_
             kl = float(metrics.get(f"KL_to_null_{null_name}", metrics.get("smoothed_KL_to_null", 0.0)))
             mi_delta = float(metrics.get(f"MI_delta_vs_null_{null_name}", metrics.get("MI_delta_vs_null", 0.0)))
             motif_delta = float(metrics.get(f"motif_delta_vs_null_{null_name}", metrics.get("signature_transition_motif_reuse_delta_vs_null", 0.0)))
-            survives_mi = mi_delta > 0.0
-            survives_motif = motif_delta > 0.0
-            survives_js_quantile = js > 0.05
-            survives_kl_quantile = kl > 0.05
+            js_rank = float(metrics.get(f"JS_rank_against_replicates_{null_name}", 0.0))
+            kl_rank = float(metrics.get(f"KL_rank_against_replicates_{null_name}", 0.0))
+            mi_rank = float(metrics.get(f"MI_rank_against_replicates_{null_name}", 0.0))
+            motif_rank = float(metrics.get(f"motif_rank_against_replicates_{null_name}", 0.0))
+            has_replicates = null_replicates > 0 and max(js_rank, kl_rank, mi_rank, motif_rank) > 0.0
+            survives_mi = mi_rank >= 0.80 if has_replicates else mi_delta > 0.0
+            survives_motif = motif_rank >= 0.80 if has_replicates else motif_delta > 0.0
+            survives_js_quantile = js_rank >= 0.80 if has_replicates else js > 0.05
+            survives_kl_quantile = kl_rank >= 0.80 if has_replicates else kl > 0.05
             survives_joint = survives_mi and survives_motif
             survives = survives_joint and survives_js_quantile
             rows.append(
@@ -402,7 +415,12 @@ def write_window_stress(run_dir: Path, csv_path: Path, md_path: Path, selection_
                     "survives_KL_quantile": int(survives_kl_quantile),
                     "survives_joint_MI_motif": int(survives_joint),
                     "survives_all_declared": int(survives),
-                    "no_replicate_null_uncertainty": 1,
+                    "JS_rank_against_replicates": js_rank,
+                    "KL_rank_against_replicates": kl_rank,
+                    "MI_rank_against_replicates": mi_rank,
+                    "motif_rank_against_replicates": motif_rank,
+                    "implemented_null_replicates": null_replicates if has_replicates else 0,
+                    "no_replicate_null_uncertainty": int(not has_replicates),
                     "candidate_survives_null": int(survives),
                     "kill_reason": _kill_reason(null_name, survives, aggregate_gate_passed, row),
                 }
@@ -539,16 +557,21 @@ def write_frontier_probe_decomposition(kill_rows: list[dict[str, object]], csv_p
 def write_null_replicate_summary(kill_rows: list[dict[str, object]], csv_path: Path, requested_replicates: int) -> None:
     rows = []
     for null_name, items in sorted(_group_by(kill_rows, "null_name").items()):
+        implemented = max((int(row.get("implemented_null_replicates", 0)) for row in items), default=0)
         rows.append(
             {
                 "null_name": null_name,
                 "requested_null_replicates": requested_replicates,
-                "implemented_null_replicates": 0,
-                "no_replicate_null_uncertainty": 1,
+                "implemented_null_replicates": implemented,
+                "no_replicate_null_uncertainty": int(implemented <= 0),
                 "n_window_rows": len(items),
                 "survival_rate_all_declared": _mean(row.get("candidate_survives_null", 0) for row in items),
                 "median_JS_to_null_window": median([float(row.get("JS_to_null_window", 0.0)) for row in items]) if items else 0.0,
                 "median_MI_delta_vs_null_window": median([float(row.get("MI_delta_vs_null_window", 0.0)) for row in items]) if items else 0.0,
+                "median_JS_rank_against_replicates": median([float(row.get("JS_rank_against_replicates", 0.0)) for row in items]) if items else 0.0,
+                "median_KL_rank_against_replicates": median([float(row.get("KL_rank_against_replicates", 0.0)) for row in items]) if items else 0.0,
+                "median_MI_rank_against_replicates": median([float(row.get("MI_rank_against_replicates", 0.0)) for row in items]) if items else 0.0,
+                "median_motif_rank_against_replicates": median([float(row.get("motif_rank_against_replicates", 0.0)) for row in items]) if items else 0.0,
             }
         )
     _write_csv(csv_path, rows)
@@ -820,7 +843,7 @@ def _window_metric_lookup(profile_rows: list[dict[str, str]], transition_rows: l
             "JS_to_null": _mean(row.get("JS_to_null", "") for row in items),
             "smoothed_KL_to_null": _mean(row.get("smoothed_KL_to_null", "") for row in items),
         }
-        metric_keys = sorted({metric for row in items for metric in row if metric.startswith(("JS_to_null_", "KL_to_null_", "MI_delta_vs_null_", "motif_delta_vs_null_"))})
+        metric_keys = sorted({metric for row in items for metric in row if metric.startswith(("JS_to_null_", "KL_to_null_", "MI_delta_vs_null_", "motif_delta_vs_null_", "JS_rank_against_replicates_", "KL_rank_against_replicates_", "MI_rank_against_replicates_", "motif_rank_against_replicates_", "null_replicate_count_"))})
         for metric in metric_keys:
             metrics[metric] = _mean(row.get(metric, "") for row in items)
         out[key] = metrics

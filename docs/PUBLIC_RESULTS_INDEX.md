@@ -1003,6 +1003,29 @@ Result in one line:
   positives, only 1.17x enrichment, with all control positives coming from the
   B4 high-chaos/high-frozen barren band.
 
+### RFS-MB0 Relation Atlas Ranked Null Repair
+
+Directory:
+
+- `results/rfs_mb0_relation_atlas/20260525_breadth_null_repair_ranked_real/`
+
+Primary retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_relation_atlas_ranked_null_repair_result.md`
+
+Reason retained:
+
+- This is the first relation-atlas pass with rank-based null replicate
+  diagnostics instead of only deterministic null thresholds.
+
+Result in one line:
+
+- Strict negative at the aggregate gate: 146 environment evaluations, 109
+  middle-regime environments, 0 atlas gate passes, 0 localized reproducible
+  candidate groups; probe-marginal-only survived broadly, but degree/out-degree
+  ranked nulls, shuffles, support matching, and reproducibility remained
+  blockers.
+
 The important public caveat:
 
 ```text

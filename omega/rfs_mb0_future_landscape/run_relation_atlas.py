@@ -46,6 +46,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--checkpoint-every", type=int, default=4)
     parser.add_argument("--horizon-grid", choices=sorted(HORIZON_GRIDS), default="long_5x")
     parser.add_argument("--horizons", type=str, default="")
+    parser.add_argument("--null-replicates", type=int, default=0)
     return parser.parse_args()
 
 
@@ -68,6 +69,7 @@ def main() -> None:
             "checkpoint_every": args.checkpoint_every,
             "horizon_grid": args.horizon_grid,
             "resolved_horizons": list(horizons),
+            "null_replicates": args.null_replicates,
             "job_count": 0,
             **selection,
             "started_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
@@ -88,6 +90,7 @@ def main() -> None:
         "checkpoint_every": args.checkpoint_every,
         "horizon_grid": args.horizon_grid,
         "resolved_horizons": list(horizons),
+        "null_replicates": args.null_replicates,
         "job_count": len(jobs),
         **selection,
         "started_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
@@ -167,6 +170,7 @@ def _jobs(args: argparse.Namespace) -> tuple[list[dict[str, object]], dict[str, 
                     "seed": base_seed + seed_index,
                     "sigma": args.sigma,
                     "start_samples": args.start_samples,
+                    "null_replicates": args.null_replicates,
                     "horizons": horizons,
                 }
             )
@@ -257,6 +261,7 @@ def _run_one(job: dict[str, object]) -> dict[str, object]:
         for start in starts:
             null_bundle_by_h = _generated_null_bundle(system, null_systems, probe, start, horizons)
             null_transitions = _generated_null_transitions(null_systems, probe, start, horizons)
+            replicate_bundle_by_h, replicate_transitions = _generated_null_replicates(params, seed, system, probe, start, horizons, int(job.get("null_replicates", 0)))
             profile, rows, dist_rows = future_profile(
                 system,
                 start,
@@ -264,6 +269,8 @@ def _run_one(job: dict[str, object]) -> dict[str, object]:
                 null_bundle_by_h.get("degree_preserving_rewire", {}),
                 null_bundle_by_h,
                 null_transitions,
+                replicate_bundle_by_h,
+                replicate_transitions,
                 horizons,
             )
             profile["parameter_set_id"] = params.parameter_set_id
@@ -292,6 +299,7 @@ def _run_one(job: dict[str, object]) -> dict[str, object]:
         "probe_count": len(probes),
         "sigma": int(job["sigma"]),
         "start_count": len(starts),
+        "null_replicates": int(job.get("null_replicates", 0)),
         "horizons_json": json.dumps(horizons),
         "metadata_json": json.dumps(system.metadata, sort_keys=True),
         "job_elapsed_seconds": time.perf_counter() - started,
@@ -340,7 +348,49 @@ def _generated_null_transitions(null_systems: dict[str, object], probe: object, 
     return out
 
 
-def _frontier_probe_diagnostic_nulls(system: object, probe: object, start: tuple[int, ...], horizons: tuple[int, ...]) -> dict[str, dict[int, dict[object, int]]]:
+def _generated_null_replicates(
+    params: RelationParams,
+    seed: int,
+    system: object,
+    probe: object,
+    start: tuple[int, ...],
+    horizons: tuple[int, ...],
+    replicate_count: int,
+) -> tuple[dict[str, list[dict[int, dict[object, int]]]], dict[str, list[dict[str, float]]]]:
+    if replicate_count <= 0:
+        return {}, {}
+    bundle: dict[str, list[dict[int, dict[object, int]]]] = {}
+    transitions: dict[str, list[dict[str, float]]] = {}
+    for replicate_index in range(replicate_count):
+        replicate_seed = seed + 1_000_003 + replicate_index * 10_007
+        replicate_nulls = generated_null_systems(params, replicate_seed)
+        for null_name, null_system in replicate_nulls.items():
+            by_h = {
+                h: signature_distribution(exact_frontier(null_system, start, h), probe)  # type: ignore[arg-type]
+                for h in horizons
+            }
+            bundle.setdefault(null_name, []).append(by_h)
+            summary, _rows = transition_information_summary(null_system, start, probe, horizons)  # type: ignore[arg-type]
+            transitions.setdefault(null_name, []).append(summary)
+        diagnostic_replicates = _frontier_probe_diagnostic_nulls(system, probe, start, horizons, replicate_seed=replicate_seed)  # type: ignore[arg-type]
+        for null_name, by_h in diagnostic_replicates.items():
+            bundle.setdefault(null_name, []).append(by_h)
+            transitions.setdefault(null_name, []).append(
+                {
+                    "signature_transition_MI_mean": 0.0,
+                    "signature_transition_conditional_entropy_mean": 0.0,
+                    "signature_transition_entropy_rate_proxy": 0.0,
+                    "signature_transition_grammar_size_mean": 0.0,
+                    "signature_transition_motif_reuse_mean": 0.0,
+                }
+            )
+    return bundle, transitions
+
+
+def _frontier_probe_diagnostic_nulls(system: object, probe: object, start: tuple[int, ...], horizons: tuple[int, ...], replicate_seed: int | None = None) -> dict[str, dict[int, dict[object, int]]]:
+    import random
+
+    rng = random.Random(replicate_seed) if replicate_seed is not None else None
     states = list(system.states)  # type: ignore[attr-defined]
     full_counts = Counter(probe.fn(state) for state in states)  # type: ignore[attr-defined]
     signatures = sorted(full_counts, key=str)
@@ -356,25 +406,30 @@ def _frontier_probe_diagnostic_nulls(system: object, probe: object, start: tuple
         observed = signature_distribution(exact_frontier(system, start, h), probe)  # type: ignore[arg-type]
         frontier_size = max(1, sum(observed.values()))
         support = sorted(observed, key=str) or signatures[:1]
-        out["frontier_size_only"][h] = _uniform_counts(signatures, frontier_size)
+        out["frontier_size_only"][h] = _uniform_counts(signatures, frontier_size, rng)
         out["probe_marginal_only"][h] = dict(full_counts)
-        out["frontier_size_plus_probe_marginal"][h] = _scaled_counts(full_counts, frontier_size)
-        out["signature_support_matched"][h] = _uniform_counts(support, frontier_size)
-        out["horizon_local_frontier_matched"][h] = _scaled_counts(full_counts, frontier_size)
-        out["window_local_frontier_matched"][h] = _scaled_counts(full_counts, frontier_size)
+        out["frontier_size_plus_probe_marginal"][h] = _scaled_counts(full_counts, frontier_size, rng)
+        out["signature_support_matched"][h] = _uniform_counts(support, frontier_size, rng)
+        out["horizon_local_frontier_matched"][h] = _scaled_counts(full_counts, frontier_size, rng)
+        out["window_local_frontier_matched"][h] = _scaled_counts(full_counts, frontier_size, rng)
     return out
 
 
-def _uniform_counts(signatures: list[object], total: int) -> dict[object, int]:
+def _uniform_counts(signatures: list[object], total: int, rng: object | None = None) -> dict[object, int]:
     if not signatures or total <= 0:
         return {}
     counts = {signature: total // len(signatures) for signature in signatures}
-    for index in range(total - sum(counts.values())):
-        counts[signatures[index % len(signatures)]] += 1
+    remaining = total - sum(counts.values())
+    if rng is not None:
+        for _ in range(remaining):
+            counts[rng.choice(signatures)] += 1  # type: ignore[attr-defined]
+    else:
+        for index in range(remaining):
+            counts[signatures[index % len(signatures)]] += 1
     return {signature: count for signature, count in counts.items() if count > 0}
 
 
-def _scaled_counts(counts: Counter[object], total: int) -> dict[object, int]:
+def _scaled_counts(counts: Counter[object], total: int, rng: object | None = None) -> dict[object, int]:
     source_total = sum(counts.values())
     if source_total <= 0 or total <= 0:
         return {}
@@ -383,7 +438,7 @@ def _scaled_counts(counts: Counter[object], total: int) -> dict[object, int]:
     drift = total - sum(scaled.values())
     index = 0
     while drift != 0 and signatures:
-        signature = signatures[index % len(signatures)]
+        signature = rng.choice(signatures) if rng is not None else signatures[index % len(signatures)]  # type: ignore[attr-defined]
         if drift > 0:
             scaled[signature] += 1
             drift -= 1

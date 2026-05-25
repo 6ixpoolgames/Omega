@@ -3692,3 +3692,72 @@ horizon/window local frontier matched survived: 12/12
 Interpretation:
 
 The runner is now good enough for a small-to-medium real breadth/null-repair run. The smoke does not support a theory claim. Its useful result is that the former blunt frontier/probe blocker can now be decomposed; in the tiny sample, signature-support matching was the support-side blocker, not frontier size alone or probe marginals alone.
+
+## 2026-05-25 - RFS-MB0 relation atlas ranked null-repair run
+
+Implemented true null replicate ranking for the relation atlas:
+
+```text
+--null-replicates
+```
+
+Primary result note:
+
+```text
+docs/research_notes/validation_results/rfs_mb0_relation_atlas_ranked_null_repair_result.md
+```
+
+Local run output:
+
+```text
+results/rfs_mb0_relation_atlas/20260525_breadth_null_repair_ranked_real/
+```
+
+Run shape:
+
+```text
+workers: 18
+start_samples: 1
+null_replicates: 5
+wall-clock budget: 5400 seconds
+wall-clock used: about 4915 seconds
+total environment evaluations: 146
+middle-regime environments: 109
+atlas gate passes: 0
+```
+
+Stage read:
+
+```text
+Stage B broad n=5: 80 environments, 45 middle-regime, 0 gate passes
+Stage C core n=5: 66 environments completed before cap, 64 middle-regime, 0 gate passes
+Stage D n=6 transfer: skipped/deferred
+Stage E window stress: 160 candidate windows, 1760 null-specific rows
+```
+
+Ranked null survival:
+
+```text
+degree_preserving_rewire: 0/160 survived
+out_degree_preserving_random: 2/160 survived
+constraint_shuffled: 0/160 survived
+asymmetry_shuffled: 0/160 survived
+roughness_resampled: 0/160 survived
+frontier_size_only: 44/160 survived
+probe_marginal_only: 160/160 survived
+frontier_size_plus_probe_marginal: 63/160 survived
+signature_support_matched: 77/160 survived
+horizon_local_frontier_matched: 59/160 survived
+window_local_frontier_matched: 62/160 survived
+```
+
+Localized reproducibility:
+
+```text
+localized candidate groups: 122
+localized_reproducible_candidate: 0
+```
+
+Interpretation:
+
+The ranked-null pass is stricter than the deterministic null smoke. Probe marginals alone are not the live blocker, but degree/out-degree replicate ranks, constraint/asymmetry/roughness shuffles, support matching, and localized reproducibility remain serious blockers. This branch remains calibration/falsification work, not evidence for a scientific gate pass.

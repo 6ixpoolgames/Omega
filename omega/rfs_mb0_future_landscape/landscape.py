@@ -54,6 +54,8 @@ def future_profile(
     null_counts_by_h: dict[int, dict[object, int]] | None = None,
     null_bundle_counts_by_h: dict[str, dict[int, dict[object, int]]] | None = None,
     null_transition_summaries: dict[str, dict[str, float]] | None = None,
+    null_replicate_counts_by_h: dict[str, list[dict[int, dict[object, int]]]] | None = None,
+    null_transition_replicates: dict[str, list[dict[str, float]]] | None = None,
     horizons: tuple[int, ...] = HORIZONS,
 ) -> tuple[dict[str, float | int | str], list[dict[str, float | int | str]], list[dict[str, float | int | str]]]:
     reach_by_h = {h: reachable(system, start, h) for h in horizons}
@@ -82,6 +84,13 @@ def future_profile(
         kl_values[h] = smoothed_kl(distributions[h], null_counts) if null_counts else 0.0
     null_bundle = _null_bundle_summary(distributions, null_bundle_counts_by_h or {})
     null_transition = _null_transition_summary(transition_summary, null_transition_summaries or {})
+    null_replicate_ranks = _null_replicate_rank_summary(
+        distributions,
+        transition_summary,
+        null_bundle_counts_by_h or {},
+        null_replicate_counts_by_h or {},
+        null_transition_replicates or {},
+    )
     reach_saturation_fraction = reach_counts[max_horizon] / max(1, len(system.states))
     exact_saturation_fraction = exact_counts[max_horizon] / max(1, len(system.states))
     profile = {
@@ -112,6 +121,7 @@ def future_profile(
         **transition_summary,
         **null_bundle,
         **null_transition,
+        **null_replicate_ranks,
         "saturation_horizon": saturation_horizon,
         "reach_saturation_fraction": reach_saturation_fraction,
         "exact_saturation_fraction": exact_saturation_fraction,
@@ -138,11 +148,19 @@ def future_profile(
             null_counts = by_h.get(h, {})
             per_null_h[f"JS_to_null_{null_name}"] = js_divergence(distributions[h], null_counts) if null_counts else 0.0
             per_null_h[f"KL_to_null_{null_name}"] = smoothed_kl(distributions[h], null_counts) if null_counts else 0.0
+            replicate_by_h = (null_replicate_counts_by_h or {}).get(null_name, [])
+            if replicate_by_h:
+                observed_js = per_null_h[f"JS_to_null_{null_name}"]
+                observed_kl = per_null_h[f"KL_to_null_{null_name}"]
+                replicate_js = [js_divergence(distributions[h], replicate.get(h, {})) for replicate in replicate_by_h]
+                replicate_kl = [smoothed_kl(distributions[h], replicate.get(h, {})) for replicate in replicate_by_h]
+                per_null_h[f"JS_rank_against_replicates_{null_name}"] = _rank_fraction(float(observed_js), replicate_js)
+                per_null_h[f"KL_rank_against_replicates_{null_name}"] = _rank_fraction(float(observed_kl), replicate_kl)
         per_null_h.update(
             {
                 key: value
                 for key, value in profile.items()
-                if key.startswith(("MI_delta_vs_null_", "motif_delta_vs_null_"))
+                if key.startswith(("MI_delta_vs_null_", "motif_delta_vs_null_", "MI_rank_against_replicates_", "motif_rank_against_replicates_"))
             }
         )
         per_null_h["MI_delta_vs_null"] = profile["MI_delta_vs_null"]
@@ -352,6 +370,58 @@ def _null_transition_summary(transition_summary: dict[str, float], null_transiti
     output["recurrence_delta_vs_null"] = -max(recurrence_nulls) if recurrence_nulls else 0.0
     output["control_relative_pass_count"] = int(mi_delta > 0.05) + int(motif_delta > 0.05)
     return output
+
+
+def _null_replicate_rank_summary(
+    distributions: dict[int, dict[object, int]],
+    transition_summary: dict[str, float],
+    null_bundle_counts_by_h: dict[str, dict[int, dict[object, int]]],
+    null_replicate_counts_by_h: dict[str, list[dict[int, dict[object, int]]]],
+    null_transition_replicates: dict[str, list[dict[str, float]]],
+) -> dict[str, float | int]:
+    output: dict[str, float | int] = {}
+    horizons = tuple(sorted(distributions))
+    for null_name, primary_by_h in sorted(null_bundle_counts_by_h.items()):
+        replicates = null_replicate_counts_by_h.get(null_name, [])
+        if not replicates:
+            continue
+        observed_js = [
+            js_divergence(distributions[h], primary_by_h.get(h, {}))
+            for h in horizons
+        ]
+        observed_kl = [
+            smoothed_kl(distributions[h], primary_by_h.get(h, {}))
+            for h in horizons
+        ]
+        replicate_js = [
+            sum(js_divergence(distributions[h], replicate.get(h, {})) for h in horizons) / len(horizons)
+            for replicate in replicates
+        ]
+        replicate_kl = [
+            sum(smoothed_kl(distributions[h], replicate.get(h, {})) for h in horizons) / len(horizons)
+            for replicate in replicates
+        ]
+        output[f"JS_rank_against_replicates_{null_name}"] = _rank_fraction(sum(observed_js) / len(observed_js), replicate_js)
+        output[f"KL_rank_against_replicates_{null_name}"] = _rank_fraction(sum(observed_kl) / len(observed_kl), replicate_kl)
+        output[f"null_replicate_count_{null_name}"] = len(replicates)
+    for null_name, replicates in sorted(null_transition_replicates.items()):
+        if not replicates:
+            continue
+        output[f"MI_rank_against_replicates_{null_name}"] = _rank_fraction(
+            transition_summary["signature_transition_MI_mean"],
+            [replicate.get("signature_transition_MI_mean", 0.0) for replicate in replicates],
+        )
+        output[f"motif_rank_against_replicates_{null_name}"] = _rank_fraction(
+            transition_summary["signature_transition_motif_reuse_mean"],
+            [replicate.get("signature_transition_motif_reuse_mean", 0.0) for replicate in replicates],
+        )
+    return output
+
+
+def _rank_fraction(observed: float, replicate_values: list[float]) -> float:
+    if not replicate_values:
+        return 0.0
+    return sum(observed >= value for value in replicate_values) / len(replicate_values)
 
 
 def _adjacent_distribution_similarity(distributions: dict[int, dict[object, int]], horizons: tuple[int, ...] = HORIZONS) -> float:
