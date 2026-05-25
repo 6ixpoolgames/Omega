@@ -3969,3 +3969,60 @@ mean probe_collision_rate: 0.963
 Interpretation:
 
 The calibration runner works, but the first path metrics are dominated by probe-collision and support-ceiling fakeouts. Candidate rows can beat matched controls and simple endpoint/unigram nulls while still being uninterpretable as path-process structure because the probe alphabet is too coarse. Do not scale this exact path metric setup until higher-resolution probes and low-outdegree/path-count controls are added.
+
+## 2026-05-25 - RFS-MB0 probe resolution calibration smoke
+
+Pulled:
+
+```text
+docs/RFS_MB0_PROBE_RESOLUTION_CALIBRATION_SPEC.md
+```
+
+Updated:
+
+```text
+omega/rfs_mb0_future_landscape/run_path_metric_calibration.py
+```
+
+Primary result note:
+
+```text
+docs/research_notes/validation_results/rfs_mb0_probe_resolution_calibration_smoke_result.md
+```
+
+Local output:
+
+```text
+results/rfs_mb0_relation_atlas/20260525_probe_resolution_calibration_smoke/
+```
+
+Run shape:
+
+```text
+workers requested: 18
+jobs queued: 288
+jobs completed: 288
+errors: 0
+candidate environments: 8
+path_horizons: 4, 8
+sample_paths_per_start: 256
+path_null_replicates: 3
+promotion_enabled: false
+wall_clock_seconds: 5.0
+```
+
+Headline:
+
+```text
+probe_resolution_fail_collision: 57 candidate rows
+probe_resolution_identity_like_only: 47 candidate rows
+probe_resolution_pass: 24 candidate rows
+probe_resolution_pass_but_control_also_passes: 13 candidate rows
+probe_collision_fakeout: 114 rows
+support_ceiling_fakeout: 106 rows
+matched_control_also_passes: 56 rows
+```
+
+Interpretation:
+
+The probe-resolution bottleneck is real. Existing low-resolution probes remain too collision-prone for path-language metrics. Medium-resolution coordinate/composite probes reduce collision enough to keep as calibrated diagnostics, but matched controls still frequently show the same path metrics. Recommendation: branch B, downgrade path-process for now and focus near-term empirical work on support/distribution deformation taxonomy.

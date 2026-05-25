@@ -11,8 +11,10 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
 from statistics import mean
 
+from .landscape import exact_frontier
 from .probes import Probe, generate_probes
-from .relation_generator import RelationParams, generate_relation_system
+from .relation_generator import RelationParams, _constraint_profile, _constraint_violation, _stable_hash, generate_relation_system
+from .substrate import LandscapeSystem, State
 
 
 def parse_args() -> argparse.Namespace:
@@ -26,8 +28,19 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--sample-paths-per-start", type=int, default=256)
     parser.add_argument("--path-null-replicates", type=int, default=3)
     parser.add_argument("--workers", type=int, default=18)
-    parser.add_argument("--max-jobs", type=int, default=72)
+    parser.add_argument("--max-jobs", type=int, default=288)
     parser.add_argument("--max-runtime-seconds", type=int, default=2400)
+    parser.add_argument(
+        "--probe-families",
+        type=str,
+        default=(
+            "existing_low,coordinate_tuple_k3,coordinate_tuple_k4,"
+            "composite_pair_plus_single,composite_two_pairs,"
+            "composite_local_window_plus_constraint_count,constraint_violation_count,"
+            "constraint_violation_count_plus_local_tuple,constraint_profile_hash,"
+            "relation_role,full_state_hash,full_state_strict"
+        ),
+    )
     return parser.parse_args()
 
 
@@ -36,7 +49,8 @@ def main() -> None:
     started = time.perf_counter()
     args.out.mkdir(parents=True, exist_ok=True)
     horizons = tuple(int(item.strip()) for item in args.path_horizons.split(",") if item.strip())
-    jobs, selection_rows, control_rows = build_jobs(args, horizons)
+    probe_keys = tuple(item.strip() for item in args.probe_families.split(",") if item.strip())
+    jobs, selection_rows, control_rows = build_jobs(args, horizons, probe_keys)
     jobs = jobs[: args.max_jobs]
     results = []
     errors = []
@@ -53,7 +67,7 @@ def main() -> None:
     write_outputs(args.out, args, started, jobs, results, selection_rows, control_rows, errors)
 
 
-def build_jobs(args: argparse.Namespace, horizons: tuple[int, ...]) -> tuple[list[dict[str, object]], list[dict[str, object]], list[dict[str, object]]]:
+def build_jobs(args: argparse.Namespace, horizons: tuple[int, ...], probe_keys: tuple[str, ...]) -> tuple[list[dict[str, object]], list[dict[str, object]], list[dict[str, object]]]:
     phenotype_rows = _read_csv(args.source_run / "candidate_phenotype_summary.csv")
     stage_dir = args.source_run / f"start_samples_{args.start_samples}"
     if not stage_dir.exists():
@@ -87,21 +101,21 @@ def build_jobs(args: argparse.Namespace, horizons: tuple[int, ...]) -> tuple[lis
     control_rows = []
     for index, candidate in enumerate(selected):
         env = candidate["environment_id"]
-        probe_family = candidate["probe_family"]
+        source_probe_family = candidate["probe_family"]
         window = candidate["window_name"]
         matched = match_control(candidate, control_candidates, metadata)
         selection_rows.append(
             {
                 "candidate_id": candidate["candidate_id"],
                 "environment_id": env,
-                "probe_family": probe_family,
+                "source_probe_family": source_probe_family,
                 "window_name": window,
                 "matched_control_environment_id": matched.get("family", ""),
                 "matched_control_match_quality": matched.get("match_quality", "none"),
             }
         )
         rows_for_candidate = [
-            ("candidate", env, probe_family, window, candidate.get("candidate_id", f"candidate_{index}")),
+            ("candidate", env, source_probe_family, window, candidate.get("candidate_id", f"candidate_{index}")),
         ]
         if matched:
             control_rows.append(
@@ -116,32 +130,34 @@ def build_jobs(args: argparse.Namespace, horizons: tuple[int, ...]) -> tuple[lis
             rows_for_candidate.append(("matched_control", matched["family"], matched["probe_family"], matched["window"], f"control_for_{index}"))
         same_env_controls = [
             row for row in control_candidates
-            if row["family"] == env and row["probe_family"] == probe_family and row["window"] != window
+            if row["family"] == env and row["probe_family"] == source_probe_family and row["window"] != window
         ][:1]
         for control in same_env_controls:
             rows_for_candidate.append(("same_environment_window_control", control["family"], control["probe_family"], control["window"], f"same_env_control_for_{index}"))
         for row_kind, row_env, row_probe, row_window, row_id in rows_for_candidate:
             if row_env not in metadata:
                 continue
-            for horizon in horizons:
-                jobs.append(
-                    {
-                        "job_id": f"{row_kind}_{index}_{row_probe}_{row_window}_H{horizon}",
-                        "row_kind": row_kind,
-                        "row_id": row_id,
-                        "candidate_environment_id": env,
-                        "environment_id": row_env,
-                        "metadata_json": metadata[row_env]["metadata_json"],
-                        "seed": int(metadata[row_env]["seed"]),
-                        "probe_family": row_probe,
-                        "window_name": row_window,
-                        "path_horizon": horizon,
-                        "start_samples": args.start_samples,
-                        "sample_paths_per_start": args.sample_paths_per_start,
-                        "path_null_replicates": args.path_null_replicates,
-                        "window_class": window_by_key.get((row_env, row_probe, row_window), {}).get("aggregate_window_class_v1_2", ""),
-                    }
-                )
+            for probe_key in probe_keys:
+                for horizon in horizons:
+                    jobs.append(
+                        {
+                            "job_id": f"{row_kind}_{index}_{probe_key}_{row_window}_H{horizon}",
+                            "row_kind": row_kind,
+                            "row_id": row_id,
+                            "candidate_environment_id": env,
+                            "environment_id": row_env,
+                            "metadata_json": metadata[row_env]["metadata_json"],
+                            "seed": int(metadata[row_env]["seed"]),
+                            "source_probe_family": row_probe,
+                            "probe_key": probe_key,
+                            "window_name": row_window,
+                            "path_horizon": horizon,
+                            "start_samples": args.start_samples,
+                            "sample_paths_per_start": args.sample_paths_per_start,
+                            "path_null_replicates": args.path_null_replicates,
+                            "window_class": window_by_key.get((row_env, row_probe, row_window), {}).get("aggregate_window_class_v1_2", ""),
+                        }
+                    )
     return jobs, selection_rows, control_rows
 
 
@@ -151,8 +167,6 @@ def match_control(candidate: dict[str, str], controls: list[dict[str, str]], met
     best_score = -1
     for control in controls:
         if control["family"] == candidate["environment_id"]:
-            continue
-        if control["probe_family"] != candidate["probe_family"]:
             continue
         control_meta = json.loads(metadata[control["family"]]["metadata_json"])
         score = 0
@@ -170,25 +184,27 @@ def match_control(candidate: dict[str, str], controls: list[dict[str, str]], met
 def run_path_job(job: dict[str, object]) -> dict[str, object]:
     params = params_from_metadata(json.loads(str(job["metadata_json"])))
     system = generate_relation_system(params, int(job["seed"]))
-    probes = [probe for probe in generate_probes(system, 2) if probe.probe_family == job["probe_family"]]
-    if not probes:
-        raise ValueError(f"no probe for family {job['probe_family']}")
-    probe = probes[0]
+    probe, alphabet_size, probe_group = build_probe(system, str(job["probe_key"]), str(job["source_probe_family"]))
     starts = [system.states[(system.seed + i * 17) % len(system.states)] for i in range(int(job["start_samples"]))]
     sequences = []
-    rng = random.Random(system.seed + int(job["path_horizon"]) * 1009 + len(str(job["probe_family"])))
+    rng = random.Random(system.seed + int(job["path_horizon"]) * 1009 + len(str(job["probe_key"])))
     for start in starts:
         sequences.extend(sample_signature_paths(system, probe, start, int(job["path_horizon"]), int(job["sample_paths_per_start"]), rng))
-    metrics = path_metrics(sequences, probe, len(system.states))
+    low_outdegree = low_outdegree_diagnostics(system, starts, int(job["path_horizon"]), sequences)
+    metrics = path_metrics(sequences, probe, len(system.states), alphabet_size)
     endpoint_nulls = []
     unigram_nulls = []
     for replicate in range(int(job["path_null_replicates"])):
         null_rng = random.Random(system.seed + replicate * 7919 + int(job["path_horizon"]))
-        endpoint_nulls.append(path_metrics(endpoint_support_randomized(sequences, null_rng), probe, len(system.states)))
-        unigram_nulls.append(path_metrics(unigram_shuffled(sequences, null_rng), probe, len(system.states)))
+        endpoint_nulls.append(path_metrics(endpoint_support_randomized(sequences, null_rng), probe, len(system.states), alphabet_size))
+        unigram_nulls.append(path_metrics(unigram_shuffled(sequences, null_rng), probe, len(system.states), alphabet_size))
     result = {
-        **{key: job[key] for key in ("job_id", "row_kind", "row_id", "candidate_environment_id", "environment_id", "probe_family", "window_name", "path_horizon", "window_class")},
+        **{key: job[key] for key in ("job_id", "row_kind", "row_id", "candidate_environment_id", "environment_id", "probe_key", "source_probe_family", "window_name", "path_horizon", "window_class")},
+        "probe_family": probe.probe_family,
+        "probe_name": probe.name,
+        "probe_group": probe_group,
         **metrics,
+        **low_outdegree,
         "endpoint_bigram_mi_rank": rank_metric(metrics["bigram_mutual_information"], [row["bigram_mutual_information"] for row in endpoint_nulls]),
         "endpoint_trigram_gain_rank": rank_metric(metrics["predictive_gain_bigram_context"], [row["predictive_gain_bigram_context"] for row in endpoint_nulls]),
         "unigram_bigram_mi_rank": rank_metric(metrics["bigram_mutual_information"], [row["bigram_mutual_information"] for row in unigram_nulls]),
@@ -198,6 +214,7 @@ def run_path_job(job: dict[str, object]) -> dict[str, object]:
     result.update(fakeout_flags(result))
     result["path_evidence_level"] = evidence_level(result)
     result["would_promote_if_enabled"] = int(result["path_evidence_level"] == "provisional_path_process_blocked_by_calibration_policy")
+    result["promotion_blocked_by_probe_resolution_policy"] = result["would_promote_if_enabled"]
     return result
 
 
@@ -216,20 +233,142 @@ def sample_signature_paths(system: object, probe: Probe, start: tuple[int, ...],
     return paths
 
 
-def path_metrics(sequences: list[tuple[object, ...]], probe: Probe, state_count: int) -> dict[str, object]:
+def build_probe(system: LandscapeSystem, probe_key: str, source_probe_family: str) -> tuple[Probe, int, str]:
+    modulus = int(system.metadata.get("alphabet_size", 3))
+    coordinate_count = len(system.states[0])
+    constraints = json.loads(str(system.metadata.get("constraint_json", "[]")))
+    in_degree = {state: 0 for state in system.states}
+    edge_set = {(source, target) for source, targets in system.edges.items() for target in targets}
+    for _source, targets in system.edges.items():
+        for target in targets:
+            in_degree[target] = in_degree.get(target, 0) + 1
+
+    def bucket(value: int) -> int:
+        if value <= 1:
+            return value
+        if value <= 3:
+            return 2
+        return 3
+
+    if probe_key == "existing_low":
+        probes = [probe for probe in generate_probes(system, 2) if probe.probe_family == source_probe_family]
+        if not probes:
+            probes = [probe for probe in generate_probes(system, 2) if probe.probe_family == "pairwise_ordered_projection"]
+        if not probes:
+            raise ValueError(f"no existing probe for family {source_probe_family}")
+        probe = probes[0]
+        return Probe(f"existing_low_{probe.name}", probe.mode, probe.fn, f"existing_low__{probe.probe_family}", probe.arity), max(1, modulus ** max(1, probe.arity)), "existing_low"
+
+    if probe_key == "coordinate_tuple_k3":
+        coords = tuple(range(min(3, coordinate_count)))
+        return Probe("coordinate_tuple_k3_0", "coordinate_tuple", lambda s, coords=coords: tuple(s[index] for index in coords), "coordinate_tuple_k3", len(coords)), modulus ** len(coords), "coordinate_tuple"
+
+    if probe_key == "coordinate_tuple_k4":
+        coords = tuple(range(min(4, coordinate_count)))
+        return Probe("coordinate_tuple_k4_0", "coordinate_tuple", lambda s, coords=coords: tuple(s[index] for index in coords), "coordinate_tuple_k4", len(coords)), modulus ** len(coords), "coordinate_tuple"
+
+    if probe_key == "composite_pair_plus_single":
+        coords = (0, 1, min(2, coordinate_count - 1))
+        return Probe("composite_pair_plus_single_0", "composite", lambda s, coords=coords: (s[coords[0]], s[coords[1]], s[coords[2]]), "composite_pair_plus_single", 3), modulus ** 3, "composite"
+
+    if probe_key == "composite_two_pairs":
+        coords = (0, 1, min(2, coordinate_count - 1), min(3, coordinate_count - 1))
+        return Probe("composite_two_pairs_0", "composite", lambda s, coords=coords: (s[coords[0]], s[coords[1]], s[coords[2]], s[coords[3]]), "composite_two_pairs", 4), modulus ** 4, "composite"
+
+    if probe_key == "composite_local_window_plus_constraint_count":
+        coords = tuple(range(min(2, coordinate_count)))
+        max_count = len(constraints) + 1
+        return (
+            Probe(
+                "composite_local_window_plus_constraint_count_0",
+                "composite_constraint",
+                lambda s, coords=coords, constraints=constraints: tuple(s[index] for index in coords) + (int(round(_constraint_violation(s, constraints))),),
+                "composite_local_window_plus_constraint_count",
+                len(coords) + 1,
+            ),
+            (modulus ** len(coords)) * max_count,
+            "constraint_profile",
+        )
+
+    if probe_key == "constraint_violation_count":
+        max_count = len(constraints) + 1
+        return Probe("constraint_violation_count", "constraint_profile", lambda s, constraints=constraints: (int(round(_constraint_violation(s, constraints))),), "constraint_violation_count", 1), max_count, "constraint_profile"
+
+    if probe_key == "constraint_violation_count_plus_local_tuple":
+        coords = tuple(range(min(2, coordinate_count)))
+        max_count = len(constraints) + 1
+        return (
+            Probe(
+                "constraint_violation_count_plus_local_tuple_0",
+                "constraint_profile",
+                lambda s, coords=coords, constraints=constraints: (int(round(_constraint_violation(s, constraints))),) + tuple(s[index] for index in coords),
+                "constraint_violation_count_plus_local_tuple",
+                len(coords) + 1,
+            ),
+            max_count * (modulus ** len(coords)),
+            "constraint_profile",
+        )
+
+    if probe_key == "constraint_profile_hash":
+        buckets = min(256, max(16, 2 ** min(8, max(1, len(constraints)))))
+        return Probe("constraint_profile_hash", "constraint_profile", lambda s, constraints=constraints, buckets=buckets: (_stable_hash(str(_constraint_profile(s, constraints))) % buckets,), "constraint_profile_hash", 1), buckets, "constraint_profile"
+
+    if probe_key == "relation_role":
+        def relation_role(s: State) -> tuple[int, ...]:
+            out_degree = len(system.edges.get(s, ()))
+            reciprocal = sum(int((target, s) in edge_set) for target in system.edges.get(s, ()))
+            depth_1 = len(set(system.edges.get(s, ())))
+            depth_2_states = {item for target in system.edges.get(s, ()) for item in system.edges.get(target, ())}
+            return (bucket(out_degree), bucket(in_degree.get(s, 0)), bucket(reciprocal), bucket(depth_1), bucket(len(depth_2_states)))
+
+        return Probe("relation_role_buckets", "relation_role", relation_role, "relation_role", 5), 4 ** 5, "relation_role"
+
+    if probe_key == "full_state_hash":
+        buckets = max(32, min(2048, len(system.states) * 2))
+        return Probe("full_state_hash", "strict_state_control", lambda s, buckets=buckets: (_stable_hash(str(s)) % buckets,), "full_state_hash", 1), buckets, "strict_state_control"
+
+    if probe_key == "full_state_strict":
+        return Probe("full_state_strict", "strict_state_control", lambda s: tuple(s), "full_state_strict", coordinate_count), len(system.states), "strict_state_control"
+
+    raise ValueError(f"unknown probe key {probe_key}")
+
+
+def low_outdegree_diagnostics(system: LandscapeSystem, starts: list[State], horizon: int, sequences: list[tuple[object, ...]]) -> dict[str, object]:
+    out_degrees = [len(system.edges.get(state, ())) for state in system.states]
+    frontier_sizes = [len(exact_frontier(system, start, horizon)) for start in starts]
+    return {
+        "effective_branch_factor": mean(out_degrees) if out_degrees else 0.0,
+        "sampled_path_count": len(sequences),
+        "unique_path_count_proxy": len(set(sequences)),
+        "frontier_size_by_H": mean(frontier_sizes) if frontier_sizes else 0.0,
+        "low_outdegree_path_fakeout_flag": int((mean(out_degrees) if out_degrees else 0.0) <= 2.0),
+        "path_count_matched_control_id": "",
+        "path_count_match_quality": "not_separately_matched_mean_outdegree_reported",
+    }
+
+
+def path_metrics(sequences: list[tuple[object, ...]], probe: Probe, state_count: int, alphabet_size: int | None = None) -> dict[str, object]:
     unigrams = Counter(item for sequence in sequences for item in sequence)
     bigrams = Counter((sequence[i], sequence[i + 1]) for sequence in sequences for i in range(len(sequence) - 1))
     trigrams = Counter((sequence[i], sequence[i + 1], sequence[i + 2]) for sequence in sequences for i in range(len(sequence) - 2))
     support = len(unigrams)
-    alphabet = max(1, 3 ** max(1, probe.arity))
+    alphabet = max(1, int(alphabet_size or (3 ** max(1, probe.arity))))
+    unigram_entropy = entropy(unigrams)
+    entropy_ceiling = math.log2(max(1, alphabet))
+    effective_signature_count = 2 ** unigram_entropy
+    support_fraction = support / alphabet
+    collision_rate = max(0.0, 1.0 - support / max(1, state_count))
     return {
         "path_count": len(sequences),
         "probe_signature_alphabet_size": alphabet,
         "observed_signature_support_size": support,
-        "observed_signature_support_fraction": support / alphabet,
-        "probe_collision_rate": max(0.0, 1.0 - support / max(1, state_count)),
-        "unigram_entropy_ceiling": math.log2(max(1, alphabet)),
-        "unigram_entropy": entropy(unigrams),
+        "observed_signature_support_fraction": support_fraction,
+        "probe_collision_rate": collision_rate,
+        "effective_signature_count": effective_signature_count,
+        "unigram_entropy_ceiling": entropy_ceiling,
+        "unigram_entropy": unigram_entropy,
+        "entropy_ceiling_fraction": unigram_entropy / max(1e-9, entropy_ceiling),
+        "probe_resolution_class": probe_resolution_class(collision_rate, support_fraction, effective_signature_count, state_count, probe.probe_family),
         "bigram_entropy": entropy(bigrams),
         "trigram_entropy": entropy(trigrams),
         "bigram_mutual_information": mutual_information_bigrams(bigrams),
@@ -268,7 +407,7 @@ def fakeout_flags(row: dict[str, object]) -> dict[str, object]:
     probe_collision = float(row["probe_collision_rate"]) > 0.90
     low_alphabet = int(row["probe_signature_alphabet_size"]) <= 3
     support_ceiling = float(row["observed_signature_support_fraction"]) >= 0.90 or float(row["observed_signature_support_fraction"]) <= 0.20
-    low_outdegree = False
+    low_outdegree = bool(int(row.get("low_outdegree_path_fakeout_flag", 0)))
     endpoint_fake = float(row["endpoint_bigram_mi_rank"]) < 0.80
     unigram_fake = float(row["unigram_bigram_mi_rank"]) < 0.80
     fakeouts = []
@@ -292,6 +431,7 @@ def fakeout_flags(row: dict[str, object]) -> dict[str, object]:
         "support_ceiling_fakeout_flag": int(support_ceiling),
         "endpoint_support_fakeout_flag": int(endpoint_fake),
         "unigram_marginal_fakeout_flag": int(unigram_fake),
+        "low_outdegree_path_fakeout_flag": int(low_outdegree),
         "fakeout_class": ";".join(fakeouts),
     }
 
@@ -300,15 +440,37 @@ def evidence_level(row: dict[str, object]) -> str:
     if row["row_kind"] != "candidate":
         return "matched_control"
     if row.get("matched_control_environment_id", "") == "":
-        return "path_descriptive"
+        return "probe_resolution_descriptive"
+    if row.get("probe_resolution_class") in {"identity_like_control", "overfit_or_identity_like"}:
+        return "probe_resolution_identity_like_only"
     if int(row["probe_collision_fakeout_flag"]) or int(row["low_alphabet_fakeout_flag"]):
-        return "path_fakeout"
+        return "probe_resolution_fail_collision"
+    if int(row["support_ceiling_fakeout_flag"]):
+        return "probe_resolution_fail_support_ceiling"
     if int(row["endpoint_support_fakeout_flag"]):
         return "path_descriptive"
     if int(row["unigram_marginal_fakeout_flag"]):
         return "path_above_endpoint"
     if float(row["endpoint_bigram_mi_rank"]) >= 0.80 and float(row["unigram_bigram_mi_rank"]) >= 0.80:
-        return "provisional_path_process_blocked_by_calibration_policy"
+        return "probe_resolution_pass"
+    return "underdetermined"
+
+
+def probe_resolution_class(collision_rate: float, support_fraction: float, effective_signature_count: float, state_count: int, probe_family: str) -> str:
+    if probe_family in {"full_state_hash", "full_state_strict"}:
+        return "identity_like_control"
+    if collision_rate < 0.10 or effective_signature_count >= 0.85 * max(1, state_count):
+        return "identity_like_control"
+    if collision_rate >= 0.90 or effective_signature_count < 4:
+        return "too_coarse"
+    if support_fraction >= 0.95:
+        return "overfit_or_identity_like"
+    if 0.75 <= collision_rate < 0.90:
+        return "usable_low_resolution"
+    if 0.40 <= collision_rate < 0.75:
+        return "usable_medium_resolution"
+    if 0.10 <= collision_rate < 0.40:
+        return "high_resolution_control"
     return "underdetermined"
 
 
@@ -325,13 +487,13 @@ def write_outputs(
     control_metric_by_candidate = {}
     for row in results:
         if row["row_kind"] == "matched_control":
-            control_metric_by_candidate.setdefault((row["candidate_environment_id"], row["probe_family"], row["path_horizon"]), row)
+            control_metric_by_candidate.setdefault((row["candidate_environment_id"], row["probe_key"], row["path_horizon"]), row)
     for row in results:
         if row["row_kind"] != "candidate":
             row["matched_control_environment_id"] = ""
             row["matched_control_match_quality"] = ""
             continue
-        control = control_metric_by_candidate.get((row["candidate_environment_id"], row["probe_family"], row["path_horizon"]), {})
+        control = control_metric_by_candidate.get((row["candidate_environment_id"], row["probe_key"], row["path_horizon"]), {})
         row["matched_control_environment_id"] = control.get("environment_id", "")
         row["matched_control_match_quality"] = "available" if control else "none"
         row["candidate_metric"] = row["bigram_mutual_information"]
@@ -347,14 +509,29 @@ def write_outputs(
             row["candidate_minus_control"] = ""
             row["candidate_control_effect_size"] = ""
             row["candidate_control_rank"] = ""
-            row["path_evidence_level"] = "path_descriptive"
+            row["path_evidence_level"] = "probe_resolution_descriptive"
             row["fakeout_class"] = str(row["fakeout_class"]) + ";descriptive_only_no_matched_control"
+        if control and row.get("path_evidence_level") == "probe_resolution_descriptive":
+            row["path_evidence_level"] = evidence_level(row)
+        if control and row.get("candidate_control_rank") == 0 and row.get("path_evidence_level") == "probe_resolution_pass":
+            row["path_evidence_level"] = "probe_resolution_pass_but_control_also_passes"
+        row["would_promote_if_enabled"] = int(row["path_evidence_level"] == "probe_resolution_pass")
+        row["promotion_blocked_by_probe_resolution_policy"] = row["would_promote_if_enabled"]
     _write_csv(out_dir / "path_metric_calibration_summary.csv", results)
+    _write_csv(out_dir / "path_metric_by_probe_family.csv", results)
     _write_csv(out_dir / "probe_collision_diagnostics.csv", probe_collision_rows(results))
     _write_csv(out_dir / "matched_non_candidate_path_controls.csv", control_rows)
     _write_csv(out_dir / "path_null_rank_summary.csv", null_rank_rows(results))
     _write_csv(out_dir / "path_metric_effect_sizes.csv", effect_size_rows(results))
     _write_csv(out_dir / "path_fakeout_summary.csv", fakeout_summary(results))
+    _write_csv(out_dir / "probe_fakeout_summary.csv", fakeout_summary(results))
+    _write_csv(out_dir / "probe_resolution_by_family.csv", probe_resolution_by_family(results))
+    _write_csv(out_dir / "candidate_control_probe_matrix.csv", candidate_control_probe_matrix(results))
+    _write_csv(out_dir / "probe_resolution_curves.csv", probe_resolution_curves(results))
+    _write_csv(out_dir / "low_outdegree_path_count_controls.csv", low_outdegree_rows(results))
+    _write_csv(out_dir / "strict_state_control_summary.csv", group_summary([row for row in results if row.get("probe_group") == "strict_state_control"], "probe_family"))
+    _write_csv(out_dir / "constraint_profile_probe_summary.csv", group_summary([row for row in results if row.get("probe_group") == "constraint_profile"], "probe_family"))
+    _write_csv(out_dir / "relation_role_probe_summary.csv", group_summary([row for row in results if row.get("probe_group") == "relation_role"], "probe_family"))
     _write_csv(out_dir / "errors.csv", errors)
     write_report(out_dir, args, started, jobs, results, errors)
     status = {
@@ -371,22 +548,65 @@ def write_outputs(
 def write_report(out_dir: Path, args: argparse.Namespace, started: float, jobs: list[dict[str, object]], results: list[dict[str, object]], errors: list[dict[str, object]]) -> None:
     fakeouts = fakeout_summary(results)
     levels = _counts(row.get("path_evidence_level", "") for row in results if row.get("row_kind") == "candidate")
+    family_rows = probe_resolution_by_family(results)
+    usable_medium = [row for row in results if row.get("probe_resolution_class") == "usable_medium_resolution"]
+    non_identity_passes = [
+        row for row in results
+        if row.get("row_kind") == "candidate"
+        and row.get("path_evidence_level") == "probe_resolution_pass"
+        and row.get("probe_resolution_class") not in {"identity_like_control", "overfit_or_identity_like"}
+    ]
+    identity_only = not non_identity_passes and any(row.get("probe_resolution_class") == "identity_like_control" for row in results)
+    medium_candidate_rows = [
+        row for row in results
+        if row.get("row_kind") == "candidate"
+        and row.get("probe_resolution_class") == "usable_medium_resolution"
+    ]
+    medium_positive = [row for row in medium_candidate_rows if row.get("candidate_control_rank") == 1 and row.get("path_evidence_level") == "probe_resolution_pass"]
+    medium_control_also = [row for row in medium_candidate_rows if row.get("path_evidence_level") == "probe_resolution_pass_but_control_also_passes"]
+    fakeout_total = sum(int(row["n_rows"]) for row in fakeouts if row["fakeout_class"] != "underdetermined_path_metric")
+    fakeout_dominant = fakeout_total > max(1, len(results) // 2)
+    decision = (
+        "A"
+        if usable_medium and non_identity_passes and len(medium_positive) > len(medium_control_also) and not fakeout_dominant
+        else ("C" if identity_only and not usable_medium else "B")
+    )
+    recommendation = {
+        "A": "Continue path calibration v2 with the medium-resolution probes that separated from controls.",
+        "B": "Downgrade path-process for now and focus on support/distribution deformation taxonomy.",
+        "C": "Pause this empirical path-process branch and write a measurement-limits note.",
+    }[decision]
     lines = [
-        "# RFS-MB0 Path Metric Calibration Report",
+        "# RFS-MB0 Probe Resolution Calibration Report",
         "",
-        "Promotion disabled: this is a calibration smoke, not a path-process detection run.",
+        "Promotion disabled: this is a probe-resolution calibration smoke, not a path-process detection run.",
         "",
         f"- Wall clock used: {time.perf_counter() - started:.1f} seconds",
         f"- Workers requested: {args.workers}",
         f"- Jobs queued: {len(jobs)}",
         f"- Jobs completed: {len(results)}",
         f"- Errors: {len(errors)}",
+        f"- Branch recommendation: {decision}. {recommendation}",
         "",
-        "## Fakeout Counts",
+        "## Probe Family Resolution",
         "",
-        "| fakeout | n |",
-        "|---|---:|",
+        "| probe_family | n | mean_collision | mean_support_fraction | mean_effect_size | dominant_resolution_class |",
+        "|---|---:|---:|---:|---:|---|",
     ]
+    for row in family_rows:
+        lines.append(
+            f"| {row['probe_family']} | {row['n_rows']} | {float(row['mean_probe_collision_rate']):.3f} | "
+            f"{float(row['mean_observed_signature_support_fraction']):.3f} | {row['mean_candidate_control_effect_size']} | {row['dominant_probe_resolution_class']} |"
+        )
+    lines.extend(
+        [
+            "",
+            "## Fakeout Counts",
+            "",
+            "| fakeout | n |",
+            "|---|---:|",
+        ]
+    )
     for row in fakeouts:
         lines.append(f"| {row['fakeout_class']} | {row['n_rows']} |")
     lines.extend(["", "## Candidate Evidence Levels", "", "| level | n |", "|---|---:|"])
@@ -394,20 +614,144 @@ def write_report(out_dir: Path, args: argparse.Namespace, started: float, jobs: 
         lines.append(f"| {level} | {count} |")
     candidate_rows = [row for row in results if row.get("row_kind") == "candidate"]
     matched = [row for row in candidate_rows if row.get("matched_control_environment_id")]
+    too_collision = sorted({str(row.get("probe_family")) for row in results if row.get("probe_resolution_class") == "too_coarse"})
+    identity_controls = sorted({str(row.get("probe_family")) for row in results if row.get("probe_resolution_class") == "identity_like_control"})
+    medium = sorted({str(row.get("probe_family")) for row in usable_medium})
     lines.extend(
         [
             "",
-            "## Matched Controls",
+            "## Required Answers",
             "",
+            f"- Too collision-prone families: {', '.join(too_collision) if too_collision else 'none observed'}",
+            f"- Identity-like controls: {', '.join(identity_controls) if identity_controls else 'none observed'}",
+            f"- Usable medium-resolution probes: {', '.join(medium) if medium else 'none observed'}",
             f"- Candidate rows: {len(candidate_rows)}",
             f"- Candidate rows with matched controls: {len(matched)}",
+            f"- Path-count caveat: low-outdegree/path-count diagnostics are written to low_outdegree_path_count_controls.csv.",
+            f"- Recommended branch: {decision}. {recommendation}",
             "",
             "## Claim Boundary",
             "",
-            "This smoke calibrates path metrics against fakeout controls. It does not promote path-process candidates or claim Omega validation.",
+            "This smoke calibrates probe resolution and path metrics against fakeout controls. It does not promote path-process candidates or claim Omega validation.",
         ]
     )
-    (out_dir / "path_metric_calibration_report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    text = "\n".join(lines) + "\n"
+    (out_dir / "probe_resolution_calibration_report.md").write_text(text, encoding="utf-8")
+    (out_dir / "path_metric_calibration_report.md").write_text(text, encoding="utf-8")
+
+
+def probe_resolution_by_family(rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    out = []
+    for family in sorted({str(row.get("probe_family", "")) for row in rows}):
+        group = [row for row in rows if str(row.get("probe_family", "")) == family]
+        effects = [_float(row.get("candidate_control_effect_size")) for row in group if _float(row.get("candidate_control_effect_size")) is not None]
+        classes = _counts(row.get("probe_resolution_class", "") for row in group)
+        dominant = max(classes.items(), key=lambda item: item[1])[0] if classes else ""
+        out.append(
+            {
+                "probe_family": family,
+                "probe_group": next((row.get("probe_group", "") for row in group), ""),
+                "n_rows": len(group),
+                "mean_probe_collision_rate": _mean_float(row.get("probe_collision_rate") for row in group),
+                "mean_observed_signature_support_fraction": _mean_float(row.get("observed_signature_support_fraction") for row in group),
+                "mean_effective_signature_count": _mean_float(row.get("effective_signature_count") for row in group),
+                "mean_entropy_ceiling_fraction": _mean_float(row.get("entropy_ceiling_fraction") for row in group),
+                "mean_candidate_control_effect_size": mean(effects) if effects else "",
+                "dominant_probe_resolution_class": dominant,
+                "probe_resolution_class_counts": json.dumps(classes, sort_keys=True),
+            }
+        )
+    return out
+
+
+def candidate_control_probe_matrix(rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    keys = (
+        "candidate_environment_id",
+        "environment_id",
+        "probe_family",
+        "probe_group",
+        "path_horizon",
+        "probe_resolution_class",
+        "candidate_metric",
+        "matched_control_metric",
+        "candidate_minus_control",
+        "candidate_control_effect_size",
+        "candidate_control_rank",
+        "endpoint_bigram_mi_rank",
+        "unigram_bigram_mi_rank",
+        "fakeout_class",
+        "path_evidence_level",
+    )
+    return [{key: row.get(key, "") for key in keys} for row in rows if row.get("row_kind") == "candidate"]
+
+
+def probe_resolution_curves(rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    keys = (
+        "candidate_environment_id",
+        "probe_key",
+        "probe_family",
+        "probe_group",
+        "path_horizon",
+        "probe_collision_rate",
+        "observed_signature_support_fraction",
+        "candidate_minus_control",
+        "candidate_control_effect_size",
+        "endpoint_bigram_mi_rank",
+        "unigram_bigram_mi_rank",
+        "fakeout_class",
+        "path_evidence_level",
+    )
+    return [{key: row.get(key, "") for key in keys} for row in rows if row.get("row_kind") == "candidate"]
+
+
+def low_outdegree_rows(rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    keys = (
+        "job_id",
+        "row_kind",
+        "environment_id",
+        "probe_family",
+        "path_horizon",
+        "effective_branch_factor",
+        "sampled_path_count",
+        "unique_path_count_proxy",
+        "frontier_size_by_H",
+        "low_outdegree_path_fakeout_flag",
+        "path_count_matched_control_id",
+        "path_count_match_quality",
+    )
+    return [{key: row.get(key, "") for key in keys} for row in rows]
+
+
+def group_summary(rows: list[dict[str, object]], group_key: str) -> list[dict[str, object]]:
+    out = []
+    for value in sorted({str(row.get(group_key, "")) for row in rows}):
+        group = [row for row in rows if str(row.get(group_key, "")) == value]
+        out.append(
+            {
+                group_key: value,
+                "n_rows": len(group),
+                "mean_probe_collision_rate": _mean_float(row.get("probe_collision_rate") for row in group),
+                "mean_observed_signature_support_fraction": _mean_float(row.get("observed_signature_support_fraction") for row in group),
+                "mean_bigram_mutual_information": _mean_float(row.get("bigram_mutual_information") for row in group),
+                "resolution_class_counts": json.dumps(_counts(row.get("probe_resolution_class", "") for row in group), sort_keys=True),
+            }
+        )
+    return out
+
+
+def _float(value: object) -> float | None:
+    try:
+        if value == "":
+            return None
+        return float(value)  # type: ignore[arg-type]
+    except (TypeError, ValueError):
+        return None
+
+
+def _mean_float(values: object) -> float | str:
+    numbers = [_float(value) for value in values]  # type: ignore[union-attr]
+    clean = [value for value in numbers if value is not None]
+    return mean(clean) if clean else ""
 
 
 def probe_collision_rows(rows: list[dict[str, object]]) -> list[dict[str, object]]:

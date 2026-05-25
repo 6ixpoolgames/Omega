@@ -1092,6 +1092,29 @@ Result in one line:
   probe-collision and support-ceiling fakeouts dominated; path null ranks and
   matched-control effects are not interpretable until probe resolution improves.
 
+### RFS-MB0 Probe Resolution Calibration Smoke
+
+Directory:
+
+- `results/rfs_mb0_relation_atlas/20260525_probe_resolution_calibration_smoke/`
+
+Primary retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_probe_resolution_calibration_smoke_result.md`
+
+Reason retained:
+
+- This is the bounded follow-up that tests whether higher-resolution neutral
+  probes make path-language metrics interpretable without collapsing into
+  identity-like controls.
+
+Result in one line:
+
+- Existing low-resolution probes remain too collision-prone; `coordinate_tuple_k4`
+  and `composite_two_pairs` are more usable, but matched controls still often
+  carry the same metrics, so the current recommendation is to downgrade
+  path-process work and focus on support/distribution deformation taxonomy.
+
 The important public caveat:
 
 ```text
