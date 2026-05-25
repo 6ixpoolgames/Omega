@@ -2,9 +2,9 @@
 
 This repository is the empirical workspace for the **Omega** theory project.
 
-The current empirical arm studies **reachable futures**: how abstract dynamical substrates preserve, lose, recover, compose, or capture future possibility under constraints.
+The current empirical arm studies **reachable futures**: how neutral transition substrates deform the set and distribution of possible futures under constraints, asymmetries, and matched controls.
 
-The long-term Omega ambition is broader: a structural account of value-bearing futures and alignment-relevant failure modes that does not begin from reward functions, utility functions, fixed preference aggregation, or moral rules. The executable work in this repo is the narrower downstream effort: building minimal substrates where those ideas can become mathematically testable.
+The long-term Omega ambition is broader: a structural account of value-bearing futures and alignment-relevant failure modes that does not begin from reward functions, utility functions, fixed preference aggregation, or moral rules. The executable work in this repo is narrower and earlier-stage: building minimal substrates where fragments of that idea can become mathematically testable.
 
 This repo contains theory notes, foundational drafts, historical validation attempts, current substrate-design notes, and executable probes.
 
@@ -12,15 +12,15 @@ It does **not** prove Omega. It is a controlled workspace for turning the theory
 
 ## One-sentence summary
 
-**We study reachable futures: which possible continuations remain viable, recoverable, composable, or become locally persistent while degrading broader future possibility.**
+**We study reachable futures: how neutral relation systems shape which futures remain reachable, excluded, concentrated, or matched-control equivalent.**
 
-The current empirical reset asks a narrower substrate question:
+The active empirical question is currently narrower than agency or identity detection:
 
-**Can neutral transition systems produce future-landscape structure that survives matched-null comparison, rather than just reflecting saturation, clocks, collapse, or probe artifacts?**
+**Can neutral action-generated relation systems produce reproducible support/distribution deformation in future landscapes, beyond saturation, collapse, probe artifacts, and matched-control equivalence?**
 
 Current status, in one line:
 
-**VAL0/VAL1 were useful reconnaissance probes; the active branch is now RFS-MB0 future-landscape detection, with detector v1.1, long-horizon audit support, and action-generated relation-atlas calibration implemented. No aggregate scientific pass yet.**
+**VAL0/VAL1 were useful reconnaissance probes; RFS-MB0 is now focused on support/distribution deformation taxonomy over neutral action-generated relation systems. The relation generator remains active, path/process metrics are parked after probe-resolution calibration, and the next target is a guided medium-breadth support/distribution atlas. No scientific gate has passed.**
 
 ## Why this matters for alignment
 
@@ -60,13 +60,9 @@ Did it preserve correction, repair, and re-entry?
 Did it expand local capability by collapsing broader possibility?
 ```
 
-In this framing, alignment is not a terminal-state target. It is a constraint on trajectory space:
+The current empirical program is still only a first step. It does not validate alignment. It asks what substrate and measurement discipline are needed before the earliest precursor can be resolved:
 
-> An aligned system should preserve and extend the conditions under which recoverable value-bearing futures remain possible.
-
-The current empirical program is still only a first step. It does not validate alignment. It asks what substrate is needed before the earliest precursor can be resolved:
-
-> Can reachable futures be measured well enough to distinguish structured future deformation from saturation, trivial persistence, clocks, collapse, and matched-control artifacts?
+> Can future-landscape deformation be measured well enough to distinguish nontrivial support/distribution effects from saturation, trivial persistence, clocks, collapse, probe artifacts, and matched-control equivalence?
 
 ## Current empirical pivot: neutral future-landscape deformation
 
@@ -95,25 +91,24 @@ time:
 asymmetry:
   non-equivalence of reachable future sets
 
-capacity:
-  available future transformation space
-
 future profile:
   horizon-indexed reachable and exact-frontier signatures
 
-future landscape deformation:
-  changes in reachability, signature distributions, recurrence, transition
-  information, and null-relative divergence across horizons
+support deformation:
+  changes in which signatures/futures are reachable
+
+distribution deformation:
+  changes in mass/count distribution over reachable signatures
 
 saturation:
-  profiles dominated by exhaustion of the finite state space
+  profiles dominated by exhaustion of the finite state space or probe alphabet
 
 controls:
-  random, degree-preserving, probe-marginal, fixed-point, cycle, permissive,
-  strict, and coordinate-permutation comparisons
+  frontier-size, probe-marginal, support-matched, matched non-candidate,
+  mechanism-ablation, destructive-rewire, start, roughness, and probe diagnostics
 
 provisional structure:
-  only a control-relative class after matched-null comparison
+  only a control-relative class after matched-control comparison
 ```
 
 The current experiment form is:
@@ -132,27 +127,100 @@ Sigma:
   mechanically generated neutral probe family
 
 H:
-  horizon
+  horizon set
 
 N:
-  matched null bundle
+  matched null/control bundle
 ```
 
 The semicolon matters. The substrate is left of the semicolon. Probe and null choices are right of it.
 
-Current design files:
+## Active branch: RFS-MB0 support/distribution deformation
 
-- [Future landscape pattern spec](docs/RFS_MB0_FUTURE_LANDSCAPE_PATTERN_SPEC.md)
-- [Future landscape detector v1 handoff](docs/RFS_MB0_FUTURE_LANDSCAPE_DETECTOR_V1_HANDOFF.md)
-- [Future landscape detector v1.1 smoke result](docs/research_notes/validation_results/rfs_mb0_future_landscape_detector_v1_1_smoke_result.md)
-- [Future landscape long-horizon audit result](docs/research_notes/validation_results/rfs_mb0_future_landscape_long_horizon_environment_audit_result.md)
-- [Action-generated relation atlas v0 calibration result](docs/research_notes/validation_results/rfs_mb0_action_generated_relation_atlas_v0_calibration_result.md)
-- [Relation atlas 5-hour batch result](docs/research_notes/validation_results/rfs_mb0_relation_atlas_5h_batch_result.md)
-- [Relation atlas repaired batch result](docs/research_notes/validation_results/rfs_mb0_relation_atlas_repaired_batch_result.md)
-- [Future landscape detector v1 smoke result](docs/research_notes/validation_results/rfs_mb0_future_landscape_detector_v1_smoke_result.md)
+The active lane is now **support/distribution deformation taxonomy and regime mapping**.
+
+This branch has moved through several audits:
+
+```text
+detector overcall repair
+long-horizon audit
+neutral action-generated relation substrate
+roughness and score-term audit
+multiple-start phenotype audit
+path metric calibration
+probe-resolution calibration
+support/distribution taxonomy smoke
+deformation detector upgrade and local parameter sweeps
+```
+
+Current interpretation:
+
+```text
+relation generator:
+  keep; it is constraint-dominated and no longer looks like a roughness artifact generator
+
+path/process metrics:
+  parked; current probes are too collision-prone and matched controls often show similar path metrics
+
+support/distribution deformation:
+  active target; small candidate residues and fakeout-to-candidate transitions justify guided breadth
+
+next run:
+  guided medium-breadth support/distribution atlas around local candidate-stable and fakeout-to-candidate transition bands
+```
+
+Important current docs:
+
+- [Branch evolution update note](docs/RFS_MB0_BRANCH_EVOLUTION_UPDATE_NOTE.md)
+- [Support/distribution deformation taxonomy spec](docs/RFS_MB0_SUPPORT_DISTRIBUTION_DEFORMATION_TAXONOMY_SPEC.md)
+- [Deformation detector upgrade and local sweep spec](docs/RFS_MB0_DEFORMATION_DETECTOR_AND_LOCAL_SWEEP_SPEC.md)
+- [Medium-breadth support/distribution atlas 10h spec](docs/RFS_MB0_MEDIUM_BREADTH_SUPPORT_DISTRIBUTION_ATLAS_10H_SPEC.md)
+- [Probe resolution calibration spec](docs/RFS_MB0_PROBE_RESOLUTION_CALIBRATION_SPEC.md)
+- [Path metric calibration smoke tightening](docs/RFS_MB0_PATH_METRIC_CALIBRATION_SMOKE_TIGHTENING.md)
+- [Relation generator phenotype repair spec](docs/RFS_MB0_RELATION_GENERATOR_PHENOTYPE_REPAIR_SPEC.md)
+- [Candidate phenotype audit spec](docs/RFS_MB0_RELATION_ATLAS_CANDIDATE_PHENOTYPE_AUDIT_SPEC.md)
+- [Action-generated relation substrate spec](docs/RFS_MB0_ACTION_GENERATED_RELATION_SUBSTRATE_SPEC.md)
 - [Minimal reachable futures formalism](docs/research_notes/omega_theory/minimal_reachable_futures_formalism.md)
 - [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
 - [Public results index](docs/PUBLIC_RESULTS_INDEX.md)
+
+## Indirect detection and the identity problem
+
+The project is not currently trying to directly detect agents, valuers, identities, or selves inside the substrate.
+
+That is deliberate.
+
+The theory has not yet earned a clean operational definition of:
+
+```text
+agent
+identity
+valuer
+self
+persistent object
+```
+
+inside the primitive substrate. Hand-defining those classes would recreate the same problem the substrate reset was meant to avoid: smuggling semantic categories into the implementation and then “discovering” them later.
+
+The empirical move is therefore indirect.
+
+Instead of asking:
+
+```text
+Which object is the agent?
+Which identity persists?
+Which state is value-bearing?
+```
+
+we ask:
+
+```text
+Does the future landscape show deformation patterns compatible with something organizing reachable futures?
+```
+
+This is a weak “shadow” strategy. We may not directly label the value-bearing or agent-like object, but we can look for changes in reachable support, endpoint distributions, stabilizations, exclusions, and fakeouts that resemble future-interest but collapse under controls.
+
+At the current stage, the most instrumentable shadow is support/distribution deformation. Path/process deformation would be stronger, but path metrics are parked until probe-resolution and matched-control issues improve.
 
 ## Historical reconnaissance probes
 
@@ -186,8 +254,10 @@ Lesson:
 ```text
 viable continuation is easy to culture in nontrivial substrates;
 opaque admissibility and hand-designed viability variables are overfit risks;
-the next target is derived bounded identity, not richer hand-coded state fields.
+the current target is derived future-landscape deformation, not richer hand-coded state fields.
 ```
+
+Constructor-theory-flavored task language was part of earlier reconnaissance and remains a loose influence on how the project thinks about possible/impossible transformations. It is **not** the active empirical frame, and this repository does not claim to implement or validate constructor theory.
 
 ## What is Omega?
 
@@ -220,6 +290,8 @@ A more operational version:
 
 > Omega asks which possible trajectories preserve or expand recoverable, compatible, value-bearing possibility under physical, epistemic, resource, scale, and inter-history constraints.
 
+The current repo does not yet operationalize that full definition. It is working on an earlier measurement problem: future-landscape deformation in neutral substrates.
+
 ## Current formal stack
 
 The current theory keeps the primitive layer small:
@@ -243,7 +315,7 @@ asymmetry:
   transformations have non-equivalent future consequences
 ```
 
-Then:
+Later theoretical notions include:
 
 ```text
 boundary:
@@ -258,9 +330,6 @@ capacity:
 coherence:
   identity-preserving continuation
 
-dissipation-like behavior:
-  contraction of identity-preserving futures
-
 recoverability:
   return to identity-continuity after perturbation
 
@@ -268,19 +337,21 @@ compatibility:
   multiple bounded identities preserve reachable futures together
 ```
 
+Those later notions are not yet the active empirical substrate. They remain downstream theory targets.
+
 Start with:
 
+- [Branch evolution update note](docs/RFS_MB0_BRANCH_EVOLUTION_UPDATE_NOTE.md)
 - [Minimal reachable futures formalism](docs/research_notes/omega_theory/minimal_reachable_futures_formalism.md)
 - [Public terms and translations](docs/research_notes/omega_theory/public_terms_and_translations.md)
 - [Omega glossary](docs/research_notes/omega_theory/omega_glossary.md)
 - [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
-- [Viability ecology reorientation](docs/research_notes/validation_design/val_ecology_viability_reorientation.md)
 
 ## Broader theory pipeline
 
 The current reachable-futures substrate work is the downstream empirical layer of a broader theory pipeline.
 
-The foundation stack supplies the upstream physical, structural, normative, and control-theoretic layers that motivate why future-bearing reachability is worth testing.
+The foundation stack supplies upstream physical, structural, normative, and control-theoretic motivations for why future-bearing reachability is worth testing.
 
 A useful map:
 
@@ -301,7 +372,7 @@ Constrained Reachability
   -> operational control law for agents preserving viable futures
 
 Omega / Reachable Futures Lab
-  -> empirical program for minimal substrates that can resolve viable futures
+  -> empirical program for minimal substrates that can resolve future-landscape deformation
 ```
 
 Start here for the pipeline view:
@@ -313,82 +384,48 @@ Start here for the pipeline view:
 - [ECHO draft](docs/progenitor_drafts/echo_rosetta_version.pdf)
 - [TELOS draft](docs/progenitor_drafts/telos_2_0_draft.pdf)
 
-## Why Constructor Theory?
-
-Constructor Theory is useful here because it gives a language for possible and impossible transformations.
-
-Instead of asking only:
-
-```text
-Did the agent survive?
-Did reward increase?
-Did a gridworld variable stay high?
-```
-
-reachable-futures probes ask:
-
-```text
-Which transformations remain possible?
-Which paths preserve future reachability?
-Which paths collapse into lock-in?
-Which future profiles saturate, collapse, cycle, or survive matched controls?
-Which apparent structures disappear under degree-preserving or frontier-matched nulls?
-```
-
-This makes the validation target less anthropocentric and less preference-first.
-
-Working bridge:
-
-```text
-Constructor Theory gives a language for possible and impossible transformations.
-Omega asks which possible transformations preserve value-bearing future possibility.
-```
-
 ## Reading paths
 
 ### For a new reader
 
-1. [Future landscape detector v1.1 smoke result](docs/research_notes/validation_results/rfs_mb0_future_landscape_detector_v1_1_smoke_result.md)
-2. [Future landscape long-horizon audit result](docs/research_notes/validation_results/rfs_mb0_future_landscape_long_horizon_environment_audit_result.md)
-3. [Action-generated relation atlas v0 calibration result](docs/research_notes/validation_results/rfs_mb0_action_generated_relation_atlas_v0_calibration_result.md)
-4. [Relation atlas 5-hour batch result](docs/research_notes/validation_results/rfs_mb0_relation_atlas_5h_batch_result.md)
-5. [Relation atlas repaired batch result](docs/research_notes/validation_results/rfs_mb0_relation_atlas_repaired_batch_result.md)
-6. [Public terms and translations](docs/research_notes/omega_theory/public_terms_and_translations.md)
-7. [Future landscape pattern spec](docs/RFS_MB0_FUTURE_LANDSCAPE_PATTERN_SPEC.md)
+1. [Branch evolution update note](docs/RFS_MB0_BRANCH_EVOLUTION_UPDATE_NOTE.md)
+2. [Support/distribution deformation taxonomy spec](docs/RFS_MB0_SUPPORT_DISTRIBUTION_DEFORMATION_TAXONOMY_SPEC.md)
+3. [Deformation detector upgrade and local sweep spec](docs/RFS_MB0_DEFORMATION_DETECTOR_AND_LOCAL_SWEEP_SPEC.md)
+4. [Medium-breadth support/distribution atlas 10h spec](docs/RFS_MB0_MEDIUM_BREADTH_SUPPORT_DISTRIBUTION_ATLAS_10H_SPEC.md)
+5. [Action-generated relation substrate spec](docs/RFS_MB0_ACTION_GENERATED_RELATION_SUBSTRATE_SPEC.md)
+6. [Minimal reachable futures formalism](docs/research_notes/omega_theory/minimal_reachable_futures_formalism.md)
+7. [Public terms and translations](docs/research_notes/omega_theory/public_terms_and_translations.md)
 8. [Public results index](docs/PUBLIC_RESULTS_INDEX.md)
 9. [Omega glossary](docs/research_notes/omega_theory/omega_glossary.md)
 10. [Foundation stack as pipeline](docs/research_notes/omega_theory/progenitor_stack_as_pipeline.md)
 
 ### For implementation work
 
-1. [Future landscape detector v1 handoff](docs/RFS_MB0_FUTURE_LANDSCAPE_DETECTOR_V1_HANDOFF.md)
-2. [Future landscape v1.1 code targets](docs/RFS_MB0_FUTURE_LANDSCAPE_V1_1_CODE_TARGETS.md)
-3. [Future landscape detector v1.1 smoke result](docs/research_notes/validation_results/rfs_mb0_future_landscape_detector_v1_1_smoke_result.md)
-4. [Future landscape long-horizon audit spec](docs/RFS_MB0_FUTURE_LANDSCAPE_LONG_HORIZON_ENVIRONMENT_AUDIT.md)
-5. [Future landscape long-horizon audit result](docs/research_notes/validation_results/rfs_mb0_future_landscape_long_horizon_environment_audit_result.md)
-6. [Action-generated relation substrate spec](docs/RFS_MB0_ACTION_GENERATED_RELATION_SUBSTRATE_SPEC.md)
-7. [Action-generated relation atlas v0 calibration result](docs/research_notes/validation_results/rfs_mb0_action_generated_relation_atlas_v0_calibration_result.md)
-8. [Relation atlas 5-hour batch spec](docs/RFS_MB0_RELATION_ATLAS_5H_BATCH_RUN_SPEC.md)
-9. [Relation atlas 5-hour batch result](docs/research_notes/validation_results/rfs_mb0_relation_atlas_5h_batch_result.md)
-10. [Relation atlas batch-runner repair spec](docs/RFS_MB0_RELATION_ATLAS_BATCH_RUNNER_REPAIR_SPEC.md)
-11. [Relation atlas repaired batch result](docs/research_notes/validation_results/rfs_mb0_relation_atlas_repaired_batch_result.md)
-12. [Minimal reachable futures formalism](docs/research_notes/omega_theory/minimal_reachable_futures_formalism.md)
-13. [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
+1. [Medium-breadth support/distribution atlas 10h spec](docs/RFS_MB0_MEDIUM_BREADTH_SUPPORT_DISTRIBUTION_ATLAS_10H_SPEC.md)
+2. [Deformation detector upgrade and local sweep spec](docs/RFS_MB0_DEFORMATION_DETECTOR_AND_LOCAL_SWEEP_SPEC.md)
+3. [Support/distribution deformation taxonomy spec](docs/RFS_MB0_SUPPORT_DISTRIBUTION_DEFORMATION_TAXONOMY_SPEC.md)
+4. [Probe resolution calibration spec](docs/RFS_MB0_PROBE_RESOLUTION_CALIBRATION_SPEC.md)
+5. [Path metric calibration smoke tightening](docs/RFS_MB0_PATH_METRIC_CALIBRATION_SMOKE_TIGHTENING.md)
+6. [Relation generator phenotype repair spec](docs/RFS_MB0_RELATION_GENERATOR_PHENOTYPE_REPAIR_SPEC.md)
+7. [Candidate phenotype audit spec](docs/RFS_MB0_RELATION_ATLAS_CANDIDATE_PHENOTYPE_AUDIT_SPEC.md)
+8. [Action-generated relation substrate spec](docs/RFS_MB0_ACTION_GENERATED_RELATION_SUBSTRATE_SPEC.md)
+9. [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
 
 ### For project history
 
 1. [Project manual](docs/OMEGA_PROJECT_MANUAL.md)
 2. [Running log](docs/OMEGA_RUNNING_LOG.md)
-3. [Public results index](docs/PUBLIC_RESULTS_INDEX.md)
-4. [Historical probe terms](docs/research_notes/omega_theory/historical_probe_terms.md)
-5. [Historical probes](results/historical_probes/)
-6. [Foundational theory drafts](docs/progenitor_drafts/README.md)
+3. [Branch evolution update note](docs/RFS_MB0_BRANCH_EVOLUTION_UPDATE_NOTE.md)
+4. [Public results index](docs/PUBLIC_RESULTS_INDEX.md)
+5. [Historical probe terms](docs/research_notes/omega_theory/historical_probe_terms.md)
+6. [Historical probes](results/historical_probes/)
+7. [Foundational theory drafts](docs/progenitor_drafts/README.md)
 
 ## Current next step
 
-The current implementation target is **RFS-MB0 Future Landscape Detector v1.1 with long-horizon and action-generated relation-atlas diagnostics**.
+The current implementation target is the **guided medium-breadth support/distribution atlas**.
 
-The detector v1.1 smoke, long-horizon audit, and action-generated relation-atlas calibration passed as implementation runs, but not as a scientific gate. The detector keeps local profile candidates visible while preventing them from becoming family-level claims. The long-horizon audit suggests the current failure is not just an H16 cutoff. The relation atlas removes hand-named positive families and produces middle-regime neutral environments, but still has zero atlas gate passes.
+The goal is to test whether locally observed candidate-stable and fakeout-to-candidate transition bands generalize across broader parameter neighborhoods, fresh seeds, starts, probe families, matched-control bundles, margin sensitivity, and limited n=6 transfer.
 
 Public summary:
 
@@ -396,20 +433,23 @@ Public summary:
 define:
   a finite transition substrate (X, ->)
   mechanically generated neutral probes Sigma
-  matched null bundle N
+  matched null/control bundle N
 
 measure:
   horizon-indexed reachable futures
-  exact-frontier signature distributions
-  transition-level signature mutual information
-  transition conditional entropy and motif reuse
-  JS/KL divergence from random, degree, and probe-marginal nulls
-  saturation diagnostics
-  conservative control-relative profile classes
+  exact-frontier signature support
+  endpoint signature distributions
+  JS/KL and rank/effect comparisons against controls
+  margin sensitivity
+  support-vs-distribution separation
+  start/probe/seed recurrence
+  probe collision and support-ceiling diagnostics
+  fakeout and boundary classes
 
 defer:
   Omega-positive labels
   agent / valuer / identity claims
+  path-process claims
   scalar energy or utility objectives
   hand-designed viability vectors
   full constructor agency
@@ -420,9 +460,10 @@ defer:
 
 ```text
 VAL0-CT:
-  completed first task-space calibration layer
+  completed first task-space reconnaissance layer
   R1 anchor wins reproduced
   held-out/generalized R1 claim not established
+  not the active empirical frame
 
 VAL0-G:
   completed neutral-grammar reconnaissance
@@ -437,13 +478,14 @@ RFS0 strict finite reachability:
   showed sparse strict objects but insufficient control separation
 
 RFS-MB0:
-  active future-landscape detector
-  v1.1 implemented; scientific gate not passed
+  active neutral future-landscape deformation program
+  support/distribution deformation taxonomy is the current lane
+  path/process metrics parked after probe-resolution calibration
 
 RFS-MB0.1:
-  next target
-  develop non-saturating structured candidates and stronger frontier/saturation
-  matched nulls
+  current target
+  guided medium-breadth support/distribution atlas around candidate-stable
+  and fakeout-to-candidate transition bands
 
 RFS-MB1:
   only after MB0 control separation
@@ -456,7 +498,8 @@ RFS-MB3:
   scale hierarchy; nested or composable bounded structures
 
 RFS-MB4:
-  constructor candidates; repeatable transformation capacity of bounded processes
+  constructor-like transformation capacity of bounded processes, if the earlier
+  substrate and measurement layers mature enough to justify revisiting it
 ```
 
 Later stages should not be implemented until RFS-MB0 has clean definitions, controls, and failure modes.
@@ -473,11 +516,11 @@ foundational theory drafts that motivate the pipeline
 historical toy-substrate probes
 negative and ambiguous results
 current reachable-futures substrate reset
-VAL0-CT validation designs and results
+support/distribution deformation taxonomy work
 ```
 
 The current scientific claim is modest:
 
-> Reachable-future structure is measurable in neutral toy substrates, but Omega-compatible subobjects have not been demonstrated. The active empirical question is whether future-landscape deformation can be distinguished from saturation, clocks, collapse, and matched-control artifacts without introducing semantic labels.
+> Future-landscape support/distribution deformation is measurable in neutral toy substrates, but Omega-compatible subobjects have not been demonstrated. The active empirical question is whether deformation regimes can be distinguished from saturation, clocks, collapse, probe artifacts, and matched-control equivalence without introducing semantic labels.
 
-VAL0/VAL1 tested earlier precursors. The project is now resetting around neutral future landscapes and control-relative detection.
+VAL0/VAL1 tested earlier precursors. The project is now centered on neutral future landscapes and control-relative deformation taxonomy.
