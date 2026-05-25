@@ -1071,6 +1071,27 @@ Result in one line:
   constraint-dominated roughness-sensitive or roughness-edge-brittle candidates;
   score terms remained strongly constraint-dominated.
 
+### RFS-MB0 Path Metric Calibration Smoke
+
+Directory:
+
+- `results/rfs_mb0_relation_atlas/20260525_path_metric_calibration_smoke/`
+
+Primary retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_path_metric_calibration_smoke_result.md`
+
+Reason retained:
+
+- This is the first fakeout-first path metric calibration run, with promotion
+  disabled and matched controls required.
+
+Result in one line:
+
+- Runner works, but all candidate rows were demoted to descriptive because
+  probe-collision and support-ceiling fakeouts dominated; path null ranks and
+  matched-control effects are not interpretable until probe resolution improves.
+
 The important public caveat:
 
 ```text

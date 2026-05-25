@@ -3912,3 +3912,60 @@ dominance_class: constraint_dominated
 Interpretation:
 
 The roughness phenotype repair worked. The previous all-roughness-artifact label was too harsh. Most candidates are roughness-resample sensitive but edge-stable/noise-tolerant and constraint-dominated. The relation generator remains worth keeping for another focused diagnostic pass, preferably path/process-focused and with enough queued jobs to saturate available workers.
+
+## 2026-05-25 - RFS-MB0 path metric calibration smoke
+
+Pulled:
+
+```text
+docs/RFS_MB0_PATH_PROCESS_DIAGNOSTIC_SPEC.md
+docs/RFS_MB0_PATH_PROCESS_DIAGNOSTIC_ADDENDUM_METRIC_CALIBRATION.md
+docs/RFS_MB0_PATH_METRIC_CALIBRATION_SMOKE_TIGHTENING.md
+```
+
+Implemented:
+
+```text
+omega/rfs_mb0_future_landscape/run_path_metric_calibration.py
+```
+
+Primary result note:
+
+```text
+docs/research_notes/validation_results/rfs_mb0_path_metric_calibration_smoke_result.md
+```
+
+Local output:
+
+```text
+results/rfs_mb0_relation_atlas/20260525_path_metric_calibration_smoke/
+```
+
+Run shape:
+
+```text
+workers requested: 18
+jobs queued: 32
+jobs completed: 32
+candidate rows: 14
+matched-control rows: 14
+same-environment window controls: 4
+path_horizons: 4, 8
+sample_paths_per_start: 256
+path_null_replicates: 3
+promotion_enabled: false
+```
+
+Headline:
+
+```text
+path_descriptive: 14/14 candidate rows
+probe_collision_fakeout: 32 rows
+support_ceiling_fakeout: 30 rows
+matched_control_also_passes: 2 rows
+mean probe_collision_rate: 0.963
+```
+
+Interpretation:
+
+The calibration runner works, but the first path metrics are dominated by probe-collision and support-ceiling fakeouts. Candidate rows can beat matched controls and simple endpoint/unigram nulls while still being uninterpretable as path-process structure because the probe alphabet is too coarse. Do not scale this exact path metric setup until higher-resolution probes and low-outdegree/path-count controls are added.
