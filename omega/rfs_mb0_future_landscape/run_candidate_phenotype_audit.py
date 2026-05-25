@@ -50,6 +50,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--per-stage-runtime-seconds", type=int, default=900)
     parser.add_argument("--stress-sample-count", type=int, default=80)
     parser.add_argument("--score-edge-sample", type=int, default=160)
+    parser.add_argument("--roughness-strengths", type=str, default="0,0.001,0.003,0.01,0.03,0.05")
+    parser.add_argument("--roughness-seed-replicates", type=int, default=3)
     return parser.parse_args()
 
 
@@ -69,7 +71,9 @@ def main() -> None:
         stage_dirs.append(stage_dir)
         status = _run_atlas_stage(args, stage_dir, start_count, min(args.per_stage_runtime_seconds, int(remaining) - 60))
         notes.append(f"start_samples={start_count}: {status.get('status', 'missing_status')} jobs={status.get('jobs_completed', 0)}/{status.get('jobs_created', 0)}")
-    phenotype_rows = write_candidate_phenotypes(stage_dirs, args.out / "candidate_phenotype_summary.csv", args.stress_sample_count)
+    roughness_rows = write_roughness_sensitivity(stage_dirs, args.out / "roughness_sensitivity_summary.csv", args)
+    roughness_by_env = {str(row["environment_id"]): row for row in roughness_rows}
+    phenotype_rows = write_candidate_phenotypes(stage_dirs, args.out / "candidate_phenotype_summary.csv", args.stress_sample_count, roughness_by_env)
     write_phenotype_reproducibility(phenotype_rows, args.out / "phenotype_reproducibility_summary.csv")
     write_score_term_decomposition(stage_dirs, args.out, args.score_edge_sample)
     write_summary(args.out, started, args, stage_dirs, phenotype_rows, notes)
@@ -113,7 +117,7 @@ def _run_atlas_stage(args: argparse.Namespace, stage_dir: Path, start_count: int
     return status
 
 
-def write_candidate_phenotypes(stage_dirs: list[Path], out_path: Path, limit: int) -> list[dict[str, object]]:
+def write_candidate_phenotypes(stage_dirs: list[Path], out_path: Path, limit: int, roughness_by_env: dict[str, dict[str, object]]) -> list[dict[str, object]]:
     raw_rows = []
     for stage_dir in stage_dirs:
         start_count = int(stage_dir.name.rsplit("_", 1)[-1])
@@ -130,7 +134,7 @@ def write_candidate_phenotypes(stage_dirs: list[Path], out_path: Path, limit: in
         for row in candidates[:limit]:
             key = (row["family"], row["probe_family"], row["window"])
             metric = metrics.get(key, {})
-            raw_rows.append(_phenotype_row(row, metric, start_count))
+            raw_rows.append(_phenotype_row(row, metric, start_count, roughness_by_env.get(row["family"], {})))
     recurrence = _candidate_recurrence(raw_rows)
     for row in raw_rows:
         row["start_coverage_class"] = recurrence.get(str(row["candidate_key"]), "start_local")
@@ -141,7 +145,7 @@ def write_candidate_phenotypes(stage_dirs: list[Path], out_path: Path, limit: in
     return raw_rows
 
 
-def _phenotype_row(row: dict[str, str], metric: dict[str, object], start_count: int) -> dict[str, object]:
+def _phenotype_row(row: dict[str, str], metric: dict[str, object], start_count: int, roughness: dict[str, object]) -> dict[str, object]:
     candidate_key = f"{row['family']}|{row['probe_family']}|{row['window']}"
     trivial_frontier = _control_result(metric, "frontier_size_only")
     trivial_probe = _control_result(metric, "probe_marginal_only")
@@ -149,7 +153,9 @@ def _phenotype_row(row: dict[str, str], metric: dict[str, object], start_count: 
     support = _support_result(metric)
     constraint = _dependency_class(metric, "constraint_shuffled")
     asymmetry = _dependency_class(metric, "asymmetry_shuffled")
-    roughness = _roughness_class(metric)
+    roughness_response = _roughness_class(metric)
+    roughness_edge = _roughness_edge_class(roughness)
+    roughness_strength = _roughness_strength_class(roughness)
     path_class = _path_process_class(row, metric)
     near_tie = int(float(metric.get("mean_transition_MI_H", row.get("mean_transition_MI_H", 0.0))) > 0.25 and support == "support_deformation")
     return {
@@ -168,12 +174,22 @@ def _phenotype_row(row: dict[str, str], metric: dict[str, object], start_count: 
         "support_matched_result": support,
         "constraint_dependency_class": constraint,
         "asymmetry_dependency_class": asymmetry,
-        "roughness_response_class": roughness,
+        "roughness_response_class": roughness_response,
+        "roughness_edge_sensitivity_class": roughness_edge,
+        "roughness_strength_profile_class": roughness_strength,
         "start_coverage_class": "",
         "path_process_class": path_class,
         "degree_outdegree_ablation_result": _degree_result(metric),
+        "mechanistic_ablation_profile": f"constraint={constraint};asymmetry={asymmetry}",
+        "triviality_profile": f"frontier={trivial_frontier};probe={trivial_probe};frontier_plus_probe={trivial_plus}",
+        "support_profile": support,
+        "process_profile": path_class,
         "shuffle_survivor_audit_required": int(constraint == "shuffle_survivor" or asymmetry == "shuffle_survivor"),
-        "roughness_brittle_flag": int(roughness == "roughness_brittle"),
+        "roughness_resample_sensitive_flag": int(roughness_response == "roughness_resample_sensitive"),
+        "roughness_artifact_flag": 0,
+        "symmetry_breaking_stable_flag": int(roughness_strength == "symmetry_breaking_stable"),
+        "noise_tolerant_flag": int(roughness_strength == "noise_tolerant"),
+        "roughness_brittle_flag": int(roughness_edge == "roughness_edge_brittle"),
         "near_tie_dominated_flag": near_tie,
         "lockin_prone_flag": int(float(row.get("saturation_fraction", 0.0)) > 0.25),
         "phenotype_class": "",
@@ -212,7 +228,31 @@ def _roughness_class(metric: dict[str, object]) -> str:
     result = _control_result(metric, "roughness_resampled")
     if result.startswith("survives"):
         return "noise_tolerant"
-    return "roughness_brittle"
+    return "roughness_resample_sensitive"
+
+
+def _roughness_edge_class(roughness: dict[str, object]) -> str:
+    edge_flip = float(roughness.get("mean_top_k_boundary_flip_rate", 0.0) or 0.0)
+    near_flip = float(roughness.get("mean_near_cutoff_rank_flip_rate", 0.0) or 0.0)
+    decisive = float(roughness.get("roughness_decisive_selected_edge_fraction", 0.0) or 0.0)
+    if max(edge_flip, near_flip, decisive) >= 0.50:
+        return "roughness_edge_brittle"
+    if max(edge_flip, near_flip, decisive) >= 0.15:
+        return "roughness_edge_sensitive"
+    return "roughness_edge_stable"
+
+
+def _roughness_strength_class(roughness: dict[str, object]) -> str:
+    zero_overlap = float(roughness.get("zero_strength_edge_overlap", 0.0) or 0.0)
+    reseed_overlap = float(roughness.get("same_strength_reseed_edge_overlap", 0.0) or 0.0)
+    strength_overlap = float(roughness.get("mean_strength_sweep_edge_overlap", 0.0) or 0.0)
+    if zero_overlap < 0.60 and reseed_overlap >= 0.80:
+        return "symmetry_breaking_stable"
+    if min(reseed_overlap, strength_overlap) >= 0.80:
+        return "noise_tolerant"
+    if min(reseed_overlap, strength_overlap) >= 0.60:
+        return "noise_sensitive_smooth"
+    return "roughness_strength_brittle"
 
 
 def _degree_result(metric: dict[str, object]) -> str:
@@ -253,8 +293,15 @@ def _candidate_recurrence(rows: list[dict[str, object]]) -> dict[str, str]:
 
 
 def _phenotype_class(row: dict[str, object]) -> str:
-    if row["roughness_response_class"] == "roughness_brittle":
-        return "roughness_brittle_artifact"
+    if row["roughness_resample_sensitive_flag"] and row["roughness_edge_sensitivity_class"] == "roughness_edge_brittle" and row["start_coverage_class"] in {"start_local", "start_fragile"}:
+        row["roughness_artifact_flag"] = 1
+        return "confirmed_roughness_artifact"
+    if row["roughness_response_class"] == "roughness_resample_sensitive" and row["roughness_edge_sensitivity_class"] != "roughness_edge_stable":
+        return "roughness_edge_brittle_candidate"
+    if row["roughness_response_class"] == "roughness_resample_sensitive" and row["roughness_strength_profile_class"] == "symmetry_breaking_stable":
+        return "roughness_symmetry_breaking_candidate"
+    if row["roughness_response_class"] == "roughness_resample_sensitive":
+        return f"constraint_dominated_roughness_sensitive"
     if row["degree_outdegree_ablation_result"] == "killed_by_out_degree_ablation":
         return "generic_branching_artifact"
     if row["support_matched_result"] == "support_deformation":
@@ -277,8 +324,10 @@ def _phenotype_confidence(row: dict[str, object]) -> str:
 
 
 def _recommended_followup(row: dict[str, object]) -> str:
-    if row["roughness_brittle_flag"]:
-        return "inspect top-k margins and roughness-decisive edges"
+    if row["roughness_artifact_flag"]:
+        return "confirm roughness artifact with larger roughness seed sweep"
+    if row["roughness_response_class"] == "roughness_resample_sensitive":
+        return "separate roughness-null sensitivity from edge-level brittleness"
     if row["start_coverage_class"] == "start_fragile":
         return "increase starts before interpreting phenotype"
     if row["support_matched_result"] == "support_deformation":
@@ -301,11 +350,86 @@ def write_phenotype_reproducibility(rows: list[dict[str, object]], out_path: Pat
                 "n_environments": len({str(row["environment_id"]) for row in items}),
                 "phenotype_recurrence_rate_across_starts": mean(int(row["start_coverage_class"] in {"basin_local", "environment_level"}) for row in items),
                 "phenotype_recurrence_rate_across_probe_families": len({str(row["probe_family"]) for row in items}) / 3.0,
-                "roughness_brittle_rate": mean(int(row["roughness_brittle_flag"]) for row in items),
+                "phenotype_recurrence_rate_across_roughness_seeds": mean(int(row["roughness_strength_profile_class"] in {"noise_tolerant", "symmetry_breaking_stable", "noise_sensitive_smooth"}) for row in items),
+                "phenotype_recurrence_rate_across_roughness_strengths": mean(int(row["roughness_strength_profile_class"] in {"noise_tolerant", "noise_sensitive_smooth"}) for row in items),
+                "roughness_artifact_rate": mean(int(row["roughness_artifact_flag"]) for row in items),
                 "path_process_rate": mean(int(row["path_process_class"] == "transition_process_candidate") for row in items),
             }
         )
     _write_csv(out_path, out)
+
+
+def write_roughness_sensitivity(stage_dirs: list[Path], out_path: Path, args: argparse.Namespace) -> list[dict[str, object]]:
+    metadata_rows = []
+    for stage_dir in stage_dirs:
+        metadata_rows.extend(_read_csv(stage_dir / "generated_environment_metadata.csv"))
+    strengths = [float(item.strip()) for item in args.roughness_strengths.split(",") if item.strip()]
+    rows = []
+    seen = set()
+    for metadata in metadata_rows:
+        env_id = metadata["environment_id"]
+        if env_id in seen:
+            continue
+        seen.add(env_id)
+        params = _params_from_metadata(metadata)
+        seed = int(metadata["seed"])
+        baseline = generate_relation_system(params, seed)
+        baseline_edges = _edge_set(baseline)
+        zero = generate_relation_system(replace(params, roughness_strength=0.0), seed, roughness_seed=seed)
+        zero_overlap = _edge_overlap(baseline_edges, _edge_set(zero))
+        same_strength_overlaps = []
+        same_strength_boundary = []
+        for replicate in range(max(1, args.roughness_seed_replicates)):
+            variant = generate_relation_system(params, seed, roughness_seed=seed + 300_001 + replicate * 10_003)
+            variant_edges = _edge_set(variant)
+            same_strength_overlaps.append(_edge_overlap(baseline_edges, variant_edges))
+            same_strength_boundary.append(_edge_flip_rate(baseline_edges, variant_edges))
+        strength_overlaps = []
+        strength_boundary = []
+        for strength in strengths:
+            for replicate in range(max(1, min(args.roughness_seed_replicates, 2))):
+                variant_params = replace(params, roughness_strength=strength)
+                variant = generate_relation_system(variant_params, seed, roughness_seed=seed + 500_003 + replicate * 7_919)
+                variant_edges = _edge_set(variant)
+                strength_overlaps.append(_edge_overlap(baseline_edges, variant_edges))
+                strength_boundary.append(_edge_flip_rate(baseline_edges, variant_edges))
+        rows.append(
+            {
+                "environment_id": env_id,
+                "parameter_set_id": params.parameter_set_id,
+                "baseline_roughness_strength": params.roughness_strength,
+                "zero_strength_edge_overlap": zero_overlap,
+                "same_strength_reseed_edge_overlap": mean(same_strength_overlaps) if same_strength_overlaps else 0.0,
+                "mean_strength_sweep_edge_overlap": mean(strength_overlaps) if strength_overlaps else 0.0,
+                "mean_top_k_boundary_flip_rate": mean(strength_boundary) if strength_boundary else 0.0,
+                "mean_near_cutoff_rank_flip_rate": mean(same_strength_boundary) if same_strength_boundary else 0.0,
+                "selected_edge_overlap_vs_baseline": mean(strength_overlaps) if strength_overlaps else 0.0,
+                "top_k_boundary_flip_rate": mean(strength_boundary) if strength_boundary else 0.0,
+                "roughness_decisive_selected_edge_fraction": 1.0 - (mean(same_strength_overlaps) if same_strength_overlaps else 1.0),
+                "roughness_decisive_near_cutoff_fraction": mean(same_strength_boundary) if same_strength_boundary else 0.0,
+                "phenotype_similarity_to_baseline": mean(strength_overlaps) if strength_overlaps else 0.0,
+                "roughness_strengths_json": json.dumps(strengths),
+                "roughness_seed_replicates": args.roughness_seed_replicates,
+            }
+        )
+    _write_csv(out_path, rows)
+    return rows
+
+
+def _edge_set(system: object) -> set[tuple[tuple[int, ...], tuple[int, ...]]]:
+    return {(source, target) for source, targets in system.edges.items() for target in targets}  # type: ignore[attr-defined]
+
+
+def _edge_overlap(left: set[tuple[tuple[int, ...], tuple[int, ...]]], right: set[tuple[tuple[int, ...], tuple[int, ...]]]) -> float:
+    if not left and not right:
+        return 1.0
+    return len(left & right) / max(1, len(left | right))
+
+
+def _edge_flip_rate(left: set[tuple[tuple[int, ...], tuple[int, ...]]], right: set[tuple[tuple[int, ...], tuple[int, ...]]]) -> float:
+    if not left:
+        return 0.0
+    return 1.0 - len(left & right) / len(left)
 
 
 def write_score_term_decomposition(stage_dirs: list[Path], out_dir: Path, edge_sample: int) -> None:
@@ -346,23 +470,39 @@ def _score_rows_for_system(system: object, params: RelationParams, per_system_li
         cutoff = float(scored[cutoff_index]["total_score"]) if scored else 0.0
         next_score = float(scored[params.out_degree_target]["total_score"]) if len(scored) > params.out_degree_target else cutoff
         selected = set(system.edges[source])  # type: ignore[attr-defined]
-        for rank, term_row in enumerate(scored[: params.out_degree_target + 2]):
+        sampled_rows = scored[: params.out_degree_target + 6]
+        if len(scored) > params.out_degree_target + 6:
+            sampled_rows.extend(scored[-2:])
+        for rank, term_row in enumerate(sampled_rows):
             total = float(term_row["total_score"])
+            actual_rank = scored.index(term_row)
             row = {
                 "environment_id": system.system_id,  # type: ignore[attr-defined]
                 "parameter_set_id": params.parameter_set_id,
                 "source_state": str(source),
                 "target_state": str(term_row["target_state"]),
                 "selected_edge": int(term_row["target_state"] in selected),
-                "candidate_rank": rank,
-                "score_margin_to_next": float(scored[rank + 1]["total_score"]) - total if rank + 1 < len(scored) else 0.0,
+                "candidate_rank": actual_rank,
+                "rank_band": _rank_band(actual_rank, params.out_degree_target, len(scored)),
+                "score_margin_to_next": float(scored[actual_rank + 1]["total_score"]) - total if actual_rank + 1 < len(scored) else 0.0,
                 "score_margin_to_cutoff": cutoff - total,
                 "near_tie_flag": int(abs(next_score - cutoff) <= max(0.001, params.roughness_strength)),
                 "roughness_decisive_flag": int(abs(next_score - cutoff) <= abs(float(term_row["roughness_term"]))),
+                "roughness_decisive_if_resampled_flag": int(abs(next_score - cutoff) <= max(0.001, 2.0 * abs(float(term_row["roughness_term"])))),
                 **{key: value for key, value in term_row.items() if key != "target_state"},
             }
             rows.append(row)
     return rows
+
+
+def _rank_band(rank: int, k: int, n: int) -> str:
+    if rank < k:
+        return "selected_top_k"
+    if rank <= k + 5:
+        return "near_cutoff"
+    if rank >= n - 2:
+        return "random_nonselected_tail"
+    return "nonselected"
 
 
 def _score_terms(source: tuple[int, ...], target: tuple[int, ...], constraints: list[dict[str, object]], bias_weights: tuple[float, ...], params: RelationParams, rough_seed: int) -> dict[str, object]:
@@ -385,16 +525,30 @@ def _score_terms(source: tuple[int, ...], target: tuple[int, ...], constraints: 
 
 
 def _top_k_margin_summary(rows: list[dict[str, object]]) -> list[dict[str, object]]:
-    selected = [row for row in rows if int(row["selected_edge"])]
-    return [
-        {
-            "n_selected_edges": len(selected),
-            "near_tie_rate": mean(int(row["near_tie_flag"]) for row in selected) if selected else 0.0,
-            "roughness_decisive_edge_fraction": mean(int(row["roughness_decisive_flag"]) for row in selected) if selected else 0.0,
-            "mean_score_margin_to_next": mean(float(row["score_margin_to_next"]) for row in selected) if selected else 0.0,
-            "mean_score_margin_to_cutoff": mean(float(row["score_margin_to_cutoff"]) for row in selected) if selected else 0.0,
-        }
-    ]
+    grouped: dict[tuple[str, str], list[dict[str, object]]] = {}
+    for row in rows:
+        grouped.setdefault((str(row["environment_id"]), str(row["parameter_set_id"])), []).append(row)
+    out = []
+    for (env, param), items in sorted(grouped.items()):
+        selected = [row for row in items if int(row["selected_edge"])]
+        near = [row for row in items if row.get("rank_band") == "near_cutoff"]
+        margins = sorted(abs(float(row["score_margin_to_cutoff"])) for row in items)
+        out.append(
+            {
+                "environment_id": env,
+                "parameter_set_id": param,
+                "n_selected_edges": len(selected),
+                "mean_margin_to_cutoff": mean(abs(float(row["score_margin_to_cutoff"])) for row in items) if items else 0.0,
+                "median_margin_to_cutoff": margins[len(margins) // 2] if margins else 0.0,
+                "q10_margin_to_cutoff": margins[max(0, len(margins) // 10 - 1)] if margins else 0.0,
+                "near_tie_rate": mean(int(row["near_tie_flag"]) for row in items) if items else 0.0,
+                "near_cutoff_density": len(near) / max(1, len(items)),
+                "roughness_decisive_selected_edge_fraction": mean(int(row["roughness_decisive_flag"]) for row in selected) if selected else 0.0,
+                "roughness_decisive_near_cutoff_fraction": mean(int(row["roughness_decisive_if_resampled_flag"]) for row in near) if near else 0.0,
+                "mean_score_margin_to_next": mean(float(row["score_margin_to_next"]) for row in selected) if selected else 0.0,
+            }
+        )
+    return out
 
 
 def _dominance_summary(rows: list[dict[str, object]]) -> list[dict[str, object]]:
@@ -442,6 +596,8 @@ def write_summary(out_dir: Path, started: float, args: argparse.Namespace, stage
             status_rows.append((stage_dir.name, json.loads(status_path.read_text(encoding="utf-8"))))
     phenotype_counts = _counts(row["phenotype_class"] for row in phenotype_rows)
     start_counts = _counts(row["start_coverage_class"] for row in phenotype_rows)
+    roughness_response = _counts(row["roughness_response_class"] for row in phenotype_rows)
+    roughness_edge = _counts(row["roughness_edge_sensitivity_class"] for row in phenotype_rows)
     lines = [
         "# RFS-MB0 Candidate Phenotype Audit Sanity Sweep",
         "",
@@ -462,6 +618,12 @@ def write_summary(out_dir: Path, started: float, args: argparse.Namespace, stage
         lines.append(f"| {key} | {count} |")
     lines.extend(["", "## Phenotype Classes", "", "| class | n |", "|---|---:|"])
     for key, count in sorted(phenotype_counts.items()):
+        lines.append(f"| {key} | {count} |")
+    lines.extend(["", "## Roughness Response", "", "| class | n |", "|---|---:|"])
+    for key, count in sorted(roughness_response.items()):
+        lines.append(f"| {key} | {count} |")
+    lines.extend(["", "## Roughness Edge Sensitivity", "", "| class | n |", "|---|---:|"])
+    for key, count in sorted(roughness_edge.items()):
         lines.append(f"| {key} | {count} |")
     lines.extend(["", "## Notes", ""])
     lines.extend(f"- {note}" for note in notes)

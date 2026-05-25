@@ -71,11 +71,11 @@ def sample_parameter_sets(count: int, seed: int) -> list[RelationParams]:
     return out
 
 
-def generate_relation_system(params: RelationParams, seed: int, null_kind: str = "base") -> LandscapeSystem:
+def generate_relation_system(params: RelationParams, seed: int, null_kind: str = "base", roughness_seed: int | None = None) -> LandscapeSystem:
     states = _enumerate_states(params.coordinate_count, params.alphabet_size)
     constraints = _generate_constraints(params, seed, null_kind)
     bias_weights = _bias_weights(params, seed, null_kind)
-    rough_seed = seed + (17_171 if null_kind == "roughness_resampled" else 0)
+    rough_seed = roughness_seed if roughness_seed is not None else seed + (17_171 if null_kind == "roughness_resampled" else 0)
     candidates_by_state = {
         state: _candidate_successors(state, params.alphabet_size, params.update_footprint)
         for state in states

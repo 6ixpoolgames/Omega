@@ -3826,3 +3826,89 @@ dominance_class: constraint_dominated
 Interpretation:
 
 The start-sample audit suggests candidate windows are not mostly one-start accidents. However, the roughness-brittle classification conflicts with the score-term decomposition, which says the sampled edge selection is constraint-dominated and only modestly roughness-decisive. The next technical probe should split roughness into roughness-off replay, same-strength reseeding, strength sweep, and edge-selection flip rate rather than treating `roughness_resampled` as a single binary artifact label.
+
+## 2026-05-25 - RFS-MB0 relation generator phenotype repair
+
+Pulled and implemented:
+
+```text
+docs/RFS_MB0_RELATION_GENERATOR_PHENOTYPE_REPAIR_SPEC.md
+```
+
+Primary result note:
+
+```text
+docs/research_notes/validation_results/rfs_mb0_relation_generator_phenotype_repair_result.md
+```
+
+Local output:
+
+```text
+results/rfs_mb0_relation_atlas/20260525_relation_generator_phenotype_repair/
+```
+
+Run shape:
+
+```text
+workers requested: 18
+parameter_samples per start pass: 8
+start_samples: 1, 3, 8
+null_replicates: 3
+roughness_strengths: 0, 0.001, 0.003, 0.01, 0.03, 0.05
+roughness_seed_replicates: 3
+wall-clock used: about 3396 seconds
+```
+
+Worker-utilization caveat:
+
+```text
+Only 8 atlas jobs were available per stage, so the 18-worker executor could not
+fully saturate the CPU. Future hardware-saturating runs should queue at least
+18 jobs per stage or parallelize roughness replay.
+```
+
+All start-sample stages completed, each with 8/8 jobs, 8 middle-regime environments, and 0 atlas gate passes.
+
+Candidate phenotype rows:
+
+```text
+88
+```
+
+Start coverage:
+
+```text
+environment_level: 75
+basin_local: 10
+start_local: 2
+start_fragile: 1
+```
+
+Phenotype classes:
+
+```text
+constraint_dominated_roughness_sensitive: 62
+roughness_edge_brittle_candidate: 25
+confirmed_roughness_artifact: 1
+```
+
+Roughness strength profile:
+
+```text
+noise_tolerant: 69
+noise_sensitive_smooth: 9
+roughness_strength_brittle: 10
+```
+
+Score/term dominance:
+
+```text
+constraint_term_dominance: 2.739
+asymmetry_term_dominance: 0.056
+roughness_term_dominance: 0.005
+dominance_class: constraint_dominated
+```
+
+Interpretation:
+
+The roughness phenotype repair worked. The previous all-roughness-artifact label was too harsh. Most candidates are roughness-resample sensitive but edge-stable/noise-tolerant and constraint-dominated. The relation generator remains worth keeping for another focused diagnostic pass, preferably path/process-focused and with enough queued jobs to saturate available workers.

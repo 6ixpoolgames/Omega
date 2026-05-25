@@ -1049,6 +1049,28 @@ Result in one line:
   constraint-dominated with only ~11% roughness-decisive selected edges,
   indicating a control-taxonomy issue rather than a clean validation signal.
 
+### RFS-MB0 Relation Generator Phenotype Repair
+
+Directory:
+
+- `results/rfs_mb0_relation_atlas/20260525_relation_generator_phenotype_repair/`
+
+Primary retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_relation_generator_phenotype_repair_result.md`
+
+Reason retained:
+
+- This pass repairs the candidate phenotype machinery so roughness-resampled
+  null sensitivity is separated from confirmed roughness artifact.
+
+Result in one line:
+
+- Focused diagnostic: 88 candidate phenotype rows, mostly environment-level;
+  only 1 confirmed roughness artifact after repair, with most rows classified
+  constraint-dominated roughness-sensitive or roughness-edge-brittle candidates;
+  score terms remained strongly constraint-dominated.
+
 The important public caveat:
 
 ```text
