@@ -1026,6 +1026,29 @@ Result in one line:
   ranked nulls, shuffles, support matching, and reproducibility remained
   blockers.
 
+### RFS-MB0 Candidate Phenotype Audit Sanity Sweep
+
+Directory:
+
+- `results/rfs_mb0_relation_atlas/20260525_candidate_phenotype_audit_sanity/`
+
+Primary retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_candidate_phenotype_audit_sanity_result.md`
+
+Reason retained:
+
+- This is the first technical audit/probe that classifies candidate windows by
+  start coverage, support/process phenotype, mechanism dependence, and
+  score-term dominance.
+
+Result in one line:
+
+- Tiny sanity sweep: candidates were mostly not start-fragile, but all were
+  currently classified roughness-brittle while score decomposition was
+  constraint-dominated with only ~11% roughness-decisive selected edges,
+  indicating a control-taxonomy issue rather than a clean validation signal.
+
 The important public caveat:
 
 ```text

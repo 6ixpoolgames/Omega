@@ -3761,3 +3761,68 @@ localized_reproducible_candidate: 0
 Interpretation:
 
 The ranked-null pass is stricter than the deterministic null smoke. Probe marginals alone are not the live blocker, but degree/out-degree replicate ranks, constraint/asymmetry/roughness shuffles, support matching, and localized reproducibility remain serious blockers. This branch remains calibration/falsification work, not evidence for a scientific gate pass.
+
+## 2026-05-25 - RFS-MB0 candidate phenotype audit sanity sweep
+
+Pulled and implemented:
+
+```text
+docs/RFS_MB0_RELATION_ATLAS_CANDIDATE_PHENOTYPE_AUDIT_SPEC.md
+```
+
+Primary result note:
+
+```text
+docs/research_notes/validation_results/rfs_mb0_candidate_phenotype_audit_sanity_result.md
+```
+
+Local output:
+
+```text
+results/rfs_mb0_relation_atlas/20260525_candidate_phenotype_audit_sanity/
+```
+
+Run shape:
+
+```text
+workers: 18
+parameter_samples per start pass: 4
+start_samples: 1, 3, 8
+null_replicates: 1
+wall-clock used: about 985 seconds
+```
+
+All three start-sample stages completed, each with 4/4 jobs, 4 middle-regime environments, and 0 atlas gate passes.
+
+Candidate phenotype rows:
+
+```text
+41
+```
+
+Start coverage:
+
+```text
+environment_level: 33
+basin_local: 6
+start_fragile: 1
+start_local: 1
+```
+
+Current phenotype classification:
+
+```text
+roughness_brittle_artifact: 41/41
+```
+
+Important technical tension:
+
+```text
+top-k near-tie rate: 0.200
+roughness decisive selected-edge fraction: 0.114
+dominance_class: constraint_dominated
+```
+
+Interpretation:
+
+The start-sample audit suggests candidate windows are not mostly one-start accidents. However, the roughness-brittle classification conflicts with the score-term decomposition, which says the sampled edge selection is constraint-dominated and only modestly roughness-decisive. The next technical probe should split roughness into roughness-off replay, same-strength reseeding, strength sweep, and edge-selection flip rate rather than treating `roughness_resampled` as a single binary artifact label.
