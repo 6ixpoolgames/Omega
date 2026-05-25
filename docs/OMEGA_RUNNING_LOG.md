@@ -3635,3 +3635,60 @@ Interpretation:
 Next:
 
 Either refine the probe/frontier null if it is too blunt, or treat the current relation-atlas candidate windows as local artifacts and move to a new substrate/detector family. Keep the repaired runner as the standard due-diligence layer.
+
+## 2026-05-25 - RFS-MB0 relation atlas breadth/null-repair smoke
+
+Pulled and implemented the next relation-atlas repair spec:
+
+```text
+docs/RFS_MB0_RELATION_ATLAS_BREADTH_AND_NULL_REPAIR_SPEC.md
+```
+
+Primary smoke note:
+
+```text
+docs/research_notes/validation_results/rfs_mb0_relation_atlas_breadth_null_repair_smoke_result.md
+```
+
+Local smoke output:
+
+```text
+results/rfs_mb0_relation_atlas/20260525_breadth_null_repair_smoke/
+```
+
+Implementation repairs:
+
+- Added the requested batch-runner flags for selection mode, stress sample count, confirmatory region files, held-out switches, null replicates, and perturbation switches.
+- Renamed region outputs toward `exploratory_regions.json` and `confirmatory_regions_preregistered.json`.
+- Replaced order-biased window stress slicing with stratified selection.
+- Added decomposed frontier/probe diagnostic null labels.
+- Added explicit output files for stage integrity, window stress selection, frontier/probe null decomposition, null-replicate status, held-out reproducibility, perturbation status, and unique coverage.
+- Added a graceful short-budget path so missing source runs produce explicit empty regions instead of a crash.
+
+Tiny smoke:
+
+```text
+workers: 6
+wall-clock budget: 1200 seconds
+wall-clock used: about 200 seconds
+total environment evaluations: 12
+middle-regime environments: 8
+atlas gate passes: 0
+candidate windows selected for Stage E: 12
+```
+
+Tiny-smoke null read:
+
+```text
+degree/out-degree survived: 12/12
+constraint/asymmetry/roughness survived: 0/12
+frontier_size_only survived: 12/12
+probe_marginal_only survived: 12/12
+frontier_size_plus_probe_marginal survived: 12/12
+signature_support_matched survived: 0/12
+horizon/window local frontier matched survived: 12/12
+```
+
+Interpretation:
+
+The runner is now good enough for a small-to-medium real breadth/null-repair run. The smoke does not support a theory claim. Its useful result is that the former blunt frontier/probe blocker can now be decomposed; in the tiny sample, signature-support matching was the support-side blocker, not frontier size alone or probe marginals alone.

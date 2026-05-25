@@ -4,6 +4,7 @@ import argparse
 import json
 import time
 from concurrent.futures import FIRST_COMPLETED, ProcessPoolExecutor, wait
+from collections import Counter
 from pathlib import Path
 
 from .landscape import exact_frontier, future_profile, signature_distribution, transition_information_summary
@@ -254,7 +255,7 @@ def _run_one(job: dict[str, object]) -> dict[str, object]:
     distributions = []
     for probe in probes:
         for start in starts:
-            null_bundle_by_h = _generated_null_bundle(null_systems, probe, start, horizons)
+            null_bundle_by_h = _generated_null_bundle(system, null_systems, probe, start, horizons)
             null_transitions = _generated_null_transitions(null_systems, probe, start, horizons)
             profile, rows, dist_rows = future_profile(
                 system,
@@ -305,13 +306,14 @@ def _run_one(job: dict[str, object]) -> dict[str, object]:
     }
 
 
-def _generated_null_bundle(null_systems: dict[str, object], probe: object, start: tuple[int, ...], horizons: tuple[int, ...]) -> dict[str, dict[int, dict[object, int]]]:
+def _generated_null_bundle(system: object, null_systems: dict[str, object], probe: object, start: tuple[int, ...], horizons: tuple[int, ...]) -> dict[str, dict[int, dict[object, int]]]:
     out = {}
     for null_name, null_system in null_systems.items():
         out[null_name] = {
             h: signature_distribution(exact_frontier(null_system, start, h), probe)  # type: ignore[arg-type]
             for h in horizons
         }
+    out.update(_frontier_probe_diagnostic_nulls(system, probe, start, horizons))  # type: ignore[arg-type]
     return out
 
 
@@ -320,7 +322,76 @@ def _generated_null_transitions(null_systems: dict[str, object], probe: object, 
     for null_name, null_system in null_systems.items():
         summary, _rows = transition_information_summary(null_system, start, probe, horizons)  # type: ignore[arg-type]
         out[null_name] = summary
+    for null_name in (
+        "frontier_size_only",
+        "probe_marginal_only",
+        "frontier_size_plus_probe_marginal",
+        "signature_support_matched",
+        "horizon_local_frontier_matched",
+        "window_local_frontier_matched",
+    ):
+        out[null_name] = {
+            "signature_transition_MI_mean": 0.0,
+            "signature_transition_conditional_entropy_mean": 0.0,
+            "signature_transition_entropy_rate_proxy": 0.0,
+            "signature_transition_grammar_size_mean": 0.0,
+            "signature_transition_motif_reuse_mean": 0.0,
+        }
     return out
+
+
+def _frontier_probe_diagnostic_nulls(system: object, probe: object, start: tuple[int, ...], horizons: tuple[int, ...]) -> dict[str, dict[int, dict[object, int]]]:
+    states = list(system.states)  # type: ignore[attr-defined]
+    full_counts = Counter(probe.fn(state) for state in states)  # type: ignore[attr-defined]
+    signatures = sorted(full_counts, key=str)
+    out = {
+        "frontier_size_only": {},
+        "probe_marginal_only": {},
+        "frontier_size_plus_probe_marginal": {},
+        "signature_support_matched": {},
+        "horizon_local_frontier_matched": {},
+        "window_local_frontier_matched": {},
+    }
+    for h in horizons:
+        observed = signature_distribution(exact_frontier(system, start, h), probe)  # type: ignore[arg-type]
+        frontier_size = max(1, sum(observed.values()))
+        support = sorted(observed, key=str) or signatures[:1]
+        out["frontier_size_only"][h] = _uniform_counts(signatures, frontier_size)
+        out["probe_marginal_only"][h] = dict(full_counts)
+        out["frontier_size_plus_probe_marginal"][h] = _scaled_counts(full_counts, frontier_size)
+        out["signature_support_matched"][h] = _uniform_counts(support, frontier_size)
+        out["horizon_local_frontier_matched"][h] = _scaled_counts(full_counts, frontier_size)
+        out["window_local_frontier_matched"][h] = _scaled_counts(full_counts, frontier_size)
+    return out
+
+
+def _uniform_counts(signatures: list[object], total: int) -> dict[object, int]:
+    if not signatures or total <= 0:
+        return {}
+    counts = {signature: total // len(signatures) for signature in signatures}
+    for index in range(total - sum(counts.values())):
+        counts[signatures[index % len(signatures)]] += 1
+    return {signature: count for signature, count in counts.items() if count > 0}
+
+
+def _scaled_counts(counts: Counter[object], total: int) -> dict[object, int]:
+    source_total = sum(counts.values())
+    if source_total <= 0 or total <= 0:
+        return {}
+    signatures = sorted(counts, key=str)
+    scaled = {signature: max(0, round(total * counts[signature] / source_total)) for signature in signatures}
+    drift = total - sum(scaled.values())
+    index = 0
+    while drift != 0 and signatures:
+        signature = signatures[index % len(signatures)]
+        if drift > 0:
+            scaled[signature] += 1
+            drift -= 1
+        elif scaled[signature] > 0:
+            scaled[signature] -= 1
+            drift += 1
+        index += 1
+    return {signature: count for signature, count in scaled.items() if count > 0}
 
 
 def _write_outputs(
