@@ -4083,3 +4083,64 @@ underdetermined: 4
 Interpretation:
 
 The support/distribution taxonomy workflow is operational. Most rows are still explained by matched-control equivalence or probe/floor-ceiling limits, but a small set of support and mixed deformation candidates remains. Continue this branch by broadening parameter/regime coverage; keep path metrics as an open thread, not the current driver.
+
+## 2026-05-25 - RFS-MB0 deformation detector upgrade and local sweep
+
+Pulled:
+
+```text
+docs/RFS_MB0_DEFORMATION_DETECTOR_AND_LOCAL_SWEEP_SPEC.md
+```
+
+Added:
+
+```text
+omega/rfs_mb0_future_landscape/run_deformation_detector_sweep.py
+```
+
+Primary result note:
+
+```text
+docs/research_notes/validation_results/rfs_mb0_deformation_detector_sweep_small_result.md
+```
+
+Local output:
+
+```text
+results/rfs_mb0_relation_atlas/20260525_deformation_detector_sweep_small/
+```
+
+Validation output:
+
+```text
+results/rfs_mb0_relation_atlas/20260525_deformation_detector_sweep_validation/
+```
+
+Small pass shape:
+
+```text
+anchors: 12
+fresh_seeds_per_variant: 2
+start_samples: 3,8
+horizons: 0,1,2,4,8,12,16,24
+workers requested: 18
+sweep jobs completed: 576
+sweep rows completed: 25344
+errors: 0
+wall_clock_seconds: 77.7
+promotion_enabled: false
+```
+
+Headline:
+
+```text
+candidate_stable_region: 3
+fakeout_to_candidate_transition: 2
+candidate_to_fakeout_transition: 7
+saturation_boundary: 10
+probe_resolution_boundary: 2
+```
+
+Interpretation:
+
+The detector/sweep validation is green. The small scaled pass found local support/distribution transition geometry: candidate anchors are mostly knife-edge at whole-anchor level, but stable local candidate regions and fakeout-to-candidate transitions appear. Recommendation: proceed to a medium-breadth support/distribution atlas concentrated around the observed bands. Path metrics remain parked.

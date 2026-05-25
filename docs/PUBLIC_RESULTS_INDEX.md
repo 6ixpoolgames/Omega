@@ -1137,6 +1137,27 @@ Result in one line:
   still dominate; the next step is broader support/distribution regime mapping,
   not path-process escalation.
 
+### RFS-MB0 Deformation Detector Sweep Small
+
+Directory:
+
+- `results/rfs_mb0_relation_atlas/20260525_deformation_detector_sweep_small/`
+
+Primary retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_deformation_detector_sweep_small_result.md`
+
+Reason retained:
+
+- This upgrades support/distribution scoring with rank/effect/margin summaries
+  and validates local parameter sweeps around both candidate and fakeout anchors.
+
+Result in one line:
+
+- The detector/sweep workflow is green; the small pass found candidate-stable
+  local regions and fakeout-to-candidate transitions, supporting a medium-breadth
+  support/distribution atlas while leaving path metrics parked.
+
 The important public caveat:
 
 ```text
