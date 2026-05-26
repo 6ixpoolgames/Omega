@@ -1222,6 +1222,29 @@ Result in one line:
   errors, but only `7` full A-to-B rows are specific non-fakeout candidates, so
   this remains an exploratory sandbox rather than a promoted validation branch.
 
+### RFS-MB0 Boundary Resolution Sweep Partial
+
+Directory:
+
+- `results/rfs_mb0_relation_atlas/20260526_boundary_resolution_sweep/`
+
+Primary retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_boundary_resolution_sweep_partial_result.md`
+
+Reason retained:
+
+- This is the first boundary-focused follow-up after the atlas repair smoke,
+  targeting saturation, probe-resolution, candidate-to-fakeout, near-miss, and
+  fakeout-to-candidate failure modes.
+
+Result in one line:
+
+- The run used `18` workers and checkpointed `187560` sweep rows with `0`
+  errors, but was externally interrupted before graceful final status; it found
+  recurrent fakeout-to-candidate boundary behavior without stable candidate
+  bands or cross-probe recurrence.
+
 The important public caveat:
 
 ```text

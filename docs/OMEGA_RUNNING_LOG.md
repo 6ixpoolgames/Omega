@@ -4327,3 +4327,64 @@ by magnitude, source-shuffle equivalence, target-shuffle equivalence, probe
 collision, or saturation. Keep RFS-MB1 as an exploratory sandbox unless we
 explicitly decide to spend a cycle repairing coupling-map specificity and
 fresh-seed recurrence.
+
+## 2026-05-27 - RFS-MB0 boundary-resolution sweep partial
+
+Ran the boundary-focused second local sweep requested in handoff 38.
+
+Updated:
+
+```text
+omega/rfs_mb0_future_landscape/run_deformation_detector_sweep.py
+```
+
+Primary result note:
+
+```text
+docs/research_notes/validation_results/rfs_mb0_boundary_resolution_sweep_partial_result.md
+```
+
+Local output:
+
+```text
+results/rfs_mb0_relation_atlas/20260526_boundary_resolution_sweep/
+```
+
+Execution status:
+
+```text
+workers requested: 18
+anchors requested: 10
+anchors selected: 6
+sweep_jobs_requested: 5440
+sweep_jobs_completed_at_checkpoint: 3790
+sweep_rows_completed: 187560
+errors: 0
+wall_clock_seconds_at_checkpoint: 14114.8
+external_wrapper_interrupted_before_final_status: true
+```
+
+Headline:
+
+```text
+candidate-like rows: 44388
+non-saturation candidate-like rows: 44388
+probe-recurrent bands: 0
+fresh-seed recurrent variant groups: 28
+stable candidate bands: 0
+fakeout_to_candidate_transition: 9
+saturation_boundary: 46
+probe_resolution_boundary: 9
+```
+
+Interpretation:
+
+The run is a large partial, not a fully graceful completion. It used all 18
+workers and checkpointed usable outputs, but the external shell timeout
+interrupted before final status could be marked complete. Scientifically, it
+keeps MB0 boundary work alive: fakeout-to-candidate transitions and fresh-seed
+recurrent boundary groups are present. It still does not justify n=6 transfer or
+stable-band promotion because stable candidate bands remain zero and
+cross-probe recurrence remains zero. The next pass should be smaller and aimed
+directly at cross-probe recurrence repair on the recurrent fakeout-to-candidate
+variant groups.

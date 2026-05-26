@@ -4,6 +4,7 @@ import argparse
 import csv
 import json
 import math
+import re
 import time
 from collections import Counter
 from concurrent.futures import FIRST_COMPLETED, ProcessPoolExecutor, wait
@@ -62,6 +63,7 @@ SWEEP_VALUES = {
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Upgrade RFS-MB0 deformation detector and run local parameter sweeps.")
     parser.add_argument("--source-run", type=Path, default=Path("results/rfs_mb0_relation_atlas/20260525_support_distribution_taxonomy_smoke"))
+    parser.add_argument("--boundary-anchor-run", type=Path, default=None)
     parser.add_argument("--out", type=Path, default=Path("results/rfs_mb0_relation_atlas/20260525_deformation_detector_sweep_validation"))
     parser.add_argument("--anchors", type=int, default=12)
     parser.add_argument("--fresh-seeds-per-variant", type=int, default=2)
@@ -83,7 +85,7 @@ def main() -> None:
     candidate_summary = _read_csv(args.source_run / "support_distribution_candidate_summary.csv")
     if not metric_rows or not candidate_summary:
         raise ValueError(f"source run is missing taxonomy outputs: {args.source_run}")
-    anchors = select_anchors(candidate_summary, metric_rows, args.anchors)
+    anchors = select_boundary_anchors(args.boundary_anchor_run, args.anchors) if args.boundary_anchor_run else select_anchors(candidate_summary, metric_rows, args.anchors)
     matched_bundle = matched_control_bundle(metric_rows)
     rank_effect = rank_effect_summary(metric_rows, matched_bundle)
     margins = margin_sensitivity(rank_effect)
@@ -199,6 +201,66 @@ def select_anchors(candidate_summary: list[dict[str, str]], metric_rows: list[di
         used.add(key)
         if len(anchors) >= target:
             break
+    return anchors
+
+
+def select_boundary_anchors(source_run: Path | None, target: int) -> list[dict[str, object]]:
+    if source_run is None:
+        return []
+    band_rows = _read_csv(source_run / "atlas_band_classification_audit.csv")
+    anchor_rows = _read_csv(source_run / "atlas_band_selection.csv")
+    if not band_rows or not anchor_rows:
+        return []
+    band_by_id = {row.get("anchor_id", row.get("band_id", "")): row for row in band_rows}
+    priority = {
+        "saturation_boundary_band": 0,
+        "probe_resolution_boundary_band": 1,
+        "near_miss_transition_band": 2,
+        "stable_fakeout_band": 3,
+    }
+    def score(row: dict[str, str]) -> tuple[int, int, int, float]:
+        band = band_by_id.get(row.get("anchor_id", ""), {})
+        klass = str(band.get("band_class", ""))
+        blockers = str(band.get("stable_candidate_blockers", ""))
+        return (
+            priority.get(klass, 10),
+            -int(float(band.get("saturation_boundary_count", 0.0) or 0.0) > 0),
+            -int(float(band.get("probe_resolution_boundary_count", 0.0) or 0.0) > 0),
+            -float(band.get("candidate_rate", 0.0) or 0.0),
+        )
+    selected = sorted(anchor_rows, key=score)[:target]
+    anchors: list[dict[str, object]] = []
+    for index, row in enumerate(selected):
+        band = band_by_id.get(row.get("anchor_id", ""), {})
+        params = params_from_parameter_set_id(row.get("parameter_set_id", ""))
+        metadata = metadata_from_params(params) if params else {}
+        anchors.append(
+            {
+                "anchor_id": f"anchor_{index:03d}",
+                "source_anchor_id": row.get("anchor_id", ""),
+                "environment_id": row.get("environment_id", ""),
+                "parameter_set_id": row.get("parameter_set_id", ""),
+                "anchor_primary_class": row.get("anchor_primary_class", ""),
+                "anchor_probe_family": row.get("anchor_probe_family", ""),
+                "probe_key": row.get("probe_key", ""),
+                "anchor_start_samples": row.get("anchor_start_samples", ""),
+                "anchor_horizon_window": "boundary_focused",
+                "selection_reason": f"boundary_focus:{band.get('band_class', '')}",
+                "boundary_band_class": band.get("band_class", ""),
+                "boundary_band_reason": band.get("band_class_reason", ""),
+                "candidate_rate": band.get("candidate_rate", ""),
+                "saturation_boundary_count": band.get("saturation_boundary_count", ""),
+                "probe_resolution_boundary_count": band.get("probe_resolution_boundary_count", ""),
+                "candidate_to_fakeout_count": band.get("candidate_to_fakeout_count", ""),
+                "fakeout_to_candidate_count": band.get("fakeout_to_candidate_count", ""),
+                "stable_candidate_blockers": band.get("stable_candidate_blockers", ""),
+                "anchor_deformation_scores": row.get("anchor_deformation_scores", ""),
+                "anchor_fakeout_tags": row.get("anchor_fakeout_tags", ""),
+                "metadata_json": json.dumps(metadata, sort_keys=True) if metadata else "",
+                "seed": row.get("seed", ""),
+                "source_probe_family": row.get("source_probe_family", row.get("anchor_probe_family", "")),
+            }
+        )
     return anchors
 
 
@@ -353,8 +415,11 @@ def build_sweep_jobs(args: argparse.Namespace, anchors: list[dict[str, object]])
     for anchor in anchors:
         anchor_jobs = []
         if not anchor.get("metadata_json"):
+            params = params_from_parameter_set_id(str(anchor.get("parameter_set_id", "")))
+        else:
+            params = params_from_metadata(json.loads(str(anchor["metadata_json"])))
+        if params is None:
             continue
-        params = params_from_metadata(json.loads(str(anchor["metadata_json"])))
         variants = local_variants(params)
         for variant_index, (dimension, value, variant_params) in enumerate(variants):
             for seed_index in range(args.fresh_seeds_per_variant):
@@ -519,15 +584,37 @@ def run_sweep_job(job: dict[str, object]) -> list[dict[str, object]]:
 def local_variants(params: RelationParams) -> list[tuple[str, object, RelationParams]]:
     variants: list[tuple[str, object, RelationParams]] = [("baseline", "baseline", params)]
     for dimension in SWEEP_DIMENSIONS:
-        values = SWEEP_VALUES[dimension]
+        values = boundary_sweep_values(params, dimension)
         current = getattr(params, dimension)
-        candidates = sorted(values, key=lambda value: abs(float(value) - float(current)))
-        for value in candidates[:3]:
+        candidates = sorted(set(values), key=lambda value: (abs(float(value) - float(current)), float(value)))
+        for value in candidates[:5]:
             if value == current and dimension != "baseline":
                 continue
             kwargs = {dimension: int(value) if dimension == "out_degree_target" else float(value)}
             variants.append((dimension, kwargs[dimension], replace(params, **kwargs)))
     return variants
+
+
+def boundary_sweep_values(params: RelationParams, dimension: str) -> tuple[float | int, ...]:
+    current = getattr(params, dimension)
+    if dimension == "out_degree_target":
+        values = {int(current), max(1, int(current) - 1), min(5, int(current) + 1)}
+        values.update(int(value) for value in SWEEP_VALUES[dimension])
+        return tuple(sorted(values))
+    if dimension in {"constraint_density", "reversibility_fraction", "asymmetry_strength"}:
+        delta = 0.075 if dimension == "constraint_density" else 0.125
+        values = {float(current), max(0.0, float(current) - delta), min(0.75, float(current) + delta)}
+        values.update(float(value) for value in SWEEP_VALUES[dimension])
+        return tuple(sorted(round(value, 4) for value in values))
+    if dimension == "constraint_strength":
+        values = {float(current), max(0.1, float(current) * 0.5), (float(current) + 0.5) / 2.0, min(3.0, float(current) * 1.5)}
+        values.update(float(value) for value in SWEEP_VALUES[dimension])
+        return tuple(sorted(round(value, 4) for value in values))
+    if dimension == "constraint_change_weight":
+        values = {float(current), max(0.0, float(current) - 0.175), min(1.0, float(current) + 0.175)}
+        values.update(float(value) for value in SWEEP_VALUES[dimension])
+        return tuple(sorted(round(value, 4) for value in values))
+    return tuple(SWEEP_VALUES[dimension])
 
 
 def _write_outputs(
@@ -600,6 +687,7 @@ def _write_outputs(
     _write_csv(out_dir / "errors.csv", errors)
     write_report(out_dir, config, started, anchors, rank_effect, margins, sweep_rows, transition_graph, stability, fakeouts, errors)
     write_medium_atlas_report(out_dir, config, started, anchors, rank_effect, margins, sweep_rows, transition_graph, stability, fakeouts, boundaries, fresh_seed_confirmation, n6_transfer, errors, required_answers, band_audit, stable_blockers, transition_summary, saturation_audit, probe_audit, fresh_seed_audit, candidate_blockers)
+    write_boundary_resolution_report(out_dir, config, started, anchors, sweep_rows, band_audit, saturation_audit, probe_audit, transition_summary, fresh_seed_audit, errors)
     status = {
         "status": config.get("status", "RUNNING"),
         "wall_clock_seconds": time.perf_counter() - started,
@@ -1544,6 +1632,94 @@ def write_medium_atlas_report(
     (out_dir / "medium_breadth_support_distribution_atlas_report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
+def write_boundary_resolution_report(
+    out_dir: Path,
+    config: dict[str, object],
+    started: float,
+    anchors: list[dict[str, object]],
+    sweep_rows: list[dict[str, object]],
+    band_audit: list[dict[str, object]],
+    saturation_audit: list[dict[str, object]],
+    probe_audit: list[dict[str, object]],
+    transition_summary: list[dict[str, object]],
+    fresh_seed_audit: list[dict[str, object]],
+    errors: list[dict[str, object]],
+) -> None:
+    candidate_rows = [row for row in sweep_rows if str(row.get("local_primary_class", "")).endswith("_candidate")]
+    nonsat_candidates = [
+        row for row in candidate_rows
+        if not int(float(row.get("support_ceiling_flag", 0.0) or 0.0))
+        and float(row.get("reachable_signature_support_fraction", 0.0) or 0.0) < 0.90
+    ]
+    probe_recurrent_bands = [
+        row for row in band_audit
+        if float(row.get("probe_recurrence_score", 0.0) or 0.0) >= float(row.get("probe_recurrence_threshold", 0.10) or 0.10)
+    ]
+    fresh_seed_recurrent = [
+        row for row in fresh_seed_audit
+        if row.get("fresh_seed_recurrence_class") in {"seed_recurrent_candidate_like", "seed_mixed_or_boundary"}
+    ]
+    transition_counts = {str(row.get("transition_class", "")): int(row.get("n_edges", row.get("count", 0)) or 0) for row in transition_summary}
+    stable_bands = [row for row in band_audit if int(float(row.get("eligible_for_stable_candidate_band", 0.0) or 0.0))]
+    if stable_bands:
+        decision = "continue_mb0_boundary_followup_before_n6"
+    elif candidate_rows and not nonsat_candidates:
+        decision = "write_measurement_limits_note_if_replicated"
+    elif fresh_seed_recurrent or probe_recurrent_bands:
+        decision = "continue_mb0_with_tighter_boundary_repair"
+    else:
+        decision = "measurement_limits_likely"
+    lines = [
+        "# RFS-MB0 Boundary Resolution Report",
+        "",
+        "Promotion disabled. This report focuses on saturation, probe-resolution, candidate-to-fakeout, near-miss, and fakeout-to-candidate boundary behavior.",
+        "",
+        f"- Status: {config.get('status', '')}",
+        f"- Wall clock used: {time.perf_counter() - started:.1f} seconds",
+        f"- Workers requested: {config.get('workers', '')}",
+        f"- Anchors selected: {len(anchors)}",
+        f"- Sweep rows completed: {len(sweep_rows)}",
+        f"- Candidate-like rows: {len(candidate_rows)}",
+        f"- Non-saturation candidate-like rows: {len(nonsat_candidates)}",
+        f"- Probe-recurrent bands: {len(probe_recurrent_bands)}",
+        f"- Fresh-seed recurrent variant groups: {len(fresh_seed_recurrent)}",
+        f"- Stable candidate bands: {len(stable_bands)}",
+        f"- Saturation audit rows: {len(saturation_audit)}",
+        f"- Probe-resolution audit rows: {len(probe_audit)}",
+        f"- Errors: {len(errors)}",
+        f"- Decision: {decision}",
+        "",
+        "## Boundary Transition Counts",
+        "",
+        "| transition | n |",
+        "|---|---:|",
+    ]
+    for key, value in sorted(transition_counts.items()):
+        lines.append(f"| {key} | {value} |")
+    lines.extend(["", "## Anchor Boundary Classes", "", "| anchor | source class | boundary class | candidate rate | blockers |", "|---|---|---|---:|---|"])
+    for row in band_audit:
+        lines.append(
+            f"| {row.get('anchor_id', '')} | {row.get('anchor_class', '')} | {row.get('band_class', '')} | {row.get('candidate_rate', '')} | {row.get('stable_candidate_blockers', '')} |"
+        )
+    lines.extend(
+        [
+            "",
+            "## Decision Rule",
+            "",
+            "Continue MB0 only if near-miss bands become less saturated, probe recurrence improves, candidate-like behavior survives fresh seeds, or fakeout-to-candidate behavior becomes fresh-seed recurrent.",
+            "",
+            "Write a measurement-limits note if candidate-like behavior remains saturation/probe-boundary dominated, probe recurrence stays weak, fresh-seed recurrence remains absent, and stable candidate bands remain zero.",
+            "",
+            "Only consider n=6 if at least one n=5 band is cross-probe recurrent, not saturation/probe limited, and fresh-seed stable.",
+            "",
+            "## Claim Boundary",
+            "",
+            "This is a boundary-resolution audit for a toy neutral relation substrate. It does not claim Omega, agency, value, identity, viability, path-process detection, or scientific-gate passage.",
+        ]
+    )
+    (out_dir / "boundary_resolution_report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
 def derived_scores(row: dict[str, str]) -> dict[str, float]:
     support = float(row.get("JS_to_triviality_nulls", 0.0) or 0.0)
     distribution = float(row.get("JS_to_support_nulls", 0.0) or 0.0)
@@ -1638,6 +1814,52 @@ def stable_seed(text: str) -> int:
     for index, char in enumerate(text):
         total = (total * 131 + (index + 17) * ord(char)) % 10_000_000
     return total
+
+
+def params_from_parameter_set_id(parameter_set_id: str) -> RelationParams | None:
+    match = re.match(
+        r"relgen_n(?P<n>\d+)_a(?P<a>\d+)_r(?P<r>\d+)_m(?P<m>\d+)_"
+        r"k(?P<k>\d+)_cd(?P<cd>[0-9.]+)_cs(?P<cs>[0-9.]+)_"
+        r"as(?P<asym>[0-9.]+)_rev(?P<rev>[0-9.]+)_rw(?P<rw>[0-9.]+)",
+        parameter_set_id,
+    )
+    if not match:
+        return None
+    return RelationParams(
+        parameter_set_id=parameter_set_id,
+        coordinate_count=int(match.group("n")),
+        alphabet_size=int(match.group("a")),
+        neighborhood_radius=int(match.group("r")),
+        update_footprint=int(match.group("m")),
+        out_degree_target=int(match.group("k")),
+        constraint_density=float(match.group("cd")),
+        constraint_strength=float(match.group("cs")),
+        asymmetry_strength=float(match.group("asym")),
+        reversibility_fraction=float(match.group("rev")),
+        rewire_probability=float(match.group("rw")),
+        roughness_strength=0.01,
+        constraint_arity=2,
+        constraint_change_weight=0.35,
+    )
+
+
+def metadata_from_params(params: RelationParams) -> dict[str, object]:
+    return {
+        "parameter_set_id": params.parameter_set_id,
+        "coordinate_count": params.coordinate_count,
+        "alphabet_size": params.alphabet_size,
+        "neighborhood_radius": params.neighborhood_radius,
+        "update_footprint": params.update_footprint,
+        "out_degree_target": params.out_degree_target,
+        "constraint_density": params.constraint_density,
+        "constraint_strength": params.constraint_strength,
+        "asymmetry_strength": params.asymmetry_strength,
+        "reversibility_fraction": params.reversibility_fraction,
+        "rewire_probability": params.rewire_probability,
+        "roughness_strength": params.roughness_strength,
+        "constraint_arity": params.constraint_arity,
+        "constraint_change_weight": params.constraint_change_weight,
+    }
 
 
 def group_by(rows: list[dict[str, object]], keys: tuple[str, ...]) -> dict[tuple[object, ...], list[dict[str, object]]]:
