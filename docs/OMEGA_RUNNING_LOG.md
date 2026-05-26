@@ -4260,3 +4260,70 @@ stable_candidate_band: 0
 Interpretation:
 
 The repair smoke succeeded as a runner/reporting repair. It explicitly resolves fakeout-to-candidate provenance, makes n=6 transfer status unambiguous, and adds band, blocker, saturation, probe-resolution, margin, fresh-seed, and manifest audits. It is not a stronger science result. n=6 transfer was intentionally skipped for this smaller run and should remain a separately budgeted follow-up.
+
+## 2026-05-26 - RFS-MB1 neutral coupled-landscape exploratory smoke
+
+Implemented and ran the first small RFS-MB1 sandbox runner from:
+
+```text
+docs/RFS_MB1_NEUTRAL_COUPLED_LANDSCAPE_AUDIT_SPEC.md
+```
+
+Updated:
+
+```text
+omega/rfs_mb1/run_neutral_coupled_landscape_audit.py
+```
+
+Primary result note:
+
+```text
+docs/research_notes/validation_results/rfs_mb1_neutral_coupled_landscape_exploratory_smoke_result.md
+```
+
+Local output:
+
+```text
+results/rfs_mb1_coupled_landscape/20260526_exploratory_smoke/
+```
+
+Run shape:
+
+```text
+paired landscapes requested: 72
+fresh seeds per pair: 1
+coupling maps: frontier_signature, constraint_profile, asymmetry_profile
+horizons: 4, 8, 16, 24, 32
+start_samples: 3
+probe_limit: 5
+workers requested: 18
+jobs requested: 2160
+jobs completed: 2160
+metric rows: 19440
+errors: 0
+wall_clock_seconds: 250.3
+promotion_enabled: false
+```
+
+Headline:
+
+```text
+full A->B rows: 2160
+mean full A->B deformation: 0.1214
+specific non-fakeout full rows: 7
+magnitude-only full-row fakeouts: 128
+source-structure margin full rows: 44
+target-specificity margin full rows: 167
+directional imbalance full rows: 499
+```
+
+Interpretation:
+
+The neutral coupled-landscape audit is operational and preserves the useful
+VAL1-MF counterfactual pattern without reintroducing semantic action verbs.
+However, the first smoke does not justify branch promotion. Specific
+non-fakeout full A-to-B rows are sparse, and many apparent effects are explained
+by magnitude, source-shuffle equivalence, target-shuffle equivalence, probe
+collision, or saturation. Keep RFS-MB1 as an exploratory sandbox unless we
+explicitly decide to spend a cycle repairing coupling-map specificity and
+fresh-seed recurrence.

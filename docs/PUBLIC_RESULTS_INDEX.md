@@ -1200,6 +1200,28 @@ Result in one line:
 - Repair smoke passed the output-contract checks with `0` errors; n=6 transfer
   was explicitly skipped as `skipped_budget` for this smaller run.
 
+### RFS-MB1 Neutral Coupled Landscape Exploratory Smoke
+
+Directory:
+
+- `results/rfs_mb1_coupled_landscape/20260526_exploratory_smoke/`
+
+Primary retained note:
+
+- `docs/research_notes/validation_results/rfs_mb1_neutral_coupled_landscape_exploratory_smoke_result.md`
+
+Reason retained:
+
+- This is the first neutral coupled-landscape smoke preserving the old
+  VAL1-MF counterfactual audit pattern while discarding hand-coded grammar
+  action verbs.
+
+Result in one line:
+
+- The MB1 runner is technically operational with `2160` completed jobs and `0`
+  errors, but only `7` full A-to-B rows are specific non-fakeout candidates, so
+  this remains an exploratory sandbox rather than a promoted validation branch.
+
 The important public caveat:
 
 ```text
