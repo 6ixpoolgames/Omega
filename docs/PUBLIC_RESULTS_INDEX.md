@@ -1179,6 +1179,27 @@ Result in one line:
   boundaries, but stable candidate bands did not generalize; n=6 transfer remains
   an explicit follow-up rather than a completed result.
 
+### RFS-MB0 Medium-Breadth Atlas Runner Repair Smoke
+
+Directory:
+
+- `results/rfs_mb0_relation_atlas/20260526_medium_breadth_atlas_repair_smoke/`
+
+Primary retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_medium_breadth_atlas_repair_smoke_result.md`
+
+Reason retained:
+
+- This repairs the atlas runner/reporting layer so required-answer booleans,
+  band classes, fakeout transitions, saturation/probe boundaries, and n=6
+  transfer status are auditable.
+
+Result in one line:
+
+- Repair smoke passed the output-contract checks with `0` errors; n=6 transfer
+  was explicitly skipped as `skipped_budget` for this smaller run.
+
 The important public caveat:
 
 ```text

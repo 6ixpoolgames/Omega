@@ -4202,3 +4202,61 @@ probe_resolution_boundary: 6
 Interpretation:
 
 The 10h atlas was technically clean and used the hardware effectively, but it did not generalize the earlier local-sweep candidate signal into stable candidate bands. The result is a boundary/near-miss map: saturation and probe-resolution boundaries dominate, fakeout structure is recurrent, and candidate retention remains below stable-band thresholds. Limited n=6 transfer was not run by this implementation and remains a follow-up. Recommended next step: second local sweep focused on saturation/probe-resolution boundaries, or a measurement-limits note if we decide the current substrate/probe design is too lossy.
+
+## 2026-05-26 - RFS-MB0 medium-breadth atlas runner repair smoke
+
+Pulled:
+
+```text
+docs/RFS_MB0_MEDIUM_BREADTH_ATLAS_RUNNER_REPAIR_SPEC.md
+```
+
+Updated:
+
+```text
+omega/rfs_mb0_future_landscape/run_deformation_detector_sweep.py
+```
+
+Primary result note:
+
+```text
+docs/research_notes/validation_results/rfs_mb0_medium_breadth_atlas_repair_smoke_result.md
+```
+
+Local output:
+
+```text
+results/rfs_mb0_relation_atlas/20260526_medium_breadth_atlas_repair_smoke/
+```
+
+Run shape:
+
+```text
+anchors selected: 6
+fresh_seeds_per_variant: 2
+start_samples: 3, 8
+horizons: 0, 1, 2, 4, 8, 12, 16, 24, 32
+workers requested: 18
+sweep jobs requested: 720
+sweep jobs completed: 720
+sweep rows completed: 35640
+rank/effect rows: 39424
+errors: 0
+wall_clock_seconds: 229.5
+promotion_enabled: false
+```
+
+Headline:
+
+```text
+output_manifest.json: present
+required_answer_provenance.csv: present
+n6_transfer_summary.csv: transfer_status skipped_budget
+fakeout_to_candidate_transition_graph_count: 1 / 30
+fakeout_to_candidate_band_level_count: 4 / 6
+stable_candidate_band: 0
+```
+
+Interpretation:
+
+The repair smoke succeeded as a runner/reporting repair. It explicitly resolves fakeout-to-candidate provenance, makes n=6 transfer status unambiguous, and adds band, blocker, saturation, probe-resolution, margin, fresh-seed, and manifest audits. It is not a stronger science result. n=6 transfer was intentionally skipped for this smaller run and should remain a separately budgeted follow-up.

@@ -544,6 +544,7 @@ def _write_outputs(
     sweep_jobs: list[dict[str, object]],
 ) -> None:
     transition_graph = phenotype_transition_graph(anchors, sweep_rows)
+    transition_summary = transition_class_summary_rows(transition_graph)
     sensitivity = local_parameter_sensitivity(sweep_rows)
     fakeouts = fakeout_transition_summary(anchors, sweep_rows)
     stability = candidate_stability_summary(anchors, sweep_rows, margins)
@@ -552,7 +553,16 @@ def _write_outputs(
     sampling_plan = atlas_sampling_plan_rows(config, anchors, sweep_jobs)
     band_summary = atlas_band_summary_rows(transition_graph, stability, fakeouts, boundaries)
     fresh_seed_confirmation = fresh_seed_band_confirmation_rows(sweep_rows)
+    fresh_seed_audit = fresh_seed_recurrence_audit_rows(sweep_rows)
     n6_transfer = n6_transfer_summary_rows(sweep_rows)
+    band_audit = atlas_band_classification_audit_rows(anchors, band_summary, stability, transition_graph, margins)
+    stable_blockers = stable_candidate_blocker_summary_rows(band_audit)
+    saturation_audit = saturation_boundary_audit_rows(sweep_rows)
+    probe_audit = probe_resolution_boundary_audit_rows(sweep_rows)
+    probe_outcomes = probe_family_outcome_summary_rows(sweep_rows)
+    margin_by_band = margin_stability_by_band_rows(margins, anchors)
+    candidate_blockers = candidate_blocker_summary_rows(sweep_rows, margins)
+    required_answers = required_answer_provenance_rows(transition_summary, band_summary, fresh_seed_audit, n6_transfer)
     _write_csv(out_dir / "local_sweep_anchor_selection.csv", strip_internal(anchors))
     _write_csv(out_dir / "matched_control_bundle.csv", matched_bundle)
     _write_csv(out_dir / "deformation_rank_effect_summary.csv", rank_effect)
@@ -560,6 +570,7 @@ def _write_outputs(
     _write_csv(out_dir / "support_vs_distribution_separation.csv", separation)
     _write_csv(out_dir / "local_parameter_sweep_results.csv", sweep_rows)
     _write_csv(out_dir / "phenotype_transition_graph.csv", transition_graph)
+    _write_csv(out_dir / "transition_class_summary.csv", transition_summary)
     _write_csv(out_dir / "local_parameter_sensitivity.csv", sensitivity)
     _write_csv(out_dir / "fakeout_transition_summary.csv", fakeouts)
     _write_csv(out_dir / "candidate_stability_summary.csv", stability)
@@ -577,9 +588,18 @@ def _write_outputs(
     _write_csv(out_dir / "atlas_candidate_stability_summary.csv", stability)
     _write_csv(out_dir / "fresh_seed_band_confirmation.csv", fresh_seed_confirmation)
     _write_csv(out_dir / "n6_transfer_summary.csv", n6_transfer)
+    _write_csv(out_dir / "required_answer_provenance.csv", required_answers)
+    _write_csv(out_dir / "atlas_band_classification_audit.csv", band_audit)
+    _write_csv(out_dir / "stable_candidate_blocker_summary.csv", stable_blockers)
+    _write_csv(out_dir / "saturation_boundary_audit.csv", saturation_audit)
+    _write_csv(out_dir / "probe_resolution_boundary_audit.csv", probe_audit)
+    _write_csv(out_dir / "probe_family_outcome_summary.csv", probe_outcomes)
+    _write_csv(out_dir / "margin_stability_by_band.csv", margin_by_band)
+    _write_csv(out_dir / "candidate_blocker_summary.csv", candidate_blockers)
+    _write_csv(out_dir / "fresh_seed_recurrence_audit.csv", fresh_seed_audit)
     _write_csv(out_dir / "errors.csv", errors)
     write_report(out_dir, config, started, anchors, rank_effect, margins, sweep_rows, transition_graph, stability, fakeouts, errors)
-    write_medium_atlas_report(out_dir, config, started, anchors, rank_effect, margins, sweep_rows, transition_graph, stability, fakeouts, boundaries, fresh_seed_confirmation, n6_transfer, errors)
+    write_medium_atlas_report(out_dir, config, started, anchors, rank_effect, margins, sweep_rows, transition_graph, stability, fakeouts, boundaries, fresh_seed_confirmation, n6_transfer, errors, required_answers, band_audit, stable_blockers, transition_summary, saturation_audit, probe_audit, fresh_seed_audit, candidate_blockers)
     status = {
         "status": config.get("status", "RUNNING"),
         "wall_clock_seconds": time.perf_counter() - started,
@@ -592,6 +612,7 @@ def _write_outputs(
         "promotion_enabled": False,
     }
     (out_dir / "status.json").write_text(json.dumps(status, indent=2, sort_keys=True), encoding="utf-8")
+    write_output_manifest(out_dir)
 
 
 def atlas_sampling_plan_rows(config: dict[str, object], anchors: list[dict[str, object]], sweep_jobs: list[dict[str, object]]) -> list[dict[str, object]]:
@@ -684,15 +705,36 @@ def n6_transfer_summary_rows(sweep_rows: list[dict[str, object]]) -> list[dict[s
     if not n6_rows:
         return [
             {
-                "transfer_status": "not_run",
-                "reason": "current expanded run used n=5 local neighborhoods; n=6 transfer remains a follow-up allocation",
+                "transfer_status": "skipped_budget",
+                "reason": "n=6 transfer was intentionally skipped for this small repair run; it should not be interpreted as completed",
+                "eligible_band_count": 0,
+                "selected_band_count": 0,
+                "jobs_requested": 0,
+                "jobs_completed": 0,
+                "errors": 0,
+                "n5_source_band_ids": "",
+                "n6_result_rows": 0,
+                "n6_recurrent_count": 0,
+                "n6_control_equivalent_count": 0,
+                "n6_probe_limited_count": 0,
+                "n6_saturation_limited_count": 0,
             }
         ]
     return [
         {
-            "transfer_status": "completed",
-            "n_rows": len(n6_rows),
-            "candidate_rate": mean(int(str(row["local_primary_class"]).endswith("_candidate")) for row in n6_rows),
+            "transfer_status": "run_completed",
+            "reason": "n=6 transfer rows detected in sweep output",
+            "eligible_band_count": len({row.get("anchor_id", "") for row in n6_rows}),
+            "selected_band_count": len({row.get("anchor_id", "") for row in n6_rows}),
+            "jobs_requested": len({row.get("job_id", "") for row in n6_rows}),
+            "jobs_completed": len({row.get("job_id", "") for row in n6_rows}),
+            "errors": 0,
+            "n5_source_band_ids": json.dumps(sorted({str(row.get("anchor_id", "")) for row in n6_rows})),
+            "n6_result_rows": len(n6_rows),
+            "n6_recurrent_count": sum(int(str(row["local_primary_class"]).endswith("_candidate")) for row in n6_rows),
+            "n6_control_equivalent_count": sum(int(str(row["local_primary_class"]) == "matched_control_equivalent") for row in n6_rows),
+            "n6_probe_limited_count": sum(int("collision" in str(row["local_primary_class"])) for row in n6_rows),
+            "n6_saturation_limited_count": sum(int("ceiling" in str(row["local_primary_class"])) for row in n6_rows),
         }
     ]
 
@@ -704,18 +746,293 @@ def phenotype_transition_graph(anchors: list[dict[str, object]], sweep_rows: lis
         classes = _counts(row["local_primary_class"] for row in rows)
         anchor_class = str(anchor_by_id.get(str(key[0]), {}).get("anchor_primary_class", ""))
         dominant = max(classes.items(), key=lambda item: item[1])[0] if classes else "underdetermined"
+        example = rows[0] if rows else {}
+        transition = transition_class(anchor_class, dominant, rows)
         out.append(
             {
                 "anchor_id": key[0],
+                "band_id": key[0],
+                "source_row_id": f"{key[0]}|anchor",
+                "target_row_id": str(example.get("job_id", "")),
+                "source_class": anchor_class,
+                "target_class": dominant,
                 "baseline_class": anchor_class,
                 "variant_dimension": key[1],
                 "variant_value": key[2],
+                "sweep_parameter": key[1],
+                "sweep_value": key[2],
+                "fresh_seed": example.get("seed", ""),
+                "probe_family": example.get("probe_family", ""),
+                "start_samples": example.get("start_samples", ""),
+                "horizon": example.get("H", ""),
+                "margin_level": "aggregate",
+                "classification_before": anchor_class,
+                "classification_after": dominant,
                 "dominant_variant_class": dominant,
                 "variant_class_counts": json.dumps(classes, sort_keys=True),
-                "transition_class": transition_class(anchor_class, dominant, rows),
+                "transition_class": transition,
+                "transition_reason": transition_reason(anchor_class, dominant, rows),
             }
         )
     return out
+
+
+def transition_reason(anchor_class: str, dominant: str, rows: list[dict[str, object]]) -> str:
+    if dominant.endswith("_candidate") and not anchor_class.endswith("_candidate"):
+        return "fakeout anchor produced candidate-like dominant variant class"
+    if anchor_class.endswith("_candidate") and not dominant.endswith("_candidate"):
+        return "candidate anchor became fakeout/limited under local variant"
+    if "ceiling" in dominant or mean(int(float(row.get("reachable_signature_support_fraction", 0.0) or 0.0) >= 0.90) for row in rows) > 0.5:
+        return "support/probe saturation dominated variant rows"
+    if "collision" in dominant:
+        return "probe collision dominated variant rows"
+    if dominant.endswith("_candidate"):
+        return "candidate-like dominant variant class"
+    return "no candidate-like transition under aggregate dominance"
+
+
+def transition_class_summary_rows(transition_graph: list[dict[str, object]]) -> list[dict[str, object]]:
+    rows = []
+    for klass, items in group_by(transition_graph, ("transition_class",)).items():
+        rows.append(
+            {
+                "transition_class": klass[0],
+                "n_edges": len(items),
+                "example_row_ids": json.dumps([row.get("target_row_id", "") for row in items[:5]]),
+            }
+        )
+    return rows
+
+
+def fresh_seed_recurrence_audit_rows(sweep_rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    rows = []
+    for key, items in group_by(sweep_rows, ("anchor_id", "variant_dimension", "variant_value")).items():
+        by_seed = group_by(items, ("seed",))
+        seed_classes = {}
+        for (seed,), seed_rows in by_seed.items():
+            classes = _counts(row["local_primary_class"] for row in seed_rows)
+            dominant = max(classes.items(), key=lambda item: item[1])[0] if classes else "underdetermined"
+            seed_classes[str(seed)] = dominant
+        candidate_count = sum(int(value.endswith("_candidate")) for value in seed_classes.values())
+        control_count = sum(int(value == "matched_control_equivalent") for value in seed_classes.values())
+        probe_limited = sum(int("collision" in value) for value in seed_classes.values())
+        saturation_limited = sum(int("ceiling" in value) for value in seed_classes.values())
+        fakeout_count = len(seed_classes) - candidate_count
+        score = candidate_count / max(1, len(seed_classes))
+        if len(seed_classes) < 2:
+            klass = "insufficient_fresh_seeds"
+        elif candidate_count == len(seed_classes):
+            klass = "seed_recurrent_candidate_like"
+        elif fakeout_count == len(seed_classes):
+            klass = "seed_recurrent_fakeout_like"
+        elif candidate_count > 0:
+            klass = "seed_mixed_or_boundary"
+        else:
+            klass = "seed_fragile_or_absent"
+        rows.append(
+            {
+                "band_id": key[0],
+                "anchor_id": key[0],
+                "parameter_variant_id": f"{key[1]}={key[2]}",
+                "fresh_seed_count": len(seed_classes),
+                "fresh_seed_candidate_count": candidate_count,
+                "fresh_seed_fakeout_count": fakeout_count,
+                "fresh_seed_control_equivalent_count": control_count,
+                "fresh_seed_probe_limited_count": probe_limited,
+                "fresh_seed_saturation_limited_count": saturation_limited,
+                "fresh_seed_recurrence_score": score,
+                "fresh_seed_recurrence_class": klass,
+                "recurrence_threshold": 1.0,
+                "example_seed_ids": json.dumps(list(seed_classes)[:5]),
+            }
+        )
+    return rows
+
+
+def saturation_boundary_audit_rows(sweep_rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    rows = []
+    for row in sweep_rows:
+        support_fraction = float(row.get("reachable_signature_support_fraction", 0.0) or 0.0)
+        support_ceiling = int(row.get("support_ceiling_flag", 0) or 0)
+        saturation_flag = int(support_ceiling or support_fraction >= 0.90 or "ceiling" in str(row.get("local_primary_class", "")))
+        if not saturation_flag:
+            continue
+        pre_score = float(row.get("mixed_deformation_score", 0.0) or 0.0) if float(row.get("H", 0) or 0) <= 4 else 0.0
+        near_score = float(row.get("mixed_deformation_score", 0.0) or 0.0) if 4 < float(row.get("H", 0) or 0) <= 16 else 0.0
+        post_score = float(row.get("mixed_deformation_score", 0.0) or 0.0) if float(row.get("H", 0) or 0) > 16 else 0.0
+        rows.append(
+            {
+                "row_id": row.get("job_id", ""),
+                "band_id": row.get("anchor_id", ""),
+                "anchor_id": row.get("anchor_id", ""),
+                "probe_family": row.get("probe_family", ""),
+                "horizon": row.get("H", ""),
+                "start_samples": row.get("start_samples", ""),
+                "support_fraction": support_fraction,
+                "support_ceiling_flag": support_ceiling,
+                "state_space_saturation_flag": int(support_fraction >= 0.95),
+                "probe_alphabet_saturation_flag": support_ceiling,
+                "frontier_growth_slope": row.get("support_growth_slope", ""),
+                "frontier_growth_curvature": "",
+                "saturation_H": row.get("support_saturation_H", ""),
+                "pre_saturation_candidate_score": pre_score,
+                "near_saturation_candidate_score": near_score,
+                "post_saturation_candidate_score": post_score,
+                "classification_if_pre_saturation_only": "candidate_like" if pre_score >= 0.10 else "not_candidate_like",
+                "classification_if_saturation_excluded": "excluded_saturation_row",
+            }
+        )
+    return rows
+
+
+def probe_resolution_boundary_audit_rows(sweep_rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    rows = []
+    by_band = group_by(sweep_rows, ("anchor_id",))
+    for row in sweep_rows:
+        probe_limited = "collision" in str(row.get("local_primary_class", "")) or "identity_like" in str(row.get("probe_resolution_class", ""))
+        if not probe_limited:
+            continue
+        same_band_classes = sorted({str(item.get("local_primary_class", "")) for item in by_band.get((row.get("anchor_id", ""),), []) if item.get("probe_family") != row.get("probe_family")})
+        rows.append(
+            {
+                "row_id": row.get("job_id", ""),
+                "band_id": row.get("anchor_id", ""),
+                "probe_family": row.get("probe_family", ""),
+                "probe_resolution_class": row.get("probe_resolution_class", ""),
+                "probe_collision_rate": row.get("probe_collision_rate", ""),
+                "observed_signature_support_fraction": row.get("observed_signature_support_fraction", row.get("reachable_signature_support_fraction", "")),
+                "support_ceiling_flag": row.get("support_ceiling_flag", ""),
+                "candidate_score": row.get("mixed_deformation_score", ""),
+                "matched_control_score": "",
+                "candidate_minus_control": "",
+                "class_under_probe": row.get("local_primary_class", ""),
+                "same_band_classes_other_probes": json.dumps(same_band_classes[:12]),
+                "cross_probe_recurrence_flag": int(any(value.endswith("_candidate") for value in same_band_classes)),
+                "probe_local_only_flag": int(not any(value.endswith("_candidate") for value in same_band_classes)),
+            }
+        )
+    return rows
+
+
+def probe_family_outcome_summary_rows(sweep_rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    rows = []
+    for key, items in group_by(sweep_rows, ("probe_family",)).items():
+        rows.append(
+            {
+                "probe_family": key[0],
+                "n_rows": len(items),
+                "probe_family_candidate_rate": mean(int(str(row["local_primary_class"]).endswith("_candidate")) for row in items),
+                "probe_family_fakeout_rate": mean(int(not str(row["local_primary_class"]).endswith("_candidate")) for row in items),
+                "probe_family_probe_limited_rate": mean(int("collision" in str(row["local_primary_class"]) or "identity_like" in str(row.get("probe_resolution_class", ""))) for row in items),
+                "probe_family_matched_control_equivalent_rate": mean(int(str(row["local_primary_class"]) == "matched_control_equivalent") for row in items),
+            }
+        )
+    return rows
+
+
+def atlas_band_classification_audit_rows(
+    anchors: list[dict[str, object]],
+    band_summary: list[dict[str, object]],
+    stability: list[dict[str, object]],
+    transition_graph: list[dict[str, object]],
+    margins: list[dict[str, object]],
+) -> list[dict[str, object]]:
+    anchors_by_id = {str(row["anchor_id"]): row for row in anchors}
+    stability_by_id = {str(row["anchor_id"]): row for row in stability}
+    transitions_by_id = group_by(transition_graph, ("anchor_id",))
+    margin_by_band = group_by(margins, ("candidate_environment_id", "probe_key"))
+    rows = []
+    for band in band_summary:
+        band_id = str(band["band_id"])
+        anchor = anchors_by_id.get(band_id, {})
+        stable = stability_by_id.get(band_id, {})
+        transitions = transitions_by_id.get((band_id,), [])
+        transition_counts = _counts(row["transition_class"] for row in transitions)
+        candidate_rate = float(stable.get("candidate_retention_rate", 0.0) or 0.0)
+        fakeout_rate = 1.0 - candidate_rate
+        fresh_seed_recurrent = int(float(stable.get("fresh_seed_recurrence_rate", 0.0) or 0.0) > 0.0)
+        probe_recurrence = float(stable.get("probe_recurrence_rate", 0.0) or 0.0)
+        start_recurrence = float(stable.get("start_recurrence_rate", 0.0) or 0.0)
+        margin_rows = margin_by_band.get((anchor.get("environment_id", ""), anchor.get("probe_key", "")), [])
+        margin_summary = json.dumps(_counts(row.get("margin_stability_class", "") for row in margin_rows), sort_keys=True)
+        blockers = stable_candidate_blockers(candidate_rate, fresh_seed_recurrent, probe_recurrence, start_recurrence, transition_counts, margin_summary)
+        eligible = int(not blockers)
+        rows.append(
+            {
+                "band_id": band_id,
+                "anchor_id": band_id,
+                "anchor_class": anchor.get("anchor_primary_class", ""),
+                "band_class": band.get("atlas_level_class", ""),
+                "band_class_reason": band_class_reason(str(band.get("atlas_level_class", "")), candidate_rate, transition_counts),
+                "candidate_rate": candidate_rate,
+                "fakeout_rate": fakeout_rate,
+                "candidate_rate_threshold": 0.50,
+                "fresh_seed_recurrent_count": fresh_seed_recurrent,
+                "fresh_seed_recurrent_threshold": 1,
+                "probe_recurrence_score": probe_recurrence,
+                "probe_recurrence_threshold": 0.10,
+                "start_recurrence_score": start_recurrence,
+                "start_recurrence_threshold": 0.10,
+                "margin_stability_summary": margin_summary,
+                "matched_control_equivalent_rate": transition_counts.get("matched_control_boundary", 0) / max(1, len(transitions)),
+                "saturation_boundary_count": transition_counts.get("saturation_boundary", 0),
+                "probe_resolution_boundary_count": transition_counts.get("probe_resolution_boundary", 0),
+                "candidate_to_fakeout_count": transition_counts.get("candidate_to_fakeout_transition", 0),
+                "fakeout_to_candidate_count": transition_counts.get("fakeout_to_candidate_transition", 0),
+                "eligible_for_stable_candidate_band": eligible,
+                "stable_candidate_blockers": ";".join(blockers) if blockers else "none",
+            }
+        )
+    return rows
+
+
+def band_class_reason(band_class: str, candidate_rate: float, transition_counts: dict[str, int]) -> str:
+    if band_class == "stable_candidate_band":
+        return "candidate retention crossed stable threshold and blockers were below ceilings"
+    if band_class == "near_miss_transition_band":
+        return "candidate-like variants occurred but stable candidate criteria were not met"
+    if band_class == "saturation_boundary_band":
+        return "support/probe saturation boundary dominated anchor neighborhood"
+    if band_class == "probe_resolution_boundary_band":
+        return "probe-resolution/collision boundary dominated anchor neighborhood"
+    return f"candidate_rate={candidate_rate:.3f}; transition_counts={json.dumps(transition_counts, sort_keys=True)}"
+
+
+def stable_candidate_blockers(
+    candidate_rate: float,
+    fresh_seed_recurrent: int,
+    probe_recurrence: float,
+    start_recurrence: float,
+    transition_counts: dict[str, int],
+    margin_summary: str,
+) -> list[str]:
+    blockers = []
+    if candidate_rate < 0.50:
+        blockers.append("candidate_rate_below_threshold")
+    if fresh_seed_recurrent < 1:
+        blockers.append("fresh_seed_recurrence_below_threshold")
+    if probe_recurrence < 0.10:
+        blockers.append("probe_recurrence_below_threshold")
+    if start_recurrence < 0.10:
+        blockers.append("start_recurrence_below_threshold")
+    if transition_counts.get("saturation_boundary", 0) > 0:
+        blockers.append("saturation_boundary_present")
+    if transition_counts.get("probe_resolution_boundary", 0) > 0:
+        blockers.append("probe_resolution_boundary_present")
+    if "fragile_margin_candidate" in margin_summary and "strong_margin_candidate" not in margin_summary:
+        blockers.append("fragile_margin_only")
+    return blockers
+
+
+def stable_candidate_blocker_summary_rows(band_audit: list[dict[str, object]]) -> list[dict[str, object]]:
+    counts = Counter()
+    for row in band_audit:
+        for blocker in str(row.get("stable_candidate_blockers", "none")).split(";"):
+            if blocker and blocker != "none":
+                counts[blocker] += 1
+    if not counts:
+        return [{"blocker": "none", "n_bands": 0}]
+    return [{"blocker": key, "n_bands": value} for key, value in sorted(counts.items())]
 
 
 def local_parameter_sensitivity(sweep_rows: list[dict[str, object]]) -> list[dict[str, object]]:
@@ -798,6 +1115,46 @@ def candidate_stability_summary(anchors: list[dict[str, object]], sweep_rows: li
     return out
 
 
+def margin_stability_by_band_rows(margins: list[dict[str, object]], anchors: list[dict[str, object]]) -> list[dict[str, object]]:
+    rows = []
+    for anchor in anchors:
+        selected = [row for row in margins if row.get("candidate_environment_id") == anchor.get("environment_id") and row.get("probe_key") == anchor.get("probe_key")]
+        counts = _counts(row.get("margin_stability_class", "") for row in selected)
+        rows.append(
+            {
+                "band_id": anchor.get("anchor_id", ""),
+                "anchor_id": anchor.get("anchor_id", ""),
+                "n_margin_rows": len(selected),
+                "margin_stability_counts": json.dumps(counts, sort_keys=True),
+                "fragile_margin_only_flag": int(bool(counts.get("fragile_margin_candidate")) and not bool(counts.get("strong_margin_candidate"))),
+                "dominant_margin_stability_class": max(counts.items(), key=lambda item: item[1])[0] if counts else "missing",
+            }
+        )
+    return rows
+
+
+def candidate_blocker_summary_rows(sweep_rows: list[dict[str, object]], margins: list[dict[str, object]]) -> list[dict[str, object]]:
+    counts = Counter()
+    for row in sweep_rows:
+        klass = str(row.get("local_primary_class", ""))
+        if klass.endswith("_candidate"):
+            continue
+        if klass == "matched_control_equivalent":
+            counts["matched_control_equivalent"] += 1
+        if "collision" in klass or "identity_like" in str(row.get("probe_resolution_class", "")):
+            counts["probe_limited"] += 1
+        if "ceiling" in klass or int(row.get("support_ceiling_flag", 0) or 0):
+            counts["support_ceiling_limited"] += 1
+        if float(row.get("reachable_signature_support_fraction", 0.0) or 0.0) >= 0.90:
+            counts["saturation_limited"] += 1
+    margin_counts = _counts(row.get("margin_stability_class", "") for row in margins)
+    if margin_counts.get("fragile_margin_candidate", 0):
+        counts["fragile_margin_only"] += int(margin_counts["fragile_margin_candidate"])
+    if not counts:
+        return [{"blocker": "none", "n_rows": 0}]
+    return [{"blocker": key, "n_rows": value} for key, value in sorted(counts.items())]
+
+
 def near_miss_summary(anchors: list[dict[str, object]], sweep_rows: list[dict[str, object]]) -> list[dict[str, object]]:
     out = []
     for anchor in anchors:
@@ -835,6 +1192,136 @@ def regime_boundary_summary(sweep_rows: list[dict[str, object]]) -> list[dict[st
             }
         )
     return out
+
+
+def required_answer_provenance_rows(
+    transition_summary: list[dict[str, object]],
+    band_summary: list[dict[str, object]],
+    fresh_seed_audit: list[dict[str, object]],
+    n6_transfer: list[dict[str, object]],
+) -> list[dict[str, object]]:
+    transition_counts = {str(row["transition_class"]): int(row["n_edges"]) for row in transition_summary}
+    band_fakeout_count = sum(int(float(row.get("fakeout_to_candidate_rate", 0.0) or 0.0) > 0.0) for row in band_summary)
+    fresh_seed_recurrent = sum(int(row.get("fresh_seed_recurrence_class") in {"seed_recurrent_candidate_like", "seed_mixed_or_boundary"}) for row in fresh_seed_audit)
+    stable_candidate_count = sum(int(row.get("atlas_level_class") == "stable_candidate_band") for row in band_summary)
+    transfer = n6_transfer[0] if n6_transfer else {}
+    graph_count = transition_counts.get("fakeout_to_candidate_transition", 0)
+    return [
+        {
+            "required_answer_name": "candidate_stable_local_neighborhoods_generalized",
+            "value": bool(stable_candidate_count > 0),
+            "source_table": "atlas_band_summary.csv",
+            "source_column": "atlas_level_class",
+            "source_filter": "atlas_level_class == stable_candidate_band",
+            "numerator": stable_candidate_count,
+            "denominator": len(band_summary),
+            "threshold": "> 0",
+            "example_row_ids": json.dumps([row.get("band_id", "") for row in band_summary if row.get("atlas_level_class") == "stable_candidate_band"][:5]),
+        },
+        {
+            "required_answer_name": "fakeout_to_candidate_transition_graph_count",
+            "value": graph_count > 0,
+            "source_table": "transition_class_summary.csv",
+            "source_column": "transition_class",
+            "source_filter": "transition_class == fakeout_to_candidate_transition",
+            "numerator": graph_count,
+            "denominator": sum(transition_counts.values()),
+            "threshold": "> 0",
+            "example_row_ids": "see phenotype_transition_graph.csv",
+        },
+        {
+            "required_answer_name": "fakeout_to_candidate_band_level_count",
+            "value": band_fakeout_count > 0,
+            "source_table": "atlas_band_summary.csv",
+            "source_column": "fakeout_to_candidate_rate",
+            "source_filter": "fakeout_to_candidate_rate > 0",
+            "numerator": band_fakeout_count,
+            "denominator": len(band_summary),
+            "threshold": "> 0",
+            "example_row_ids": json.dumps([row.get("band_id", "") for row in band_summary if float(row.get("fakeout_to_candidate_rate", 0.0) or 0.0) > 0.0][:5]),
+        },
+        {
+            "required_answer_name": "fakeout_to_candidate_fresh_seed_recurrent_count",
+            "value": fresh_seed_recurrent > 0,
+            "source_table": "fresh_seed_recurrence_audit.csv",
+            "source_column": "fresh_seed_recurrence_class",
+            "source_filter": "class in seed_recurrent_candidate_like, seed_mixed_or_boundary",
+            "numerator": fresh_seed_recurrent,
+            "denominator": len(fresh_seed_audit),
+            "threshold": "> 0",
+            "example_row_ids": json.dumps([row.get("parameter_variant_id", "") for row in fresh_seed_audit if row.get("fresh_seed_recurrence_class") in {"seed_recurrent_candidate_like", "seed_mixed_or_boundary"}][:5]),
+        },
+        {
+            "required_answer_name": "fakeout_to_candidate_any_recurred",
+            "value": graph_count > 0 or band_fakeout_count > 0 or fresh_seed_recurrent > 0,
+            "source_table": "transition_class_summary.csv;atlas_band_summary.csv;fresh_seed_recurrence_audit.csv",
+            "source_column": "multiple",
+            "source_filter": "any fakeout-to-candidate recurrence criterion positive",
+            "numerator": graph_count + band_fakeout_count + fresh_seed_recurrent,
+            "denominator": sum(transition_counts.values()) + len(band_summary) + len(fresh_seed_audit),
+            "threshold": "> 0",
+            "example_row_ids": "see component rows above",
+        },
+        {
+            "required_answer_name": "n6_transfer_completed",
+            "value": transfer.get("transfer_status") == "run_completed",
+            "source_table": "n6_transfer_summary.csv",
+            "source_column": "transfer_status",
+            "source_filter": "transfer_status == run_completed",
+            "numerator": int(transfer.get("transfer_status") == "run_completed"),
+            "denominator": 1,
+            "threshold": "run_completed",
+            "example_row_ids": transfer.get("n5_source_band_ids", ""),
+        },
+    ]
+
+
+REQUIRED_REPAIR_OUTPUTS = (
+    "medium_breadth_support_distribution_atlas_report.md",
+    "required_answer_provenance.csv",
+    "n6_transfer_summary.csv",
+    "atlas_band_classification_audit.csv",
+    "stable_candidate_blocker_summary.csv",
+    "phenotype_transition_graph.csv",
+    "transition_class_summary.csv",
+    "saturation_boundary_audit.csv",
+    "probe_resolution_boundary_audit.csv",
+    "probe_family_outcome_summary.csv",
+    "atlas_rank_effect_summary.csv",
+    "atlas_margin_sensitivity.csv",
+    "margin_stability_by_band.csv",
+    "candidate_blocker_summary.csv",
+    "fresh_seed_recurrence_audit.csv",
+    "output_manifest.json",
+    "status.json",
+)
+
+
+def write_output_manifest(out_dir: Path) -> None:
+    rows = []
+    for name in REQUIRED_REPAIR_OUTPUTS:
+        path = out_dir / name
+        exists = path.exists()
+        row_count = ""
+        status = "present" if exists else "missing"
+        if exists and path.suffix == ".csv":
+            row_count = csv_row_count(path)
+            status = "present_empty" if row_count == 0 else "present"
+        rows.append({"file": name, "exists": exists, "row_count": row_count, "status": status})
+    (out_dir / "output_manifest.json").write_text(json.dumps(rows, indent=2, sort_keys=True), encoding="utf-8")
+
+
+def csv_row_count(path: Path) -> int:
+    if not path.exists():
+        return 0
+    with path.open("r", newline="", encoding="utf-8") as handle:
+        reader = csv.reader(handle)
+        rows = list(reader)
+    if not rows:
+        return 0
+    if rows[0] == ["empty"]:
+        return 0
+    return max(0, len(rows) - 1)
 
 
 def write_report(
@@ -916,6 +1403,14 @@ def write_medium_atlas_report(
     fresh_seed_confirmation: list[dict[str, object]],
     n6_transfer: list[dict[str, object]],
     errors: list[dict[str, object]],
+    required_answers: list[dict[str, object]],
+    band_audit: list[dict[str, object]],
+    stable_blockers: list[dict[str, object]],
+    transition_summary: list[dict[str, object]],
+    saturation_audit: list[dict[str, object]],
+    probe_audit: list[dict[str, object]],
+    fresh_seed_audit: list[dict[str, object]],
+    candidate_blockers: list[dict[str, object]],
 ) -> None:
     transition_counts = _counts(row["transition_class"] for row in transition_graph)
     margin_counts = _counts(row["margin_stability_class"] for row in margins)
@@ -931,7 +1426,9 @@ def write_medium_atlas_report(
     lines = [
         "# RFS-MB0 Medium-Breadth Support/Distribution Atlas Report",
         "",
-        "Promotion disabled: this is a guided support/distribution atlas, not Omega validation.",
+        "Promotion disabled: this is a guided support/distribution atlas repair smoke, not Omega validation.",
+        "",
+        "## 1. Run Shape And Integrity",
         "",
         f"- Wall clock used: {time.perf_counter() - started:.1f} seconds",
         f"- Workers requested: {config['workers']}",
@@ -941,29 +1438,92 @@ def write_medium_atlas_report(
         f"- Errors: {len(errors)}",
         f"- Recommended next step: {decision}",
         "",
-        "## Atlas Band Classes",
+        "## 2. Promotion/Claim Boundary",
+        "",
+        "No row is promoted to Omega, agency, identity, valuerhood, viability, path-process detection, or scientific-gate passage.",
+        "",
+        "## 3. Required-Answer Provenance",
+        "",
+        "| answer | value | source | numerator | denominator |",
+        "|---|---|---|---:|---:|",
+    ]
+    for row in required_answers:
+        lines.append(f"| {row['required_answer_name']} | {row['value']} | {row['source_table']} | {row['numerator']} | {row['denominator']} |")
+    graph_count = next((row for row in required_answers if row["required_answer_name"] == "fakeout_to_candidate_transition_graph_count"), {})
+    band_count = next((row for row in required_answers if row["required_answer_name"] == "fakeout_to_candidate_band_level_count"), {})
+    if int(graph_count.get("numerator", 0) or 0) == 0 and int(band_count.get("numerator", 0) or 0) > 0:
+        lines.extend(["", "No explicit fakeout_to_candidate transition graph edges were emitted, but band-level fakeout-to-candidate recurrence was observed under the band-level criterion."])
+    elif int(graph_count.get("numerator", 0) or 0) == 0:
+        lines.extend(["", "No explicit fakeout_to_candidate transition graph edges were emitted."])
+    n6_status = next((row.get("transfer_status", "not_run") for row in n6_transfer), "not_run")
+    if n6_status != "run_completed":
+        lines.extend(["", "n=6 transfer was not run and should not be interpreted as completed."])
+    lines.extend(
+        [
+            "",
+            "## 4. Band Class Summary",
         "",
         "| class | n |",
         "|---|---:|",
-    ]
+        ]
+    )
     for key, value in sorted(band_classes.items()):
         lines.append(f"| {key} | {value} |")
-    lines.extend(["", "## Transition Classes", "", "| transition | n |", "|---|---:|"])
-    for key, value in sorted(transition_counts.items()):
-        lines.append(f"| {key} | {value} |")
-    lines.extend(["", "## Margin Stability", "", "| stability | n |", "|---|---:|"])
+    lines.extend(["", "## 5. Stable-Candidate Blocker Summary", "", "| blocker | n |", "|---|---:|"])
+    for row in stable_blockers:
+        lines.append(f"| {row.get('blocker', '')} | {row.get('n_bands', row.get('n_rows', ''))} |")
+    lines.extend(["", "## 6. Transition Graph Summary", "", "| transition | n |", "|---|---:|"])
+    for row in transition_summary:
+        lines.append(f"| {row.get('transition_class', '')} | {row.get('n_edges', '')} |")
+    lines.extend(
+        [
+            "",
+            "## 7. Saturation Boundary Audit",
+            "",
+            f"- Saturation audit rows: {len(saturation_audit)}",
+            "",
+            "## 8. Probe-Resolution Boundary Audit",
+            "",
+            f"- Probe-resolution audit rows: {len(probe_audit)}",
+            "",
+            "## 9. Fresh-Seed Recurrence Audit",
+            "",
+            f"- Fresh-seed recurrence audit rows: {len(fresh_seed_audit)}",
+            "",
+            "## 10. Margin/Rank-Effect Summary",
+            "",
+            "| stability | n |",
+            "|---|---:|",
+        ]
+    )
     for key, value in sorted(margin_counts.items()):
         lines.append(f"| {key} | {value} |")
     lines.extend(
         [
             "",
-            "## Required Answers",
+            "## 11. n=6 Transfer Status",
             "",
-            f"- Candidate-stable local neighborhoods generalized to sampled bands: {band_classes.get('stable_candidate_band', 0) > 0}",
-            f"- Fakeout-to-candidate transitions recurred: {transition_counts.get('fakeout_to_candidate_transition', 0) > 0 or band_classes.get('near_miss_transition_band', 0) > 0}",
-            f"- Fresh-seed recurrent band rows: {seed_recurrent}",
             f"- n=6 transfer status: {n6_status}",
-            "- Path metrics remained parked and did not drive classification.",
+            f"- n=6 transfer reason: {n6_transfer[0].get('reason', '') if n6_transfer else ''}",
+            "",
+            "## 12. Recommended Next Step",
+            "",
+            f"- {decision}",
+            "",
+            "## 13. Machine-Readable Output Manifest",
+            "",
+            "- See `output_manifest.json`.",
+            "",
+            "## Candidate Blockers",
+            "",
+            "| blocker | n |",
+            "|---|---:|",
+        ]
+    )
+    for row in candidate_blockers:
+        lines.append(f"| {row.get('blocker', '')} | {row.get('n_rows', '')} |")
+    lines.extend(
+        [
             "",
             "## Sensitive Parameters",
             "",
