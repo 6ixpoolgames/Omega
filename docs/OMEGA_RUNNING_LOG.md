@@ -4144,3 +4144,61 @@ probe_resolution_boundary: 2
 Interpretation:
 
 The detector/sweep validation is green. The small scaled pass found local support/distribution transition geometry: candidate anchors are mostly knife-edge at whole-anchor level, but stable local candidate regions and fakeout-to-candidate transitions appear. Recommendation: proceed to a medium-breadth support/distribution atlas concentrated around the observed bands. Path metrics remain parked.
+
+## 2026-05-26 - RFS-MB0 medium-breadth support/distribution atlas 10h
+
+Pulled:
+
+```text
+docs/RFS_MB0_MEDIUM_BREADTH_SUPPORT_DISTRIBUTION_ATLAS_10H_SPEC.md
+```
+
+Updated:
+
+```text
+omega/rfs_mb0_future_landscape/run_deformation_detector_sweep.py
+```
+
+Primary result note:
+
+```text
+docs/research_notes/validation_results/rfs_mb0_medium_breadth_support_distribution_atlas_10h_result.md
+```
+
+Local output:
+
+```text
+results/rfs_mb0_relation_atlas/20260525_medium_breadth_support_distribution_atlas_10h/
+```
+
+Run shape:
+
+```text
+workers requested: 18
+anchors selected: 16
+fresh_seeds_per_variant: 5
+start_samples: 3, 8, 16
+horizons: 0, 1, 2, 4, 8, 12, 16, 24, 32
+sweep jobs requested: 21840
+sweep jobs completed: 21840
+sweep rows completed: 1769040
+rank/effect rows: 39424
+errors: 0
+wall_clock_seconds: 26700.2
+promotion_enabled: false
+```
+
+Headline:
+
+```text
+near_miss_transition_band: 10
+stable_fakeout_band: 6
+stable_candidate_band: 0
+saturation_boundary: 124
+candidate_to_fakeout_transition: 78
+probe_resolution_boundary: 6
+```
+
+Interpretation:
+
+The 10h atlas was technically clean and used the hardware effectively, but it did not generalize the earlier local-sweep candidate signal into stable candidate bands. The result is a boundary/near-miss map: saturation and probe-resolution boundaries dominate, fakeout structure is recurrent, and candidate retention remains below stable-band thresholds. Limited n=6 transfer was not run by this implementation and remains a follow-up. Recommended next step: second local sweep focused on saturation/probe-resolution boundaries, or a measurement-limits note if we decide the current substrate/probe design is too lossy.

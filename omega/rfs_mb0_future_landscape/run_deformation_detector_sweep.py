@@ -549,6 +549,10 @@ def _write_outputs(
     stability = candidate_stability_summary(anchors, sweep_rows, margins)
     near_misses = near_miss_summary(anchors, sweep_rows)
     boundaries = regime_boundary_summary(sweep_rows)
+    sampling_plan = atlas_sampling_plan_rows(config, anchors, sweep_jobs)
+    band_summary = atlas_band_summary_rows(transition_graph, stability, fakeouts, boundaries)
+    fresh_seed_confirmation = fresh_seed_band_confirmation_rows(sweep_rows)
+    n6_transfer = n6_transfer_summary_rows(sweep_rows)
     _write_csv(out_dir / "local_sweep_anchor_selection.csv", strip_internal(anchors))
     _write_csv(out_dir / "matched_control_bundle.csv", matched_bundle)
     _write_csv(out_dir / "deformation_rank_effect_summary.csv", rank_effect)
@@ -561,8 +565,21 @@ def _write_outputs(
     _write_csv(out_dir / "candidate_stability_summary.csv", stability)
     _write_csv(out_dir / "near_miss_summary.csv", near_misses)
     _write_csv(out_dir / "regime_boundary_summary.csv", boundaries)
+    _write_csv(out_dir / "atlas_band_selection.csv", strip_internal(anchors))
+    _write_csv(out_dir / "atlas_sampling_plan.csv", sampling_plan)
+    _write_csv(out_dir / "atlas_rank_effect_summary.csv", rank_effect)
+    _write_csv(out_dir / "atlas_margin_sensitivity.csv", margins)
+    _write_csv(out_dir / "atlas_support_vs_distribution_separation.csv", separation)
+    _write_csv(out_dir / "atlas_matched_control_bundle.csv", matched_bundle)
+    _write_csv(out_dir / "atlas_regime_map.csv", boundaries)
+    _write_csv(out_dir / "atlas_band_summary.csv", band_summary)
+    _write_csv(out_dir / "atlas_fakeout_transition_summary.csv", fakeouts)
+    _write_csv(out_dir / "atlas_candidate_stability_summary.csv", stability)
+    _write_csv(out_dir / "fresh_seed_band_confirmation.csv", fresh_seed_confirmation)
+    _write_csv(out_dir / "n6_transfer_summary.csv", n6_transfer)
     _write_csv(out_dir / "errors.csv", errors)
     write_report(out_dir, config, started, anchors, rank_effect, margins, sweep_rows, transition_graph, stability, fakeouts, errors)
+    write_medium_atlas_report(out_dir, config, started, anchors, rank_effect, margins, sweep_rows, transition_graph, stability, fakeouts, boundaries, fresh_seed_confirmation, n6_transfer, errors)
     status = {
         "status": config.get("status", "RUNNING"),
         "wall_clock_seconds": time.perf_counter() - started,
@@ -575,6 +592,109 @@ def _write_outputs(
         "promotion_enabled": False,
     }
     (out_dir / "status.json").write_text(json.dumps(status, indent=2, sort_keys=True), encoding="utf-8")
+
+
+def atlas_sampling_plan_rows(config: dict[str, object], anchors: list[dict[str, object]], sweep_jobs: list[dict[str, object]]) -> list[dict[str, object]]:
+    rows = []
+    for key, jobs in group_by(sweep_jobs, ("anchor_id", "variant_dimension")).items():
+        anchor = next((row for row in anchors if row["anchor_id"] == key[0]), {})
+        rows.append(
+            {
+                "anchor_id": key[0],
+                "anchor_primary_class": anchor.get("anchor_primary_class", ""),
+                "variant_dimension": key[1],
+                "planned_jobs": len(jobs),
+                "fresh_seeds_per_variant": config.get("fresh_seeds_per_variant", ""),
+                "workers": config.get("workers", ""),
+                "promotion_enabled": False,
+            }
+        )
+    return rows
+
+
+def atlas_band_summary_rows(
+    transition_graph: list[dict[str, object]],
+    stability: list[dict[str, object]],
+    fakeouts: list[dict[str, object]],
+    boundaries: list[dict[str, object]],
+) -> list[dict[str, object]]:
+    transition_counts = _counts(row["transition_class"] for row in transition_graph)
+    fakeout_rate_by_anchor = {row["anchor_id"]: row.get("fakeout_to_candidate_rate", 0.0) for row in fakeouts}
+    stability_by_anchor = {row["anchor_id"]: row for row in stability}
+    rows = []
+    for anchor_id, stability_row in sorted(stability_by_anchor.items()):
+        rows.append(
+            {
+                "band_id": anchor_id,
+                "baseline_class": stability_row.get("baseline_class", ""),
+                "candidate_retention_rate": stability_row.get("candidate_retention_rate", ""),
+                "fakeout_to_candidate_rate": fakeout_rate_by_anchor.get(anchor_id, ""),
+                "start_recurrence_rate": stability_row.get("start_recurrence_rate", ""),
+                "probe_recurrence_rate": stability_row.get("probe_recurrence_rate", ""),
+                "transition_class": stability_row.get("transition_class", ""),
+                "atlas_level_class": atlas_level_class(stability_row, fakeout_rate_by_anchor.get(anchor_id, 0.0)),
+                "global_transition_counts": json.dumps(transition_counts, sort_keys=True),
+                "sensitive_parameter_count": len(boundaries),
+            }
+        )
+    return rows
+
+
+def atlas_level_class(stability_row: dict[str, object], fakeout_to_candidate_rate: object) -> str:
+    retention = float(stability_row.get("candidate_retention_rate", 0.0) or 0.0)
+    fakeout_rate = float(fakeout_to_candidate_rate or 0.0)
+    baseline = str(stability_row.get("baseline_class", ""))
+    if retention >= 0.50:
+        return "stable_candidate_band"
+    if fakeout_rate > 0.0:
+        return "near_miss_transition_band"
+    if "ceiling" in baseline:
+        return "saturation_boundary_band"
+    if "collision" in baseline:
+        return "probe_resolution_boundary_band"
+    if baseline == "matched_control_equivalent":
+        return "matched_control_boundary_band"
+    return "stable_fakeout_band"
+
+
+def fresh_seed_band_confirmation_rows(sweep_rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    rows = []
+    for key, items in group_by(sweep_rows, ("anchor_id", "variant_dimension", "variant_value")).items():
+        seed_rates = {
+            str(seed): mean(int(str(row["local_primary_class"]).endswith("_candidate")) for row in subset)
+            for (seed,), subset in group_by(items, ("seed",)).items()
+        }
+        rows.append(
+            {
+                "anchor_id": key[0],
+                "variant_dimension": key[1],
+                "variant_value": key[2],
+                "fresh_seed_count": len(seed_rates),
+                "fresh_seed_candidate_rate_mean": mean(seed_rates.values()) if seed_rates else 0.0,
+                "fresh_seed_candidate_rate_min": min(seed_rates.values()) if seed_rates else 0.0,
+                "fresh_seed_recurrence_class": "seed_recurrent" if seed_rates and min(seed_rates.values()) > 0.0 else "seed_fragile_or_absent",
+                "seed_rates_json": json.dumps(seed_rates, sort_keys=True),
+            }
+        )
+    return rows
+
+
+def n6_transfer_summary_rows(sweep_rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    n6_rows = [row for row in sweep_rows if "n6_" in str(row.get("parameter_set_id", "")) or "n6" in str(row.get("environment_id", ""))]
+    if not n6_rows:
+        return [
+            {
+                "transfer_status": "not_run",
+                "reason": "current expanded run used n=5 local neighborhoods; n=6 transfer remains a follow-up allocation",
+            }
+        ]
+    return [
+        {
+            "transfer_status": "completed",
+            "n_rows": len(n6_rows),
+            "candidate_rate": mean(int(str(row["local_primary_class"]).endswith("_candidate")) for row in n6_rows),
+        }
+    ]
 
 
 def phenotype_transition_graph(anchors: list[dict[str, object]], sweep_rows: list[dict[str, object]]) -> list[dict[str, object]]:
@@ -779,6 +899,89 @@ def write_report(
         ]
     )
     (out_dir / "deformation_detector_upgrade_report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def write_medium_atlas_report(
+    out_dir: Path,
+    config: dict[str, object],
+    started: float,
+    anchors: list[dict[str, object]],
+    rank_effect: list[dict[str, object]],
+    margins: list[dict[str, object]],
+    sweep_rows: list[dict[str, object]],
+    transition_graph: list[dict[str, object]],
+    stability: list[dict[str, object]],
+    fakeouts: list[dict[str, object]],
+    boundaries: list[dict[str, object]],
+    fresh_seed_confirmation: list[dict[str, object]],
+    n6_transfer: list[dict[str, object]],
+    errors: list[dict[str, object]],
+) -> None:
+    transition_counts = _counts(row["transition_class"] for row in transition_graph)
+    margin_counts = _counts(row["margin_stability_class"] for row in margins)
+    band_classes = _counts(atlas_level_class(row, next((fakeout.get("fakeout_to_candidate_rate", 0.0) for fakeout in fakeouts if fakeout.get("anchor_id") == row.get("anchor_id")), 0.0)) for row in stability)
+    seed_recurrent = sum(1 for row in fresh_seed_confirmation if row.get("fresh_seed_recurrence_class") == "seed_recurrent")
+    n6_status = next((row.get("transfer_status", "not_run") for row in n6_transfer), "not_run")
+    if band_classes.get("stable_candidate_band", 0) or band_classes.get("near_miss_transition_band", 0):
+        decision = "broader_atlas_or_second_local_sweep"
+    elif transition_counts.get("fakeout_to_candidate_transition", 0):
+        decision = "second_local_sweep"
+    else:
+        decision = "measurement_limits_note_or_pause"
+    lines = [
+        "# RFS-MB0 Medium-Breadth Support/Distribution Atlas Report",
+        "",
+        "Promotion disabled: this is a guided support/distribution atlas, not Omega validation.",
+        "",
+        f"- Wall clock used: {time.perf_counter() - started:.1f} seconds",
+        f"- Workers requested: {config['workers']}",
+        f"- Anchors selected: {len(anchors)}",
+        f"- Sweep rows completed: {len(sweep_rows)}",
+        f"- Rank/effect rows: {len(rank_effect)}",
+        f"- Errors: {len(errors)}",
+        f"- Recommended next step: {decision}",
+        "",
+        "## Atlas Band Classes",
+        "",
+        "| class | n |",
+        "|---|---:|",
+    ]
+    for key, value in sorted(band_classes.items()):
+        lines.append(f"| {key} | {value} |")
+    lines.extend(["", "## Transition Classes", "", "| transition | n |", "|---|---:|"])
+    for key, value in sorted(transition_counts.items()):
+        lines.append(f"| {key} | {value} |")
+    lines.extend(["", "## Margin Stability", "", "| stability | n |", "|---|---:|"])
+    for key, value in sorted(margin_counts.items()):
+        lines.append(f"| {key} | {value} |")
+    lines.extend(
+        [
+            "",
+            "## Required Answers",
+            "",
+            f"- Candidate-stable local neighborhoods generalized to sampled bands: {band_classes.get('stable_candidate_band', 0) > 0}",
+            f"- Fakeout-to-candidate transitions recurred: {transition_counts.get('fakeout_to_candidate_transition', 0) > 0 or band_classes.get('near_miss_transition_band', 0) > 0}",
+            f"- Fresh-seed recurrent band rows: {seed_recurrent}",
+            f"- n=6 transfer status: {n6_status}",
+            "- Path metrics remained parked and did not drive classification.",
+            "",
+            "## Sensitive Parameters",
+            "",
+            "| parameter | candidate_rate | fakeout_rate |",
+            "|---|---:|---:|",
+        ]
+    )
+    for row in boundaries:
+        lines.append(f"| {row.get('parameter', '')} | {row.get('candidate_rate', '')} | {row.get('fakeout_rate', '')} |")
+    lines.extend(
+        [
+            "",
+            "## Claim Boundary",
+            "",
+            "This run maps support/distribution deformation bands under specified controls. It does not claim agency, identity, valuerhood, path-process detection, Omega detection, or scientific-gate passage.",
+        ]
+    )
+    (out_dir / "medium_breadth_support_distribution_atlas_report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
 def derived_scores(row: dict[str, str]) -> dict[str, float]:

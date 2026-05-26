@@ -1158,6 +1158,27 @@ Result in one line:
   local regions and fakeout-to-candidate transitions, supporting a medium-breadth
   support/distribution atlas while leaving path metrics parked.
 
+### RFS-MB0 Medium-Breadth Support/Distribution Atlas 10h
+
+Directory:
+
+- `results/rfs_mb0_relation_atlas/20260525_medium_breadth_support_distribution_atlas_10h/`
+
+Primary retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_medium_breadth_support_distribution_atlas_10h_result.md`
+
+Reason retained:
+
+- This is the first unattended medium-breadth support/distribution atlas using
+  the upgraded rank/effect/margin detector and guided local parameter bands.
+
+Result in one line:
+
+- The run was technically clean and mapped recurrent near-miss/saturation/probe
+  boundaries, but stable candidate bands did not generalize; n=6 transfer remains
+  an explicit follow-up rather than a completed result.
+
 The important public caveat:
 
 ```text
