@@ -556,7 +556,10 @@ def run_sweep_job(job: dict[str, object]) -> list[dict[str, object]]:
                 "observed_signature_support_size": support_size,
                 "observed_signature_support_fraction": support_fraction,
                 "probe_collision_rate": collision,
-                "support_ceiling_flag": int(support_fraction >= 0.90 or support_fraction <= 0.05),
+                "support_ceiling_flag": int(support_fraction >= 0.90),
+                "support_floor_flag": int(support_fraction <= 0.05),
+                "support_extreme_flag": int(support_fraction >= 0.90 or support_fraction <= 0.05),
+                "support_regime_class": support_regime_class(support_fraction),
                 "probe_resolution_class": probe_resolution_class(collision, support_fraction, 2 ** entropy, len(system.states), probe.probe_family),
                 "signature_entropy": entropy,
                 "signature_entropy_ceiling_fraction": entropy / max(1e-9, full_entropy),
@@ -942,7 +945,7 @@ def saturation_boundary_audit_rows(sweep_rows: list[dict[str, object]]) -> list[
     for row in sweep_rows:
         support_fraction = float(row.get("reachable_signature_support_fraction", 0.0) or 0.0)
         support_ceiling = int(row.get("support_ceiling_flag", 0) or 0)
-        saturation_flag = int(support_ceiling or support_fraction >= 0.90 or "ceiling" in str(row.get("local_primary_class", "")))
+        saturation_flag = int(support_ceiling or support_fraction >= 0.90)
         if not saturation_flag:
             continue
         pre_score = float(row.get("mixed_deformation_score", 0.0) or 0.0) if float(row.get("H", 0) or 0) <= 4 else 0.0
@@ -958,6 +961,9 @@ def saturation_boundary_audit_rows(sweep_rows: list[dict[str, object]]) -> list[
                 "start_samples": row.get("start_samples", ""),
                 "support_fraction": support_fraction,
                 "support_ceiling_flag": support_ceiling,
+                "support_floor_flag": row.get("support_floor_flag", ""),
+                "support_extreme_flag": row.get("support_extreme_flag", ""),
+                "support_regime_class": row.get("support_regime_class", ""),
                 "state_space_saturation_flag": int(support_fraction >= 0.95),
                 "probe_alphabet_saturation_flag": support_ceiling,
                 "frontier_growth_slope": row.get("support_growth_slope", ""),
@@ -977,7 +983,9 @@ def probe_resolution_boundary_audit_rows(sweep_rows: list[dict[str, object]]) ->
     rows = []
     by_band = group_by(sweep_rows, ("anchor_id",))
     for row in sweep_rows:
-        probe_limited = "collision" in str(row.get("local_primary_class", "")) or "identity_like" in str(row.get("probe_resolution_class", ""))
+        collision_limited = "collision" in str(row.get("local_primary_class", ""))
+        identity_like_limited = "identity_like" in str(row.get("probe_resolution_class", ""))
+        probe_limited = collision_limited or identity_like_limited
         if not probe_limited:
             continue
         same_band_classes = sorted({str(item.get("local_primary_class", "")) for item in by_band.get((row.get("anchor_id", ""),), []) if item.get("probe_family") != row.get("probe_family")})
@@ -990,6 +998,9 @@ def probe_resolution_boundary_audit_rows(sweep_rows: list[dict[str, object]]) ->
                 "probe_collision_rate": row.get("probe_collision_rate", ""),
                 "observed_signature_support_fraction": row.get("observed_signature_support_fraction", row.get("reachable_signature_support_fraction", "")),
                 "support_ceiling_flag": row.get("support_ceiling_flag", ""),
+                "support_floor_flag": row.get("support_floor_flag", ""),
+                "collision_limited_flag": int(collision_limited),
+                "identity_like_limited_flag": int(identity_like_limited),
                 "candidate_score": row.get("mixed_deformation_score", ""),
                 "matched_control_score": "",
                 "candidate_minus_control": "",
@@ -1778,7 +1789,19 @@ def local_parameter_value(value: object) -> object:
 
 
 def deformation_score_csv(row: dict[str, str]) -> float:
-    return float(row.get("JS_to_triviality_nulls", 0.0) or 0.0) + float(row.get("JS_to_support_nulls", 0.0) or 0.0)
+    js_distribution_score = float(row.get("JS_to_triviality_nulls", 0.0) or 0.0) + float(row.get("JS_to_support_nulls", 0.0) or 0.0)
+    support_set_score = float(row.get("support_symmetric_difference_fraction", 0.0) or 0.0)
+    mass_concentration_score = float(row.get("mass_concentration_top_k", 0.0) or 0.0)
+    support_growth_score = abs(float(row.get("support_growth_slope", 0.0) or 0.0))
+    return 0.40 * js_distribution_score + 0.35 * support_set_score + 0.15 * mass_concentration_score + 0.10 * support_growth_score
+
+
+def support_regime_class(support_fraction: float) -> str:
+    if support_fraction <= 0.05:
+        return "support_floor_sparse"
+    if support_fraction >= 0.90:
+        return "support_ceiling_saturated"
+    return "middle_support_regime"
 
 
 def row_id(row: dict[str, str]) -> str:

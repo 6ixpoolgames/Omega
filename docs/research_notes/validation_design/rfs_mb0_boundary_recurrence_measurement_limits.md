@@ -8,6 +8,14 @@ The current RFS-MB0 boundary workflow finds local/pre-control and fresh-seed
 recurrent boundary structure, but the focused pass did not produce clean
 recurrent boundary candidates.
 
+Update after detector instrumentation repair:
+
+```text
+The measurement limit remains, but the diagnosis is sharper.
+The old generic probe-limited label decomposes mostly into collision-limited
+recurrence, with a smaller weak-control-bundle class.
+```
+
 The decisive result is:
 
 ```text
@@ -15,6 +23,14 @@ The decisive result is:
 20 / 20 were non-saturation recurrent by the row-level saturation flag
 0 / 20 were clean recurrent boundary candidates
 20 / 20 were classified as evidence_probe_recurrent_but_probe_limited
+```
+
+Corrected rerun:
+
+```text
+independent_axis_recurrent_but_collision_limited: 16 / 20
+weak_control_bundle_recurrence: 4 / 20
+clean recurrent boundary candidates: 0 / 20
 ```
 
 ## Measurement Limit
@@ -38,13 +54,13 @@ Do not run n=6 from this state.
 
 Do not use broader breadth as the next move.
 
-The next useful work is probe/detector repair:
+The next useful work is probe repair:
 
 ```text
-1. reduce probe limitation in the evidence probe panel
+1. reduce collision in the evidence probe panel
 2. introduce stricter but non-identity-like evidence probes
-3. recompute matched controls for generated focused systems
-4. rerun a small focused pass only after probe limitation is reduced
+3. strengthen focused matched-control bundles
+4. rerun a small focused pass only after collision is reduced
 ```
 
 If probe-limited recurrence persists after probe repair, MB0 should be paused
@@ -55,4 +71,3 @@ or reframed as a measurement-limits branch rather than scaled further.
 This note does not claim Omega, agency, value, identity, viability,
 path-process detection, stable candidate bands, n=6 transfer, or
 scientific-gate passage.
-

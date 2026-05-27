@@ -264,7 +264,10 @@ def run_job(job: dict[str, object]) -> list[dict[str, object]]:
                 "observed_signature_support_size": support_size,
                 "observed_signature_support_fraction": support_fraction,
                 "probe_collision_rate": collision,
-                "support_ceiling_flag": int(support_fraction >= 0.90 or support_fraction <= 0.05),
+                "support_ceiling_flag": int(support_fraction >= 0.90),
+                "support_floor_flag": int(support_fraction <= 0.05),
+                "support_extreme_flag": int(support_fraction >= 0.90 or support_fraction <= 0.05),
+                "support_regime_class": support_regime_class(support_fraction),
                 "probe_resolution_class": probe_resolution_class(collision, support_fraction, 2 ** entropy_from_counts(observed), len(system.states), probe.probe_family),
                 "signature_entropy": entropy_from_counts(observed),
                 "signature_entropy_ceiling_fraction": entropy_from_counts(observed) / max(1e-9, full_entropy),
@@ -314,6 +317,7 @@ def diagnostic_nulls(system: object, probe: object, observed_by_h: dict[int, dic
 
 def classify_pre_control(row: dict[str, object]) -> dict[str, object]:
     support_limited = int(row["support_ceiling_flag"])
+    support_floor_limited = int(row.get("support_floor_flag", 0) or 0)
     collision_limited = float(row["probe_collision_rate"]) >= 0.95
     identity_like = row["probe_resolution_class"] == "identity_like_control"
     trivial_js = float(row.get("JS_to_triviality_nulls", 0.0) or 0.0)
@@ -352,6 +356,7 @@ def classify_pre_control(row: dict[str, object]) -> dict[str, object]:
         "support_result": support_result,
         "distribution_result": distribution_result,
         "probe_result": probe_result,
+        "support_floor_result": "support_floor_sparse" if support_floor_limited else "not_floor_limited",
         "matched_control_result": "pending",
         "start_result": "pending",
         "mechanism_result": ";".join(mechanism_tags) if mechanism_tags else "underdetermined",
@@ -360,6 +365,14 @@ def classify_pre_control(row: dict[str, object]) -> dict[str, object]:
         "base_fakeout_class": "none" if primary.endswith("_candidate") else primary,
         "promotion_enabled": False,
     }
+
+
+def support_regime_class(support_fraction: float) -> str:
+    if support_fraction <= 0.05:
+        return "support_floor_sparse"
+    if support_fraction >= 0.90:
+        return "support_ceiling_saturated"
+    return "middle_support_regime"
 
 
 def write_outputs(
