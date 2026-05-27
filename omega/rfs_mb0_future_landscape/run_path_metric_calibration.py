@@ -250,6 +250,16 @@ def build_probe(system: LandscapeSystem, probe_key: str, source_probe_family: st
             return 2
         return 3
 
+    def quantile_rank_map(values_by_state: dict[State, float], bins: int) -> dict[State, int]:
+        values = sorted(values_by_state.values())
+        if not values:
+            return {state: 0 for state in system.states}
+        out: dict[State, int] = {}
+        for state, value in values_by_state.items():
+            lower_count = sum(1 for item in values if item < value)
+            out[state] = min(bins - 1, int(bins * lower_count / max(1, len(values))))
+        return out
+
     if probe_key == "existing_low":
         probes = [probe for probe in generate_probes(system, 2) if probe.probe_family == source_probe_family]
         if not probes:
@@ -377,6 +387,98 @@ def build_probe(system: LandscapeSystem, probe_key: str, source_probe_family: st
             return (bucket(len(h1)), bucket(len(h2)), bucket(len(h3)), constraint_bucket)
 
         return Probe("multi_scale_support_region_bucket", "quotient_support_growth", multi_scale_support_region_bucket, "multi_scale_support_region_bucket", 4), 4 ** 4, "support_growth"
+
+    if probe_key == "degree_profile_rank":
+        out_rank = quantile_rank_map({state: float(len(system.edges.get(state, ()))) for state in system.states}, 4)
+        in_rank = quantile_rank_map({state: float(in_degree.get(state, 0)) for state in system.states}, 4)
+        return Probe("degree_profile_rank", "degree_rank_profile", lambda s, out_rank=out_rank, in_rank=in_rank: (out_rank[s], in_rank[s]), "degree_profile_rank", 2), 16, "degree_rank"
+
+    if probe_key == "constraint_cross_degree_rank":
+        out_rank = quantile_rank_map({state: float(len(system.edges.get(state, ()))) for state in system.states}, 4)
+        levels = max(3, min(6, len(constraints) + 1))
+
+        def constraint_cross_degree_rank(s: State, out_rank=out_rank, constraints=constraints, levels=levels) -> tuple[int, int]:
+            violation = min(levels - 1, int(round(_constraint_violation(s, constraints))))
+            return (violation, out_rank[s])
+
+        return Probe("constraint_cross_degree_rank", "cross_constraint_degree", constraint_cross_degree_rank, "constraint_cross_degree_rank", 2), levels * 4, "cross_constraint_degree"
+
+    if probe_key == "constraint_gradient_class":
+        levels = max(3, min(6, len(constraints) + 1))
+
+        def constraint_gradient_class(s: State, constraints=constraints, levels=levels) -> tuple[int, int]:
+            self_violation = _constraint_violation(s, constraints)
+            targets = tuple(system.edges.get(s, ()))
+            if not targets:
+                return (min(levels - 1, int(round(self_violation))), 0)
+            neighbor_mean = mean(_constraint_violation(target, constraints) for target in targets)
+            delta = neighbor_mean - self_violation
+            if delta > 0.3:
+                gradient = 1
+            elif delta < -0.3:
+                gradient = 2
+            else:
+                gradient = 0
+            return (min(levels - 1, int(round(self_violation))), gradient)
+
+        return Probe("constraint_gradient_class", "constraint_gradient", constraint_gradient_class, "constraint_gradient_class", 2), levels * 3, "constraint_gradient"
+
+    if probe_key == "horizon_growth_contrast_v2":
+        h1 = {state: set(system.edges.get(state, ())) for state in system.states}
+        h2 = {state: {item for target in h1[state] for item in system.edges.get(target, ())} for state in system.states}
+        h4 = {state: {item for target in h2[state] for item in h2.get(target, set())} for state in system.states}
+        ratio_12 = {state: len(h2[state]) / max(1, len(h1[state])) for state in system.states}
+        ratio_24 = {state: len(h4[state]) / max(1, len(h2[state])) for state in system.states}
+        rank_12 = quantile_rank_map(ratio_12, 4)
+        rank_24 = quantile_rank_map(ratio_24, 4)
+
+        def horizon_growth_contrast_v2(s: State, rank_12=rank_12, rank_24=rank_24, h1=h1, h2=h2) -> tuple[int, int, int]:
+            dead_or_floor = int(len(h1[s]) == 0 or len(h2[s]) <= 1)
+            return (rank_12[s], rank_24[s], dead_or_floor)
+
+        return Probe("horizon_growth_contrast_v2", "frontier_dynamics", horizon_growth_contrast_v2, "horizon_growth_contrast_v2", 3), 32, "frontier_dynamics"
+
+    if probe_key == "wiring_role_class_v2":
+        out_rank = quantile_rank_map({state: float(len(system.edges.get(state, ()))) for state in system.states}, 4)
+        in_rank = quantile_rank_map({state: float(in_degree.get(state, 0)) for state in system.states}, 4)
+        reciprocity_rank = quantile_rank_map(
+            {
+                state: float(sum(int((target, state) in edge_set) for target in system.edges.get(state, ())))
+                for state in system.states
+            },
+            4,
+        )
+
+        def wiring_role_class_v2(s: State, out_rank=out_rank, in_rank=in_rank, reciprocity_rank=reciprocity_rank) -> tuple[int, int, int]:
+            return (out_rank[s], in_rank[s], reciprocity_rank[s])
+
+        return Probe("wiring_role_class_v2", "wiring_role", wiring_role_class_v2, "wiring_role_class_v2", 3), 64, "wiring_role"
+
+    if probe_key == "self_recurrence_horizon_v2":
+        h1 = {state: set(system.edges.get(state, ())) for state in system.states}
+        h2 = {state: {item for target in h1[state] for item in h1.get(target, set())} for state in system.states}
+        h4 = {state: {item for target in h2[state] for item in h2.get(target, set())} for state in system.states}
+        h8 = {state: {item for target in h4[state] for item in h4.get(target, set())} for state in system.states}
+        return_counts = {
+            state: int(state in h1[state]) + int(state in h2[state]) + int(state in h4[state]) + int(state in h8[state])
+            for state in system.states
+        }
+        return_rank = quantile_rank_map({state: float(count) for state, count in return_counts.items()}, 4)
+
+        def self_recurrence_horizon_v2(s: State, h1=h1, h2=h2, h4=h4, h8=h8, return_rank=return_rank) -> tuple[int, int]:
+            if s in h1[s]:
+                earliest = 1
+            elif s in h2[s]:
+                earliest = 2
+            elif s in h4[s]:
+                earliest = 3
+            elif s in h8[s]:
+                earliest = 4
+            else:
+                earliest = 0
+            return (earliest, return_rank[s])
+
+        return Probe("self_recurrence_horizon_v2", "cycle_structure", self_recurrence_horizon_v2, "self_recurrence_horizon_v2", 2), 20, "cycle_structure"
 
     if probe_key == "full_state_hash":
         buckets = max(32, min(2048, len(system.states) * 2))

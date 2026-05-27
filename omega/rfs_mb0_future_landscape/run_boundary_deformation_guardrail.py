@@ -32,6 +32,12 @@ PROBE_AXES = {
     "frontier_response_bucket": "frontier_response_axis",
     "motif_count_bucket": "relation_motif_axis",
     "multi_scale_support_region_bucket": "support_growth_axis",
+    "constraint_gradient_class": "constraint_gradient_axis",
+    "degree_profile_rank": "degree_rank_axis",
+    "constraint_cross_degree_rank": "cross_constraint_degree_axis",
+    "horizon_growth_contrast_v2": "frontier_dynamics_axis",
+    "self_recurrence_horizon_v2": "cycle_structure_axis",
+    "wiring_role_class_v2": "wiring_role_axis",
     "existing_low": "low_projection_axis",
     "full_state_hash": "identity_axis",
     "full_state_strict": "identity_axis",
@@ -42,6 +48,12 @@ NEW_QUOTIENT_AXES = {
     "frontier_response_axis",
     "relation_motif_axis",
     "support_growth_axis",
+    "constraint_gradient_axis",
+    "degree_rank_axis",
+    "cross_constraint_degree_axis",
+    "frontier_dynamics_axis",
+    "cycle_structure_axis",
+    "wiring_role_axis",
 }
 EXISTING_REPAIRED_AXES = {"coordinate_axis", "constraint_axis"}
 OUTPUTS = (
@@ -332,11 +344,14 @@ def quotient_metric_rows(rows: list[dict[str, object]], guardrail_rows: list[dic
 
 def default_guardrail_fields(row: dict[str, object]) -> dict[str, object]:
     row["effective_signature_count"] = int(float_or_zero(row.get("effective_signature_count", row.get("reachable_signature_support_size"))))
-    row["average_bucket_size"] = float_or_zero(row.get("average_bucket_size")) or (float_or_zero(row.get("frontier_size")) / max(1.0, float_or_zero(row.get("effective_signature_count"))))
-    row["median_bucket_size"] = float_or_zero(row.get("median_bucket_size"))
-    row["min_bucket_size"] = float_or_zero(row.get("min_bucket_size"))
-    row["singleton_bucket_fraction"] = float_or_zero(row.get("singleton_bucket_fraction"))
+    missing = []
+    for field in ("average_bucket_size", "median_bucket_size", "min_bucket_size", "singleton_bucket_fraction"):
+        if row.get(field, "") == "":
+            row[field] = ""
+            missing.append(field)
     row["support_fraction"] = float_or_zero(row.get("reachable_signature_support_fraction"))
+    row["bucket_stats_available"] = int(not missing)
+    row["bucket_stats_missing_reason"] = "none" if not missing else "missing:" + ",".join(missing)
     row["identity_like_score"] = identity_like_score(row)
     return {}
 
@@ -352,17 +367,17 @@ def resolution_regime(row: dict[str, object], threshold: dict[str, dict[str, flo
         return "too_coarse_collision"
     identity = threshold["identity_like"]
     if (
-        float_or_zero(row.get("singleton_bucket_fraction")) >= identity["singleton_bucket_fraction"]
-        or float_or_zero(row.get("average_bucket_size")) <= identity["average_bucket_size"]
-        or float_or_zero(row.get("signature_entropy_ceiling_fraction")) >= identity["entropy_ceiling_fraction"]
+        metric_ge(row.get("singleton_bucket_fraction"), identity["singleton_bucket_fraction"])
+        or metric_le(row.get("average_bucket_size"), identity["average_bucket_size"])
+        or metric_ge(row.get("signature_entropy_ceiling_fraction"), identity["entropy_ceiling_fraction"])
         or row.get("probe_axis") == "identity_axis"
     ):
         return "identity_like_control"
     watch = threshold["high_resolution_watch"]
     if (
-        float_or_zero(row.get("singleton_bucket_fraction")) >= watch["singleton_bucket_fraction"]
-        or float_or_zero(row.get("average_bucket_size")) <= watch["average_bucket_size"]
-        or float_or_zero(row.get("signature_entropy_ceiling_fraction")) >= watch["entropy_ceiling_fraction"]
+        metric_ge(row.get("singleton_bucket_fraction"), watch["singleton_bucket_fraction"])
+        or metric_le(row.get("average_bucket_size"), watch["average_bucket_size"])
+        or metric_ge(row.get("signature_entropy_ceiling_fraction"), watch["entropy_ceiling_fraction"])
     ):
         return "high_resolution_watch"
     return "usable_quotient"
@@ -563,11 +578,27 @@ def probe_role(probe_key: str) -> str:
 
 
 def identity_like_score(row: dict[str, object]) -> float:
-    singleton = float_or_zero(row.get("singleton_bucket_fraction"))
-    avg = float_or_zero(row.get("average_bucket_size"))
-    entropy = float_or_zero(row.get("signature_entropy_ceiling_fraction"))
-    avg_component = max(0.0, min(1.0, (3.0 - avg) / 3.0))
-    return max(singleton, avg_component, entropy)
+    components = []
+    if metric_available(row.get("singleton_bucket_fraction")):
+        components.append(float_or_zero(row.get("singleton_bucket_fraction")))
+    if metric_available(row.get("average_bucket_size")):
+        avg = float_or_zero(row.get("average_bucket_size"))
+        components.append(max(0.0, min(1.0, (3.0 - avg) / 3.0)))
+    if metric_available(row.get("signature_entropy_ceiling_fraction")):
+        components.append(float_or_zero(row.get("signature_entropy_ceiling_fraction")))
+    return max(components) if components else 0.0
+
+
+def metric_available(value: object) -> bool:
+    return value not in {"", None}
+
+
+def metric_ge(value: object, threshold: float) -> bool:
+    return metric_available(value) and float_or_zero(value) >= threshold
+
+
+def metric_le(value: object, threshold: float) -> bool:
+    return metric_available(value) and float_or_zero(value) <= threshold
 
 
 def detection_status(row: dict[str, object]) -> str:

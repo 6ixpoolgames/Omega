@@ -797,3 +797,45 @@ This is narrower, cleaner, and more defensible.
 If the guided atlas finds stable deformation bands, the next step is broader regime mapping and a theory note connecting support deformation to the future-landscape shadow concept.
 
 If the guided atlas collapses into fakeouts or matched-control equivalence, the next step is a measurement-limits note and possible reassessment of detector or generator design.
+
+## 23. 2026-05-27 Instrumentation Pivot Update
+
+The branch has now pivoted again, from broader support/distribution atlas work to RFS-MB0 instrumentation.
+
+Current posture:
+
+```text
+The substrate remains potentially fertile, but the measurement basis is not yet adequate.
+```
+
+The boundary deformation guardrail audit showed that recurrent boundary structure is still visible, but available probes do not yet characterize it as clean quotient-level deformation across independent non-identity axes. New quotient probes were mostly collision-limited, and available usable signal remained concentrated on the constraint axis.
+
+The first Phase A instrumentation preflight completed cleanly:
+
+```text
+jobs_completed: 800 / 800
+row_count: 39600
+errors: 0
+available_axis_gate: fail
+new_quotient_axis_gate: fail
+passing design-set axis: constraint_axis only
+```
+
+Interpretation:
+
+```text
+Do not proceed to Phase B detection yet.
+Do not touch the holdout for confirmation yet.
+Return to probe design and improve the instrument first.
+```
+
+This pivot is not a retreat from MB0. It is a stricter separation between:
+
+```text
+substrate fertility
+instrument viability
+candidate detection
+identity or agent classification
+```
+
+Identity and agent classification remain deferred. The active target is still recurrent boundary deformation detection, but only after the instrument can pass preflight without relying on identity-like or collision-limited probes.
