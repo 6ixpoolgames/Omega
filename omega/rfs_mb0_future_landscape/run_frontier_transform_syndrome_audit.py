@@ -3,14 +3,16 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import random
 import time
 from bisect import bisect_right
 from collections import Counter, defaultdict
+from itertools import combinations
 from pathlib import Path
 from statistics import mean, pstdev
 
 from .run_focused_boundary_recurrence import float_or_zero, group_by, write_csv
-from .run_frontier_transform_b0 import metric_family
+from .run_frontier_transform_b0 import FLOW_MODES, PROBES, WINDOWS, metric_family
 
 
 REQUIRED_PHASE_B_INPUTS = (
@@ -29,6 +31,7 @@ CONTROL_INPUT_CANDIDATES = (
 )
 
 OUTPUTS = (
+    "syndrome_manifest.json",
     "phase_b_postmortem_control_match_decomposition.csv",
     "phase_b_postmortem_top_control_equivalent_rows.csv",
     "phase_b_postmortem_control_match_by_control_type.csv",
@@ -39,6 +42,8 @@ OUTPUTS = (
     "phase_b_syndrome_component_scores.csv",
     "phase_b_syndrome_smoke.csv",
     "phase_b_syndrome_vs_controls.csv",
+    "phase_b_syndrome_marginal_preserving_controls.csv",
+    "phase_b_syndrome_component_ablation.csv",
     "phase_b_syndrome_multiplicity_audit.csv",
     "phase_b_syndrome_readiness.csv",
     "errors.csv",
@@ -70,6 +75,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--phase-b-dir", type=Path, required=True)
     parser.add_argument("--out", type=Path, default=None)
     parser.add_argument("--component-z-threshold", type=float, default=0.5)
+    parser.add_argument("--marginal-control-replicates", type=int, default=500)
+    parser.add_argument("--marginal-control-seed", type=int, default=20260528)
     return parser.parse_args()
 
 
@@ -78,6 +85,8 @@ def main() -> None:
     started = time.perf_counter()
     out_dir = args.out or (args.phase_b_dir / "stage_a_syndrome_audit")
     out_dir.mkdir(parents=True, exist_ok=True)
+    manifest = syndrome_manifest()
+    write_syndrome_manifest(out_dir, manifest)
     missing = [name for name in REQUIRED_PHASE_B_INPUTS if not (args.phase_b_dir / name).exists()]
     if not any((args.phase_b_dir / name).exists() for name in CONTROL_INPUT_CANDIDATES):
         missing.append("phase_b_stage_a_control_values.csv or phase_b_design_control_rows.csv")
@@ -91,6 +100,9 @@ def main() -> None:
         "n6_run_count": 0,
         "alphabet_expansion_count": 0,
         "component_z_threshold": args.component_z_threshold,
+        "marginal_control_replicates": args.marginal_control_replicates,
+        "marginal_control_seed": args.marginal_control_seed,
+        "syndrome_manifest_written_before_scoring": 1,
         "started_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     }
     errors: list[dict[str, object]] = []
@@ -110,7 +122,7 @@ def main() -> None:
     control_quality = control_quality_by_name(control_rows, control_quality_rows)
     postmortem_control_decomposition = control_match_decomposition(recurrence_rows)
     top_control_equivalent = top_control_equivalent_rows(recurrence_rows)
-    by_control = control_match_by_control_type(control_rows, control_quality)
+    by_control = control_match_by_control_type(recurrence_rows, effect_rows, control_quality)
     by_flow = flow_mode_decomposition(metric_rows, effect_rows)
     by_window = window_decomposition(metric_rows, control_rows)
     by_probe = probe_dependency(metric_rows, effect_rows, recurrence_rows)
@@ -121,9 +133,21 @@ def main() -> None:
         args.component_z_threshold,
     )
     smoke_rows = syndrome_smoke(component_scores)
-    syndrome_controls = syndrome_vs_controls(component_scores)
+    marginal_controls = marginal_preserving_syndrome_controls(
+        component_scores,
+        max(100, args.marginal_control_replicates),
+        args.marginal_control_seed,
+    )
+    ablation = syndrome_component_ablation(component_scores, marginal_controls)
+    syndrome_controls = syndrome_vs_controls(component_scores, marginal_controls, ablation)
     multiplicity = syndrome_multiplicity_audit(component_scores)
-    readiness = syndrome_readiness(smoke_rows, readiness_rows, control_quality_rows, control_quality)
+    readiness = syndrome_readiness(
+        syndrome_controls,
+        ablation,
+        readiness_rows,
+        control_quality_rows,
+        control_quality,
+    )
 
     write_csv(out_dir / "phase_b_postmortem_control_match_decomposition.csv", postmortem_control_decomposition)
     write_csv(out_dir / "phase_b_postmortem_top_control_equivalent_rows.csv", top_control_equivalent)
@@ -134,6 +158,8 @@ def main() -> None:
     write_csv(out_dir / "phase_b_syndrome_component_scores.csv", component_scores)
     write_csv(out_dir / "phase_b_syndrome_smoke.csv", smoke_rows)
     write_csv(out_dir / "phase_b_syndrome_vs_controls.csv", syndrome_controls)
+    write_csv(out_dir / "phase_b_syndrome_marginal_preserving_controls.csv", marginal_controls)
+    write_csv(out_dir / "phase_b_syndrome_component_ablation.csv", ablation)
     write_csv(out_dir / "phase_b_syndrome_multiplicity_audit.csv", multiplicity)
     write_csv(out_dir / "phase_b_syndrome_readiness.csv", readiness)
     write_csv(out_dir / "errors.csv", errors)
@@ -145,6 +171,9 @@ def main() -> None:
     status["control_rows"] = len(control_rows)
     status["control_source"] = control_source_name
     status["syndrome_component_rows"] = len(component_scores)
+    status["syndrome_manifest_rows"] = len(manifest)
+    status["marginal_preserving_control_rows"] = len(marginal_controls)
+    status["component_ablation_rows"] = len(ablation)
     (out_dir / "status.json").write_text(json.dumps(status, indent=2, sort_keys=True), encoding="utf-8")
     write_manifest(out_dir)
 
@@ -162,31 +191,87 @@ def write_missing_outputs(out_dir: Path, status: dict[str, object], missing: lis
     write_manifest(out_dir)
 
 
+def syndrome_manifest() -> list[dict[str, object]]:
+    windows = [f"{left}->{right}" for left, right in WINDOWS]
+    eligible_probes = [probe for probe in PROBES if probe not in DIAGNOSTIC_PROBES]
+    out = []
+    for (syndrome_id,), components in group_by(syndrome_library(), ("syndrome_id",)).items():
+        component_rows = sorted(components, key=lambda row: str(row["syndrome_component_id"]))
+        out.append(
+            {
+                "syndrome_id": syndrome_id,
+                "selection_mode": "preregistered",
+                "readiness_allowed": True,
+                "component_count": len(component_rows),
+                "metric_components": [
+                    {
+                        "component_id": row["syndrome_component_id"],
+                        "metric_name": row["metric_name"],
+                        "metric_family": row["metric_family"],
+                    }
+                    for row in component_rows
+                ],
+                "allowed_windows": windows,
+                "allowed_window_relation": "canonical_phase_b_windows_only",
+                "allowed_flow_modes": list(FLOW_MODES),
+                "allowed_probes": eligible_probes,
+                "excluded_positive_probes": sorted(DIAGNOSTIC_PROBES),
+                "component_signs": {
+                    str(row["syndrome_component_id"]): int(row["direction"])
+                    for row in component_rows
+                },
+                "component_threshold_rule": "signed_z >= component_z_threshold",
+                "minimum_component_pass_count": len(component_rows),
+                "joint_pass_rule": "all_scored_components_pass_and_at_least_two_scored_components",
+                "informal_name_optional": informal_name(str(syndrome_id)),
+                "informal_interpretation": informal_interpretation(str(syndrome_id)),
+            }
+        )
+    return out
+
+
+def write_syndrome_manifest(out_dir: Path, manifest: list[dict[str, object]]) -> None:
+    (out_dir / "syndrome_manifest.json").write_text(json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8")
+
+
 def syndrome_library() -> list[dict[str, object]]:
     return [
-        component("stabilizing_boundary_syndrome", "growth_low", "frontier_growth_ratio", -1),
-        component("stabilizing_boundary_syndrome", "turnover_low", "support_turnover_rate", -1),
-        component("stabilizing_boundary_syndrome", "offdiag_low", "off_diagonal_transform_mass", -1),
-        component("stabilizing_boundary_syndrome", "bottleneck_high", "frontier_bottleneck_index", 1),
-        component("stabilizing_boundary_syndrome", "window_stability_low", "window_metric_vector_l2_distance_to_next", -1),
-        component("transition_boundary_syndrome", "turnover_high", "support_turnover_rate", 1),
-        component("transition_boundary_syndrome", "offdiag_high", "off_diagonal_transform_mass", 1),
-        component("transition_boundary_syndrome", "window_change_high", "window_metric_vector_l2_distance_to_next", 1),
-        component("transition_boundary_syndrome", "bottleneck_high", "frontier_bottleneck_index", 1),
-        component("compression_funnel_syndrome", "growth_low", "frontier_growth_ratio", -1),
-        component("compression_funnel_syndrome", "transition_entropy_low", "transition_matrix_entropy", -1),
-        component("compression_funnel_syndrome", "bottleneck_high", "frontier_bottleneck_index", 1),
-        component("compression_funnel_syndrome", "lost_signature_high", "lost_signature_rate", 1),
-        component("compression_funnel_syndrome", "new_signature_low", "new_signature_rate", -1),
-        component("diffusive_noise_syndrome", "turnover_high", "support_turnover_rate", 1),
-        component("diffusive_noise_syndrome", "offdiag_high", "off_diagonal_transform_mass", 1),
-        component("diffusive_noise_syndrome", "transition_entropy_high", "transition_matrix_entropy", 1),
-        component("diffusive_noise_syndrome", "bottleneck_low", "frontier_bottleneck_index", -1),
-        component("diffusive_noise_syndrome", "window_change_high", "window_metric_vector_l2_distance_to_next", 1),
-        component("recurrence_cascade_syndrome", "signature_js_next_low", "signature_distribution_js_to_next_window", -1),
-        component("recurrence_cascade_syndrome", "diagonal_persistence_high", "diagonal_persistence_mass", 1),
-        component("recurrence_cascade_syndrome", "flow_concentration_high", "top_k_flow_concentration", 1),
+        component("SYN_A_low_growth_high_bottleneck_low_offdiag", "growth_low", "frontier_growth_ratio", -1),
+        component("SYN_A_low_growth_high_bottleneck_low_offdiag", "bottleneck_high", "frontier_bottleneck_index", 1),
+        component("SYN_A_low_growth_high_bottleneck_low_offdiag", "offdiag_low", "off_diagonal_transform_mass", -1),
+        component("SYN_B_high_turnover_high_offdiag_high_window_delta", "turnover_high", "support_turnover_rate", 1),
+        component("SYN_B_high_turnover_high_offdiag_high_window_delta", "offdiag_high", "off_diagonal_transform_mass", 1),
+        component("SYN_B_high_turnover_high_offdiag_high_window_delta", "window_delta_high", "window_metric_vector_l2_distance_to_next", 1),
+        component("SYN_C_low_growth_high_concentration_low_entropy", "growth_low", "frontier_growth_ratio", -1),
+        component("SYN_C_low_growth_high_concentration_low_entropy", "concentration_high", "top_k_flow_concentration", 1),
+        component("SYN_C_low_growth_high_concentration_low_entropy", "transition_entropy_low", "transition_matrix_entropy", -1),
+        component("SYN_D_high_turnover_high_entropy_low_bottleneck_control", "turnover_high", "support_turnover_rate", 1),
+        component("SYN_D_high_turnover_high_entropy_low_bottleneck_control", "transition_entropy_high", "transition_matrix_entropy", 1),
+        component("SYN_D_high_turnover_high_entropy_low_bottleneck_control", "bottleneck_low", "frontier_bottleneck_index", -1),
+        component("SYN_E_transition_then_persistence_cascade", "signature_js_next_low", "signature_distribution_js_to_next_window", -1),
+        component("SYN_E_transition_then_persistence_cascade", "diagonal_persistence_high", "diagonal_persistence_mass", 1),
+        component("SYN_E_transition_then_persistence_cascade", "flow_concentration_high", "top_k_flow_concentration", 1),
     ]
+
+
+def informal_name(syndrome_id: str) -> str:
+    return {
+        "SYN_A_low_growth_high_bottleneck_low_offdiag": "stabilizing_boundary_syndrome",
+        "SYN_B_high_turnover_high_offdiag_high_window_delta": "transition_boundary_syndrome",
+        "SYN_C_low_growth_high_concentration_low_entropy": "compression_funnel_syndrome",
+        "SYN_D_high_turnover_high_entropy_low_bottleneck_control": "diffusive_noise_syndrome",
+        "SYN_E_transition_then_persistence_cascade": "recurrence_cascade_syndrome",
+    }.get(syndrome_id, "")
+
+
+def informal_interpretation(syndrome_id: str) -> str:
+    return {
+        "SYN_A_low_growth_high_bottleneck_low_offdiag": "low growth with bottlenecking and reduced off-diagonal transform mass",
+        "SYN_B_high_turnover_high_offdiag_high_window_delta": "high support turnover with high off-diagonal mass and window change",
+        "SYN_C_low_growth_high_concentration_low_entropy": "low growth with concentrated low-entropy transition flow",
+        "SYN_D_high_turnover_high_entropy_low_bottleneck_control": "high turnover and entropy without bottleneck concentration",
+        "SYN_E_transition_then_persistence_cascade": "low next-window signature divergence with persistence and flow concentration",
+    }.get(syndrome_id, "")
 
 
 def read_control_rows(phase_b_dir: Path) -> tuple[str, list[dict[str, str]]]:
@@ -205,6 +290,7 @@ def component(syndrome_id: str, component_id: str, metric_name: str, direction: 
         "metric_family": metric_family(metric_name),
         "direction": direction,
         "selection_mode": "preregistered",
+        "readiness_allowed": True,
     }
 
 
@@ -362,23 +448,254 @@ def syndrome_smoke(component_rows: list[dict[str, object]]) -> list[dict[str, ob
     return out
 
 
-def syndrome_vs_controls(component_rows: list[dict[str, object]]) -> list[dict[str, object]]:
+def marginal_preserving_syndrome_controls(
+    component_rows: list[dict[str, object]],
+    replicates: int,
+    seed: int,
+) -> list[dict[str, object]]:
+    out = []
+    for context in component_contexts(component_rows):
+        rng = random.Random(stable_context_seed(seed, context["syndrome_id"], context["probe_key"], context["flow_mode"]))
+        controls = []
+        vectors = context["component_vectors"]
+        component_ids = list(vectors)
+        for _replicate_id in range(replicates):
+            shuffled: dict[str, list[int]] = {}
+            for component_id, vector in vectors.items():
+                copied = list(vector)
+                rng.shuffle(copied)
+                shuffled[component_id] = copied
+            controls.append(joint_rate(shuffled.values()))
+        observed = float(context["observed_joint_rate"])
+        control_mean = mean(controls) if controls else 0.0
+        percentile_value = percentile(observed, controls)
+        for replicate_id, control_rate in enumerate(controls):
+            for component_id in component_ids:
+                out.append(
+                    {
+                        "syndrome_id": context["syndrome_id"],
+                        "probe_key": context["probe_key"],
+                        "flow_mode": context["flow_mode"],
+                        "replicate_id": replicate_id,
+                        "component_id": component_id,
+                        "component_marginal_rate": context["component_marginal_rates"][component_id],
+                        "observed_joint_rate": observed,
+                        "control_joint_rate": control_rate,
+                        "control_joint_rate_mean": control_mean,
+                        "joint_rate_excess": observed - control_mean,
+                        "joint_rate_percentile": percentile_value,
+                        "replicate_count": replicates,
+                        "complete_unit_count": context["complete_unit_count"],
+                        "control_family": "component_marginal_preserving_syndrome_control",
+                    }
+                )
+    return out
+
+
+def syndrome_component_ablation(
+    component_rows: list[dict[str, object]],
+    marginal_controls: list[dict[str, object]],
+) -> list[dict[str, object]]:
+    control_summary = marginal_control_summary(marginal_controls)
+    out = []
+    for context in component_contexts(component_rows):
+        key = (context["syndrome_id"], context["probe_key"], context["flow_mode"])
+        controls = control_summary.get(key, {})
+        vectors = context["component_vectors"]
+        component_ids = list(vectors)
+        full_score = float(context["observed_joint_rate"])
+        best_single = max((context["component_marginal_rates"][component_id] for component_id in component_ids), default=0.0)
+        pair_scores = [
+            joint_rate(vectors[component_id] for component_id in pair)
+            for pair in combinations(component_ids, 2)
+        ]
+        best_pair = max(pair_scores, default=0.0)
+        full_excess = float(controls.get("joint_rate_excess", 0.0) or 0.0)
+        single_component_driven = int(full_excess > 0 and best_single >= 0.90 and best_pair <= full_score + 1e-12)
+        decision = "single_component_driven_not_joint_syndrome" if single_component_driven else "joint_syndrome_not_single_component_driven"
+        for removed in component_ids:
+            kept = [component_id for component_id in component_ids if component_id != removed]
+            leave_one_out = joint_rate(vectors[component_id] for component_id in kept)
+            out.append(
+                {
+                    "syndrome_id": context["syndrome_id"],
+                    "probe_key": context["probe_key"],
+                    "flow_mode": context["flow_mode"],
+                    "ablation_kind": "leave_one_component_out",
+                    "component_removed": removed,
+                    "component_subset_json": json.dumps(kept),
+                    "full_syndrome_score": full_score,
+                    "ablated_score": leave_one_out,
+                    "best_single_component_score": best_single,
+                    "best_pair_score": best_pair,
+                    "single_component_explained_fraction": best_single / full_score if full_score > 0 else 0.0,
+                    "joint_rate_excess": full_excess,
+                    "joint_rate_percentile": controls.get("joint_rate_percentile", ""),
+                    "decision_class": decision,
+                    "complete_unit_count": context["complete_unit_count"],
+                }
+            )
+    return out
+
+
+def syndrome_vs_controls(
+    component_rows: list[dict[str, object]],
+    marginal_controls: list[dict[str, object]],
+    ablation_rows: list[dict[str, object]],
+) -> list[dict[str, object]]:
+    marginal_summary = marginal_control_summary(marginal_controls)
+    ablation_summary = ablation_by_context(ablation_rows)
     out = []
     for (syndrome_id, probe, flow), items in group_by(component_rows, ("syndrome_id", "probe_key", "flow_mode")).items():
         scored = [item for item in items if item.get("component_status") == "scored"]
         passed = [item for item in scored if int(item.get("component_pass", 0))]
+        key = (str(syndrome_id), str(probe), str(flow))
+        controls = marginal_summary.get(key, {})
+        observed_joint = float_or_zero(controls.get("observed_joint_rate"))
+        control_mean = float_or_zero(controls.get("control_joint_rate_mean"))
+        percentile_value = float_or_zero(controls.get("joint_rate_percentile"))
+        ablation = ablation_summary.get(key, {})
+        marginal_available = bool(controls)
+        apparent_joint_positive = (
+            marginal_available
+            and
+            observed_joint > control_mean
+            and percentile_value >= 0.80
+            and str(probe) not in DIAGNOSTIC_PROBES
+        )
         out.append({
             "syndrome_id": syndrome_id,
             "probe_key": probe,
             "flow_mode": flow,
+            "selection_mode": "preregistered",
+            "readiness_allowed": int(str(probe) not in DIAGNOSTIC_PROBES),
             "component_rows": len(items),
             "scored_component_rows": len(scored),
             "component_pass_rows": len(passed),
             "component_pass_rate": len(passed) / max(1, len(scored)),
             "mean_signed_z": mean(float_or_zero(item.get("signed_z")) for item in scored) if scored else "",
-            "control_equivalence_read": "not_control_equivalent_smoke" if passed and len(passed) / max(1, len(scored)) >= 0.5 else "control_equivalent_or_insufficient",
+            "observed_joint_rate": observed_joint,
+            "component_marginal_preserving_control_mean": control_mean,
+            "joint_rate_excess": observed_joint - control_mean,
+            "joint_rate_percentile": percentile_value,
+            "marginal_control_replicates": controls.get("replicate_count", ""),
+            "single_component_ablation_decision": ablation.get("decision_class", ""),
+            "control_equivalence_read": control_equivalence_read(apparent_joint_positive, marginal_available),
+            "stage_a_decision_class": syndrome_stage_a_decision(apparent_joint_positive, ablation, marginal_available),
         })
     return out
+
+
+def component_contexts(component_rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    library_components = {
+        syndrome_id: [str(row["syndrome_component_id"]) for row in sorted(items, key=lambda item: str(item["syndrome_component_id"]))]
+        for (syndrome_id,), items in group_by(syndrome_library(), ("syndrome_id",)).items()
+    }
+    contexts = []
+    for (syndrome_id, probe, flow), items in group_by(component_rows, ("syndrome_id", "probe_key", "flow_mode")).items():
+        expected_components = library_components.get(str(syndrome_id), [])
+        units: dict[tuple[object, ...], dict[str, int]] = defaultdict(dict)
+        for item in items:
+            if item.get("component_status") != "scored":
+                continue
+            unit_key = (
+                item.get("group_id"),
+                item.get("seed"),
+                item.get("start_index"),
+                item.get("start_samples"),
+                item.get("window"),
+            )
+            units[unit_key][str(item.get("syndrome_component_id"))] = int(item.get("component_pass", 0))
+        complete_units = [
+            unit for unit in units.values()
+            if all(component_id in unit for component_id in expected_components)
+        ]
+        if not complete_units or not expected_components:
+            continue
+        vectors = {
+            component_id: [int(unit[component_id]) for unit in complete_units]
+            for component_id in expected_components
+        }
+        contexts.append(
+            {
+                "syndrome_id": str(syndrome_id),
+                "probe_key": str(probe),
+                "flow_mode": str(flow),
+                "component_vectors": vectors,
+                "component_marginal_rates": {
+                    component_id: mean(vector) if vector else 0.0
+                    for component_id, vector in vectors.items()
+                },
+                "observed_joint_rate": joint_rate(vectors.values()),
+                "complete_unit_count": len(complete_units),
+            }
+        )
+    return contexts
+
+
+def joint_rate(vectors: object) -> float:
+    vector_list = [list(vector) for vector in vectors]
+    if not vector_list or not vector_list[0]:
+        return 0.0
+    count = min(len(vector) for vector in vector_list)
+    if count == 0:
+        return 0.0
+    return sum(int(all(vector[index] for vector in vector_list)) for index in range(count)) / count
+
+
+def stable_context_seed(base_seed: int, syndrome_id: object, probe: object, flow: object) -> int:
+    text = f"{base_seed}|{syndrome_id}|{probe}|{flow}"
+    value = 0
+    for char in text:
+        value = (value * 131 + ord(char)) % (2**32)
+    return value
+
+
+def marginal_control_summary(rows: list[dict[str, object]]) -> dict[tuple[str, str, str], dict[str, object]]:
+    grouped = group_by(rows, ("syndrome_id", "probe_key", "flow_mode"))
+    out: dict[tuple[str, str, str], dict[str, object]] = {}
+    for key, items in grouped.items():
+        controls_by_replicate = {
+            int(float_or_zero(item.get("replicate_id"))): float_or_zero(item.get("control_joint_rate"))
+            for item in items
+        }
+        controls = list(controls_by_replicate.values())
+        first = items[0] if items else {}
+        out[(str(key[0]), str(key[1]), str(key[2]))] = {
+            "observed_joint_rate": float_or_zero(first.get("observed_joint_rate")),
+            "control_joint_rate_mean": mean(controls) if controls else 0.0,
+            "joint_rate_excess": float_or_zero(first.get("observed_joint_rate")) - (mean(controls) if controls else 0.0),
+            "joint_rate_percentile": float_or_zero(first.get("joint_rate_percentile")),
+            "replicate_count": int(float_or_zero(first.get("replicate_count"))),
+            "complete_unit_count": int(float_or_zero(first.get("complete_unit_count"))),
+        }
+    return out
+
+
+def ablation_by_context(rows: list[dict[str, object]]) -> dict[tuple[str, str, str], dict[str, object]]:
+    out = {}
+    for (syndrome_id, probe, flow), items in group_by(rows, ("syndrome_id", "probe_key", "flow_mode")).items():
+        if items:
+            out[(str(syndrome_id), str(probe), str(flow))] = dict(items[0])
+    return out
+
+
+def control_equivalence_read(apparent_joint_positive: bool, marginal_available: bool) -> str:
+    if not marginal_available:
+        return "underdetermined_missing_marginal_preserving_control"
+    if apparent_joint_positive:
+        return "above_marginal_preserving_controls"
+    return "marginal_control_equivalent_or_insufficient"
+
+
+def syndrome_stage_a_decision(apparent_joint_positive: bool, ablation: dict[str, object], marginal_available: bool) -> str:
+    if not marginal_available:
+        return "syndrome_smoke_insufficient_data"
+    if not apparent_joint_positive:
+        return "syndrome_smoke_control_equivalent"
+    if ablation.get("decision_class") == "single_component_driven_not_joint_syndrome":
+        return "syndrome_smoke_single_component_driven"
+    return "syndrome_smoke_joint_positive_above_marginal_controls"
 
 
 def syndrome_multiplicity_audit(component_rows: list[dict[str, object]]) -> list[dict[str, object]]:
@@ -395,32 +712,65 @@ def syndrome_multiplicity_audit(component_rows: list[dict[str, object]]) -> list
 
 
 def syndrome_readiness(
-    smoke_rows: list[dict[str, object]],
+    syndrome_controls: list[dict[str, object]],
+    ablation_rows: list[dict[str, object]],
     phase_b_readiness: list[dict[str, str]],
     control_quality_rows: list[dict[str, str]],
     control_quality: dict[str, str],
 ) -> list[dict[str, object]]:
-    positive = [
-        row for row in smoke_rows
-        if int(row.get("syndrome_joint_pass", 0)) and row.get("probe_key") not in DIAGNOSTIC_PROBES
-    ]
-    selected = sorted({str(row.get("syndrome_id")) for row in positive})
     missing_families = missing_mechanism_control_families(control_quality_rows, control_quality)
-    missing_mechanism_controls = bool(missing_families)
-    decision = "syndrome_smoke_control_equivalent"
+    ablation_summary = ablation_by_context(ablation_rows)
+    eligible = []
+    single_component = []
+    apparent_positive = []
+    insufficient = []
+    for row in syndrome_controls:
+        if str(row.get("selection_mode")) != "preregistered":
+            continue
+        if not int(float_or_zero(row.get("readiness_allowed"))):
+            continue
+        if row.get("probe_key") in DIAGNOSTIC_PROBES:
+            continue
+        if row.get("stage_a_decision_class") == "syndrome_smoke_insufficient_data":
+            insufficient.append(row)
+            continue
+        joint_positive = (
+            float_or_zero(row.get("observed_joint_rate")) > float_or_zero(row.get("component_marginal_preserving_control_mean"))
+            and float_or_zero(row.get("joint_rate_percentile")) >= 0.80
+        )
+        if not joint_positive:
+            continue
+        apparent_positive.append(row)
+        key = (str(row.get("syndrome_id")), str(row.get("probe_key")), str(row.get("flow_mode")))
+        ablation = ablation_summary.get(key, {})
+        if ablation.get("decision_class") == "single_component_driven_not_joint_syndrome":
+            single_component.append(row)
+            continue
+        eligible.append(row)
+    selected = sorted({str(row.get("syndrome_id")) for row in eligible})
     if selected:
-        decision = "syndrome_smoke_positive_above_controls"
-    elif missing_mechanism_controls:
+        decision = "syndrome_smoke_joint_positive_above_marginal_controls"
+    elif single_component:
+        decision = "syndrome_smoke_single_component_driven"
+    elif apparent_positive:
+        decision = "syndrome_smoke_insufficient_data"
+    elif syndrome_controls:
+        decision = "syndrome_smoke_control_equivalent"
+    else:
         decision = "syndrome_smoke_insufficient_data"
     return [{
         "decision_class": decision,
-        "stage_b_allowed": int(bool(selected) or missing_mechanism_controls),
+        "stage_b_allowed": int(bool(selected)),
         "selected_syndrome_ids": json.dumps(selected),
         "selection_mode": "preregistered",
-        "selection_reason": readiness_reason(selected, missing_families),
+        "selection_reason": readiness_reason(selected, missing_families, decision),
         "excluded_positive_probes": json.dumps(sorted(DIAGNOSTIC_PROBES)),
         "excluded_positive_controls": json.dumps(sorted(PLACEHOLDER_CONTROLS | NOT_AVAILABLE_CONTROLS)),
         "missing_mechanism_control_families": json.dumps(missing_families),
+        "apparent_positive_contexts": len(apparent_positive),
+        "single_component_driven_contexts": len(single_component),
+        "insufficient_marginal_control_contexts": len(insufficient),
+        "marginal_control_minimum_replicates_met": int(marginal_replicate_minimum_met(syndrome_controls)),
         "phase_b_prior_decision": phase_b_readiness[0].get("decision_class", "") if phase_b_readiness else "",
         "holdout_scoring_count": 0,
     }]
@@ -447,12 +797,22 @@ def missing_mechanism_control_families(
     return sorted(missing)
 
 
-def readiness_reason(selected: list[str], missing_families: list[str]) -> str:
+def readiness_reason(selected: list[str], missing_families: list[str], decision: str) -> str:
     if selected:
-        return "joint_pass_in_stage_a"
+        return "joint_rate_above_marginal_preserving_controls_and_not_single_component_driven"
+    if decision == "syndrome_smoke_single_component_driven":
+        return "apparent_joint_positive_explained_by_component_ablation"
     if missing_families:
-        return "missing_mechanism_controls_dominate_uncertainty"
-    return "no_preregistered_syndrome_above_controls"
+        return "missing_mechanism_controls_remain_but_stage_a_joint_control_gate_not_met"
+    return "no_preregistered_syndrome_above_marginal_preserving_controls"
+
+
+def marginal_replicate_minimum_met(rows: list[dict[str, object]]) -> bool:
+    available = [
+        row for row in rows
+        if row.get("marginal_control_replicates", "") != ""
+    ]
+    return bool(available) and all(float_or_zero(row.get("marginal_control_replicates")) >= 100 for row in available)
 
 
 def control_match_decomposition(rows: list[dict[str, str]]) -> list[dict[str, object]]:
@@ -479,18 +839,47 @@ def top_control_equivalent_rows(rows: list[dict[str, str]]) -> list[dict[str, ob
     return [{**row, "control_match_class": control_match_class(row)} for row in eligible[:50]]
 
 
-def control_match_by_control_type(rows: list[dict[str, str]], control_quality: dict[str, str]) -> list[dict[str, object]]:
+def control_match_by_control_type(
+    recurrence_rows: list[dict[str, str]],
+    effect_rows: list[dict[str, str]],
+    control_quality: dict[str, str],
+) -> list[dict[str, object]]:
     out = []
-    for (name,), items in group_by(rows, ("control_name",)).items():
-        values = [float_or_zero(row.get("absolute_delta")) for row in items if row.get("absolute_delta", "") != ""]
-        out.append({
-            "control_name": name,
-            "control_quality": control_quality.get(str(name), "computed"),
-            "rows": len(items),
-            "mean_absolute_delta": mean(values) if values else "",
-            "metric_count": len({row.get("metric_name") for row in items}),
-            "probe_count": len({row.get("probe_key") for row in items}),
-        })
+    recurrence_by_key = {
+        (row.get("metric_family", ""), row.get("metric_name", ""), row.get("probe_key", ""), row.get("flow_mode", "")): row
+        for row in recurrence_rows
+    }
+    for row in effect_rows:
+        metric = row.get("metric_name", "")
+        if not metric:
+            continue
+        key = (row.get("metric_family", ""), metric, row.get("probe_key", ""), row.get("flow_mode", ""))
+        recurrence = recurrence_by_key.get(key, {})
+        observed = float_or_zero(recurrence.get("observed_recurrence_rate"))
+        control_recurrence = int(
+            float_or_zero(row.get("absolute_effect_size")) >= 0.10
+            and row.get("effect_direction") != "control_equivalent"
+            and row.get("control_quality") == "computed"
+        )
+        excess = observed - control_recurrence
+        out.append(
+            {
+                "metric_family": row.get("metric_family", ""),
+                "metric_name": metric,
+                "probe_key": row.get("probe_key", ""),
+                "flow_mode": row.get("flow_mode", ""),
+                "window": "all_windows",
+                "observed_recurrence_rate": observed,
+                "control_name": row.get("control_name", ""),
+                "control_quality": control_quality.get(str(row.get("control_name", "")), row.get("control_quality", "")),
+                "control_recurrence_mean": control_recurrence,
+                "recurrence_excess_vs_this_control": excess,
+                "control_match_flag": int(excess <= 0),
+                "effect_direction": row.get("effect_direction", ""),
+                "absolute_effect_size": row.get("absolute_effect_size", ""),
+                "comparison_count": row.get("comparison_count", ""),
+            }
+        )
     return out
 
 
@@ -620,6 +1009,20 @@ def write_report(
             f"Decision class: `{decision.get('decision_class', 'unknown')}`",
             f"Stage B allowed: `{decision.get('stage_b_allowed', 0)}`",
             f"Selected syndromes: `{decision.get('selected_syndrome_ids', '[]')}`",
+            "",
+            "## Addendum Controls",
+            "",
+            "The preregistered metric-native syndrome manifest was written before scoring.",
+            "Marginal-preserving controls and component ablations were emitted before readiness.",
+            "",
+            f"Apparent positive contexts: `{decision.get('apparent_positive_contexts', 0)}`",
+            f"Single-component driven contexts: `{decision.get('single_component_driven_contexts', 0)}`",
+            f"Insufficient marginal-control contexts: `{decision.get('insufficient_marginal_control_contexts', 0)}`",
+            f"Marginal replicate minimum met: `{decision.get('marginal_control_minimum_replicates_met', 0)}`",
+            "",
+            "Diagnostic probes excluded from readiness:",
+            "",
+            f"`{decision.get('excluded_positive_probes', '[]')}`",
             "",
             "## Syndrome Smoke",
             "",
