@@ -323,6 +323,61 @@ def build_probe(system: LandscapeSystem, probe_key: str, source_probe_family: st
 
         return Probe("relation_role_buckets", "relation_role", relation_role, "relation_role", 5), 4 ** 5, "relation_role"
 
+    if probe_key == "constraint_neighborhood_histogram":
+        def constraint_neighborhood_histogram(s: State) -> tuple[int, ...]:
+            targets = tuple(system.edges.get(s, ()))
+            neighborhood = (s,) + targets[: min(4, max(1, len(targets)))]
+            counts = Counter(bucket(int(round(_constraint_violation(state, constraints)))) for state in neighborhood)
+            return tuple(counts.get(index, 0) for index in range(4))
+
+        return Probe("constraint_neighborhood_histogram", "quotient_constraint_neighborhood", constraint_neighborhood_histogram, "constraint_neighborhood_histogram", 4), 5 ** 4, "constraint_neighborhood"
+
+    if probe_key == "relation_neighborhood_degree_asymmetry_histogram":
+        def relation_neighborhood_degree_asymmetry_histogram(s: State) -> tuple[int, ...]:
+            targets = tuple(system.edges.get(s, ()))
+            reciprocal = sum(int((target, s) in edge_set) for target in targets)
+            asymmetry = max(0, len(targets) - reciprocal)
+            successor_out = sum(len(system.edges.get(target, ())) for target in targets)
+            return (bucket(len(targets)), bucket(in_degree.get(s, 0)), bucket(reciprocal), bucket(asymmetry), bucket(successor_out))
+
+        return Probe("relation_neighborhood_degree_asymmetry_histogram", "quotient_relation_geometry", relation_neighborhood_degree_asymmetry_histogram, "relation_neighborhood_degree_asymmetry_histogram", 5), 4 ** 5, "relation_geometry"
+
+    if probe_key == "frontier_response_bucket":
+        def frontier_response_bucket(s: State) -> tuple[int, ...]:
+            h1 = set(system.edges.get(s, ()))
+            h2 = {item for target in h1 for item in system.edges.get(target, ())}
+            h3 = {item for target in h2 for item in system.edges.get(target, ())}
+            growth_12 = len(h2) - len(h1)
+            growth_23 = len(h3) - len(h2)
+            return (bucket(len(h1)), bucket(max(0, growth_12)), bucket(max(0, growth_23)))
+
+        return Probe("frontier_response_bucket", "quotient_frontier_response", frontier_response_bucket, "frontier_response_bucket", 3), 4 ** 3, "frontier_response"
+
+    if probe_key == "motif_count_bucket":
+        def motif_count_bucket(s: State) -> tuple[int, ...]:
+            targets = tuple(system.edges.get(s, ()))
+            reciprocal = sum(int((target, s) in edge_set) for target in targets)
+            two_step_return = 0
+            feed_forward = 0
+            target_set = set(targets)
+            for target in targets:
+                target_targets = set(system.edges.get(target, ()))
+                two_step_return += int(s in target_targets)
+                feed_forward += len(target_set.intersection(target_targets))
+            return (bucket(reciprocal), bucket(two_step_return), bucket(feed_forward))
+
+        return Probe("motif_count_bucket", "quotient_relation_motif", motif_count_bucket, "motif_count_bucket", 3), 4 ** 3, "relation_motif"
+
+    if probe_key == "multi_scale_support_region_bucket":
+        def multi_scale_support_region_bucket(s: State) -> tuple[int, ...]:
+            h1 = set(system.edges.get(s, ()))
+            h2 = {item for target in h1 for item in system.edges.get(target, ())}
+            h3 = {item for target in h2 for item in system.edges.get(target, ())}
+            constraint_bucket = bucket(int(round(_constraint_violation(s, constraints))))
+            return (bucket(len(h1)), bucket(len(h2)), bucket(len(h3)), constraint_bucket)
+
+        return Probe("multi_scale_support_region_bucket", "quotient_support_growth", multi_scale_support_region_bucket, "multi_scale_support_region_bucket", 4), 4 ** 4, "support_growth"
+
     if probe_key == "full_state_hash":
         buckets = max(32, min(2048, len(system.states) * 2))
         return Probe("full_state_hash", "strict_state_control", lambda s, buckets=buckets: (_stable_hash(str(s)) % buckets,), "full_state_hash", 1), buckets, "strict_state_control"

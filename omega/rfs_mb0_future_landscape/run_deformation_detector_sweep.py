@@ -530,6 +530,15 @@ def run_sweep_job(job: dict[str, object]) -> list[dict[str, object]]:
             observed = observed_by_h[h]
             support_size = len(observed)
             support_fraction = support_size / max(1, alphabet_size)
+            bucket_counts = sorted(observed.values())
+            bucket_count_n = len(bucket_counts)
+            median_bucket_size = (
+                0.0
+                if not bucket_counts
+                else float(bucket_counts[bucket_count_n // 2])
+                if bucket_count_n % 2
+                else 0.5 * (bucket_counts[bucket_count_n // 2 - 1] + bucket_counts[bucket_count_n // 2])
+            )
             collision = max(0.0, 1.0 - support_size / max(1, len(system.states)))
             entropy = entropy_from_counts(observed)
             full_entropy = math.log2(max(1, alphabet_size))
@@ -563,6 +572,11 @@ def run_sweep_job(job: dict[str, object]) -> list[dict[str, object]]:
                 "probe_resolution_class": probe_resolution_class(collision, support_fraction, 2 ** entropy, len(system.states), probe.probe_family),
                 "signature_entropy": entropy,
                 "signature_entropy_ceiling_fraction": entropy / max(1e-9, full_entropy),
+                "effective_signature_count": support_size,
+                "average_bucket_size": (sum(bucket_counts) / max(1, support_size)),
+                "median_bucket_size": median_bucket_size,
+                "min_bucket_size": min(bucket_counts) if bucket_counts else 0,
+                "singleton_bucket_fraction": (sum(1 for count in bucket_counts if count == 1) / max(1, support_size)),
                 "JS_to_triviality_nulls": mean(js_divergence(observed, null_by_name[name][h]) for name in TRIVIALITY_NULLS if name in null_by_name),
                 "JS_to_support_nulls": mean(js_divergence(observed, null_by_name[name][h]) for name in SUPPORT_NULLS if name in null_by_name),
                 "KL_to_triviality_nulls": mean(smoothed_kl(observed, null_by_name[name][h]) for name in TRIVIALITY_NULLS if name in null_by_name),
