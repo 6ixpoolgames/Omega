@@ -1272,6 +1272,28 @@ Result in one line:
   errors; `20 / 20` groups were evidence-probe recurrent, but all were
   probe-limited and `0 / 20` were clean recurrent boundary candidates.
 
+### RFS-MB0 Detector Instrumentation Repair
+
+Directory:
+
+- `results/rfs_mb0_relation_atlas/20260527_detector_instrumentation_repair_scaled/`
+
+Primary retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_detector_instrumentation_repair_result.md`
+
+Reason retained:
+
+- This repairs detector instrumentation bugs around support ceiling/floor,
+  probe-limit decomposition, independent probe-axis recurrence, support-aware
+  scoring, and focused matched-control outputs.
+
+Result in one line:
+
+- The same `20` focused groups completed cleanly with `800 / 800` jobs and `0`
+  errors; clean candidates remain `0`, with `16` groups collision-limited and
+  `4` weak-control-bundle limited.
+
 The important public caveat:
 
 ```text

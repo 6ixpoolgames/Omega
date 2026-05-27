@@ -4455,3 +4455,72 @@ state cleanly. Scientifically, it points to a measurement limit: recurrence is
 present in selected boundary groups, but every scaled focused group remains
 probe-limited. Do not run n=6 from this state; repair probes or pause MB0
 scaling.
+
+## 2026-05-27 - RFS-MB0 detector instrumentation repair
+
+Pulled:
+
+```text
+docs/RFS_MB0_DETECTOR_INSTRUMENTATION_REPAIR_SPEC.md
+```
+
+Implemented repairs for the external bug audit:
+
+```text
+support ceiling/floor split
+probe-limit decomposition
+independent probe-axis recurrence
+support-aware score decomposition
+focused matched-control bundle/rank outputs
+corrected group classification
+```
+
+Updated:
+
+```text
+omega/rfs_mb0_future_landscape/run_support_distribution_taxonomy.py
+omega/rfs_mb0_future_landscape/run_deformation_detector_sweep.py
+omega/rfs_mb0_future_landscape/run_focused_boundary_recurrence.py
+```
+
+Primary result note:
+
+```text
+docs/research_notes/validation_results/rfs_mb0_detector_instrumentation_repair_result.md
+```
+
+Scaled rerun output:
+
+```text
+results/rfs_mb0_relation_atlas/20260527_detector_instrumentation_repair_scaled/
+```
+
+Run shape:
+
+```text
+groups: 20
+fresh_seeds_per_group: 4
+workers: 18
+jobs_requested: 800
+jobs_completed: 800
+metric_rows: 39600
+errors: 0
+status: COMPLETED
+wall_clock_seconds: 48.1
+```
+
+Corrected classification:
+
+```text
+independent_axis_recurrent_but_collision_limited: 16
+weak_control_bundle_recurrence: 4
+clean_recurrent_boundary_candidate: 0
+```
+
+Interpretation:
+
+The repair did not rescue clean recurrent boundary candidates. It did sharpen
+the measurement-limit diagnosis: recurrence survives independent coordinate and
+constraint axes, but most selected groups remain collision-limited, with a
+smaller weak-control-bundle class. Do not run n=6 or broader breadth from this
+state; the next useful work is lower-collision, non-identity evidence probes.
