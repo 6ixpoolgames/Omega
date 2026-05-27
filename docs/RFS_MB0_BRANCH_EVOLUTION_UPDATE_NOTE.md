@@ -839,3 +839,48 @@ identity or agent classification
 ```
 
 Identity and agent classification remain deferred. The active target is still recurrent boundary deformation detection, but only after the instrument can pass preflight without relying on identity-like or collision-limited probes.
+
+## 24. 2026-05-27 Frontier-Transform Instrumentation Update
+
+After endpoint/quotient probe instrumentation failed to produce adequate independent non-identity axes, the branch pivoted from endpoint-state signatures to frontier-transform metrics.
+
+New measurement object:
+
+```text
+frontier-transform window F_Ha -> F_Hb
+```
+
+rather than:
+
+```text
+endpoint signature distribution at H
+```
+
+The first frontier-transform Phase A preflight completed cleanly:
+
+```text
+jobs_completed: 160 / 160
+row_count: 4480
+errors: 0
+holdout_detection_enabled: false
+candidate_detection_enabled: false
+```
+
+Design-set preflight found multiple viable non-control transform metric families:
+
+```text
+growth
+support_turnover
+transition_matrix
+branch_merge
+bottleneck
+window_stability
+```
+
+Interpretation:
+
+```text
+Frontier-transform instrumentation is viable enough for a small Phase B design-set recurrence run.
+This is not a detection claim.
+Holdout scoring remains blocked until Phase B succeeds under frozen metrics and windows.
+```
