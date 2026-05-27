@@ -20,7 +20,19 @@ The active empirical question is currently narrower than agency or identity dete
 
 Current status, in one line:
 
-**VAL0/VAL1 were useful reconnaissance probes; RFS-MB0 is now focused on support/distribution deformation taxonomy over neutral action-generated relation systems. The relation generator remains active, path/process metrics are parked after probe-resolution calibration, and the next target is a guided medium-breadth support/distribution atlas. No scientific gate has passed.**
+**VAL0/VAL1 were useful reconnaissance probes; RFS-MB0 is now focused on support/distribution deformation taxonomy over neutral action-generated relation systems. The relation generator remains active, path/process metrics are parked after probe-resolution calibration, and the current implementation focus is detector/probe instrumentation repair after recurrent boundary signals hit measurement limits. No scientific gate has passed.**
+
+## Workflow: human-directed, AI-assisted research
+
+This repository is developed through a human-directed, AI-assisted research workflow.
+
+The core theoretical motivation, project taste, branch selection, interpretive standards, and many of the key pivots are human-generated. AI systems are used as implementation and critique accelerators: they draft specs, modify runners, generate reports, audit code, summarize results, and propose follow-up experiments.
+
+This distinction matters. The workflow is semi-autonomous in the sense that AI coding agents can carry out bounded implementation tasks and produce structured artifacts, but the scientific direction is not autonomous. Human review decides which failures matter, which claims are allowed, when a result is overinterpreted, and when a branch should be repaired, paused, or redirected.
+
+A major aspiration of the workflow is for AI systems to contribute genuinely novel research insight, not merely implement plausible incremental next steps. So far, that has not been the dominant pattern. In this project, AI assistance has been valuable for implementation, documentation, local critique, bug-finding, and experimental iteration, while the core theory, research taste, major pivots, and interpretation standards have remained human-led.
+
+This is an important partial/negative result about the workflow itself: current AI assistance can greatly increase iteration speed and breadth, but it has not replaced human judgment or reliably generated the central conceptual advances of the project. The repo is therefore best read as a record of human-led theory development using AI-assisted experimental infrastructure, not as an autonomous AI research system.
 
 ## Why this matters for alignment
 
@@ -151,6 +163,9 @@ path metric calibration
 probe-resolution calibration
 support/distribution taxonomy smoke
 deformation detector upgrade and local parameter sweeps
+medium-breadth atlas and boundary-resolution sweeps
+boundary recurrence repair
+detector instrumentation repair
 ```
 
 Current interpretation:
@@ -163,15 +178,18 @@ path/process metrics:
   parked; current probes are too collision-prone and matched controls often show similar path metrics
 
 support/distribution deformation:
-  active target; small candidate residues and fakeout-to-candidate transitions justify guided breadth
+  active target; recurrent boundary structure is visible, but clean stable-band promotion is blocked by measurement/probe limitations
 
 next run:
-  guided medium-breadth support/distribution atlas around local candidate-stable and fakeout-to-candidate transition bands
+  detector instrumentation repair and exact rerun of focused boundary groups before any n=6 transfer or broader atlas
 ```
 
 Important current docs:
 
 - [Branch evolution update note](docs/RFS_MB0_BRANCH_EVOLUTION_UPDATE_NOTE.md)
+- [Detector instrumentation repair spec](docs/RFS_MB0_DETECTOR_INSTRUMENTATION_REPAIR_SPEC.md)
+- [Boundary recurrence repair and focused pass spec](docs/RFS_MB0_BOUNDARY_RECURRENCE_REPAIR_AND_FOCUSED_PASS_SPEC.md)
+- [Medium-breadth atlas runner repair spec](docs/RFS_MB0_MEDIUM_BREADTH_ATLAS_RUNNER_REPAIR_SPEC.md)
 - [Support/distribution deformation taxonomy spec](docs/RFS_MB0_SUPPORT_DISTRIBUTION_DEFORMATION_TAXONOMY_SPEC.md)
 - [Deformation detector upgrade and local sweep spec](docs/RFS_MB0_DEFORMATION_DETECTOR_AND_LOCAL_SWEEP_SPEC.md)
 - [Medium-breadth support/distribution atlas 10h spec](docs/RFS_MB0_MEDIUM_BREADTH_SUPPORT_DISTRIBUTION_ATLAS_10H_SPEC.md)
@@ -389,27 +407,29 @@ Start here for the pipeline view:
 ### For a new reader
 
 1. [Branch evolution update note](docs/RFS_MB0_BRANCH_EVOLUTION_UPDATE_NOTE.md)
-2. [Support/distribution deformation taxonomy spec](docs/RFS_MB0_SUPPORT_DISTRIBUTION_DEFORMATION_TAXONOMY_SPEC.md)
-3. [Deformation detector upgrade and local sweep spec](docs/RFS_MB0_DEFORMATION_DETECTOR_AND_LOCAL_SWEEP_SPEC.md)
-4. [Medium-breadth support/distribution atlas 10h spec](docs/RFS_MB0_MEDIUM_BREADTH_SUPPORT_DISTRIBUTION_ATLAS_10H_SPEC.md)
-5. [Action-generated relation substrate spec](docs/RFS_MB0_ACTION_GENERATED_RELATION_SUBSTRATE_SPEC.md)
-6. [Minimal reachable futures formalism](docs/research_notes/omega_theory/minimal_reachable_futures_formalism.md)
-7. [Public terms and translations](docs/research_notes/omega_theory/public_terms_and_translations.md)
-8. [Public results index](docs/PUBLIC_RESULTS_INDEX.md)
-9. [Omega glossary](docs/research_notes/omega_theory/omega_glossary.md)
-10. [Foundation stack as pipeline](docs/research_notes/omega_theory/progenitor_stack_as_pipeline.md)
+2. [Detector instrumentation repair spec](docs/RFS_MB0_DETECTOR_INSTRUMENTATION_REPAIR_SPEC.md)
+3. [Boundary recurrence repair and focused pass spec](docs/RFS_MB0_BOUNDARY_RECURRENCE_REPAIR_AND_FOCUSED_PASS_SPEC.md)
+4. [Support/distribution deformation taxonomy spec](docs/RFS_MB0_SUPPORT_DISTRIBUTION_DEFORMATION_TAXONOMY_SPEC.md)
+5. [Deformation detector upgrade and local sweep spec](docs/RFS_MB0_DEFORMATION_DETECTOR_AND_LOCAL_SWEEP_SPEC.md)
+6. [Action-generated relation substrate spec](docs/RFS_MB0_ACTION_GENERATED_RELATION_SUBSTRATE_SPEC.md)
+7. [Minimal reachable futures formalism](docs/research_notes/omega_theory/minimal_reachable_futures_formalism.md)
+8. [Public terms and translations](docs/research_notes/omega_theory/public_terms_and_translations.md)
+9. [Public results index](docs/PUBLIC_RESULTS_INDEX.md)
+10. [Omega glossary](docs/research_notes/omega_theory/omega_glossary.md)
+11. [Foundation stack as pipeline](docs/research_notes/omega_theory/progenitor_stack_as_pipeline.md)
 
 ### For implementation work
 
-1. [Medium-breadth support/distribution atlas 10h spec](docs/RFS_MB0_MEDIUM_BREADTH_SUPPORT_DISTRIBUTION_ATLAS_10H_SPEC.md)
-2. [Deformation detector upgrade and local sweep spec](docs/RFS_MB0_DEFORMATION_DETECTOR_AND_LOCAL_SWEEP_SPEC.md)
-3. [Support/distribution deformation taxonomy spec](docs/RFS_MB0_SUPPORT_DISTRIBUTION_DEFORMATION_TAXONOMY_SPEC.md)
-4. [Probe resolution calibration spec](docs/RFS_MB0_PROBE_RESOLUTION_CALIBRATION_SPEC.md)
-5. [Path metric calibration smoke tightening](docs/RFS_MB0_PATH_METRIC_CALIBRATION_SMOKE_TIGHTENING.md)
-6. [Relation generator phenotype repair spec](docs/RFS_MB0_RELATION_GENERATOR_PHENOTYPE_REPAIR_SPEC.md)
-7. [Candidate phenotype audit spec](docs/RFS_MB0_RELATION_ATLAS_CANDIDATE_PHENOTYPE_AUDIT_SPEC.md)
-8. [Action-generated relation substrate spec](docs/RFS_MB0_ACTION_GENERATED_RELATION_SUBSTRATE_SPEC.md)
-9. [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
+1. [Detector instrumentation repair spec](docs/RFS_MB0_DETECTOR_INSTRUMENTATION_REPAIR_SPEC.md)
+2. [Boundary recurrence repair and focused pass spec](docs/RFS_MB0_BOUNDARY_RECURRENCE_REPAIR_AND_FOCUSED_PASS_SPEC.md)
+3. [Medium-breadth atlas runner repair spec](docs/RFS_MB0_MEDIUM_BREADTH_ATLAS_RUNNER_REPAIR_SPEC.md)
+4. [Support/distribution deformation taxonomy spec](docs/RFS_MB0_SUPPORT_DISTRIBUTION_DEFORMATION_TAXONOMY_SPEC.md)
+5. [Probe resolution calibration spec](docs/RFS_MB0_PROBE_RESOLUTION_CALIBRATION_SPEC.md)
+6. [Path metric calibration smoke tightening](docs/RFS_MB0_PATH_METRIC_CALIBRATION_SMOKE_TIGHTENING.md)
+7. [Relation generator phenotype repair spec](docs/RFS_MB0_RELATION_GENERATOR_PHENOTYPE_REPAIR_SPEC.md)
+8. [Candidate phenotype audit spec](docs/RFS_MB0_RELATION_ATLAS_CANDIDATE_PHENOTYPE_AUDIT_SPEC.md)
+9. [Action-generated relation substrate spec](docs/RFS_MB0_ACTION_GENERATED_RELATION_SUBSTRATE_SPEC.md)
+10. [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
 
 ### For project history
 
@@ -423,9 +443,9 @@ Start here for the pipeline view:
 
 ## Current next step
 
-The current implementation target is the **guided medium-breadth support/distribution atlas**.
+The current implementation target is **detector instrumentation repair for RFS-MB0 boundary recurrence**.
 
-The goal is to test whether locally observed candidate-stable and fakeout-to-candidate transition bands generalize across broader parameter neighborhoods, fresh seeds, starts, probe families, matched-control bundles, margin sensitivity, and limited n=6 transfer.
+The recent boundary recurrence pass found reproducible boundary structure, but the measurement stack may have overclassified it as probe/saturation limited because of detector instrumentation issues. The current task is to repair those issues, then rerun the same focused boundary groups before treating the measurement-limits result as final.
 
 Public summary:
 
@@ -446,6 +466,13 @@ measure:
   probe collision and support-ceiling diagnostics
   fakeout and boundary classes
 
+repair now:
+  support ceiling versus support floor split
+  collision-limited versus identity-like-limited probes
+  independent probe-axis recurrence
+  support-aware deformation scoring
+  focused matched-control bundles
+
 defer:
   Omega-positive labels
   agent / valuer / identity claims
@@ -454,6 +481,7 @@ defer:
   hand-designed viability vectors
   full constructor agency
   broad coupled-process scaling
+  n=6 transfer
 ```
 
 ## Roadmap
@@ -481,11 +509,11 @@ RFS-MB0:
   active neutral future-landscape deformation program
   support/distribution deformation taxonomy is the current lane
   path/process metrics parked after probe-resolution calibration
+  recurrent boundary signals observed, but clean support/distribution deformation is not established
 
 RFS-MB0.1:
   current target
-  guided medium-breadth support/distribution atlas around candidate-stable
-  and fakeout-to-candidate transition bands
+  detector instrumentation repair and exact rerun of focused recurrent boundary groups
 
 RFS-MB1:
   only after MB0 control separation
@@ -517,10 +545,11 @@ historical toy-substrate probes
 negative and ambiguous results
 current reachable-futures substrate reset
 support/distribution deformation taxonomy work
+measurement-limit and detector-instrumentation repair work
 ```
 
 The current scientific claim is modest:
 
-> Future-landscape support/distribution deformation is measurable in neutral toy substrates, but Omega-compatible subobjects have not been demonstrated. The active empirical question is whether deformation regimes can be distinguished from saturation, clocks, collapse, probe artifacts, and matched-control equivalence without introducing semantic labels.
+> Future-landscape support/distribution deformation is measurable in neutral toy substrates, but Omega-compatible subobjects have not been demonstrated. The active empirical question is whether recurrent boundary signals can be distinguished from saturation, clocks, collapse, probe artifacts, support-floor/ceiling artifacts, and matched-control equivalence without introducing semantic labels.
 
 VAL0/VAL1 tested earlier precursors. The project is now centered on neutral future landscapes and control-relative deformation taxonomy.
