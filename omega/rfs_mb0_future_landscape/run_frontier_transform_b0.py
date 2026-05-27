@@ -54,6 +54,7 @@ OUTPUTS = (
     "frontier_transform_b0_window_stability.csv",
     "frontier_transform_b0_control_manifest.csv",
     "frontier_transform_b0_computed_controls.csv",
+    "frontier_transform_b0_row_level_control_effects.csv",
     "frontier_transform_b0_control_effects.csv",
     "frontier_transform_b0_directional_effects.csv",
     "frontier_transform_b0_metric_viability.csv",
@@ -422,7 +423,7 @@ def control_deltas(control_name: str, true_rows: list[dict[str, object]], contro
                 continue
             true_value = float_or_zero(row.get(metric))
             control_value = float_or_zero(control.get(metric))
-            out.append({"control_name": control_name, "shuffle_seed": shuffle_seed, "true_window": row.get("window"), "shuffled_window": control.get("window"), "metric_name": metric, "true_value": true_value, "control_value": control_value, "signed_delta": true_value - control_value, "absolute_delta": abs(true_value - control_value), "probe_key": row.get("probe_key"), "flow_mode": row.get("flow_mode"), "group_id": row.get("group_id")})
+            out.append(control_comparison_row(control_name, row, control, metric, true_value, control_value, shuffle_seed))
     return out
 
 
@@ -440,7 +441,7 @@ def horizon_order_controls(rows: list[dict[str, object]], shuffle_seed: int) -> 
                     continue
                 true_value = float_or_zero(true.get(metric))
                 control_value = float_or_zero(control.get(metric))
-                out.append({"control_name": "horizon_order_shuffled_control", "shuffle_seed": shuffle_seed, "true_window": true.get("window"), "shuffled_window": control.get("window"), "metric_name": metric, "true_value": true_value, "control_value": control_value, "signed_delta": true_value - control_value, "absolute_delta": abs(true_value - control_value), "probe_key": true.get("probe_key"), "flow_mode": true.get("flow_mode"), "group_id": true.get("group_id")})
+                out.append(control_comparison_row("horizon_order_shuffled_control", true, control, metric, true_value, control_value, shuffle_seed))
     return out
 
 
@@ -453,7 +454,7 @@ def probe_marginal_controls(rows: list[dict[str, object]], shuffle_seed: int) ->
         for metric in ("transition_matrix_entropy", "row_entropy_mean", "transition_matrix_sparsity", "off_diagonal_transform_mass"):
             true_value = float_or_zero(row.get(metric))
             control_value = true_value if metric != "off_diagonal_transform_mass" else 1.0 - true_value
-            out.append({"control_name": "probe_marginal_window_control", "shuffle_seed": shuffle_seed, "true_window": row.get("window"), "shuffled_window": row.get("window"), "metric_name": metric, "true_value": true_value, "control_value": control_value, "signed_delta": true_value - control_value, "absolute_delta": abs(true_value - control_value), "probe_key": row.get("probe_key"), "flow_mode": row.get("flow_mode"), "group_id": row.get("group_id")})
+            out.append(control_comparison_row("probe_marginal_window_control", row, row, metric, true_value, control_value, shuffle_seed, control_note="placeholder_not_true_marginal_repairing"))
     return out
 
 
@@ -464,6 +465,7 @@ def write_outputs(out_dir: Path, status: dict[str, object], started: float, spli
     status["metric_rows"] = len(rows)
     status["control_rows"] = len(controls)
     status["errors"] = len(errors)
+    row_effects = row_level_control_effect_rows(controls)
     effects = control_effect_rows(rows, controls)
     viability = metric_viability(effects, rows)
     readiness = phase_b_readiness(rows, controls, viability, split_rows)
@@ -473,6 +475,7 @@ def write_outputs(out_dir: Path, status: dict[str, object], started: float, spli
     write_csv(out_dir / "frontier_transform_b0_window_stability.csv", window_stability_rows(rows))
     write_csv(out_dir / "frontier_transform_b0_control_manifest.csv", control_manifest(controls))
     write_csv(out_dir / "frontier_transform_b0_computed_controls.csv", controls)
+    write_csv(out_dir / "frontier_transform_b0_row_level_control_effects.csv", row_effects)
     write_csv(out_dir / "frontier_transform_b0_control_effects.csv", effects)
     write_csv(out_dir / "frontier_transform_b0_directional_effects.csv", effects)
     write_csv(out_dir / "frontier_transform_b0_metric_viability.csv", viability)
@@ -514,10 +517,69 @@ def context_control_rows(rows: list[dict[str, object]]) -> list[dict[str, object
                     "flow_mode": row.get("flow_mode"),
                     "group_id": row.get("group_id"),
                     "control_group_id": control.get("group_id"),
+                    **row_context_fields(row),
+                    **row_context_fields(control, prefix="control_"),
                     "frontier_size_match_distance": distance if control_name == "frontier_size_matched_window_control" else "",
                     "frontier_size_match_quality": match_quality(distance) if control_name == "frontier_size_matched_window_control" else "",
                 })
     return out
+
+
+def control_comparison_row(
+    control_name: str,
+    row: dict[str, object],
+    control: dict[str, object],
+    metric: str,
+    true_value: float,
+    control_value: float,
+    shuffle_seed: int | str,
+    control_note: str = "",
+) -> dict[str, object]:
+    return {
+        "control_name": control_name,
+        "shuffle_seed": shuffle_seed,
+        "true_window": row.get("window"),
+        "shuffled_window": control.get("window"),
+        "metric_name": metric,
+        "true_value": true_value,
+        "control_value": control_value,
+        "signed_delta": true_value - control_value,
+        "absolute_delta": abs(true_value - control_value),
+        "probe_key": row.get("probe_key"),
+        "flow_mode": row.get("flow_mode"),
+        "group_id": row.get("group_id"),
+        "control_group_id": control.get("group_id"),
+        "control_note": control_note,
+        **row_context_fields(row),
+        **row_context_fields(control, prefix="control_"),
+    }
+
+
+def row_context_fields(row: dict[str, object], prefix: str = "") -> dict[str, object]:
+    fields = (
+        "job_id",
+        "preflight_context",
+        "group_id",
+        "anchor_id",
+        "anchor_environment_id",
+        "queue_stage",
+        "seed",
+        "fresh_seed_index",
+        "start_index",
+        "start_samples",
+        "probe_key",
+        "probe_group",
+        "flow_mode",
+        "window",
+        "H_a",
+        "H_b",
+        "frontier_size_a",
+        "frontier_size_b",
+        "support_size_a",
+        "support_size_b",
+        "row_kind",
+    )
+    return {f"{prefix}{field}": row.get(field, "") for field in fields}
 
 
 def nearest_control(row: dict[str, object], candidates: list[dict[str, object]], exclude_same: bool) -> dict[str, object] | None:
@@ -559,6 +621,28 @@ def control_effect_rows(rows: list[dict[str, object]], controls: list[dict[str, 
             elif signed < -0.10:
                 direction = "design_below_control"
             out.append({"control_name": control_name, "probe_key": probe, "flow_mode": flow, "metric_name": metric, "metric_family": metric_family(str(metric)), "design_mean": mean(true_values) if true_values else 0.0, "control_mean": mean(control_values) if control_values else 0.0, "signed_effect_size": signed, "absolute_effect_size": absolute, "effect_direction": direction, "control_percentile": percentile(mean(true_values) if true_values else 0.0, control_values), "extremeness_percentile": percentile(abs(mean(true_values) if true_values else 0.0), [abs(v) for v in control_values]), "comparison_count": len(items)})
+    return out
+
+
+def row_level_control_effect_rows(controls: list[dict[str, object]]) -> list[dict[str, object]]:
+    out = []
+    for row in controls:
+        if not row.get("metric_name"):
+            continue
+        signed = float_or_zero(row.get("signed_delta"))
+        direction = "control_equivalent"
+        if signed > 0:
+            direction = "design_above_control"
+        elif signed < 0:
+            direction = "design_below_control"
+        out.append({
+            **row,
+            "metric_family": metric_family(str(row.get("metric_name", ""))),
+            "row_level_signed_delta": signed,
+            "row_level_absolute_delta": abs(signed),
+            "row_level_effect_direction": direction,
+            "row_context_available": int(bool(row.get("job_id") or row.get("seed") != "" or row.get("window") != "")),
+        })
     return out
 
 

@@ -23,6 +23,7 @@ from .run_frontier_transform_b0 import (
     flow_mode_summary,
     metric_family,
     no_target_audit,
+    row_level_control_effect_rows,
     run_job,
     window_stability_rows,
 )
@@ -38,6 +39,7 @@ OUTPUTS = (
     "phase_b_progress_checkpoints.csv",
     "phase_b_design_metric_rows.csv",
     "phase_b_design_control_rows.csv",
+    "phase_b_row_level_control_effects.csv",
     "phase_b_directional_effects.csv",
     "phase_b_metric_family_recurrence.csv",
     "phase_b_design_recurrence_summary.csv",
@@ -298,6 +300,9 @@ def run_job_batch(batch: list[dict[str, object]]) -> tuple[list[dict[str, object
 
 def write_outputs(out_dir: Path, status: dict[str, object], started: float, split_rows: list[dict[str, object]], rows: list[dict[str, object]], controls: list[dict[str, object]], errors: list[dict[str, object]], checkpoints: list[dict[str, object]]) -> None:
     controls = add_control_quality(controls + context_control_rows_limited(rows))
+    row_effects = row_level_control_effect_rows(controls)
+    for row in row_effects:
+        row["control_quality"] = control_quality_for_name(controls, str(row.get("control_name", "")))
     effects = control_effect_rows_labeled(rows, controls)
     rec_rows = recurrence_rows(effects, rows)
     matched = matched_recurrence_controls(rec_rows, effects)
@@ -311,6 +316,7 @@ def write_outputs(out_dir: Path, status: dict[str, object], started: float, spli
     write_csv(out_dir / "phase_b_progress_checkpoints.csv", checkpoints)
     write_csv(out_dir / "phase_b_design_metric_rows.csv", rows)
     write_csv(out_dir / "phase_b_design_control_rows.csv", controls)
+    write_csv(out_dir / "phase_b_row_level_control_effects.csv", row_effects)
     write_csv(out_dir / "phase_b_directional_effects.csv", effects)
     metric_family_rows = family_recurrence(rec_rows)
     write_csv(out_dir / "phase_b_metric_family_recurrence.csv", metric_family_rows)
@@ -353,6 +359,13 @@ def control_effect_rows_labeled(rows: list[dict[str, object]], controls: list[di
     for row in effects:
         row["control_quality"] = quality_by_control.get(str(row.get("control_name")), "computed")
     return effects
+
+
+def control_quality_for_name(controls: list[dict[str, object]], name: str) -> str:
+    for row in controls:
+        if str(row.get("control_name", "")) == name and row.get("control_quality"):
+            return str(row.get("control_quality"))
+    return "computed"
 
 
 def recurrence_rows(effects: list[dict[str, object]], rows: list[dict[str, object]]) -> list[dict[str, object]]:
