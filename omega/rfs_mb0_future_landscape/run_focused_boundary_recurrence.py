@@ -722,7 +722,7 @@ def group_by(rows: list[dict[str, object]], keys: tuple[str, ...]) -> dict[tuple
 def read_csv(path: Path) -> list[dict[str, str]]:
     if not path.exists():
         return []
-    with path.open("r", newline="", encoding="utf-8") as handle:
+    with path.open("r", newline="", encoding="utf-8-sig") as handle:
         return list(csv.DictReader(handle))
 
 
@@ -736,10 +736,10 @@ def write_csv(path: Path, rows: list[dict[str, object]]) -> None:
         for key in row:
             if key not in fields:
                 fields.append(key)
-    with path.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fields)
-        writer.writeheader()
-        writer.writerows(rows)
+    with path.open("w", newline="", encoding="utf-8", buffering=1024 * 1024) as handle:
+        writer = csv.writer(handle)
+        writer.writerow(fields)
+        writer.writerows(([row.get(field, "") for field in fields] for row in rows))
 
 
 def write_manifest(out_dir: Path) -> None:

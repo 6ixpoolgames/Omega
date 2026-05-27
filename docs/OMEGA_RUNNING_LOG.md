@@ -7,6 +7,106 @@ run.
 Entries are organized in rough reverse chronological order, with the most recent
 patch notes at the top.
 
+## 2026-05-28
+
+### RFS-MB0 Frontier-Transform Syndrome Audit Laptop Validation
+
+Ran a laptop-local validation of the new frontier-transform Phase B / Stage A
+syndrome audit path.
+
+Retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_frontier_transform_syndrome_laptop_validation_result.md`
+
+Local outputs:
+
+- `results/local_runs/20260528_laptop_frontier_transform_phase_b_validation_192jobs/`
+- `results/local_runs/20260528_laptop_frontier_transform_stage_a_validation_192jobs/`
+
+Claim boundary:
+
+```text
+This was a local runner/output-contract validation, not a scientific Phase B
+rerun and not a holdout, candidate-promotion, mechanism-dependency, Omega,
+agency, identity, or value result.
+```
+
+Reason:
+
+```text
+The historical Phase B/source CSV directories are ignored and not present in
+this laptop clone, so the run regenerated a small fixture-like input bundle
+under results/local_runs/ to exercise the implementation path.
+```
+
+Laptop profile:
+
+```text
+workers: 7
+job_batch_size: 2
+thread caps: OMP/OPENBLAS/MKL/NUMEXPR/NUMBA = 1
+machine: laptop DESKTOP-LVVT7H7, Intel i7-1165G7, Intel Iris Xe, no CUDA
+```
+
+Phase B local validation completed:
+
+```text
+jobs_completed: 192 / 192
+metric_rows: 14336
+control_rows: 1245559
+errors: 0
+holdout_scoring_count: 0
+decision_class: phase_c_blocked_no_recurrence
+phase_c_ready: 0
+```
+
+Stage A syndrome audit completed:
+
+```text
+metric_rows: 14336
+control_rows: 1245559
+syndrome_component_rows: 118272
+errors: 0
+new_systems_generated: 0
+holdout_scoring_count: 0
+n6_run_count: 0
+alphabet_expansion_count: 0
+```
+
+Stage A emitted a positive preregistered-syndrome readiness row on the local
+fixture, selecting:
+
+```text
+diffusive_noise_syndrome
+recurrence_cascade_syndrome
+stabilizing_boundary_syndrome
+transition_boundary_syndrome
+```
+
+Interpretation:
+
+```text
+This validates that the Stage A scoring/readiness path executes on nontrivial
+rows. It does not establish that the historical Phase B run contains these
+syndromes.
+```
+
+CSV hardening added during the validation:
+
+```text
+shared frontier-transform read_csv tolerates UTF-8 BOM headers
+shared write_csv uses csv.writer with larger buffering instead of DictWriter
+Phase B can skip duplicate row-level effect CSVs during validation runs
+```
+
+Main observed bottleneck:
+
+```text
+phase_b_design_control_rows.csv was about 745 MB.
+Worker execution finished quickly; final CSV materialization and Stage A CSV
+ingestion dominated wall time.
+```
+
 ## 2026-05-27
 
 ### RFS-MB0 Frontier-Transform Syndrome and Mechanism-Control Audit Spec

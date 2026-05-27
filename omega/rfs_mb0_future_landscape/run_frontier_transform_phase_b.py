@@ -76,6 +76,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--checkpoint-every-jobs", type=int, default=120)
     parser.add_argument("--max-runtime-seconds", type=int, default=36000)
     parser.add_argument("--shutdown-cushion-seconds", type=int, default=900)
+    parser.add_argument("--skip-full-control-csv", action="store_true")
+    parser.add_argument("--skip-row-level-effect-csv", action="store_true")
     return parser.parse_args()
 
 
@@ -125,7 +127,7 @@ def main() -> None:
     if status["status"] == "RUNNING":
         status["status"] = "COMPLETED"
         status["finalization_reason"] = "all_jobs_completed"
-    write_outputs(args.out, status, started, split_rows, rows, controls, errors, checkpoints)
+    write_outputs(args.out, status, started, split_rows, rows, controls, errors, checkpoints, args)
 
 
 def install_signal_handlers() -> None:
@@ -298,11 +300,12 @@ def run_job_batch(batch: list[dict[str, object]]) -> tuple[list[dict[str, object
     return rows, controls, errors, completed
 
 
-def write_outputs(out_dir: Path, status: dict[str, object], started: float, split_rows: list[dict[str, object]], rows: list[dict[str, object]], controls: list[dict[str, object]], errors: list[dict[str, object]], checkpoints: list[dict[str, object]]) -> None:
+def write_outputs(out_dir: Path, status: dict[str, object], started: float, split_rows: list[dict[str, object]], rows: list[dict[str, object]], controls: list[dict[str, object]], errors: list[dict[str, object]], checkpoints: list[dict[str, object]], args: argparse.Namespace) -> None:
     controls = add_control_quality(controls + context_control_rows_limited(rows))
-    row_effects = row_level_control_effect_rows(controls)
-    for row in row_effects:
-        row["control_quality"] = control_quality_for_name(controls, str(row.get("control_name", "")))
+    row_effects = [] if args.skip_row_level_effect_csv else row_level_control_effect_rows(controls)
+    if row_effects:
+        for row in row_effects:
+            row["control_quality"] = control_quality_for_name(controls, str(row.get("control_name", "")))
     effects = control_effect_rows_labeled(rows, controls)
     rec_rows = recurrence_rows(effects, rows)
     matched = matched_recurrence_controls(rec_rows, effects)
@@ -313,10 +316,18 @@ def write_outputs(out_dir: Path, status: dict[str, object], started: float, spli
     status["metric_rows"] = len(rows)
     status["control_rows"] = len(controls)
     status["errors"] = len(errors)
+    status["full_control_csv_written"] = int(not args.skip_full_control_csv)
+    status["row_level_effect_csv_written"] = int(not args.skip_row_level_effect_csv)
     write_csv(out_dir / "phase_b_progress_checkpoints.csv", checkpoints)
     write_csv(out_dir / "phase_b_design_metric_rows.csv", rows)
-    write_csv(out_dir / "phase_b_design_control_rows.csv", controls)
-    write_csv(out_dir / "phase_b_row_level_control_effects.csv", row_effects)
+    if args.skip_full_control_csv:
+        write_csv(out_dir / "phase_b_design_control_rows.csv", [{"status": "skipped", "reason": "skip_full_control_csv"}])
+    else:
+        write_csv(out_dir / "phase_b_design_control_rows.csv", controls)
+    if args.skip_row_level_effect_csv:
+        write_csv(out_dir / "phase_b_row_level_control_effects.csv", [{"status": "skipped", "reason": "skip_row_level_effect_csv"}])
+    else:
+        write_csv(out_dir / "phase_b_row_level_control_effects.csv", row_effects)
     write_csv(out_dir / "phase_b_directional_effects.csv", effects)
     metric_family_rows = family_recurrence(rec_rows)
     write_csv(out_dir / "phase_b_metric_family_recurrence.csv", metric_family_rows)
