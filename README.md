@@ -199,6 +199,7 @@ Important current docs:
 - [Frontier-transform instrumentation spec](docs/RFS_MB0_FRONTIER_TRANSFORM_INSTRUMENTATION_SPEC.md)
 - [Instrumentation branch pivot and probe panel spec](docs/RFS_MB0_INSTRUMENTATION_BRANCH_PIVOT_AND_PROBE_PANEL_SPEC.md)
 - [Boundary deformation guardrail and quotient probe spec](docs/RFS_MB0_BOUNDARY_DEFORMATION_GUARDRAIL_AND_QUOTIENT_PROBE_SPEC.md)
+- [Boundary non-privileging and field-deformation theory note](docs/research_notes/omega_theory/boundary_nonprivileging_and_field_deformation.md)
 - [Branch evolution update note](docs/RFS_MB0_BRANCH_EVOLUTION_UPDATE_NOTE.md)
 - [Minimal reachable futures formalism](docs/research_notes/omega_theory/minimal_reachable_futures_formalism.md)
 - [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
@@ -341,6 +342,7 @@ Start with:
 
 - [Branch evolution update note](docs/RFS_MB0_BRANCH_EVOLUTION_UPDATE_NOTE.md)
 - [Minimal reachable futures formalism](docs/research_notes/omega_theory/minimal_reachable_futures_formalism.md)
+- [Boundary non-privileging and field-deformation theory note](docs/research_notes/omega_theory/boundary_nonprivileging_and_field_deformation.md)
 - [Public terms and translations](docs/research_notes/omega_theory/public_terms_and_translations.md)
 - [Omega glossary](docs/research_notes/omega_theory/omega_glossary.md)
 - [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
@@ -388,10 +390,11 @@ Start here for the pipeline view:
 4. [Frontier-transform syndrome and mechanism-control audit spec](docs/RFS_MB0_FRONTIER_TRANSFORM_SYNDROME_AND_MECHANISM_CONTROL_AUDIT_SPEC.md)
 5. [Frontier-transform instrumentation spec](docs/RFS_MB0_FRONTIER_TRANSFORM_INSTRUMENTATION_SPEC.md)
 6. [Minimal reachable futures formalism](docs/research_notes/omega_theory/minimal_reachable_futures_formalism.md)
-7. [Public terms and translations](docs/research_notes/omega_theory/public_terms_and_translations.md)
-8. [Public results index](docs/PUBLIC_RESULTS_INDEX.md)
-9. [Omega glossary](docs/research_notes/omega_theory/omega_glossary.md)
-10. [Foundation stack as pipeline](docs/research_notes/omega_theory/progenitor_stack_as_pipeline.md)
+7. [Boundary non-privileging and field-deformation theory note](docs/research_notes/omega_theory/boundary_nonprivileging_and_field_deformation.md)
+8. [Public terms and translations](docs/research_notes/omega_theory/public_terms_and_translations.md)
+9. [Public results index](docs/PUBLIC_RESULTS_INDEX.md)
+10. [Omega glossary](docs/research_notes/omega_theory/omega_glossary.md)
+11. [Foundation stack as pipeline](docs/research_notes/omega_theory/progenitor_stack_as_pipeline.md)
 
 ### For implementation work
 
