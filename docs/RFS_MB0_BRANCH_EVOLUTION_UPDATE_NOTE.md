@@ -883,4 +883,50 @@ Interpretation:
 Frontier-transform instrumentation is viable enough for a small Phase B design-set recurrence run.
 This is not a detection claim.
 Holdout scoring remains blocked until Phase B succeeds under frozen metrics and windows.
+
+## 25. 2026-05-27 Frontier-Transform B0 Control/Flow Repair
+
+After Phase A passed minimum frontier-transform viability, B0 repaired control and flow semantics before true recurrence testing.
+
+B0 changes:
+
+```text
+separated constrained_window_flow from one_step_local_flow
+removed silent fallback from frontier-window transition flow
+reported no-window-target and skipped-state rates
+replaced four-integer sketch stability with metric-vector and real distribution stability
+computed transform controls rather than only listing them
+reported signed and absolute effect directions
+kept holdout scoring at zero
+```
+
+B0 completed cleanly:
+
+```text
+jobs_completed: 160 / 160
+metric_rows: 8960
+control_rows: 643112
+errors: 0
+decision_class: phase_b_ready
+holdout_scoring_count: 0
+```
+
+Viable metric families after B0:
+
+```text
+support_turnover
+transition_matrix
+bottleneck
+window_stability
+```
+
+Growth and corrected branch/merge metrics did not survive B0 viability controls. This narrows the Phase B instrument rather than weakening the branch: the next recurrence test should focus on the metric families that remained viable after flow/control repair.
+
+Interpretation:
+
+```text
+B0 permits a small design-set Phase B recurrence run.
+B0 is still not detection or validation.
+Holdout Phase C remains frozen.
+```
 ```
