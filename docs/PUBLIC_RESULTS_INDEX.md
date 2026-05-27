@@ -1245,6 +1245,33 @@ Result in one line:
   recurrent fakeout-to-candidate boundary behavior without stable candidate
   bands or cross-probe recurrence.
 
+### RFS-MB0 Boundary Recurrence Repair Batches
+
+Directories:
+
+- `results/rfs_mb0_relation_atlas/20260527_boundary_recurrence_repair_batch1/`
+- `results/rfs_mb0_relation_atlas/20260527_focused_boundary_recurrence_smoke/`
+- `results/rfs_mb0_relation_atlas/20260527_focused_boundary_recurrence_scaled/`
+
+Primary retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_boundary_recurrence_repair_batches_result.md`
+
+Measurement-limits note:
+
+- `docs/research_notes/validation_design/rfs_mb0_boundary_recurrence_measurement_limits.md`
+
+Reason retained:
+
+- This repaired the interrupted boundary run reporting and tested the selected
+  fresh-seed recurrent boundary groups under an evidence-probe focused pass.
+
+Result in one line:
+
+- The scaled focused pass completed cleanly with `800 / 800` jobs and `0`
+  errors; `20 / 20` groups were evidence-probe recurrent, but all were
+  probe-limited and `0 / 20` were clean recurrent boundary candidates.
+
 The important public caveat:
 
 ```text

@@ -4388,3 +4388,70 @@ stable-band promotion because stable candidate bands remain zero and
 cross-probe recurrence remains zero. The next pass should be smaller and aimed
 directly at cross-probe recurrence repair on the recurrent fakeout-to-candidate
 variant groups.
+
+## 2026-05-27 - RFS-MB0 boundary recurrence repair batches
+
+Implemented the batch workflow from:
+
+```text
+docs/RFS_MB0_BOUNDARY_RECURRENCE_REPAIR_AND_FOCUSED_PASS_SPEC.md
+```
+
+New scripts:
+
+```text
+omega/rfs_mb0_future_landscape/run_boundary_recurrence_repair.py
+omega/rfs_mb0_future_landscape/run_focused_boundary_recurrence.py
+```
+
+Primary result note:
+
+```text
+docs/research_notes/validation_results/rfs_mb0_boundary_recurrence_repair_batches_result.md
+```
+
+Measurement-limits note:
+
+```text
+docs/research_notes/validation_design/rfs_mb0_boundary_recurrence_measurement_limits.md
+```
+
+Batch outputs:
+
+```text
+results/rfs_mb0_relation_atlas/20260527_boundary_recurrence_repair_batch1/
+results/rfs_mb0_relation_atlas/20260527_focused_boundary_recurrence_smoke/
+results/rfs_mb0_relation_atlas/20260527_focused_boundary_recurrence_scaled/
+```
+
+Scaled focused pass:
+
+```text
+groups: 20
+fresh_seeds_per_group: 4
+workers: 18
+jobs_requested: 800
+jobs_completed: 800
+metric_rows: 39600
+errors: 0
+status: COMPLETED
+wall_clock_seconds: 44.6
+```
+
+Headline:
+
+```text
+evidence_probe_recurrent_groups: 20 / 20
+non_saturation_evidence_probe_recurrent_groups: 20 / 20
+clean recurrent boundary candidates: 0 / 20
+all groups: evidence_probe_recurrent_but_probe_limited
+measurement_limits_note_required: true
+```
+
+Interpretation:
+
+The repair workflow is technically healthy and now reports partial/focused
+state cleanly. Scientifically, it points to a measurement limit: recurrence is
+present in selected boundary groups, but every scaled focused group remains
+probe-limited. Do not run n=6 from this state; repair probes or pause MB0
+scaling.
