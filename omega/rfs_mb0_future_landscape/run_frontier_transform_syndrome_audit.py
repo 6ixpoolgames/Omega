@@ -4,6 +4,7 @@ import argparse
 import csv
 import json
 import time
+from bisect import bisect_right
 from collections import Counter, defaultdict
 from pathlib import Path
 from statistics import mean, pstdev
@@ -213,7 +214,7 @@ def syndrome_component_scores(
     control_quality: dict[str, str],
     threshold: float,
 ) -> list[dict[str, object]]:
-    control_values = control_values_by_context(control_rows, control_quality)
+    control_summaries = control_summaries_by_context(control_rows, control_quality)
     out = []
     for row in metric_rows:
         if row.get("preflight_context") != "design_recurrent_boundary":
@@ -226,13 +227,13 @@ def syndrome_component_scores(
                 out.append(component_score_row(row, comp, threshold, "unavailable_metric"))
                 continue
             key = control_context_key(row, metric)
-            controls = control_values.get(key, [])
-            if not controls:
+            summary = control_summaries.get(key)
+            if summary is None:
                 out.append(component_score_row(row, comp, threshold, "unavailable_control"))
                 continue
             observed = float_or_zero(row.get(metric))
-            control_mean = mean(controls)
-            control_std = pstdev(controls) if len(controls) > 1 else 0.0
+            control_mean = float(summary["mean"])
+            control_std = float(summary["std"])
             signed_delta = int(comp["direction"]) * (observed - control_mean)
             signed_z = signed_delta / control_std if control_std > 1e-12 else signed_delta
             item = component_score_row(row, comp, threshold, "scored")
@@ -241,9 +242,9 @@ def syndrome_component_scores(
                 "control_mean": control_mean,
                 "control_std": control_std,
                 "signed_z": signed_z,
-                "control_percentile": percentile(observed, controls),
+                "control_percentile": percentile_from_sorted(observed, summary["sorted_values"]),
                 "component_pass": int(signed_z >= threshold),
-                "control_count": len(controls),
+                "control_count": summary["count"],
             })
             out.append(item)
     return out
@@ -279,8 +280,9 @@ def component_score_row(row: dict[str, str], comp: dict[str, object], threshold:
     }
 
 
-def control_values_by_context(control_rows: list[dict[str, str]], control_quality: dict[str, str]) -> dict[tuple[str, str, str, str], list[float]]:
+def control_summaries_by_context(control_rows: list[dict[str, str]], control_quality: dict[str, str]) -> dict[tuple[str, str, str, str], dict[str, object]]:
     out: dict[tuple[str, str, str, str], list[float]] = defaultdict(list)
+    syndrome_metrics = {str(component["metric_name"]) for component in syndrome_library()}
     for row in control_rows:
         name = row.get("control_name", "")
         if control_quality.get(name, "computed") in {"placeholder", "not_available"}:
@@ -290,6 +292,8 @@ def control_values_by_context(control_rows: list[dict[str, str]], control_qualit
         metric = row.get("metric_name", "")
         if not metric:
             continue
+        if metric not in syndrome_metrics:
+            continue
         key = (
             metric,
             row.get("probe_key", ""),
@@ -297,7 +301,16 @@ def control_values_by_context(control_rows: list[dict[str, str]], control_qualit
             row.get("true_window", row.get("window", "")),
         )
         out[key].append(float_or_zero(row.get("control_value")))
-    return out
+    summaries: dict[tuple[str, str, str, str], dict[str, object]] = {}
+    for key, values in out.items():
+        sorted_values = sorted(values)
+        summaries[key] = {
+            "count": len(values),
+            "mean": mean(values),
+            "std": pstdev(values) if len(values) > 1 else 0.0,
+            "sorted_values": sorted_values,
+        }
+    return summaries
 
 
 def control_context_key(row: dict[str, str], metric: str) -> tuple[str, str, str, str]:
@@ -560,6 +573,13 @@ def percentile(value: float, controls: list[float]) -> float:
     if not controls:
         return 0.0
     return sum(int(value >= item) for item in controls) / len(controls)
+
+
+def percentile_from_sorted(value: float, controls: object) -> float:
+    sorted_controls = controls if isinstance(controls, list) else []
+    if not sorted_controls:
+        return 0.0
+    return bisect_right(sorted_controls, value) / len(sorted_controls)
 
 
 def read_csv(path: Path) -> list[dict[str, str]]:

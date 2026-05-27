@@ -247,6 +247,39 @@ be produced from a much smaller input. The single compact Phase B rerun was not
 faster wall-clock than the earlier full-control run, so the next performance
 target is Stage A scoring/grouping itself rather than only CSV emission.
 
+## Cached Stage A Control Summaries
+
+A second follow-up optimized Stage A scoring by summarizing each control bucket
+once:
+
+```text
+control_count
+control_mean
+control_std
+sorted control values for percentile lookup
+```
+
+Stage A also filters compact control rows to preregistered syndrome metrics
+before building those summaries.
+
+Validation on the same compact 192-job Phase B output:
+
+```text
+pre-cache compact Stage A elapsed: 456.399 seconds
+cached compact Stage A elapsed: 8.400 seconds
+syndrome_component_rows: 118272
+```
+
+Equivalence check:
+
+```text
+phase_b_syndrome_readiness.csv: identical
+phase_b_syndrome_smoke.csv: identical
+phase_b_syndrome_component_scores.csv: identical
+```
+
+This removes the main Stage A scoring bottleneck for laptop-scale validation.
+
 ## Recommendation
 
 The implementation is ready for external audit and for a real Stage A read-only

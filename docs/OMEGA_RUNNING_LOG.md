@@ -146,6 +146,25 @@ and preserves syndrome outputs. The next bottleneck is Stage A control-value
 grouping/scoring, not just raw CSV emission.
 ```
 
+Follow-up Stage A scoring optimization:
+
+```text
+control buckets are now summarized once
+control_mean/control_std are cached per metric/probe/flow/window
+percentiles use sorted control values and binary search
+control rows are filtered to preregistered syndrome metrics before scoring
+```
+
+Validation on the same compact 192-job Phase B output:
+
+```text
+pre-cache compact Stage A elapsed: 456.399 seconds
+cached compact Stage A elapsed: 8.400 seconds
+phase_b_syndrome_readiness.csv: identical
+phase_b_syndrome_smoke.csv: identical
+phase_b_syndrome_component_scores.csv: identical
+```
+
 ## 2026-05-27
 
 ### RFS-MB0 Frontier-Transform Syndrome and Mechanism-Control Audit Spec
