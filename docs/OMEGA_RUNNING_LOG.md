@@ -9,6 +9,101 @@ patch notes at the top.
 
 ## 2026-05-28
 
+### RFS-MB0 Frontier-Transform Stage B Mechanism Smoke on Laptop
+
+Implemented and ran a laptop-local Stage B mechanism-control dependency smoke
+after the Stage A addendum gate allowed a mechanism-profile pass.
+
+Retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_laptop_stage_b_mechanism_smoke_30m_result.md`
+
+Primary output:
+
+- `results/rfs_mb0_relation_atlas/20260528_frontier_transform_stage_b_mechanism_smoke_30m/`
+
+Input Stage A addendum:
+
+- `results/rfs_mb0_relation_atlas/20260528_frontier_transform_stage_a_addendum_laptop_full_control/`
+
+Input Phase B full-control rebuild:
+
+- `results/rfs_mb0_relation_atlas/20260528_frontier_transform_phase_b_regenerated_full_controls/`
+
+Hardware boundary:
+
+```text
+laptop profile only
+workers: 7
+job_batch_size: 2
+thread caps: OMP/OPENBLAS/MKL/NUMEXPR/NUMBA = 1
+desktop runs should not inherit this profile
+```
+
+Claim boundary:
+
+```text
+Mechanism-control dependency smoke only.
+Not historical desktop full-breadth confirmation.
+No holdout scoring, n=6 transfer, alphabet expansion, candidate promotion,
+Omega detection, agency detection, identity detection, or value detection.
+```
+
+Run status:
+
+```text
+status: COMPLETED
+elapsed_seconds: 89.283
+jobs_completed: 224 / 224
+metric_rows: 18816
+component_score_rows: 141120
+syndrome_rate_rows: 224
+dependency_score_rows: 52
+decision_rows: 4
+errors: 0
+holdout_scoring_count: 0
+n6_run_count: 0
+alphabet_expansion_count: 0
+```
+
+Decision read:
+
+```text
+SYN_A_low_growth_high_bottleneck_low_offdiag:
+  control_too_destructive_underdetermined
+  baseline_syndrome_rate: 0.026785714285714284
+
+SYN_B_high_turnover_high_offdiag_high_window_delta:
+  no_measurable_syndrome
+  baseline_syndrome_rate: 0.0
+
+SYN_C_low_growth_high_concentration_low_entropy:
+  control_too_destructive_underdetermined
+  baseline_syndrome_rate: 0.026785714285714284
+
+SYN_D_high_turnover_high_entropy_low_bottleneck_control:
+  no_measurable_syndrome
+  baseline_syndrome_rate: 0.0
+```
+
+Interpretation:
+
+```text
+Mildly promising as an instrumentation target, not a validation result.
+SYN_A and SYN_C are measurable and show weak roughness sensitivity under the
+gentlest non-destructive roughness control, while gentle asymmetry is generic.
+The stronger controls are often substrate-destructive, so negative reads remain
+underdetermined. SYN_B and SYN_D were not measurable in this limited Stage B
+design.
+```
+
+Next step:
+
+```text
+Run a Stage B-2 targeted mechanism smoke with gentler preservation-first
+control ladders before spending more seeds or opening any holdout path.
+```
+
 ### RFS-MB0 Frontier-Transform Syndrome Audit Laptop Validation
 
 Ran a laptop-local validation of the new frontier-transform Phase B / Stage A
