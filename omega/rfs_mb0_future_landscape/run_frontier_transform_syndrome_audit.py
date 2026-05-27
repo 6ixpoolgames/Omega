@@ -549,7 +549,7 @@ def percentile(value: float, controls: list[float]) -> float:
 
 
 def read_csv(path: Path) -> list[dict[str, str]]:
-    with path.open("r", newline="", encoding="utf-8") as handle:
+    with path.open("r", newline="", encoding="utf-8-sig") as handle:
         return list(csv.DictReader(handle))
 
 
@@ -609,7 +609,8 @@ def write_manifest(out_dir: Path) -> None:
     rows = []
     for name in OUTPUTS:
         path = out_dir / name
-        rows.append({"file": name, "exists": path.exists(), "status": "present" if path.exists() else "missing"})
+        exists = path.exists() or name == "output_manifest.json"
+        rows.append({"file": name, "exists": exists, "status": "present" if exists else "missing"})
     (out_dir / "output_manifest.json").write_text(json.dumps(rows, indent=2, sort_keys=True), encoding="utf-8")
 
 
