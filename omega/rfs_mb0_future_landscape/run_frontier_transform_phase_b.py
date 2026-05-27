@@ -39,6 +39,7 @@ OUTPUTS = (
     "phase_b_progress_checkpoints.csv",
     "phase_b_design_metric_rows.csv",
     "phase_b_design_control_rows.csv",
+    "phase_b_stage_a_control_values.csv",
     "phase_b_row_level_control_effects.csv",
     "phase_b_directional_effects.csv",
     "phase_b_metric_family_recurrence.csv",
@@ -302,6 +303,7 @@ def run_job_batch(batch: list[dict[str, object]]) -> tuple[list[dict[str, object
 
 def write_outputs(out_dir: Path, status: dict[str, object], started: float, split_rows: list[dict[str, object]], rows: list[dict[str, object]], controls: list[dict[str, object]], errors: list[dict[str, object]], checkpoints: list[dict[str, object]], args: argparse.Namespace) -> None:
     controls = add_control_quality(controls + context_control_rows_limited(rows))
+    stage_a_control_values = compact_stage_a_control_values(controls)
     row_effects = [] if args.skip_row_level_effect_csv else row_level_control_effect_rows(controls)
     if row_effects:
         for row in row_effects:
@@ -315,6 +317,7 @@ def write_outputs(out_dir: Path, status: dict[str, object], started: float, spli
     status["elapsed_seconds"] = round(time.perf_counter() - started, 3)
     status["metric_rows"] = len(rows)
     status["control_rows"] = len(controls)
+    status["stage_a_control_value_rows"] = len(stage_a_control_values)
     status["errors"] = len(errors)
     status["full_control_csv_written"] = int(not args.skip_full_control_csv)
     status["row_level_effect_csv_written"] = int(not args.skip_row_level_effect_csv)
@@ -324,6 +327,7 @@ def write_outputs(out_dir: Path, status: dict[str, object], started: float, spli
         write_csv(out_dir / "phase_b_design_control_rows.csv", [{"status": "skipped", "reason": "skip_full_control_csv"}])
     else:
         write_csv(out_dir / "phase_b_design_control_rows.csv", controls)
+    write_csv(out_dir / "phase_b_stage_a_control_values.csv", stage_a_control_values)
     if args.skip_row_level_effect_csv:
         write_csv(out_dir / "phase_b_row_level_control_effects.csv", [{"status": "skipped", "reason": "skip_row_level_effect_csv"}])
     else:
@@ -377,6 +381,26 @@ def control_quality_for_name(controls: list[dict[str, object]], name: str) -> st
         if str(row.get("control_name", "")) == name and row.get("control_quality"):
             return str(row.get("control_quality"))
     return "computed"
+
+
+def compact_stage_a_control_values(controls: list[dict[str, object]]) -> list[dict[str, object]]:
+    out = []
+    fields = (
+        "control_name",
+        "control_quality",
+        "control_status",
+        "metric_name",
+        "control_value",
+        "probe_key",
+        "flow_mode",
+        "true_window",
+        "window",
+    )
+    for row in controls:
+        if not row.get("metric_name"):
+            continue
+        out.append({field: row.get(field, "") for field in fields})
+    return out
 
 
 def recurrence_rows(effects: list[dict[str, object]], rows: list[dict[str, object]]) -> list[dict[str, object]]:

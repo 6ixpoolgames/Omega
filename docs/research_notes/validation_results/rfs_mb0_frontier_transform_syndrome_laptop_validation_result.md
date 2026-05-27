@@ -178,6 +178,75 @@ stream large control rows to disk during worker collection, or
 write a compact Stage A control-value table instead of a full debug control CSV
 ```
 
+## Compact Stage A Control-Value Follow-Up
+
+A follow-up implementation added:
+
+```text
+phase_b_stage_a_control_values.csv
+```
+
+This compact table carries only the fields Stage A needs for control-value
+distributions:
+
+```text
+control_name
+control_quality
+control_status
+metric_name
+control_value
+probe_key
+flow_mode
+true_window
+window
+```
+
+Stage A now prefers this compact table when present, and falls back to
+`phase_b_design_control_rows.csv` for older runs.
+
+Validation on the same 192-job laptop Phase B output:
+
+```text
+full debug control CSV: 744725521 bytes
+compact Stage A control CSV: 172520869 bytes
+compact rows: 1245364
+```
+
+Equivalence check:
+
+```text
+phase_b_syndrome_readiness.csv: identical
+phase_b_syndrome_smoke.csv: identical
+phase_b_syndrome_vs_controls.csv: identical
+phase_b_syndrome_component_scores.csv: identical
+```
+
+Stage A runtime on the same Phase B data:
+
+```text
+full-control source: 470.003 seconds
+compact-control source: 403.329 seconds
+```
+
+A separate compact Phase B rerun with `--skip-full-control-csv` also completed:
+
+```text
+jobs_completed: 192 / 192
+metric_rows: 14336
+control_rows: 1245559
+stage_a_control_value_rows: 1245364
+full_control_csv_written: 0
+phase_b_design_control_rows.csv: 46 bytes sentinel
+phase_b_stage_a_control_values.csv: 172517680 bytes
+errors: 0
+```
+
+The compact contract therefore does what it was intended to do: Stage A no
+longer requires the full debug control CSV, and equivalent syndrome outputs can
+be produced from a much smaller input. The single compact Phase B rerun was not
+faster wall-clock than the earlier full-control run, so the next performance
+target is Stage A scoring/grouping itself rather than only CSV emission.
+
 ## Recommendation
 
 The implementation is ready for external audit and for a real Stage A read-only

@@ -107,6 +107,45 @@ Worker execution finished quickly; final CSV materialization and Stage A CSV
 ingestion dominated wall time.
 ```
 
+Follow-up compact Stage A control-value contract:
+
+```text
+Phase B now emits phase_b_stage_a_control_values.csv.
+Stage A prefers that compact table and falls back to phase_b_design_control_rows.csv.
+```
+
+Validation on the same 192-job laptop Phase B output:
+
+```text
+full debug control CSV: 744725521 bytes
+compact Stage A control CSV: 172520869 bytes
+phase_b_syndrome_readiness.csv: identical
+phase_b_syndrome_smoke.csv: identical
+phase_b_syndrome_vs_controls.csv: identical
+phase_b_syndrome_component_scores.csv: identical
+Stage A elapsed, full source: 470.003 seconds
+Stage A elapsed, compact source: 403.329 seconds
+```
+
+A compact Phase B rerun with `--skip-full-control-csv` completed cleanly:
+
+```text
+jobs_completed: 192 / 192
+stage_a_control_value_rows: 1245364
+full_control_csv_written: 0
+phase_b_design_control_rows.csv: 46 byte sentinel
+phase_b_stage_a_control_values.csv: about 172.5 MB
+errors: 0
+```
+
+Interpretation:
+
+```text
+The compact contract removes Stage A's dependency on the full debug control CSV
+and preserves syndrome outputs. The next bottleneck is Stage A control-value
+grouping/scoring, not just raw CSV emission.
+```
+
 ## 2026-05-27
 
 ### RFS-MB0 Frontier-Transform Syndrome and Mechanism-Control Audit Spec

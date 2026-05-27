@@ -14,7 +14,6 @@ from .run_frontier_transform_b0 import metric_family
 
 REQUIRED_PHASE_B_INPUTS = (
     "phase_b_design_metric_rows.csv",
-    "phase_b_design_control_rows.csv",
     "phase_b_directional_effects.csv",
     "phase_b_metric_family_recurrence.csv",
     "phase_b_matched_recurrence_controls.csv",
@@ -22,6 +21,10 @@ REQUIRED_PHASE_B_INPUTS = (
     "phase_b_control_quality_audit.csv",
     "phase_b_no_target_audit.csv",
     "phase_b_phase_c_readiness.csv",
+)
+CONTROL_INPUT_CANDIDATES = (
+    "phase_b_stage_a_control_values.csv",
+    "phase_b_design_control_rows.csv",
 )
 
 OUTPUTS = (
@@ -75,6 +78,8 @@ def main() -> None:
     out_dir = args.out or (args.phase_b_dir / "stage_a_syndrome_audit")
     out_dir.mkdir(parents=True, exist_ok=True)
     missing = [name for name in REQUIRED_PHASE_B_INPUTS if not (args.phase_b_dir / name).exists()]
+    if not any((args.phase_b_dir / name).exists() for name in CONTROL_INPUT_CANDIDATES):
+        missing.append("phase_b_stage_a_control_values.csv or phase_b_design_control_rows.csv")
     status: dict[str, object] = {
         "status": "RUNNING",
         "phase": "frontier_transform_syndrome_audit_stage_a_read_only",
@@ -95,7 +100,7 @@ def main() -> None:
         return
 
     metric_rows = read_csv(args.phase_b_dir / "phase_b_design_metric_rows.csv")
-    control_rows = read_csv(args.phase_b_dir / "phase_b_design_control_rows.csv")
+    control_source_name, control_rows = read_control_rows(args.phase_b_dir)
     effect_rows = read_csv(args.phase_b_dir / "phase_b_directional_effects.csv")
     recurrence_rows = read_csv(args.phase_b_dir / "phase_b_matched_recurrence_controls.csv")
     control_quality_rows = read_csv(args.phase_b_dir / "phase_b_control_quality_audit.csv")
@@ -137,6 +142,7 @@ def main() -> None:
     status["elapsed_seconds"] = round(time.perf_counter() - started, 3)
     status["metric_rows"] = len(metric_rows)
     status["control_rows"] = len(control_rows)
+    status["control_source"] = control_source_name
     status["syndrome_component_rows"] = len(component_scores)
     (out_dir / "status.json").write_text(json.dumps(status, indent=2, sort_keys=True), encoding="utf-8")
     write_manifest(out_dir)
@@ -180,6 +186,14 @@ def syndrome_library() -> list[dict[str, object]]:
         component("recurrence_cascade_syndrome", "diagonal_persistence_high", "diagonal_persistence_mass", 1),
         component("recurrence_cascade_syndrome", "flow_concentration_high", "top_k_flow_concentration", 1),
     ]
+
+
+def read_control_rows(phase_b_dir: Path) -> tuple[str, list[dict[str, str]]]:
+    for name in CONTROL_INPUT_CANDIDATES:
+        path = phase_b_dir / name
+        if path.exists():
+            return name, read_csv(path)
+    return "", []
 
 
 def component(syndrome_id: str, component_id: str, metric_name: str, direction: int) -> dict[str, object]:
