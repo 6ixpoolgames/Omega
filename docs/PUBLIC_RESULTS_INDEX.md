@@ -1294,6 +1294,30 @@ Result in one line:
   errors; clean candidates remain `0`, with `16` groups collision-limited and
   `4` weak-control-bundle limited.
 
+### RFS-MB0 Frontier-Transform Phase B Design Recurrence
+
+Directory:
+
+- `results/rfs_mb0_relation_atlas/20260527_frontier_transform_phase_b_10h/`
+
+Primary retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_frontier_transform_phase_b_10h_result.md`
+
+Reason retained:
+
+- This is the first larger design-set recurrence pass after the
+  frontier-transform Phase A/B0 instrumentation pivot, preserving flow-mode
+  separation, computed controls, no holdout scoring, and graceful partial
+  finalization.
+
+Result in one line:
+
+- The primary run completed `1120 / 1120` jobs with `0` errors and no holdout
+  scoring; raw design-set recurrence appeared in B0-viable families, but after
+  repaired matched recurrence controls the strongest rows were
+  control-equivalent, so Phase C remains blocked.
+
 The important public caveat:
 
 ```text

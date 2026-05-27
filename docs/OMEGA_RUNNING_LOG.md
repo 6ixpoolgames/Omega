@@ -4524,3 +4524,63 @@ the measurement-limit diagnosis: recurrence survives independent coordinate and
 constraint axes, but most selected groups remain collision-limited, with a
 smaller weak-control-bundle class. Do not run n=6 or broader breadth from this
 state; the next useful work is lower-collision, non-identity evidence probes.
+
+## 2026-05-27 - RFS-MB0 frontier-transform Phase B design recurrence
+
+Pulled:
+
+```text
+docs/RFS_MB0_FRONTIER_TRANSFORM_PHASE_B_10H_DESIGN_RECURRENCE_SPEC.md
+```
+
+Implemented:
+
+```text
+omega/rfs_mb0_future_landscape/run_frontier_transform_phase_b.py
+```
+
+Primary result note:
+
+```text
+docs/research_notes/validation_results/rfs_mb0_frontier_transform_phase_b_10h_result.md
+```
+
+Primary output:
+
+```text
+results/rfs_mb0_relation_atlas/20260527_frontier_transform_phase_b_10h/
+```
+
+Run shape:
+
+```text
+workers: 18
+jobs_completed: 1120 / 1120
+metric_rows: 134400
+control_rows: 13165111
+errors: 0
+elapsed_seconds: 3100.015
+holdout_scoring_count: 0
+```
+
+The first smoke passed technically but exposed an over-optimistic recurrence
+control summary. The runner was repaired so matched recurrence controls are
+computed from non-placeholder transform-control effects, and the repaired smoke
+passed before the primary run.
+
+Final readiness:
+
+```text
+decision_class: phase_c_blocked_no_recurrence
+phase_c_ready: 0
+supporting_metric_family_count: 0
+supporting_probe_count: 0
+```
+
+Interpretation:
+
+Raw design-set recurrence appears in bottleneck, support-turnover,
+transition-matrix, and window-stability families, but the strongest rows are
+control-equivalent after the recurrence-control repair. Do not open frozen
+holdout Phase C yet. The next useful work is stronger independent recurrence
+controls/null replicates or improved transform probes.

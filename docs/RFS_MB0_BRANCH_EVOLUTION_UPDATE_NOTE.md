@@ -883,6 +883,7 @@ Interpretation:
 Frontier-transform instrumentation is viable enough for a small Phase B design-set recurrence run.
 This is not a detection claim.
 Holdout scoring remains blocked until Phase B succeeds under frozen metrics and windows.
+```
 
 ## 25. 2026-05-27 Frontier-Transform B0 Control/Flow Repair
 
@@ -929,4 +930,83 @@ B0 permits a small design-set Phase B recurrence run.
 B0 is still not detection or validation.
 Holdout Phase C remains frozen.
 ```
+
+## 26. 2026-05-27 Frontier-Transform Phase B Design-Set Recurrence
+
+Phase B implemented the larger design-set recurrence pass requested by the 10h
+spec, with 18 workers and a hard time budget. Before the primary batch, the
+runner was updated for graceful partial finalization:
+
+```text
+periodic status.json writes
+phase_b_progress_checkpoints.csv during execution
+SIGINT/SIGTERM/SIGBREAK stop requests
+shutdown cushion before wall-clock expiry
+normal final artifact generation from completed rows after interruption
+```
+
+The repaired smoke completed cleanly:
+
+```text
+jobs_completed: 16 / 16
+metric_rows: 896
+control_rows: 55283
+errors: 0
+holdout_scoring_count: 0
+phase_b_design_recurrence_summary.csv: present
+decision_class: phase_c_blocked_no_recurrence
+```
+
+Primary Phase B completed cleanly:
+
+```text
+jobs_completed: 1120 / 1120
+metric_rows: 134400
+control_rows: 13165111
+errors: 0
+elapsed_seconds: 3100.015
+holdout_scoring_count: 0
+```
+
+Raw design-set recurrence appeared in B0-viable families:
+
+```text
+bottleneck observed recurrence mean: 0.2875
+support_turnover observed recurrence mean: 0.2600
+transition_matrix observed recurrence mean: 0.2417
+window_stability observed recurrence mean: 0.1176
+```
+
+However, after repairing the matched recurrence-control summary, the strongest
+recurrence rows were control-equivalent:
+
+```text
+observed_recurrence_rate: up to 0.6
+control_recurrence_mean: matched at 0.6 on strongest rows
+recurrence_excess: 0.0
+```
+
+Final decision:
+
+```text
+decision_class: phase_c_blocked_no_recurrence
+phase_c_ready: 0
+supporting_metric_family_count: 0
+supporting_probe_count: 0
+holdout_scoring_count: 0
+```
+
+Interpretation:
+
+```text
+Do not open frozen holdout Phase C from this result.
+Frontier-transform instrumentation remains technically healthy.
+The limiting issue is not runtime or workflow; it is control-equivalent recurrence.
+Next work should improve independent recurrence controls/null replicates or improve transform probes.
+```
+
+Result note:
+
+```text
+docs/research_notes/validation_results/rfs_mb0_frontier_transform_phase_b_10h_result.md
 ```
