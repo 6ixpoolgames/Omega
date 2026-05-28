@@ -1318,6 +1318,31 @@ Result in one line:
   repaired matched recurrence controls the strongest rows were
   control-equivalent, so Phase C remains blocked.
 
+### RFS-MB0 Desktop Phase B / Stage A / Stage B Syndrome Validation
+
+Directories:
+
+- `results/rfs_mb0_relation_atlas/20260528_desktop_frontier_transform_phase_b_regenerated_full_controls/`
+- `results/rfs_mb0_relation_atlas/20260528_desktop_frontier_transform_stage_a_regenerated_full_controls/`
+- `results/rfs_mb0_relation_atlas/20260528_desktop_frontier_transform_stage_b_mechanism_smoke/`
+
+Primary retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_desktop_phase_b_stage_a_b_validation_result.md`
+
+Reason retained:
+
+- This is the desktop validation of the optimized regenerated Phase B
+  full-control path, read-only Stage A syndrome audit, and Stage B
+  mechanism-control smoke. It supersedes the laptop-only runner validation for
+  scientific workflow interpretation.
+
+Result in one line:
+
+- Stage A found preregistered joint signed syndromes above
+  marginal-preserving controls on regenerated desktop Phase B rows, but Stage B
+  remains `control_too_destructive_underdetermined`; holdout remains blocked.
+
 The important public caveat:
 
 ```text

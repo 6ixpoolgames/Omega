@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import signal
 import time
 from concurrent.futures import FIRST_COMPLETED, ProcessPoolExecutor, wait
 from pathlib import Path
@@ -27,6 +28,7 @@ from .run_path_metric_calibration import build_probe
 
 
 OUTPUTS = (
+    "mechanism_control_progress_checkpoints.csv",
     "mechanism_control_system_manifest.csv",
     "mechanism_control_substrate_preservation.csv",
     "mechanism_control_syndrome_rates.csv",
@@ -44,6 +46,7 @@ ASYMMETRY_CONTROL = "asymmetry_flip_sweep_control"
 CONSTRAINT_CONTROL = "constraint_resampled_generation_control"
 BASELINE_CONTROL = "baseline_unperturbed"
 DIAGNOSTIC_PROBES = {"existing_low", "full_state_hash"}
+STOP_REQUESTED = False
 
 
 def parse_args() -> argparse.Namespace:
@@ -71,6 +74,7 @@ def parse_args() -> argparse.Namespace:
 
 
 def main() -> None:
+    install_signal_handlers()
     args = parse_args()
     started = time.perf_counter()
     args.out.mkdir(parents=True, exist_ok=True)
@@ -106,7 +110,7 @@ def main() -> None:
         "candidate_detection_enabled": False,
         "holdout_detection_enabled": False,
     }
-    metric_rows, manifest, preservation, errors = run_batches(args, jobs, status, started)
+    metric_rows, manifest, preservation, errors, checkpoints = run_batches(args, jobs, status, started)
     preservation = add_frontier_preservation_metrics(preservation, metric_rows)
     component_scores = score_components(args, metric_rows)
     syndrome_rates = syndrome_rate_rows(component_scores, selected_syndromes)
@@ -124,7 +128,18 @@ def main() -> None:
     status["decision_rows"] = len(decision_summary)
     status["errors"] = len(errors)
     status["mechanism_control_systems_generated"] = sum(1 for row in manifest if row.get("mechanism_control_name") != BASELINE_CONTROL)
-    write_outputs(args.out, status, metric_rows, manifest, preservation, component_scores, syndrome_rates, dependency_scores, decision_summary, errors)
+    write_outputs(args.out, status, metric_rows, manifest, preservation, component_scores, syndrome_rates, dependency_scores, decision_summary, errors, checkpoints)
+
+
+def install_signal_handlers() -> None:
+    def request_stop(_signum: int, _frame: object) -> None:
+        global STOP_REQUESTED
+        STOP_REQUESTED = True
+
+    for name in ("SIGINT", "SIGTERM", "SIGBREAK"):
+        signum = getattr(signal, name, None)
+        if signum is not None:
+            signal.signal(signum, request_stop)
 
 
 def selected_syndrome_ids(stage_a_dir: Path) -> list[str]:
@@ -223,7 +238,7 @@ def run_batches(
     jobs: list[dict[str, object]],
     status: dict[str, object],
     started: float,
-) -> tuple[list[dict[str, object]], list[dict[str, object]], list[dict[str, object]], list[dict[str, object]]]:
+) -> tuple[list[dict[str, object]], list[dict[str, object]], list[dict[str, object]], list[dict[str, object]], list[dict[str, object]]]:
     batches = [jobs[index : index + max(1, args.job_batch_size)] for index in range(0, len(jobs), max(1, args.job_batch_size))]
     pending = list(batches)
     futures = {}
@@ -231,9 +246,15 @@ def run_batches(
     manifest: list[dict[str, object]] = []
     preservation: list[dict[str, object]] = []
     errors: list[dict[str, object]] = []
+    checkpoints: list[dict[str, object]] = []
+    last_checkpoint_jobs = 0
     executor = ProcessPoolExecutor(max_workers=max(1, args.workers))
     try:
         while pending or futures:
+            if STOP_REQUESTED:
+                status["status"] = "PARTIAL_INTERRUPTED"
+                status["finalization_reason"] = "signal_stop_requested"
+                break
             remaining = args.max_runtime_seconds - (time.perf_counter() - started)
             if remaining <= args.shutdown_cushion_seconds:
                 status["status"] = "PARTIAL_TIME_LIMIT_REACHED"
@@ -253,6 +274,10 @@ def run_batches(
                     preservation.extend(audits)
                     errors.extend(batch_errors)
                     status["jobs_completed"] = int(status["jobs_completed"]) + completed
+                    if int(status["jobs_completed"]) - last_checkpoint_jobs >= 60:
+                        checkpoints.append(checkpoint_row(status, started, metric_rows, manifest, preservation, errors))
+                        last_checkpoint_jobs = int(status["jobs_completed"])
+                        write_partial_status(args.out, status, started, metric_rows, manifest, preservation, errors, checkpoints)
                 except Exception as exc:  # noqa: BLE001
                     errors.append({"job_id": ",".join(str(job.get("job_id", "")) for job in batch), "error": repr(exc)})
     finally:
@@ -264,7 +289,50 @@ def run_batches(
         else:
             executor.shutdown(wait=True, cancel_futures=False)
     status["pending_jobs_remaining"] = sum(len(batch) for batch in pending)
-    return metric_rows, manifest, preservation, errors
+    checkpoints.append(checkpoint_row(status, started, metric_rows, manifest, preservation, errors))
+    write_partial_status(args.out, status, started, metric_rows, manifest, preservation, errors, checkpoints)
+    return metric_rows, manifest, preservation, errors, checkpoints
+
+
+def checkpoint_row(
+    status: dict[str, object],
+    started: float,
+    metric_rows: list[dict[str, object]],
+    manifest: list[dict[str, object]],
+    preservation: list[dict[str, object]],
+    errors: list[dict[str, object]],
+) -> dict[str, object]:
+    return {
+        "elapsed_seconds": round(time.perf_counter() - started, 3),
+        "jobs_submitted": status.get("jobs_submitted"),
+        "jobs_completed": status.get("jobs_completed"),
+        "metric_rows": len(metric_rows),
+        "system_manifest_rows": len(manifest),
+        "preservation_rows": len(preservation),
+        "errors": len(errors),
+        "status": status.get("status"),
+    }
+
+
+def write_partial_status(
+    out_dir: Path,
+    status: dict[str, object],
+    started: float,
+    metric_rows: list[dict[str, object]],
+    manifest: list[dict[str, object]],
+    preservation: list[dict[str, object]],
+    errors: list[dict[str, object]],
+    checkpoints: list[dict[str, object]],
+) -> None:
+    partial = dict(status)
+    partial["elapsed_seconds"] = round(time.perf_counter() - started, 3)
+    partial["metric_rows_partial"] = len(metric_rows)
+    partial["system_manifest_rows_partial"] = len(manifest)
+    partial["preservation_rows_partial"] = len(preservation)
+    partial["errors"] = len(errors)
+    partial["partial_checkpoint_written_utc"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+    (out_dir / "status.json").write_text(json.dumps(partial, indent=2, sort_keys=True), encoding="utf-8")
+    write_csv(out_dir / "mechanism_control_progress_checkpoints.csv", checkpoints)
 
 
 def run_batch(jobs: list[dict[str, object]]) -> tuple[list[dict[str, object]], list[dict[str, object]], list[dict[str, object]], list[dict[str, object]], int]:
@@ -552,7 +620,9 @@ def write_outputs(
     dependency_scores: list[dict[str, object]],
     decision_summary: list[dict[str, object]],
     errors: list[dict[str, object]],
+    checkpoints: list[dict[str, object]],
 ) -> None:
+    write_csv(out_dir / "mechanism_control_progress_checkpoints.csv", checkpoints)
     write_csv(out_dir / "mechanism_control_system_manifest.csv", manifest)
     write_csv(out_dir / "mechanism_control_substrate_preservation.csv", preservation)
     write_csv(out_dir / "mechanism_control_syndrome_rates.csv", syndrome_rates)

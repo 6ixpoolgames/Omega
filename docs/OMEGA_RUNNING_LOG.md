@@ -9,6 +9,100 @@ patch notes at the top.
 
 ## 2026-05-28
 
+### RFS-MB0 Desktop Phase B / Stage A / Stage B Validation
+
+Ran the desktop validation of the regenerated Phase B full-control path,
+read-only Stage A syndrome audit, and Stage B mechanism-control smoke.
+
+Retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_desktop_phase_b_stage_a_b_validation_result.md`
+
+Local outputs:
+
+- `results/rfs_mb0_relation_atlas/20260528_desktop_frontier_transform_phase_b_regenerated_full_controls/`
+- `results/rfs_mb0_relation_atlas/20260528_desktop_frontier_transform_stage_a_regenerated_full_controls/`
+- `results/rfs_mb0_relation_atlas/20260528_desktop_frontier_transform_stage_b_mechanism_smoke/`
+
+Hardware boundary:
+
+```text
+desktop profile
+Ryzen 5900X class CPU
+RTX 4070 Ti available, not needed for this CPU-bound pass
+workers: 18
+job_batch_size: 4
+thread caps: OMP/OPENBLAS/MKL/NUMEXPR = 1
+```
+
+Stage 1 regenerated Phase B full controls:
+
+```text
+status: COMPLETED
+elapsed_seconds: 3959.802
+jobs_completed: 1120 / 1120
+metric_rows: 134400
+control_rows: 13165111
+stage_a_control_value_rows: 13163988
+errors: 0
+full_control_csv_written: 1
+row_level_effect_csv_written: 0
+holdout_scoring_count: 0
+decision_class: phase_c_blocked_no_recurrence
+```
+
+Stage A syndrome audit:
+
+```text
+status: COMPLETED
+elapsed_seconds: 178.609
+control_source: phase_b_stage_a_control_values.csv
+syndrome_component_rows: 940800
+marginal_control_replicates: 500
+decision_class: syndrome_smoke_joint_positive_above_marginal_controls
+stage_b_allowed: 1
+selected_syndrome_ids:
+  SYN_A_low_growth_high_bottleneck_low_offdiag
+  SYN_B_high_turnover_high_offdiag_high_window_delta
+  SYN_C_low_growth_high_concentration_low_entropy
+  SYN_D_high_turnover_high_entropy_low_bottleneck_control
+```
+
+Stage B mechanism smoke:
+
+```text
+status: COMPLETED
+elapsed_seconds: 980.677
+jobs_completed: 4480 / 4480
+metric_rows: 376320
+component_score_rows: 2822400
+errors: 0
+holdout_scoring_count: 0
+n6_run_count: 0
+alphabet_expansion_count: 0
+```
+
+Decision read:
+
+```text
+All four selected syndromes remain control_too_destructive_underdetermined.
+Non-destructive dependency signal appears mainly in SYN_A/SYN_C under
+roughness p0.01 and asymmetry p0.01/p0.02.
+Most stronger mechanism controls are too destructive for negative
+interpretation.
+```
+
+Interpretation:
+
+```text
+The syndrome branch is now more promising than marginal recurrence, because
+Stage A separates preregistered joint signed syndromes from marginal-preserving
+controls on regenerated desktop Phase B rows.
+
+The mechanism-control ladder is not yet clean enough. Do not open holdout.
+Next work should calibrate gentler preservation-first controls before scaling.
+```
+
 ### RFS-MB0 Frontier-Transform Stage B Mechanism Smoke on Laptop
 
 Implemented and ran a laptop-local Stage B mechanism-control dependency smoke

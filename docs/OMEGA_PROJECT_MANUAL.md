@@ -175,6 +175,14 @@ results/local_runs/
 
 and should remain ignored.
 
+For large RFS-MB0 relation-atlas and future-landscape runs, the raw CSV
+directories should also remain local/ignored unless a compact subset is
+explicitly promoted. The public record should normally be:
+
+```text
+docs/research_notes/validation_results/<retained_result_note>.md
+```
+
 Do not add new root-level `*_results` folders. If a historical script defaults
 to root-level output, override its output directory when rerunning it.
 
