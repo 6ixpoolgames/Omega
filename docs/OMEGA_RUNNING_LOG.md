@@ -7,6 +7,86 @@ run.
 Entries are organized in rough reverse chronological order, with the most recent
 patch notes at the top.
 
+## 2026-05-29
+
+### RFS-MB0 Stage B-2 Spectral Future-Field Geometry Smoke
+
+Implemented and smoked the optional Stage B-2 spectral future-field geometry
+branch requested by
+`docs/RFS_MB0_STAGE_B2_SPECTRAL_FUTURE_FIELD_GEOMETRY_SMOKE_SPEC.md`.
+
+Retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_future_field_geometry_smoke_result.md`
+
+Local outputs:
+
+- `results/rfs_mb0_relation_atlas/20260529_stage_b2_spectral_contract_smoke/`
+- `results/rfs_mb0_relation_atlas/20260529_stage_b2_spectral_small_smoke_v2/`
+
+Implementation:
+
+```text
+new runner: omega/rfs_mb0_future_landscape/run_stage_b2_spectral_future_field_geometry_smoke.py
+matrix families: cofrontier, coflow
+normalization: bounded independence residual
+signal-aware partial finalization: enabled
+direct Stage B-2 controls: enabled
+full shuffled/matched spectral controls: not implemented yet
+```
+
+Small desktop smoke:
+
+```text
+status: COMPLETED
+elapsed_seconds: 15.473
+workers: 18
+jobs_completed: 240 / 240
+contexts_accumulated: 30240
+matrix_count: 180
+spectral_decompositions_completed: 180
+matrix_coverage_insufficient_count: 0
+errors: 0
+decision_class: spectral_future_geometry_present
+branch_recommendation: recommend_channel_edge_sensitivity_with_spectral_guidance
+```
+
+Claim boundary:
+
+```text
+holdout_scoring_count: 0
+n6_run_count: 0
+alphabet_expansion_count: 0
+candidate_promotion_enabled: false
+control_comparison_scope: direct_stage_b2_controls_only
+label/context/horizon/frontier-size/probe-marginal spectral controls: not completed
+```
+
+Interpretation:
+
+```text
+The smoke found nonblank, well-covered spectral structure in future-signature
+co-occurrence and transition-flow matrices. The strongest direct-control
+effects were coflow middle-horizon positive-mass deltas under low-probability
+edge/topology perturbations, especially asymmetric edge flips.
+```
+
+Caveat:
+
+```text
+This is a direct-control spectral audition only. It does not satisfy the full
+spectral migration criteria and should not be read as Omega, agency, identity,
+value, or holdout evidence.
+```
+
+Next recommendation:
+
+```text
+Use spectral high-loading structures as exploratory guidance for the
+channel-edge sensitivity branch, or repair the spectral runner with shuffled
+and matched controls before any stronger spectral-gauge interpretation.
+```
+
 ## 2026-05-28
 
 ### RFS-MB0 Stage B-2 Exploratory Iteration Pass

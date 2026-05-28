@@ -20,6 +20,8 @@ Current entry points:
 
 - `RFS_MB0_FUTURE_LANDSCAPE_PATTERN_SPEC.md`
 - `RFS_MB0_FUTURE_LANDSCAPE_DETECTOR_V1_HANDOFF.md`
+- `RFS_MB0_STAGE_B2_EXPLORATORY_ITERATION_PASS_SPEC.md`
+- `RFS_MB0_STAGE_B2_SPECTRAL_FUTURE_FIELD_GEOMETRY_SMOKE_SPEC.md`
 - `RFS_MB0_ACTION_GENERATED_RELATION_SUBSTRATE_SPEC.md`
 - `REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md`
 - `research_notes/validation_design/val_ecology_viability_reorientation.md`
@@ -61,6 +63,7 @@ Directory:
 
 Current result notes:
 
+- `rfs_mb0_stage_b2_spectral_future_field_geometry_smoke_result.md`
 - `rfs_mb0_stage_b2_exploratory_iteration_pass_result.md`
 - `rfs_mb0_stage_b2_mechanism_calibration_smokes_result.md`
 - `rfs_mb0_desktop_phase_b_stage_a_b_validation_result.md`
@@ -101,6 +104,13 @@ Result in one line:
   and asymmetry-strength controls stayed near baseline. The recommended next
   branch is channel-specific edge sensitivity, not holdout or candidate
   promotion.
+- The Stage B-2 spectral future-field geometry smoke completed a compact
+  18-worker direct-control audition in about 15.5 seconds with 180 matrices,
+  zero errors, and full matrix coverage. It found nonblank cofrontier/coflow
+  spectral structure and strong direct coflow sensitivity to low-probability
+  edge/topology perturbations. This is not a full spectral pass: label-shuffled,
+  context-shuffled, horizon-order, frontier-size, and probe-marginal spectral
+  controls are still missing.
 - RFS-MB0 future-landscape detector v1.1 passed implementation checks, and the
   long-horizon audit extended the horizon grid through H1024: 33 systems, 3696
   profiles, zero errors. It did not pass the scientific gate: zero aggregate

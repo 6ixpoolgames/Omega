@@ -20,7 +20,7 @@ The active empirical question is currently narrower than agency, identity, or va
 
 Current status, in one line:
 
-**VAL0/VAL1 were useful reconnaissance probes; RFS-MB0 has moved from endpoint support/distribution deformation to frontier-transform instrumentation. The frontier-transform instrument is technically healthy and found raw design-set recurrence, but Phase B showed that marginal recurrence is control-equivalent. Phase C holdout is blocked. The next task is a preregistered joint-syndrome and mechanism-control audit. No scientific gate has passed.**
+**VAL0/VAL1 were useful reconnaissance probes; RFS-MB0 has moved from endpoint support/distribution deformation to frontier-transform instrumentation. Stage B-2 found preregistered A/C joint signed syndromes that are sensitive to edge/topology perturbation, and a compact spectral smoke found nonblank direct-control future-field geometry. This is not yet a scientific gate pass: holdout remains blocked and shuffled/matched spectral controls are still missing.**
 
 ## Workflow: human-directed, AI-assisted research
 
@@ -164,6 +164,8 @@ frontier-transform Phase A preflight
 frontier-transform B0 control/flow repair
 frontier-transform Phase B 10h design-set recurrence
 frontier-transform syndrome and mechanism-control audit spec
+frontier-transform Stage B-2 exploratory iteration
+spectral future-field geometry smoke
 ```
 
 Current interpretation:
@@ -185,13 +187,27 @@ Phase B recurrence:
   raw design-set recurrence appeared, but strongest rows were control-equivalent
   after matched recurrence-control repair
 
+Stage B-2:
+  preregistered A/C joint signed syndromes remained sensitive to low-probability
+  edge/topology perturbation, while exact roughness-seed and asymmetry-strength
+  controls stayed near baseline
+
+spectral tangent:
+  cofrontier/coflow matrices are nonblank and direct-control topology-sensitive,
+  but this has not yet run label-shuffled, context-shuffled, horizon-order,
+  frontier-size, or probe-marginal spectral controls
+
 next task:
-  decompose the 0.6 control match, score preregistered joint signed syndromes,
-  and test mechanism dependency under roughness/asymmetry/constraint controls
+  channel-specific edge sensitivity, using spectral high-loading structures as
+  exploratory guidance only
 ```
 
 Important current docs:
 
+- [Stage B-2 spectral future-field geometry smoke result](docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_future_field_geometry_smoke_result.md)
+- [Stage B-2 spectral future-field geometry smoke spec](docs/RFS_MB0_STAGE_B2_SPECTRAL_FUTURE_FIELD_GEOMETRY_SMOKE_SPEC.md)
+- [Stage B-2 exploratory iteration pass result](docs/research_notes/validation_results/rfs_mb0_stage_b2_exploratory_iteration_pass_result.md)
+- [Stage B-2 exploratory iteration pass spec](docs/RFS_MB0_STAGE_B2_EXPLORATORY_ITERATION_PASS_SPEC.md)
 - [Frontier-transform syndrome and mechanism-control audit spec](docs/RFS_MB0_FRONTIER_TRANSFORM_SYNDROME_AND_MECHANISM_CONTROL_AUDIT_SPEC.md)
 - [Frontier-transform Phase B 10h design recurrence spec](docs/RFS_MB0_FRONTIER_TRANSFORM_PHASE_B_10H_DESIGN_RECURRENCE_SPEC.md)
 - [Frontier-transform Phase B 10h result](docs/research_notes/validation_results/rfs_mb0_frontier_transform_phase_b_10h_result.md)

@@ -1,6 +1,6 @@
 # Omega Project Manual
 
-Last updated: 2026-05-23
+Last updated: 2026-05-29
 
 Repository: https://github.com/6ixpoolgames/Omega
 
@@ -82,6 +82,10 @@ as the canonical internal definition anchor.
    - `docs/research_notes/validation_results/rfs_mb0_relation_atlas_5h_batch_result.md`
    - `docs/RFS_MB0_RELATION_ATLAS_BATCH_RUNNER_REPAIR_SPEC.md`
    - `docs/research_notes/validation_results/rfs_mb0_relation_atlas_repaired_batch_result.md`
+   - `docs/RFS_MB0_STAGE_B2_EXPLORATORY_ITERATION_PASS_SPEC.md`
+   - `docs/research_notes/validation_results/rfs_mb0_stage_b2_exploratory_iteration_pass_result.md`
+   - `docs/RFS_MB0_STAGE_B2_SPECTRAL_FUTURE_FIELD_GEOMETRY_SMOKE_SPEC.md`
+   - `docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_future_field_geometry_smoke_result.md`
    - `docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md`
    - `docs/research_notes/validation_design/val_ecology_viability_reorientation.md`
    - `docs/research_notes/validation_design/README.md`
@@ -335,7 +339,18 @@ omega/rfs_mb0_future_landscape/
 Latest result:
 
 ```text
-docs/research_notes/validation_results/rfs_mb0_future_landscape_detector_v1_1_smoke_result.md
+docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_future_field_geometry_smoke_result.md
+docs/research_notes/validation_results/rfs_mb0_stage_b2_exploratory_iteration_pass_result.md
+```
+
+Current live read:
+
+```text
+Stage B-2 strengthened the read that preregistered A/C joint signed syndromes
+are sensitive to topology-level edge perturbations. The spectral future-field
+smoke found a nonblank direct-control spectral object over future-frontier and
+transition-flow matrices, but it has not yet run the shuffled and matched
+spectral controls needed for a stronger claim.
 ```
 
 RFS-MB0 is now the recommended starting point for new implementation work.
