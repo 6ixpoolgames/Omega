@@ -9,6 +9,89 @@ patch notes at the top.
 
 ## 2026-05-28
 
+### RFS-MB0 Stage B-2 Mechanism Calibration Smokes
+
+Implemented and smoked the Stage B-2 mechanism-calibration / entropy-flow-
+horizon overlay runner after the desktop Stage B addendum tightened control
+identity and proxy discipline.
+
+Retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_stage_b2_mechanism_calibration_smokes_result.md`
+
+Local outputs:
+
+- `results/rfs_mb0_relation_atlas/20260528_stage_b2_contract_smoke/`
+- `results/rfs_mb0_relation_atlas/20260528_stage_b2_small_desktop_smoke_v2/`
+
+Implementation:
+
+```text
+new runner: omega/rfs_mb0_future_landscape/run_frontier_transform_stage_b2_mechanism_calibration.py
+dedicated background CSV writer: enabled
+compact Stage A control-summary loading: enabled
+signal-aware partial checkpoint/status writes: enabled
+control identity / proxy discipline fields: enabled
+post-preservation destructiveness gates: enabled
+```
+
+Small desktop smoke:
+
+```text
+status: COMPLETED
+elapsed_seconds: 53.334
+workers: 18
+jobs_completed: 288 / 288
+metric_rows: 24192
+component_score_rows: 290304
+syndrome_rate_rows: 192
+dependency_score_rows: 44
+decision_rows: 4
+errors: 0
+holdout_scoring_count: 0
+n6_run_count: 0
+alphabet_expansion_count: 0
+```
+
+Control identity read:
+
+```text
+exact mechanism controls: 3
+generation-level proxies: 1
+topology-level proxies: 7
+too-destructive/underdetermined conditions: 2
+runtime-downgraded intended controls: 0
+```
+
+Decision read:
+
+```text
+SYN_A / SYN_C: edge_roughening_sensitive_syndrome at low smoke confidence
+SYN_B / SYN_D: control_too_destructive_underdetermined
+```
+
+Interpretation:
+
+```text
+The Stage B-2 workflow is live and catches destructive/proxy conditions.
+This is a mechanism-calibration smoke, not a validation claim.
+Do not open holdout.
+```
+
+Scaling warning:
+
+```text
+For this small smoke, control summary loading dominated wall clock:
+  control_summary_load_seconds: 37.667
+
+Component score output remains large even with the dedicated writer:
+  290304 rows, about 212 MB
+```
+
+Medium scale is reasonable with a wall-clock cap and local disk headroom. A
+long run should either add a more compact component-score mode or cache the
+Stage A control summary in a faster read format.
+
 ### RFS-MB0 Desktop Phase B / Stage A / Stage B Validation
 
 Ran the desktop validation of the regenerated Phase B full-control path,
