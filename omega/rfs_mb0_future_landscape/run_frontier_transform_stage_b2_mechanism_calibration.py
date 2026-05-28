@@ -3,13 +3,16 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import pickle
 import queue
+import random
 import signal
 import threading
 import time
 from collections import Counter, defaultdict
 from concurrent.futures import FIRST_COMPLETED, ProcessPoolExecutor, wait
 from dataclasses import replace
+from itertools import combinations
 from pathlib import Path
 from statistics import mean, pstdev
 from typing import Any
@@ -27,11 +30,16 @@ from .run_frontier_transform_b0 import rows_for_starts
 from .run_frontier_transform_syndrome_audit import (
     component_contexts,
     component_score_row,
+    control_equivalence_read,
     control_context_key,
+    joint_rate,
     marginal_preserving_syndrome_controls,
+    percentile,
     percentile_from_sorted,
+    stable_context_seed,
     syndrome_component_ablation,
     syndrome_library,
+    syndrome_stage_a_decision,
     syndrome_vs_controls,
 )
 from .run_instrumentation_phase_a import build_holdout_split
@@ -58,7 +66,9 @@ OUTPUTS = (
     "stage_b2_mechanism_control_system_manifest.csv",
     "stage_b2_substrate_preservation.csv",
     "stage_b2_metric_rows.csv",
+    "stage_b2_metric_rows_audit_sample.csv",
     "stage_b2_component_scores.csv",
+    "stage_b2_component_scores_audit_sample.csv",
     "stage_b2_syndrome_rates.csv",
     "stage_b2_dependency_scores.csv",
     "stage_b2_decision_summary.csv",
@@ -209,6 +219,17 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--marginal-control-replicates", type=int, default=100)
     parser.add_argument("--marginal-control-seed", type=int, default=20260528)
     parser.add_argument("--output-profile", choices=("compact", "debug"), default="compact")
+    parser.add_argument("--metric-output-mode", choices=("full", "audit_sample", "none"), default="full")
+    parser.add_argument("--metric-audit-sample-rate", type=float, default=0.02)
+    parser.add_argument("--metric-audit-sample-cap", type=int, default=50000)
+    parser.add_argument("--component-output-mode", choices=("full", "audit_sample", "none"), default="audit_sample")
+    parser.add_argument("--component-audit-sample-rate", type=float, default=0.02)
+    parser.add_argument("--component-audit-sample-cap", type=int, default=50000)
+    parser.add_argument("--marginal-output-mode", choices=("full", "summary"), default="summary")
+    parser.add_argument("--control-summary-cache-mode", choices=("auto", "rebuild", "off"), default="auto")
+    parser.add_argument("--control-summary-cache", type=Path, default=None)
+    parser.add_argument("--track-frontier-preservation-metrics", action="store_true")
+    parser.add_argument("--track-saturation-timing", action="store_true")
     return parser.parse_args()
 
 
@@ -220,7 +241,12 @@ def main() -> None:
     args.out.mkdir(parents=True, exist_ok=True)
     selected_syndromes = selected_syndrome_ids(args)
     selected_components = [component for component in syndrome_library() if str(component["syndrome_id"]) in set(selected_syndromes)]
-    control_summaries, control_source, control_summary_rows = load_control_summaries(args.phase_b_dir, selected_components)
+    control_summaries, control_source, control_summary_rows, control_summary_cache_status = load_control_summaries(
+        args.phase_b_dir,
+        selected_components,
+        args.control_summary_cache_mode,
+        args.control_summary_cache,
+    )
     control_summary_load_seconds = round(time.perf_counter() - started, 3)
     groups, split_rows = build_holdout_split(args)
     anchors = {row.get("anchor_id", ""): row for row in read_csv(args.source_run / "atlas_band_selection.csv")}
@@ -247,58 +273,86 @@ def main() -> None:
         "control_source": control_source,
         "control_summary_contexts": control_summary_rows,
         "control_summary_load_seconds": control_summary_load_seconds,
+        "control_summary_cache_status": control_summary_cache_status,
         "new_systems_generated": 0,
         "holdout_scoring_count": 0,
         "n6_run_count": 0,
         "alphabet_expansion_count": 0,
         "promotion_enabled": False,
+        "candidate_promotion_enabled": False,
         "candidate_detection_enabled": False,
         "holdout_detection_enabled": False,
         "output_profile": args.output_profile,
+        "metric_output_mode": args.metric_output_mode,
+        "metric_audit_sample_rate": args.metric_audit_sample_rate,
+        "metric_audit_sample_cap": args.metric_audit_sample_cap,
+        "component_output_mode": args.component_output_mode,
+        "component_audit_sample_rate": args.component_audit_sample_rate,
+        "component_audit_sample_cap": args.component_audit_sample_cap,
+        "marginal_output_mode": args.marginal_output_mode,
+        "track_frontier_preservation_metrics": bool(args.track_frontier_preservation_metrics),
+        "track_saturation_timing": bool(args.track_saturation_timing),
         "streaming_writer_enabled": True,
     }
     write_csv(args.out / "stage_b2_job_manifest.csv", job_manifest_rows(jobs))
     (args.out / "stage_b2_run_config.json").write_text(json.dumps({**vars(args), "selected_syndrome_ids": selected_syndromes}, indent=2, sort_keys=True, default=str), encoding="utf-8")
+    writer_fields: dict[str, tuple[str, ...]] = {}
+    if args.metric_output_mode == "full":
+        writer_fields["stage_b2_metric_rows.csv"] = METRIC_ROW_FIELDS
+    elif args.metric_output_mode == "audit_sample":
+        writer_fields["stage_b2_metric_rows_audit_sample.csv"] = METRIC_ROW_FIELDS
+    if args.component_output_mode == "full":
+        writer_fields["stage_b2_component_scores.csv"] = COMPONENT_ROW_FIELDS
+    elif args.component_output_mode == "audit_sample":
+        writer_fields["stage_b2_component_scores_audit_sample.csv"] = COMPONENT_ROW_FIELDS
     writer = StreamingCsvWriter(
         args.out,
-        {
-            "stage_b2_metric_rows.csv": METRIC_ROW_FIELDS,
-            "stage_b2_component_scores.csv": COMPONENT_ROW_FIELDS,
-        },
+        writer_fields,
     )
     writer.start()
+    metric_stats = MetricStatsAccumulator(
+        track_frontier_preservation=args.track_frontier_preservation_metrics,
+        track_saturation_timing=args.track_saturation_timing,
+    )
+    component_stats = ComponentStatsAccumulator(selected_components)
     try:
-        metric_rows, component_rows, manifests, preservation, errors, checkpoints = run_batches(
+        metric_rows, manifests, preservation, errors, checkpoints = run_batches(
             args,
             jobs,
             status,
             started,
             writer,
+            metric_stats,
+            component_stats,
             control_summaries,
             selected_components,
         )
     finally:
         writer.close()
-    preservation = add_frontier_preservation_metrics(preservation, metric_rows)
+    preservation = metric_stats.add_frontier_preservation_metrics(preservation)
     identity = control_identity_audit(manifests, preservation)
-    syndrome_rates = syndrome_rate_rows(component_rows, selected_syndromes)
+    syndrome_rates = component_stats.syndrome_rate_rows(selected_syndromes)
     dependency = dependency_score_rows(syndrome_rates, preservation, selected_syndromes, identity)
     decision = decision_summary_rows(dependency, selected_syndromes)
-    entropy = entropy_view_summary(metric_rows)
-    flow = flow_view_summary(metric_rows)
-    horizon = horizon_view_summary(metric_rows)
+    entropy = metric_stats.entropy_view_summary()
+    flow = metric_stats.flow_view_summary()
+    horizon = metric_stats.horizon_view_summary()
     overlay = entropy_flow_horizon_overlay(entropy, flow, horizon)
     corridor = corridor_trap_fakeout_summary(decision, dependency, overlay)
-    marginal = marginal_preserving_syndrome_controls(component_rows, max(20, args.marginal_control_replicates), args.marginal_control_seed)
-    ablation = syndrome_component_ablation(component_rows, marginal)
-    vs_controls = syndrome_vs_controls(component_rows, marginal, ablation)
+    marginal = component_stats.marginal_preserving_syndrome_controls(max(20, args.marginal_control_replicates), args.marginal_control_seed, args.marginal_output_mode)
+    ablation = component_stats.syndrome_component_ablation(marginal)
+    vs_controls = component_stats.syndrome_vs_controls(marginal, ablation)
     if status["status"] == "RUNNING":
         status["status"] = "COMPLETED"
         status["finalization_reason"] = "all_jobs_completed"
     status["finished_utc"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     status["elapsed_seconds"] = round(time.perf_counter() - started, 3)
-    status["metric_rows"] = len(metric_rows)
-    status["component_score_rows"] = len(component_rows)
+    status["metric_rows"] = metric_stats.total_rows
+    status["control_rows"] = 0
+    status["metric_rows_retained_in_memory"] = len(metric_rows)
+    status["metric_audit_sample_rows"] = metric_stats.audit_sample_rows
+    status["component_score_rows"] = component_stats.total_rows
+    status["component_audit_sample_rows"] = component_stats.audit_sample_rows
     status["mechanism_control_systems_generated"] = sum(1 for row in manifests if row.get("actual_control_name") != BASELINE_CONTROL)
     status["syndrome_rate_rows"] = len(syndrome_rates)
     status["dependency_score_rows"] = len(dependency)
@@ -365,6 +419,470 @@ class StreamingCsvWriter:
             self.error = exc
 
 
+class MetricStatsAccumulator:
+    def __init__(self, track_frontier_preservation: bool = False, track_saturation_timing: bool = False) -> None:
+        self.track_frontier_preservation = track_frontier_preservation
+        self.track_saturation_timing = track_saturation_timing
+        self.total_rows = 0
+        self.audit_sample_rows = 0
+        self.entropy_groups: dict[tuple[object, ...], dict[str, list[float]]] = defaultdict(metric_bucket)
+        self.flow_groups: dict[tuple[object, ...], dict[str, list[float]]] = defaultdict(metric_bucket)
+        self.horizon_groups: dict[tuple[object, ...], dict[str, list[float]]] = defaultdict(metric_bucket)
+        self.baseline_rows: dict[tuple[object, ...], dict[str, object]] = {}
+        self.pending_control_rows: dict[tuple[object, ...], list[dict[str, object]]] = defaultdict(list)
+        self.frontier_delta_sums: dict[object, list[float]] = defaultdict(lambda: [0.0, 0.0])
+        self.support_delta_sums: dict[object, list[float]] = defaultdict(lambda: [0.0, 0.0])
+        self.growth_by_context: dict[tuple[object, ...], list[tuple[int, float]]] = defaultdict(list)
+
+    def add_rows(self, rows: list[dict[str, object]]) -> None:
+        for row in rows:
+            self.total_rows += 1
+            band = horizon_band(row)
+            entropy_key = tuple(row.get(field, "") for field in ("condition_id", "actual_control_name", "proxy_level", "probe_key", "flow_mode")) + (band,)
+            flow_key = entropy_key
+            horizon_key = tuple(row.get(field, "") for field in ("condition_id", "actual_control_name", "proxy_level")) + (band,)
+            update_metric_bucket(self.entropy_groups[entropy_key], row, ("transition_matrix_entropy", "row_entropy_mean", "column_entropy_mean"))
+            update_metric_bucket(self.flow_groups[flow_key], row, ("frontier_bottleneck_index", "top_k_flow_concentration", "off_diagonal_transform_mass", "edge_into_fb_rate", "states_without_window_target"))
+            update_metric_bucket(self.horizon_groups[horizon_key], row, ("frontier_growth_ratio", "frontier_bottleneck_index", "transition_matrix_entropy", "support_turnover_rate"))
+            self._add_preservation_row(row)
+
+    def _add_preservation_row(self, row: dict[str, object]) -> None:
+        if not self.track_frontier_preservation and not self.track_saturation_timing:
+            return
+        key = baseline_key(row)
+        growth_context = (
+            row.get("condition_id"),
+            row.get("group_id"),
+            row.get("seed"),
+            row.get("probe_key"),
+            row.get("start_samples"),
+            row.get("start_index"),
+            row.get("flow_mode"),
+        )
+        if self.track_saturation_timing:
+            self.growth_by_context[growth_context].append((int(float_or_zero(row.get("H_a"))), float_or_zero(row.get("frontier_growth_ratio"))))
+        if not self.track_frontier_preservation:
+            return
+        if row.get("actual_control_name") == BASELINE_CONTROL:
+            self.baseline_rows[key] = row
+            pending = self.pending_control_rows.pop(key, [])
+            for control_row in pending:
+                self._record_preservation_delta(row, control_row)
+            return
+        baseline = self.baseline_rows.get(key)
+        if baseline is None:
+            self.pending_control_rows[key].append(row)
+            return
+        self._record_preservation_delta(baseline, row)
+
+    def _record_preservation_delta(self, baseline: dict[str, object], row: dict[str, object]) -> None:
+        condition_id = row.get("condition_id", "")
+        frontier_delta = abs(float_or_zero(row.get("frontier_size_b")) - float_or_zero(baseline.get("frontier_size_b"))) / max(1.0, float_or_zero(baseline.get("frontier_size_b")))
+        support_delta = abs(float_or_zero(row.get("frontier_growth_ratio")) - float_or_zero(baseline.get("frontier_growth_ratio")))
+        self.frontier_delta_sums[condition_id][0] += frontier_delta
+        self.frontier_delta_sums[condition_id][1] += 1.0
+        self.support_delta_sums[condition_id][0] += support_delta
+        self.support_delta_sums[condition_id][1] += 1.0
+
+    def add_frontier_preservation_metrics(self, preservation: list[dict[str, object]]) -> list[dict[str, object]]:
+        for audit in preservation:
+            condition_id = audit.get("condition_id", "")
+            frontier_sum, frontier_count = self.frontier_delta_sums.get(condition_id, [0.0, 0.0])
+            support_sum, support_count = self.support_delta_sums.get(condition_id, [0.0, 0.0])
+            audit["frontier_size_profile_delta"] = frontier_sum / frontier_count if frontier_count else 0.0
+            audit["support_growth_baseline_delta"] = support_sum / support_count if support_count else 0.0
+            audit["saturation_timing_delta"] = self._saturation_timing_delta(condition_id)
+            audit["control_destructiveness_score"] = max(float_or_zero(audit.get("control_destructiveness_score")), min(1.0, float_or_zero(audit["frontier_size_profile_delta"])))
+            audit["control_too_destructive_flag"] = int(float_or_zero(audit.get("control_destructiveness_score")) > 0.50)
+            audit["destructiveness_band"] = destructiveness_band(float_or_zero(audit.get("control_destructiveness_score")))
+        return preservation
+
+    def _saturation_timing_delta(self, condition_id: object) -> float:
+        if not self.track_saturation_timing:
+            return 0.0
+        deltas = []
+        suffix_to_baseline = {
+            key[1:]: first_stable_window_from_pairs(values)
+            for key, values in self.growth_by_context.items()
+            if key[0] == f"{BASELINE_CONTROL}:baseline"
+        }
+        for key, values in self.growth_by_context.items():
+            if key[0] != condition_id:
+                continue
+            baseline = suffix_to_baseline.get(key[1:])
+            if baseline is None:
+                continue
+            deltas.append(abs(first_stable_window_from_pairs(values) - baseline))
+        return mean(deltas) if deltas else 0.0
+
+    def entropy_view_summary(self) -> list[dict[str, object]]:
+        return view_rows(
+            self.entropy_groups,
+            ("condition_id", "actual_control_name", "proxy_level", "probe_key", "flow_mode", "horizon_band"),
+            ("transition_matrix_entropy", "row_entropy_mean", "column_entropy_mean"),
+        )
+
+    def flow_view_summary(self) -> list[dict[str, object]]:
+        return view_rows(
+            self.flow_groups,
+            ("condition_id", "actual_control_name", "proxy_level", "probe_key", "flow_mode", "horizon_band"),
+            ("frontier_bottleneck_index", "top_k_flow_concentration", "off_diagonal_transform_mass", "edge_into_fb_rate", "states_without_window_target"),
+        )
+
+    def horizon_view_summary(self) -> list[dict[str, object]]:
+        return view_rows(
+            self.horizon_groups,
+            ("condition_id", "actual_control_name", "proxy_level", "horizon_band"),
+            ("frontier_growth_ratio", "frontier_bottleneck_index", "transition_matrix_entropy", "support_turnover_rate"),
+        )
+
+
+class ComponentStatsAccumulator:
+    def __init__(self, components: list[dict[str, object]]) -> None:
+        self.total_rows = 0
+        self.audit_sample_rows = 0
+        self.library_components = {
+            syndrome_id: [str(row["syndrome_component_id"]) for row in sorted(items, key=lambda item: str(item["syndrome_component_id"]))]
+            for (syndrome_id,), items in group_by(components, ("syndrome_id",)).items()
+        }
+        self.units: dict[tuple[object, ...], dict[tuple[object, ...], dict[str, int]]] = defaultdict(lambda: defaultdict(dict))
+        self.context_counts: dict[tuple[object, ...], list[float]] = defaultdict(lambda: [0.0, 0.0])
+        self.component_stats: dict[tuple[object, ...], dict[str, list[float]]] = defaultdict(lambda: defaultdict(lambda: [0.0, 0.0, 0.0]))
+
+    def add_rows(self, rows: list[dict[str, object]]) -> None:
+        unit_components: dict[tuple[tuple[object, ...], tuple[object, ...]], dict[str, int]] = defaultdict(dict)
+        for row in rows:
+            self.total_rows += 1
+            if row.get("component_status") != "scored":
+                continue
+            context_key = component_context_key_with_condition(row)
+            unit_key = (
+                row.get("group_id"),
+                row.get("seed"),
+                row.get("fresh_seed_index"),
+                row.get("start_index"),
+                row.get("start_samples"),
+                row.get("window"),
+            )
+            component_id = str(row.get("syndrome_component_id"))
+            passed = int(float_or_zero(row.get("component_pass")))
+            unit_components[(context_key, unit_key)][component_id] = passed
+            stats = self.component_stats[context_key][component_id]
+            stats[0] += 1.0
+            stats[1] += passed
+            stats[2] += float_or_zero(row.get("signed_z"))
+        for (context_key, _unit_key), unit in unit_components.items():
+            syndrome_id = str(component_context_fields_from_key(context_key)["syndrome_id"])
+            expected = self.library_components.get(syndrome_id, [])
+            if expected and all(component_id in unit for component_id in expected):
+                self.context_counts[context_key][0] += 1.0
+                self.context_counts[context_key][1] += int(all(unit[component_id] for component_id in expected))
+
+    def contexts(self) -> list[dict[str, object]]:
+        out = []
+        for context_key, counts in self.context_counts.items():
+            context_fields = component_context_fields_from_key(context_key)
+            expected = self.library_components.get(str(context_fields["syndrome_id"]), [])
+            complete_count, joint_count = counts
+            if complete_count <= 0 or not expected:
+                continue
+            component_rates = {}
+            for component_id in expected:
+                stats = self.component_stats[context_key].get(component_id, [0.0, 0.0, 0.0])
+                component_rates[component_id] = stats[1] / stats[0] if stats[0] else 0.0
+            out.append({
+                **context_fields,
+                "component_vectors": {},
+                "component_marginal_rates": component_rates,
+                "observed_joint_rate": joint_count / complete_count,
+                "complete_unit_count": int(complete_count),
+            })
+        return out
+
+
+def metric_bucket() -> dict[str, list[float]]:
+    return defaultdict(lambda: [0.0, 0.0])  # type: ignore[return-value]
+
+
+def update_metric_bucket(bucket: dict[str, list[float]], row: dict[str, object], metrics: tuple[str, ...]) -> None:
+    for metric in metrics:
+        if row.get(metric, "") == "":
+            continue
+        bucket[metric][0] += float_or_zero(row.get(metric))
+        bucket[metric][1] += 1.0
+
+
+def view_rows(groups: dict[tuple[object, ...], dict[str, list[float]]], keys: tuple[str, ...], metrics: tuple[str, ...]) -> list[dict[str, object]]:
+    out = []
+    for key, bucket in groups.items():
+        row = {field: value for field, value in zip(keys, key)}
+        row["rows"] = int(max((values[1] for values in bucket.values()), default=0.0))
+        for metric in metrics:
+            total, count = bucket.get(metric, [0.0, 0.0])
+            row[f"{metric}_mean"] = total / count if count else ""
+        out.append(row)
+    return out
+
+
+def first_stable_window_from_pairs(values: list[tuple[int, float]]) -> int:
+    ordered = sorted(values, key=lambda item: item[0])
+    for index, (_window, growth) in enumerate(ordered):
+        if growth <= 1.05:
+            return index
+    return len(ordered)
+
+
+def product(values: object) -> float:
+    result = 1.0
+    seen = False
+    for value in values:  # type: ignore[assignment]
+        seen = True
+        result *= float_or_zero(value)
+    return result if seen else 0.0
+
+
+COMPONENT_CONTEXT_KEYS = (
+    "condition_id",
+    "mechanism_condition",
+    "mechanism_control_name",
+    "mechanism_control_strength",
+    "mechanism_strength_label",
+    "actual_control_name",
+    "proxy_level",
+    "allowed_interpretation_level",
+    "syndrome_id",
+    "probe_key",
+    "flow_mode",
+)
+
+
+def component_context_key_with_condition(row: dict[str, object]) -> tuple[object, ...]:
+    return tuple(row.get(field, "") for field in COMPONENT_CONTEXT_KEYS)
+
+
+def component_context_key_from_fields(row: dict[str, object]) -> tuple[object, ...]:
+    return tuple(row.get(field, "") for field in COMPONENT_CONTEXT_KEYS)
+
+
+def component_context_fields_from_key(key: tuple[object, ...]) -> dict[str, object]:
+    return {field: value for field, value in zip(COMPONENT_CONTEXT_KEYS, key)}
+
+
+def context_summary_key(context: dict[str, object]) -> tuple[str, str, str, str]:
+    return (
+        str(context.get("condition_id", "")),
+        str(context.get("syndrome_id", "")),
+        str(context.get("probe_key", "")),
+        str(context.get("flow_mode", "")),
+    )
+
+
+def marginal_control_summary_by_condition(rows: list[dict[str, object]]) -> dict[tuple[str, str, str, str], dict[str, object]]:
+    out: dict[tuple[str, str, str, str], dict[str, object]] = {}
+    for key, items in group_by(rows, ("condition_id", "syndrome_id", "probe_key", "flow_mode")).items():
+        if items and items[0].get("marginal_output_mode") == "summary":
+            first = items[0]
+            out[(str(key[0]), str(key[1]), str(key[2]), str(key[3]))] = {
+                "observed_joint_rate": float_or_zero(first.get("observed_joint_rate")),
+                "control_joint_rate_mean": float_or_zero(first.get("control_joint_rate_mean")),
+                "joint_rate_excess": float_or_zero(first.get("joint_rate_excess")),
+                "joint_rate_percentile": float_or_zero(first.get("joint_rate_percentile")),
+                "replicate_count": int(float_or_zero(first.get("replicate_count"))),
+                "complete_unit_count": int(float_or_zero(first.get("complete_unit_count"))),
+            }
+            continue
+        controls_by_replicate = {
+            int(float_or_zero(item.get("replicate_id"))): float_or_zero(item.get("control_joint_rate"))
+            for item in items
+        }
+        controls = list(controls_by_replicate.values())
+        first = items[0] if items else {}
+        out[(str(key[0]), str(key[1]), str(key[2]), str(key[3]))] = {
+            "observed_joint_rate": float_or_zero(first.get("observed_joint_rate")),
+            "control_joint_rate_mean": mean(controls) if controls else 0.0,
+            "joint_rate_excess": float_or_zero(first.get("observed_joint_rate")) - (mean(controls) if controls else 0.0),
+            "joint_rate_percentile": float_or_zero(first.get("joint_rate_percentile")),
+            "replicate_count": int(float_or_zero(first.get("replicate_count"))),
+            "complete_unit_count": int(float_or_zero(first.get("complete_unit_count"))),
+        }
+    return out
+
+
+def ablation_by_condition_context(rows: list[dict[str, object]]) -> dict[tuple[str, str, str, str], dict[str, object]]:
+    out = {}
+    for key, items in group_by(rows, ("condition_id", "syndrome_id", "probe_key", "flow_mode")).items():
+        if items:
+            out[(str(key[0]), str(key[1]), str(key[2]), str(key[3]))] = dict(items[0])
+    return out
+
+def component_stats_syndrome_rate_rows(self: ComponentStatsAccumulator, selected_syndromes: list[str]) -> list[dict[str, object]]:
+    selected = set(selected_syndromes)
+    out: list[dict[str, object]] = []
+    for context in self.contexts():
+        if selected and context["syndrome_id"] not in selected:
+            continue
+        out.append({
+            "condition_id": context["condition_id"],
+            "mechanism_condition": context["mechanism_condition"],
+            "mechanism_control_name": context["mechanism_control_name"],
+            "mechanism_control_strength": context["mechanism_control_strength"],
+            "mechanism_strength_label": context["mechanism_strength_label"],
+            "actual_control_name": context["actual_control_name"],
+            "proxy_level": context["proxy_level"],
+            "allowed_interpretation_level": context["allowed_interpretation_level"],
+            "syndrome_id": context["syndrome_id"],
+            "probe_key": context["probe_key"],
+            "flow_mode": context["flow_mode"],
+            "syndrome_rate": context["observed_joint_rate"],
+            "complete_unit_count": context["complete_unit_count"],
+            "component_marginal_rates_json": json.dumps(context["component_marginal_rates"], sort_keys=True),
+        })
+    return out
+
+
+def component_stats_marginal_preserving_syndrome_controls(self: ComponentStatsAccumulator, replicates: int, seed: int, output_mode: str = "summary") -> list[dict[str, object]]:
+    out = []
+    for context in self.contexts():
+        rng = random.Random(stable_context_seed(seed, f"{context['condition_id']}|{context['syndrome_id']}", context["probe_key"], context["flow_mode"]))
+        controls = []
+        component_rates = context["component_marginal_rates"]
+        component_ids = list(component_rates)
+        complete_units = int(float_or_zero(context["complete_unit_count"]))
+        for _replicate_id in range(replicates):
+            joint_hits = 0
+            for _unit_index in range(max(1, complete_units)):
+                joint_hits += int(all(rng.random() <= float_or_zero(component_rates[component_id]) for component_id in component_ids))
+            controls.append(joint_hits / max(1, complete_units))
+        observed = float(context["observed_joint_rate"])
+        control_mean = mean(controls) if controls else 0.0
+        percentile_value = percentile(observed, controls)
+        summary_row = {
+            "condition_id": context["condition_id"],
+            "actual_control_name": context["actual_control_name"],
+            "proxy_level": context["proxy_level"],
+            "syndrome_id": context["syndrome_id"],
+            "probe_key": context["probe_key"],
+            "flow_mode": context["flow_mode"],
+            "replicate_id": "",
+            "component_id": "",
+            "component_marginal_rate": "",
+            "observed_joint_rate": observed,
+            "control_joint_rate": "",
+            "control_joint_rate_mean": control_mean,
+            "joint_rate_excess": observed - control_mean,
+            "joint_rate_percentile": percentile_value,
+            "replicate_count": replicates,
+            "complete_unit_count": context["complete_unit_count"],
+            "control_family": "component_marginal_rate_preserving_syndrome_control_summary",
+            "marginal_output_mode": "summary",
+        }
+        if output_mode == "summary":
+            out.append(summary_row)
+            continue
+        for replicate_id, control_rate in enumerate(controls):
+            for component_id in component_ids:
+                out.append({
+                    **summary_row,
+                    "replicate_id": replicate_id,
+                    "component_id": component_id,
+                    "component_marginal_rate": context["component_marginal_rates"][component_id],
+                    "control_joint_rate": control_rate,
+                    "marginal_output_mode": "full",
+                })
+    return out
+
+
+def component_stats_syndrome_component_ablation(self: ComponentStatsAccumulator, marginal_controls: list[dict[str, object]]) -> list[dict[str, object]]:
+    control_summary = marginal_control_summary_by_condition(marginal_controls)
+    out = []
+    for context in self.contexts():
+        key = context_summary_key(context)
+        controls = control_summary.get(key, {})
+        component_rates = context["component_marginal_rates"]
+        component_ids = list(component_rates)
+        full_score = float(context["observed_joint_rate"])
+        best_single = max((component_rates[component_id] for component_id in component_ids), default=0.0)
+        pair_scores = [product(component_rates[component_id] for component_id in pair) for pair in combinations(component_ids, 2)]
+        best_pair = max(pair_scores, default=0.0)
+        full_excess = float(controls.get("joint_rate_excess", 0.0) or 0.0)
+        single_component_driven = int(full_excess > 0 and best_single >= 0.90 and best_pair <= full_score + 1e-12)
+        decision = "single_component_driven_not_joint_syndrome" if single_component_driven else "joint_syndrome_not_single_component_driven"
+        for removed in component_ids:
+            kept = [component_id for component_id in component_ids if component_id != removed]
+            out.append(
+                {
+                    "condition_id": context["condition_id"],
+                    "actual_control_name": context["actual_control_name"],
+                    "proxy_level": context["proxy_level"],
+                    "syndrome_id": context["syndrome_id"],
+                    "probe_key": context["probe_key"],
+                    "flow_mode": context["flow_mode"],
+                    "ablation_kind": "leave_one_component_out",
+                    "component_removed": removed,
+                    "component_subset_json": json.dumps(kept),
+                    "full_syndrome_score": full_score,
+                    "ablated_score": product(component_rates[component_id] for component_id in kept),
+                    "best_single_component_score": best_single,
+                    "best_pair_score": best_pair,
+                    "single_component_explained_fraction": best_single / full_score if full_score > 0 else 0.0,
+                    "joint_rate_excess": full_excess,
+                    "joint_rate_percentile": controls.get("joint_rate_percentile", ""),
+                    "decision_class": decision,
+                    "complete_unit_count": context["complete_unit_count"],
+                }
+            )
+    return out
+
+
+def component_stats_syndrome_vs_controls(self: ComponentStatsAccumulator, marginal_controls: list[dict[str, object]], ablation_rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    marginal_summary = marginal_control_summary_by_condition(marginal_controls)
+    ablation_summary = ablation_by_condition_context(ablation_rows)
+    out = []
+    for context in self.contexts():
+        key = context_summary_key(context)
+        controls = marginal_summary.get(key, {})
+        ablation = ablation_summary.get(key, {})
+        component_stats = self.component_stats[component_context_key_from_fields(context)]
+        total = sum(stats[0] for stats in component_stats.values())
+        passed = sum(stats[1] for stats in component_stats.values())
+        signed_z_sum = sum(stats[2] for stats in component_stats.values())
+        marginal_available = bool(controls)
+        observed_joint = float_or_zero(controls.get("observed_joint_rate"))
+        control_mean = float_or_zero(controls.get("control_joint_rate_mean"))
+        percentile_value = float_or_zero(controls.get("joint_rate_percentile"))
+        apparent_joint_positive = marginal_available and observed_joint > control_mean and percentile_value >= 0.80 and str(context["probe_key"]) not in DIAGNOSTIC_PROBES
+        out.append({
+            "condition_id": context["condition_id"],
+            "actual_control_name": context["actual_control_name"],
+            "proxy_level": context["proxy_level"],
+            "syndrome_id": context["syndrome_id"],
+            "probe_key": context["probe_key"],
+            "flow_mode": context["flow_mode"],
+            "selection_mode": "preregistered",
+            "readiness_allowed": int(str(context["probe_key"]) not in DIAGNOSTIC_PROBES),
+            "component_rows": int(total),
+            "scored_component_rows": int(total),
+            "component_pass_rows": int(passed),
+            "component_pass_rate": passed / max(1.0, total),
+            "mean_signed_z": signed_z_sum / max(1.0, total),
+            "observed_joint_rate": observed_joint,
+            "component_marginal_preserving_control_mean": control_mean,
+            "joint_rate_excess": observed_joint - control_mean,
+            "joint_rate_percentile": percentile_value,
+            "marginal_control_replicates": controls.get("replicate_count", ""),
+            "single_component_ablation_decision": ablation.get("decision_class", ""),
+            "control_equivalence_read": control_equivalence_read(apparent_joint_positive, marginal_available),
+            "stage_a_decision_class": syndrome_stage_a_decision(apparent_joint_positive, ablation, marginal_available),
+        })
+    return out
+
+
+ComponentStatsAccumulator.syndrome_rate_rows = component_stats_syndrome_rate_rows  # type: ignore[method-assign]
+ComponentStatsAccumulator.marginal_preserving_syndrome_controls = component_stats_marginal_preserving_syndrome_controls  # type: ignore[method-assign]
+ComponentStatsAccumulator.syndrome_component_ablation = component_stats_syndrome_component_ablation  # type: ignore[method-assign]
+ComponentStatsAccumulator.syndrome_vs_controls = component_stats_syndrome_vs_controls  # type: ignore[method-assign]
+
+
 def selected_syndrome_ids(args: argparse.Namespace) -> list[str]:
     selected = [item.strip() for item in args.primary_syndromes.split(",") if item.strip()]
     if args.include_secondary_syndromes:
@@ -376,12 +894,31 @@ def selected_syndrome_ids(args: argparse.Namespace) -> list[str]:
     return seen
 
 
-def load_control_summaries(phase_b_dir: Path, components: list[dict[str, object]]) -> tuple[dict[tuple[str, str, str, str], dict[str, object]], str, int]:
+def load_control_summaries(
+    phase_b_dir: Path,
+    components: list[dict[str, object]],
+    cache_mode: str,
+    cache_path: Path | None,
+) -> tuple[dict[tuple[str, str, str, str], dict[str, object]], str, int, str]:
     candidates = ("phase_b_stage_a_control_values.csv", "phase_b_design_control_rows.csv")
     path = next((phase_b_dir / name for name in candidates if (phase_b_dir / name).exists()), None)
     if path is None:
-        return {}, "", 0
-    metrics = {str(component["metric_name"]) for component in components}
+        return {}, "", 0, "missing_source"
+    # Cache all preregistered syndrome metrics so primary-only and primary+secondary
+    # runs can share one startup cache across a batched validation block.
+    metrics = {str(component["metric_name"]) for component in syndrome_library()}
+    metadata = control_summary_cache_metadata(path, metrics)
+    resolved_cache = cache_path or (phase_b_dir / "stage_b2_control_summary_cache.pkl")
+    if cache_mode != "off" and cache_mode != "rebuild" and resolved_cache.exists():
+        try:
+            with resolved_cache.open("rb") as handle:
+                payload = pickle.load(handle)
+            if payload.get("metadata") == metadata:
+                summaries = payload.get("summaries", {})
+                if isinstance(summaries, dict):
+                    return summaries, path.name, len(summaries), f"loaded:{resolved_cache.name}"
+        except Exception:
+            pass
     raw: dict[tuple[str, str, str, str], list[float]] = defaultdict(list)
     with path.open("r", newline="", encoding="utf-8-sig") as handle:
         for row in csv.DictReader(handle):
@@ -409,7 +946,27 @@ def load_control_summaries(phase_b_dir: Path, components: list[dict[str, object]
             "std": pstdev(values) if len(values) > 1 else 0.0,
             "sorted_values": sorted_values,
         }
-    return summaries, path.name, len(summaries)
+    cache_status = "cache_off" if cache_mode == "off" else "rebuilt"
+    if cache_mode != "off":
+        try:
+            resolved_cache.parent.mkdir(parents=True, exist_ok=True)
+            with resolved_cache.open("wb") as handle:
+                pickle.dump({"metadata": metadata, "summaries": summaries}, handle, protocol=pickle.HIGHEST_PROTOCOL)
+            cache_status = f"rebuilt:{resolved_cache.name}"
+        except Exception as exc:  # noqa: BLE001
+            cache_status = f"rebuild_failed:{type(exc).__name__}"
+    return summaries, path.name, len(summaries), cache_status
+
+
+def control_summary_cache_metadata(path: Path, metrics: set[str]) -> dict[str, object]:
+    stat = path.stat()
+    return {
+        "source_path": str(path.resolve()),
+        "source_size": stat.st_size,
+        "source_mtime_ns": stat.st_mtime_ns,
+        "metrics": sorted(metrics),
+        "schema_version": 1,
+    }
 
 
 def build_jobs(
@@ -566,12 +1123,13 @@ def run_batches(
     status: dict[str, object],
     started: float,
     writer: StreamingCsvWriter,
+    metric_stats: MetricStatsAccumulator,
+    component_stats: ComponentStatsAccumulator,
     control_summaries: dict[tuple[str, str, str, str], dict[str, object]],
     selected_components: list[dict[str, object]],
-) -> tuple[list[dict[str, object]], list[dict[str, object]], list[dict[str, object]], list[dict[str, object]], list[dict[str, object]], list[dict[str, object]]]:
+) -> tuple[list[dict[str, object]], list[dict[str, object]], list[dict[str, object]], list[dict[str, object]], list[dict[str, object]]]:
     pending = [jobs[index : index + max(1, args.job_batch_size)] for index in range(0, len(jobs), max(1, args.job_batch_size))]
     metric_rows: list[dict[str, object]] = []
-    component_rows: list[dict[str, object]] = []
     manifests: list[dict[str, object]] = []
     preservation: list[dict[str, object]] = []
     errors: list[dict[str, object]] = []
@@ -602,18 +1160,43 @@ def run_batches(
                 except Exception as exc:  # noqa: BLE001
                     rows, manifest_rows, preservation_rows, batch_errors, completed = [], [], [], [{"job_id": ",".join(str(job.get("job_id", "")) for job in batch), "error": repr(exc)}], 0
                 scored = score_components_for_rows(rows, control_summaries, selected_components, args.component_z_threshold)
-                writer.write("stage_b2_metric_rows.csv", rows)
-                writer.write("stage_b2_component_scores.csv", scored)
-                metric_rows.extend(rows)
-                component_rows.extend(scored)
+                metric_stats.add_rows(rows)
+                component_stats.add_rows(scored)
+                metric_sample = retained_rows(
+                    rows,
+                    args.metric_output_mode,
+                    args.metric_audit_sample_rate,
+                    args.metric_audit_sample_cap,
+                    metric_stats.audit_sample_rows,
+                    "metric",
+                )
+                component_sample = retained_rows(
+                    scored,
+                    args.component_output_mode,
+                    args.component_audit_sample_rate,
+                    args.component_audit_sample_cap,
+                    component_stats.audit_sample_rows,
+                    "component",
+                )
+                metric_stats.audit_sample_rows += len(metric_sample)
+                component_stats.audit_sample_rows += len(component_sample)
+                if args.metric_output_mode == "full":
+                    writer.write("stage_b2_metric_rows.csv", metric_sample)
+                    metric_rows.extend(metric_sample)
+                elif args.metric_output_mode == "audit_sample":
+                    writer.write("stage_b2_metric_rows_audit_sample.csv", metric_sample)
+                if args.component_output_mode == "full":
+                    writer.write("stage_b2_component_scores.csv", component_sample)
+                elif args.component_output_mode == "audit_sample":
+                    writer.write("stage_b2_component_scores_audit_sample.csv", component_sample)
                 manifests.extend(manifest_rows)
                 preservation.extend(preservation_rows)
                 errors.extend(batch_errors)
                 status["jobs_completed"] = int(status["jobs_completed"]) + completed
                 if int(status["jobs_completed"]) - last_checkpoint_jobs >= max(1, args.checkpoint_every_jobs):
-                    checkpoints.append(checkpoint_row(status, started, metric_rows, component_rows, manifests, preservation, errors))
+                    checkpoints.append(checkpoint_row(status, started, metric_stats.total_rows, component_stats.total_rows, manifests, preservation, errors))
                     last_checkpoint_jobs = int(status["jobs_completed"])
-                    write_partial_status(args.out, status, started, checkpoints, metric_rows, component_rows, manifests, preservation, errors)
+                    write_partial_status(args.out, status, started, checkpoints, metric_stats.total_rows, component_stats.total_rows, manifests, preservation, errors)
     finally:
         if futures:
             for future in futures:
@@ -623,9 +1206,9 @@ def run_batches(
         else:
             executor.shutdown(wait=True, cancel_futures=False)
     status["pending_jobs_remaining"] = sum(len(batch) for batch in pending)
-    checkpoints.append(checkpoint_row(status, started, metric_rows, component_rows, manifests, preservation, errors))
-    write_partial_status(args.out, status, started, checkpoints, metric_rows, component_rows, manifests, preservation, errors)
-    return metric_rows, component_rows, manifests, preservation, errors, checkpoints
+    checkpoints.append(checkpoint_row(status, started, metric_stats.total_rows, component_stats.total_rows, manifests, preservation, errors))
+    write_partial_status(args.out, status, started, checkpoints, metric_stats.total_rows, component_stats.total_rows, manifests, preservation, errors)
+    return metric_rows, manifests, preservation, errors, checkpoints
 
 
 def run_batch(batch: list[dict[str, object]], output_profile: str) -> tuple[list[dict[str, object]], list[dict[str, object]], list[dict[str, object]], list[dict[str, object]], int]:
@@ -645,6 +1228,39 @@ def run_batch(batch: list[dict[str, object]], output_profile: str) -> tuple[list
             errors.append({"job_id": job.get("job_id", ""), "error": repr(exc)})
         completed += 1
     return metric_rows, manifests, preservation, errors, completed
+
+
+def retained_rows(
+    rows: list[dict[str, object]],
+    mode: str,
+    sample_rate: float,
+    sample_cap: int,
+    retained_so_far: int,
+    salt: str,
+) -> list[dict[str, object]]:
+    if mode == "none":
+        return []
+    if mode == "full":
+        return rows
+    remaining = max(0, sample_cap - retained_so_far)
+    if remaining <= 0:
+        return []
+    rate = max(0.0, min(1.0, sample_rate))
+    kept = [
+        row for row in rows
+        if stable_sample_fraction(row, salt) <= rate
+    ]
+    if len(kept) < min(remaining, len(rows)) and retained_so_far == 0:
+        kept.extend(row for row in rows if row not in kept)
+    return kept[:remaining]
+
+
+def stable_sample_fraction(row: dict[str, object], salt: str) -> float:
+    text = "|".join(str(row.get(field, "")) for field in ("job_id", "condition_id", "syndrome_id", "syndrome_component_id", "group_id", "seed", "start_index", "window", "probe_key", "flow_mode"))
+    value = 0
+    for char in f"{salt}|{text}":
+        value = (value * 131 + ord(char)) % 1_000_003
+    return value / 1_000_003
 
 
 def run_stage_b2_job(job: dict[str, object], output_profile: str) -> tuple[list[dict[str, object]], dict[str, object], dict[str, object]]:
@@ -1177,8 +1793,8 @@ def group_by(rows: list[dict[str, object]], keys: tuple[str, ...]) -> dict[tuple
 def checkpoint_row(
     status: dict[str, object],
     started: float,
-    metric_rows: list[dict[str, object]],
-    component_rows: list[dict[str, object]],
+    metric_row_count: int,
+    component_row_count: int,
     manifests: list[dict[str, object]],
     preservation: list[dict[str, object]],
     errors: list[dict[str, object]],
@@ -1187,8 +1803,8 @@ def checkpoint_row(
         "elapsed_seconds": round(time.perf_counter() - started, 3),
         "jobs_submitted": status.get("jobs_submitted"),
         "jobs_completed": status.get("jobs_completed"),
-        "metric_rows": len(metric_rows),
-        "component_rows": len(component_rows),
+        "metric_rows": metric_row_count,
+        "component_rows": component_row_count,
         "system_manifest_rows": len(manifests),
         "preservation_rows": len(preservation),
         "errors": len(errors),
@@ -1201,16 +1817,16 @@ def write_partial_status(
     status: dict[str, object],
     started: float,
     checkpoints: list[dict[str, object]],
-    metric_rows: list[dict[str, object]],
-    component_rows: list[dict[str, object]],
+    metric_row_count: int,
+    component_row_count: int,
     manifests: list[dict[str, object]],
     preservation: list[dict[str, object]],
     errors: list[dict[str, object]],
 ) -> None:
     partial = dict(status)
     partial["elapsed_seconds"] = round(time.perf_counter() - started, 3)
-    partial["metric_rows_partial"] = len(metric_rows)
-    partial["component_rows_partial"] = len(component_rows)
+    partial["metric_rows_partial"] = metric_row_count
+    partial["component_rows_partial"] = component_row_count
     partial["system_manifest_rows_partial"] = len(manifests)
     partial["preservation_rows_partial"] = len(preservation)
     partial["errors"] = len(errors)
@@ -1257,7 +1873,7 @@ def write_final_outputs(
     write_csv(out_dir / "errors.csv", errors)
     write_report(out_dir, status, identity, decision, corridor)
     (out_dir / "status.json").write_text(json.dumps(status, indent=2, sort_keys=True), encoding="utf-8")
-    write_manifest(out_dir)
+    write_manifest(out_dir, status)
 
 
 def write_report(out_dir: Path, status: dict[str, object], identity: list[dict[str, object]], decision: list[dict[str, object]], corridor: list[dict[str, object]]) -> None:
@@ -1303,12 +1919,21 @@ def write_report(out_dir: Path, status: dict[str, object], identity: list[dict[s
     (out_dir / "rfs_mb0_stage_b2_mechanism_calibration_and_gauge_overlay_report.md").write_text("\n".join(lines), encoding="utf-8")
 
 
-def write_manifest(out_dir: Path) -> None:
+def write_manifest(out_dir: Path, status: dict[str, object]) -> None:
     rows = []
     for name in OUTPUTS:
         path = out_dir / name
         exists = path.exists() or name == "output_manifest.json"
-        rows.append({"file": name, "exists": exists, "status": "present" if exists else "missing", "row_count": csv_row_count(path) if path.suffix == ".csv" else ""})
+        file_status = "present" if exists else "missing"
+        if name == "stage_b2_metric_rows.csv" and status.get("metric_output_mode") != "full":
+            file_status = f"skipped_by_metric_output_mode:{status.get('metric_output_mode')}"
+        if name == "stage_b2_metric_rows_audit_sample.csv" and status.get("metric_output_mode") != "audit_sample":
+            file_status = f"skipped_by_metric_output_mode:{status.get('metric_output_mode')}"
+        if name == "stage_b2_component_scores.csv" and status.get("component_output_mode") != "full":
+            file_status = f"skipped_by_component_output_mode:{status.get('component_output_mode')}"
+        if name == "stage_b2_component_scores_audit_sample.csv" and status.get("component_output_mode") != "audit_sample":
+            file_status = f"skipped_by_component_output_mode:{status.get('component_output_mode')}"
+        rows.append({"file": name, "exists": exists, "status": file_status, "row_count": csv_row_count(path) if path.suffix == ".csv" else ""})
     (out_dir / "output_manifest.json").write_text(json.dumps(rows, indent=2, sort_keys=True), encoding="utf-8")
 
 

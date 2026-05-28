@@ -61,6 +61,7 @@ Directory:
 
 Current result notes:
 
+- `rfs_mb0_stage_b2_exploratory_iteration_pass_result.md`
 - `rfs_mb0_stage_b2_mechanism_calibration_smokes_result.md`
 - `rfs_mb0_desktop_phase_b_stage_a_b_validation_result.md`
 - `rfs_mb0_future_landscape_detector_v1_1_smoke_result.md`
@@ -94,6 +95,12 @@ Result in one line:
   smokes completed cleanly and surfaced edge-fragility in SYN_A/SYN_C at low
   smoke confidence, while keeping destructive/proxy controls gated. This is
   still not holdout validation or an Omega claim.
+- The Stage B-2 exploratory iteration pass completed 576,000 design-set jobs in
+  about 7.96 hours with zero errors. It strengthened the read that SYN_A/SYN_C
+  are sensitive to topology-level edge perturbations, while exact roughness-seed
+  and asymmetry-strength controls stayed near baseline. The recommended next
+  branch is channel-specific edge sensitivity, not holdout or candidate
+  promotion.
 - RFS-MB0 future-landscape detector v1.1 passed implementation checks, and the
   long-horizon audit extended the horizon grid through H1024: 33 systems, 3696
   profiles, zero errors. It did not pass the scientific gate: zero aggregate

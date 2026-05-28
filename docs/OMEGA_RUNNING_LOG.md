@@ -9,6 +9,84 @@ patch notes at the top.
 
 ## 2026-05-28
 
+### RFS-MB0 Stage B-2 Exploratory Iteration Pass
+
+Implemented the Stage B-2 long-run I/O path and completed the exploratory
+iteration pass requested by `docs/RFS_MB0_STAGE_B2_EXPLORATORY_ITERATION_PASS_SPEC.md`.
+
+Retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_stage_b2_exploratory_iteration_pass_result.md`
+
+Local outputs:
+
+- `results/rfs_mb0_relation_atlas/20260528_stage_b2_existing_output_triage/`
+- `results/rfs_mb0_relation_atlas/20260528_stage_b2_optimized_count_contract_smoke_notrack/`
+- `results/rfs_mb0_relation_atlas/20260528_stage_b2_exploratory_iteration_8h_gentle_mechanism/`
+
+Optimization changes:
+
+```text
+Stage A control-summary cache: enabled
+metric raw output: audit sample
+component raw output: audit sample
+marginal controls: summary mode
+syndrome aggregation: online count-based aggregation
+```
+
+Main run status:
+
+```text
+status: COMPLETED
+elapsed_seconds: 28653.366
+workers: 18
+jobs_completed: 576000 / 576000
+metric_rows_scored: 48384000
+component_score_rows_scored: 580608000
+errors: 0
+holdout_scoring_count: 0
+n6_run_count: 0
+alphabet_expansion_count: 0
+```
+
+Performance:
+
+```text
+control_summary_load_seconds: 0.134
+throughput: about 20.1 jobs / second
+previous desktop Stage B smoke throughput: about 4.6 jobs / second
+```
+
+Decision read:
+
+```text
+SYN_A: edge_roughening_sensitive_syndrome
+SYN_C: edge_roughening_sensitive_syndrome
+SYN_B: no_resolved_residual
+SYN_D: no_resolved_residual
+```
+
+Interpretation:
+
+```text
+The large design-set run supports A/C edge/topology sensitivity, not clean
+exact generator-mechanism sensitivity. Roughness-seed and asymmetry-strength
+exact controls stayed near baseline. The next best branch is channel-specific
+edge sensitivity: high-flow/signature-transition perturbation versus matched
+random edge perturbation.
+```
+
+Caveat:
+
+```text
+track_frontier_preservation_metrics: false
+track_saturation_timing: false
+```
+
+The long run uses graph-level preservation/destructiveness only. Keep the
+p0.02 topology reads conservative until a smaller frontier-preservation audit
+checks them directly.
+
 ### RFS-MB0 Stage B-2 Mechanism Calibration Smokes
 
 Implemented and smoked the Stage B-2 mechanism-calibration / entropy-flow-
