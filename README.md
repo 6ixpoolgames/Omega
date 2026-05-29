@@ -212,6 +212,8 @@ next task:
 Important current docs:
 
 - [Laptop spectral control mapping smoke result](docs/research_notes/validation_results/rfs_mb0_laptop_spectral_control_mapping_smoke_result.md)
+- [Laptop spectral subspace control repair smoke result](docs/research_notes/validation_results/rfs_mb0_laptop_spectral_subspace_control_repair_smoke_result.md)
+- [Stage B-2 spectral subspace control repair smoke spec](docs/RFS_MB0_STAGE_B2_SPECTRAL_SUBSPACE_CONTROL_REPAIR_SMOKE_SPEC.md)
 - [Laptop spectral control mapping smoke spec](docs/RFS_MB0_STAGE_B2_LAPTOP_SPECTRAL_CONTROL_MAPPING_SMOKE_SPEC.md)
 - [Stage B-2 spectral channel high-loading repair result](docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_channel_high_loading_repair_result.md)
 - [Stage B-2 spectral channel-edge repair prep result](docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_channel_edge_smoke_repair_prep_result.md)

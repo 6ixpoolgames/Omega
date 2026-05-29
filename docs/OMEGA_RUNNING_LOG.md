@@ -9,6 +9,74 @@ patch notes at the top.
 
 ## 2026-05-30
 
+### RFS-MB0 Laptop Spectral Subspace Control Repair Sweeps
+
+Ran the new spectral subspace control repair smoke as a laptop-safe targeted
+sweep. This was an instrument-building pass: the goal was to widen the aperture
+on where/how the controls fail, not to rescue the data into a favorable claim.
+
+Retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_laptop_spectral_subspace_control_repair_smoke_result.md`
+
+Local outputs:
+
+- `results/local_runs/20260530_laptop_spectral_subspace_control_repair_sweeps_v2/`
+
+Local outputs are generated CSV/JSON artifacts and are not committed.
+
+Sweep status:
+
+```text
+status: COMPLETED
+elapsed_seconds: 39.009
+cases_completed: 9 / 9
+cases_failed: 0
+errors: 0
+manifest: 20 / 20 present
+```
+
+Aggregate read:
+
+```text
+decision_class: not_ready_repair_required
+next_action_fork: repair_shuffle_controls
+structure_shuffle_matrix_pass_fraction: 0.3925
+structure_shuffle_catastrophic_fraction: 0.51
+subspace_above_control_fraction: 0.53
+```
+
+Most important instrumentation result:
+
+```text
+Scalar structure statistics mostly failed:
+  positive_spectral_mass, effective_rank, participation_ratio
+
+Baseline-alignment separated almost everywhere:
+  top_k_subspace_alignment_to_baseline
+
+Interpretation:
+  statistic mismatch / over-permissive alignment statistic, not a pass.
+```
+
+Distributedness v2:
+
+```text
+control_equivalent: 28
+distributed: 8
+diffuse_noise_like: 8
+cluster_local: 5
+item_local: 1
+```
+
+Decision:
+
+```text
+Do not run graph perturbation or subspace ablation yet. Repair the
+shuffle/statistic instrument so baseline-alignment cannot override failed
+structure-destroying scalar controls.
+```
+
 ### RFS-MB0 Laptop Spectral Triage/Subspace Diagnostic Repair
 
 Tightened the laptop spectral control/mapping smoke per external audit comments.

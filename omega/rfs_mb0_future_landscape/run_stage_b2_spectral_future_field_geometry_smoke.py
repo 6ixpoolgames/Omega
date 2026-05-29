@@ -1578,6 +1578,8 @@ def shuffle_smoke_rows(
             else:
                 contexts = sampled_contexts(context_pool.get(horizon_shuffle_key(matrix.key), []), len(bucket.context_items), rng)
             payload = spectral_payload_from_contexts(contexts, args)
+            control_matrix = spectral_matrix_from_contexts(matrix.key, contexts, args)
+            alignment = alignment_payload(matrix, control_matrix, args.top_k)
             rows.append({
                 **key_row(matrix.key),
                 "matrix_id": matrix.matrix_id,
@@ -1587,6 +1589,11 @@ def shuffle_smoke_rows(
                 "shuffle_positive_spectral_mass": payload["positive_spectral_mass"],
                 "observed_effective_rank": observed.get("effective_rank", ""),
                 "shuffle_effective_rank": payload["effective_rank"],
+                "observed_top1_participation": observed.get("participation_ratio_top_modes", ""),
+                "shuffle_top1_participation": payload["top1_participation"],
+                "observed_topk_alignment": 1.0 if matrix.items else "",
+                "shuffle_topk_alignment": alignment.get("top_k_subspace_alignment", ""),
+                "shuffle_topk_alignment_status": alignment.get("alignment_status", ""),
                 "observed_spectral_gap_k": observed.get("spectral_gap_k", ""),
                 "shuffle_spectral_gap_k": payload["spectral_gap_k"],
                 "shuffle_item_count": payload["item_count"],
