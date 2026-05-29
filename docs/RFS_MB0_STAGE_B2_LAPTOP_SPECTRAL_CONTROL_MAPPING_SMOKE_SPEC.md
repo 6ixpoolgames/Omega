@@ -18,6 +18,7 @@ This spec is binding with these guardrails:
 7. same-sample high-loading ablation is exploratory only and cannot support readiness;
 8. high-loading ablation specificity must be quantitative, matched-random controlled, and multi-metric;
 9. subspace transfer must be reported separately from item-local ablation specificity.
+10. compact audit fields must use external-review names directly, not only internal aliases.
 ```
 
 ## 0. Purpose
@@ -244,6 +245,9 @@ laptop_spectral_smoke_progress_checkpoints.csv
 laptop_spectral_smoke_errors.csv
 laptop_spectral_smoke_output_manifest.json
 laptop_spectral_output_contract_report.md
+laptop_gpt_requested_status_key_fields.csv
+laptop_mapping_status_counts.csv
+laptop_spectral_forwarding_summary.md
 ```
 
 Gate:
@@ -341,6 +345,7 @@ The report must show a row per shuffle family:
 ```text
 shuffle_family
 threshold
+replicate_count
 primary_context_count
 passed_context_count
 pass_fraction
@@ -348,6 +353,7 @@ median_observed_percentile
 min_observed_percentile
 catastrophic_floor
 catastrophic_fail_count
+catastrophic_fail_flag
 family_passed
 blocking_reason
 ```
@@ -486,6 +492,7 @@ loading_score
 item_count
 item_mass
 realized_edge_count
+mapped_realized_edge_count
 realized_edge_sample_json
 mapped_item_mass
 mapping_status
@@ -608,7 +615,11 @@ high_loading_over_random_ratio
 ablation_direction_match
 coverage_loss_after_ablation
 matching_quality
+random_matching_quality
 metric_specificity_wins
+effect_metric_count
+matched_random_drop_fraction_std
+matched_random_drop_fraction_max
 ablation_failure_reason
 subspace_transfer_status
 subspace_item_read

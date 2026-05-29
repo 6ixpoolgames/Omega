@@ -1657,6 +1657,8 @@ def high_loading_rows(
             row["selection_partition"] = "selection"
             row["loading_rank"] = rank
         rows.extend(selected)
+        loading_score_sum = sum(float_or_zero(row.get("loading_score")) for row in selected)
+        loading_score_max = max((float_or_zero(row.get("loading_score")) for row in selected), default=0.0)
         summaries.append({
             **key_row(matrix.key),
             "matrix_id": matrix.matrix_id,
@@ -1665,6 +1667,9 @@ def high_loading_rows(
             "stable_candidate_count": len(stable),
             "high_loading_item_count": len(selected),
             "high_loading_item_mass": sum(float_or_zero(row.get("item_mass")) for row in selected),
+            "high_loading_score_sum": loading_score_sum,
+            "high_loading_score_max": loading_score_max,
+            "high_loading_top_score_fraction": loading_score_max / max(1e-9, loading_score_sum),
             "total_matrix_item_mass": sum(bucket.item_counts.values()),
             "selection_read": "stable_items_selected" if selected else "no_stable_high_loading_items",
         })
@@ -1744,6 +1749,7 @@ def item_mapping_rows(loading_rows: list[dict[str, object]], counts: dict[Matrix
         rows.append({
             **row,
             "realized_edge_count": edge_count,
+            "mapped_realized_edge_count": edge_count,
             "realized_edge_sample_json": json.dumps((bucket.item_edge_samples.get(item, []) if bucket else [])[:8], sort_keys=True),
             "mapped_item_mass": mapped_mass,
             "mapping_status": status,
@@ -1753,12 +1759,14 @@ def item_mapping_rows(loading_rows: list[dict[str, object]], counts: dict[Matrix
         total_mass = sum(float_or_zero(row.get("item_mass")) for row in items)
         mapped_mass = sum(float_or_zero(row.get("mapped_item_mass")) for row in items)
         mapped_count = sum(1 for row in items if row.get("mapping_status") == "mapped_to_realized_edges")
+        mapped_realized_edge_count = sum(int(float_or_zero(row.get("mapped_realized_edge_count"))) for row in items if row.get("mapping_status") == "mapped_to_realized_edges")
         first = items[0] if items else {}
         fraction = mapped_mass / max(1.0, total_mass)
         coverage.append({
             **key_subset(first),
             "matrix_id": matrix_id,
             "mapped_item_count": mapped_count,
+            "mapped_realized_edge_count": mapped_realized_edge_count,
             "high_loading_item_count": len(items),
             "mapped_item_fraction": mapped_count / max(1, len(items)),
             "mapped_item_mass": mapped_mass,
@@ -1966,14 +1974,18 @@ def ablation_decision_row(
         "random_delta_mean": random_delta_mean,
         "random_delta_std": random_delta_std,
         "random_delta_max": random_delta_max,
+        "matched_random_drop_fraction_std": random_delta_std,
+        "matched_random_drop_fraction_max": random_delta_max,
         "low_loading_delta": low_delta,
         "high_loading_minus_random_mean": high_delta - random_delta_mean,
         "high_loading_over_random_ratio": high_delta / max(1e-9, random_delta_mean),
         "ablation_direction_match": direction_match,
         "coverage_loss_after_ablation": coverage_loss,
         "metric_specificity_wins": metric_wins,
+        "effect_metric_count": metric_wins,
         "metric_specificity_reads": ";".join(metric_reads),
         "matching_quality": matching_quality,
+        "random_matching_quality": matching_quality,
         "random_matching": "matrix_context_count_mass_greedy",
         "high_loading_drop_fraction_mean": high_delta,
         "matched_random_drop_fraction_mean": random_delta_mean,
@@ -2470,6 +2482,7 @@ def shuffle_family_summary(control_summary: list[dict[str, object]], args: argpa
         rows.append({
             "shuffle_family": family,
             "threshold": threshold,
+            "replicate_count": sum(int(float_or_zero(row.get("replicate_count"))) for row in items),
             "primary_context_count": len(percentiles),
             "passed_context_count": pass_count,
             "pass_fraction": pass_fraction,
@@ -2477,6 +2490,7 @@ def shuffle_family_summary(control_summary: list[dict[str, object]], args: argpa
             "min_observed_percentile": min_percentile,
             "catastrophic_floor": catastrophic_floor,
             "catastrophic_fail_count": catastrophic_count,
+            "catastrophic_fail_flag": int(catastrophic_count > 0),
             "family_passed": int(family_passed),
             "blocking_reason": "" if family_passed else shuffle_family_blocker(percentiles, pass_fraction, median_percentile, catastrophic_count, min_pass_fraction, min_median),
         })

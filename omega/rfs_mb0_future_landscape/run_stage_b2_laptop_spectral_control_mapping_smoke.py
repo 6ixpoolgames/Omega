@@ -73,6 +73,9 @@ LAPTOP_OUTPUTS = (
     "laptop_tiny_channel_smoke_report.md",
     "laptop_spectral_gate_results.csv",
     "laptop_spectral_control_mapping_smoke_report.md",
+    "laptop_gpt_requested_status_key_fields.csv",
+    "laptop_mapping_status_counts.csv",
+    "laptop_spectral_forwarding_summary.md",
 )
 
 ALIASES = {
@@ -268,6 +271,7 @@ def main() -> None:
     status["elapsed_seconds"] = round(time.perf_counter() - started, 3)
     write_json(args.out / "laptop_spectral_smoke_status.json", status)
     write_report(args.out, status, gates)
+    write_compact_forwarding_outputs(args.out, status, gates)
     write_laptop_manifest(args.out)
 
 
@@ -302,6 +306,7 @@ def finalize_missing_source(args: argparse.Namespace, status: dict[str, object],
     write_gate_results(args.out / "laptop_spectral_gate_results.csv", gates)
     write_json(args.out / "laptop_spectral_smoke_status.json", status)
     write_report(args.out, status, gates)
+    write_compact_forwarding_outputs(args.out, status, gates)
     write_laptop_manifest(args.out)
 
 
@@ -412,6 +417,110 @@ def write_report(out_dir: Path, status: dict[str, object], gates: list[GateResul
         "",
     ])
     (out_dir / "laptop_spectral_control_mapping_smoke_report.md").write_text("\n".join(lines), encoding="utf-8")
+
+
+def write_compact_forwarding_outputs(out_dir: Path, status: dict[str, object], gates: list[GateResult]) -> None:
+    key_fields = (
+        "status",
+        "finalization_reason",
+        "jobs_requested",
+        "jobs_completed",
+        "errors",
+        "control_summary_cache_status",
+        "shuffle_replicates_completed",
+        "high_loading_items_exported",
+        "item_sets_mapped",
+        "ablation_jobs_completed",
+        "perturbation_jobs_completed",
+        "decision_classes",
+        "blocking_reason",
+        "ready_for_larger_spectral_control_run",
+        "ready_for_larger_analysis_only_channel_run",
+        "ready_for_tiny_graph_channel_perturbation",
+        "ready_for_larger_graph_channel_run",
+    )
+    write_csv(out_dir / "laptop_gpt_requested_status_key_fields.csv", [{"field": field, "value": status.get(field, "")} for field in key_fields])
+    mapping_rows = read_csv(out_dir / "laptop_spectral_item_to_edge_mapping.csv")
+    mapping_counts = []
+    for (mapping_status,), rows in group_rows(mapping_rows, ("mapping_status",)).items():
+        mapping_counts.append({
+            "mapping_status": mapping_status,
+            "count": len(rows),
+            "mapped_realized_edge_count": sum(int(float_or_zero(row.get("mapped_realized_edge_count", row.get("realized_edge_count")))) for row in rows),
+        })
+    write_csv(out_dir / "laptop_mapping_status_counts.csv", mapping_counts)
+    write_forwarding_summary(out_dir, status, gates)
+
+
+def write_forwarding_summary(out_dir: Path, status: dict[str, object], gates: list[GateResult]) -> None:
+    first_failed = next((gate for gate in gates if gate.required and not gate.passed), None)
+    shuffle_rows = read_csv(out_dir / "laptop_spectral_shuffle_family_gate_summary.csv")
+    mapping_rows = read_csv(out_dir / "laptop_spectral_mapping_coverage.csv")
+    ablation_row = (read_csv(out_dir / "laptop_item_ablation_decision.csv") or [{}])[0]
+    best_mapping = max((float_or_zero(row.get("mapped_item_mass_fraction")) for row in mapping_rows), default=0.0)
+    lines = [
+        "# RFS-MB0 Laptop Spectral Control Mapping Forwarding Summary",
+        "",
+        "## Executive Summary",
+        "",
+        f"Final status: `{status.get('status')}` with `{status.get('finalization_reason', '')}`.",
+        "",
+        f"Decision class: `{status.get('laptop_decision_class', 'not_ready_repair_required')}`.",
+        "",
+        f"Blocking reason: `{status.get('blocking_reason', '')}`.",
+        "",
+        f"Control summary cache: `{status.get('control_summary_cache_status', '')}`.",
+        "",
+        f"First failed required gate: `{first_failed.gate_id if first_failed else ''} {first_failed.gate_name if first_failed else ''}` observed `{first_failed.observed if first_failed else ''}` with blocker `{first_failed.blocking_reason if first_failed else ''}`.",
+        "",
+        f"Readiness ladder: spectral controls `{status.get('ready_for_larger_spectral_control_run', 0)}`, analysis-only channel diagnostics `{status.get('ready_for_larger_analysis_only_channel_run', 0)}`, tiny graph-channel perturbation `{status.get('ready_for_tiny_graph_channel_perturbation', 0)}`, larger graph-channel run `{status.get('ready_for_larger_graph_channel_run', 0)}`.",
+        "",
+        "Artifact policy: generated CSV/JSON artifacts are local-only and should not be committed unless explicitly promoted.",
+        "",
+        "## Gate Results",
+        "",
+        "| gate | required | passed | threshold | observed | blocker |",
+        "|---|---:|---:|---|---|---|",
+    ]
+    for gate in gates:
+        row = gate.row()
+        lines.append(f"| {row['gate_id']} {row['gate_name']} | {row['required']} | {row['passed']} | {row['threshold']} | {row['observed']} | {row['blocking_reason']} |")
+    lines.extend([
+        "",
+        "## Shuffle Families",
+        "",
+        "| family | replicates | pass_fraction | median_percentile | min_percentile | catastrophic | passed |",
+        "|---|---:|---:|---:|---:|---:|---:|",
+    ])
+    for row in shuffle_rows:
+        lines.append(f"| {row.get('shuffle_family', '')} | {row.get('replicate_count', '')} | {row.get('pass_fraction', '')} | {row.get('median_observed_percentile', '')} | {row.get('min_observed_percentile', '')} | {row.get('catastrophic_fail_flag', '')} | {row.get('family_passed', '')} |")
+    lines.extend([
+        "",
+        "## Mapping",
+        "",
+        f"Best mapped item mass fraction: `{best_mapping:.3f}`.",
+        "",
+        "## Ablation And Subspace",
+        "",
+        f"Decision: `{ablation_row.get('decision_class', '')}`.",
+        "",
+        f"Failure reason: `{ablation_row.get('ablation_failure_reason', '')}`.",
+        "",
+        f"High-loading drop mean: `{ablation_row.get('high_loading_drop_fraction_mean', '')}`.",
+        f"Matched-random mean/std/max: `{ablation_row.get('matched_random_drop_fraction_mean', '')}` / `{ablation_row.get('matched_random_drop_fraction_std', '')}` / `{ablation_row.get('matched_random_drop_fraction_max', '')}`.",
+        f"Effect metric count: `{ablation_row.get('effect_metric_count', '')}`.",
+        f"Random matching quality: `{ablation_row.get('random_matching_quality', '')}`.",
+        f"Subspace/item read: `{ablation_row.get('subspace_item_read', '')}`.",
+        "",
+    ])
+    (out_dir / "laptop_spectral_forwarding_summary.md").write_text("\n".join(lines), encoding="utf-8")
+
+
+def group_rows(rows: list[dict[str, object]], keys: tuple[str, ...]) -> dict[tuple[object, ...], list[dict[str, object]]]:
+    grouped: dict[tuple[object, ...], list[dict[str, object]]] = {}
+    for row in rows:
+        grouped.setdefault(tuple(row.get(key, "") for key in keys), []).append(row)
+    return grouped
 
 
 def write_laptop_manifest(out_dir: Path) -> None:

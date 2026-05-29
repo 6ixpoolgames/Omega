@@ -112,6 +112,42 @@ repair should address the spectral-control layer and test subspace-level
 diagnostics before graph perturbation.
 ```
 
+Tool-tightening addendum:
+
+```text
+schema_version: 2026-05-30.2
+instrument_version: 0.2.1
+
+Added direct external-audit field names:
+  matched_random_drop_fraction_std
+  matched_random_drop_fraction_max
+  effect_metric_count
+  random_matching_quality
+  replicate_count
+  catastrophic_fail_flag
+  mapped_realized_edge_count
+
+Added compact forwarding outputs:
+  laptop_gpt_requested_status_key_fields.csv
+  laptop_mapping_status_counts.csv
+  laptop_spectral_forwarding_summary.md
+```
+
+Contract checks:
+
+```text
+tiny complete-path smoke:
+  status: COMPLETED
+  jobs_completed: 6 / 6
+  manifest_rows: 40
+  missing_manifest_rows: 0
+
+missing-source guard:
+  status: PARTIAL_CONTROL_SOURCE_MISSING
+  jobs_requested: 0
+  compact audit files present
+```
+
 ## 2026-05-29
 
 ### RFS-MB0 Stage B-2 Spectral Channel High-Loading Repair
