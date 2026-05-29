@@ -20,7 +20,7 @@ The active empirical question is currently narrower than agency, identity, or va
 
 Current status, in one line:
 
-**VAL0/VAL1 were useful reconnaissance probes; RFS-MB0 has moved from endpoint support/distribution deformation to frontier-transform instrumentation. Stage B-2 found preregistered A/C joint signed syndromes that are sensitive to edge/topology perturbation, and a compact spectral smoke found nonblank direct-control future-field geometry. This is not yet a scientific gate pass: holdout remains blocked and shuffled/matched spectral controls are still missing.**
+**VAL0/VAL1 were useful reconnaissance probes; RFS-MB0 has moved from endpoint support/distribution deformation to frontier-transform instrumentation. Stage B-2 found preregistered A/C joint signed syndromes that are sensitive to edge/topology perturbation, and a compact spectral smoke found nonblank direct-control future-field geometry. The latest channel-edge prep tightened the instrument, but blocked the 24h run because high-loading ablation was random-equivalent. No scientific gate has passed.**
 
 ## Workflow: human-directed, AI-assisted research
 
@@ -194,16 +194,23 @@ Stage B-2:
 
 spectral tangent:
   cofrontier/coflow matrices are nonblank and direct-control topology-sensitive,
-  but this has not yet run label-shuffled, context-shuffled, horizon-order,
-  frontier-size, or probe-marginal spectral controls
+  and cheap label/context/horizon shuffle controls now run, but frontier-size
+  and probe-marginal spectral controls are still missing
+
+channel-edge prep:
+  high-loading export and item-to-edge mapping work, but high-loading ablation
+  was random-equivalent in the small smoke, so the 24h channel-edge run is
+  blocked pending repair
 
 next task:
-  channel-specific edge sensitivity, using spectral high-loading structures as
-  exploratory guidance only
+  repair high-loading selection with replicate-stable, cross-shuffle-surviving,
+  cross-seed recurrent items before any larger channel-edge pass
 ```
 
 Important current docs:
 
+- [Stage B-2 spectral channel-edge repair prep result](docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_channel_edge_smoke_repair_prep_result.md)
+- [Stage B-2 spectral channel-edge repair prep spec](docs/RFS_MB0_STAGE_B2_SPECTRAL_CHANNEL_EDGE_SMOKE_REPAIR_PREP_SPEC.md)
 - [Stage B-2 spectral future-field geometry smoke result](docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_future_field_geometry_smoke_result.md)
 - [Stage B-2 spectral future-field geometry smoke spec](docs/RFS_MB0_STAGE_B2_SPECTRAL_FUTURE_FIELD_GEOMETRY_SMOKE_SPEC.md)
 - [Stage B-2 exploratory iteration pass result](docs/research_notes/validation_results/rfs_mb0_stage_b2_exploratory_iteration_pass_result.md)

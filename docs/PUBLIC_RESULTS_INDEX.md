@@ -22,6 +22,7 @@ Current entry points:
 - `RFS_MB0_FUTURE_LANDSCAPE_DETECTOR_V1_HANDOFF.md`
 - `RFS_MB0_STAGE_B2_EXPLORATORY_ITERATION_PASS_SPEC.md`
 - `RFS_MB0_STAGE_B2_SPECTRAL_FUTURE_FIELD_GEOMETRY_SMOKE_SPEC.md`
+- `RFS_MB0_STAGE_B2_SPECTRAL_CHANNEL_EDGE_SMOKE_REPAIR_PREP_SPEC.md`
 - `RFS_MB0_ACTION_GENERATED_RELATION_SUBSTRATE_SPEC.md`
 - `REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md`
 - `research_notes/validation_design/val_ecology_viability_reorientation.md`
@@ -63,6 +64,7 @@ Directory:
 
 Current result notes:
 
+- `rfs_mb0_stage_b2_spectral_channel_edge_smoke_repair_prep_result.md`
 - `rfs_mb0_stage_b2_spectral_future_field_geometry_smoke_result.md`
 - `rfs_mb0_stage_b2_exploratory_iteration_pass_result.md`
 - `rfs_mb0_stage_b2_mechanism_calibration_smokes_result.md`
@@ -111,6 +113,12 @@ Result in one line:
   edge/topology perturbations. This is not a full spectral pass: label-shuffled,
   context-shuffled, horizon-order, frontier-size, and probe-marginal spectral
   controls are still missing.
+- The Stage B-2 spectral channel-edge repair prep tightened the instrument
+  before any 24h run. The prep runner now emits shuffle-control, high-loading,
+  item-to-edge mapping, ablation, and tiny perturbation outputs. The 18-worker
+  small smoke completed 80/80 jobs with zero errors, but the 24h run is blocked:
+  high-loading ablation was random-equivalent, and tiny targeted-vs-random
+  perturbation was not interpretable enough to scale.
 - RFS-MB0 future-landscape detector v1.1 passed implementation checks, and the
   long-horizon audit extended the horizon grid through H1024: 33 systems, 3696
   profiles, zero errors. It did not pass the scientific gate: zero aggregate

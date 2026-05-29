@@ -9,6 +9,76 @@ patch notes at the top.
 
 ## 2026-05-29
 
+### RFS-MB0 Stage B-2 Spectral Channel-Edge Smoke Repair Prep
+
+Implemented the repair-prep layer requested by
+`docs/RFS_MB0_STAGE_B2_SPECTRAL_CHANNEL_EDGE_SMOKE_REPAIR_PREP_SPEC.md`.
+
+Retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_channel_edge_smoke_repair_prep_result.md`
+
+Local outputs:
+
+- `results/rfs_mb0_relation_atlas/20260529_stage_b2_spectral_channel_prep_contract_smoke_v5/`
+- `results/rfs_mb0_relation_atlas/20260529_stage_b2_spectral_channel_prep_small_smoke_v2/`
+
+Implementation changes:
+
+```text
+prep output contract files: added
+label/context/horizon shuffle controls: added
+high-loading item export: added
+item-to-edge mapping export: added
+analysis-only high-loading ablation: added
+tiny targeted-vs-random perturbation plumbing: added
+frontier-size/probe-marginal spectral controls: still not implemented
+```
+
+Small smoke status:
+
+```text
+status: COMPLETED
+elapsed_seconds: 10.059
+workers: 18
+jobs_completed: 80 / 80
+contexts_accumulated: 6720
+matrix_count: 180
+errors: 0
+manifest_rows: 51
+missing_manifest_rows: 0
+```
+
+Decision:
+
+```text
+runner_contract_passed
+spectral_shuffle_controls_passed
+spectral_item_mapping_adequate
+high_loading_ablation_random_equivalent
+tiny_channel_perturbation_not_interpretable
+not_ready_repair_required
+ready_for_24h_run: 0
+```
+
+Interpretation:
+
+```text
+The instrument is tighter and the data paths work, but the 24h spectral
+channel-edge run is blocked. High-loading item ablation became
+random-equivalent in the broader small smoke: high-loading removal changed
+positive spectral mass less than matched random removal on average
+(`0.1073` vs `0.1261` drop fraction).
+```
+
+Next recommendation:
+
+```text
+Repair high-loading selection before scaling: require replicate-stable,
+cross-shuffle-surviving, cross-seed recurrent high-loading items and compare
+against frequency/degree/baseline-flow matched item sets.
+```
+
 ### RFS-MB0 Stage B-2 Spectral Future-Field Geometry Smoke
 
 Implemented and smoked the optional Stage B-2 spectral future-field geometry
