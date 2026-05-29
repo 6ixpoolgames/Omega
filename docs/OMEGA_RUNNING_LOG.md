@@ -7,6 +7,111 @@ run.
 Entries are organized in rough reverse chronological order, with the most recent
 patch notes at the top.
 
+## 2026-05-30
+
+### RFS-MB0 Laptop Spectral Control Mapping Diagnostic Smoke
+
+Implemented the laptop-safe spectral control/mapping smoke wrapper and tightened
+the spectral channel-prep gates:
+
+```text
+per-family shuffle pass fractions and catastrophic floors
+mandatory selection/evaluation split for ablation readiness
+quantitative high-loading vs matched-random ablation fields
+subspace-transfer diagnostics
+readiness split into spectral-control, analysis-only, tiny graph, and larger graph levels
+```
+
+Retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_laptop_spectral_control_mapping_smoke_result.md`
+
+Local outputs:
+
+- `results/local_runs/20260530_laptop_spectral_gpt_diagnostic_smoke/`
+- `results/local_runs/20260530_laptop_spectral_gpt_forwarding_bundle/`
+- `results/local_runs/20260530_laptop_spectral_gpt_forwarding_bundle.zip`
+
+Local outputs are forwarding/audit artifacts only and are not committed.
+
+Diagnostic smoke status:
+
+```text
+status: COMPLETED
+elapsed_seconds: 13.527
+workers: 7
+jobs_completed: 24 / 24
+contexts_accumulated: 3024
+matrix_count: 54
+errors: 0
+control_summary_cache_status: loaded:stage_b2_control_summary_cache.pkl
+shuffle_replicates_completed: 90
+high_loading_items_exported: 40
+item_sets_mapped: 5
+ablation_jobs_completed: 35
+perturbation_jobs_completed: 0
+```
+
+Gate read:
+
+```text
+G0 control_source_available: passed
+G1 output_contract_passed: passed
+G2 shuffle_family_thresholds: failed
+G3 item_mapping_mass: passed
+G4 selection_evaluation_ablation: failed
+G5 tiny_perturbation_optional: not run
+```
+
+Decision:
+
+```text
+runner_contract_passed
+spectral_shuffle_controls_control_equivalent
+spectral_item_mapping_adequate
+high_loading_ablation_random_equivalent
+subspace_transfers_but_items_not_specific
+tiny_channel_perturbation_not_interpretable
+not_ready_repair_required
+
+ready_for_larger_spectral_control_run: 0
+ready_for_larger_analysis_only_channel_run: 0
+ready_for_tiny_graph_channel_perturbation: 0
+ready_for_larger_graph_channel_run: 0
+```
+
+Key readout:
+
+```text
+shuffle families:
+  label_shuffle: failed, catastrophic_fail_count 3
+  context_shuffle: failed, catastrophic_fail_count 1
+  horizon_order_shuffle: passed
+
+mapping:
+  best_mapped_item_mass_fraction: 1.000
+
+matched ablation:
+  high_loading_delta: 0.047743807987362004
+  random_delta_mean: 0.08715710311136862
+  random_delta_max: 0.10902465909564239
+  metric_specificity_wins: 0
+
+subspace:
+  subspace_transfer_status: subspace_transfers
+  subspace_item_read: subspace_transfers_but_items_not_specific
+```
+
+Interpretation:
+
+```text
+The laptop diagnostic smoke blocks larger spectral/channel scaling. Mapping is
+adequate, and a selection/evaluation subspace transfers, but item-local
+high-loading ablation is random-equivalent to matched random controls. The next
+repair should address the spectral-control layer and test subspace-level
+diagnostics before graph perturbation.
+```
+
 ## 2026-05-29
 
 ### RFS-MB0 Stage B-2 Spectral Channel High-Loading Repair

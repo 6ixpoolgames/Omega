@@ -194,22 +194,25 @@ Stage B-2:
 
 spectral tangent:
   cofrontier/coflow matrices are nonblank and direct-control topology-sensitive,
-  and cheap label/context/horizon shuffle controls now run, but frontier-size
-  and probe-marginal spectral controls are still missing
+  and cheap label/context/horizon shuffle controls now run; the laptop
+  diagnostic smoke blocks scaling because only horizon-order shuffle passed the
+  stricter family gate
 
 channel-edge prep:
-  high-loading export and item-to-edge mapping work; stable high-loading
-  selection plus frequency/baseline-flow matched ablation cleared the small
-  instrument gate for a larger spectral channel-edge run
+  high-loading export and item-to-edge mapping work, but selection/evaluation
+  ablation remains random-equivalent to matched random controls on the laptop
+  diagnostic smoke; the subspace transfers but item-local channels are not
+  specific enough for graph perturbation
 
 next task:
-  run a larger spectral channel-edge exploratory pass with no holdout, no n=6,
-  no alphabet expansion, and explicit caveats for missing frontier-size and
-  probe-marginal spectral controls
+  repair the spectral-control layer and test subspace-level diagnostics before
+  any graph perturbation or larger spectral-channel run
 ```
 
 Important current docs:
 
+- [Laptop spectral control mapping smoke result](docs/research_notes/validation_results/rfs_mb0_laptop_spectral_control_mapping_smoke_result.md)
+- [Laptop spectral control mapping smoke spec](docs/RFS_MB0_STAGE_B2_LAPTOP_SPECTRAL_CONTROL_MAPPING_SMOKE_SPEC.md)
 - [Stage B-2 spectral channel high-loading repair result](docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_channel_high_loading_repair_result.md)
 - [Stage B-2 spectral channel-edge repair prep result](docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_channel_edge_smoke_repair_prep_result.md)
 - [Stage B-2 spectral channel-edge repair prep spec](docs/RFS_MB0_STAGE_B2_SPECTRAL_CHANNEL_EDGE_SMOKE_REPAIR_PREP_SPEC.md)

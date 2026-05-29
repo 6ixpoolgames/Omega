@@ -18,6 +18,7 @@ Directory:
 
 Current entry points:
 
+- `RFS_MB0_STAGE_B2_LAPTOP_SPECTRAL_CONTROL_MAPPING_SMOKE_SPEC.md`
 - `RFS_MB0_FUTURE_LANDSCAPE_PATTERN_SPEC.md`
 - `RFS_MB0_FUTURE_LANDSCAPE_DETECTOR_V1_HANDOFF.md`
 - `RFS_MB0_STAGE_B2_EXPLORATORY_ITERATION_PASS_SPEC.md`
@@ -64,6 +65,7 @@ Directory:
 
 Current result notes:
 
+- `rfs_mb0_laptop_spectral_control_mapping_smoke_result.md`
 - `rfs_mb0_stage_b2_spectral_channel_high_loading_repair_result.md`
 - `rfs_mb0_stage_b2_spectral_channel_edge_smoke_repair_prep_result.md`
 - `rfs_mb0_stage_b2_spectral_future_field_geometry_smoke_result.md`

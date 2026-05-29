@@ -9,9 +9,9 @@ import signal
 import time
 from collections import Counter, defaultdict
 from concurrent.futures import FIRST_COMPLETED, ProcessPoolExecutor, wait
-from dataclasses import dataclass, replace
+from dataclasses import replace
 from pathlib import Path
-from statistics import mean
+from statistics import mean, median, pstdev
 from typing import Any
 
 import numpy as np
@@ -32,6 +32,7 @@ from .run_frontier_transform_stage_b2_mechanism_calibration import (
 from .run_frontier_transform_syndrome_audit import syndrome_library
 from .run_instrumentation_phase_a import build_holdout_split
 from .run_path_metric_calibration import build_probe
+from .spectral_types import MatrixCounts, MatrixKey, SpectralMatrix
 
 
 PRIMARY_SYNDROMES = (
@@ -81,7 +82,11 @@ OUTPUTS = (
     "spectral_context_shuffle_smoke.csv",
     "spectral_horizon_shuffle_smoke.csv",
     "spectral_control_repair_smoke_summary.csv",
+    "spectral_shuffle_family_gate_summary.csv",
     "spectral_control_repair_smoke_report.md",
+    "spectral_selection_evaluation_partition_summary.csv",
+    "spectral_subspace_transfer_diagnostic.csv",
+    "spectral_readiness_levels.csv",
     "spectral_high_loading_candidate_pool_smoke.csv",
     "spectral_high_loading_items_smoke.csv",
     "spectral_item_loading_summary_smoke.csv",
@@ -105,50 +110,6 @@ OUTPUTS = (
     "rfs_mb0_stage_b2_spectral_channel_edge_smoke_repair_prep_result.md",
 )
 STOP_REQUESTED = False
-
-
-@dataclass(frozen=True)
-class MatrixKey:
-    matrix_family: str
-    condition_id: str
-    actual_control_name: str
-    proxy_level: str
-    probe_key: str
-    flow_mode: str
-    horizon_band: str
-
-
-@dataclass
-class MatrixCounts:
-    contexts: int
-    item_counts: Counter[str]
-    pair_counts: Counter[tuple[str, str]]
-    raw_item_mass: int
-    dropped_context_items: int
-    syndrome_positive_contexts: Counter[str]
-    context_items: list[tuple[str, tuple[str, ...]]]
-    item_edge_counts: Counter[str]
-    item_edge_samples: dict[str, list[str]]
-
-    @classmethod
-    def empty(cls) -> MatrixCounts:
-        return cls(0, Counter(), Counter(), 0, 0, Counter(), [], Counter(), defaultdict(list))
-
-
-@dataclass
-class SpectralMatrix:
-    key: MatrixKey
-    matrix_id: str
-    items: list[str]
-    matrix: np.ndarray
-    eigvals: np.ndarray
-    eigvecs: np.ndarray
-    item_mass_covered: int
-    item_mass_total: int
-    dropped_item_count: int
-    dropped_item_mass: int
-    contexts: int
-    syndrome_positive_contexts: Counter[str]
 
 
 def parse_args() -> argparse.Namespace:
@@ -185,12 +146,27 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--control-summary-cache", type=Path, default=None)
     parser.add_argument("--shuffle-replicates", type=int, default=5)
     parser.add_argument("--shuffle-max-matrices", type=int, default=24)
+    parser.add_argument("--label-shuffle-min-percentile", type=float, default=0.80)
+    parser.add_argument("--context-shuffle-min-percentile", type=float, default=0.80)
+    parser.add_argument("--horizon-shuffle-min-percentile", type=float, default=0.80)
+    parser.add_argument("--min-shuffle-families-passed", type=int, default=2)
+    parser.add_argument("--shuffle-family-min-pass-fraction", type=float, default=0.50)
+    parser.add_argument("--shuffle-family-min-median-percentile", type=float, default=0.80)
+    parser.add_argument("--shuffle-family-catastrophic-min-percentile", type=float, default=0.50)
     parser.add_argument("--high-loading-top-k-items", type=int, default=24)
     parser.add_argument("--high-loading-candidate-pool-multiplier", type=int, default=8)
     parser.add_argument("--high-loading-min-seed-count", type=int, default=2)
     parser.add_argument("--high-loading-min-shuffle-survival-count", type=int, default=1)
     parser.add_argument("--high-loading-min-matrix-recurrence", type=int, default=1)
+    parser.add_argument("--selection-evaluation-split", action="store_true")
+    parser.add_argument("--selection-partition-fraction", type=float, default=0.50)
+    parser.add_argument("--selection-partition-seed", type=str, default="stage_b2_spectral_partition_v1")
     parser.add_argument("--ablation-random-replicates", type=int, default=5)
+    parser.add_argument("--ablation-specific-min-random-stds", type=float, default=1.0)
+    parser.add_argument("--ablation-min-effect-metrics", type=int, default=2)
+    parser.add_argument("--ablation-max-coverage-loss", type=float, default=0.60)
+    parser.add_argument("--random-matching-min-quality", type=float, default=0.60)
+    parser.add_argument("--subspace-transfer-min-alignment", type=float, default=0.50)
     parser.add_argument("--prep-target-conditions", type=str, default="baseline_unperturbed:baseline,small_edge_resample_control:p0.02,asymmetric_edge_flip_control:p0.02")
     parser.add_argument("--prep-target-horizon-bands", type=str, default="middle")
     parser.add_argument("--mapping-mass-threshold", type=float, default=0.30)
@@ -1032,14 +1008,68 @@ def write_channel_prep_outputs(
     selected_syndromes: list[str],
 ) -> None:
     summary_by_id = {str(row.get("matrix_id")): row for row in summary}
-    target = prep_target_matrices(matrices, summary_by_id, args)
+    selection_counts = counts
+    evaluation_counts = counts
+    selection_matrices = matrices
+    evaluation_matrices = matrices
+    partition_meta = {
+        "partition_axis": "same_sample",
+        "partition_balance": "",
+        "selection_context_count": sum(bucket.contexts for bucket in counts.values()),
+        "evaluation_context_count": sum(bucket.contexts for bucket in counts.values()),
+        "selection_item_mass": sum(bucket.raw_item_mass for bucket in counts.values()),
+        "evaluation_item_mass": sum(bucket.raw_item_mass for bucket in counts.values()),
+    }
+    selection_eval_status = "same_sample_exploratory"
+    if getattr(args, "selection_evaluation_split", False):
+        selection_counts, evaluation_counts, partition_meta = partition_matrix_counts(counts, args)
+        selection_matrices = build_spectral_matrices(selection_counts, args)
+        evaluation_matrices = build_spectral_matrices(evaluation_counts, args)
+        selection_eval_status = "computed"
+    selection_summary = matrix_summary_rows(selection_matrices, args)
+    selection_summary_by_id = {str(row.get("matrix_id")): row for row in selection_summary}
+    evaluation_by_id = {matrix.matrix_id: matrix for matrix in evaluation_matrices}
+    target_pool = selection_matrices
+    if getattr(args, "selection_evaluation_split", False):
+        overlap_pool = [matrix for matrix in selection_matrices if matrix.matrix_id in evaluation_by_id]
+        if overlap_pool:
+            target_pool = overlap_pool
+    target = prep_target_matrices(target_pool, selection_summary_by_id, args)
+    evaluation_target = [evaluation_by_id[matrix.matrix_id] for matrix in target if matrix.matrix_id in evaluation_by_id]
+    if getattr(args, "selection_evaluation_split", False) and not evaluation_target:
+        selection_eval_status = "insufficient_evaluation_partition"
     label_rows = shuffle_smoke_rows("label_shuffle", target, counts, matrices, summary_by_id, args)
     context_rows = shuffle_smoke_rows("context_shuffle", target, counts, matrices, summary_by_id, args)
     horizon_rows = shuffle_smoke_rows("horizon_order_shuffle", target, counts, matrices, summary_by_id, args)
     control_summary = spectral_control_repair_summary(label_rows, context_rows, horizon_rows)
-    loading_rows, loading_summary, candidate_rows = high_loading_rows(target, counts, control_summary, args)
+    loading_rows, loading_summary, candidate_rows = high_loading_rows(target, selection_counts, control_summary, args)
     mapping_rows, mapping_coverage = item_mapping_rows(loading_rows, counts, args)
-    high_ablation, random_ablation, low_mid_ablation, ablation_manifest, ablation_decision = item_ablation_rows(target, counts, loading_rows, args)
+    subspace_rows = subspace_transfer_rows(target, evaluation_target, args)
+    if not getattr(args, "selection_evaluation_split", False):
+        high_ablation, random_ablation, low_mid_ablation, ablation_manifest = [], [], [], []
+        ablation_decision = [{
+            "decision_class": "same_sample_ablation_exploratory",
+            "ablation_failure_reason": "selection_evaluation_split_required_for_readiness",
+            "high_loading_drop_fraction_mean": "",
+            "matched_random_drop_fraction_mean": "",
+            "matrix_count": 0,
+            "random_replicate_rows": 0,
+            "random_matching": "not_run_without_selection_evaluation_split",
+        }]
+    elif selection_eval_status == "insufficient_evaluation_partition":
+        high_ablation, random_ablation, low_mid_ablation, ablation_manifest = [], [], [], []
+        ablation_decision = [{
+            "decision_class": "selection_evaluation_split_insufficient",
+            "ablation_failure_reason": "evaluation_partition_missing_target_matrices",
+            "high_loading_drop_fraction_mean": "",
+            "matched_random_drop_fraction_mean": "",
+            "matrix_count": 0,
+            "random_replicate_rows": 0,
+            "random_matching": "item_count_and_baseline_flow_count_greedy",
+        }]
+    else:
+        high_ablation, random_ablation, low_mid_ablation, ablation_manifest, ablation_decision = item_ablation_rows(evaluation_target, evaluation_counts, loading_rows, args)
+        ablation_decision = add_subspace_read_to_ablation_decision(ablation_decision, subspace_rows)
     perturbation = tiny_channel_perturbation_rows(
         jobs,
         loading_rows,
@@ -1049,18 +1079,54 @@ def write_channel_prep_outputs(
         components,
         selected_syndromes,
     ) if should_run_tiny_perturbation(control_summary, mapping_coverage, ablation_decision, args) else tiny_perturbation_placeholder_rows()
-    decision_classes = channel_prep_decision_classes(control_summary, mapping_coverage, ablation_decision, perturbation["summary"])
+    readiness_rows = readiness_level_rows(control_summary, mapping_coverage, ablation_decision, perturbation["summary"], selection_eval_status, args)
+    decision_classes = channel_prep_decision_classes(control_summary, mapping_coverage, ablation_decision, perturbation["summary"], readiness_rows, args)
+    readiness_map = {str(row.get("readiness_key")): int(float_or_zero(row.get("ready"))) for row in readiness_rows}
     status.update({
         "channel_prep_status": "COMPLETED" if status.get("status") == "COMPLETED" else status.get("status"),
         "runner_contract_status": "runner_contract_passed",
-        "spectral_shuffle_control_status": shuffle_status(control_summary),
+        "spectral_shuffle_control_status": shuffle_status(control_summary, args),
         "item_mapping_status": mapping_status(mapping_coverage, args.mapping_mass_threshold),
         "item_ablation_status": ablation_decision[0].get("decision_class", "high_loading_ablation_random_equivalent") if ablation_decision else "high_loading_ablation_random_equivalent",
         "tiny_channel_perturbation_status": tiny_perturbation_status(perturbation["summary"]),
+        "selection_evaluation_split_enabled": bool(getattr(args, "selection_evaluation_split", False)),
+        "selection_evaluation_split_status": selection_eval_status,
+        "selection_partition_axis": partition_meta.get("partition_axis", ""),
+        "selection_partition_balance": partition_meta.get("partition_balance", ""),
+        "selection_context_count": partition_meta.get("selection_context_count", ""),
+        "evaluation_context_count": partition_meta.get("evaluation_context_count", ""),
+        "selection_item_mass": partition_meta.get("selection_item_mass", ""),
+        "evaluation_item_mass": partition_meta.get("evaluation_item_mass", ""),
+        "selection_partition_fraction": getattr(args, "selection_partition_fraction", ""),
+        "selection_partition_seed": getattr(args, "selection_partition_seed", ""),
+        "label_shuffle_min_percentile": getattr(args, "label_shuffle_min_percentile", ""),
+        "context_shuffle_min_percentile": getattr(args, "context_shuffle_min_percentile", ""),
+        "horizon_shuffle_min_percentile": getattr(args, "horizon_shuffle_min_percentile", ""),
+        "min_shuffle_families_passed": getattr(args, "min_shuffle_families_passed", ""),
+        "shuffle_family_min_pass_fraction": getattr(args, "shuffle_family_min_pass_fraction", ""),
+        "shuffle_family_min_median_percentile": getattr(args, "shuffle_family_min_median_percentile", ""),
+        "shuffle_family_catastrophic_min_percentile": getattr(args, "shuffle_family_catastrophic_min_percentile", ""),
+        "ablation_specific_min_random_stds": getattr(args, "ablation_specific_min_random_stds", ""),
+        "ablation_min_effect_metrics": getattr(args, "ablation_min_effect_metrics", ""),
+        "ablation_max_coverage_loss": getattr(args, "ablation_max_coverage_loss", ""),
+        "random_matching_min_quality": getattr(args, "random_matching_min_quality", ""),
+        "subspace_transfer_min_alignment": getattr(args, "subspace_transfer_min_alignment", ""),
+        "selection_matrix_count": len(selection_matrices),
+        "evaluation_matrix_count": len(evaluation_matrices),
+        "selection_evaluation_target_overlap_count": len(evaluation_target),
         "high_loading_candidate_pool_rows": len(candidate_rows),
         "stable_high_loading_selected_rows": len(loading_rows),
         "stable_high_loading_matrix_count": sum(1 for row in loading_summary if row.get("selection_read") == "stable_items_selected"),
-        "ablation_random_matching": "item_count_and_baseline_flow_count_greedy",
+        "shuffle_replicates_completed": sum(1 for row in label_rows + context_rows + horizon_rows if row.get("shuffle_status") == "computed"),
+        "high_loading_items_exported": len(loading_rows),
+        "item_sets_mapped": len(mapping_coverage),
+        "ablation_jobs_completed": len(high_ablation) + len(random_ablation) + len(low_mid_ablation),
+        "perturbation_jobs_completed": sum(1 for row in perturbation["manifest"] if row.get("perturbation_status") == "computed"),
+        "blocking_reason": channel_blocking_reason(readiness_rows, ablation_decision),
+        "ablation_failure_reason": ablation_decision[0].get("ablation_failure_reason", "") if ablation_decision else "",
+        "subspace_transfer_status": ablation_decision[0].get("subspace_transfer_status", "subspace_transfer_not_computed") if ablation_decision else "subspace_transfer_not_computed",
+        "subspace_item_read": ablation_decision[0].get("subspace_item_read", "subspace_transfer_not_computed") if ablation_decision else "subspace_transfer_not_computed",
+        "ablation_random_matching": ablation_decision[0].get("random_matching", "matrix_context_count_mass_greedy") if ablation_decision else "matrix_context_count_mass_greedy",
         "control_comparison_scope": "direct_stage_b2_plus_prep_shuffle_controls",
         "label_shuffled_controls_completed": True,
         "context_shuffled_controls_completed": True,
@@ -1068,10 +1134,20 @@ def write_channel_prep_outputs(
         "frontier_size_matched_controls_completed": False,
         "probe_marginal_controls_completed": False,
         "decision_classes": ";".join(decision_classes),
-        "ready_for_24h_run": int("ready_for_24h_spectral_channel_run" in decision_classes),
+        "ready_for_larger_spectral_control_run": readiness_map.get("ready_for_larger_spectral_control_run", 0),
+        "ready_for_larger_analysis_only_channel_run": readiness_map.get("ready_for_larger_analysis_only_channel_run", 0),
+        "ready_for_tiny_graph_channel_perturbation": readiness_map.get("ready_for_tiny_graph_channel_perturbation", 0),
+        "ready_for_larger_graph_channel_run": readiness_map.get("ready_for_larger_graph_channel_run", 0),
+        "ready_for_24h_run": readiness_map.get("ready_for_larger_graph_channel_run", 0),
     })
-    if "ready_for_24h_spectral_channel_run" in decision_classes:
-        status["branch_recommendation"] = "recommend_24h_spectral_channel_run"
+    if int(status.get("ready_for_larger_graph_channel_run", 0)):
+        status["branch_recommendation"] = "recommend_larger_graph_channel_run"
+    elif int(status.get("ready_for_tiny_graph_channel_perturbation", 0)):
+        status["branch_recommendation"] = "recommend_tiny_graph_channel_perturbation"
+    elif int(status.get("ready_for_larger_analysis_only_channel_run", 0)):
+        status["branch_recommendation"] = "recommend_ablation_repair_analysis_only_run"
+    elif int(status.get("ready_for_larger_spectral_control_run", 0)):
+        status["branch_recommendation"] = "recommend_larger_spectral_control_only_run"
     else:
         status["branch_recommendation"] = "recommend_spectral_channel_repair_before_large_run"
     write_csv(out_dir / "spectral_channel_prep_errors.csv", errors)
@@ -1080,6 +1156,10 @@ def write_channel_prep_outputs(
     write_csv(out_dir / "spectral_context_shuffle_smoke.csv", context_rows)
     write_csv(out_dir / "spectral_horizon_shuffle_smoke.csv", horizon_rows)
     write_csv(out_dir / "spectral_control_repair_smoke_summary.csv", control_summary)
+    write_csv(out_dir / "spectral_shuffle_family_gate_summary.csv", shuffle_family_summary(control_summary, args))
+    write_csv(out_dir / "spectral_selection_evaluation_partition_summary.csv", partition_summary_rows(selection_counts, evaluation_counts, partition_meta))
+    write_csv(out_dir / "spectral_subspace_transfer_diagnostic.csv", subspace_rows)
+    write_csv(out_dir / "spectral_readiness_levels.csv", readiness_rows)
     write_csv(out_dir / "spectral_high_loading_candidate_pool_smoke.csv", candidate_rows)
     write_csv(out_dir / "spectral_high_loading_items_smoke.csv", loading_rows)
     write_csv(out_dir / "spectral_item_loading_summary_smoke.csv", loading_summary)
@@ -1120,6 +1200,68 @@ def prep_target_matrices(matrices: list[SpectralMatrix], summary_by_id: dict[str
         preferred = [matrix for matrix in matrices if matrix.key.matrix_family == "coflow"]
     preferred.sort(key=lambda matrix: float_or_zero(summary_by_id.get(matrix.matrix_id, {}).get("positive_spectral_mass")), reverse=True)
     return preferred[: max(1, args.shuffle_max_matrices)]
+
+
+def subspace_transfer_rows(
+    selection_target: list[SpectralMatrix],
+    evaluation_target: list[SpectralMatrix],
+    args: argparse.Namespace,
+) -> list[dict[str, object]]:
+    evaluation_by_id = {matrix.matrix_id: matrix for matrix in evaluation_target}
+    rows: list[dict[str, object]] = []
+    threshold = float(getattr(args, "subspace_transfer_min_alignment", 0.50))
+    for selection_matrix in selection_target:
+        evaluation_matrix = evaluation_by_id.get(selection_matrix.matrix_id)
+        payload = alignment_payload(selection_matrix, evaluation_matrix, args.top_k)
+        alignment = float_or_zero(payload.get("top_k_subspace_alignment"))
+        status = str(payload.get("alignment_status", "comparison_matrix_unavailable"))
+        rows.append({
+            **key_row(selection_matrix.key),
+            "matrix_id": selection_matrix.matrix_id,
+            "selection_context_count": selection_matrix.contexts,
+            "evaluation_context_count": evaluation_matrix.contexts if evaluation_matrix else 0,
+            **payload,
+            "subspace_transfer_threshold": threshold,
+            "subspace_transfer_read": "subspace_transfers" if status == "computed" and alignment >= threshold else "subspace_does_not_transfer",
+        })
+    if not rows:
+        rows.append({
+            "matrix_id": "",
+            "alignment_status": "comparison_matrix_unavailable",
+            "top_k_subspace_alignment": "",
+            "aligned_item_count": 0,
+            "subspace_transfer_threshold": threshold,
+            "subspace_transfer_read": "subspace_transfer_not_computed",
+        })
+    return rows
+
+
+def subspace_transfer_status(rows: list[dict[str, object]]) -> str:
+    computed = [row for row in rows if row.get("alignment_status") == "computed"]
+    if not computed:
+        return "subspace_transfer_not_computed"
+    transfers = [row for row in computed if row.get("subspace_transfer_read") == "subspace_transfers"]
+    return "subspace_transfers" if len(transfers) >= max(1, math.ceil(len(computed) / 2)) else "subspace_does_not_transfer"
+
+
+def add_subspace_read_to_ablation_decision(
+    ablation_decision: list[dict[str, object]],
+    subspace_rows: list[dict[str, object]],
+) -> list[dict[str, object]]:
+    status = subspace_transfer_status(subspace_rows)
+    out: list[dict[str, object]] = []
+    for row in ablation_decision:
+        decision = str(row.get("decision_class", "high_loading_ablation_random_equivalent"))
+        if decision == "high_loading_ablation_specific" and status == "subspace_transfers":
+            combined = "item_specific_and_subspace_transfers"
+        elif decision != "high_loading_ablation_specific" and status == "subspace_transfers":
+            combined = "subspace_transfers_but_items_not_specific"
+        elif status == "subspace_does_not_transfer":
+            combined = "subspace_does_not_transfer"
+        else:
+            combined = "subspace_transfer_not_computed"
+        out.append({**row, "subspace_transfer_status": status, "subspace_item_read": combined})
+    return out
 
 
 def parse_csv_set(raw: object) -> set[str]:
@@ -1209,6 +1351,145 @@ def sampled_contexts(pool: list[tuple[str, tuple[str, ...]]], size: int, rng: ra
     return [pool[rng.randrange(len(pool))] for _ in range(size)]
 
 
+def partition_matrix_counts(
+    counts: dict[MatrixKey, MatrixCounts],
+    args: argparse.Namespace,
+) -> tuple[dict[MatrixKey, MatrixCounts], dict[MatrixKey, MatrixCounts], dict[str, object]]:
+    selection: dict[MatrixKey, MatrixCounts] = defaultdict(MatrixCounts.empty)
+    evaluation: dict[MatrixKey, MatrixCounts] = defaultdict(MatrixCounts.empty)
+    fraction = max(0.05, min(0.95, float_or_zero(getattr(args, "selection_partition_fraction", 0.5))))
+    salt = str(getattr(args, "selection_partition_seed", "stage_b2_spectral_partition_v1"))
+    axis, axis_index = choose_partition_axis(counts)
+    assignments = partition_value_assignments(counts, axis, axis_index, fraction, salt)
+    for key, bucket in counts.items():
+        for context_id, items in bucket.context_items:
+            partition_value = context_partition_value(context_id, axis_index) if axis_index is not None else context_id
+            target = selection if assignments.get(partition_value, True) else evaluation
+            add_partition_context(target[key], context_id, items)
+    if split_matrix_count(selection, evaluation) == 0 and axis != "context_hash":
+        selection = defaultdict(MatrixCounts.empty)
+        evaluation = defaultdict(MatrixCounts.empty)
+        axis, axis_index = "context_hash", None
+        assignments = partition_value_assignments(counts, axis, axis_index, fraction, salt)
+        for key, bucket in counts.items():
+            for context_id, items in bucket.context_items:
+                target = selection if assignments.get(context_id, True) else evaluation
+                add_partition_context(target[key], context_id, items)
+    selection_contexts = sum(bucket.contexts for bucket in selection.values())
+    evaluation_contexts = sum(bucket.contexts for bucket in evaluation.values())
+    selection_mass = sum(bucket.raw_item_mass for bucket in selection.values())
+    evaluation_mass = sum(bucket.raw_item_mass for bucket in evaluation.values())
+    total_contexts = selection_contexts + evaluation_contexts
+    meta = {
+        "partition_axis": axis,
+        "partition_balance": selection_contexts / max(1, total_contexts),
+        "selection_context_count": selection_contexts,
+        "evaluation_context_count": evaluation_contexts,
+        "selection_item_mass": selection_mass,
+        "evaluation_item_mass": evaluation_mass,
+    }
+    return selection, evaluation, meta
+
+
+def split_matrix_count(selection: dict[MatrixKey, MatrixCounts], evaluation: dict[MatrixKey, MatrixCounts]) -> int:
+    return sum(
+        1
+        for key in set(selection) | set(evaluation)
+        if selection.get(key, MatrixCounts.empty()).contexts > 0 and evaluation.get(key, MatrixCounts.empty()).contexts > 0
+    )
+
+
+def partition_value_assignments(
+    counts: dict[MatrixKey, MatrixCounts],
+    axis: str,
+    axis_index: int | None,
+    fraction: float,
+    salt: str,
+) -> dict[str, bool]:
+    values = sorted({
+        context_partition_value(context_id, axis_index) if axis_index is not None else context_id
+        for bucket in counts.values()
+        for context_id, _items in bucket.context_items
+    })
+    if len(values) <= 1:
+        return {value: stable_partition_fraction(f"{axis}|{value}", salt) < fraction for value in values}
+    ordered = sorted(values, key=lambda value: stable_partition_fraction(f"{axis}|{value}", salt))
+    selection_count = min(len(values) - 1, max(1, round(len(values) * fraction)))
+    return {value: index < selection_count for index, value in enumerate(ordered)}
+
+
+def choose_partition_axis(counts: dict[MatrixKey, MatrixCounts]) -> tuple[str, int | None]:
+    candidates = (
+        ("group_id", 1),
+        ("seed", 2),
+        ("start_index", 4),
+        ("probe_key", 3),
+        ("flow_mode", 6),
+    )
+    context_ids = [context_id for bucket in counts.values() for context_id, _items in bucket.context_items]
+    for axis, index in candidates:
+        values = {context_partition_value(context_id, index) for context_id in context_ids}
+        if len(values) >= 2:
+            return axis, index
+    return "context_hash", None
+
+
+def context_partition_value(context_id: str, index: int) -> str:
+    parts = str(context_id).split("|")
+    return parts[index] if len(parts) > index else ""
+
+
+def partition_summary_rows(
+    selection_counts: dict[MatrixKey, MatrixCounts],
+    evaluation_counts: dict[MatrixKey, MatrixCounts],
+    partition_meta: dict[str, object],
+) -> list[dict[str, object]]:
+    rows = [{
+        "partition_axis": partition_meta.get("partition_axis", ""),
+        "partition_balance": partition_meta.get("partition_balance", ""),
+        "selection_context_count": partition_meta.get("selection_context_count", ""),
+        "evaluation_context_count": partition_meta.get("evaluation_context_count", ""),
+        "selection_item_mass": partition_meta.get("selection_item_mass", ""),
+        "evaluation_item_mass": partition_meta.get("evaluation_item_mass", ""),
+        "partition_read": "computed" if float_or_zero(partition_meta.get("selection_context_count")) > 0 and float_or_zero(partition_meta.get("evaluation_context_count")) > 0 else "insufficient",
+    }]
+    keys = sorted(set(selection_counts) | set(evaluation_counts), key=lambda key: matrix_id_for_key(key))
+    for key in keys:
+        selection = selection_counts.get(key, MatrixCounts.empty())
+        evaluation = evaluation_counts.get(key, MatrixCounts.empty())
+        rows.append({
+            **key_row(key),
+            "matrix_id": matrix_id_for_key(key),
+            "partition_axis": partition_meta.get("partition_axis", ""),
+            "selection_context_count": selection.contexts,
+            "evaluation_context_count": evaluation.contexts,
+            "selection_item_mass": selection.raw_item_mass,
+            "evaluation_item_mass": evaluation.raw_item_mass,
+            "partition_read": "matrix_split_available" if selection.contexts > 0 and evaluation.contexts > 0 else "matrix_split_insufficient",
+        })
+    return rows
+
+
+def add_partition_context(bucket: MatrixCounts, context_id: str, items: tuple[str, ...]) -> None:
+    unique = tuple(sorted(set(items)))
+    if not unique:
+        return
+    bucket.contexts += 1
+    bucket.raw_item_mass += len(unique)
+    bucket.context_items.append((context_id, unique))
+    bucket.item_counts.update(unique)
+    for index, left in enumerate(unique):
+        for right in unique[index + 1:]:
+            bucket.pair_counts[(left, right)] += 1
+
+
+def stable_partition_fraction(context_id: object, salt: str) -> float:
+    value = 0
+    for char in f"{salt}|{context_id}":
+        value = (value * 131 + ord(char)) % 1_000_003
+    return value / 1_000_003
+
+
 def spectral_payload_from_contexts(contexts: list[tuple[str, tuple[str, ...]]], args: argparse.Namespace, exclude: set[str] | None = None) -> dict[str, object]:
     exclude = exclude or set()
     bucket = MatrixCounts.empty()
@@ -1223,7 +1504,7 @@ def spectral_payload_from_contexts(contexts: list[tuple[str, tuple[str, ...]]], 
                 bucket.pair_counts[(left, right)] += 1
     retained = [(item, count) for item, count in bucket.item_counts.most_common(args.max_items_per_matrix) if count >= args.min_item_count]
     if len(retained) < 2 or bucket.contexts <= 0:
-        return {"status": "insufficient_items", "item_count": len(retained), "positive_spectral_mass": 0.0, "effective_rank": 0.0, "spectral_gap_k": 0.0}
+        return {"status": "insufficient_items", "item_count": len(retained), "positive_spectral_mass": 0.0, "effective_rank": 0.0, "spectral_gap_k": 0.0, "top1_participation": 0.0}
     items = [item for item, _count in retained]
     index = {item: idx for idx, item in enumerate(items)}
     matrix = np.zeros((len(items), len(items)), dtype=np.float64)
@@ -1238,15 +1519,17 @@ def spectral_payload_from_contexts(contexts: list[tuple[str, tuple[str, ...]]], 
         value = (p_ij - p_i * p_j) / (0.5 * (p_ij + p_i * p_j) + args.epsilon)
         matrix[i, j] = value
         matrix[j, i] = value
-    eigvals = np.linalg.eigvalsh(matrix)
+    eigvals, eigvecs = np.linalg.eigh(matrix)
     positive = eigvals[eigvals > 0]
     absvals = np.abs(eigvals)
+    top_index = int(np.argmax(absvals)) if absvals.size else 0
     return {
         "status": "computed",
         "item_count": len(items),
         "positive_spectral_mass": float(np.sum(positive)) if positive.size else 0.0,
         "effective_rank": effective_rank(absvals),
         "spectral_gap_k": spectral_gap(absvals, args.top_k),
+        "top1_participation": participation_ratio(eigvecs[:, top_index]) if eigvecs.size else 0.0,
     }
 
 
@@ -1369,8 +1652,10 @@ def high_loading_rows(
             candidate_rows.append({**enriched_row, "selection_status": "candidate_pool"})
         stable = [row for row in enriched if int(float_or_zero(row.get("stability_pass"))) == 1]
         selected = sorted(stable, key=lambda row: float_or_zero(row.get("selection_score")), reverse=True)[: max(1, args.high_loading_top_k_items)]
-        for row in selected:
+        for rank, row in enumerate(selected, start=1):
             row["selection_status"] = "stable_selected"
+            row["selection_partition"] = "selection"
+            row["loading_rank"] = rank
         rows.extend(selected)
         summaries.append({
             **key_row(matrix.key),
@@ -1502,63 +1787,214 @@ def item_ablation_rows(
             continue
         high_items = {str(row.get("signature_transition", "")) for row in selected_rows}
         baseline_bucket = baseline_bucket_for(matrix, counts)
-        observed = float(np.sum(matrix.eigvals[matrix.eigvals > 0])) if matrix.eigvals.size else 0.0
+        observed = spectral_metrics_for_matrix(matrix, args.top_k)
         high_payload = spectral_payload_from_contexts(bucket.context_items, args, high_items)
-        high_drop = observed - float_or_zero(high_payload.get("positive_spectral_mass"))
         base = {
             **key_row(matrix.key),
             "matrix_id": matrix.matrix_id,
-            "observed_positive_spectral_mass": observed,
             "removed_item_count": len(high_items),
+            **{f"observed_{key}": value for key, value in observed.items()},
         }
-        high_rows.append({
+        high_rows.append(ablation_metric_row(
+            {
+                **base,
+                "ablation_kind": "high_loading",
+            },
+            observed,
+            high_payload,
+            high_items,
+            bucket,
+        ))
+        manifest.append({
             **base,
             "ablation_kind": "high_loading",
-            "ablated_positive_spectral_mass": high_payload.get("positive_spectral_mass", 0.0),
-            "positive_spectral_mass_drop": high_drop,
-            "positive_spectral_mass_drop_fraction": high_drop / max(1e-9, observed),
-            "ablation_status": high_payload.get("status", ""),
+            "removed_items_json": json.dumps(sorted(high_items)[:64]),
+            "removed_item_mass": removed_item_mass(bucket, high_items),
+            "coverage_loss_after_ablation": coverage_loss_after_ablation(bucket, high_items),
         })
-        manifest.append({**base, "ablation_kind": "high_loading", "removed_items_json": json.dumps(sorted(high_items)[:64])})
         candidates = [item for item in matrix.items if item not in high_items]
         for replicate in range(max(1, args.ablation_random_replicates)):
             rng = random.Random(stable_seed(f"ablation|{matrix.matrix_id}|{replicate}"))
-            random_items = matched_random_item_set(candidates, selected_rows, bucket, baseline_bucket, rng)
+            random_items, matching = matched_random_item_set(candidates, selected_rows, bucket, baseline_bucket, rng)
             payload = spectral_payload_from_contexts(bucket.context_items, args, random_items)
-            drop = observed - float_or_zero(payload.get("positive_spectral_mass"))
-            random_rows.append({
-                **base,
-                "ablation_kind": "frequency_baseline_flow_matched_random",
-                "replicate": replicate,
-                "matching_method": "item_count_and_baseline_flow_count_greedy",
-                "removed_items_json": json.dumps(sorted(random_items)[:64]),
-                "ablated_positive_spectral_mass": payload.get("positive_spectral_mass", 0.0),
-                "positive_spectral_mass_drop": drop,
-                "positive_spectral_mass_drop_fraction": drop / max(1e-9, observed),
-                "ablation_status": payload.get("status", ""),
-            })
+            random_rows.append(ablation_metric_row(
+                {
+                    **base,
+                    "ablation_kind": "frequency_baseline_flow_matched_random",
+                    "replicate": replicate,
+                    "matching_method": "matrix_context_count_mass_greedy",
+                    "matching_preserved_fields": "matrix_family;condition_id;probe_key;flow_mode;horizon_band;item_count_bin;baseline_flow_count_bin;context_count_bin",
+                    "matching_quality": matching.get("matching_quality", ""),
+                    "matching_quality_read": matching.get("matching_quality_read", ""),
+                    "removed_items_json": json.dumps(sorted(random_items)[:64]),
+                },
+                observed,
+                payload,
+                random_items,
+                bucket,
+            ))
         low_items = set(candidates[-min(len(high_items), len(candidates)):]) if candidates else set()
         payload = spectral_payload_from_contexts(bucket.context_items, args, low_items)
-        drop = observed - float_or_zero(payload.get("positive_spectral_mass"))
-        low_rows.append({
-            **base,
-            "ablation_kind": "low_mid_loading",
-            "ablated_positive_spectral_mass": payload.get("positive_spectral_mass", 0.0),
-            "positive_spectral_mass_drop": drop,
-            "positive_spectral_mass_drop_fraction": drop / max(1e-9, observed),
-            "ablation_status": payload.get("status", ""),
-        })
-    high_drop_mean = mean([float_or_zero(row.get("positive_spectral_mass_drop_fraction")) for row in high_rows]) if high_rows else 0.0
-    random_drop_mean = mean([float_or_zero(row.get("positive_spectral_mass_drop_fraction")) for row in random_rows]) if random_rows else 0.0
-    decision = "high_loading_ablation_specific" if high_drop_mean > random_drop_mean * 1.10 and high_drop_mean - random_drop_mean > 0.01 else "high_loading_ablation_random_equivalent"
-    decision_rows = [{
+        low_rows.append(ablation_metric_row(
+            {
+                **base,
+                "ablation_kind": "low_mid_loading",
+            },
+            observed,
+            payload,
+            low_items,
+            bucket,
+        ))
+    decision_rows = [ablation_decision_row(high_rows, random_rows, low_rows, args)]
+    return high_rows, random_rows, low_rows, manifest, decision_rows
+
+
+def spectral_metrics_for_matrix(matrix: SpectralMatrix, top_k: int) -> dict[str, float]:
+    eigvals = matrix.eigvals
+    positive = eigvals[eigvals > 0]
+    absvals = np.abs(eigvals)
+    top_index = int(np.argmax(absvals)) if absvals.size else 0
+    return {
+        "positive_spectral_mass": float(np.sum(positive)) if positive.size else 0.0,
+        "effective_rank": effective_rank(absvals),
+        "spectral_gap_k": spectral_gap(absvals, top_k),
+        "top1_participation": participation_ratio(matrix.eigvecs[:, top_index]) if matrix.eigvecs.size else 0.0,
+    }
+
+
+def ablation_metric_row(
+    base: dict[str, object],
+    observed: dict[str, float],
+    payload: dict[str, object],
+    removed_items: set[str],
+    bucket: MatrixCounts,
+) -> dict[str, object]:
+    positive_drop = observed["positive_spectral_mass"] - float_or_zero(payload.get("positive_spectral_mass"))
+    effective_rank_drop = observed["effective_rank"] - float_or_zero(payload.get("effective_rank"))
+    gap_drop = observed["spectral_gap_k"] - float_or_zero(payload.get("spectral_gap_k"))
+    participation_change = abs(observed["top1_participation"] - float_or_zero(payload.get("top1_participation")))
+    return {
+        **base,
+        "removed_item_mass": removed_item_mass(bucket, removed_items),
+        "coverage_loss_after_ablation": coverage_loss_after_ablation(bucket, removed_items),
+        "ablated_positive_spectral_mass": payload.get("positive_spectral_mass", 0.0),
+        "positive_spectral_mass_drop": positive_drop,
+        "positive_spectral_mass_drop_fraction": positive_drop / max(1e-9, observed["positive_spectral_mass"]),
+        "ablated_effective_rank": payload.get("effective_rank", 0.0),
+        "effective_rank_drop": effective_rank_drop,
+        "effective_rank_drop_fraction": effective_rank_drop / max(1e-9, observed["effective_rank"]),
+        "ablated_spectral_gap_k": payload.get("spectral_gap_k", 0.0),
+        "spectral_gap_drop": gap_drop,
+        "spectral_gap_drop_fraction": gap_drop / max(1e-9, observed["spectral_gap_k"]),
+        "ablated_top1_participation": payload.get("top1_participation", 0.0),
+        "top1_participation_change": participation_change,
+        "top1_participation_change_fraction": participation_change / max(1e-9, observed["top1_participation"]),
+        "ablation_status": payload.get("status", ""),
+    }
+
+
+def removed_item_mass(bucket: MatrixCounts, removed_items: set[str]) -> int:
+    return sum(bucket.item_counts.get(item, 0) for item in removed_items)
+
+
+def coverage_loss_after_ablation(bucket: MatrixCounts, removed_items: set[str]) -> float:
+    return removed_item_mass(bucket, removed_items) / max(1, bucket.raw_item_mass)
+
+
+def ablation_decision_row(
+    high_rows: list[dict[str, object]],
+    random_rows: list[dict[str, object]],
+    low_rows: list[dict[str, object]],
+    args: argparse.Namespace,
+) -> dict[str, object]:
+    metric_fields = (
+        "positive_spectral_mass_drop_fraction",
+        "effective_rank_drop_fraction",
+        "top1_participation_change_fraction",
+    )
+    high_delta = metric_mean(high_rows, "positive_spectral_mass_drop_fraction")
+    random_delta_mean = metric_mean(random_rows, "positive_spectral_mass_drop_fraction")
+    random_delta_std = metric_std(random_rows, "positive_spectral_mass_drop_fraction")
+    random_delta_max = metric_max(random_rows, "positive_spectral_mass_drop_fraction")
+    low_delta = metric_mean(low_rows, "positive_spectral_mass_drop_fraction")
+    matching_quality = metric_mean(random_rows, "matching_quality") if random_rows else 0.0
+    coverage_loss = metric_mean(high_rows, "coverage_loss_after_ablation")
+    metric_wins = 0
+    metric_reads: list[str] = []
+    has_ablation_rows = bool(high_rows and random_rows)
+    for field in metric_fields:
+        high_value = metric_mean(high_rows, field)
+        random_mean = metric_mean(random_rows, field)
+        random_std = metric_std(random_rows, field)
+        random_max = metric_max(random_rows, field)
+        passed = has_ablation_rows and (
+            high_value > random_max
+            or (high_value > 0.0 and high_value >= random_mean + float(getattr(args, "ablation_specific_min_random_stds", 1.0)) * random_std)
+        )
+        metric_wins += int(passed)
+        metric_reads.append(f"{field}:{'pass' if passed else 'fail'}")
+    positive_specific = has_ablation_rows and (
+        high_delta > random_delta_max
+        or (high_delta > 0.0 and high_delta >= random_delta_mean + float(getattr(args, "ablation_specific_min_random_stds", 1.0)) * random_delta_std)
+    )
+    direction_match = int(high_delta > random_delta_mean and high_delta > low_delta)
+    failure_reasons: list[str] = []
+    if not high_rows or not random_rows:
+        decision = "high_loading_ablation_insufficient"
+        failure_reasons.append("ablation_rows_missing")
+    elif matching_quality < float(getattr(args, "random_matching_min_quality", 0.60)):
+        decision = "random_matching_weak_underdetermined"
+        failure_reasons.append("random_matching_weak")
+    elif coverage_loss > float(getattr(args, "ablation_max_coverage_loss", 0.60)):
+        decision = "coverage_loss_too_high"
+        failure_reasons.append("coverage_loss_too_high")
+    elif positive_specific and metric_wins >= int(getattr(args, "ablation_min_effect_metrics", 2)):
+        decision = "high_loading_ablation_specific"
+    elif metric_wins == 1:
+        decision = "single_metric_ablation_hint"
+        failure_reasons.append("high_loading_delta_only_beat_random_on_one_metric")
+    else:
+        decision = "high_loading_ablation_random_equivalent"
+        if high_delta <= random_delta_max:
+            failure_reasons.append("high_loading_delta_le_random_max")
+        if metric_wins < int(getattr(args, "ablation_min_effect_metrics", 2)):
+            failure_reasons.append("insufficient_metric_specificity")
+    return {
         "decision_class": decision,
-        "high_loading_drop_fraction_mean": high_drop_mean,
-        "matched_random_drop_fraction_mean": random_drop_mean,
+        "ablation_failure_reason": ";".join(failure_reasons),
+        "high_loading_delta": high_delta,
+        "random_delta_mean": random_delta_mean,
+        "random_delta_std": random_delta_std,
+        "random_delta_max": random_delta_max,
+        "low_loading_delta": low_delta,
+        "high_loading_minus_random_mean": high_delta - random_delta_mean,
+        "high_loading_over_random_ratio": high_delta / max(1e-9, random_delta_mean),
+        "ablation_direction_match": direction_match,
+        "coverage_loss_after_ablation": coverage_loss,
+        "metric_specificity_wins": metric_wins,
+        "metric_specificity_reads": ";".join(metric_reads),
+        "matching_quality": matching_quality,
+        "random_matching": "matrix_context_count_mass_greedy",
+        "high_loading_drop_fraction_mean": high_delta,
+        "matched_random_drop_fraction_mean": random_delta_mean,
         "matrix_count": len(high_rows),
         "random_replicate_rows": len(random_rows),
-    }]
-    return high_rows, random_rows, low_rows, manifest, decision_rows
+    }
+
+
+def metric_mean(rows: list[dict[str, object]], field: str) -> float:
+    values = [float_or_zero(row.get(field)) for row in rows if row.get(field) != ""]
+    return mean(values) if values else 0.0
+
+
+def metric_std(rows: list[dict[str, object]], field: str) -> float:
+    values = [float_or_zero(row.get(field)) for row in rows if row.get(field) != ""]
+    return pstdev(values) if len(values) > 1 else 0.0
+
+
+def metric_max(rows: list[dict[str, object]], field: str) -> float:
+    values = [float_or_zero(row.get(field)) for row in rows if row.get(field) != ""]
+    return max(values) if values else 0.0
 
 
 def matched_random_item_set(
@@ -1567,28 +2003,38 @@ def matched_random_item_set(
     bucket: MatrixCounts,
     baseline_bucket: MatrixCounts | None,
     rng: random.Random,
-) -> set[str]:
+) -> tuple[set[str], dict[str, object]]:
     available = set(candidates)
     selected: set[str] = set()
     candidate_items = list(available)
+    qualities: list[float] = []
+    stats = item_context_stats(bucket)
     for row in sorted(selected_rows, key=lambda item: float_or_zero(item.get("item_count")), reverse=True):
         if not candidate_items:
             break
         target_count = max(1.0, float_or_zero(row.get("item_count")))
         target_baseline = max(0.0, float_or_zero(row.get("baseline_flow_item_count")))
+        target_contexts = max(1.0, float_or_zero(row.get("context_count")))
         scored = []
         for item in candidate_items:
             item_count = max(1.0, bucket.item_counts.get(item, 0))
             baseline_count = baseline_bucket.item_counts.get(item, 0) if baseline_bucket else item_count
+            context_count = max(1.0, float_or_zero(stats.get(item, {}).get("context_count")))
             score = abs(math.log(item_count / target_count))
             score += 0.75 * abs(math.log((baseline_count + 1.0) / (target_baseline + 1.0)))
+            score += 0.50 * abs(math.log(context_count / target_contexts))
             score += rng.random() * 1e-6
             scored.append((score, item))
         scored.sort(key=lambda pair: pair[0])
-        chosen = scored[0][1]
+        best_score, chosen = scored[0]
         selected.add(chosen)
+        qualities.append(max(0.0, 1.0 - best_score / 4.0))
         candidate_items.remove(chosen)
-    return selected
+    quality = (mean(qualities) if qualities else 0.0) * (len(selected) / max(1, len(selected_rows)))
+    return selected, {
+        "matching_quality": quality,
+        "matching_quality_read": "matching_strong" if quality >= 0.60 else "matching_weak",
+    }
 
 
 def should_run_tiny_perturbation(
@@ -1598,7 +2044,7 @@ def should_run_tiny_perturbation(
     args: argparse.Namespace,
 ) -> bool:
     return (
-        shuffle_status(control_summary) == "spectral_shuffle_controls_passed"
+        shuffle_status(control_summary, args) == "spectral_shuffle_controls_passed"
         and mapping_status(mapping_coverage, args.mapping_mass_threshold) == "spectral_item_mapping_adequate"
         and bool(ablation_decision)
         and ablation_decision[0].get("decision_class") == "high_loading_ablation_specific"
@@ -1927,29 +2373,133 @@ def channel_prep_decision_classes(
     mapping_coverage: list[dict[str, object]],
     ablation_decision: list[dict[str, object]],
     perturbation_summary: list[dict[str, object]],
+    readiness_rows: list[dict[str, object]],
+    args: argparse.Namespace | None = None,
 ) -> list[str]:
     classes = ["runner_contract_passed"]
-    classes.append(shuffle_status(control_summary))
-    classes.append(mapping_status(mapping_coverage, 0.30))
+    classes.append(shuffle_status(control_summary, args))
+    classes.append(mapping_status(mapping_coverage, float(getattr(args, "mapping_mass_threshold", 0.30)) if args is not None else 0.30))
     classes.append(ablation_decision[0].get("decision_class", "high_loading_ablation_random_equivalent") if ablation_decision else "high_loading_ablation_random_equivalent")
+    if ablation_decision and ablation_decision[0].get("subspace_item_read"):
+        classes.append(str(ablation_decision[0].get("subspace_item_read")))
     classes.append(tiny_perturbation_status(perturbation_summary))
-    if (
-        classes[1] == "spectral_shuffle_controls_passed"
-        and classes[2] == "spectral_item_mapping_adequate"
-        and classes[3] == "high_loading_ablation_specific"
-        and classes[4] == "tiny_channel_perturbation_implemented"
-    ):
-        classes.append("ready_for_24h_spectral_channel_run")
-    else:
+    classes.extend(str(row.get("readiness_key")) for row in readiness_rows if int(float_or_zero(row.get("ready"))) == 1)
+    if not any(str(row.get("readiness_key")) == "ready_for_larger_graph_channel_run" and int(float_or_zero(row.get("ready"))) == 1 for row in readiness_rows):
         classes.append("not_ready_repair_required")
     return [str(item) for item in classes]
 
 
-def shuffle_status(control_summary: list[dict[str, object]]) -> str:
+def readiness_level_rows(
+    control_summary: list[dict[str, object]],
+    mapping_coverage: list[dict[str, object]],
+    ablation_decision: list[dict[str, object]],
+    perturbation_summary: list[dict[str, object]],
+    selection_eval_status: str,
+    args: argparse.Namespace | None = None,
+) -> list[dict[str, object]]:
+    shuffle_pass = shuffle_status(control_summary, args) == "spectral_shuffle_controls_passed"
+    mapping_pass = mapping_status(mapping_coverage, float(getattr(args, "mapping_mass_threshold", 0.30)) if args is not None else 0.30) == "spectral_item_mapping_adequate"
+    split_pass = selection_eval_status == "computed"
+    ablation_pass = bool(ablation_decision) and ablation_decision[0].get("decision_class") == "high_loading_ablation_specific"
+    tiny_pass = tiny_perturbation_status(perturbation_summary) == "tiny_channel_perturbation_implemented"
+    rows = [
+        readiness_row("ready_for_larger_spectral_control_run", shuffle_pass, "shuffle_family_controls_passed", "shuffle_family_controls_not_passed"),
+        readiness_row("ready_for_larger_analysis_only_channel_run", shuffle_pass and mapping_pass and split_pass, "shuffle_mapping_and_split_passed", first_blocker((shuffle_pass, "shuffle_failed"), (mapping_pass, "mapping_failed"), (split_pass, "selection_evaluation_split_required"))),
+        readiness_row("ready_for_tiny_graph_channel_perturbation", shuffle_pass and mapping_pass and split_pass and ablation_pass, "ablation_specific_on_evaluation_partition", first_blocker((shuffle_pass, "shuffle_failed"), (mapping_pass, "mapping_failed"), (split_pass, "selection_evaluation_split_required"), (ablation_pass, str(ablation_decision[0].get("ablation_failure_reason", "ablation_not_specific")) if ablation_decision else "ablation_not_specific"))),
+        readiness_row("ready_for_larger_graph_channel_run", shuffle_pass and mapping_pass and split_pass and ablation_pass and tiny_pass, "tiny_targeted_vs_random_perturbation_passed", first_blocker((shuffle_pass, "shuffle_failed"), (mapping_pass, "mapping_failed"), (split_pass, "selection_evaluation_split_required"), (ablation_pass, "ablation_not_specific"), (tiny_pass, "tiny_perturbation_not_passed"))),
+    ]
+    return rows
+
+
+def channel_blocking_reason(readiness_rows: list[dict[str, object]], ablation_decision: list[dict[str, object]]) -> str:
+    ablation_reason = str(ablation_decision[0].get("ablation_failure_reason", "")) if ablation_decision else ""
+    for row in readiness_rows:
+        if int(float_or_zero(row.get("ready"))) == 0:
+            reason = str(row.get("readiness_reason", ""))
+            if reason == "ablation_not_specific" and ablation_reason:
+                return ablation_reason
+            return reason
+    return ""
+
+
+def readiness_row(key: str, ready: bool, pass_reason: str, block_reason: str) -> dict[str, object]:
+    return {
+        "readiness_key": key,
+        "ready": int(ready),
+        "readiness_reason": pass_reason if ready else block_reason,
+    }
+
+
+def first_blocker(*checks: tuple[bool, str]) -> str:
+    for passed, reason in checks:
+        if not passed:
+            return reason
+    return ""
+
+
+def shuffle_status(control_summary: list[dict[str, object]], args: argparse.Namespace | None = None) -> str:
     if not control_summary:
         return "spectral_shuffle_controls_control_equivalent"
-    reads = [row.get("shuffle_control_read") for row in control_summary]
-    return "spectral_shuffle_controls_passed" if any(read == "observed_above_shuffle" for read in reads) else "spectral_shuffle_controls_control_equivalent"
+    family_rows = shuffle_family_summary(control_summary, args)
+    passed = sum(int(row.get("family_passed", 0)) for row in family_rows)
+    required = int(getattr(args, "min_shuffle_families_passed", 2)) if args is not None else 2
+    catastrophic = any(int(row.get("catastrophic_fail_count", 0)) > 0 for row in family_rows)
+    return "spectral_shuffle_controls_passed" if passed >= required and not catastrophic else "spectral_shuffle_controls_control_equivalent"
+
+
+def shuffle_family_summary(control_summary: list[dict[str, object]], args: argparse.Namespace | None = None) -> list[dict[str, object]]:
+    thresholds = {
+        "label_shuffle": float(getattr(args, "label_shuffle_min_percentile", 0.80)) if args is not None else 0.80,
+        "context_shuffle": float(getattr(args, "context_shuffle_min_percentile", 0.80)) if args is not None else 0.80,
+        "horizon_order_shuffle": float(getattr(args, "horizon_shuffle_min_percentile", 0.80)) if args is not None else 0.80,
+    }
+    grouped = group_by(control_summary, ("shuffle_kind",))
+    rows: list[dict[str, object]] = []
+    for family, threshold in thresholds.items():
+        items = grouped.get((family,), [])
+        percentiles = [float_or_zero(row.get("observed_percentile_vs_shuffle")) for row in items if row.get("observed_percentile_vs_shuffle") != ""]
+        pass_count = sum(1 for value in percentiles if value >= threshold)
+        pass_fraction = pass_count / max(1, len(percentiles))
+        median_percentile = median(percentiles) if percentiles else 0.0
+        min_percentile = min(percentiles) if percentiles else 0.0
+        catastrophic_floor = float(getattr(args, "shuffle_family_catastrophic_min_percentile", 0.50)) if args is not None else 0.50
+        catastrophic_count = sum(1 for value in percentiles if value < catastrophic_floor)
+        min_pass_fraction = float(getattr(args, "shuffle_family_min_pass_fraction", 0.50)) if args is not None else 0.50
+        min_median = float(getattr(args, "shuffle_family_min_median_percentile", threshold)) if args is not None else threshold
+        family_passed = bool(percentiles) and pass_fraction >= min_pass_fraction and median_percentile >= min_median and catastrophic_count == 0
+        rows.append({
+            "shuffle_family": family,
+            "threshold": threshold,
+            "primary_context_count": len(percentiles),
+            "passed_context_count": pass_count,
+            "pass_fraction": pass_fraction,
+            "median_observed_percentile": median_percentile,
+            "min_observed_percentile": min_percentile,
+            "catastrophic_floor": catastrophic_floor,
+            "catastrophic_fail_count": catastrophic_count,
+            "family_passed": int(family_passed),
+            "blocking_reason": "" if family_passed else shuffle_family_blocker(percentiles, pass_fraction, median_percentile, catastrophic_count, min_pass_fraction, min_median),
+        })
+    return rows
+
+
+def shuffle_family_blocker(
+    percentiles: list[float],
+    pass_fraction: float,
+    median_percentile: float,
+    catastrophic_count: int,
+    min_pass_fraction: float,
+    min_median: float,
+) -> str:
+    if not percentiles:
+        return "no_primary_contexts"
+    if catastrophic_count:
+        return "primary_context_below_catastrophic_floor"
+    if pass_fraction < min_pass_fraction:
+        return "pass_fraction_below_threshold"
+    if median_percentile < min_median:
+        return "median_percentile_below_threshold"
+    return "family_failed"
 
 
 def mapping_status(mapping_coverage: list[dict[str, object]], threshold: float) -> str:
@@ -2005,8 +2555,14 @@ def write_item_ablation_report(out_dir: Path, rows: list[dict[str, object]]) -> 
         "# Spectral Item Ablation Report",
         "",
         f"Decision class: `{row.get('decision_class', 'high_loading_ablation_random_equivalent')}`.",
-        f"High-loading drop mean: `{float_or_zero(row.get('high_loading_drop_fraction_mean')):.4f}`.",
-        f"Matched-random drop mean: `{float_or_zero(row.get('matched_random_drop_fraction_mean')):.4f}`.",
+        f"Failure reason: `{row.get('ablation_failure_reason', '')}`.",
+        f"High-loading delta: `{float_or_zero(row.get('high_loading_delta', row.get('high_loading_drop_fraction_mean'))):.4f}`.",
+        f"Random mean/std/max: `{float_or_zero(row.get('random_delta_mean', row.get('matched_random_drop_fraction_mean'))):.4f}` / `{float_or_zero(row.get('random_delta_std')):.4f}` / `{float_or_zero(row.get('random_delta_max')):.4f}`.",
+        f"Low-loading delta: `{float_or_zero(row.get('low_loading_delta')):.4f}`.",
+        f"Metric specificity wins: `{row.get('metric_specificity_wins', '')}`.",
+        f"Matching quality: `{float_or_zero(row.get('matching_quality')):.3f}`.",
+        f"Coverage loss after ablation: `{float_or_zero(row.get('coverage_loss_after_ablation')):.3f}`.",
+        f"Subspace/item read: `{row.get('subspace_item_read', '')}`.",
     ]
     (out_dir / "spectral_item_ablation_report.md").write_text("\n".join(lines), encoding="utf-8")
 
@@ -2051,20 +2607,23 @@ def write_channel_prep_report(
         "- Priority 3 analysis-only ablation: completed.",
         f"- Priority 4 graph-level tiny perturbation: `{status.get('tiny_channel_perturbation_status')}`.",
         "",
-        "## Readiness For 24h Run",
+        "## Readiness Levels",
         "",
         f"Decision classes: `{status.get('decision_classes')}`.",
-        f"Ready for 24h run: `{status.get('ready_for_24h_run')}`.",
+        f"Larger spectral controls ready: `{status.get('ready_for_larger_spectral_control_run')}`.",
+        f"Larger analysis-only channel diagnostics ready: `{status.get('ready_for_larger_analysis_only_channel_run')}`.",
+        f"Tiny graph-channel perturbation ready: `{status.get('ready_for_tiny_graph_channel_perturbation')}`.",
+        f"Larger graph-channel run ready: `{status.get('ready_for_larger_graph_channel_run')}`.",
         "",
         "## Blockers / Repairs Required",
         "",
     ]
-    if int(status.get("ready_for_24h_run", 0)):
-        lines.append("No prep blocker was detected by this smoke. Treat this as readiness for a larger channel-edge run, not as a positive theory result.")
+    if int(status.get("ready_for_larger_graph_channel_run", 0)):
+        lines.append("No graph-channel prep blocker was detected by this smoke. Treat this as readiness for a larger exploratory run, not as a positive theory result.")
     else:
-        lines.append("The 24h run remains blocked until the failed prep stage is repaired and reviewed.")
-        if status.get("item_ablation_status") == "high_loading_ablation_random_equivalent":
-            lines.append("Primary blocker: high-loading item ablation was random-equivalent at this smoke scale.")
+        lines.append("The larger graph-channel run remains blocked until the failed prep stage is repaired and reviewed.")
+        if status.get("item_ablation_status") != "high_loading_ablation_specific":
+            lines.append(f"Primary ablation blocker: `{status.get('ablation_failure_reason')}`.")
         if status.get("tiny_channel_perturbation_status") == "tiny_channel_perturbation_not_interpretable":
             lines.append("Secondary blocker: tiny targeted-vs-random perturbation is not yet interpretable or was gated off.")
     lines.extend([
@@ -2075,6 +2634,8 @@ def write_channel_prep_report(
         f"Best mapped item mass fraction: `{max((float_or_zero(row.get('mapped_item_mass_fraction')) for row in mapping_coverage), default=0.0):.3f}`.",
         f"Stable high-loading selected rows: `{status.get('stable_high_loading_selected_rows')}`.",
         f"Ablation decision: `{ablation_decision[0].get('decision_class', '') if ablation_decision else ''}`.",
+        f"Ablation failure reason: `{ablation_decision[0].get('ablation_failure_reason', '') if ablation_decision else ''}`.",
+        f"Subspace/item read: `{ablation_decision[0].get('subspace_item_read', '') if ablation_decision else ''}`.",
         f"Ablation random matching: `{status.get('ablation_random_matching')}`.",
         "",
         "## Output Manifest",

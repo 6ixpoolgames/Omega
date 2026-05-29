@@ -4,6 +4,22 @@ Status: laptop-safe implementation spec / small-smoke calibration
 Scope: next sequential smoke for spectral controls, high-loading item export, item-to-edge mapping, and optional tiny perturbation  
 Claim boundary: no holdout, no candidate promotion, no Omega detection, no agent detection, no identity detection, no valuer detection
 
+Implementation addendum, 2026-05-30:
+
+```text
+This spec is binding with these guardrails:
+
+1. retained result notes must begin with a short human-readable executive summary;
+2. generated CSV/JSON run artifacts are local-only and must not be committed unless explicitly promoted by a maintainer;
+3. the runner must hard-gate missing Phase B / Stage A control-summary inputs before launching jobs;
+4. shuffled-control pass/fail must be reported by shuffle family, not only as one aggregate status;
+5. high-loading selection and high-loading ablation evaluation must use separate deterministic partitions where feasible.
+6. readiness must be split into spectral-control, analysis-only channel, tiny graph-channel, and larger graph-channel levels;
+7. same-sample high-loading ablation is exploratory only and cannot support readiness;
+8. high-loading ablation specificity must be quantitative, matched-random controlled, and multi-metric;
+9. subspace transfer must be reported separately from item-local ablation specificity.
+```
+
 ## 0. Purpose
 
 Run a laptop-safe smoke to answer:
@@ -80,6 +96,19 @@ holdout_scoring_count: 0
 n6_run_count: 0
 alphabet_expansion_count: 0
 candidate_promotion_enabled: false
+```
+
+Artifact policy:
+
+```text
+All generated CSV/JSON outputs from this smoke are local run artifacts.
+Default output root:
+  results/local_runs/
+
+Do not commit generated smoke CSVs, status JSONs, manifests, or raw matrix
+tables to Git. Commit only code changes, spec/addendum changes, and compact
+retained result notes under docs/research_notes/validation_results/ when a run
+is worth retaining.
 ```
 
 ## 3. Laptop profile
@@ -227,6 +256,15 @@ decision class does not imply full spectral migration;
 claim-boundary counters are present.
 ```
 
+Additional input gate:
+
+```text
+control_summary_cache_status must not be missing_source;
+phase_b_stage_a_control_values.csv or phase_b_design_control_rows.csv must be present;
+if the control source is missing, emit PARTIAL_CONTROL_SOURCE_MISSING,
+write the contract/status/manifest/error/report files, and stop before launching jobs.
+```
+
 If this fails, stop and repair runner plumbing.
 
 ### Stage 1: cheap spectral shuffled-control smoke
@@ -282,6 +320,51 @@ shuffle_topk_alignment
 observed_percentile_vs_shuffle
 ```
 
+Default family thresholds:
+
+```text
+label_shuffle:
+  observed_percentile_vs_shuffle >= 0.80
+
+context_shuffle:
+  observed_percentile_vs_shuffle >= 0.80
+
+horizon_order_shuffle:
+  observed_percentile_vs_shuffle >= 0.80
+
+minimum families passing:
+  2 / 3
+```
+
+The report must show a row per shuffle family:
+
+```text
+shuffle_family
+threshold
+primary_context_count
+passed_context_count
+pass_fraction
+median_observed_percentile
+min_observed_percentile
+catastrophic_floor
+catastrophic_fail_count
+family_passed
+blocking_reason
+```
+
+Laptop family pass rule:
+
+```text
+family passes if:
+  pass_fraction >= 0.50
+  median_observed_percentile >= 0.80
+  catastrophic_fail_count == 0
+
+overall shuffle smoke passes if:
+  at least 2 of 3 families pass
+  no family has a primary context below the catastrophic floor
+```
+
 Gate:
 
 ```text
@@ -291,7 +374,7 @@ percentile/rank versus shuffle controls is emitted;
 controls do not overwrite direct-control summaries.
 ```
 
-If shuffled controls reproduce the observed coflow structure, stop and recommend spectral-control repair or measurement-limits note.
+If fewer than two shuffle families pass the family threshold, stop and recommend spectral-control repair or measurement-limits note.
 
 ### Stage 2: high-loading coflow item export
 
@@ -455,6 +538,24 @@ compare to matched random item removal;
 optionally compare to low-loading item removal.
 ```
 
+Selection/evaluation split:
+
+```text
+High-loading item selection must use a deterministic selection partition.
+Ablation evaluation must use a separate deterministic evaluation partition.
+
+Default:
+  partition_rule: stable hash of context_id
+  selection_partition_fraction: 0.50
+  partition_seed: recorded in status/config/report
+
+If the evaluation partition has insufficient contexts, emit
+selection_evaluation_split_insufficient and stop before claiming
+high_loading_ablation_specific.
+
+This split is not holdout Phase C. It is within-smoke anti-overfit hygiene.
+```
+
 Allowed interpretation:
 
 ```text
@@ -465,6 +566,9 @@ not causal topology dependence.
 Outputs:
 
 ```text
+laptop_selection_evaluation_partition_summary.csv
+laptop_subspace_transfer_diagnostic.csv
+laptop_spectral_readiness_levels.csv
 laptop_spectral_item_ablation_manifest.csv
 laptop_high_loading_ablation_summary.csv
 laptop_random_item_ablation_summary.csv
@@ -476,12 +580,47 @@ laptop_item_ablation_report.md
 Gate:
 
 ```text
-high-loading ablation changes spectral summaries more than matched random ablation;
+same-sample ablation may only be reported as same_sample_ablation_exploratory;
+selection/evaluation split must be available for readiness;
+high_loading_delta > random_delta_max, or high_loading_delta >= random_delta_mean + 1.0 * random_delta_std;
+the high-loading effect appears in at least 2 of:
+  positive spectral mass;
+  effective rank;
+  participation/top-subspace proxy;
+random matching quality is adequate;
 coverage remains adequate after ablation;
 result is not driven by one diagnostic probe.
 ```
 
-If high-loading ablation is random-equivalent, stop. Do not run targeted graph perturbation next.
+If high-loading ablation is random-equivalent, single-metric-only, weakly matched,
+or split-insufficient, stop. Do not run targeted graph perturbation next.
+
+The decision row must explain the blocker with fields including:
+
+```text
+high_loading_delta
+random_delta_mean
+random_delta_std
+random_delta_max
+low_loading_delta
+high_loading_minus_random_mean
+high_loading_over_random_ratio
+ablation_direction_match
+coverage_loss_after_ablation
+matching_quality
+metric_specificity_wins
+ablation_failure_reason
+subspace_transfer_status
+subspace_item_read
+```
+
+Subspace diagnostic:
+
+```text
+select top-k subspace on selection partition;
+compare alignment to top-k subspace on evaluation partition;
+report subspace_transfers, subspace_does_not_transfer, or subspace_transfer_not_computed.
+```
 
 ### Stage 5: optional tiny targeted-vs-random perturbation
 
@@ -575,9 +714,20 @@ item_to_edge_mapping_adequate
 item_to_edge_mapping_insufficient
 high_loading_ablation_specific
 high_loading_ablation_random_equivalent
+single_metric_ablation_hint
+same_sample_ablation_exploratory
+selection_evaluation_split_insufficient
+random_matching_weak_underdetermined
+subspace_transfers_but_items_not_specific
+subspace_does_not_transfer
+item_specific_and_subspace_transfers
 tiny_targeted_random_perturbation_implemented
 tiny_targeted_random_perturbation_not_interpretable
-ready_for_larger_spectral_channel_run
+ready_for_larger_spectral_control_run
+ready_for_larger_analysis_only_channel_run
+ready_for_tiny_graph_channel_perturbation
+ready_for_larger_graph_channel_run
+PARTIAL_CONTROL_SOURCE_MISSING
 not_ready_repair_required
 ```
 
@@ -604,6 +754,7 @@ docs/research_notes/validation_results/rfs_mb0_laptop_spectral_control_mapping_s
 Required sections:
 
 ```text
+0. Executive summary
 1. Claim boundary
 2. Laptop runtime profile
 3. Output contract smoke
@@ -612,7 +763,7 @@ Required sections:
 6. Item-to-edge mapping
 7. Analysis-only ablation
 8. Optional tiny perturbation, if run
-9. Readiness for larger spectral-channel run
+9. Readiness levels
 10. Repairs required
 11. Output manifest
 ```
@@ -620,8 +771,18 @@ Required sections:
 The result note must explicitly answer:
 
 ```text
-Is a larger spectrally guided channel-edge run ready?
+Which readiness levels, if any, are open?
 If not, what exactly blocks it?
+```
+
+Executive summary must be readable without opening raw CSVs and must include:
+
+```text
+decision;
+one-sentence interpretation;
+blocking caveats;
+next recommended action;
+artifact policy: generated CSVs stayed local.
 ```
 
 ## 9. Graceful exit requirements
@@ -672,11 +833,13 @@ Allowed final statuses:
 
 ```text
 COMPLETED
+PARTIAL_CONTROL_SOURCE_MISSING
 PARTIAL_TIME_LIMIT_REACHED
 PARTIAL_INTERRUPTED
 PARTIAL_SHUFFLE_CONTROLS_FAILED
 PARTIAL_ITEM_EXPORT_FAILED
 PARTIAL_MAPPING_INSUFFICIENT
+PARTIAL_SELECTION_EVALUATION_SPLIT_INSUFFICIENT
 PARTIAL_ABLATION_RANDOM_EQUIVALENT
 PARTIAL_NO_INTERPRETABLE_PERTURBATIONS
 FAILED_WITH_ERRORS
@@ -727,14 +890,15 @@ If they do not, the spectral path is not ready for a larger run.
 
 This laptop smoke should not try to prove the channel hypothesis.
 
-It should answer one narrow readiness question:
+It should answer a narrow readiness ladder:
 
 ```text
-Do spectral controls, high-loading item export, item-to-edge mapping,
-and analysis-only ablation work well enough to justify a larger
-spectrally guided channel-edge run?
+Are larger spectral controls ready?
+Are larger analysis-only channel diagnostics ready?
+Is tiny graph-channel perturbation ready?
+Is a larger graph-channel run ready?
 ```
 
-If yes, the next larger run is justified.
+Only the highest passed readiness level is justified.
 
 If no, repair the instrument before spending desktop-scale time.
