@@ -88,6 +88,7 @@ as the canonical internal definition anchor.
    - `docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_future_field_geometry_smoke_result.md`
    - `docs/RFS_MB0_STAGE_B2_SPECTRAL_CHANNEL_EDGE_SMOKE_REPAIR_PREP_SPEC.md`
    - `docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_channel_edge_smoke_repair_prep_result.md`
+   - `docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_channel_high_loading_repair_result.md`
    - `docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md`
    - `docs/research_notes/validation_design/val_ecology_viability_reorientation.md`
    - `docs/research_notes/validation_design/README.md`
@@ -343,6 +344,7 @@ Latest result:
 ```text
 docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_future_field_geometry_smoke_result.md
 docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_channel_edge_smoke_repair_prep_result.md
+docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_channel_high_loading_repair_result.md
 docs/research_notes/validation_results/rfs_mb0_stage_b2_exploratory_iteration_pass_result.md
 ```
 
@@ -355,7 +357,11 @@ smoke found a nonblank direct-control spectral object over future-frontier and
 transition-flow matrices. The channel-edge repair prep added cheap shuffle
 controls, high-loading export, item-to-edge mapping, and ablation checks, but
 blocked the 24h channel-edge run because high-loading ablation was
-random-equivalent at the small-smoke scale.
+random-equivalent at the small-smoke scale. The follow-up high-loading repair
+added stable item selection and frequency/baseline-flow matched random
+ablation; the repaired small smoke cleared the instrument gate for a larger
+spectral channel-edge exploratory run, while leaving frontier-size and
+probe-marginal controls as caveats.
 ```
 
 RFS-MB0 is now the recommended starting point for new implementation work.

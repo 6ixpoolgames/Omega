@@ -82,6 +82,7 @@ OUTPUTS = (
     "spectral_horizon_shuffle_smoke.csv",
     "spectral_control_repair_smoke_summary.csv",
     "spectral_control_repair_smoke_report.md",
+    "spectral_high_loading_candidate_pool_smoke.csv",
     "spectral_high_loading_items_smoke.csv",
     "spectral_item_loading_summary_smoke.csv",
     "spectral_item_to_edge_mapping_smoke.csv",
@@ -185,6 +186,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--shuffle-replicates", type=int, default=5)
     parser.add_argument("--shuffle-max-matrices", type=int, default=24)
     parser.add_argument("--high-loading-top-k-items", type=int, default=24)
+    parser.add_argument("--high-loading-candidate-pool-multiplier", type=int, default=8)
+    parser.add_argument("--high-loading-min-seed-count", type=int, default=2)
+    parser.add_argument("--high-loading-min-shuffle-survival-count", type=int, default=1)
+    parser.add_argument("--high-loading-min-matrix-recurrence", type=int, default=1)
     parser.add_argument("--ablation-random-replicates", type=int, default=5)
     parser.add_argument("--prep-target-conditions", type=str, default="baseline_unperturbed:baseline,small_edge_resample_control:p0.02,asymmetric_edge_flip_control:p0.02")
     parser.add_argument("--prep-target-horizon-bands", type=str, default="middle")
@@ -1032,7 +1037,7 @@ def write_channel_prep_outputs(
     context_rows = shuffle_smoke_rows("context_shuffle", target, counts, matrices, summary_by_id, args)
     horizon_rows = shuffle_smoke_rows("horizon_order_shuffle", target, counts, matrices, summary_by_id, args)
     control_summary = spectral_control_repair_summary(label_rows, context_rows, horizon_rows)
-    loading_rows, loading_summary = high_loading_rows(target, counts, args)
+    loading_rows, loading_summary, candidate_rows = high_loading_rows(target, counts, control_summary, args)
     mapping_rows, mapping_coverage = item_mapping_rows(loading_rows, counts, args)
     high_ablation, random_ablation, low_mid_ablation, ablation_manifest, ablation_decision = item_ablation_rows(target, counts, loading_rows, args)
     perturbation = tiny_channel_perturbation_rows(
@@ -1052,6 +1057,10 @@ def write_channel_prep_outputs(
         "item_mapping_status": mapping_status(mapping_coverage, args.mapping_mass_threshold),
         "item_ablation_status": ablation_decision[0].get("decision_class", "high_loading_ablation_random_equivalent") if ablation_decision else "high_loading_ablation_random_equivalent",
         "tiny_channel_perturbation_status": tiny_perturbation_status(perturbation["summary"]),
+        "high_loading_candidate_pool_rows": len(candidate_rows),
+        "stable_high_loading_selected_rows": len(loading_rows),
+        "stable_high_loading_matrix_count": sum(1 for row in loading_summary if row.get("selection_read") == "stable_items_selected"),
+        "ablation_random_matching": "item_count_and_baseline_flow_count_greedy",
         "control_comparison_scope": "direct_stage_b2_plus_prep_shuffle_controls",
         "label_shuffled_controls_completed": True,
         "context_shuffled_controls_completed": True,
@@ -1071,6 +1080,7 @@ def write_channel_prep_outputs(
     write_csv(out_dir / "spectral_context_shuffle_smoke.csv", context_rows)
     write_csv(out_dir / "spectral_horizon_shuffle_smoke.csv", horizon_rows)
     write_csv(out_dir / "spectral_control_repair_smoke_summary.csv", control_summary)
+    write_csv(out_dir / "spectral_high_loading_candidate_pool_smoke.csv", candidate_rows)
     write_csv(out_dir / "spectral_high_loading_items_smoke.csv", loading_rows)
     write_csv(out_dir / "spectral_item_loading_summary_smoke.csv", loading_summary)
     write_csv(out_dir / "spectral_item_to_edge_mapping_smoke.csv", mapping_rows)
@@ -1268,13 +1278,24 @@ def spectral_control_repair_summary(*tables: list[dict[str, object]]) -> list[di
     return rows
 
 
-def high_loading_rows(target: list[SpectralMatrix], counts: dict[MatrixKey, MatrixCounts], args: argparse.Namespace) -> tuple[list[dict[str, object]], list[dict[str, object]]]:
+def high_loading_rows(
+    target: list[SpectralMatrix],
+    counts: dict[MatrixKey, MatrixCounts],
+    control_summary: list[dict[str, object]],
+    args: argparse.Namespace,
+) -> tuple[list[dict[str, object]], list[dict[str, object]], list[dict[str, object]]]:
     rows: list[dict[str, object]] = []
     summaries: list[dict[str, object]] = []
+    candidate_rows: list[dict[str, object]] = []
+    shuffle_survival = matrix_shuffle_survival(control_summary)
+    recurrence: Counter[tuple[str, str, str, str]] = Counter()
+    per_matrix_candidates: dict[str, list[dict[str, object]]] = {}
     for matrix in target:
         bucket = counts.get(matrix.key)
         if bucket is None or matrix.eigvecs.size == 0:
             continue
+        item_stats = item_context_stats(bucket)
+        baseline_bucket = baseline_bucket_for(matrix, counts)
         scores: dict[str, dict[str, object]] = {}
         ordered = np.argsort(matrix.eigvals)[::-1]
         positive_modes = [idx for idx in ordered if matrix.eigvals[idx] > 0][: args.top_k]
@@ -1283,31 +1304,138 @@ def high_loading_rows(target: list[SpectralMatrix], counts: dict[MatrixKey, Matr
             vector = matrix.eigvecs[:, mode_index]
             for item_index, item in enumerate(matrix.items):
                 score = abs(float(vector[item_index])) * abs(eigval)
+                stats = item_stats.get(item, {"seed_count": 0, "group_count": 0, "context_count": 0})
                 current = scores.get(item)
-                if current is None or score > float_or_zero(current.get("loading_score")):
+                if current is None:
                     scores[item] = {
                         **key_row(matrix.key),
                         "spectral_item_id": f"{matrix.matrix_id}:{stable_seed(item) % 1_000_000:06d}",
                         "matrix_id": matrix.matrix_id,
                         "signature_transition": item,
                         "loading_score": score,
+                        "loading_score_sum": score,
+                        "positive_mode_hit_count": 1,
                         "mode_index": mode_rank,
                         "raw_eigen_index": int(mode_index),
                         "eigenvalue": eigval,
                         "item_count": bucket.item_counts.get(item, 0),
                         "item_mass": bucket.item_counts.get(item, 0),
+                        "baseline_flow_item_count": baseline_bucket.item_counts.get(item, 0) if baseline_bucket else bucket.item_counts.get(item, 0),
+                        **stats,
                     }
-        selected = sorted(scores.values(), key=lambda row: float_or_zero(row.get("loading_score")), reverse=True)[: max(1, args.high_loading_top_k_items)]
+                else:
+                    current["loading_score_sum"] = float_or_zero(current.get("loading_score_sum")) + score
+                    current["positive_mode_hit_count"] = int(float_or_zero(current.get("positive_mode_hit_count"))) + 1
+                    if score > float_or_zero(current.get("loading_score")):
+                        current["loading_score"] = score
+                        current["mode_index"] = mode_rank
+                        current["raw_eigen_index"] = int(mode_index)
+                        current["eigenvalue"] = eigval
+        pool_limit = max(1, args.high_loading_top_k_items * max(1, args.high_loading_candidate_pool_multiplier))
+        pool = sorted(scores.values(), key=lambda row: float_or_zero(row.get("loading_score")), reverse=True)[:pool_limit]
+        per_matrix_candidates[matrix.matrix_id] = pool
+        for row in pool:
+            recurrence[recurrence_key(row)] += 1
+    for matrix in target:
+        bucket = counts.get(matrix.key)
+        if bucket is None:
+            continue
+        pool = per_matrix_candidates.get(matrix.matrix_id, [])
+        enriched = []
+        for row in pool:
+            rec_count = recurrence[recurrence_key(row)]
+            shuffle_count = shuffle_survival.get(str(row.get("matrix_id")), 0)
+            seed_count = int(float_or_zero(row.get("seed_count")))
+            stability_pass = int(
+                seed_count >= args.high_loading_min_seed_count
+                and shuffle_count >= args.high_loading_min_shuffle_survival_count
+                and rec_count >= args.high_loading_min_matrix_recurrence
+            )
+            selection_score = (
+                float_or_zero(row.get("loading_score"))
+                * (1.0 + math.log1p(seed_count))
+                * (1.0 + 0.20 * shuffle_count)
+                * (1.0 + 0.10 * max(0, rec_count - 1))
+            )
+            enriched_row = {
+                **row,
+                "matrix_recurrence_count": rec_count,
+                "shuffle_survival_count": shuffle_count,
+                "stability_pass": stability_pass,
+                "stability_rule": f"seed>={args.high_loading_min_seed_count};shuffle>={args.high_loading_min_shuffle_survival_count};matrix_recurrence>={args.high_loading_min_matrix_recurrence}",
+                "selection_score": selection_score,
+            }
+            enriched.append(enriched_row)
+            candidate_rows.append({**enriched_row, "selection_status": "candidate_pool"})
+        stable = [row for row in enriched if int(float_or_zero(row.get("stability_pass"))) == 1]
+        selected = sorted(stable, key=lambda row: float_or_zero(row.get("selection_score")), reverse=True)[: max(1, args.high_loading_top_k_items)]
+        for row in selected:
+            row["selection_status"] = "stable_selected"
         rows.extend(selected)
         summaries.append({
             **key_row(matrix.key),
             "matrix_id": matrix.matrix_id,
-            "positive_mode_count_used": len(positive_modes),
+            "positive_mode_count_used": len([idx for idx in np.argsort(matrix.eigvals)[::-1] if matrix.eigvals[idx] > 0][: args.top_k]),
+            "candidate_pool_count": len(enriched),
+            "stable_candidate_count": len(stable),
             "high_loading_item_count": len(selected),
             "high_loading_item_mass": sum(float_or_zero(row.get("item_mass")) for row in selected),
             "total_matrix_item_mass": sum(bucket.item_counts.values()),
+            "selection_read": "stable_items_selected" if selected else "no_stable_high_loading_items",
         })
-    return rows, summaries
+    return rows, summaries, candidate_rows
+
+
+def matrix_shuffle_survival(control_summary: list[dict[str, object]]) -> dict[str, int]:
+    out: dict[str, int] = defaultdict(int)
+    for row in control_summary:
+        if row.get("shuffle_control_read") == "observed_above_shuffle":
+            out[str(row.get("matrix_id", ""))] += 1
+    return out
+
+
+def item_context_stats(bucket: MatrixCounts) -> dict[str, dict[str, int]]:
+    seeds: dict[str, set[str]] = defaultdict(set)
+    groups: dict[str, set[str]] = defaultdict(set)
+    contexts: Counter[str] = Counter()
+    for context_id, items in bucket.context_items:
+        parts = context_id.split("|")
+        group_id = parts[1] if len(parts) > 1 else ""
+        seed = parts[2] if len(parts) > 2 else ""
+        for item in items:
+            seeds[item].add(seed)
+            groups[item].add(group_id)
+            contexts[item] += 1
+    return {
+        item: {
+            "seed_count": len(seeds[item]),
+            "group_count": len(groups[item]),
+            "context_count": contexts[item],
+        }
+        for item in contexts
+    }
+
+
+def baseline_bucket_for(matrix: SpectralMatrix, counts: dict[MatrixKey, MatrixCounts]) -> MatrixCounts | None:
+    key = MatrixKey(
+        matrix.key.matrix_family,
+        f"{BASELINE_CONTROL}:baseline",
+        BASELINE_CONTROL,
+        "not_available",
+        matrix.key.probe_key,
+        matrix.key.flow_mode,
+        matrix.key.horizon_band,
+    )
+    return counts.get(key)
+
+
+def recurrence_key(row: dict[str, object]) -> tuple[str, str, str, str]:
+    return (
+        str(row.get("probe_key", "")),
+        str(row.get("flow_mode", "")),
+        str(row.get("horizon_band", "")),
+        str(row.get("signature_transition", "")),
+    )
 
 
 def item_mapping_rows(loading_rows: list[dict[str, object]], counts: dict[MatrixKey, MatrixCounts], args: argparse.Namespace) -> tuple[list[dict[str, object]], list[dict[str, object]]]:
@@ -1373,6 +1501,7 @@ def item_ablation_rows(
         if bucket is None or not selected_rows:
             continue
         high_items = {str(row.get("signature_transition", "")) for row in selected_rows}
+        baseline_bucket = baseline_bucket_for(matrix, counts)
         observed = float(np.sum(matrix.eigvals[matrix.eigvals > 0])) if matrix.eigvals.size else 0.0
         high_payload = spectral_payload_from_contexts(bucket.context_items, args, high_items)
         high_drop = observed - float_or_zero(high_payload.get("positive_spectral_mass"))
@@ -1394,13 +1523,15 @@ def item_ablation_rows(
         candidates = [item for item in matrix.items if item not in high_items]
         for replicate in range(max(1, args.ablation_random_replicates)):
             rng = random.Random(stable_seed(f"ablation|{matrix.matrix_id}|{replicate}"))
-            random_items = set(rng.sample(candidates, min(len(high_items), len(candidates)))) if candidates else set()
+            random_items = matched_random_item_set(candidates, selected_rows, bucket, baseline_bucket, rng)
             payload = spectral_payload_from_contexts(bucket.context_items, args, random_items)
             drop = observed - float_or_zero(payload.get("positive_spectral_mass"))
             random_rows.append({
                 **base,
-                "ablation_kind": "matched_random",
+                "ablation_kind": "frequency_baseline_flow_matched_random",
                 "replicate": replicate,
+                "matching_method": "item_count_and_baseline_flow_count_greedy",
+                "removed_items_json": json.dumps(sorted(random_items)[:64]),
                 "ablated_positive_spectral_mass": payload.get("positive_spectral_mass", 0.0),
                 "positive_spectral_mass_drop": drop,
                 "positive_spectral_mass_drop_fraction": drop / max(1e-9, observed),
@@ -1430,6 +1561,36 @@ def item_ablation_rows(
     return high_rows, random_rows, low_rows, manifest, decision_rows
 
 
+def matched_random_item_set(
+    candidates: list[str],
+    selected_rows: list[dict[str, object]],
+    bucket: MatrixCounts,
+    baseline_bucket: MatrixCounts | None,
+    rng: random.Random,
+) -> set[str]:
+    available = set(candidates)
+    selected: set[str] = set()
+    candidate_items = list(available)
+    for row in sorted(selected_rows, key=lambda item: float_or_zero(item.get("item_count")), reverse=True):
+        if not candidate_items:
+            break
+        target_count = max(1.0, float_or_zero(row.get("item_count")))
+        target_baseline = max(0.0, float_or_zero(row.get("baseline_flow_item_count")))
+        scored = []
+        for item in candidate_items:
+            item_count = max(1.0, bucket.item_counts.get(item, 0))
+            baseline_count = baseline_bucket.item_counts.get(item, 0) if baseline_bucket else item_count
+            score = abs(math.log(item_count / target_count))
+            score += 0.75 * abs(math.log((baseline_count + 1.0) / (target_baseline + 1.0)))
+            score += rng.random() * 1e-6
+            scored.append((score, item))
+        scored.sort(key=lambda pair: pair[0])
+        chosen = scored[0][1]
+        selected.add(chosen)
+        candidate_items.remove(chosen)
+    return selected
+
+
 def should_run_tiny_perturbation(
     control_summary: list[dict[str, object]],
     mapping_coverage: list[dict[str, object]],
@@ -1457,9 +1618,9 @@ def tiny_channel_perturbation_rows(
     mapped = [row for row in mapping_rows if row.get("mapping_status") == "mapped_to_realized_edges"]
     if not mapped:
         return tiny_perturbation_placeholder_rows("no_mapped_items")
-    rows_by_target = group_by(mapped, ("condition_id", "probe_key", "flow_mode", "horizon_band"))
+    rows_by_target = group_by(mapped, ("matrix_id", "condition_id", "probe_key", "flow_mode", "horizon_band"))
     selected_targets = sorted(
-        (items[0] for _key, items in rows_by_target.items()),
+        (aggregate_perturbation_target(items) for _key, items in rows_by_target.items()),
         key=lambda row: float_or_zero(row.get("loading_score")),
         reverse=True,
     )[: max(1, args.tiny_perturbation_jobs)]
@@ -1510,6 +1671,22 @@ def tiny_channel_perturbation_rows(
     }
 
 
+def aggregate_perturbation_target(items: list[dict[str, object]]) -> dict[str, object]:
+    first = items[0]
+    transitions = sorted({str(row.get("signature_transition", "")) for row in items if row.get("signature_transition")})
+    total_mass = sum(float_or_zero(row.get("item_mass")) for row in items)
+    return {
+        **key_subset(first),
+        "matrix_id": first.get("matrix_id", ""),
+        "signature_transition": transitions[0] if transitions else "",
+        "target_signature_transitions_json": json.dumps(transitions, sort_keys=True),
+        "target_item_count": len(transitions),
+        "loading_score": sum(float_or_zero(row.get("loading_score")) for row in items),
+        "loading_score_max": max((float_or_zero(row.get("loading_score")) for row in items), default=0.0),
+        "item_mass": total_mass,
+    }
+
+
 def tiny_perturbation_placeholder_rows(reason: str = "graph_level_targeted_perturbation_gated_until_shuffle_mapping_and_ablation_review") -> dict[str, list[dict[str, object]]]:
     rows = [{"status": "not_run", "reason": reason, "decision_class": "tiny_channel_perturbation_not_interpretable"}]
     return {
@@ -1547,7 +1724,7 @@ def run_tiny_perturbation_job(
     baseline = generate_relation_system(params, seed)  # type: ignore[arg-type]
     control = make_stage_b2_control_system(baseline, job, seed, params)  # type: ignore[arg-type]
     probe, alphabet_size, probe_group = build_probe(control, str(job["probe_key"]), str(job["source_probe_family"]))
-    target_items = {str(row.get("signature_transition")) for row in [target] if row.get("signature_transition")}
+    target_items = target_transition_set(target)
     selected_edges = matching_edges_for_items(control, probe, target_items)
     all_edges = [(source, target_state) for source, targets in control.edges.items() for target_state in targets]
     perturb_count = max(1, min(len(selected_edges), round(len(all_edges) * float(strength)))) if selected_edges else 0
@@ -1577,6 +1754,8 @@ def run_tiny_perturbation_job(
         "perturbation_kind": perturbation_kind,
         "strength": strength,
         "target_signature_transition": target.get("signature_transition", ""),
+        "target_signature_transitions_json": json.dumps(sorted(target_items), sort_keys=True),
+        "target_item_count": len(target_items),
         "target_loading_score": target.get("loading_score", ""),
         "selected_edge_count": len(edge_targets),
         "candidate_target_edge_count": len(selected_edges),
@@ -1591,6 +1770,18 @@ def run_tiny_perturbation_job(
         "spectral": [{**base, "spectral_status": payload.get("status", ""), "positive_spectral_mass": payload.get("positive_spectral_mass", 0.0), "effective_rank": payload.get("effective_rank", 0.0), "spectral_gap_k": payload.get("spectral_gap_k", 0.0), "item_count": payload.get("item_count", 0)}],
         "entropy": entropy_rows,
     }
+
+
+def target_transition_set(target: dict[str, object]) -> set[str]:
+    raw = target.get("target_signature_transitions_json", "")
+    if raw:
+        try:
+            parsed = json.loads(str(raw))
+            if isinstance(parsed, list):
+                return {str(item) for item in parsed if str(item)}
+        except json.JSONDecodeError:
+            pass
+    return {str(target.get("signature_transition", ""))} if target.get("signature_transition") else set()
 
 
 def rows_and_contexts_for_system(
@@ -1882,7 +2073,9 @@ def write_channel_prep_report(
         "",
         f"Shuffle summary rows: `{len(control_summary)}`.",
         f"Best mapped item mass fraction: `{max((float_or_zero(row.get('mapped_item_mass_fraction')) for row in mapping_coverage), default=0.0):.3f}`.",
+        f"Stable high-loading selected rows: `{status.get('stable_high_loading_selected_rows')}`.",
         f"Ablation decision: `{ablation_decision[0].get('decision_class', '') if ablation_decision else ''}`.",
+        f"Ablation random matching: `{status.get('ablation_random_matching')}`.",
         "",
         "## Output Manifest",
         "",

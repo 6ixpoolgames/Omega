@@ -64,6 +64,7 @@ Directory:
 
 Current result notes:
 
+- `rfs_mb0_stage_b2_spectral_channel_high_loading_repair_result.md`
 - `rfs_mb0_stage_b2_spectral_channel_edge_smoke_repair_prep_result.md`
 - `rfs_mb0_stage_b2_spectral_future_field_geometry_smoke_result.md`
 - `rfs_mb0_stage_b2_exploratory_iteration_pass_result.md`
@@ -119,6 +120,13 @@ Result in one line:
   small smoke completed 80/80 jobs with zero errors, but the 24h run is blocked:
   high-loading ablation was random-equivalent, and tiny targeted-vs-random
   perturbation was not interpretable enough to scale.
+- The follow-up high-loading repair added stable item selection, seed/group
+  recurrence fields, matrix-level shuffle-survival, frequency/baseline-flow
+  matched random ablation, and stable-item-set perturbation. The repaired small
+  smoke completed 80/80 jobs with zero errors and cleared the instrument gates
+  for a larger spectral channel-edge run. This is readiness only, not a
+  scientific gate pass: frontier-size/probe-marginal controls remain missing,
+  and tiny perturbation separated spectral response but not A/C syndrome rates.
 - RFS-MB0 future-landscape detector v1.1 passed implementation checks, and the
   long-horizon audit extended the horizon grid through H1024: 33 systems, 3696
   profiles, zero errors. It did not pass the scientific gate: zero aggregate

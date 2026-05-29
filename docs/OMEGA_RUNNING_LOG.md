@@ -9,6 +9,84 @@ patch notes at the top.
 
 ## 2026-05-29
 
+### RFS-MB0 Stage B-2 Spectral Channel High-Loading Repair
+
+Implemented the next repair after the channel-edge prep block:
+
+```text
+stable high-loading selection
+frequency / baseline-flow matched random ablation
+matrix-level stable-item-set perturbation
+```
+
+Retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_channel_high_loading_repair_result.md`
+
+Local output:
+
+- `results/rfs_mb0_relation_atlas/20260529_stage_b2_spectral_channel_high_loading_repair_small_smoke_v2/`
+
+Small smoke status:
+
+```text
+status: COMPLETED
+elapsed_seconds: 24.965
+workers: 18
+jobs_completed: 80 / 80
+contexts_accumulated: 6720
+matrix_count: 180
+errors: 0
+manifest_rows: 52
+missing_manifest_rows: 0
+```
+
+Repair read:
+
+```text
+candidate_pool_rows: 2275
+stable_high_loading_selected_rows: 87
+stable_high_loading_matrix_count: 10
+ablation_random_matching: item_count_and_baseline_flow_count_greedy
+```
+
+Decision:
+
+```text
+runner_contract_passed
+spectral_shuffle_controls_passed
+spectral_item_mapping_adequate
+high_loading_ablation_specific
+tiny_channel_perturbation_implemented
+ready_for_24h_spectral_channel_run
+ready_for_24h_run: 1
+```
+
+Key readout:
+
+```text
+matched ablation:
+  high_loading_drop_fraction_mean: 0.05884
+  matched_random_drop_fraction_mean: 0.04504
+
+tiny perturbation:
+  targeted_spectral_positive_mass_mean: 45.6983
+  random_spectral_positive_mass_mean: 42.5753
+  targeted_vs_random_spectral_relative_separation: 0.06834
+  destructive_rows: 0
+  targeted_ac_rate_mean: 0.0
+  random_ac_rate_mean: 0.0
+```
+
+Interpretation:
+
+```text
+The instrument is now ready for a larger spectral channel-edge exploratory run.
+This is not a scientific gate pass. Frontier-size/probe-marginal spectral
+controls remain missing, and A/C syndrome rates did not move in the tiny
+perturbation smoke.
+```
+
 ### RFS-MB0 Stage B-2 Spectral Channel-Edge Smoke Repair Prep
 
 Implemented the repair-prep layer requested by
