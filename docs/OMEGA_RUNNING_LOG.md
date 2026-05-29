@@ -9,6 +9,71 @@ patch notes at the top.
 
 ## 2026-05-30
 
+### RFS-MB0 Laptop Spectral Triage/Subspace Diagnostic Repair
+
+Tightened the laptop spectral control/mapping smoke per external audit comments.
+The runner now distinguishes label-interpretation controls from required
+structure-destroying shuffles, emits matrix-level shuffle-failure anatomy,
+reports subspace distributedness, compares transfer against subspace controls,
+and writes an explicit next-action fork.
+
+Instrument metadata:
+
+```text
+instrument_version: 0.3.0
+schema_version: 2026-05-30.3
+```
+
+Retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_laptop_spectral_control_mapping_smoke_result.md`
+
+Local validation outputs:
+
+- `results/local_runs/20260530_laptop_spectral_triage_contract_smoke_v2/`
+- `results/local_runs/20260530_laptop_spectral_triage_missing_source_gate/`
+
+Local outputs remain generated artifacts and are not committed.
+
+Contract smoke status:
+
+```text
+status: COMPLETED
+jobs_completed: 6 / 6
+errors: 0
+manifest: 44 / 44 present
+spectral_shuffle_control_status: spectral_shuffle_controls_control_equivalent
+blocking_reason: structure_shuffle_controls_not_passed
+subspace_distributedness_read: diffuse_noise_like
+subspace_control_alignment_status: subspace_transfer_control_equivalent
+next_action_fork: repair_shuffle_controls
+```
+
+New diagnostic row counts:
+
+```text
+laptop_spectral_shuffle_failure_anatomy.csv: 9
+laptop_subspace_distributedness_diagnostic.csv: 3
+laptop_subspace_control_alignment.csv: 12
+laptop_spectral_next_action_fork.csv: 1
+```
+
+Graceful exit guard:
+
+```text
+status: PARTIAL_CONTROL_SOURCE_MISSING
+jobs_requested: 0
+jobs_completed: 0
+blocking_reason: missing_source
+```
+
+Decision:
+
+```text
+Tooling repaired and smoke-validated. Scientific next action remains
+repair_shuffle_controls; do not run graph perturbation from this state.
+```
+
 ### RFS-MB0 Laptop Spectral Control Mapping Diagnostic Smoke
 
 Implemented the laptop-safe spectral control/mapping smoke wrapper and tightened

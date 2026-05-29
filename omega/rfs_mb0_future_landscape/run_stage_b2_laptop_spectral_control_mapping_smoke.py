@@ -47,9 +47,13 @@ LAPTOP_OUTPUTS = (
     "laptop_horizon_shuffle_spectral_smoke.csv",
     "laptop_spectral_shuffle_control_summary.csv",
     "laptop_spectral_shuffle_family_gate_summary.csv",
+    "laptop_spectral_shuffle_failure_anatomy.csv",
     "laptop_spectral_shuffle_control_report.md",
     "laptop_selection_evaluation_partition_summary.csv",
     "laptop_subspace_transfer_diagnostic.csv",
+    "laptop_subspace_distributedness_diagnostic.csv",
+    "laptop_subspace_control_alignment.csv",
+    "laptop_spectral_next_action_fork.csv",
     "laptop_spectral_readiness_levels.csv",
     "laptop_spectral_high_loading_items.csv",
     "laptop_spectral_item_loading_summary.csv",
@@ -89,9 +93,13 @@ ALIASES = {
     "spectral_horizon_shuffle_smoke.csv": "laptop_horizon_shuffle_spectral_smoke.csv",
     "spectral_control_repair_smoke_summary.csv": "laptop_spectral_shuffle_control_summary.csv",
     "spectral_shuffle_family_gate_summary.csv": "laptop_spectral_shuffle_family_gate_summary.csv",
+    "spectral_shuffle_failure_anatomy.csv": "laptop_spectral_shuffle_failure_anatomy.csv",
     "spectral_control_repair_smoke_report.md": "laptop_spectral_shuffle_control_report.md",
     "spectral_selection_evaluation_partition_summary.csv": "laptop_selection_evaluation_partition_summary.csv",
     "spectral_subspace_transfer_diagnostic.csv": "laptop_subspace_transfer_diagnostic.csv",
+    "spectral_subspace_distributedness_diagnostic.csv": "laptop_subspace_distributedness_diagnostic.csv",
+    "spectral_subspace_control_alignment.csv": "laptop_subspace_control_alignment.csv",
+    "spectral_next_action_fork.csv": "laptop_spectral_next_action_fork.csv",
     "spectral_readiness_levels.csv": "laptop_spectral_readiness_levels.csv",
     "spectral_high_loading_items_smoke.csv": "laptop_spectral_high_loading_items.csv",
     "spectral_item_loading_summary_smoke.csv": "laptop_spectral_item_loading_summary.csv",
@@ -171,6 +179,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--ablation-max-coverage-loss", type=float, default=0.60)
     parser.add_argument("--random-matching-min-quality", type=float, default=0.60)
     parser.add_argument("--subspace-transfer-min-alignment", type=float, default=0.50)
+    parser.add_argument("--subspace-control-replicates", type=int, default=3)
     parser.add_argument("--prep-target-conditions", type=str, default="baseline_unperturbed:baseline,small_edge_resample_control:p0.02,asymmetric_edge_flip_control:p0.02")
     parser.add_argument("--prep-target-horizon-bands", type=str, default="middle")
     parser.add_argument("--mapping-mass-threshold", type=float, default=0.30)
@@ -228,6 +237,7 @@ def main() -> None:
         "ablation_max_coverage_loss": args.ablation_max_coverage_loss,
         "random_matching_min_quality": args.random_matching_min_quality,
         "subspace_transfer_min_alignment": args.subspace_transfer_min_alignment,
+        "subspace_control_replicates": args.subspace_control_replicates,
     }
     write_json(args.out / "laptop_spectral_smoke_status.json", status)
     if cache_status == "missing_source" or not control_summaries:
@@ -297,6 +307,9 @@ def finalize_missing_source(args: argparse.Namespace, status: dict[str, object],
         "ready_for_larger_spectral_channel_run": 0,
         "subspace_transfer_status": "subspace_transfer_not_computed",
         "subspace_item_read": "subspace_transfer_not_computed",
+        "subspace_distributedness_read": "subspace_distributedness_not_computed",
+        "subspace_control_alignment_status": "subspace_control_alignment_not_computed",
+        "next_action_fork": "repair_shuffle_controls",
         "ablation_failure_reason": "missing_source",
         "laptop_decision_class": "PARTIAL_CONTROL_SOURCE_MISSING",
         "laptop_next_step": "restore or regenerate the missing Phase B/Stage A control summary source before any compute",
@@ -327,7 +340,13 @@ def gate_results(out_dir: Path, status: dict[str, object]) -> list[GateResult]:
     ablation_rows = read_csv(out_dir / "spectral_item_ablation_decision.csv")
     tiny_rows = read_csv(out_dir / "spectral_channel_tiny_target_vs_random_summary.csv")
     shuffle_pass = int(status.get("spectral_shuffle_control_status") == "spectral_shuffle_controls_passed")
-    shuffle_blocker = ";".join(sorted({row.get("blocking_reason", "") for row in shuffle_rows if row.get("blocking_reason")})) or "shuffle_family_controls_not_passed"
+    required_shuffle_rows = [row for row in shuffle_rows if int(float_or_zero(row.get("family_required_for_control_gate", 1))) == 1]
+    blocker_rows = required_shuffle_rows or shuffle_rows
+    shuffle_blocker = ";".join(sorted({row.get("blocking_reason", "") for row in blocker_rows if row.get("blocking_reason")})) or "structure_shuffle_controls_not_passed"
+    structure_total = len(required_shuffle_rows)
+    structure_passed = sum(int(float_or_zero(row.get("family_passed"))) for row in required_shuffle_rows)
+    label_rows = [row for row in shuffle_rows if row.get("shuffle_control_category") == "label_interpretation_control"]
+    label_passed = sum(int(float_or_zero(row.get("family_passed"))) for row in label_rows)
     mapping_best = max((float_or_zero(row.get("mapped_item_mass_fraction")) for row in mapping_rows), default=0.0)
     ablation_decision = ablation_rows[0].get("decision_class", "") if ablation_rows else ""
     ablation_blocker = ablation_rows[0].get("ablation_failure_reason", "ablation_not_specific") if ablation_rows else "ablation_not_specific"
@@ -335,7 +354,7 @@ def gate_results(out_dir: Path, status: dict[str, object]) -> list[GateResult]:
     return [
         GateResult("G0", "control_source_available", True, status.get("control_summary_cache_status") != "missing_source", "source present", status.get("control_summary_cache_status", "")),
         GateResult("G1", "output_contract_passed", True, True, "required files written", "core outputs present"),
-        GateResult("G2", "shuffle_family_thresholds", True, bool(shuffle_pass), f">={status.get('min_shuffle_families_passed', 2)} families", f"{sum(int(row.get('family_passed', 0)) for row in shuffle_rows)} families", "" if shuffle_pass else shuffle_blocker),
+        GateResult("G2", "structure_shuffle_family_thresholds", True, bool(shuffle_pass), "context and horizon structure controls pass; label shuffle reported separately", f"{structure_passed}/{structure_total} structure families; {label_passed}/{len(label_rows)} label families", "" if shuffle_pass else shuffle_blocker),
         GateResult("G3", "item_mapping_mass", True, mapping_best >= 0.30, "mapped_item_mass_fraction >= 0.30", f"{mapping_best:.3f}", "" if mapping_best >= 0.30 else "mapping_insufficient"),
         GateResult("G4", "selection_evaluation_ablation", True, ablation_decision == "high_loading_ablation_specific", "high_loading_ablation_specific", ablation_decision, "" if ablation_decision == "high_loading_ablation_specific" else ablation_blocker),
         GateResult("G5", "tiny_perturbation_optional", False, tiny_decision == "tiny_channel_perturbation_implemented", "implemented if requested", tiny_decision),
@@ -410,6 +429,9 @@ def write_report(out_dir: Path, status: dict[str, object], gates: list[GateResul
         f"Decision: `{status.get('item_ablation_status', '')}`.",
         f"Failure reason: `{status.get('ablation_failure_reason', '')}`.",
         f"Subspace/item read: `{status.get('subspace_item_read', status.get('subspace_transfer_status', ''))}`.",
+        f"Distributedness read: `{status.get('subspace_distributedness_read', '')}`.",
+        f"Subspace-control alignment: `{status.get('subspace_control_alignment_status', '')}`.",
+        f"Next-action fork: `{status.get('next_action_fork', '')}`.",
         "",
         "## Output Manifest",
         "",
@@ -438,6 +460,9 @@ def write_compact_forwarding_outputs(out_dir: Path, status: dict[str, object], g
         "ready_for_larger_analysis_only_channel_run",
         "ready_for_tiny_graph_channel_perturbation",
         "ready_for_larger_graph_channel_run",
+        "subspace_distributedness_read",
+        "subspace_control_alignment_status",
+        "next_action_fork",
     )
     write_csv(out_dir / "laptop_gpt_requested_status_key_fields.csv", [{"field": field, "value": status.get(field, "")} for field in key_fields])
     mapping_rows = read_csv(out_dir / "laptop_spectral_item_to_edge_mapping.csv")
@@ -455,8 +480,12 @@ def write_compact_forwarding_outputs(out_dir: Path, status: dict[str, object], g
 def write_forwarding_summary(out_dir: Path, status: dict[str, object], gates: list[GateResult]) -> None:
     first_failed = next((gate for gate in gates if gate.required and not gate.passed), None)
     shuffle_rows = read_csv(out_dir / "laptop_spectral_shuffle_family_gate_summary.csv")
+    anatomy_rows = read_csv(out_dir / "laptop_spectral_shuffle_failure_anatomy.csv")
     mapping_rows = read_csv(out_dir / "laptop_spectral_mapping_coverage.csv")
     ablation_row = (read_csv(out_dir / "laptop_item_ablation_decision.csv") or [{}])[0]
+    distributed_rows = read_csv(out_dir / "laptop_subspace_distributedness_diagnostic.csv")
+    subspace_control_rows = read_csv(out_dir / "laptop_subspace_control_alignment.csv")
+    next_action_row = (read_csv(out_dir / "laptop_spectral_next_action_fork.csv") or [{}])[0]
     best_mapping = max((float_or_zero(row.get("mapped_item_mass_fraction")) for row in mapping_rows), default=0.0)
     lines = [
         "# RFS-MB0 Laptop Spectral Control Mapping Forwarding Summary",
@@ -475,6 +504,10 @@ def write_forwarding_summary(out_dir: Path, status: dict[str, object], gates: li
         "",
         f"Readiness ladder: spectral controls `{status.get('ready_for_larger_spectral_control_run', 0)}`, analysis-only channel diagnostics `{status.get('ready_for_larger_analysis_only_channel_run', 0)}`, tiny graph-channel perturbation `{status.get('ready_for_tiny_graph_channel_perturbation', 0)}`, larger graph-channel run `{status.get('ready_for_larger_graph_channel_run', 0)}`.",
         "",
+        f"Subspace read: distributedness `{status.get('subspace_distributedness_read', '')}`, control alignment `{status.get('subspace_control_alignment_status', '')}`.",
+        "",
+        f"Next action fork: `{status.get('next_action_fork', next_action_row.get('next_action_fork', ''))}`.",
+        "",
         "Artifact policy: generated CSV/JSON artifacts are local-only and should not be committed unless explicitly promoted.",
         "",
         "## Gate Results",
@@ -489,11 +522,24 @@ def write_forwarding_summary(out_dir: Path, status: dict[str, object], gates: li
         "",
         "## Shuffle Families",
         "",
-        "| family | replicates | pass_fraction | median_percentile | min_percentile | catastrophic | passed |",
-        "|---|---:|---:|---:|---:|---:|---:|",
+        "| family | category | required | replicates | pass_fraction | median_percentile | min_percentile | catastrophic | passed |",
+        "|---|---|---:|---:|---:|---:|---:|---:|---:|",
     ])
     for row in shuffle_rows:
-        lines.append(f"| {row.get('shuffle_family', '')} | {row.get('replicate_count', '')} | {row.get('pass_fraction', '')} | {row.get('median_observed_percentile', '')} | {row.get('min_observed_percentile', '')} | {row.get('catastrophic_fail_flag', '')} | {row.get('family_passed', '')} |")
+        lines.append(f"| {row.get('shuffle_family', '')} | {row.get('shuffle_control_category', '')} | {row.get('family_required_for_control_gate', '')} | {row.get('replicate_count', '')} | {row.get('pass_fraction', '')} | {row.get('median_observed_percentile', '')} | {row.get('min_observed_percentile', '')} | {row.get('catastrophic_fail_flag', '')} | {row.get('family_passed', '')} |")
+    anatomy_counts = group_rows(anatomy_rows, ("shuffle_family", "blocking_reason"))
+    lines.extend([
+        "",
+        "## Shuffle Failure Anatomy",
+        "",
+        "| family | blocker | matrix_count |",
+        "|---|---|---:|",
+    ])
+    if anatomy_counts:
+        for (family, blocker), rows in sorted(anatomy_counts.items()):
+            lines.append(f"| {family} | {blocker or 'none'} | {len(rows)} |")
+    else:
+        lines.append("|  | no rows | 0 |")
     lines.extend([
         "",
         "## Mapping",
@@ -511,6 +557,42 @@ def write_forwarding_summary(out_dir: Path, status: dict[str, object], gates: li
         f"Effect metric count: `{ablation_row.get('effect_metric_count', '')}`.",
         f"Random matching quality: `{ablation_row.get('random_matching_quality', '')}`.",
         f"Subspace/item read: `{ablation_row.get('subspace_item_read', '')}`.",
+        "",
+        "## Distributedness",
+        "",
+        "| read | matrix_count |",
+        "|---|---:|",
+    ])
+    distributed_counts = group_rows(distributed_rows, ("distributedness_read",))
+    if distributed_counts:
+        for (read,), rows in sorted(distributed_counts.items()):
+            lines.append(f"| {read} | {len(rows)} |")
+    else:
+        lines.append("| subspace_distributedness_not_computed | 0 |")
+    lines.extend([
+        "",
+        "## Subspace Control Alignment",
+        "",
+        f"Aggregate status: `{status.get('subspace_control_alignment_status', '')}`.",
+        "",
+        "| control_family | above_control_count | computed_replicates |",
+        "|---|---:|---:|",
+    ])
+    control_groups = group_rows(subspace_control_rows, ("control_family",))
+    if control_groups:
+        for (family,), rows in sorted(control_groups.items()):
+            above = sum(int(float_or_zero(row.get("subspace_transfer_above_control"))) for row in rows)
+            replicates = sum(int(float_or_zero(row.get("control_computed_replicates"))) for row in rows)
+            lines.append(f"| {family} | {above} | {replicates} |")
+    else:
+        lines.append("|  | 0 | 0 |")
+    lines.extend([
+        "",
+        "## Next Action Fork",
+        "",
+        f"Fork: `{next_action_row.get('next_action_fork', status.get('next_action_fork', ''))}`.",
+        "",
+        f"Reason: `{next_action_row.get('fork_reason', '')}`.",
         "",
     ])
     (out_dir / "laptop_spectral_forwarding_summary.md").write_text("\n".join(lines), encoding="utf-8")

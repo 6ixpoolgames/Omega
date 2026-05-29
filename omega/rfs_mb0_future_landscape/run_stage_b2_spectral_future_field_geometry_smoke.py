@@ -83,9 +83,13 @@ OUTPUTS = (
     "spectral_horizon_shuffle_smoke.csv",
     "spectral_control_repair_smoke_summary.csv",
     "spectral_shuffle_family_gate_summary.csv",
+    "spectral_shuffle_failure_anatomy.csv",
     "spectral_control_repair_smoke_report.md",
     "spectral_selection_evaluation_partition_summary.csv",
     "spectral_subspace_transfer_diagnostic.csv",
+    "spectral_subspace_distributedness_diagnostic.csv",
+    "spectral_subspace_control_alignment.csv",
+    "spectral_next_action_fork.csv",
     "spectral_readiness_levels.csv",
     "spectral_high_loading_candidate_pool_smoke.csv",
     "spectral_high_loading_items_smoke.csv",
@@ -167,6 +171,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--ablation-max-coverage-loss", type=float, default=0.60)
     parser.add_argument("--random-matching-min-quality", type=float, default=0.60)
     parser.add_argument("--subspace-transfer-min-alignment", type=float, default=0.50)
+    parser.add_argument("--subspace-control-replicates", type=int, default=3)
     parser.add_argument("--prep-target-conditions", type=str, default="baseline_unperturbed:baseline,small_edge_resample_control:p0.02,asymmetric_edge_flip_control:p0.02")
     parser.add_argument("--prep-target-horizon-bands", type=str, default="middle")
     parser.add_argument("--mapping-mass-threshold", type=float, default=0.30)
@@ -1042,9 +1047,12 @@ def write_channel_prep_outputs(
     context_rows = shuffle_smoke_rows("context_shuffle", target, counts, matrices, summary_by_id, args)
     horizon_rows = shuffle_smoke_rows("horizon_order_shuffle", target, counts, matrices, summary_by_id, args)
     control_summary = spectral_control_repair_summary(label_rows, context_rows, horizon_rows)
+    shuffle_anatomy = shuffle_failure_anatomy_rows(control_summary, target, summary_by_id, args)
     loading_rows, loading_summary, candidate_rows = high_loading_rows(target, selection_counts, control_summary, args)
     mapping_rows, mapping_coverage = item_mapping_rows(loading_rows, counts, args)
     subspace_rows = subspace_transfer_rows(target, evaluation_target, args)
+    distributed_rows = subspace_distributedness_rows(target, args)
+    subspace_control_rows = subspace_control_alignment_rows(target, evaluation_target, evaluation_counts, evaluation_matrices, args)
     if not getattr(args, "selection_evaluation_split", False):
         high_ablation, random_ablation, low_mid_ablation, ablation_manifest = [], [], [], []
         ablation_decision = [{
@@ -1082,6 +1090,8 @@ def write_channel_prep_outputs(
     readiness_rows = readiness_level_rows(control_summary, mapping_coverage, ablation_decision, perturbation["summary"], selection_eval_status, args)
     decision_classes = channel_prep_decision_classes(control_summary, mapping_coverage, ablation_decision, perturbation["summary"], readiness_rows, args)
     readiness_map = {str(row.get("readiness_key")): int(float_or_zero(row.get("ready"))) for row in readiness_rows}
+    next_action_rows = next_action_fork_rows(control_summary, mapping_coverage, ablation_decision, subspace_rows, subspace_control_rows, args)
+    next_action = str(next_action_rows[0].get("next_action_fork", "write_spectral_measurement_limits_note")) if next_action_rows else "write_spectral_measurement_limits_note"
     status.update({
         "channel_prep_status": "COMPLETED" if status.get("status") == "COMPLETED" else status.get("status"),
         "runner_contract_status": "runner_contract_passed",
@@ -1126,6 +1136,9 @@ def write_channel_prep_outputs(
         "ablation_failure_reason": ablation_decision[0].get("ablation_failure_reason", "") if ablation_decision else "",
         "subspace_transfer_status": ablation_decision[0].get("subspace_transfer_status", "subspace_transfer_not_computed") if ablation_decision else "subspace_transfer_not_computed",
         "subspace_item_read": ablation_decision[0].get("subspace_item_read", "subspace_transfer_not_computed") if ablation_decision else "subspace_transfer_not_computed",
+        "subspace_distributedness_read": aggregate_distributedness_read(distributed_rows),
+        "subspace_control_alignment_status": aggregate_subspace_control_status(subspace_control_rows),
+        "next_action_fork": next_action,
         "ablation_random_matching": ablation_decision[0].get("random_matching", "matrix_context_count_mass_greedy") if ablation_decision else "matrix_context_count_mass_greedy",
         "control_comparison_scope": "direct_stage_b2_plus_prep_shuffle_controls",
         "label_shuffled_controls_completed": True,
@@ -1157,8 +1170,12 @@ def write_channel_prep_outputs(
     write_csv(out_dir / "spectral_horizon_shuffle_smoke.csv", horizon_rows)
     write_csv(out_dir / "spectral_control_repair_smoke_summary.csv", control_summary)
     write_csv(out_dir / "spectral_shuffle_family_gate_summary.csv", shuffle_family_summary(control_summary, args))
+    write_csv(out_dir / "spectral_shuffle_failure_anatomy.csv", shuffle_anatomy)
     write_csv(out_dir / "spectral_selection_evaluation_partition_summary.csv", partition_summary_rows(selection_counts, evaluation_counts, partition_meta))
     write_csv(out_dir / "spectral_subspace_transfer_diagnostic.csv", subspace_rows)
+    write_csv(out_dir / "spectral_subspace_distributedness_diagnostic.csv", distributed_rows)
+    write_csv(out_dir / "spectral_subspace_control_alignment.csv", subspace_control_rows)
+    write_csv(out_dir / "spectral_next_action_fork.csv", next_action_rows)
     write_csv(out_dir / "spectral_readiness_levels.csv", readiness_rows)
     write_csv(out_dir / "spectral_high_loading_candidate_pool_smoke.csv", candidate_rows)
     write_csv(out_dir / "spectral_high_loading_items_smoke.csv", loading_rows)
@@ -1234,6 +1251,271 @@ def subspace_transfer_rows(
             "subspace_transfer_read": "subspace_transfer_not_computed",
         })
     return rows
+
+
+def shuffle_failure_anatomy_rows(
+    control_summary: list[dict[str, object]],
+    target: list[SpectralMatrix],
+    summary_by_id: dict[str, dict[str, object]],
+    args: argparse.Namespace,
+) -> list[dict[str, object]]:
+    matrix_by_id = {matrix.matrix_id: matrix for matrix in target}
+    rows: list[dict[str, object]] = []
+    for row in control_summary:
+        matrix_id = str(row.get("matrix_id", ""))
+        matrix = matrix_by_id.get(matrix_id)
+        summary = summary_by_id.get(matrix_id, {})
+        family = str(row.get("shuffle_kind", ""))
+        percentile = float_or_zero(row.get("observed_percentile_vs_shuffle"))
+        threshold = shuffle_family_threshold(family, args)
+        catastrophic_floor = float(getattr(args, "shuffle_family_catastrophic_min_percentile", 0.50))
+        rows.append({
+            **key_subset(row),
+            "matrix_id": matrix_id,
+            "shuffle_family": family,
+            "shuffle_control_category": shuffle_control_category(family),
+            "family_required_for_control_gate": int(shuffle_family_required(family)),
+            "observed_percentile_vs_shuffle": percentile,
+            "matrix_shuffle_passed": int(percentile >= threshold),
+            "catastrophic_fail_flag": int(percentile < catastrophic_floor),
+            "threshold": threshold,
+            "catastrophic_floor": catastrophic_floor,
+            "item_count": len(matrix.items) if matrix else summary.get("item_count", ""),
+            "coverage": summary.get("item_mass_coverage", matrix.item_mass_covered / max(1, matrix.item_mass_total) if matrix else ""),
+            "positive_spectral_mass": summary.get("positive_spectral_mass", row.get("observed_positive_spectral_mass", "")),
+            "effective_rank": summary.get("effective_rank", ""),
+            "blocking_reason": "" if percentile >= threshold and percentile >= catastrophic_floor else shuffle_family_blocker([percentile], int(percentile >= threshold), percentile, int(percentile < catastrophic_floor), 1.0, threshold),
+        })
+    return rows
+
+
+def subspace_distributedness_rows(target: list[SpectralMatrix], args: argparse.Namespace) -> list[dict[str, object]]:
+    rows: list[dict[str, object]] = []
+    for matrix in target:
+        weights = subspace_loading_weights(matrix, args.top_k)
+        total = float(np.sum(weights))
+        if total <= 1e-12 or not matrix.items:
+            rows.append({
+                **key_row(matrix.key),
+                "matrix_id": matrix.matrix_id,
+                "item_count": len(matrix.items),
+                "distributedness_read": "diffuse_noise_like",
+                "loading_entropy": 0.0,
+                "loading_entropy_fraction": 0.0,
+                "effective_contributing_items": 0.0,
+                "participation_ratio": 0.0,
+                "top_item_mass_share": 0.0,
+                "top_5_item_mass_share": 0.0,
+                "top_20_item_mass_share": 0.0,
+            })
+            continue
+        probs = np.asarray(weights, dtype=np.float64) / total
+        ordered = sorted((float(value) for value in probs), reverse=True)
+        entropy = -sum(value * math.log(value) for value in ordered if value > 1e-12)
+        entropy_fraction = entropy / max(1e-9, math.log(max(2, len(ordered))))
+        effective_items = math.exp(entropy)
+        participation = 1.0 / max(1e-12, sum(value * value for value in ordered))
+        top1 = ordered[0] if ordered else 0.0
+        top5 = sum(ordered[:5])
+        top20 = sum(ordered[:20])
+        rows.append({
+            **key_row(matrix.key),
+            "matrix_id": matrix.matrix_id,
+            "item_count": len(matrix.items),
+            "positive_spectral_mass": float(np.sum(matrix.eigvals[matrix.eigvals > 0])) if matrix.eigvals.size else 0.0,
+            "loading_entropy": entropy,
+            "loading_entropy_fraction": entropy_fraction,
+            "effective_contributing_items": effective_items,
+            "participation_ratio": participation,
+            "top_item_mass_share": top1,
+            "top_5_item_mass_share": top5,
+            "top_20_item_mass_share": top20,
+            "distributedness_read": distributedness_class(top1, top5, top20, effective_items, entropy_fraction, len(ordered)),
+        })
+    return rows
+
+
+def subspace_loading_weights(matrix: SpectralMatrix, top_k: int) -> np.ndarray:
+    if matrix.eigvecs.size == 0 or not matrix.items:
+        return np.zeros(0, dtype=np.float64)
+    weights = np.zeros(len(matrix.items), dtype=np.float64)
+    ordered = np.argsort(matrix.eigvals)[::-1]
+    positive_modes = [idx for idx in ordered if matrix.eigvals[idx] > 0][:top_k]
+    for mode_index in positive_modes:
+        vector = matrix.eigvecs[:, mode_index]
+        weights += abs(float(matrix.eigvals[mode_index])) * (vector ** 2)
+    return weights
+
+
+def distributedness_class(top1: float, top5: float, top20: float, effective_items: float, entropy_fraction: float, item_count: int) -> str:
+    if top1 >= 0.35 or effective_items <= 3:
+        return "item_local"
+    if top5 >= 0.65 or effective_items <= 10:
+        return "cluster_local"
+    if entropy_fraction >= 0.90 and effective_items >= 0.50 * max(1, item_count):
+        return "diffuse_noise_like"
+    if top20 < 0.80 and effective_items >= 10:
+        return "distributed"
+    return "cluster_local"
+
+
+def aggregate_distributedness_read(rows: list[dict[str, object]]) -> str:
+    if not rows:
+        return "subspace_distributedness_not_computed"
+    counts = Counter(str(row.get("distributedness_read", "")) for row in rows)
+    return counts.most_common(1)[0][0] if counts else "subspace_distributedness_not_computed"
+
+
+def subspace_control_alignment_rows(
+    selection_target: list[SpectralMatrix],
+    evaluation_target: list[SpectralMatrix],
+    evaluation_counts: dict[MatrixKey, MatrixCounts],
+    evaluation_matrices: list[SpectralMatrix],
+    args: argparse.Namespace,
+) -> list[dict[str, object]]:
+    evaluation_by_id = {matrix.matrix_id: matrix for matrix in evaluation_target}
+    context_pool = shuffled_context_pool(evaluation_matrices, evaluation_counts)
+    rows: list[dict[str, object]] = []
+    for selection_matrix in selection_target:
+        evaluation_matrix = evaluation_by_id.get(selection_matrix.matrix_id)
+        actual = alignment_payload(selection_matrix, evaluation_matrix, args.top_k)
+        actual_alignment = float_or_zero(actual.get("top_k_subspace_alignment"))
+        bucket = evaluation_counts.get(evaluation_matrix.key) if evaluation_matrix else None
+        for family in ("label_shuffle", "context_shuffle", "horizon_order_shuffle", "random_subspace_baseline"):
+            values: list[float] = []
+            statuses: list[str] = []
+            for replicate in range(max(1, int(getattr(args, "subspace_control_replicates", 3)))):
+                rng = random.Random(stable_seed(f"subspace_control|{family}|{selection_matrix.matrix_id}|{replicate}"))
+                if family == "random_subspace_baseline":
+                    payload = random_subspace_alignment_payload(selection_matrix, evaluation_matrix, args.top_k, rng)
+                else:
+                    payload = shuffled_subspace_alignment_payload(selection_matrix, evaluation_matrix, bucket, context_pool, family, args, rng)
+                statuses.append(str(payload.get("alignment_status", "")))
+                if payload.get("alignment_status") == "computed":
+                    values.append(float_or_zero(payload.get("top_k_subspace_alignment")))
+            mean_value = mean(values) if values else 0.0
+            max_value = max(values) if values else 0.0
+            std_value = pstdev(values) if len(values) > 1 else 0.0
+            above = actual.get("alignment_status") == "computed" and values and actual_alignment > max_value
+            rows.append({
+                **key_row(selection_matrix.key),
+                "matrix_id": selection_matrix.matrix_id,
+                "control_family": family,
+                "control_category": shuffle_control_category(family),
+                "actual_selection_evaluation_alignment": actual_alignment if actual.get("alignment_status") == "computed" else "",
+                "actual_alignment_status": actual.get("alignment_status", ""),
+                "control_alignment_mean": mean_value if values else "",
+                "control_alignment_std": std_value if values else "",
+                "control_alignment_max": max_value if values else "",
+                "control_computed_replicates": len(values),
+                "subspace_transfer_above_control": int(bool(above)),
+                "subspace_control_read": "subspace_transfer_above_controls" if above else "subspace_transfer_control_equivalent",
+                "control_statuses": ";".join(sorted(set(statuses))),
+            })
+    if not rows:
+        rows.append({"matrix_id": "", "control_family": "", "subspace_control_read": "subspace_control_alignment_not_computed"})
+    return rows
+
+
+def shuffled_subspace_alignment_payload(
+    selection_matrix: SpectralMatrix,
+    evaluation_matrix: SpectralMatrix | None,
+    bucket: MatrixCounts | None,
+    context_pool: dict[tuple[object, ...], list[tuple[str, tuple[str, ...]]]],
+    family: str,
+    args: argparse.Namespace,
+    rng: random.Random,
+) -> dict[str, object]:
+    if evaluation_matrix is None or bucket is None:
+        return {"alignment_status": "comparison_matrix_unavailable", "top_k_subspace_alignment": "", "aligned_item_count": 0}
+    if family == "label_shuffle":
+        contexts = label_shuffled_contexts(bucket, rng)
+    elif family == "context_shuffle":
+        contexts = sampled_contexts(context_pool.get(context_shuffle_key(evaluation_matrix.key), []), len(bucket.context_items), rng)
+    else:
+        contexts = sampled_contexts(context_pool.get(horizon_shuffle_key(evaluation_matrix.key), []), len(bucket.context_items), rng)
+    control = spectral_matrix_from_contexts(evaluation_matrix.key, contexts, args)
+    return alignment_payload(selection_matrix, control, args.top_k)
+
+
+def spectral_matrix_from_contexts(key: MatrixKey, contexts: list[tuple[str, tuple[str, ...]]], args: argparse.Namespace) -> SpectralMatrix | None:
+    bucket = MatrixCounts.empty()
+    for context_id, items in contexts:
+        add_partition_context(bucket, context_id, items)
+    matrices = build_spectral_matrices({key: bucket}, args)
+    return matrices[0] if matrices else None
+
+
+def random_subspace_alignment_payload(
+    selection_matrix: SpectralMatrix,
+    evaluation_matrix: SpectralMatrix | None,
+    top_k: int,
+    rng: random.Random,
+) -> dict[str, object]:
+    common = sorted(set(selection_matrix.items) & (set(evaluation_matrix.items) if evaluation_matrix else set(selection_matrix.items)))
+    if len(common) < max(2, top_k):
+        return {"alignment_status": "insufficient_common_items", "top_k_subspace_alignment": "", "aligned_item_count": len(common)}
+    left_sub = submatrix(selection_matrix, common)
+    left_vals, left_vecs = np.linalg.eigh(left_sub)
+    k = min(top_k, len(common), left_vecs.shape[1])
+    u = left_vecs[:, np.argsort(np.abs(left_vals))[-k:]]
+    random_matrix = np.asarray([[rng.gauss(0.0, 1.0) for _col in range(k)] for _row in range(len(common))], dtype=np.float64)
+    q, _r = np.linalg.qr(random_matrix)
+    v = q[:, :k]
+    alignment = float(np.linalg.norm(u.T @ v, ord="fro") ** 2 / max(1, k))
+    return {"alignment_status": "computed", "top_k_subspace_alignment": alignment, "aligned_item_count": len(common)}
+
+
+def aggregate_subspace_control_status(rows: list[dict[str, object]]) -> str:
+    computed = [row for row in rows if row.get("actual_alignment_status") == "computed" and int(float_or_zero(row.get("control_computed_replicates"))) > 0]
+    if not computed:
+        return "subspace_control_alignment_not_computed"
+    structure = [row for row in computed if row.get("control_category") == "structure_destroying_control"]
+    basis = structure or computed
+    passed = sum(1 for row in basis if int(float_or_zero(row.get("subspace_transfer_above_control"))) == 1)
+    return "subspace_transfer_above_controls" if passed >= max(1, math.ceil(len(basis) / 2)) else "subspace_transfer_control_equivalent"
+
+
+def next_action_fork_rows(
+    control_summary: list[dict[str, object]],
+    mapping_coverage: list[dict[str, object]],
+    ablation_decision: list[dict[str, object]],
+    subspace_rows: list[dict[str, object]],
+    subspace_control_rows: list[dict[str, object]],
+    args: argparse.Namespace,
+) -> list[dict[str, object]]:
+    shuffle_read = shuffle_status(control_summary, args)
+    mapping_read = mapping_status(mapping_coverage, args.mapping_mass_threshold)
+    ablation_read = str(ablation_decision[0].get("decision_class", "")) if ablation_decision else ""
+    subspace_read = subspace_transfer_status(subspace_rows)
+    control_read = aggregate_subspace_control_status(subspace_control_rows)
+    if shuffle_read != "spectral_shuffle_controls_passed":
+        action = "repair_shuffle_controls"
+        reason = "structure_destroying_shuffle_controls_not_passed"
+    elif subspace_read == "subspace_transfers" and control_read == "subspace_transfer_above_controls" and ablation_read != "high_loading_ablation_specific":
+        action = "run_subspace_ablation_smoke"
+        reason = "subspace_transfers_above_controls_but_items_not_specific"
+    elif ablation_read != "high_loading_ablation_specific":
+        action = "run_item_ablation_repair"
+        reason = "item_local_ablation_not_specific"
+    elif mapping_read != "spectral_item_mapping_adequate":
+        action = "write_spectral_measurement_limits_note"
+        reason = "mapping_insufficient_for_graph_path"
+    elif ablation_read == "high_loading_ablation_specific":
+        action = "prepare_graph_perturbation_spec"
+        reason = "controls_mapping_and_item_ablation_passed"
+    else:
+        action = "write_spectral_measurement_limits_note"
+        reason = "no_interpretable_next_experimental_path"
+    return [{
+        "next_action_fork": action,
+        "fork_reason": reason,
+        "shuffle_status": shuffle_read,
+        "mapping_status": mapping_read,
+        "ablation_status": ablation_read,
+        "subspace_transfer_status": subspace_read,
+        "subspace_control_alignment_status": control_read,
+    }]
 
 
 def subspace_transfer_status(rows: list[dict[str, object]]) -> str:
@@ -2415,10 +2697,10 @@ def readiness_level_rows(
     ablation_pass = bool(ablation_decision) and ablation_decision[0].get("decision_class") == "high_loading_ablation_specific"
     tiny_pass = tiny_perturbation_status(perturbation_summary) == "tiny_channel_perturbation_implemented"
     rows = [
-        readiness_row("ready_for_larger_spectral_control_run", shuffle_pass, "shuffle_family_controls_passed", "shuffle_family_controls_not_passed"),
-        readiness_row("ready_for_larger_analysis_only_channel_run", shuffle_pass and mapping_pass and split_pass, "shuffle_mapping_and_split_passed", first_blocker((shuffle_pass, "shuffle_failed"), (mapping_pass, "mapping_failed"), (split_pass, "selection_evaluation_split_required"))),
-        readiness_row("ready_for_tiny_graph_channel_perturbation", shuffle_pass and mapping_pass and split_pass and ablation_pass, "ablation_specific_on_evaluation_partition", first_blocker((shuffle_pass, "shuffle_failed"), (mapping_pass, "mapping_failed"), (split_pass, "selection_evaluation_split_required"), (ablation_pass, str(ablation_decision[0].get("ablation_failure_reason", "ablation_not_specific")) if ablation_decision else "ablation_not_specific"))),
-        readiness_row("ready_for_larger_graph_channel_run", shuffle_pass and mapping_pass and split_pass and ablation_pass and tiny_pass, "tiny_targeted_vs_random_perturbation_passed", first_blocker((shuffle_pass, "shuffle_failed"), (mapping_pass, "mapping_failed"), (split_pass, "selection_evaluation_split_required"), (ablation_pass, "ablation_not_specific"), (tiny_pass, "tiny_perturbation_not_passed"))),
+        readiness_row("ready_for_larger_spectral_control_run", shuffle_pass, "structure_shuffle_controls_passed", "structure_shuffle_controls_not_passed"),
+        readiness_row("ready_for_larger_analysis_only_channel_run", shuffle_pass and mapping_pass and split_pass, "shuffle_mapping_and_split_passed", first_blocker((shuffle_pass, "structure_shuffle_failed"), (mapping_pass, "mapping_failed"), (split_pass, "selection_evaluation_split_required"))),
+        readiness_row("ready_for_tiny_graph_channel_perturbation", shuffle_pass and mapping_pass and split_pass and ablation_pass, "ablation_specific_on_evaluation_partition", first_blocker((shuffle_pass, "structure_shuffle_failed"), (mapping_pass, "mapping_failed"), (split_pass, "selection_evaluation_split_required"), (ablation_pass, str(ablation_decision[0].get("ablation_failure_reason", "ablation_not_specific")) if ablation_decision else "ablation_not_specific"))),
+        readiness_row("ready_for_larger_graph_channel_run", shuffle_pass and mapping_pass and split_pass and ablation_pass and tiny_pass, "tiny_targeted_vs_random_perturbation_passed", first_blocker((shuffle_pass, "structure_shuffle_failed"), (mapping_pass, "mapping_failed"), (split_pass, "selection_evaluation_split_required"), (ablation_pass, "ablation_not_specific"), (tiny_pass, "tiny_perturbation_not_passed"))),
     ]
     return rows
 
@@ -2453,10 +2735,14 @@ def shuffle_status(control_summary: list[dict[str, object]], args: argparse.Name
     if not control_summary:
         return "spectral_shuffle_controls_control_equivalent"
     family_rows = shuffle_family_summary(control_summary, args)
+    required_rows = [row for row in family_rows if int(row.get("family_required_for_control_gate", 1)) == 1]
+    if required_rows:
+        required_passed = all(int(row.get("family_passed", 0)) == 1 for row in required_rows)
+        catastrophic = any(int(row.get("catastrophic_fail_count", 0)) > 0 for row in required_rows)
+        return "spectral_shuffle_controls_passed" if required_passed and not catastrophic else "spectral_shuffle_controls_control_equivalent"
     passed = sum(int(row.get("family_passed", 0)) for row in family_rows)
     required = int(getattr(args, "min_shuffle_families_passed", 2)) if args is not None else 2
-    catastrophic = any(int(row.get("catastrophic_fail_count", 0)) > 0 for row in family_rows)
-    return "spectral_shuffle_controls_passed" if passed >= required and not catastrophic else "spectral_shuffle_controls_control_equivalent"
+    return "spectral_shuffle_controls_passed" if passed >= required else "spectral_shuffle_controls_control_equivalent"
 
 
 def shuffle_family_summary(control_summary: list[dict[str, object]], args: argparse.Namespace | None = None) -> list[dict[str, object]]:
@@ -2481,6 +2767,8 @@ def shuffle_family_summary(control_summary: list[dict[str, object]], args: argpa
         family_passed = bool(percentiles) and pass_fraction >= min_pass_fraction and median_percentile >= min_median and catastrophic_count == 0
         rows.append({
             "shuffle_family": family,
+            "shuffle_control_category": shuffle_control_category(family),
+            "family_required_for_control_gate": int(shuffle_family_required(family)),
             "threshold": threshold,
             "replicate_count": sum(int(float_or_zero(row.get("replicate_count"))) for row in items),
             "primary_context_count": len(percentiles),
@@ -2495,6 +2783,28 @@ def shuffle_family_summary(control_summary: list[dict[str, object]], args: argpa
             "blocking_reason": "" if family_passed else shuffle_family_blocker(percentiles, pass_fraction, median_percentile, catastrophic_count, min_pass_fraction, min_median),
         })
     return rows
+
+
+def shuffle_family_threshold(family: str, args: argparse.Namespace | None = None) -> float:
+    if family == "label_shuffle":
+        return float(getattr(args, "label_shuffle_min_percentile", 0.80)) if args is not None else 0.80
+    if family == "context_shuffle":
+        return float(getattr(args, "context_shuffle_min_percentile", 0.80)) if args is not None else 0.80
+    if family == "horizon_order_shuffle":
+        return float(getattr(args, "horizon_shuffle_min_percentile", 0.80)) if args is not None else 0.80
+    return 0.80
+
+
+def shuffle_control_category(family: str) -> str:
+    if family == "label_shuffle":
+        return "label_interpretation_control"
+    if family == "random_subspace_baseline":
+        return "random_subspace_control"
+    return "structure_destroying_control"
+
+
+def shuffle_family_required(family: str) -> bool:
+    return shuffle_control_category(family) == "structure_destroying_control"
 
 
 def shuffle_family_blocker(

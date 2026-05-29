@@ -4,14 +4,27 @@ Date: 2026-05-30
 
 ## Executive Summary
 
+Instrumentation addendum: the laptop spectral control/mapping runner was
+upgraded to instrument version `0.3.0` / schema `2026-05-30.3` to support the
+GPT-requested triage view. The addendum splits label-shuffle controls from
+required structure-destroying shuffles, emits matrix-level shuffle-failure
+anatomy, reports coflow subspace distributedness, compares subspace transfer
+against explicit controls, and emits one next-action fork.
+
+Tiny local contract validation completed cleanly: 6/6 jobs, 0 errors, 44/44
+manifest files present. The addendum does not change the scientific conclusion:
+the current local read is still `not_ready_repair_required`, with
+`structure_shuffle_controls_not_passed` and next action
+`repair_shuffle_controls`.
+
 Final status: `COMPLETED` with `all_jobs_completed`.
 
 Decision class: `not_ready_repair_required`.
 
-Blocking reason: `shuffle_family_controls_not_passed`. The first failed
-required gate was `G2 shuffle_family_thresholds`: only 1 of 3 shuffle families
-passed, below the required 2 of 3, with catastrophic primary-context failures in
-label and context shuffle families.
+Blocking reason: `structure_shuffle_controls_not_passed`. Under the v0.3.0
+contract, label shuffle is retained as a label-interpretation warning, while
+context and horizon shuffles are the required structure-destroying controls.
+The tiny contract smoke still failed the required structure gate.
 
 The run does not justify a larger spectral-control run, analysis-only channel
 run, tiny graph-channel perturbation, or larger graph-channel run.
@@ -49,6 +62,8 @@ Local output:
 
 ```text
 results/local_runs/20260530_laptop_spectral_gpt_diagnostic_smoke/
+results/local_runs/20260530_laptop_spectral_triage_contract_smoke_v2/
+results/local_runs/20260530_laptop_spectral_triage_missing_source_gate/
 ```
 
 Local forwarding bundle for external audit:
@@ -59,6 +74,61 @@ results/local_runs/20260530_laptop_spectral_gpt_forwarding_bundle.zip
 ```
 
 These paths are local-only and are not repository artifacts.
+
+## Instrumentation Addendum
+
+Implemented outputs:
+
+```text
+laptop_spectral_shuffle_failure_anatomy.csv
+laptop_subspace_distributedness_diagnostic.csv
+laptop_subspace_control_alignment.csv
+laptop_spectral_next_action_fork.csv
+```
+
+Tiny contract smoke:
+
+```text
+status: COMPLETED
+finalization_reason: all_jobs_completed
+jobs_completed: 6 / 6
+errors: 0
+instrument_version: 0.3.0
+schema_version: 2026-05-30.3
+manifest: 44 / 44 present
+spectral_shuffle_control_status: spectral_shuffle_controls_control_equivalent
+blocking_reason: structure_shuffle_controls_not_passed
+subspace_distributedness_read: diffuse_noise_like
+subspace_control_alignment_status: subspace_transfer_control_equivalent
+next_action_fork: repair_shuffle_controls
+```
+
+Addendum CSV row counts:
+
+```text
+laptop_spectral_shuffle_failure_anatomy.csv: 9
+laptop_subspace_distributedness_diagnostic.csv: 3
+laptop_subspace_control_alignment.csv: 12
+laptop_spectral_next_action_fork.csv: 1
+```
+
+Graceful-exit guard:
+
+```text
+status: PARTIAL_CONTROL_SOURCE_MISSING
+finalization_reason: missing_phase_b_control_summary_source
+jobs_requested: 0
+jobs_completed: 0
+blocking_reason: missing_source
+```
+
+Read:
+
+```text
+The tool now produces the requested triage details without pushing generated
+CSV/JSON artifacts into the repository. The smoke remains theory-work only:
+repair structure-destroying shuffle controls before graph perturbation.
+```
 
 ## Runtime And Contract
 
@@ -86,7 +156,7 @@ The local manifest reported all expected forwarding-bundle artifacts present.
 ```text
 G0 control_source_available: passed
 G1 output_contract_passed: passed
-G2 shuffle_family_thresholds: failed
+G2 structure_shuffle_family_thresholds: failed
 G3 item_mapping_mass: passed
 G4 selection_evaluation_ablation: failed
 G5 tiny_perturbation_optional: not run / optional
@@ -96,9 +166,9 @@ First failed required gate:
 
 ```text
 gate_id: G2
-gate_name: shuffle_family_thresholds
-threshold: >=2 families
-observed: 1 families
+gate_name: structure_shuffle_family_thresholds
+threshold: context and horizon structure controls pass; label shuffle reported separately
+observed: 0/2 structure families; 0/1 label families in the tiny contract smoke
 blocking_reason: primary_context_below_catastrophic_floor
 ```
 

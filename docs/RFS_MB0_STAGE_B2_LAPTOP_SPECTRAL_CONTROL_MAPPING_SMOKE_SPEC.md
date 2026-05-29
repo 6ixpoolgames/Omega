@@ -19,6 +19,9 @@ This spec is binding with these guardrails:
 8. high-loading ablation specificity must be quantitative, matched-random controlled, and multi-metric;
 9. subspace transfer must be reported separately from item-local ablation specificity.
 10. compact audit fields must use external-review names directly, not only internal aliases.
+11. label-shuffle controls are label-interpretation controls; context and horizon shuffles are the required structure-destroying controls.
+12. shuffle failures must be anatomized by matrix/probe/flow/horizon/condition before proposing graph perturbations.
+13. coflow subspace distributedness and transfer against explicit subspace controls must be reported before choosing the next fork.
 ```
 
 ## 0. Purpose
@@ -301,6 +304,8 @@ laptop_label_shuffle_spectral_smoke.csv
 laptop_context_shuffle_spectral_smoke.csv
 laptop_horizon_shuffle_spectral_smoke.csv
 laptop_spectral_shuffle_control_summary.csv
+laptop_spectral_shuffle_family_gate_summary.csv
+laptop_spectral_shuffle_failure_anatomy.csv
 laptop_spectral_shuffle_control_report.md
 ```
 
@@ -329,21 +334,29 @@ Default family thresholds:
 ```text
 label_shuffle:
   observed_percentile_vs_shuffle >= 0.80
+  category: label_interpretation_control
+  required_for_structure_gate: false
 
 context_shuffle:
   observed_percentile_vs_shuffle >= 0.80
+  category: structure_destroying_control
+  required_for_structure_gate: true
 
 horizon_order_shuffle:
   observed_percentile_vs_shuffle >= 0.80
+  category: structure_destroying_control
+  required_for_structure_gate: true
 
-minimum families passing:
-  2 / 3
+label shuffle is reported for interpretive sanity but must not be treated as
+equivalent to structure-destroying context or horizon shuffles.
 ```
 
 The report must show a row per shuffle family:
 
 ```text
 shuffle_family
+shuffle_control_category
+family_required_for_control_gate
 threshold
 replicate_count
 primary_context_count
@@ -367,8 +380,40 @@ family passes if:
   catastrophic_fail_count == 0
 
 overall shuffle smoke passes if:
-  at least 2 of 3 families pass
-  no family has a primary context below the catastrophic floor
+  context_shuffle passes
+  horizon_order_shuffle passes
+  no required structure-destroying family has a primary context below the catastrophic floor
+
+label_shuffle failure does not by itself block the structure gate, but it must
+remain visible as a label-interpretation warning.
+```
+
+Failure anatomy output:
+
+```text
+laptop_spectral_shuffle_failure_anatomy.csv
+```
+
+Required anatomy fields:
+
+```text
+matrix_id
+matrix_family
+condition_id
+probe_key
+flow_mode
+horizon_band
+shuffle_family
+shuffle_control_category
+family_required_for_control_gate
+observed_percentile_vs_shuffle
+matrix_shuffle_passed
+catastrophic_fail_flag
+item_count
+coverage
+positive_spectral_mass
+effective_rank
+blocking_reason
 ```
 
 Gate:
@@ -575,6 +620,9 @@ Outputs:
 ```text
 laptop_selection_evaluation_partition_summary.csv
 laptop_subspace_transfer_diagnostic.csv
+laptop_subspace_distributedness_diagnostic.csv
+laptop_subspace_control_alignment.csv
+laptop_spectral_next_action_fork.csv
 laptop_spectral_readiness_levels.csv
 laptop_spectral_item_ablation_manifest.csv
 laptop_high_loading_ablation_summary.csv
@@ -631,6 +679,101 @@ Subspace diagnostic:
 select top-k subspace on selection partition;
 compare alignment to top-k subspace on evaluation partition;
 report subspace_transfers, subspace_does_not_transfer, or subspace_transfer_not_computed.
+```
+
+Distributedness diagnostic:
+
+```text
+Measure whether the apparent object is item-local, cluster-local, distributed,
+or diffuse/noise-like before deciding that item ablation failure closes the
+spectral route.
+```
+
+Required distributedness fields:
+
+```text
+matrix_id
+matrix_family
+condition_id
+probe_key
+flow_mode
+horizon_band
+item_count
+positive_spectral_mass
+participation_ratio
+top_item_mass_share
+top_5_item_mass_share
+top_20_item_mass_share
+effective_contributing_items
+loading_entropy
+loading_entropy_fraction
+distributedness_read
+```
+
+Allowed distributedness reads:
+
+```text
+item_local
+cluster_local
+distributed
+diffuse_noise_like
+```
+
+Subspace control alignment:
+
+```text
+Compare selection/evaluation top-k subspace transfer against:
+  context-shuffled evaluation subspace;
+  horizon-shuffled evaluation subspace;
+  random subspace baseline;
+  label-shuffled mapping baseline.
+```
+
+Required subspace-control fields:
+
+```text
+matrix_id
+matrix_family
+condition_id
+probe_key
+flow_mode
+horizon_band
+control_family
+control_category
+actual_selection_evaluation_alignment
+actual_alignment_status
+control_alignment_mean
+control_alignment_std
+control_alignment_max
+control_computed_replicates
+subspace_transfer_above_control
+subspace_control_read
+control_statuses
+```
+
+Allowed subspace-control reads:
+
+```text
+subspace_transfer_above_controls
+subspace_transfer_control_equivalent
+subspace_control_alignment_not_computed
+```
+
+Next-action fork:
+
+```text
+The smoke must emit one explicit next-action fork so later theory work does not
+quietly slide from a failed item-local channel into a graph perturbation claim.
+```
+
+Allowed forks:
+
+```text
+repair_shuffle_controls
+run_item_ablation_repair
+run_subspace_ablation_smoke
+write_spectral_measurement_limits_note
+prepare_graph_perturbation_spec
 ```
 
 ### Stage 5: optional tiny targeted-vs-random perturbation
@@ -731,6 +874,17 @@ selection_evaluation_split_insufficient
 random_matching_weak_underdetermined
 subspace_transfers_but_items_not_specific
 subspace_does_not_transfer
+subspace_transfer_above_controls
+subspace_transfer_control_equivalent
+item_local
+cluster_local
+distributed
+diffuse_noise_like
+repair_shuffle_controls
+run_item_ablation_repair
+run_subspace_ablation_smoke
+write_spectral_measurement_limits_note
+prepare_graph_perturbation_spec
 item_specific_and_subspace_transfers
 tiny_targeted_random_perturbation_implemented
 tiny_targeted_random_perturbation_not_interpretable
@@ -770,13 +924,15 @@ Required sections:
 2. Laptop runtime profile
 3. Output contract smoke
 4. Shuffled spectral controls
-5. High-loading coflow item export
-6. Item-to-edge mapping
-7. Analysis-only ablation
-8. Optional tiny perturbation, if run
-9. Readiness levels
-10. Repairs required
-11. Output manifest
+5. Shuffle failure anatomy
+6. High-loading coflow item export
+7. Item-to-edge mapping
+8. Analysis-only ablation
+9. Distributedness and subspace-control alignment
+10. Optional tiny perturbation, if run
+11. Readiness levels
+12. Next-action fork and repairs required
+13. Output manifest
 ```
 
 The result note must explicitly answer:

@@ -10,8 +10,8 @@ from .run_focused_boundary_recurrence import write_csv
 
 
 INSTRUMENT_NAME = "rfs_mb0_stage_b2_spectral_augmented_instrument"
-INSTRUMENT_VERSION = "0.2.1"
-SCHEMA_VERSION = "2026-05-30.2"
+INSTRUMENT_VERSION = "0.3.0"
+SCHEMA_VERSION = "2026-05-30.3"
 CLAIM_BOUNDARY = (
     "No holdout scoring, no n=6 transfer, no alphabet expansion, no candidate "
     "promotion, no Omega detection, no agent detection, no identity detection, "
