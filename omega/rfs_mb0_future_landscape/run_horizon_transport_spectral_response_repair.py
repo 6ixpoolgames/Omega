@@ -37,16 +37,12 @@ from .spectral_contracts import (
 
 
 PARENT_SPEC_ID = "docs/RFS_MB0_HORIZON_TRANSPORT_SPECTRAL_RESPONSE_REPAIR_SPEC.md"
-SPEC_ID = "docs/RFS_MB0_HORIZON_TRANSPORT_MATCHED_NULL_AND_FIXTURE_SMOKE_SPEC.md"
+MATCHED_NULL_SPEC_ID = "docs/RFS_MB0_HORIZON_TRANSPORT_MATCHED_NULL_AND_FIXTURE_SMOKE_SPEC.md"
+EXPANSION_SPEC_ID = "docs/RFS_MB0_HORIZON_TRANSPORT_EXPANSION_SMOKE_SPEC.md"
 RUNNER_MODULE = "omega.rfs_mb0_future_landscape.run_horizon_transport_spectral_response_repair"
 STOP_REQUESTED = False
 
-OUTPUTS = (
-    "horizon_transport_repair_run_config.json",
-    "horizon_transport_repair_status.json",
-    "horizon_transport_repair_progress_checkpoints.csv",
-    "horizon_transport_repair_errors.csv",
-    "horizon_transport_repair_output_manifest.json",
+COMMON_OUTPUTS = (
     "horizon_transport_matrix_manifest.csv",
     "horizon_transport_row_item_manifest.csv",
     "horizon_transport_column_item_manifest.csv",
@@ -59,11 +55,15 @@ OUTPUTS = (
     "horizon_transport_detector_null_summary.csv",
     "horizon_transport_detector_null_anatomy.csv",
     "horizon_transport_detector_null_gate_results.csv",
+    "horizon_transport_matched_marginal_summary.csv",
     "horizon_transport_fixture_results.csv",
     "horizon_transport_perturbation_manifest.csv",
     "horizon_transport_response_profile_summary.csv",
     "horizon_transport_response_classification.csv",
-    "rfs_mb0_horizon_transport_spectral_response_repair_result.md",
+    "horizon_transport_by_probe_summary.csv",
+    "horizon_transport_by_flow_mode_summary.csv",
+    "horizon_transport_by_horizon_pair_summary.csv",
+    "horizon_transport_context_recommendation.csv",
 )
 
 STRUCTURE_DESTROYING_NULL_FAMILIES = (
@@ -122,6 +122,56 @@ class TransportMatrix:
     right_vectors: np.ndarray
 
 
+def run_kind(args: argparse.Namespace) -> str:
+    if args.expansion_smoke:
+        return "expansion"
+    return "repair"
+
+
+def active_spec_id(args: argparse.Namespace) -> str:
+    if args.expansion_smoke:
+        return EXPANSION_SPEC_ID
+    return MATCHED_NULL_SPEC_ID
+
+
+def artifact_prefix(kind: str) -> str:
+    return "horizon_transport_expansion" if kind == "expansion" else "horizon_transport_repair"
+
+
+def run_phase(kind: str) -> str:
+    return "rfs_mb0_horizon_transport_expansion_smoke" if kind == "expansion" else "rfs_mb0_horizon_transport_spectral_response_repair"
+
+
+def run_config_filename(kind: str) -> str:
+    return f"{artifact_prefix(kind)}_run_config.json"
+
+
+def status_filename(kind: str) -> str:
+    return f"{artifact_prefix(kind)}_status.json"
+
+
+def progress_filename(kind: str) -> str:
+    return f"{artifact_prefix(kind)}_progress_checkpoints.csv"
+
+
+def errors_filename(kind: str) -> str:
+    return f"{artifact_prefix(kind)}_errors.csv"
+
+
+def manifest_filename(kind: str) -> str:
+    return f"{artifact_prefix(kind)}_output_manifest.json"
+
+
+def report_filename(kind: str) -> str:
+    if kind == "expansion":
+        return "rfs_mb0_horizon_transport_expansion_smoke_result.md"
+    return "rfs_mb0_horizon_transport_spectral_response_repair_result.md"
+
+
+def status_run_kind(status: dict[str, object]) -> str:
+    return str(status.get("run_kind", "repair"))
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run RFS-MB0 horizon-transport spectral response repair smoke.")
     parser.add_argument("--selection", type=Path, default=Path("results/rfs_mb0_relation_atlas/20260527_boundary_recurrence_repair_batch1/focused_boundary_group_selection.csv"))
@@ -151,6 +201,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--detector-null-min-pass-fraction", type=float, default=0.50)
     parser.add_argument("--detector-null-min-percentile", type=float, default=0.80)
     parser.add_argument("--fixture-smoke", action="store_true", help="Run synthetic horizon-transport fixtures instead of empirical jobs.")
+    parser.add_argument("--expansion-smoke", action="store_true", help="Write expansion-smoke outputs and readiness labels.")
     return parser.parse_args()
 
 
@@ -161,7 +212,12 @@ def main() -> None:
     started = time.perf_counter()
     repo_root = Path(__file__).resolve().parents[2]
     args.out.mkdir(parents=True, exist_ok=True)
-    metadata = {**instrument_metadata(SPEC_ID, RUNNER_MODULE, repo_root), "parent_spec_id": PARENT_SPEC_ID}
+    kind = run_kind(args)
+    metadata = {
+        **instrument_metadata(active_spec_id(args), RUNNER_MODULE, repo_root),
+        "parent_spec_id": PARENT_SPEC_ID,
+        "matched_null_spec_id": MATCHED_NULL_SPEC_ID,
+    }
     probes = tuple(item.strip() for item in args.probes.split(",") if item.strip())
     starts = tuple(int(item.strip()) for item in args.start_samples_list.split(",") if item.strip())
     if args.fixture_smoke:
@@ -170,16 +226,20 @@ def main() -> None:
         groups, split_rows = build_holdout_split(args)
         anchors = {row.get("anchor_id", ""): row for row in read_csv(args.source_run / "atlas_band_selection.csv")}
         jobs = build_jobs(args, groups, split_rows, anchors, probes, starts)
-    write_json(args.out / "horizon_transport_repair_run_config.json", {
+    write_json(args.out / run_config_filename(kind), {
         **metadata,
         **vars(args),
         "job_count": len(jobs),
+        "run_kind": kind,
         "claim_boundary": CLAIM_BOUNDARY,
     })
     status: dict[str, object] = {
         **metadata,
         "status": "RUNNING",
-        "phase": "rfs_mb0_horizon_transport_spectral_response_repair",
+        "phase": run_phase(kind),
+        "run_kind": kind,
+        "artifact_prefix": artifact_prefix(kind),
+        "report_file": report_filename(kind),
         "started_utc": utc_now(),
         "out_dir": str(args.out),
         "jobs_requested": len(jobs),
@@ -195,8 +255,9 @@ def main() -> None:
         "candidate_promotion_enabled": False,
         "artifact_policy": LOCAL_ONLY_ARTIFACT_POLICY,
         "fixture_smoke_enabled": bool(args.fixture_smoke),
+        "expansion_smoke_enabled": bool(args.expansion_smoke),
     }
-    write_json(args.out / "horizon_transport_repair_status.json", status)
+    write_json(args.out / status_filename(kind), status)
     if args.fixture_smoke:
         rows: list[dict[str, object]] = []
         errors: list[dict[str, object]] = []
@@ -291,9 +352,10 @@ def checkpoint_row(status: dict[str, object], started: float, row_count: int, er
 
 def write_partial(out_dir: Path, status: dict[str, object], started: float, checkpoints: list[dict[str, object]], errors: list[dict[str, object]]) -> None:
     status["elapsed_seconds"] = round(time.perf_counter() - started, 3)
-    write_json(out_dir / "horizon_transport_repair_status.json", status)
-    write_csv(out_dir / "horizon_transport_repair_progress_checkpoints.csv", checkpoints)
-    write_csv(out_dir / "horizon_transport_repair_errors.csv", errors)
+    kind = status_run_kind(status)
+    write_json(out_dir / status_filename(kind), status)
+    write_csv(out_dir / progress_filename(kind), checkpoints)
+    write_csv(out_dir / errors_filename(kind), errors)
 
 
 def build_transport_matrices(rows: list[dict[str, object]], args: argparse.Namespace) -> list[TransportMatrix]:
@@ -497,6 +559,11 @@ def compute_outputs(matrices: list[TransportMatrix], rows: list[dict[str, object
     fixture_results = fixture_result_rows(null_anatomy, response_classification)
     null_gates = detector_null_gate_rows(null_summary, matrices, args, fixture_results)
     subspace_alignment = horizon_pair_alignment_rows(matrices, args)
+    matched_marginal = matched_marginal_summary_rows(null_anatomy, args)
+    context_recommendation = context_recommendation_rows(summary, matched_marginal, response_classification)
+    by_probe = aggregate_context_summary_rows(context_recommendation, ("probe_key",), "probe_key")
+    by_flow_mode = aggregate_context_summary_rows(context_recommendation, ("flow_mode",), "flow_mode")
+    by_horizon_pair = aggregate_context_summary_rows(context_recommendation, ("source_horizon_band", "target_horizon_band", "H_a", "H_b"), "horizon_pair")
     return {
         "manifest": manifest,
         "row_items": row_items,
@@ -509,11 +576,16 @@ def compute_outputs(matrices: list[TransportMatrix], rows: list[dict[str, object
         "null_anatomy": null_anatomy,
         "null_summary": null_summary,
         "null_gates": null_gates,
+        "matched_marginal": matched_marginal,
         "fixture_results": fixture_results,
         "perturb_manifest": perturb_manifest,
         "response_summary": response_summary,
         "response_classification": response_classification,
         "subspace_alignment": subspace_alignment,
+        "by_probe": by_probe,
+        "by_flow_mode": by_flow_mode,
+        "by_horizon_pair": by_horizon_pair,
+        "context_recommendation": context_recommendation,
     }
 
 
@@ -798,6 +870,143 @@ def detector_null_summary_rows(anatomy: list[dict[str, object]], args: argparse.
             "summary_read": summary_read,
         })
     return rows
+
+
+def matched_marginal_summary_rows(anatomy: list[dict[str, object]], args: argparse.Namespace) -> list[dict[str, object]]:
+    rows: list[dict[str, object]] = []
+    wanted = [
+        row for row in anatomy
+        if row.get("null_category") == "marginal_matched_detector_null"
+        and row.get("observed_statistic") == "marginal_residual_fraction"
+    ]
+    keys = ("probe_key", "flow_mode", "source_horizon_band", "target_horizon_band", "H_a", "H_b", "condition_id", "null_family")
+    for key, items in group_by(wanted, keys).items():
+        passed = [int(float_or_zero(row.get("null_gate_passed"))) for row in items]
+        percentiles = [float_or_zero(row.get("observed_percentile_vs_null")) for row in items]
+        pass_fraction = mean(passed) if passed else 0.0
+        rows.append({
+            "probe_key": key[0],
+            "flow_mode": key[1],
+            "source_horizon_band": key[2],
+            "target_horizon_band": key[3],
+            "H_a": key[4],
+            "H_b": key[5],
+            "horizon_pair": f"{key[4]}->{key[5]}",
+            "condition_id": key[6],
+            "null_family": key[7],
+            "observed_statistic": "marginal_residual_fraction",
+            "matrix_count": len({row.get("matrix_id") for row in items}),
+            "row_count": len(items),
+            "pass_fraction": pass_fraction,
+            "median_observed_percentile_vs_null": median(percentiles) if percentiles else 0.0,
+            "min_observed_percentile_vs_null": min(percentiles) if percentiles else 0.0,
+            "required_pass_fraction": args.detector_null_min_pass_fraction,
+            "summary_read": "detector_null_separates" if pass_fraction >= args.detector_null_min_pass_fraction else "detector_null_control_equivalent",
+        })
+    return rows
+
+
+def context_recommendation_rows(
+    summary: list[dict[str, object]],
+    matched_marginal: list[dict[str, object]],
+    response_classification: list[dict[str, object]],
+) -> list[dict[str, object]]:
+    context_keys = ("probe_key", "flow_mode", "source_horizon_band", "target_horizon_band", "H_a", "H_b")
+    summary_by_context = group_by(summary, context_keys)
+    marginal_by_context = group_by(matched_marginal, context_keys)
+    response_by_context = group_by(response_classification, context_keys)
+    all_contexts = set(summary_by_context) | set(marginal_by_context) | set(response_by_context)
+    rows: list[dict[str, object]] = []
+    for key in sorted(all_contexts, key=lambda item: tuple(str(part) for part in item)):
+        matrix_rows = summary_by_context.get(key, [])
+        marginal_rows = marginal_by_context.get(key, [])
+        response_rows = response_by_context.get(key, [])
+        coverage_values = [float_or_zero(row.get("coverage")) for row in matrix_rows]
+        response_counts = Counter(str(row.get("response_class", "")) for row in response_rows)
+        interpretable_responses = [
+            row for row in response_rows
+            if row.get("response_class") not in {"transport_resolution_mismatch", "transport_response_underpowered"}
+        ]
+        passed_families = {
+            str(row.get("null_family", ""))
+            for row in marginal_rows
+            if row.get("summary_read") == "detector_null_separates"
+        }
+        required_families = set(MARGINAL_MATCHED_NULL_FAMILIES)
+        matched_all = required_families <= passed_families
+        coverage_min = min(coverage_values) if coverage_values else 0.0
+        coverage_mean = mean(coverage_values) if coverage_values else 0.0
+        dominant_response = response_counts.most_common(1)[0][0] if response_counts else ""
+        if coverage_min < 0.80:
+            context_read = "transport_matrix_undercovered"
+            recommendation = "repair_or_reduce_matrix_resolution"
+        elif matched_all and interpretable_responses:
+            context_read = "matched_marginal_separates_interpretable"
+            recommendation = "candidate_for_context_narrowing"
+        elif passed_families:
+            context_read = "matched_marginal_mixed"
+            recommendation = "inspect_context_before_scaling"
+        elif response_rows:
+            context_read = "response_only_no_matched_marginal_separation"
+            recommendation = "measurement_limits_or_fixture_expansion"
+        else:
+            context_read = "context_underpowered"
+            recommendation = "increase_context_rows_or_repair"
+        rows.append({
+            "probe_key": key[0],
+            "flow_mode": key[1],
+            "source_horizon_band": key[2],
+            "target_horizon_band": key[3],
+            "H_a": key[4],
+            "H_b": key[5],
+            "horizon_pair": f"{key[4]}->{key[5]}",
+            "matrix_count": len(matrix_rows),
+            "coverage_mean": coverage_mean,
+            "coverage_min": coverage_min,
+            "matched_marginal_families_passed": len(required_families & passed_families),
+            "matched_marginal_families_required": len(required_families),
+            "matched_marginal_all_families_passed": int(matched_all),
+            "response_rows": len(response_rows),
+            "response_interpretable_rows": len(interpretable_responses),
+            "dominant_response_class": dominant_response,
+            "context_read": context_read,
+            "context_recommendation": recommendation,
+            "context_priority_score": context_priority_score(coverage_mean, matched_all, len(required_families & passed_families), len(interpretable_responses)),
+        })
+    return sorted(rows, key=lambda row: float_or_zero(row.get("context_priority_score")), reverse=True)
+
+
+def aggregate_context_summary_rows(rows: list[dict[str, object]], fields: tuple[str, ...], label: str) -> list[dict[str, object]]:
+    out: list[dict[str, object]] = []
+    for key, items in group_by(rows, fields).items():
+        coverage = [float_or_zero(row.get("coverage_min")) for row in items]
+        full_pass = [int(float_or_zero(row.get("matched_marginal_all_families_passed"))) for row in items]
+        any_pass = [1 if float_or_zero(row.get("matched_marginal_families_passed")) > 0 else 0 for row in items]
+        interpretable = [1 if float_or_zero(row.get("response_interpretable_rows")) > 0 else 0 for row in items]
+        response_counts = Counter(str(row.get("dominant_response_class", "")) for row in items if row.get("dominant_response_class"))
+        summary_read = "mixed_or_control_equivalent"
+        if full_pass and sum(full_pass) == len(items) and any(interpretable):
+            summary_read = "matched_marginal_separates"
+        elif any(full_pass):
+            summary_read = "context_specific_separation"
+        elif any(any_pass):
+            summary_read = "partial_matched_marginal_separation"
+        out.append({
+            label: "|".join(str(part) for part in key),
+            "context_count": len(items),
+            "coverage_min": min(coverage) if coverage else 0.0,
+            "coverage_mean": mean(coverage) if coverage else 0.0,
+            "matched_marginal_full_pass_contexts": sum(full_pass),
+            "matched_marginal_any_pass_contexts": sum(any_pass),
+            "response_interpretable_contexts": sum(interpretable),
+            "dominant_response_class": response_counts.most_common(1)[0][0] if response_counts else "",
+            "summary_read": summary_read,
+        })
+    return sorted(out, key=lambda row: (float_or_zero(row.get("matched_marginal_full_pass_contexts")), float_or_zero(row.get("coverage_mean"))), reverse=True)
+
+
+def context_priority_score(coverage_mean: float, matched_all: bool, marginal_family_count: int, interpretable_count: int) -> float:
+    return coverage_mean + (10.0 if matched_all else 0.0) + marginal_family_count + min(5, interpretable_count) / 10.0
 
 
 def detector_null_gate_rows(summary: list[dict[str, object]], matrices: list[TransportMatrix], args: argparse.Namespace, fixture_results: list[dict[str, object]]) -> list[dict[str, object]]:
@@ -1115,26 +1324,34 @@ def write_outputs(
     write_csv(out_dir / "horizon_transport_detector_null_summary.csv", outputs["null_summary"])
     write_csv(out_dir / "horizon_transport_detector_null_anatomy.csv", outputs["null_anatomy"])
     write_csv(out_dir / "horizon_transport_detector_null_gate_results.csv", outputs["null_gates"])
+    write_csv(out_dir / "horizon_transport_matched_marginal_summary.csv", outputs["matched_marginal"])
     write_csv(out_dir / "horizon_transport_fixture_results.csv", outputs["fixture_results"])
     write_csv(out_dir / "horizon_transport_perturbation_manifest.csv", outputs["perturb_manifest"])
     write_csv(out_dir / "horizon_transport_response_profile_summary.csv", outputs["response_summary"])
     write_csv(out_dir / "horizon_transport_response_classification.csv", outputs["response_classification"])
-    status.update(decision_fields(outputs))
+    write_csv(out_dir / "horizon_transport_by_probe_summary.csv", outputs["by_probe"])
+    write_csv(out_dir / "horizon_transport_by_flow_mode_summary.csv", outputs["by_flow_mode"])
+    write_csv(out_dir / "horizon_transport_by_horizon_pair_summary.csv", outputs["by_horizon_pair"])
+    write_csv(out_dir / "horizon_transport_context_recommendation.csv", outputs["context_recommendation"])
+    status.update(decision_fields(outputs, status))
     status["matrix_count"] = len(outputs["manifest"])
     status["detector_null_rows"] = len(outputs["null_anatomy"])
+    status["matched_marginal_summary_rows"] = len(outputs["matched_marginal"])
+    status["context_recommendation_rows"] = len(outputs["context_recommendation"])
     status["fixture_result_rows"] = len(outputs["fixture_results"])
     status["perturbation_response_rows"] = len(outputs["response_classification"])
     status["errors"] = len(errors)
     status["finished_utc"] = utc_now()
     status["elapsed_seconds"] = round(time.perf_counter() - started, 3)
-    write_csv(out_dir / "horizon_transport_repair_errors.csv", errors)
-    write_csv(out_dir / "horizon_transport_repair_progress_checkpoints.csv", checkpoints)
+    kind = status_run_kind(status)
+    write_csv(out_dir / errors_filename(kind), errors)
+    write_csv(out_dir / progress_filename(kind), checkpoints)
     write_report(out_dir, status, outputs)
-    write_manifest(out_dir)
-    write_json(out_dir / "horizon_transport_repair_status.json", status)
+    write_manifest(out_dir, status)
+    write_json(out_dir / status_filename(kind), status)
 
 
-def decision_fields(outputs: dict[str, list[dict[str, object]]]) -> dict[str, object]:
+def decision_fields(outputs: dict[str, list[dict[str, object]]], status: dict[str, object]) -> dict[str, object]:
     gates = outputs["null_gates"]
     matrix_gate = any(row.get("gate_name") == "horizon_transport_matrix_coverage" and int(float_or_zero(row.get("passed"))) for row in gates)
     null_gate = any(row.get("gate_name") == "structure_detector_null_separation" and int(float_or_zero(row.get("passed"))) for row in gates)
@@ -1145,7 +1362,9 @@ def decision_fields(outputs: dict[str, list[dict[str, object]]]) -> dict[str, ob
     fixture_gate = (not fixture_required) or all(int(float_or_zero(row.get("passed"))) for row in fixture_rows)
     response_rows = [row for row in outputs["response_classification"] if row.get("response_class") not in {"transport_resolution_mismatch", "transport_response_underpowered"}]
     response_interpretable = bool(response_rows)
-    if fixture_required and matrix_gate and null_gate and matched_marginal_gate and null_power_gate and response_interpretable and fixture_gate:
+    if status_run_kind(status) == "expansion":
+        readiness, next_action = expansion_decision(outputs, matrix_gate, null_gate, null_power_gate, matched_marginal_gate, response_interpretable)
+    elif fixture_required and matrix_gate and null_gate and matched_marginal_gate and null_power_gate and response_interpretable and fixture_gate:
         readiness = "fixture_contract_passed"
         next_action = "run_empirical_matched_null_plumbing_smoke"
     elif matrix_gate and null_gate and matched_marginal_gate and null_power_gate and response_interpretable and fixture_gate:
@@ -1170,9 +1389,13 @@ def decision_fields(outputs: dict[str, list[dict[str, object]]]) -> dict[str, ob
         "readiness_level": readiness,
         "next_action_fork": next_action,
         "ready_for_horizon_transport_smoke_expansion": int(readiness == "ready_for_horizon_transport_smoke_expansion"),
+        "ready_for_horizon_transport_scaleup": int(readiness == "ready_for_horizon_transport_scaleup"),
+        "ready_for_horizon_transport_context_narrowing": int(readiness == "ready_for_horizon_transport_context_narrowing"),
+        "ready_for_horizon_transport_fixture_expansion": int(readiness == "ready_for_horizon_transport_fixture_expansion"),
+        "measurement_limits_note_recommended": int(readiness == "measurement_limits_note_recommended"),
         "fixture_contract_passed": int(readiness == "fixture_contract_passed"),
         "ready_for_fixture_horizon_transport_tests": int(readiness == "ready_for_fixture_horizon_transport_tests"),
-        "ready_for_direct_channel_diagnostics": 0,
+        "ready_for_direct_channel_diagnostics": int(readiness == "ready_for_direct_channel_diagnostics"),
         "not_ready_repair_required": int(readiness == "not_ready_repair_required"),
         "detector_null_gate_passed": int(null_gate),
         "detector_null_replicate_powered": int(null_power_gate),
@@ -1184,15 +1407,47 @@ def decision_fields(outputs: dict[str, list[dict[str, object]]]) -> dict[str, ob
     }
 
 
+def expansion_decision(
+    outputs: dict[str, list[dict[str, object]]],
+    matrix_gate: bool,
+    null_gate: bool,
+    null_power_gate: bool,
+    matched_marginal_gate: bool,
+    response_interpretable: bool,
+) -> tuple[str, str]:
+    if not matrix_gate or not null_power_gate:
+        return "not_ready_repair_required", "repair_transport_null_controls"
+    promising = [
+        row for row in outputs["context_recommendation"]
+        if row.get("context_read") == "matched_marginal_separates_interpretable"
+    ]
+    partial = [
+        row for row in outputs["context_recommendation"]
+        if row.get("context_read") in {"matched_marginal_separates_interpretable", "matched_marginal_mixed"}
+    ]
+    if matched_marginal_gate and null_gate and response_interpretable and len(promising) >= 4:
+        return "ready_for_horizon_transport_scaleup", "expand_horizon_transport_scale"
+    if partial:
+        return "ready_for_horizon_transport_context_narrowing", "narrow_to_best_horizon_transport_context"
+    if null_gate and response_interpretable:
+        return "ready_for_horizon_transport_fixture_expansion", "build_more_horizon_transport_fixtures"
+    if matrix_gate and null_power_gate:
+        return "measurement_limits_note_recommended", "write_horizon_transport_measurement_limits_note"
+    return "not_ready_repair_required", "repair_transport_null_controls"
+
+
 def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, list[dict[str, object]]]) -> None:
     gates = outputs["null_gates"]
     response_counts = Counter(str(row.get("response_class", "")) for row in outputs["response_classification"])
+    best_context = outputs["context_recommendation"][0] if outputs["context_recommendation"] else {}
     lines = [
         "# Executive Summary",
         "",
         f"Decision: `{status.get('readiness_level', '')}`.",
         "",
         f"Next action: `{status.get('next_action_fork', '')}`.",
+        "",
+        f"Run kind: `{status.get('run_kind', '')}`.",
         "",
         f"Horizon-transport matrices built: `{status.get('matrix_count', 0)}`.",
         "",
@@ -1206,13 +1461,27 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
         "",
         f"Perturbation response interpretable: `{status.get('perturbation_response_interpretable', 0)}`.",
         "",
-        "Detector-null controls and candidate perturbation responses were written to separate outputs.",
+        f"Best context: `{context_label(best_context)}`.",
         "",
-        f"Artifact policy: {LOCAL_ONLY_ARTIFACT_POLICY}",
+        "Detector-null controls and candidate perturbation responses were written to separate outputs.",
         "",
         "## Claim Boundary",
         "",
         CLAIM_BOUNDARY,
+        "",
+        "## Run Shape and Local Artifact Policy",
+        "",
+        f"Jobs requested: `{status.get('jobs_requested', 0)}`.",
+        f"Jobs completed: `{status.get('jobs_completed', 0)}`.",
+        f"Workers: `{status.get('workers', '')}`.",
+        f"Finalization reason: `{status.get('finalization_reason', '')}`.",
+        f"Artifact policy: {LOCAL_ONLY_ARTIFACT_POLICY}",
+        "",
+        "## Matrix Coverage",
+        "",
+        f"Matrix count: `{len(outputs['manifest'])}`.",
+        f"Coverage rows: `{len(outputs['coverage'])}`.",
+        f"Minimum context coverage: `{min((float_or_zero(row.get('coverage_min')) for row in outputs['context_recommendation']), default=0.0):.3f}`.",
         "",
         "## Control Taxonomy Compliance",
         "",
@@ -1220,8 +1489,7 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
         "",
         "## Horizon-Transport Matrix Construction",
         "",
-        f"Matrix count: `{len(outputs['manifest'])}`.",
-        f"Coverage rows: `{len(outputs['coverage'])}`.",
+        "Matrix family: `horizon_transport`; spectral method: `SVD`.",
         "",
         "## Detector-Null Results",
         "",
@@ -1230,6 +1498,17 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
     ]
     for row in gates:
         lines.append(f"| {row.get('gate_name', '')} | {row.get('passed', '')} | {row.get('observed', '')} | {row.get('blocking_reason', '')} |")
+    lines.extend([
+        "",
+        "## Matched Marginal Null Results",
+        "",
+        "| null_family | contexts | mean pass_fraction | min percentile |",
+        "|---|---:|---:|---:|",
+    ])
+    for family, items in group_by(outputs["matched_marginal"], ("null_family",)).items():
+        pass_fractions = [float_or_zero(row.get("pass_fraction")) for row in items]
+        min_percentiles = [float_or_zero(row.get("min_observed_percentile_vs_null")) for row in items]
+        lines.append(f"| {family[0]} | {len(items)} | {mean(pass_fractions) if pass_fractions else 0.0:.3f} | {min(min_percentiles) if min_percentiles else 0.0:.3f} |")
     lines.extend([
         "",
         "## Fixture Results",
@@ -1252,6 +1531,44 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
         lines.append(f"| {name} | {count} |")
     lines.extend([
         "",
+        "## Probe / Flow / Horizon-Pair Context Summary",
+        "",
+        "### By Probe",
+        "",
+        "| probe | contexts | full matched pass | response contexts | read |",
+        "|---|---:|---:|---:|---|",
+    ])
+    for row in outputs["by_probe"]:
+        lines.append(f"| {row.get('probe_key', '')} | {row.get('context_count', '')} | {row.get('matched_marginal_full_pass_contexts', '')} | {row.get('response_interpretable_contexts', '')} | {row.get('summary_read', '')} |")
+    lines.extend([
+        "",
+        "### By Flow Mode",
+        "",
+        "| flow_mode | contexts | full matched pass | response contexts | read |",
+        "|---|---:|---:|---:|---|",
+    ])
+    for row in outputs["by_flow_mode"]:
+        lines.append(f"| {row.get('flow_mode', '')} | {row.get('context_count', '')} | {row.get('matched_marginal_full_pass_contexts', '')} | {row.get('response_interpretable_contexts', '')} | {row.get('summary_read', '')} |")
+    lines.extend([
+        "",
+        "### By Horizon Pair",
+        "",
+        "| horizon_pair | contexts | full matched pass | response contexts | read |",
+        "|---|---:|---:|---:|---|",
+    ])
+    for row in outputs["by_horizon_pair"]:
+        lines.append(f"| {row.get('horizon_pair', '')} | {row.get('context_count', '')} | {row.get('matched_marginal_full_pass_contexts', '')} | {row.get('response_interpretable_contexts', '')} | {row.get('summary_read', '')} |")
+    lines.extend([
+        "",
+        "## Context Recommendation",
+        "",
+        "| context | read | recommendation | score |",
+        "|---|---|---|---:|",
+    ])
+    for row in outputs["context_recommendation"][:10]:
+        lines.append(f"| {context_label(row)} | {row.get('context_read', '')} | {row.get('context_recommendation', '')} | {float_or_zero(row.get('context_priority_score')):.3f} |")
+    lines.extend([
+        "",
         "## Horizon-Pair Comparison",
         "",
         f"Subspace alignment rows: `{len(outputs['subspace_alignment'])}`.",
@@ -1259,6 +1576,10 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
         "## Readiness Levels",
         "",
         f"- ready_for_horizon_transport_smoke_expansion: `{status.get('ready_for_horizon_transport_smoke_expansion', 0)}`",
+        f"- ready_for_horizon_transport_scaleup: `{status.get('ready_for_horizon_transport_scaleup', 0)}`",
+        f"- ready_for_horizon_transport_context_narrowing: `{status.get('ready_for_horizon_transport_context_narrowing', 0)}`",
+        f"- ready_for_horizon_transport_fixture_expansion: `{status.get('ready_for_horizon_transport_fixture_expansion', 0)}`",
+        f"- measurement_limits_note_recommended: `{status.get('measurement_limits_note_recommended', 0)}`",
         f"- fixture_contract_passed: `{status.get('fixture_contract_passed', 0)}`",
         f"- ready_for_fixture_horizon_transport_tests: `{status.get('ready_for_fixture_horizon_transport_tests', 0)}`",
         f"- ready_for_direct_channel_diagnostics: `{status.get('ready_for_direct_channel_diagnostics', 0)}`",
@@ -1270,10 +1591,10 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
         "",
         "## Output Manifest",
         "",
-        "See `horizon_transport_repair_output_manifest.json`.",
+        f"See `{manifest_filename(status_run_kind(status))}`.",
         "",
     ])
-    (out_dir / "rfs_mb0_horizon_transport_spectral_response_repair_result.md").write_text("\n".join(lines), encoding="utf-8")
+    (out_dir / report_filename(status_run_kind(status))).write_text("\n".join(lines), encoding="utf-8")
 
 
 def fixture_status_text(status: dict[str, object]) -> str:
@@ -1284,13 +1605,36 @@ def fixture_status_text(status: dict[str, object]) -> str:
     return "failed"
 
 
-def write_manifest(out_dir: Path) -> None:
-    rows = output_manifest_rows(list(OUTPUTS), out_dir)
+def context_label(row: dict[str, object]) -> str:
+    if not row:
+        return "none"
+    return "|".join([
+        str(row.get("probe_key", "")),
+        str(row.get("flow_mode", "")),
+        f"{row.get('H_a', '')}->{row.get('H_b', '')}",
+    ])
+
+
+def output_files(kind: str) -> list[str]:
+    return [
+        run_config_filename(kind),
+        status_filename(kind),
+        progress_filename(kind),
+        errors_filename(kind),
+        manifest_filename(kind),
+        *COMMON_OUTPUTS,
+        report_filename(kind),
+    ]
+
+
+def write_manifest(out_dir: Path, status: dict[str, object]) -> None:
+    kind = status_run_kind(status)
+    rows = output_manifest_rows(output_files(kind), out_dir)
     for row in rows:
-        if row.get("file") == "horizon_transport_repair_output_manifest.json":
+        if row.get("file") == manifest_filename(kind):
             row["exists"] = True
             row["status"] = "present"
-    write_json(out_dir / "horizon_transport_repair_output_manifest.json", rows)
+    write_json(out_dir / manifest_filename(kind), rows)
 
 
 def transport_matrix_id(key: TransportKey) -> str:
