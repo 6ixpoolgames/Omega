@@ -1497,7 +1497,10 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
         "|---|---:|---|---|",
     ]
     for row in gates:
-        lines.append(f"| {row.get('gate_name', '')} | {row.get('passed', '')} | {row.get('observed', '')} | {row.get('blocking_reason', '')} |")
+        lines.append(
+            f"| {markdown_cell(row.get('gate_name', ''))} | {row.get('passed', '')} | "
+            f"{markdown_cell(row.get('observed', ''))} | {markdown_cell(row.get('blocking_reason', ''))} |"
+        )
     lines.extend([
         "",
         "## Matched Marginal Null Results",
@@ -1508,7 +1511,10 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
     for family, items in group_by(outputs["matched_marginal"], ("null_family",)).items():
         pass_fractions = [float_or_zero(row.get("pass_fraction")) for row in items]
         min_percentiles = [float_or_zero(row.get("min_observed_percentile_vs_null")) for row in items]
-        lines.append(f"| {family[0]} | {len(items)} | {mean(pass_fractions) if pass_fractions else 0.0:.3f} | {min(min_percentiles) if min_percentiles else 0.0:.3f} |")
+        lines.append(
+            f"| {markdown_cell(family[0])} | {len(items)} | "
+            f"{mean(pass_fractions) if pass_fractions else 0.0:.3f} | {min(min_percentiles) if min_percentiles else 0.0:.3f} |"
+        )
     lines.extend([
         "",
         "## Fixture Results",
@@ -1517,7 +1523,10 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
         "|---|---:|---|",
     ])
     for row in outputs["fixture_results"]:
-        lines.append(f"| {row.get('fixture_id', '')} | {row.get('passed', '')} | {row.get('observed', '')} |")
+        lines.append(
+            f"| {markdown_cell(row.get('fixture_id', ''))} | {row.get('passed', '')} | "
+            f"{markdown_cell(row.get('observed', ''))} |"
+        )
     if not outputs["fixture_results"]:
         lines.append("| not_run |  | fixture smoke disabled |")
     lines.extend([
@@ -1528,7 +1537,7 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
         "|---|---:|",
     ])
     for name, count in sorted(response_counts.items()):
-        lines.append(f"| {name} | {count} |")
+        lines.append(f"| {markdown_cell(name)} | {count} |")
     lines.extend([
         "",
         "## Probe / Flow / Horizon-Pair Context Summary",
@@ -1539,7 +1548,11 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
         "|---|---:|---:|---:|---|",
     ])
     for row in outputs["by_probe"]:
-        lines.append(f"| {row.get('probe_key', '')} | {row.get('context_count', '')} | {row.get('matched_marginal_full_pass_contexts', '')} | {row.get('response_interpretable_contexts', '')} | {row.get('summary_read', '')} |")
+        lines.append(
+            f"| {markdown_cell(row.get('probe_key', ''))} | {row.get('context_count', '')} | "
+            f"{row.get('matched_marginal_full_pass_contexts', '')} | {row.get('response_interpretable_contexts', '')} | "
+            f"{markdown_cell(row.get('summary_read', ''))} |"
+        )
     lines.extend([
         "",
         "### By Flow Mode",
@@ -1548,7 +1561,11 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
         "|---|---:|---:|---:|---|",
     ])
     for row in outputs["by_flow_mode"]:
-        lines.append(f"| {row.get('flow_mode', '')} | {row.get('context_count', '')} | {row.get('matched_marginal_full_pass_contexts', '')} | {row.get('response_interpretable_contexts', '')} | {row.get('summary_read', '')} |")
+        lines.append(
+            f"| {markdown_cell(row.get('flow_mode', ''))} | {row.get('context_count', '')} | "
+            f"{row.get('matched_marginal_full_pass_contexts', '')} | {row.get('response_interpretable_contexts', '')} | "
+            f"{markdown_cell(row.get('summary_read', ''))} |"
+        )
     lines.extend([
         "",
         "### By Horizon Pair",
@@ -1557,7 +1574,11 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
         "|---|---:|---:|---:|---|",
     ])
     for row in outputs["by_horizon_pair"]:
-        lines.append(f"| {row.get('horizon_pair', '')} | {row.get('context_count', '')} | {row.get('matched_marginal_full_pass_contexts', '')} | {row.get('response_interpretable_contexts', '')} | {row.get('summary_read', '')} |")
+        lines.append(
+            f"| {markdown_cell(row.get('horizon_pair', ''))} | {row.get('context_count', '')} | "
+            f"{row.get('matched_marginal_full_pass_contexts', '')} | {row.get('response_interpretable_contexts', '')} | "
+            f"{markdown_cell(row.get('summary_read', ''))} |"
+        )
     lines.extend([
         "",
         "## Context Recommendation",
@@ -1566,7 +1587,10 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
         "|---|---|---|---:|",
     ])
     for row in outputs["context_recommendation"][:10]:
-        lines.append(f"| {context_label(row)} | {row.get('context_read', '')} | {row.get('context_recommendation', '')} | {float_or_zero(row.get('context_priority_score')):.3f} |")
+        lines.append(
+            f"| {markdown_cell(context_label(row))} | {markdown_cell(row.get('context_read', ''))} | "
+            f"{markdown_cell(row.get('context_recommendation', ''))} | {float_or_zero(row.get('context_priority_score')):.3f} |"
+        )
     lines.extend([
         "",
         "## Horizon-Pair Comparison",
@@ -1613,6 +1637,10 @@ def context_label(row: dict[str, object]) -> str:
         str(row.get("flow_mode", "")),
         f"{row.get('H_a', '')}->{row.get('H_b', '')}",
     ])
+
+
+def markdown_cell(value: object) -> str:
+    return str(value).replace("|", "\\|").replace("\n", " ")
 
 
 def output_files(kind: str) -> list[str]:
