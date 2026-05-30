@@ -20,7 +20,7 @@ The active empirical question is currently narrower than agency, identity, or va
 
 Current status, in one line:
 
-**VAL0/VAL1 were useful reconnaissance probes; RFS-MB0 has moved from endpoint support/distribution deformation to frontier-transform and horizon-transport instrumentation. The latest horizon-transport scaleups passed matched-marginal instrument gates and showed a graded transition from stable tiny responses toward high-alignment mass-growth/control-equivalent responses in mid/downstream horizons. This is still not a scientific gate pass, candidate promotion, or Omega/agency/value claim.**
+**VAL0/VAL1 were useful reconnaissance probes; RFS-MB0 has moved from endpoint support/distribution deformation to frontier-transform and horizon-transport instrumentation. The latest H128 horizon-transport scaleup passed matched-marginal instrument gates and exposed a stable-to-amplified-aligned response surface across horizon depth and perturbation strength. This is still not a scientific gate pass, candidate promotion, or Omega/agency/value claim.**
 
 ## Workflow: human-directed, AI-assisted research
 
@@ -169,6 +169,7 @@ spectral future-field geometry smoke
 horizon-transport matched-null fixture repair
 horizon-transport expansion smoke
 horizon-transport response-resolution scaleup
+horizon-transport response-surface H128 scaleup
 ```
 
 Current interpretation:
@@ -207,20 +208,20 @@ channel-edge prep:
 
 horizon transport:
   row/column/bimarginal matched nulls and synthetic fixtures run; the
-  response-resolution scaleups completed cleanly with full matrix coverage and
-  matched marginal separation across both required probes/flow modes; tiny
-  perturbations remain mostly stable, while p0.015/p0.02 ladders produce
-  high-alignment mass-growth/control-equivalent departures in mid/downstream
-  horizon transport
+  response-surface H128 scaleup completed cleanly with full matrix coverage,
+  matched marginal separation across both required probes/flow modes, 8/8
+  response fixtures passing, no terminal-saturation flags, and a clear
+  stable-to-amplified-aligned horizon response surface
 
 next task:
-  improve response-profile resolution with fixtures and compact reporting
-  before opening holdout, graph perturbation, direct channel diagnostics, or
-  candidate promotion
+  write a horizon-transport theory/instrument note before opening holdout,
+  graph perturbation, direct channel diagnostics, or candidate promotion
 ```
 
 Important current docs:
 
+- [Horizon-transport response-surface H128 scaleup result](docs/research_notes/validation_results/rfs_mb0_horizon_transport_response_surface_h128_scaleup_result.md)
+- [Horizon-transport response-surface H128 scaleup spec](docs/RFS_MB0_HORIZON_TRANSPORT_RESPONSE_SURFACE_H128_SCALEUP_SPEC.md)
 - [Horizon-transport response-resolution scaleup result](docs/research_notes/validation_results/rfs_mb0_horizon_transport_response_resolution_scaleup_result.md)
 - [Horizon-transport expansion smoke result](docs/research_notes/validation_results/rfs_mb0_horizon_transport_expansion_smoke_result.md)
 - [Horizon-transport expansion smoke spec](docs/RFS_MB0_HORIZON_TRANSPORT_EXPANSION_SMOKE_SPEC.md)

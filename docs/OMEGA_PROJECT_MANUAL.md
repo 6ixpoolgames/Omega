@@ -351,6 +351,7 @@ Latest result:
 docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_future_field_geometry_smoke_result.md
 docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_channel_edge_smoke_repair_prep_result.md
 docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_channel_high_loading_repair_result.md
+docs/research_notes/validation_results/rfs_mb0_horizon_transport_response_surface_h128_scaleup_result.md
 docs/research_notes/validation_results/rfs_mb0_horizon_transport_response_resolution_scaleup_result.md
 docs/research_notes/validation_results/rfs_mb0_horizon_transport_expansion_smoke_result.md
 docs/research_notes/validation_results/rfs_mb0_stage_b2_exploratory_iteration_pass_result.md
@@ -374,7 +375,10 @@ directional horizon-transport matrices; row/column/bimarginal matched nulls,
 fixtures, and committed-input scaleups now pass instrument gates. Tiny
 perturbations remain mostly stable, while stronger nonlethal p0.015/p0.02
 ladders produce high-alignment mass-growth/control-equivalent departures in
-mid/downstream horizon transport. The next task is response-profile resolution,
+mid/downstream horizon transport. The H128 response-surface scaleup then
+resolved this into a stable-to-amplified-aligned horizon response surface with
+8/8 response fixtures passing, matched marginal separation to H128, and no
+terminal-saturation flags. The next task is a horizon-transport theory note,
 not holdout, graph-channel diagnostics, or candidate promotion.
 ```
 

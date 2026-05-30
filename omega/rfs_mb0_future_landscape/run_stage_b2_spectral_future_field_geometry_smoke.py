@@ -404,14 +404,15 @@ def run_job(job: dict[str, object], max_items_per_context: int) -> tuple[list[di
     control = make_stage_b2_control_system(baseline, job, seed, params)  # type: ignore[arg-type]
     probe, alphabet_size, probe_group = build_probe(control, str(job["probe_key"]), str(job["source_probe_family"]))
     starts = [control.states[(seed + i * 17) % len(control.states)] for i in range(int(job["start_samples"]))]
-    horizons = sorted({h for window in WINDOWS for h in window})
+    windows = job_windows(job)
+    horizons = sorted({h for window in windows for h in window})
     contexts: list[dict[str, object]] = []
     rows: list[dict[str, object]] = []
     row_kind = "baseline" if job.get("actual_control_name") == BASELINE_CONTROL else "mechanism_control"
     common = common_condition_fields(job, baseline.system_id, control.system_id)
     for start_index, start in enumerate(starts):
         frontiers = {h: exact_frontier(control, start, h) for h in horizons}
-        for ha, hb in WINDOWS:
+        for ha, hb in windows:
             cofrontier_items = frontier_signature_items(frontiers[hb], probe, max_items_per_context)
             contexts.append(context_record(job, start_index, f"{ha}->{hb}", ha, hb, "cofrontier", "frontier", cofrontier_items))
             for flow_mode in FLOW_MODES:
@@ -423,6 +424,21 @@ def run_job(job: dict[str, object], max_items_per_context: int) -> tuple[list[di
                 edge_counts, edge_samples = transition_item_edge_map(control, probe, frontiers[ha], frontiers[hb], flow_mode)
                 contexts.append(context_record(job, start_index, f"{ha}->{hb}", ha, hb, "coflow", flow_mode, transition_items, edge_counts, edge_samples))
     return contexts, rows
+
+
+def job_windows(job: dict[str, object]) -> tuple[tuple[int, int], ...]:
+    raw = job.get("horizon_pairs")
+    if not raw:
+        return WINDOWS
+    out: list[tuple[int, int]] = []
+    for item in raw:  # type: ignore[assignment]
+        if isinstance(item, str):
+            left, right = item.split("->", 1)
+            out.append((int(left), int(right)))
+        else:
+            left, right = item  # type: ignore[misc]
+            out.append((int(left), int(right)))
+    return tuple(out) or WINDOWS
 
 
 def common_condition_fields(job: dict[str, object], baseline_system_id: str, control_system_id: str) -> dict[str, object]:

@@ -7,6 +7,86 @@ run.
 Entries are organized in rough reverse chronological order, with the most recent
 patch notes at the top.
 
+## 2026-05-31
+
+### RFS-MB0 Horizon-Transport Response Surface H128 Scaleup
+
+Implemented the H128 response-surface instrumentation requested by
+`docs/RFS_MB0_HORIZON_TRANSPORT_RESPONSE_SURFACE_H128_SCALEUP_SPEC.md`.
+
+Retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_horizon_transport_response_surface_h128_scaleup_result.md`
+
+Local validation outputs:
+
+- `results/local_runs/20260531_h128_response_fixture_smoke_v4_status_field/`
+- `results/local_runs/20260531_h128_regenerated_boundary_selection_top64/`
+- `results/local_runs/20260531_h128_regenerated_detector_instrumentation_top28/`
+- `results/local_runs/20260531_h128_response_surface_tiny_smoke/`
+- `results/local_runs/20260531_h128_response_surface_regenerated_scaleup/`
+
+Instrumentation added:
+
+```text
+H128 horizon-pair support
+transport_amplified_aligned response class
+expanded response fixtures for amplified/weakened/rerouted/reopened classes
+response flags output
+response class by strength/horizon output
+horizon response threshold table
+terminal saturation diagnostics
+H128-specific run/status/report filenames
+```
+
+Fixture status:
+
+```text
+8 / 8 passed
+```
+
+Scoped input regeneration:
+
+```text
+focused groups selected: 28
+corrected groups: 28
+upstream focused recurrence jobs: 1344 / 1344
+upstream errors: 0
+```
+
+H128 scaleup:
+
+```text
+status: COMPLETED
+workers: 18
+jobs_completed: 11520 / 11520
+elapsed_seconds: 2196.206
+errors: 0
+matrix_count: 660
+null_replicates: 15
+matched marginal detector-null separation: passed, 3/3 families
+terminal_saturation_flagged_rows: 0 / 660
+```
+
+Response read:
+
+```text
+transport_stable: 235
+transport_amplified_aligned: 381
+```
+
+Interpretation:
+
+```text
+H128 exposes a clean horizon-dependent amplification surface. Short horizons
+remain stable; middle/deep horizons become amplified-aligned; the first
+nonstable horizon moves earlier as perturbation strength rises. The full
+scaleup did not produce weakened, rerouted, reopened, collapsed, or
+control-equivalent empirical rows. The next action fork is
+write_horizon_transport_theory_note, still without holdout, graph-channel
+diagnostics, candidate promotion, or Omega/agency/value claims.
+```
+
 ## 2026-05-30
 
 ### RFS-MB0 Horizon-Transport Response-Resolution Scaleup

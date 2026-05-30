@@ -19,6 +19,7 @@ Directory:
 Current entry points:
 
 - `RFS_MB0_HORIZON_TRANSPORT_MATCHED_NULL_AND_FIXTURE_SMOKE_SPEC.md`
+- `RFS_MB0_HORIZON_TRANSPORT_RESPONSE_SURFACE_H128_SCALEUP_SPEC.md`
 - `RFS_MB0_HORIZON_TRANSPORT_EXPANSION_SMOKE_SPEC.md`
 - `RFS_MB0_HORIZON_TRANSPORT_SPECTRAL_RESPONSE_REPAIR_SPEC.md`
 - `RFS_MB0_STAGE_B2_LAPTOP_SPECTRAL_CONTROL_MAPPING_SMOKE_SPEC.md`
@@ -49,8 +50,9 @@ Status:
   bundles, saturation diagnostics, and long-horizon audit support through
   H1024;
 - the current scientific gate is not passed; horizon transport has passed
-  instrument-scale matched-marginal gates, but response-profile resolution is
-  still incomplete and no holdout/candidate/Omega claim is open;
+  instrument-scale matched-marginal gates through H128 and exposed a
+  stable-to-amplified-aligned response surface, but no holdout/candidate/Omega
+  claim is open;
 - VAL0-G and VAL1-MF are reconnaissance evidence for viability dynamics and
   substrate limitations;
 - VAL0-CT showed reproducible anchor wins and clean dense controls, but no
@@ -71,6 +73,7 @@ Directory:
 
 Current result notes:
 
+- `rfs_mb0_horizon_transport_response_surface_h128_scaleup_result.md`
 - `rfs_mb0_horizon_transport_response_resolution_scaleup_result.md`
 - `rfs_mb0_horizon_transport_expansion_smoke_result.md`
 - `rfs_mb0_horizon_transport_matched_null_fixture_smoke_result.md`
@@ -126,6 +129,14 @@ Result in one line:
   high-alignment mass-growth/control-equivalent responses in mid/downstream
   horizon transport. The next action is response-profile fixture/reporting
   resolution, not graph-channel diagnostics or holdout.
+- The H128 response-surface scaleup added response fixtures, terminal
+  saturation diagnostics, and a horizon threshold table. A regenerated-input
+  `11520 / 11520` job design-set run completed with `0` errors, `8 / 8`
+  response fixtures passing, matched marginal separation to `H=128`, and no
+  terminal-saturation flags. The full run emitted `transport_stable` and
+  `transport_amplified_aligned` only; first amplification moved earlier as
+  perturbation strength rose. The next action is a horizon-transport theory
+  note, not holdout or candidate promotion.
 - The desktop Phase B / Stage A / Stage B branch shifted the current live
   empirical hook from marginal recurrence toward preregistered joint signed
   syndromes. Stage B-2 is now implemented as a preservation-first mechanism
@@ -1468,6 +1479,32 @@ Result in one line:
   p0.015/p0.02 perturbations produced high-alignment mass-growth
   `transport_control_equivalent` responses in mid/downstream horizon transport,
   but still no weakened, rerouted, reopened, or collapsed response classes.
+
+### RFS-MB0 Horizon-Transport Response Surface H128 Scaleup
+
+Directory:
+
+- `results/local_runs/20260531_h128_response_surface_regenerated_scaleup/`
+
+Primary retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_horizon_transport_response_surface_h128_scaleup_result.md`
+
+Reason retained:
+
+- This is the first H128 response-surface pass after response taxonomy repair.
+  It adds H128 horizon pairs, `transport_amplified_aligned`, expanded response
+  fixtures, terminal saturation diagnostics, response flags, strength/horizon
+  class tables, and horizon threshold reporting.
+
+Result in one line:
+
+- The regenerated-input design-set run completed `11520 / 11520` jobs with `0`
+  errors, `15` null replicates, `8 / 8` response fixtures passing, matched
+  marginal detector-null separation through `H=128`, and `0 / 660` terminal
+  saturation flags; empirical responses were `transport_stable` at short
+  horizons and `transport_amplified_aligned` at middle/deep horizons, with the
+  first amplified horizon moving earlier as perturbation strength increased.
 
 The important public caveat:
 

@@ -39,8 +39,11 @@ from .spectral_contracts import (
 PARENT_SPEC_ID = "docs/RFS_MB0_HORIZON_TRANSPORT_SPECTRAL_RESPONSE_REPAIR_SPEC.md"
 MATCHED_NULL_SPEC_ID = "docs/RFS_MB0_HORIZON_TRANSPORT_MATCHED_NULL_AND_FIXTURE_SMOKE_SPEC.md"
 EXPANSION_SPEC_ID = "docs/RFS_MB0_HORIZON_TRANSPORT_EXPANSION_SMOKE_SPEC.md"
+H128_SPEC_ID = "docs/RFS_MB0_HORIZON_TRANSPORT_RESPONSE_SURFACE_H128_SCALEUP_SPEC.md"
 RUNNER_MODULE = "omega.rfs_mb0_future_landscape.run_horizon_transport_spectral_response_repair"
 STOP_REQUESTED = False
+DEFAULT_HORIZON_PAIRS = ((0, 1), (1, 2), (2, 4), (4, 8), (8, 16), (16, 24), (24, 32))
+H128_HORIZON_PAIRS = (*DEFAULT_HORIZON_PAIRS, (32, 48), (48, 64), (64, 96), (96, 128))
 
 COMMON_OUTPUTS = (
     "horizon_transport_matrix_manifest.csv",
@@ -60,6 +63,12 @@ COMMON_OUTPUTS = (
     "horizon_transport_perturbation_manifest.csv",
     "horizon_transport_response_profile_summary.csv",
     "horizon_transport_response_classification.csv",
+    "horizon_transport_response_flags.csv",
+    "response_class_by_strength_and_horizon_pair.csv",
+    "horizon_response_threshold_table.csv",
+    "horizon_transport_terminal_saturation_summary.csv",
+    "horizon_transport_saturation_by_horizon_pair.csv",
+    "horizon_transport_response_fixture_summary.csv",
     "horizon_transport_by_probe_summary.csv",
     "horizon_transport_by_flow_mode_summary.csv",
     "horizon_transport_by_horizon_pair_summary.csv",
@@ -85,7 +94,9 @@ DETECTOR_NULL_FAMILIES = (
 )
 DETECTOR_STATISTICS = (
     "positive_or_nonzero_spectral_mass",
+    "singular_spectral_mass",
     "effective_rank",
+    "singular_effective_rank",
     "transport_concentration",
     "marginal_residual_fraction",
 )
@@ -123,22 +134,30 @@ class TransportMatrix:
 
 
 def run_kind(args: argparse.Namespace) -> str:
+    if args.h128_scaleup:
+        return "h128"
     if args.expansion_smoke:
         return "expansion"
     return "repair"
 
 
 def active_spec_id(args: argparse.Namespace) -> str:
+    if args.h128_scaleup:
+        return H128_SPEC_ID
     if args.expansion_smoke:
         return EXPANSION_SPEC_ID
     return MATCHED_NULL_SPEC_ID
 
 
 def artifact_prefix(kind: str) -> str:
+    if kind == "h128":
+        return "horizon_transport_h128"
     return "horizon_transport_expansion" if kind == "expansion" else "horizon_transport_repair"
 
 
 def run_phase(kind: str) -> str:
+    if kind == "h128":
+        return "rfs_mb0_horizon_transport_response_surface_h128_scaleup"
     return "rfs_mb0_horizon_transport_expansion_smoke" if kind == "expansion" else "rfs_mb0_horizon_transport_spectral_response_repair"
 
 
@@ -163,6 +182,8 @@ def manifest_filename(kind: str) -> str:
 
 
 def report_filename(kind: str) -> str:
+    if kind == "h128":
+        return "rfs_mb0_horizon_transport_response_surface_h128_scaleup_result.md"
     if kind == "expansion":
         return "rfs_mb0_horizon_transport_expansion_smoke_result.md"
     return "rfs_mb0_horizon_transport_spectral_response_repair_result.md"
@@ -202,6 +223,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--detector-null-min-percentile", type=float, default=0.80)
     parser.add_argument("--fixture-smoke", action="store_true", help="Run synthetic horizon-transport fixtures instead of empirical jobs.")
     parser.add_argument("--expansion-smoke", action="store_true", help="Write expansion-smoke outputs and readiness labels.")
+    parser.add_argument("--h128-scaleup", action="store_true", help="Write H128 response-surface outputs and readiness labels.")
+    parser.add_argument("--horizon-pairs", type=str, default="", help="Comma-separated horizon pairs like 0->1,1->2. Defaults to H128 pairs when --h128-scaleup is set, otherwise H32 pairs.")
     return parser.parse_args()
 
 
@@ -219,17 +242,20 @@ def main() -> None:
     }
     probes = tuple(item.strip() for item in args.probes.split(",") if item.strip())
     starts = tuple(int(item.strip()) for item in args.start_samples_list.split(",") if item.strip())
+    horizon_pairs = parse_horizon_pairs(args.horizon_pairs, use_h128=args.h128_scaleup)
     if args.fixture_smoke:
         jobs: list[dict[str, object]] = []
     else:
         groups, split_rows = build_holdout_split(args)
         anchors = {row.get("anchor_id", ""): row for row in read_csv(args.source_run / "atlas_band_selection.csv")}
         jobs = build_jobs(args, groups, split_rows, anchors, probes, starts)
+        attach_horizon_pairs(jobs, horizon_pairs)
     write_json(args.out / run_config_filename(kind), {
         **metadata,
         **vars(args),
         "job_count": len(jobs),
         "run_kind": kind,
+        "horizon_pairs": [f"{left}->{right}" for left, right in horizon_pairs],
         "claim_boundary": CLAIM_BOUNDARY,
     })
     status: dict[str, object] = {
@@ -255,6 +281,8 @@ def main() -> None:
         "artifact_policy": LOCAL_ONLY_ARTIFACT_POLICY,
         "fixture_smoke_enabled": bool(args.fixture_smoke),
         "expansion_smoke_enabled": bool(args.expansion_smoke),
+        "h128_scaleup_enabled": bool(args.h128_scaleup),
+        "horizon_pairs": [f"{left}->{right}" for left, right in horizon_pairs],
     }
     write_json(args.out / status_filename(kind), status)
     if args.fixture_smoke:
@@ -281,6 +309,25 @@ def install_signal_handlers() -> None:
         signum = getattr(signal, name, None)
         if signum is not None:
             signal.signal(signum, handle_stop)
+
+
+def parse_horizon_pairs(raw: str, *, use_h128: bool) -> tuple[tuple[int, int], ...]:
+    if not raw.strip():
+        return H128_HORIZON_PAIRS if use_h128 else DEFAULT_HORIZON_PAIRS
+    pairs: list[tuple[int, int]] = []
+    for item in raw.split(","):
+        value = item.strip()
+        if not value:
+            continue
+        left, right = value.split("->", 1)
+        pairs.append((int(left.strip()), int(right.strip())))
+    return tuple(pairs) or (H128_HORIZON_PAIRS if use_h128 else DEFAULT_HORIZON_PAIRS)
+
+
+def attach_horizon_pairs(jobs: list[dict[str, object]], horizon_pairs: tuple[tuple[int, int], ...]) -> None:
+    serializable_pairs = tuple((int(left), int(right)) for left, right in horizon_pairs)
+    for job in jobs:
+        job["horizon_pairs"] = serializable_pairs
 
 
 def run_jobs(
@@ -463,6 +510,8 @@ def build_fixture_matrices() -> list[TransportMatrix]:
     corridor_cols = ["stable_open", "stable_side", "stable_reentry", "stable_sink"]
     trap_rows = ["trap_entry", "trap_loop", "trap_exit", "trap_recovery"]
     trap_cols = ["downstream_entry", "downstream_loop", "downstream_exit", "downstream_recovery"]
+    response_rows = [f"r{i}" for i in range(8)]
+    response_cols = [f"c{i}" for i in range(8)]
     fixtures = [
         (
             TransportKey("fixture_block_transport_signal", BASELINE_CONTROL, 0.0, "fixture_block_probe", "fixture_flow", "middle", "middle", 4, 16),
@@ -530,6 +579,126 @@ def build_fixture_matrices() -> list[TransportMatrix]:
                 [0, 0, 0.6, 2.0],
             ], dtype=np.float64),
         ),
+        (
+            TransportKey("fixture_amplified_aligned_baseline", BASELINE_CONTROL, 0.0, "fixture_amplified_probe", "fixture_flow", "middle", "downstream", 16, 24),
+            response_rows,
+            response_cols,
+            np.asarray([
+                [12, 2, 1, 0, 0, 0, 0, 0],
+                [2, 10, 1, 0, 0, 0, 0, 0],
+                [1, 1, 8, 1, 0, 0, 0, 0],
+                [0, 0, 1, 6, 1, 0, 0, 0],
+                [0, 0, 0, 1, 5, 1, 0, 0],
+                [0, 0, 0, 0, 1, 4, 1, 0],
+                [0, 0, 0, 0, 0, 1, 3, 1],
+                [0, 0, 0, 0, 0, 0, 1, 2],
+            ], dtype=np.float64),
+        ),
+        (
+            TransportKey("fixture_amplified_aligned_response", "fixture_nonlethal_amplify", 0.20, "fixture_amplified_probe", "fixture_flow", "middle", "downstream", 16, 24),
+            response_rows,
+            response_cols,
+            np.asarray([
+                [15.6, 2.6, 1.3, 0, 0, 0, 0, 0],
+                [2.6, 13.0, 1.3, 0, 0, 0, 0, 0],
+                [1.3, 1.3, 10.4, 1.3, 0, 0, 0, 0],
+                [0, 0, 1.3, 7.8, 1.3, 0, 0, 0],
+                [0, 0, 0, 1.3, 6.5, 1.3, 0, 0],
+                [0, 0, 0, 0, 1.3, 5.2, 1.3, 0],
+                [0, 0, 0, 0, 0, 1.3, 3.9, 1.3],
+                [0, 0, 0, 0, 0, 0, 1.3, 2.6],
+            ], dtype=np.float64),
+        ),
+        (
+            TransportKey("fixture_weakened_baseline", BASELINE_CONTROL, 0.0, "fixture_weakened_probe", "fixture_flow", "middle", "downstream", 16, 24),
+            response_rows,
+            response_cols,
+            np.asarray([
+                [12, 2, 1, 0, 0, 0, 0, 0],
+                [2, 10, 1, 0, 0, 0, 0, 0],
+                [1, 1, 8, 1, 0, 0, 0, 0],
+                [0, 0, 1, 6, 1, 0, 0, 0],
+                [0, 0, 0, 1, 5, 1, 0, 0],
+                [0, 0, 0, 0, 1, 4, 1, 0],
+                [0, 0, 0, 0, 0, 1, 3, 1],
+                [0, 0, 0, 0, 0, 0, 1, 2],
+            ], dtype=np.float64),
+        ),
+        (
+            TransportKey("fixture_weakened_response", "fixture_nonlethal_weaken", 0.30, "fixture_weakened_probe", "fixture_flow", "middle", "downstream", 16, 24),
+            response_rows,
+            response_cols,
+            np.asarray([
+                [8.4, 1.4, 0.7, 0, 0, 0, 0, 0],
+                [1.4, 7.0, 0.7, 0, 0, 0, 0, 0],
+                [0.7, 0.7, 5.6, 0.7, 0, 0, 0, 0],
+                [0, 0, 0.7, 4.2, 0.7, 0, 0, 0],
+                [0, 0, 0, 0.7, 3.5, 0.7, 0, 0],
+                [0, 0, 0, 0, 0.7, 2.8, 0.7, 0],
+                [0, 0, 0, 0, 0, 0.7, 2.1, 0.7],
+                [0, 0, 0, 0, 0, 0, 0.7, 1.4],
+            ], dtype=np.float64),
+        ),
+        (
+            TransportKey("fixture_rerouted_baseline", BASELINE_CONTROL, 0.0, "fixture_rerouted_probe", "fixture_flow", "middle", "downstream", 16, 24),
+            response_rows,
+            response_cols,
+            np.asarray([
+                [40, 1, 0, 0, 0, 0, 0, 0],
+                [1, 34, 1, 0, 0, 0, 0, 0],
+                [0, 1, 28, 1, 0, 0, 0, 0],
+                [0, 0, 1, 22, 1, 0, 0, 0],
+                [0, 0, 0, 1, 16, 1, 0, 0],
+                [0, 0, 0, 0, 1, 10, 1, 0],
+                [0, 0, 0, 0, 0, 1, 6, 1],
+                [0, 0, 0, 0, 0, 0, 1, 4],
+            ], dtype=np.float64),
+        ),
+        (
+            TransportKey("fixture_rerouted_response", "fixture_nonlethal_reroute", 0.20, "fixture_rerouted_probe", "fixture_flow", "middle", "downstream", 16, 24),
+            response_rows,
+            response_cols,
+            np.asarray([
+                [0, 0, 0, 0, 0, 0, 1, 40],
+                [0, 0, 0, 0, 0, 1, 34, 1],
+                [0, 0, 0, 0, 1, 28, 1, 0],
+                [0, 0, 0, 1, 22, 1, 0, 0],
+                [0, 0, 1, 16, 1, 0, 0, 0],
+                [0, 1, 10, 1, 0, 0, 0, 0],
+                [1, 6, 1, 0, 0, 0, 0, 0],
+                [4, 1, 0, 0, 0, 0, 0, 0],
+            ], dtype=np.float64),
+        ),
+        (
+            TransportKey("fixture_reopens_baseline", BASELINE_CONTROL, 0.0, "fixture_reopens_probe", "fixture_flow", "middle", "downstream", 16, 24),
+            response_rows,
+            response_cols,
+            np.asarray([
+                [44, 0, 0, 0, 0, 0, 0, 0],
+                [0, 12, 0, 0, 0, 0, 0, 0],
+                [0, 0, 8, 0, 0, 0, 0, 0],
+                [0, 0, 0, 4, 0, 0, 0, 0],
+                [0, 0, 0, 0, 2, 0, 0, 0],
+                [0, 0, 0, 0, 0, 1, 0, 0],
+                [0, 0, 0, 0, 0, 0, 1, 0],
+                [0, 0, 0, 0, 0, 0, 0, 1],
+            ], dtype=np.float64),
+        ),
+        (
+            TransportKey("fixture_reopens_response", "fixture_nonlethal_reopens", 0.20, "fixture_reopens_probe", "fixture_flow", "middle", "downstream", 16, 24),
+            response_rows,
+            response_cols,
+            np.asarray([
+                [8, 3, 3, 3, 3, 2, 2, 2],
+                [3, 8, 3, 3, 3, 2, 2, 2],
+                [3, 3, 8, 3, 3, 2, 2, 2],
+                [3, 3, 3, 8, 3, 2, 2, 2],
+                [3, 3, 3, 3, 8, 2, 2, 2],
+                [2, 2, 2, 2, 2, 6, 2, 2],
+                [2, 2, 2, 2, 2, 2, 6, 2],
+                [2, 2, 2, 2, 2, 2, 2, 6],
+            ], dtype=np.float64) * 1.3,
+        ),
     ]
     return [fixture_transport_matrix(key, rows, cols, values) for key, rows, cols, values in fixtures]
 
@@ -569,9 +738,25 @@ def compute_outputs(matrices: list[TransportMatrix], rows: list[dict[str, object
     preliminary_null_gates = detector_null_gate_rows(null_summary, matrices, args, [])
     perturb_manifest, response_summary, response_classification = perturbation_response_rows(matrices, preliminary_null_gates, args)
     fixture_results = fixture_result_rows(null_anatomy, response_classification)
+    response_fixture_summary: list[dict[str, object]] = []
+    if args.h128_scaleup and not args.fixture_smoke:
+        fixture_matrices = build_fixture_matrices()
+        fixture_null_anatomy = detector_null_anatomy_rows(fixture_matrices, args)
+        fixture_null_summary = detector_null_summary_rows(fixture_null_anatomy, args)
+        fixture_gates = detector_null_gate_rows(fixture_null_summary, fixture_matrices, args, [])
+        _fixture_manifest, fixture_response_summary, fixture_response_classification = perturbation_response_rows(fixture_matrices, fixture_gates, args)
+        fixture_results = fixture_result_rows(fixture_null_anatomy, fixture_response_classification)
+        response_fixture_summary = fixture_response_classification
+    elif args.fixture_smoke:
+        response_fixture_summary = response_classification
     null_gates = detector_null_gate_rows(null_summary, matrices, args, fixture_results)
     subspace_alignment = horizon_pair_alignment_rows(matrices, args)
     matched_marginal = matched_marginal_summary_rows(null_anatomy, args)
+    saturation = terminal_saturation_rows(matrices)
+    saturation_by_horizon_pair = saturation_by_horizon_pair_rows(saturation)
+    response_flags = response_flag_rows(response_classification, saturation)
+    response_by_strength_horizon = response_class_by_strength_and_horizon_rows(response_classification)
+    threshold_table = horizon_response_threshold_rows(response_classification, saturation)
     context_recommendation = context_recommendation_rows(summary, matched_marginal, response_classification)
     by_probe = aggregate_context_summary_rows(context_recommendation, ("probe_key",), "probe_key")
     by_flow_mode = aggregate_context_summary_rows(context_recommendation, ("flow_mode",), "flow_mode")
@@ -593,6 +778,12 @@ def compute_outputs(matrices: list[TransportMatrix], rows: list[dict[str, object
         "perturb_manifest": perturb_manifest,
         "response_summary": response_summary,
         "response_classification": response_classification,
+        "response_flags": response_flags,
+        "response_by_strength_horizon": response_by_strength_horizon,
+        "threshold_table": threshold_table,
+        "saturation": saturation,
+        "saturation_by_horizon_pair": saturation_by_horizon_pair,
+        "response_fixture_summary": response_fixture_summary,
         "subspace_alignment": subspace_alignment,
         "by_probe": by_probe,
         "by_flow_mode": by_flow_mode,
@@ -918,6 +1109,196 @@ def matched_marginal_summary_rows(anatomy: list[dict[str, object]], args: argpar
     return rows
 
 
+def terminal_saturation_rows(matrices: list[TransportMatrix]) -> list[dict[str, object]]:
+    grouped = group_matrices(matrices, ("condition_id", "actual_control_name", "mechanism_control_strength", "probe_key", "flow_mode"))
+    rows: list[dict[str, object]] = []
+    for _key, items in grouped.items():
+        previous_entropy = None
+        previous_support = None
+        for matrix in sorted(items, key=lambda item: (item.key.H_b, item.key.H_a)):
+            values = matrix.matrix
+            total = float(values.sum())
+            flat = values.flatten()
+            row_mass = values.sum(axis=1)
+            col_mass = values.sum(axis=0)
+            largest_entry_share = float(np.max(flat)) / max(1.0, total) if flat.size else 0.0
+            row_max_share = float(np.max(row_mass)) / max(1.0, total) if row_mass.size else 0.0
+            column_max_share = float(np.max(col_mass)) / max(1.0, total) if col_mass.size else 0.0
+            entropy = entropy_from_values(flat)
+            max_entropy = math.log2(max(2, int(np.count_nonzero(flat))))
+            entropy_fraction = entropy / max(1e-12, max_entropy)
+            support_total = matrix.raw_row_item_count + matrix.raw_column_item_count
+            coverage = matrix.retained_transport_mass / max(1.0, matrix.transport_mass_total)
+            row_support_saturation = matrix.raw_row_item_count <= 2 or row_max_share >= 0.95
+            column_support_saturation = matrix.raw_column_item_count <= 2 or column_max_share >= 0.95
+            row_column_support_saturation = row_support_saturation and column_support_saturation
+            mass_concentration_saturation = largest_entry_share >= 0.80 or row_max_share >= 0.95 or column_max_share >= 0.95
+            transport_entropy_saturation = entropy_fraction <= 0.15
+            frontier_support_saturation = row_support_saturation or column_support_saturation
+            undercovered = coverage < 0.80 or len(matrix.row_items) < 2 or len(matrix.column_items) < 2
+            terminal = (
+                matrix.key.H_b >= 96
+                and (frontier_support_saturation or transport_entropy_saturation or mass_concentration_saturation)
+            )
+            if undercovered:
+                allowed = "undercovered_diagnostic_only"
+            elif terminal:
+                allowed = "terminal_saturation_diagnostic_only"
+            else:
+                allowed = "normal_horizon_response"
+            rows.append({
+                **key_row(matrix.key),
+                "matrix_id": matrix.matrix_id,
+                "terminal_saturation_flag": int(terminal),
+                "frontier_support_saturation": int(frontier_support_saturation),
+                "transport_entropy_saturation": int(transport_entropy_saturation),
+                "row_support_saturation": int(row_support_saturation),
+                "column_support_saturation": int(column_support_saturation),
+                "row_column_support_saturation": int(row_column_support_saturation),
+                "mass_concentration_saturation": int(mass_concentration_saturation),
+                "largest_entry_mass_share": largest_entry_share,
+                "row_max_mass_share": row_max_share,
+                "column_max_mass_share": column_max_share,
+                "transport_entropy": entropy,
+                "transport_entropy_fraction_of_nonzero_max": entropy_fraction,
+                "transport_entropy_delta_vs_previous_horizon": "" if previous_entropy is None else entropy - previous_entropy,
+                "support_delta_vs_previous_horizon": "" if previous_support is None else support_total - previous_support,
+                "horizon_pair_undercoverage_flag": int(undercovered),
+                "coverage": coverage,
+                "allowed_interpretation_level": allowed,
+            })
+            previous_entropy = entropy
+            previous_support = support_total
+    return rows
+
+
+def saturation_by_horizon_pair_rows(saturation: list[dict[str, object]]) -> list[dict[str, object]]:
+    rows: list[dict[str, object]] = []
+    for key, items in group_by(saturation, ("horizon_pair", "H_a", "H_b")).items():
+        terminal = [int(float_or_zero(row.get("terminal_saturation_flag"))) for row in items]
+        undercovered = [int(float_or_zero(row.get("horizon_pair_undercoverage_flag"))) for row in items]
+        normal = [1 if row.get("allowed_interpretation_level") == "normal_horizon_response" else 0 for row in items]
+        rows.append({
+            "horizon_pair": key[0],
+            "H_a": key[1],
+            "H_b": key[2],
+            "matrix_count": len(items),
+            "terminal_saturation_fraction": mean(terminal) if terminal else 0.0,
+            "undercoverage_fraction": mean(undercovered) if undercovered else 0.0,
+            "normal_interpretation_fraction": mean(normal) if normal else 0.0,
+            "largest_entry_mass_share_mean": mean([float_or_zero(row.get("largest_entry_mass_share")) for row in items]) if items else 0.0,
+            "row_max_mass_share_mean": mean([float_or_zero(row.get("row_max_mass_share")) for row in items]) if items else 0.0,
+            "column_max_mass_share_mean": mean([float_or_zero(row.get("column_max_mass_share")) for row in items]) if items else 0.0,
+            "transport_entropy_mean": mean([float_or_zero(row.get("transport_entropy")) for row in items]) if items else 0.0,
+        })
+    return sorted(rows, key=lambda row: (float_or_zero(row.get("H_b")), float_or_zero(row.get("H_a"))))
+
+
+def response_flag_rows(response_classification: list[dict[str, object]], saturation: list[dict[str, object]]) -> list[dict[str, object]]:
+    saturation_by_matrix = {str(row.get("matrix_id", "")): row for row in saturation}
+    rows: list[dict[str, object]] = []
+    for row in response_classification:
+        sat = saturation_by_matrix.get(str(row.get("matrix_id", "")), {})
+        rows.append({
+            "condition_id": row.get("condition_id", ""),
+            "actual_control_name": row.get("actual_control_name", ""),
+            "mechanism_control_strength": row.get("mechanism_control_strength", ""),
+            "probe_key": row.get("probe_key", ""),
+            "flow_mode": row.get("flow_mode", ""),
+            "horizon_pair": row.get("horizon_pair", ""),
+            "response_class": row.get("response_class", ""),
+            "response_flags": row.get("response_flags", ""),
+            "mean_subspace_alignment": row.get("mean_subspace_alignment", ""),
+            "spectral_mass_delta_fraction": row.get("spectral_mass_delta_fraction", ""),
+            "transport_entropy_delta": row.get("transport_entropy_delta", ""),
+            "perturbation_response_magnitude": row.get("perturbation_response_magnitude", ""),
+            "allowed_interpretation_level": sat.get("allowed_interpretation_level", ""),
+            "terminal_saturation_flag": sat.get("terminal_saturation_flag", ""),
+        })
+    return rows
+
+
+def response_class_by_strength_and_horizon_rows(response_classification: list[dict[str, object]]) -> list[dict[str, object]]:
+    keys = ("actual_control_name", "mechanism_control_strength", "probe_key", "flow_mode", "horizon_pair", "H_a", "H_b", "response_class")
+    rows: list[dict[str, object]] = []
+    for key, items in group_by(response_classification, keys).items():
+        rows.append({
+            "perturbation_family": key[0],
+            "perturbation_strength": key[1],
+            "probe_key": key[2],
+            "flow_mode": key[3],
+            "horizon_pair": key[4],
+            "H_a": key[5],
+            "H_b": key[6],
+            "response_class": key[7],
+            "row_count": len(items),
+            "mean_subspace_alignment_mean": mean([float_or_zero(row.get("mean_subspace_alignment")) for row in items]) if items else 0.0,
+            "spectral_mass_delta_fraction_mean": mean([float_or_zero(row.get("spectral_mass_delta_fraction")) for row in items]) if items else 0.0,
+            "transport_entropy_delta_mean": mean([float_or_zero(row.get("transport_entropy_delta")) for row in items]) if items else 0.0,
+            "perturbation_response_magnitude_mean": mean([float_or_zero(row.get("perturbation_response_magnitude")) for row in items]) if items else 0.0,
+        })
+    return sorted(rows, key=lambda row: (
+        str(row.get("perturbation_family", "")),
+        float_or_zero(row.get("perturbation_strength")),
+        str(row.get("probe_key", "")),
+        str(row.get("flow_mode", "")),
+        float_or_zero(row.get("H_b")),
+        str(row.get("response_class", "")),
+    ))
+
+
+def horizon_response_threshold_rows(response_classification: list[dict[str, object]], saturation: list[dict[str, object]]) -> list[dict[str, object]]:
+    rows: list[dict[str, object]] = []
+    keys = ("actual_control_name", "mechanism_control_strength", "probe_key", "flow_mode")
+    for key, items in group_by(response_classification, keys).items():
+        ordered = sorted(items, key=lambda row: (float_or_zero(row.get("H_b")), float_or_zero(row.get("H_a"))))
+        sat_items = sorted(
+            [
+                row for row in saturation
+                if row.get("actual_control_name") == key[0]
+                and str(row.get("mechanism_control_strength")) == str(key[1])
+                and row.get("probe_key") == key[2]
+                and row.get("flow_mode") == key[3]
+            ],
+            key=lambda row: (float_or_zero(row.get("H_b")), float_or_zero(row.get("H_a"))),
+        )
+        rows.append({
+            "perturbation_family": key[0],
+            "perturbation_strength": key[1],
+            "probe_key": key[2],
+            "flow_mode": key[3],
+            "first_nonstable_horizon": first_response_horizon(ordered, lambda row: row.get("response_class") != "transport_stable"),
+            "first_amplified_aligned_horizon": first_response_horizon(ordered, lambda row: row.get("response_class") == "transport_amplified_aligned"),
+            "first_weakened_horizon": first_response_horizon(ordered, lambda row: row.get("response_class") == "transport_weakened"),
+            "first_rerouted_horizon": first_response_horizon(ordered, lambda row: row.get("response_class") == "transport_rerouted"),
+            "first_reopened_horizon": first_response_horizon(ordered, lambda row: row.get("response_class") == "transport_reopens"),
+            "first_collapsed_horizon": first_response_horizon(ordered, lambda row: row.get("response_class") == "transport_collapses"),
+            "terminal_saturation_horizon": first_response_horizon(sat_items, lambda row: int(float_or_zero(row.get("terminal_saturation_flag"))) == 1),
+            "latest_interpretable_horizon": latest_response_horizon(sat_items, lambda row: row.get("allowed_interpretation_level") == "normal_horizon_response"),
+        })
+    return sorted(rows, key=lambda row: (
+        str(row.get("perturbation_family", "")),
+        float_or_zero(row.get("perturbation_strength")),
+        str(row.get("probe_key", "")),
+        str(row.get("flow_mode", "")),
+    ))
+
+
+def first_response_horizon(rows: list[dict[str, object]], predicate: object) -> str:
+    for row in rows:
+        if predicate(row):  # type: ignore[operator]
+            return str(row.get("horizon_pair", ""))
+    return ""
+
+
+def latest_response_horizon(rows: list[dict[str, object]], predicate: object) -> str:
+    out = ""
+    for row in rows:
+        if predicate(row):  # type: ignore[operator]
+            out = str(row.get("horizon_pair", ""))
+    return out
+
+
 def context_recommendation_rows(
     summary: list[dict[str, object]],
     matched_marginal: list[dict[str, object]],
@@ -1179,11 +1560,31 @@ def fixture_result_rows(null_anatomy: list[dict[str, object]], response_classifi
         row for row in fixture_responses
         if row.get("condition_id") == "fixture_trap_collapse_response"
     ]
+    amplified_rows = [
+        row for row in fixture_responses
+        if row.get("condition_id") == "fixture_amplified_aligned_response"
+    ]
+    weakened_rows = [
+        row for row in fixture_responses
+        if row.get("condition_id") == "fixture_weakened_response"
+    ]
+    rerouted_rows = [
+        row for row in fixture_responses
+        if row.get("condition_id") == "fixture_rerouted_response"
+    ]
+    reopens_rows = [
+        row for row in fixture_responses
+        if row.get("condition_id") == "fixture_reopens_response"
+    ]
 
     block_pass = any(int(float_or_zero(row.get("null_gate_passed"))) for row in block_rows)
     fakeout_pass = bool(fakeout_rows) and not any(int(float_or_zero(row.get("null_gate_passed"))) for row in fakeout_rows)
     corridor_pass = any(row.get("response_class") == "transport_stable" for row in corridor_rows)
     trap_pass = any(row.get("response_class") == "transport_collapses" for row in trap_rows)
+    amplified_pass = any(row.get("response_class") == "transport_amplified_aligned" for row in amplified_rows)
+    weakened_pass = any(row.get("response_class") == "transport_weakened" for row in weakened_rows)
+    rerouted_pass = any(row.get("response_class") == "transport_rerouted" for row in rerouted_rows)
+    reopens_pass = any(row.get("response_class") == "transport_reopens" for row in reopens_rows)
 
     return [
         {
@@ -1216,6 +1617,38 @@ def fixture_result_rows(null_anatomy: list[dict[str, object]], response_classifi
             "expected_behavior": "transport_collapses",
             "observed": observed_fixture_read(trap_rows, "response_class"),
             "passed": int(trap_pass),
+            "source_table": "horizon_transport_response_classification.csv",
+        },
+        {
+            "fixture_id": "amplified_aligned_response",
+            "fixture_question": "does aligned mass growth enter the amplified-aligned response class",
+            "expected_behavior": "transport_amplified_aligned",
+            "observed": observed_fixture_read(amplified_rows, "response_class"),
+            "passed": int(amplified_pass),
+            "source_table": "horizon_transport_response_classification.csv",
+        },
+        {
+            "fixture_id": "weakened_response",
+            "fixture_question": "does non-collapsing mass loss enter the weakened response class",
+            "expected_behavior": "transport_weakened",
+            "observed": observed_fixture_read(weakened_rows, "response_class"),
+            "passed": int(weakened_pass),
+            "source_table": "horizon_transport_response_classification.csv",
+        },
+        {
+            "fixture_id": "rerouted_response",
+            "fixture_question": "does low-alignment transport reorganization enter the rerouted response class",
+            "expected_behavior": "transport_rerouted",
+            "observed": observed_fixture_read(rerouted_rows, "response_class"),
+            "passed": int(rerouted_pass),
+            "source_table": "horizon_transport_response_classification.csv",
+        },
+        {
+            "fixture_id": "reopens_response",
+            "fixture_question": "does entropy-increasing transport spread enter the reopens response class",
+            "expected_behavior": "transport_reopens",
+            "observed": observed_fixture_read(reopens_rows, "response_class"),
+            "passed": int(reopens_pass),
             "source_table": "horizon_transport_response_classification.csv",
         },
     ]
@@ -1273,12 +1706,16 @@ def response_flags(left_alignment: float, right_alignment: float, mass_delta: fl
     mean_alignment = (left_alignment + right_alignment) / 2.0
     if mean_alignment >= 0.80:
         flags.append("aligned")
+    if mean_alignment < 0.80:
+        flags.append("subspace_shifted")
     if mean_alignment < 0.50:
         flags.append("low_alignment")
     if mass_delta <= -0.50:
         flags.append("mass_collapse")
     elif mass_delta <= -0.15:
         flags.append("mass_weakened")
+    elif mass_delta >= 0.15:
+        flags.append("mass_amplified")
     if entropy_delta >= 0.20:
         flags.append("entropy_reopened")
     if magnitude >= 0.25:
@@ -1298,8 +1735,10 @@ def classify_response(row: dict[str, object]) -> str:
         return "transport_weakened"
     if entropy_delta >= 0.20:
         return "transport_reopens"
-    if alignment < 0.50 and mass_delta > -0.15:
+    if alignment < 0.80 and mass_delta > -0.15:
         return "transport_rerouted"
+    if alignment >= 0.80 and mass_delta >= 0.15:
+        return "transport_amplified_aligned"
     if alignment >= 0.80 and abs(mass_delta) <= 0.15:
         return "transport_stable"
     return "transport_control_equivalent"
@@ -1366,6 +1805,12 @@ def write_outputs(
     write_csv(out_dir / "horizon_transport_perturbation_manifest.csv", outputs["perturb_manifest"])
     write_csv(out_dir / "horizon_transport_response_profile_summary.csv", outputs["response_summary"])
     write_csv(out_dir / "horizon_transport_response_classification.csv", outputs["response_classification"])
+    write_csv(out_dir / "horizon_transport_response_flags.csv", outputs["response_flags"])
+    write_csv(out_dir / "response_class_by_strength_and_horizon_pair.csv", outputs["response_by_strength_horizon"])
+    write_csv(out_dir / "horizon_response_threshold_table.csv", outputs["threshold_table"])
+    write_csv(out_dir / "horizon_transport_terminal_saturation_summary.csv", outputs["saturation"])
+    write_csv(out_dir / "horizon_transport_saturation_by_horizon_pair.csv", outputs["saturation_by_horizon_pair"])
+    write_csv(out_dir / "horizon_transport_response_fixture_summary.csv", outputs["response_fixture_summary"])
     write_csv(out_dir / "horizon_transport_by_probe_summary.csv", outputs["by_probe"])
     write_csv(out_dir / "horizon_transport_by_flow_mode_summary.csv", outputs["by_flow_mode"])
     write_csv(out_dir / "horizon_transport_by_horizon_pair_summary.csv", outputs["by_horizon_pair"])
@@ -1377,6 +1822,11 @@ def write_outputs(
     status["context_recommendation_rows"] = len(outputs["context_recommendation"])
     status["fixture_result_rows"] = len(outputs["fixture_results"])
     status["perturbation_response_rows"] = len(outputs["response_classification"])
+    status["response_flag_rows"] = len(outputs["response_flags"])
+    status["horizon_response_threshold_rows"] = len(outputs["threshold_table"])
+    status["terminal_saturation_rows"] = len(outputs["saturation"])
+    status["terminal_saturation_flagged_rows"] = sum(int(float_or_zero(row.get("terminal_saturation_flag"))) for row in outputs["saturation"])
+    status["response_fixture_summary_rows"] = len(outputs["response_fixture_summary"])
     status["errors"] = len(errors)
     status["finished_utc"] = utc_now()
     status["elapsed_seconds"] = round(time.perf_counter() - started, 3)
@@ -1399,7 +1849,9 @@ def decision_fields(outputs: dict[str, list[dict[str, object]]], status: dict[st
     fixture_gate = (not fixture_required) or all(int(float_or_zero(row.get("passed"))) for row in fixture_rows)
     response_rows = [row for row in outputs["response_classification"] if row.get("response_class") not in {"transport_resolution_mismatch", "transport_response_underpowered"}]
     response_interpretable = bool(response_rows)
-    if status_run_kind(status) == "expansion":
+    if status_run_kind(status) == "h128":
+        readiness, next_action = h128_decision(outputs, matrix_gate, null_gate, null_power_gate, matched_marginal_gate, response_interpretable, fixture_gate)
+    elif status_run_kind(status) == "expansion":
         readiness, next_action = expansion_decision(outputs, matrix_gate, null_gate, null_power_gate, matched_marginal_gate, response_interpretable)
     elif fixture_required and matrix_gate and null_gate and matched_marginal_gate and null_power_gate and response_interpretable and fixture_gate:
         readiness = "fixture_contract_passed"
@@ -1429,8 +1881,10 @@ def decision_fields(outputs: dict[str, list[dict[str, object]]], status: dict[st
         "ready_for_horizon_transport_scaleup": int(readiness == "ready_for_horizon_transport_scaleup"),
         "ready_for_horizon_transport_context_narrowing": int(readiness == "ready_for_horizon_transport_context_narrowing"),
         "ready_for_horizon_transport_fixture_expansion": int(readiness == "ready_for_horizon_transport_fixture_expansion"),
+        "ready_for_response_fixture_repair": int(readiness == "ready_for_response_fixture_repair"),
+        "ready_for_horizon_transport_theory_note": int(readiness == "ready_for_horizon_transport_theory_note"),
         "measurement_limits_note_recommended": int(readiness == "measurement_limits_note_recommended"),
-        "fixture_contract_passed": int(readiness == "fixture_contract_passed"),
+        "fixture_contract_passed": int(fixture_required and fixture_gate),
         "ready_for_fixture_horizon_transport_tests": int(readiness == "ready_for_fixture_horizon_transport_tests"),
         "ready_for_direct_channel_diagnostics": int(readiness == "ready_for_direct_channel_diagnostics"),
         "not_ready_repair_required": int(readiness == "not_ready_repair_required"),
@@ -1442,6 +1896,40 @@ def decision_fields(outputs: dict[str, list[dict[str, object]]], status: dict[st
         "synthetic_fixture_contract_not_run": int(not fixture_required),
         "perturbation_response_interpretable": int(response_interpretable),
     }
+
+
+def h128_decision(
+    outputs: dict[str, list[dict[str, object]]],
+    matrix_gate: bool,
+    null_gate: bool,
+    null_power_gate: bool,
+    matched_marginal_gate: bool,
+    response_interpretable: bool,
+    fixture_gate: bool,
+) -> tuple[str, str]:
+    if not matrix_gate or not null_gate or not null_power_gate or not matched_marginal_gate:
+        return "not_ready_repair_required", "extend_or_trim_horizon_range"
+    if not fixture_gate:
+        return "ready_for_response_fixture_repair", "repair_response_taxonomy_fixtures"
+    saturation_rows = outputs.get("saturation", [])
+    decisive = [
+        row for row in saturation_rows
+        if str(row.get("horizon_pair", "")) in {"64->96", "96->128"}
+    ]
+    if decisive and mean([int(float_or_zero(row.get("terminal_saturation_flag"))) for row in decisive]) >= 0.50:
+        return "measurement_limits_note_recommended", "write_horizon_transport_measurement_limits_note"
+    classes = {
+        str(row.get("response_class", ""))
+        for row in outputs.get("response_classification", [])
+    }
+    nonstable = classes - {"", "transport_stable", "transport_resolution_mismatch", "transport_response_underpowered"}
+    if "transport_amplified_aligned" in nonstable and len(nonstable) >= 1:
+        return "ready_for_horizon_transport_theory_note", "write_horizon_transport_theory_note"
+    if response_interpretable and nonstable:
+        return "ready_for_horizon_transport_context_narrowing", "narrow_to_horizon_response_context"
+    if response_interpretable:
+        return "measurement_limits_note_recommended", "write_horizon_transport_measurement_limits_note"
+    return "not_ready_repair_required", "extend_or_trim_horizon_range"
 
 
 def expansion_decision(
@@ -1577,6 +2065,54 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
         lines.append(f"| {markdown_cell(name)} | {count} |")
     lines.extend([
         "",
+        "## Terminal Saturation Diagnostics",
+        "",
+        "| horizon_pair | matrices | terminal fraction | undercoverage fraction | normal fraction |",
+        "|---|---:|---:|---:|---:|",
+    ])
+    for row in outputs.get("saturation_by_horizon_pair", []):
+        lines.append(
+            f"| {markdown_cell(row.get('horizon_pair', ''))} | {row.get('matrix_count', '')} | "
+            f"{float_or_zero(row.get('terminal_saturation_fraction')):.3f} | "
+            f"{float_or_zero(row.get('undercoverage_fraction')):.3f} | "
+            f"{float_or_zero(row.get('normal_interpretation_fraction')):.3f} |"
+        )
+    lines.extend([
+        "",
+        "## Response Class by Strength and Horizon Pair",
+        "",
+        "| perturbation | strength | probe | flow | horizon_pair | response_class | count |",
+        "|---|---:|---|---|---|---|---:|",
+    ])
+    for row in outputs.get("response_by_strength_horizon", [])[:80]:
+        lines.append(
+            f"| {markdown_cell(row.get('perturbation_family', ''))} | {row.get('perturbation_strength', '')} | "
+            f"{markdown_cell(row.get('probe_key', ''))} | {markdown_cell(row.get('flow_mode', ''))} | "
+            f"{markdown_cell(row.get('horizon_pair', ''))} | {markdown_cell(row.get('response_class', ''))} | "
+            f"{row.get('row_count', '')} |"
+        )
+    lines.extend([
+        "",
+        "## Horizon Response Threshold Table",
+        "",
+        "| perturbation | strength | probe | flow | first nonstable | first amplified | first weakened | first rerouted | first reopened | first collapsed | terminal saturation | latest interpretable |",
+        "|---|---:|---|---|---|---|---|---|---|---|---|---|",
+    ])
+    for row in outputs.get("threshold_table", []):
+        lines.append(
+            f"| {markdown_cell(row.get('perturbation_family', ''))} | {row.get('perturbation_strength', '')} | "
+            f"{markdown_cell(row.get('probe_key', ''))} | {markdown_cell(row.get('flow_mode', ''))} | "
+            f"{markdown_cell(row.get('first_nonstable_horizon', ''))} | "
+            f"{markdown_cell(row.get('first_amplified_aligned_horizon', ''))} | "
+            f"{markdown_cell(row.get('first_weakened_horizon', ''))} | "
+            f"{markdown_cell(row.get('first_rerouted_horizon', ''))} | "
+            f"{markdown_cell(row.get('first_reopened_horizon', ''))} | "
+            f"{markdown_cell(row.get('first_collapsed_horizon', ''))} | "
+            f"{markdown_cell(row.get('terminal_saturation_horizon', ''))} | "
+            f"{markdown_cell(row.get('latest_interpretable_horizon', ''))} |"
+        )
+    lines.extend([
+        "",
         "## Probe / Flow / Horizon-Pair Context Summary",
         "",
         "### By Probe",
@@ -1640,6 +2176,8 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
         f"- ready_for_horizon_transport_scaleup: `{status.get('ready_for_horizon_transport_scaleup', 0)}`",
         f"- ready_for_horizon_transport_context_narrowing: `{status.get('ready_for_horizon_transport_context_narrowing', 0)}`",
         f"- ready_for_horizon_transport_fixture_expansion: `{status.get('ready_for_horizon_transport_fixture_expansion', 0)}`",
+        f"- ready_for_response_fixture_repair: `{status.get('ready_for_response_fixture_repair', 0)}`",
+        f"- ready_for_horizon_transport_theory_note: `{status.get('ready_for_horizon_transport_theory_note', 0)}`",
         f"- measurement_limits_note_recommended: `{status.get('measurement_limits_note_recommended', 0)}`",
         f"- fixture_contract_passed: `{status.get('fixture_contract_passed', 0)}`",
         f"- ready_for_fixture_horizon_transport_tests: `{status.get('ready_for_fixture_horizon_transport_tests', 0)}`",
@@ -1758,9 +2296,9 @@ def horizon_point_band(horizon: int) -> str:
 def transport_stat(matrix: TransportMatrix | np.ndarray, stat: str) -> float:
     values = matrix.matrix if isinstance(matrix, TransportMatrix) else matrix
     singular = np.linalg.svd(values, compute_uv=False)
-    if stat == "positive_or_nonzero_spectral_mass":
+    if stat in {"positive_or_nonzero_spectral_mass", "singular_spectral_mass"}:
         return float(np.sum(singular))
-    if stat == "effective_rank":
+    if stat in {"effective_rank", "singular_effective_rank"}:
         return effective_rank(singular)
     if stat == "transport_concentration":
         return top_share(values.flatten(), 1)
