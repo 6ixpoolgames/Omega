@@ -65,6 +65,7 @@ Directory:
 
 Current result notes:
 
+- `rfs_mb0_horizon_transport_spectral_response_repair_result.md`
 - `rfs_mb0_laptop_spectral_subspace_control_repair_smoke_result.md`
 - `rfs_mb0_laptop_spectral_control_mapping_smoke_result.md`
 - `rfs_mb0_stage_b2_spectral_channel_high_loading_repair_result.md`

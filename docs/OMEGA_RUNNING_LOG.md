@@ -9,6 +9,64 @@ patch notes at the top.
 
 ## 2026-05-30
 
+### RFS-MB0 Horizon-Transport Spectral Response Repair
+
+Implemented the first horizon-transport spectral response repair instrument.
+This is a conceptual reorientation rather than a large theoretical pivot:
+directional `horizon_transport` matrices are built from existing
+frontier-transform transition rows, using SVD, with detector null controls kept
+separate from candidate perturbation-response profiles.
+
+Retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_horizon_transport_spectral_response_repair_result.md`
+
+Local validation outputs:
+
+- `results/local_runs/20260530_horizon_transport_repair_contract_smoke_v4_underpowered/`
+- `results/local_runs/20260530_horizon_transport_repair_contract_smoke_v5_powered/`
+
+Local outputs are generated CSV/JSON artifacts and are not committed.
+
+Repair validation:
+
+```text
+underpowered-null contract:
+  jobs_completed: 10
+  errors: 0
+  matrix_count: 140
+  manifest: 21 / 21 present
+  null_replicates: 2
+  readiness_level: not_ready_repair_required
+  next_action_fork: repair_transport_null_controls
+  blocking_reason: detector_null_replicates_underpowered
+
+powered contract:
+  jobs_completed: 10
+  errors: 0
+  matrix_count: 140
+  detector_null_rows: 252
+  perturbation_response_rows: 112
+  manifest: 21 / 21 present
+  null_replicates: 3
+  readiness_level: ready_for_horizon_transport_smoke_expansion
+  next_action_fork: expand_horizon_transport_smoke
+```
+
+Perturbation response classes in the powered contract:
+
+```text
+transport_stable: 109
+transport_control_equivalent: 3
+```
+
+Decision:
+
+```text
+Small repairs validated. The next empirical step can be a slightly larger
+horizon-transport smoke, still without graph perturbation or candidate claims.
+```
+
 ### RFS-MB0 Laptop Spectral Subspace Control Repair Sweeps
 
 Ran the new spectral subspace control repair smoke as a laptop-safe targeted
