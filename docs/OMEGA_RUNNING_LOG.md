@@ -9,6 +9,83 @@ patch notes at the top.
 
 ## 2026-05-30
 
+### RFS-MB0 Horizon-Transport Response-Resolution Scaleup
+
+Audited the horizon-transport runner, repaired small instrumentation issues,
+and ran two committed-input design-set scaleups for response-profile
+resolution.
+
+Retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_horizon_transport_response_resolution_scaleup_result.md`
+
+Local validation outputs:
+
+- `results/local_runs/20260531_horizon_transport_response_resolution_scaleup_v2/`
+- `results/local_runs/20260531_horizon_transport_response_ladder_p015_p02/`
+
+Code audit repairs:
+
+```text
+Windows SIGBREAK handler added
+future-level worker exceptions now count affected jobs with errors
+cancelled job accounting now counts jobs, not batches
+pending_jobs_remaining now updates during progress checkpoints
+response rows now include actual_control_name, mechanism_control_strength, horizon_pair
+response_flags added
+response classifier now checks collapse/weakening/reopening before stable
+```
+
+Fixture contract after repair:
+
+```text
+4 / 4 passed
+```
+
+Primary scaleup:
+
+```text
+status: COMPLETED
+workers: 18
+jobs_completed: 1008 / 1008
+elapsed_seconds: 58.420
+errors: 0
+matrix_count: 196
+null_replicates: 9
+matched marginal detector-null separation: passed, 3/3 families
+response classes:
+  transport_stable: 144
+  transport_control_equivalent: 24
+```
+
+Focused p0.015/p0.02 ladder:
+
+```text
+status: COMPLETED
+workers: 18
+jobs_completed: 720 / 720
+elapsed_seconds: 48.371
+errors: 0
+matrix_count: 140
+matched marginal detector-null separation: passed, 3/3 families
+response classes:
+  transport_stable: 62
+  transport_control_equivalent: 50
+```
+
+Interpretation:
+
+```text
+Matched-marginal-separated horizon transport persists at larger design-set
+scale. Response profiles are no longer uniformly stable: stronger nonlethal
+p0.015/p0.02 perturbations produce high-alignment mass-growth departures,
+especially across 8->16, 16->24, and 24->32. The run still did not produce
+transport_weakened, transport_rerouted, transport_reopens, or
+transport_collapses, so the next step is response-profile fixture expansion and
+compact reporting, not holdout, graph-channel diagnostics, candidate promotion,
+or Omega/agency/value claims.
+```
+
 ### RFS-MB0 Horizon-Transport Expansion Smoke
 
 Implemented expansion-smoke reporting for the horizon-transport runner and ran

@@ -1,6 +1,6 @@
 # Omega Project Manual
 
-Last updated: 2026-05-29
+Last updated: 2026-05-31
 
 Repository: https://github.com/6ixpoolgames/Omega
 
@@ -351,6 +351,7 @@ Latest result:
 docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_future_field_geometry_smoke_result.md
 docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_channel_edge_smoke_repair_prep_result.md
 docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_channel_high_loading_repair_result.md
+docs/research_notes/validation_results/rfs_mb0_horizon_transport_response_resolution_scaleup_result.md
 docs/research_notes/validation_results/rfs_mb0_horizon_transport_expansion_smoke_result.md
 docs/research_notes/validation_results/rfs_mb0_stage_b2_exploratory_iteration_pass_result.md
 ```
@@ -370,8 +371,11 @@ ablation; the repaired small smoke cleared the instrument gate for a larger
 spectral channel-edge exploratory run, while leaving frontier-size and
 probe-marginal controls as caveats. The live spectral branch then reoriented to
 directional horizon-transport matrices; row/column/bimarginal matched nulls,
-fixtures, and the desktop-shape expansion smoke now pass instrument gates, with
-uniformly stable tiny perturbation responses.
+fixtures, and committed-input scaleups now pass instrument gates. Tiny
+perturbations remain mostly stable, while stronger nonlethal p0.015/p0.02
+ladders produce high-alignment mass-growth/control-equivalent departures in
+mid/downstream horizon transport. The next task is response-profile resolution,
+not holdout, graph-channel diagnostics, or candidate promotion.
 ```
 
 RFS-MB0 is now the recommended starting point for new implementation work.

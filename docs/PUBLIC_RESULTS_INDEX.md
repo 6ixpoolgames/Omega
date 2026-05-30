@@ -38,16 +38,19 @@ Current entry points:
 
 Status:
 
-- current implementation target is RFS-MB0 future-landscape detection;
-- asks whether horizon-indexed reachable-future profiles can distinguish
-  structured future deformation from saturation, clocks, collapse, and
-  matched-control artifacts without semantic labels;
+- current implementation target is RFS-MB0 horizon-transport instrumentation
+  over neutral future landscapes;
+- asks whether directional horizon transport between reachable-future frontiers
+  can distinguish structured future deformation from saturation, clocks,
+  collapse, matched-control artifacts, and perturbation-response fakeouts
+  without semantic labels;
 - detector v1.1 is implemented with local-vs-aggregate classification,
   mechanical probes, transition-level information measures, matched null
   bundles, saturation diagnostics, and long-horizon audit support through
   H1024;
-- the current scientific gate is not passed because no non-control,
-  non-saturated family receives aggregate `structured_propagation`;
+- the current scientific gate is not passed; horizon transport has passed
+  instrument-scale matched-marginal gates, but response-profile resolution is
+  still incomplete and no holdout/candidate/Omega claim is open;
 - VAL0-G and VAL1-MF are reconnaissance evidence for viability dynamics and
   substrate limitations;
 - VAL0-CT showed reproducible anchor wins and clean dense controls, but no
@@ -68,6 +71,7 @@ Directory:
 
 Current result notes:
 
+- `rfs_mb0_horizon_transport_response_resolution_scaleup_result.md`
 - `rfs_mb0_horizon_transport_expansion_smoke_result.md`
 - `rfs_mb0_horizon_transport_matched_null_fixture_smoke_result.md`
 - `rfs_mb0_horizon_transport_spectral_response_repair_result.md`
@@ -116,6 +120,12 @@ Result in one line:
   `transport_stable`; the next action fork is `expand_horizon_transport_scale`.
   This is an instrument-scaleup result only, not holdout, candidate promotion,
   graph causality, or an Omega/agency/value claim.
+- The horizon-transport response-resolution scaleup then ran committed-input
+  design-set scaleups with `9` null replicates. Matched marginal separation
+  persisted, and stronger nonlethal p0.015/p0.02 ladders produced
+  high-alignment mass-growth/control-equivalent responses in mid/downstream
+  horizon transport. The next action is response-profile fixture/reporting
+  resolution, not graph-channel diagnostics or holdout.
 - The desktop Phase B / Stage A / Stage B branch shifted the current live
   empirical hook from marginal recurrence toward preregistered joint signed
   syndromes. Stage B-2 is now implemented as a preservation-first mechanism
@@ -1430,6 +1440,34 @@ Result in one line:
   matched marginal detector-null separation across both required probes and
   flow modes, and uniformly `transport_stable` perturbation responses; the
   emitted next-action fork is `expand_horizon_transport_scale`.
+
+### RFS-MB0 Horizon-Transport Response-Resolution Scaleup
+
+Directories:
+
+- `results/local_runs/20260531_horizon_transport_response_resolution_scaleup_v2/`
+- `results/local_runs/20260531_horizon_transport_response_ladder_p015_p02/`
+
+Primary retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_horizon_transport_response_resolution_scaleup_result.md`
+
+Reason retained:
+
+- This is the first larger committed-input horizon-transport response-resolution
+  pass after the expansion smoke. It keeps the no-holdout/no-candidate-promotion
+  claim boundary, uses `9` matched-null replicates, repairs progress and
+  response-reporting instrumentation, and tests whether stronger nonlethal
+  perturbation ladders produce response diversity.
+
+Result in one line:
+
+- The primary scaleup completed `1008 / 1008` jobs and the focused ladder
+  completed `720 / 720`, both with `0` errors and matched marginal
+  detector-null separation across all three required matched-null families;
+  p0.015/p0.02 perturbations produced high-alignment mass-growth
+  `transport_control_equivalent` responses in mid/downstream horizon transport,
+  but still no weakened, rerouted, reopened, or collapsed response classes.
 
 The important public caveat:
 

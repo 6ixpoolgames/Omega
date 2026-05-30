@@ -20,7 +20,7 @@ The active empirical question is currently narrower than agency, identity, or va
 
 Current status, in one line:
 
-**VAL0/VAL1 were useful reconnaissance probes; RFS-MB0 has moved from endpoint support/distribution deformation to frontier-transform and horizon-transport instrumentation. The latest horizon-transport expansion smoke passed instrument-scaleup gates under matched marginal nulls, with uniformly stable tiny perturbation responses. This is still not a scientific gate pass, candidate promotion, or Omega/agency/value claim.**
+**VAL0/VAL1 were useful reconnaissance probes; RFS-MB0 has moved from endpoint support/distribution deformation to frontier-transform and horizon-transport instrumentation. The latest horizon-transport scaleups passed matched-marginal instrument gates and showed a graded transition from stable tiny responses toward high-alignment mass-growth/control-equivalent responses in mid/downstream horizons. This is still not a scientific gate pass, candidate promotion, or Omega/agency/value claim.**
 
 ## Workflow: human-directed, AI-assisted research
 
@@ -168,6 +168,7 @@ frontier-transform Stage B-2 exploratory iteration
 spectral future-field geometry smoke
 horizon-transport matched-null fixture repair
 horizon-transport expansion smoke
+horizon-transport response-resolution scaleup
 ```
 
 Current interpretation:
@@ -206,18 +207,21 @@ channel-edge prep:
 
 horizon transport:
   row/column/bimarginal matched nulls and synthetic fixtures run; the
-  desktop-shape expansion smoke completed 180/180 jobs with full matrix
-  coverage, matched marginal separation across both required probes/flow modes,
-  and uniformly stable tiny perturbation responses
+  response-resolution scaleups completed cleanly with full matrix coverage and
+  matched marginal separation across both required probes/flow modes; tiny
+  perturbations remain mostly stable, while p0.015/p0.02 ladders produce
+  high-alignment mass-growth/control-equivalent departures in mid/downstream
+  horizon transport
 
 next task:
-  expand horizon-transport scale within the same claim boundary; do not open
-  holdout, graph perturbation, direct channel diagnostics, or candidate
-  promotion from this smoke alone
+  improve response-profile resolution with fixtures and compact reporting
+  before opening holdout, graph perturbation, direct channel diagnostics, or
+  candidate promotion
 ```
 
 Important current docs:
 
+- [Horizon-transport response-resolution scaleup result](docs/research_notes/validation_results/rfs_mb0_horizon_transport_response_resolution_scaleup_result.md)
 - [Horizon-transport expansion smoke result](docs/research_notes/validation_results/rfs_mb0_horizon_transport_expansion_smoke_result.md)
 - [Horizon-transport expansion smoke spec](docs/RFS_MB0_HORIZON_TRANSPORT_EXPANSION_SMOKE_SPEC.md)
 - [Horizon-transport matched null and fixture smoke result](docs/research_notes/validation_results/rfs_mb0_horizon_transport_matched_null_fixture_smoke_result.md)

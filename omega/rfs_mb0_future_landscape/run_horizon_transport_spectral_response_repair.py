@@ -207,8 +207,7 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    signal.signal(signal.SIGINT, handle_stop)
-    signal.signal(signal.SIGTERM, handle_stop)
+    install_signal_handlers()
     started = time.perf_counter()
     repo_root = Path(__file__).resolve().parents[2]
     args.out.mkdir(parents=True, exist_ok=True)
@@ -277,6 +276,13 @@ def handle_stop(_signum: int, _frame: object) -> None:
     STOP_REQUESTED = True
 
 
+def install_signal_handlers() -> None:
+    for name in ("SIGINT", "SIGTERM", "SIGBREAK"):
+        signum = getattr(signal, name, None)
+        if signum is not None:
+            signal.signal(signum, handle_stop)
+
+
 def run_jobs(
     args: argparse.Namespace,
     jobs: list[dict[str, object]],
@@ -289,6 +295,7 @@ def run_jobs(
     checkpoints: list[dict[str, object]] = []
     last_checkpoint = 0
     futures = {}
+    cancelled_job_count = 0
     executor = ProcessPoolExecutor(max_workers=max(1, args.workers))
     try:
         while pending or futures:
@@ -305,29 +312,34 @@ def run_jobs(
                 batch = pending.pop(0)
                 futures[executor.submit(run_batch, batch, args.max_items_per_context)] = batch
                 status["jobs_submitted"] = int(status["jobs_submitted"]) + len(batch)
+            status["pending_jobs_remaining"] = sum(len(batch) for batch in pending) + sum(len(batch) for batch in futures.values())
             done, _pending_futures = wait(futures, timeout=1.0, return_when=FIRST_COMPLETED)
             for future in done:
                 batch = futures.pop(future)
                 try:
                     _contexts, metric_rows, batch_errors, completed = future.result()
                 except Exception as exc:  # noqa: BLE001
-                    metric_rows, batch_errors, completed = [], [{"job_id": ",".join(str(job.get("job_id", "")) for job in batch), "error": repr(exc)}], 0
+                    metric_rows = []
+                    batch_errors = [{"job_id": ",".join(str(job.get("job_id", "")) for job in batch), "error": repr(exc)}]
+                    completed = len(batch)
                 rows.extend(metric_rows)
                 errors.extend(batch_errors)
                 status["jobs_completed"] = int(status["jobs_completed"]) + completed
+                status["pending_jobs_remaining"] = sum(len(batch) for batch in pending) + sum(len(batch) for batch in futures.values())
                 if int(status["jobs_completed"]) - last_checkpoint >= max(1, args.checkpoint_every_jobs):
                     checkpoints.append(checkpoint_row(status, started, len(rows), len(errors)))
                     last_checkpoint = int(status["jobs_completed"])
                     write_partial(args.out, status, started, checkpoints, errors)
     finally:
         if futures:
+            cancelled_job_count = sum(len(batch) for batch in futures.values())
             for future in futures:
                 future.cancel()
-            status["jobs_cancelled"] = len(futures)
+            status["jobs_cancelled"] = cancelled_job_count
             executor.shutdown(wait=False, cancel_futures=True)
         else:
             executor.shutdown(wait=True, cancel_futures=False)
-    status["pending_jobs_remaining"] = sum(len(batch) for batch in pending)
+    status["pending_jobs_remaining"] = sum(len(batch) for batch in pending) + cancelled_job_count
     if status.get("status") == "RUNNING":
         status["status"] = "COMPLETED"
         status["finalization_reason"] = "all_jobs_completed"
@@ -1246,7 +1258,32 @@ def response_payload(baseline: TransportMatrix | None, matrix: TransportMatrix, 
         "perturbation_transport_entropy": entropy_from_values(pert_sub.flatten()),
         "transport_entropy_delta": entropy_from_values(pert_sub.flatten()) - entropy_from_values(base_sub.flatten()),
         "perturbation_response_magnitude": float(np.linalg.norm(pert_sub - base_sub) / max(1e-12, np.linalg.norm(base_sub))),
+        "response_flags": response_flags(
+            left_alignment,
+            right_alignment,
+            (pert_mass - base_mass) / max(1e-12, base_mass),
+            entropy_from_values(pert_sub.flatten()) - entropy_from_values(base_sub.flatten()),
+            float(np.linalg.norm(pert_sub - base_sub) / max(1e-12, np.linalg.norm(base_sub))),
+        ),
     }
+
+
+def response_flags(left_alignment: float, right_alignment: float, mass_delta: float, entropy_delta: float, magnitude: float) -> str:
+    flags = []
+    mean_alignment = (left_alignment + right_alignment) / 2.0
+    if mean_alignment >= 0.80:
+        flags.append("aligned")
+    if mean_alignment < 0.50:
+        flags.append("low_alignment")
+    if mass_delta <= -0.50:
+        flags.append("mass_collapse")
+    elif mass_delta <= -0.15:
+        flags.append("mass_weakened")
+    if entropy_delta >= 0.20:
+        flags.append("entropy_reopened")
+    if magnitude >= 0.25:
+        flags.append("large_entry_response")
+    return ",".join(flags) if flags else "none"
 
 
 def classify_response(row: dict[str, object]) -> str:
@@ -1255,16 +1292,16 @@ def classify_response(row: dict[str, object]) -> str:
     alignment = float_or_zero(row.get("mean_subspace_alignment"))
     mass_delta = float_or_zero(row.get("spectral_mass_delta_fraction"))
     entropy_delta = float_or_zero(row.get("transport_entropy_delta"))
-    if alignment >= 0.80 and abs(mass_delta) <= 0.15:
-        return "transport_stable"
     if mass_delta <= -0.50:
         return "transport_collapses"
     if mass_delta <= -0.15:
         return "transport_weakened"
-    if alignment < 0.50 and mass_delta > -0.15:
-        return "transport_rerouted"
     if entropy_delta >= 0.20:
         return "transport_reopens"
+    if alignment < 0.50 and mass_delta > -0.15:
+        return "transport_rerouted"
+    if alignment >= 0.80 and abs(mass_delta) <= 0.15:
+        return "transport_stable"
     return "transport_control_equivalent"
 
 
@@ -1679,12 +1716,15 @@ def key_row(key: TransportKey) -> dict[str, object]:
     return {
         "matrix_family": "horizon_transport",
         "condition_id": key.condition_id,
+        "actual_control_name": key.actual_control_name,
+        "mechanism_control_strength": key.mechanism_control_strength,
         "probe_key": key.probe_key,
         "flow_mode": key.flow_mode,
         "source_horizon_band": key.source_horizon_band,
         "target_horizon_band": key.target_horizon_band,
         "H_a": key.H_a,
         "H_b": key.H_b,
+        "horizon_pair": f"{key.H_a}->{key.H_b}",
     }
 
 
