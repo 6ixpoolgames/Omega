@@ -20,7 +20,7 @@ The active empirical question is currently narrower than agency, identity, or va
 
 Current status, in one line:
 
-**VAL0/VAL1 were useful reconnaissance probes; RFS-MB0 has moved from endpoint support/distribution deformation to frontier-transform instrumentation. Stage B-2 found preregistered A/C joint signed syndromes that are sensitive to edge/topology perturbation, and a compact spectral smoke found nonblank direct-control future-field geometry. The latest high-loading repair cleared the instrument gates for a larger spectral channel-edge run, but no scientific gate has passed.**
+**VAL0/VAL1 were useful reconnaissance probes; RFS-MB0 has moved from endpoint support/distribution deformation to frontier-transform and horizon-transport instrumentation. The latest horizon-transport repair added row/column/bimarginal matched nulls plus synthetic fixtures; it is ready for a slightly larger horizon-transport smoke, but no scientific gate has passed.**
 
 ## Workflow: human-directed, AI-assisted research
 
@@ -193,10 +193,8 @@ Stage B-2:
   controls stayed near baseline
 
 spectral tangent:
-  cofrontier/coflow matrices are nonblank and direct-control topology-sensitive,
-  and cheap label/context/horizon shuffle controls now run; the laptop
-  diagnostic smoke blocks scaling because only horizon-order shuffle passed the
-  stricter family gate
+  static cofrontier/coflow matrices were useful but control-sensitive; the live
+  branch has reoriented toward directional horizon-transport matrices
 
 channel-edge prep:
   high-loading export and item-to-edge mapping work, but selection/evaluation
@@ -204,13 +202,20 @@ channel-edge prep:
   diagnostic smoke; the subspace transfers but item-local channels are not
   specific enough for graph perturbation
 
+horizon transport:
+  row/column/bimarginal matched nulls and synthetic fixtures now run; a tiny
+  empirical plumbing smoke did not collapse under matched marginal controls, but
+  this is readiness only
+
 next task:
-  repair the spectral-control layer and test subspace-level diagnostics before
-  any graph perturbation or larger spectral-channel run
+  run a slightly larger horizon-transport smoke before any graph perturbation,
+  direct channel diagnostics, or candidate promotion
 ```
 
 Important current docs:
 
+- [Horizon-transport matched null and fixture smoke result](docs/research_notes/validation_results/rfs_mb0_horizon_transport_matched_null_fixture_smoke_result.md)
+- [Horizon-transport matched null and fixture smoke spec](docs/RFS_MB0_HORIZON_TRANSPORT_MATCHED_NULL_AND_FIXTURE_SMOKE_SPEC.md)
 - [Laptop spectral control mapping smoke result](docs/research_notes/validation_results/rfs_mb0_laptop_spectral_control_mapping_smoke_result.md)
 - [Laptop spectral subspace control repair smoke result](docs/research_notes/validation_results/rfs_mb0_laptop_spectral_subspace_control_repair_smoke_result.md)
 - [Horizon-transport spectral response repair result](docs/research_notes/validation_results/rfs_mb0_horizon_transport_spectral_response_repair_result.md)

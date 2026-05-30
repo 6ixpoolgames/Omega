@@ -9,6 +9,77 @@ patch notes at the top.
 
 ## 2026-05-30
 
+### RFS-MB0 Horizon-Transport Matched Null and Fixture Repair
+
+Implemented the small repair recommended before any larger horizon-transport
+smoke. The runner now includes row/column/bimarginal matched detector nulls,
+adds `marginal_residual_fraction`, and supports a fixture-only smoke mode for
+known transport-association, marginal-fakeout, corridor, and trap cases.
+
+Retained spec and note:
+
+- `docs/RFS_MB0_HORIZON_TRANSPORT_MATCHED_NULL_AND_FIXTURE_SMOKE_SPEC.md`
+- `docs/research_notes/validation_results/rfs_mb0_horizon_transport_matched_null_fixture_smoke_result.md`
+
+Local validation outputs:
+
+- `results/local_runs/20260530_horizon_transport_matched_null_fixture_smoke/`
+- `results/local_runs/20260530_horizon_transport_matched_null_empirical_tiny_smoke/`
+- `results/local_runs/20260530_horizon_transport_matched_null_fixture_underpowered_guard/`
+
+Local outputs are generated CSV/JSON artifacts and are not committed.
+
+Fixture smoke:
+
+```text
+status: COMPLETED
+elapsed_seconds: 0.904
+matrix_count: 6
+detector_null_rows: 96
+fixture_result_rows: 4
+perturbation_response_rows: 2
+errors: 0
+matched_marginal_detector_null_gate_passed: 1
+synthetic_fixture_contract_passed: 1
+fixture contract: 4 / 4 passed
+readiness_level: fixture_contract_passed
+next_action_fork: run_empirical_matched_null_plumbing_smoke
+```
+
+Tiny empirical plumbing smoke:
+
+```text
+status: COMPLETED
+elapsed_seconds: 0.936
+jobs_completed: 2
+errors: 0
+matrix_count: 28
+detector_null_rows: 336
+perturbation_response_rows: 14
+matched_marginal_detector_null_gate_passed: 1
+readiness_level: ready_for_horizon_transport_smoke_expansion
+```
+
+Underpowered guard:
+
+```text
+null_replicates: 2
+detector_null_gate_passed: 0
+detector_null_replicate_powered: 0
+matched_marginal_detector_null_gate_passed: 0
+readiness_level: not_ready_repair_required
+blocking_reason: detector_null_replicates_underpowered
+```
+
+Decision:
+
+```text
+Matched-null and fixture repair is complete enough for a slightly larger
+horizon-transport smoke. This remains instrumentation readiness only: no graph
+perturbation, no direct-channel claim, no candidate promotion, and no
+Omega/agency/value claim.
+```
+
 ### RFS-MB0 Horizon-Transport Spectral Response Repair
 
 Implemented the first horizon-transport spectral response repair instrument.

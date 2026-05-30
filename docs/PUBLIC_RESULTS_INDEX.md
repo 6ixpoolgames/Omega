@@ -18,6 +18,8 @@ Directory:
 
 Current entry points:
 
+- `RFS_MB0_HORIZON_TRANSPORT_MATCHED_NULL_AND_FIXTURE_SMOKE_SPEC.md`
+- `RFS_MB0_HORIZON_TRANSPORT_SPECTRAL_RESPONSE_REPAIR_SPEC.md`
 - `RFS_MB0_STAGE_B2_LAPTOP_SPECTRAL_CONTROL_MAPPING_SMOKE_SPEC.md`
 - `RFS_MB0_FUTURE_LANDSCAPE_PATTERN_SPEC.md`
 - `RFS_MB0_FUTURE_LANDSCAPE_DETECTOR_V1_HANDOFF.md`
@@ -65,6 +67,7 @@ Directory:
 
 Current result notes:
 
+- `rfs_mb0_horizon_transport_matched_null_fixture_smoke_result.md`
 - `rfs_mb0_horizon_transport_spectral_response_repair_result.md`
 - `rfs_mb0_laptop_spectral_subspace_control_repair_smoke_result.md`
 - `rfs_mb0_laptop_spectral_control_mapping_smoke_result.md`
@@ -98,6 +101,12 @@ Result in one line:
 - Current reset: the project is not claiming Omega validation. It is building a
   collaborator-legible empirical program around reachable-future landscapes,
   matched controls, and failure modes.
+- The horizon-transport matched-null and fixture repair added row/column and
+  bimarginal matched detector nulls, a marginal-residual statistic, and
+  synthetic fixtures. The fixture contract passed 4/4 and a two-job empirical
+  plumbing smoke completed with the matched-marginal gate passing. This is
+  readiness for a slightly larger horizon-transport smoke, not scientific
+  validation.
 - The desktop Phase B / Stage A / Stage B branch shifted the current live
   empirical hook from marginal recurrence toward preregistered joint signed
   syndromes. Stage B-2 is now implemented as a preservation-first mechanism

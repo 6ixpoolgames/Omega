@@ -36,7 +36,8 @@ from .spectral_contracts import (
 )
 
 
-SPEC_ID = "docs/RFS_MB0_HORIZON_TRANSPORT_SPECTRAL_RESPONSE_REPAIR_SPEC.md"
+PARENT_SPEC_ID = "docs/RFS_MB0_HORIZON_TRANSPORT_SPECTRAL_RESPONSE_REPAIR_SPEC.md"
+SPEC_ID = "docs/RFS_MB0_HORIZON_TRANSPORT_MATCHED_NULL_AND_FIXTURE_SMOKE_SPEC.md"
 RUNNER_MODULE = "omega.rfs_mb0_future_landscape.run_horizon_transport_spectral_response_repair"
 STOP_REQUESTED = False
 
@@ -58,10 +59,35 @@ OUTPUTS = (
     "horizon_transport_detector_null_summary.csv",
     "horizon_transport_detector_null_anatomy.csv",
     "horizon_transport_detector_null_gate_results.csv",
+    "horizon_transport_fixture_results.csv",
     "horizon_transport_perturbation_manifest.csv",
     "horizon_transport_response_profile_summary.csv",
     "horizon_transport_response_classification.csv",
     "rfs_mb0_horizon_transport_spectral_response_repair_result.md",
+)
+
+STRUCTURE_DESTROYING_NULL_FAMILIES = (
+    "context_shuffle_transport_null",
+    "horizon_pair_shuffle_transport_null",
+)
+MARGINAL_MATCHED_NULL_FAMILIES = (
+    "row_marginal_matched_transport_null",
+    "column_marginal_matched_transport_null",
+    "row_column_marginal_matched_transport_null",
+)
+INTERPRETATION_CONTROL_FAMILIES = (
+    "label_shuffle_transport_interpretation_control",
+)
+DETECTOR_NULL_FAMILIES = (
+    *STRUCTURE_DESTROYING_NULL_FAMILIES,
+    *MARGINAL_MATCHED_NULL_FAMILIES,
+    *INTERPRETATION_CONTROL_FAMILIES,
+)
+DETECTOR_STATISTICS = (
+    "positive_or_nonzero_spectral_mass",
+    "effective_rank",
+    "transport_concentration",
+    "marginal_residual_fraction",
 )
 
 
@@ -124,6 +150,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--null-replicates", type=int, default=5)
     parser.add_argument("--detector-null-min-pass-fraction", type=float, default=0.50)
     parser.add_argument("--detector-null-min-percentile", type=float, default=0.80)
+    parser.add_argument("--fixture-smoke", action="store_true", help="Run synthetic horizon-transport fixtures instead of empirical jobs.")
     return parser.parse_args()
 
 
@@ -134,12 +161,15 @@ def main() -> None:
     started = time.perf_counter()
     repo_root = Path(__file__).resolve().parents[2]
     args.out.mkdir(parents=True, exist_ok=True)
-    metadata = instrument_metadata(SPEC_ID, RUNNER_MODULE, repo_root)
+    metadata = {**instrument_metadata(SPEC_ID, RUNNER_MODULE, repo_root), "parent_spec_id": PARENT_SPEC_ID}
     probes = tuple(item.strip() for item in args.probes.split(",") if item.strip())
     starts = tuple(int(item.strip()) for item in args.start_samples_list.split(",") if item.strip())
-    groups, split_rows = build_holdout_split(args)
-    anchors = {row.get("anchor_id", ""): row for row in read_csv(args.source_run / "atlas_band_selection.csv")}
-    jobs = build_jobs(args, groups, split_rows, anchors, probes, starts)
+    if args.fixture_smoke:
+        jobs: list[dict[str, object]] = []
+    else:
+        groups, split_rows = build_holdout_split(args)
+        anchors = {row.get("anchor_id", ""): row for row in read_csv(args.source_run / "atlas_band_selection.csv")}
+        jobs = build_jobs(args, groups, split_rows, anchors, probes, starts)
     write_json(args.out / "horizon_transport_repair_run_config.json", {
         **metadata,
         **vars(args),
@@ -164,10 +194,19 @@ def main() -> None:
         "alphabet_expansion_count": 0,
         "candidate_promotion_enabled": False,
         "artifact_policy": LOCAL_ONLY_ARTIFACT_POLICY,
+        "fixture_smoke_enabled": bool(args.fixture_smoke),
     }
     write_json(args.out / "horizon_transport_repair_status.json", status)
-    rows, errors, checkpoints = run_jobs(args, jobs, status, started)
-    matrices = build_transport_matrices(rows, args)
+    if args.fixture_smoke:
+        rows: list[dict[str, object]] = []
+        errors: list[dict[str, object]] = []
+        checkpoints = [checkpoint_row(status, started, 0, 0)]
+        status["status"] = "COMPLETED"
+        status["finalization_reason"] = "fixture_smoke_completed"
+        matrices = build_fixture_matrices()
+    else:
+        rows, errors, checkpoints = run_jobs(args, jobs, status, started)
+        matrices = build_transport_matrices(rows, args)
     outputs = compute_outputs(matrices, rows, args)
     write_outputs(args.out, outputs, errors, checkpoints, status, started)
 
@@ -343,6 +382,105 @@ def parse_transition_distribution(raw: object) -> Counter[tuple[str, str]]:
     return out
 
 
+def build_fixture_matrices() -> list[TransportMatrix]:
+    row_items = ["route_A0", "route_A1", "route_B0", "route_B1"]
+    column_items = ["dest_A0", "dest_A1", "dest_B0", "dest_B1"]
+    corridor_rows = ["corridor_open", "corridor_side", "corridor_reentry", "corridor_sink"]
+    corridor_cols = ["stable_open", "stable_side", "stable_reentry", "stable_sink"]
+    trap_rows = ["trap_entry", "trap_loop", "trap_exit", "trap_recovery"]
+    trap_cols = ["downstream_entry", "downstream_loop", "downstream_exit", "downstream_recovery"]
+    fixtures = [
+        (
+            TransportKey("fixture_block_transport_signal", BASELINE_CONTROL, 0.0, "fixture_block_probe", "fixture_flow", "middle", "middle", 4, 16),
+            row_items,
+            column_items,
+            np.asarray([
+                [12, 8, 0, 0],
+                [8, 12, 0, 0],
+                [0, 0, 12, 8],
+                [0, 0, 8, 12],
+            ], dtype=np.float64),
+        ),
+        (
+            TransportKey("fixture_marginal_fakeout", BASELINE_CONTROL, 0.0, "fixture_fakeout_probe", "fixture_flow", "middle", "middle", 4, 16),
+            row_items,
+            column_items,
+            np.asarray([
+                [16, 12, 8, 4],
+                [12, 9, 6, 3],
+                [8, 6, 4, 2],
+                [4, 3, 2, 1],
+            ], dtype=np.float64),
+        ),
+        (
+            TransportKey("fixture_corridor_baseline", BASELINE_CONTROL, 0.0, "fixture_corridor_probe", "fixture_flow", "middle", "middle", 4, 16),
+            corridor_rows,
+            corridor_cols,
+            np.asarray([
+                [18, 2, 1, 0],
+                [2, 15, 2, 1],
+                [1, 2, 14, 2],
+                [0, 1, 2, 12],
+            ], dtype=np.float64),
+        ),
+        (
+            TransportKey("fixture_corridor_stable_response", "fixture_nonlethal_corridor_jitter", 0.05, "fixture_corridor_probe", "fixture_flow", "middle", "middle", 4, 16),
+            corridor_rows,
+            corridor_cols,
+            np.asarray([
+                [18, 2, 1, 0],
+                [2, 14, 3, 1],
+                [1, 2, 14, 2],
+                [0, 1, 2, 12],
+            ], dtype=np.float64),
+        ),
+        (
+            TransportKey("fixture_trap_baseline", BASELINE_CONTROL, 0.0, "fixture_trap_probe", "fixture_flow", "middle", "middle", 4, 16),
+            trap_rows,
+            trap_cols,
+            np.asarray([
+                [16, 3, 1, 0],
+                [3, 18, 2, 0],
+                [1, 2, 12, 3],
+                [0, 0, 3, 10],
+            ], dtype=np.float64),
+        ),
+        (
+            TransportKey("fixture_trap_collapse_response", "fixture_nonlethal_trap_collapse", 0.80, "fixture_trap_probe", "fixture_flow", "middle", "middle", 4, 16),
+            trap_rows,
+            trap_cols,
+            np.asarray([
+                [3.2, 0.6, 0.2, 0],
+                [0.6, 3.6, 0.4, 0],
+                [0.2, 0.4, 2.4, 0.6],
+                [0, 0, 0.6, 2.0],
+            ], dtype=np.float64),
+        ),
+    ]
+    return [fixture_transport_matrix(key, rows, cols, values) for key, rows, cols, values in fixtures]
+
+
+def fixture_transport_matrix(key: TransportKey, rows: list[str], cols: list[str], values: np.ndarray) -> TransportMatrix:
+    left_vectors, singular_values, right_t = np.linalg.svd(values, full_matrices=False)
+    total = float(np.sum(values))
+    return TransportMatrix(
+        key=key,
+        matrix_id=transport_matrix_id(key),
+        row_items=list(rows),
+        column_items=list(cols),
+        matrix=values,
+        transport_context_count=1,
+        transport_mass_total=total,
+        retained_transport_mass=total,
+        dropped_transport_mass=0.0,
+        raw_row_item_count=len(rows),
+        raw_column_item_count=len(cols),
+        singular_values=singular_values,
+        left_vectors=left_vectors,
+        right_vectors=right_t.T,
+    )
+
+
 def compute_outputs(matrices: list[TransportMatrix], rows: list[dict[str, object]], args: argparse.Namespace) -> dict[str, list[dict[str, object]]]:
     manifest = matrix_manifest_rows(matrices)
     row_items = row_item_manifest_rows(matrices)
@@ -354,8 +492,10 @@ def compute_outputs(matrices: list[TransportMatrix], rows: list[dict[str, object
     entropy = entropy_rows(matrices)
     null_anatomy = detector_null_anatomy_rows(matrices, args)
     null_summary = detector_null_summary_rows(null_anatomy, args)
-    null_gates = detector_null_gate_rows(null_summary, matrices, args)
-    perturb_manifest, response_summary, response_classification = perturbation_response_rows(matrices, null_gates, args)
+    preliminary_null_gates = detector_null_gate_rows(null_summary, matrices, args, [])
+    perturb_manifest, response_summary, response_classification = perturbation_response_rows(matrices, preliminary_null_gates, args)
+    fixture_results = fixture_result_rows(null_anatomy, response_classification)
+    null_gates = detector_null_gate_rows(null_summary, matrices, args, fixture_results)
     subspace_alignment = horizon_pair_alignment_rows(matrices, args)
     return {
         "manifest": manifest,
@@ -369,6 +509,7 @@ def compute_outputs(matrices: list[TransportMatrix], rows: list[dict[str, object
         "null_anatomy": null_anatomy,
         "null_summary": null_summary,
         "null_gates": null_gates,
+        "fixture_results": fixture_results,
         "perturb_manifest": perturb_manifest,
         "response_summary": response_summary,
         "response_classification": response_classification,
@@ -451,6 +592,7 @@ def matrix_summary_rows(matrices: list[TransportMatrix], args: argparse.Namespac
             "right_top_item_mass_share": top_share(col_mass, 1),
             "transport_entropy": entropy_from_values(matrix.matrix.flatten()),
             "transport_concentration": top_share(matrix.matrix.flatten(), 1),
+            "marginal_residual_fraction": marginal_residual_fraction(matrix.matrix),
             "coverage": matrix.retained_transport_mass / max(1.0, matrix.transport_mass_total),
             "normalization_kind": "transport_count",
             **intervention_taxonomy(matrix.key),
@@ -497,22 +639,21 @@ def detector_null_anatomy_rows(matrices: list[TransportMatrix], args: argparse.N
     baseline = [matrix for matrix in matrices if matrix.key.actual_control_name == BASELINE_CONTROL]
     pool_by_probe_flow = group_matrices(baseline, ("probe_key", "flow_mode"))
     rows: list[dict[str, object]] = []
-    statistics = ("positive_or_nonzero_spectral_mass", "effective_rank", "transport_concentration")
     for matrix in baseline:
-        for null_family in ("context_shuffle_transport_null", "horizon_pair_shuffle_transport_null", "label_shuffle_transport_interpretation_control"):
+        for null_family in DETECTOR_NULL_FAMILIES:
             null_values_by_stat: dict[str, list[float]] = defaultdict(list)
             for replicate in range(max(1, args.null_replicates)):
                 rng = random.Random(stable_seed(f"horizon_transport_null|{matrix.matrix_id}|{null_family}|{replicate}"))
                 null_matrix = make_null_matrix(matrix, null_family, pool_by_probe_flow, rng)
-                for stat in statistics:
+                for stat in DETECTOR_STATISTICS:
                     null_values_by_stat[stat].append(transport_stat(null_matrix, stat))
-            for stat in statistics:
+            for stat in DETECTOR_STATISTICS:
                 observed = transport_stat(matrix.matrix, stat)
                 null_values = null_values_by_stat[stat]
                 percentile = sum(value <= observed for value in null_values) / max(1, len(null_values))
                 threshold = float(args.detector_null_min_percentile)
                 passed = percentile >= threshold
-                category = "label_interpretation_control" if null_family.startswith("label") else "structure_destroying_detector_null"
+                category = null_category(null_family)
                 rows.append({
                     **key_row(matrix.key),
                     "matrix_id": matrix.matrix_id,
@@ -524,7 +665,7 @@ def detector_null_anatomy_rows(matrices: list[TransportMatrix], args: argparse.N
                     "null_std": pstdev(null_values) if len(null_values) > 1 else 0.0 if null_values else "",
                     "null_max": max(null_values) if null_values else "",
                     "observed_percentile_vs_null": percentile,
-                    "expected_direction": "observed_above_detector_null" if category != "label_interpretation_control" else "label_permutation_interpretation_only",
+                    "expected_direction": expected_null_direction(category),
                     "separation_margin": percentile - threshold,
                     "null_gate_passed": int(passed),
                     "failure_interpretation": null_failure_interpretation(matrix, category, percentile, threshold, len(null_values)),
@@ -539,6 +680,12 @@ def make_null_matrix(
     rng: random.Random,
 ) -> np.ndarray:
     values = np.asarray(matrix.matrix, dtype=np.float64)
+    if null_family == "row_marginal_matched_transport_null":
+        return row_marginal_matched_matrix(values, rng)
+    if null_family == "column_marginal_matched_transport_null":
+        return column_marginal_matched_matrix(values, rng)
+    if null_family == "row_column_marginal_matched_transport_null":
+        return row_column_marginal_matched_matrix(values, rng)
     if null_family == "label_shuffle_transport_interpretation_control":
         row_order = list(range(values.shape[0]))
         col_order = list(range(values.shape[1]))
@@ -557,11 +704,87 @@ def make_null_matrix(
     return np.asarray(flat, dtype=np.float64).reshape(values.shape)
 
 
+def row_marginal_matched_matrix(values: np.ndarray, rng: random.Random) -> np.ndarray:
+    row_sums = values.sum(axis=1)
+    col_sums = values.sum(axis=0)
+    total = float(col_sums.sum())
+    if total <= 0:
+        return np.zeros_like(values, dtype=np.float64)
+    probs = np.asarray(col_sums, dtype=np.float64) / total
+    np_rng = np.random.default_rng(rng.randrange(0, 2**32 - 1))
+    out = np.zeros_like(values, dtype=np.float64)
+    for index, row_total in enumerate(row_sums):
+        count = max(0, int(round(float(row_total))))
+        if count <= 0:
+            continue
+        sample = np_rng.multinomial(count, probs)
+        out[index, :] = sample
+        if abs(float(row_total) - count) > 1e-9:
+            out[index, :] *= float(row_total) / max(1.0, float(count))
+    return out
+
+
+def column_marginal_matched_matrix(values: np.ndarray, rng: random.Random) -> np.ndarray:
+    row_sums = values.sum(axis=1)
+    col_sums = values.sum(axis=0)
+    total = float(row_sums.sum())
+    if total <= 0:
+        return np.zeros_like(values, dtype=np.float64)
+    probs = np.asarray(row_sums, dtype=np.float64) / total
+    np_rng = np.random.default_rng(rng.randrange(0, 2**32 - 1))
+    out = np.zeros_like(values, dtype=np.float64)
+    for index, col_total in enumerate(col_sums):
+        count = max(0, int(round(float(col_total))))
+        if count <= 0:
+            continue
+        sample = np_rng.multinomial(count, probs)
+        out[:, index] = sample
+        if abs(float(col_total) - count) > 1e-9:
+            out[:, index] *= float(col_total) / max(1.0, float(count))
+    return out
+
+
+def row_column_marginal_matched_matrix(values: np.ndarray, rng: random.Random) -> np.ndarray:
+    row_sums = values.sum(axis=1)
+    col_sums = values.sum(axis=0)
+    total = float(row_sums.sum())
+    if total <= 0:
+        return np.zeros_like(values, dtype=np.float64)
+    np_rng = np.random.default_rng(rng.randrange(0, 2**32 - 1))
+    out = np_rng.random(values.shape) + 1e-6
+    for _ in range(80):
+        current_rows = out.sum(axis=1)
+        out *= np.divide(row_sums, current_rows, out=np.zeros_like(row_sums), where=current_rows > 0)[:, None]
+        current_cols = out.sum(axis=0)
+        out *= np.divide(col_sums, current_cols, out=np.zeros_like(col_sums), where=current_cols > 0)[None, :]
+    return out
+
+
+def null_category(null_family: str) -> str:
+    if null_family in INTERPRETATION_CONTROL_FAMILIES:
+        return "label_interpretation_control"
+    if null_family in MARGINAL_MATCHED_NULL_FAMILIES:
+        return "marginal_matched_detector_null"
+    return "structure_destroying_detector_null"
+
+
+def expected_null_direction(category: str) -> str:
+    if category == "label_interpretation_control":
+        return "label_permutation_interpretation_only"
+    if category == "marginal_matched_detector_null":
+        return "observed_above_marginal_matched_null"
+    return "observed_above_detector_null"
+
+
 def detector_null_summary_rows(anatomy: list[dict[str, object]], args: argparse.Namespace) -> list[dict[str, object]]:
     rows: list[dict[str, object]] = []
     for key, items in group_by(anatomy, ("null_family", "null_category", "observed_statistic")).items():
         passed = [int(float_or_zero(row.get("null_gate_passed"))) for row in items]
         percentiles = [float_or_zero(row.get("observed_percentile_vs_null")) for row in items]
+        if key[1] == "label_interpretation_control":
+            summary_read = "interpretation_control_only"
+        else:
+            summary_read = "detector_null_separates" if passed and mean(passed) >= args.detector_null_min_pass_fraction else "detector_null_control_equivalent"
         rows.append({
             "null_family": key[0],
             "null_category": key[1],
@@ -572,19 +795,34 @@ def detector_null_summary_rows(anatomy: list[dict[str, object]], args: argparse.
             "median_observed_percentile_vs_null": median(percentiles) if percentiles else 0.0,
             "min_observed_percentile_vs_null": min(percentiles) if percentiles else 0.0,
             "required_pass_fraction": args.detector_null_min_pass_fraction,
-            "summary_read": "detector_null_separates" if passed and mean(passed) >= args.detector_null_min_pass_fraction else "detector_null_control_equivalent",
+            "summary_read": summary_read,
         })
     return rows
 
 
-def detector_null_gate_rows(summary: list[dict[str, object]], matrices: list[TransportMatrix], args: argparse.Namespace) -> list[dict[str, object]]:
-    required = [
+def detector_null_gate_rows(summary: list[dict[str, object]], matrices: list[TransportMatrix], args: argparse.Namespace, fixture_results: list[dict[str, object]]) -> list[dict[str, object]]:
+    structure_required = [
         row for row in summary
         if row.get("null_category") == "structure_destroying_detector_null"
-        and row.get("observed_statistic") in {"positive_or_nonzero_spectral_mass", "effective_rank", "transport_concentration"}
+        and row.get("observed_statistic") in set(DETECTOR_STATISTICS)
+    ]
+    marginal_required = [
+        row for row in summary
+        if row.get("null_category") == "marginal_matched_detector_null"
+        and row.get("observed_statistic") == "marginal_residual_fraction"
     ]
     replicate_powered = args.null_replicates >= 3
-    any_required_pass = any(row.get("summary_read") == "detector_null_separates" for row in required)
+    structure_pass = any(row.get("summary_read") == "detector_null_separates" for row in structure_required)
+    required_marginal_families = set(MARGINAL_MATCHED_NULL_FAMILIES)
+    marginal_families_passed = {
+        str(row.get("null_family", ""))
+        for row in marginal_required
+        if row.get("summary_read") == "detector_null_separates"
+    }
+    marginal_pass = required_marginal_families <= marginal_families_passed
+    marginal_observed = f"{len(required_marginal_families & marginal_families_passed)}/{len(required_marginal_families)} families_passed"
+    fixture_required = bool(fixture_results)
+    fixture_pass = bool(fixture_results) and all(int(float_or_zero(row.get("passed"))) for row in fixture_results)
     adequate_coverage = any(
         matrix.retained_transport_mass / max(1.0, matrix.transport_mass_total) >= 0.80
         for matrix in matrices
@@ -612,10 +850,10 @@ def detector_null_gate_rows(summary: list[dict[str, object]], matrices: list[Tra
             "gate_id": "G2",
             "gate_name": "structure_detector_null_separation",
             "required": 1,
-            "passed": int(any_required_pass and replicate_powered),
+            "passed": int(structure_pass and replicate_powered),
             "threshold": f"at least one required structure null statistic pass_fraction >= {args.detector_null_min_pass_fraction}",
-            "observed": "passed" if any_required_pass and replicate_powered else "underpowered" if any_required_pass and not replicate_powered else "control_equivalent",
-            "blocking_reason": "" if any_required_pass and replicate_powered else "detector_null_replicates_underpowered" if any_required_pass and not replicate_powered else "transport_detector_nulls_control_equivalent",
+            "observed": "passed" if structure_pass and replicate_powered else "underpowered" if structure_pass and not replicate_powered else "control_equivalent",
+            "blocking_reason": "" if structure_pass and replicate_powered else "detector_null_replicates_underpowered" if structure_pass and not replicate_powered else "transport_detector_nulls_control_equivalent",
         },
         {
             "gate_id": "G3",
@@ -625,6 +863,24 @@ def detector_null_gate_rows(summary: list[dict[str, object]], matrices: list[Tra
             "threshold": "null_replicates >= 3",
             "observed": args.null_replicates,
             "blocking_reason": "" if replicate_powered else "detector_null_replicates_underpowered",
+        },
+        {
+            "gate_id": "G4",
+            "gate_name": "matched_marginal_detector_null_separation",
+            "required": 1,
+            "passed": int(marginal_pass and replicate_powered),
+            "threshold": "marginal_residual_fraction separates from row, column, and bimarginal matched null families",
+            "observed": marginal_observed if replicate_powered else "underpowered",
+            "blocking_reason": "" if marginal_pass and replicate_powered else "detector_null_replicates_underpowered" if marginal_pass and not replicate_powered else "marginal_matched_nulls_control_equivalent",
+        },
+        {
+            "gate_id": "G5",
+            "gate_name": "synthetic_fixture_contract",
+            "required": int(fixture_required),
+            "passed": int(fixture_pass),
+            "threshold": "all fixture expectations pass when fixture smoke is enabled",
+            "observed": f"{sum(int(float_or_zero(row.get('passed'))) for row in fixture_results)}/{len(fixture_results)}" if fixture_required else "not_run",
+            "blocking_reason": "" if fixture_pass or not fixture_required else "synthetic_fixture_contract_failed",
         },
     ]
 
@@ -639,7 +895,7 @@ def perturbation_response_rows(
         for matrix in matrices
         if matrix.key.actual_control_name == BASELINE_CONTROL
     }
-    detector_null_status = "detector_nulls_passed" if any(row.get("gate_name") == "structure_detector_null_separation" and int(float_or_zero(row.get("passed"))) for row in null_gates) else "detector_nulls_not_passed"
+    detector_null_status = "detector_nulls_passed" if required_detector_gates_passed(null_gates) else "detector_nulls_not_passed"
     manifest: list[dict[str, object]] = []
     summary: list[dict[str, object]] = []
     classes: list[dict[str, object]] = []
@@ -660,6 +916,95 @@ def perturbation_response_rows(
         summary.append(common)
         classes.append({**common, "response_class": response_class, "allowed_claim_level": tax["allowed_claim_level"]})
     return manifest, summary, classes
+
+
+def required_detector_gates_passed(null_gates: list[dict[str, object]]) -> bool:
+    required = {
+        "structure_detector_null_separation",
+        "detector_null_replicate_power",
+        "matched_marginal_detector_null_separation",
+    }
+    passed = {
+        str(row.get("gate_name", ""))
+        for row in null_gates
+        if int(float_or_zero(row.get("passed")))
+    }
+    return required <= passed
+
+
+def fixture_result_rows(null_anatomy: list[dict[str, object]], response_classification: list[dict[str, object]]) -> list[dict[str, object]]:
+    fixture_nulls = [row for row in null_anatomy if str(row.get("condition_id", "")).startswith("fixture_")]
+    fixture_responses = [row for row in response_classification if str(row.get("condition_id", "")).startswith("fixture_")]
+    if not fixture_nulls and not fixture_responses:
+        return []
+
+    block_rows = [
+        row for row in fixture_nulls
+        if row.get("condition_id") == "fixture_block_transport_signal"
+        and row.get("null_family") in MARGINAL_MATCHED_NULL_FAMILIES
+        and row.get("observed_statistic") == "marginal_residual_fraction"
+    ]
+    fakeout_rows = [
+        row for row in fixture_nulls
+        if row.get("condition_id") == "fixture_marginal_fakeout"
+        and row.get("null_family") == "row_column_marginal_matched_transport_null"
+        and row.get("observed_statistic") == "marginal_residual_fraction"
+    ]
+    corridor_rows = [
+        row for row in fixture_responses
+        if row.get("condition_id") == "fixture_corridor_stable_response"
+    ]
+    trap_rows = [
+        row for row in fixture_responses
+        if row.get("condition_id") == "fixture_trap_collapse_response"
+    ]
+
+    block_pass = any(int(float_or_zero(row.get("null_gate_passed"))) for row in block_rows)
+    fakeout_pass = bool(fakeout_rows) and not any(int(float_or_zero(row.get("null_gate_passed"))) for row in fakeout_rows)
+    corridor_pass = any(row.get("response_class") == "transport_stable" for row in corridor_rows)
+    trap_pass = any(row.get("response_class") == "transport_collapses" for row in trap_rows)
+
+    return [
+        {
+            "fixture_id": "block_transport_signal",
+            "fixture_question": "does true association beyond marginals separate from matched marginal nulls",
+            "expected_behavior": "marginal_residual_fraction passes at least one matched marginal null",
+            "observed": observed_fixture_read(block_rows, "null_gate_passed"),
+            "passed": int(block_pass),
+            "source_table": "horizon_transport_detector_null_anatomy.csv",
+        },
+        {
+            "fixture_id": "marginal_fakeout",
+            "fixture_question": "does a pure row/column mass fakeout fail the bimarginal matched null",
+            "expected_behavior": "marginal_residual_fraction does not pass row_column_marginal_matched_transport_null",
+            "observed": observed_fixture_read(fakeout_rows, "null_gate_passed"),
+            "passed": int(fakeout_pass),
+            "source_table": "horizon_transport_detector_null_anatomy.csv",
+        },
+        {
+            "fixture_id": "corridor_stable_response",
+            "fixture_question": "does a tiny corridor perturbation stay in the stable response class",
+            "expected_behavior": "transport_stable",
+            "observed": observed_fixture_read(corridor_rows, "response_class"),
+            "passed": int(corridor_pass),
+            "source_table": "horizon_transport_response_classification.csv",
+        },
+        {
+            "fixture_id": "trap_collapse_response",
+            "fixture_question": "does a trap collapse perturbation enter the collapse response class",
+            "expected_behavior": "transport_collapses",
+            "observed": observed_fixture_read(trap_rows, "response_class"),
+            "passed": int(trap_pass),
+            "source_table": "horizon_transport_response_classification.csv",
+        },
+    ]
+
+
+def observed_fixture_read(rows: list[dict[str, object]], field: str) -> str:
+    if not rows:
+        return "missing"
+    counts = Counter(str(row.get(field, "")) for row in rows)
+    return "; ".join(f"{key}:{value}" for key, value in sorted(counts.items()))
 
 
 def response_payload(baseline: TransportMatrix | None, matrix: TransportMatrix, args: argparse.Namespace) -> dict[str, object]:
@@ -770,12 +1115,14 @@ def write_outputs(
     write_csv(out_dir / "horizon_transport_detector_null_summary.csv", outputs["null_summary"])
     write_csv(out_dir / "horizon_transport_detector_null_anatomy.csv", outputs["null_anatomy"])
     write_csv(out_dir / "horizon_transport_detector_null_gate_results.csv", outputs["null_gates"])
+    write_csv(out_dir / "horizon_transport_fixture_results.csv", outputs["fixture_results"])
     write_csv(out_dir / "horizon_transport_perturbation_manifest.csv", outputs["perturb_manifest"])
     write_csv(out_dir / "horizon_transport_response_profile_summary.csv", outputs["response_summary"])
     write_csv(out_dir / "horizon_transport_response_classification.csv", outputs["response_classification"])
     status.update(decision_fields(outputs))
     status["matrix_count"] = len(outputs["manifest"])
     status["detector_null_rows"] = len(outputs["null_anatomy"])
+    status["fixture_result_rows"] = len(outputs["fixture_results"])
     status["perturbation_response_rows"] = len(outputs["response_classification"])
     status["errors"] = len(errors)
     status["finished_utc"] = utc_now()
@@ -792,14 +1139,27 @@ def decision_fields(outputs: dict[str, list[dict[str, object]]]) -> dict[str, ob
     matrix_gate = any(row.get("gate_name") == "horizon_transport_matrix_coverage" and int(float_or_zero(row.get("passed"))) for row in gates)
     null_gate = any(row.get("gate_name") == "structure_detector_null_separation" and int(float_or_zero(row.get("passed"))) for row in gates)
     null_power_gate = any(row.get("gate_name") == "detector_null_replicate_power" and int(float_or_zero(row.get("passed"))) for row in gates)
+    matched_marginal_gate = any(row.get("gate_name") == "matched_marginal_detector_null_separation" and int(float_or_zero(row.get("passed"))) for row in gates)
+    fixture_rows = outputs["fixture_results"]
+    fixture_required = bool(fixture_rows)
+    fixture_gate = (not fixture_required) or all(int(float_or_zero(row.get("passed"))) for row in fixture_rows)
     response_rows = [row for row in outputs["response_classification"] if row.get("response_class") not in {"transport_resolution_mismatch", "transport_response_underpowered"}]
     response_interpretable = bool(response_rows)
-    if matrix_gate and null_gate and null_power_gate and response_interpretable:
+    if fixture_required and matrix_gate and null_gate and matched_marginal_gate and null_power_gate and response_interpretable and fixture_gate:
+        readiness = "fixture_contract_passed"
+        next_action = "run_empirical_matched_null_plumbing_smoke"
+    elif matrix_gate and null_gate and matched_marginal_gate and null_power_gate and response_interpretable and fixture_gate:
         readiness = "ready_for_horizon_transport_smoke_expansion"
         next_action = "expand_horizon_transport_smoke"
     elif matrix_gate and not null_power_gate:
         readiness = "not_ready_repair_required"
         next_action = "repair_transport_null_controls"
+    elif matrix_gate and null_gate and not matched_marginal_gate:
+        readiness = "not_ready_repair_required"
+        next_action = "repair_marginal_matched_transport_nulls"
+    elif matrix_gate and null_gate and matched_marginal_gate and not fixture_gate:
+        readiness = "not_ready_repair_required"
+        next_action = "repair_horizon_transport_fixtures"
     elif matrix_gate and not null_gate:
         readiness = "ready_for_fixture_horizon_transport_tests"
         next_action = "build_horizon_transport_fixtures"
@@ -810,11 +1170,16 @@ def decision_fields(outputs: dict[str, list[dict[str, object]]]) -> dict[str, ob
         "readiness_level": readiness,
         "next_action_fork": next_action,
         "ready_for_horizon_transport_smoke_expansion": int(readiness == "ready_for_horizon_transport_smoke_expansion"),
+        "fixture_contract_passed": int(readiness == "fixture_contract_passed"),
         "ready_for_fixture_horizon_transport_tests": int(readiness == "ready_for_fixture_horizon_transport_tests"),
         "ready_for_direct_channel_diagnostics": 0,
         "not_ready_repair_required": int(readiness == "not_ready_repair_required"),
         "detector_null_gate_passed": int(null_gate),
         "detector_null_replicate_powered": int(null_power_gate),
+        "matched_marginal_detector_null_gate_passed": int(matched_marginal_gate),
+        "synthetic_fixture_contract_passed": int(fixture_required and fixture_gate),
+        "synthetic_fixture_contract_required": int(fixture_required),
+        "synthetic_fixture_contract_not_run": int(not fixture_required),
         "perturbation_response_interpretable": int(response_interpretable),
     }
 
@@ -834,6 +1199,10 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
         f"Detector-null gate passed: `{status.get('detector_null_gate_passed', 0)}`.",
         "",
         f"Detector-null replicate powered: `{status.get('detector_null_replicate_powered', 0)}`.",
+        "",
+        f"Matched marginal null gate passed: `{status.get('matched_marginal_detector_null_gate_passed', 0)}`.",
+        "",
+        f"Synthetic fixture contract: `{fixture_status_text(status)}`.",
         "",
         f"Perturbation response interpretable: `{status.get('perturbation_response_interpretable', 0)}`.",
         "",
@@ -863,6 +1232,17 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
         lines.append(f"| {row.get('gate_name', '')} | {row.get('passed', '')} | {row.get('observed', '')} | {row.get('blocking_reason', '')} |")
     lines.extend([
         "",
+        "## Fixture Results",
+        "",
+        "| fixture | passed | observed |",
+        "|---|---:|---|",
+    ])
+    for row in outputs["fixture_results"]:
+        lines.append(f"| {row.get('fixture_id', '')} | {row.get('passed', '')} | {row.get('observed', '')} |")
+    if not outputs["fixture_results"]:
+        lines.append("| not_run |  | fixture smoke disabled |")
+    lines.extend([
+        "",
         "## Perturbation-Response Results",
         "",
         "| response_class | count |",
@@ -879,6 +1259,7 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
         "## Readiness Levels",
         "",
         f"- ready_for_horizon_transport_smoke_expansion: `{status.get('ready_for_horizon_transport_smoke_expansion', 0)}`",
+        f"- fixture_contract_passed: `{status.get('fixture_contract_passed', 0)}`",
         f"- ready_for_fixture_horizon_transport_tests: `{status.get('ready_for_fixture_horizon_transport_tests', 0)}`",
         f"- ready_for_direct_channel_diagnostics: `{status.get('ready_for_direct_channel_diagnostics', 0)}`",
         f"- not_ready_repair_required: `{status.get('not_ready_repair_required', 0)}`",
@@ -893,6 +1274,14 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
         "",
     ])
     (out_dir / "rfs_mb0_horizon_transport_spectral_response_repair_result.md").write_text("\n".join(lines), encoding="utf-8")
+
+
+def fixture_status_text(status: dict[str, object]) -> str:
+    if int(float_or_zero(status.get("synthetic_fixture_contract_required"))) == 0:
+        return "not_run"
+    if int(float_or_zero(status.get("synthetic_fixture_contract_passed"))):
+        return "passed"
+    return "failed"
 
 
 def write_manifest(out_dir: Path) -> None:
@@ -963,6 +1352,8 @@ def transport_stat(matrix: TransportMatrix | np.ndarray, stat: str) -> float:
         return effective_rank(singular)
     if stat == "transport_concentration":
         return top_share(values.flatten(), 1)
+    if stat == "marginal_residual_fraction":
+        return marginal_residual_fraction(values)
     return 0.0
 
 
@@ -975,6 +1366,8 @@ def null_failure_interpretation(matrix: TransportMatrix, category: str, percenti
         return "underpowered_replicates"
     if percentile >= threshold:
         return "passed"
+    if category == "marginal_matched_detector_null":
+        return "marginal_mass_geometry_explains_statistic"
     if percentile <= 0.50:
         return "true_control_equivalence"
     return "statistic_mismatch"
@@ -1014,6 +1407,19 @@ def group_matrices(matrices: list[TransportMatrix], fields: tuple[str, ...]) -> 
             values.append(getattr(matrix.key, field))
         grouped[tuple(values)].append(matrix)
     return grouped
+
+
+def marginal_residual_fraction(values: np.ndarray) -> float:
+    total = float(np.sum(values))
+    if total <= 0:
+        return 0.0
+    row_sums = values.sum(axis=1)
+    col_sums = values.sum(axis=0)
+    expected = np.outer(row_sums, col_sums) / total
+    denom = float(np.linalg.norm(values))
+    if denom <= 1e-12:
+        return 0.0
+    return float(np.linalg.norm(values - expected) / denom)
 
 
 def entropy_from_values(values: np.ndarray) -> float:
