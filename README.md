@@ -20,7 +20,7 @@ The active empirical question is currently narrower than agency, identity, or va
 
 Current status, in one line:
 
-**VAL0/VAL1 were useful reconnaissance probes; RFS-MB0 has moved from endpoint support/distribution deformation to frontier-transform and horizon-transport instrumentation. The latest horizon-transport repair added row/column/bimarginal matched nulls plus synthetic fixtures; it is ready for a slightly larger horizon-transport smoke, but no scientific gate has passed.**
+**VAL0/VAL1 were useful reconnaissance probes; RFS-MB0 has moved from endpoint support/distribution deformation to frontier-transform and horizon-transport instrumentation. The latest horizon-transport expansion smoke passed instrument-scaleup gates under matched marginal nulls, with uniformly stable tiny perturbation responses. This is still not a scientific gate pass, candidate promotion, or Omega/agency/value claim.**
 
 ## Workflow: human-directed, AI-assisted research
 
@@ -166,6 +166,8 @@ frontier-transform Phase B 10h design-set recurrence
 frontier-transform syndrome and mechanism-control audit spec
 frontier-transform Stage B-2 exploratory iteration
 spectral future-field geometry smoke
+horizon-transport matched-null fixture repair
+horizon-transport expansion smoke
 ```
 
 Current interpretation:
@@ -203,17 +205,21 @@ channel-edge prep:
   specific enough for graph perturbation
 
 horizon transport:
-  row/column/bimarginal matched nulls and synthetic fixtures now run; a tiny
-  empirical plumbing smoke did not collapse under matched marginal controls, but
-  this is readiness only
+  row/column/bimarginal matched nulls and synthetic fixtures run; the
+  desktop-shape expansion smoke completed 180/180 jobs with full matrix
+  coverage, matched marginal separation across both required probes/flow modes,
+  and uniformly stable tiny perturbation responses
 
 next task:
-  run a slightly larger horizon-transport smoke before any graph perturbation,
-  direct channel diagnostics, or candidate promotion
+  expand horizon-transport scale within the same claim boundary; do not open
+  holdout, graph perturbation, direct channel diagnostics, or candidate
+  promotion from this smoke alone
 ```
 
 Important current docs:
 
+- [Horizon-transport expansion smoke result](docs/research_notes/validation_results/rfs_mb0_horizon_transport_expansion_smoke_result.md)
+- [Horizon-transport expansion smoke spec](docs/RFS_MB0_HORIZON_TRANSPORT_EXPANSION_SMOKE_SPEC.md)
 - [Horizon-transport matched null and fixture smoke result](docs/research_notes/validation_results/rfs_mb0_horizon_transport_matched_null_fixture_smoke_result.md)
 - [Horizon-transport matched null and fixture smoke spec](docs/RFS_MB0_HORIZON_TRANSPORT_MATCHED_NULL_AND_FIXTURE_SMOKE_SPEC.md)
 - [Laptop spectral control mapping smoke result](docs/research_notes/validation_results/rfs_mb0_laptop_spectral_control_mapping_smoke_result.md)

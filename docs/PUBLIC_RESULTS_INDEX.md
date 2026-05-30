@@ -19,6 +19,7 @@ Directory:
 Current entry points:
 
 - `RFS_MB0_HORIZON_TRANSPORT_MATCHED_NULL_AND_FIXTURE_SMOKE_SPEC.md`
+- `RFS_MB0_HORIZON_TRANSPORT_EXPANSION_SMOKE_SPEC.md`
 - `RFS_MB0_HORIZON_TRANSPORT_SPECTRAL_RESPONSE_REPAIR_SPEC.md`
 - `RFS_MB0_STAGE_B2_LAPTOP_SPECTRAL_CONTROL_MAPPING_SMOKE_SPEC.md`
 - `RFS_MB0_FUTURE_LANDSCAPE_PATTERN_SPEC.md`
@@ -67,6 +68,7 @@ Directory:
 
 Current result notes:
 
+- `rfs_mb0_horizon_transport_expansion_smoke_result.md`
 - `rfs_mb0_horizon_transport_matched_null_fixture_smoke_result.md`
 - `rfs_mb0_horizon_transport_spectral_response_repair_result.md`
 - `rfs_mb0_laptop_spectral_subspace_control_repair_smoke_result.md`
@@ -107,6 +109,13 @@ Result in one line:
   plumbing smoke completed with the matched-marginal gate passing. This is
   readiness for a slightly larger horizon-transport smoke, not scientific
   validation.
+- The horizon-transport expansion smoke completed the intended desktop-shape
+  `180 / 180` job smoke on the local 192-input bundle with `0` errors, `140`
+  matrices, full coverage, and matched marginal detector-null separation across
+  both required probes and flow modes. All `112` perturbation-response rows were
+  `transport_stable`; the next action fork is `expand_horizon_transport_scale`.
+  This is an instrument-scaleup result only, not holdout, candidate promotion,
+  graph causality, or an Omega/agency/value claim.
 - The desktop Phase B / Stage A / Stage B branch shifted the current live
   empirical hook from marginal recurrence toward preregistered joint signed
   syndromes. Stage B-2 is now implemented as a preservation-first mechanism
@@ -1397,6 +1406,30 @@ Result in one line:
 - Stage A found preregistered joint signed syndromes above
   marginal-preserving controls on regenerated desktop Phase B rows, but Stage B
   remains `control_too_destructive_underdetermined`; holdout remains blocked.
+
+### RFS-MB0 Horizon-Transport Expansion Smoke
+
+Directory:
+
+- `results/local_runs/20260530_horizon_transport_expansion_smoke_desktop_scale_192_inputs/`
+
+Primary retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_horizon_transport_expansion_smoke_result.md`
+
+Reason retained:
+
+- This is the first proper desktop-shape horizon-transport smoke after the
+  matched-null fixture repair, preserving row/column/bimarginal matched detector
+  nulls, response-profile taxonomy, local-only artifact hygiene, and the
+  no-holdout/no-candidate-promotion claim boundary.
+
+Result in one line:
+
+- The smoke completed `180 / 180` jobs with `0` errors, full matrix coverage,
+  matched marginal detector-null separation across both required probes and
+  flow modes, and uniformly `transport_stable` perturbation responses; the
+  emitted next-action fork is `expand_horizon_transport_scale`.
 
 The important public caveat:
 

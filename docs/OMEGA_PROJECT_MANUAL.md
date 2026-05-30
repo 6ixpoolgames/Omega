@@ -93,6 +93,8 @@ as the canonical internal definition anchor.
    - `docs/research_notes/validation_results/rfs_mb0_laptop_spectral_control_mapping_smoke_result.md`
    - `docs/RFS_MB0_HORIZON_TRANSPORT_MATCHED_NULL_AND_FIXTURE_SMOKE_SPEC.md`
    - `docs/research_notes/validation_results/rfs_mb0_horizon_transport_matched_null_fixture_smoke_result.md`
+   - `docs/RFS_MB0_HORIZON_TRANSPORT_EXPANSION_SMOKE_SPEC.md`
+   - `docs/research_notes/validation_results/rfs_mb0_horizon_transport_expansion_smoke_result.md`
    - `docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md`
    - `docs/research_notes/validation_design/val_ecology_viability_reorientation.md`
    - `docs/research_notes/validation_design/README.md`
@@ -349,6 +351,7 @@ Latest result:
 docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_future_field_geometry_smoke_result.md
 docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_channel_edge_smoke_repair_prep_result.md
 docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_channel_high_loading_repair_result.md
+docs/research_notes/validation_results/rfs_mb0_horizon_transport_expansion_smoke_result.md
 docs/research_notes/validation_results/rfs_mb0_stage_b2_exploratory_iteration_pass_result.md
 ```
 
@@ -365,7 +368,10 @@ random-equivalent at the small-smoke scale. The follow-up high-loading repair
 added stable item selection and frequency/baseline-flow matched random
 ablation; the repaired small smoke cleared the instrument gate for a larger
 spectral channel-edge exploratory run, while leaving frontier-size and
-probe-marginal controls as caveats.
+probe-marginal controls as caveats. The live spectral branch then reoriented to
+directional horizon-transport matrices; row/column/bimarginal matched nulls,
+fixtures, and the desktop-shape expansion smoke now pass instrument gates, with
+uniformly stable tiny perturbation responses.
 ```
 
 RFS-MB0 is now the recommended starting point for new implementation work.

@@ -9,6 +9,82 @@ patch notes at the top.
 
 ## 2026-05-30
 
+### RFS-MB0 Horizon-Transport Expansion Smoke
+
+Implemented expansion-smoke reporting for the horizon-transport runner and ran
+the proper desktop-shape smoke requested by
+`docs/RFS_MB0_HORIZON_TRANSPORT_EXPANSION_SMOKE_SPEC.md`.
+
+Retained spec and note:
+
+- `docs/RFS_MB0_HORIZON_TRANSPORT_EXPANSION_SMOKE_SPEC.md`
+- `docs/research_notes/validation_results/rfs_mb0_horizon_transport_expansion_smoke_result.md`
+
+Local validation output:
+
+- `results/local_runs/20260530_horizon_transport_expansion_smoke_desktop_scale_192_inputs/`
+
+Local generated CSV/JSON outputs are not committed.
+
+Run-shape note:
+
+```text
+The committed default focused selection currently yields one runnable group and
+only a 60-job expanded local smoke. The proper desktop-shape smoke therefore
+used the local rebuildable 192-input bundle to exercise 3 design groups.
+```
+
+Desktop-shape smoke:
+
+```text
+status: COMPLETED
+git_commit: a988989
+workers: 7
+jobs_completed: 180 / 180
+elapsed_seconds: 15.293
+errors: 0
+matrix_count: 140
+detector_null_rows: 672
+matched_marginal_summary_rows: 84
+perturbation_response_rows: 112
+```
+
+Gate read:
+
+```text
+matrix coverage: passed, observed 1.0
+structure detector-null separation: passed
+null replicate power: passed, null_replicates 7
+matched marginal detector-null separation: passed, 3/3 families
+fixture contract: not required in empirical expansion run
+```
+
+Context/response read:
+
+```text
+both required probes: matched_marginal_separates
+both required flow modes: matched_marginal_separates
+all 7 emitted horizon pairs: matched_marginal_separates
+response classes: transport_stable 112 / 112
+```
+
+Decision:
+
+```text
+readiness_level: ready_for_horizon_transport_scaleup
+next_action_fork: expand_horizon_transport_scale
+```
+
+Interpretation:
+
+```text
+This is a clean instrument-scaleup smoke. Horizon transport remained covered,
+matched marginal detector nulls separated, and perturbation responses were
+interpretable but uniformly stable. It does not authorize holdout, graph
+perturbation, direct channel diagnostics, candidate promotion, or
+Omega/agency/value claims.
+```
+
 ### RFS-MB0 Horizon-Transport Matched Null and Fixture Repair
 
 Implemented the small repair recommended before any larger horizon-transport
