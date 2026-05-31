@@ -2,9 +2,9 @@
 
 This repository is the empirical workspace for the **Omega / Reachable Futures** theory project.
 
-The current empirical program studies **reachable futures**: how neutral finite transition systems shape which futures remain reachable, excluded, concentrated, transformed, control-equivalent, or measurement-limited.
+The project studies **reachable futures**: how neutral finite transition systems shape which futures remain reachable, excluded, concentrated, transformed, control-equivalent, measurement-limited, recoverable, or composable.
 
-The long-term Omega ambition is broader: a structural account of value-bearing futures and alignment-relevant failure modes that does not begin from reward functions, utility functions, fixed preference aggregation, moral rules, or privileged agent/valuer boundaries. The executable work in this repo is narrower and earlier-stage: building minimal substrates where fragments of that idea can become mathematically testable.
+The long-term Omega ambition is broader: a structural account of value-bearing futures and alignment-relevant failure modes that does not begin from reward functions, utility functions, fixed preference aggregation, moral rules, or privileged agent/valuer boundaries. The executable work in this repo is narrower and earlier-stage: building instruments and minimal substrates where fragments of that idea can become mathematically testable.
 
 This repository does **not** prove Omega. It is a controlled workspace for turning the theory into testable mathematical objects, identifying substrate artifacts, and letting weak formulations fail.
 
@@ -14,21 +14,19 @@ If you are new to the project, start with:
 
 1. [External Reader Guide](docs/EXTERNAL_READER_GUIDE.md)
 2. [Omega Formal Core v0](docs/research_notes/omega_theory/omega_formal_core_v0.md)
-3. [Hard top-m mechanism result](docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md)
-4. [Top-m geometry audit result](docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md)
-5. [MaxEnt local transition Phase 1 preflight result](docs/research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md)
-6. [Low-beta preservation sensitivity scaleup result](docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
-7. [Asymmetry-ladder preservation scaleup result](docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
-8. [Horizon Transport and Aligned Amplification](docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md)
-9. [Transition Energy and Constraint Untethering](docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
-10. [Transition-Energy Substrate Atlas](docs/research_notes/omega_theory/transition_energy_substrate_atlas.md)
-11. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
+3. [Future Field Atlas Instrument Spec](docs/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md)
+4. [Hard top-m mechanism result](docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md)
+5. [Top-m geometry audit result](docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md)
+6. [MaxEnt local transition Phase 1 preflight result](docs/research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md)
+7. [Low-beta preservation sensitivity scaleup result](docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
+8. [Asymmetry-ladder preservation scaleup result](docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
+9. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
 
 The external reader guide gives a short, current, claim-bounded overview of the project and the best reading paths for technical readers, implementation reviewers, and historical context.
 
 ## Current status in one paragraph
 
-VAL0/VAL1 were useful reconnaissance probes. RFS-MB0 has reoriented from endpoint support/distribution deformation and static coflow spectra toward directional **horizon-transport** instrumentation. The H128 horizon-transport response-surface scaleup passed matched-marginal instrument gates and surfaced a stable-to-amplified-aligned response surface. Transition-energy characterization then turned the branch into a substrate-response atlas. The asymmetry-ladder and low-beta runs made preservation asymmetry the current loadbearing substrate ingredient, especially `symbol_histogram_distance`; the MaxEnt and top-m audits then narrowed that read. The current preservation response is not recovered by the tested MaxEnt macro-marginal, softmax/Gibbs, or rank-conditioned samplers. The latest hard-top-m mechanism pass found a fixed low-rank-core boundary: baseline `m=3`, `m=4` with one weakest edge removed, and `m=5` with two weakest edges removed were response-bearing, while expansion, random deletion, and strongest-edge deletion stayed stable. The current empirical target is therefore shared low-rank successor-core pressure for coupled frontiers, not generic lower out-degree or a broad Omega claim. The formal core has now been closed at v0 as a boundary-nonprivileged definition of Omega-compatible viable propagation. This is still not a scientific validation gate, candidate promotion, holdout result, or Omega/agency/value claim.
+VAL0/VAL1 were useful reconnaissance probes. RFS-MB0 then reoriented from endpoint support/distribution deformation and static coflow spectra toward directional **horizon-transport** instrumentation. The H128 response-surface scaleup passed matched-marginal instrument gates and surfaced a stable-to-amplified-aligned response surface. Transition-energy characterization turned the branch into a substrate-response atlas. Preservation asymmetry, especially `symbol_histogram_distance`, became the strongest non-template substrate hook; MaxEnt and top-m audits then narrowed the read. The latest hard-top-m mechanism pass found a fixed low-rank-core boundary: baseline `m=3`, `m=4` with one weakest edge removed, and `m=5` with two weakest edges removed were response-bearing, while expansion, random deletion, and strongest-edge deletion stayed stable. This closes the old single-frontier mechanism branch as substrate anatomy. The current branch is now **Future Field Atlas**, a pre-scientific instrumentation reset: build an atlas instrument that scans lawful frontier evolution, preserves raw topology, maps features, and defers labels/interpretation to downstream analysis. This is still not a scientific validation gate, candidate promotion, holdout result, or Omega/agency/value claim.
 
 ## Current formal core
 
@@ -60,25 +58,73 @@ not local persistence that degrades broader future-bearing structure.
 
 The empirical branch therefore measures future-field deformation first, then asks whether any boundary, quotient, process-bundle, or value-bearing designation is earned under predictive, transport, recoverability, non-erasure, compatibility, and matched-control audits. See [Omega Formal Core v0](docs/research_notes/omega_theory/omega_formal_core_v0.md).
 
-## Current live object
+## Current instrument reset: Future Field Atlas
 
-The live empirical object is:
-
-```text
-matched-marginal-separated horizon transport
-with response profiles that depend on minimal transition-energy asymmetry ingredients
-```
-
-The current strongest substrate ingredient is:
+The live implementation target is no longer a broader response-classification sweep. It is a clean instrument build:
 
 ```text
-preservation asymmetry:
-  E(s,t) = d(s,t) + beta * |I(t)-I(s)| + roughness
+Future Field Atlas:
+  scanner first;
+  mapper second;
+  analyzer third;
+  labels last.
 ```
 
-where `I(s)` is a macro-invariant / coarse asymmetry coordinate. This is not value, utility, reward, fitness, or Omega.
+Spec:
 
-## Key concept: horizon transport
+- [Future Field Atlas Instrument Spec](docs/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md)
+
+Branch:
+
+```text
+instrument/future-field-atlas
+```
+
+Target package / runner:
+
+```text
+omega.future_field_atlas
+omega.future_field_atlas.run_future_field_atlas
+```
+
+Purpose:
+
+```text
+Build a clean future-field atlas instrument that scans lawful frontier evolution,
+preserves raw topology, maps features, and defers labeling/interpretation to
+downstream analysis.
+```
+
+This is a **pre-scientific instrument build**, not a result branch. The first milestone is to recover the known fixed top-3 low-rank successor-core boundary pattern from raw topology, without relying on response-class labels as primary evidence.
+
+## Why the instrumentation reset exists
+
+The old horizon-transport runner was useful. It produced transport matrices, SVD summaries, matched-null audits, response classifications, and aggregate tables. It established a working measurement discipline and narrowed the substrate anatomy.
+
+But its workflow is still response-classifier-first:
+
+```text
+generate substrate;
+build selected horizon-pair transport matrices;
+compute summaries;
+classify response;
+aggregate labels.
+```
+
+Future Field Atlas uses a topology-first workflow:
+
+```text
+generate lawful substrate;
+scan frontier evolution;
+preserve topology;
+map raw features;
+analyze downstream;
+label last, if useful.
+```
+
+This matters because the project's object is futures: their topology, dynamics, lush reachability, deformation, composability, recoverability, and interaction. Coupled frontier work should not begin from labels such as `transport_amplified_aligned`. It should begin from raw frontier geometry and joint/product deformation fields.
+
+## Legacy live object: horizon transport
 
 Horizon transport asks what earlier reachable-future structures become at later horizons:
 
@@ -107,7 +153,7 @@ transport_stable: 235
 transport_amplified_aligned: 381
 ```
 
-This established horizon transport as the current live instrument, not as Omega validation.
+This established horizon transport as a useful legacy instrument, not as Omega validation. Future Field Atlas should preserve compatibility with horizon-transport views as derived artifacts, while making raw frontier topology primary.
 
 ## Key concept: transition energy
 
@@ -137,66 +183,54 @@ E3 combined:
 
 `A(s)` is a directional asymmetry field. `I(s)` is a macro-invariant / coarse asymmetry coordinate.
 
-## Current asymmetry-ladder result
+## Current substrate-anatomy result
 
-The preservation-focused asymmetry-ladder scaleup completed:
-
-```text
-jobs_completed: 14976 / 14976
-errors: 0
-matrix_count: 9846
-null_replicates: 9
-matched_marginal_detector_null_gate_passed: 1
-synthetic_fixture_contract: 8 / 8
-terminal_saturation_flagged_rows: 0
-readiness_level: preservation_asymmetry_loadbearing
-```
-
-Family-level read:
+The preservation-focused asymmetry-ladder and low-beta passes strengthened the preservation-asymmetry read. The cleanest target was:
 
 ```text
-locality-only:
-  baseline; no aligned amplification
-
-directional asymmetry:
-  rerouting/reopening; no aligned amplification in this grid
-
-preservation asymmetry:
-  aligned response, rerouting, reopening; current loadbearing family
-
-combined asymmetry:
-  clean and rerouting-bearing, but not yet synergistic in the tested grid
+symbol_histogram_distance
 ```
 
-The cleanest current preservation target is:
+MaxEnt and top-m audits then narrowed the mechanism:
 
 ```text
-symbol_histogram_distance:
-  aligned fraction: 0.154
-  aligned rows: 380
-  rerouted rows: 262
-  reopened rows: 245
-  weakened rows: 75
-  baseline-missing rows: 0
+MaxEnt macro-marginal:
+  did not recover the response
+
+softmax / Gibbs:
+  did not recover the response
+
+rank-conditioned local sampling:
+  did not recover the response
+
+hard-top-m mechanism boundary-resolution sweep:
+  baseline m=3, m=4 with one weakest edge removed, and m=5 with two weakest
+  edges removed were response-bearing;
+  expansion, random deletion, and strongest-edge deletion stayed stable
 ```
 
-The low-beta sensitivity pass showed that beta is wired and moves selected
-transition edges even at `0.005`, while aligned response first appears around
-`0.05` and strengthens through `0.10-0.25`.
+Current substrate-anatomy read:
+
+```text
+fixed low-rank successor-core / core-fringe boundary pressure
+```
+
+This is a coupling primitive candidate for later coupled frontier scanning. It is not Omega, value, agency, or validation.
 
 ## What current results do and do not mean
 
 Current results mean:
 
 ```text
-horizon transport is the current live instrument;
+horizon transport was a useful legacy instrument;
 matched marginal nulls did not explain away the H128 response surface;
 perturbation changed future transport geometry without simply destroying it;
 horizon depth appears loadbearing in the response profile;
 transition-energy substrate laws express different response regimes;
-preservation asymmetry is currently the strongest non-template substrate hook;
-Omega Formal Core v0 is the current definitional anchor for what future results
-would need to instantiate.
+preservation asymmetry became the strongest non-template substrate hook;
+MaxEnt/top-m audits narrowed the mechanism to fixed low-rank successor-core boundary pressure;
+Omega Formal Core v0 is the current definitional anchor;
+Future Field Atlas is the current implementation branch for a raw-topology-first instrument reset.
 ```
 
 Current results do **not** mean:
@@ -224,25 +258,23 @@ Perturbations test the candidate response profile.
 Destructive ablation maps viability boundaries; it is not ordinary negative evidence.
 ```
 
-For the current branch:
+Future Field Atlas keeps this discipline but moves the primary evidence back to raw topology:
 
 ```text
-detector-null controls:
-  context/horizon shuffles
-  row marginal matched transport nulls
-  column marginal matched transport nulls
-  row-column marginal matched transport nulls
-  marginal residual fraction
-  synthetic marginal fakeout fixtures
+scanner:
+  saves frontier geometry
 
-perturbation-response probes:
-  small edge resampling
-  asymmetric edge flipping
-  graded nonlethal strength ladders
-  response class by horizon pair
+mapper:
+  computes raw topology and deformation features
+
+analyzer:
+  compares baselines, perturbations, product controls, and coupled runs
+
+labeler:
+  optional downstream convenience layer only
 ```
 
-Perturbation should be interpreted as a response profile: stable, amplified, weakened, rerouted, reopened, collapsed, control-equivalent, or measurement-limited.
+Labels must be reconstructible from raw columns and must not drive artifact retention.
 
 ## How to read the project
 
@@ -252,11 +284,12 @@ Read:
 
 1. [External Reader Guide](docs/EXTERNAL_READER_GUIDE.md)
 2. [Omega Formal Core v0](docs/research_notes/omega_theory/omega_formal_core_v0.md)
-3. [Top-m geometry audit result](docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md)
-4. [MaxEnt local transition Phase 1 preflight result](docs/research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md)
-5. [Low-beta preservation sensitivity scaleup result](docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
-6. [Asymmetry-ladder preservation scaleup result](docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
-7. [Asymmetry-ladder preservation scaleup figures](docs/research_notes/validation_results/figures/20260531_asymmetry_ladder_preservation_scaleup/README.md)
+3. [Future Field Atlas Instrument Spec](docs/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md)
+4. [Hard top-m mechanism result](docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md)
+5. [Top-m geometry audit result](docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md)
+6. [MaxEnt local transition Phase 1 preflight result](docs/research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md)
+7. [Low-beta preservation sensitivity scaleup result](docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
+8. [Asymmetry-ladder preservation scaleup result](docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
 
 ### Theory orientation
 
@@ -273,12 +306,13 @@ Read:
 
 Read:
 
-1. [Asymmetry-ladder transition-energy spec](docs/RFS_MB0_ASYMMETRY_LADDER_TRANSITION_ENERGY_SUBSTRATE_SPEC.md)
-2. [Max-entropy local transition preflight spec](docs/RFS_MB0_MAX_ENTROPY_LOCAL_TRANSITION_PREFLIGHT_SPEC.md)
+1. [Future Field Atlas Instrument Spec](docs/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md)
+2. [Top-m mechanism audit spec](docs/RFS_MB0_TOP_M_MECHANISM_AUDIT_SPEC.md)
 3. [Top-m geometry audit spec](docs/RFS_MB0_TOP_M_GEOMETRY_AUDIT_SPEC.md)
-4. [Transition-energy substrate characterization spec](docs/RFS_MB0_TRANSITION_ENERGY_SUBSTRATE_CHARACTERIZATION_RUN_SPEC.md)
-5. [Horizon-transport runner map](docs/implementation/horizon_transport_runner_map.md)
-6. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
+4. [Max-entropy local transition preflight spec](docs/RFS_MB0_MAX_ENTROPY_LOCAL_TRANSITION_PREFLIGHT_SPEC.md)
+5. [Asymmetry-ladder transition-energy spec](docs/RFS_MB0_ASYMMETRY_LADDER_TRANSITION_ENERGY_SUBSTRATE_SPEC.md)
+6. [Horizon-transport runner map](docs/implementation/horizon_transport_runner_map.md)
+7. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
 
 ### Historical orientation
 
@@ -291,26 +325,37 @@ Read:
 
 ## Current next step
 
-The current next step is **not** holdout, graph perturbation, direct channel diagnostics, or candidate promotion.
+The current next step is **not** holdout, graph perturbation, direct channel diagnostics, coupled-frontier science, or candidate promotion.
 
-The current next step is to use the low-beta preservation sensitivity map as
-calibration for a max-entropy local transition ensemble preflight:
+The current next step is:
 
 ```text
-near-term options:
-  prioritize symbol_histogram_distance as the clean preservation target;
-  keep hamming_weight_or_nonzero_count as the simple comparator;
-  use total_coordinate_mass only with explicit paired-baseline availability guards;
-  keep grammar-neutral probes such as relation_role and full_state_hash;
-  preserve matched-marginal detector gates and response-profile taxonomy;
-  only later consider direct channel diagnostics if response profiles suggest localized functional dependence.
+Future Field Atlas instrument build
+```
 
-still blocked:
-  holdout scoring;
-  n=6 transfer;
-  alphabet expansion as promotion;
-  graph-channel causal claims;
-  agent/value/Omega labels.
+Near-term implementation target:
+
+```text
+Phase 0:
+  single-frontier scanner smoke
+
+Phase 1:
+  known-mechanism recovery from raw topology
+  target: retained top-3 low-rank successor-core boundary pressure
+
+Phase 2:
+  coupled future-field scan only after Phase 0/1 pass
+```
+
+Still blocked:
+
+```text
+holdout scoring;
+n=6 transfer;
+alphabet expansion as promotion;
+graph-channel causal claims;
+agent/value/Omega labels;
+coupled-frontier interpretation before the atlas scanner works.
 ```
 
 ## Why this matters for alignment
@@ -325,7 +370,7 @@ The current empirical program does not validate alignment. It asks what substrat
 
 > Can future-landscape deformation be measured well enough to distinguish nontrivial future-structuring effects from saturation, trivial persistence, clocks, collapse, probe artifacts, generic finite-frontier dynamics, and matched-control equivalence?
 
-The formal core now gives the closed v0 definition that this empirical ladder is trying to approach: boundary-nonprivileged, recoverable, non-erasing propagation of value-bearing substrates, plus compatibility with broader future-bearing structure.
+Future Field Atlas is the next measurement-discipline step: it builds a topology-first instrument so that later coupled future-field scans can analyze composability, recovery, capture, erasure, and support from raw geometry rather than response labels.
 
 ## Workflow
 
@@ -342,31 +387,29 @@ VAL0/VAL1:
 RFS0:
   exact finite reachability measurement-floor smoke; insufficient control separation
 
-RFS-MB0:
-  active neutral future-landscape deformation program;
+RFS-MB0 / horizon-transport lineage:
+  neutral future-landscape deformation program;
   endpoint support/distribution and quotient probes became measurement-limited;
   frontier-transform instrumentation matured into horizon-transport instrumentation;
-  current live object is matched-marginal-separated horizon transport with preservation-asymmetry-linked aligned amplification;
-  current substrate program uses transition-energy families rather than hand-built symbolic laws;
-  current formal anchor is Omega Formal Core v0;
-  current next empirical move is max-entropy preservation preflight
+  transition-energy families replaced hand-built symbolic laws;
+  MaxEnt/top-m audits narrowed preservation response to fixed low-rank successor-core boundary pressure
 
-RFS-MB1:
-  only after MB0 control separation and response-profile taxonomy mature;
-  perturbation and recovery of future-profile structure
+Future Field Atlas:
+  current pre-scientific instrument build;
+  scanner-first / mapper-second / label-last workflow;
+  Phase 0/1 recovers known low-rank-core boundary signal from raw topology;
+  Phase 2 later enables coupled future-field scans
 
-RFS-MB2:
-  coupled future landscapes; compatibility, capture, erasure
+Coupled future-field scans:
+  only after atlas Phase 0/1 passes;
+  compatibility, capture, erasure, support, and recovery features from raw topology
 
-RFS-MB3:
-  scale hierarchy; nested or composable bounded structures
-
-RFS-MB4:
-  constructor-like transformation capacity of bounded processes, if earlier substrate and measurement layers mature enough to justify revisiting it
+Scale hierarchy / constructor-like branches:
+  only after earlier substrate and measurement layers mature enough to justify revisiting them
 ```
 
 ## Important caveat
 
 The current scientific claim is modest:
 
-> Directional horizon-transport instrumentation can measure a matched-marginal-separated response surface in neutral toy substrates. Transition-energy substrate characterization shows that different generic substrate laws express different response regimes. Preservation asymmetry is currently the strongest non-template substrate hook for aligned amplification. Omega Formal Core v0 is the current definitional anchor, but Omega-compatible subobjects have not been demonstrated.
+> Directional horizon-transport instrumentation can measure a matched-marginal-separated response surface in neutral toy substrates. Transition-energy substrate characterization shows that different generic substrate laws express different response regimes. Preservation asymmetry narrowed to fixed low-rank successor-core boundary pressure in the current substrate anatomy. Omega Formal Core v0 is the current definitional anchor, but Omega-compatible subobjects have not been demonstrated. Future Field Atlas is an instrument build, not a validation result.
