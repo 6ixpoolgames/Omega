@@ -15,11 +15,11 @@ from typing import Iterable
 
 from .analyzer import (
     boundary_recovery_by_horizon_pair,
-    known_mechanism_recovery_summary,
     rank_core_recovery_by_horizon,
+    target_rank_core_distance_summary,
 )
 from .contracts import CLAIM_BOUNDARY, ScanBundle, ScanTask, instrument_metadata
-from .generator import DEFAULT_BOUNDARY_CONTROLS, build_generated_conditions, select_start_states
+from .generator import DEFAULT_SELECTION_OPERATORS, build_generated_conditions, select_start_states
 from .mapper import map_scan
 from .scanner import scan_task
 from .transport import (
@@ -49,8 +49,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--macro-invariant-kind", type=str, default="symbol_histogram_distance")
     parser.add_argument("--macro-invariant-beta-list", type=str, default="0.10")
     parser.add_argument("--core-rank-k", type=int, default=3)
-    parser.add_argument("--selection-operators", type=str, default="", help="Comma-separated operator-native calibration presets. Empty uses --boundary-controls.")
-    parser.add_argument("--boundary-controls", type=str, default=",".join(DEFAULT_BOUNDARY_CONTROLS))
+    parser.add_argument(
+        "--selection-operators",
+        type=str,
+        default=",".join(DEFAULT_SELECTION_OPERATORS),
+        help="Comma-separated operator specs such as rank_prefix:m=3 or rank_subset:m=4:retain=1|2|3:remove=4.",
+    )
     parser.add_argument("--max-frontier-nodes-per-horizon", type=int, default=512)
     parser.add_argument("--max-frontier-edges-per-step", type=int, default=2048)
     parser.add_argument("--workers", type=int, default=1)
@@ -70,8 +74,7 @@ def main() -> None:
     horizon_pairs = parse_horizon_pairs(args.horizon_pairs, args.horizon_max)
     start_samples = max(parse_int_list(args.start_samples_list) or [1])
     macro_betas = tuple(parse_float_list(args.macro_invariant_beta_list) or [0.10])
-    operator_source = args.selection_operators or args.boundary_controls
-    boundary_controls = tuple(item.strip() for item in operator_source.split(",") if item.strip())
+    selection_operators = tuple(item.strip() for item in args.selection_operators.split(",") if item.strip())
     config = {
         **instrument_metadata(),
         **vars(args),
@@ -80,14 +83,13 @@ def main() -> None:
         "horizon_schedule_resolved": list(horizon_schedule),
         "horizon_pairs_resolved": [f"{left}->{right}" for left, right in horizon_pairs],
         "macro_invariant_betas": list(macro_betas),
-        "selection_operators_resolved": list(boundary_controls),
-        "boundary_controls_resolved": list(boundary_controls),
+        "selection_operators_resolved": list(selection_operators),
     }
     write_json(args.out / "future_field_atlas_run_config.json", config)
     conditions = build_generated_conditions(
         groups=groups,
         fresh_seeds_per_group=args.fresh_seeds_per_group,
-        boundary_controls=boundary_controls,
+        selection_operators=selection_operators,
         macro_invariant_kind=args.macro_invariant_kind,
         macro_invariant_betas=macro_betas,
         core_rank_k=args.core_rank_k,
@@ -285,7 +287,7 @@ def write_all_outputs(
     multiscale_pairs = expand_horizon_pair_closure(horizon_pairs)
     multiscale = multiscale_transport_matrices(mapped_scans, multiscale_pairs)  # type: ignore[arg-type]
     residual_rows = flow_composition_residual_rows(multiscale)
-    target_core_summary = known_mechanism_recovery_summary(mapped_scans)  # type: ignore[arg-type]
+    target_core_summary = target_rank_core_distance_summary(mapped_scans)  # type: ignore[arg-type]
     rank_core_rows = rank_core_recovery_by_horizon(mapped_scans)  # type: ignore[arg-type]
     boundary_pair_rows = boundary_recovery_by_horizon_pair(mapped_scans, horizon_pairs)  # type: ignore[arg-type]
 
@@ -307,7 +309,6 @@ def write_all_outputs(
         "raw_transport_matrices_multiscale_manifest.csv",
         "transport_flow_composition_residuals.csv",
         "target_rank_core_distance_summary.csv",
-        "known_mechanism_recovery_summary.csv",
         "rank_core_recovery_by_horizon.csv",
         "boundary_recovery_by_horizon_pair.csv",
     ]
@@ -322,7 +323,6 @@ def write_all_outputs(
     write_csv(out_dir / "raw_transport_matrices_multiscale_manifest.csv", matrix_manifest_rows(multiscale))
     write_csv(out_dir / "transport_flow_composition_residuals.csv", residual_rows)
     write_csv(out_dir / "target_rank_core_distance_summary.csv", target_core_summary)
-    write_csv(out_dir / "known_mechanism_recovery_summary.csv", target_core_summary)
     write_csv(out_dir / "rank_core_recovery_by_horizon.csv", rank_core_rows)
     write_csv(out_dir / "boundary_recovery_by_horizon_pair.csv", boundary_pair_rows)
     status["completed_utc"] = utc_now()
@@ -330,7 +330,6 @@ def write_all_outputs(
     status["frontier_node_rows"] = len(node_rows)
     status["frontier_edge_rows"] = len(edge_rows)
     status["target_rank_core_distance_rows"] = len(target_core_summary)
-    status["known_mechanism_recovery_rows"] = len(target_core_summary)
     write_partial(out_dir, status, progress, errors, started_perf)
     write_report(out_dir, status, target_core_summary)
     manifest = {

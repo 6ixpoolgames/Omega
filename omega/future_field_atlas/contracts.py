@@ -62,33 +62,6 @@ class ConditionSpec:
     transformation_law: TransformationLawSpec
     selection_operator: SelectionOperatorSpec
     observable: ObservableSpec
-    human_label: str
-    legacy_boundary_control_alias: str
-    legacy_role_alias: str
-
-    @property
-    def substrate_family(self) -> str:
-        return self.transformation_law.law_family
-
-    @property
-    def substrate_variant(self) -> str:
-        return self.human_label
-
-    @property
-    def boundary_control(self) -> str:
-        return self.legacy_boundary_control_alias
-
-    @property
-    def role(self) -> str:
-        return self.legacy_role_alias
-
-    @property
-    def base_m(self) -> int:
-        return self.selection_operator.base_out_degree
-
-    @property
-    def effective_m(self) -> int:
-        return self.selection_operator.effective_out_degree
 
     @property
     def core_rank_k(self) -> int:
@@ -101,14 +74,6 @@ class ConditionSpec:
     @property
     def macro_invariant_beta(self) -> float:
         return self.transformation_law.macro_invariant_beta
-
-    @property
-    def perturbation_family(self) -> str:
-        return "none" if self.selection_operator.operator_family == "rank_prefix" else self.selection_operator.operator_family
-
-    @property
-    def perturbation_strength(self) -> float:
-        return 0.0 if self.selection_operator.operator_family == "rank_prefix" else 1.0
 
 
 @dataclass(frozen=True)

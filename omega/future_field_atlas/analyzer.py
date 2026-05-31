@@ -6,7 +6,7 @@ from .contracts import MappedScan
 from .util import mean
 
 
-def known_mechanism_recovery_summary(scans: list[MappedScan]) -> list[dict[str, object]]:
+def target_rank_core_distance_summary(scans: list[MappedScan]) -> list[dict[str, object]]:
     grouped: dict[str, list[dict[str, object]]] = defaultdict(list)
     profile_grouped: dict[str, list[dict[str, object]]] = defaultdict(list)
     for scan in scans:
@@ -42,9 +42,6 @@ def known_mechanism_recovery_summary(scans: list[MappedScan]) -> list[dict[str, 
             "selection_operator_id": first["selection_operator_id"],
             "selection_operator_family": first["selection_operator_family"],
             "selection_operator_params_json": first["selection_operator_params_json"],
-            "human_label": first["human_label"],
-            "legacy_boundary_control_alias": first["legacy_boundary_control_alias"],
-            "legacy_role_alias": first["legacy_role_alias"],
             "group_id": first["group_id"],
             "macro_invariant_beta": first["macro_invariant_beta"],
             "base_out_degree": first["base_out_degree"],
@@ -77,8 +74,6 @@ def rank_core_recovery_by_horizon(scans: list[MappedScan]) -> list[dict[str, obj
             "condition_id": first["condition_id"],
             "selection_operator_id": first["selection_operator_id"],
             "selection_operator_family": first["selection_operator_family"],
-            "human_label": first["human_label"],
-            "legacy_boundary_control_alias": first["legacy_boundary_control_alias"],
             "group_id": first["group_id"],
             "horizon": first["horizon"],
             "base_out_degree": first["base_out_degree"],
@@ -113,8 +108,6 @@ def boundary_recovery_by_horizon_pair(scans: list[MappedScan], horizon_pairs: tu
                 "condition_id": scan.raw.spec.condition_id,
                 "selection_operator_id": scan.raw.spec.selection_operator.selection_operator_id,
                 "selection_operator_family": scan.raw.spec.selection_operator.operator_family,
-                "human_label": scan.raw.spec.human_label,
-                "legacy_boundary_control_alias": scan.raw.spec.legacy_boundary_control_alias,
                 "group_id": scan.raw.spec.group_id,
                 "source_horizon": left,
                 "target_horizon": right,

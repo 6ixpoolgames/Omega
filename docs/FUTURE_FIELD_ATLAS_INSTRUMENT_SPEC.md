@@ -93,7 +93,7 @@ Do not rebuild the full empirical program. Keep the first implementation narrow 
 
 ```text
 single-frontier scanner smoke
-known-mechanism recovery from raw topology
+rank-core calibration recovery from raw topology
 then coupled-frontier scan
 ```
 
@@ -117,10 +117,11 @@ How do two future fields later compose, interfere, capture, erase, or support ea
 
 The instrument must separate four layers.
 
-### 3.0 Operator-native condition identity
+### 3.0 Clean operator-native condition identity
 
-Implementation should treat human-readable treatment names as aliases, not
-condition primitives. Native condition identity should be expressed through:
+Implementation must treat mathematical specs as the condition primitives.
+Historical treatment-arm names belong in `docs/FUTURE_FIELD_ATLAS_GLOSSARY.md`,
+not in the runtime schema. Native condition identity is expressed through:
 
 ```text
 StateSpaceSpec
@@ -144,9 +145,9 @@ seed_policy
 selection_operator_params_json
 ```
 
-Legacy labels such as `baseline_m3` or `drop_weakest_m4_to_core3` may remain in
-manifests as `human_label` or `legacy_boundary_control_alias`, but they should
-not be the primary mathematical identity of a condition.
+The runner should not emit `boundary_control`, `condition_role`, `human_label`,
+or `legacy_*` columns. Human-readable historical translation is documentation,
+not runtime identity.
 
 ### 3.1 Scanner
 
@@ -216,7 +217,7 @@ no coupled frontiers
 no semantic labels
 ```
 
-### Phase 1: known-mechanism recovery
+### Phase 1: rank-core calibration recovery
 
 Goal: recover the known fixed low-rank core boundary pattern from raw topology.
 
@@ -276,17 +277,22 @@ A scanned substrate instance should record:
 
 ```text
 substrate_id
-substrate_family
-substrate_variant
-state_space_descriptor
+state_space_id
 start_state_id
 seed
-transformation_rule_id
-frontier_expansion_rule_id
-core_fringe_rule_id
+law_id
+law_family
+observable_set_id
+selection_operator_id
+selection_operator_family
+selection_operator_params_json
+base_out_degree
+effective_out_degree
+retained_rank_set
+removed_rank_set
+stochastic_selection_flag
+seed_policy
 horizon_schedule_id
-perturbation_family
-perturbation_strength
 ```
 
 ## 6. Horizon schedule
@@ -498,8 +504,8 @@ Required columns:
 scan_id
 condition_id
 horizon
-base_m
-effective_m
+base_out_degree
+effective_out_degree
 core_edge_count
 fringe_edge_count
 boundary_edge_count
@@ -589,19 +595,19 @@ rank_core_recovery_by_horizon.csv
 boundary_recovery_by_horizon_pair.csv
 ```
 
-`known_mechanism_recovery_summary.csv` may be retained as a compatibility alias
-for early Phase 0/1 output, but the primary artifact should use continuous
-rank-core distance metrics rather than boolean recovery labels.
+The primary artifact uses continuous rank-core distance metrics rather than
+boolean recovery labels. Do not emit `known_mechanism_recovery_summary.csv` in
+the clean runtime path.
 
 Required recovery comparisons:
 
 ```text
-baseline m=3
-baseline m=4
-baseline m=5
-drop weakest from m=4 to retained top-3 core
-drop two weakest from m=5 to retained top-3 core
-random deletion controls if cheap
+rank_prefix:m=3
+rank_prefix:m=4
+rank_prefix:m=5
+rank_subset:m=4:retain=1|2|3:remove=4
+rank_subset:m=5:retain=1|2|3:remove=4|5
+stochastic_rank_subset controls if cheap
 ```
 
 Success criterion for instrument smoke:
@@ -614,7 +620,7 @@ from baseline m=4/m=5 and random deletion controls without relying on response l
 Failure criterion:
 
 ```text
-If raw topology features cannot distinguish the known response-bearing mechanism,
+If raw topology features cannot distinguish the calibration mechanism,
 repair the scanner/mapper before building coupled-frontier scan.
 ```
 
@@ -715,9 +721,6 @@ Initial runner options:
 --frontier-scan-mode
 --core-rank-k
 --selection-operators
---boundary-controls  # legacy alias for calibration presets
---perturbation-families
---perturbation-strengths
 --raw-state-payload-sample-limit
 --max-frontier-nodes-per-horizon
 --max-frontier-edges-per-step
@@ -732,8 +735,7 @@ horizon_max: 128
 horizon_schedule: dense_to_32_plus_h128
 macro_invariant_kind: symbol_histogram_distance
 core_rank_k: 3
-selection_operators: rank_prefix_m3,rank_prefix_m4,rank_prefix_m5,rank_subset_m4_keep_1_2_3,rank_subset_m5_keep_1_2_3
-perturbation_families: small_edge_resample_control,asymmetric_edge_flip_control
+selection_operators: rank_prefix:m=3,rank_prefix:m=4,rank_prefix:m=5,rank_subset:m=4:retain=1|2|3:remove=4,rank_subset:m=5:retain=1|2|3:remove=4|5
 ```
 
 ## 14. Implementation notes
@@ -765,7 +767,7 @@ Stop and repair if:
 
 ```text
 raw frontier artifacts are not sufficient to reconstruct derived summaries;
-labels are needed to decide whether Phase 1 recovered the known mechanism;
+labels are needed to decide whether Phase 1 recovered the rank-core calibration pattern;
 frontier truncation hides core/fringe structure;
 matched nulls cannot be computed from raw artifacts;
 run output is dominated by response-class tables;
@@ -780,8 +782,9 @@ Minimal Codex task:
 
 ```text
 Create `omega.future_field_atlas` with a runner that scans single-frontier topology,
-writes raw frontier node/edge/profile/core-fringe artifacts, and demonstrates known-mechanism
-recovery for retained top-3 low-rank successor-core boundary pressure without using response labels.
+writes raw frontier node/edge/profile/core-fringe artifacts, and demonstrates
+rank-core calibration recovery for retained top-3 low-rank successor-core
+boundary pressure without using response labels.
 ```
 
 Do not implement coupled-frontier interaction until the atlas artifacts are adequate.

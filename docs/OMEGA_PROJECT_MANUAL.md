@@ -24,11 +24,13 @@ substrate untethering as the empirical lineage, and state clearly that it has
 not passed the scientific gate.
 The current active implementation branch is the Future Field Atlas clean
 rebuild: raw reachable-frontier topology first, response labels last. After the
-first audit repair, condition identity is operator-native: state-space specs,
-transition-law specs, selection-operator specs, and observable specs. It is
-being calibrated against the latest hard-top-m mechanism result, which points
-toward a fixed low-rank successor core: baseline `m=3`, `m=4` with one weakest
-edge removed, and `m=5` with two weakest edges removed were response-bearing.
+schema teardown, condition identity is operator-native: state-space specs,
+transition-law specs, selection-operator specs, and observable specs. Historical
+treatment names are documented only in the Future Field Atlas glossary. The
+instrument is being calibrated against the latest hard-top-m mechanism result,
+which points toward a fixed low-rank successor core: rank-prefix `m=3`,
+rank-subset `m=4` retaining ranks `1;2;3`, and rank-subset `m=5` retaining
+ranks `1;2;3` were response-bearing.
 Generic lower out-degree is less plausible because random deletion at matched
 effective degree stayed stable.
 ```
@@ -46,6 +48,7 @@ Treat "budget_conservation", "budget_kind", "budget_weight", and
 Primary current design note:
 
 - `docs/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md`
+- `docs/FUTURE_FIELD_ATLAS_GLOSSARY.md`
 - `docs/research_notes/validation_results/future_field_atlas_phase0_1_smoke_result.md`
 - `docs/RFS_MB0_TOP_M_MECHANISM_AUDIT_SPEC.md`
 - `docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md`

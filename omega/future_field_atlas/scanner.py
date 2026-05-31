@@ -156,22 +156,11 @@ def base_scan_fields(task: ScanTask) -> dict[str, object]:
         "removed_rank_set": rank_set_text(operator.removed_rank_set),
         "stochastic_selection_flag": operator.stochastic_flag,
         "seed_policy": operator.seed_policy,
-        "human_label": spec.human_label,
-        "legacy_boundary_control_alias": spec.legacy_boundary_control_alias,
-        "legacy_role_alias": spec.legacy_role_alias,
-        "substrate_family": spec.substrate_family,
-        "substrate_variant": spec.substrate_variant,
-        "boundary_control": spec.boundary_control,
-        "condition_role": spec.role,
         "start_state_id": state_id(task.start_state),
         "start_index": task.start_index,
-        "base_m": spec.base_m,
-        "effective_m": spec.effective_m,
         "core_rank_k": spec.core_rank_k,
         "macro_invariant_kind": spec.macro_invariant_kind,
         "macro_invariant_beta": spec.macro_invariant_beta,
-        "perturbation_family": spec.perturbation_family,
-        "perturbation_strength": spec.perturbation_strength,
     }
 
 

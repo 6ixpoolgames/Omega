@@ -9,18 +9,21 @@ patch notes at the top.
 
 ## 2026-06-01
 
-### Future Field Atlas Phase 0/1 Operator-Native Clean-Build Smoke
+### Future Field Atlas Phase 0/1 Clean Slate Smoke
 
 Implemented the first clean Future Field Atlas package as an instrumentation
 reset. The new package separates substrate generation, frontier scanning,
-geometry mapping, transport matrix construction, and known-mechanism analysis.
+geometry mapping, transport matrix construction, and rank-core distance analysis.
 The scanner records raw topology and does not classify responses.
 
-After audit, repaired the first build so condition identity is mathematical:
-`StateSpaceSpec`, `TransformationLawSpec`, `SelectionOperatorSpec`, and
-`ObservableSpec`. Legacy boundary-control names remain only as aliases.
-Boolean recovery labels were replaced by continuous target-rank-core distance
-metrics.
+After audit, tore down the remaining compatibility adapter surface. Condition
+identity is mathematical: `StateSpaceSpec`, `TransformationLawSpec`,
+`SelectionOperatorSpec`, and `ObservableSpec`. Historical treatment-arm names
+now live only in the Future Field Atlas glossary. Runtime outputs no longer
+emit `boundary_control`, `condition_role`, `human_label`, `legacy_*`, `base_m`,
+`effective_m`, `perturbation_family`, `perturbation_strength`, or
+`known_mechanism_recovery_summary.csv`. Boolean recovery labels were replaced by
+continuous target-rank-core distance metrics.
 
 Retained note:
 
@@ -29,10 +32,11 @@ Retained note:
 Spec:
 
 - `docs/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md`
+- `docs/FUTURE_FIELD_ATLAS_GLOSSARY.md`
 
 Local validation output:
 
-- `results/future_field_atlas/20260601_phase0_1_operator_refactor_h32/`
+- `results/future_field_atlas/20260601_phase0_1_clean_slate_h32/`
 
 Run shape:
 
@@ -41,7 +45,7 @@ status: COMPLETED
 workers: 4
 conditions: 8
 scans_completed: 8 / 8
-elapsed_seconds: 17.274
+elapsed_seconds: 15.997
 errors: 0
 horizon_max: 32
 frontier_node_rows: 30801
@@ -53,13 +57,13 @@ Main read:
 
 ```text
 near-zero target-core distance:
-  rank_prefix m=3 retaining ranks 1;2;3
-  rank_subset m=4 retaining ranks 1;2;3 and removing rank 4
-  rank_subset m=5 retaining ranks 1;2;3 and removing ranks 4;5
+  rank_prefix:m=3
+  rank_subset:m=4:retain=1|2|3:remove=4
+  rank_subset:m=5:retain=1|2|3:remove=4|5
 
 nonzero target-core distance:
-  rank_prefix m=4/m=5 with fringe present
-  rank_subset m=4 retaining ranks 2;3;4 and removing rank 1
+  rank_prefix:m=4 and rank_prefix:m=5 with fringe present
+  rank_subset:m=4:retain=2|3|4:remove=1
 
 sampled stochastic controls:
   emitted core/fringe fractions but no deterministic rank-set distance

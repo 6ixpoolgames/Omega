@@ -6,5 +6,4 @@ analysis, and labeling as separate layers.
 """
 
 INSTRUMENT_NAME = "future_field_atlas"
-INSTRUMENT_VERSION = "0.1.0"
-
+INSTRUMENT_VERSION = "0.2.0"

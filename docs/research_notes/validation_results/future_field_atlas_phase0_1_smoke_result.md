@@ -1,71 +1,38 @@
-# Future Field Atlas Phase 0/1 Smoke Result
+# Future Field Atlas Phase 0/1 Clean Slate Smoke Result
 
-Status: clean instrument-build smoke completed after operator-native repair  
-Primary output: `results/future_field_atlas/20260601_phase0_1_operator_refactor_h32/`  
-Runner: `omega.future_field_atlas.run_future_field_atlas`  
+Status: clean instrument-build smoke completed after schema teardown
+Primary output: `results/future_field_atlas/20260601_phase0_1_clean_slate_h32/`
+Runner: `omega.future_field_atlas.run_future_field_atlas`
 Spec: `docs/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md`
+Glossary: `docs/FUTURE_FIELD_ATLAS_GLOSSARY.md`
 
 ## Executive Summary
 
-The Future Field Atlas Phase 0/1 smoke completed cleanly and demonstrates the
-new raw-topology-first instrument path:
+The Future Field Atlas Phase 0/1 smoke completed cleanly after removing the
+legacy treatment-arm adapter surface from the runtime path.
 
 ```text
 status: COMPLETED
+instrument_version: 0.2.0
 workers: 4
 conditions: 8
 scans_completed: 8 / 8
-elapsed_seconds: 17.274
+elapsed_seconds: 15.997
 errors: 0
 horizon_max: 32
 frontier_node_rows: 30801
 frontier_edge_rows: 107409
 target_rank_core_distance_rows: 8
-known_mechanism_recovery_rows: 8
 ```
 
-This is not a science run and not an Omega validation result. It is a clean
-instrumentation smoke showing that the new package can generate lawful
-single-frontier conditions, unfold reachable-frontier topology, save raw
-node/edge/profile/core-fringe artifacts, emit sparse transport matrices, and
-measure distance to the known low-rank core boundary anatomy without using the
-old response taxonomy.
+This remains an instrument smoke, not a science result and not an Omega
+validation result. The purpose was to verify that the atlas can express the
+calibration branch through mathematical operators rather than historical
+treatment-arm names.
 
 ## What Changed
 
-The new package is:
-
-```text
-omega.future_field_atlas
-```
-
-The implementation separates:
-
-```text
-calibration generator:
-  lawful substrate and selection-operator condition construction
-
-scanner:
-  frontier unfolding and raw node/edge recording
-
-mapper:
-  reconstructible profile, membership, and core/fringe geometry maps
-
-transport:
-  adjacent and multiscale sparse transport artifacts
-
-analyzer:
-  continuous distance-to-target-rank-core metrics from raw topology
-
-runner:
-  thin orchestration, manifests, graceful status/progress/error outputs
-```
-
-The scanner does not classify response. Labels remain downstream convenience
-views only.
-
-After audit, condition identity is no longer the legacy treatment-arm string.
-The native object is now a selection operator inside explicit specs:
+The clean atlas runtime now uses:
 
 ```text
 StateSpaceSpec
@@ -74,61 +41,45 @@ SelectionOperatorSpec
 ObservableSpec
 ```
 
-Each condition records:
+Runtime outputs no longer emit:
 
 ```text
-selection_operator_id
-selection_operator_family
-base_out_degree
-effective_out_degree
-core_rank_k
-retained_rank_set
-removed_rank_set
-stochastic_selection_flag
-seed_policy
+boundary_control
+condition_role
+human_label
+legacy_boundary_control_alias
+legacy_role_alias
+base_m
+effective_m
+perturbation_family
+perturbation_strength
+known_mechanism_recovery_summary.csv
 ```
 
-Legacy names such as `drop_weakest_m4_to_core3` remain only as human-readable
-aliases.
+The historical translations were moved to
+`docs/FUTURE_FIELD_ATLAS_GLOSSARY.md`. That document is for humans only and is
+not imported by the runner.
 
-## Known-Mechanism Recovery
+## Native Operator Interface
 
-The Phase 1 calibration target was the previous hard top-m result:
+The smoke used the clean operator syntax:
 
 ```text
-known mechanism:
-  retained top-3 low-energy successor core
-
-expected raw anatomy:
-  baseline m=3 identifies the retained core
-  m=4 with one weakest selected edge removed identifies the retained core
-  m=5 with two weakest selected edges removed identifies the retained core
-  baseline m=4/m=5 contain fringe boundary edges
-  random deletion and strongest-edge deletion do not cleanly identify the core
+rank_prefix:m=3
+rank_prefix:m=4
+rank_prefix:m=5
+rank_subset:m=4:retain=1|2|3:remove=4
+rank_subset:m=5:retain=1|2|3:remove=4|5
+stochastic_rank_subset:m=4:effective=3
+stochastic_rank_subset:m=5:effective=3
+rank_subset:m=4:retain=2|3|4:remove=1
 ```
 
-The smoke expressed that anatomy as near-zero target-core distance for the
-expected deterministic operators:
+The runner no longer accepts `--boundary-controls`.
 
-| selection operator | base out-degree | effective out-degree | retained ranks | core fraction | fringe fraction | distance to target-core geometry |
-|---|---:|---:|---|---:|---:|---:|
-| rank_prefix | 3 | 3 | 1;2;3 | 1.000 | 0.000 | 0.000 |
-| rank_prefix | 4 | 4 | 1;2;3;4 | 0.750 | 0.250 | 0.188 |
-| rank_prefix | 5 | 5 | 1;2;3;4;5 | 0.600 | 0.400 | 0.300 |
-| rank_subset | 4 | 3 | 1;2;3 | 1.000 | 0.000 | 0.000 |
-| rank_subset | 5 | 3 | 1;2;3 | 1.000 | 0.000 | 0.000 |
-| rank_subset | 4 | 3 | 2;3;4 | 0.667 | 0.333 | 0.375 |
-| stochastic_rank_subset | 4 | 3 | sampled | 0.743 | 0.257 | sampled |
-| stochastic_rank_subset | 5 | 3 | sampled | 0.628 | 0.372 | sampled |
+## Primary Artifacts
 
-This is the intended calibration split. It does not say the atlas has
-validated the prior response result. It says the raw topology artifacts contain
-enough rank/core/fringe structure to express the known mechanism as operator
-geometry and continuous distances rather than response labels.
-
-## Artifacts Emitted
-
-Primary local artifacts:
+The clean smoke emitted:
 
 ```text
 future_field_atlas_manifest.json
@@ -148,48 +99,42 @@ raw_transport_matrices_multiscale.npz
 raw_transport_matrices_multiscale_manifest.csv
 transport_flow_composition_residuals.csv
 target_rank_core_distance_summary.csv
-known_mechanism_recovery_summary.csv
 rank_core_recovery_by_horizon.csv
 boundary_recovery_by_horizon_pair.csv
 ```
 
-The raw CSV/NPZ artifacts are local generated outputs and should not be pushed
-to the public repository.
+Generated CSV/NPZ artifacts remain local and should not be pushed to the repos.
 
-The old `known_mechanism_recovery_summary.csv` file is retained as a
-compatibility alias. The primary operator-native summary is now
-`target_rank_core_distance_summary.csv`.
+## Calibration Readout
+
+The clean atlas expresses the known calibration split as continuous
+rank-boundary geometry, not as a boolean recovery label.
+
+```text
+rank_prefix:m=3                            distance 0.000
+rank_prefix:m=4                            distance 0.188
+rank_prefix:m=5                            distance 0.300
+rank_subset:m=4:retain=1|2|3:remove=4      distance 0.000
+rank_subset:m=5:retain=1|2|3:remove=4|5    distance 0.000
+rank_subset:m=4:retain=2|3|4:remove=1      distance 0.375
+```
+
+The stochastic rank-subset controls are retained as raw sampled operators with
+blank target-rank distance where no deterministic retained-rank set exists.
 
 ## Interpretation
 
-The operator-native repair makes the clean build more principled:
+The teardown succeeded. The Future Field Atlas runtime is now much closer to
+the intended formal layer:
 
 ```text
-generate lawful substrates;
-unfold reachable frontiers;
-record topology;
-map geometry;
-contrast conditions;
-label only as a derived view.
+lawful finite state space
+transformation law
+selection operator
+frontier scan
+observable map
+continuous distance readout
 ```
 
-The first smoke supports continuing with the Future Field Atlas Phase 0/1
-instrument rather than extending the old monolithic horizon-transport runner.
-
-## Recommended Next Step
-
-Do one more slightly larger Phase 1 calibration pass before coupled-frontier
-implementation:
-
-```text
-horizon_max: 64 or 128
-groups: 2 to 4
-fresh_seeds_per_group: 1
-start_samples: 1 to 2
-workers: 8 to 18
-keep labels off
-keep raw artifacts local
-```
-
-Proceed to coupled future-field scans only if the raw-topology recovery split
-persists and the emitted artifacts remain reconstructible from scanner output.
+The next code extension should add new formal specs or operators directly.
+Historical names should stay in the glossary and in old result notes only.

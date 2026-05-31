@@ -32,15 +32,15 @@ from .contracts import (
 from .util import safe_token
 
 
-DEFAULT_BOUNDARY_CONTROLS = (
-    "baseline_m3",
-    "baseline_m4",
-    "baseline_m5",
-    "drop_weakest_m4_to_core3",
-    "drop_two_weakest_m5_to_core3",
-    "random_delete_one_m4_to_core3",
-    "random_delete_two_m5_to_core3",
-    "drop_strongest_m4_to_m3",
+DEFAULT_SELECTION_OPERATORS = (
+    "rank_prefix:m=3",
+    "rank_prefix:m=4",
+    "rank_prefix:m=5",
+    "rank_subset:m=4:retain=1|2|3:remove=4",
+    "rank_subset:m=5:retain=1|2|3:remove=4|5",
+    "stochastic_rank_subset:m=4:effective=3",
+    "stochastic_rank_subset:m=5:effective=3",
+    "rank_subset:m=4:retain=2|3|4:remove=1",
 )
 
 
@@ -48,20 +48,20 @@ def build_generated_conditions(
     *,
     groups: int,
     fresh_seeds_per_group: int,
-    boundary_controls: tuple[str, ...],
+    selection_operators: tuple[str, ...],
     macro_invariant_kind: str,
     macro_invariant_betas: tuple[float, ...],
     core_rank_k: int,
     base_seed: int,
 ) -> list[GeneratedCondition]:
     out: list[GeneratedCondition] = []
-    controls = boundary_controls or DEFAULT_BOUNDARY_CONTROLS
+    operator_texts = selection_operators or DEFAULT_SELECTION_OPERATORS
     for group_index in range(max(1, groups)):
         for fresh_index in range(max(1, fresh_seeds_per_group)):
             seed = base_seed + group_index * 10_000 + fresh_index * 101
             for beta in macro_invariant_betas:
-                for control in controls:
-                    operator, role = selection_operator_from_alias(control, core_rank_k)
+                for operator_text in operator_texts:
+                    operator = parse_selection_operator(operator_text, core_rank_k)
                     params = relation_params(group_index, operator.base_out_degree)
                     condition_id = (
                         f"g{group_index:02d}_s{fresh_index:02d}_"
@@ -110,15 +110,12 @@ def build_generated_conditions(
                         selection_operator=operator,
                         observable=ObservableSpec(
                             observable_set_id=f"rank_core_k{core_rank_k}__{macro_invariant_kind}",
-                            observable_family="rank_core_fringe_and_frontier_topology",
+                            observable_family="rank_core_boundary_and_frontier_topology",
                             observable_params_json=json.dumps(
                                 {"core_rank_k": core_rank_k, "macro_invariant_kind": macro_invariant_kind},
                                 sort_keys=True,
                             ),
                         ),
-                        human_label=control,
-                        legacy_boundary_control_alias=control,
-                        legacy_role_alias=role,
                     )
                     candidate_anatomy, selected, baseline = edge_anatomy_for_condition(
                         system_edges=system.edges,
@@ -126,7 +123,7 @@ def build_generated_conditions(
                         seed=seed,
                         job=job,
                         core_rank_k=core_rank_k,
-                        condition_role=role,
+                        reference_operator=operator.operator_family == "rank_prefix",
                     )
                     out.append(
                         GeneratedCondition(
@@ -168,56 +165,133 @@ def relation_params(group_index: int, out_degree_target: int) -> RelationParams:
     return replace(base, out_degree_target=out_degree_target)
 
 
-def selection_operator_from_alias(control: str, core_rank_k: int) -> tuple[SelectionOperatorSpec, str]:
-    if control in {"baseline_m3", "rank_prefix_m3"}:
-        return rank_prefix_operator(3, core_rank_k, control, PRESERVATION_ASYMMETRY), "baseline"
-    if control in {"baseline_m4", "rank_prefix_m4"}:
-        return rank_prefix_operator(4, core_rank_k, control, PRESERVATION_ASYMMETRY), "baseline"
-    if control in {"baseline_m5", "rank_prefix_m5"}:
-        return rank_prefix_operator(5, core_rank_k, control, PRESERVATION_ASYMMETRY), "baseline"
-    if control in {"drop_weakest_m4_to_core3", "rank_subset_m4_keep_1_2_3"}:
-        return rank_subset_operator(4, (1, 2, 3), (4,), core_rank_k, control, TOP_M_DROP_WEAKEST_FROM_TOP_M), "weakest_edge_pruning"
-    if control in {"drop_two_weakest_m5_to_core3", "rank_subset_m5_keep_1_2_3"}:
-        return rank_subset_operator(5, (1, 2, 3), (4, 5), core_rank_k, control, TOP_M_DROP_TWO_WEAKEST_FROM_TOP_M), "weakest_edge_pruning"
-    if control in {"random_delete_one_m4_to_core3", "stochastic_rank_subset_m4_to_3_from_top_m"}:
-        return stochastic_rank_subset_operator(4, 3, core_rank_k, control, TOP_M_RANDOM_DELETE_ONE_FROM_TOP_M), "random_top_m_pruning_control"
-    if control in {"random_delete_two_m5_to_core3", "stochastic_rank_subset_m5_to_3_from_top_m"}:
-        return stochastic_rank_subset_operator(5, 3, core_rank_k, control, TOP_M_RANDOM_DELETE_TWO_FROM_TOP_M), "random_top_m_pruning_control"
-    if control in {"drop_strongest_m4_to_m3", "rank_subset_m4_keep_2_3_4"}:
-        return rank_subset_operator(4, (2, 3, 4), (1,), core_rank_k, control, TOP_M_DROP_STRONGEST_FROM_TOP_M), "strongest_edge_pruning_control"
-    if control.startswith("baseline_m"):
-        value = int(control.removeprefix("baseline_m"))
-        return rank_prefix_operator(value, core_rank_k, control, PRESERVATION_ASYMMETRY), "baseline"
-    raise ValueError(f"unknown boundary control: {control}")
+def parse_selection_operator(raw: str, core_rank_k: int) -> SelectionOperatorSpec:
+    operator_family, options = parse_operator_text(raw)
+    if operator_family == "rank_prefix":
+        base_out_degree = required_int(options, "m", raw)
+        return rank_prefix_operator(base_out_degree, core_rank_k, PRESERVATION_ASYMMETRY)
+    if operator_family == "rank_subset":
+        base_out_degree = required_int(options, "m", raw)
+        retained = parse_rank_set(required_text(options, "retain", raw))
+        removed = parse_rank_set(options.get("remove", ""))
+        if not removed:
+            removed = tuple(rank for rank in range(1, base_out_degree + 1) if rank not in set(retained))
+        implementation_family = rank_subset_implementation_family(base_out_degree, retained, removed, raw)
+        return rank_subset_operator(base_out_degree, retained, removed, core_rank_k, implementation_family)
+    if operator_family == "stochastic_rank_subset":
+        base_out_degree = required_int(options, "m", raw)
+        effective_out_degree = required_int(options, "effective", raw)
+        implementation_family = stochastic_rank_subset_implementation_family(base_out_degree, effective_out_degree, raw)
+        return stochastic_rank_subset_operator(base_out_degree, effective_out_degree, core_rank_k, implementation_family)
+    raise ValueError(
+        f"unknown selection operator family in {raw!r}; expected rank_prefix, "
+        "rank_subset, or stochastic_rank_subset"
+    )
 
 
-def rank_prefix_operator(base_m: int, core_rank_k: int, alias: str, family: str) -> SelectionOperatorSpec:
-    retained = tuple(range(1, base_m + 1))
+def parse_operator_text(raw: str) -> tuple[str, dict[str, str]]:
+    text = str(raw or "").strip()
+    if not text:
+        raise ValueError("empty selection operator")
+    if ":" not in text and "_" in text:
+        raise ValueError(
+            f"legacy selection operator token {text!r} is not accepted by the clean atlas runtime; "
+            "use operator syntax such as rank_prefix:m=3 or "
+            "rank_subset:m=4:retain=1|2|3:remove=4"
+        )
+    parts = text.split(":")
+    family = parts[0].strip()
+    options: dict[str, str] = {}
+    for part in parts[1:]:
+        if "=" not in part:
+            raise ValueError(f"selection operator option {part!r} in {text!r} is missing '='")
+        key, value = part.split("=", 1)
+        options[key.strip()] = value.strip()
+    return family, options
+
+
+def required_text(options: dict[str, str], key: str, raw: str) -> str:
+    value = options.get(key, "").strip()
+    if not value:
+        raise ValueError(f"selection operator {raw!r} is missing required option {key!r}")
+    return value
+
+
+def required_int(options: dict[str, str], key: str, raw: str) -> int:
+    return int(required_text(options, key, raw))
+
+
+def parse_rank_set(raw: str) -> tuple[int, ...]:
+    text = str(raw or "").strip()
+    if not text:
+        return tuple()
+    for delimiter in ("|", ";", "_"):
+        text = text.replace(delimiter, ",")
+    ranks = tuple(int(item.strip()) for item in text.split(",") if item.strip())
+    if len(set(ranks)) != len(ranks):
+        raise ValueError(f"rank set contains duplicates: {raw!r}")
+    return tuple(sorted(ranks))
+
+
+def rank_subset_implementation_family(
+    base_out_degree: int,
+    retained_rank_set: tuple[int, ...],
+    removed_rank_set: tuple[int, ...],
+    raw: str,
+) -> str:
+    if base_out_degree == 4 and retained_rank_set == (1, 2, 3) and removed_rank_set == (4,):
+        return TOP_M_DROP_WEAKEST_FROM_TOP_M
+    if base_out_degree == 5 and retained_rank_set == (1, 2, 3) and removed_rank_set == (4, 5):
+        return TOP_M_DROP_TWO_WEAKEST_FROM_TOP_M
+    if base_out_degree == 4 and retained_rank_set == (2, 3, 4) and removed_rank_set == (1,):
+        return TOP_M_DROP_STRONGEST_FROM_TOP_M
+    raise ValueError(
+        f"selection operator {raw!r} has no calibration generator implementation. "
+        "The clean atlas runtime only accepts mathematically named operators, but "
+        "the current Phase 0/1 generator still supports a narrow audited calibration subset."
+    )
+
+
+def stochastic_rank_subset_implementation_family(
+    base_out_degree: int,
+    effective_out_degree: int,
+    raw: str,
+) -> str:
+    if base_out_degree == 4 and effective_out_degree == 3:
+        return TOP_M_RANDOM_DELETE_ONE_FROM_TOP_M
+    if base_out_degree == 5 and effective_out_degree == 3:
+        return TOP_M_RANDOM_DELETE_TWO_FROM_TOP_M
+    raise ValueError(
+        f"selection operator {raw!r} has no calibration generator implementation. "
+        "Supported stochastic calibration operators are m=4,effective=3 and m=5,effective=3."
+    )
+
+
+def rank_prefix_operator(base_out_degree: int, core_rank_k: int, family: str) -> SelectionOperatorSpec:
+    retained = tuple(range(1, base_out_degree + 1))
     return selection_operator(
         operator_family="rank_prefix",
-        base_out_degree=base_m,
-        effective_out_degree=base_m,
+        base_out_degree=base_out_degree,
+        effective_out_degree=base_out_degree,
         core_rank_k=core_rank_k,
         retained_rank_set=retained,
         removed_rank_set=tuple(),
         stochastic_flag=0,
         seed_policy="deterministic_rank_order",
         implementation_family=family,
-        alias=alias,
     )
 
 
 def rank_subset_operator(
-    base_m: int,
+    base_out_degree: int,
     retained_rank_set: tuple[int, ...],
     removed_rank_set: tuple[int, ...],
     core_rank_k: int,
-    alias: str,
     family: str,
 ) -> SelectionOperatorSpec:
     return selection_operator(
         operator_family="rank_subset",
-        base_out_degree=base_m,
+        base_out_degree=base_out_degree,
         effective_out_degree=len(retained_rank_set),
         core_rank_k=core_rank_k,
         retained_rank_set=retained_rank_set,
@@ -225,28 +299,25 @@ def rank_subset_operator(
         stochastic_flag=0,
         seed_policy="deterministic_rank_order",
         implementation_family=family,
-        alias=alias,
     )
 
 
 def stochastic_rank_subset_operator(
-    base_m: int,
-    effective_m: int,
+    base_out_degree: int,
+    effective_out_degree: int,
     core_rank_k: int,
-    alias: str,
     family: str,
 ) -> SelectionOperatorSpec:
     return selection_operator(
         operator_family="stochastic_rank_subset",
-        base_out_degree=base_m,
-        effective_out_degree=effective_m,
+        base_out_degree=base_out_degree,
+        effective_out_degree=effective_out_degree,
         core_rank_k=core_rank_k,
         retained_rank_set=tuple(),
         removed_rank_set=tuple(),
         stochastic_flag=1,
         seed_policy="stable_ranked_sample_from_top_m",
         implementation_family=family,
-        alias=alias,
     )
 
 
@@ -261,7 +332,6 @@ def selection_operator(
     stochastic_flag: int,
     seed_policy: str,
     implementation_family: str,
-    alias: str,
 ) -> SelectionOperatorSpec:
     params = {
         "operator_family": operator_family,
@@ -273,7 +343,6 @@ def selection_operator(
         "stochastic_flag": stochastic_flag,
         "seed_policy": seed_policy,
         "implementation_family": implementation_family,
-        "legacy_alias": alias,
     }
     retained_token = "sampled" if stochastic_flag else "_".join(str(rank) for rank in retained_rank_set)
     removed_token = "sampled" if stochastic_flag else ("none" if not removed_rank_set else "_".join(str(rank) for rank in removed_rank_set))
@@ -302,7 +371,7 @@ def edge_anatomy_for_condition(
     seed: int,
     job: dict[str, object],
     core_rank_k: int,
-    condition_role: str,
+    reference_operator: bool,
 ) -> tuple[dict[tuple[State, State], EdgeAnatomy], set[tuple[State, State]], set[tuple[State, State]]]:
     states = enumerate_states(params.coordinate_count, params.alphabet_size)
     candidates_by_state = {
@@ -342,9 +411,7 @@ def edge_anatomy_for_condition(
                 selected_flag=selected,
                 baseline_selected_flag=baseline_selected,
                 rank_offset_from_core_boundary=rank_index - core_rank_k,
-                perturbation_changed_flag=int(
-                    condition_role != "baseline" and selected and not baseline_selected
-                ),
+                perturbation_changed_flag=int(not reference_operator and selected != baseline_selected),
             )
     return anatomy, selected_edge_keys, baseline_edge_keys
 
