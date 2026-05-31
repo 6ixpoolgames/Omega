@@ -1,45 +1,59 @@
 # Omega / Reachable Futures Lab
 
-This repository is the empirical workspace for the **Omega** theory project.
+This repository is the empirical workspace for the **Omega / Reachable Futures** theory project.
 
-The current empirical arm studies **reachable futures**: how neutral transition substrates shape, constrain, concentrate, transform, or collapse possible futures under relation, asymmetry, horizon, and matched-control structure.
+The current empirical program studies **reachable futures**: how neutral finite transition systems shape which futures remain reachable, excluded, concentrated, transformed, control-equivalent, or measurement-limited.
 
 The long-term Omega ambition is broader: a structural account of value-bearing futures and alignment-relevant failure modes that does not begin from reward functions, utility functions, fixed preference aggregation, or moral rules. The executable work in this repo is narrower and earlier-stage: building minimal substrates where fragments of that idea can become mathematically testable.
 
-This repo contains theory notes, foundational drafts, historical validation attempts, current substrate-design notes, executable probes, result logs, and control/audit specifications.
+This repository does **not** prove Omega. It is a controlled workspace for turning the theory into testable mathematical objects, identifying substrate artifacts, and letting weak formulations fail.
 
-It does **not** prove Omega. It is a controlled workspace for turning the theory into testable mathematical objects, identifying substrate artifacts, and letting weak formulations fail.
+## Start here
 
-## One-sentence summary
+If you are new to the project, start with:
 
-**We study reachable futures: how neutral relation systems shape which futures remain reachable, excluded, concentrated, transformed, control-equivalent, or measurement-limited.**
+1. [External Reader Guide](docs/EXTERNAL_READER_GUIDE.md)
+2. [Asymmetry-ladder preservation scaleup result](docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
+3. [Horizon Transport and Aligned Amplification](docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md)
+4. [Transition Energy and Constraint Untethering](docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
+5. [Transition-Energy Substrate Atlas](docs/research_notes/omega_theory/transition_energy_substrate_atlas.md)
+6. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
 
-The active empirical question is currently narrower than agency, identity, or value detection:
+The external reader guide gives a short, current, claim-bounded overview of the project and the best reading paths for technical readers, implementation reviewers, and historical context.
 
-**Can neutral transition systems produce measurable future-landscape deformation that separates from matched nulls without importing semantic labels such as agent, valuer, identity, or good?**
+## Current status in one paragraph
 
-Current status, in one line:
+VAL0/VAL1 were useful reconnaissance probes. RFS-MB0 has reoriented from endpoint support/distribution deformation and static coflow spectra toward directional **horizon-transport** instrumentation. The H128 horizon-transport response-surface scaleup passed matched-marginal instrument gates and surfaced a stable-to-amplified-aligned response surface. Transition-energy characterization then turned the branch into a substrate-response atlas. The newest asymmetry-ladder runs compare locality, directional asymmetry, preservation asymmetry, and combined asymmetry directly. The preservation-focused scaleup strengthened the read that **preservation asymmetry** is the current loadbearing substrate ingredient: symbol-composition preservation produced aligned response, rerouting, reopening, weakening, and no baseline-missing rows. This is still not a scientific validation gate, candidate promotion, holdout result, or Omega/agency/value claim.
 
-**VAL0/VAL1 were useful reconnaissance probes; RFS-MB0 has reoriented from endpoint support/distribution deformation and static coflow spectra toward directional horizon-transport instrumentation. The H128 horizon-transport response-surface scaleup passed matched-marginal instrument gates and surfaced a stable-to-amplified-aligned response surface. The transition-energy characterization turned that into a substrate-response atlas, and the newest asymmetry-ladder run compares locality, directional asymmetry, preservation asymmetry, and combined asymmetry directly. The first seed-scaled ladder batch reached `preservation_asymmetry_loadbearing`: locality-only stayed a baseline, directional/combined asymmetry produced rerouting without aligned amplification, and preservation asymmetry carried aligned response. This is still not a scientific validation gate, candidate promotion, or Omega/agency/value claim.**
+## Current live object
 
-## Current empirical branch: horizon transport
-
-The live empirical object is now:
+The live empirical object is:
 
 ```text
 matched-marginal-separated horizon transport
-with horizon-dependent aligned amplification under nonlethal perturbation
+with response profiles that depend on minimal transition-energy asymmetry ingredients
 ```
 
-Horizon transport asks what earlier future structures become at later horizons:
+The current strongest substrate ingredient is:
+
+```text
+preservation asymmetry:
+  E(s,t) = d(s,t) + beta * |I(t)-I(s)| + roughness
+```
+
+where `I(s)` is a macro-invariant / coarse asymmetry coordinate. This is not value, utility, reward, fitness, or Omega.
+
+## Key concept: horizon transport
+
+Horizon transport asks what earlier reachable-future structures become at later horizons:
 
 ```text
 T_{H_a -> H_b}
 ```
 
-This is a directional object, measured with transport matrices and SVD, not a static co-occurrence object. It is closer to the theory's central concern with continuability across horizon than earlier endpoint or static coflow/cofrontier probes.
+This is a directional matrix family measured with SVD and matched controls. It is not a static co-occurrence object.
 
-The H128 response-surface scaleup reported:
+The H128 response-surface run reported:
 
 ```text
 jobs_completed: 11520 / 11520
@@ -51,101 +65,24 @@ synthetic_fixture_contract: 8 / 8
 terminal_saturation_flagged_rows: 0 / 660
 ```
 
-Empirical response classes in the full run:
+Empirical response classes in that run:
 
 ```text
 transport_stable: 235
 transport_amplified_aligned: 381
 ```
 
-The important horizon pattern:
+This established horizon transport as the current live instrument, not as Omega validation.
+
+## Key concept: transition energy
+
+The current substrate program uses explicit transition energy:
 
 ```text
-short horizons:
-  stable
-
-middle/deep horizons:
-  amplified-aligned
-
-higher perturbation strength:
-  first amplified-aligned horizon shifts earlier
-
-extended horizons through H=128:
-  interpretable in this run, with no terminal saturation flags
+E(s,t)
 ```
 
-## Transition-energy substrate atlas
-
-The current substrate program now treats substrate-law differences as signal, not noise.
-
-The clean terminology is:
-
-```text
-locality-only:
-  baseline local branching
-
-smooth directional field:
-  directional asymmetry field A(s), using A(t)-A(s)
-
-macro-invariant / asymmetry-preservation:
-  coarse invariant I(s), using |I(t)-I(s)|
-
-constraint-template substrate:
-  historical comparator using hand-built symbolic constraint templates
-```
-
-Do not describe the macro-invariant family as a budget family. The concept is **asymmetry preservation**: some coarse distinction is costly to erase, so transport can remain coherent without hand-picked symbolic laws.
-
-The transition-energy substrate atlas currently reads:
-
-```text
-locality-only:
-  clean baseline; no aligned amplification in the tested grid
-
-smooth directional field:
-  response-bearing; rerouting/reopening/weakening appear, but no aligned amplification in the tested grid
-
-macro-invariant / asymmetry-preservation:
-  aligned response appears; total-coordinate-mass strongest but coverage-limited
-
-constraint-template comparator:
-  still positive; no longer unique
-```
-
-This is a substrate-characterization result, not validation.
-
-The first implemented asymmetry-ladder batches currently read:
-
-```text
-locality-only:
-  clean baseline in the seed-scaled batch
-
-directional asymmetry:
-  rerouting/differentiated response, no aligned amplification
-
-preservation asymmetry:
-  current loadbearing family; aligned response under matched controls.
-  The preservation-focused scaleup made symbol-composition preservation the
-  cleanest current target.
-
-combined asymmetry:
-  clean and rerouting-bearing, but not yet synergistic in the sparse tested grid
-```
-
-## Minimal transition-energy ladder
-
-The transition-energy substrate program maps directly onto the primitives:
-
-```text
-distinction:
-  finite states differ
-
-relation:
-  selected transitions connect states
-
-asymmetry:
-  transition energy / selection makes transformations non-equivalent
-```
+`E(s,t)` is an edge-selection score over possible transformations. It is not moral cost, thermodynamic energy, utility, value, reward, fitness, or Omega.
 
 The minimal ladder is:
 
@@ -163,7 +100,52 @@ E3 combined:
   E(s,t) = d(s,t) + alpha * (A(t)-A(s)) + beta * |I(t)-I(s)| + roughness
 ```
 
-`A(s)` is a directional asymmetry field. `I(s)` is a macro-invariant / coarse asymmetry coordinate. Neither is value, utility, reward, fitness, or Omega.
+`A(s)` is a directional asymmetry field. `I(s)` is a macro-invariant / coarse asymmetry coordinate.
+
+## Current asymmetry-ladder result
+
+The preservation-focused asymmetry-ladder scaleup completed:
+
+```text
+jobs_completed: 14976 / 14976
+errors: 0
+matrix_count: 9846
+null_replicates: 9
+matched_marginal_detector_null_gate_passed: 1
+synthetic_fixture_contract: 8 / 8
+terminal_saturation_flagged_rows: 0
+readiness_level: preservation_asymmetry_loadbearing
+```
+
+Family-level read:
+
+```text
+locality-only:
+  baseline; no aligned amplification
+
+directional asymmetry:
+  rerouting/reopening; no aligned amplification in this grid
+
+preservation asymmetry:
+  aligned response, rerouting, reopening; current loadbearing family
+
+combined asymmetry:
+  clean and rerouting-bearing, but not yet synergistic in the tested grid
+```
+
+The cleanest current preservation target is:
+
+```text
+symbol_histogram_distance:
+  aligned fraction: 0.154
+  aligned rows: 380
+  rerouted rows: 262
+  reopened rows: 245
+  weakened rows: 75
+  baseline-missing rows: 0
+```
+
+The next empirical question is low-beta sensitivity below `beta = 0.25`.
 
 ## What current results do and do not mean
 
@@ -174,7 +156,8 @@ horizon transport is the current live instrument;
 matched marginal nulls did not explain away the H128 response surface;
 perturbation changed future transport geometry without simply destroying it;
 horizon depth appears loadbearing in the response profile;
-transition-energy substrate laws express different response regimes.
+transition-energy substrate laws express different response regimes;
+preservation asymmetry is currently the strongest non-template substrate hook.
 ```
 
 Current results do **not** mean:
@@ -184,13 +167,15 @@ Omega detected;
 agent detected;
 valuer detected;
 identity detected;
+life detected;
+self-replication detected;
 candidate promoted;
 holdout ready;
 graph-channel causality shown;
 value-bearing structure demonstrated.
 ```
 
-## Control philosophy: detector nulls versus perturbations
+## Control philosophy
 
 A key reorientation in the project is the separation between detector-null controls and perturbation-response profiles.
 
@@ -218,15 +203,83 @@ perturbation-response probes:
   response class by horizon pair
 ```
 
-This distinction is loadbearing. Living or life-like systems do not survive arbitrary destructive ablation. Perturbation should be interpreted as a response profile: stable, amplified, weakened, rerouted, reopened, collapsed, or control-equivalent.
+Perturbation should be interpreted as a response profile: stable, amplified, weakened, rerouted, reopened, collapsed, control-equivalent, or measurement-limited.
 
-## Workflow: human-directed, AI-assisted research
+## How to read the project
 
-This repository is developed through a human-directed, AI-assisted research workflow.
+### Quick orientation
 
-The core theoretical motivation, project judgment, branch selection, interpretive standards, and many key pivots are human-generated. AI systems are used as implementation and critique accelerators: they draft specs, modify runners, generate reports, audit code, summarize results, and propose follow-up experiments.
+Read:
 
-This distinction matters. The workflow is semi-autonomous in the sense that AI coding agents can carry out bounded implementation tasks and produce structured artifacts, but the scientific direction is not autonomous. Human review decides which failures matter, which claims are allowed, when a result is overinterpreted, and when a branch should be repaired, paused, or redirected.
+1. [External Reader Guide](docs/EXTERNAL_READER_GUIDE.md)
+2. [Asymmetry-ladder preservation scaleup result](docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
+3. [Asymmetry-ladder preservation scaleup figures](docs/research_notes/validation_results/figures/20260531_asymmetry_ladder_preservation_scaleup/README.md)
+
+### Theory orientation
+
+Read:
+
+1. [Horizon Transport and Aligned Amplification](docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md)
+2. [Transition Energy and Constraint Untethering](docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
+3. [Transition-Energy Substrate Atlas](docs/research_notes/omega_theory/transition_energy_substrate_atlas.md)
+4. [Minimal reachable futures formalism](docs/research_notes/omega_theory/minimal_reachable_futures_formalism.md)
+5. [Boundary non-privileging and field-deformation theory note](docs/research_notes/omega_theory/boundary_nonprivileging_and_field_deformation.md)
+
+### Implementation orientation
+
+Read:
+
+1. [Asymmetry-ladder transition-energy spec](docs/RFS_MB0_ASYMMETRY_LADDER_TRANSITION_ENERGY_SUBSTRATE_SPEC.md)
+2. [Transition-energy substrate characterization spec](docs/RFS_MB0_TRANSITION_ENERGY_SUBSTRATE_CHARACTERIZATION_RUN_SPEC.md)
+3. [Horizon-transport runner map](docs/implementation/horizon_transport_runner_map.md)
+4. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
+
+### Historical orientation
+
+Read:
+
+1. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
+2. [Running log](docs/OMEGA_RUNNING_LOG.md)
+3. [Project manual](docs/OMEGA_PROJECT_MANUAL.md)
+4. [Historical probe terms](docs/research_notes/omega_theory/historical_probe_terms.md)
+
+## Current next step
+
+The current next step is **not** holdout, graph perturbation, direct channel diagnostics, or candidate promotion.
+
+The current next step is:
+
+```text
+low-beta preservation-asymmetry sensitivity
+```
+
+Specifically, resolve beta values below `0.25`:
+
+```text
+0
+0.005
+0.01
+0.025
+0.05
+0.10
+0.15
+0.25
+```
+
+Focus on:
+
+```text
+symbol_histogram_distance:
+  cleanest current target
+
+total_coordinate_mass:
+  still live but paired-baseline limited
+
+hamming_weight_or_nonzero_count:
+  clean low-signal comparator
+```
+
+A max-entropy local transition ensemble should come after this sensitivity map is clearer.
 
 ## Why this matters for alignment
 
@@ -234,65 +287,17 @@ Omega is motivated by a central alignment problem:
 
 > A system can become highly capable, persistent, and effective while degrading the broader conditions under which value-bearing futures remain possible.
 
-This is the failure mode the internal notes call **pseudo-Omega**. In public-facing terms, it is a **locally viable / globally degrading capture regime** or **destructive lock-in**: local success that collapses broader future possibility.
+In public-facing terms, this is a locally viable / globally degrading capture regime or destructive lock-in: local success that collapses broader future possibility.
 
-Omega tries to formalize this failure mode without starting from a fixed reward function or a direct aggregation of human preferences.
-
-The current empirical program is still only a first step. It does not validate alignment. It asks what substrate and measurement discipline are needed before the earliest precursor can be resolved:
+The current empirical program does not validate alignment. It asks what substrate and measurement discipline are needed before the earliest precursor can be resolved:
 
 > Can future-landscape deformation be measured well enough to distinguish nontrivial future-structuring effects from saturation, trivial persistence, clocks, collapse, probe artifacts, generic finite-frontier dynamics, and matched-control equivalence?
 
-## Important current docs
+## Workflow
 
-### Start here
+This repository is developed through a human-directed, AI-assisted research workflow.
 
-- [Horizon Transport and Aligned Amplification](docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md)
-- [Transition Energy and Constraint Untethering](docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
-- [Transition-Energy Substrate Atlas](docs/research_notes/omega_theory/transition_energy_substrate_atlas.md)
-- [Asymmetry-ladder transition-energy result](docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_transition_energy_result.md)
-- [Asymmetry-ladder preservation scaleup result](docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
-- [Asymmetry-ladder preservation scaleup figures](docs/research_notes/validation_results/figures/20260531_asymmetry_ladder_preservation_scaleup/README.md)
-- [Asymmetry-ladder transition-energy spec](docs/RFS_MB0_ASYMMETRY_LADDER_TRANSITION_ENERGY_SUBSTRATE_SPEC.md)
-- [Macro-invariant due-diligence result](docs/research_notes/validation_results/rfs_mb0_macro_invariant_due_diligence_result.md)
-- [Transition-energy substrate characterization result](docs/research_notes/validation_results/rfs_mb0_transition_energy_substrate_characterization_result.md)
-- [Transition-energy substrate characterization spec](docs/RFS_MB0_TRANSITION_ENERGY_SUBSTRATE_CHARACTERIZATION_RUN_SPEC.md)
-- [Substrate-untethering transition-energy larger smoke result](docs/research_notes/validation_results/rfs_mb0_substrate_untethering_transition_energy_sweep_result.md)
-- [Substrate-untethering transition-energy sweep spec](docs/RFS_MB0_SUBSTRATE_UNTETHERING_TRANSITION_ENERGY_SWEEP_SPEC.md)
-- [Horizon-transport response-surface H128 scaleup result](docs/research_notes/validation_results/rfs_mb0_horizon_transport_response_surface_h128_scaleup_result.md)
-- [Horizon-transport response-surface H128 scaleup spec](docs/RFS_MB0_HORIZON_TRANSPORT_RESPONSE_SURFACE_H128_SCALEUP_SPEC.md)
-
-### Theory foundations
-
-- [Minimal reachable futures formalism](docs/research_notes/omega_theory/minimal_reachable_futures_formalism.md)
-- [Boundary non-privileging and field-deformation theory note](docs/research_notes/omega_theory/boundary_nonprivileging_and_field_deformation.md)
-- [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
-- [Branch evolution update note](docs/RFS_MB0_BRANCH_EVOLUTION_UPDATE_NOTE.md)
-- [Omega glossary](docs/research_notes/omega_theory/omega_glossary.md)
-- [Public results index](docs/PUBLIC_RESULTS_INDEX.md)
-
-## Current next step
-
-The current next step is **not** holdout, graph perturbation, direct channel diagnostics, or candidate promotion.
-
-The current next step is to continue the transition-energy substrate program using the cleaned terminology:
-
-```text
-near-term options:
-  resolve low-beta preservation-asymmetry sensitivity below beta 0.25;
-  optionally repair total-coordinate-mass paired-baseline availability;
-  move toward a max-entropy local transition ensemble with explicit macro-invariant constraints;
-  keep grammar-neutral probes such as relation_role and full_state_hash;
-  preserve matched-marginal detector gates and response-profile taxonomy;
-  compare response surfaces across substrate families and scales;
-  only later consider direct channel diagnostics if response profiles suggest localized functional dependence.
-
-still blocked:
-  holdout scoring;
-  n=6 transfer;
-  alphabet expansion as promotion;
-  graph-channel causal claims;
-  agent/value/Omega labels.
-```
+The core theoretical motivation, project judgment, branch selection, interpretive standards, and many key pivots are human-generated. AI systems are used as implementation and critique accelerators: they draft specs, modify runners, generate reports, audit code, summarize results, and propose follow-up experiments.
 
 ## Roadmap
 
@@ -307,7 +312,7 @@ RFS-MB0:
   active neutral future-landscape deformation program;
   endpoint support/distribution and quotient probes became measurement-limited;
   frontier-transform instrumentation matured into horizon-transport instrumentation;
-  current live object is matched-marginal-separated horizon transport with aligned amplification;
+  current live object is matched-marginal-separated horizon transport with preservation-asymmetry-linked aligned amplification;
   current substrate program uses transition-energy families rather than hand-built symbolic laws
 
 RFS-MB1:
@@ -321,17 +326,11 @@ RFS-MB3:
   scale hierarchy; nested or composable bounded structures
 
 RFS-MB4:
-  constructor-like transformation capacity of bounded processes, if the earlier substrate and measurement layers mature enough to justify revisiting it
+  constructor-like transformation capacity of bounded processes, if earlier substrate and measurement layers mature enough to justify revisiting it
 ```
-
-Later stages should not be implemented until RFS-MB0 has clean definitions, controls, and failure modes.
 
 ## Important caveat
 
-This repository does not prove Omega as a scientific theory.
-
 The current scientific claim is modest:
 
-> Directional horizon-transport instrumentation can measure a matched-marginal-separated response surface in neutral toy substrates. Transition-energy substrate characterization shows that different generic substrate laws express different response regimes. Omega-compatible subobjects have not been demonstrated.
-
-VAL0/VAL1 tested earlier precursors. The project is now centered on neutral future landscapes, horizon-transport instrumentation, transition-energy substrate design, and control-relative deformation taxonomy.
+> Directional horizon-transport instrumentation can measure a matched-marginal-separated response surface in neutral toy substrates. Transition-energy substrate characterization shows that different generic substrate laws express different response regimes. Preservation asymmetry is currently the strongest non-template substrate hook for aligned amplification. Omega-compatible subobjects have not been demonstrated.
