@@ -95,6 +95,10 @@ as the canonical internal definition anchor.
    - `docs/research_notes/validation_results/rfs_mb0_horizon_transport_matched_null_fixture_smoke_result.md`
    - `docs/RFS_MB0_HORIZON_TRANSPORT_EXPANSION_SMOKE_SPEC.md`
    - `docs/research_notes/validation_results/rfs_mb0_horizon_transport_expansion_smoke_result.md`
+   - `docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md`
+   - `docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md`
+   - `docs/RFS_MB0_SUBSTRATE_UNTETHERING_TRANSITION_ENERGY_SWEEP_SPEC.md`
+   - `docs/research_notes/validation_results/rfs_mb0_substrate_untethering_transition_energy_sweep_result.md`
    - `docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md`
    - `docs/research_notes/validation_design/val_ecology_viability_reorientation.md`
    - `docs/research_notes/validation_design/README.md`

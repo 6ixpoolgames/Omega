@@ -20,7 +20,7 @@ The active empirical question is currently narrower than agency, identity, or va
 
 Current status, in one line:
 
-**VAL0/VAL1 were useful reconnaissance probes; RFS-MB0 has now reoriented from endpoint support/distribution deformation and static coflow spectra toward directional horizon-transport instrumentation. The latest H128 horizon-transport response-surface scaleup passed matched-marginal instrument gates and surfaced a stable-to-amplified-aligned response surface across horizon depth and perturbation strength. This is still not a scientific validation gate, candidate promotion, or Omega/agency/value claim.**
+**VAL0/VAL1 were useful reconnaissance probes; RFS-MB0 has now reoriented from endpoint support/distribution deformation and static coflow spectra toward directional horizon-transport instrumentation. The latest H128 horizon-transport response-surface scaleup passed matched-marginal instrument gates and surfaced a stable-to-amplified-aligned response surface across horizon depth and perturbation strength. The active substrate question is whether this object survives beyond the original hand-built constraint vocabulary. This is still not a scientific validation gate, candidate promotion, or Omega/agency/value claim.**
 
 ## Current empirical branch: horizon transport
 
@@ -79,6 +79,9 @@ extended horizons through H=128:
 The current intermediate theory object is described in:
 
 - [Horizon Transport and Aligned Amplification](docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md)
+- [Transition Energy and Constraint Untethering](docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
+- [Substrate-untethering transition-energy tiny smoke result](docs/research_notes/validation_results/rfs_mb0_substrate_untethering_transition_energy_sweep_result.md)
+- [Substrate-untethering transition-energy sweep spec](docs/RFS_MB0_SUBSTRATE_UNTETHERING_TRANSITION_ENERGY_SWEEP_SPEC.md)
 - [Horizon-transport response-surface H128 scaleup result](docs/research_notes/validation_results/rfs_mb0_horizon_transport_response_surface_h128_scaleup_result.md)
 - [Horizon-transport response-surface H128 scaleup spec](docs/RFS_MB0_HORIZON_TRANSPORT_RESPONSE_SURFACE_H128_SCALEUP_SPEC.md)
 
@@ -297,7 +300,9 @@ horizon transport:
   current live empirical branch; H128 scaleup surfaced matched-marginal-separated stable-to-amplified-aligned response surface
 
 next task:
-  use the new horizon-transport theory note to guide response-threshold mapping, boundary probes, resolution checks, and only later direct channel diagnostics if earned
+  test whether the horizon-transport object survives transition-energy
+  substrate untethering, then move toward a max-entropy local transition ensemble
+  if the E0/E1/E2 substrate families remain clean enough
 ```
 
 ## Important current docs
@@ -305,6 +310,9 @@ next task:
 ### Start here
 
 - [Horizon Transport and Aligned Amplification](docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md)
+- [Transition Energy and Constraint Untethering](docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
+- [Substrate-untethering transition-energy tiny smoke result](docs/research_notes/validation_results/rfs_mb0_substrate_untethering_transition_energy_sweep_result.md)
+- [Substrate-untethering transition-energy sweep spec](docs/RFS_MB0_SUBSTRATE_UNTETHERING_TRANSITION_ENERGY_SWEEP_SPEC.md)
 - [Horizon-transport response-surface H128 scaleup result](docs/research_notes/validation_results/rfs_mb0_horizon_transport_response_surface_h128_scaleup_result.md)
 - [Horizon-transport response-surface H128 scaleup spec](docs/RFS_MB0_HORIZON_TRANSPORT_RESPONSE_SURFACE_H128_SCALEUP_SPEC.md)
 - [Horizon Transport and Control Reorientation Note](docs/research_notes/omega_theory/horizon_transport_and_control_reorientation_note.md)
