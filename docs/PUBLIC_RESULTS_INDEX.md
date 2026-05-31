@@ -22,7 +22,7 @@ graph-channel causality
 
 The current claim is modest:
 
-> Directional horizon-transport instrumentation can measure matched-control-separated response profiles in neutral finite transition substrates. Transition-energy substrate laws express different response regimes. Preservation asymmetry is currently the strongest non-template substrate hook for aligned amplification, with low-beta sensitivity now mapped below beta `0.25`; the latest MaxEnt/top-m audits indicate that the current preservation response is narrow to hard top-m selection geometry rather than recovered by the tested stochastic relaxations. The hard-top-m mechanism branch now points toward weakest selected-edge pruning / core-fringe boundary pressure, not generic lower out-degree and not a broad Omega claim.
+> Directional horizon-transport instrumentation can measure matched-control-separated response profiles in neutral finite transition substrates. Transition-energy substrate laws express different response regimes. Preservation asymmetry is currently the strongest non-template substrate hook for aligned amplification, with low-beta sensitivity now mapped below beta `0.25`; the latest MaxEnt/top-m audits indicate that the current preservation response is narrow to hard top-m selection geometry rather than recovered by the tested stochastic relaxations. The hard-top-m mechanism branch now points toward a fixed low-rank successor core: response appears when the retained selected-edge set is the top-3 low-energy core, not under generic lower out-degree, random deletion, or expansion.
 
 ## Best onboarding path
 
@@ -104,7 +104,7 @@ combined asymmetry:
 
 ## Most important current results
 
-### Hard top-m mechanism pruning-resolution sweep
+### Hard top-m mechanism boundary-resolution sweep
 
 Result note:
 
@@ -113,39 +113,40 @@ Result note:
 Run summary:
 
 ```text
-jobs_completed: 38400 / 38400
+jobs_completed: 20160 / 20160
 errors: 0
-matrix_count: 6600
+matrix_count: 6655
 workers: 18
 matched_marginal_detector_null_gate_passed: 1
 synthetic_fixture_contract: 8 / 8
 paired_baseline_missing_rows: 0
-readiness_level: top_m_weakest_edge_pruning_loadbearing
-next_action_fork: expand_core_fringe_boundary_pruning_controls
+terminal_saturation_flagged_rows: 0
+readiness_level: top_m_fixed_low_rank_core_loadbearing
+next_action_fork: carry_shared_low_rank_core_boundary_forward
 ```
 
-Upper-medium sweep update:
+Boundary-resolution update:
 
 ```text
-deterministic_top_m:
-  stable
+baseline m=3:
+  response-bearing
 
-top_m_m_minus_1 / top_m_drop_weakest_from_top_m:
-  response-bearing; strongest at beta 0.10 and 0.15
+m=4 with one weakest edge removed:
+  response-bearing
 
-top_m_m_minus_2:
-  weaker aligned-amplification echo
+m=5 with two weakest edges removed:
+  response-bearing
 
-random deletion / all-local random m-1 / strongest-edge deletion / near-tie jitter / m+1 / m+2:
+baseline m=4/m=5, expansion, random deletion, strongest-edge deletion:
   stable
 ```
 
 Interpretation:
 
 ```text
-The immediate target is the weakest selected-edge / core-fringe boundary of hard
-top-m pruning. Generic lower out-degree is less plausible because random
-deletion at the same effective degree stayed stable.
+The immediate target is shared low-rank successor-core boundary pressure.
+Generic lower out-degree is less plausible because random deletion at matched
+effective degree stayed stable.
 ```
 
 ### Top-m geometry audit

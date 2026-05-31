@@ -113,6 +113,9 @@ COMMON_OUTPUTS = (
     "response_by_beta_or_temperature.csv",
     "response_by_sampler_family_and_invariant.csv",
     "response_by_beta_or_temperature_and_invariant.csv",
+    "response_by_top_m_base_out_degree.csv",
+    "response_by_top_m_boundary_control.csv",
+    "response_by_top_m_boundary_horizon_perturbation.csv",
     "paired_baseline_availability_by_sampler_context.csv",
 )
 

@@ -1,6 +1,6 @@
 # RFS-MB0 Hard Top-m Mechanism Audit Spec
 
-Status: medium sweep completed / pruning-resolution run pending
+Status: boundary-resolution medium sweep completed
 Builds on:
 - `docs/RFS_MB0_TOP_M_GEOMETRY_AUDIT_SPEC.md`
 - `docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md`
@@ -38,7 +38,15 @@ Run these on the same design set:
 8. top_m_random_m_minus_1_from_all_local
 9. top_m_drop_strongest_from_top_m
 10. top_m_drop_weakest_from_top_m
-11. top_m_near_tie_jitter, optional if cheap
+11. top_m_drop_two_weakest_from_top_m
+12. top_m_random_delete_two_from_top_m
+13. top_m_near_tie_jitter, optional if cheap
+```
+
+Boundary-resolution runs should explicitly vary base out-degree:
+
+```text
+base m: 3, 4, 5
 ```
 
 All variants use the same preservation energy:
@@ -101,6 +109,9 @@ response_by_sampler_family.csv
 response_by_beta_or_temperature.csv
 response_by_sampler_family_and_invariant.csv
 response_by_beta_or_temperature_and_invariant.csv
+response_by_top_m_base_out_degree.csv
+response_by_top_m_boundary_control.csv
+response_by_top_m_boundary_horizon_perturbation.csv
 paired_baseline_availability_by_sampler_context.csv
 horizon_response_threshold_table.csv
 ```
@@ -118,6 +129,10 @@ If random m-1 deletion from all local candidates recovers the response:
 
 If highest-rank-within-top-m deletion recovers while random deletion does not:
   the weakest selected edge / core-fringe boundary is likely loadbearing.
+
+If baseline m=3, m=4 with one weakest edge removed, and m=5 with two weakest
+edges removed recover while random deletion and expansion do not:
+  the loadbearing object is a fixed low-rank successor core.
 
 If m-1 recovers but m+1 does not:
   the response may be tied to sparse strict pruning rather than full top-m identity.

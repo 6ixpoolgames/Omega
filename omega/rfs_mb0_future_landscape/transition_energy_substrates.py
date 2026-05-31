@@ -27,9 +27,11 @@ TOP_M_M_MINUS_1 = "top_m_m_minus_1"
 TOP_M_M_PLUS_1 = "top_m_m_plus_1"
 TOP_M_M_PLUS_2 = "top_m_m_plus_2"
 TOP_M_RANDOM_DELETE_ONE_FROM_TOP_M = "top_m_random_delete_one_from_top_m"
+TOP_M_RANDOM_DELETE_TWO_FROM_TOP_M = "top_m_random_delete_two_from_top_m"
 TOP_M_RANDOM_M_MINUS_1_FROM_ALL_LOCAL = "top_m_random_m_minus_1_from_all_local"
 TOP_M_DROP_STRONGEST_FROM_TOP_M = "top_m_drop_strongest_from_top_m"
 TOP_M_DROP_WEAKEST_FROM_TOP_M = "top_m_drop_weakest_from_top_m"
+TOP_M_DROP_TWO_WEAKEST_FROM_TOP_M = "top_m_drop_two_weakest_from_top_m"
 MAX_ENTROPY_LOCAL = "max_entropy_local"
 MAX_ENTROPY_MACRO_INVARIANT = "max_entropy_macro_invariant"
 RANK_CONDITIONED_MAX_ENTROPY = "rank_conditioned_max_entropy"
@@ -44,9 +46,11 @@ TOP_M_MECHANISM_FAMILIES = frozenset({
     TOP_M_M_PLUS_1,
     TOP_M_M_PLUS_2,
     TOP_M_RANDOM_DELETE_ONE_FROM_TOP_M,
+    TOP_M_RANDOM_DELETE_TWO_FROM_TOP_M,
     TOP_M_RANDOM_M_MINUS_1_FROM_ALL_LOCAL,
     TOP_M_DROP_STRONGEST_FROM_TOP_M,
     TOP_M_DROP_WEAKEST_FROM_TOP_M,
+    TOP_M_DROP_TWO_WEAKEST_FROM_TOP_M,
 })
 TOP_M_GEOMETRY_AUDIT_FAMILIES = frozenset({
     PRESERVATION_ASYMMETRY,
@@ -91,12 +95,16 @@ MACRO_INVARIANT_ALIASES = {
     "top-m-plus-2": TOP_M_M_PLUS_2,
     "random_delete_one_from_top_m": TOP_M_RANDOM_DELETE_ONE_FROM_TOP_M,
     "random-delete-one-from-top-m": TOP_M_RANDOM_DELETE_ONE_FROM_TOP_M,
+    "random_delete_two_from_top_m": TOP_M_RANDOM_DELETE_TWO_FROM_TOP_M,
+    "random-delete-two-from-top-m": TOP_M_RANDOM_DELETE_TWO_FROM_TOP_M,
     "random_m_minus_1_from_all_local": TOP_M_RANDOM_M_MINUS_1_FROM_ALL_LOCAL,
     "random-m-minus-1-from-all-local": TOP_M_RANDOM_M_MINUS_1_FROM_ALL_LOCAL,
     "drop_strongest_from_top_m": TOP_M_DROP_STRONGEST_FROM_TOP_M,
     "drop-strongest-from-top-m": TOP_M_DROP_STRONGEST_FROM_TOP_M,
     "drop_weakest_from_top_m": TOP_M_DROP_WEAKEST_FROM_TOP_M,
     "drop-weakest-from-top-m": TOP_M_DROP_WEAKEST_FROM_TOP_M,
+    "drop_two_weakest_from_top_m": TOP_M_DROP_TWO_WEAKEST_FROM_TOP_M,
+    "drop-two-weakest-from-top-m": TOP_M_DROP_TWO_WEAKEST_FROM_TOP_M,
     "directional_asymmetry_field": DIRECTIONAL_ASYMMETRY,
     "combined_directional_preservation": COMBINED_ASYMMETRY,
     "max_entropy_local_transition": MAX_ENTROPY_LOCAL,
@@ -128,9 +136,11 @@ TRANSITION_ENERGY_FAMILIES = (
     TOP_M_M_PLUS_1,
     TOP_M_M_PLUS_2,
     TOP_M_RANDOM_DELETE_ONE_FROM_TOP_M,
+    TOP_M_RANDOM_DELETE_TWO_FROM_TOP_M,
     TOP_M_RANDOM_M_MINUS_1_FROM_ALL_LOCAL,
     TOP_M_DROP_STRONGEST_FROM_TOP_M,
     TOP_M_DROP_WEAKEST_FROM_TOP_M,
+    TOP_M_DROP_TWO_WEAKEST_FROM_TOP_M,
     MAX_ENTROPY_LOCAL,
     MAX_ENTROPY_MACRO_INVARIANT,
     RANK_CONDITIONED_MAX_ENTROPY,
@@ -536,12 +546,16 @@ def top_m_mechanism_edges(
             selected = scored[: min(len(scored), k + 2)]
         elif family == TOP_M_RANDOM_DELETE_ONE_FROM_TOP_M:
             selected = stable_ranked_sample(scored[:k], max(1, k - 1), seed, salt, source, "random_delete_one_from_top_m")
+        elif family == TOP_M_RANDOM_DELETE_TWO_FROM_TOP_M:
+            selected = stable_ranked_sample(scored[:k], max(1, k - 2), seed, salt, source, "random_delete_two_from_top_m")
         elif family == TOP_M_RANDOM_M_MINUS_1_FROM_ALL_LOCAL:
             selected = stable_ranked_sample(scored, max(1, k - 1), seed, salt, source, "random_m_minus_1_from_all_local")
         elif family == TOP_M_DROP_STRONGEST_FROM_TOP_M:
             selected = scored[1:k] if k > 1 else scored[:1]
         elif family == TOP_M_DROP_WEAKEST_FROM_TOP_M:
             selected = scored[: max(1, k - 1)]
+        elif family == TOP_M_DROP_TWO_WEAKEST_FROM_TOP_M:
+            selected = scored[: max(1, k - 2)]
         elif family == TOP_M_CORE_PRESERVED_FRINGE_RANDOMIZED:
             selected = core_preserved_fringe_randomized(scored, k, core_size, fringe_multiplier, seed, salt, source)
         elif family == TOP_M_CORE_RANDOMIZED_FRINGE_PRESERVED:
@@ -565,6 +579,7 @@ def top_m_mechanism_edges(
             TOP_M_BOUNDARY_JITTER,
             TOP_M_NEAR_TIE_JITTER,
             TOP_M_RANDOM_DELETE_ONE_FROM_TOP_M,
+            TOP_M_RANDOM_DELETE_TWO_FROM_TOP_M,
             TOP_M_RANDOM_M_MINUS_1_FROM_ALL_LOCAL,
         }),
         "core_size": core_size,
@@ -694,12 +709,16 @@ def top_m_mechanism_selection_rule(family: str) -> str:
         return "top_m_lowest_energy_candidates_m_plus_2"
     if family == TOP_M_RANDOM_DELETE_ONE_FROM_TOP_M:
         return "top_m_random_delete_one_from_top_m"
+    if family == TOP_M_RANDOM_DELETE_TWO_FROM_TOP_M:
+        return "top_m_random_delete_two_from_top_m"
     if family == TOP_M_RANDOM_M_MINUS_1_FROM_ALL_LOCAL:
         return "top_m_random_m_minus_1_from_all_local"
     if family == TOP_M_DROP_STRONGEST_FROM_TOP_M:
         return "top_m_drop_strongest_from_top_m"
     if family == TOP_M_DROP_WEAKEST_FROM_TOP_M:
         return "top_m_drop_weakest_from_top_m"
+    if family == TOP_M_DROP_TWO_WEAKEST_FROM_TOP_M:
+        return "top_m_drop_two_weakest_from_top_m"
     return "top_m_lowest_energy_candidates"
 
 
@@ -800,6 +819,8 @@ def top_m_sampler_audit_metadata(
         per_state_errors.append(distribution_total_variation(count_rank_buckets(calibration_source_ranks, params), count_rank_buckets(selected_source_ranks, params)))
     return {
         "sampler_family": sampler_family_label(str(job.get("substrate_family", ""))),
+        "base_out_degree_target": max(1, params.out_degree_target),
+        "top_m_base_out_degree": job.get("top_m_base_out_degree", max(1, params.out_degree_target)),
         "top_m_calibration_edge_count": len(calibration_edge_set),
         "edge_jaccard_vs_top_m_calibration": intersection / max(1, union),
         "selected_edge_overlap_fraction_vs_top_m_calibration": intersection / max(1, len(calibration_edge_set)),

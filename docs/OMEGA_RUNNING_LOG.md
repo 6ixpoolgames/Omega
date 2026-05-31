@@ -9,6 +9,64 @@ patch notes at the top.
 
 ## 2026-06-01
 
+### RFS-MB0 Hard Top-m Boundary Resolution Medium Sweep
+
+Ran the final narrow single-frontier mechanism pass before moving to coupled
+frontier interaction. The pass varied base `m` / out-degree over `3,4,5` and
+compared one-edge weakest deletion, two-edge weakest deletion, random deletion,
+strongest-edge deletion, and one-edge expansion.
+
+Retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md`
+
+Local validation output:
+
+- `results/local_runs/20260601_top_m_boundary_resolution_medium_v2/`
+
+Run shape:
+
+```text
+status: COMPLETED
+workers: 18
+jobs_completed: 20160 / 20160
+elapsed_seconds: 346.340
+errors: 0
+matrix_count: 6655
+null_replicates: 9
+matched_marginal_detector_null_gate_passed: 1
+synthetic_fixture_contract: passed
+paired_baseline_missing_rows: 0
+terminal_saturation_flagged_rows: 0
+readiness_level: top_m_fixed_low_rank_core_loadbearing
+next_action_fork: carry_shared_low_rank_core_boundary_forward
+```
+
+Main read:
+
+```text
+response-bearing:
+  baseline m=3
+  m=4 with one weakest selected edge removed
+  m=5 with two weakest selected edges removed
+
+stable:
+  baseline m=4/m=5
+  m+1 expansion
+  random one-edge deletion
+  random two-edge deletion
+  strongest-edge deletion
+```
+
+Interpretation:
+
+```text
+The current coupling primitive should be shared low-rank successor-core /
+core-fringe boundary pressure, not generic lower out-degree and not weakest-edge
+deletion by itself. Stop single-frontier mechanism work unless coupled-frontier
+results contradict this read.
+```
+
 ### RFS-MB0 Hard Top-m Pruning Resolution Upper-Medium Sweep
 
 Expanded the hard-top-m mechanism audit with pruning-resolution controls after

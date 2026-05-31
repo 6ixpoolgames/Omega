@@ -26,10 +26,11 @@ The current active branch is auditing the mechanism behind the preservation
 asymmetry response. The latest MaxEnt/top-m audits indicate that the observed
 symbol-histogram preservation response is narrow to hard top-m selection
 geometry rather than recovered by the tested stochastic relaxations. The
-hard-top-m mechanism pruning-resolution sweep now points toward weakest
-selected-edge pruning / core-fringe boundary pressure. Generic lower out-degree
-is less plausible because random deletion at the same effective degree stayed
-stable.
+hard-top-m mechanism boundary-resolution sweep now points toward a fixed
+low-rank successor core: baseline `m=3`, `m=4` with one weakest edge removed,
+and `m=5` with two weakest edges removed were response-bearing. Generic lower
+out-degree is less plausible because random deletion at matched effective
+degree stayed stable.
 ```
 
 Terminology rule:
