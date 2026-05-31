@@ -1475,6 +1475,7 @@ def response_flag_rows(response_classification: list[dict[str, object]], saturat
     for row in response_classification:
         sat = saturation_by_matrix.get(str(row.get("matrix_id", "")), {})
         rows.append({
+            "substrate_family": row.get("substrate_family", substrate_family_from_condition_id(row.get("condition_id", ""))),
             "condition_id": row.get("condition_id", ""),
             "actual_control_name": row.get("actual_control_name", ""),
             "mechanism_control_strength": row.get("mechanism_control_strength", ""),
@@ -1494,18 +1495,19 @@ def response_flag_rows(response_classification: list[dict[str, object]], saturat
 
 
 def response_class_by_strength_and_horizon_rows(response_classification: list[dict[str, object]]) -> list[dict[str, object]]:
-    keys = ("actual_control_name", "mechanism_control_strength", "probe_key", "flow_mode", "horizon_pair", "H_a", "H_b", "response_class")
+    keys = ("substrate_family", "actual_control_name", "mechanism_control_strength", "probe_key", "flow_mode", "horizon_pair", "H_a", "H_b", "response_class")
     rows: list[dict[str, object]] = []
     for key, items in group_by(response_classification, keys).items():
         rows.append({
-            "perturbation_family": key[0],
-            "perturbation_strength": key[1],
-            "probe_key": key[2],
-            "flow_mode": key[3],
-            "horizon_pair": key[4],
-            "H_a": key[5],
-            "H_b": key[6],
-            "response_class": key[7],
+            "substrate_family": key[0],
+            "perturbation_family": key[1],
+            "perturbation_strength": key[2],
+            "probe_key": key[3],
+            "flow_mode": key[4],
+            "horizon_pair": key[5],
+            "H_a": key[6],
+            "H_b": key[7],
+            "response_class": key[8],
             "row_count": len(items),
             "mean_subspace_alignment_mean": mean([float_or_zero(row.get("mean_subspace_alignment")) for row in items]) if items else 0.0,
             "spectral_mass_delta_fraction_mean": mean([float_or_zero(row.get("spectral_mass_delta_fraction")) for row in items]) if items else 0.0,
@@ -1513,6 +1515,7 @@ def response_class_by_strength_and_horizon_rows(response_classification: list[di
             "perturbation_response_magnitude_mean": mean([float_or_zero(row.get("perturbation_response_magnitude")) for row in items]) if items else 0.0,
         })
     return sorted(rows, key=lambda row: (
+        str(row.get("substrate_family", "")),
         str(row.get("perturbation_family", "")),
         float_or_zero(row.get("perturbation_strength")),
         str(row.get("probe_key", "")),
@@ -1524,24 +1527,26 @@ def response_class_by_strength_and_horizon_rows(response_classification: list[di
 
 def horizon_response_threshold_rows(response_classification: list[dict[str, object]], saturation: list[dict[str, object]]) -> list[dict[str, object]]:
     rows: list[dict[str, object]] = []
-    keys = ("actual_control_name", "mechanism_control_strength", "probe_key", "flow_mode")
+    keys = ("substrate_family", "actual_control_name", "mechanism_control_strength", "probe_key", "flow_mode")
     for key, items in group_by(response_classification, keys).items():
         ordered = sorted(items, key=lambda row: (float_or_zero(row.get("H_b")), float_or_zero(row.get("H_a"))))
         sat_items = sorted(
             [
                 row for row in saturation
-                if row.get("actual_control_name") == key[0]
-                and str(row.get("mechanism_control_strength")) == str(key[1])
-                and row.get("probe_key") == key[2]
-                and row.get("flow_mode") == key[3]
+                if row.get("substrate_family") == key[0]
+                and row.get("actual_control_name") == key[1]
+                and str(row.get("mechanism_control_strength")) == str(key[2])
+                and row.get("probe_key") == key[3]
+                and row.get("flow_mode") == key[4]
             ],
             key=lambda row: (float_or_zero(row.get("H_b")), float_or_zero(row.get("H_a"))),
         )
         rows.append({
-            "perturbation_family": key[0],
-            "perturbation_strength": key[1],
-            "probe_key": key[2],
-            "flow_mode": key[3],
+            "substrate_family": key[0],
+            "perturbation_family": key[1],
+            "perturbation_strength": key[2],
+            "probe_key": key[3],
+            "flow_mode": key[4],
             "first_nonstable_horizon": first_response_horizon(ordered, lambda row: row.get("response_class") != RESPONSE_CLASS_STABLE),
             "first_amplified_aligned_horizon": first_response_horizon(ordered, lambda row: row.get("response_class") == RESPONSE_CLASS_AMPLIFIED_ALIGNED),
             "first_weakened_horizon": first_response_horizon(ordered, lambda row: row.get("response_class") == RESPONSE_CLASS_WEAKENED),
@@ -1552,6 +1557,7 @@ def horizon_response_threshold_rows(response_classification: list[dict[str, obje
             "latest_interpretable_horizon": latest_response_horizon(sat_items, lambda row: row.get("allowed_interpretation_level") == "normal_horizon_response"),
         })
     return sorted(rows, key=lambda row: (
+        str(row.get("substrate_family", "")),
         str(row.get("perturbation_family", "")),
         float_or_zero(row.get("perturbation_strength")),
         str(row.get("probe_key", "")),
@@ -1560,7 +1566,7 @@ def horizon_response_threshold_rows(response_classification: list[dict[str, obje
 
 
 def response_diversity_rows(response_classification: list[dict[str, object]], saturation: list[dict[str, object]]) -> list[dict[str, object]]:
-    context_keys = ("actual_control_name", "mechanism_control_strength", "probe_key", "flow_mode")
+    context_keys = ("substrate_family", "actual_control_name", "mechanism_control_strength", "probe_key", "flow_mode")
     saturation_by_context = group_by(saturation, context_keys)
     rows: list[dict[str, object]] = []
     for key, items in group_by(response_classification, context_keys).items():
@@ -1574,10 +1580,11 @@ def response_diversity_rows(response_classification: list[dict[str, object]], sa
         normal_rows = [row for row in sat_items if row.get("allowed_interpretation_level") == "normal_horizon_response"]
         diversity_score = response_diversity_score(class_set)
         rows.append({
-            "perturbation_family": key[0],
-            "perturbation_strength": key[1],
-            "probe_key": key[2],
-            "flow_mode": key[3],
+            "substrate_family": key[0],
+            "perturbation_family": key[1],
+            "perturbation_strength": key[2],
+            "probe_key": key[3],
+            "flow_mode": key[4],
             "response_row_count": len(items),
             "interpretable_response_row_count": len(interpretable),
             "response_class_diversity_by_context": len(class_set),
@@ -1597,6 +1604,7 @@ def response_diversity_rows(response_classification: list[dict[str, object]], sa
             "transport_viscosity_read": context_viscosity_read(interpretable, class_set, terminal_flags, undercoverage_flags),
         })
     return sorted(rows, key=lambda row: (
+        str(row.get("substrate_family")),
         str(row.get("perturbation_family")),
         float_or_zero(row.get("perturbation_strength")),
         str(row.get("probe_key")),
@@ -1610,13 +1618,14 @@ def transport_viscosity_rows(
     saturation: list[dict[str, object]],
 ) -> list[dict[str, object]]:
     diversity_by_context = {
-        (row.get("perturbation_family"), row.get("perturbation_strength"), row.get("probe_key"), row.get("flow_mode")): row
+        (row.get("substrate_family"), row.get("perturbation_family"), row.get("perturbation_strength"), row.get("probe_key"), row.get("flow_mode")): row
         for row in response_diversity
     }
     saturation_by_matrix = {str(row.get("matrix_id", "")): row for row in saturation}
     rows: list[dict[str, object]] = []
     for row in response_classification:
         context = diversity_by_context.get((
+            row.get("substrate_family", substrate_family_from_condition_id(row.get("condition_id", ""))),
             row.get("actual_control_name"),
             row.get("mechanism_control_strength"),
             row.get("probe_key"),
@@ -1645,6 +1654,7 @@ def transport_viscosity_rows(
         else:
             read = "underpowered_or_unresolved"
         rows.append({
+            "substrate_family": row.get("substrate_family", substrate_family_from_condition_id(row.get("condition_id", ""))),
             "condition_id": row.get("condition_id", ""),
             "probe_key": row.get("probe_key", ""),
             "flow_mode": row.get("flow_mode", ""),
@@ -1775,7 +1785,7 @@ def context_recommendation_rows(
     matched_marginal: list[dict[str, object]],
     response_classification: list[dict[str, object]],
 ) -> list[dict[str, object]]:
-    context_keys = ("probe_key", "flow_mode", "source_horizon_band", "target_horizon_band", "H_a", "H_b")
+    context_keys = ("substrate_family", "probe_key", "flow_mode", "source_horizon_band", "target_horizon_band", "H_a", "H_b")
     summary_by_context = group_by(summary, context_keys)
     marginal_by_context = group_by(matched_marginal, context_keys)
     response_by_context = group_by(response_classification, context_keys)
@@ -1817,13 +1827,14 @@ def context_recommendation_rows(
             context_read = "context_underpowered"
             recommendation = "increase_context_rows_or_repair"
         rows.append({
-            "probe_key": key[0],
-            "flow_mode": key[1],
-            "source_horizon_band": key[2],
-            "target_horizon_band": key[3],
-            "H_a": key[4],
-            "H_b": key[5],
-            "horizon_pair": f"{key[4]}->{key[5]}",
+            "substrate_family": key[0],
+            "probe_key": key[1],
+            "flow_mode": key[2],
+            "source_horizon_band": key[3],
+            "target_horizon_band": key[4],
+            "H_a": key[5],
+            "H_b": key[6],
+            "horizon_pair": f"{key[5]}->{key[6]}",
             "matrix_count": len(matrix_rows),
             "coverage_mean": coverage_mean,
             "coverage_min": coverage_min,
@@ -2507,8 +2518,8 @@ def substrate_untethering_decision(
     if not response_interpretable:
         return "instrument_resolution_limit_possible", "repair_transition_energy_generator"
     jobs_requested = int(float_or_zero(status.get("jobs_requested")))
-    detector_rows = len(outputs.get("null_anatomy", []))
-    if jobs_requested < 96 or detector_rows < 10_000:
+    response_rows = len(outputs.get("response_classification", []))
+    if jobs_requested < 512 or response_rows < 500:
         return "untethering_underpowered", "continue_transition_energy_substrates"
     aligned = {
         str(row.get("substrate_family", "")): float_or_zero(row.get("aligned_amplification_rows"))
@@ -2934,11 +2945,16 @@ def fixture_status_text(status: dict[str, object]) -> str:
 def context_label(row: dict[str, object]) -> str:
     if not row:
         return "none"
-    return "|".join([
+    pieces = []
+    substrate_family = str(row.get("substrate_family", ""))
+    if substrate_family:
+        pieces.append(substrate_family)
+    pieces.extend([
         str(row.get("probe_key", "")),
         str(row.get("flow_mode", "")),
         f"{row.get('H_a', '')}->{row.get('H_b', '')}",
     ])
+    return "|".join(pieces)
 
 
 def markdown_cell(value: object) -> str:

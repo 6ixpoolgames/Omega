@@ -55,9 +55,10 @@ Status:
   stable-to-amplified-aligned response surface, but no holdout/candidate/Omega
   claim is open;
 - the active substrate question is whether the H128 object survives beyond the
-  hand-built modular/equality/difference constraint vocabulary; the first
-  transition-energy smoke is retained only as an underpowered implementation
-  and directionality audit;
+  hand-built modular/equality/difference constraint vocabulary; the larger
+  transition-energy smoke now shows measurable horizon transport across four
+  current substrate families, while still remaining below any holdout,
+  candidate-promotion, or Omega/agency/value claim;
 - VAL0-G and VAL1-MF are reconnaissance evidence for viability dynamics and
   substrate limitations;
 - VAL0-CT showed reproducible anchor wins and clean dense controls, but no
@@ -143,14 +144,17 @@ Result in one line:
   `transport_amplified_aligned` only; first amplification moved earlier as
   perturbation strength rose. The next action is a horizon-transport theory
   note, not holdout or candidate promotion.
-- The substrate-untethering transition-energy tiny smoke completed `24 / 24`
-  jobs with `0` errors across `constraint_template_current`, `locality_only`,
-  `smooth_random_potential`, and `budget_conservation`. It is deliberately
-  marked `untethering_underpowered`; smooth-potential and budget-conservation
-  produced nonzero aligned-amplification rows, while locality-only did not.
-  This is a GPT/Codex-auditable implementation/prognostic result, not a
-  substrate-generalization claim. The intended longer-term substrate target is
-  a max-entropy local transition ensemble.
+- The substrate-untethering transition-energy larger smoke completed `896 / 896`
+  jobs with `0` errors, `18` workers, `13` null replicates, and `1160`
+  horizon-transport matrices across `constraint_template_current`,
+  `locality_only`, `smooth_random_potential`, and `budget_conservation`.
+  The matched-marginal detector gate passed and the decision was
+  `horizon_transport_generalizes_beyond_constraint_vocabulary`.
+  Budget-conservation showed the strongest aligned-amplification fraction;
+  locality-only reopened without aligned amplification; constraint-template
+  and smooth-potential families mostly rerouted. This supports continuing
+  transition-energy substrate work and moving toward a max-entropy local
+  transition ensemble, not candidate promotion or Omega validation.
 - The desktop Phase B / Stage A / Stage B branch shifted the current live
   empirical hook from marginal recurrence toward preregistered joint signed
   syndromes. Stage B-2 is now implemented as a preservation-first mechanism

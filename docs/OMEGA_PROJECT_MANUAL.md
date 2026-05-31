@@ -19,12 +19,16 @@ Use Omega as the broader theory and long-term hypothesis.
 Do not present VAL0/VAL1 as validation of Omega.
 Frame VAL0/VAL1 as reconnaissance probes that exposed viability dynamics and
 substrate limitations.
-Present RFS-MB0 detector v1.1 plus the long-horizon audit layer as the active
-empirical branch and state clearly that it has not passed the scientific gate.
+Present RFS-MB0 horizon-transport instrumentation and transition-energy
+substrate untethering as the active empirical branch, and state clearly that it
+has not passed the scientific gate.
 ```
 
 Primary current design note:
 
+- `docs/RFS_MB0_SUBSTRATE_UNTETHERING_TRANSITION_ENERGY_SWEEP_SPEC.md`
+- `docs/RFS_MB0_HORIZON_TRANSPORT_RESPONSE_SURFACE_H128_SCALEUP_SPEC.md`
+- `docs/RFS_MB0_HORIZON_TRANSPORT_EXPANSION_SMOKE_SPEC.md`
 - `docs/RFS_MB0_FUTURE_LANDSCAPE_PATTERN_SPEC.md`
 - `docs/RFS_MB0_FUTURE_LANDSCAPE_DETECTOR_V1_HANDOFF.md`
 - `docs/RFS_MB0_FUTURE_LANDSCAPE_LONG_HORIZON_ENVIRONMENT_AUDIT.md`

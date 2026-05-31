@@ -9,10 +9,11 @@ patch notes at the top.
 
 ## 2026-05-31
 
-### RFS-MB0 Substrate Untethering Transition-Energy Tiny Smoke
+### RFS-MB0 Substrate Untethering Transition-Energy Larger Smoke
 
-Implemented and ran the first transition-energy substrate untethering smoke
-from `docs/RFS_MB0_SUBSTRATE_UNTETHERING_TRANSITION_ENERGY_SWEEP_SPEC.md`.
+Ran the larger transition-energy substrate untethering smoke from
+`docs/RFS_MB0_SUBSTRATE_UNTETHERING_TRANSITION_ENERGY_SWEEP_SPEC.md` after the
+initial tiny implementation smoke and decision-guard audit.
 
 Retained note:
 
@@ -20,19 +21,21 @@ Retained note:
 
 Local validation output:
 
-- `results/local_runs/20260531_substrate_untethering_tiny_smoke_v4/`
+- `results/local_runs/20260531_substrate_untethering_larger_smoke_powered_v2/`
 
 Run shape:
 
 ```text
 status: COMPLETED
-workers: 4
-jobs_completed: 24 / 24
-elapsed_seconds: 8.188
+workers: 18
+jobs_completed: 896 / 896
+elapsed_seconds: 142.856
 errors: 0
-matrix_count: 436
-null_replicates: 3
-decision: untethering_underpowered
+matrix_count: 1160
+null_replicates: 13
+matched_marginal_detector_null_gate_passed: 1
+synthetic_fixture_contract: 8 / 8
+decision: horizon_transport_generalizes_beyond_constraint_vocabulary
 next_action_fork: continue_transition_energy_substrates
 ```
 
@@ -48,27 +51,28 @@ budget_conservation
 Compact result:
 
 ```text
-budget_conservation: 7 aligned-amplification rows, modal high-viscosity aligned amplifier
-smooth_random_potential: 10 aligned-amplification rows, modal stable
-constraint_template_current: 15 aligned-amplification rows, modal rerouted
+budget_conservation: 42 aligned-amplification rows, modal stable, high-viscosity aligned amplifier
+smooth_random_potential: 19 aligned-amplification rows, modal rerouted
+constraint_template_current: 17 aligned-amplification rows, modal rerouted
 locality_only: 0 aligned-amplification rows, modal reopens
 ```
 
 Interpretation:
 
 ```text
-This was an implementation/prognostic smoke only. It verifies the substrate
-untethering path and suggests smooth-potential / budget-conservation families
-are worth scaling, but it is deliberately underpowered and does not establish
-substrate generalization.
+This is a powered instrument smoke, not a theory validation gate. It shows
+horizon transport remains measurable outside the original hand-built
+constraint-template vocabulary, with different response profiles across
+transition-energy families. It does not establish Omega, agency, value,
+identity, holdout readiness, graph-channel causality, or candidate promotion.
 ```
 
 Next direction:
 
 ```text
-Run a small-medium E0/E1/E2 substrate-untethering validation with
-grammar-neutral probes, then transition toward a max-entropy local transition
-ensemble once capacity and matched-null behavior are stable.
+Continue transition-energy substrate untethering with grammar-neutral probes,
+then transition toward a max-entropy local transition ensemble once capacity
+and matched-null behavior are stable.
 ```
 
 ### RFS-MB0 Horizon-Transport Response Surface H128 Scaleup
