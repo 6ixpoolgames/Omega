@@ -238,8 +238,8 @@ def generate_max_entropy_system(
         selection_rule = "maximum_entropy_local_matched_macro_invariant_delta"
         constraint_profile = "locality_plus_exact_out_degree_plus_macro_delta_marginal"
     elif family == RANK_CONDITIONED_MAX_ENTROPY:
-        selection_rule = "rank_conditioned_local_sampling"
-        constraint_profile = "locality_plus_exact_out_degree_plus_local_rank_bucket"
+        selection_rule = "uniform_top_rank_window_local_sampling"
+        constraint_profile = "locality_plus_exact_out_degree_plus_top_rank_window"
     metadata.update({
         "transition_energy_form": transition_energy_form(family),
         "selection_rule": selection_rule,
@@ -254,6 +254,7 @@ def generate_max_entropy_system(
         "max_entropy_sampler_weight_iterations": sampler.get("weight_iterations", ""),
         "rank_bucket_multiplier": sampler.get("rank_bucket_multiplier", ""),
         "rank_condition_window_mean": sampler.get("rank_condition_window_mean", ""),
+        "rank_conditioned_sampler_scope": sampler.get("rank_conditioned_sampler_scope", ""),
         "max_entropy_equivalent_beta_target": equivalent_beta,
         "equivalent_beta_target": equivalent_beta,
         "macro_invariant_beta": equivalent_beta,
@@ -271,6 +272,8 @@ def generate_max_entropy_system(
         "max_entropy_empty_successor_source_count": empty_successors,
         "max_entropy_reversibility_fraction_requested": params.reversibility_fraction,
         "max_entropy_reversibility_fraction_applied": 0.0,
+        "apply_reversibility_requested": 0,
+        "reversibility_fraction_applied": 0.0,
         **sampler_audit,
     })
     return LandscapeSystem(
@@ -321,6 +324,8 @@ def generate_softmax_preservation_system(
         "max_entropy_calibration_edge_count": sum(len(targets) for targets in calibration_edges.values()),
         "max_entropy_reversibility_fraction_requested": params.reversibility_fraction,
         "max_entropy_reversibility_fraction_applied": 0.0,
+        "apply_reversibility_requested": 0,
+        "reversibility_fraction_applied": 0.0,
         **top_m_sampler_audit_metadata(edges, calibration_edges, scored_by_source, params, job),
     })
     return LandscapeSystem(
@@ -441,6 +446,7 @@ def rank_conditioned_max_entropy_edges(
         "weight_iterations": 0,
         "rank_bucket_multiplier": multiplier,
         "rank_condition_window_mean": mean(windows) if windows else 0.0,
+        "rank_conditioned_sampler_scope": "uniform_top_rank_window_not_full_rank_bucket_maxent",
     }
 
 
@@ -844,6 +850,9 @@ def transition_metadata(
         "selection_rule": "top_m_lowest_energy_candidates",
         "roughness_strength": transition_float(job, "transition_roughness_strength", params.roughness_strength),
         "reversibility_fraction": params.reversibility_fraction,
+        "apply_reversibility_requested": int(transition_bool(job, "apply_reversibility", True)),
+        "reversibility_fraction_applied": params.reversibility_fraction if transition_bool(job, "apply_reversibility", True) else 0.0,
+        "sampler_postprocess_policy": str(job.get("sampler_postprocess_policy", "family_default")),
         "rewire_probability": 0.0,
         "constraint_json": "[]",
         "constraint_template_count": 0,

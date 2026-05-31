@@ -102,7 +102,7 @@ matched_marginal_detector_null_separation: passed
 synthetic_fixture_contract: passed
 ```
 
-No paired-baseline failures were observed for MaxEnt/rank-conditioned variants:
+No paired-baseline failures were observed for MaxEnt/rank-window variants:
 
 ```text
 paired_baseline_missing_rows: 0
@@ -110,6 +110,20 @@ paired_baseline_status: ok
 ```
 
 The primary MaxEnt macro-marginal sampler status for `symbol_histogram_distance` was `ok`. The hamming-weight comparator showed `repair_required` in the macro-marginal match table, but hamming was diagnostic only and did not carry any positive response.
+
+## Post-run Implementation Audit
+
+The follow-up code audit identified tightening requirements before the next mechanism run:
+
+```text
+enforce identical no-reversibility/no-rewire post-processing for all top-m audit families;
+emit primary-invariant sampler response tables instead of only all-invariant aggregates;
+emit context-level paired-baseline availability by sampler/probe/flow/horizon/perturbation;
+make top-m audit readiness fail closed when required families or primary rows are missing;
+label the rank-conditioned comparator as a top-rank-window local sampler, not full rank-bucket MaxEnt.
+```
+
+These changes are guardrails against the formal-core false-positive class named `deterministic substrate artifact`.
 
 ## Sampler Response
 

@@ -109,6 +109,9 @@ COMMON_OUTPUTS = (
     "top_m_geometry_edge_match_to_calibration.csv",
     "response_by_sampler_family.csv",
     "response_by_beta_or_temperature.csv",
+    "response_by_sampler_family_and_invariant.csv",
+    "response_by_beta_or_temperature_and_invariant.csv",
+    "paired_baseline_availability_by_sampler_context.csv",
 )
 
 STRUCTURE_DESTROYING_NULL_FAMILIES = (

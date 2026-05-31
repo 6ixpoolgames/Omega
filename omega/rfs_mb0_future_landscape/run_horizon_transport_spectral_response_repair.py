@@ -644,6 +644,9 @@ def expand_jobs_for_substrate_families(jobs: list[dict[str, object]], args: argp
             item["job_id"] = f"{family}::{variant_id}::{item.get('job_id', '')}"
             item["transition_energy_family"] = family
             item["transition_energy_form"] = transition_energy_form_label(family)
+            if run_kind(args) == TOP_M_GEOMETRY_AUDIT and family in TOP_M_GEOMETRY_AUDIT_FAMILIES:
+                item["apply_reversibility"] = False
+                item["sampler_postprocess_policy"] = "no_reversibility_or_rewire_for_top_m_geometry_audit"
             item["potential_beta"] = variant.get("potential_beta", args.potential_beta)
             item["potential_seed"] = int(item.get("seed", 0)) + 71_003
             item["potential_smoothness"] = variant.get("potential_smoothness", args.potential_smoothness)
@@ -1235,6 +1238,9 @@ def compute_outputs(
     top_m_edge_match = top_m_geometry_edge_match_to_calibration_rows(top_m_sampler_diagnostics)
     response_by_sampler_family = response_by_group_rows([row for row in response_classification if row.get("sampler_family")], ("sampler_family",))
     response_by_beta_or_temperature = response_by_group_rows([row for row in response_classification if row.get("beta_or_temperature")], ("sampler_family", "beta_or_temperature"))
+    response_by_sampler_family_and_invariant = response_by_group_rows([row for row in response_classification if row.get("sampler_family")], ("sampler_family", "macro_invariant_kind"))
+    response_by_beta_or_temperature_and_invariant = response_by_group_rows([row for row in response_classification if row.get("beta_or_temperature")], ("sampler_family", "macro_invariant_kind", "beta_or_temperature"))
+    paired_baseline_availability_by_sampler_context = paired_baseline_availability_by_sampler_context_rows(response_classification)
     response_by_directional_alpha = response_by_group_rows([row for row in response_classification if row.get("asymmetry_alpha") not in (None, "")], ("asymmetry_alpha",))
     response_by_asymmetry_field_smoothness = response_by_group_rows([row for row in response_classification if row.get("asymmetry_field_smoothness") not in (None, "")], ("asymmetry_field_smoothness",))
     response_by_alpha_beta_pair = response_by_group_rows([row for row in response_classification if row.get("alpha_beta_pair")], ("alpha_beta_pair",))
@@ -1309,6 +1315,9 @@ def compute_outputs(
         "top_m_edge_match": top_m_edge_match,
         "response_by_sampler_family": response_by_sampler_family,
         "response_by_beta_or_temperature": response_by_beta_or_temperature,
+        "response_by_sampler_family_and_invariant": response_by_sampler_family_and_invariant,
+        "response_by_beta_or_temperature_and_invariant": response_by_beta_or_temperature_and_invariant,
+        "paired_baseline_availability_by_sampler_context": paired_baseline_availability_by_sampler_context,
         "response_by_directional_alpha": response_by_directional_alpha,
         "response_by_asymmetry_field_smoothness": response_by_asymmetry_field_smoothness,
         "response_by_alpha_beta_pair": response_by_alpha_beta_pair,
@@ -1685,6 +1694,42 @@ def paired_baseline_availability_by_max_entropy_variant_rows(rows: list[dict[str
     return out
 
 
+def paired_baseline_availability_by_sampler_context_rows(rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    grouped: dict[tuple[object, ...], list[dict[str, object]]] = defaultdict(list)
+    fields = (
+        "sampler_family",
+        "substrate_family",
+        "substrate_variant",
+        "macro_invariant_kind",
+        "equivalent_beta_target",
+        "beta_or_temperature",
+        "probe_key",
+        "flow_mode",
+        "H_a",
+        "H_b",
+        "intervention_family",
+        "intervention_strength",
+    )
+    for row in rows:
+        if not row.get("sampler_family"):
+            continue
+        grouped[tuple(row.get(field, "") for field in fields)].append(row)
+    out: list[dict[str, object]] = []
+    for key, items in sorted(grouped.items(), key=lambda item: tuple(str(part) for part in item[0])):
+        missing = [row for row in items if row.get("response_status") == "baseline_missing" or row.get("response_class") == "transport_baseline_missing"]
+        out_row = {field: key[index] for index, field in enumerate(fields)}
+        out_row.update({
+            "horizon_pair": f"{key[8]}->{key[9]}",
+            "response_rows": len(items),
+            "paired_baseline_available_rows": len(items) - len(missing),
+            "paired_baseline_missing_rows": len(missing),
+            "paired_baseline_available_fraction": (len(items) - len(missing)) / max(1, len(items)),
+            "paired_baseline_status": "ok" if not missing else "response_baseline_missing",
+        })
+        out.append(out_row)
+    return out
+
+
 def unique_top_m_geometry_baseline_rows(rows: list[dict[str, object]]) -> list[dict[str, object]]:
     seen: set[str] = set()
     out: list[dict[str, object]] = []
@@ -1716,6 +1761,9 @@ def top_m_geometry_sampler_diagnostics_rows(rows: list[dict[str, object]]) -> li
             "sampler_temperature": row.get("sampler_temperature", ""),
             "rank_bucket_multiplier": row.get("rank_bucket_multiplier", ""),
             "rank_condition_window_mean": row.get("rank_condition_window_mean", ""),
+            "apply_reversibility_requested": row.get("apply_reversibility_requested", ""),
+            "reversibility_fraction_applied": row.get("reversibility_fraction_applied", ""),
+            "sampler_postprocess_policy": row.get("sampler_postprocess_policy", ""),
             "top_m_calibration_edge_count": row.get("top_m_calibration_edge_count", row.get("max_entropy_calibration_edge_count", "")),
             "edge_count": row.get("edge_count", ""),
             "mean_out_degree": row.get("mean_out_degree", ""),
@@ -3600,6 +3648,9 @@ def write_outputs(
     write_csv(out_dir / "top_m_geometry_edge_match_to_calibration.csv", outputs["top_m_edge_match"])
     write_csv(out_dir / "response_by_sampler_family.csv", outputs["response_by_sampler_family"])
     write_csv(out_dir / "response_by_beta_or_temperature.csv", outputs["response_by_beta_or_temperature"])
+    write_csv(out_dir / "response_by_sampler_family_and_invariant.csv", outputs["response_by_sampler_family_and_invariant"])
+    write_csv(out_dir / "response_by_beta_or_temperature_and_invariant.csv", outputs["response_by_beta_or_temperature_and_invariant"])
+    write_csv(out_dir / "paired_baseline_availability_by_sampler_context.csv", outputs["paired_baseline_availability_by_sampler_context"])
     write_csv(out_dir / "response_by_alpha_beta_pair.csv", outputs["response_by_alpha_beta_pair"])
     write_csv(out_dir / "matched_null_pass_by_asymmetry_family.csv", outputs["matched_by_substrate"])
     write_csv(out_dir / "matched_null_pass_by_asymmetry_variant.csv", outputs["matched_by_substrate_variant"])
@@ -3631,6 +3682,8 @@ def write_outputs(
     status["top_m_geometry_sampler_diagnostics_rows"] = len(outputs["top_m_sampler_diagnostics"])
     status["top_m_geometry_rank_energy_match_summary_rows"] = len(outputs["top_m_rank_energy_match"])
     status["top_m_geometry_edge_match_to_calibration_rows"] = len(outputs["top_m_edge_match"])
+    status["response_by_sampler_family_and_invariant_rows"] = len(outputs["response_by_sampler_family_and_invariant"])
+    status["paired_baseline_availability_by_sampler_context_rows"] = len(outputs["paired_baseline_availability_by_sampler_context"])
     status["fixture_result_rows"] = len(outputs["fixture_results"])
     status["perturbation_response_rows"] = len(outputs["response_classification"])
     status["response_flag_rows"] = len(outputs["response_flags"])
@@ -3740,6 +3793,7 @@ def decision_fields(outputs: dict[str, list[dict[str, object]]], status: dict[st
         "rank_conditioned_geometry_loadbearing": int(readiness == "rank_conditioned_geometry_loadbearing"),
         "algorithmically_narrow_top_m_geometry": int(readiness == "algorithmically_narrow_top_m_geometry"),
         "top_m_geometry_audit_underpowered": int(readiness == "top_m_geometry_audit_underpowered"),
+        "top_m_geometry_spec_incomplete": int(readiness == "top_m_geometry_spec_incomplete"),
         "locality_only_baseline_confirmed": int(readiness == "locality_only_baseline_confirmed"),
         "locality_only_response_bearing": int(readiness == "locality_only_response_bearing"),
         "constraint_template_no_longer_primary": int(readiness == "constraint_template_no_longer_primary"),
@@ -3872,7 +3926,9 @@ def top_m_geometry_audit_decision(
     primary_rows = [
         row for row in outputs.get("response_classification", [])
         if str(row.get("macro_invariant_kind", "")) == "symbol_histogram_distance"
-    ] or outputs.get("response_classification", [])
+    ]
+    if not primary_rows:
+        return "top_m_geometry_spec_incomplete", "rerun_with_symbol_histogram_primary_invariant"
     top_m_rows = [
         row for row in primary_rows
         if str(row.get("sampler_family", "")) in {
@@ -3882,7 +3938,22 @@ def top_m_geometry_audit_decision(
             "max_entropy_macro_marginal",
         }
     ]
-    if any(str(row.get("response_class", "")) == "transport_baseline_missing" for row in top_m_rows):
+    required_samplers = {
+        "deterministic_top_m",
+        "softmax_gibbs_energy",
+        "rank_conditioned_local",
+        "max_entropy_macro_marginal",
+    }
+    present_samplers = {str(row.get("sampler_family", "")) for row in top_m_rows}
+    if not required_samplers <= present_samplers:
+        return "top_m_geometry_spec_incomplete", "rerun_with_required_sampler_family_comparison"
+    context_missing = [
+        row for row in outputs.get("paired_baseline_availability_by_sampler_context", [])
+        if str(row.get("macro_invariant_kind", "")) == "symbol_histogram_distance"
+        and str(row.get("sampler_family", "")) in required_samplers
+        and int(float_or_zero(row.get("paired_baseline_missing_rows"))) > 0
+    ]
+    if context_missing or any(str(row.get("response_class", "")) == "transport_baseline_missing" for row in top_m_rows):
         return "coverage_repair_required", "repair_top_m_geometry_paired_baselines"
 
     macro_match_rows = [
@@ -3890,6 +3961,8 @@ def top_m_geometry_audit_decision(
         if int(float_or_zero(row.get("target_marginal_applied_count"))) > 0
         and str(row.get("macro_invariant_kind", "")) == "symbol_histogram_distance"
     ]
+    if not macro_match_rows:
+        return "top_m_geometry_spec_incomplete", "rerun_with_max_entropy_macro_marginal_comparator"
     if any(row.get("marginal_match_status") != "ok" for row in macro_match_rows):
         return "not_ready_repair_required", "repair_max_entropy_macro_marginal_sampler"
     if not response_interpretable:
@@ -3908,6 +3981,8 @@ def top_m_geometry_audit_decision(
     rank_aligned = float_or_zero(rank_conditioned.get("aligned_amplification_fraction")) > 0.0
     macro_aligned = float_or_zero(macro_marginal.get("aligned_amplification_fraction")) > 0.0
 
+    if not deterministic_aligned:
+        return "top_m_geometry_audit_underpowered", "inspect_deterministic_reproducibility"
     if softmax_aligned:
         return "energy_rank_bias_loadbearing", "expand_softmax_temperature_ladder"
     if rank_aligned:
@@ -3916,8 +3991,6 @@ def top_m_geometry_audit_decision(
         return "algorithmically_narrow_top_m_geometry", "audit_hard_top_m_mechanism"
     if macro_aligned:
         return "max_entropy_transition_ready", "inspect_macro_marginal_sampler_response"
-    if not deterministic_aligned:
-        return "top_m_geometry_audit_underpowered", "inspect_deterministic_reproducibility"
     return "deterministic_top_m_geometry_loadbearing", "continue_top_m_geometry_audit"
 
 
@@ -4222,10 +4295,16 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
             "",
             "## Top-m Geometry Audit",
             "",
+            "The sampler-family tables below are filtered to the primary invariant `symbol_histogram_distance`; diagnostic invariants are reported in the CSV artifacts.",
+            "",
             "| sampler_family | response rows | dominant response | aligned fraction |",
             "|---|---:|---|---:|",
         ])
-        for row in outputs.get("response_by_sampler_family", []):
+        primary_sampler_rows = [
+            row for row in outputs.get("response_by_sampler_family_and_invariant", [])
+            if str(row.get("macro_invariant_kind", "")) == "symbol_histogram_distance"
+        ] or outputs.get("response_by_sampler_family", [])
+        for row in primary_sampler_rows:
             lines.append(
                 f"| {markdown_cell(row.get('sampler_family', ''))} | {row.get('response_rows', '')} | "
                 f"{markdown_cell(row.get('dominant_response_class', ''))} | "
@@ -4238,12 +4317,21 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
             "| sampler_family | beta_or_temperature | response rows | dominant response | aligned fraction |",
             "|---|---|---:|---|---:|",
         ])
-        for row in outputs.get("response_by_beta_or_temperature", [])[:80]:
+        primary_beta_rows = [
+            row for row in outputs.get("response_by_beta_or_temperature_and_invariant", [])
+            if str(row.get("macro_invariant_kind", "")) == "symbol_histogram_distance"
+        ] or outputs.get("response_by_beta_or_temperature", [])
+        for row in primary_beta_rows[:80]:
             lines.append(
                 f"| {markdown_cell(row.get('sampler_family', ''))} | {markdown_cell(row.get('beta_or_temperature', ''))} | "
                 f"{row.get('response_rows', '')} | {markdown_cell(row.get('dominant_response_class', ''))} | "
                 f"{float_or_zero(row.get('aligned_amplification_fraction')):.3f} |"
             )
+        context_missing = sum(int(float_or_zero(row.get("paired_baseline_missing_rows"))) for row in outputs.get("paired_baseline_availability_by_sampler_context", []))
+        lines.extend([
+            "",
+            f"Paired-baseline missing rows across sampler contexts: `{context_missing}`.",
+        ])
         lines.extend([
             "",
             "### Edge / Rank / Energy Match",
@@ -4586,6 +4674,8 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
         f"- max_entropy_transition_ready: `{status.get('max_entropy_transition_ready', 0)}`",
         f"- max_entropy_local_response_bearing: `{status.get('max_entropy_local_response_bearing', 0)}`",
         f"- deterministic_top_m_geometry_loadbearing: `{status.get('deterministic_top_m_geometry_loadbearing', 0)}`",
+        f"- algorithmically_narrow_top_m_geometry: `{status.get('algorithmically_narrow_top_m_geometry', 0)}`",
+        f"- top_m_geometry_spec_incomplete: `{status.get('top_m_geometry_spec_incomplete', 0)}`",
         f"- not_ready_repair_required: `{status.get('not_ready_repair_required', 0)}`",
         "",
         "## Next-Action Fork",

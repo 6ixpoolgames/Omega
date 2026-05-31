@@ -9,6 +9,36 @@ patch notes at the top.
 
 ## 2026-05-31
 
+### RFS-MB0 Top-m Geometry Code Tightening
+
+Audited the top-m geometry implementation against the formal-core false
+positive class `deterministic substrate artifact`.
+
+Code tightening:
+
+```text
+top-m audit jobs now force no reversibility/no rewire post-processing;
+sampler diagnostics expose the applied post-processing policy;
+response tables now include sampler-family-by-invariant outputs;
+paired-baseline availability is emitted by sampler/probe/flow/horizon/perturbation context;
+top-m geometry readiness fails closed when required sampler families or primary invariant rows are missing;
+rank-conditioned comparator is documented as a top-rank-window local sampler, not full rank-bucket MaxEnt.
+```
+
+Smoke:
+
+```text
+local output: results/local_runs/20260601_top_m_geometry_tightening_smoke/
+jobs_completed: 40 / 40
+errors: 0
+matrix_count: 120
+matched_marginal_detector_null_gate_passed: 1
+synthetic_fixture_contract: passed
+paired_baseline_availability_by_sampler_context_rows: 96
+top_m_geometry_spec_incomplete: 0
+readiness_level: top_m_geometry_audit_underpowered
+```
+
 ### RFS-MB0 Top-m Geometry Audit
 
 Ran the narrow sampler-geometry audit requested after the MaxEnt Phase 1

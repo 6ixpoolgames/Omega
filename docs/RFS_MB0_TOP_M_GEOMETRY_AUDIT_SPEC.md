@@ -1,6 +1,6 @@
 # RFS-MB0 Top-m Geometry Audit Spec
 
-Status: narrow design-set audit / implemented runner target  
+Status: narrow design-set audit / implemented runner target / tightened artifact guardrails
 Builds on:
 - `docs/research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md`
 - `docs/RFS_MB0_MAX_ENTROPY_LOCAL_TRANSITION_PREFLIGHT_SPEC.md`
@@ -41,6 +41,16 @@ Run these on the same design set:
 
 The deterministic family is the calibration reference. The stochastic families must report edge overlap, rank distribution match, energy distribution match, and per-state rank-bucket match against that reference.
 
+All compared sampler families must share the same post-processing policy. For this audit that policy is:
+
+```text
+no reversibility transform;
+no random rewire transform;
+compare the transition graph emitted directly by the sampler.
+```
+
+This prevents an apparent deterministic/stochastic difference from being caused by a post-sampler graph transform.
+
 ## 3. Invariants
 
 Primary invariant:
@@ -78,12 +88,28 @@ top_m_geometry_per_state_rank_bucket_match_summary.csv
 top_m_geometry_edge_match_to_calibration.csv
 response_by_sampler_family.csv
 response_by_beta_or_temperature.csv
+response_by_sampler_family_and_invariant.csv
+response_by_beta_or_temperature_and_invariant.csv
+paired_baseline_availability_by_sampler_context.csv
 horizon_response_threshold_table.csv
 paired baseline availability diagnostics
 matched-marginal detector gate diagnostics
 ```
 
 Response classification must require paired baseline and perturbation matrix availability across substrate variant, probe, flow mode, horizon pair, perturbation family, and perturbation strength. If a perturbation matrix exists without the paired baseline, classify it as `transport_baseline_missing` and exclude it from positive response summaries.
+
+Readiness classification must fail closed if the primary invariant, required sampler families, MaxEnt macro-marginal match rows, or paired-baseline context rows are unavailable.
+
+## 5.1 Current rank-conditioned comparator limit
+
+The implemented rank-conditioned comparator is currently a local top-rank-window sampler:
+
+```text
+uniformly sample exact out-degree from the top k * multiplier ranked candidates
+per state.
+```
+
+It is not yet a full rank-bucket MaxEnt solver. Interpret stable results from this branch as ruling out the tested rank-window local sampler, not every possible rank-conditioned MaxEnt ensemble.
 
 ## 6. Interpretation fork
 
