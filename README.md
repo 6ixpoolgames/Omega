@@ -14,16 +14,17 @@ If you are new to the project, start with:
 
 1. [External Reader Guide](docs/EXTERNAL_READER_GUIDE.md)
 2. [Asymmetry-ladder preservation scaleup result](docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
-3. [Horizon Transport and Aligned Amplification](docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md)
-4. [Transition Energy and Constraint Untethering](docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
-5. [Transition-Energy Substrate Atlas](docs/research_notes/omega_theory/transition_energy_substrate_atlas.md)
-6. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
+3. [Low-beta preservation sensitivity scaleup result](docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
+4. [Horizon Transport and Aligned Amplification](docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md)
+5. [Transition Energy and Constraint Untethering](docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
+6. [Transition-Energy Substrate Atlas](docs/research_notes/omega_theory/transition_energy_substrate_atlas.md)
+7. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
 
 The external reader guide gives a short, current, claim-bounded overview of the project and the best reading paths for technical readers, implementation reviewers, and historical context.
 
 ## Current status in one paragraph
 
-VAL0/VAL1 were useful reconnaissance probes. RFS-MB0 has reoriented from endpoint support/distribution deformation and static coflow spectra toward directional **horizon-transport** instrumentation. The H128 horizon-transport response-surface scaleup passed matched-marginal instrument gates and surfaced a stable-to-amplified-aligned response surface. Transition-energy characterization then turned the branch into a substrate-response atlas. The newest asymmetry-ladder runs compare locality, directional asymmetry, preservation asymmetry, and combined asymmetry directly. The preservation-focused scaleup strengthened the read that **preservation asymmetry** is the current loadbearing substrate ingredient: symbol-composition preservation produced aligned response, rerouting, reopening, weakening, and no baseline-missing rows. This is still not a scientific validation gate, candidate promotion, holdout result, or Omega/agency/value claim.
+VAL0/VAL1 were useful reconnaissance probes. RFS-MB0 has reoriented from endpoint support/distribution deformation and static coflow spectra toward directional **horizon-transport** instrumentation. The H128 horizon-transport response-surface scaleup passed matched-marginal instrument gates and surfaced a stable-to-amplified-aligned response surface. Transition-energy characterization then turned the branch into a substrate-response atlas. The newest asymmetry-ladder runs compare locality, directional asymmetry, preservation asymmetry, and combined asymmetry directly. Preservation asymmetry is the current loadbearing substrate ingredient; the low-beta sensitivity pass showed that beta changes the selected transition graph before aligned response appears, with first aggregate aligned response around beta `0.05`. This is still not a scientific validation gate, candidate promotion, holdout result, or Omega/agency/value claim.
 
 ## Current live object
 
@@ -145,7 +146,9 @@ symbol_histogram_distance:
   baseline-missing rows: 0
 ```
 
-The next empirical question is low-beta sensitivity below `beta = 0.25`.
+The low-beta sensitivity pass showed that beta is wired and moves selected
+transition edges even at `0.005`, while aligned response first appears around
+`0.05` and strengthens through `0.10-0.25`.
 
 ## What current results do and do not mean
 
@@ -213,7 +216,8 @@ Read:
 
 1. [External Reader Guide](docs/EXTERNAL_READER_GUIDE.md)
 2. [Asymmetry-ladder preservation scaleup result](docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
-3. [Asymmetry-ladder preservation scaleup figures](docs/research_notes/validation_results/figures/20260531_asymmetry_ladder_preservation_scaleup/README.md)
+3. [Low-beta preservation sensitivity scaleup result](docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
+4. [Asymmetry-ladder preservation scaleup figures](docs/research_notes/validation_results/figures/20260531_asymmetry_ladder_preservation_scaleup/README.md)
 
 ### Theory orientation
 
@@ -247,39 +251,25 @@ Read:
 
 The current next step is **not** holdout, graph perturbation, direct channel diagnostics, or candidate promotion.
 
-The current next step is:
+The current next step is to use the low-beta preservation sensitivity map as
+calibration for a max-entropy local transition ensemble preflight:
 
 ```text
-low-beta preservation-asymmetry sensitivity
+near-term options:
+  prioritize symbol_histogram_distance as the clean preservation target;
+  keep hamming_weight_or_nonzero_count as the simple comparator;
+  use total_coordinate_mass only with explicit paired-baseline availability guards;
+  keep grammar-neutral probes such as relation_role and full_state_hash;
+  preserve matched-marginal detector gates and response-profile taxonomy;
+  only later consider direct channel diagnostics if response profiles suggest localized functional dependence.
+
+still blocked:
+  holdout scoring;
+  n=6 transfer;
+  alphabet expansion as promotion;
+  graph-channel causal claims;
+  agent/value/Omega labels.
 ```
-
-Specifically, resolve beta values below `0.25`:
-
-```text
-0
-0.005
-0.01
-0.025
-0.05
-0.10
-0.15
-0.25
-```
-
-Focus on:
-
-```text
-symbol_histogram_distance:
-  cleanest current target
-
-total_coordinate_mass:
-  still live but paired-baseline limited
-
-hamming_weight_or_nonzero_count:
-  clean low-signal comparator
-```
-
-A max-entropy local transition ensemble should come after this sensitivity map is clearer.
 
 ## Why this matters for alignment
 

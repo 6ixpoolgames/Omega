@@ -22,7 +22,7 @@ graph-channel causality
 
 The current claim is modest:
 
-> Directional horizon-transport instrumentation can measure matched-control-separated response profiles in neutral finite transition substrates. Transition-energy substrate laws express different response regimes. Preservation asymmetry is currently the strongest non-template substrate hook for aligned amplification.
+> Directional horizon-transport instrumentation can measure matched-control-separated response profiles in neutral finite transition substrates. Transition-energy substrate laws express different response regimes. Preservation asymmetry is currently the strongest non-template substrate hook for aligned amplification, with low-beta sensitivity now mapped below beta `0.25`.
 
 ## Best onboarding path
 
@@ -31,9 +31,10 @@ Start here:
 1. [`docs/EXTERNAL_READER_GUIDE.md`](EXTERNAL_READER_GUIDE.md)
 2. [`README.md`](../README.md)
 3. [`docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`](research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
-4. [`docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md`](research_notes/omega_theory/horizon_transport_aligned_amplification.md)
-5. [`docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md`](research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
-6. [`docs/research_notes/omega_theory/transition_energy_substrate_atlas.md`](research_notes/omega_theory/transition_energy_substrate_atlas.md)
+4. [`docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md`](research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
+5. [`docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md`](research_notes/omega_theory/horizon_transport_aligned_amplification.md)
+6. [`docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md`](research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
+7. [`docs/research_notes/omega_theory/transition_energy_substrate_atlas.md`](research_notes/omega_theory/transition_energy_substrate_atlas.md)
 
 ## Current live branch
 
@@ -156,10 +157,43 @@ symbol_histogram_distance:
   baseline-missing rows: 0
 ```
 
-Next empirical question:
+The follow-up low-beta sensitivity pass showed:
 
 ```text
-low-beta preservation-asymmetry sensitivity below beta 0.25
+beta is wired and changes selected transition edges at 0.005;
+aligned response first appears around beta 0.05;
+symbol_histogram_distance remains the cleanest preservation target;
+total_coordinate_mass remains live but paired-baseline limited.
+```
+
+### Low-beta preservation sensitivity scaleup
+
+Result note:
+
+- [`rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md`](research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
+
+Run summary:
+
+```text
+jobs_completed: 14976 / 14976
+errors: 0
+matrix_count: 10026
+null_replicates: 9
+selected_edge_overlap_by_beta_rows: 24
+matched_marginal_detector_null_gate_passed: 1
+synthetic_fixture_contract: 8 / 8
+terminal_saturation_flagged_rows: 0
+readiness_level: preservation_asymmetry_loadbearing
+```
+
+Main read:
+
+```text
+selected-edge overlap confirms beta changes the substrate before aligned response appears;
+first aggregate aligned response appears around beta 0.05;
+symbol_histogram_distance is the clean preservation target;
+total_coordinate_mass is live but paired-baseline limited;
+next branch is a max-entropy local transition ensemble preflight, not holdout.
 ```
 
 ### First asymmetry-ladder implementation run
