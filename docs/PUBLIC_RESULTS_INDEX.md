@@ -19,6 +19,7 @@ Directory:
 Current entry points:
 
 - `RFS_MB0_HORIZON_TRANSPORT_MATCHED_NULL_AND_FIXTURE_SMOKE_SPEC.md`
+- `RFS_MB0_TRANSITION_ENERGY_SUBSTRATE_CHARACTERIZATION_RUN_SPEC.md`
 - `RFS_MB0_SUBSTRATE_UNTETHERING_TRANSITION_ENERGY_SWEEP_SPEC.md`
 - `RFS_MB0_HORIZON_TRANSPORT_RESPONSE_SURFACE_H128_SCALEUP_SPEC.md`
 - `RFS_MB0_HORIZON_TRANSPORT_EXPANSION_SMOKE_SPEC.md`
@@ -54,10 +55,10 @@ Status:
   instrument-scale matched-marginal gates through H128 and exposed a
   stable-to-amplified-aligned response surface, but no holdout/candidate/Omega
   claim is open;
-- the active substrate question is whether the H128 object survives beyond the
-  hand-built modular/equality/difference constraint vocabulary; the larger
-  transition-energy smoke now shows measurable horizon transport across four
-  current substrate families, while still remaining below any holdout,
+- the active substrate question is now a substrate-response atlas question:
+  locality-only remained a baseline, smooth-potential was response-bearing but
+  not aligned-amplifying in the tested grid, and budget-conservation carried
+  aligned response with coverage caveats; this remains below any holdout,
   candidate-promotion, or Omega/agency/value claim;
 - VAL0-G and VAL1-MF are reconnaissance evidence for viability dynamics and
   substrate limitations;
@@ -79,6 +80,7 @@ Directory:
 
 Current result notes:
 
+- `rfs_mb0_transition_energy_substrate_characterization_result.md`
 - `rfs_mb0_substrate_untethering_transition_energy_sweep_result.md`
 - `rfs_mb0_horizon_transport_response_surface_h128_scaleup_result.md`
 - `rfs_mb0_horizon_transport_response_resolution_scaleup_result.md`
@@ -155,6 +157,16 @@ Result in one line:
   and smooth-potential families mostly rerouted. This supports continuing
   transition-energy substrate work and moving toward a max-entropy local
   transition ensemble, not candidate promotion or Omega validation.
+- The transition-energy substrate characterization larger smoke completed
+  `7744 / 7744` jobs with `0` errors, `18` workers, `13` null replicates,
+  `22` substrate variants, and `10324` horizon-transport matrices. The
+  matched-marginal gate and fixture contract passed. The decision was
+  `locality_only_baseline_confirmed`: locality-only produced no aligned
+  amplification, smooth-potential produced stable/rerouted/reopened response
+  without aligned amplification, and budget-conservation produced aligned
+  response with total-coordinate-mass strongest but coverage-limited. The next
+  action is `write_transition_energy_substrate_atlas_note`, not holdout,
+  candidate promotion, graph causality, or Omega validation.
 - The desktop Phase B / Stage A / Stage B branch shifted the current live
   empirical hook from marginal recurrence toward preregistered joint signed
   syndromes. Stage B-2 is now implemented as a preservation-first mechanism

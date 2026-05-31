@@ -409,7 +409,7 @@ def run_job(job: dict[str, object], max_items_per_context: int) -> tuple[list[di
     contexts: list[dict[str, object]] = []
     rows: list[dict[str, object]] = []
     row_kind = "baseline" if job.get("actual_control_name") == BASELINE_CONTROL else "mechanism_control"
-    common = common_condition_fields(job, baseline.system_id, control.system_id)
+    common = common_condition_fields(job, baseline.system_id, control.system_id, baseline.metadata)
     for start_index, start in enumerate(starts):
         frontiers = {h: exact_frontier(control, start, h) for h in horizons}
         for ha, hb in windows:
@@ -441,10 +441,24 @@ def job_windows(job: dict[str, object]) -> tuple[tuple[int, int], ...]:
     return tuple(out) or WINDOWS
 
 
-def common_condition_fields(job: dict[str, object], baseline_system_id: str, control_system_id: str) -> dict[str, object]:
+def common_condition_fields(
+    job: dict[str, object],
+    baseline_system_id: str,
+    control_system_id: str,
+    baseline_metadata: dict[str, object] | None = None,
+) -> dict[str, object]:
     keys = (
         "condition_id",
         "substrate_family",
+        "substrate_variant",
+        "transition_energy_family",
+        "transition_energy_form",
+        "potential_beta",
+        "potential_smoothness",
+        "potential_scale",
+        "budget_kind",
+        "budget_weight",
+        "transition_roughness_strength",
         "mechanism_condition",
         "mechanism_control_name",
         "mechanism_control_strength",
@@ -456,7 +470,30 @@ def common_condition_fields(job: dict[str, object], baseline_system_id: str, con
         "proxy_level",
         "allowed_interpretation_level",
     )
-    return {key: job.get(key, "") for key in keys} | {"baseline_system_id": baseline_system_id, "control_system_id": control_system_id}
+    out = {key: job.get(key, "") for key in keys} | {"baseline_system_id": baseline_system_id, "control_system_id": control_system_id}
+    if baseline_metadata:
+        metadata_keys = (
+            "potential_neighbor_correlation",
+            "potential_mean",
+            "potential_std",
+            "potential_min",
+            "potential_max",
+            "budget_mean",
+            "budget_std",
+            "budget_min",
+            "budget_max",
+            "budget_delta_mean",
+            "selected_energy_mean",
+            "selected_energy_std",
+            "mean_out_degree",
+            "edge_count",
+        )
+        for key in metadata_keys:
+            out[key] = baseline_metadata.get(key, "")
+        for key in ("transition_energy_family", "transition_energy_form"):
+            if not out.get(key):
+                out[key] = baseline_metadata.get(key, "")
+    return out
 
 
 def frontier_signature_items(frontier: frozenset[object], probe: Any, cap: int) -> list[str]:
@@ -2502,7 +2539,7 @@ def run_tiny_perturbation_job(
     perturbed = rewire_edges(control, edge_targets, rng, f"{perturbation_kind}_p{strength:g}")
     starts = [perturbed.states[(seed + i * 17) % len(perturbed.states)] for i in range(int(job["start_samples"]))]
     row_kind = "mechanism_control"
-    common = common_condition_fields(job, baseline.system_id, perturbed.system_id)
+    common = common_condition_fields(job, baseline.system_id, perturbed.system_id, baseline.metadata)
     metric_rows, context_rows = rows_and_contexts_for_system(job, perturbed, probe, alphabet_size, probe_group, starts, row_kind, common, args.max_items_per_context)
     flags = syndrome_flags(metric_rows, control_summaries, components, selected_syndromes, args.component_z_threshold)
     counts: dict[MatrixKey, MatrixCounts] = defaultdict(MatrixCounts.empty)

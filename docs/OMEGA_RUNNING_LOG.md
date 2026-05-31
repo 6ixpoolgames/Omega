@@ -9,6 +9,75 @@ patch notes at the top.
 
 ## 2026-05-31
 
+### RFS-MB0 Transition-Energy Substrate Characterization Larger Smoke
+
+Pulled and implemented `docs/RFS_MB0_TRANSITION_ENERGY_SUBSTRATE_CHARACTERIZATION_RUN_SPEC.md`.
+
+Retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_transition_energy_substrate_characterization_result.md`
+
+Local validation outputs:
+
+- `results/local_runs/20260531_transition_energy_characterization_fixture_smoke/`
+- `results/local_runs/20260531_transition_energy_characterization_preflight/`
+- `results/local_runs/20260531_transition_energy_characterization_larger_smoke/`
+
+Implementation repair:
+
+```text
+Response baselines are now keyed by substrate_family + substrate_variant +
+probe + flow + horizon pair. This prevents multi-family perturbation matrices
+from being compared against a baseline from a different substrate family or
+variant.
+```
+
+Run shape:
+
+```text
+status: COMPLETED
+workers: 18
+jobs_completed: 7744 / 7744
+elapsed_seconds: 1378.371
+errors: 0
+matrix_count: 10324
+substrate_family_variant_count: 22
+null_replicates: 13
+matched_marginal_detector_null_gate_passed: 1
+synthetic_fixture_contract: 8 / 8
+decision: locality_only_baseline_confirmed
+next_action_fork: write_transition_energy_substrate_atlas_note
+```
+
+Compact read:
+
+```text
+locality_only:
+  no aligned amplification across low/current/high roughness variants;
+  keep as bounded-locality baseline
+
+smooth_random_potential:
+  response-bearing but not aligned-amplifying in the tested smoothness/beta grid;
+  mostly stable with rerouted/reopened rows
+
+budget_conservation:
+  aligned response present;
+  total-coordinate-mass strongest but coverage-limited;
+  hamming-weight/nonzero variants have cleaner matched-null behavior
+
+constraint_template_current:
+  still positive comparator, but not unique
+```
+
+Interpretation:
+
+```text
+This is a substrate-response atlas result for the instrument, not a theory
+validation gate. It supports writing a transition-energy substrate atlas note
+and deciding between budget-coverage repair and a more principled
+max-entropy-local-transition substrate.
+```
+
 ### RFS-MB0 Substrate Untethering Transition-Energy Larger Smoke
 
 Ran the larger transition-energy substrate untethering smoke from

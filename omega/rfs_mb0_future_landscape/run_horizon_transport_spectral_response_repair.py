@@ -46,6 +46,7 @@ from .horizon_transport_contracts import (
     RUNNER_MODULE,
     STRUCTURE_DESTROYING_NULL_FAMILIES,
     SWEEP_KINDS,
+    TRANSITION_ENERGY_CHARACTERIZATION,
     active_spec_id,
     artifact_prefix,
     attach_horizon_pairs,
@@ -153,7 +154,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--fixture-smoke", action="store_true", help="Run synthetic horizon-transport fixtures instead of empirical jobs.")
     parser.add_argument("--expansion-smoke", action="store_true", help="Write expansion-smoke outputs and readiness labels.")
     parser.add_argument("--h128-scaleup", action="store_true", help="Write H128 response-surface outputs and readiness labels.")
-    parser.add_argument("--sweep-kind", choices=("", "horizon_10x", "breadth", "viscosity_ladder", "breadth_horizon_cross", "substrate_untethering"), default="", help="Optional viscosity/horizon/breadth/substrate sweep mode with sweep-specific defaults and report names.")
+    parser.add_argument("--sweep-kind", choices=("", *sorted(SWEEP_KINDS)), default="", help="Optional viscosity/horizon/breadth/substrate sweep mode with sweep-specific defaults and report names.")
     parser.add_argument("--horizon-pairs", type=str, default="", help="Comma-separated horizon pairs like 0->1,1->2. Defaults to H128 pairs when --h128-scaleup is set, otherwise H32 pairs.")
     parser.add_argument("--substrate-families", type=str, default=CONSTRAINT_TEMPLATE_CURRENT, help="Comma-separated substrate families. Use transition-energy families for untethering smokes.")
     parser.add_argument("--potential-beta", type=float, default=0.5, help="Smooth-potential transition-energy beta for transition-energy substrates.")
@@ -162,6 +163,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--budget-kind", type=str, default="total_coordinate_mass", help="Budget statistic for budget_conservation substrates.")
     parser.add_argument("--budget-weight", type=float, default=1.0, help="Budget penalty weight for budget_conservation substrates.")
     parser.add_argument("--transition-roughness-strength", type=float, default=-1.0, help="Override transition-energy roughness strength. Negative uses RelationParams roughness_strength.")
+    parser.add_argument("--locality-roughness-strengths", type=str, default="", help="Characterization roughness variants for locality_only. Use comma-separated floats plus optional current.")
+    parser.add_argument("--potential-smoothness-list", type=str, default="", help="Characterization smooth-potential smoothness variants.")
+    parser.add_argument("--potential-beta-list", type=str, default="", help="Characterization smooth-potential beta variants.")
+    parser.add_argument("--budget-kinds", type=str, default="", help="Characterization budget variants.")
+    parser.add_argument("--budget-weights", type=str, default="", help="Characterization budget weight variants.")
     return parser.parse_args()
 
 
@@ -195,6 +201,7 @@ def main() -> None:
         "run_kind": kind,
         "horizon_pairs": [f"{left}->{right}" for left, right in horizon_pairs],
         "substrate_families": substrate_families(args),
+        "substrate_family_variants": substrate_family_variants(args),
         "raw_state_sample_requested_jobs": int(args.raw_state_sample_jobs),
         "claim_boundary": CLAIM_BOUNDARY,
     })
@@ -225,6 +232,7 @@ def main() -> None:
         "sweep_kind": args.sweep_kind,
         "horizon_pairs": [f"{left}->{right}" for left, right in horizon_pairs],
         "substrate_families": substrate_families(args),
+        "substrate_family_variant_count": len(substrate_family_variants(args)),
         "raw_state_sample_requested_jobs": int(args.raw_state_sample_jobs),
         "raw_state_sample_enabled": int(args.raw_state_sample_jobs > 0 and not args.fixture_smoke),
     }
@@ -266,30 +274,154 @@ def substrate_families(args: argparse.Namespace) -> list[str]:
     return families or [CONSTRAINT_TEMPLATE_CURRENT]
 
 
+def substrate_family_variants(args: argparse.Namespace) -> list[dict[str, object]]:
+    variants: list[dict[str, object]] = []
+    characterization = run_kind(args) == TRANSITION_ENERGY_CHARACTERIZATION
+    for family in substrate_families(args):
+        if not characterization:
+            variants.append(default_substrate_variant(family, args))
+            continue
+        if family == CONSTRAINT_TEMPLATE_CURRENT:
+            variants.append({
+                "substrate_family": family,
+                "substrate_variant": "current_comparator",
+                "variant_role": "constraint_template_comparator",
+            })
+        elif family == "locality_only":
+            for token, value in roughness_variant_values(args):
+                row = {
+                    "substrate_family": family,
+                    "substrate_variant": f"roughness_{token}",
+                    "variant_role": "locality_roughness_sweep",
+                }
+                if value is not None:
+                    row["transition_roughness_strength"] = value
+                variants.append(row)
+        elif family == "smooth_random_potential":
+            for smoothness in list_or_default(args.potential_smoothness_list, (0.25, 0.65, 0.90)):
+                for beta in list_or_default(args.potential_beta_list, (0.25, 0.50, 1.00)):
+                    variants.append({
+                        "substrate_family": family,
+                        "substrate_variant": f"smoothness_{float_label(smoothness)}__beta_{float_label(beta)}",
+                        "variant_role": "smooth_potential_smoothness_beta_sweep",
+                        "potential_smoothness": smoothness,
+                        "potential_beta": beta,
+                        "potential_scale": args.potential_scale,
+                    })
+        elif family == "budget_conservation":
+            budget_kinds = string_list_or_default(args.budget_kinds, ("total_coordinate_mass", "symbol_histogram_distance", "hamming_weight_or_nonzero_count"))
+            for budget_kind in budget_kinds:
+                for weight in list_or_default(args.budget_weights, (0.25, 1.00, 2.00)):
+                    variants.append({
+                        "substrate_family": family,
+                        "substrate_variant": f"budget_{safe_id(budget_kind)}__weight_{float_label(weight)}",
+                        "variant_role": "budget_kind_weight_sweep",
+                        "budget_kind": budget_kind,
+                        "budget_weight": weight,
+                    })
+    return variants
+
+
+def default_substrate_variant(family: str, args: argparse.Namespace) -> dict[str, object]:
+    row: dict[str, object] = {
+        "substrate_family": family,
+        "substrate_variant": "default",
+        "variant_role": "single_setting",
+    }
+    if family == "smooth_random_potential":
+        row.update({
+            "potential_beta": args.potential_beta,
+            "potential_smoothness": args.potential_smoothness,
+            "potential_scale": args.potential_scale,
+        })
+    if family == "budget_conservation":
+        row.update({
+            "budget_kind": args.budget_kind,
+            "budget_weight": args.budget_weight,
+        })
+    if args.transition_roughness_strength >= 0:
+        row["transition_roughness_strength"] = args.transition_roughness_strength
+    return row
+
+
+def roughness_variant_values(args: argparse.Namespace) -> list[tuple[str, float | None]]:
+    raw = str(args.locality_roughness_strengths or "").strip()
+    tokens = [item.strip() for item in raw.split(",") if item.strip()] if raw else ["low", "current", "high"]
+    values: list[tuple[str, float | None]] = []
+    for token in tokens:
+        lowered = token.lower()
+        if lowered == "current":
+            values.append(("current", None))
+        elif lowered == "low":
+            values.append(("low", 0.0025))
+        elif lowered == "high":
+            values.append(("high", 0.05))
+        else:
+            value = float(token)
+            values.append((float_label(value), value))
+    return values
+
+
+def list_or_default(raw: str, default: tuple[float, ...]) -> tuple[float, ...]:
+    values = parse_float_list(raw) if str(raw or "").strip() else tuple()
+    return values or default
+
+
+def string_list_or_default(raw: str, default: tuple[str, ...]) -> tuple[str, ...]:
+    values = tuple(item.strip() for item in str(raw or "").split(",") if item.strip())
+    return values or default
+
+
+def float_label(value: float) -> str:
+    return f"{float(value):g}".replace("-", "m").replace(".", "p")
+
+
+def safe_id(value: object) -> str:
+    return "".join(char if char.isalnum() else "_" for char in str(value)).strip("_")
+
+
 def expand_jobs_for_substrate_families(jobs: list[dict[str, object]], args: argparse.Namespace) -> list[dict[str, object]]:
-    families = substrate_families(args)
-    if families == [CONSTRAINT_TEMPLATE_CURRENT]:
+    variants = substrate_family_variants(args)
+    if len(variants) == 1 and variants[0].get("substrate_family") == CONSTRAINT_TEMPLATE_CURRENT:
         for job in jobs:
             job["substrate_family"] = CONSTRAINT_TEMPLATE_CURRENT
+            job["substrate_variant"] = variants[0].get("substrate_variant", "default")
         return jobs
     expanded: list[dict[str, object]] = []
-    for family in families:
+    for variant in variants:
+        family = str(variant["substrate_family"])
+        variant_id = str(variant["substrate_variant"])
         for job in jobs:
             item = dict(job)
             original_condition = str(item.get("condition_id", ""))
             item["substrate_family"] = family
-            item["condition_id"] = f"{family}::{original_condition}"
-            item["job_id"] = f"{family}::{item.get('job_id', '')}"
-            item["potential_beta"] = args.potential_beta
+            item["substrate_variant"] = variant_id
+            item["condition_id"] = f"{family}::{variant_id}::{original_condition}"
+            item["job_id"] = f"{family}::{variant_id}::{item.get('job_id', '')}"
+            item["transition_energy_family"] = family
+            item["transition_energy_form"] = transition_energy_form_label(family)
+            item["potential_beta"] = variant.get("potential_beta", args.potential_beta)
             item["potential_seed"] = int(item.get("seed", 0)) + 71_003
-            item["potential_smoothness"] = args.potential_smoothness
-            item["potential_scale"] = args.potential_scale
-            item["budget_kind"] = args.budget_kind
-            item["budget_weight"] = args.budget_weight
-            if args.transition_roughness_strength >= 0:
+            item["potential_smoothness"] = variant.get("potential_smoothness", args.potential_smoothness)
+            item["potential_scale"] = variant.get("potential_scale", args.potential_scale)
+            item["budget_kind"] = variant.get("budget_kind", args.budget_kind)
+            item["budget_weight"] = variant.get("budget_weight", args.budget_weight)
+            if "transition_roughness_strength" in variant:
+                item["transition_roughness_strength"] = variant["transition_roughness_strength"]
+            elif args.transition_roughness_strength >= 0:
                 item["transition_roughness_strength"] = args.transition_roughness_strength
             expanded.append(item)
     return expanded
+
+
+def transition_energy_form_label(family: str) -> str:
+    if family == "locality_only":
+        return "hamming_distance_plus_seeded_roughness"
+    if family == "smooth_random_potential":
+        return "hamming_distance_plus_beta_potential_delta_plus_seeded_roughness"
+    if family == "budget_conservation":
+        return "hamming_distance_plus_budget_delta_penalty_plus_seeded_roughness"
+    return "current_constraint_template_scored_relation"
 
 
 def raw_state_frontier_sample_rows(
@@ -769,9 +901,11 @@ def compute_outputs(
     manifest = matrix_manifest_rows(matrices)
     matrix_entries = matrix_entry_rows(matrices, args)
     substrate_manifest = substrate_family_manifest_rows(matrices, args)
+    substrate_variant_manifest = substrate_family_variant_manifest_rows(matrices, args)
     transition_family_summary = transition_energy_family_summary_rows(args)
     transition_parameter_summary = transition_energy_parameter_summary_rows(args)
     substrate_capacity = substrate_capacity_by_family_rows(matrices)
+    substrate_capacity_variant = substrate_capacity_by_family_variant_rows(matrices)
     substrate_generation = substrate_generation_diagnostics_rows(rows)
     row_items = row_item_manifest_rows(matrices)
     column_items = column_item_manifest_rows(matrices)
@@ -808,10 +942,19 @@ def compute_outputs(
     viscosity = transport_viscosity_rows(response_classification, response_diversity, saturation)
     context_recommendation = context_recommendation_rows(summary, matched_marginal, response_classification)
     by_substrate = horizon_transport_by_substrate_family_rows(context_recommendation)
+    by_substrate_variant = horizon_transport_by_substrate_family_variant_rows(context_recommendation)
+    response_by_substrate = response_by_group_rows(response_classification, ("substrate_family",))
+    response_by_substrate_variant = response_by_group_rows(response_classification, ("substrate_family", "substrate_variant"))
+    response_by_budget = response_by_group_rows([row for row in response_classification if row.get("budget_kind")], ("budget_kind",))
+    response_by_potential_smoothness = response_by_group_rows([row for row in response_classification if row.get("potential_smoothness") not in (None, "")], ("potential_smoothness",))
+    response_by_potential_beta = response_by_group_rows([row for row in response_classification if row.get("potential_beta") not in (None, "")], ("potential_beta",))
     aligned_by_substrate = aligned_amplification_by_substrate_family_rows(response_classification)
     diversity_by_substrate = response_diversity_by_substrate_family_rows(response_diversity)
+    diversity_by_substrate_variant = response_diversity_by_substrate_family_variant_rows(response_diversity)
     viscosity_by_substrate = transport_viscosity_by_substrate_family_rows(viscosity)
+    viscosity_by_substrate_variant = transport_viscosity_by_substrate_family_variant_rows(viscosity)
     matched_by_substrate = matched_null_pass_by_substrate_family_rows(matched_marginal)
+    matched_by_substrate_variant = matched_null_pass_by_substrate_family_variant_rows(matched_marginal)
     by_probe = aggregate_context_summary_rows(context_recommendation, ("probe_key",), "probe_key")
     by_flow_mode = aggregate_context_summary_rows(context_recommendation, ("flow_mode",), "flow_mode")
     by_horizon_pair = aggregate_context_summary_rows(context_recommendation, ("source_horizon_band", "target_horizon_band", "H_a", "H_b"), "horizon_pair")
@@ -820,9 +963,11 @@ def compute_outputs(
         "matrix_entries": matrix_entries,
         "raw_state_samples": raw_state_samples,
         "substrate_manifest": substrate_manifest,
+        "substrate_variant_manifest": substrate_variant_manifest,
         "transition_family_summary": transition_family_summary,
         "transition_parameter_summary": transition_parameter_summary,
         "substrate_capacity": substrate_capacity,
+        "substrate_capacity_variant": substrate_capacity_variant,
         "substrate_generation": substrate_generation,
         "row_items": row_items,
         "column_items": column_items,
@@ -852,10 +997,19 @@ def compute_outputs(
         "by_flow_mode": by_flow_mode,
         "by_horizon_pair": by_horizon_pair,
         "by_substrate": by_substrate,
+        "by_substrate_variant": by_substrate_variant,
+        "response_by_substrate": response_by_substrate,
+        "response_by_substrate_variant": response_by_substrate_variant,
+        "response_by_budget": response_by_budget,
+        "response_by_potential_smoothness": response_by_potential_smoothness,
+        "response_by_potential_beta": response_by_potential_beta,
         "aligned_by_substrate": aligned_by_substrate,
         "diversity_by_substrate": diversity_by_substrate,
+        "diversity_by_substrate_variant": diversity_by_substrate_variant,
         "viscosity_by_substrate": viscosity_by_substrate,
+        "viscosity_by_substrate_variant": viscosity_by_substrate_variant,
         "matched_by_substrate": matched_by_substrate,
+        "matched_by_substrate_variant": matched_by_substrate_variant,
         "context_recommendation": context_recommendation,
     }
 
@@ -921,22 +1075,31 @@ def substrate_family_manifest_rows(matrices: list[TransportMatrix], args: argpar
     ]
 
 
+def substrate_family_variant_manifest_rows(matrices: list[TransportMatrix], args: argparse.Namespace) -> list[dict[str, object]]:
+    matrix_counts = Counter(
+        (substrate_family_from_condition_id(matrix.key.condition_id), substrate_variant_from_condition_id(matrix.key.condition_id))
+        for matrix in matrices
+    )
+    rows: list[dict[str, object]] = []
+    for variant in substrate_family_variants(args):
+        family = str(variant.get("substrate_family", ""))
+        variant_id = str(variant.get("substrate_variant", ""))
+        rows.append({
+            **variant,
+            "matrix_count": matrix_counts.get((family, variant_id), 0),
+            "uses_hand_built_constraint_templates": int(family == CONSTRAINT_TEMPLATE_CURRENT),
+            "proposal_kernel": "current_relation_generator" if family == CONSTRAINT_TEMPLATE_CURRENT else "hamming_ball_without_self",
+            "selection_rule": "current_constraint_scored_top_m" if family == CONSTRAINT_TEMPLATE_CURRENT else "top_m_lowest_energy_candidates",
+        })
+    return rows
+
+
 def transition_energy_family_summary_rows(args: argparse.Namespace) -> list[dict[str, object]]:
     rows = []
     for family in substrate_families(args):
-        if family == CONSTRAINT_TEMPLATE_CURRENT:
-            form = "current_constraint_template_scored_relation"
-        elif family == "locality_only":
-            form = "hamming_distance_plus_seeded_roughness"
-        elif family == "smooth_random_potential":
-            form = "hamming_distance_plus_beta_potential_delta_plus_seeded_roughness"
-        elif family == "budget_conservation":
-            form = "hamming_distance_plus_budget_delta_penalty_plus_seeded_roughness"
-        else:
-            form = "unknown"
         rows.append({
             "substrate_family": family,
-            "transition_energy_form": form,
+            "transition_energy_form": transition_energy_form_label(family),
             "hand_built_constraint_vocabulary_removed": int(family != CONSTRAINT_TEMPLATE_CURRENT),
             "probabilistic_sampling_used": 0,
         })
@@ -944,18 +1107,22 @@ def transition_energy_family_summary_rows(args: argparse.Namespace) -> list[dict
 
 
 def transition_energy_parameter_summary_rows(args: argparse.Namespace) -> list[dict[str, object]]:
-    return [
-        {
+    rows: list[dict[str, object]] = []
+    for variant in substrate_family_variants(args):
+        family = str(variant.get("substrate_family", ""))
+        rows.append({
             "substrate_family": family,
-            "potential_beta": args.potential_beta if family == "smooth_random_potential" else "",
-            "potential_smoothness": args.potential_smoothness if family == "smooth_random_potential" else "",
-            "potential_scale": args.potential_scale if family == "smooth_random_potential" else "",
-            "budget_kind": args.budget_kind if family == "budget_conservation" else "",
-            "budget_weight": args.budget_weight if family == "budget_conservation" else "",
-            "transition_roughness_strength_override": args.transition_roughness_strength if args.transition_roughness_strength >= 0 else "",
-        }
-        for family in substrate_families(args)
-    ]
+            "substrate_variant": variant.get("substrate_variant", ""),
+            "variant_role": variant.get("variant_role", ""),
+            "transition_energy_form": transition_energy_form_label(family),
+            "potential_beta": variant.get("potential_beta", "") if family == "smooth_random_potential" else "",
+            "potential_smoothness": variant.get("potential_smoothness", "") if family == "smooth_random_potential" else "",
+            "potential_scale": variant.get("potential_scale", "") if family == "smooth_random_potential" else "",
+            "budget_kind": variant.get("budget_kind", "") if family == "budget_conservation" else "",
+            "budget_weight": variant.get("budget_weight", "") if family == "budget_conservation" else "",
+            "transition_roughness_strength_override": variant.get("transition_roughness_strength", ""),
+        })
+    return rows
 
 
 def substrate_capacity_by_family_rows(matrices: list[TransportMatrix]) -> list[dict[str, object]]:
@@ -978,6 +1145,28 @@ def substrate_capacity_by_family_rows(matrices: list[TransportMatrix]) -> list[d
     return rows
 
 
+def substrate_capacity_by_family_variant_rows(matrices: list[TransportMatrix]) -> list[dict[str, object]]:
+    grouped: dict[tuple[str, str], list[TransportMatrix]] = defaultdict(list)
+    for matrix in matrices:
+        grouped[(substrate_family_from_condition_id(matrix.key.condition_id), substrate_variant_from_condition_id(matrix.key.condition_id))].append(matrix)
+    rows: list[dict[str, object]] = []
+    for (family, variant), items in sorted(grouped.items()):
+        coverages = [matrix.retained_transport_mass / max(1.0, matrix.transport_mass_total) for matrix in items]
+        row_counts = [matrix.raw_row_item_count for matrix in items]
+        col_counts = [matrix.raw_column_item_count for matrix in items]
+        rows.append({
+            "substrate_family": family,
+            "substrate_variant": variant,
+            "matrix_count": len(items),
+            "coverage_mean": mean(coverages) if coverages else 0.0,
+            "coverage_min": min(coverages) if coverages else 0.0,
+            "raw_row_item_count_mean": mean(row_counts) if row_counts else 0.0,
+            "raw_column_item_count_mean": mean(col_counts) if col_counts else 0.0,
+            "capacity_read": "substrate_capacity_low" if items and (mean(row_counts) < 2 or mean(col_counts) < 2) else "substrate_capacity_available",
+        })
+    return rows
+
+
 def substrate_generation_diagnostics_rows(rows: list[dict[str, object]]) -> list[dict[str, object]]:
     grouped: dict[str, list[dict[str, object]]] = defaultdict(list)
     for row in rows:
@@ -993,8 +1182,16 @@ def substrate_generation_diagnostics_rows(rows: list[dict[str, object]]) -> list
             "fb_state_count_mean": mean(fb_counts) if fb_counts else 0.0,
             "baseline_rows": sum(int(row.get("actual_control_name") == BASELINE_CONTROL) for row in items),
             "mechanism_control_rows": sum(int(row.get("actual_control_name") != BASELINE_CONTROL) for row in items),
+            "potential_neighbor_correlation_mean": optional_mean(items, "potential_neighbor_correlation"),
+            "budget_delta_mean": optional_mean(items, "budget_delta_mean"),
+            "selected_energy_mean": optional_mean(items, "selected_energy_mean"),
         })
     return out
+
+
+def optional_mean(rows: list[dict[str, object]], field: str) -> object:
+    values = [float_or_zero(row.get(field)) for row in rows if row.get(field) not in (None, "")]
+    return mean(values) if values else ""
 
 
 def horizon_transport_by_substrate_family_rows(rows: list[dict[str, object]]) -> list[dict[str, object]]:
@@ -1008,6 +1205,29 @@ def horizon_transport_by_substrate_family_rows(rows: list[dict[str, object]]) ->
             "substrate_family": family,
             "context_count": len(items),
             "matched_marginal_separates_interpretable_count": len(matched),
+            "context_read_mode": Counter(str(row.get("context_read", "")) for row in items).most_common(1)[0][0] if items else "",
+        })
+    return out
+
+
+def horizon_transport_by_substrate_family_variant_rows(rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    grouped: dict[tuple[str, str], list[dict[str, object]]] = defaultdict(list)
+    for row in rows:
+        grouped[(
+            str(row.get("substrate_family", substrate_family_from_condition_id(row.get("condition_id", "")))),
+            str(row.get("substrate_variant", substrate_variant_from_condition_id(row.get("condition_id", "")))),
+        )].append(row)
+    out: list[dict[str, object]] = []
+    for (family, variant), items in sorted(grouped.items()):
+        matched = [row for row in items if row.get("context_read") == "matched_marginal_separates_interpretable"]
+        coverages = [float_or_zero(row.get("coverage_min")) for row in items]
+        out.append({
+            "substrate_family": family,
+            "substrate_variant": variant,
+            "context_count": len(items),
+            "matched_marginal_separates_interpretable_count": len(matched),
+            "matched_interpretable_context_fraction": len(matched) / max(1, len(items)),
+            "matrix_coverage_min": min(coverages) if coverages else 0.0,
             "context_read_mode": Counter(str(row.get("context_read", "")) for row in items).most_common(1)[0][0] if items else "",
         })
     return out
@@ -1032,6 +1252,36 @@ def aligned_amplification_by_substrate_family_rows(rows: list[dict[str, object]]
     return out
 
 
+def response_by_group_rows(rows: list[dict[str, object]], fields: tuple[str, ...]) -> list[dict[str, object]]:
+    grouped: dict[tuple[object, ...], list[dict[str, object]]] = defaultdict(list)
+    for row in rows:
+        grouped[tuple(row.get(field, "") for field in fields)].append(row)
+    out: list[dict[str, object]] = []
+    response_classes = (
+        RESPONSE_CLASS_STABLE,
+        RESPONSE_CLASS_AMPLIFIED_ALIGNED,
+        RESPONSE_CLASS_WEAKENED,
+        RESPONSE_CLASS_REROUTED,
+        RESPONSE_CLASS_REOPENS,
+        RESPONSE_CLASS_COLLAPSES,
+        RESPONSE_CLASS_CONTROL_EQUIVALENT,
+        *MEASUREMENT_LIMIT_RESPONSE_CLASSES,
+    )
+    for key, items in sorted(grouped.items(), key=lambda item: tuple(str(part) for part in item[0])):
+        counts = Counter(str(row.get("response_class", "")) for row in items)
+        out_row = {field: key[index] for index, field in enumerate(fields)}
+        out_row.update({
+            "response_rows": len(items),
+            "interpretable_response_rows": sum(1 for item in items if is_interpretable_response(item.get("response_class"))),
+            "dominant_response_class": counts.most_common(1)[0][0] if items else "",
+            "aligned_amplification_fraction": counts.get(RESPONSE_CLASS_AMPLIFIED_ALIGNED, 0) / max(1, len(items)),
+        })
+        for response_class in response_classes:
+            out_row[f"{response_class}_count"] = counts.get(response_class, 0)
+        out.append(out_row)
+    return out
+
+
 def response_diversity_by_substrate_family_rows(rows: list[dict[str, object]]) -> list[dict[str, object]]:
     grouped: dict[str, list[dict[str, object]]] = defaultdict(list)
     for row in rows:
@@ -1041,6 +1291,26 @@ def response_diversity_by_substrate_family_rows(rows: list[dict[str, object]]) -
         values = [float_or_zero(row.get("response_diversity_score")) for row in items]
         out.append({
             "substrate_family": family,
+            "response_diversity_rows": len(items),
+            "response_diversity_score_mean": mean(values) if values else 0.0,
+            "response_diversity_read_mode": Counter(str(row.get("response_diversity_read", "")) for row in items).most_common(1)[0][0] if items else "",
+        })
+    return out
+
+
+def response_diversity_by_substrate_family_variant_rows(rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    grouped: dict[tuple[str, str], list[dict[str, object]]] = defaultdict(list)
+    for row in rows:
+        grouped[(
+            str(row.get("substrate_family", substrate_family_from_condition_id(row.get("condition_id", "")))),
+            str(row.get("substrate_variant", substrate_variant_from_condition_id(row.get("condition_id", "")))),
+        )].append(row)
+    out = []
+    for (family, variant), items in sorted(grouped.items()):
+        values = [float_or_zero(row.get("response_diversity_score")) for row in items]
+        out.append({
+            "substrate_family": family,
+            "substrate_variant": variant,
             "response_diversity_rows": len(items),
             "response_diversity_score_mean": mean(values) if values else 0.0,
             "response_diversity_read_mode": Counter(str(row.get("response_diversity_read", "")) for row in items).most_common(1)[0][0] if items else "",
@@ -1064,6 +1334,26 @@ def transport_viscosity_by_substrate_family_rows(rows: list[dict[str, object]]) 
     return out
 
 
+def transport_viscosity_by_substrate_family_variant_rows(rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    grouped: dict[tuple[str, str], list[dict[str, object]]] = defaultdict(list)
+    for row in rows:
+        grouped[(
+            str(row.get("substrate_family", substrate_family_from_condition_id(row.get("condition_id", "")))),
+            str(row.get("substrate_variant", substrate_variant_from_condition_id(row.get("condition_id", "")))),
+        )].append(row)
+    out = []
+    for (family, variant), items in sorted(grouped.items()):
+        values = [float_or_zero(row.get("transport_viscosity_score")) for row in items]
+        out.append({
+            "substrate_family": family,
+            "substrate_variant": variant,
+            "transport_viscosity_rows": len(items),
+            "transport_viscosity_score_mean": mean(values) if values else 0.0,
+            "transport_viscosity_read_mode": Counter(str(row.get("transport_viscosity_read", "")) for row in items).most_common(1)[0][0] if items else "",
+        })
+    return out
+
+
 def matched_null_pass_by_substrate_family_rows(rows: list[dict[str, object]]) -> list[dict[str, object]]:
     grouped: dict[str, list[dict[str, object]]] = defaultdict(list)
     for row in rows:
@@ -1074,6 +1364,27 @@ def matched_null_pass_by_substrate_family_rows(rows: list[dict[str, object]]) ->
         percentile_values = [float_or_zero(row.get("min_observed_percentile_vs_null")) for row in items]
         out.append({
             "substrate_family": family,
+            "matched_null_rows": len(items),
+            "pass_fraction_mean": mean(pass_values) if pass_values else 0.0,
+            "min_observed_percentile_mean": mean(percentile_values) if percentile_values else 0.0,
+        })
+    return out
+
+
+def matched_null_pass_by_substrate_family_variant_rows(rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    grouped: dict[tuple[str, str], list[dict[str, object]]] = defaultdict(list)
+    for row in rows:
+        grouped[(
+            str(row.get("substrate_family", substrate_family_from_condition_id(row.get("condition_id", "")))),
+            str(row.get("substrate_variant", substrate_variant_from_condition_id(row.get("condition_id", "")))),
+        )].append(row)
+    out = []
+    for (family, variant), items in sorted(grouped.items()):
+        pass_values = [float_or_zero(row.get("pass_fraction")) for row in items]
+        percentile_values = [float_or_zero(row.get("min_observed_percentile_vs_null")) for row in items]
+        out.append({
+            "substrate_family": family,
+            "substrate_variant": variant,
             "matched_null_rows": len(items),
             "pass_fraction_mean": mean(pass_values) if pass_values else 0.0,
             "min_observed_percentile_mean": mean(percentile_values) if percentile_values else 0.0,
@@ -1370,6 +1681,7 @@ def matched_marginal_summary_rows(anatomy: list[dict[str, object]], args: argpar
             "H_b": key[5],
             "horizon_pair": f"{key[4]}->{key[5]}",
             "substrate_family": substrate_family_from_condition_id(key[6]),
+            "substrate_variant": substrate_variant_from_condition_id(key[6]),
             "condition_id": key[6],
             "null_family": key[7],
             "observed_statistic": "marginal_residual_fraction",
@@ -1476,6 +1788,7 @@ def response_flag_rows(response_classification: list[dict[str, object]], saturat
         sat = saturation_by_matrix.get(str(row.get("matrix_id", "")), {})
         rows.append({
             "substrate_family": row.get("substrate_family", substrate_family_from_condition_id(row.get("condition_id", ""))),
+            "substrate_variant": row.get("substrate_variant", substrate_variant_from_condition_id(row.get("condition_id", ""))),
             "condition_id": row.get("condition_id", ""),
             "actual_control_name": row.get("actual_control_name", ""),
             "mechanism_control_strength": row.get("mechanism_control_strength", ""),
@@ -1495,19 +1808,20 @@ def response_flag_rows(response_classification: list[dict[str, object]], saturat
 
 
 def response_class_by_strength_and_horizon_rows(response_classification: list[dict[str, object]]) -> list[dict[str, object]]:
-    keys = ("substrate_family", "actual_control_name", "mechanism_control_strength", "probe_key", "flow_mode", "horizon_pair", "H_a", "H_b", "response_class")
+    keys = ("substrate_family", "substrate_variant", "actual_control_name", "mechanism_control_strength", "probe_key", "flow_mode", "horizon_pair", "H_a", "H_b", "response_class")
     rows: list[dict[str, object]] = []
     for key, items in group_by(response_classification, keys).items():
         rows.append({
             "substrate_family": key[0],
-            "perturbation_family": key[1],
-            "perturbation_strength": key[2],
-            "probe_key": key[3],
-            "flow_mode": key[4],
-            "horizon_pair": key[5],
-            "H_a": key[6],
-            "H_b": key[7],
-            "response_class": key[8],
+            "substrate_variant": key[1],
+            "perturbation_family": key[2],
+            "perturbation_strength": key[3],
+            "probe_key": key[4],
+            "flow_mode": key[5],
+            "horizon_pair": key[6],
+            "H_a": key[7],
+            "H_b": key[8],
+            "response_class": key[9],
             "row_count": len(items),
             "mean_subspace_alignment_mean": mean([float_or_zero(row.get("mean_subspace_alignment")) for row in items]) if items else 0.0,
             "spectral_mass_delta_fraction_mean": mean([float_or_zero(row.get("spectral_mass_delta_fraction")) for row in items]) if items else 0.0,
@@ -1516,6 +1830,7 @@ def response_class_by_strength_and_horizon_rows(response_classification: list[di
         })
     return sorted(rows, key=lambda row: (
         str(row.get("substrate_family", "")),
+        str(row.get("substrate_variant", "")),
         str(row.get("perturbation_family", "")),
         float_or_zero(row.get("perturbation_strength")),
         str(row.get("probe_key", "")),
@@ -1527,26 +1842,28 @@ def response_class_by_strength_and_horizon_rows(response_classification: list[di
 
 def horizon_response_threshold_rows(response_classification: list[dict[str, object]], saturation: list[dict[str, object]]) -> list[dict[str, object]]:
     rows: list[dict[str, object]] = []
-    keys = ("substrate_family", "actual_control_name", "mechanism_control_strength", "probe_key", "flow_mode")
+    keys = ("substrate_family", "substrate_variant", "actual_control_name", "mechanism_control_strength", "probe_key", "flow_mode")
     for key, items in group_by(response_classification, keys).items():
         ordered = sorted(items, key=lambda row: (float_or_zero(row.get("H_b")), float_or_zero(row.get("H_a"))))
         sat_items = sorted(
             [
                 row for row in saturation
                 if row.get("substrate_family") == key[0]
-                and row.get("actual_control_name") == key[1]
-                and str(row.get("mechanism_control_strength")) == str(key[2])
-                and row.get("probe_key") == key[3]
-                and row.get("flow_mode") == key[4]
+                and row.get("substrate_variant") == key[1]
+                and row.get("actual_control_name") == key[2]
+                and str(row.get("mechanism_control_strength")) == str(key[3])
+                and row.get("probe_key") == key[4]
+                and row.get("flow_mode") == key[5]
             ],
             key=lambda row: (float_or_zero(row.get("H_b")), float_or_zero(row.get("H_a"))),
         )
         rows.append({
             "substrate_family": key[0],
-            "perturbation_family": key[1],
-            "perturbation_strength": key[2],
-            "probe_key": key[3],
-            "flow_mode": key[4],
+            "substrate_variant": key[1],
+            "perturbation_family": key[2],
+            "perturbation_strength": key[3],
+            "probe_key": key[4],
+            "flow_mode": key[5],
             "first_nonstable_horizon": first_response_horizon(ordered, lambda row: row.get("response_class") != RESPONSE_CLASS_STABLE),
             "first_amplified_aligned_horizon": first_response_horizon(ordered, lambda row: row.get("response_class") == RESPONSE_CLASS_AMPLIFIED_ALIGNED),
             "first_weakened_horizon": first_response_horizon(ordered, lambda row: row.get("response_class") == RESPONSE_CLASS_WEAKENED),
@@ -1558,6 +1875,7 @@ def horizon_response_threshold_rows(response_classification: list[dict[str, obje
         })
     return sorted(rows, key=lambda row: (
         str(row.get("substrate_family", "")),
+        str(row.get("substrate_variant", "")),
         str(row.get("perturbation_family", "")),
         float_or_zero(row.get("perturbation_strength")),
         str(row.get("probe_key", "")),
@@ -1566,7 +1884,7 @@ def horizon_response_threshold_rows(response_classification: list[dict[str, obje
 
 
 def response_diversity_rows(response_classification: list[dict[str, object]], saturation: list[dict[str, object]]) -> list[dict[str, object]]:
-    context_keys = ("substrate_family", "actual_control_name", "mechanism_control_strength", "probe_key", "flow_mode")
+    context_keys = ("substrate_family", "substrate_variant", "actual_control_name", "mechanism_control_strength", "probe_key", "flow_mode")
     saturation_by_context = group_by(saturation, context_keys)
     rows: list[dict[str, object]] = []
     for key, items in group_by(response_classification, context_keys).items():
@@ -1581,10 +1899,11 @@ def response_diversity_rows(response_classification: list[dict[str, object]], sa
         diversity_score = response_diversity_score(class_set)
         rows.append({
             "substrate_family": key[0],
-            "perturbation_family": key[1],
-            "perturbation_strength": key[2],
-            "probe_key": key[3],
-            "flow_mode": key[4],
+            "substrate_variant": key[1],
+            "perturbation_family": key[2],
+            "perturbation_strength": key[3],
+            "probe_key": key[4],
+            "flow_mode": key[5],
             "response_row_count": len(items),
             "interpretable_response_row_count": len(interpretable),
             "response_class_diversity_by_context": len(class_set),
@@ -1605,6 +1924,7 @@ def response_diversity_rows(response_classification: list[dict[str, object]], sa
         })
     return sorted(rows, key=lambda row: (
         str(row.get("substrate_family")),
+        str(row.get("substrate_variant")),
         str(row.get("perturbation_family")),
         float_or_zero(row.get("perturbation_strength")),
         str(row.get("probe_key")),
@@ -1618,7 +1938,7 @@ def transport_viscosity_rows(
     saturation: list[dict[str, object]],
 ) -> list[dict[str, object]]:
     diversity_by_context = {
-        (row.get("substrate_family"), row.get("perturbation_family"), row.get("perturbation_strength"), row.get("probe_key"), row.get("flow_mode")): row
+        (row.get("substrate_family"), row.get("substrate_variant"), row.get("perturbation_family"), row.get("perturbation_strength"), row.get("probe_key"), row.get("flow_mode")): row
         for row in response_diversity
     }
     saturation_by_matrix = {str(row.get("matrix_id", "")): row for row in saturation}
@@ -1626,6 +1946,7 @@ def transport_viscosity_rows(
     for row in response_classification:
         context = diversity_by_context.get((
             row.get("substrate_family", substrate_family_from_condition_id(row.get("condition_id", ""))),
+            row.get("substrate_variant", substrate_variant_from_condition_id(row.get("condition_id", ""))),
             row.get("actual_control_name"),
             row.get("mechanism_control_strength"),
             row.get("probe_key"),
@@ -1655,6 +1976,7 @@ def transport_viscosity_rows(
             read = "underpowered_or_unresolved"
         rows.append({
             "substrate_family": row.get("substrate_family", substrate_family_from_condition_id(row.get("condition_id", ""))),
+            "substrate_variant": row.get("substrate_variant", substrate_variant_from_condition_id(row.get("condition_id", ""))),
             "condition_id": row.get("condition_id", ""),
             "probe_key": row.get("probe_key", ""),
             "flow_mode": row.get("flow_mode", ""),
@@ -1785,7 +2107,7 @@ def context_recommendation_rows(
     matched_marginal: list[dict[str, object]],
     response_classification: list[dict[str, object]],
 ) -> list[dict[str, object]]:
-    context_keys = ("substrate_family", "probe_key", "flow_mode", "source_horizon_band", "target_horizon_band", "H_a", "H_b")
+    context_keys = ("substrate_family", "substrate_variant", "probe_key", "flow_mode", "source_horizon_band", "target_horizon_band", "H_a", "H_b")
     summary_by_context = group_by(summary, context_keys)
     marginal_by_context = group_by(matched_marginal, context_keys)
     response_by_context = group_by(response_classification, context_keys)
@@ -1828,13 +2150,14 @@ def context_recommendation_rows(
             recommendation = "increase_context_rows_or_repair"
         rows.append({
             "substrate_family": key[0],
-            "probe_key": key[1],
-            "flow_mode": key[2],
-            "source_horizon_band": key[3],
-            "target_horizon_band": key[4],
-            "H_a": key[5],
-            "H_b": key[6],
-            "horizon_pair": f"{key[5]}->{key[6]}",
+            "substrate_variant": key[1],
+            "probe_key": key[2],
+            "flow_mode": key[3],
+            "source_horizon_band": key[4],
+            "target_horizon_band": key[5],
+            "H_a": key[6],
+            "H_b": key[7],
+            "horizon_pair": f"{key[6]}->{key[7]}",
             "matrix_count": len(matrix_rows),
             "coverage_mean": coverage_mean,
             "coverage_min": coverage_min,
@@ -2363,9 +2686,11 @@ def write_outputs(
     raw_state_sparse_path = out_dir / "horizon_transport_raw_state_frontier_sparse.npz"
     write_sparse_raw_state_frontier_npz(raw_state_sparse_path, outputs["raw_state_samples"])
     write_csv(out_dir / "substrate_family_manifest.csv", outputs["substrate_manifest"])
+    write_csv(out_dir / "substrate_family_variant_manifest.csv", outputs["substrate_variant_manifest"])
     write_csv(out_dir / "transition_energy_family_summary.csv", outputs["transition_family_summary"])
     write_csv(out_dir / "transition_energy_parameter_summary.csv", outputs["transition_parameter_summary"])
     write_csv(out_dir / "substrate_capacity_by_family.csv", outputs["substrate_capacity"])
+    write_csv(out_dir / "substrate_capacity_by_family_variant.csv", outputs["substrate_capacity_variant"])
     write_csv(out_dir / "substrate_generation_diagnostics.csv", outputs["substrate_generation"])
     write_csv(out_dir / "horizon_transport_row_item_manifest.csv", outputs["row_items"])
     write_csv(out_dir / "horizon_transport_column_item_manifest.csv", outputs["column_items"])
@@ -2395,10 +2720,19 @@ def write_outputs(
     write_csv(out_dir / "horizon_transport_by_flow_mode_summary.csv", outputs["by_flow_mode"])
     write_csv(out_dir / "horizon_transport_by_horizon_pair_summary.csv", outputs["by_horizon_pair"])
     write_csv(out_dir / "horizon_transport_by_substrate_family_summary.csv", outputs["by_substrate"])
+    write_csv(out_dir / "horizon_transport_by_substrate_family_variant_summary.csv", outputs["by_substrate_variant"])
+    write_csv(out_dir / "response_by_substrate_family.csv", outputs["response_by_substrate"])
+    write_csv(out_dir / "response_by_substrate_family_variant.csv", outputs["response_by_substrate_variant"])
+    write_csv(out_dir / "response_by_budget_kind.csv", outputs["response_by_budget"])
+    write_csv(out_dir / "response_by_potential_smoothness.csv", outputs["response_by_potential_smoothness"])
+    write_csv(out_dir / "response_by_potential_beta.csv", outputs["response_by_potential_beta"])
     write_csv(out_dir / "aligned_amplification_by_substrate_family.csv", outputs["aligned_by_substrate"])
     write_csv(out_dir / "response_diversity_by_substrate_family.csv", outputs["diversity_by_substrate"])
+    write_csv(out_dir / "response_diversity_by_substrate_family_variant.csv", outputs["diversity_by_substrate_variant"])
     write_csv(out_dir / "transport_viscosity_by_substrate_family.csv", outputs["viscosity_by_substrate"])
+    write_csv(out_dir / "transport_viscosity_by_substrate_family_variant.csv", outputs["viscosity_by_substrate_variant"])
     write_csv(out_dir / "matched_null_pass_by_substrate_family.csv", outputs["matched_by_substrate"])
+    write_csv(out_dir / "matched_null_pass_by_substrate_family_variant.csv", outputs["matched_by_substrate_variant"])
     write_csv(out_dir / "horizon_transport_context_recommendation.csv", outputs["context_recommendation"])
     status.update(decision_fields(outputs, status))
     status["matrix_count"] = len(outputs["manifest"])
@@ -2409,6 +2743,8 @@ def write_outputs(
     status["detector_null_rows"] = len(outputs["null_anatomy"])
     status["matched_marginal_summary_rows"] = len(outputs["matched_marginal"])
     status["context_recommendation_rows"] = len(outputs["context_recommendation"])
+    status["substrate_family_variant_count"] = len(outputs["substrate_variant_manifest"])
+    status["response_by_substrate_family_variant_rows"] = len(outputs["response_by_substrate_variant"])
     status["fixture_result_rows"] = len(outputs["fixture_results"])
     status["perturbation_response_rows"] = len(outputs["response_classification"])
     status["response_flag_rows"] = len(outputs["response_flags"])
@@ -2444,7 +2780,9 @@ def decision_fields(outputs: dict[str, list[dict[str, object]]], status: dict[st
     response_rows = [row for row in outputs["response_classification"] if is_interpretable_response(row.get("response_class"))]
     response_interpretable = bool(response_rows)
     kind = status_run_kind(status)
-    if kind == "substrate_untethering":
+    if kind == TRANSITION_ENERGY_CHARACTERIZATION:
+        readiness, next_action = transition_characterization_decision(outputs, status, matrix_gate, null_gate, null_power_gate, matched_marginal_gate, response_interpretable, fixture_gate)
+    elif kind == "substrate_untethering":
         readiness, next_action = substrate_untethering_decision(outputs, status, matrix_gate, null_gate, null_power_gate, matched_marginal_gate, response_interpretable, fixture_gate)
     elif kind in SWEEP_KINDS:
         readiness, next_action = sweep_decision(outputs, matrix_gate, null_gate, null_power_gate, matched_marginal_gate, response_interpretable, fixture_gate, kind)
@@ -2493,6 +2831,15 @@ def decision_fields(outputs: dict[str, list[dict[str, object]]], status: dict[st
         "budget_invariant_needed": int(readiness == "budget_invariant_needed"),
         "locality_only_trivial_baseline": int(readiness == "locality_only_trivial_baseline"),
         "untethering_underpowered": int(readiness == "untethering_underpowered"),
+        "transition_energy_substrates_characterized": int(readiness == "transition_energy_substrates_characterized"),
+        "budget_conservation_loadbearing": int(readiness == "budget_conservation_loadbearing"),
+        "smooth_potential_loadbearing": int(readiness == "smooth_potential_loadbearing"),
+        "locality_only_baseline_confirmed": int(readiness == "locality_only_baseline_confirmed"),
+        "locality_only_response_bearing": int(readiness == "locality_only_response_bearing"),
+        "constraint_template_no_longer_primary": int(readiness == "constraint_template_no_longer_primary"),
+        "max_entropy_transition_ready": int(readiness == "max_entropy_transition_ready"),
+        "substrate_characterization_underpowered": int(readiness == "substrate_characterization_underpowered"),
+        "coverage_repair_required": int(readiness == "coverage_repair_required"),
         "detector_null_gate_passed": int(null_gate),
         "detector_null_replicate_powered": int(null_power_gate),
         "matched_marginal_detector_null_gate_passed": int(matched_marginal_gate),
@@ -2545,6 +2892,64 @@ def substrate_untethering_decision(
     if aligned.get(CONSTRAINT_TEMPLATE_CURRENT, 0.0) > 0:
         return "constraint_template_specific_signal", "write_substrate_artifact_risk_note"
     return "untethering_underpowered", "continue_transition_energy_substrates"
+
+
+def transition_characterization_decision(
+    outputs: dict[str, list[dict[str, object]]],
+    status: dict[str, object],
+    matrix_gate: bool,
+    null_gate: bool,
+    null_power_gate: bool,
+    matched_marginal_gate: bool,
+    response_interpretable: bool,
+    fixture_gate: bool,
+) -> tuple[str, str]:
+    if not matrix_gate or not null_gate or not null_power_gate or not fixture_gate:
+        return "not_ready_repair_required", "pause_substrate_untethering"
+    if not matched_marginal_gate:
+        return "coverage_repair_required", "continue_transition_energy_characterization"
+    if not response_interpretable:
+        return "not_ready_repair_required", "pause_substrate_untethering"
+    jobs_requested = int(float_or_zero(status.get("jobs_requested")))
+    response_rows = len(outputs.get("response_classification", []))
+    variant_count = len(outputs.get("substrate_variant_manifest", []))
+    if jobs_requested < 4096 or response_rows < 2000 or variant_count < 8:
+        return "substrate_characterization_underpowered", "continue_transition_energy_characterization"
+
+    response_by_family = {
+        str(row.get("substrate_family", "")): row
+        for row in outputs.get("response_by_substrate", [])
+    }
+    matched_by_family = {
+        str(row.get("substrate_family", "")): float_or_zero(row.get("pass_fraction_mean"))
+        for row in outputs.get("matched_by_substrate", [])
+    }
+    budget = response_by_family.get("budget_conservation", {})
+    smooth = response_by_family.get("smooth_random_potential", {})
+    locality = response_by_family.get("locality_only", {})
+    constraint = response_by_family.get(CONSTRAINT_TEMPLATE_CURRENT, {})
+    budget_aligned = float_or_zero(budget.get("aligned_amplification_fraction"))
+    smooth_aligned = float_or_zero(smooth.get("aligned_amplification_fraction"))
+    locality_aligned = float_or_zero(locality.get("aligned_amplification_fraction"))
+    constraint_aligned = float_or_zero(constraint.get("aligned_amplification_fraction"))
+    budget_pass = matched_by_family.get("budget_conservation", 0.0) >= 0.75
+    smooth_pass = matched_by_family.get("smooth_random_potential", 0.0) >= 0.75
+    locality_pass = matched_by_family.get("locality_only", 0.0) >= 0.75
+
+    non_template_signal = max(budget_aligned, smooth_aligned, locality_aligned) >= constraint_aligned
+    if budget_pass and budget_aligned >= max(smooth_aligned, locality_aligned, constraint_aligned, 0.05):
+        return "budget_conservation_loadbearing", "expand_budget_conservation_family"
+    if smooth_pass and smooth_aligned >= max(budget_aligned, locality_aligned, constraint_aligned, 0.05):
+        return "smooth_potential_loadbearing", "expand_smooth_potential_family"
+    if locality_pass and locality_aligned >= 0.05:
+        return "locality_only_response_bearing", "continue_transition_energy_characterization"
+    if locality_pass and locality_aligned == 0.0 and (budget_aligned > 0.0 or smooth_aligned > 0.0):
+        return "locality_only_baseline_confirmed", "write_transition_energy_substrate_atlas_note"
+    if non_template_signal and budget_pass and smooth_pass:
+        return "constraint_template_no_longer_primary", "write_transition_energy_substrate_atlas_note"
+    if budget_pass and smooth_pass and locality_pass:
+        return "transition_energy_substrates_characterized", "implement_max_entropy_local_transition"
+    return "transition_energy_substrates_characterized", "write_transition_energy_substrate_atlas_note"
 
 
 def sweep_decision(
@@ -2722,6 +3127,68 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
             f"{aligned.get('aligned_amplification_rows', 0)} | "
             f"{markdown_cell(viscosity.get('transport_viscosity_read_mode', ''))} |"
         )
+    if status.get("run_kind") == TRANSITION_ENERGY_CHARACTERIZATION:
+        lines.extend([
+            "",
+            "## Substrate Family Variants",
+            "",
+            "| substrate_family | substrate_variant | matrices | capacity read | matched fraction | dominant response | aligned fraction |",
+            "|---|---|---:|---|---:|---|---:|",
+        ])
+        capacity_by_variant = {
+            (row.get("substrate_family"), row.get("substrate_variant")): row
+            for row in outputs.get("substrate_capacity_variant", [])
+        }
+        matched_by_variant = {
+            (row.get("substrate_family"), row.get("substrate_variant")): row
+            for row in outputs.get("matched_by_substrate_variant", [])
+        }
+        response_by_variant = {
+            (row.get("substrate_family"), row.get("substrate_variant")): row
+            for row in outputs.get("response_by_substrate_variant", [])
+        }
+        for row in outputs.get("substrate_variant_manifest", [])[:80]:
+            key = (row.get("substrate_family"), row.get("substrate_variant"))
+            capacity = capacity_by_variant.get(key, {})
+            matched = matched_by_variant.get(key, {})
+            response = response_by_variant.get(key, {})
+            lines.append(
+                f"| {markdown_cell(row.get('substrate_family', ''))} | {markdown_cell(row.get('substrate_variant', ''))} | "
+                f"{row.get('matrix_count', 0)} | {markdown_cell(capacity.get('capacity_read', ''))} | "
+                f"{float_or_zero(matched.get('pass_fraction_mean')):.3f} | "
+                f"{markdown_cell(response.get('dominant_response_class', ''))} | "
+                f"{float_or_zero(response.get('aligned_amplification_fraction')):.3f} |"
+            )
+        lines.extend([
+            "",
+            "## Budget-Conservation Analysis",
+            "",
+            "| budget_kind | response rows | dominant response | aligned fraction |",
+            "|---|---:|---|---:|",
+        ])
+        for row in outputs.get("response_by_budget", []):
+            lines.append(
+                f"| {markdown_cell(row.get('budget_kind', ''))} | {row.get('response_rows', '')} | "
+                f"{markdown_cell(row.get('dominant_response_class', ''))} | "
+                f"{float_or_zero(row.get('aligned_amplification_fraction')):.3f} |"
+            )
+        lines.extend([
+            "",
+            "## Smooth-Potential Analysis",
+            "",
+            "| parameter | value | response rows | dominant response | aligned fraction |",
+            "|---|---|---:|---|---:|",
+        ])
+        for row in outputs.get("response_by_potential_smoothness", []):
+            lines.append(
+                f"| potential_smoothness | {markdown_cell(row.get('potential_smoothness', ''))} | {row.get('response_rows', '')} | "
+                f"{markdown_cell(row.get('dominant_response_class', ''))} | {float_or_zero(row.get('aligned_amplification_fraction')):.3f} |"
+            )
+        for row in outputs.get("response_by_potential_beta", []):
+            lines.append(
+                f"| potential_beta | {markdown_cell(row.get('potential_beta', ''))} | {row.get('response_rows', '')} | "
+                f"{markdown_cell(row.get('dominant_response_class', ''))} | {float_or_zero(row.get('aligned_amplification_fraction')):.3f} |"
+            )
     lines.extend([
         "",
         "## Control Taxonomy Compliance",
@@ -2994,9 +3461,15 @@ def transport_matrix_id(key: TransportKey) -> str:
 
 
 def key_row(key: TransportKey) -> dict[str, object]:
+    variant = substrate_variant_from_condition_id(key.condition_id)
     return {
         "matrix_family": "horizon_transport",
         "substrate_family": substrate_family_from_condition_id(key.condition_id),
+        "substrate_variant": variant,
+        "potential_smoothness": variant_parameter(variant, "smoothness"),
+        "potential_beta": variant_parameter(variant, "beta"),
+        "budget_kind": budget_kind_from_variant(variant),
+        "budget_weight": variant_parameter(variant, "weight"),
         "condition_id": key.condition_id,
         "actual_control_name": key.actual_control_name,
         "mechanism_control_strength": key.mechanism_control_strength,
@@ -3019,6 +3492,33 @@ def substrate_family_from_condition_id(condition_id: object) -> str:
     if value.startswith("fixture_"):
         return "synthetic_fixture"
     return CONSTRAINT_TEMPLATE_CURRENT
+
+
+def substrate_variant_from_condition_id(condition_id: object) -> str:
+    value = str(condition_id)
+    parts = value.split("::")
+    if len(parts) >= 3 and parts[0] in TRANSITION_ENERGY_FAMILIES:
+        return parts[1]
+    if len(parts) == 2 and parts[0] in TRANSITION_ENERGY_FAMILIES:
+        return "default"
+    if value.startswith("fixture_"):
+        return "synthetic_fixture"
+    return "default"
+
+
+def variant_parameter(variant: str, field: str) -> str:
+    prefix = f"{field}_"
+    for part in str(variant).split("__"):
+        if part.startswith(prefix):
+            return part[len(prefix):].replace("p", ".").replace("m", "-")
+    return ""
+
+
+def budget_kind_from_variant(variant: str) -> str:
+    if not str(variant).startswith("budget_"):
+        return ""
+    head = str(variant).split("__", 1)[0]
+    return head[len("budget_"):]
 
 
 def intervention_taxonomy(key: TransportKey) -> dict[str, object]:
@@ -3079,7 +3579,14 @@ def null_failure_interpretation(matrix: TransportMatrix, category: str, percenti
 
 
 def response_view_key(matrix: TransportMatrix) -> tuple[object, ...]:
-    return (matrix.key.probe_key, matrix.key.flow_mode, matrix.key.H_a, matrix.key.H_b)
+    return (
+        substrate_family_from_condition_id(matrix.key.condition_id),
+        substrate_variant_from_condition_id(matrix.key.condition_id),
+        matrix.key.probe_key,
+        matrix.key.flow_mode,
+        matrix.key.H_a,
+        matrix.key.H_b,
+    )
 
 
 def sub_transport_matrix(matrix: TransportMatrix, rows: list[str], cols: list[str]) -> np.ndarray:

@@ -136,9 +136,9 @@ def potential_field(states: tuple[State, ...], params: RelationParams, seed: int
 def budget_field(states: tuple[State, ...], params: RelationParams, job: dict[str, object]) -> dict[State, float]:
     budget_kind = str(job.get("budget_kind", "total_coordinate_mass") or "total_coordinate_mass")
     normalizer = max(1.0, params.coordinate_count * max(1, params.alphabet_size - 1))
-    if budget_kind == "hamming_weight":
+    if budget_kind in {"hamming_weight", "hamming_weight_or_nonzero_count", "nonzero_count"}:
         return {state: sum(int(value != 0) for value in state) / max(1, len(state)) for state in states}
-    if budget_kind == "symbol_histogram_l2":
+    if budget_kind in {"symbol_histogram_l2", "symbol_histogram_distance"}:
         uniform = 1.0 / max(1, params.alphabet_size)
         out = {}
         for state in states:

@@ -20,7 +20,7 @@ The active empirical question is currently narrower than agency, identity, or va
 
 Current status, in one line:
 
-**VAL0/VAL1 were useful reconnaissance probes; RFS-MB0 has now reoriented from endpoint support/distribution deformation and static coflow spectra toward directional horizon-transport instrumentation. The H128 horizon-transport response-surface scaleup passed matched-marginal instrument gates and surfaced a stable-to-amplified-aligned response surface across horizon depth and perturbation strength. The latest substrate-untethering transition-energy larger smoke shows this object remains measurable beyond the original hand-built constraint vocabulary. This is still not a scientific validation gate, candidate promotion, or Omega/agency/value claim.**
+**VAL0/VAL1 were useful reconnaissance probes; RFS-MB0 has now reoriented from endpoint support/distribution deformation and static coflow spectra toward directional horizon-transport instrumentation. The H128 horizon-transport response-surface scaleup passed matched-marginal instrument gates and surfaced a stable-to-amplified-aligned response surface. The latest transition-energy substrate characterization run turns that into a substrate-response atlas: locality-only remains a baseline, smooth-potential is response-bearing but not aligned-amplifying in the tested grid, and budget-conservation carries aligned response with coverage caveats. This is still not a scientific validation gate, candidate promotion, or Omega/agency/value claim.**
 
 ## Current empirical branch: horizon transport
 
@@ -80,6 +80,8 @@ The current intermediate theory object is described in:
 
 - [Horizon Transport and Aligned Amplification](docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md)
 - [Transition Energy and Constraint Untethering](docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
+- [Transition-energy substrate characterization result](docs/research_notes/validation_results/rfs_mb0_transition_energy_substrate_characterization_result.md)
+- [Transition-energy substrate characterization spec](docs/RFS_MB0_TRANSITION_ENERGY_SUBSTRATE_CHARACTERIZATION_RUN_SPEC.md)
 - [Substrate-untethering transition-energy larger smoke result](docs/research_notes/validation_results/rfs_mb0_substrate_untethering_transition_energy_sweep_result.md)
 - [Substrate-untethering transition-energy sweep spec](docs/RFS_MB0_SUBSTRATE_UNTETHERING_TRANSITION_ENERGY_SWEEP_SPEC.md)
 - [Horizon-transport response-surface H128 scaleup result](docs/research_notes/validation_results/rfs_mb0_horizon_transport_response_surface_h128_scaleup_result.md)
@@ -300,10 +302,10 @@ horizon transport:
   current live empirical branch; H128 scaleup surfaced matched-marginal-separated stable-to-amplified-aligned response surface
 
 next task:
-  continue transition-energy substrate untethering after the larger smoke
-  showed horizon transport surviving across current substrate families;
-  move toward a max-entropy local transition ensemble if substrate and
-  matched-null behavior remain clean enough
+  write a transition-energy substrate atlas note;
+  repair coverage around budget-conservation, especially total coordinate mass;
+  move toward a max-entropy local transition ensemble only after preserving
+  the substrate-law distinctions surfaced by the characterization run
 ```
 
 ## Important current docs
@@ -312,6 +314,8 @@ next task:
 
 - [Horizon Transport and Aligned Amplification](docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md)
 - [Transition Energy and Constraint Untethering](docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
+- [Transition-energy substrate characterization result](docs/research_notes/validation_results/rfs_mb0_transition_energy_substrate_characterization_result.md)
+- [Transition-energy substrate characterization spec](docs/RFS_MB0_TRANSITION_ENERGY_SUBSTRATE_CHARACTERIZATION_RUN_SPEC.md)
 - [Substrate-untethering transition-energy larger smoke result](docs/research_notes/validation_results/rfs_mb0_substrate_untethering_transition_energy_sweep_result.md)
 - [Substrate-untethering transition-energy sweep spec](docs/RFS_MB0_SUBSTRATE_UNTETHERING_TRANSITION_ENERGY_SWEEP_SPEC.md)
 - [Horizon-transport response-surface H128 scaleup result](docs/research_notes/validation_results/rfs_mb0_horizon_transport_response_surface_h128_scaleup_result.md)
@@ -536,10 +540,12 @@ Start here for the pipeline view:
 
 The current next step is **not** holdout, graph perturbation, direct channel diagnostics, or candidate promotion.
 
-The current next step is to continue transition-energy substrate untethering and reduce dependence on hand-built constraint vocabulary:
+The current next step is to write the transition-energy substrate atlas note and decide how to repair/advance the substrate branch:
 
 ```text
 near-term options:
+  repair budget-conservation coverage before ranking total mass too highly;
+  write the transition-energy substrate atlas note;
   move toward a max-entropy local transition ensemble;
   keep grammar-neutral probes such as relation_role and full_state_hash;
   preserve matched-marginal detector gates and response-profile taxonomy;
