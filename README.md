@@ -251,6 +251,7 @@ The current empirical program is still only a first step. It does not validate a
 - [Transition-Energy Substrate Atlas](docs/research_notes/omega_theory/transition_energy_substrate_atlas.md)
 - [Asymmetry-ladder transition-energy result](docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_transition_energy_result.md)
 - [Asymmetry-ladder preservation scaleup result](docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
+- [Asymmetry-ladder preservation scaleup figures](docs/research_notes/validation_results/figures/20260531_asymmetry_ladder_preservation_scaleup/README.md)
 - [Asymmetry-ladder transition-energy spec](docs/RFS_MB0_ASYMMETRY_LADDER_TRANSITION_ENERGY_SUBSTRATE_SPEC.md)
 - [Macro-invariant due-diligence result](docs/research_notes/validation_results/rfs_mb0_macro_invariant_due_diligence_result.md)
 - [Transition-energy substrate characterization result](docs/research_notes/validation_results/rfs_mb0_transition_energy_substrate_characterization_result.md)

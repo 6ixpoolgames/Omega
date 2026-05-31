@@ -135,6 +135,10 @@ Current result notes:
 - `val0_ct_12h_heldout_exploratory_result.md`
 - `val0_ct_r1_calibration_result.md`
 
+Current figure bundles:
+
+- `figures/20260531_asymmetry_ladder_preservation_scaleup/`
+
 Result in one line:
 
 - Current reset: the project is not claiming Omega validation. It is building a

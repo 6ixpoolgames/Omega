@@ -8,6 +8,12 @@ Local output:
 results/local_runs/20260531_asymmetry_ladder_preservation_scaleup/
 ```
 
+Promoted visualization bundle:
+
+```text
+docs/research_notes/validation_results/figures/20260531_asymmetry_ladder_preservation_scaleup/
+```
+
 Runner:
 
 ```text
@@ -69,6 +75,25 @@ detector_null_replicate_power: passed
 matched_marginal_detector_null_separation: passed
 synthetic_fixture_contract: 8 / 8
 ```
+
+## Visualization Outputs
+
+The compact figure bundle contains:
+
+```text
+raw_transport_matrix_atlas.png
+horizon_response_metric_rgb_spectrogram.png
+horizon_response_class_spectrogram.png
+transport_viscosity_score_spectrogram.png
+alignment_mass_entropy_panels.png
+saturation_coverage_profile.png
+response_threshold_ladder.png
+```
+
+The raw transport atlas and RGB spectrogram are the most useful first-pass
+views. They are diagnostics of measured transport outputs, not additional
+claim status. The run did not include raw frontier state sampling, so there is
+no raw substrate-state frontier heatmap for this batch.
 
 ## Family-Level Read
 
