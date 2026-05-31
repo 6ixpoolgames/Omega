@@ -50,6 +50,7 @@ from .horizon_transport_contracts import (
     SWEEP_KINDS,
     TRANSITION_ENERGY_CHARACTERIZATION,
     TOP_M_GEOMETRY_AUDIT,
+    TOP_M_MECHANISM_AUDIT,
     active_spec_id,
     artifact_prefix,
     attach_horizon_pairs,
@@ -99,6 +100,12 @@ from .transition_energy_substrates import (
     SMOOTH_RANDOM_POTENTIAL,
     SOFTMAX_PRESERVATION,
     TOP_M_GEOMETRY_AUDIT_FAMILIES,
+    TOP_M_MECHANISM_FAMILIES,
+    TOP_M_BOUNDARY_JITTER,
+    TOP_M_CORE_PRESERVED_FRINGE_RANDOMIZED,
+    TOP_M_CORE_RANDOMIZED_FRINGE_PRESERVED,
+    TOP_M_M_MINUS_1,
+    TOP_M_M_PLUS_1,
     TRANSITION_ENERGY_FAMILIES,
     canonical_transition_energy_family,
     generate_job_baseline_system,
@@ -317,7 +324,7 @@ def substrate_families(args: argparse.Namespace) -> list[str]:
 
 def substrate_family_variants(args: argparse.Namespace) -> list[dict[str, object]]:
     variants: list[dict[str, object]] = []
-    characterization = run_kind(args) in {TRANSITION_ENERGY_CHARACTERIZATION, ASYMMETRY_LADDER, MAX_ENTROPY_PREFLIGHT, TOP_M_GEOMETRY_AUDIT}
+    characterization = run_kind(args) in {TRANSITION_ENERGY_CHARACTERIZATION, ASYMMETRY_LADDER, MAX_ENTROPY_PREFLIGHT, TOP_M_GEOMETRY_AUDIT, TOP_M_MECHANISM_AUDIT}
     for family in substrate_families(args):
         if not characterization:
             variants.append(default_substrate_variant(family, args))
@@ -383,6 +390,20 @@ def substrate_family_variants(args: argparse.Namespace) -> list[dict[str, object
                         "budget_weight": beta,
                         "macro_invariant_kind": invariant_kind,
                         "macro_invariant_beta": beta,
+                    })
+        elif family in TOP_M_MECHANISM_FAMILIES:
+            invariant_kinds = string_list_or_default(args.budget_kinds, ("symbol_histogram_distance",))
+            for invariant_kind in invariant_kinds:
+                for beta in list_or_default(args.macro_invariant_beta_list or args.budget_weights, (0.075, 0.10, 0.15)):
+                    variants.append({
+                        "substrate_family": family,
+                        "substrate_variant": f"invariant_{safe_id(invariant_kind)}__beta_{float_label(beta)}",
+                        "variant_role": "hard_top_m_mechanism_audit",
+                        "budget_kind": invariant_kind,
+                        "budget_weight": beta,
+                        "macro_invariant_kind": invariant_kind,
+                        "macro_invariant_beta": beta,
+                        "top_m_mechanism_family": family,
                     })
         elif family == COMBINED_ASYMMETRY:
             invariant_kinds = string_list_or_default(args.budget_kinds, ("hamming_weight_or_nonzero_count", "total_coordinate_mass"))
@@ -500,6 +521,15 @@ def default_substrate_variant(family: str, args: argparse.Namespace) -> dict[str
             "budget_weight": beta,
             "macro_invariant_kind": args.budget_kind,
             "macro_invariant_beta": beta,
+        })
+    if family in TOP_M_MECHANISM_FAMILIES:
+        beta = macro_invariant_beta_default(args)
+        row.update({
+            "budget_kind": args.budget_kind,
+            "budget_weight": beta,
+            "macro_invariant_kind": args.budget_kind,
+            "macro_invariant_beta": beta,
+            "top_m_mechanism_family": family,
         })
     if family == COMBINED_ASYMMETRY:
         beta = macro_invariant_beta_default(args)
@@ -644,9 +674,9 @@ def expand_jobs_for_substrate_families(jobs: list[dict[str, object]], args: argp
             item["job_id"] = f"{family}::{variant_id}::{item.get('job_id', '')}"
             item["transition_energy_family"] = family
             item["transition_energy_form"] = transition_energy_form_label(family)
-            if run_kind(args) == TOP_M_GEOMETRY_AUDIT and family in TOP_M_GEOMETRY_AUDIT_FAMILIES:
+            if run_kind(args) in {TOP_M_GEOMETRY_AUDIT, TOP_M_MECHANISM_AUDIT} and family in TOP_M_GEOMETRY_AUDIT_FAMILIES:
                 item["apply_reversibility"] = False
-                item["sampler_postprocess_policy"] = "no_reversibility_or_rewire_for_top_m_geometry_audit"
+                item["sampler_postprocess_policy"] = f"no_reversibility_or_rewire_for_{run_kind(args)}"
             item["potential_beta"] = variant.get("potential_beta", args.potential_beta)
             item["potential_seed"] = int(item.get("seed", 0)) + 71_003
             item["potential_smoothness"] = variant.get("potential_smoothness", args.potential_smoothness)
@@ -660,6 +690,7 @@ def expand_jobs_for_substrate_families(jobs: list[dict[str, object]], args: argp
             item["max_entropy_delta_match_error_max"] = variant.get("max_entropy_delta_match_error_max", args.max_entropy_delta_match_error_max)
             item["sampler_temperature"] = variant.get("sampler_temperature", "")
             item["rank_bucket_multiplier"] = variant.get("rank_bucket_multiplier", "")
+            item["top_m_mechanism_family"] = variant.get("top_m_mechanism_family", "")
             item["asymmetry_alpha"] = variant.get("asymmetry_alpha", args.asymmetry_alpha)
             item["asymmetry_field_seed"] = int(item.get("seed", 0)) + 73_001
             item["asymmetry_field_smoothness"] = variant.get("asymmetry_field_smoothness", args.asymmetry_field_smoothness)
@@ -682,7 +713,7 @@ def transition_energy_form_label(family: str) -> str:
         return "hamming_distance_plus_budget_delta_penalty_plus_seeded_roughness"
     if family == DIRECTIONAL_ASYMMETRY:
         return "hamming_distance_plus_alpha_directional_asymmetry_delta_plus_seeded_roughness"
-    if family == PRESERVATION_ASYMMETRY:
+    if family == PRESERVATION_ASYMMETRY or family in TOP_M_MECHANISM_FAMILIES:
         return "hamming_distance_plus_beta_macro_invariant_delta_penalty_plus_seeded_roughness"
     if family == COMBINED_ASYMMETRY:
         return "hamming_distance_plus_alpha_directional_delta_plus_beta_macro_invariant_delta_plus_seeded_roughness"
@@ -1761,6 +1792,12 @@ def top_m_geometry_sampler_diagnostics_rows(rows: list[dict[str, object]]) -> li
             "sampler_temperature": row.get("sampler_temperature", ""),
             "rank_bucket_multiplier": row.get("rank_bucket_multiplier", ""),
             "rank_condition_window_mean": row.get("rank_condition_window_mean", ""),
+            "top_m_mechanism_family": row.get("top_m_mechanism_family", ""),
+            "top_m_mechanism_rule": row.get("top_m_mechanism_rule", ""),
+            "top_m_mechanism_core_size": row.get("top_m_mechanism_core_size", ""),
+            "top_m_mechanism_fringe_pool_size": row.get("top_m_mechanism_fringe_pool_size", ""),
+            "top_m_mechanism_boundary_window": row.get("top_m_mechanism_boundary_window", ""),
+            "effective_out_degree_target": row.get("effective_out_degree_target", ""),
             "apply_reversibility_requested": row.get("apply_reversibility_requested", ""),
             "reversibility_fraction_applied": row.get("reversibility_fraction_applied", ""),
             "sampler_postprocess_policy": row.get("sampler_postprocess_policy", ""),
@@ -1804,6 +1841,7 @@ def top_m_geometry_per_state_rank_bucket_match_summary_rows(rows: list[dict[str,
             "macro_invariant_beta": row.get("macro_invariant_beta", ""),
             "sampler_temperature": row.get("sampler_temperature", ""),
             "rank_bucket_multiplier": row.get("rank_bucket_multiplier", ""),
+            "top_m_mechanism_rule": row.get("top_m_mechanism_rule", ""),
             "sample_count": row.get("sample_count", 0),
             "per_state_rank_bucket_match_error_mean": row.get("per_state_rank_bucket_match_error_mean", ""),
             "per_state_rank_bucket_match_error_max": row.get("per_state_rank_bucket_match_error_max", ""),
@@ -1822,6 +1860,7 @@ def top_m_geometry_edge_match_to_calibration_rows(rows: list[dict[str, object]])
             "macro_invariant_beta": row.get("macro_invariant_beta", ""),
             "sampler_temperature": row.get("sampler_temperature", ""),
             "rank_bucket_multiplier": row.get("rank_bucket_multiplier", ""),
+            "top_m_mechanism_rule": row.get("top_m_mechanism_rule", ""),
             "sample_count": row.get("sample_count", 0),
             "edge_jaccard_vs_top_m_calibration_mean": row.get("edge_jaccard_vs_top_m_calibration_mean", ""),
             "selected_edge_overlap_fraction_vs_top_m_calibration_mean": row.get("selected_edge_overlap_fraction_vs_top_m_calibration_mean", ""),
@@ -1833,7 +1872,7 @@ def top_m_geometry_edge_match_to_calibration_rows(rows: list[dict[str, object]])
 
 
 def aggregate_top_m_geometry_rows(rows: list[dict[str, object]], *, include_per_state: bool) -> list[dict[str, object]]:
-    grouped: dict[tuple[str, str, str, str, str, str], list[dict[str, object]]] = defaultdict(list)
+    grouped: dict[tuple[str, str, str, str, str, str, str], list[dict[str, object]]] = defaultdict(list)
     for row in rows:
         grouped[(
             str(row.get("sampler_family", "")),
@@ -1842,10 +1881,11 @@ def aggregate_top_m_geometry_rows(rows: list[dict[str, object]], *, include_per_
             str(row.get("macro_invariant_beta", "")),
             str(row.get("sampler_temperature", "")),
             str(row.get("rank_bucket_multiplier", "")),
+            str(row.get("top_m_mechanism_rule", "")),
         )].append(row)
     out: list[dict[str, object]] = []
     for key, items in sorted(grouped.items(), key=lambda item: tuple(str(part) for part in item[0])):
-        sampler_family, family, invariant_kind, beta, temperature, rank_multiplier = key
+        sampler_family, family, invariant_kind, beta, temperature, rank_multiplier, mechanism_rule = key
         row = {
             "sampler_family": sampler_family,
             "substrate_family": family,
@@ -1853,6 +1893,7 @@ def aggregate_top_m_geometry_rows(rows: list[dict[str, object]], *, include_per_
             "macro_invariant_beta": beta,
             "sampler_temperature": temperature,
             "rank_bucket_multiplier": rank_multiplier,
+            "top_m_mechanism_rule": mechanism_rule,
             "sample_count": len(items),
             "edge_jaccard_vs_top_m_calibration_mean": optional_mean(items, "edge_jaccard_vs_top_m_calibration"),
             "selected_edge_overlap_fraction_vs_top_m_calibration_mean": optional_mean(items, "selected_edge_overlap_fraction_vs_top_m_calibration"),
@@ -1972,6 +2013,16 @@ def substrate_selection_rule(family: str) -> str:
         return "maximum_entropy_local_matched_macro_invariant_delta"
     if family == RANK_CONDITIONED_MAX_ENTROPY:
         return "rank_conditioned_local_sampling"
+    if family == TOP_M_CORE_PRESERVED_FRINGE_RANDOMIZED:
+        return "top_m_core_preserved_fringe_randomized"
+    if family == TOP_M_CORE_RANDOMIZED_FRINGE_PRESERVED:
+        return "top_m_core_randomized_fringe_preserved"
+    if family == TOP_M_BOUNDARY_JITTER:
+        return "top_m_boundary_jitter"
+    if family == TOP_M_M_MINUS_1:
+        return "top_m_lowest_energy_candidates_m_minus_1"
+    if family == TOP_M_M_PLUS_1:
+        return "top_m_lowest_energy_candidates_m_plus_1"
     return "top_m_lowest_energy_candidates"
 
 
@@ -1982,7 +2033,11 @@ def transition_energy_family_summary_rows(args: argparse.Namespace) -> list[dict
             "substrate_family": family,
             "transition_energy_form": transition_energy_form_label(family),
             "hand_built_constraint_vocabulary_removed": int(family != CONSTRAINT_TEMPLATE_CURRENT),
-            "probabilistic_sampling_used": int(family in MAX_ENTROPY_FAMILIES or family == SOFTMAX_PRESERVATION),
+            "probabilistic_sampling_used": int(family in MAX_ENTROPY_FAMILIES or family == SOFTMAX_PRESERVATION or family in {
+                TOP_M_CORE_PRESERVED_FRINGE_RANDOMIZED,
+                TOP_M_CORE_RANDOMIZED_FRINGE_PRESERVED,
+                TOP_M_BOUNDARY_JITTER,
+            }),
         })
     return rows
 
@@ -2001,13 +2056,14 @@ def transition_energy_parameter_summary_rows(args: argparse.Namespace) -> list[d
             "potential_scale": variant.get("potential_scale", "") if family == SMOOTH_RANDOM_POTENTIAL else "",
             "budget_kind": variant.get("budget_kind", "") if family == BUDGET_CONSERVATION else "",
             "budget_weight": variant.get("budget_weight", "") if family == BUDGET_CONSERVATION else "",
-            "macro_invariant_kind": variant.get("macro_invariant_kind", "") if family in {PRESERVATION_ASYMMETRY, COMBINED_ASYMMETRY, SOFTMAX_PRESERVATION, *MAX_ENTROPY_FAMILIES} else "",
-            "macro_invariant_beta": variant.get("macro_invariant_beta", "") if family in {PRESERVATION_ASYMMETRY, COMBINED_ASYMMETRY, SOFTMAX_PRESERVATION, *MAX_ENTROPY_FAMILIES} else "",
+            "macro_invariant_kind": variant.get("macro_invariant_kind", "") if family in {PRESERVATION_ASYMMETRY, COMBINED_ASYMMETRY, SOFTMAX_PRESERVATION, *MAX_ENTROPY_FAMILIES, *TOP_M_MECHANISM_FAMILIES} else "",
+            "macro_invariant_beta": variant.get("macro_invariant_beta", "") if family in {PRESERVATION_ASYMMETRY, COMBINED_ASYMMETRY, SOFTMAX_PRESERVATION, *MAX_ENTROPY_FAMILIES, *TOP_M_MECHANISM_FAMILIES} else "",
             "equivalent_beta_target": variant.get("equivalent_beta_target", "") if family in MAX_ENTROPY_FAMILIES else "",
             "max_entropy_sampler_draws": variant.get("max_entropy_sampler_draws", "") if family in MAX_ENTROPY_FAMILIES else "",
             "max_entropy_delta_match_error_max": variant.get("max_entropy_delta_match_error_max", "") if family in MAX_ENTROPY_FAMILIES else "",
             "sampler_temperature": variant.get("sampler_temperature", "") if family == SOFTMAX_PRESERVATION else "",
             "rank_bucket_multiplier": variant.get("rank_bucket_multiplier", "") if family == RANK_CONDITIONED_MAX_ENTROPY else "",
+            "top_m_mechanism_family": variant.get("top_m_mechanism_family", "") if family in TOP_M_MECHANISM_FAMILIES else "",
             "asymmetry_alpha": variant.get("asymmetry_alpha", "") if family in {DIRECTIONAL_ASYMMETRY, COMBINED_ASYMMETRY} else "",
             "asymmetry_field_smoothness": variant.get("asymmetry_field_smoothness", "") if family in {DIRECTIONAL_ASYMMETRY, COMBINED_ASYMMETRY} else "",
             "asymmetry_field_scale": variant.get("asymmetry_field_scale", "") if family in {DIRECTIONAL_ASYMMETRY, COMBINED_ASYMMETRY} else "",
@@ -3725,6 +3781,8 @@ def decision_fields(outputs: dict[str, list[dict[str, object]]], status: dict[st
         readiness, next_action = max_entropy_preflight_decision(outputs, status, matrix_gate, null_gate, null_power_gate, matched_marginal_gate, response_interpretable, fixture_gate)
     elif kind == TOP_M_GEOMETRY_AUDIT:
         readiness, next_action = top_m_geometry_audit_decision(outputs, status, matrix_gate, null_gate, null_power_gate, matched_marginal_gate, response_interpretable, fixture_gate)
+    elif kind == TOP_M_MECHANISM_AUDIT:
+        readiness, next_action = top_m_mechanism_audit_decision(outputs, status, matrix_gate, null_gate, null_power_gate, matched_marginal_gate, response_interpretable, fixture_gate)
     elif kind == "substrate_untethering":
         readiness, next_action = substrate_untethering_decision(outputs, status, matrix_gate, null_gate, null_power_gate, matched_marginal_gate, response_interpretable, fixture_gate)
     elif kind == ASYMMETRY_LADDER:
@@ -3792,6 +3850,9 @@ def decision_fields(outputs: dict[str, list[dict[str, object]]], status: dict[st
         "energy_rank_bias_loadbearing": int(readiness == "energy_rank_bias_loadbearing"),
         "rank_conditioned_geometry_loadbearing": int(readiness == "rank_conditioned_geometry_loadbearing"),
         "algorithmically_narrow_top_m_geometry": int(readiness == "algorithmically_narrow_top_m_geometry"),
+        "top_m_mechanism_smoke_completed": int(readiness == "top_m_mechanism_smoke_completed"),
+        "top_m_mechanism_partially_preserved": int(readiness == "top_m_mechanism_partially_preserved"),
+        "hard_top_m_exact_selection_loadbearing": int(readiness == "hard_top_m_exact_selection_loadbearing"),
         "top_m_geometry_audit_underpowered": int(readiness == "top_m_geometry_audit_underpowered"),
         "top_m_geometry_spec_incomplete": int(readiness == "top_m_geometry_spec_incomplete"),
         "locality_only_baseline_confirmed": int(readiness == "locality_only_baseline_confirmed"),
@@ -3992,6 +4053,68 @@ def top_m_geometry_audit_decision(
     if macro_aligned:
         return "max_entropy_transition_ready", "inspect_macro_marginal_sampler_response"
     return "deterministic_top_m_geometry_loadbearing", "continue_top_m_geometry_audit"
+
+
+def top_m_mechanism_audit_decision(
+    outputs: dict[str, list[dict[str, object]]],
+    status: dict[str, object],
+    matrix_gate: bool,
+    null_gate: bool,
+    null_power_gate: bool,
+    matched_marginal_gate: bool,
+    response_interpretable: bool,
+    fixture_gate: bool,
+) -> tuple[str, str]:
+    if not matrix_gate or not null_gate or not null_power_gate or not fixture_gate:
+        return "not_ready_repair_required", "repair_top_m_mechanism_audit_plumbing"
+    if not matched_marginal_gate:
+        return "coverage_repair_required", "repair_top_m_mechanism_matched_marginal_gates"
+
+    primary_rows = [
+        row for row in outputs.get("response_classification", [])
+        if str(row.get("macro_invariant_kind", "")) == "symbol_histogram_distance"
+    ]
+    if not primary_rows:
+        return "top_m_geometry_spec_incomplete", "rerun_with_symbol_histogram_primary_invariant"
+
+    required_samplers = {"deterministic_top_m"}
+    mechanism_samplers = set(TOP_M_MECHANISM_FAMILIES)
+    present_samplers = {str(row.get("sampler_family", "")) for row in primary_rows}
+    if not required_samplers <= present_samplers or len(present_samplers & mechanism_samplers) < 2:
+        return "top_m_geometry_spec_incomplete", "rerun_with_deterministic_and_mechanism_variants"
+
+    context_missing = [
+        row for row in outputs.get("paired_baseline_availability_by_sampler_context", [])
+        if str(row.get("macro_invariant_kind", "")) == "symbol_histogram_distance"
+        and str(row.get("sampler_family", "")) in (required_samplers | mechanism_samplers)
+        and int(float_or_zero(row.get("paired_baseline_missing_rows"))) > 0
+    ]
+    if context_missing or any(str(row.get("response_class", "")) == "transport_baseline_missing" for row in primary_rows):
+        return "coverage_repair_required", "repair_top_m_mechanism_paired_baselines"
+    if not response_interpretable:
+        return "top_m_geometry_audit_underpowered", "continue_top_m_mechanism_audit"
+
+    sampler_rows = {
+        str(row.get("sampler_family", "")): row
+        for row in response_by_group_rows(primary_rows, ("sampler_family",))
+    }
+    deterministic = sampler_rows.get("deterministic_top_m", {})
+    deterministic_aligned = float_or_zero(deterministic.get("aligned_amplification_fraction")) > 0.0
+    if not deterministic_aligned:
+        return "top_m_geometry_audit_underpowered", "inspect_deterministic_reproducibility"
+
+    jobs_requested = int(float_or_zero(status.get("jobs_requested")))
+    response_rows = len(primary_rows)
+    if jobs_requested < 256 or response_rows < 250:
+        return "top_m_mechanism_smoke_completed", "run_top_m_mechanism_medium"
+
+    mechanism_aligned = [
+        family for family in mechanism_samplers
+        if float_or_zero(sampler_rows.get(family, {}).get("aligned_amplification_fraction")) > 0.0
+    ]
+    if mechanism_aligned:
+        return "top_m_mechanism_partially_preserved", "expand_top_m_mechanism_variant_resolution"
+    return "hard_top_m_exact_selection_loadbearing", "demote_or_repair_deterministic_top_m_effect"
 
 
 def asymmetry_ladder_decision(
@@ -4290,12 +4413,12 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
             f"{aligned.get('aligned_amplification_rows', 0)} | "
             f"{markdown_cell(viscosity.get('transport_viscosity_read_mode', ''))} |"
         )
-    if status.get("run_kind") == TOP_M_GEOMETRY_AUDIT:
+    if status.get("run_kind") in {TOP_M_GEOMETRY_AUDIT, TOP_M_MECHANISM_AUDIT}:
         lines.extend([
             "",
-            "## Top-m Geometry Audit",
+            "## Top-m Audit",
             "",
-            "The sampler-family tables below are filtered to the primary invariant `symbol_histogram_distance`; diagnostic invariants are reported in the CSV artifacts.",
+            "The sampler-family tables below are filtered to the primary invariant `symbol_histogram_distance`; diagnostic invariants, if any, are reported in the CSV artifacts.",
             "",
             "| sampler_family | response rows | dominant response | aligned fraction |",
             "|---|---:|---|---:|",
@@ -4336,13 +4459,14 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
             "",
             "### Edge / Rank / Energy Match",
             "",
-            "| sampler_family | invariant | beta | temperature | rank window | samples | edge overlap | rank match error | energy match error |",
-            "|---|---|---:|---:|---:|---:|---:|---:|---:|",
+            "| sampler_family | invariant | beta | mechanism rule | temperature | rank window | samples | edge overlap | rank match error | energy match error |",
+            "|---|---|---:|---|---:|---:|---:|---:|---:|---:|",
         ])
         for row in outputs.get("top_m_rank_energy_match", [])[:80]:
             lines.append(
                 f"| {markdown_cell(row.get('sampler_family', ''))} | {markdown_cell(row.get('macro_invariant_kind', ''))} | "
-                f"{markdown_cell(row.get('macro_invariant_beta', ''))} | {markdown_cell(row.get('sampler_temperature', ''))} | "
+                f"{markdown_cell(row.get('macro_invariant_beta', ''))} | {markdown_cell(row.get('top_m_mechanism_rule', ''))} | "
+                f"{markdown_cell(row.get('sampler_temperature', ''))} | "
                 f"{markdown_cell(row.get('rank_bucket_multiplier', ''))} | {row.get('sample_count', '')} | "
                 f"{float_or_zero(row.get('selected_edge_overlap_fraction_vs_top_m_calibration_mean')):.3f} | "
                 f"{float_or_zero(row.get('rank_distribution_match_error_mean')):.3f} | "
@@ -4352,13 +4476,14 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
             "",
             "### Per-state Rank Bucket Match",
             "",
-            "| sampler_family | invariant | beta | temperature | rank window | samples | mean error | max error |",
-            "|---|---|---:|---:|---:|---:|---:|---:|",
+            "| sampler_family | invariant | beta | mechanism rule | temperature | rank window | samples | mean error | max error |",
+            "|---|---|---:|---|---:|---:|---:|---:|---:|",
         ])
         for row in outputs.get("top_m_per_state_rank_bucket", [])[:80]:
             lines.append(
                 f"| {markdown_cell(row.get('sampler_family', ''))} | {markdown_cell(row.get('macro_invariant_kind', ''))} | "
-                f"{markdown_cell(row.get('macro_invariant_beta', ''))} | {markdown_cell(row.get('sampler_temperature', ''))} | "
+                f"{markdown_cell(row.get('macro_invariant_beta', ''))} | {markdown_cell(row.get('top_m_mechanism_rule', ''))} | "
+                f"{markdown_cell(row.get('sampler_temperature', ''))} | "
                 f"{markdown_cell(row.get('rank_bucket_multiplier', ''))} | {row.get('sample_count', '')} | "
                 f"{float_or_zero(row.get('per_state_rank_bucket_match_error_mean')):.3f} | "
                 f"{float_or_zero(row.get('per_state_rank_bucket_match_error_max')):.3f} |"
@@ -4675,6 +4800,9 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
         f"- max_entropy_local_response_bearing: `{status.get('max_entropy_local_response_bearing', 0)}`",
         f"- deterministic_top_m_geometry_loadbearing: `{status.get('deterministic_top_m_geometry_loadbearing', 0)}`",
         f"- algorithmically_narrow_top_m_geometry: `{status.get('algorithmically_narrow_top_m_geometry', 0)}`",
+        f"- top_m_mechanism_smoke_completed: `{status.get('top_m_mechanism_smoke_completed', 0)}`",
+        f"- top_m_mechanism_partially_preserved: `{status.get('top_m_mechanism_partially_preserved', 0)}`",
+        f"- hard_top_m_exact_selection_loadbearing: `{status.get('hard_top_m_exact_selection_loadbearing', 0)}`",
         f"- top_m_geometry_spec_incomplete: `{status.get('top_m_geometry_spec_incomplete', 0)}`",
         f"- not_ready_repair_required: `{status.get('not_ready_repair_required', 0)}`",
         "",
@@ -4752,7 +4880,7 @@ def transport_matrix_id(key: TransportKey) -> str:
 def key_row(key: TransportKey) -> dict[str, object]:
     family = substrate_family_from_condition_id(key.condition_id)
     variant = substrate_variant_from_condition_id(key.condition_id)
-    macro_beta = variant_parameter(variant, "beta") if family in {PRESERVATION_ASYMMETRY, COMBINED_ASYMMETRY, SOFTMAX_PRESERVATION} else ""
+    macro_beta = variant_parameter(variant, "beta") if family in {PRESERVATION_ASYMMETRY, COMBINED_ASYMMETRY, SOFTMAX_PRESERVATION, *TOP_M_MECHANISM_FAMILIES} else ""
     equivalent_beta = variant_parameter(variant, "equivalent_beta") if family in MAX_ENTROPY_FAMILIES else ""
     asymmetry_alpha = variant_parameter(variant, "alpha") if family in {DIRECTIONAL_ASYMMETRY, COMBINED_ASYMMETRY} else ""
     asymmetry_smoothness = variant_parameter(variant, "smoothness") if family in {DIRECTIONAL_ASYMMETRY, COMBINED_ASYMMETRY} else ""
@@ -4769,7 +4897,7 @@ def key_row(key: TransportKey) -> dict[str, object]:
         "potential_beta": variant_parameter(variant, "beta") if family == SMOOTH_RANDOM_POTENTIAL else "",
         "budget_kind": budget_kind_from_variant(variant) if family == BUDGET_CONSERVATION else "",
         "budget_weight": variant_parameter(variant, "weight") if family == BUDGET_CONSERVATION else "",
-        "macro_invariant_kind": invariant_kind_from_variant(variant) if family in {PRESERVATION_ASYMMETRY, COMBINED_ASYMMETRY, SOFTMAX_PRESERVATION, *MAX_ENTROPY_FAMILIES} else "",
+        "macro_invariant_kind": invariant_kind_from_variant(variant) if family in {PRESERVATION_ASYMMETRY, COMBINED_ASYMMETRY, SOFTMAX_PRESERVATION, *MAX_ENTROPY_FAMILIES, *TOP_M_MECHANISM_FAMILIES} else "",
         "macro_invariant_beta": macro_beta or equivalent_beta,
         "equivalent_beta_target": equivalent_beta or macro_beta,
         "beta_or_temperature": beta_or_temperature_label(family, macro_beta or equivalent_beta, sampler_temperature, rank_bucket_multiplier),
@@ -4823,6 +4951,8 @@ def sampler_family_from_family(family: str) -> str:
         return "max_entropy_macro_marginal"
     if family == MAX_ENTROPY_LOCAL:
         return "max_entropy_local"
+    if family in TOP_M_MECHANISM_FAMILIES:
+        return family
     return family
 
 

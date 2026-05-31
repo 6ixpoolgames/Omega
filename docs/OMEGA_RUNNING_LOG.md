@@ -7,6 +7,60 @@ run.
 Entries are organized in rough reverse chronological order, with the most recent
 patch notes at the top.
 
+## 2026-06-01
+
+### RFS-MB0 Hard Top-m Mechanism Smoke
+
+Implemented and ran the first hard-top-m mechanism smoke after the top-m
+geometry audit forked to `audit_hard_top_m_mechanism`.
+
+Retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md`
+
+Spec:
+
+- `docs/RFS_MB0_TOP_M_MECHANISM_AUDIT_SPEC.md`
+
+Local validation output:
+
+- `results/local_runs/20260601_top_m_mechanism_smoke/`
+
+Run shape:
+
+```text
+status: COMPLETED
+workers: 18
+jobs_completed: 180 / 180
+elapsed_seconds: 8.199
+errors: 0
+matrix_count: 720
+null_replicates: 3
+matched_marginal_detector_null_gate_passed: 1
+synthetic_fixture_contract: passed
+paired_baseline_missing_rows: 0
+readiness_level: top_m_mechanism_smoke_completed
+next_action_fork: run_top_m_mechanism_medium
+```
+
+Main read:
+
+```text
+deterministic_top_m reproduced aligned rows;
+top_m_m_minus_1 also produced aligned rows and exceeded deterministic in this
+small smoke;
+top_m_boundary_jitter, core/fringe randomization, and top_m_m_plus_1 stayed stable.
+```
+
+Interpretation:
+
+```text
+The smoke is not a theory validation result. It is enough to justify a medium
+mechanism audit. The m-1 / m+1 split is the highest-signal feature: preserving
+all top-m edges plus one near-boundary edge did not recover the response, while
+strictly pruning to m-1 did.
+```
+
 ## 2026-05-31
 
 ### RFS-MB0 Top-m Geometry Code Tightening

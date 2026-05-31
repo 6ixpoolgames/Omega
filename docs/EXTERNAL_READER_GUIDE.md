@@ -67,13 +67,14 @@ smooth directional fields:
 preservation asymmetry:
   carries aligned amplification under matched controls, but the latest sampler
   audit suggests the current response is narrow to hard deterministic top-m
-  edge selection
+  edge selection; the first hard-top-m mechanism smoke makes strict pruning /
+  low-rank edge pressure the next target
 
 combined asymmetry:
   clean and rerouting-bearing, but not yet synergistic in the sparse tested grid
 ```
 
-The preservation-focused asymmetry-ladder and low-beta scaleups strengthened the preservation-asymmetry read. The cleanest current target is `symbol_histogram_distance`, because it produced aligned amplification, rerouting, reopening, weakening, and no baseline-missing rows. The subsequent MaxEnt and top-m geometry audits narrowed the mechanism: the tested stochastic relaxations stayed stable while deterministic top-m reproduced the response.
+The preservation-focused asymmetry-ladder and low-beta scaleups strengthened the preservation-asymmetry read. The cleanest current target is `symbol_histogram_distance`, because it produced aligned amplification, rerouting, reopening, weakening, and no baseline-missing rows. The subsequent MaxEnt and top-m geometry audits narrowed the mechanism: the tested stochastic relaxations stayed stable while deterministic top-m reproduced the response. A first hard-top-m mechanism smoke then found an informative m-1 / m+1 split: strict pruning produced aligned rows, while adding one near-boundary edge stayed stable.
 
 ## 3. Core vocabulary
 
@@ -301,7 +302,7 @@ The immediate next empirical task is not holdout and not candidate promotion.
 It is:
 
 ```text
-hard deterministic top-m mechanism audit
+medium hard deterministic top-m mechanism audit
 ```
 
 The low-beta and MaxEnt/top-m audits found:
@@ -312,12 +313,17 @@ symbol_histogram_distance:
 
 softmax/Gibbs, rank-conditioned, and MaxEnt macro-marginal samplers:
   stable in the tested grid
+
+first hard-top-m mechanism smoke:
+  deterministic top-m and m-1 strict pruning produced aligned rows;
+  boundary jitter, core/fringe randomization, and m+1 stayed stable
 ```
 
 The focus should be:
 
 ```text
 determine what exact feature of hard top-m edge selection carries the response:
+  strict pruning / low-rank edge pressure;
   cutoff discontinuity;
   per-state rank boundary;
   core/fringe edge composition;

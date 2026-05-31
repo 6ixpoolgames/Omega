@@ -22,7 +22,7 @@ graph-channel causality
 
 The current claim is modest:
 
-> Directional horizon-transport instrumentation can measure matched-control-separated response profiles in neutral finite transition substrates. Transition-energy substrate laws express different response regimes. Preservation asymmetry is currently the strongest non-template substrate hook for aligned amplification, with low-beta sensitivity now mapped below beta `0.25`; the latest MaxEnt/top-m audits indicate that the current preservation response is narrow to hard deterministic top-m edge selection rather than recovered by the tested stochastic relaxations.
+> Directional horizon-transport instrumentation can measure matched-control-separated response profiles in neutral finite transition substrates. Transition-energy substrate laws express different response regimes. Preservation asymmetry is currently the strongest non-template substrate hook for aligned amplification, with low-beta sensitivity now mapped below beta `0.25`; the latest MaxEnt/top-m audits indicate that the current preservation response is narrow to hard deterministic top-m edge selection rather than recovered by the tested stochastic relaxations. A first hard-top-m mechanism smoke points toward strict pruning / low-rank edge pressure as the next target, not a broad Omega claim.
 
 ## Best onboarding path
 
@@ -30,13 +30,14 @@ Start here:
 
 1. [`docs/EXTERNAL_READER_GUIDE.md`](EXTERNAL_READER_GUIDE.md)
 2. [`README.md`](../README.md)
-3. [`docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md`](research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md)
-4. [`docs/research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md`](research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md)
-5. [`docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`](research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
-6. [`docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md`](research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
-7. [`docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md`](research_notes/omega_theory/horizon_transport_aligned_amplification.md)
-8. [`docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md`](research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
-9. [`docs/research_notes/omega_theory/transition_energy_substrate_atlas.md`](research_notes/omega_theory/transition_energy_substrate_atlas.md)
+3. [`docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md`](research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md)
+4. [`docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md`](research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md)
+5. [`docs/research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md`](research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md)
+6. [`docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`](research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
+7. [`docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md`](research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
+8. [`docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md`](research_notes/omega_theory/horizon_transport_aligned_amplification.md)
+9. [`docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md`](research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
+10. [`docs/research_notes/omega_theory/transition_energy_substrate_atlas.md`](research_notes/omega_theory/transition_energy_substrate_atlas.md)
 
 ## Current live branch
 
@@ -102,6 +103,46 @@ combined asymmetry:
 ```
 
 ## Most important current results
+
+### Hard top-m mechanism smoke
+
+Result note:
+
+- [`rfs_mb0_top_m_mechanism_audit_result.md`](research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md)
+
+Run summary:
+
+```text
+jobs_completed: 180 / 180
+errors: 0
+matrix_count: 720
+workers: 18
+matched_marginal_detector_null_gate_passed: 1
+synthetic_fixture_contract: 8 / 8
+paired_baseline_missing_rows: 0
+readiness_level: top_m_mechanism_smoke_completed
+next_action_fork: run_top_m_mechanism_medium
+```
+
+Smoke read:
+
+```text
+deterministic_top_m:
+  aligned rows present
+
+top_m_m_minus_1:
+  aligned rows present
+
+boundary jitter / core-fringe randomized / m+1:
+  stable
+```
+
+Interpretation:
+
+```text
+This is only a smoke. The m-1 / m+1 split makes strict pruning or low-rank
+edge pressure the immediate next target for a medium mechanism audit.
+```
 
 ### Top-m geometry audit
 

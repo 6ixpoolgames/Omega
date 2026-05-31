@@ -18,6 +18,7 @@ TRANSITION_ENERGY_CHARACTERIZATION_SPEC_ID = "docs/RFS_MB0_TRANSITION_ENERGY_SUB
 ASYMMETRY_LADDER_SPEC_ID = "docs/RFS_MB0_ASYMMETRY_LADDER_TRANSITION_ENERGY_SUBSTRATE_SPEC.md"
 MAX_ENTROPY_PREFLIGHT_SPEC_ID = "docs/RFS_MB0_MAX_ENTROPY_LOCAL_TRANSITION_PREFLIGHT_SPEC.md"
 TOP_M_GEOMETRY_AUDIT_SPEC_ID = "docs/RFS_MB0_TOP_M_GEOMETRY_AUDIT_SPEC.md"
+TOP_M_MECHANISM_AUDIT_SPEC_ID = "docs/RFS_MB0_TOP_M_MECHANISM_AUDIT_SPEC.md"
 RUNNER_MODULE = "omega.rfs_mb0_future_landscape.run_horizon_transport_spectral_response_repair"
 
 DEFAULT_HORIZON_PAIRS = ((0, 1), (1, 2), (2, 4), (4, 8), (8, 16), (16, 24), (24, 32))
@@ -29,7 +30,8 @@ TRANSITION_ENERGY_CHARACTERIZATION = "transition_energy_characterization"
 ASYMMETRY_LADDER = "asymmetry_ladder"
 MAX_ENTROPY_PREFLIGHT = "max_entropy_preflight"
 TOP_M_GEOMETRY_AUDIT = "top_m_geometry_audit"
-SWEEP_KINDS = frozenset({"horizon_10x", "breadth", "viscosity_ladder", "breadth_horizon_cross", "substrate_untethering", TRANSITION_ENERGY_CHARACTERIZATION, ASYMMETRY_LADDER, MAX_ENTROPY_PREFLIGHT, TOP_M_GEOMETRY_AUDIT})
+TOP_M_MECHANISM_AUDIT = "top_m_mechanism_audit"
+SWEEP_KINDS = frozenset({"horizon_10x", "breadth", "viscosity_ladder", "breadth_horizon_cross", "substrate_untethering", TRANSITION_ENERGY_CHARACTERIZATION, ASYMMETRY_LADDER, MAX_ENTROPY_PREFLIGHT, TOP_M_GEOMETRY_AUDIT, TOP_M_MECHANISM_AUDIT})
 
 COMMON_OUTPUTS = (
     "horizon_transport_matrix_manifest.csv",
@@ -155,6 +157,8 @@ def run_kind(args: object) -> str:
 def active_spec_id(args: object) -> str:
     if str(getattr(args, "sweep_kind", "") or "") == TOP_M_GEOMETRY_AUDIT:
         return TOP_M_GEOMETRY_AUDIT_SPEC_ID
+    if str(getattr(args, "sweep_kind", "") or "") == TOP_M_MECHANISM_AUDIT:
+        return TOP_M_MECHANISM_AUDIT_SPEC_ID
     if str(getattr(args, "sweep_kind", "") or "") == MAX_ENTROPY_PREFLIGHT:
         return MAX_ENTROPY_PREFLIGHT_SPEC_ID
     if str(getattr(args, "sweep_kind", "") or "") == ASYMMETRY_LADDER:
@@ -191,6 +195,8 @@ def artifact_prefix(kind: str) -> str:
         return "max_entropy_preflight"
     if kind == TOP_M_GEOMETRY_AUDIT:
         return "top_m_geometry_audit"
+    if kind == TOP_M_MECHANISM_AUDIT:
+        return "top_m_mechanism_audit"
     if kind == "h128":
         return "horizon_transport_h128"
     return "horizon_transport_expansion" if kind == "expansion" else "horizon_transport_repair"
@@ -215,6 +221,8 @@ def run_phase(kind: str) -> str:
         return "rfs_mb0_max_entropy_local_transition_preflight"
     if kind == TOP_M_GEOMETRY_AUDIT:
         return "rfs_mb0_top_m_geometry_audit"
+    if kind == TOP_M_MECHANISM_AUDIT:
+        return "rfs_mb0_top_m_mechanism_audit"
     if kind == "h128":
         return "rfs_mb0_horizon_transport_response_surface_h128_scaleup"
     return "rfs_mb0_horizon_transport_expansion_smoke" if kind == "expansion" else "rfs_mb0_horizon_transport_spectral_response_repair"
@@ -259,6 +267,8 @@ def report_filename(kind: str) -> str:
         return "rfs_mb0_max_entropy_local_transition_preflight_result.md"
     if kind == TOP_M_GEOMETRY_AUDIT:
         return "rfs_mb0_top_m_geometry_audit_result.md"
+    if kind == TOP_M_MECHANISM_AUDIT:
+        return "rfs_mb0_top_m_mechanism_audit_result.md"
     if kind == "h128":
         return "rfs_mb0_horizon_transport_response_surface_h128_scaleup_result.md"
     if kind == "expansion":
@@ -290,7 +300,7 @@ def default_horizon_pairs(*, use_h128: bool, sweep_kind: str = "") -> tuple[tupl
         return VISCOSITY_LADDER_HORIZON_PAIRS
     if sweep_kind == "breadth_horizon_cross":
         return BREADTH_HORIZON_CROSS_PAIRS
-    if sweep_kind in {"substrate_untethering", TRANSITION_ENERGY_CHARACTERIZATION, ASYMMETRY_LADDER, MAX_ENTROPY_PREFLIGHT, TOP_M_GEOMETRY_AUDIT}:
+    if sweep_kind in {"substrate_untethering", TRANSITION_ENERGY_CHARACTERIZATION, ASYMMETRY_LADDER, MAX_ENTROPY_PREFLIGHT, TOP_M_GEOMETRY_AUDIT, TOP_M_MECHANISM_AUDIT}:
         return H128_HORIZON_PAIRS
     if sweep_kind == "breadth":
         return H128_HORIZON_PAIRS

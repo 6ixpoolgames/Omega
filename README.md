@@ -14,20 +14,21 @@ If you are new to the project, start with:
 
 1. [External Reader Guide](docs/EXTERNAL_READER_GUIDE.md)
 2. [Omega Formal Core v0](docs/research_notes/omega_theory/omega_formal_core_v0.md)
-3. [Top-m geometry audit result](docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md)
-4. [MaxEnt local transition Phase 1 preflight result](docs/research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md)
-5. [Low-beta preservation sensitivity scaleup result](docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
-6. [Asymmetry-ladder preservation scaleup result](docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
-7. [Horizon Transport and Aligned Amplification](docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md)
-8. [Transition Energy and Constraint Untethering](docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
-9. [Transition-Energy Substrate Atlas](docs/research_notes/omega_theory/transition_energy_substrate_atlas.md)
-10. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
+3. [Hard top-m mechanism smoke result](docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md)
+4. [Top-m geometry audit result](docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md)
+5. [MaxEnt local transition Phase 1 preflight result](docs/research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md)
+6. [Low-beta preservation sensitivity scaleup result](docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
+7. [Asymmetry-ladder preservation scaleup result](docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
+8. [Horizon Transport and Aligned Amplification](docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md)
+9. [Transition Energy and Constraint Untethering](docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
+10. [Transition-Energy Substrate Atlas](docs/research_notes/omega_theory/transition_energy_substrate_atlas.md)
+11. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
 
 The external reader guide gives a short, current, claim-bounded overview of the project and the best reading paths for technical readers, implementation reviewers, and historical context.
 
 ## Current status in one paragraph
 
-VAL0/VAL1 were useful reconnaissance probes. RFS-MB0 has reoriented from endpoint support/distribution deformation and static coflow spectra toward directional **horizon-transport** instrumentation. The H128 horizon-transport response-surface scaleup passed matched-marginal instrument gates and surfaced a stable-to-amplified-aligned response surface. Transition-energy characterization then turned the branch into a substrate-response atlas. The asymmetry-ladder and low-beta runs made preservation asymmetry the current loadbearing substrate ingredient, especially `symbol_histogram_distance`; the MaxEnt and top-m audits then narrowed that read. The current preservation response is not recovered by the tested MaxEnt macro-marginal, softmax/Gibbs, or rank-conditioned samplers, so the next empirical task is to audit the hard deterministic top-m mechanism itself. The formal core has now been closed at v0 as a boundary-nonprivileged definition of Omega-compatible viable propagation. This is still not a scientific validation gate, candidate promotion, holdout result, or Omega/agency/value claim.
+VAL0/VAL1 were useful reconnaissance probes. RFS-MB0 has reoriented from endpoint support/distribution deformation and static coflow spectra toward directional **horizon-transport** instrumentation. The H128 horizon-transport response-surface scaleup passed matched-marginal instrument gates and surfaced a stable-to-amplified-aligned response surface. Transition-energy characterization then turned the branch into a substrate-response atlas. The asymmetry-ladder and low-beta runs made preservation asymmetry the current loadbearing substrate ingredient, especially `symbol_histogram_distance`; the MaxEnt and top-m audits then narrowed that read. The current preservation response is not recovered by the tested MaxEnt macro-marginal, softmax/Gibbs, or rank-conditioned samplers. A first hard-top-m mechanism smoke found that `m-1` strict pruning preserved aligned rows while boundary jitter, core/fringe randomization, and `m+1` stayed stable, so the next empirical task is a medium hard-top-m mechanism audit. The formal core has now been closed at v0 as a boundary-nonprivileged definition of Omega-compatible viable propagation. This is still not a scientific validation gate, candidate promotion, holdout result, or Omega/agency/value claim.
 
 ## Current formal core
 

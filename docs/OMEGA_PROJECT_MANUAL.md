@@ -25,7 +25,9 @@ has not passed the scientific gate.
 The current active branch is auditing the mechanism behind the preservation
 asymmetry response. The latest MaxEnt/top-m audits indicate that the observed
 symbol-histogram preservation response is narrow to hard deterministic top-m
-edge selection in the tested design set.
+edge selection in the tested design set. The first hard-top-m mechanism smoke
+points toward strict pruning / low-rank edge pressure as the next medium-run
+target.
 ```
 
 Terminology rule:
@@ -40,6 +42,8 @@ Treat "budget_conservation", "budget_kind", "budget_weight", and
 
 Primary current design note:
 
+- `docs/RFS_MB0_TOP_M_MECHANISM_AUDIT_SPEC.md`
+- `docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md`
 - `docs/RFS_MB0_TOP_M_GEOMETRY_AUDIT_SPEC.md`
 - `docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md`
 - `docs/RFS_MB0_MAX_ENTROPY_LOCAL_TRANSITION_PREFLIGHT_SPEC.md`

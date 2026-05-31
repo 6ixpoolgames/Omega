@@ -18,15 +18,28 @@ DIRECTIONAL_ASYMMETRY = "directional_asymmetry"
 PRESERVATION_ASYMMETRY = "preservation_asymmetry"
 COMBINED_ASYMMETRY = "combined_asymmetry"
 SOFTMAX_PRESERVATION = "softmax_preservation_asymmetry"
+TOP_M_CORE_PRESERVED_FRINGE_RANDOMIZED = "top_m_core_preserved_fringe_randomized"
+TOP_M_CORE_RANDOMIZED_FRINGE_PRESERVED = "top_m_core_randomized_fringe_preserved"
+TOP_M_BOUNDARY_JITTER = "top_m_boundary_jitter"
+TOP_M_M_MINUS_1 = "top_m_m_minus_1"
+TOP_M_M_PLUS_1 = "top_m_m_plus_1"
 MAX_ENTROPY_LOCAL = "max_entropy_local"
 MAX_ENTROPY_MACRO_INVARIANT = "max_entropy_macro_invariant"
 RANK_CONDITIONED_MAX_ENTROPY = "rank_conditioned_max_entropy"
 MAX_ENTROPY_FAMILIES = frozenset({MAX_ENTROPY_LOCAL, MAX_ENTROPY_MACRO_INVARIANT, RANK_CONDITIONED_MAX_ENTROPY})
+TOP_M_MECHANISM_FAMILIES = frozenset({
+    TOP_M_CORE_PRESERVED_FRINGE_RANDOMIZED,
+    TOP_M_CORE_RANDOMIZED_FRINGE_PRESERVED,
+    TOP_M_BOUNDARY_JITTER,
+    TOP_M_M_MINUS_1,
+    TOP_M_M_PLUS_1,
+})
 TOP_M_GEOMETRY_AUDIT_FAMILIES = frozenset({
     PRESERVATION_ASYMMETRY,
     SOFTMAX_PRESERVATION,
     RANK_CONDITIONED_MAX_ENTROPY,
     MAX_ENTROPY_MACRO_INVARIANT,
+    *TOP_M_MECHANISM_FAMILIES,
 })
 MACRO_INVARIANT_ALIASES = {
     "macro_invariant": BUDGET_CONSERVATION,
@@ -46,6 +59,16 @@ MACRO_INVARIANT_ALIASES = {
     "gibbs-preservation-asymmetry": SOFTMAX_PRESERVATION,
     "softmax_preservation": SOFTMAX_PRESERVATION,
     "softmax-preservation": SOFTMAX_PRESERVATION,
+    "core_preserved_fringe_randomized": TOP_M_CORE_PRESERVED_FRINGE_RANDOMIZED,
+    "core-preserved-fringe-randomized": TOP_M_CORE_PRESERVED_FRINGE_RANDOMIZED,
+    "core_randomized_fringe_preserved": TOP_M_CORE_RANDOMIZED_FRINGE_PRESERVED,
+    "core-randomized-fringe-preserved": TOP_M_CORE_RANDOMIZED_FRINGE_PRESERVED,
+    "boundary_jitter": TOP_M_BOUNDARY_JITTER,
+    "boundary-jitter": TOP_M_BOUNDARY_JITTER,
+    "top_m_minus_1": TOP_M_M_MINUS_1,
+    "top-m-minus-1": TOP_M_M_MINUS_1,
+    "top_m_plus_1": TOP_M_M_PLUS_1,
+    "top-m-plus-1": TOP_M_M_PLUS_1,
     "directional_asymmetry_field": DIRECTIONAL_ASYMMETRY,
     "combined_directional_preservation": COMBINED_ASYMMETRY,
     "max_entropy_local_transition": MAX_ENTROPY_LOCAL,
@@ -68,6 +91,11 @@ TRANSITION_ENERGY_FAMILIES = (
     PRESERVATION_ASYMMETRY,
     COMBINED_ASYMMETRY,
     SOFTMAX_PRESERVATION,
+    TOP_M_CORE_PRESERVED_FRINGE_RANDOMIZED,
+    TOP_M_CORE_RANDOMIZED_FRINGE_PRESERVED,
+    TOP_M_BOUNDARY_JITTER,
+    TOP_M_M_MINUS_1,
+    TOP_M_M_PLUS_1,
     MAX_ENTROPY_LOCAL,
     MAX_ENTROPY_MACRO_INVARIANT,
     RANK_CONDITIONED_MAX_ENTROPY,
@@ -96,6 +124,8 @@ def generate_transition_energy_system(
         raise ValueError(f"unknown transition-energy substrate family: {family}")
     if family == SOFTMAX_PRESERVATION:
         return generate_softmax_preservation_system(params, seed, job, family)
+    if family in TOP_M_MECHANISM_FAMILIES:
+        return generate_top_m_mechanism_system(params, seed, job, family)
     if family in MAX_ENTROPY_FAMILIES:
         return generate_max_entropy_system(params, seed, job, family)
     states = enumerate_states(params.coordinate_count, params.alphabet_size)
@@ -105,7 +135,7 @@ def generate_transition_energy_system(
     }
     potential = potential_field(states, params, seed, job) if family == SMOOTH_RANDOM_POTENTIAL else {}
     asymmetry = asymmetry_field(states, params, seed, job) if family in {DIRECTIONAL_ASYMMETRY, COMBINED_ASYMMETRY} else {}
-    budget = budget_field(states, params, job) if family in {BUDGET_CONSERVATION, PRESERVATION_ASYMMETRY, COMBINED_ASYMMETRY} else {}
+    budget = budget_field(states, params, job) if family in {BUDGET_CONSERVATION, PRESERVATION_ASYMMETRY, COMBINED_ASYMMETRY, *TOP_M_MECHANISM_FAMILIES} else {}
     edges: dict[State, tuple[State, ...]] = {}
     diagnostics: list[float] = []
     roughness_strength = transition_float(job, "transition_roughness_strength", params.roughness_strength)
@@ -131,6 +161,62 @@ def generate_transition_energy_system(
         states=states,
         edges=edges,
         transform_names=("top_m_transition_energy",),
+        metadata=metadata,
+    )
+
+
+def generate_top_m_mechanism_system(
+    params: RelationParams,
+    seed: int,
+    job: dict[str, object],
+    family: str,
+) -> LandscapeSystem:
+    states = enumerate_states(params.coordinate_count, params.alphabet_size)
+    candidates_by_state = {
+        state: candidate_successors(state, params.alphabet_size, params.update_footprint)
+        for state in states
+    }
+    budget = budget_field(states, params, job)
+    roughness_strength = transition_float(job, "transition_roughness_strength", params.roughness_strength)
+    beta = macro_invariant_beta(job, params)
+    calibration_job = deterministic_preservation_job(job, beta)
+    scored_by_source = preservation_scored_candidates(states, candidates_by_state, params, seed, roughness_strength, budget, calibration_job)
+    calibration_edges = top_m_edges_from_scores(scored_by_source, params)
+    edges, selected_scores, sampler = top_m_mechanism_edges(scored_by_source, params, seed, job, family)
+    if transition_bool(job, "apply_reversibility", False):
+        edges = apply_reversibility(states, edges, params.reversibility_fraction, seed + 11_003)
+    metadata = transition_metadata(params, seed, family, states, edges, selected_scores, {}, {}, budget, job)
+    metadata.update({
+        "transition_energy_form": transition_energy_form(family),
+        "selection_rule": sampler["selection_rule"],
+        "transform_names": "top_m_mechanism_transition_energy",
+        "probabilistic_sampling_used": int(sampler["probabilistic_sampling_used"]),
+        "sampler_family": sampler_family_label(family),
+        "top_m_mechanism_family": family,
+        "top_m_mechanism_rule": sampler["selection_rule"],
+        "top_m_mechanism_core_size": sampler["core_size"],
+        "top_m_mechanism_fringe_pool_size": sampler["fringe_pool_size"],
+        "top_m_mechanism_boundary_window": sampler["boundary_window"],
+        "effective_out_degree_target": sampler["effective_out_degree_target"],
+        "max_entropy_equivalent_beta_target": beta,
+        "equivalent_beta_target": beta,
+        "macro_invariant_beta": beta,
+        "budget_weight": beta,
+        "max_entropy_calibration_family": PRESERVATION_ASYMMETRY,
+        "max_entropy_calibration_edge_count": sum(len(targets) for targets in calibration_edges.values()),
+        "max_entropy_reversibility_fraction_requested": params.reversibility_fraction,
+        "max_entropy_reversibility_fraction_applied": 0.0,
+        "apply_reversibility_requested": int(transition_bool(job, "apply_reversibility", False)),
+        "reversibility_fraction_applied": params.reversibility_fraction if transition_bool(job, "apply_reversibility", False) else 0.0,
+        **top_m_sampler_audit_metadata(edges, calibration_edges, scored_by_source, params, job),
+    })
+    return LandscapeSystem(
+        system_id=transition_system_id(params, family, seed, job),
+        seed=seed,
+        family=f"{params.parameter_set_id}_{family}",
+        states=states,
+        edges=edges,
+        transform_names=("top_m_mechanism_transition_energy",),
         metadata=metadata,
     )
 
@@ -385,6 +471,149 @@ def top_m_edges_from_scores(
     }
 
 
+def top_m_mechanism_edges(
+    scored_by_source: dict[State, list[tuple[float, State]]],
+    params: RelationParams,
+    seed: int,
+    job: dict[str, object],
+    family: str,
+) -> tuple[dict[State, tuple[State, ...]], list[float], dict[str, object]]:
+    k = max(1, params.out_degree_target)
+    core_size = min(k, max(1, int(transition_float(job, "top_m_core_size", max(1, k // 2)))))
+    fringe_multiplier = max(1.0, transition_float(job, "top_m_fringe_multiplier", 2.0))
+    boundary_window = max(1, int(transition_float(job, "top_m_boundary_jitter_window", 1)))
+    salt = str(job.get("substrate_variant", job.get("job_id", "")))
+    edges: dict[State, tuple[State, ...]] = {}
+    selected_scores: list[float] = []
+    fringe_pool_sizes: list[int] = []
+    effective_degrees: list[int] = []
+    for source, scored in scored_by_source.items():
+        if not scored:
+            edges[source] = tuple()
+            continue
+        if family == TOP_M_M_MINUS_1:
+            selected = scored[: max(1, k - 1)]
+        elif family == TOP_M_M_PLUS_1:
+            selected = scored[: min(len(scored), k + 1)]
+        elif family == TOP_M_CORE_PRESERVED_FRINGE_RANDOMIZED:
+            selected = core_preserved_fringe_randomized(scored, k, core_size, fringe_multiplier, seed, salt, source)
+        elif family == TOP_M_CORE_RANDOMIZED_FRINGE_PRESERVED:
+            selected = core_randomized_fringe_preserved(scored, k, core_size, fringe_multiplier, seed, salt, source)
+        elif family == TOP_M_BOUNDARY_JITTER:
+            selected = boundary_jittered_top_m(scored, k, boundary_window, seed, salt, source)
+        else:
+            selected = scored[:k]
+        selected.sort(key=lambda item: (item[0], item[1]))
+        selected_scores.extend(score for score, _target in selected)
+        effective_degrees.append(len(selected))
+        fringe_pool_sizes.append(min(len(scored), max(k, int(math.ceil(k * fringe_multiplier)))))
+        edges[source] = tuple(target for _score, target in selected)
+    return edges, selected_scores, {
+        "selection_rule": top_m_mechanism_selection_rule(family),
+        "probabilistic_sampling_used": int(family in {
+            TOP_M_CORE_PRESERVED_FRINGE_RANDOMIZED,
+            TOP_M_CORE_RANDOMIZED_FRINGE_PRESERVED,
+            TOP_M_BOUNDARY_JITTER,
+        }),
+        "core_size": core_size,
+        "fringe_pool_size": mean(fringe_pool_sizes) if fringe_pool_sizes else 0.0,
+        "boundary_window": boundary_window if family == TOP_M_BOUNDARY_JITTER else "",
+        "effective_out_degree_target": mean(effective_degrees) if effective_degrees else 0.0,
+    }
+
+
+def core_preserved_fringe_randomized(
+    scored: list[tuple[float, State]],
+    k: int,
+    core_size: int,
+    fringe_multiplier: float,
+    seed: int,
+    salt: str,
+    source: State,
+) -> list[tuple[float, State]]:
+    core = scored[:core_size]
+    needed = max(0, k - len(core))
+    if needed == 0:
+        return list(core)
+    window = min(len(scored), max(k, int(math.ceil(k * fringe_multiplier))))
+    pool = scored[core_size:window] or scored[core_size:]
+    randomized = stable_ranked_sample(pool, needed, seed, salt, source, "core_preserved_fringe_randomized")
+    return [*core, *randomized]
+
+
+def core_randomized_fringe_preserved(
+    scored: list[tuple[float, State]],
+    k: int,
+    core_size: int,
+    fringe_multiplier: float,
+    seed: int,
+    salt: str,
+    source: State,
+) -> list[tuple[float, State]]:
+    fringe = scored[core_size:k]
+    needed = max(0, k - len(fringe))
+    window = min(len(scored), max(k, int(math.ceil(k * fringe_multiplier))))
+    fringe_targets = {target for _score, target in fringe}
+    pool = [item for item in scored[:window] if item[1] not in fringe_targets]
+    if len(pool) < needed:
+        pool = [item for item in scored if item[1] not in fringe_targets]
+    randomized = stable_ranked_sample(pool, needed, seed, salt, source, "core_randomized_fringe_preserved")
+    return [*randomized, *fringe]
+
+
+def boundary_jittered_top_m(
+    scored: list[tuple[float, State]],
+    k: int,
+    boundary_window: int,
+    seed: int,
+    salt: str,
+    source: State,
+) -> list[tuple[float, State]]:
+    preserved = scored[: max(0, k - 1)]
+    preserved_targets = {target for _score, target in preserved}
+    lower = max(0, k - 1)
+    upper = min(len(scored), k + boundary_window)
+    pool = [item for item in scored[lower:upper] if item[1] not in preserved_targets]
+    if not pool:
+        pool = [item for item in scored if item[1] not in preserved_targets]
+    return [*preserved, *stable_ranked_sample(pool, max(0, k - len(preserved)), seed, salt, source, "boundary_jitter")]
+
+
+def stable_ranked_sample(
+    pool: list[tuple[float, State]],
+    count: int,
+    seed: int,
+    salt: str,
+    source: State,
+    label: str,
+) -> list[tuple[float, State]]:
+    if count <= 0 or not pool:
+        return []
+    ranked = sorted(
+        pool,
+        key=lambda item: (
+            stable_unit(f"{seed}:{salt}:{source}:{item[1]}:{label}"),
+            item[0],
+            item[1],
+        ),
+    )
+    return ranked[:count]
+
+
+def top_m_mechanism_selection_rule(family: str) -> str:
+    if family == TOP_M_CORE_PRESERVED_FRINGE_RANDOMIZED:
+        return "top_m_core_preserved_fringe_randomized"
+    if family == TOP_M_CORE_RANDOMIZED_FRINGE_PRESERVED:
+        return "top_m_core_randomized_fringe_preserved"
+    if family == TOP_M_BOUNDARY_JITTER:
+        return "top_m_boundary_jitter"
+    if family == TOP_M_M_MINUS_1:
+        return "top_m_lowest_energy_candidates_m_minus_1"
+    if family == TOP_M_M_PLUS_1:
+        return "top_m_lowest_energy_candidates_m_plus_1"
+    return "top_m_lowest_energy_candidates"
+
+
 def softmax_sample_edges(
     scored_by_source: dict[State, list[tuple[float, State]]],
     params: RelationParams,
@@ -539,6 +768,8 @@ def sampler_family_label(family: str) -> str:
         return "max_entropy_macro_marginal"
     if canonical == MAX_ENTROPY_LOCAL:
         return "max_entropy_local"
+    if canonical in TOP_M_MECHANISM_FAMILIES:
+        return canonical
     return canonical
 
 
@@ -729,7 +960,7 @@ def transition_energy(
     if family == DIRECTIONAL_ASYMMETRY:
         alpha = transition_float(job, "asymmetry_alpha", max(0.25, params.asymmetry_strength or 0.5))
         return distance + alpha * (asymmetry[target] - asymmetry[source]) + roughness
-    if family == PRESERVATION_ASYMMETRY:
+    if family == PRESERVATION_ASYMMETRY or family in TOP_M_MECHANISM_FAMILIES:
         beta = macro_invariant_beta(job, params)
         return distance + beta * abs(budget[target] - budget[source]) + roughness
     if family == COMBINED_ASYMMETRY:
@@ -942,7 +1173,7 @@ def transition_energy_form(family: str) -> str:
         return "hamming_distance_plus_budget_delta_penalty_plus_seeded_roughness"
     if family == DIRECTIONAL_ASYMMETRY:
         return "hamming_distance_plus_alpha_directional_asymmetry_delta_plus_seeded_roughness"
-    if family == PRESERVATION_ASYMMETRY:
+    if family == PRESERVATION_ASYMMETRY or family in TOP_M_MECHANISM_FAMILIES:
         return "hamming_distance_plus_beta_macro_invariant_delta_penalty_plus_seeded_roughness"
     if family == COMBINED_ASYMMETRY:
         return "hamming_distance_plus_alpha_directional_delta_plus_beta_macro_invariant_delta_plus_seeded_roughness"
