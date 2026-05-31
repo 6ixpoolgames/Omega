@@ -44,6 +44,7 @@ from .run_frontier_transform_syndrome_audit import (
 )
 from .run_instrumentation_phase_a import build_holdout_split
 from .run_path_metric_calibration import build_probe
+from .transition_energy_substrates import CONSTRAINT_TEMPLATE_CURRENT, generate_job_baseline_system
 
 
 BASELINE_CONTROL = "baseline_unperturbed"
@@ -1266,7 +1267,7 @@ def stable_sample_fraction(row: dict[str, object], salt: str) -> float:
 def run_stage_b2_job(job: dict[str, object], output_profile: str) -> tuple[list[dict[str, object]], dict[str, object], dict[str, object]]:
     params = job["params"]
     seed = int(job["seed"])
-    baseline = generate_relation_system(params, seed)  # type: ignore[arg-type]
+    baseline = generate_job_baseline_system(job, params, seed)  # type: ignore[arg-type]
     control = make_stage_b2_control_system(baseline, job, seed, params)  # type: ignore[arg-type]
     probe, alphabet_size, probe_group = build_probe(control, str(job["probe_key"]), str(job["source_probe_family"]))
     starts = [control.states[(seed + i * 17) % len(control.states)] for i in range(int(job["start_samples"]))]
@@ -1289,9 +1290,14 @@ def run_stage_b2_job(job: dict[str, object], output_profile: str) -> tuple[list[
 def make_stage_b2_control_system(baseline: Any, job: dict[str, object], seed: int, params: RelationParams) -> Any:
     actual = str(job.get("actual_control_name", ""))
     strength = float_or_zero(job.get("mechanism_control_strength"))
+    substrate_family = str(job.get("substrate_family", CONSTRAINT_TEMPLATE_CURRENT) or CONSTRAINT_TEMPLATE_CURRENT)
     if actual == BASELINE_CONTROL:
         return baseline
     if actual == "roughness_seed_resample_generation_control":
+        if substrate_family != CONSTRAINT_TEMPLATE_CURRENT:
+            metadata = control_metadata(baseline, job, "not_available")
+            metadata["mechanism_control_unavailable_reason"] = "generation_roughness_resample_not_defined_for_transition_energy_substrate"
+            return replace(baseline, system_id=f"{baseline.system_id}_roughness_seed_not_available", metadata=metadata)
         control = generate_relation_system(params, seed, roughness_seed=seed + 31_337 + int(strength) * 10_003)
         metadata = control_metadata(baseline, job, "computed")
         metadata.update(control.metadata)
@@ -1301,6 +1307,10 @@ def make_stage_b2_control_system(baseline: Any, job: dict[str, object], seed: in
         control = roughness_resampled_transform_control(baseline, seed + 41_111, strength)
         return replace(control, metadata={**control.metadata, **control_metadata(baseline, job, "computed")})
     if actual == "asymmetry_strength_sweep_control":
+        if substrate_family != CONSTRAINT_TEMPLATE_CURRENT:
+            metadata = control_metadata(baseline, job, "not_available")
+            metadata["mechanism_control_unavailable_reason"] = "generator_asymmetry_strength_sweep_not_defined_for_transition_energy_substrate"
+            return replace(baseline, system_id=f"{baseline.system_id}_asymmetry_strength_not_available", metadata=metadata)
         if params.asymmetry_strength == 0.0 and strength != 1.0:
             metadata = control_metadata(baseline, job, "not_available")
             metadata["mechanism_control_unavailable_reason"] = "baseline_asymmetry_zero"
@@ -1316,6 +1326,10 @@ def make_stage_b2_control_system(baseline: Any, job: dict[str, object], seed: in
         control = asymmetry_flip_sweep_control(baseline, seed + 51_119, strength)
         return replace(control, metadata={**control.metadata, **control_metadata(baseline, job, "computed")})
     if actual == "constraint_resampled_generation_proxy":
+        if substrate_family != CONSTRAINT_TEMPLATE_CURRENT:
+            metadata = control_metadata(baseline, job, "not_available")
+            metadata["mechanism_control_unavailable_reason"] = "constraint_resampled_generation_proxy_not_defined_for_transition_energy_substrate"
+            return replace(baseline, system_id=f"{baseline.system_id}_constraint_proxy_not_available", metadata=metadata)
         control = constraint_resampled_generation_control(baseline, params, seed + 61_123, strength)
         metadata = control_metadata(baseline, job, "computed")
         metadata.update(control.metadata)
@@ -1343,6 +1357,7 @@ def control_metadata(baseline: Any, job: dict[str, object], status: str) -> dict
 def common_condition_fields(job: dict[str, object], baseline_system_id: str, control_system_id: str) -> dict[str, object]:
     keys = (
         "condition_id",
+        "substrate_family",
         "mechanism_condition",
         "mechanism_control_name",
         "mechanism_control_strength",

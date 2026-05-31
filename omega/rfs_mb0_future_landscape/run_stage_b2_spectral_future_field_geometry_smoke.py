@@ -17,7 +17,6 @@ from typing import Any
 import numpy as np
 
 from .landscape import exact_frontier
-from .relation_generator import generate_relation_system
 from .run_deformation_detector_sweep import params_from_parameter_set_id, stable_seed
 from .run_focused_boundary_recurrence import apply_variant, float_or_zero, read_csv, write_csv
 from .run_frontier_transform_b0 import FLOW_MODES, WINDOWS, transition_counts, transform_row
@@ -33,6 +32,7 @@ from .run_frontier_transform_syndrome_audit import syndrome_library
 from .run_instrumentation_phase_a import build_holdout_split
 from .run_path_metric_calibration import build_probe
 from .spectral_types import MatrixCounts, MatrixKey, SpectralMatrix
+from .transition_energy_substrates import generate_job_baseline_system
 
 
 PRIMARY_SYNDROMES = (
@@ -400,7 +400,7 @@ def run_batch(batch: list[dict[str, object]], max_items_per_context: int) -> tup
 def run_job(job: dict[str, object], max_items_per_context: int) -> tuple[list[dict[str, object]], list[dict[str, object]]]:
     seed = int(job["seed"])
     params = job["params"]
-    baseline = generate_relation_system(params, seed)  # type: ignore[arg-type]
+    baseline = generate_job_baseline_system(job, params, seed)  # type: ignore[arg-type]
     control = make_stage_b2_control_system(baseline, job, seed, params)  # type: ignore[arg-type]
     probe, alphabet_size, probe_group = build_probe(control, str(job["probe_key"]), str(job["source_probe_family"]))
     starts = [control.states[(seed + i * 17) % len(control.states)] for i in range(int(job["start_samples"]))]
@@ -444,6 +444,7 @@ def job_windows(job: dict[str, object]) -> tuple[tuple[int, int], ...]:
 def common_condition_fields(job: dict[str, object], baseline_system_id: str, control_system_id: str) -> dict[str, object]:
     keys = (
         "condition_id",
+        "substrate_family",
         "mechanism_condition",
         "mechanism_control_name",
         "mechanism_control_strength",
@@ -2484,7 +2485,7 @@ def run_tiny_perturbation_job(
 ) -> dict[str, list[dict[str, object]]]:
     seed = int(job["seed"])
     params = job["params"]
-    baseline = generate_relation_system(params, seed)  # type: ignore[arg-type]
+    baseline = generate_job_baseline_system(job, params, seed)  # type: ignore[arg-type]
     control = make_stage_b2_control_system(baseline, job, seed, params)  # type: ignore[arg-type]
     probe, alphabet_size, probe_group = build_probe(control, str(job["probe_key"]), str(job["source_probe_family"]))
     target_items = target_transition_set(target)
