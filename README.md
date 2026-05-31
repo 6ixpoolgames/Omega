@@ -4,7 +4,7 @@ This repository is the empirical workspace for the **Omega / Reachable Futures**
 
 The current empirical program studies **reachable futures**: how neutral finite transition systems shape which futures remain reachable, excluded, concentrated, transformed, control-equivalent, or measurement-limited.
 
-The long-term Omega ambition is broader: a structural account of value-bearing futures and alignment-relevant failure modes that does not begin from reward functions, utility functions, fixed preference aggregation, or moral rules. The executable work in this repo is narrower and earlier-stage: building minimal substrates where fragments of that idea can become mathematically testable.
+The long-term Omega ambition is broader: a structural account of value-bearing futures and alignment-relevant failure modes that does not begin from reward functions, utility functions, fixed preference aggregation, moral rules, or privileged agent/valuer boundaries. The executable work in this repo is narrower and earlier-stage: building minimal substrates where fragments of that idea can become mathematically testable.
 
 This repository does **not** prove Omega. It is a controlled workspace for turning the theory into testable mathematical objects, identifying substrate artifacts, and letting weak formulations fail.
 
@@ -13,18 +13,49 @@ This repository does **not** prove Omega. It is a controlled workspace for turni
 If you are new to the project, start with:
 
 1. [External Reader Guide](docs/EXTERNAL_READER_GUIDE.md)
-2. [Asymmetry-ladder preservation scaleup result](docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
+2. [Omega Formal Core v0](docs/research_notes/omega_theory/omega_formal_core_v0.md)
 3. [Low-beta preservation sensitivity scaleup result](docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
-4. [Horizon Transport and Aligned Amplification](docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md)
-5. [Transition Energy and Constraint Untethering](docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
-6. [Transition-Energy Substrate Atlas](docs/research_notes/omega_theory/transition_energy_substrate_atlas.md)
-7. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
+4. [Asymmetry-ladder preservation scaleup result](docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
+5. [Horizon Transport and Aligned Amplification](docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md)
+6. [Transition Energy and Constraint Untethering](docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
+7. [Transition-Energy Substrate Atlas](docs/research_notes/omega_theory/transition_energy_substrate_atlas.md)
+8. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
 
 The external reader guide gives a short, current, claim-bounded overview of the project and the best reading paths for technical readers, implementation reviewers, and historical context.
 
 ## Current status in one paragraph
 
-VAL0/VAL1 were useful reconnaissance probes. RFS-MB0 has reoriented from endpoint support/distribution deformation and static coflow spectra toward directional **horizon-transport** instrumentation. The H128 horizon-transport response-surface scaleup passed matched-marginal instrument gates and surfaced a stable-to-amplified-aligned response surface. Transition-energy characterization then turned the branch into a substrate-response atlas. The newest asymmetry-ladder runs compare locality, directional asymmetry, preservation asymmetry, and combined asymmetry directly. Preservation asymmetry is the current loadbearing substrate ingredient; the low-beta sensitivity pass showed that beta changes the selected transition graph before aligned response appears, with first aggregate aligned response around beta `0.05`. This is still not a scientific validation gate, candidate promotion, holdout result, or Omega/agency/value claim.
+VAL0/VAL1 were useful reconnaissance probes. RFS-MB0 has reoriented from endpoint support/distribution deformation and static coflow spectra toward directional **horizon-transport** instrumentation. The H128 horizon-transport response-surface scaleup passed matched-marginal instrument gates and surfaced a stable-to-amplified-aligned response surface. Transition-energy characterization then turned the branch into a substrate-response atlas. The newest asymmetry-ladder runs compare locality, directional asymmetry, preservation asymmetry, and combined asymmetry directly. Preservation asymmetry is the current loadbearing substrate ingredient; the low-beta sensitivity pass showed that beta changes the selected transition graph before aligned response appears, with first aggregate aligned response around beta `0.05`. The formal core has now been closed at v0 as a boundary-nonprivileged definition of Omega-compatible viable propagation. This is still not a scientific validation gate, candidate promotion, holdout result, or Omega/agency/value claim.
+
+## Current formal core
+
+The current definitional anchor is:
+
+```text
+Omega is the boundary-nonprivileged compatibility structure of futures that
+support recoverable, non-erasing propagation of value-bearing substrates.
+```
+
+In this usage, a value-bearing substrate is not an ontologically privileged agent, self, object, or valuer. It is:
+
+```text
+an admissibly designated process-bundle supporting recoverable, non-erasing,
+viable propagation of future-relevant distinctions.
+```
+
+This formal core records what the empirical arm has forced the theory not to say:
+
+```text
+not raw entropy;
+not survival alone;
+not static reachability;
+not COM as a universal quotient;
+not an agent/valuer/identity-first ontology;
+not a scalar before tuple anatomy;
+not local persistence that degrades broader future-bearing structure.
+```
+
+The empirical branch therefore measures future-field deformation first, then asks whether any boundary, quotient, process-bundle, or value-bearing designation is earned under predictive, transport, recoverability, non-erasure, compatibility, and matched-control audits. See [Omega Formal Core v0](docs/research_notes/omega_theory/omega_formal_core_v0.md).
 
 ## Current live object
 
@@ -160,7 +191,9 @@ matched marginal nulls did not explain away the H128 response surface;
 perturbation changed future transport geometry without simply destroying it;
 horizon depth appears loadbearing in the response profile;
 transition-energy substrate laws express different response regimes;
-preservation asymmetry is currently the strongest non-template substrate hook.
+preservation asymmetry is currently the strongest non-template substrate hook;
+Omega Formal Core v0 is the current definitional anchor for what future results
+would need to instantiate.
 ```
 
 Current results do **not** mean:
@@ -215,28 +248,31 @@ Perturbation should be interpreted as a response profile: stable, amplified, wea
 Read:
 
 1. [External Reader Guide](docs/EXTERNAL_READER_GUIDE.md)
-2. [Asymmetry-ladder preservation scaleup result](docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
+2. [Omega Formal Core v0](docs/research_notes/omega_theory/omega_formal_core_v0.md)
 3. [Low-beta preservation sensitivity scaleup result](docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
-4. [Asymmetry-ladder preservation scaleup figures](docs/research_notes/validation_results/figures/20260531_asymmetry_ladder_preservation_scaleup/README.md)
+4. [Asymmetry-ladder preservation scaleup result](docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
+5. [Asymmetry-ladder preservation scaleup figures](docs/research_notes/validation_results/figures/20260531_asymmetry_ladder_preservation_scaleup/README.md)
 
 ### Theory orientation
 
 Read:
 
-1. [Horizon Transport and Aligned Amplification](docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md)
-2. [Transition Energy and Constraint Untethering](docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
-3. [Transition-Energy Substrate Atlas](docs/research_notes/omega_theory/transition_energy_substrate_atlas.md)
-4. [Minimal reachable futures formalism](docs/research_notes/omega_theory/minimal_reachable_futures_formalism.md)
-5. [Boundary non-privileging and field-deformation theory note](docs/research_notes/omega_theory/boundary_nonprivileging_and_field_deformation.md)
+1. [Omega Formal Core v0](docs/research_notes/omega_theory/omega_formal_core_v0.md)
+2. [Horizon Transport and Aligned Amplification](docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md)
+3. [Transition Energy and Constraint Untethering](docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
+4. [Transition-Energy Substrate Atlas](docs/research_notes/omega_theory/transition_energy_substrate_atlas.md)
+5. [Minimal reachable futures formalism](docs/research_notes/omega_theory/minimal_reachable_futures_formalism.md)
+6. [Boundary non-privileging and field-deformation theory note](docs/research_notes/omega_theory/boundary_nonprivileging_and_field_deformation.md)
 
 ### Implementation orientation
 
 Read:
 
 1. [Asymmetry-ladder transition-energy spec](docs/RFS_MB0_ASYMMETRY_LADDER_TRANSITION_ENERGY_SUBSTRATE_SPEC.md)
-2. [Transition-energy substrate characterization spec](docs/RFS_MB0_TRANSITION_ENERGY_SUBSTRATE_CHARACTERIZATION_RUN_SPEC.md)
-3. [Horizon-transport runner map](docs/implementation/horizon_transport_runner_map.md)
-4. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
+2. [Max-entropy local transition preflight spec](docs/RFS_MB0_MAX_ENTROPY_LOCAL_TRANSITION_PREFLIGHT_SPEC.md)
+3. [Transition-energy substrate characterization spec](docs/RFS_MB0_TRANSITION_ENERGY_SUBSTRATE_CHARACTERIZATION_RUN_SPEC.md)
+4. [Horizon-transport runner map](docs/implementation/horizon_transport_runner_map.md)
+5. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
 
 ### Historical orientation
 
@@ -283,6 +319,8 @@ The current empirical program does not validate alignment. It asks what substrat
 
 > Can future-landscape deformation be measured well enough to distinguish nontrivial future-structuring effects from saturation, trivial persistence, clocks, collapse, probe artifacts, generic finite-frontier dynamics, and matched-control equivalence?
 
+The formal core now gives the closed v0 definition that this empirical ladder is trying to approach: boundary-nonprivileged, recoverable, non-erasing propagation of value-bearing substrates, plus compatibility with broader future-bearing structure.
+
 ## Workflow
 
 This repository is developed through a human-directed, AI-assisted research workflow.
@@ -303,7 +341,9 @@ RFS-MB0:
   endpoint support/distribution and quotient probes became measurement-limited;
   frontier-transform instrumentation matured into horizon-transport instrumentation;
   current live object is matched-marginal-separated horizon transport with preservation-asymmetry-linked aligned amplification;
-  current substrate program uses transition-energy families rather than hand-built symbolic laws
+  current substrate program uses transition-energy families rather than hand-built symbolic laws;
+  current formal anchor is Omega Formal Core v0;
+  current next empirical move is max-entropy preservation preflight
 
 RFS-MB1:
   only after MB0 control separation and response-profile taxonomy mature;
@@ -323,4 +363,4 @@ RFS-MB4:
 
 The current scientific claim is modest:
 
-> Directional horizon-transport instrumentation can measure a matched-marginal-separated response surface in neutral toy substrates. Transition-energy substrate characterization shows that different generic substrate laws express different response regimes. Preservation asymmetry is currently the strongest non-template substrate hook for aligned amplification. Omega-compatible subobjects have not been demonstrated.
+> Directional horizon-transport instrumentation can measure a matched-marginal-separated response surface in neutral toy substrates. Transition-energy substrate characterization shows that different generic substrate laws express different response regimes. Preservation asymmetry is currently the strongest non-template substrate hook for aligned amplification. Omega Formal Core v0 is the current definitional anchor, but Omega-compatible subobjects have not been demonstrated.
