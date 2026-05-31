@@ -37,6 +37,11 @@ omega/rfs_mb0_future_landscape/run_stage_b2_spectral_future_field_geometry_smoke
 
 omega/rfs_mb0_future_landscape/spectral_contracts.py
   Shared claim-boundary and artifact-policy metadata.
+
+scripts/visualization/plot_horizon_transport_spectrogram.py
+  Standalone visualization utility. It consumes an existing run directory and
+  writes local PNG diagnostics under `<run-dir>/figures/`. It is intentionally
+  outside the runner path.
 ```
 
 ## Maintenance rules
@@ -69,6 +74,10 @@ omega/rfs_mb0_future_landscape/spectral_contracts.py
    set for a condition/probe/flow/horizon context. True per-design-group
    response diversity is therefore not available yet. Add a deliberate matrix
    granularity option before claiming `response_diversity_by_design_group`.
+
+8. Keep visualization as a post-processing utility. Validation runners should
+   emit CSV/JSON/report artifacts; plotting should read those artifacts after
+   the run so a graphics failure cannot compromise graceful run closure.
 
 ## Viscosity Detector
 

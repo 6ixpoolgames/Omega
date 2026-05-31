@@ -1,0 +1,378 @@
+"""Plot horizon-transport response spectrograms from a local run directory.
+
+The plots are diagnostic readouts for the current horizon-transport instrument:
+they visualize response class, viscosity score, alignment, mass delta, and
+saturation by horizon. They do not add scientific claims beyond the CSVs.
+"""
+
+from __future__ import annotations
+
+import argparse
+import csv
+import math
+import os
+from collections import Counter, defaultdict
+from pathlib import Path
+from statistics import mean
+
+MPL_CACHE_DIR = Path(".matplotlib-cache")
+MPL_CACHE_DIR.mkdir(exist_ok=True)
+os.environ.setdefault("MPLCONFIGDIR", str(MPL_CACHE_DIR.resolve()))
+
+import matplotlib
+
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.colors import BoundaryNorm, ListedColormap
+
+
+RESPONSE_CLASS_ORDER = (
+    "transport_stable",
+    "transport_amplified_aligned",
+    "transport_weakened",
+    "transport_rerouted",
+    "transport_reopens",
+    "transport_collapses",
+    "transport_control_equivalent",
+    "transport_resolution_mismatch",
+    "transport_response_underpowered",
+)
+RESPONSE_CLASS_COLORS = (
+    "#4C956C",
+    "#2F80ED",
+    "#F2C94C",
+    "#9B51E0",
+    "#00A7A7",
+    "#D64545",
+    "#9E9E9E",
+    "#222222",
+    "#5A6472",
+)
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Plot horizon-transport response spectrograms from runner CSV outputs.")
+    parser.add_argument("--run-dir", type=Path, required=True, help="Run output directory containing horizon_transport_*.csv files.")
+    parser.add_argument("--out-dir", type=Path, default=None, help="Figure output directory. Defaults to <run-dir>/figures.")
+    parser.add_argument("--max-context-rows", type=int, default=120, help="Maximum context rows per heatmap before truncation for readability.")
+    parser.add_argument("--dpi", type=int, default=160)
+    return parser.parse_args()
+
+
+def main() -> None:
+    args = parse_args()
+    run_dir = args.run_dir
+    out_dir = args.out_dir or run_dir / "figures"
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    response_rows = read_csv(run_dir / "horizon_transport_response_classification.csv")
+    viscosity_rows = read_csv(run_dir / "horizon_transport_viscosity_summary.csv")
+    saturation_rows = read_csv(run_dir / "horizon_transport_saturation_by_horizon_pair.csv")
+    threshold_rows = read_csv(run_dir / "horizon_response_threshold_table.csv")
+
+    written: list[Path] = []
+    if response_rows:
+        written.append(plot_response_class_heatmap(response_rows, out_dir, args.max_context_rows, args.dpi))
+    if viscosity_rows:
+        written.append(plot_numeric_heatmap(
+            viscosity_rows,
+            out_dir / "transport_viscosity_score_spectrogram.png",
+            args.max_context_rows,
+            args.dpi,
+            "transport_viscosity_score",
+            "Transport Viscosity Score by Horizon",
+            cmap="viridis",
+            vmin=0.0,
+            vmax=1.0,
+        ))
+        written.append(plot_metric_panels(viscosity_rows, out_dir, args.max_context_rows, args.dpi))
+    if saturation_rows:
+        written.append(plot_saturation_profile(saturation_rows, out_dir, args.dpi))
+    if threshold_rows:
+        written.append(plot_threshold_ladder(threshold_rows, out_dir, args.dpi))
+
+    write_readme(run_dir, out_dir, written, response_rows, viscosity_rows, saturation_rows, threshold_rows)
+    print(f"Wrote {len(written)} figure(s) to {out_dir}")
+
+
+def read_csv(path: Path) -> list[dict[str, str]]:
+    if not path.exists():
+        return []
+    with path.open("r", encoding="utf-8-sig", newline="") as handle:
+        return list(csv.DictReader(handle))
+
+
+def plot_response_class_heatmap(rows: list[dict[str, str]], out_dir: Path, max_context_rows: int, dpi: int) -> Path:
+    horizons = horizon_order(rows)
+    contexts = limited_context_order(rows, max_context_rows)
+    values = np.full((len(contexts), len(horizons)), np.nan)
+    grouped: dict[tuple[tuple[str, str, str, str], str], Counter[str]] = defaultdict(Counter)
+    for row in rows:
+        grouped[(context_key(row), horizon_pair(row))][str(row.get("response_class", ""))] += 1
+    class_index = {name: index for index, name in enumerate(RESPONSE_CLASS_ORDER)}
+    for row_index, context in enumerate(contexts):
+        for col_index, horizon in enumerate(horizons):
+            counts = grouped.get((context, horizon), Counter())
+            if not counts:
+                continue
+            response_class = sorted(counts, key=lambda name: (-counts[name], class_index.get(name, 999), name))[0]
+            values[row_index, col_index] = class_index.get(response_class, len(RESPONSE_CLASS_ORDER) - 1)
+
+    fig, ax = sized_figure(len(horizons), len(contexts))
+    cmap = ListedColormap(RESPONSE_CLASS_COLORS)
+    norm = BoundaryNorm(np.arange(-0.5, len(RESPONSE_CLASS_ORDER) + 0.5, 1), cmap.N)
+    image = ax.imshow(values, aspect="auto", interpolation="nearest", cmap=cmap, norm=norm)
+    style_grid_axes(ax, horizons, contexts, "Horizon Pair", "Perturbation / Probe / Flow")
+    ax.set_title("Horizon-Transport Response Class Spectrogram")
+    cbar = fig.colorbar(image, ax=ax, fraction=0.025, pad=0.02)
+    cbar.set_ticks(range(len(RESPONSE_CLASS_ORDER)))
+    cbar.set_ticklabels([short_response_label(name) for name in RESPONSE_CLASS_ORDER])
+    out_path = out_dir / "horizon_response_class_spectrogram.png"
+    save(fig, out_path, dpi)
+    return out_path
+
+
+def plot_numeric_heatmap(
+    rows: list[dict[str, str]],
+    out_path: Path,
+    max_context_rows: int,
+    dpi: int,
+    field: str,
+    title: str,
+    *,
+    cmap: str,
+    vmin: float | None = None,
+    vmax: float | None = None,
+) -> Path:
+    horizons = horizon_order(rows)
+    contexts = limited_context_order(rows, max_context_rows)
+    values = numeric_grid(rows, contexts, horizons, field)
+    fig, ax = sized_figure(len(horizons), len(contexts))
+    image = ax.imshow(values, aspect="auto", interpolation="nearest", cmap=cmap, vmin=vmin, vmax=vmax)
+    style_grid_axes(ax, horizons, contexts, "Horizon Pair", "Perturbation / Probe / Flow")
+    ax.set_title(title)
+    fig.colorbar(image, ax=ax, fraction=0.025, pad=0.02)
+    save(fig, out_path, dpi)
+    return out_path
+
+
+def plot_metric_panels(rows: list[dict[str, str]], out_dir: Path, max_context_rows: int, dpi: int) -> Path:
+    horizons = horizon_order(rows)
+    contexts = limited_context_order(rows, max_context_rows)
+    fields = (
+        ("mean_alignment", "Mean Alignment", "viridis", 0.0, 1.0),
+        ("mass_delta_fraction", "Mass Delta Fraction", "coolwarm", None, None),
+        ("entropy_delta", "Entropy Delta", "coolwarm", None, None),
+    )
+    fig_height = max(8.0, min(24.0, 1.8 + 0.26 * max(1, len(contexts)))) * len(fields) / 2.4
+    fig, axes = plt.subplots(len(fields), 1, figsize=(max(10.0, 0.72 * len(horizons) + 6.0), fig_height), constrained_layout=True)
+    for ax, (field, title, cmap, vmin, vmax) in zip(np.ravel(axes), fields):
+        values = numeric_grid(rows, contexts, horizons, field)
+        image = ax.imshow(values, aspect="auto", interpolation="nearest", cmap=cmap, vmin=vmin, vmax=vmax)
+        style_grid_axes(ax, horizons, contexts, "Horizon Pair", "Perturbation / Probe / Flow")
+        ax.set_title(title)
+        fig.colorbar(image, ax=ax, fraction=0.025, pad=0.02)
+    out_path = out_dir / "alignment_mass_entropy_panels.png"
+    save(fig, out_path, dpi)
+    return out_path
+
+
+def plot_saturation_profile(rows: list[dict[str, str]], out_dir: Path, dpi: int) -> Path:
+    ordered = sorted(rows, key=horizon_sort_key)
+    labels = [horizon_pair(row) for row in ordered]
+    terminal = [float_or_nan(row.get("terminal_saturation_fraction")) for row in ordered]
+    undercoverage = [float_or_nan(row.get("undercoverage_fraction")) for row in ordered]
+    normal = [float_or_nan(row.get("normal_interpretation_fraction")) for row in ordered]
+    x = np.arange(len(labels))
+    fig, ax = plt.subplots(figsize=(max(9.0, 0.75 * len(labels) + 4.0), 5.0), constrained_layout=True)
+    ax.plot(x, terminal, marker="o", label="terminal saturation")
+    ax.plot(x, undercoverage, marker="o", label="undercoverage")
+    ax.plot(x, normal, marker="o", label="normal interpretation")
+    ax.set_xticks(x)
+    ax.set_xticklabels(labels, rotation=35, ha="right")
+    ax.set_ylim(-0.05, 1.05)
+    ax.set_ylabel("Fraction")
+    ax.set_xlabel("Horizon Pair")
+    ax.set_title("Saturation and Coverage by Horizon")
+    ax.grid(axis="y", alpha=0.25)
+    ax.legend(loc="best")
+    out_path = out_dir / "saturation_coverage_profile.png"
+    save(fig, out_path, dpi)
+    return out_path
+
+
+def plot_threshold_ladder(rows: list[dict[str, str]], out_dir: Path, dpi: int) -> Path:
+    fields = (
+        "first_nonstable_horizon",
+        "first_amplified_aligned_horizon",
+        "first_non_amplified_response_horizon",
+        "terminal_saturation_horizon",
+        "latest_interpretable_horizon",
+    )
+    fig, ax = plt.subplots(figsize=(12.0, max(5.0, 0.42 * len(rows) + 2.0)), constrained_layout=True)
+    y_labels = [context_label(context_key(row)) for row in rows]
+    horizon_values = sorted({value for row in rows for field in fields if (value := row.get(field, ""))}, key=horizon_label_sort_key)
+    horizon_index = {label: index for index, label in enumerate(horizon_values)}
+    markers = ("o", "s", "^", "x", "D")
+    colors = ("#111111", "#2F80ED", "#D64545", "#F2994A", "#4C956C")
+    for y, row in enumerate(rows):
+        for field, marker, color in zip(fields, markers, colors):
+            value = row.get(field, "")
+            if not value:
+                continue
+            ax.scatter(horizon_index[value], y, marker=marker, color=color, label=field if y == 0 else "")
+    ax.set_yticks(range(len(y_labels)))
+    ax.set_yticklabels(y_labels, fontsize=8)
+    ax.set_xticks(range(len(horizon_values)))
+    ax.set_xticklabels(horizon_values, rotation=35, ha="right")
+    ax.set_xlabel("Horizon Pair")
+    ax.set_title("Response Threshold Ladder")
+    ax.grid(axis="x", alpha=0.20)
+    ax.legend(loc="upper right", fontsize=8)
+    out_path = out_dir / "response_threshold_ladder.png"
+    save(fig, out_path, dpi)
+    return out_path
+
+
+def numeric_grid(rows: list[dict[str, str]], contexts: list[tuple[str, str, str, str]], horizons: list[str], field: str) -> np.ndarray:
+    grouped: dict[tuple[tuple[str, str, str, str], str], list[float]] = defaultdict(list)
+    for row in rows:
+        value = float_or_nan(row.get(field))
+        if math.isnan(value):
+            continue
+        grouped[(context_key(row), horizon_pair(row))].append(value)
+    values = np.full((len(contexts), len(horizons)), np.nan)
+    for row_index, context in enumerate(contexts):
+        for col_index, horizon in enumerate(horizons):
+            observed = grouped.get((context, horizon), [])
+            if observed:
+                values[row_index, col_index] = mean(observed)
+    return values
+
+
+def horizon_order(rows: list[dict[str, str]]) -> list[str]:
+    return sorted({horizon_pair(row) for row in rows if horizon_pair(row)}, key=horizon_label_sort_key)
+
+
+def limited_context_order(rows: list[dict[str, str]], max_context_rows: int) -> list[tuple[str, str, str, str]]:
+    contexts = sorted({context_key(row) for row in rows}, key=context_sort_key)
+    return contexts[: max(1, max_context_rows)]
+
+
+def context_key(row: dict[str, str]) -> tuple[str, str, str, str]:
+    family = row.get("perturbation_family") or row.get("actual_control_name") or ""
+    strength = row.get("perturbation_strength") or row.get("mechanism_control_strength") or ""
+    return (str(family), str(strength), str(row.get("probe_key", "")), str(row.get("flow_mode", "")))
+
+
+def context_sort_key(key: tuple[str, str, str, str]) -> tuple[str, float, str, str]:
+    family, strength, probe, flow = key
+    return (family, float_or_nan(strength), probe, flow)
+
+
+def context_label(key: tuple[str, str, str, str]) -> str:
+    family, strength, probe, flow = key
+    family = family.replace("_control", "").replace("_", " ")
+    probe = probe.replace("constraint_", "c_").replace("_", " ")
+    flow = flow.replace("_", " ")
+    return f"{family} p={strength}\n{probe} / {flow}"
+
+
+def horizon_pair(row: dict[str, str]) -> str:
+    return str(row.get("horizon_pair", "") or f"{row.get('H_a', '')}->{row.get('H_b', '')}")
+
+
+def horizon_sort_key(row: dict[str, str]) -> tuple[float, float, str]:
+    return horizon_label_sort_key(horizon_pair(row))
+
+
+def horizon_label_sort_key(label: str) -> tuple[float, float, str]:
+    if "->" in label:
+        left, right = label.split("->", 1)
+        return (float_or_nan(right), float_or_nan(left), label)
+    return (math.inf, math.inf, label)
+
+
+def float_or_nan(value: object) -> float:
+    try:
+        if value in (None, ""):
+            return math.nan
+        return float(value)  # type: ignore[arg-type]
+    except (TypeError, ValueError):
+        return math.nan
+
+
+def short_response_label(name: str) -> str:
+    return name.replace("transport_", "").replace("_aligned", "").replace("_", " ")
+
+
+def sized_figure(width_count: int, height_count: int) -> tuple[plt.Figure, plt.Axes]:
+    width = max(10.0, min(24.0, 0.72 * max(1, width_count) + 6.0))
+    height = max(6.0, min(30.0, 0.34 * max(1, height_count) + 2.5))
+    return plt.subplots(figsize=(width, height), constrained_layout=True)
+
+
+def style_grid_axes(ax: plt.Axes, horizons: list[str], contexts: list[tuple[str, str, str, str]], xlabel: str, ylabel: str) -> None:
+    ax.set_xticks(range(len(horizons)))
+    ax.set_xticklabels(horizons, rotation=35, ha="right")
+    ax.set_yticks(range(len(contexts)))
+    ax.set_yticklabels([context_label(key) for key in contexts], fontsize=8)
+    ax.set_xlabel(xlabel)
+    ax.set_ylabel(ylabel)
+    ax.set_xticks(np.arange(-0.5, len(horizons), 1), minor=True)
+    ax.set_yticks(np.arange(-0.5, len(contexts), 1), minor=True)
+    ax.grid(which="minor", color="white", linewidth=0.8, alpha=0.65)
+    ax.tick_params(which="minor", bottom=False, left=False)
+
+
+def save(fig: plt.Figure, path: Path, dpi: int) -> None:
+    fig.savefig(path, dpi=dpi, bbox_inches="tight")
+    plt.close(fig)
+
+
+def write_readme(
+    run_dir: Path,
+    out_dir: Path,
+    written: list[Path],
+    response_rows: list[dict[str, str]],
+    viscosity_rows: list[dict[str, str]],
+    saturation_rows: list[dict[str, str]],
+    threshold_rows: list[dict[str, str]],
+) -> None:
+    class_counts = Counter(row.get("response_class", "") for row in response_rows if row.get("response_class"))
+    viscosity_counts = Counter(row.get("transport_viscosity_read", "") for row in viscosity_rows if row.get("transport_viscosity_read"))
+    lines = [
+        "# Horizon-Transport Visualization Bundle",
+        "",
+        f"Source run: `{run_dir}`",
+        "",
+        "These figures are diagnostic visualizations of local CSV outputs. They do not add claim status.",
+        "",
+        "## Figures",
+        "",
+    ]
+    for path in written:
+        lines.append(f"- `{path.name}`")
+    lines.extend([
+        "",
+        "## Row Counts",
+        "",
+        f"- response rows: `{len(response_rows)}`",
+        f"- viscosity rows: `{len(viscosity_rows)}`",
+        f"- saturation rows: `{len(saturation_rows)}`",
+        f"- threshold rows: `{len(threshold_rows)}`",
+        "",
+        "## Response Classes",
+        "",
+    ])
+    for name, count in sorted(class_counts.items()):
+        lines.append(f"- {name}: `{count}`")
+    lines.extend(["", "## Viscosity Reads", ""])
+    for name, count in sorted(viscosity_counts.items()):
+        lines.append(f"- {name}: `{count}`")
+    (out_dir / "README.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+if __name__ == "__main__":
+    main()
