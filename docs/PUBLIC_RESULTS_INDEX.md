@@ -68,6 +68,12 @@ Status:
 - a guarded Option A due-diligence follow-up then reached the formal
   loadbearing read for the macro-invariant / asymmetry-constrained family, with
   full matrix coverage and explicit `transport_baseline_missing` separation;
+- the asymmetry-ladder branch is now implemented: locality-only,
+  directional-asymmetry, preservation-asymmetry, combined-asymmetry, and the
+  historical constraint-template comparator can be run under one
+  horizon-transport instrument. The first seed-scaled batch reached
+  `preservation_asymmetry_loadbearing`; this is still substrate
+  characterization, not holdout or Omega validation;
 - VAL0-G and VAL1-MF are reconnaissance evidence for viability dynamics and
   substrate limitations;
 - VAL0-CT showed reproducible anchor wins and clean dense controls, but no
@@ -89,6 +95,7 @@ Directory:
 Current result notes:
 
 - `rfs_mb0_transition_energy_substrate_characterization_result.md`
+- `rfs_mb0_asymmetry_ladder_transition_energy_result.md`
 - `rfs_mb0_macro_invariant_due_diligence_result.md`
 - `rfs_mb0_option_a_budget_coverage_small_result.md`
 - `rfs_mb0_substrate_untethering_transition_energy_sweep_result.md`
@@ -198,6 +205,15 @@ Result in one line:
   symbol-composition is the cleanest diversified invariant; nonzero support is
   the clean low-signal comparator. This closes Option A enough to proceed to a
   max-entropy local transition preflight.
+- The first asymmetry-ladder implementation batch completed `640 / 640` jobs
+  with `0` errors, `18` workers, `7` null replicates, and `3402`
+  horizon-transport matrices across locality-only, directional-asymmetry,
+  preservation-asymmetry, combined-asymmetry, and the historical
+  constraint-template comparator. All detector/null/fixture gates passed. The
+  formal read was `preservation_asymmetry_loadbearing` with the next fork
+  `expand_preservation_asymmetry_family`: locality-only stayed a clean
+  baseline, directional and combined asymmetry produced rerouting without
+  aligned amplification, and preservation asymmetry carried aligned response.
 - The desktop Phase B / Stage A / Stage B branch shifted the current live
   empirical hook from marginal recurrence toward preregistered joint signed
   syndromes. Stage B-2 is now implemented as a preservation-first mechanism

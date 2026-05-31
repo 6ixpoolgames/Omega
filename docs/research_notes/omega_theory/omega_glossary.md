@@ -127,6 +127,32 @@ or resource accounting. It means that a coarse distinction-level quantity is
 approximately conserved or expensive to change, making some future transitions
 less symmetric than others.
 
+### Preservation asymmetry
+
+Preservation asymmetry is the explicit asymmetry-ladder name for a
+macro-invariant transition substrate:
+
+```text
+E(s,t) = d(s,t) + beta * |I(t) - I(s)| + roughness
+```
+
+It tests whether preserving a coarse distinction-level coordinate supports
+coherent horizon transport without adding hand-built symbolic constraint
+templates.
+
+### Directional asymmetry
+
+Directional asymmetry is the asymmetry-ladder name for a transition substrate
+with a scalar directional field:
+
+```text
+E(s,t) = d(s,t) + alpha * (A(t) - A(s)) + roughness
+```
+
+It tests whether a minimal direction field changes reachable-future transport
+through rerouting, threshold shifts, or other differentiated response without
+claiming that the field is value, reward, utility, or fitness.
+
 ### Viability
 
 Viability means continuation remains admissible under a constraint set.

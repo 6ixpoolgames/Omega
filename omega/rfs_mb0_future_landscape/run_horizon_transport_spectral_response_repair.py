@@ -36,6 +36,7 @@ from .run_stage_b2_spectral_future_field_geometry_smoke import (
     spectral_gap,
 )
 from .horizon_transport_contracts import (
+    ASYMMETRY_LADDER,
     COMMON_OUTPUTS,
     DETECTOR_NULL_FAMILIES,
     DETECTOR_STATISTICS,
@@ -84,7 +85,12 @@ from .spectral_contracts import (
 )
 from .transition_energy_substrates import (
     BUDGET_CONSERVATION,
+    COMBINED_ASYMMETRY,
     CONSTRAINT_TEMPLATE_CURRENT,
+    DIRECTIONAL_ASYMMETRY,
+    LOCALITY_ONLY,
+    PRESERVATION_ASYMMETRY,
+    SMOOTH_RANDOM_POTENTIAL,
     TRANSITION_ENERGY_FAMILIES,
     canonical_transition_energy_family,
     generate_job_baseline_system,
@@ -168,16 +174,26 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--potential-scale", type=float, default=1.0, help="Scale of the smooth random potential field.")
     parser.add_argument("--budget-kind", type=str, default="total_coordinate_mass", help="Implementation name for invariant statistic in macro-invariant substrates.")
     parser.add_argument("--invariant-kind", dest="budget_kind", type=str, help="Public alias for --budget-kind.")
+    parser.add_argument("--macro-invariant-kind", dest="budget_kind", type=str, help="Public alias for --budget-kind.")
     parser.add_argument("--budget-weight", type=float, default=1.0, help="Implementation name for invariant penalty weight in macro-invariant substrates.")
     parser.add_argument("--invariant-weight", "--asymmetry-penalty-weight", dest="budget_weight", type=float, help="Public/theory alias for --budget-weight.")
+    parser.add_argument("--macro-invariant-beta", type=float, default=None, help="Public beta for preservation-asymmetry transition-energy substrates.")
+    parser.add_argument("--asymmetry-alpha", type=float, default=0.5, help="Directional-asymmetry alpha for transition-energy substrates.")
+    parser.add_argument("--asymmetry-field-smoothness", type=float, default=0.65, help="Smoothness for the directional asymmetry field.")
+    parser.add_argument("--asymmetry-field-scale", type=float, default=1.0, help="Scale for the directional asymmetry field.")
     parser.add_argument("--transition-roughness-strength", type=float, default=-1.0, help="Override transition-energy roughness strength. Negative uses RelationParams roughness_strength.")
     parser.add_argument("--locality-roughness-strengths", type=str, default="", help="Characterization roughness variants for locality_only. Use comma-separated floats plus optional current.")
     parser.add_argument("--potential-smoothness-list", type=str, default="", help="Characterization smooth-potential smoothness variants.")
     parser.add_argument("--potential-beta-list", type=str, default="", help="Characterization smooth-potential beta variants.")
     parser.add_argument("--budget-kinds", type=str, default="", help="Characterization invariant variants; retained implementation name.")
     parser.add_argument("--invariant-kinds", dest="budget_kinds", type=str, help="Public alias for --budget-kinds.")
+    parser.add_argument("--macro-invariant-kinds", dest="budget_kinds", type=str, help="Public alias for --budget-kinds.")
     parser.add_argument("--budget-weights", type=str, default="", help="Characterization invariant-weight variants; retained implementation name.")
     parser.add_argument("--invariant-weights", "--asymmetry-penalty-weights", dest="budget_weights", type=str, help="Public/theory alias for --budget-weights.")
+    parser.add_argument("--macro-invariant-beta-list", type=str, default="", help="Preservation-asymmetry beta variants.")
+    parser.add_argument("--asymmetry-alpha-list", type=str, default="", help="Directional-asymmetry alpha variants.")
+    parser.add_argument("--asymmetry-field-smoothness-list", type=str, default="", help="Directional-asymmetry field-smoothness variants.")
+    parser.add_argument("--combined-alpha-beta-pairs", type=str, default="", help="Sparse combined-asymmetry pairs like 0.25:0.5,0.5:1.0.")
     return parser.parse_args()
 
 
@@ -286,7 +302,7 @@ def substrate_families(args: argparse.Namespace) -> list[str]:
 
 def substrate_family_variants(args: argparse.Namespace) -> list[dict[str, object]]:
     variants: list[dict[str, object]] = []
-    characterization = run_kind(args) == TRANSITION_ENERGY_CHARACTERIZATION
+    characterization = run_kind(args) in {TRANSITION_ENERGY_CHARACTERIZATION, ASYMMETRY_LADDER}
     for family in substrate_families(args):
         if not characterization:
             variants.append(default_substrate_variant(family, args))
@@ -297,7 +313,7 @@ def substrate_family_variants(args: argparse.Namespace) -> list[dict[str, object
                 "substrate_variant": "current_comparator",
                 "variant_role": "constraint_template_comparator",
             })
-        elif family == "locality_only":
+        elif family == LOCALITY_ONLY:
             for token, value in roughness_variant_values(args):
                 row = {
                     "substrate_family": family,
@@ -307,7 +323,7 @@ def substrate_family_variants(args: argparse.Namespace) -> list[dict[str, object
                 if value is not None:
                     row["transition_roughness_strength"] = value
                 variants.append(row)
-        elif family == "smooth_random_potential":
+        elif family == SMOOTH_RANDOM_POTENTIAL:
             for smoothness in list_or_default(args.potential_smoothness_list, (0.25, 0.65, 0.90)):
                 for beta in list_or_default(args.potential_beta_list, (0.25, 0.50, 1.00)):
                     variants.append({
@@ -329,6 +345,47 @@ def substrate_family_variants(args: argparse.Namespace) -> list[dict[str, object
                         "budget_kind": budget_kind,
                         "budget_weight": weight,
                     })
+        elif family == DIRECTIONAL_ASYMMETRY:
+            for smoothness in list_or_default(args.asymmetry_field_smoothness_list, (0.65,)):
+                for alpha in list_or_default(args.asymmetry_alpha_list, (0.25, 0.50, 1.00)):
+                    variants.append({
+                        "substrate_family": family,
+                        "substrate_variant": f"alpha_{float_label(alpha)}__smoothness_{float_label(smoothness)}",
+                        "variant_role": "directional_asymmetry_alpha_smoothness_sweep",
+                        "asymmetry_alpha": alpha,
+                        "asymmetry_field_smoothness": smoothness,
+                        "asymmetry_field_scale": args.asymmetry_field_scale,
+                    })
+        elif family == PRESERVATION_ASYMMETRY:
+            invariant_kinds = string_list_or_default(args.budget_kinds, ("total_coordinate_mass", "symbol_histogram_distance", "hamming_weight_or_nonzero_count"))
+            for invariant_kind in invariant_kinds:
+                for beta in list_or_default(args.macro_invariant_beta_list or args.budget_weights, (0.25, 1.00, 2.00)):
+                    variants.append({
+                        "substrate_family": family,
+                        "substrate_variant": f"invariant_{safe_id(invariant_kind)}__beta_{float_label(beta)}",
+                        "variant_role": "preservation_asymmetry_invariant_beta_sweep",
+                        "budget_kind": invariant_kind,
+                        "budget_weight": beta,
+                        "macro_invariant_kind": invariant_kind,
+                        "macro_invariant_beta": beta,
+                    })
+        elif family == COMBINED_ASYMMETRY:
+            invariant_kinds = string_list_or_default(args.budget_kinds, ("hamming_weight_or_nonzero_count", "total_coordinate_mass"))
+            for invariant_kind in invariant_kinds:
+                for alpha, beta in combined_alpha_beta_pairs(args):
+                    variants.append({
+                        "substrate_family": family,
+                        "substrate_variant": f"alpha_{float_label(alpha)}__beta_{float_label(beta)}__invariant_{safe_id(invariant_kind)}__smoothness_{float_label(args.asymmetry_field_smoothness)}",
+                        "variant_role": "combined_asymmetry_sparse_alpha_beta_sweep",
+                        "asymmetry_alpha": alpha,
+                        "asymmetry_field_smoothness": args.asymmetry_field_smoothness,
+                        "asymmetry_field_scale": args.asymmetry_field_scale,
+                        "budget_kind": invariant_kind,
+                        "budget_weight": beta,
+                        "macro_invariant_kind": invariant_kind,
+                        "macro_invariant_beta": beta,
+                        "alpha_beta_pair": f"{float_label(alpha)}:{float_label(beta)}",
+                    })
     return variants
 
 
@@ -338,7 +395,7 @@ def default_substrate_variant(family: str, args: argparse.Namespace) -> dict[str
         "substrate_variant": "default",
         "variant_role": "single_setting",
     }
-    if family == "smooth_random_potential":
+    if family == SMOOTH_RANDOM_POTENTIAL:
         row.update({
             "potential_beta": args.potential_beta,
             "potential_smoothness": args.potential_smoothness,
@@ -348,6 +405,32 @@ def default_substrate_variant(family: str, args: argparse.Namespace) -> dict[str
         row.update({
             "budget_kind": args.budget_kind,
             "budget_weight": args.budget_weight,
+        })
+    if family == DIRECTIONAL_ASYMMETRY:
+        row.update({
+            "asymmetry_alpha": args.asymmetry_alpha,
+            "asymmetry_field_smoothness": args.asymmetry_field_smoothness,
+            "asymmetry_field_scale": args.asymmetry_field_scale,
+        })
+    if family == PRESERVATION_ASYMMETRY:
+        beta = macro_invariant_beta_default(args)
+        row.update({
+            "budget_kind": args.budget_kind,
+            "budget_weight": beta,
+            "macro_invariant_kind": args.budget_kind,
+            "macro_invariant_beta": beta,
+        })
+    if family == COMBINED_ASYMMETRY:
+        beta = macro_invariant_beta_default(args)
+        row.update({
+            "asymmetry_alpha": args.asymmetry_alpha,
+            "asymmetry_field_smoothness": args.asymmetry_field_smoothness,
+            "asymmetry_field_scale": args.asymmetry_field_scale,
+            "budget_kind": args.budget_kind,
+            "budget_weight": beta,
+            "macro_invariant_kind": args.budget_kind,
+            "macro_invariant_beta": beta,
+            "alpha_beta_pair": f"{float_label(args.asymmetry_alpha)}:{float_label(beta)}",
         })
     if args.transition_roughness_strength >= 0:
         row["transition_roughness_strength"] = args.transition_roughness_strength
@@ -380,6 +463,37 @@ def list_or_default(raw: str, default: tuple[float, ...]) -> tuple[float, ...]:
 def string_list_or_default(raw: str, default: tuple[str, ...]) -> tuple[str, ...]:
     values = tuple(item.strip() for item in str(raw or "").split(",") if item.strip())
     return values or default
+
+
+def macro_invariant_beta_default(args: argparse.Namespace) -> float:
+    value = getattr(args, "macro_invariant_beta", None)
+    return float(value) if value is not None else float(args.budget_weight)
+
+
+def combined_alpha_beta_pairs(args: argparse.Namespace) -> tuple[tuple[float, float], ...]:
+    raw = str(getattr(args, "combined_alpha_beta_pairs", "") or "").strip()
+    if raw:
+        pairs: list[tuple[float, float]] = []
+        for token in raw.split(","):
+            value = token.strip()
+            if not value:
+                continue
+            if ":" in value:
+                left, right = value.split(":", 1)
+            elif "/" in value:
+                left, right = value.split("/", 1)
+            else:
+                raise ValueError(f"combined alpha/beta pair must use ':' or '/': {value}")
+            pairs.append((float(left.strip()), float(right.strip())))
+        return tuple(pairs)
+    return (
+        (0.25, 0.25),
+        (0.25, 1.00),
+        (0.50, 0.25),
+        (0.50, 1.00),
+        (1.00, 1.00),
+        (0.50, 2.00),
+    )
 
 
 def float_label(value: float) -> str:
@@ -416,6 +530,13 @@ def expand_jobs_for_substrate_families(jobs: list[dict[str, object]], args: argp
             item["potential_scale"] = variant.get("potential_scale", args.potential_scale)
             item["budget_kind"] = variant.get("budget_kind", args.budget_kind)
             item["budget_weight"] = variant.get("budget_weight", args.budget_weight)
+            item["macro_invariant_kind"] = variant.get("macro_invariant_kind", item["budget_kind"])
+            item["macro_invariant_beta"] = variant.get("macro_invariant_beta", macro_invariant_beta_default(args))
+            item["asymmetry_alpha"] = variant.get("asymmetry_alpha", args.asymmetry_alpha)
+            item["asymmetry_field_seed"] = int(item.get("seed", 0)) + 73_001
+            item["asymmetry_field_smoothness"] = variant.get("asymmetry_field_smoothness", args.asymmetry_field_smoothness)
+            item["asymmetry_field_scale"] = variant.get("asymmetry_field_scale", args.asymmetry_field_scale)
+            item["alpha_beta_pair"] = variant.get("alpha_beta_pair", "")
             if "transition_roughness_strength" in variant:
                 item["transition_roughness_strength"] = variant["transition_roughness_strength"]
             elif args.transition_roughness_strength >= 0:
@@ -425,12 +546,18 @@ def expand_jobs_for_substrate_families(jobs: list[dict[str, object]], args: argp
 
 
 def transition_energy_form_label(family: str) -> str:
-    if family == "locality_only":
+    if family == LOCALITY_ONLY:
         return "hamming_distance_plus_seeded_roughness"
-    if family == "smooth_random_potential":
+    if family == SMOOTH_RANDOM_POTENTIAL:
         return "hamming_distance_plus_beta_potential_delta_plus_seeded_roughness"
     if family == BUDGET_CONSERVATION:
         return "hamming_distance_plus_budget_delta_penalty_plus_seeded_roughness"
+    if family == DIRECTIONAL_ASYMMETRY:
+        return "hamming_distance_plus_alpha_directional_asymmetry_delta_plus_seeded_roughness"
+    if family == PRESERVATION_ASYMMETRY:
+        return "hamming_distance_plus_beta_macro_invariant_delta_penalty_plus_seeded_roughness"
+    if family == COMBINED_ASYMMETRY:
+        return "hamming_distance_plus_alpha_directional_delta_plus_beta_macro_invariant_delta_plus_seeded_roughness"
     return "current_constraint_template_scored_relation"
 
 
@@ -958,6 +1085,11 @@ def compute_outputs(
     response_by_budget = response_by_group_rows([row for row in response_classification if row.get("budget_kind")], ("budget_kind",))
     response_by_potential_smoothness = response_by_group_rows([row for row in response_classification if row.get("potential_smoothness") not in (None, "")], ("potential_smoothness",))
     response_by_potential_beta = response_by_group_rows([row for row in response_classification if row.get("potential_beta") not in (None, "")], ("potential_beta",))
+    response_by_macro_invariant_kind = response_by_group_rows([row for row in response_classification if row.get("macro_invariant_kind")], ("macro_invariant_kind",))
+    response_by_macro_invariant_beta = response_by_group_rows([row for row in response_classification if row.get("macro_invariant_beta") not in (None, "")], ("macro_invariant_beta",))
+    response_by_directional_alpha = response_by_group_rows([row for row in response_classification if row.get("asymmetry_alpha") not in (None, "")], ("asymmetry_alpha",))
+    response_by_asymmetry_field_smoothness = response_by_group_rows([row for row in response_classification if row.get("asymmetry_field_smoothness") not in (None, "")], ("asymmetry_field_smoothness",))
+    response_by_alpha_beta_pair = response_by_group_rows([row for row in response_classification if row.get("alpha_beta_pair")], ("alpha_beta_pair",))
     aligned_by_substrate = aligned_amplification_by_substrate_family_rows(response_classification)
     diversity_by_substrate = response_diversity_by_substrate_family_rows(response_diversity)
     diversity_by_substrate_variant = response_diversity_by_substrate_family_variant_rows(response_diversity)
@@ -1013,6 +1145,11 @@ def compute_outputs(
         "response_by_budget": response_by_budget,
         "response_by_potential_smoothness": response_by_potential_smoothness,
         "response_by_potential_beta": response_by_potential_beta,
+        "response_by_macro_invariant_kind": response_by_macro_invariant_kind,
+        "response_by_macro_invariant_beta": response_by_macro_invariant_beta,
+        "response_by_directional_alpha": response_by_directional_alpha,
+        "response_by_asymmetry_field_smoothness": response_by_asymmetry_field_smoothness,
+        "response_by_alpha_beta_pair": response_by_alpha_beta_pair,
         "aligned_by_substrate": aligned_by_substrate,
         "diversity_by_substrate": diversity_by_substrate,
         "diversity_by_substrate_variant": diversity_by_substrate_variant,
@@ -1125,11 +1262,17 @@ def transition_energy_parameter_summary_rows(args: argparse.Namespace) -> list[d
             "substrate_variant": variant.get("substrate_variant", ""),
             "variant_role": variant.get("variant_role", ""),
             "transition_energy_form": transition_energy_form_label(family),
-            "potential_beta": variant.get("potential_beta", "") if family == "smooth_random_potential" else "",
-            "potential_smoothness": variant.get("potential_smoothness", "") if family == "smooth_random_potential" else "",
-            "potential_scale": variant.get("potential_scale", "") if family == "smooth_random_potential" else "",
-            "budget_kind": variant.get("budget_kind", "") if family == "budget_conservation" else "",
-            "budget_weight": variant.get("budget_weight", "") if family == "budget_conservation" else "",
+            "potential_beta": variant.get("potential_beta", "") if family == SMOOTH_RANDOM_POTENTIAL else "",
+            "potential_smoothness": variant.get("potential_smoothness", "") if family == SMOOTH_RANDOM_POTENTIAL else "",
+            "potential_scale": variant.get("potential_scale", "") if family == SMOOTH_RANDOM_POTENTIAL else "",
+            "budget_kind": variant.get("budget_kind", "") if family == BUDGET_CONSERVATION else "",
+            "budget_weight": variant.get("budget_weight", "") if family == BUDGET_CONSERVATION else "",
+            "macro_invariant_kind": variant.get("macro_invariant_kind", "") if family in {PRESERVATION_ASYMMETRY, COMBINED_ASYMMETRY} else "",
+            "macro_invariant_beta": variant.get("macro_invariant_beta", "") if family in {PRESERVATION_ASYMMETRY, COMBINED_ASYMMETRY} else "",
+            "asymmetry_alpha": variant.get("asymmetry_alpha", "") if family in {DIRECTIONAL_ASYMMETRY, COMBINED_ASYMMETRY} else "",
+            "asymmetry_field_smoothness": variant.get("asymmetry_field_smoothness", "") if family in {DIRECTIONAL_ASYMMETRY, COMBINED_ASYMMETRY} else "",
+            "asymmetry_field_scale": variant.get("asymmetry_field_scale", "") if family in {DIRECTIONAL_ASYMMETRY, COMBINED_ASYMMETRY} else "",
+            "alpha_beta_pair": variant.get("alpha_beta_pair", "") if family == COMBINED_ASYMMETRY else "",
             "transition_roughness_strength_override": variant.get("transition_roughness_strength", ""),
         })
     return rows
@@ -1194,6 +1337,9 @@ def substrate_generation_diagnostics_rows(rows: list[dict[str, object]]) -> list
             "mechanism_control_rows": sum(int(row.get("actual_control_name") != BASELINE_CONTROL) for row in items),
             "potential_neighbor_correlation_mean": optional_mean(items, "potential_neighbor_correlation"),
             "budget_delta_mean": optional_mean(items, "budget_delta_mean"),
+            "asymmetry_neighbor_correlation_mean": optional_mean(items, "asymmetry_neighbor_correlation"),
+            "asymmetry_delta_mean": optional_mean(items, "asymmetry_delta_mean"),
+            "macro_invariant_delta_mean": optional_mean(items, "macro_invariant_delta_mean"),
             "selected_energy_mean": optional_mean(items, "selected_energy_mean"),
         })
     return out
@@ -2743,6 +2889,15 @@ def write_outputs(
     write_csv(out_dir / "response_by_budget_kind.csv", outputs["response_by_budget"])
     write_csv(out_dir / "response_by_potential_smoothness.csv", outputs["response_by_potential_smoothness"])
     write_csv(out_dir / "response_by_potential_beta.csv", outputs["response_by_potential_beta"])
+    write_csv(out_dir / "response_by_asymmetry_family.csv", outputs["response_by_substrate"])
+    write_csv(out_dir / "response_by_asymmetry_variant.csv", outputs["response_by_substrate_variant"])
+    write_csv(out_dir / "response_by_directional_alpha.csv", outputs["response_by_directional_alpha"])
+    write_csv(out_dir / "response_by_asymmetry_field_smoothness.csv", outputs["response_by_asymmetry_field_smoothness"])
+    write_csv(out_dir / "response_by_macro_invariant_kind.csv", outputs["response_by_macro_invariant_kind"])
+    write_csv(out_dir / "response_by_macro_invariant_beta.csv", outputs["response_by_macro_invariant_beta"])
+    write_csv(out_dir / "response_by_alpha_beta_pair.csv", outputs["response_by_alpha_beta_pair"])
+    write_csv(out_dir / "matched_null_pass_by_asymmetry_family.csv", outputs["matched_by_substrate"])
+    write_csv(out_dir / "matched_null_pass_by_asymmetry_variant.csv", outputs["matched_by_substrate_variant"])
     write_csv(out_dir / "aligned_amplification_by_substrate_family.csv", outputs["aligned_by_substrate"])
     write_csv(out_dir / "response_diversity_by_substrate_family.csv", outputs["diversity_by_substrate"])
     write_csv(out_dir / "response_diversity_by_substrate_family_variant.csv", outputs["diversity_by_substrate_variant"])
@@ -2801,6 +2956,8 @@ def decision_fields(outputs: dict[str, list[dict[str, object]]], status: dict[st
         readiness, next_action = transition_characterization_decision(outputs, status, matrix_gate, null_gate, null_power_gate, matched_marginal_gate, response_interpretable, fixture_gate)
     elif kind == "substrate_untethering":
         readiness, next_action = substrate_untethering_decision(outputs, status, matrix_gate, null_gate, null_power_gate, matched_marginal_gate, response_interpretable, fixture_gate)
+    elif kind == ASYMMETRY_LADDER:
+        readiness, next_action = asymmetry_ladder_decision(outputs, status, matrix_gate, null_gate, null_power_gate, matched_marginal_gate, response_interpretable, fixture_gate)
     elif kind in SWEEP_KINDS:
         readiness, next_action = sweep_decision(outputs, matrix_gate, null_gate, null_power_gate, matched_marginal_gate, response_interpretable, fixture_gate, kind)
     elif kind == "h128":
@@ -2851,6 +3008,12 @@ def decision_fields(outputs: dict[str, list[dict[str, object]]], status: dict[st
         "transition_energy_substrates_characterized": int(readiness == "transition_energy_substrates_characterized"),
         "budget_conservation_loadbearing": int(readiness == "budget_conservation_loadbearing"),
         "smooth_potential_loadbearing": int(readiness == "smooth_potential_loadbearing"),
+        "asymmetry_ladder_characterized": int(readiness == "asymmetry_ladder_characterized"),
+        "directional_asymmetry_loadbearing": int(readiness == "directional_asymmetry_loadbearing"),
+        "preservation_asymmetry_loadbearing": int(readiness == "preservation_asymmetry_loadbearing"),
+        "combined_asymmetry_loadbearing": int(readiness == "combined_asymmetry_loadbearing"),
+        "combined_asymmetry_not_yet_clean": int(readiness == "combined_asymmetry_not_yet_clean"),
+        "max_entropy_asymmetry_ready": int(readiness == "max_entropy_asymmetry_ready"),
         "locality_only_baseline_confirmed": int(readiness == "locality_only_baseline_confirmed"),
         "locality_only_response_bearing": int(readiness == "locality_only_response_bearing"),
         "constraint_template_no_longer_primary": int(readiness == "constraint_template_no_longer_primary"),
@@ -2909,6 +3072,69 @@ def substrate_untethering_decision(
     if aligned.get(CONSTRAINT_TEMPLATE_CURRENT, 0.0) > 0:
         return "constraint_template_specific_signal", "write_substrate_artifact_risk_note"
     return "untethering_underpowered", "continue_transition_energy_substrates"
+
+
+def asymmetry_ladder_decision(
+    outputs: dict[str, list[dict[str, object]]],
+    status: dict[str, object],
+    matrix_gate: bool,
+    null_gate: bool,
+    null_power_gate: bool,
+    matched_marginal_gate: bool,
+    response_interpretable: bool,
+    fixture_gate: bool,
+) -> tuple[str, str]:
+    if not matrix_gate or not null_gate or not null_power_gate or not fixture_gate:
+        return "not_ready_repair_required", "continue_asymmetry_ladder_characterization"
+    if not matched_marginal_gate:
+        return "coverage_repair_required", "repair_preservation_asymmetry_coverage"
+    if not response_interpretable:
+        return "asymmetry_ladder_underpowered", "continue_asymmetry_ladder_characterization"
+    jobs_requested = int(float_or_zero(status.get("jobs_requested")))
+    response_rows = len(outputs.get("response_classification", []))
+    if jobs_requested < 512 or response_rows < 500:
+        return "asymmetry_ladder_underpowered", "continue_asymmetry_ladder_characterization"
+
+    response_by_family = {
+        str(row.get("substrate_family", "")): row
+        for row in outputs.get("response_by_substrate", [])
+    }
+    matched_by_family = {
+        str(row.get("substrate_family", "")): float_or_zero(row.get("pass_fraction_mean"))
+        for row in outputs.get("matched_by_substrate", [])
+    }
+    preservation = response_by_family.get(PRESERVATION_ASYMMETRY, {})
+    directional = response_by_family.get(DIRECTIONAL_ASYMMETRY, {})
+    combined = response_by_family.get(COMBINED_ASYMMETRY, {})
+    locality = response_by_family.get(LOCALITY_ONLY, {})
+    preservation_aligned = float_or_zero(preservation.get("aligned_amplification_fraction"))
+    combined_aligned = float_or_zero(combined.get("aligned_amplification_fraction"))
+    locality_aligned = float_or_zero(locality.get("aligned_amplification_fraction"))
+    directional_differentiated = sum(
+        float_or_zero(directional.get(f"{name}_count"))
+        for name in (RESPONSE_CLASS_REROUTED, RESPONSE_CLASS_REOPENS, RESPONSE_CLASS_WEAKENED, RESPONSE_CLASS_COLLAPSES)
+    )
+    combined_differentiated = sum(
+        float_or_zero(combined.get(f"{name}_count"))
+        for name in (RESPONSE_CLASS_REROUTED, RESPONSE_CLASS_REOPENS, RESPONSE_CLASS_WEAKENED, RESPONSE_CLASS_COLLAPSES)
+    )
+    preservation_pass = matched_by_family.get(PRESERVATION_ASYMMETRY, 0.0) >= 0.75
+    directional_pass = matched_by_family.get(DIRECTIONAL_ASYMMETRY, 0.0) >= 0.75
+    combined_pass = matched_by_family.get(COMBINED_ASYMMETRY, 0.0) >= 0.75
+    locality_pass = matched_by_family.get(LOCALITY_ONLY, 0.0) >= 0.75
+    if combined_pass and combined_aligned >= max(preservation_aligned, 0.05) and combined_differentiated > 0:
+        return "combined_asymmetry_loadbearing", "expand_combined_asymmetry_family"
+    if preservation_pass and preservation_aligned >= 0.05:
+        return "preservation_asymmetry_loadbearing", "expand_preservation_asymmetry_family"
+    if directional_pass and directional_differentiated > 0:
+        return "directional_asymmetry_loadbearing", "expand_directional_asymmetry_family"
+    if combined and (not combined_pass or combined_aligned < preservation_aligned):
+        return "combined_asymmetry_not_yet_clean", "continue_asymmetry_ladder_characterization"
+    if locality_pass and locality_aligned == 0.0 and (preservation_aligned > 0.0 or directional_differentiated > 0):
+        return "locality_only_baseline_confirmed", "write_asymmetry_ladder_theory_note"
+    if preservation_pass and directional_pass and combined_pass:
+        return "asymmetry_ladder_characterized", "implement_max_entropy_asymmetry_ensemble"
+    return "asymmetry_ladder_characterized", "continue_asymmetry_ladder_characterization"
 
 
 def transition_characterization_decision(
@@ -3206,6 +3432,38 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
                 f"| potential_beta | {markdown_cell(row.get('potential_beta', ''))} | {row.get('response_rows', '')} | "
                 f"{markdown_cell(row.get('dominant_response_class', ''))} | {float_or_zero(row.get('aligned_amplification_fraction')):.3f} |"
             )
+        lines.extend([
+            "",
+            "## Asymmetry-Ladder Parameter Analysis",
+            "",
+            "| parameter | value | response rows | dominant response | aligned fraction |",
+            "|---|---|---:|---|---:|",
+        ])
+        for row in outputs.get("response_by_directional_alpha", []):
+            lines.append(
+                f"| asymmetry_alpha | {markdown_cell(row.get('asymmetry_alpha', ''))} | {row.get('response_rows', '')} | "
+                f"{markdown_cell(row.get('dominant_response_class', ''))} | {float_or_zero(row.get('aligned_amplification_fraction')):.3f} |"
+            )
+        for row in outputs.get("response_by_asymmetry_field_smoothness", []):
+            lines.append(
+                f"| asymmetry_field_smoothness | {markdown_cell(row.get('asymmetry_field_smoothness', ''))} | {row.get('response_rows', '')} | "
+                f"{markdown_cell(row.get('dominant_response_class', ''))} | {float_or_zero(row.get('aligned_amplification_fraction')):.3f} |"
+            )
+        for row in outputs.get("response_by_macro_invariant_kind", []):
+            lines.append(
+                f"| macro_invariant_kind | {markdown_cell(row.get('macro_invariant_kind', ''))} | {row.get('response_rows', '')} | "
+                f"{markdown_cell(row.get('dominant_response_class', ''))} | {float_or_zero(row.get('aligned_amplification_fraction')):.3f} |"
+            )
+        for row in outputs.get("response_by_macro_invariant_beta", []):
+            lines.append(
+                f"| macro_invariant_beta | {markdown_cell(row.get('macro_invariant_beta', ''))} | {row.get('response_rows', '')} | "
+                f"{markdown_cell(row.get('dominant_response_class', ''))} | {float_or_zero(row.get('aligned_amplification_fraction')):.3f} |"
+            )
+        for row in outputs.get("response_by_alpha_beta_pair", []):
+            lines.append(
+                f"| alpha_beta_pair | {markdown_cell(row.get('alpha_beta_pair', ''))} | {row.get('response_rows', '')} | "
+                f"{markdown_cell(row.get('dominant_response_class', ''))} | {float_or_zero(row.get('aligned_amplification_fraction')):.3f} |"
+            )
     lines.extend([
         "",
         "## Control Taxonomy Compliance",
@@ -3478,15 +3736,24 @@ def transport_matrix_id(key: TransportKey) -> str:
 
 
 def key_row(key: TransportKey) -> dict[str, object]:
+    family = substrate_family_from_condition_id(key.condition_id)
     variant = substrate_variant_from_condition_id(key.condition_id)
+    macro_beta = variant_parameter(variant, "beta") if family in {PRESERVATION_ASYMMETRY, COMBINED_ASYMMETRY} else ""
+    asymmetry_alpha = variant_parameter(variant, "alpha") if family in {DIRECTIONAL_ASYMMETRY, COMBINED_ASYMMETRY} else ""
+    asymmetry_smoothness = variant_parameter(variant, "smoothness") if family in {DIRECTIONAL_ASYMMETRY, COMBINED_ASYMMETRY} else ""
     return {
         "matrix_family": "horizon_transport",
-        "substrate_family": substrate_family_from_condition_id(key.condition_id),
+        "substrate_family": family,
         "substrate_variant": variant,
-        "potential_smoothness": variant_parameter(variant, "smoothness"),
-        "potential_beta": variant_parameter(variant, "beta"),
-        "budget_kind": budget_kind_from_variant(variant),
-        "budget_weight": variant_parameter(variant, "weight"),
+        "potential_smoothness": variant_parameter(variant, "smoothness") if family == SMOOTH_RANDOM_POTENTIAL else "",
+        "potential_beta": variant_parameter(variant, "beta") if family == SMOOTH_RANDOM_POTENTIAL else "",
+        "budget_kind": budget_kind_from_variant(variant) if family == BUDGET_CONSERVATION else "",
+        "budget_weight": variant_parameter(variant, "weight") if family == BUDGET_CONSERVATION else "",
+        "macro_invariant_kind": invariant_kind_from_variant(variant) if family in {PRESERVATION_ASYMMETRY, COMBINED_ASYMMETRY} else "",
+        "macro_invariant_beta": macro_beta,
+        "asymmetry_alpha": asymmetry_alpha,
+        "asymmetry_field_smoothness": asymmetry_smoothness,
+        "alpha_beta_pair": f"{asymmetry_alpha}:{macro_beta}" if asymmetry_alpha and macro_beta else "",
         "condition_id": key.condition_id,
         "actual_control_name": key.actual_control_name,
         "mechanism_control_strength": key.mechanism_control_strength,
@@ -3536,6 +3803,15 @@ def budget_kind_from_variant(variant: str) -> str:
         return ""
     head = str(variant).split("__", 1)[0]
     return head[len("budget_"):]
+
+
+def invariant_kind_from_variant(variant: str) -> str:
+    for part in str(variant).split("__"):
+        if part.startswith("invariant_"):
+            return part[len("invariant_"):]
+    if str(variant).startswith("budget_"):
+        return budget_kind_from_variant(variant)
+    return ""
 
 
 def intervention_taxonomy(key: TransportKey) -> dict[str, object]:

@@ -22,6 +22,9 @@ substrate limitations.
 Present RFS-MB0 horizon-transport instrumentation and transition-energy
 substrate untethering as the active empirical branch, and state clearly that it
 has not passed the scientific gate.
+The newest active branch is the asymmetry ladder: locality, directional
+asymmetry, preservation asymmetry, and combined asymmetry are compared as
+minimal transition-energy ingredients over reachable-future transport.
 ```
 
 Terminology rule:
@@ -29,12 +32,15 @@ Terminology rule:
 ```text
 Use "macro-invariant" in public-facing prose.
 Use "asymmetry-constrained transition energy" in theory-facing prose.
+Use "preservation asymmetry" for the explicit asymmetry-ladder E2 substrate.
 Treat "budget_conservation", "budget_kind", "budget_weight", and
 "budget_delta" as retained raw implementation/output names only.
 ```
 
 Primary current design note:
 
+- `docs/RFS_MB0_ASYMMETRY_LADDER_TRANSITION_ENERGY_SUBSTRATE_SPEC.md`
+- `docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_transition_energy_result.md`
 - `docs/RFS_MB0_TRANSITION_ENERGY_SUBSTRATE_CHARACTERIZATION_RUN_SPEC.md`
 - `docs/research_notes/omega_theory/transition_energy_substrate_atlas.md`
 - `docs/research_notes/validation_results/rfs_mb0_macro_invariant_due_diligence_result.md`

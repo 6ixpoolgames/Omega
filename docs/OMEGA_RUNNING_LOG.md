@@ -9,6 +9,87 @@ patch notes at the top.
 
 ## 2026-05-31
 
+### RFS-MB0 Asymmetry-Ladder First Implementation Run
+
+Implemented the asymmetry-ladder transition-energy families and ran the first
+seed-scaled design-set batch.
+
+Retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_transition_energy_result.md`
+
+Local validation outputs:
+
+- `results/local_runs/20260531_asymmetry_ladder_fixture_smoke/`
+- `results/local_runs/20260531_asymmetry_ladder_tiny_smoke/`
+- `results/local_runs/20260531_asymmetry_ladder_seed_scaled/`
+
+Implementation change:
+
+```text
+directional_asymmetry:
+  E(s,t) = d(s,t) + alpha * (A(t) - A(s)) + roughness
+
+preservation_asymmetry:
+  E(s,t) = d(s,t) + beta * |I(t) - I(s)| + roughness
+
+combined_asymmetry:
+  E(s,t) = d(s,t) + alpha * (A(t) - A(s))
+         + beta * |I(t) - I(s)| + roughness
+```
+
+Run shape:
+
+```text
+status: COMPLETED
+workers: 18
+jobs_completed: 640 / 640
+elapsed_seconds: 829.711
+errors: 0
+matrix_count: 3402
+substrate_family_variant_count: 16
+null_replicates: 7
+matched_marginal_detector_null_gate_passed: 1
+synthetic_fixture_contract: passed
+terminal_saturation_flagged_rows: 0
+readiness_level: preservation_asymmetry_loadbearing
+next_action_fork: expand_preservation_asymmetry_family
+```
+
+Compact result:
+
+```text
+locality_only:
+  aligned fraction: 0.000
+  read: clean baseline in this batch
+
+directional_asymmetry:
+  aligned fraction: 0.000
+  rerouted rows: 16
+  read: differentiated/rerouting response without aligned amplification
+
+preservation_asymmetry:
+  aligned fraction over interpretable rows: 0.084
+  aligned rows: 76
+  baseline-missing rows: 72
+  read: first loadbearing ladder family
+
+combined_asymmetry:
+  aligned fraction: 0.000
+  rerouted rows: 55
+  read: clean but not yet synergistic in the sparse tested grid
+```
+
+Interpretation:
+
+```text
+The live object is increasingly the response profile of reachable-future
+transport under minimal transition-energy ingredients. Macro-invariant /
+preservation asymmetry is the current strongest hook; directional and combined
+families are useful for rerouting/threshold mapping but did not carry aligned
+response in this pass.
+```
+
 ### RFS-MB0 Baseline Symmetry Guard Patch
 
 Patched the response summaries before running the asymmetry-ladder spec.

@@ -20,7 +20,7 @@ The active empirical question is currently narrower than agency, identity, or va
 
 Current status, in one line:
 
-**VAL0/VAL1 were useful reconnaissance probes; RFS-MB0 has reoriented from endpoint support/distribution deformation and static coflow spectra toward directional horizon-transport instrumentation. The H128 horizon-transport response-surface scaleup passed matched-marginal instrument gates and surfaced a stable-to-amplified-aligned response surface. The latest transition-energy characterization turns that into a substrate-response atlas: locality-only remains a baseline, smooth directional fields are response-bearing but not aligned-amplifying in the tested grid, and macro-invariant / asymmetry-preserving transition energy carries aligned response. The Option A due-diligence run repaired matrix coverage, separated paired-baseline absence from true resolution mismatch, and reached the formal loadbearing read for this substrate family. This is still not a scientific validation gate, candidate promotion, or Omega/agency/value claim.**
+**VAL0/VAL1 were useful reconnaissance probes; RFS-MB0 has reoriented from endpoint support/distribution deformation and static coflow spectra toward directional horizon-transport instrumentation. The H128 horizon-transport response-surface scaleup passed matched-marginal instrument gates and surfaced a stable-to-amplified-aligned response surface. The transition-energy characterization turned that into a substrate-response atlas, and the newest asymmetry-ladder run compares locality, directional asymmetry, preservation asymmetry, and combined asymmetry directly. The first seed-scaled ladder batch reached `preservation_asymmetry_loadbearing`: locality-only stayed a baseline, directional/combined asymmetry produced rerouting without aligned amplification, and preservation asymmetry carried aligned response. This is still not a scientific validation gate, candidate promotion, or Omega/agency/value claim.**
 
 ## Current empirical branch: horizon transport
 
@@ -113,6 +113,22 @@ constraint-template comparator:
 ```
 
 This is a substrate-characterization result, not validation.
+
+The first implemented asymmetry-ladder batch currently reads:
+
+```text
+locality-only:
+  clean baseline in the seed-scaled batch
+
+directional asymmetry:
+  rerouting/differentiated response, no aligned amplification
+
+preservation asymmetry:
+  current loadbearing family; aligned response under matched controls
+
+combined asymmetry:
+  clean and rerouting-bearing, but not yet synergistic in the sparse tested grid
+```
 
 ## Minimal transition-energy ladder
 
@@ -231,6 +247,8 @@ The current empirical program is still only a first step. It does not validate a
 - [Horizon Transport and Aligned Amplification](docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md)
 - [Transition Energy and Constraint Untethering](docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
 - [Transition-Energy Substrate Atlas](docs/research_notes/omega_theory/transition_energy_substrate_atlas.md)
+- [Asymmetry-ladder transition-energy result](docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_transition_energy_result.md)
+- [Asymmetry-ladder transition-energy spec](docs/RFS_MB0_ASYMMETRY_LADDER_TRANSITION_ENERGY_SUBSTRATE_SPEC.md)
 - [Macro-invariant due-diligence result](docs/research_notes/validation_results/rfs_mb0_macro_invariant_due_diligence_result.md)
 - [Transition-energy substrate characterization result](docs/research_notes/validation_results/rfs_mb0_transition_energy_substrate_characterization_result.md)
 - [Transition-energy substrate characterization spec](docs/RFS_MB0_TRANSITION_ENERGY_SUBSTRATE_CHARACTERIZATION_RUN_SPEC.md)
@@ -256,8 +274,9 @@ The current next step is to continue the transition-energy substrate program usi
 
 ```text
 near-term options:
+  expand preservation-asymmetry variants and seed/start diversity;
   optionally repair total-coordinate-mass paired-baseline availability;
-  move toward a max-entropy local transition ensemble with macro-invariant constraints;
+  move toward a max-entropy local transition ensemble with explicit macro-invariant constraints;
   keep grammar-neutral probes such as relation_role and full_state_hash;
   preserve matched-marginal detector gates and response-profile taxonomy;
   compare response surfaces across substrate families and scales;

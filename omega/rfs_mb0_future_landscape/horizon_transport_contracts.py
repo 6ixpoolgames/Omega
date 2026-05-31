@@ -15,6 +15,7 @@ H128_SPEC_ID = "docs/RFS_MB0_HORIZON_TRANSPORT_RESPONSE_SURFACE_H128_SCALEUP_SPE
 VISCOSITY_SWEEP_SPEC_ID = "docs/RFS_MB0_HORIZON_TRANSPORT_VISCOSITY_HORIZON_BREADTH_SWEEP_SPEC.md"
 SUBSTRATE_UNTETHERING_SPEC_ID = "docs/RFS_MB0_SUBSTRATE_UNTETHERING_TRANSITION_ENERGY_SWEEP_SPEC.md"
 TRANSITION_ENERGY_CHARACTERIZATION_SPEC_ID = "docs/RFS_MB0_TRANSITION_ENERGY_SUBSTRATE_CHARACTERIZATION_RUN_SPEC.md"
+ASYMMETRY_LADDER_SPEC_ID = "docs/RFS_MB0_ASYMMETRY_LADDER_TRANSITION_ENERGY_SUBSTRATE_SPEC.md"
 RUNNER_MODULE = "omega.rfs_mb0_future_landscape.run_horizon_transport_spectral_response_repair"
 
 DEFAULT_HORIZON_PAIRS = ((0, 1), (1, 2), (2, 4), (4, 8), (8, 16), (16, 24), (24, 32))
@@ -23,7 +24,8 @@ HORIZON_10X_PAIRS = ((16, 24), (24, 32), (64, 96), (96, 128), (128, 256), (256, 
 VISCOSITY_LADDER_HORIZON_PAIRS = ((4, 8), (8, 16), (16, 24), (24, 32), (64, 96), (96, 128))
 BREADTH_HORIZON_CROSS_PAIRS = ((96, 128), (128, 256), (256, 512), (512, 1024))
 TRANSITION_ENERGY_CHARACTERIZATION = "transition_energy_characterization"
-SWEEP_KINDS = frozenset({"horizon_10x", "breadth", "viscosity_ladder", "breadth_horizon_cross", "substrate_untethering", TRANSITION_ENERGY_CHARACTERIZATION})
+ASYMMETRY_LADDER = "asymmetry_ladder"
+SWEEP_KINDS = frozenset({"horizon_10x", "breadth", "viscosity_ladder", "breadth_horizon_cross", "substrate_untethering", TRANSITION_ENERGY_CHARACTERIZATION, ASYMMETRY_LADDER})
 
 COMMON_OUTPUTS = (
     "horizon_transport_matrix_manifest.csv",
@@ -73,6 +75,15 @@ COMMON_OUTPUTS = (
     "response_by_budget_kind.csv",
     "response_by_potential_smoothness.csv",
     "response_by_potential_beta.csv",
+    "response_by_asymmetry_family.csv",
+    "response_by_asymmetry_variant.csv",
+    "response_by_directional_alpha.csv",
+    "response_by_asymmetry_field_smoothness.csv",
+    "response_by_macro_invariant_kind.csv",
+    "response_by_macro_invariant_beta.csv",
+    "response_by_alpha_beta_pair.csv",
+    "matched_null_pass_by_asymmetry_family.csv",
+    "matched_null_pass_by_asymmetry_variant.csv",
     "aligned_amplification_by_substrate_family.csv",
     "response_diversity_by_substrate_family.csv",
     "response_diversity_by_substrate_family_variant.csv",
@@ -121,6 +132,8 @@ def run_kind(args: object) -> str:
 
 
 def active_spec_id(args: object) -> str:
+    if str(getattr(args, "sweep_kind", "") or "") == ASYMMETRY_LADDER:
+        return ASYMMETRY_LADDER_SPEC_ID
     if str(getattr(args, "sweep_kind", "") or "") == TRANSITION_ENERGY_CHARACTERIZATION:
         return TRANSITION_ENERGY_CHARACTERIZATION_SPEC_ID
     if str(getattr(args, "sweep_kind", "") or "") == "substrate_untethering":
@@ -147,6 +160,8 @@ def artifact_prefix(kind: str) -> str:
         return "substrate_untethering"
     if kind == TRANSITION_ENERGY_CHARACTERIZATION:
         return "transition_energy_characterization"
+    if kind == ASYMMETRY_LADDER:
+        return "asymmetry_ladder"
     if kind == "h128":
         return "horizon_transport_h128"
     return "horizon_transport_expansion" if kind == "expansion" else "horizon_transport_repair"
@@ -165,6 +180,8 @@ def run_phase(kind: str) -> str:
         return "rfs_mb0_substrate_untethering_transition_energy_sweep"
     if kind == TRANSITION_ENERGY_CHARACTERIZATION:
         return "rfs_mb0_transition_energy_substrate_characterization"
+    if kind == ASYMMETRY_LADDER:
+        return "rfs_mb0_asymmetry_ladder_transition_energy"
     if kind == "h128":
         return "rfs_mb0_horizon_transport_response_surface_h128_scaleup"
     return "rfs_mb0_horizon_transport_expansion_smoke" if kind == "expansion" else "rfs_mb0_horizon_transport_spectral_response_repair"
@@ -203,6 +220,8 @@ def report_filename(kind: str) -> str:
         return "rfs_mb0_substrate_untethering_transition_energy_sweep_result.md"
     if kind == TRANSITION_ENERGY_CHARACTERIZATION:
         return "rfs_mb0_transition_energy_substrate_characterization_result.md"
+    if kind == ASYMMETRY_LADDER:
+        return "rfs_mb0_asymmetry_ladder_transition_energy_result.md"
     if kind == "h128":
         return "rfs_mb0_horizon_transport_response_surface_h128_scaleup_result.md"
     if kind == "expansion":
@@ -234,7 +253,7 @@ def default_horizon_pairs(*, use_h128: bool, sweep_kind: str = "") -> tuple[tupl
         return VISCOSITY_LADDER_HORIZON_PAIRS
     if sweep_kind == "breadth_horizon_cross":
         return BREADTH_HORIZON_CROSS_PAIRS
-    if sweep_kind in {"substrate_untethering", TRANSITION_ENERGY_CHARACTERIZATION}:
+    if sweep_kind in {"substrate_untethering", TRANSITION_ENERGY_CHARACTERIZATION, ASYMMETRY_LADDER}:
         return H128_HORIZON_PAIRS
     if sweep_kind == "breadth":
         return H128_HORIZON_PAIRS
