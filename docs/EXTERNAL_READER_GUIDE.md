@@ -65,13 +65,15 @@ smooth directional fields:
   produce rerouting/reopening/differentiated response, but not aligned amplification in the tested grid
 
 preservation asymmetry:
-  carries aligned amplification under matched controls
+  carries aligned amplification under matched controls, but the latest sampler
+  audit suggests the current response is narrow to hard deterministic top-m
+  edge selection
 
 combined asymmetry:
   clean and rerouting-bearing, but not yet synergistic in the sparse tested grid
 ```
 
-The latest preservation-focused asymmetry-ladder scaleup strengthened the preservation-asymmetry read. The cleanest current target is `symbol_histogram_distance`, because it produced aligned amplification, rerouting, reopening, weakening, and no baseline-missing rows.
+The preservation-focused asymmetry-ladder and low-beta scaleups strengthened the preservation-asymmetry read. The cleanest current target is `symbol_histogram_distance`, because it produced aligned amplification, rerouting, reopening, weakening, and no baseline-missing rows. The subsequent MaxEnt and top-m geometry audits narrowed the mechanism: the tested stochastic relaxations stayed stable while deterministic top-m reproduced the response.
 
 ## 3. Core vocabulary
 
@@ -216,7 +218,8 @@ Read:
 
 1. `README.md`
 2. this guide
-3. `docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`
+3. `docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md`
+4. `docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`
 
 Goal: understand what the live result is and what it does not claim.
 
@@ -229,6 +232,8 @@ Read:
 3. `docs/research_notes/omega_theory/transition_energy_substrate_atlas.md`
 4. `docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_transition_energy_result.md`
 5. `docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`
+6. `docs/research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md`
+7. `docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md`
 
 Goal: understand why the project moved from hand-built constraint templates toward transition-energy asymmetry families.
 
@@ -237,9 +242,11 @@ Goal: understand why the project moved from hand-built constraint templates towa
 Read:
 
 1. `docs/RFS_MB0_ASYMMETRY_LADDER_TRANSITION_ENERGY_SUBSTRATE_SPEC.md`
-2. `docs/RFS_MB0_TRANSITION_ENERGY_SUBSTRATE_CHARACTERIZATION_RUN_SPEC.md`
-3. `docs/implementation/horizon_transport_runner_map.md`
-4. `docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`
+2. `docs/RFS_MB0_MAX_ENTROPY_LOCAL_TRANSITION_PREFLIGHT_SPEC.md`
+3. `docs/RFS_MB0_TOP_M_GEOMETRY_AUDIT_SPEC.md`
+4. `docs/RFS_MB0_TRANSITION_ENERGY_SUBSTRATE_CHARACTERIZATION_RUN_SPEC.md`
+5. `docs/implementation/horizon_transport_runner_map.md`
+6. `docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md`
 
 Goal: understand what the runner emits, what controls are required, and how result notes should be interpreted.
 
@@ -275,10 +282,13 @@ directional asymmetry:
   rerouting / differentiated response
 
 preservation asymmetry:
-  current loadbearing branch for aligned amplification
+  current loadbearing branch for aligned amplification, but mechanism-narrow
 
 symbol-composition preservation:
   current cleanest target inside preservation asymmetry
+
+MaxEnt / stochastic relaxations:
+  stable in the latest audits; they did not recover the deterministic response
 
 combined asymmetry:
   not yet abandoned; needs better parameterization after preservation is resolved
@@ -291,36 +301,29 @@ The immediate next empirical task is not holdout and not candidate promotion.
 It is:
 
 ```text
-low-beta preservation-asymmetry sensitivity
+hard deterministic top-m mechanism audit
 ```
 
-The latest scaleup found that beta values from `0.25` to `4.0` mostly sit on a saturated selected-edge plateau. The next run should resolve beta values below `0.25`:
+The low-beta and MaxEnt/top-m audits found:
 
 ```text
-0
-0.005
-0.01
-0.025
-0.05
-0.10
-0.15
-0.25
+symbol_histogram_distance:
+  deterministic preservation-asymmetry response appears at beta 0.075+
+
+softmax/Gibbs, rank-conditioned, and MaxEnt macro-marginal samplers:
+  stable in the tested grid
 ```
 
 The focus should be:
 
 ```text
-symbol_histogram_distance:
-  cleanest current target
-
-total_coordinate_mass:
-  still live but paired-baseline limited
-
-hamming_weight_or_nonzero_count:
-  clean low-signal comparator
+determine what exact feature of hard top-m edge selection carries the response:
+  cutoff discontinuity;
+  per-state rank boundary;
+  core/fringe edge composition;
+  near-tie behavior;
+  or response-taxonomy interaction.
 ```
-
-A max-entropy local transition ensemble should come after this sensitivity map is clearer.
 
 ## 8. How to evaluate a result note
 

@@ -1,6 +1,6 @@
 # Omega Project Manual
 
-Last updated: 2026-05-31
+Last updated: 2026-06-01
 
 Repository: https://github.com/6ixpoolgames/Omega
 
@@ -22,9 +22,10 @@ substrate limitations.
 Present RFS-MB0 horizon-transport instrumentation and transition-energy
 substrate untethering as the active empirical branch, and state clearly that it
 has not passed the scientific gate.
-The newest active branch is the asymmetry ladder: locality, directional
-asymmetry, preservation asymmetry, and combined asymmetry are compared as
-minimal transition-energy ingredients over reachable-future transport.
+The current active branch is auditing the mechanism behind the preservation
+asymmetry response. The latest MaxEnt/top-m audits indicate that the observed
+symbol-histogram preservation response is narrow to hard deterministic top-m
+edge selection in the tested design set.
 ```
 
 Terminology rule:
@@ -39,6 +40,10 @@ Treat "budget_conservation", "budget_kind", "budget_weight", and
 
 Primary current design note:
 
+- `docs/RFS_MB0_TOP_M_GEOMETRY_AUDIT_SPEC.md`
+- `docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md`
+- `docs/RFS_MB0_MAX_ENTROPY_LOCAL_TRANSITION_PREFLIGHT_SPEC.md`
+- `docs/research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md`
 - `docs/RFS_MB0_ASYMMETRY_LADDER_TRANSITION_ENERGY_SUBSTRATE_SPEC.md`
 - `docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_transition_energy_result.md`
 - `docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`

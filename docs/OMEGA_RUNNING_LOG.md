@@ -9,6 +9,92 @@ patch notes at the top.
 
 ## 2026-05-31
 
+### RFS-MB0 Top-m Geometry Audit
+
+Ran the narrow sampler-geometry audit requested after the MaxEnt Phase 1
+preflight.
+
+Retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md`
+
+Local validation output:
+
+- `results/local_runs/20260601_top_m_geometry_audit/`
+
+Run shape:
+
+```text
+status: COMPLETED
+workers: 18
+jobs_completed: 2240 / 2240
+elapsed_seconds: 228.005
+errors: 0
+matrix_count: 5600
+null_replicates: 9
+matched_marginal_detector_null_gate_passed: 1
+synthetic_fixture_contract: passed
+terminal_saturation_flagged_rows: 0
+readiness_level: algorithmically_narrow_top_m_geometry
+next_action_fork: audit_hard_top_m_mechanism
+```
+
+Main read:
+
+```text
+deterministic preservation_asymmetry top-m reproduced the symbol-histogram
+response at beta 0.075, 0.10, and 0.15;
+softmax/Gibbs energy sampling did not recover it;
+rank-conditioned local sampling did not recover it;
+MaxEnt macro-marginal sampling did not recover it.
+```
+
+Interpretation:
+
+```text
+The current preservation-asymmetry aligned response appears algorithmically
+narrow to hard deterministic top-m edge selection in this audit. Do not expand
+broad MaxEnt yet; audit the hard top-m mechanism next.
+```
+
+### RFS-MB0 MaxEnt Local Transition Phase 1 Preflight
+
+Ran the first real MaxEnt comparator pass after Phase 0 plumbing.
+
+Retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md`
+
+Local validation output:
+
+- `results/local_runs/20260531_max_entropy_local_transition_phase1_preflight_v2/`
+
+Run shape:
+
+```text
+status: COMPLETED
+workers: 18
+jobs_completed: 1280 / 1280
+elapsed_seconds: 146.650
+errors: 0
+matrix_count: 3320
+null_replicates: 9
+matched_marginal_detector_null_gate_passed: 1
+synthetic_fixture_contract: passed
+terminal_saturation_flagged_rows: 0
+readiness_level: deterministic_top_m_geometry_loadbearing
+next_action_fork: audit_top_m_geometry_or_refine_max_entropy_sampler
+```
+
+Main read:
+
+```text
+deterministic preservation_asymmetry reproduced the symbol-histogram response;
+MaxEnt local and MaxEnt macro-invariant comparators stayed stable;
+the next required move was a narrow top-m geometry audit, not a broad MaxEnt
+expansion.
+```
+
 ### RFS-MB0 Low-Beta Preservation Sensitivity Scaleup
 
 Ran the repaired low-beta preservation-asymmetry sensitivity scaleup.

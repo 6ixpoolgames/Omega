@@ -14,18 +14,20 @@ If you are new to the project, start with:
 
 1. [External Reader Guide](docs/EXTERNAL_READER_GUIDE.md)
 2. [Omega Formal Core v0](docs/research_notes/omega_theory/omega_formal_core_v0.md)
-3. [Low-beta preservation sensitivity scaleup result](docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
-4. [Asymmetry-ladder preservation scaleup result](docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
-5. [Horizon Transport and Aligned Amplification](docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md)
-6. [Transition Energy and Constraint Untethering](docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
-7. [Transition-Energy Substrate Atlas](docs/research_notes/omega_theory/transition_energy_substrate_atlas.md)
-8. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
+3. [Top-m geometry audit result](docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md)
+4. [MaxEnt local transition Phase 1 preflight result](docs/research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md)
+5. [Low-beta preservation sensitivity scaleup result](docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
+6. [Asymmetry-ladder preservation scaleup result](docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
+7. [Horizon Transport and Aligned Amplification](docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md)
+8. [Transition Energy and Constraint Untethering](docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
+9. [Transition-Energy Substrate Atlas](docs/research_notes/omega_theory/transition_energy_substrate_atlas.md)
+10. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
 
 The external reader guide gives a short, current, claim-bounded overview of the project and the best reading paths for technical readers, implementation reviewers, and historical context.
 
 ## Current status in one paragraph
 
-VAL0/VAL1 were useful reconnaissance probes. RFS-MB0 has reoriented from endpoint support/distribution deformation and static coflow spectra toward directional **horizon-transport** instrumentation. The H128 horizon-transport response-surface scaleup passed matched-marginal instrument gates and surfaced a stable-to-amplified-aligned response surface. Transition-energy characterization then turned the branch into a substrate-response atlas. The newest asymmetry-ladder runs compare locality, directional asymmetry, preservation asymmetry, and combined asymmetry directly. Preservation asymmetry is the current loadbearing substrate ingredient; the low-beta sensitivity pass showed that beta changes the selected transition graph before aligned response appears, with first aggregate aligned response around beta `0.05`. The formal core has now been closed at v0 as a boundary-nonprivileged definition of Omega-compatible viable propagation. This is still not a scientific validation gate, candidate promotion, holdout result, or Omega/agency/value claim.
+VAL0/VAL1 were useful reconnaissance probes. RFS-MB0 has reoriented from endpoint support/distribution deformation and static coflow spectra toward directional **horizon-transport** instrumentation. The H128 horizon-transport response-surface scaleup passed matched-marginal instrument gates and surfaced a stable-to-amplified-aligned response surface. Transition-energy characterization then turned the branch into a substrate-response atlas. The asymmetry-ladder and low-beta runs made preservation asymmetry the current loadbearing substrate ingredient, especially `symbol_histogram_distance`; the MaxEnt and top-m audits then narrowed that read. The current preservation response is not recovered by the tested MaxEnt macro-marginal, softmax/Gibbs, or rank-conditioned samplers, so the next empirical task is to audit the hard deterministic top-m mechanism itself. The formal core has now been closed at v0 as a boundary-nonprivileged definition of Omega-compatible viable propagation. This is still not a scientific validation gate, candidate promotion, holdout result, or Omega/agency/value claim.
 
 ## Current formal core
 
@@ -249,9 +251,11 @@ Read:
 
 1. [External Reader Guide](docs/EXTERNAL_READER_GUIDE.md)
 2. [Omega Formal Core v0](docs/research_notes/omega_theory/omega_formal_core_v0.md)
-3. [Low-beta preservation sensitivity scaleup result](docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
-4. [Asymmetry-ladder preservation scaleup result](docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
-5. [Asymmetry-ladder preservation scaleup figures](docs/research_notes/validation_results/figures/20260531_asymmetry_ladder_preservation_scaleup/README.md)
+3. [Top-m geometry audit result](docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md)
+4. [MaxEnt local transition Phase 1 preflight result](docs/research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md)
+5. [Low-beta preservation sensitivity scaleup result](docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
+6. [Asymmetry-ladder preservation scaleup result](docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
+7. [Asymmetry-ladder preservation scaleup figures](docs/research_notes/validation_results/figures/20260531_asymmetry_ladder_preservation_scaleup/README.md)
 
 ### Theory orientation
 
@@ -270,9 +274,10 @@ Read:
 
 1. [Asymmetry-ladder transition-energy spec](docs/RFS_MB0_ASYMMETRY_LADDER_TRANSITION_ENERGY_SUBSTRATE_SPEC.md)
 2. [Max-entropy local transition preflight spec](docs/RFS_MB0_MAX_ENTROPY_LOCAL_TRANSITION_PREFLIGHT_SPEC.md)
-3. [Transition-energy substrate characterization spec](docs/RFS_MB0_TRANSITION_ENERGY_SUBSTRATE_CHARACTERIZATION_RUN_SPEC.md)
-4. [Horizon-transport runner map](docs/implementation/horizon_transport_runner_map.md)
-5. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
+3. [Top-m geometry audit spec](docs/RFS_MB0_TOP_M_GEOMETRY_AUDIT_SPEC.md)
+4. [Transition-energy substrate characterization spec](docs/RFS_MB0_TRANSITION_ENERGY_SUBSTRATE_CHARACTERIZATION_RUN_SPEC.md)
+5. [Horizon-transport runner map](docs/implementation/horizon_transport_runner_map.md)
+6. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
 
 ### Historical orientation
 

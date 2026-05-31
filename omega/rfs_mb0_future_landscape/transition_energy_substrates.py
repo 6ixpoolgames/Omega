@@ -17,9 +17,17 @@ BUDGET_CONSERVATION = "budget_conservation"
 DIRECTIONAL_ASYMMETRY = "directional_asymmetry"
 PRESERVATION_ASYMMETRY = "preservation_asymmetry"
 COMBINED_ASYMMETRY = "combined_asymmetry"
+SOFTMAX_PRESERVATION = "softmax_preservation_asymmetry"
 MAX_ENTROPY_LOCAL = "max_entropy_local"
 MAX_ENTROPY_MACRO_INVARIANT = "max_entropy_macro_invariant"
-MAX_ENTROPY_FAMILIES = frozenset({MAX_ENTROPY_LOCAL, MAX_ENTROPY_MACRO_INVARIANT})
+RANK_CONDITIONED_MAX_ENTROPY = "rank_conditioned_max_entropy"
+MAX_ENTROPY_FAMILIES = frozenset({MAX_ENTROPY_LOCAL, MAX_ENTROPY_MACRO_INVARIANT, RANK_CONDITIONED_MAX_ENTROPY})
+TOP_M_GEOMETRY_AUDIT_FAMILIES = frozenset({
+    PRESERVATION_ASYMMETRY,
+    SOFTMAX_PRESERVATION,
+    RANK_CONDITIONED_MAX_ENTROPY,
+    MAX_ENTROPY_MACRO_INVARIANT,
+})
 MACRO_INVARIANT_ALIASES = {
     "macro_invariant": BUDGET_CONSERVATION,
     "macro-invariant": BUDGET_CONSERVATION,
@@ -34,6 +42,10 @@ MACRO_INVARIANT_ALIASES = {
     "asymmetry-preservation": PRESERVATION_ASYMMETRY,
     "macro_invariant_preservation": PRESERVATION_ASYMMETRY,
     "macro-invariant-preservation": PRESERVATION_ASYMMETRY,
+    "gibbs_preservation_asymmetry": SOFTMAX_PRESERVATION,
+    "gibbs-preservation-asymmetry": SOFTMAX_PRESERVATION,
+    "softmax_preservation": SOFTMAX_PRESERVATION,
+    "softmax-preservation": SOFTMAX_PRESERVATION,
     "directional_asymmetry_field": DIRECTIONAL_ASYMMETRY,
     "combined_directional_preservation": COMBINED_ASYMMETRY,
     "max_entropy_local_transition": MAX_ENTROPY_LOCAL,
@@ -42,6 +54,10 @@ MACRO_INVARIANT_ALIASES = {
     "max-entropy-macro-invariant-transition": MAX_ENTROPY_MACRO_INVARIANT,
     "max_entropy_preservation": MAX_ENTROPY_MACRO_INVARIANT,
     "max-entropy-preservation": MAX_ENTROPY_MACRO_INVARIANT,
+    "rank_conditioned_maxent": RANK_CONDITIONED_MAX_ENTROPY,
+    "rank-conditioned-maxent": RANK_CONDITIONED_MAX_ENTROPY,
+    "local_rank_bucket_matched": RANK_CONDITIONED_MAX_ENTROPY,
+    "local-rank-bucket-matched": RANK_CONDITIONED_MAX_ENTROPY,
 }
 TRANSITION_ENERGY_FAMILIES = (
     CONSTRAINT_TEMPLATE_CURRENT,
@@ -51,8 +67,10 @@ TRANSITION_ENERGY_FAMILIES = (
     DIRECTIONAL_ASYMMETRY,
     PRESERVATION_ASYMMETRY,
     COMBINED_ASYMMETRY,
+    SOFTMAX_PRESERVATION,
     MAX_ENTROPY_LOCAL,
     MAX_ENTROPY_MACRO_INVARIANT,
+    RANK_CONDITIONED_MAX_ENTROPY,
 )
 
 
@@ -76,6 +94,8 @@ def generate_transition_energy_system(
 ) -> LandscapeSystem:
     if family not in TRANSITION_ENERGY_FAMILIES:
         raise ValueError(f"unknown transition-energy substrate family: {family}")
+    if family == SOFTMAX_PRESERVATION:
+        return generate_softmax_preservation_system(params, seed, job, family)
     if family in MAX_ENTROPY_FAMILIES:
         return generate_max_entropy_system(params, seed, job, family)
     states = enumerate_states(params.coordinate_count, params.alphabet_size)
@@ -93,6 +113,17 @@ def generate_transition_energy_system(
     if transition_bool(job, "apply_reversibility", True):
         edges = apply_reversibility(states, edges, params.reversibility_fraction, seed + 11_003)
     metadata = transition_metadata(params, seed, family, states, edges, diagnostics, potential, asymmetry, budget, job)
+    if family == PRESERVATION_ASYMMETRY:
+        calibration_job = deterministic_preservation_job(job, macro_invariant_beta(job, params))
+        scored_by_source = preservation_scored_candidates(states, candidates_by_state, params, seed, roughness_strength, budget, calibration_job)
+        calibration_edges = top_m_edges_from_scores(scored_by_source, params)
+        metadata.update({
+            "sampler_family": sampler_family_label(family),
+            "probabilistic_sampling_used": 0,
+            "max_entropy_calibration_family": PRESERVATION_ASYMMETRY,
+            "max_entropy_calibration_edge_count": sum(len(targets) for targets in calibration_edges.values()),
+            **top_m_sampler_audit_metadata(edges, calibration_edges, scored_by_source, params, job),
+        })
     return LandscapeSystem(
         system_id=transition_system_id(params, family, seed, job),
         seed=seed,
@@ -159,32 +190,13 @@ def generate_max_entropy_system(
     roughness_strength = transition_float(job, "transition_roughness_strength", params.roughness_strength)
     sampler_draws = max(1, int(transition_float(job, "max_entropy_sampler_draws", 16)))
     equivalent_beta = max_entropy_equivalent_beta(job, params)
+    calibration_job = deterministic_preservation_job(job, equivalent_beta)
+    scored_by_source = preservation_scored_candidates(states, candidates_by_state, params, seed, roughness_strength, budget, calibration_job)
+    calibration_edges = top_m_edges_from_scores(scored_by_source, params)
+    calibration_edge_count = sum(len(targets) for targets in calibration_edges.values())
     target_counts: dict[str, int] = {}
-    calibration_edges: dict[State, tuple[State, ...]] = {}
-    calibration_edge_count = 0
-    if family == MAX_ENTROPY_MACRO_INVARIANT:
-        calibration_job = dict(job)
-        calibration_job.update({
-            "substrate_family": PRESERVATION_ASYMMETRY,
-            "transition_energy_family": PRESERVATION_ASYMMETRY,
-            "macro_invariant_beta": equivalent_beta,
-            "budget_weight": equivalent_beta,
-            "apply_reversibility": False,
-        })
-        calibration_edges, _scores = top_m_transition_edges(
-            states,
-            candidates_by_state,
-            PRESERVATION_ASYMMETRY,
-            params,
-            seed,
-            roughness_strength,
-            {},
-            {},
-            budget,
-            calibration_job,
-        )
+    if family in {MAX_ENTROPY_MACRO_INVARIANT, RANK_CONDITIONED_MAX_ENTROPY}:
         target_counts = edge_delta_counts(calibration_edges, budget)
-        calibration_edge_count = sum(len(targets) for targets in calibration_edges.values())
 
     if family == MAX_ENTROPY_MACRO_INVARIANT:
         edges, sampler = matched_delta_max_entropy_edges(
@@ -197,6 +209,8 @@ def generate_max_entropy_system(
             job,
             sampler_draws,
         )
+    elif family == RANK_CONDITIONED_MAX_ENTROPY:
+        edges, sampler = rank_conditioned_max_entropy_edges(scored_by_source, params, seed, job)
     else:
         edges = uniform_max_entropy_edges(states, candidates_by_state, params, seed, job)
         observed_counts = edge_delta_counts(edges, budget)
@@ -217,17 +231,29 @@ def generate_max_entropy_system(
     target_counts = dict(sampler.get("target_counts", target_counts)) if isinstance(sampler.get("target_counts", {}), dict) else target_counts
     match_error = sampler.get("match_error", "")
     metadata = transition_metadata(params, seed, family, states, edges, [], {}, {}, budget, job)
+    sampler_audit = top_m_sampler_audit_metadata(edges, calibration_edges, scored_by_source, params, job)
+    selection_rule = "uniform_local_without_macro_constraint"
+    constraint_profile = "locality_plus_exact_out_degree"
+    if family == MAX_ENTROPY_MACRO_INVARIANT:
+        selection_rule = "maximum_entropy_local_matched_macro_invariant_delta"
+        constraint_profile = "locality_plus_exact_out_degree_plus_macro_delta_marginal"
+    elif family == RANK_CONDITIONED_MAX_ENTROPY:
+        selection_rule = "rank_conditioned_local_sampling"
+        constraint_profile = "locality_plus_exact_out_degree_plus_local_rank_bucket"
     metadata.update({
         "transition_energy_form": transition_energy_form(family),
-        "selection_rule": "uniform_local_without_macro_constraint" if family == MAX_ENTROPY_LOCAL else "maximum_entropy_local_matched_macro_invariant_delta",
+        "selection_rule": selection_rule,
         "transform_names": "max_entropy_local_transition",
         "probabilistic_sampling_used": 1,
+        "sampler_family": sampler_family_label(family),
         "max_entropy_family": family,
-        "max_entropy_constraint_profile": "locality_plus_exact_out_degree" if family == MAX_ENTROPY_LOCAL else "locality_plus_exact_out_degree_plus_macro_delta_marginal",
+        "max_entropy_constraint_profile": constraint_profile,
         "max_entropy_sampler_status": sampler.get("status", "ok"),
         "max_entropy_sampler_draws": sampler.get("draws", sampler_draws),
         "max_entropy_sampler_best_draw_index": sampler.get("best_draw_index", ""),
         "max_entropy_sampler_weight_iterations": sampler.get("weight_iterations", ""),
+        "rank_bucket_multiplier": sampler.get("rank_bucket_multiplier", ""),
+        "rank_condition_window_mean": sampler.get("rank_condition_window_mean", ""),
         "max_entropy_equivalent_beta_target": equivalent_beta,
         "equivalent_beta_target": equivalent_beta,
         "macro_invariant_beta": equivalent_beta,
@@ -245,6 +271,7 @@ def generate_max_entropy_system(
         "max_entropy_empty_successor_source_count": empty_successors,
         "max_entropy_reversibility_fraction_requested": params.reversibility_fraction,
         "max_entropy_reversibility_fraction_applied": 0.0,
+        **sampler_audit,
     })
     return LandscapeSystem(
         system_id=transition_system_id(params, family, seed, job),
@@ -255,6 +282,258 @@ def generate_max_entropy_system(
         transform_names=("max_entropy_local_transition",),
         metadata=metadata,
     )
+
+
+def generate_softmax_preservation_system(
+    params: RelationParams,
+    seed: int,
+    job: dict[str, object],
+    family: str,
+) -> LandscapeSystem:
+    states = enumerate_states(params.coordinate_count, params.alphabet_size)
+    candidates_by_state = {
+        state: candidate_successors(state, params.alphabet_size, params.update_footprint)
+        for state in states
+    }
+    budget = budget_field(states, params, job)
+    roughness_strength = transition_float(job, "transition_roughness_strength", params.roughness_strength)
+    beta = macro_invariant_beta(job, params)
+    temperature = max(1e-6, transition_float(job, "sampler_temperature", 0.05))
+    calibration_job = deterministic_preservation_job(job, beta)
+    scored_by_source = preservation_scored_candidates(states, candidates_by_state, params, seed, roughness_strength, budget, calibration_job)
+    calibration_edges = top_m_edges_from_scores(scored_by_source, params)
+    edges = softmax_sample_edges(scored_by_source, params, seed, job, temperature)
+    selected_scores = [score for source, targets in edges.items() for score, target in scored_by_source[source] if target in targets]
+    metadata = transition_metadata(params, seed, family, states, edges, selected_scores, {}, {}, budget, job)
+    metadata.update({
+        "transition_energy_form": transition_energy_form(family),
+        "selection_rule": "softmax_gibbs_without_replacement_over_preservation_energy",
+        "transform_names": "softmax_preservation_transition_energy",
+        "probabilistic_sampling_used": 1,
+        "sampler_family": sampler_family_label(family),
+        "sampler_temperature": temperature,
+        "softmax_temperature": temperature,
+        "max_entropy_equivalent_beta_target": beta,
+        "equivalent_beta_target": beta,
+        "macro_invariant_beta": beta,
+        "budget_weight": beta,
+        "max_entropy_calibration_family": PRESERVATION_ASYMMETRY,
+        "max_entropy_calibration_edge_count": sum(len(targets) for targets in calibration_edges.values()),
+        "max_entropy_reversibility_fraction_requested": params.reversibility_fraction,
+        "max_entropy_reversibility_fraction_applied": 0.0,
+        **top_m_sampler_audit_metadata(edges, calibration_edges, scored_by_source, params, job),
+    })
+    return LandscapeSystem(
+        system_id=transition_system_id(params, family, seed, job),
+        seed=seed,
+        family=f"{params.parameter_set_id}_{family}",
+        states=states,
+        edges=edges,
+        transform_names=("softmax_preservation_transition_energy",),
+        metadata=metadata,
+    )
+
+
+def deterministic_preservation_job(job: dict[str, object], beta: float) -> dict[str, object]:
+    out = dict(job)
+    out.update({
+        "substrate_family": PRESERVATION_ASYMMETRY,
+        "transition_energy_family": PRESERVATION_ASYMMETRY,
+        "macro_invariant_beta": beta,
+        "budget_weight": beta,
+        "apply_reversibility": False,
+    })
+    return out
+
+
+def preservation_scored_candidates(
+    states: tuple[State, ...],
+    candidates_by_state: dict[State, tuple[State, ...]],
+    params: RelationParams,
+    seed: int,
+    roughness_strength: float,
+    budget: dict[State, float],
+    job: dict[str, object],
+) -> dict[State, list[tuple[float, State]]]:
+    scored_by_source: dict[State, list[tuple[float, State]]] = {}
+    for source in states:
+        scored = [
+            (
+                transition_energy(source, target, PRESERVATION_ASYMMETRY, params, seed, roughness_strength, {}, {}, budget, job),
+                target,
+            )
+            for target in candidates_by_state[source]
+        ]
+        scored.sort(key=lambda item: (item[0], item[1]))
+        scored_by_source[source] = scored
+    return scored_by_source
+
+
+def top_m_edges_from_scores(
+    scored_by_source: dict[State, list[tuple[float, State]]],
+    params: RelationParams,
+) -> dict[State, tuple[State, ...]]:
+    k = max(1, params.out_degree_target)
+    return {
+        source: tuple(target for _score, target in scored[:k])
+        for source, scored in scored_by_source.items()
+    }
+
+
+def softmax_sample_edges(
+    scored_by_source: dict[State, list[tuple[float, State]]],
+    params: RelationParams,
+    seed: int,
+    job: dict[str, object],
+    temperature: float,
+) -> dict[State, tuple[State, ...]]:
+    k = max(1, params.out_degree_target)
+    salt = str(job.get("substrate_variant", job.get("job_id", "")))
+    edges: dict[State, tuple[State, ...]] = {}
+    for source, scored in scored_by_source.items():
+        if not scored:
+            edges[source] = tuple()
+            continue
+        min_score = min(score for score, _target in scored)
+        ranked = []
+        for score, target in scored:
+            exponent = -max(-80.0, min(80.0, (score - min_score) / max(1e-6, temperature)))
+            weight = max(1e-12, math.exp(exponent))
+            unit = max(1e-12, stable_unit(f"{seed}:{salt}:{temperature:g}:{source}:{target}:softmax"))
+            key = -math.log(unit) / weight
+            ranked.append((key, target))
+        ranked.sort(key=lambda item: (item[0], item[1]))
+        edges[source] = tuple(sorted(target for _key, target in ranked[:k]))
+    return edges
+
+
+def rank_conditioned_max_entropy_edges(
+    scored_by_source: dict[State, list[tuple[float, State]]],
+    params: RelationParams,
+    seed: int,
+    job: dict[str, object],
+) -> tuple[dict[State, tuple[State, ...]], dict[str, object]]:
+    k = max(1, params.out_degree_target)
+    multiplier = max(1.0, transition_float(job, "rank_bucket_multiplier", 2.0))
+    salt = str(job.get("substrate_variant", job.get("job_id", "")))
+    windows: list[int] = []
+    edges: dict[State, tuple[State, ...]] = {}
+    for source, scored in scored_by_source.items():
+        window = min(len(scored), max(k, int(math.ceil(k * multiplier))))
+        windows.append(window)
+        pool = scored[:window]
+        ranked = sorted(
+            pool,
+            key=lambda item: (
+                stable_unit(f"{seed}:{salt}:{multiplier:g}:{source}:{item[1]}:rank_conditioned"),
+                item[1],
+            ),
+        )
+        edges[source] = tuple(sorted(target for _score, target in ranked[:k]))
+    return edges, {
+        "status": "ok",
+        "draws": 1,
+        "best_draw_index": 0,
+        "match_error": "",
+        "target_counts": {},
+        "observed_counts": {},
+        "target_marginal_applied": 0,
+        "weight_iterations": 0,
+        "rank_bucket_multiplier": multiplier,
+        "rank_condition_window_mean": mean(windows) if windows else 0.0,
+    }
+
+
+def top_m_sampler_audit_metadata(
+    edges: dict[State, tuple[State, ...]],
+    calibration_edges: dict[State, tuple[State, ...]],
+    scored_by_source: dict[State, list[tuple[float, State]]],
+    params: RelationParams,
+    job: dict[str, object],
+) -> dict[str, object]:
+    rank_by_edge: dict[tuple[State, State], int] = {}
+    energy_by_edge: dict[tuple[State, State], float] = {}
+    for source, scored in scored_by_source.items():
+        for index, (score, target) in enumerate(scored, start=1):
+            rank_by_edge[(source, target)] = index
+            energy_by_edge[(source, target)] = score
+    selected_edge_set = {(source, target) for source, targets in edges.items() for target in targets}
+    calibration_edge_set = {(source, target) for source, targets in calibration_edges.items() for target in targets}
+    intersection = len(selected_edge_set & calibration_edge_set)
+    union = len(selected_edge_set | calibration_edge_set)
+    selected_ranks = [rank_by_edge[item] for item in selected_edge_set if item in rank_by_edge]
+    calibration_ranks = [rank_by_edge[item] for item in calibration_edge_set if item in rank_by_edge]
+    selected_energies = [energy_by_edge[item] for item in selected_edge_set if item in energy_by_edge]
+    calibration_energies = [energy_by_edge[item] for item in calibration_edge_set if item in energy_by_edge]
+    selected_rank_counts = count_rank_buckets(selected_ranks, params)
+    calibration_rank_counts = count_rank_buckets(calibration_ranks, params)
+    selected_energy_counts = count_energy_buckets(selected_energies)
+    calibration_energy_counts = count_energy_buckets(calibration_energies)
+    per_state_errors = []
+    for source in scored_by_source:
+        selected_source_ranks = [rank_by_edge[(source, target)] for target in edges.get(source, ()) if (source, target) in rank_by_edge]
+        calibration_source_ranks = [rank_by_edge[(source, target)] for target in calibration_edges.get(source, ()) if (source, target) in rank_by_edge]
+        per_state_errors.append(distribution_total_variation(count_rank_buckets(calibration_source_ranks, params), count_rank_buckets(selected_source_ranks, params)))
+    return {
+        "sampler_family": sampler_family_label(str(job.get("substrate_family", ""))),
+        "top_m_calibration_edge_count": len(calibration_edge_set),
+        "edge_jaccard_vs_top_m_calibration": intersection / max(1, union),
+        "selected_edge_overlap_fraction_vs_top_m_calibration": intersection / max(1, len(calibration_edge_set)),
+        "selected_edge_retention_fraction_vs_top_m_calibration": intersection / max(1, len(selected_edge_set)),
+        "selected_edge_symmetric_difference_fraction_vs_top_m": (union - intersection) / max(1, union),
+        "selected_rank_mean": mean(selected_ranks) if selected_ranks else "",
+        "calibration_rank_mean": mean(calibration_ranks) if calibration_ranks else "",
+        "rank_distribution_match_error": distribution_total_variation(calibration_rank_counts, selected_rank_counts),
+        "rank_bucket_distribution": normalized_distribution_json(selected_rank_counts),
+        "calibration_rank_bucket_distribution": normalized_distribution_json(calibration_rank_counts),
+        "selected_energy_mean": mean(selected_energies) if selected_energies else "",
+        "calibration_energy_mean": mean(calibration_energies) if calibration_energies else "",
+        "energy_mean_delta_vs_top_m": (mean(selected_energies) - mean(calibration_energies)) if selected_energies and calibration_energies else "",
+        "energy_distribution_match_error": distribution_total_variation(calibration_energy_counts, selected_energy_counts),
+        "energy_bucket_distribution": normalized_distribution_json(selected_energy_counts),
+        "calibration_energy_bucket_distribution": normalized_distribution_json(calibration_energy_counts),
+        "per_state_rank_bucket_match_error_mean": mean(per_state_errors) if per_state_errors else "",
+        "per_state_rank_bucket_match_error_max": max(per_state_errors) if per_state_errors else "",
+    }
+
+
+def count_rank_buckets(ranks: list[int], params: RelationParams) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    k = max(1, params.out_degree_target)
+    for rank in ranks:
+        if rank <= k:
+            bucket = "top_m"
+        elif rank <= 2 * k:
+            bucket = "near_top_2m"
+        elif rank <= 4 * k:
+            bucket = "mid_4m"
+        else:
+            bucket = "tail"
+        counts[bucket] = counts.get(bucket, 0) + 1
+    return counts
+
+
+def count_energy_buckets(values: list[float]) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for value in values:
+        bucket = f"{round(float(value), 3):.3f}"
+        counts[bucket] = counts.get(bucket, 0) + 1
+    return counts
+
+
+def sampler_family_label(family: str) -> str:
+    canonical = canonical_transition_energy_family(family)
+    if canonical == PRESERVATION_ASYMMETRY:
+        return "deterministic_top_m"
+    if canonical == SOFTMAX_PRESERVATION:
+        return "softmax_gibbs_energy"
+    if canonical == RANK_CONDITIONED_MAX_ENTROPY:
+        return "rank_conditioned_local"
+    if canonical == MAX_ENTROPY_MACRO_INVARIANT:
+        return "max_entropy_macro_marginal"
+    if canonical == MAX_ENTROPY_LOCAL:
+        return "max_entropy_local"
+    return canonical
 
 
 def transition_system_id(params: RelationParams, family: str, seed: int, job: dict[str, object]) -> str:
@@ -658,10 +937,14 @@ def transition_energy_form(family: str) -> str:
         return "hamming_distance_plus_beta_macro_invariant_delta_penalty_plus_seeded_roughness"
     if family == COMBINED_ASYMMETRY:
         return "hamming_distance_plus_alpha_directional_delta_plus_beta_macro_invariant_delta_plus_seeded_roughness"
+    if family == SOFTMAX_PRESERVATION:
+        return "softmax_gibbs_without_replacement_over_preservation_energy"
     if family == MAX_ENTROPY_LOCAL:
         return "maximum_entropy_sample_over_local_candidate_edges_with_exact_out_degree"
     if family == MAX_ENTROPY_MACRO_INVARIANT:
         return "maximum_entropy_sample_over_local_edges_matched_to_macro_invariant_delta_marginal"
+    if family == RANK_CONDITIONED_MAX_ENTROPY:
+        return "maximum_entropy_sample_over_local_rank_conditioned_candidate_window"
     return "current_constraint_template_scored_relation"
 
 

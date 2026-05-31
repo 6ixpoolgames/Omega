@@ -49,6 +49,7 @@ from .horizon_transport_contracts import (
     STRUCTURE_DESTROYING_NULL_FAMILIES,
     SWEEP_KINDS,
     TRANSITION_ENERGY_CHARACTERIZATION,
+    TOP_M_GEOMETRY_AUDIT,
     active_spec_id,
     artifact_prefix,
     attach_horizon_pairs,
@@ -94,7 +95,10 @@ from .transition_energy_substrates import (
     MAX_ENTROPY_LOCAL,
     MAX_ENTROPY_MACRO_INVARIANT,
     PRESERVATION_ASYMMETRY,
+    RANK_CONDITIONED_MAX_ENTROPY,
     SMOOTH_RANDOM_POTENTIAL,
+    SOFTMAX_PRESERVATION,
+    TOP_M_GEOMETRY_AUDIT_FAMILIES,
     TRANSITION_ENERGY_FAMILIES,
     canonical_transition_energy_family,
     generate_job_baseline_system,
@@ -199,6 +203,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--equivalent-beta-target-list", type=str, default="", help="MaxEnt calibration beta targets for deterministic preservation-asymmetry edge-marginal matching.")
     parser.add_argument("--max-entropy-sampler-draws", type=int, default=16, help="Deterministic weighted sampling draws per MaxEnt macro-invariant substrate job.")
     parser.add_argument("--max-entropy-delta-match-error-max", type=float, default=0.10, help="Total-variation tolerance for MaxEnt macro-invariant delta marginal matching.")
+    parser.add_argument("--sampler-temperature-list", type=str, default="", help="Softmax/Gibbs sampler temperatures for top-m geometry audit variants.")
+    parser.add_argument("--rank-bucket-multiplier-list", type=str, default="", help="Rank-conditioned local sampler window multipliers over out-degree target.")
     parser.add_argument("--asymmetry-alpha-list", type=str, default="", help="Directional-asymmetry alpha variants.")
     parser.add_argument("--asymmetry-field-smoothness-list", type=str, default="", help="Directional-asymmetry field-smoothness variants.")
     parser.add_argument("--combined-alpha-beta-pairs", type=str, default="", help="Sparse combined-asymmetry pairs like 0.25:0.5,0.5:1.0.")
@@ -311,7 +317,7 @@ def substrate_families(args: argparse.Namespace) -> list[str]:
 
 def substrate_family_variants(args: argparse.Namespace) -> list[dict[str, object]]:
     variants: list[dict[str, object]] = []
-    characterization = run_kind(args) in {TRANSITION_ENERGY_CHARACTERIZATION, ASYMMETRY_LADDER, MAX_ENTROPY_PREFLIGHT}
+    characterization = run_kind(args) in {TRANSITION_ENERGY_CHARACTERIZATION, ASYMMETRY_LADDER, MAX_ENTROPY_PREFLIGHT, TOP_M_GEOMETRY_AUDIT}
     for family in substrate_families(args):
         if not characterization:
             variants.append(default_substrate_variant(family, args))
@@ -395,6 +401,22 @@ def substrate_family_variants(args: argparse.Namespace) -> list[dict[str, object
                         "macro_invariant_beta": beta,
                         "alpha_beta_pair": f"{float_label(alpha)}:{float_label(beta)}",
                     })
+        elif family == SOFTMAX_PRESERVATION:
+            invariant_kinds = string_list_or_default(args.budget_kinds, ("symbol_histogram_distance",))
+            for invariant_kind in invariant_kinds:
+                for beta in list_or_default(args.macro_invariant_beta_list or args.budget_weights, (0.075, 0.10, 0.15)):
+                    for temperature in sampler_temperatures(args):
+                        variants.append({
+                            "substrate_family": family,
+                            "substrate_variant": f"invariant_{safe_id(invariant_kind)}__beta_{float_label(beta)}__temperature_{float_label(temperature)}",
+                            "variant_role": "softmax_gibbs_preservation_energy_sampler",
+                            "budget_kind": invariant_kind,
+                            "budget_weight": beta,
+                            "macro_invariant_kind": invariant_kind,
+                            "macro_invariant_beta": beta,
+                            "equivalent_beta_target": beta,
+                            "sampler_temperature": temperature,
+                        })
         elif family == MAX_ENTROPY_LOCAL:
             invariant_kinds = string_list_or_default(args.budget_kinds, ("symbol_histogram_distance",))
             for invariant_kind in invariant_kinds:
@@ -427,6 +449,24 @@ def substrate_family_variants(args: argparse.Namespace) -> list[dict[str, object
                         "max_entropy_sampler_draws": args.max_entropy_sampler_draws,
                         "max_entropy_delta_match_error_max": args.max_entropy_delta_match_error_max,
                     })
+        elif family == RANK_CONDITIONED_MAX_ENTROPY:
+            invariant_kinds = string_list_or_default(args.budget_kinds, ("symbol_histogram_distance",))
+            for invariant_kind in invariant_kinds:
+                for beta in equivalent_beta_targets(args):
+                    for multiplier in rank_bucket_multipliers(args):
+                        variants.append({
+                            "substrate_family": family,
+                            "substrate_variant": f"equivalent_beta_{float_label(beta)}__invariant_{safe_id(invariant_kind)}__rank_window_{float_label(multiplier)}",
+                            "variant_role": "rank_conditioned_local_sampler",
+                            "budget_kind": invariant_kind,
+                            "macro_invariant_kind": invariant_kind,
+                            "budget_weight": beta,
+                            "macro_invariant_beta": beta,
+                            "equivalent_beta_target": beta,
+                            "rank_bucket_multiplier": multiplier,
+                            "max_entropy_sampler_draws": 1,
+                            "max_entropy_delta_match_error_max": args.max_entropy_delta_match_error_max,
+                        })
     return variants
 
 
@@ -473,6 +513,17 @@ def default_substrate_variant(family: str, args: argparse.Namespace) -> dict[str
             "macro_invariant_beta": beta,
             "alpha_beta_pair": f"{float_label(args.asymmetry_alpha)}:{float_label(beta)}",
         })
+    if family == SOFTMAX_PRESERVATION:
+        beta = macro_invariant_beta_default(args)
+        temperature = sampler_temperatures(args)[0]
+        row.update({
+            "budget_kind": args.budget_kind,
+            "budget_weight": beta,
+            "macro_invariant_kind": args.budget_kind,
+            "macro_invariant_beta": beta,
+            "equivalent_beta_target": beta,
+            "sampler_temperature": temperature,
+        })
     if family in MAX_ENTROPY_FAMILIES:
         beta = equivalent_beta_targets(args)[0]
         row.update({
@@ -484,6 +535,8 @@ def default_substrate_variant(family: str, args: argparse.Namespace) -> dict[str
             "max_entropy_sampler_draws": args.max_entropy_sampler_draws,
             "max_entropy_delta_match_error_max": args.max_entropy_delta_match_error_max,
         })
+        if family == RANK_CONDITIONED_MAX_ENTROPY:
+            row["rank_bucket_multiplier"] = rank_bucket_multipliers(args)[0]
     if args.transition_roughness_strength >= 0:
         row["transition_roughness_strength"] = args.transition_roughness_strength
     return row
@@ -524,6 +577,14 @@ def macro_invariant_beta_default(args: argparse.Namespace) -> float:
 
 def equivalent_beta_targets(args: argparse.Namespace) -> tuple[float, ...]:
     return list_or_default(args.equivalent_beta_target_list or args.macro_invariant_beta_list, (0.05, 0.10))
+
+
+def sampler_temperatures(args: argparse.Namespace) -> tuple[float, ...]:
+    return list_or_default(args.sampler_temperature_list, (0.02, 0.05, 0.10))
+
+
+def rank_bucket_multipliers(args: argparse.Namespace) -> tuple[float, ...]:
+    return list_or_default(args.rank_bucket_multiplier_list, (2.0, 3.0))
 
 
 def combined_alpha_beta_pairs(args: argparse.Namespace) -> tuple[tuple[float, float], ...]:
@@ -594,6 +655,8 @@ def expand_jobs_for_substrate_families(jobs: list[dict[str, object]], args: argp
             item["equivalent_beta_target"] = variant.get("equivalent_beta_target", item["macro_invariant_beta"])
             item["max_entropy_sampler_draws"] = variant.get("max_entropy_sampler_draws", args.max_entropy_sampler_draws)
             item["max_entropy_delta_match_error_max"] = variant.get("max_entropy_delta_match_error_max", args.max_entropy_delta_match_error_max)
+            item["sampler_temperature"] = variant.get("sampler_temperature", "")
+            item["rank_bucket_multiplier"] = variant.get("rank_bucket_multiplier", "")
             item["asymmetry_alpha"] = variant.get("asymmetry_alpha", args.asymmetry_alpha)
             item["asymmetry_field_seed"] = int(item.get("seed", 0)) + 73_001
             item["asymmetry_field_smoothness"] = variant.get("asymmetry_field_smoothness", args.asymmetry_field_smoothness)
@@ -620,10 +683,14 @@ def transition_energy_form_label(family: str) -> str:
         return "hamming_distance_plus_beta_macro_invariant_delta_penalty_plus_seeded_roughness"
     if family == COMBINED_ASYMMETRY:
         return "hamming_distance_plus_alpha_directional_delta_plus_beta_macro_invariant_delta_plus_seeded_roughness"
+    if family == SOFTMAX_PRESERVATION:
+        return "softmax_gibbs_without_replacement_over_preservation_energy"
     if family == MAX_ENTROPY_LOCAL:
         return "maximum_entropy_sample_over_local_candidate_edges_with_exact_out_degree"
     if family == MAX_ENTROPY_MACRO_INVARIANT:
         return "maximum_entropy_sample_over_local_edges_matched_to_macro_invariant_delta_marginal"
+    if family == RANK_CONDITIONED_MAX_ENTROPY:
+        return "maximum_entropy_sample_over_local_rank_conditioned_candidate_window"
     return "current_constraint_template_scored_relation"
 
 
@@ -1162,6 +1229,12 @@ def compute_outputs(
     response_by_max_entropy_family = response_by_group_rows([row for row in response_classification if row.get("substrate_family") in MAX_ENTROPY_FAMILIES], ("substrate_family",))
     response_by_equivalent_beta_target = response_by_group_rows([row for row in response_classification if row.get("equivalent_beta_target") not in (None, "")], ("equivalent_beta_target",))
     paired_baseline_availability_by_max_entropy_variant = paired_baseline_availability_by_max_entropy_variant_rows(response_classification)
+    top_m_sampler_diagnostics = top_m_geometry_sampler_diagnostics_rows(rows)
+    top_m_rank_energy_match = top_m_geometry_rank_energy_match_summary_rows(top_m_sampler_diagnostics)
+    top_m_per_state_rank_bucket = top_m_geometry_per_state_rank_bucket_match_summary_rows(top_m_sampler_diagnostics)
+    top_m_edge_match = top_m_geometry_edge_match_to_calibration_rows(top_m_sampler_diagnostics)
+    response_by_sampler_family = response_by_group_rows([row for row in response_classification if row.get("sampler_family")], ("sampler_family",))
+    response_by_beta_or_temperature = response_by_group_rows([row for row in response_classification if row.get("beta_or_temperature")], ("sampler_family", "beta_or_temperature"))
     response_by_directional_alpha = response_by_group_rows([row for row in response_classification if row.get("asymmetry_alpha") not in (None, "")], ("asymmetry_alpha",))
     response_by_asymmetry_field_smoothness = response_by_group_rows([row for row in response_classification if row.get("asymmetry_field_smoothness") not in (None, "")], ("asymmetry_field_smoothness",))
     response_by_alpha_beta_pair = response_by_group_rows([row for row in response_classification if row.get("alpha_beta_pair")], ("alpha_beta_pair",))
@@ -1230,6 +1303,12 @@ def compute_outputs(
         "response_by_max_entropy_family": response_by_max_entropy_family,
         "response_by_equivalent_beta_target": response_by_equivalent_beta_target,
         "paired_baseline_availability_by_max_entropy_variant": paired_baseline_availability_by_max_entropy_variant,
+        "top_m_sampler_diagnostics": top_m_sampler_diagnostics,
+        "top_m_rank_energy_match": top_m_rank_energy_match,
+        "top_m_per_state_rank_bucket": top_m_per_state_rank_bucket,
+        "top_m_edge_match": top_m_edge_match,
+        "response_by_sampler_family": response_by_sampler_family,
+        "response_by_beta_or_temperature": response_by_beta_or_temperature,
         "response_by_directional_alpha": response_by_directional_alpha,
         "response_by_asymmetry_field_smoothness": response_by_asymmetry_field_smoothness,
         "response_by_alpha_beta_pair": response_by_alpha_beta_pair,
@@ -1606,6 +1685,149 @@ def paired_baseline_availability_by_max_entropy_variant_rows(rows: list[dict[str
     return out
 
 
+def unique_top_m_geometry_baseline_rows(rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    seen: set[str] = set()
+    out: list[dict[str, object]] = []
+    for row in rows:
+        family = canonical_transition_energy_family(str(row.get("substrate_family", "") or substrate_family_from_condition_id(row.get("condition_id", ""))))
+        if family not in TOP_M_GEOMETRY_AUDIT_FAMILIES or row.get("actual_control_name") != BASELINE_CONTROL:
+            continue
+        key = str(row.get("baseline_system_id", row.get("condition_id", "")))
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append(row)
+    return out
+
+
+def top_m_geometry_sampler_diagnostics_rows(rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    out: list[dict[str, object]] = []
+    for row in unique_top_m_geometry_baseline_rows(rows):
+        family = canonical_transition_energy_family(str(row.get("substrate_family", "") or ""))
+        out.append({
+            "baseline_system_id": row.get("baseline_system_id", ""),
+            "condition_id": row.get("condition_id", ""),
+            "substrate_family": family,
+            "substrate_variant": row.get("substrate_variant", substrate_variant_from_condition_id(row.get("condition_id", ""))),
+            "sampler_family": row.get("sampler_family", sampler_family_from_family(family)),
+            "macro_invariant_kind": row.get("macro_invariant_kind", ""),
+            "macro_invariant_beta": row.get("macro_invariant_beta", ""),
+            "equivalent_beta_target": row.get("equivalent_beta_target", row.get("macro_invariant_beta", "")),
+            "sampler_temperature": row.get("sampler_temperature", ""),
+            "rank_bucket_multiplier": row.get("rank_bucket_multiplier", ""),
+            "rank_condition_window_mean": row.get("rank_condition_window_mean", ""),
+            "top_m_calibration_edge_count": row.get("top_m_calibration_edge_count", row.get("max_entropy_calibration_edge_count", "")),
+            "edge_count": row.get("edge_count", ""),
+            "mean_out_degree": row.get("mean_out_degree", ""),
+            "edge_jaccard_vs_top_m_calibration": row.get("edge_jaccard_vs_top_m_calibration", ""),
+            "selected_edge_overlap_fraction_vs_top_m_calibration": row.get("selected_edge_overlap_fraction_vs_top_m_calibration", ""),
+            "selected_edge_retention_fraction_vs_top_m_calibration": row.get("selected_edge_retention_fraction_vs_top_m_calibration", ""),
+            "selected_edge_symmetric_difference_fraction_vs_top_m": row.get("selected_edge_symmetric_difference_fraction_vs_top_m", ""),
+            "selected_rank_mean": row.get("selected_rank_mean", ""),
+            "calibration_rank_mean": row.get("calibration_rank_mean", ""),
+            "rank_distribution_match_error": row.get("rank_distribution_match_error", ""),
+            "rank_bucket_distribution": row.get("rank_bucket_distribution", ""),
+            "calibration_rank_bucket_distribution": row.get("calibration_rank_bucket_distribution", ""),
+            "selected_energy_mean": row.get("selected_energy_mean", ""),
+            "calibration_energy_mean": row.get("calibration_energy_mean", ""),
+            "energy_mean_delta_vs_top_m": row.get("energy_mean_delta_vs_top_m", ""),
+            "energy_distribution_match_error": row.get("energy_distribution_match_error", ""),
+            "energy_bucket_distribution": row.get("energy_bucket_distribution", ""),
+            "calibration_energy_bucket_distribution": row.get("calibration_energy_bucket_distribution", ""),
+            "per_state_rank_bucket_match_error_mean": row.get("per_state_rank_bucket_match_error_mean", ""),
+            "per_state_rank_bucket_match_error_max": row.get("per_state_rank_bucket_match_error_max", ""),
+            "macro_invariant_delta_match_error": row.get("macro_invariant_delta_match_error", ""),
+            "macro_invariant_delta_match_tolerance": row.get("macro_invariant_delta_match_tolerance", ""),
+        })
+    return out
+
+
+def top_m_geometry_rank_energy_match_summary_rows(rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    return aggregate_top_m_geometry_rows(rows, include_per_state=False)
+
+
+def top_m_geometry_per_state_rank_bucket_match_summary_rows(rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    summary = aggregate_top_m_geometry_rows(rows, include_per_state=True)
+    return [
+        {
+            "sampler_family": row.get("sampler_family", ""),
+            "substrate_family": row.get("substrate_family", ""),
+            "macro_invariant_kind": row.get("macro_invariant_kind", ""),
+            "macro_invariant_beta": row.get("macro_invariant_beta", ""),
+            "sampler_temperature": row.get("sampler_temperature", ""),
+            "rank_bucket_multiplier": row.get("rank_bucket_multiplier", ""),
+            "sample_count": row.get("sample_count", 0),
+            "per_state_rank_bucket_match_error_mean": row.get("per_state_rank_bucket_match_error_mean", ""),
+            "per_state_rank_bucket_match_error_max": row.get("per_state_rank_bucket_match_error_max", ""),
+        }
+        for row in summary
+    ]
+
+
+def top_m_geometry_edge_match_to_calibration_rows(rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    summary = aggregate_top_m_geometry_rows(rows, include_per_state=False)
+    return [
+        {
+            "sampler_family": row.get("sampler_family", ""),
+            "substrate_family": row.get("substrate_family", ""),
+            "macro_invariant_kind": row.get("macro_invariant_kind", ""),
+            "macro_invariant_beta": row.get("macro_invariant_beta", ""),
+            "sampler_temperature": row.get("sampler_temperature", ""),
+            "rank_bucket_multiplier": row.get("rank_bucket_multiplier", ""),
+            "sample_count": row.get("sample_count", 0),
+            "edge_jaccard_vs_top_m_calibration_mean": row.get("edge_jaccard_vs_top_m_calibration_mean", ""),
+            "selected_edge_overlap_fraction_vs_top_m_calibration_mean": row.get("selected_edge_overlap_fraction_vs_top_m_calibration_mean", ""),
+            "selected_edge_retention_fraction_vs_top_m_calibration_mean": row.get("selected_edge_retention_fraction_vs_top_m_calibration_mean", ""),
+            "selected_edge_symmetric_difference_fraction_vs_top_m_mean": row.get("selected_edge_symmetric_difference_fraction_vs_top_m_mean", ""),
+        }
+        for row in summary
+    ]
+
+
+def aggregate_top_m_geometry_rows(rows: list[dict[str, object]], *, include_per_state: bool) -> list[dict[str, object]]:
+    grouped: dict[tuple[str, str, str, str, str, str], list[dict[str, object]]] = defaultdict(list)
+    for row in rows:
+        grouped[(
+            str(row.get("sampler_family", "")),
+            str(row.get("substrate_family", "")),
+            str(row.get("macro_invariant_kind", "")),
+            str(row.get("macro_invariant_beta", "")),
+            str(row.get("sampler_temperature", "")),
+            str(row.get("rank_bucket_multiplier", "")),
+        )].append(row)
+    out: list[dict[str, object]] = []
+    for key, items in sorted(grouped.items(), key=lambda item: tuple(str(part) for part in item[0])):
+        sampler_family, family, invariant_kind, beta, temperature, rank_multiplier = key
+        row = {
+            "sampler_family": sampler_family,
+            "substrate_family": family,
+            "macro_invariant_kind": invariant_kind,
+            "macro_invariant_beta": beta,
+            "sampler_temperature": temperature,
+            "rank_bucket_multiplier": rank_multiplier,
+            "sample_count": len(items),
+            "edge_jaccard_vs_top_m_calibration_mean": optional_mean(items, "edge_jaccard_vs_top_m_calibration"),
+            "selected_edge_overlap_fraction_vs_top_m_calibration_mean": optional_mean(items, "selected_edge_overlap_fraction_vs_top_m_calibration"),
+            "selected_edge_retention_fraction_vs_top_m_calibration_mean": optional_mean(items, "selected_edge_retention_fraction_vs_top_m_calibration"),
+            "selected_edge_symmetric_difference_fraction_vs_top_m_mean": optional_mean(items, "selected_edge_symmetric_difference_fraction_vs_top_m"),
+            "selected_rank_mean": optional_mean(items, "selected_rank_mean"),
+            "calibration_rank_mean": optional_mean(items, "calibration_rank_mean"),
+            "rank_distribution_match_error_mean": optional_mean(items, "rank_distribution_match_error"),
+            "selected_energy_mean": optional_mean(items, "selected_energy_mean"),
+            "calibration_energy_mean": optional_mean(items, "calibration_energy_mean"),
+            "energy_mean_delta_vs_top_m_mean": optional_mean(items, "energy_mean_delta_vs_top_m"),
+            "energy_distribution_match_error_mean": optional_mean(items, "energy_distribution_match_error"),
+            "macro_invariant_delta_match_error_mean": optional_mean(items, "macro_invariant_delta_match_error"),
+        }
+        if include_per_state:
+            row.update({
+                "per_state_rank_bucket_match_error_mean": optional_mean(items, "per_state_rank_bucket_match_error_mean"),
+                "per_state_rank_bucket_match_error_max": max([float_or_zero(item.get("per_state_rank_bucket_match_error_max")) for item in items if item.get("per_state_rank_bucket_match_error_max") not in (None, "")], default=0.0),
+            })
+        out.append(row)
+    return out
+
+
 def selected_edge_overlap_sort_key(key: tuple[str, str, str, str, str]) -> tuple[str, str, float, str, str]:
     family, invariant_kind, beta, alpha, smoothness = key
     return (family, invariant_kind, float_or_zero(beta), alpha, smoothness)
@@ -1694,10 +1916,14 @@ def substrate_family_variant_manifest_rows(matrices: list[TransportMatrix], args
 def substrate_selection_rule(family: str) -> str:
     if family == CONSTRAINT_TEMPLATE_CURRENT:
         return "current_constraint_scored_top_m"
+    if family == SOFTMAX_PRESERVATION:
+        return "softmax_gibbs_without_replacement_over_preservation_energy"
     if family == MAX_ENTROPY_LOCAL:
         return "uniform_local_without_macro_constraint"
     if family == MAX_ENTROPY_MACRO_INVARIANT:
         return "maximum_entropy_local_matched_macro_invariant_delta"
+    if family == RANK_CONDITIONED_MAX_ENTROPY:
+        return "rank_conditioned_local_sampling"
     return "top_m_lowest_energy_candidates"
 
 
@@ -1708,7 +1934,7 @@ def transition_energy_family_summary_rows(args: argparse.Namespace) -> list[dict
             "substrate_family": family,
             "transition_energy_form": transition_energy_form_label(family),
             "hand_built_constraint_vocabulary_removed": int(family != CONSTRAINT_TEMPLATE_CURRENT),
-            "probabilistic_sampling_used": int(family in MAX_ENTROPY_FAMILIES),
+            "probabilistic_sampling_used": int(family in MAX_ENTROPY_FAMILIES or family == SOFTMAX_PRESERVATION),
         })
     return rows
 
@@ -1727,11 +1953,13 @@ def transition_energy_parameter_summary_rows(args: argparse.Namespace) -> list[d
             "potential_scale": variant.get("potential_scale", "") if family == SMOOTH_RANDOM_POTENTIAL else "",
             "budget_kind": variant.get("budget_kind", "") if family == BUDGET_CONSERVATION else "",
             "budget_weight": variant.get("budget_weight", "") if family == BUDGET_CONSERVATION else "",
-            "macro_invariant_kind": variant.get("macro_invariant_kind", "") if family in {PRESERVATION_ASYMMETRY, COMBINED_ASYMMETRY, *MAX_ENTROPY_FAMILIES} else "",
-            "macro_invariant_beta": variant.get("macro_invariant_beta", "") if family in {PRESERVATION_ASYMMETRY, COMBINED_ASYMMETRY, *MAX_ENTROPY_FAMILIES} else "",
+            "macro_invariant_kind": variant.get("macro_invariant_kind", "") if family in {PRESERVATION_ASYMMETRY, COMBINED_ASYMMETRY, SOFTMAX_PRESERVATION, *MAX_ENTROPY_FAMILIES} else "",
+            "macro_invariant_beta": variant.get("macro_invariant_beta", "") if family in {PRESERVATION_ASYMMETRY, COMBINED_ASYMMETRY, SOFTMAX_PRESERVATION, *MAX_ENTROPY_FAMILIES} else "",
             "equivalent_beta_target": variant.get("equivalent_beta_target", "") if family in MAX_ENTROPY_FAMILIES else "",
             "max_entropy_sampler_draws": variant.get("max_entropy_sampler_draws", "") if family in MAX_ENTROPY_FAMILIES else "",
             "max_entropy_delta_match_error_max": variant.get("max_entropy_delta_match_error_max", "") if family in MAX_ENTROPY_FAMILIES else "",
+            "sampler_temperature": variant.get("sampler_temperature", "") if family == SOFTMAX_PRESERVATION else "",
+            "rank_bucket_multiplier": variant.get("rank_bucket_multiplier", "") if family == RANK_CONDITIONED_MAX_ENTROPY else "",
             "asymmetry_alpha": variant.get("asymmetry_alpha", "") if family in {DIRECTIONAL_ASYMMETRY, COMBINED_ASYMMETRY} else "",
             "asymmetry_field_smoothness": variant.get("asymmetry_field_smoothness", "") if family in {DIRECTIONAL_ASYMMETRY, COMBINED_ASYMMETRY} else "",
             "asymmetry_field_scale": variant.get("asymmetry_field_scale", "") if family in {DIRECTIONAL_ASYMMETRY, COMBINED_ASYMMETRY} else "",
@@ -3366,6 +3594,12 @@ def write_outputs(
     write_csv(out_dir / "response_by_max_entropy_family.csv", outputs["response_by_max_entropy_family"])
     write_csv(out_dir / "response_by_equivalent_beta_target.csv", outputs["response_by_equivalent_beta_target"])
     write_csv(out_dir / "paired_baseline_availability_by_max_entropy_variant.csv", outputs["paired_baseline_availability_by_max_entropy_variant"])
+    write_csv(out_dir / "top_m_geometry_sampler_diagnostics.csv", outputs["top_m_sampler_diagnostics"])
+    write_csv(out_dir / "top_m_geometry_rank_energy_match_summary.csv", outputs["top_m_rank_energy_match"])
+    write_csv(out_dir / "top_m_geometry_per_state_rank_bucket_match_summary.csv", outputs["top_m_per_state_rank_bucket"])
+    write_csv(out_dir / "top_m_geometry_edge_match_to_calibration.csv", outputs["top_m_edge_match"])
+    write_csv(out_dir / "response_by_sampler_family.csv", outputs["response_by_sampler_family"])
+    write_csv(out_dir / "response_by_beta_or_temperature.csv", outputs["response_by_beta_or_temperature"])
     write_csv(out_dir / "response_by_alpha_beta_pair.csv", outputs["response_by_alpha_beta_pair"])
     write_csv(out_dir / "matched_null_pass_by_asymmetry_family.csv", outputs["matched_by_substrate"])
     write_csv(out_dir / "matched_null_pass_by_asymmetry_variant.csv", outputs["matched_by_substrate_variant"])
@@ -3394,6 +3628,9 @@ def write_outputs(
     status["max_entropy_sampler_diagnostics_rows"] = len(outputs["max_entropy_sampler_diagnostics"])
     status["max_entropy_edge_match_to_calibration_rows"] = len(outputs["max_entropy_edge_match_to_calibration"])
     status["paired_baseline_availability_by_max_entropy_variant_rows"] = len(outputs["paired_baseline_availability_by_max_entropy_variant"])
+    status["top_m_geometry_sampler_diagnostics_rows"] = len(outputs["top_m_sampler_diagnostics"])
+    status["top_m_geometry_rank_energy_match_summary_rows"] = len(outputs["top_m_rank_energy_match"])
+    status["top_m_geometry_edge_match_to_calibration_rows"] = len(outputs["top_m_edge_match"])
     status["fixture_result_rows"] = len(outputs["fixture_results"])
     status["perturbation_response_rows"] = len(outputs["response_classification"])
     status["response_flag_rows"] = len(outputs["response_flags"])
@@ -3433,6 +3670,8 @@ def decision_fields(outputs: dict[str, list[dict[str, object]]], status: dict[st
         readiness, next_action = transition_characterization_decision(outputs, status, matrix_gate, null_gate, null_power_gate, matched_marginal_gate, response_interpretable, fixture_gate)
     elif kind == MAX_ENTROPY_PREFLIGHT:
         readiness, next_action = max_entropy_preflight_decision(outputs, status, matrix_gate, null_gate, null_power_gate, matched_marginal_gate, response_interpretable, fixture_gate)
+    elif kind == TOP_M_GEOMETRY_AUDIT:
+        readiness, next_action = top_m_geometry_audit_decision(outputs, status, matrix_gate, null_gate, null_power_gate, matched_marginal_gate, response_interpretable, fixture_gate)
     elif kind == "substrate_untethering":
         readiness, next_action = substrate_untethering_decision(outputs, status, matrix_gate, null_gate, null_power_gate, matched_marginal_gate, response_interpretable, fixture_gate)
     elif kind == ASYMMETRY_LADDER:
@@ -3497,6 +3736,10 @@ def decision_fields(outputs: dict[str, list[dict[str, object]]], status: dict[st
         "max_entropy_preflight_completed": int(readiness == "max_entropy_preflight_completed"),
         "max_entropy_local_response_bearing": int(readiness == "max_entropy_local_response_bearing"),
         "deterministic_top_m_geometry_loadbearing": int(readiness == "deterministic_top_m_geometry_loadbearing"),
+        "energy_rank_bias_loadbearing": int(readiness == "energy_rank_bias_loadbearing"),
+        "rank_conditioned_geometry_loadbearing": int(readiness == "rank_conditioned_geometry_loadbearing"),
+        "algorithmically_narrow_top_m_geometry": int(readiness == "algorithmically_narrow_top_m_geometry"),
+        "top_m_geometry_audit_underpowered": int(readiness == "top_m_geometry_audit_underpowered"),
         "locality_only_baseline_confirmed": int(readiness == "locality_only_baseline_confirmed"),
         "locality_only_response_bearing": int(readiness == "locality_only_response_bearing"),
         "constraint_template_no_longer_primary": int(readiness == "constraint_template_no_longer_primary"),
@@ -3609,6 +3852,73 @@ def max_entropy_preflight_decision(
     if deterministic_aligned > 0.0 and macro_aligned == 0.0:
         return "deterministic_top_m_geometry_loadbearing", "audit_top_m_geometry_or_refine_max_entropy_sampler"
     return "max_entropy_preflight_completed", "continue_max_entropy_preflight"
+
+
+def top_m_geometry_audit_decision(
+    outputs: dict[str, list[dict[str, object]]],
+    status: dict[str, object],
+    matrix_gate: bool,
+    null_gate: bool,
+    null_power_gate: bool,
+    matched_marginal_gate: bool,
+    response_interpretable: bool,
+    fixture_gate: bool,
+) -> tuple[str, str]:
+    if not matrix_gate or not null_gate or not null_power_gate or not fixture_gate:
+        return "not_ready_repair_required", "repair_top_m_geometry_audit_plumbing"
+    if not matched_marginal_gate:
+        return "coverage_repair_required", "repair_top_m_geometry_matched_marginal_gates"
+
+    primary_rows = [
+        row for row in outputs.get("response_classification", [])
+        if str(row.get("macro_invariant_kind", "")) == "symbol_histogram_distance"
+    ] or outputs.get("response_classification", [])
+    top_m_rows = [
+        row for row in primary_rows
+        if str(row.get("sampler_family", "")) in {
+            "deterministic_top_m",
+            "softmax_gibbs_energy",
+            "rank_conditioned_local",
+            "max_entropy_macro_marginal",
+        }
+    ]
+    if any(str(row.get("response_class", "")) == "transport_baseline_missing" for row in top_m_rows):
+        return "coverage_repair_required", "repair_top_m_geometry_paired_baselines"
+
+    macro_match_rows = [
+        row for row in outputs.get("max_entropy_marginal_match_summary", [])
+        if int(float_or_zero(row.get("target_marginal_applied_count"))) > 0
+        and str(row.get("macro_invariant_kind", "")) == "symbol_histogram_distance"
+    ]
+    if any(row.get("marginal_match_status") != "ok" for row in macro_match_rows):
+        return "not_ready_repair_required", "repair_max_entropy_macro_marginal_sampler"
+    if not response_interpretable:
+        return "top_m_geometry_audit_underpowered", "continue_top_m_geometry_audit"
+
+    sampler_rows = {
+        str(row.get("sampler_family", "")): row
+        for row in response_by_group_rows(top_m_rows, ("sampler_family",))
+    }
+    deterministic = sampler_rows.get("deterministic_top_m", {})
+    softmax = sampler_rows.get("softmax_gibbs_energy", {})
+    rank_conditioned = sampler_rows.get("rank_conditioned_local", {})
+    macro_marginal = sampler_rows.get("max_entropy_macro_marginal", {})
+    deterministic_aligned = float_or_zero(deterministic.get("aligned_amplification_fraction")) > 0.0
+    softmax_aligned = float_or_zero(softmax.get("aligned_amplification_fraction")) > 0.0
+    rank_aligned = float_or_zero(rank_conditioned.get("aligned_amplification_fraction")) > 0.0
+    macro_aligned = float_or_zero(macro_marginal.get("aligned_amplification_fraction")) > 0.0
+
+    if softmax_aligned:
+        return "energy_rank_bias_loadbearing", "expand_softmax_temperature_ladder"
+    if rank_aligned:
+        return "rank_conditioned_geometry_loadbearing", "expand_rank_conditioned_sampler"
+    if deterministic_aligned and not softmax_aligned and not rank_aligned and not macro_aligned:
+        return "algorithmically_narrow_top_m_geometry", "audit_hard_top_m_mechanism"
+    if macro_aligned:
+        return "max_entropy_transition_ready", "inspect_macro_marginal_sampler_response"
+    if not deterministic_aligned:
+        return "top_m_geometry_audit_underpowered", "inspect_deterministic_reproducibility"
+    return "deterministic_top_m_geometry_loadbearing", "continue_top_m_geometry_audit"
 
 
 def asymmetry_ladder_decision(
@@ -3907,6 +4217,64 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
             f"{aligned.get('aligned_amplification_rows', 0)} | "
             f"{markdown_cell(viscosity.get('transport_viscosity_read_mode', ''))} |"
         )
+    if status.get("run_kind") == TOP_M_GEOMETRY_AUDIT:
+        lines.extend([
+            "",
+            "## Top-m Geometry Audit",
+            "",
+            "| sampler_family | response rows | dominant response | aligned fraction |",
+            "|---|---:|---|---:|",
+        ])
+        for row in outputs.get("response_by_sampler_family", []):
+            lines.append(
+                f"| {markdown_cell(row.get('sampler_family', ''))} | {row.get('response_rows', '')} | "
+                f"{markdown_cell(row.get('dominant_response_class', ''))} | "
+                f"{float_or_zero(row.get('aligned_amplification_fraction')):.3f} |"
+            )
+        lines.extend([
+            "",
+            "### Beta / Temperature Response",
+            "",
+            "| sampler_family | beta_or_temperature | response rows | dominant response | aligned fraction |",
+            "|---|---|---:|---|---:|",
+        ])
+        for row in outputs.get("response_by_beta_or_temperature", [])[:80]:
+            lines.append(
+                f"| {markdown_cell(row.get('sampler_family', ''))} | {markdown_cell(row.get('beta_or_temperature', ''))} | "
+                f"{row.get('response_rows', '')} | {markdown_cell(row.get('dominant_response_class', ''))} | "
+                f"{float_or_zero(row.get('aligned_amplification_fraction')):.3f} |"
+            )
+        lines.extend([
+            "",
+            "### Edge / Rank / Energy Match",
+            "",
+            "| sampler_family | invariant | beta | temperature | rank window | samples | edge overlap | rank match error | energy match error |",
+            "|---|---|---:|---:|---:|---:|---:|---:|---:|",
+        ])
+        for row in outputs.get("top_m_rank_energy_match", [])[:80]:
+            lines.append(
+                f"| {markdown_cell(row.get('sampler_family', ''))} | {markdown_cell(row.get('macro_invariant_kind', ''))} | "
+                f"{markdown_cell(row.get('macro_invariant_beta', ''))} | {markdown_cell(row.get('sampler_temperature', ''))} | "
+                f"{markdown_cell(row.get('rank_bucket_multiplier', ''))} | {row.get('sample_count', '')} | "
+                f"{float_or_zero(row.get('selected_edge_overlap_fraction_vs_top_m_calibration_mean')):.3f} | "
+                f"{float_or_zero(row.get('rank_distribution_match_error_mean')):.3f} | "
+                f"{float_or_zero(row.get('energy_distribution_match_error_mean')):.3f} |"
+            )
+        lines.extend([
+            "",
+            "### Per-state Rank Bucket Match",
+            "",
+            "| sampler_family | invariant | beta | temperature | rank window | samples | mean error | max error |",
+            "|---|---|---:|---:|---:|---:|---:|---:|",
+        ])
+        for row in outputs.get("top_m_per_state_rank_bucket", [])[:80]:
+            lines.append(
+                f"| {markdown_cell(row.get('sampler_family', ''))} | {markdown_cell(row.get('macro_invariant_kind', ''))} | "
+                f"{markdown_cell(row.get('macro_invariant_beta', ''))} | {markdown_cell(row.get('sampler_temperature', ''))} | "
+                f"{markdown_cell(row.get('rank_bucket_multiplier', ''))} | {row.get('sample_count', '')} | "
+                f"{float_or_zero(row.get('per_state_rank_bucket_match_error_mean')):.3f} | "
+                f"{float_or_zero(row.get('per_state_rank_bucket_match_error_max')):.3f} |"
+            )
     if status.get("run_kind") == TRANSITION_ENERGY_CHARACTERIZATION:
         lines.extend([
             "",
@@ -4294,21 +4662,27 @@ def transport_matrix_id(key: TransportKey) -> str:
 def key_row(key: TransportKey) -> dict[str, object]:
     family = substrate_family_from_condition_id(key.condition_id)
     variant = substrate_variant_from_condition_id(key.condition_id)
-    macro_beta = variant_parameter(variant, "beta") if family in {PRESERVATION_ASYMMETRY, COMBINED_ASYMMETRY} else ""
+    macro_beta = variant_parameter(variant, "beta") if family in {PRESERVATION_ASYMMETRY, COMBINED_ASYMMETRY, SOFTMAX_PRESERVATION} else ""
     equivalent_beta = variant_parameter(variant, "equivalent_beta") if family in MAX_ENTROPY_FAMILIES else ""
     asymmetry_alpha = variant_parameter(variant, "alpha") if family in {DIRECTIONAL_ASYMMETRY, COMBINED_ASYMMETRY} else ""
     asymmetry_smoothness = variant_parameter(variant, "smoothness") if family in {DIRECTIONAL_ASYMMETRY, COMBINED_ASYMMETRY} else ""
+    sampler_temperature = variant_parameter(variant, "temperature") if family == SOFTMAX_PRESERVATION else ""
+    rank_bucket_multiplier = variant_parameter(variant, "rank_window") if family == RANK_CONDITIONED_MAX_ENTROPY else ""
     return {
         "matrix_family": "horizon_transport",
         "substrate_family": family,
         "substrate_variant": variant,
+        "sampler_family": sampler_family_from_family(family),
+        "sampler_temperature": sampler_temperature,
+        "rank_bucket_multiplier": rank_bucket_multiplier,
         "potential_smoothness": variant_parameter(variant, "smoothness") if family == SMOOTH_RANDOM_POTENTIAL else "",
         "potential_beta": variant_parameter(variant, "beta") if family == SMOOTH_RANDOM_POTENTIAL else "",
         "budget_kind": budget_kind_from_variant(variant) if family == BUDGET_CONSERVATION else "",
         "budget_weight": variant_parameter(variant, "weight") if family == BUDGET_CONSERVATION else "",
-        "macro_invariant_kind": invariant_kind_from_variant(variant) if family in {PRESERVATION_ASYMMETRY, COMBINED_ASYMMETRY, *MAX_ENTROPY_FAMILIES} else "",
+        "macro_invariant_kind": invariant_kind_from_variant(variant) if family in {PRESERVATION_ASYMMETRY, COMBINED_ASYMMETRY, SOFTMAX_PRESERVATION, *MAX_ENTROPY_FAMILIES} else "",
         "macro_invariant_beta": macro_beta or equivalent_beta,
-        "equivalent_beta_target": equivalent_beta,
+        "equivalent_beta_target": equivalent_beta or macro_beta,
+        "beta_or_temperature": beta_or_temperature_label(family, macro_beta or equivalent_beta, sampler_temperature, rank_bucket_multiplier),
         "asymmetry_alpha": asymmetry_alpha,
         "asymmetry_field_smoothness": asymmetry_smoothness,
         "alpha_beta_pair": f"{asymmetry_alpha}:{macro_beta}" if asymmetry_alpha and macro_beta else "",
@@ -4346,6 +4720,30 @@ def substrate_variant_from_condition_id(condition_id: object) -> str:
     if value.startswith("fixture_"):
         return "synthetic_fixture"
     return "default"
+
+
+def sampler_family_from_family(family: str) -> str:
+    if family == PRESERVATION_ASYMMETRY:
+        return "deterministic_top_m"
+    if family == SOFTMAX_PRESERVATION:
+        return "softmax_gibbs_energy"
+    if family == RANK_CONDITIONED_MAX_ENTROPY:
+        return "rank_conditioned_local"
+    if family == MAX_ENTROPY_MACRO_INVARIANT:
+        return "max_entropy_macro_marginal"
+    if family == MAX_ENTROPY_LOCAL:
+        return "max_entropy_local"
+    return family
+
+
+def beta_or_temperature_label(family: str, beta: str, temperature: str, rank_bucket_multiplier: str) -> str:
+    if family == SOFTMAX_PRESERVATION:
+        return f"beta_{beta}__temperature_{temperature}"
+    if family == RANK_CONDITIONED_MAX_ENTROPY:
+        return f"beta_{beta}__rank_window_{rank_bucket_multiplier}"
+    if beta:
+        return f"beta_{beta}"
+    return ""
 
 
 def variant_parameter(variant: str, field: str) -> str:
