@@ -9,6 +9,62 @@ patch notes at the top.
 
 ## 2026-06-01
 
+### Future Field Atlas Phase 0/1 Clean-Build Smoke
+
+Implemented the first clean Future Field Atlas package as an instrumentation
+reset. The new package separates substrate generation, frontier scanning,
+geometry mapping, transport matrix construction, and known-mechanism analysis.
+The scanner records raw topology and does not classify responses.
+
+Retained note:
+
+- `docs/research_notes/validation_results/future_field_atlas_phase0_1_smoke_result.md`
+
+Spec:
+
+- `docs/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md`
+
+Local validation output:
+
+- `results/future_field_atlas/20260601_phase0_1_h32_smoke/`
+
+Run shape:
+
+```text
+status: COMPLETED
+workers: 4
+conditions: 8
+scans_completed: 8 / 8
+elapsed_seconds: 14.517
+errors: 0
+horizon_max: 32
+frontier_node_rows: 30273
+frontier_edge_rows: 105867
+```
+
+Main read:
+
+```text
+raw topology recovered the retained top-3 low-rank successor-core anatomy in:
+  baseline m=3
+  m=4 with one weakest edge removed
+  m=5 with two weakest edges removed
+
+raw topology did not identify the top-3 core for:
+  baseline m=4/m=5 with fringe present
+  random deletion controls
+  strongest-edge deletion control
+```
+
+Interpretation:
+
+```text
+This is an instrument-build smoke, not a validation result. It supports moving
+from the old response-classifier-first runner toward a raw-geometry-first atlas.
+Do not implement coupled future-field scans until a slightly larger Phase 1
+calibration confirms that the raw artifacts remain sufficient.
+```
+
 ### RFS-MB0 Hard Top-m Boundary Resolution Medium Sweep
 
 Ran the final narrow single-frontier mechanism pass before moving to coupled

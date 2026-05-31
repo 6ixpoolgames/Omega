@@ -2,7 +2,11 @@
 
 This index is for outside readers who want to understand the current empirical state of the Omega / Reachable Futures repository without reading every historical artifact.
 
-The repository contains many exploratory runs. The current active branch is **RFS-MB0 horizon transport over transition-energy substrates**. Older VAL0/VAL1/RFS0 results remain useful for provenance and failure analysis, but they are not the current validation center.
+The repository contains many exploratory runs. The current active branch is a
+clean **Future Field Atlas** rebuild over the RFS-MB0 horizon-transport lessons:
+raw reachable-frontier topology first, response labels last. Older VAL0/VAL1/RFS0
+results remain useful for provenance and failure analysis, but they are not the
+current validation center.
 
 ## Claim boundary
 
@@ -22,7 +26,7 @@ graph-channel causality
 
 The current claim is modest:
 
-> Directional horizon-transport instrumentation can measure matched-control-separated response profiles in neutral finite transition substrates. Transition-energy substrate laws express different response regimes. Preservation asymmetry is currently the strongest non-template substrate hook for aligned amplification, with low-beta sensitivity now mapped below beta `0.25`; the latest MaxEnt/top-m audits indicate that the current preservation response is narrow to hard top-m selection geometry rather than recovered by the tested stochastic relaxations. The hard-top-m mechanism branch now points toward a fixed low-rank successor core: response appears when the retained selected-edge set is the top-3 low-energy core, not under generic lower out-degree, random deletion, or expansion.
+> Directional horizon-transport instrumentation can measure matched-control-separated response profiles in neutral finite transition substrates. Transition-energy substrate laws express different response regimes. Preservation asymmetry is currently the strongest non-template substrate hook for aligned amplification, with low-beta sensitivity now mapped below beta `0.25`; the latest MaxEnt/top-m audits indicate that the current preservation response is narrow to hard top-m selection geometry rather than recovered by the tested stochastic relaxations. The hard-top-m mechanism branch now points toward a fixed low-rank successor core: response appears when the retained selected-edge set is the top-3 low-energy core, not under generic lower out-degree, random deletion, or expansion. The current implementation work is now rebuilding the instrument as a Future Field Atlas so raw topology, core/fringe anatomy, and transport matrices are emitted before any response labels.
 
 ## Best onboarding path
 
@@ -30,14 +34,15 @@ Start here:
 
 1. [`docs/EXTERNAL_READER_GUIDE.md`](EXTERNAL_READER_GUIDE.md)
 2. [`README.md`](../README.md)
-3. [`docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md`](research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md)
-4. [`docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md`](research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md)
-5. [`docs/research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md`](research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md)
-6. [`docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`](research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
-7. [`docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md`](research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
-8. [`docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md`](research_notes/omega_theory/horizon_transport_aligned_amplification.md)
-9. [`docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md`](research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
-10. [`docs/research_notes/omega_theory/transition_energy_substrate_atlas.md`](research_notes/omega_theory/transition_energy_substrate_atlas.md)
+3. [`docs/research_notes/validation_results/future_field_atlas_phase0_1_smoke_result.md`](research_notes/validation_results/future_field_atlas_phase0_1_smoke_result.md)
+4. [`docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md`](research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md)
+5. [`docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md`](research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md)
+6. [`docs/research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md`](research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md)
+7. [`docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`](research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
+8. [`docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md`](research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
+9. [`docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md`](research_notes/omega_theory/horizon_transport_aligned_amplification.md)
+10. [`docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md`](research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
+11. [`docs/research_notes/omega_theory/transition_energy_substrate_atlas.md`](research_notes/omega_theory/transition_energy_substrate_atlas.md)
 
 ## Current live branch
 
@@ -103,6 +108,33 @@ combined asymmetry:
 ```
 
 ## Most important current results
+
+### Future Field Atlas Phase 0/1 smoke
+
+Result note:
+
+- [`future_field_atlas_phase0_1_smoke_result.md`](research_notes/validation_results/future_field_atlas_phase0_1_smoke_result.md)
+
+Run summary:
+
+```text
+status: COMPLETED
+scans_completed: 8 / 8
+errors: 0
+horizon_max: 32
+frontier_node_rows: 30273
+frontier_edge_rows: 105867
+```
+
+Read:
+
+```text
+The clean atlas build recovers the known retained top-3 low-rank successor-core
+anatomy from raw core/fringe topology without using the old response taxonomy.
+```
+
+This is an instrument-build result only. It supports the rebuild, not an Omega
+or coupled-frontier claim.
 
 ### Hard top-m mechanism boundary-resolution sweep
 

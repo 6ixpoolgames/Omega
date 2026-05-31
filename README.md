@@ -14,21 +14,22 @@ If you are new to the project, start with:
 
 1. [External Reader Guide](docs/EXTERNAL_READER_GUIDE.md)
 2. [Omega Formal Core v0](docs/research_notes/omega_theory/omega_formal_core_v0.md)
-3. [Hard top-m mechanism result](docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md)
-4. [Top-m geometry audit result](docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md)
-5. [MaxEnt local transition Phase 1 preflight result](docs/research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md)
-6. [Low-beta preservation sensitivity scaleup result](docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
-7. [Asymmetry-ladder preservation scaleup result](docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
-8. [Horizon Transport and Aligned Amplification](docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md)
-9. [Transition Energy and Constraint Untethering](docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
-10. [Transition-Energy Substrate Atlas](docs/research_notes/omega_theory/transition_energy_substrate_atlas.md)
-11. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
+3. [Future Field Atlas Phase 0/1 smoke](docs/research_notes/validation_results/future_field_atlas_phase0_1_smoke_result.md)
+4. [Hard top-m mechanism result](docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md)
+5. [Top-m geometry audit result](docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md)
+6. [MaxEnt local transition Phase 1 preflight result](docs/research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md)
+7. [Low-beta preservation sensitivity scaleup result](docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
+8. [Asymmetry-ladder preservation scaleup result](docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
+9. [Horizon Transport and Aligned Amplification](docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md)
+10. [Transition Energy and Constraint Untethering](docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
+11. [Transition-Energy Substrate Atlas](docs/research_notes/omega_theory/transition_energy_substrate_atlas.md)
+12. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
 
 The external reader guide gives a short, current, claim-bounded overview of the project and the best reading paths for technical readers, implementation reviewers, and historical context.
 
 ## Current status in one paragraph
 
-VAL0/VAL1 were useful reconnaissance probes. RFS-MB0 has reoriented from endpoint support/distribution deformation and static coflow spectra toward directional **horizon-transport** instrumentation. The H128 horizon-transport response-surface scaleup passed matched-marginal instrument gates and surfaced a stable-to-amplified-aligned response surface. Transition-energy characterization then turned the branch into a substrate-response atlas. The asymmetry-ladder and low-beta runs made preservation asymmetry the current loadbearing substrate ingredient, especially `symbol_histogram_distance`; the MaxEnt and top-m audits then narrowed that read. The current preservation response is not recovered by the tested MaxEnt macro-marginal, softmax/Gibbs, or rank-conditioned samplers. The latest hard-top-m mechanism pass found a fixed low-rank-core boundary: baseline `m=3`, `m=4` with one weakest edge removed, and `m=5` with two weakest edges removed were response-bearing, while expansion, random deletion, and strongest-edge deletion stayed stable. The current empirical target is therefore shared low-rank successor-core pressure for coupled frontiers, not generic lower out-degree or a broad Omega claim. The formal core has now been closed at v0 as a boundary-nonprivileged definition of Omega-compatible viable propagation. This is still not a scientific validation gate, candidate promotion, holdout result, or Omega/agency/value claim.
+VAL0/VAL1 were useful reconnaissance probes. RFS-MB0 reoriented from endpoint support/distribution deformation and static coflow spectra toward directional **horizon-transport** instrumentation. The H128 horizon-transport response-surface scaleup passed matched-marginal instrument gates and surfaced a stable-to-amplified-aligned response surface. Transition-energy characterization then turned the branch into a substrate-response atlas. The asymmetry-ladder and low-beta runs made preservation asymmetry the current loadbearing substrate ingredient, especially `symbol_histogram_distance`; the MaxEnt and top-m audits then narrowed that read. The latest hard-top-m mechanism pass found a fixed low-rank-core boundary: baseline `m=3`, `m=4` with one weakest edge removed, and `m=5` with two weakest edges removed were response-bearing, while expansion, random deletion, and strongest-edge deletion stayed stable. The current implementation branch is now rebuilding the instrument as a **Future Field Atlas**: raw reachable-frontier topology first, response labels last. The current empirical target is therefore shared low-rank successor-core pressure for future coupled-frontier work, not generic lower out-degree or a broad Omega claim. The formal core has now been closed at v0 as a boundary-nonprivileged definition of Omega-compatible viable propagation. This is still not a scientific validation gate, candidate promotion, holdout result, or Omega/agency/value claim.
 
 ## Current formal core
 
