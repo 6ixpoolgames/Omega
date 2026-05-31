@@ -16,11 +16,135 @@ It does **not** prove Omega. It is a controlled workspace for turning the theory
 
 The active empirical question is currently narrower than agency, identity, or value detection:
 
-**Can neutral action-generated relation systems produce recurrent future-landscape deformation that survives matched controls, probe artifacts, generic finite-frontier phase behavior, and mechanism-dependency audits?**
+**Can neutral transition systems produce measurable future-landscape deformation that separates from matched nulls without importing semantic labels such as agent, valuer, identity, or good?**
 
 Current status, in one line:
 
-**VAL0/VAL1 were useful reconnaissance probes; RFS-MB0 has moved from endpoint support/distribution deformation to frontier-transform and horizon-transport instrumentation. The latest H128 horizon-transport scaleup passed matched-marginal instrument gates and exposed a stable-to-amplified-aligned response surface across horizon depth and perturbation strength. This is still not a scientific gate pass, candidate promotion, or Omega/agency/value claim.**
+**VAL0/VAL1 were useful reconnaissance probes; RFS-MB0 has now reoriented from endpoint support/distribution deformation and static coflow spectra toward directional horizon-transport instrumentation. The latest H128 horizon-transport response-surface scaleup passed matched-marginal instrument gates and surfaced a stable-to-amplified-aligned response surface across horizon depth and perturbation strength. This is still not a scientific validation gate, candidate promotion, or Omega/agency/value claim.**
+
+## Current empirical branch: horizon transport
+
+The live empirical object is now:
+
+```text
+matched-marginal-separated horizon transport
+with horizon-dependent aligned amplification under nonlethal perturbation
+```
+
+Horizon transport asks what earlier future structures become at later horizons:
+
+```text
+T_{H_a -> H_b}
+```
+
+This is a directional object, measured with transport matrices and SVD, not a static co-occurrence object. It is closer to the theory's central concern with continuability across horizon than earlier endpoint or static coflow/cofrontier probes.
+
+The H128 response-surface scaleup reported:
+
+```text
+jobs_completed: 11520 / 11520
+errors: 0
+matrix_count: 660
+null_replicates: 15
+matched_marginal_detector_null_separation: passed
+synthetic_fixture_contract: 8 / 8
+terminal_saturation_flagged_rows: 0 / 660
+```
+
+Empirical response classes in the full run:
+
+```text
+transport_stable: 235
+transport_amplified_aligned: 381
+```
+
+No empirical rows were classified as weakened, rerouted, reopened, collapsed, or control-equivalent.
+
+The important horizon pattern:
+
+```text
+short horizons:
+  stable
+
+middle/deep horizons:
+  amplified-aligned
+
+higher perturbation strength:
+  first amplified-aligned horizon shifts earlier
+
+extended horizons through H=128:
+  interpretable in this run, with no terminal saturation flags
+```
+
+The current intermediate theory object is described in:
+
+- [Horizon Transport and Aligned Amplification](docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md)
+- [Horizon-transport response-surface H128 scaleup result](docs/research_notes/validation_results/rfs_mb0_horizon_transport_response_surface_h128_scaleup_result.md)
+- [Horizon-transport response-surface H128 scaleup spec](docs/RFS_MB0_HORIZON_TRANSPORT_RESPONSE_SURFACE_H128_SCALEUP_SPEC.md)
+
+## What this result does and does not mean
+
+This result means:
+
+```text
+horizon transport is the current live instrument;
+matched marginal nulls did not explain away the H128 response surface;
+perturbation changed future transport geometry without simply destroying it;
+horizon depth appears loadbearing in the response profile;
+```
+
+This result does **not** mean:
+
+```text
+Omega detected;
+agent detected;
+valuer detected;
+identity detected;
+candidate promoted;
+holdout ready;
+graph-channel causality shown;
+value-bearing structure demonstrated.
+```
+
+The next theoretical task is to understand aligned amplification:
+
+```text
+Does aligned amplification indicate increased transport coherence,
+noise-induced opening of aligned routes,
+a finite-substrate effect,
+a precursor to weakening/collapse at stronger perturbation,
+or an artifact not yet caught by current nulls?
+```
+
+## Control philosophy: detector nulls versus perturbations
+
+A key reorientation in the project is the separation between detector-null controls and perturbation-response profiles.
+
+```text
+Null controls test the detector.
+Perturbations test the candidate response profile.
+Destructive ablation maps viability boundaries; it is not ordinary negative evidence.
+```
+
+For the current branch:
+
+```text
+detector-null controls:
+  context/horizon shuffles
+  row marginal matched transport nulls
+  column marginal matched transport nulls
+  row-column marginal matched transport nulls
+  marginal residual fraction
+  synthetic marginal fakeout fixtures
+
+perturbation-response probes:
+  small edge resampling
+  asymmetric edge flipping
+  graded nonlethal strength ladders
+  response class by horizon pair
+```
+
+This distinction is loadbearing. Living or life-like systems do not survive arbitrary destructive ablation. Perturbation should be interpreted as a response profile: stable, amplified, weakened, rerouted, reopened, collapsed, or control-equivalent. The current empirical response is aligned amplification.
 
 ## Workflow: human-directed, AI-assisted research
 
@@ -30,9 +154,7 @@ The core theoretical motivation, project judgment, branch selection, interpretiv
 
 This distinction matters. The workflow is semi-autonomous in the sense that AI coding agents can carry out bounded implementation tasks and produce structured artifacts, but the scientific direction is not autonomous. Human review decides which failures matter, which claims are allowed, when a result is overinterpreted, and when a branch should be repaired, paused, or redirected.
 
-A major aspiration of the workflow is for AI systems to contribute genuinely novel research insight, not merely implement plausible incremental next steps. So far, that has not been the dominant pattern. In this project, AI assistance has been valuable for implementation, documentation, local critique, bug-finding, and experimental iteration, while the core theory, research taste, major pivots, and interpretation standards have remained human-led.
-
-This is an important partial/negative result about the workflow itself: current AI assistance can greatly increase iteration speed and breadth, but it has not replaced human judgment or reliably generated the central conceptual advances of the project. The repo is therefore best read as a record of human-led theory development using AI-assisted experimental infrastructure, not as an autonomous AI research system.
+A major aspiration of the workflow is for AI systems to contribute genuinely novel research insight, not merely implement plausible incremental next steps. So far, AI assistance has been valuable for implementation, documentation, local critique, bug-finding, and experimental iteration, while the core theory, research taste, major pivots, and interpretation standards have remained human-led.
 
 ## Why this matters for alignment
 
@@ -59,21 +181,7 @@ The current empirical program is still only a first step. It does not validate a
 
 > Can future-landscape deformation be measured well enough to distinguish nontrivial future-structuring effects from saturation, trivial persistence, clocks, collapse, probe artifacts, generic finite-frontier dynamics, and matched-control equivalence?
 
-## Current empirical pivot: frontier-transform instrumentation
-
-The project moved from task-graph probes and hand-defined bounded identities toward a substrate-first program for **neutral future landscapes**.
-
-The active empirical object is not an agent, valuer, identity, reward, or viability label. It is the deformation of reachable futures induced by a neutral transition relation. Recent work suggests that endpoint-state signatures are too weak or too collision-prone, so the active measurement object is now the **frontier-transform process**:
-
-```text
-F_Ha -> F_Hb
-```
-
-rather than only:
-
-```text
-endpoint signature distribution at H
-```
+## Primitive substrate
 
 The current primitive substrate remains deliberately minimal:
 
@@ -99,19 +207,14 @@ asymmetry:
 future profile:
   horizon-indexed frontier transformation process
 
-support/distribution deformation:
-  changes in reachable support and endpoint distributions
+horizon transport:
+  directional map from earlier horizon structures to later horizon structures
 
-frontier-transform deformation:
-  changes in how reachable frontiers expand, compress, turn over, bottleneck,
-  stabilize, or flow across horizon windows
-
-syndrome:
-  preregistered joint signed transform profile across metric families/windows
+response profile:
+  how horizon transport changes under perturbation
 
 controls:
-  frontier-size, probe-marginal, horizon-order, start-shuffled, fakeout,
-  neutral, roughness, asymmetry, constraint/mechanism, and identity-control diagnostics
+  matched nulls and detector validity checks, separated from candidate response probes
 
 provisional structure:
   only a control-relative class after matched-control comparison
@@ -141,7 +244,7 @@ N:
 
 The semicolon matters. The substrate is left of the semicolon. Probe, horizon, and null choices are right of it.
 
-## Active branch: RFS-MB0 frontier-transform instrumentation
+## Active branch history: RFS-MB0
 
 RFS-MB0 has moved through several phases:
 
@@ -184,74 +287,55 @@ endpoint/quotient probes:
 path/process metrics:
   parked; current path metrics were too permissive and control-sensitive
 
-frontier-transform instrumentation:
-  technically healthy; Phase A/B0 passed instrumentation gates
+static cofrontier/coflow spectra:
+  useful but control-sensitive; demoted
 
-Phase B recurrence:
-  raw design-set recurrence appeared, but strongest rows were control-equivalent
-  after matched recurrence-control repair
-
-Stage B-2:
-  preregistered A/C joint signed syndromes remained sensitive to low-probability
-  edge/topology perturbation, while exact roughness-seed and asymmetry-strength
-  controls stayed near baseline
-
-spectral tangent:
-  static cofrontier/coflow matrices were useful but control-sensitive; the live
-  branch has reoriented toward directional horizon-transport matrices
-
-channel-edge prep:
-  high-loading export and item-to-edge mapping work, but selection/evaluation
-  ablation remains random-equivalent to matched random controls on the laptop
-  diagnostic smoke; the subspace transfers but item-local channels are not
-  specific enough for graph perturbation
+high-loading channel targeting:
+  export and mapping worked, but ablation was random-equivalent; graph perturbation blocked
 
 horizon transport:
-  row/column/bimarginal matched nulls and synthetic fixtures run; the
-  response-surface H128 scaleup completed cleanly with full matrix coverage,
-  matched marginal separation across both required probes/flow modes, 8/8
-  response fixtures passing, no terminal-saturation flags, and a clear
-  stable-to-amplified-aligned horizon response surface
+  current live empirical branch; H128 scaleup surfaced matched-marginal-separated stable-to-amplified-aligned response surface
 
 next task:
-  write a horizon-transport theory/instrument note before opening holdout,
-  graph perturbation, direct channel diagnostics, or candidate promotion
+  use the new horizon-transport theory note to guide response-threshold mapping, boundary probes, resolution checks, and only later direct channel diagnostics if earned
 ```
 
-Important current docs:
+## Important current docs
 
+### Start here
+
+- [Horizon Transport and Aligned Amplification](docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md)
 - [Horizon-transport response-surface H128 scaleup result](docs/research_notes/validation_results/rfs_mb0_horizon_transport_response_surface_h128_scaleup_result.md)
 - [Horizon-transport response-surface H128 scaleup spec](docs/RFS_MB0_HORIZON_TRANSPORT_RESPONSE_SURFACE_H128_SCALEUP_SPEC.md)
+- [Horizon Transport and Control Reorientation Note](docs/research_notes/omega_theory/horizon_transport_and_control_reorientation_note.md)
+
+### Horizon-transport branch
+
 - [Horizon-transport response-resolution scaleup result](docs/research_notes/validation_results/rfs_mb0_horizon_transport_response_resolution_scaleup_result.md)
 - [Horizon-transport expansion smoke result](docs/research_notes/validation_results/rfs_mb0_horizon_transport_expansion_smoke_result.md)
 - [Horizon-transport expansion smoke spec](docs/RFS_MB0_HORIZON_TRANSPORT_EXPANSION_SMOKE_SPEC.md)
 - [Horizon-transport matched null and fixture smoke result](docs/research_notes/validation_results/rfs_mb0_horizon_transport_matched_null_fixture_smoke_result.md)
 - [Horizon-transport matched null and fixture smoke spec](docs/RFS_MB0_HORIZON_TRANSPORT_MATCHED_NULL_AND_FIXTURE_SMOKE_SPEC.md)
-- [Laptop spectral control mapping smoke result](docs/research_notes/validation_results/rfs_mb0_laptop_spectral_control_mapping_smoke_result.md)
-- [Laptop spectral subspace control repair smoke result](docs/research_notes/validation_results/rfs_mb0_laptop_spectral_subspace_control_repair_smoke_result.md)
 - [Horizon-transport spectral response repair result](docs/research_notes/validation_results/rfs_mb0_horizon_transport_spectral_response_repair_result.md)
 - [Horizon-transport spectral response repair spec](docs/RFS_MB0_HORIZON_TRANSPORT_SPECTRAL_RESPONSE_REPAIR_SPEC.md)
-- [Stage B-2 spectral subspace control repair smoke spec](docs/RFS_MB0_STAGE_B2_SPECTRAL_SUBSPACE_CONTROL_REPAIR_SMOKE_SPEC.md)
-- [Laptop spectral control mapping smoke spec](docs/RFS_MB0_STAGE_B2_LAPTOP_SPECTRAL_CONTROL_MAPPING_SMOKE_SPEC.md)
+
+### Earlier spectral/frontier-transform branch
+
+- [Laptop spectral control mapping smoke result](docs/research_notes/validation_results/rfs_mb0_laptop_spectral_control_mapping_smoke_result.md)
+- [Laptop spectral subspace control repair smoke result](docs/research_notes/validation_results/rfs_mb0_laptop_spectral_subspace_control_repair_smoke_result.md)
 - [Stage B-2 spectral channel high-loading repair result](docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_channel_high_loading_repair_result.md)
-- [Stage B-2 spectral channel-edge repair prep result](docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_channel_edge_smoke_repair_prep_result.md)
-- [Stage B-2 spectral channel-edge repair prep spec](docs/RFS_MB0_STAGE_B2_SPECTRAL_CHANNEL_EDGE_SMOKE_REPAIR_PREP_SPEC.md)
 - [Stage B-2 spectral future-field geometry smoke result](docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_future_field_geometry_smoke_result.md)
-- [Stage B-2 spectral future-field geometry smoke spec](docs/RFS_MB0_STAGE_B2_SPECTRAL_FUTURE_FIELD_GEOMETRY_SMOKE_SPEC.md)
 - [Stage B-2 exploratory iteration pass result](docs/research_notes/validation_results/rfs_mb0_stage_b2_exploratory_iteration_pass_result.md)
-- [Stage B-2 exploratory iteration pass spec](docs/RFS_MB0_STAGE_B2_EXPLORATORY_ITERATION_PASS_SPEC.md)
-- [Frontier-transform syndrome and mechanism-control audit spec](docs/RFS_MB0_FRONTIER_TRANSFORM_SYNDROME_AND_MECHANISM_CONTROL_AUDIT_SPEC.md)
-- [Frontier-transform Phase B 10h design recurrence spec](docs/RFS_MB0_FRONTIER_TRANSFORM_PHASE_B_10H_DESIGN_RECURRENCE_SPEC.md)
 - [Frontier-transform Phase B 10h result](docs/research_notes/validation_results/rfs_mb0_frontier_transform_phase_b_10h_result.md)
-- [Frontier-transform B0 control/flow repair spec](docs/RFS_MB0_FRONTIER_TRANSFORM_PHASE_B0_CONTROL_FLOW_REPAIR_SPEC.md)
 - [Frontier-transform instrumentation spec](docs/RFS_MB0_FRONTIER_TRANSFORM_INSTRUMENTATION_SPEC.md)
-- [Instrumentation branch pivot and probe panel spec](docs/RFS_MB0_INSTRUMENTATION_BRANCH_PIVOT_AND_PROBE_PANEL_SPEC.md)
-- [Boundary deformation guardrail and quotient probe spec](docs/RFS_MB0_BOUNDARY_DEFORMATION_GUARDRAIL_AND_QUOTIENT_PROBE_SPEC.md)
-- [Boundary non-privileging and field-deformation theory note](docs/research_notes/omega_theory/boundary_nonprivileging_and_field_deformation.md)
-- [Branch evolution update note](docs/RFS_MB0_BRANCH_EVOLUTION_UPDATE_NOTE.md)
+
+### Theory foundations
+
 - [Minimal reachable futures formalism](docs/research_notes/omega_theory/minimal_reachable_futures_formalism.md)
+- [Boundary non-privileging and field-deformation theory note](docs/research_notes/omega_theory/boundary_nonprivileging_and_field_deformation.md)
 - [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
-- [Running log](docs/OMEGA_RUNNING_LOG.md)
+- [Branch evolution update note](docs/RFS_MB0_BRANCH_EVOLUTION_UPDATE_NOTE.md)
+- [Omega glossary](docs/research_notes/omega_theory/omega_glossary.md)
 - [Public results index](docs/PUBLIC_RESULTS_INDEX.md)
 
 ## Indirect detection and the identity problem
@@ -272,8 +356,6 @@ persistent object
 
 inside the primitive substrate. Hand-defining those classes would recreate the same problem the substrate reset was meant to avoid: smuggling semantic categories into the implementation and then “discovering” them later.
 
-The empirical move is therefore indirect but no longer purely “dark matter”-like. Recurrent boundary structures are often literally present in the generated transition systems; what is missing is a theory and measurement stack capable of classifying them cleanly.
-
 Instead of asking:
 
 ```text
@@ -285,8 +367,7 @@ Which state is value-bearing?
 we currently ask:
 
 ```text
-Does the future landscape show a recurrent signed frontier-transform syndrome
-that is above generic controls and dependent on the mechanisms that generate it?
+Does the future landscape show a control-relative horizon-transport response surface?
 ```
 
 Identity and agent classification remain deferred. This branch detects and audits deformation shadows first.
@@ -361,39 +442,21 @@ A more operational version:
 
 The current repo does not yet operationalize that full definition. It is working on an earlier measurement problem: future-landscape deformation in neutral substrates.
 
-## Current formal stack
+## Methods influences
 
-The current theory keeps the primitive layer small:
-
-```text
-distinction
-relation
-asymmetry
-```
-
-Plainly:
+Recent theory/method pivots were informed by, but do not directly implement, two outside methods papers:
 
 ```text
-distinction:
-  configurations can differ
+Hierarchical Concept Geometry in Language Models Emerges from Word Co-occurrence
+  arXiv:2605.23821
+  Takeaway for Omega: the right relational matrix can expose latent coarse-to-fine geometry; for Omega, the better analogue appears to be directional horizon transport rather than static co-occurrence.
 
-relation:
-  neutral transformations connect configurations
-
-asymmetry:
-  transformations have non-equivalent future consequences
+X-Token: Projection-Guided Cross-Tokenizer Knowledge Distillation
+  arXiv:2605.21699
+  Takeaway for Omega: incompatible decompositions can require projection maps and coverage audits; this may inform later gauge-alignment work, but is not included in the current horizon-transport runner.
 ```
 
-Later theoretical notions include boundary, identity, capacity, coherence, recoverability, compatibility, and valuerhood. Those are downstream theory targets, not active empirical labels.
-
-Start with:
-
-- [Branch evolution update note](docs/RFS_MB0_BRANCH_EVOLUTION_UPDATE_NOTE.md)
-- [Minimal reachable futures formalism](docs/research_notes/omega_theory/minimal_reachable_futures_formalism.md)
-- [Boundary non-privileging and field-deformation theory note](docs/research_notes/omega_theory/boundary_nonprivileging_and_field_deformation.md)
-- [Public terms and translations](docs/research_notes/omega_theory/public_terms_and_translations.md)
-- [Omega glossary](docs/research_notes/omega_theory/omega_glossary.md)
-- [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
+These are methodological influences, not claims of equivalence.
 
 ## Broader theory pipeline
 
@@ -432,29 +495,23 @@ Start here for the pipeline view:
 
 ### For a new reader
 
-1. [Running log](docs/OMEGA_RUNNING_LOG.md)
-2. [Branch evolution update note](docs/RFS_MB0_BRANCH_EVOLUTION_UPDATE_NOTE.md)
-3. [Frontier-transform Phase B 10h result](docs/research_notes/validation_results/rfs_mb0_frontier_transform_phase_b_10h_result.md)
-4. [Frontier-transform syndrome and mechanism-control audit spec](docs/RFS_MB0_FRONTIER_TRANSFORM_SYNDROME_AND_MECHANISM_CONTROL_AUDIT_SPEC.md)
-5. [Frontier-transform instrumentation spec](docs/RFS_MB0_FRONTIER_TRANSFORM_INSTRUMENTATION_SPEC.md)
-6. [Minimal reachable futures formalism](docs/research_notes/omega_theory/minimal_reachable_futures_formalism.md)
-7. [Boundary non-privileging and field-deformation theory note](docs/research_notes/omega_theory/boundary_nonprivileging_and_field_deformation.md)
-8. [Public terms and translations](docs/research_notes/omega_theory/public_terms_and_translations.md)
-9. [Public results index](docs/PUBLIC_RESULTS_INDEX.md)
-10. [Omega glossary](docs/research_notes/omega_theory/omega_glossary.md)
-11. [Foundation stack as pipeline](docs/research_notes/omega_theory/progenitor_stack_as_pipeline.md)
+1. [Horizon Transport and Aligned Amplification](docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md)
+2. [Horizon-transport response-surface H128 scaleup result](docs/research_notes/validation_results/rfs_mb0_horizon_transport_response_surface_h128_scaleup_result.md)
+3. [Horizon Transport and Control Reorientation Note](docs/research_notes/omega_theory/horizon_transport_and_control_reorientation_note.md)
+4. [Minimal reachable futures formalism](docs/research_notes/omega_theory/minimal_reachable_futures_formalism.md)
+5. [Boundary non-privileging and field-deformation theory note](docs/research_notes/omega_theory/boundary_nonprivileging_and_field_deformation.md)
+6. [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
+7. [Public results index](docs/PUBLIC_RESULTS_INDEX.md)
+8. [Omega glossary](docs/research_notes/omega_theory/omega_glossary.md)
 
 ### For implementation work
 
-1. [Frontier-transform syndrome and mechanism-control audit spec](docs/RFS_MB0_FRONTIER_TRANSFORM_SYNDROME_AND_MECHANISM_CONTROL_AUDIT_SPEC.md)
-2. [Frontier-transform Phase B 10h design recurrence spec](docs/RFS_MB0_FRONTIER_TRANSFORM_PHASE_B_10H_DESIGN_RECURRENCE_SPEC.md)
-3. [Frontier-transform B0 control/flow repair spec](docs/RFS_MB0_FRONTIER_TRANSFORM_PHASE_B0_CONTROL_FLOW_REPAIR_SPEC.md)
-4. [Frontier-transform instrumentation spec](docs/RFS_MB0_FRONTIER_TRANSFORM_INSTRUMENTATION_SPEC.md)
-5. [Instrumentation branch pivot and probe panel spec](docs/RFS_MB0_INSTRUMENTATION_BRANCH_PIVOT_AND_PROBE_PANEL_SPEC.md)
-6. [Boundary deformation guardrail and quotient probe spec](docs/RFS_MB0_BOUNDARY_DEFORMATION_GUARDRAIL_AND_QUOTIENT_PROBE_SPEC.md)
-7. [Probe resolution calibration spec](docs/RFS_MB0_PROBE_RESOLUTION_CALIBRATION_SPEC.md)
-8. [Action-generated relation substrate spec](docs/RFS_MB0_ACTION_GENERATED_RELATION_SUBSTRATE_SPEC.md)
-9. [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
+1. [Horizon-transport response-surface H128 scaleup spec](docs/RFS_MB0_HORIZON_TRANSPORT_RESPONSE_SURFACE_H128_SCALEUP_SPEC.md)
+2. [Horizon-transport expansion smoke spec](docs/RFS_MB0_HORIZON_TRANSPORT_EXPANSION_SMOKE_SPEC.md)
+3. [Horizon-transport matched null and fixture smoke spec](docs/RFS_MB0_HORIZON_TRANSPORT_MATCHED_NULL_AND_FIXTURE_SMOKE_SPEC.md)
+4. [Horizon-transport spectral response repair spec](docs/RFS_MB0_HORIZON_TRANSPORT_SPECTRAL_RESPONSE_REPAIR_SPEC.md)
+5. [Frontier-transform instrumentation spec](docs/RFS_MB0_FRONTIER_TRANSFORM_INSTRUMENTATION_SPEC.md)
+6. [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
 
 ### For project history
 
@@ -467,42 +524,24 @@ Start here for the pipeline view:
 
 ## Current next step
 
-The current implementation target is **frontier-transform syndrome and mechanism-control audit**.
+The current next step is **not** holdout, graph perturbation, direct channel diagnostics, or candidate promotion.
 
-Phase B showed that marginal frontier-transform recurrence is too generic: raw recurrence appeared in B0-viable families, but matched recurrence controls reached the same strongest recurrence rate, leaving recurrence excess at zero. The next task is to test whether preregistered joint signed frontier-transform syndromes separate from controls and show the expected dependency profile under roughness, asymmetry, and constraint/mechanism perturbations.
-
-Public summary:
+The current next step is to use the new theory/instrument note to decide the next horizon-transport branch:
 
 ```text
-define:
-  a finite transition substrate (X, ->)
-  horizon-window frontier transforms F_Ha -> F_Hb
-  preregistered signed syndrome library
-  matched recurrence and mechanism-control bundle
+near-term options:
+  map response thresholds around H_amp;
+  test slightly stronger boundary probes with explicit viability-boundary labels;
+  compare response surfaces across resolution/scale views;
+  tighten explanations of aligned amplification;
+  only later consider direct channel diagnostics if response profiles suggest localized functional dependence.
 
-measure:
-  support-turnover, transition-matrix, bottleneck, and window-stability families
-  signed syndrome component scores
-  syndrome recurrence across seeds/starts/windows
-  generic controls versus mechanism perturbation controls
-  roughness/asymmetry/constraint dependency profiles
-
-repair now:
-  marginal recurrence is too generic
-  controls can match recurrence at 0.6
-  syndrome definitions must be preregistered to avoid metric mining
-  mechanism controls must be treated as dependency tests, not survival tests
-
-defer:
-  Omega-positive labels
-  agent / valuer / identity claims
-  path-process claims
-  scalar energy or utility objectives
-  hand-designed viability vectors
-  full constructor agency
-  holdout Phase C
-  n=6 transfer
-  alphabet expansion except optional tiny diagnostic
+still blocked:
+  holdout scoring;
+  n=6 transfer;
+  alphabet expansion as promotion;
+  graph-channel causal claims;
+  agent/value/Omega labels.
 ```
 
 ## Roadmap
@@ -529,14 +568,11 @@ RFS0 strict finite reachability:
 RFS-MB0:
   active neutral future-landscape deformation program
   endpoint support/distribution and quotient probes became measurement-limited
-  frontier-transform instrumentation is now active
-
-RFS-MB0T:
-  current target
-  frontier-transform syndrome and mechanism-control audit
+  frontier-transform instrumentation matured into horizon-transport instrumentation
+  current live object is matched-marginal-separated horizon transport with aligned amplification
 
 RFS-MB1:
-  only after MB0 control separation
+  only after MB0 control separation and response-profile taxonomy mature
   perturbation and recovery of future-profile structure
 
 RFS-MB2:
@@ -564,13 +600,13 @@ foundational theory drafts that motivate the pipeline
 historical toy-substrate probes
 negative and ambiguous results
 current reachable-futures substrate reset
-support/distribution deformation taxonomy work
 frontier-transform instrumentation work
+horizon-transport instrumentation work
 measurement-limit and mechanism-control audit work
 ```
 
 The current scientific claim is modest:
 
-> Frontier-transform instrumentation can measure recurrent transform patterns in neutral toy substrates, but the strongest Phase B marginal recurrence was control-equivalent. Omega-compatible subobjects have not been demonstrated. The active empirical question is whether preregistered joint signed transform syndromes can distinguish candidate-like deformation from generic finite-frontier phase behavior and mechanism-independent controls without introducing semantic labels.
+> Directional horizon-transport instrumentation can measure a matched-marginal-separated response surface in neutral toy substrates. The H128 design-set run surfaced stable short-horizon transport and amplified-aligned middle/deep-horizon transport under nonlethal perturbation. Omega-compatible subobjects have not been demonstrated.
 
-VAL0/VAL1 tested earlier precursors. The project is now centered on neutral future landscapes, frontier-transform instrumentation, and control-relative deformation taxonomy.
+VAL0/VAL1 tested earlier precursors. The project is now centered on neutral future landscapes, horizon-transport instrumentation, and control-relative deformation taxonomy.
