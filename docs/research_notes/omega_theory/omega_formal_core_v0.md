@@ -8,13 +8,11 @@ Claim boundary: no Omega validation, no agency detection, no value detection, no
 
 ## 0. Purpose
 
-This note proposes a clean formal core for Omega after the empirical arm has ruled out or narrowed several earlier candidates.
+This note records the current formal core left standing after several simpler empirical and theoretical formulations failed or narrowed.
 
-The purpose is not to prove Omega. The purpose is to define the smallest formal stack that can explain why the surviving empirical objects matter, why the failed objects failed, and what future substrates should test.
+It is intentionally process-bearing. It is not the final elegant form of the theory. It is a working stack that preserves what the project currently knows not to say.
 
-This document is intentionally process-bearing. It is not elegant in the way a mature theory should eventually be elegant. It records the current layered structure of the project because the project has learned by failing through several simpler formulations.
-
-The core thesis is:
+Core thesis:
 
 ```text
 Distinctions matter only through relations.
@@ -25,63 +23,53 @@ non-erasure failures, and remain compatible with broader future-bearing
 structure.
 ```
 
-Omega is therefore not raw entropy, survival, persistence, reachability, compression, reward, utility, or value. These may be diagnostics, gates, or downstream interpretations. The formal target is viable future-bearing propagation under admissible coarse-grainings, with recoverability, non-erasure, and compatibility constraints.
+Boundary addendum:
+
+```text
+Agents, valuers, identities, selves, objects, and value-bearing substrates are
+not primitive boundaries. They are admissible designations only when a candidate
+process-bundle earns that role by predictive, transport, recoverability,
+non-erasure, and compatibility performance under explicit audits.
+```
+
+Omega is therefore not raw entropy, survival, persistence, reachability, compression, reward, utility, value, identity, or agenthood. These may be diagnostics, gates, or downstream interpretations. The formal target is viable future-bearing propagation under boundary-nonprivileged admissible coarse-grainings, with recoverability, non-erasure, and compatibility constraints.
 
 ## 1. What the empirical arm has ruled out
 
-The historical empirical arm suggests the following demotions.
+The project imports lessons, not historical objects.
 
-### 1.1 Survival is not enough
+```text
+survival:
+  necessary background condition, not Omega
 
-A trajectory may persist while becoming trapped, brittle, unrecoverable, or destructive to broader future-bearing structure.
+raw entropy:
+  breadth diagnostic only after viability and propagation pass
 
-Survival is therefore a gate or background condition, not the Omega object.
+static reachability:
+  insufficient without horizon-indexed propagation
 
-### 1.2 Raw entropy is not enough
+static fibers:
+  insufficient without certified transport
 
-High entropy over future states can arise from noise, diffusion, bad quotienting, uncontrolled branching, or measurement artifacts.
+hand quotients:
+  useful witnesses, not solved quotient theory
 
-Entropy may diagnose breadth after viability and propagation have already been established. It is not the primary object.
+learned quotients:
+  must be audited for splitting, merging, overfit, and component loss
 
-### 1.3 Static reachability is not enough
+scalar summaries:
+  secondary diagnostics, never substitutes for tuple anatomy
 
-A state may have many reachable futures without preserving the distinctions that make those futures meaningful across horizon.
+substrate response:
+  precursor evidence only, not value/agency/Omega validation
 
-The object must be directional and horizon-indexed.
-
-### 1.4 Static fibers are not enough
-
-A quotient may expose large fibers at a time slice without showing that those fibers transport through time.
-
-The object is not fiber size. The object is certified fiber transport.
-
-### 1.5 Hand quotients are not enough
-
-COM-like quotients can witness structure in toy substrates, but hand quotients do not solve the quotient problem.
-
-The final object must be expressed relative to admissible quotients, and the search for a minimal predictive quotient remains open.
-
-### 1.6 Learned quotients are not automatically enough
-
-A learned quotient can split real structure, merge incompatible structure, inflate small fibers, overfit validation metrics, or erase component preservation.
-
-Quotient learning must be audited, not assumed.
-
-### 1.7 Scalar summaries are not enough
-
-A scalar can summarize a structured signature, but it cannot replace the signature.
-
-The primary Omega object should initially be a tuple or anatomy, not a single number.
-
-### 1.8 Substrate response is not theory validation
-
-A toy substrate can produce meaningful response structure without showing value, agency, identity, valuerhood, or Omega.
-
-Positive substrate results are precursor evidence only.
+boundary labels:
+  useful designations only if earned; not primitive agents, selves, or valuers
+```
 
 ## 2. Primitive substrate
 
-Let a substrate be a tuple:
+Let a substrate be:
 
 ```text
 S = (X, U, R, P, H)
@@ -94,7 +82,7 @@ X:
   state space
 
 U:
-  admissible interventions, transformations, controls, or transition-generating acts
+  admissible transformations, interventions, controls, or transition-generating acts
 
 R:
   admissible relation structure over states
@@ -108,7 +96,7 @@ H:
 
 In finite deterministic settings, `R` may be a directed graph. In stochastic settings, `P(x' | x, u)` may induce `R` by positive-probability support.
 
-No agent, valuer, value function, reward, preference, or moral label is assumed at this level.
+No agent, valuer, value function, reward, preference, moral label, or privileged boundary is assumed at this level.
 
 ## 3. Primitive I: distinction
 
@@ -126,35 +114,11 @@ A pair `(x, y)` carries a future-relevant distinction over horizon `T` if:
 exists pi in Pi such that D(F_T^pi(x), F_T^pi(y)) > epsilon
 ```
 
-where `D` is an admissible divergence or distinguishability measure.
-
-A raw syntactic difference is not yet an Omega-relevant distinction. It becomes relevant only if it can affect future structure.
-
-### 3.1 Action-relevant distinction
-
-A distinction is action-relevant if there exist admissible interventions whose future consequences depend on it:
-
-```text
-A_T(x, y) = sup_{pi,pi'} D(F_T^pi(x), F_T^pi'(y))
-```
-
-A distinction is action-relevant when `A_T(x, y) > epsilon`.
-
-### 3.2 Distinction field
-
-For a substrate and horizon, the distinction field is the set or measure of distinctions that remain future-relevant:
-
-```text
-D_T(S) = { (x,y) in X x X : exists pi, D(F_T^pi(x), F_T^pi(y)) > epsilon }
-```
-
-This is not yet value. It is the substrate-level condition that differences can continue to matter.
+A raw syntactic difference is not yet Omega-relevant. It becomes relevant only if it can affect future structure.
 
 ## 4. Primitive II: relation
 
 A relation is admissible continuity through transformation.
-
-For states `x, y in X`:
 
 ```text
 x R_u y
@@ -176,52 +140,17 @@ x R_u y iff P(y | x, u) > 0
 
 Relations define possible continuation. Without relation, distinction cannot propagate.
 
-### 4.1 Relation is not mere adjacency
-
-A relation is not merely graph adjacency. It is continuity under the substrate's admissible transformations.
-
-Two states can be close under a metric and unrelated under admissible dynamics. Two states can be distant under a metric but related by an admissible transformation.
-
-### 4.2 Relation-induced futures
-
-For horizon `T`, define the reachable future set:
-
-```text
-Reach_T(x) = { y in X : exists path x = x_0 R x_1 R ... R x_T = y }
-```
-
-For stochastic systems, this may be replaced by positive-probability support or by a thresholded support.
-
-Reachability is necessary but insufficient. Omega concerns what future-relevant distinctions do under this relation.
-
 ## 5. Primitive III: asymmetry
 
 Asymmetry is non-equivalence of transformations in their future consequences.
 
-A relation is asymmetric at horizon `T` if:
-
-```text
-x R y does not imply equivalent future structure from y back to x
-```
-
-More formally, define forward and reverse future structure:
-
-```text
-F_T(x -> y) = future structure after transition x -> y
-F_T(y -> x) = future structure after transition y -> x
-```
-
-An asymmetric relation satisfies:
+A relation is asymmetric at horizon `T` when forward and reverse transformations do not preserve equivalent future structure:
 
 ```text
 D(F_T(x -> y), F_T(y -> x)) > epsilon
 ```
 
-for an admissible future-structure divergence.
-
-### 5.1 Forms of asymmetry
-
-Asymmetry includes but is not limited to:
+Forms of asymmetry include:
 
 ```text
 directional asymmetry:
@@ -243,19 +172,13 @@ component-erasure asymmetry:
   a joint structure persists by eliminating lower-rank variation
 ```
 
-### 5.2 Asymmetry is the first nontrivial primitive
-
-Distinctions without relations are inert.
-
-Relations without asymmetry may produce motion but not directed future-structure consequences.
-
-Asymmetry is where future-relevant structure first becomes nontrivial.
+Distinctions without relations are inert. Relations without asymmetry may produce motion but not directed future-structure consequences. Asymmetry is where future-relevant structure first becomes nontrivial.
 
 ## 6. Horizons and future structure
 
 Omega is horizon-indexed.
 
-Let `H` be a set of horizons. For `T in H`, define a future structure object:
+For `T in H`, define a future structure object:
 
 ```text
 Phi_T(x)
@@ -263,29 +186,13 @@ Phi_T(x)
 
 where `Phi_T(x)` may be a reachable set, transition distribution, frontier profile, quotient-fiber structure, or horizon-transport object.
 
-A candidate Omega object must specify which future structure it uses.
-
-### 6.1 Static endpoint objects are insufficient
-
-Endpoint support alone may miss propagation, transport, recoverability, or non-erasure.
-
-Therefore, the preferred empirical object is directional:
+Endpoint support alone may miss propagation, transport, recoverability, or non-erasure. The preferred empirical object is directional:
 
 ```text
 T_{H_a -> H_b}
 ```
 
 which asks how structure at an earlier horizon becomes structure at a later horizon.
-
-### 6.2 Horizon response
-
-A substrate may be stable at short horizons and unstable or amplified at long horizons.
-
-Therefore horizon is a response coordinate:
-
-```text
-ResponseClass = f(horizon_pair, perturbation_family, perturbation_strength, probe, flow_mode)
-```
 
 A formal Omega proxy should not collapse all horizons into one number before response anatomy is inspected.
 
@@ -305,40 +212,19 @@ The viable future set is:
 F_T^V(x) = { tau_{0:T} : tau_0 = x and V(tau_{0:T}) = 1 }
 ```
 
-Viability is necessary but not sufficient.
+Viability is necessary but not sufficient. A system may be viable while losing recoverability, lower-rank support, alternative continuation, or compatibility with broader future-bearing structure.
 
-A system may be viable while:
+Viability is therefore a gate. Omega concerns propagation of viable future-bearing structure through time.
 
-```text
-erasing distinctions;
-collapsing recoverability;
-destroying component structure;
-capturing other future landscapes;
-preserving only a brittle singleton path;
-optimizing local continuation while degrading broader compatibility.
-```
-
-Thus viability is a gate. Omega concerns propagation of viable future-bearing structure through time.
-
-## 8. Propagation
+## 8. Propagation and recoverability
 
 Propagation asks whether future-relevant distinctions continue to make a difference across horizon.
 
-Given a distinction `d = (x,y)`, define its propagated distinguishability at horizon `T`:
+For distinction `d = (x,y)`:
 
 ```text
 Prop_T(d) = sup_pi D(F_T^pi(x), F_T^pi(y))
 ```
-
-A distinction propagates when:
-
-```text
-Prop_T(d) > epsilon
-```
-
-A substrate supports distinction propagation when a nontrivial set of future-relevant distinctions remains propagated across horizon.
-
-### 8.1 Viable propagation
 
 Viable propagation restricts to viable trajectories:
 
@@ -346,51 +232,82 @@ Viable propagation restricts to viable trajectories:
 Prop_T^V(d) = sup_pi D(F_T^{V,pi}(x), F_T^{V,pi}(y))
 ```
 
-where `F_T^{V,pi}` is the future distribution conditioned or restricted to viable trajectories.
+Recoverability asks whether degraded distinction-structure can be re-established by admissible dynamics.
 
-Viable propagation is stronger than reachability and stronger than survival.
-
-### 8.2 Propagation is directional
-
-Propagation is not a static property of a state. It depends on how distinctions move through relations across horizon.
-
-Empirically, this motivates transport objects rather than endpoint counts.
-
-## 9. Recoverability
-
-Recoverability asks whether a degraded distinction or structure can be re-established by admissible dynamics.
-
-Let `Pert` be a class of perturbations. For a structure `sigma`, perturbation `eta`, and recovery policy `rho`, define:
+For structure `sigma`, perturbation `eta`, and recovery policy `rho`:
 
 ```text
 Rec_T(sigma, eta) = sup_rho Similarity(sigma, Recover_T(eta(sigma), rho))
 ```
 
-A structure is recoverable when:
+Recoverability does not require exact microstate restoration. It requires restoring the future-relevant distinctions or quotient-level structure that support viable propagation.
+
+## 9. Boundary non-privileging and admissible designation
+
+Boundary non-privileging is a core methodological and formal constraint.
+
+No candidate boundary, identity, agent, valuer, self, object, or value-bearing substrate is taken as ontologically primitive. Such boundaries are admissible designations only if they earn their role through predictive, transport, recoverability, non-erasure, and compatibility performance under explicit audits.
+
+Compact rule:
 
 ```text
-Rec_T(sigma, eta) > r_min
+Boundaries are instruments of measurement, not objects of validation.
 ```
 
-for relevant perturbations.
-
-### 9.1 Recoverability is not exact restoration
-
-Recoverability does not require returning to the identical microstate.
-
-It requires restoring the future-relevant distinctions or quotient-level structure that support viable propagation.
-
-### 9.2 Fragility
-
-Fragility is low recoverability under relevant perturbations:
+A designation is a proposed boundary or process-bundle map:
 
 ```text
-Frag_T(sigma) = 1 - E_eta[Rec_T(sigma, eta)]
+delta: X -> B
 ```
 
-High local performance with high fragility is not Omega-compatible.
+where `B` labels candidate bounded structures, process bundles, components, or subsystems.
 
-## 10. Quotients
+A designation may be useful if it supports prediction, transport analysis, recovery analysis, non-erasure analysis, or compatibility analysis. It is not thereby ontologically privileged.
+
+An admissible designation must pass the relevant audits:
+
+```text
+predictive usefulness:
+  preserves future-relevant distinctions enough to support analysis
+
+transport usefulness:
+  can be tracked across horizon without pure label drift
+
+recoverability usefulness:
+  perturbation and recovery can be defined over the designation
+
+non-erasure usefulness:
+  does not hide lower-rank collapse or component loss
+
+compatibility usefulness:
+  can expose constructive or destructive interaction with other future-bearing
+  structures
+```
+
+A value-bearing substrate is not an ontologically privileged agent or object.
+
+```text
+value-bearing substrate:
+  an admissibly designated process-bundle supporting recoverable, non-erasing,
+  viable propagation of future-relevant distinctions.
+```
+
+This definition intentionally avoids starting from agent, valuer, identity, or self. Those categories may later be recovered as special designations that pass stronger audits.
+
+Empirical consequence:
+
+```text
+Do not ask first:
+  Did we find an agent?
+  Did we find a valuer?
+  Did we find identity?
+
+Ask first:
+  Does some future-field deformation support an admissible designation under
+  which recoverable, non-erasing, value-bearing propagation is present?
+```
+
+## 10. Quotients and fibers
 
 A quotient or macro-map is:
 
@@ -400,11 +317,7 @@ kappa: X -> Z
 
 where `Z` is a macro-state space.
 
-Quotients determine which macro-structures are treated as equivalent.
-
-### 10.1 Admissible quotient
-
-A quotient is admissible for Omega analysis only if it preserves enough future-relevant structure.
+Quotients are a special case of admissible designation focused on macro-state equivalence rather than bounded process-bundle identification.
 
 A quotient `kappa` is predictive over horizon `T` if:
 
@@ -412,56 +325,13 @@ A quotient `kappa` is predictive over horizon `T` if:
 kappa(x) = kappa(y) implies D(F_T(x), F_T(y)) <= epsilon
 ```
 
-for the future structure being studied.
-
 A quotient is minimally admissible if it balances predictive sufficiency against complexity:
 
 ```text
 kappa* = arg min_kappa [ L_prop(kappa) + lambda L_quotient(kappa) ]
 ```
 
-where:
-
-```text
-L_prop:
-  loss of viable propagation information under kappa
-
-L_quotient:
-  complexity or description length of kappa
-```
-
 The quotient problem remains unsolved. Current hand quotients and learned quotients are provisional instruments, not final objects.
-
-### 10.2 Quotient failure modes
-
-A bad quotient can:
-
-```text
-launder entropy:
-  inflate breadth by merging incompatible states
-
-split structure:
-  fragment a coherent propagating macro-structure
-
-merge incompatibles:
-  hide future-relevant distinctions
-
-erase components:
-  preserve a joint macro-label while deleting lower-rank support
-
-overfit:
-  validate on a finite batch while losing horizon generalization
-
-become identity:
-  preserve everything but explain nothing
-
-become all-one:
-  erase everything while appearing simple
-```
-
-A formal Omega claim requires quotient audits.
-
-## 11. Fibers
 
 Given quotient `kappa`, the fiber over macro-state `z` is:
 
@@ -469,40 +339,11 @@ Given quotient `kappa`, the fiber over macro-state `z` is:
 kappa^{-1}(z) = { x in X : kappa(x) = z }
 ```
 
-In trajectory form, the fiber at time or segment `t` is:
-
-```text
-R_t(z) = { tau in F_T^V : kappa(tau_t) = z }
-```
-
-Fibers represent lower-rank realizations of macro-structure.
-
-### 11.1 Fiber mass
-
-Fiber mass:
-
-```text
-M_t(z) = |R_t(z)|
-```
-
-or, in stochastic settings, probability mass.
-
 Fiber mass alone is not Omega. A large fiber can be noisy, fragmented, unrecoverable, or non-transporting.
 
-### 11.2 Fiber quality
+A certified fiber should satisfy sufficient mass, non-singleton support, nonfragmentation, component preservation, recoverability, and future-transport capacity.
 
-A certified fiber should satisfy:
-
-```text
-sufficient mass;
-non-singleton support;
-nonfragmentation;
-component preservation;
-recoverability;
-future-transport capacity.
-```
-
-## 12. Certified transport
+## 11. Certified transport and non-erasure
 
 A macro path under quotient `kappa` is:
 
@@ -532,31 +373,13 @@ nonfragmentation:
   transported mass is not only singleton or tiny isolated fibers
 
 recoverability:
-  relevant perturbations do not destroy the transport channel
+  relevant perturbations do not eliminate the transport channel
 
 matched-null separation:
   transport is not explained by detector artifacts or marginal structure alone
 ```
 
-### 12.1 Static fibers versus transport fibers
-
-Static certified fibers are not enough.
-
-Omega-like structure requires certified transport:
-
-```text
-fiber support at horizon H_a
-  becomes
-fiber support at horizon H_b
-```
-
-without erasure, fragmentation, or collapse.
-
-## 13. Non-erasure
-
-Non-erasure is a central Omega constraint.
-
-A macro-structure is not Omega-like if it persists by eliminating the lower-rank structures that make it meaningful.
+Non-erasure is central: a macro-structure is not Omega-like if it persists by eliminating the lower-rank structures that make it meaningful.
 
 Given a coupled system:
 
@@ -564,46 +387,11 @@ Given a coupled system:
 X = X_A x X_B
 ```
 
-A quotient `kappa_AB` over the joint system must be audited for component preservation.
+A joint macro-transport channel is non-erasing only if component-preservation is sufficient and lower-rank erasure remains below threshold.
 
-Let:
-
-```text
-C_A:
-  preservation of component A distinctions
-
-C_B:
-  preservation of component B distinctions
-
-E_lower:
-  lower-rank erasure score
-```
-
-A joint macro-transport channel is non-erasing only if:
-
-```text
-C_A >= c_min
-C_B >= c_min
-E_lower <= e_max
-```
-
-or if a justified domain-specific component criterion replaces these.
-
-### 13.1 Local success can hide erasure
-
-A system can preserve a joint macro-label while destroying one component's future-bearing structure.
-
-Such a system may be locally viable but not Omega-compatible.
-
-## 14. Compatibility
+## 12. Compatibility
 
 Compatibility concerns interaction among future-bearing structures.
-
-Let there be two subsystems or future landscapes:
-
-```text
-S_A, S_B
-```
 
 Local viable propagation for `S_A` is not sufficient if it degrades the future-bearing propagation of `S_B`.
 
@@ -615,57 +403,32 @@ Compat_T(S_A, S_B) in [0,1]
 
 which measures whether viable propagation in one system preserves, supports, or at least does not destructively collapse viable propagation in the other.
 
-### 14.1 Capture and erasure
-
-Important coupled failure modes include:
+Important coupled failure modes include capture, erasure, lock-in, singleton domination, and pseudo-cooperation.
 
 ```text
-capture:
-  one system preserves its own future landscape by constraining another into a
-  narrow compatible channel
-
-erasure:
-  one system destroys another's future-bearing distinctions
-
-lock-in:
-  future possibilities remain viable only inside a brittle narrowing corridor
-
-singleton domination:
-  apparent stability arises from eliminating alternative continuations
-
-pseudo-cooperation:
-  joint viability exists but one component's recoverable structure is lost
-```
-
-### 14.2 Omega-compatible viability
-
-Local viability:
-
-```text
-system continues on its own terms
-```
+local viability:
+  system continues on its own terms
 
 Omega-compatible viability:
-
-```text
-system continues while preserving compatibility with broader future-bearing
-structure
+  system continues while preserving compatibility with broader future-bearing
+  structure
 ```
 
 This is where alignment relevance begins. It should not be imported earlier.
 
-## 15. Candidate Omega signature
+## 13. Candidate Omega signature
 
 The primary object should be a structured signature, not a scalar.
 
-For quotient `kappa`, horizon `T`, substrate `S`, perturbation family `Pert`, and compatibility scope `C`, define:
+For quotient `kappa`, designation `delta`, horizon `T`, substrate `S`, perturbation family `Pert`, and compatibility scope `C`, define:
 
 ```text
-Omega_sig(S, kappa, T, Pert, C) =
+Omega_sig(S, delta, kappa, T, Pert, C) =
   (
     V_gate,
     D_prop,
     R_rec,
+    B_designation,
     Q_adm,
     F_transport,
     N_nonfrag,
@@ -688,6 +451,9 @@ D_prop:
 
 R_rec:
   propagated structure is recoverable under perturbation
+
+B_designation:
+  boundary/designation is admissible for the claim and not reified as primitive
 
 Q_adm:
   quotient is predictive/admissible enough for the claim
@@ -722,7 +488,7 @@ Omega_index = g(Omega_sig)
 
 The scalar is a summary. The tuple is primary.
 
-## 16. Minimal Omega-compatible condition
+## 14. Minimal Omega-compatible condition
 
 A candidate structure is minimally Omega-compatible only if:
 
@@ -730,6 +496,7 @@ A candidate structure is minimally Omega-compatible only if:
 V_gate passes;
 D_prop > threshold;
 R_rec > threshold;
+B_designation passes boundary-nonprivileging audit;
 Q_adm passes quotient audit;
 F_transport passes transport audit;
 N_nonfrag passes nonfragmentation audit;
@@ -742,174 +509,130 @@ If compatibility is outside scope, the result must be labeled a precursor:
 
 ```text
 Omega-precursor:
-  viable, recoverable, non-erasing propagation under an admissible quotient,
-  but not yet tested for coupled compatibility.
+  viable, recoverable, non-erasing propagation under an admissible designation
+  and quotient, but not yet tested for coupled compatibility.
 ```
 
 Current MB0 results are at most precursor-level.
 
-## 17. Pseudo-Omega failure classes
+## 15. Definition closure
+
+Working closure:
+
+```text
+Omega is the boundary-nonprivileged compatibility structure of futures that
+support recoverable, non-erasing propagation of value-bearing substrates.
+```
+
+Where:
+
+```text
+value-bearing substrate:
+  an admissibly designated process-bundle supporting recoverable, non-erasing,
+  viable propagation of future-relevant distinctions.
+```
+
+Equivalent form:
+
+```text
+Omega is the future-trajectory structure that preserves the possibility of
+value-bearing propagation under boundary-nonprivileged designation.
+```
+
+This maps the intuitive statement:
+
+```text
+Omega is the set of trajectories across futures that contain value-bearing
+substrates.
+```
+
+to the stricter formal statement:
+
+```text
+Omega is the class/structure of trajectories that preserve or support compatible
+propagation of admissibly designated value-bearing substrates without collapse,
+erasure, or incompatible capture.
+```
+
+Containment is too weak. A future may contain one value-bearing substrate while eliminating the possibility of compatible propagation elsewhere. Omega requires compatible propagation, not mere presence.
+
+## 16. Pseudo-Omega failure classes
 
 The formalism should name false positives.
 
-### 17.1 Entropy laundering
-
-A quotient creates apparent breadth by merging incompatible states.
-
-### 17.2 Static fiber fakeout
-
-Large fibers exist, but they do not transport.
-
-### 17.3 Singleton capture
-
-A system appears stable because alternatives were eliminated.
-
-### 17.4 Component erasure
-
-A joint macro-structure persists by deleting lower-rank component distinctions.
-
-### 17.5 Local viability trap
-
-A system remains viable while degrading broader future landscapes.
-
-### 17.6 Measurement-marginal artifact
-
-A detector sees structure explained by row/column marginals or other matched controls.
-
-### 17.7 Deterministic substrate artifact
-
-A positive response depends on a hand-authored edge-selection rule rather than a substrate-general constraint.
-
-### 17.8 Quotient overfit
-
-A learned quotient works on a finite validation batch but fails horizon transfer or perturbation robustness.
-
-## 18. Mapping to empirical programs
-
-### 18.1 Historical entropy / single-field branch
-
-Tested future breadth and viable reachability.
-
-Import:
-
 ```text
-viability matters;
-entropy is secondary;
-traps and irreversibility matter;
-horizon coherence matters.
+entropy laundering:
+  quotient creates apparent breadth by merging incompatible states
+
+static fiber fakeout:
+  large fibers exist but do not transport
+
+singleton capture:
+  apparent stability comes from eliminating alternatives
+
+component erasure:
+  joint macro-structure persists by losing lower-rank distinctions
+
+local viability trap:
+  local persistence degrades broader future landscapes
+
+measurement-marginal artifact:
+  detector signal is explained by matched controls
+
+deterministic substrate artifact:
+  response depends on a hand-authored edge-selection rule
+
+quotient overfit:
+  learned quotient works on finite batch but fails horizon transfer
+
+boundary reification:
+  useful measurement boundary is mistaken for primitive agent/self/valuer
 ```
 
-Demote:
+## 17. Mapping to empirical programs
 
 ```text
-raw entropy as Omega;
-single scalar future richness as the main object.
+historical entropy / single-field branch:
+  imports viability, irreversibility, horizon coherence;
+  demotes raw entropy and single scalar richness
+
+historical COM / multifield branch:
+  imports quotients, fibers, component preservation, non-erasure;
+  demotes COM as universal or final
+
+RFS-MB0 horizon transport:
+  imports directional future-structure transport under matched controls;
+  remains instrument, not Omega validation
+
+boundary non-privileging:
+  explains why the empirical arm avoids defining agents/valuers/identity first
+
+preservation asymmetry:
+  live substrate ingredient for preserving coarse distinctions;
+  not value, agency, or Omega
+
+MaxEnt-P:
+  next artifact audit for whether preservation is substrate-level or top-m artifact
+
+MB2 coupled landscapes:
+  later compatibility test for capture, erasure, support, and interference
 ```
 
-### 18.2 Historical COM / multifield branch
-
-Tested quotient fibers and viable propagation through a hand coordinate.
-
-Import:
-
-```text
-quotients matter;
-fibers matter;
-component preservation matters;
-non-erasure matters;
-learned quotient recovery is hard.
-```
-
-Demote:
-
-```text
-COM as universal;
-hand quotient as final;
-certified static fibers without transport.
-```
-
-### 18.3 RFS-MB0 horizon transport
-
-Tests directional future-structure transport under matched controls.
-
-Import:
-
-```text
-horizon-indexed transport is a better precursor than static co-occurrence;
-null controls and perturbation response must be separated;
-response classes should remain neutral.
-```
-
-Current interpretation:
-
-```text
-matched-marginal-separated horizon transport is a live instrument;
-not Omega validation.
-```
-
-### 18.4 Preservation asymmetry
-
-Tests whether penalizing changes in coarse macro-invariants affects future-transport response.
-
-Import:
-
-```text
-preservation of coarse distinctions is a live substrate ingredient;
-low-beta threshold behavior suggests graph deformation precedes transport response.
-```
-
-Current interpretation:
-
-```text
-preservation asymmetry is a promising non-template substrate hook;
-not value, agency, or Omega.
-```
-
-### 18.5 MaxEnt-P preflight
-
-Tests whether preservation survives when moved from deterministic top-m energy scoring to an ensemble-level macro-invariant marginal constraint.
-
-Formal role:
-
-```text
-tests whether preservation asymmetry is substrate-level or top-m artifact.
-```
-
-### 18.6 MB2 coupled landscapes
-
-Future decisive layer.
-
-Formal role:
-
-```text
-tests compatibility, capture, erasure, and multi-system future-landscape
-interaction.
-```
-
-This is where alignment relevance becomes directly testable.
-
-## 19. Relationship to Gradient Field Theory
+## 18. Relationship to Gradient Field Theory
 
 Gradient Field Theory contributes a coherence subfunctional.
-
-Its useful object is something like:
 
 ```text
 C_info:
   persistence and recoverability of action-relevant distinctions under dynamics
 ```
 
-In this formal core:
-
-```text
-C_info > 0
-```
-
-is a necessary condition for Omega-relevant structure, but not sufficient.
+In this formal core, `C_info > 0` is necessary but not sufficient.
 
 Omega additionally requires:
 
 ```text
+boundary-nonprivileged admissible designation;
 admissible quotienting;
 fiber or horizon transport;
 non-erasure;
@@ -928,15 +651,66 @@ Omega-compatible viable propagation:
   stronger structured condition
 ```
 
+## 19. Relationship to Gradient Ethics and the normative layer
+
+Gradient Ethics should be read as a downstream normative specialization of this formal core, not as the root definition of Omega.
+
+The formal core stays below agent/value labels. It defines the boundary-nonprivileged substrate conditions under which value-bearing propagation can be meaningfully designated. Gradient Ethics begins later, once coherent agentic or valuer-like systems are in scope and asks what constraints follow under uncertainty and irreversibility.
+
+Mapping:
+
+```text
+Omega future-bearing propagation:
+  substrate-level condition that value-bearing process-bundles can continue
+
+Gradient Ethics future reachability:
+  normative-layer interpretation of what persistent agents must preserve under
+  uncertainty
+
+Omega non-erasure / compatibility:
+  formal precursor to rights, non-interference, and anti-capture constraints
+
+Omega recoverability:
+  formal precursor to corrigibility, oversight, and repairability
+
+Omega boundary non-privileging:
+  prevents premature reification of agent/valuer boundaries while still allowing
+  functional designations to earn normative relevance
+
+Omega coupled compatibility:
+  substrate-level precursor to cooperation, justice, trust, and distributed
+  agency arguments
+```
+
+The normative layer remains conditional, not categorical:
+
+```text
+If a system is an admissibly designated persistent agent or valuer operating
+under uncertainty, then it is constrained to preserve the future-bearing
+conditions that make its own and others' agency possible.
+```
+
+This is not a utility function or decision procedure. It is a constraint layer. Ethical norms are interpreted as guardrails against irreversible loss, erasure, capture, and collapse of future-bearing propagation.
+
+Thus:
+
+```text
+Omega formal core:
+  What future-trajectory structures can support value-bearing propagation?
+
+Gradient Ethics:
+  What constraints must persistent agents obey once such future-bearing
+  structures and agentic interactions are in scope?
+```
+
 ## 20. Relationship to ethics and alignment
 
-This formal core does not derive ethics.
-
-It provides a substrate-level vocabulary for future-preserving structure.
+This formal core does not derive ethics by itself.
 
 Ethical or alignment interpretation becomes available only after:
 
 ```text
+admissible value-bearing substrate designation;
 bounded historical identities;
 valuerhood;
 recoverable continuability;
@@ -946,50 +720,36 @@ capture / erasure / preservation dynamics
 
 are formally in scope.
 
-Before that, the formalism should speak only of:
-
-```text
-distinctions;
-relations;
-asymmetries;
-viability;
-propagation;
-recoverability;
-quotients;
-transport;
-non-erasure;
-compatibility.
-```
+Before that, the formalism should speak only of distinctions, relations, asymmetries, viability, propagation, recoverability, admissible designations, quotients, transport, non-erasure, and compatibility.
 
 ## 21. Open problems
 
-### 21.1 Quotient problem
+```text
+designation problem:
+  how to learn admissible process-bundle designations without reifying boundaries
 
-How is `kappa*` learned or characterized without hand coordinates?
+quotient problem:
+  how to characterize kappa* without hand coordinates
 
-### 21.2 Compatibility problem
+compatibility problem:
+  how to measure coupled compatibility without smuggling in value labels
 
-How should compatibility be measured in coupled future landscapes without smuggling in value labels?
+non-erasure problem:
+  how to define lower-rank erasure across arbitrary substrates
 
-### 21.3 Non-erasure problem
+recoverability problem:
+  which perturbations are admissible and how much recovery is enough
 
-How can lower-rank erasure be defined across arbitrary substrates?
+scalarization problem:
+  whether any scalar Omega index can avoid hiding tuple anatomy
 
-### 21.4 Recoverability problem
+substrate-generalization problem:
+  which positive results survive beyond finite toy graphs
 
-Which perturbation families are admissible, and how much recovery is enough?
-
-### 21.5 Scalarization problem
-
-Can a scalar Omega index be defined without hiding the tuple anatomy?
-
-### 21.6 Substrate-generalization problem
-
-Which positive results survive beyond finite toy graphs?
-
-### 21.7 Observer / valuer bridge
-
-When does a future-bearing propagating structure become a bounded historical identity or valuer?
+observer / valuer bridge:
+  when future-bearing propagation earns bounded historical identity or valuer
+  designation
+```
 
 ## 22. Minimal formal commitments
 
@@ -999,16 +759,18 @@ This draft commits to:
 1. Omega is not raw entropy.
 2. Omega is not survival alone.
 3. Omega is not static reachability.
-4. Omega is horizon-indexed.
-5. Omega requires future-relevant distinctions.
-6. Distinctions require relations to propagate.
-7. Relations matter through asymmetric future consequences.
-8. Viability is a gate, not the target.
-9. Propagation must be recoverable.
-10. Quotients must be admissible and audited.
-11. Macro persistence must not erase lower-rank support.
-12. Local viability can be globally degrading.
-13. Omega-compatible propagation is a structured signature before it is a scalar.
+4. Omega is not an ontologically privileged boundary.
+5. Omega is horizon-indexed.
+6. Omega requires future-relevant distinctions.
+7. Distinctions require relations to propagate.
+8. Relations matter through asymmetric future consequences.
+9. Viability is a gate, not the target.
+10. Propagation must be recoverable.
+11. Boundaries and quotients must be admissible and audited.
+12. Macro persistence must not erase lower-rank support.
+13. Local viability can be globally degrading.
+14. Omega-compatible propagation is a structured signature before it is a scalar.
+15. Normative claims are downstream conditional constraints, not primitive axioms.
 ```
 
 ## 23. Bottom line
@@ -1016,20 +778,19 @@ This draft commits to:
 The clean formal core is:
 
 ```text
-Omega is the structured compatibility of viable future-bearing propagation.
+Omega is the boundary-nonprivileged compatibility structure of futures that
+support recoverable, non-erasing propagation of value-bearing substrates.
 
 At the precursor level, this means:
   future-relevant distinctions propagate through admissible relations across
-  horizon, remain recoverable under perturbation, survive quotienting, and avoid
-  non-erasure failures.
+  horizon, remain recoverable under perturbation, survive admissible designation
+  and quotient audits, and avoid non-erasure failures.
 
 At the full level, this propagation must also remain compatible with broader
 future-bearing structures in coupled systems.
 ```
 
-Current empirical work has not validated Omega.
-
-It has clarified the path:
+Current empirical work has not validated Omega. It has clarified the path:
 
 ```text
 single-field entropy:
@@ -1037,6 +798,9 @@ single-field entropy:
 
 COM:
   historical witness
+
+boundary non-privileging:
+  formalized as admissible designation rather than primitive identity
 
 horizon transport:
   live instrument
@@ -1049,4 +813,8 @@ MaxEnt-P:
 
 coupled landscapes:
   later compatibility test
+
+Gradient Ethics:
+  downstream normative layer once admissible agent/valuer designations are in
+  scope
 ```
