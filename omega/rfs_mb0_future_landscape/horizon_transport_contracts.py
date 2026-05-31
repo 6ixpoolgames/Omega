@@ -12,10 +12,15 @@ PARENT_SPEC_ID = "docs/RFS_MB0_HORIZON_TRANSPORT_SPECTRAL_RESPONSE_REPAIR_SPEC.m
 MATCHED_NULL_SPEC_ID = "docs/RFS_MB0_HORIZON_TRANSPORT_MATCHED_NULL_AND_FIXTURE_SMOKE_SPEC.md"
 EXPANSION_SPEC_ID = "docs/RFS_MB0_HORIZON_TRANSPORT_EXPANSION_SMOKE_SPEC.md"
 H128_SPEC_ID = "docs/RFS_MB0_HORIZON_TRANSPORT_RESPONSE_SURFACE_H128_SCALEUP_SPEC.md"
+VISCOSITY_SWEEP_SPEC_ID = "docs/RFS_MB0_HORIZON_TRANSPORT_VISCOSITY_HORIZON_BREADTH_SWEEP_SPEC.md"
 RUNNER_MODULE = "omega.rfs_mb0_future_landscape.run_horizon_transport_spectral_response_repair"
 
 DEFAULT_HORIZON_PAIRS = ((0, 1), (1, 2), (2, 4), (4, 8), (8, 16), (16, 24), (24, 32))
 H128_HORIZON_PAIRS = (*DEFAULT_HORIZON_PAIRS, (32, 48), (48, 64), (64, 96), (96, 128))
+HORIZON_10X_PAIRS = ((16, 24), (24, 32), (64, 96), (96, 128), (128, 256), (256, 512), (512, 1024), (1024, 1280))
+VISCOSITY_LADDER_HORIZON_PAIRS = ((4, 8), (8, 16), (16, 24), (24, 32), (64, 96), (96, 128))
+BREADTH_HORIZON_CROSS_PAIRS = ((96, 128), (128, 256), (256, 512), (512, 1024))
+SWEEP_KINDS = frozenset({"horizon_10x", "breadth", "viscosity_ladder", "breadth_horizon_cross"})
 
 COMMON_OUTPUTS = (
     "horizon_transport_matrix_manifest.csv",
@@ -41,6 +46,8 @@ COMMON_OUTPUTS = (
     "horizon_transport_terminal_saturation_summary.csv",
     "horizon_transport_saturation_by_horizon_pair.csv",
     "horizon_transport_response_fixture_summary.csv",
+    "horizon_transport_viscosity_summary.csv",
+    "horizon_transport_response_diversity_summary.csv",
     "horizon_transport_by_probe_summary.csv",
     "horizon_transport_by_flow_mode_summary.csv",
     "horizon_transport_by_horizon_pair_summary.csv",
@@ -75,6 +82,9 @@ DETECTOR_STATISTICS = (
 
 
 def run_kind(args: object) -> str:
+    sweep_kind = str(getattr(args, "sweep_kind", "") or "")
+    if sweep_kind:
+        return sweep_kind
     if bool(getattr(args, "h128_scaleup", False)):
         return "h128"
     if bool(getattr(args, "expansion_smoke", False)):
@@ -83,6 +93,8 @@ def run_kind(args: object) -> str:
 
 
 def active_spec_id(args: object) -> str:
+    if str(getattr(args, "sweep_kind", "") or ""):
+        return VISCOSITY_SWEEP_SPEC_ID
     if bool(getattr(args, "h128_scaleup", False)):
         return H128_SPEC_ID
     if bool(getattr(args, "expansion_smoke", False)):
@@ -91,12 +103,28 @@ def active_spec_id(args: object) -> str:
 
 
 def artifact_prefix(kind: str) -> str:
+    if kind == "horizon_10x":
+        return "horizon_transport_10x_horizon"
+    if kind == "breadth":
+        return "horizon_transport_breadth"
+    if kind == "viscosity_ladder":
+        return "horizon_transport_viscosity_ladder"
+    if kind == "breadth_horizon_cross":
+        return "horizon_transport_breadth_horizon_cross"
     if kind == "h128":
         return "horizon_transport_h128"
     return "horizon_transport_expansion" if kind == "expansion" else "horizon_transport_repair"
 
 
 def run_phase(kind: str) -> str:
+    if kind == "horizon_10x":
+        return "rfs_mb0_horizon_transport_10x_horizon_sweep"
+    if kind == "breadth":
+        return "rfs_mb0_horizon_transport_breadth_sweep"
+    if kind == "viscosity_ladder":
+        return "rfs_mb0_horizon_transport_viscosity_ladder"
+    if kind == "breadth_horizon_cross":
+        return "rfs_mb0_horizon_transport_breadth_horizon_cross_mini"
     if kind == "h128":
         return "rfs_mb0_horizon_transport_response_surface_h128_scaleup"
     return "rfs_mb0_horizon_transport_expansion_smoke" if kind == "expansion" else "rfs_mb0_horizon_transport_spectral_response_repair"
@@ -123,6 +151,14 @@ def manifest_filename(kind: str) -> str:
 
 
 def report_filename(kind: str) -> str:
+    if kind == "horizon_10x":
+        return "rfs_mb0_horizon_transport_10x_horizon_sweep_result.md"
+    if kind == "breadth":
+        return "rfs_mb0_horizon_transport_breadth_sweep_result.md"
+    if kind == "viscosity_ladder":
+        return "rfs_mb0_horizon_transport_viscosity_ladder_result.md"
+    if kind == "breadth_horizon_cross":
+        return "rfs_mb0_horizon_transport_breadth_horizon_cross_mini_result.md"
     if kind == "h128":
         return "rfs_mb0_horizon_transport_response_surface_h128_scaleup_result.md"
     if kind == "expansion":
@@ -134,9 +170,9 @@ def status_run_kind(status: dict[str, object]) -> str:
     return str(status.get("run_kind", "repair"))
 
 
-def parse_horizon_pairs(raw: str, *, use_h128: bool) -> tuple[tuple[int, int], ...]:
+def parse_horizon_pairs(raw: str, *, use_h128: bool, sweep_kind: str = "") -> tuple[tuple[int, int], ...]:
     if not raw.strip():
-        return H128_HORIZON_PAIRS if use_h128 else DEFAULT_HORIZON_PAIRS
+        return default_horizon_pairs(use_h128=use_h128, sweep_kind=sweep_kind)
     pairs: list[tuple[int, int]] = []
     for item in raw.split(","):
         value = item.strip()
@@ -144,7 +180,19 @@ def parse_horizon_pairs(raw: str, *, use_h128: bool) -> tuple[tuple[int, int], .
             continue
         left, right = value.split("->", 1)
         pairs.append((int(left.strip()), int(right.strip())))
-    return tuple(pairs) or (H128_HORIZON_PAIRS if use_h128 else DEFAULT_HORIZON_PAIRS)
+    return tuple(pairs) or default_horizon_pairs(use_h128=use_h128, sweep_kind=sweep_kind)
+
+
+def default_horizon_pairs(*, use_h128: bool, sweep_kind: str = "") -> tuple[tuple[int, int], ...]:
+    if sweep_kind == "horizon_10x":
+        return HORIZON_10X_PAIRS
+    if sweep_kind == "viscosity_ladder":
+        return VISCOSITY_LADDER_HORIZON_PAIRS
+    if sweep_kind == "breadth_horizon_cross":
+        return BREADTH_HORIZON_CROSS_PAIRS
+    if sweep_kind == "breadth":
+        return H128_HORIZON_PAIRS
+    return H128_HORIZON_PAIRS if use_h128 else DEFAULT_HORIZON_PAIRS
 
 
 def attach_horizon_pairs(jobs: list[dict[str, object]], horizon_pairs: tuple[tuple[int, int], ...]) -> None:

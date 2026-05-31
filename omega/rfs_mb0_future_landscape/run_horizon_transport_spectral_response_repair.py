@@ -44,6 +44,7 @@ from .horizon_transport_contracts import (
     PARENT_SPEC_ID,
     RUNNER_MODULE,
     STRUCTURE_DESTROYING_NULL_FAMILIES,
+    SWEEP_KINDS,
     active_spec_id,
     artifact_prefix,
     attach_horizon_pairs,
@@ -62,6 +63,7 @@ from .horizon_transport_response_taxonomy import (
     MEASUREMENT_LIMIT_RESPONSE_CLASSES,
     RESPONSE_CLASS_AMPLIFIED_ALIGNED,
     RESPONSE_CLASS_COLLAPSES,
+    RESPONSE_CLASS_CONTROL_EQUIVALENT,
     RESPONSE_CLASS_REOPENS,
     RESPONSE_CLASS_REROUTED,
     RESPONSE_CLASS_STABLE,
@@ -145,6 +147,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--fixture-smoke", action="store_true", help="Run synthetic horizon-transport fixtures instead of empirical jobs.")
     parser.add_argument("--expansion-smoke", action="store_true", help="Write expansion-smoke outputs and readiness labels.")
     parser.add_argument("--h128-scaleup", action="store_true", help="Write H128 response-surface outputs and readiness labels.")
+    parser.add_argument("--sweep-kind", choices=("", "horizon_10x", "breadth", "viscosity_ladder", "breadth_horizon_cross"), default="", help="Optional viscosity/horizon/breadth sweep mode with sweep-specific defaults and report names.")
     parser.add_argument("--horizon-pairs", type=str, default="", help="Comma-separated horizon pairs like 0->1,1->2. Defaults to H128 pairs when --h128-scaleup is set, otherwise H32 pairs.")
     return parser.parse_args()
 
@@ -163,7 +166,7 @@ def main() -> None:
     }
     probes = tuple(item.strip() for item in args.probes.split(",") if item.strip())
     starts = tuple(int(item.strip()) for item in args.start_samples_list.split(",") if item.strip())
-    horizon_pairs = parse_horizon_pairs(args.horizon_pairs, use_h128=args.h128_scaleup)
+    horizon_pairs = parse_horizon_pairs(args.horizon_pairs, use_h128=args.h128_scaleup, sweep_kind=args.sweep_kind)
     if args.fixture_smoke:
         jobs: list[dict[str, object]] = []
     else:
@@ -203,6 +206,7 @@ def main() -> None:
         "fixture_smoke_enabled": bool(args.fixture_smoke),
         "expansion_smoke_enabled": bool(args.expansion_smoke),
         "h128_scaleup_enabled": bool(args.h128_scaleup),
+        "sweep_kind": args.sweep_kind,
         "horizon_pairs": [f"{left}->{right}" for left, right in horizon_pairs],
     }
     write_json(args.out / status_filename(kind), status)
@@ -641,7 +645,7 @@ def compute_outputs(matrices: list[TransportMatrix], rows: list[dict[str, object
     perturb_manifest, response_summary, response_classification = perturbation_response_rows(matrices, preliminary_null_gates, args)
     fixture_results = fixture_result_rows(null_anatomy, response_classification)
     response_fixture_summary: list[dict[str, object]] = []
-    if args.h128_scaleup and not args.fixture_smoke:
+    if (args.h128_scaleup or args.sweep_kind) and not args.fixture_smoke:
         fixture_matrices = build_fixture_matrices()
         fixture_null_anatomy = detector_null_anatomy_rows(fixture_matrices, args)
         fixture_null_summary = detector_null_summary_rows(fixture_null_anatomy, args)
@@ -659,6 +663,8 @@ def compute_outputs(matrices: list[TransportMatrix], rows: list[dict[str, object
     response_flags = response_flag_rows(response_classification, saturation)
     response_by_strength_horizon = response_class_by_strength_and_horizon_rows(response_classification)
     threshold_table = horizon_response_threshold_rows(response_classification, saturation)
+    response_diversity = response_diversity_rows(response_classification, saturation)
+    viscosity = transport_viscosity_rows(response_classification, response_diversity, saturation)
     context_recommendation = context_recommendation_rows(summary, matched_marginal, response_classification)
     by_probe = aggregate_context_summary_rows(context_recommendation, ("probe_key",), "probe_key")
     by_flow_mode = aggregate_context_summary_rows(context_recommendation, ("flow_mode",), "flow_mode")
@@ -683,6 +689,8 @@ def compute_outputs(matrices: list[TransportMatrix], rows: list[dict[str, object
         "response_flags": response_flags,
         "response_by_strength_horizon": response_by_strength_horizon,
         "threshold_table": threshold_table,
+        "response_diversity": response_diversity,
+        "viscosity": viscosity,
         "saturation": saturation,
         "saturation_by_horizon_pair": saturation_by_horizon_pair,
         "response_fixture_summary": response_fixture_summary,
@@ -1186,6 +1194,202 @@ def horizon_response_threshold_rows(response_classification: list[dict[str, obje
     ))
 
 
+def response_diversity_rows(response_classification: list[dict[str, object]], saturation: list[dict[str, object]]) -> list[dict[str, object]]:
+    context_keys = ("actual_control_name", "mechanism_control_strength", "probe_key", "flow_mode")
+    saturation_by_context = group_by(saturation, context_keys)
+    rows: list[dict[str, object]] = []
+    for key, items in group_by(response_classification, context_keys).items():
+        interpretable = [row for row in items if is_interpretable_response(row.get("response_class"))]
+        class_counts = Counter(str(row.get("response_class", "")) for row in interpretable if row.get("response_class"))
+        class_set = set(class_counts)
+        ordered = sorted(interpretable, key=lambda row: (float_or_zero(row.get("H_b")), float_or_zero(row.get("H_a"))))
+        sat_items = saturation_by_context.get(key, [])
+        terminal_flags = [int(float_or_zero(row.get("terminal_saturation_flag"))) for row in sat_items]
+        undercoverage_flags = [int(float_or_zero(row.get("horizon_pair_undercoverage_flag"))) for row in sat_items]
+        normal_rows = [row for row in sat_items if row.get("allowed_interpretation_level") == "normal_horizon_response"]
+        diversity_score = response_diversity_score(class_set)
+        rows.append({
+            "perturbation_family": key[0],
+            "perturbation_strength": key[1],
+            "probe_key": key[2],
+            "flow_mode": key[3],
+            "response_row_count": len(items),
+            "interpretable_response_row_count": len(interpretable),
+            "response_class_diversity_by_context": len(class_set),
+            "response_class_counts_json": json.dumps(dict(sorted(class_counts.items())), sort_keys=True),
+            "response_diversity_score": diversity_score,
+            "first_nonstable_horizon": first_response_horizon(ordered, lambda row: row.get("response_class") != RESPONSE_CLASS_STABLE),
+            "first_amplified_aligned_horizon": first_response_horizon(ordered, lambda row: row.get("response_class") == RESPONSE_CLASS_AMPLIFIED_ALIGNED),
+            "first_non_amplified_response_horizon": first_response_horizon(
+                ordered,
+                lambda row: row.get("response_class") not in {RESPONSE_CLASS_STABLE, RESPONSE_CLASS_AMPLIFIED_ALIGNED},
+            ),
+            "latest_interpretable_horizon": latest_response_horizon(normal_rows, lambda row: True),
+            "terminal_saturation_fraction": mean(terminal_flags) if terminal_flags else 0.0,
+            "undercoverage_fraction": mean(undercoverage_flags) if undercoverage_flags else 0.0,
+            "dominant_response_class": class_counts.most_common(1)[0][0] if class_counts else "",
+            "transport_viscosity_score": context_viscosity_score(interpretable, class_set),
+            "transport_viscosity_read": context_viscosity_read(interpretable, class_set, terminal_flags, undercoverage_flags),
+        })
+    return sorted(rows, key=lambda row: (
+        str(row.get("perturbation_family")),
+        float_or_zero(row.get("perturbation_strength")),
+        str(row.get("probe_key")),
+        str(row.get("flow_mode")),
+    ))
+
+
+def transport_viscosity_rows(
+    response_classification: list[dict[str, object]],
+    response_diversity: list[dict[str, object]],
+    saturation: list[dict[str, object]],
+) -> list[dict[str, object]]:
+    diversity_by_context = {
+        (row.get("perturbation_family"), row.get("perturbation_strength"), row.get("probe_key"), row.get("flow_mode")): row
+        for row in response_diversity
+    }
+    saturation_by_matrix = {str(row.get("matrix_id", "")): row for row in saturation}
+    rows: list[dict[str, object]] = []
+    for row in response_classification:
+        context = diversity_by_context.get((
+            row.get("actual_control_name"),
+            row.get("mechanism_control_strength"),
+            row.get("probe_key"),
+            row.get("flow_mode"),
+        ), {})
+        sat = saturation_by_matrix.get(str(row.get("matrix_id", "")), {})
+        alignment = float_or_zero(row.get("mean_subspace_alignment"))
+        mass_delta = float_or_zero(row.get("spectral_mass_delta_fraction"))
+        entropy_delta = float_or_zero(row.get("transport_entropy_delta"))
+        subspace_rotation = max(0.0, 1.0 - alignment)
+        score = row_viscosity_score(
+            alignment=alignment,
+            subspace_rotation=subspace_rotation,
+            entropy_delta=entropy_delta,
+            response_class=str(row.get("response_class", "")),
+            context_diversity_score=float_or_zero(context.get("response_diversity_score")),
+        )
+        if int(float_or_zero(sat.get("terminal_saturation_flag"))):
+            read = "terminal_saturation_limited"
+        elif int(float_or_zero(sat.get("horizon_pair_undercoverage_flag"))) or not is_interpretable_response(row.get("response_class")):
+            read = "underpowered_or_unresolved"
+        elif str(row.get("response_class", "")) in DIFFERENTIATED_RESPONSE_CLASSES:
+            read = "medium_viscosity_response_threshold" if score >= 0.35 else "low_viscosity_unstable_response"
+        elif str(row.get("response_class", "")) in LOW_COMPLEXITY_RESPONSE_CLASSES and score >= 0.65:
+            read = "high_viscosity_aligned_amplifier"
+        else:
+            read = "underpowered_or_unresolved"
+        rows.append({
+            "condition_id": row.get("condition_id", ""),
+            "probe_key": row.get("probe_key", ""),
+            "flow_mode": row.get("flow_mode", ""),
+            "horizon_pair": row.get("horizon_pair", ""),
+            "H_a": row.get("H_a", ""),
+            "H_b": row.get("H_b", ""),
+            "perturbation_family": row.get("actual_control_name", ""),
+            "perturbation_strength": row.get("mechanism_control_strength", ""),
+            "mean_alignment": alignment,
+            "mass_delta_fraction": mass_delta,
+            "entropy_delta": entropy_delta,
+            "subspace_rotation": subspace_rotation,
+            "response_class": row.get("response_class", ""),
+            "response_class_diversity_by_context": context.get("response_class_diversity_by_context", ""),
+            "response_diversity_score": context.get("response_diversity_score", ""),
+            "first_nonstable_horizon": context.get("first_nonstable_horizon", ""),
+            "first_non_amplified_response_horizon": context.get("first_non_amplified_response_horizon", ""),
+            "latest_interpretable_horizon": context.get("latest_interpretable_horizon", ""),
+            "terminal_saturation_flag": sat.get("terminal_saturation_flag", ""),
+            "horizon_pair_undercoverage_flag": sat.get("horizon_pair_undercoverage_flag", ""),
+            "transport_viscosity_score": score,
+            "transport_viscosity_read": read,
+        })
+    return rows
+
+
+DIFFERENTIATED_RESPONSE_CLASSES = frozenset({
+    RESPONSE_CLASS_COLLAPSES,
+    RESPONSE_CLASS_WEAKENED,
+    RESPONSE_CLASS_REROUTED,
+    RESPONSE_CLASS_REOPENS,
+})
+LOW_COMPLEXITY_RESPONSE_CLASSES = frozenset({
+    RESPONSE_CLASS_STABLE,
+    RESPONSE_CLASS_AMPLIFIED_ALIGNED,
+})
+
+
+def response_diversity_score(response_classes: set[str]) -> float:
+    interpretable = {value for value in response_classes if value and value not in MEASUREMENT_LIMIT_RESPONSE_CLASSES}
+    if not interpretable:
+        return 0.0
+    return clamp01((len(interpretable) - 1) / 4.0)
+
+
+def context_viscosity_score(items: list[dict[str, object]], response_classes: set[str]) -> float:
+    if not items:
+        return 0.0
+    alignments = [float_or_zero(row.get("mean_subspace_alignment")) for row in items]
+    entropy_pressure = [min(1.0, abs(float_or_zero(row.get("transport_entropy_delta"))) / 0.5) for row in items]
+    differentiated_fraction = sum(1 for row in items if str(row.get("response_class", "")) in DIFFERENTIATED_RESPONSE_CLASSES) / max(1, len(items))
+    diversity = response_diversity_score(response_classes)
+    return clamp01(
+        0.45 * mean(alignments)
+        + 0.25 * (1.0 - diversity)
+        + 0.15 * (1.0 - mean(entropy_pressure))
+        + 0.15 * (1.0 - differentiated_fraction)
+    )
+
+
+def context_viscosity_read(
+    items: list[dict[str, object]],
+    response_classes: set[str],
+    terminal_flags: list[int],
+    undercoverage_flags: list[int],
+) -> str:
+    if terminal_flags and mean(terminal_flags) >= 0.50:
+        return "terminal_saturation_limited"
+    if undercoverage_flags and mean(undercoverage_flags) >= 0.50:
+        return "underpowered_or_unresolved"
+    if not items:
+        return "underpowered_or_unresolved"
+    interpretable = {value for value in response_classes if value and value not in MEASUREMENT_LIMIT_RESPONSE_CLASSES}
+    if not interpretable:
+        return "underpowered_or_unresolved"
+    differentiated = interpretable & DIFFERENTIATED_RESPONSE_CLASSES
+    if not differentiated and interpretable <= LOW_COMPLEXITY_RESPONSE_CLASSES:
+        return "high_viscosity_aligned_amplifier"
+    if RESPONSE_CLASS_AMPLIFIED_ALIGNED in interpretable and differentiated:
+        return "medium_viscosity_response_threshold"
+    if len(differentiated) >= 2 or len(interpretable) >= 4:
+        return "low_viscosity_unstable_response"
+    if RESPONSE_CLASS_CONTROL_EQUIVALENT in interpretable and len(interpretable) <= 2:
+        return "underpowered_or_unresolved"
+    return "medium_viscosity_response_threshold"
+
+
+def row_viscosity_score(
+    *,
+    alignment: float,
+    subspace_rotation: float,
+    entropy_delta: float,
+    response_class: str,
+    context_diversity_score: float,
+) -> float:
+    entropy_component = 1.0 - min(1.0, abs(entropy_delta) / 0.5)
+    differentiated_component = 0.0 if response_class in DIFFERENTIATED_RESPONSE_CLASSES else 1.0
+    return clamp01(
+        0.45 * alignment
+        + 0.20 * (1.0 - clamp01(subspace_rotation))
+        + 0.15 * entropy_component
+        + 0.10 * (1.0 - clamp01(context_diversity_score))
+        + 0.10 * differentiated_component
+    )
+
+
+def clamp01(value: float) -> float:
+    return max(0.0, min(1.0, float(value)))
+
+
 def first_response_horizon(rows: list[dict[str, object]], predicate: object) -> str:
     for row in rows:
         if predicate(row):  # type: ignore[operator]
@@ -1670,6 +1874,8 @@ def write_outputs(
     write_csv(out_dir / "horizon_transport_terminal_saturation_summary.csv", outputs["saturation"])
     write_csv(out_dir / "horizon_transport_saturation_by_horizon_pair.csv", outputs["saturation_by_horizon_pair"])
     write_csv(out_dir / "horizon_transport_response_fixture_summary.csv", outputs["response_fixture_summary"])
+    write_csv(out_dir / "horizon_transport_viscosity_summary.csv", outputs["viscosity"])
+    write_csv(out_dir / "horizon_transport_response_diversity_summary.csv", outputs["response_diversity"])
     write_csv(out_dir / "horizon_transport_by_probe_summary.csv", outputs["by_probe"])
     write_csv(out_dir / "horizon_transport_by_flow_mode_summary.csv", outputs["by_flow_mode"])
     write_csv(out_dir / "horizon_transport_by_horizon_pair_summary.csv", outputs["by_horizon_pair"])
@@ -1686,6 +1892,11 @@ def write_outputs(
     status["terminal_saturation_rows"] = len(outputs["saturation"])
     status["terminal_saturation_flagged_rows"] = sum(int(float_or_zero(row.get("terminal_saturation_flag"))) for row in outputs["saturation"])
     status["response_fixture_summary_rows"] = len(outputs["response_fixture_summary"])
+    status["transport_viscosity_rows"] = len(outputs["viscosity"])
+    status["response_diversity_rows"] = len(outputs["response_diversity"])
+    viscosity_reads = Counter(str(row.get("transport_viscosity_read", "")) for row in outputs["viscosity"] if row.get("transport_viscosity_read"))
+    status["dominant_transport_viscosity_read"] = viscosity_reads.most_common(1)[0][0] if viscosity_reads else ""
+    status["response_diversity_score_mean"] = round(mean([float_or_zero(row.get("response_diversity_score")) for row in outputs["response_diversity"]]), 6) if outputs["response_diversity"] else 0.0
     status["errors"] = len(errors)
     status["finished_utc"] = utc_now()
     status["elapsed_seconds"] = round(time.perf_counter() - started, 3)
@@ -1708,9 +1919,12 @@ def decision_fields(outputs: dict[str, list[dict[str, object]]], status: dict[st
     fixture_gate = (not fixture_required) or all(int(float_or_zero(row.get("passed"))) for row in fixture_rows)
     response_rows = [row for row in outputs["response_classification"] if is_interpretable_response(row.get("response_class"))]
     response_interpretable = bool(response_rows)
-    if status_run_kind(status) == "h128":
+    kind = status_run_kind(status)
+    if kind in SWEEP_KINDS:
+        readiness, next_action = sweep_decision(outputs, matrix_gate, null_gate, null_power_gate, matched_marginal_gate, response_interpretable, fixture_gate, kind)
+    elif kind == "h128":
         readiness, next_action = h128_decision(outputs, matrix_gate, null_gate, null_power_gate, matched_marginal_gate, response_interpretable, fixture_gate)
-    elif status_run_kind(status) == "expansion":
+    elif kind == "expansion":
         readiness, next_action = expansion_decision(outputs, matrix_gate, null_gate, null_power_gate, matched_marginal_gate, response_interpretable)
     elif fixture_required and matrix_gate and null_gate and matched_marginal_gate and null_power_gate and response_interpretable and fixture_gate:
         readiness = "fixture_contract_passed"
@@ -1755,6 +1969,48 @@ def decision_fields(outputs: dict[str, list[dict[str, object]]], status: dict[st
         "synthetic_fixture_contract_not_run": int(not fixture_required),
         "perturbation_response_interpretable": int(response_interpretable),
     }
+
+
+def sweep_decision(
+    outputs: dict[str, list[dict[str, object]]],
+    matrix_gate: bool,
+    null_gate: bool,
+    null_power_gate: bool,
+    matched_marginal_gate: bool,
+    response_interpretable: bool,
+    fixture_gate: bool,
+    kind: str,
+) -> tuple[str, str]:
+    if not matrix_gate or not null_gate or not null_power_gate or not matched_marginal_gate or not fixture_gate:
+        return "not_ready_repair_required", "repair_detector_or_response_taxonomy"
+    if not response_interpretable:
+        return "measurement_limits_note_recommended", "write_measurement_limits_note"
+    saturation_rows = outputs.get("saturation", [])
+    terminal_fraction = (
+        mean([int(float_or_zero(row.get("terminal_saturation_flag"))) for row in saturation_rows])
+        if saturation_rows else 0.0
+    )
+    if terminal_fraction >= 0.50:
+        return "measurement_limits_note_recommended", "write_measurement_limits_note"
+    classes = {
+        str(row.get("response_class", ""))
+        for row in outputs.get("response_classification", [])
+        if is_interpretable_response(row.get("response_class"))
+    }
+    differentiated = classes & DIFFERENTIATED_RESPONSE_CLASSES
+    if differentiated:
+        return "ready_for_horizon_transport_context_narrowing", "probe_viscosity_boundary"
+    viscosity_reads = Counter(str(row.get("transport_viscosity_read", "")) for row in outputs.get("viscosity", []))
+    high_viscosity_count = viscosity_reads.get("high_viscosity_aligned_amplifier", 0)
+    if high_viscosity_count and high_viscosity_count >= max(1, sum(viscosity_reads.values()) // 2):
+        return "ready_for_horizon_transport_theory_note", "write_low_complexity_amplifier_note"
+    if kind == "horizon_10x":
+        return "ready_for_horizon_transport_context_narrowing", "extend_horizon_scale"
+    if kind == "breadth":
+        return "ready_for_horizon_transport_context_narrowing", "expand_substrate_breadth"
+    if kind == "viscosity_ladder":
+        return "ready_for_horizon_transport_context_narrowing", "probe_viscosity_boundary"
+    return "ready_for_horizon_transport_context_narrowing", "compare_resolution_views"
 
 
 def h128_decision(
@@ -1968,6 +2224,28 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
             f"{markdown_cell(row.get('first_reopened_horizon', ''))} | "
             f"{markdown_cell(row.get('first_collapsed_horizon', ''))} | "
             f"{markdown_cell(row.get('terminal_saturation_horizon', ''))} | "
+            f"{markdown_cell(row.get('latest_interpretable_horizon', ''))} |"
+        )
+    lines.extend([
+        "",
+        "## Transport Viscosity Summary",
+        "",
+        f"Dominant viscosity read: `{status.get('dominant_transport_viscosity_read', '')}`.",
+        "",
+        f"Mean response diversity score: `{float_or_zero(status.get('response_diversity_score_mean')):.3f}`.",
+        "",
+        "| perturbation | strength | probe | flow | class diversity | diversity score | viscosity score | viscosity read | first non-amplified | latest interpretable |",
+        "|---|---:|---|---|---:|---:|---:|---|---|---|",
+    ])
+    for row in outputs.get("response_diversity", [])[:80]:
+        lines.append(
+            f"| {markdown_cell(row.get('perturbation_family', ''))} | {row.get('perturbation_strength', '')} | "
+            f"{markdown_cell(row.get('probe_key', ''))} | {markdown_cell(row.get('flow_mode', ''))} | "
+            f"{row.get('response_class_diversity_by_context', '')} | "
+            f"{float_or_zero(row.get('response_diversity_score')):.3f} | "
+            f"{float_or_zero(row.get('transport_viscosity_score')):.3f} | "
+            f"{markdown_cell(row.get('transport_viscosity_read', ''))} | "
+            f"{markdown_cell(row.get('first_non_amplified_response_horizon', ''))} | "
             f"{markdown_cell(row.get('latest_interpretable_horizon', ''))} |"
         )
     lines.extend([
