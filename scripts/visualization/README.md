@@ -17,3 +17,25 @@ results/local_runs/<run_id>/figures/
 
 Generated figures are local diagnostics and are not committed unless explicitly
 promoted.
+
+The most direct view is:
+
+```text
+horizon_response_metric_rgb_spectrogram.png
+```
+
+RGB mapping:
+
+```text
+red:
+  positive spectral_mass_delta_fraction
+
+green:
+  mean_subspace_alignment
+
+blue:
+  positive transport_entropy_delta
+```
+
+So stable aligned transport is mostly green, while amplified-aligned transport
+is yellow/orange because mass growth adds red while alignment remains green.

@@ -56,6 +56,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--run-dir", type=Path, required=True, help="Run output directory containing horizon_transport_*.csv files.")
     parser.add_argument("--out-dir", type=Path, default=None, help="Figure output directory. Defaults to <run-dir>/figures.")
     parser.add_argument("--max-context-rows", type=int, default=120, help="Maximum context rows per heatmap before truncation for readability.")
+    parser.add_argument("--rgb-mass-delta-max", type=float, default=0.60, help="Positive mass-delta value mapped to full red in the RGB spectrogram.")
+    parser.add_argument("--rgb-entropy-delta-max", type=float, default=0.30, help="Positive entropy-delta value mapped to full blue in the RGB spectrogram.")
     parser.add_argument("--dpi", type=int, default=160)
     return parser.parse_args()
 
@@ -73,6 +75,7 @@ def main() -> None:
 
     written: list[Path] = []
     if response_rows:
+        written.append(plot_response_rgb_spectrogram(response_rows, out_dir, args.max_context_rows, args.dpi, args.rgb_mass_delta_max, args.rgb_entropy_delta_max))
         written.append(plot_response_class_heatmap(response_rows, out_dir, args.max_context_rows, args.dpi))
     if viscosity_rows:
         written.append(plot_numeric_heatmap(
@@ -129,6 +132,41 @@ def plot_response_class_heatmap(rows: list[dict[str, str]], out_dir: Path, max_c
     cbar.set_ticks(range(len(RESPONSE_CLASS_ORDER)))
     cbar.set_ticklabels([short_response_label(name) for name in RESPONSE_CLASS_ORDER])
     out_path = out_dir / "horizon_response_class_spectrogram.png"
+    save(fig, out_path, dpi)
+    return out_path
+
+
+def plot_response_rgb_spectrogram(
+    rows: list[dict[str, str]],
+    out_dir: Path,
+    max_context_rows: int,
+    dpi: int,
+    mass_delta_max: float,
+    entropy_delta_max: float,
+) -> Path:
+    horizons = horizon_order(rows)
+    contexts = limited_context_order(rows, max_context_rows)
+    red = normalized_grid(rows, contexts, horizons, "spectral_mass_delta_fraction", low=0.0, high=max(1e-9, mass_delta_max), positive_only=True)
+    green = normalized_grid(rows, contexts, horizons, "mean_subspace_alignment", low=0.0, high=1.0)
+    blue = normalized_grid(rows, contexts, horizons, "transport_entropy_delta", low=0.0, high=max(1e-9, entropy_delta_max), positive_only=True)
+    alpha = ~np.isnan(red) | ~np.isnan(green) | ~np.isnan(blue)
+    rgb = np.stack([
+        np.nan_to_num(red, nan=0.0),
+        np.nan_to_num(green, nan=0.0),
+        np.nan_to_num(blue, nan=0.0),
+    ], axis=2)
+    rgb[~alpha] = 1.0
+
+    fig, ax = sized_figure(len(horizons), len(contexts))
+    ax.imshow(rgb, aspect="auto", interpolation="nearest", vmin=0.0, vmax=1.0)
+    style_grid_axes(ax, horizons, contexts, "Horizon Pair", "Perturbation / Probe / Flow")
+    ax.set_title("Horizon-Transport Metric RGB Spectrogram")
+    legend = (
+        "RGB mapping: red = positive spectral mass delta; "
+        "green = subspace alignment; blue = positive entropy delta"
+    )
+    ax.text(0.0, 1.025, legend, transform=ax.transAxes, fontsize=9, va="bottom")
+    out_path = out_dir / "horizon_response_metric_rgb_spectrogram.png"
     save(fig, out_path, dpi)
     return out_path
 
@@ -251,6 +289,23 @@ def numeric_grid(rows: list[dict[str, str]], contexts: list[tuple[str, str, str,
     return values
 
 
+def normalized_grid(
+    rows: list[dict[str, str]],
+    contexts: list[tuple[str, str, str, str]],
+    horizons: list[str],
+    field: str,
+    *,
+    low: float,
+    high: float,
+    positive_only: bool = False,
+) -> np.ndarray:
+    values = numeric_grid(rows, contexts, horizons, field)
+    if positive_only:
+        values = np.maximum(values, 0.0)
+    normalized = (values - low) / max(1e-12, high - low)
+    return np.clip(normalized, 0.0, 1.0)
+
+
 def horizon_order(rows: list[dict[str, str]]) -> list[str]:
     return sorted({horizon_pair(row) for row in rows if horizon_pair(row)}, key=horizon_label_sort_key)
 
@@ -355,6 +410,16 @@ def write_readme(
     for path in written:
         lines.append(f"- `{path.name}`")
     lines.extend([
+        "",
+        "## RGB Spectrogram Mapping",
+        "",
+        "`horizon_response_metric_rgb_spectrogram.png` maps measured variables directly:",
+        "",
+        "- red: positive `spectral_mass_delta_fraction`",
+        "- green: `mean_subspace_alignment`",
+        "- blue: positive `transport_entropy_delta`",
+        "",
+        "Stable aligned transport appears mostly green. Amplified-aligned transport appears yellow/orange because mass gain adds red while alignment stays green.",
         "",
         "## Row Counts",
         "",
