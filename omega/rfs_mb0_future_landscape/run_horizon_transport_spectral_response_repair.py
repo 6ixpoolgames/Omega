@@ -22,9 +22,11 @@ from statistics import mean, median, pstdev
 
 import numpy as np
 
+from .landscape import exact_frontier
+from .relation_generator import generate_relation_system
 from .run_deformation_detector_sweep import stable_seed
 from .run_focused_boundary_recurrence import float_or_zero, read_csv, write_csv
-from .run_frontier_transform_stage_b2_mechanism_calibration import BASELINE_CONTROL
+from .run_frontier_transform_stage_b2_mechanism_calibration import BASELINE_CONTROL, make_stage_b2_control_system
 from .run_instrumentation_phase_a import build_holdout_split
 from .run_stage_b2_spectral_future_field_geometry_smoke import (
     build_jobs,
@@ -139,6 +141,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--shutdown-cushion-seconds", type=int, default=600)
     parser.add_argument("--max-items-per-context", type=int, default=64)
     parser.add_argument("--max-items-per-side", type=int, default=128)
+    parser.add_argument("--matrix-entry-top-k", type=int, default=256, help="Maximum nonzero transport entries retained per matrix for raw structure visualization.")
+    parser.add_argument("--raw-state-sample-jobs", type=int, default=0, help="Number of built jobs to sample for raw substrate state frontier heatmaps. Zero disables this local diagnostic.")
+    parser.add_argument("--raw-state-sample-starts", type=int, default=1, help="Start states per sampled job for raw substrate state frontier diagnostics.")
+    parser.add_argument("--raw-state-sample-states", type=int, default=256, help="Maximum raw substrate states retained per sampled frontier.")
     parser.add_argument("--min-item-count", type=int, default=1)
     parser.add_argument("--top-k", type=int, default=5)
     parser.add_argument("--null-replicates", type=int, default=5)
@@ -180,6 +186,7 @@ def main() -> None:
         "job_count": len(jobs),
         "run_kind": kind,
         "horizon_pairs": [f"{left}->{right}" for left, right in horizon_pairs],
+        "raw_state_sample_requested_jobs": int(args.raw_state_sample_jobs),
         "claim_boundary": CLAIM_BOUNDARY,
     })
     status: dict[str, object] = {
@@ -208,7 +215,12 @@ def main() -> None:
         "h128_scaleup_enabled": bool(args.h128_scaleup),
         "sweep_kind": args.sweep_kind,
         "horizon_pairs": [f"{left}->{right}" for left, right in horizon_pairs],
+        "raw_state_sample_requested_jobs": int(args.raw_state_sample_jobs),
+        "raw_state_sample_enabled": int(args.raw_state_sample_jobs > 0 and not args.fixture_smoke),
     }
+    write_json(args.out / status_filename(kind), status)
+    raw_state_samples = raw_state_frontier_sample_rows(jobs, horizon_pairs, args) if not args.fixture_smoke else []
+    status["raw_state_sample_rows"] = len(raw_state_samples)
     write_json(args.out / status_filename(kind), status)
     if args.fixture_smoke:
         rows: list[dict[str, object]] = []
@@ -220,8 +232,8 @@ def main() -> None:
     else:
         rows, errors, checkpoints = run_jobs(args, jobs, status, started)
         matrices = build_transport_matrices(rows, args)
-    outputs = compute_outputs(matrices, rows, args)
-    write_outputs(args.out, outputs, errors, checkpoints, status, started)
+    outputs = compute_outputs(matrices, rows, raw_state_samples, args)
+    write_outputs(args.out, outputs, matrices, errors, checkpoints, status, started)
 
 
 def handle_stop(_signum: int, _frame: object) -> None:
@@ -234,6 +246,79 @@ def install_signal_handlers() -> None:
         signum = getattr(signal, name, None)
         if signum is not None:
             signal.signal(signum, handle_stop)
+
+
+def raw_state_frontier_sample_rows(
+    jobs: list[dict[str, object]],
+    horizon_pairs: tuple[tuple[int, int], ...],
+    args: argparse.Namespace,
+) -> list[dict[str, object]]:
+    if args.raw_state_sample_jobs <= 0:
+        return []
+    horizons = sorted({horizon for pair in horizon_pairs for horizon in pair})
+    selected = jobs[: max(0, args.raw_state_sample_jobs)]
+    rows: list[dict[str, object]] = []
+    for job in selected:
+        if STOP_REQUESTED:
+            break
+        try:
+            seed = int(job["seed"])
+            params = job["params"]
+            baseline = generate_relation_system(params, seed)  # type: ignore[arg-type]
+            system = make_stage_b2_control_system(baseline, job, seed, params)  # type: ignore[arg-type]
+            starts = [system.states[(seed + i * 17) % len(system.states)] for i in range(min(int(job["start_samples"]), max(1, args.raw_state_sample_starts)))]
+            state_index = {state: index for index, state in enumerate(system.states)}
+            for start_index, start in enumerate(starts):
+                if STOP_REQUESTED:
+                    break
+                for horizon in horizons:
+                    if STOP_REQUESTED:
+                        break
+                    frontier = sorted(exact_frontier(system, start, horizon))
+                    frontier_size = len(frontier)
+                    for rank, state in enumerate(frontier[: max(1, args.raw_state_sample_states)], start=1):
+                        state_tuple = tuple(state) if isinstance(state, tuple) else (state,)
+                        row = {
+                            "raw_state_view": "exact_frontier_sample",
+                            "raw_state_sample_status": "ok",
+                            "condition_id": job.get("condition_id", ""),
+                            "actual_control_name": job.get("actual_control_name", ""),
+                            "mechanism_control_strength": job.get("mechanism_control_strength", ""),
+                            "probe_key": job.get("probe_key", ""),
+                            "flow_mode": "raw_exact_frontier",
+                            "job_id": job.get("job_id", ""),
+                            "group_id": job.get("group_id", ""),
+                            "seed": seed,
+                            "baseline_system_id": baseline.system_id,
+                            "control_system_id": system.system_id,
+                            "start_index": start_index,
+                            "start_state": raw_state_id(start),
+                            "H": horizon,
+                            "state_id": raw_state_id(state),
+                            "state_index": state_index.get(state, ""),
+                            "frontier_rank": rank,
+                            "frontier_size": frontier_size,
+                            "frontier_sample_limit": args.raw_state_sample_states,
+                            "frontier_sample_truncated": int(frontier_size > args.raw_state_sample_states),
+                            "state_presence": 1,
+                        }
+                        for coord_index, value in enumerate(state_tuple):
+                            row[f"state_coord_{coord_index}"] = value
+                        rows.append(row)
+        except Exception as exc:  # noqa: BLE001
+            rows.append({
+                "condition_id": job.get("condition_id", ""),
+                "job_id": job.get("job_id", ""),
+                "raw_state_sample_status": "error",
+                "error": repr(exc),
+            })
+    return rows
+
+
+def raw_state_id(state: object) -> str:
+    if isinstance(state, tuple):
+        return "(" + ",".join(str(part) for part in state) + ")"
+    return str(state)
 
 
 def run_jobs(
@@ -630,8 +715,14 @@ def fixture_transport_matrix(key: TransportKey, rows: list[str], cols: list[str]
     )
 
 
-def compute_outputs(matrices: list[TransportMatrix], rows: list[dict[str, object]], args: argparse.Namespace) -> dict[str, list[dict[str, object]]]:
+def compute_outputs(
+    matrices: list[TransportMatrix],
+    rows: list[dict[str, object]],
+    raw_state_samples: list[dict[str, object]],
+    args: argparse.Namespace,
+) -> dict[str, list[dict[str, object]]]:
     manifest = matrix_manifest_rows(matrices)
+    matrix_entries = matrix_entry_rows(matrices, args)
     row_items = row_item_manifest_rows(matrices)
     column_items = column_item_manifest_rows(matrices)
     coverage = coverage_rows(matrices)
@@ -671,6 +762,8 @@ def compute_outputs(matrices: list[TransportMatrix], rows: list[dict[str, object
     by_horizon_pair = aggregate_context_summary_rows(context_recommendation, ("source_horizon_band", "target_horizon_band", "H_a", "H_b"), "horizon_pair")
     return {
         "manifest": manifest,
+        "matrix_entries": matrix_entries,
+        "raw_state_samples": raw_state_samples,
         "row_items": row_items,
         "column_items": column_items,
         "coverage": coverage,
@@ -715,6 +808,35 @@ def matrix_manifest_rows(matrices: list[TransportMatrix]) -> list[dict[str, obje
         "normalization_kind": "transport_count",
         **intervention_taxonomy(matrix.key),
     } for matrix in matrices]
+
+
+def matrix_entry_rows(matrices: list[TransportMatrix], args: argparse.Namespace) -> list[dict[str, object]]:
+    rows: list[dict[str, object]] = []
+    top_k = max(0, int(getattr(args, "matrix_entry_top_k", 0)))
+    if top_k == 0:
+        return rows
+    for matrix in matrices:
+        nonzero = np.argwhere(matrix.matrix > 0)
+        entries = [
+            (int(row_index), int(column_index), float(matrix.matrix[row_index, column_index]))
+            for row_index, column_index in nonzero
+        ]
+        entries.sort(key=lambda item: item[2], reverse=True)
+        total = max(1.0, float(matrix.matrix.sum()))
+        for rank, (row_index, column_index, mass) in enumerate(entries[:top_k], start=1):
+            rows.append({
+                **key_row(matrix.key),
+                "matrix_id": matrix.matrix_id,
+                "entry_rank": rank,
+                "row_item": matrix.row_items[row_index],
+                "row_item_index": row_index,
+                "column_item": matrix.column_items[column_index],
+                "column_item_index": column_index,
+                "transport_mass": mass,
+                "transport_mass_share": mass / total,
+                "matrix_entry_retention": f"top_{top_k}_nonzero_entries_by_mass",
+            })
+    return rows
 
 
 def row_item_manifest_rows(matrices: list[TransportMatrix]) -> list[dict[str, object]]:
@@ -1843,15 +1965,148 @@ def horizon_pair_alignment_rows(matrices: list[TransportMatrix], args: argparse.
     return rows
 
 
+def write_sparse_transport_matrix_npz(path: Path, matrices: list[TransportMatrix]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    matrix_index_parts: list[np.ndarray] = []
+    row_index_parts: list[np.ndarray] = []
+    column_index_parts: list[np.ndarray] = []
+    mass_parts: list[np.ndarray] = []
+    matrix_ids: list[str] = []
+    row_counts: list[int] = []
+    column_counts: list[int] = []
+    for matrix_number, matrix in enumerate(matrices):
+        matrix_ids.append(matrix.matrix_id)
+        row_counts.append(len(matrix.row_items))
+        column_counts.append(len(matrix.column_items))
+        row_indices, column_indices = np.nonzero(matrix.matrix > 0)
+        if row_indices.size == 0:
+            continue
+        matrix_index_parts.append(np.full(row_indices.size, matrix_number, dtype=np.int32))
+        row_index_parts.append(row_indices.astype(np.int32, copy=False))
+        column_index_parts.append(column_indices.astype(np.int32, copy=False))
+        mass_parts.append(matrix.matrix[row_indices, column_indices].astype(np.float64, copy=False))
+    np.savez_compressed(
+        path,
+        encoding_version=string_array(["horizon_transport_sparse_v1"]),
+        matrix_id=string_array(matrix_ids),
+        row_count=np.asarray(row_counts, dtype=np.int32),
+        column_count=np.asarray(column_counts, dtype=np.int32),
+        matrix_index=concat_or_empty(matrix_index_parts, np.int32),
+        row_index=concat_or_empty(row_index_parts, np.int32),
+        column_index=concat_or_empty(column_index_parts, np.int32),
+        transport_mass=concat_or_empty(mass_parts, np.float64),
+    )
+
+
+def write_sparse_raw_state_frontier_npz(path: Path, rows: list[dict[str, object]]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    valid = [
+        row for row in rows
+        if row.get("state_id") not in (None, "") and row.get("raw_state_sample_status", "ok") != "error"
+    ]
+    context_keys = sorted({raw_state_sparse_context_key(row) for row in valid}, key=raw_state_sparse_context_sort_key)
+    state_ordinals: dict[str, int] = {}
+    for row in valid:
+        state = str(row.get("state_id", ""))
+        state_ordinals[state] = min(state_ordinals.get(state, 1_000_000_000), int_or_default(row.get("state_index"), 1_000_000_000))
+    state_ids = sorted(state_ordinals, key=lambda state: (state_ordinals[state], state))
+    context_index = {key: index for index, key in enumerate(context_keys)}
+    state_index = {state: index for index, state in enumerate(state_ids)}
+    counts: Counter[tuple[int, int]] = Counter()
+    frontier_sizes: dict[tuple[int, int], int] = {}
+    for row in valid:
+        key = raw_state_sparse_context_key(row)
+        state = str(row.get("state_id", ""))
+        item_key = (state_index[state], context_index[key])
+        counts[item_key] += 1
+        frontier_sizes[item_key] = max(frontier_sizes.get(item_key, 0), int_or_default(row.get("frontier_size"), 0))
+    state_parts: list[int] = []
+    context_parts: list[int] = []
+    count_parts: list[int] = []
+    frontier_size_parts: list[int] = []
+    for (state_number, context_number), count in sorted(counts.items(), key=lambda item: (item[0][1], item[0][0])):
+        state_parts.append(state_number)
+        context_parts.append(context_number)
+        count_parts.append(count)
+        frontier_size_parts.append(frontier_sizes.get((state_number, context_number), 0))
+    np.savez_compressed(
+        path,
+        encoding_version=string_array(["raw_state_frontier_sparse_v1"]),
+        state_id=string_array(state_ids),
+        state_ordinal=np.asarray([state_ordinals[state] for state in state_ids], dtype=np.int32),
+        context_label=string_array([raw_state_sparse_context_label(key) for key in context_keys]),
+        context_condition_id=string_array([key[0] for key in context_keys]),
+        context_actual_control_name=string_array([key[1] for key in context_keys]),
+        context_mechanism_control_strength=string_array([key[2] for key in context_keys]),
+        context_probe_key=string_array([key[3] for key in context_keys]),
+        context_job_id=string_array([key[4] for key in context_keys]),
+        context_seed=np.asarray([int_or_default(key[5], 0) for key in context_keys], dtype=np.int64),
+        context_start_index=np.asarray([int_or_default(key[6], 0) for key in context_keys], dtype=np.int32),
+        context_horizon=np.asarray([int_or_default(key[7], 0) for key in context_keys], dtype=np.int32),
+        state_index=np.asarray(state_parts, dtype=np.int32),
+        context_index=np.asarray(context_parts, dtype=np.int32),
+        state_presence_count=np.asarray(count_parts, dtype=np.int32),
+        frontier_size=np.asarray(frontier_size_parts, dtype=np.int32),
+    )
+
+
+def raw_state_sparse_context_key(row: dict[str, object]) -> tuple[str, str, str, str, str, str, str, str]:
+    return (
+        str(row.get("condition_id", "")),
+        str(row.get("actual_control_name", "")),
+        str(row.get("mechanism_control_strength", "")),
+        str(row.get("probe_key", "")),
+        str(row.get("job_id", "")),
+        str(row.get("seed", "")),
+        str(row.get("start_index", "")),
+        str(row.get("H", "")),
+    )
+
+
+def raw_state_sparse_context_sort_key(key: tuple[str, str, str, str, str, str, str, str]) -> tuple[str, float, str, str, int, int]:
+    return (key[1], float_or_zero(key[2]), key[3], key[4], int_or_default(key[6], 0), int_or_default(key[7], 0))
+
+
+def raw_state_sparse_context_label(key: tuple[str, str, str, str, str, str, str, str]) -> str:
+    return "|".join((key[1], key[2], key[3], f"seed{key[5]}", f"start{key[6]}", f"H{key[7]}"))
+
+
+def concat_or_empty(parts: list[np.ndarray], dtype: object) -> np.ndarray:
+    if not parts:
+        return np.asarray([], dtype=dtype)
+    return np.concatenate(parts).astype(dtype, copy=False)
+
+
+def string_array(values: list[str]) -> np.ndarray:
+    width = max(1, *(len(str(value)) for value in values))
+    return np.asarray([str(value) for value in values], dtype=f"<U{width}")
+
+
+def int_or_default(value: object, default: int) -> int:
+    try:
+        if value in (None, ""):
+            return default
+        return int(float(value))  # type: ignore[arg-type]
+    except (TypeError, ValueError):
+        return default
+
+
 def write_outputs(
     out_dir: Path,
     outputs: dict[str, list[dict[str, object]]],
+    matrices: list[TransportMatrix],
     errors: list[dict[str, object]],
     checkpoints: list[dict[str, object]],
     status: dict[str, object],
     started: float,
 ) -> None:
     write_csv(out_dir / "horizon_transport_matrix_manifest.csv", outputs["manifest"])
+    write_csv(out_dir / "horizon_transport_matrix_entries.csv", outputs["matrix_entries"])
+    matrix_sparse_path = out_dir / "horizon_transport_matrix_sparse.npz"
+    write_sparse_transport_matrix_npz(matrix_sparse_path, matrices)
+    write_csv(out_dir / "horizon_transport_raw_state_frontier_samples.csv", outputs["raw_state_samples"])
+    raw_state_sparse_path = out_dir / "horizon_transport_raw_state_frontier_sparse.npz"
+    write_sparse_raw_state_frontier_npz(raw_state_sparse_path, outputs["raw_state_samples"])
     write_csv(out_dir / "horizon_transport_row_item_manifest.csv", outputs["row_items"])
     write_csv(out_dir / "horizon_transport_column_item_manifest.csv", outputs["column_items"])
     write_csv(out_dir / "horizon_transport_coverage.csv", outputs["coverage"])
@@ -1882,6 +2137,10 @@ def write_outputs(
     write_csv(out_dir / "horizon_transport_context_recommendation.csv", outputs["context_recommendation"])
     status.update(decision_fields(outputs, status))
     status["matrix_count"] = len(outputs["manifest"])
+    status["matrix_entry_rows"] = len(outputs["matrix_entries"])
+    status["matrix_sparse_npz_bytes"] = matrix_sparse_path.stat().st_size if matrix_sparse_path.exists() else 0
+    status["raw_state_sample_rows"] = len(outputs["raw_state_samples"])
+    status["raw_state_sparse_npz_bytes"] = raw_state_sparse_path.stat().st_size if raw_state_sparse_path.exists() else 0
     status["detector_null_rows"] = len(outputs["null_anatomy"])
     status["matched_marginal_summary_rows"] = len(outputs["matched_marginal"])
     status["context_recommendation_rows"] = len(outputs["context_recommendation"])
@@ -2115,6 +2374,9 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
         f"Jobs completed: `{status.get('jobs_completed', 0)}`.",
         f"Workers: `{status.get('workers', '')}`.",
         f"Finalization reason: `{status.get('finalization_reason', '')}`.",
+        f"Compact transport matrix NPZ bytes: `{status.get('matrix_sparse_npz_bytes', 0)}`.",
+        f"Raw substrate state sample rows: `{status.get('raw_state_sample_rows', 0)}`.",
+        f"Compact raw frontier NPZ bytes: `{status.get('raw_state_sparse_npz_bytes', 0)}`.",
         f"Artifact policy: {LOCAL_ONLY_ARTIFACT_POLICY}",
         "",
         "## Matrix Coverage",

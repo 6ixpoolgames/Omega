@@ -24,6 +24,10 @@ SWEEP_KINDS = frozenset({"horizon_10x", "breadth", "viscosity_ladder", "breadth_
 
 COMMON_OUTPUTS = (
     "horizon_transport_matrix_manifest.csv",
+    "horizon_transport_matrix_entries.csv",
+    "horizon_transport_matrix_sparse.npz",
+    "horizon_transport_raw_state_frontier_samples.csv",
+    "horizon_transport_raw_state_frontier_sparse.npz",
     "horizon_transport_row_item_manifest.csv",
     "horizon_transport_column_item_manifest.csv",
     "horizon_transport_coverage.csv",

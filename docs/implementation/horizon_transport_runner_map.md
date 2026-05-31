@@ -40,8 +40,10 @@ omega/rfs_mb0_future_landscape/spectral_contracts.py
 
 scripts/visualization/plot_horizon_transport_spectrogram.py
   Standalone visualization utility. It consumes an existing run directory and
-  writes local PNG diagnostics under `<run-dir>/figures/`. It is intentionally
-  outside the runner path.
+  writes local PNG diagnostics under `<run-dir>/figures/`, including raw
+  transport matrix atlases when `horizon_transport_matrix_entries.csv` is
+  present and raw substrate frontier heatmaps when opt-in raw state samples are
+  present. It is intentionally outside the runner path.
 ```
 
 ## Maintenance rules
@@ -99,7 +101,22 @@ Current emitted files:
 ```text
 horizon_transport_viscosity_summary.csv
 horizon_transport_response_diversity_summary.csv
+horizon_transport_matrix_entries.csv
+horizon_transport_matrix_sparse.npz
+horizon_transport_raw_state_frontier_samples.csv
+horizon_transport_raw_state_frontier_sparse.npz
 ```
+
+`horizon_transport_matrix_entries.csv` is a human-auditable retained-entry
+view, while `horizon_transport_matrix_sparse.npz` is the compact raw retained
+transport matrix artifact for larger analysis. Both are instrument-native:
+row/column items are probe-signature transport items.
+
+`horizon_transport_raw_state_frontier_samples.csv` and
+`horizon_transport_raw_state_frontier_sparse.npz` are opt-in substrate-native
+diagnostics. They sample exact frontier occupancy over actual state tuples in
+`X`, bounded by `--raw-state-sample-jobs`, `--raw-state-sample-starts`, and
+`--raw-state-sample-states`.
 
 ## Minimal verification
 
