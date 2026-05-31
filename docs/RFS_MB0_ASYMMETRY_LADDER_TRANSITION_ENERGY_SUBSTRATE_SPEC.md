@@ -4,7 +4,7 @@ Status: implemented design-set substrate-law characterization spec
 Builds on: `docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md`, `docs/research_notes/omega_theory/transition_energy_substrate_atlas.md`, and `docs/research_notes/validation_results/rfs_mb0_transition_energy_substrate_characterization_result.md`  
 Claim boundary: no holdout scoring, no candidate promotion, no Omega detection, no agency detection, no identity detection, no valuer detection
 
-Implementation result: see `docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_transition_energy_result.md`. The first seed-scaled batch reached `preservation_asymmetry_loadbearing`; this is substrate characterization only.
+Implementation results: see `docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_transition_energy_result.md` and `docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`. The first seed-scaled batch and preservation-focused scaleup reached `preservation_asymmetry_loadbearing`; this is substrate characterization only.
 
 ## 0. One-sentence purpose
 

@@ -74,6 +74,9 @@ Status:
   horizon-transport instrument. The first seed-scaled batch reached
   `preservation_asymmetry_loadbearing`; this is still substrate
   characterization, not holdout or Omega validation;
+- a preservation-focused asymmetry-ladder scaleup strengthened that read and
+  made symbol-composition preservation the cleanest current target: aligned
+  response, rerouting, reopening, weakening, and no baseline-missing rows;
 - VAL0-G and VAL1-MF are reconnaissance evidence for viability dynamics and
   substrate limitations;
 - VAL0-CT showed reproducible anchor wins and clean dense controls, but no
@@ -96,6 +99,7 @@ Current result notes:
 
 - `rfs_mb0_transition_energy_substrate_characterization_result.md`
 - `rfs_mb0_asymmetry_ladder_transition_energy_result.md`
+- `rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`
 - `rfs_mb0_macro_invariant_due_diligence_result.md`
 - `rfs_mb0_option_a_budget_coverage_small_result.md`
 - `rfs_mb0_substrate_untethering_transition_energy_sweep_result.md`
@@ -214,6 +218,16 @@ Result in one line:
   `expand_preservation_asymmetry_family`: locality-only stayed a clean
   baseline, directional and combined asymmetry produced rerouting without
   aligned amplification, and preservation asymmetry carried aligned response.
+- The preservation-focused asymmetry-ladder scaleup completed `14976 / 14976`
+  jobs with `0` errors, `18` workers, `9` null replicates, and `9846`
+  horizon-transport matrices. All detector/null/fixture gates passed and the
+  formal read remained `preservation_asymmetry_loadbearing`. Preservation
+  asymmetry produced `795` aligned-amplification rows over interpretable
+  response rows. `symbol_histogram_distance` is now the best clean next target:
+  aligned fraction `0.154`, `380` aligned rows, `262` rerouted rows, `245`
+  reopened rows, `75` weakened rows, and no baseline-missing rows. The beta
+  ladder `0.25-4.0` was mostly saturated, so the next run should resolve
+  low-beta sensitivity below `0.25`.
 - The desktop Phase B / Stage A / Stage B branch shifted the current live
   empirical hook from marginal recurrence toward preregistered joint signed
   syndromes. Stage B-2 is now implemented as a preservation-first mechanism

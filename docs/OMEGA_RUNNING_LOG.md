@@ -9,6 +9,112 @@ patch notes at the top.
 
 ## 2026-05-31
 
+### RFS-MB0 Asymmetry-Ladder Preservation Scaleup
+
+Ran the preservation-focused asymmetry-ladder scaleup recommended after the
+first implementation batch.
+
+Retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`
+
+Local validation output:
+
+- `results/local_runs/20260531_asymmetry_ladder_preservation_scaleup/`
+
+Run shape:
+
+```text
+status: COMPLETED
+workers: 18
+jobs_completed: 14976 / 14976
+elapsed_seconds: 4304.994
+errors: 0
+matrix_count: 9846
+substrate_family_variant_count: 26
+null_replicates: 9
+matched_marginal_detector_null_gate_passed: 1
+synthetic_fixture_contract: passed
+terminal_saturation_flagged_rows: 0
+readiness_level: preservation_asymmetry_loadbearing
+next_action_fork: expand_preservation_asymmetry_family
+```
+
+Compact family read:
+
+```text
+locality_only:
+  aligned fraction: 0.000
+
+directional_asymmetry:
+  aligned fraction: 0.000
+  rerouted rows: 37
+  reopened rows: 8
+
+preservation_asymmetry:
+  aligned fraction over interpretable rows: 0.174
+  aligned rows: 795
+  rerouted rows: 275
+  reopened rows: 395
+  baseline-missing rows: 360
+
+combined_asymmetry:
+  aligned fraction: 0.000
+  rerouted rows: 71
+  reopened rows: 5
+
+constraint_template_current:
+  aligned fraction: 0.233
+  aligned rows: 82
+```
+
+Invariant read:
+
+```text
+hamming_weight_or_nonzero_count:
+  aligned fraction: 0.057
+  aligned rows: 140
+  baseline-missing rows: 0
+
+symbol_histogram_distance:
+  aligned fraction: 0.154
+  aligned rows: 380
+  rerouted rows: 262
+  reopened rows: 245
+  weakened rows: 75
+  baseline-missing rows: 0
+
+total_coordinate_mass:
+  aligned fraction: 0.158
+  aligned rows: 275
+  baseline-missing rows: 360
+```
+
+Beta-ladder audit:
+
+```text
+The runner is applying beta, but the tested beta range 0.25-4.0 is mostly on a
+saturated selected-edge plateau. A spot edge-overlap audit showed meaningful
+changes below 0.25.
+```
+
+Interpretation:
+
+```text
+Preservation asymmetry strengthened as the live hook. The positive read no
+longer depends only on total coordinate mass: symbol-composition preservation
+is now the best clean all-around target because it has aligned response,
+rerouting, reopening, weakening, and no baseline-missing rows.
+```
+
+Next recommendation:
+
+```text
+Run a low-beta preservation-asymmetry sensitivity pass before max-entropy:
+beta values 0, 0.005, 0.01, 0.025, 0.05, 0.10, 0.15, 0.25, with selected-edge
+overlap by beta and baseline availability by invariant/horizon pair.
+```
+
 ### RFS-MB0 Asymmetry-Ladder First Implementation Run
 
 Implemented the asymmetry-ladder transition-energy families and ran the first

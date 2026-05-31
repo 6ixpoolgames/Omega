@@ -114,7 +114,7 @@ constraint-template comparator:
 
 This is a substrate-characterization result, not validation.
 
-The first implemented asymmetry-ladder batch currently reads:
+The first implemented asymmetry-ladder batches currently read:
 
 ```text
 locality-only:
@@ -124,7 +124,9 @@ directional asymmetry:
   rerouting/differentiated response, no aligned amplification
 
 preservation asymmetry:
-  current loadbearing family; aligned response under matched controls
+  current loadbearing family; aligned response under matched controls.
+  The preservation-focused scaleup made symbol-composition preservation the
+  cleanest current target.
 
 combined asymmetry:
   clean and rerouting-bearing, but not yet synergistic in the sparse tested grid
@@ -248,6 +250,7 @@ The current empirical program is still only a first step. It does not validate a
 - [Transition Energy and Constraint Untethering](docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
 - [Transition-Energy Substrate Atlas](docs/research_notes/omega_theory/transition_energy_substrate_atlas.md)
 - [Asymmetry-ladder transition-energy result](docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_transition_energy_result.md)
+- [Asymmetry-ladder preservation scaleup result](docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
 - [Asymmetry-ladder transition-energy spec](docs/RFS_MB0_ASYMMETRY_LADDER_TRANSITION_ENERGY_SUBSTRATE_SPEC.md)
 - [Macro-invariant due-diligence result](docs/research_notes/validation_results/rfs_mb0_macro_invariant_due_diligence_result.md)
 - [Transition-energy substrate characterization result](docs/research_notes/validation_results/rfs_mb0_transition_energy_substrate_characterization_result.md)
@@ -274,7 +277,7 @@ The current next step is to continue the transition-energy substrate program usi
 
 ```text
 near-term options:
-  expand preservation-asymmetry variants and seed/start diversity;
+  resolve low-beta preservation-asymmetry sensitivity below beta 0.25;
   optionally repair total-coordinate-mass paired-baseline availability;
   move toward a max-entropy local transition ensemble with explicit macro-invariant constraints;
   keep grammar-neutral probes such as relation_role and full_state_hash;
