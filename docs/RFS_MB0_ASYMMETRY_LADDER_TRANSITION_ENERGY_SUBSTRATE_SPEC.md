@@ -216,6 +216,8 @@ macro_invariant_beta
 macro_invariant_delta_distribution
 macro_invariant_value_distribution
 coverage_by_invariant_kind
+paired_baseline_availability_by_invariant_kind
+baseline_missing_by_invariant_kind
 resolution_mismatch_by_invariant_kind
 ```
 
@@ -334,7 +336,7 @@ hamming_weight_or_nonzero_count:
   cleaner behavior in prior atlas
 
 total_coordinate_mass:
-  strongest aligned fraction, but needs coverage/resolution audit
+  strongest aligned fraction, but needs paired-baseline availability audit
 
 symbol_histogram_distance:
   differentiated response / reopening signal
@@ -526,8 +528,25 @@ transport_rerouted
 transport_reopens
 transport_collapses
 transport_control_equivalent
+transport_baseline_missing
+transport_insufficient_common_items
 transport_resolution_mismatch
 transport_response_underpowered
+```
+
+Baseline-symmetry guard:
+
+```text
+Response classification must require paired baseline and perturbation matrix
+availability across substrate variant, probe, flow mode, horizon pair, and
+perturbation family.
+
+If a perturbation matrix exists without its paired baseline, the runner must
+emit transport_baseline_missing and exclude that row from response-class
+dominance, aligned-amplification fractions, and other interpretable response
+summaries.
+
+The row should remain present as an auditable measurement-limit count.
 ```
 
 Required fixture contract:
@@ -547,6 +566,9 @@ matrix_coverage_mean
 undercoverage_fraction_by_horizon
 normal_interpretation_fraction_by_horizon
 resolution_mismatch_fraction
+baseline_missing_fraction
+insufficient_common_items_fraction
+paired_baseline_available_fraction
 frontier_source_state_count_mean
 frontier_target_state_count_mean
 row_support_mean

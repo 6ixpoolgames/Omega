@@ -9,6 +9,102 @@ patch notes at the top.
 
 ## 2026-05-31
 
+### RFS-MB0 Baseline Symmetry Guard Patch
+
+Patched the response summaries before running the asymmetry-ladder spec.
+
+Reason:
+
+```text
+The macro-invariant due-diligence run showed that total coordinate mass still
+has paired-baseline availability limits in constrained-window flow. Those rows
+must remain auditable, but must not depress or dominate interpretable response
+summaries.
+```
+
+Implementation change:
+
+```text
+response_by_* summaries now compute dominant_response_class and
+aligned_amplification_fraction over interpretable response rows only.
+
+measurement-limit rows remain counted separately as:
+  measurement_limit_response_rows
+  transport_baseline_missing_count
+  transport_insufficient_common_items_count
+  transport_resolution_mismatch_count
+
+aligned_amplification_fraction_all_rows remains available as an audit value.
+```
+
+Spec update:
+
+- `docs/RFS_MB0_ASYMMETRY_LADDER_TRANSITION_ENERGY_SUBSTRATE_SPEC.md`
+
+Local validation outputs:
+
+- `results/local_runs/20260531_baseline_guard_fixture_smoke/`
+- `results/local_runs/20260531_baseline_guard_macro_invariant_tiny/`
+
+Tiny targeted check:
+
+```text
+status: COMPLETED
+workers: 18
+jobs_completed: 84 / 84
+elapsed_seconds: 79.607
+errors: 0
+matrix_count: 827
+null_replicates: 7
+matched_marginal_detector_null_gate_passed: 1
+synthetic_fixture_contract: passed
+```
+
+Response summary after guard:
+
+```text
+nonzero-support invariant:
+  response_rows: 264
+  interpretable_rows: 264
+  measurement_limit_rows: 0
+  aligned_fraction_interpretable: 0.0265
+  aligned_fraction_all_rows: 0.0265
+
+symbol-composition invariant:
+  response_rows: 248
+  interpretable_rows: 234
+  measurement_limit_rows: 14
+  aligned_fraction_interpretable: 0.2137
+  aligned_fraction_all_rows: 0.2016
+
+total coordinate-mass invariant:
+  response_rows: 206
+  interpretable_rows: 156
+  measurement_limit_rows: 50
+  aligned_fraction_interpretable: 0.2692
+  aligned_fraction_all_rows: 0.2039
+```
+
+Row-level response classes:
+
+```text
+computed transport_stable: 425
+computed transport_amplified_aligned: 99
+computed transport_rerouted: 65
+baseline_missing transport_baseline_missing: 64
+computed transport_reopens: 56
+computed transport_weakened: 9
+transport_resolution_mismatch: 0
+transport_insufficient_common_items: 0
+```
+
+Interpretation:
+
+```text
+Baseline-missing rows are now measurement-limit counts, not response evidence.
+The asymmetry-ladder spec should proceed only with this guard active.
+```
+
 ### RFS-MB0 Macro-Invariant Due-Diligence Run
 
 Ran the guarded Option A due-diligence follow-up before moving to the

@@ -1249,15 +1249,18 @@ def aligned_amplification_by_substrate_family_rows(rows: list[dict[str, object]]
         grouped[str(row.get("substrate_family", substrate_family_from_condition_id(row.get("condition_id", ""))))].append(row)
     out: list[dict[str, object]] = []
     for family, items in sorted(grouped.items()):
-        aligned = [row for row in items if row.get("response_class") == RESPONSE_CLASS_AMPLIFIED_ALIGNED]
         interpretable = [row for row in items if is_interpretable_response(row.get("response_class"))]
+        aligned = [row for row in interpretable if row.get("response_class") == RESPONSE_CLASS_AMPLIFIED_ALIGNED]
+        interpretable_counts = Counter(str(row.get("response_class", "")) for row in interpretable)
         out.append({
             "substrate_family": family,
             "response_rows": len(items),
             "aligned_amplification_rows": len(aligned),
-            "aligned_amplification_fraction": len(aligned) / max(1, len(items)),
             "interpretable_response_rows": len(interpretable),
-            "dominant_response_class": Counter(str(row.get("response_class", "")) for row in items).most_common(1)[0][0] if items else "",
+            "measurement_limit_response_rows": len(items) - len(interpretable),
+            "aligned_amplification_fraction": len(aligned) / max(1, len(interpretable)),
+            "aligned_amplification_fraction_all_rows": len(aligned) / max(1, len(items)),
+            "dominant_response_class": interpretable_counts.most_common(1)[0][0] if interpretable_counts else "",
         })
     return out
 
@@ -1279,12 +1282,16 @@ def response_by_group_rows(rows: list[dict[str, object]], fields: tuple[str, ...
     )
     for key, items in sorted(grouped.items(), key=lambda item: tuple(str(part) for part in item[0])):
         counts = Counter(str(row.get("response_class", "")) for row in items)
+        interpretable_items = [item for item in items if is_interpretable_response(item.get("response_class"))]
+        interpretable_counts = Counter(str(row.get("response_class", "")) for row in interpretable_items)
         out_row = {field: key[index] for index, field in enumerate(fields)}
         out_row.update({
             "response_rows": len(items),
-            "interpretable_response_rows": sum(1 for item in items if is_interpretable_response(item.get("response_class"))),
-            "dominant_response_class": counts.most_common(1)[0][0] if items else "",
-            "aligned_amplification_fraction": counts.get(RESPONSE_CLASS_AMPLIFIED_ALIGNED, 0) / max(1, len(items)),
+            "interpretable_response_rows": len(interpretable_items),
+            "measurement_limit_response_rows": len(items) - len(interpretable_items),
+            "dominant_response_class": interpretable_counts.most_common(1)[0][0] if interpretable_counts else "",
+            "aligned_amplification_fraction": interpretable_counts.get(RESPONSE_CLASS_AMPLIFIED_ALIGNED, 0) / max(1, len(interpretable_items)),
+            "aligned_amplification_fraction_all_rows": counts.get(RESPONSE_CLASS_AMPLIFIED_ALIGNED, 0) / max(1, len(items)),
         })
         for response_class in response_classes:
             out_row[f"{response_class}_count"] = counts.get(response_class, 0)
@@ -2128,11 +2135,11 @@ def context_recommendation_rows(
         marginal_rows = marginal_by_context.get(key, [])
         response_rows = response_by_context.get(key, [])
         coverage_values = [float_or_zero(row.get("coverage")) for row in matrix_rows]
-        response_counts = Counter(str(row.get("response_class", "")) for row in response_rows)
         interpretable_responses = [
             row for row in response_rows
             if is_interpretable_response(row.get("response_class"))
         ]
+        response_counts = Counter(str(row.get("response_class", "")) for row in interpretable_responses)
         passed_families = {
             str(row.get("null_family", ""))
             for row in marginal_rows

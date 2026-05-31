@@ -289,6 +289,45 @@ My recommendation:
 Proceed to Option B after noting this due diligence.
 ```
 
+Postscript guard update:
+
+```text
+Before the asymmetry-ladder run, response summaries were patched so
+transport_baseline_missing and other measurement-limit rows remain counted but
+are excluded from dominant response class and aligned-amplification fractions.
+The runner now also emits aligned_amplification_fraction_all_rows as an audit
+denominator.
+```
+
+Tiny targeted guard check:
+
+```text
+jobs_completed: 84 / 84
+errors: 0
+fixture_contract: passed
+
+total coordinate-mass:
+  response_rows: 206
+  interpretable_response_rows: 156
+  measurement_limit_response_rows: 50
+  aligned_amplification_fraction: 0.269
+  aligned_amplification_fraction_all_rows: 0.204
+
+symbol-composition:
+  response_rows: 248
+  interpretable_response_rows: 234
+  measurement_limit_response_rows: 14
+  aligned_amplification_fraction: 0.214
+  aligned_amplification_fraction_all_rows: 0.202
+```
+
+Read:
+
+```text
+Baseline-missing rows are now auditable measurement limits rather than response
+evidence. The asymmetry-ladder spec should use this guard.
+```
+
 Reason:
 
 ```text
