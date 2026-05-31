@@ -104,8 +104,15 @@ from .transition_energy_substrates import (
     TOP_M_BOUNDARY_JITTER,
     TOP_M_CORE_PRESERVED_FRINGE_RANDOMIZED,
     TOP_M_CORE_RANDOMIZED_FRINGE_PRESERVED,
+    TOP_M_DROP_STRONGEST_FROM_TOP_M,
+    TOP_M_DROP_WEAKEST_FROM_TOP_M,
+    TOP_M_M_MINUS_2,
     TOP_M_M_MINUS_1,
     TOP_M_M_PLUS_1,
+    TOP_M_M_PLUS_2,
+    TOP_M_NEAR_TIE_JITTER,
+    TOP_M_RANDOM_DELETE_ONE_FROM_TOP_M,
+    TOP_M_RANDOM_M_MINUS_1_FROM_ALL_LOCAL,
     TRANSITION_ENERGY_FAMILIES,
     canonical_transition_energy_family,
     generate_job_baseline_system,
@@ -2019,10 +2026,24 @@ def substrate_selection_rule(family: str) -> str:
         return "top_m_core_randomized_fringe_preserved"
     if family == TOP_M_BOUNDARY_JITTER:
         return "top_m_boundary_jitter"
+    if family == TOP_M_NEAR_TIE_JITTER:
+        return "top_m_near_tie_energy_jitter"
+    if family == TOP_M_M_MINUS_2:
+        return "top_m_lowest_energy_candidates_m_minus_2"
     if family == TOP_M_M_MINUS_1:
         return "top_m_lowest_energy_candidates_m_minus_1"
     if family == TOP_M_M_PLUS_1:
         return "top_m_lowest_energy_candidates_m_plus_1"
+    if family == TOP_M_M_PLUS_2:
+        return "top_m_lowest_energy_candidates_m_plus_2"
+    if family == TOP_M_RANDOM_DELETE_ONE_FROM_TOP_M:
+        return "top_m_random_delete_one_from_top_m"
+    if family == TOP_M_RANDOM_M_MINUS_1_FROM_ALL_LOCAL:
+        return "top_m_random_m_minus_1_from_all_local"
+    if family == TOP_M_DROP_STRONGEST_FROM_TOP_M:
+        return "top_m_drop_strongest_from_top_m"
+    if family == TOP_M_DROP_WEAKEST_FROM_TOP_M:
+        return "top_m_drop_weakest_from_top_m"
     return "top_m_lowest_energy_candidates"
 
 
@@ -2037,6 +2058,9 @@ def transition_energy_family_summary_rows(args: argparse.Namespace) -> list[dict
                 TOP_M_CORE_PRESERVED_FRINGE_RANDOMIZED,
                 TOP_M_CORE_RANDOMIZED_FRINGE_PRESERVED,
                 TOP_M_BOUNDARY_JITTER,
+                TOP_M_NEAR_TIE_JITTER,
+                TOP_M_RANDOM_DELETE_ONE_FROM_TOP_M,
+                TOP_M_RANDOM_M_MINUS_1_FROM_ALL_LOCAL,
             }),
         })
     return rows
@@ -3853,6 +3877,11 @@ def decision_fields(outputs: dict[str, list[dict[str, object]]], status: dict[st
         "top_m_mechanism_smoke_completed": int(readiness == "top_m_mechanism_smoke_completed"),
         "top_m_mechanism_partially_preserved": int(readiness == "top_m_mechanism_partially_preserved"),
         "top_m_pruning_variant_response_bearing": int(readiness == "top_m_pruning_variant_response_bearing"),
+        "top_m_low_rank_core_pruning_loadbearing": int(readiness == "top_m_low_rank_core_pruning_loadbearing"),
+        "top_m_lower_out_degree_capacity_pressure": int(readiness == "top_m_lower_out_degree_capacity_pressure"),
+        "top_m_weakest_edge_pruning_loadbearing": int(readiness == "top_m_weakest_edge_pruning_loadbearing"),
+        "top_m_pruning_ladder_response_bearing": int(readiness == "top_m_pruning_ladder_response_bearing"),
+        "top_m_expansion_response_bearing": int(readiness == "top_m_expansion_response_bearing"),
         "hard_top_m_exact_selection_loadbearing": int(readiness == "hard_top_m_exact_selection_loadbearing"),
         "top_m_geometry_audit_underpowered": int(readiness == "top_m_geometry_audit_underpowered"),
         "top_m_geometry_spec_incomplete": int(readiness == "top_m_geometry_spec_incomplete"),
@@ -4108,8 +4137,32 @@ def top_m_mechanism_audit_decision(
         family for family in mechanism_samplers
         if float_or_zero(sampler_rows.get(family, {}).get("aligned_amplification_fraction")) > 0.0
     ]
+    def aligned(family: str) -> bool:
+        return float_or_zero(sampler_rows.get(family, {}).get("aligned_amplification_fraction")) > 0.0
+
     deterministic = sampler_rows.get("deterministic_top_m", {})
     deterministic_aligned = float_or_zero(deterministic.get("aligned_amplification_fraction")) > 0.0
+
+    minus2_aligned = aligned(TOP_M_M_MINUS_2)
+    minus1_aligned = aligned(TOP_M_M_MINUS_1)
+    plus1_aligned = aligned(TOP_M_M_PLUS_1)
+    plus2_aligned = aligned(TOP_M_M_PLUS_2)
+    random_top_aligned = aligned(TOP_M_RANDOM_DELETE_ONE_FROM_TOP_M)
+    random_all_aligned = aligned(TOP_M_RANDOM_M_MINUS_1_FROM_ALL_LOCAL)
+    drop_strongest_aligned = aligned(TOP_M_DROP_STRONGEST_FROM_TOP_M)
+    drop_weakest_aligned = aligned(TOP_M_DROP_WEAKEST_FROM_TOP_M)
+    pruning_core_aligned = minus1_aligned or drop_weakest_aligned
+
+    if plus1_aligned or plus2_aligned:
+        return "top_m_expansion_response_bearing", "inspect_expansion_beta_horizon_and_taxonomy_thresholds"
+    if random_top_aligned or random_all_aligned:
+        return "top_m_lower_out_degree_capacity_pressure", "carry_shared_successor_capacity_forward"
+    if drop_weakest_aligned and not drop_strongest_aligned:
+        return "top_m_weakest_edge_pruning_loadbearing", "expand_core_fringe_boundary_pruning_controls"
+    if minus2_aligned and minus1_aligned and not deterministic_aligned:
+        return "top_m_pruning_ladder_response_bearing", "carry_pruning_ladder_successor_capacity_forward"
+    if pruning_core_aligned and not deterministic_aligned:
+        return "top_m_low_rank_core_pruning_loadbearing", "carry_strict_low_rank_core_pruning_forward"
     if not deterministic_aligned and mechanism_aligned:
         return "top_m_pruning_variant_response_bearing", "expand_strict_pruning_controls_and_inspect_deterministic_reproducibility"
     if not deterministic_aligned:
@@ -4805,6 +4858,11 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
         f"- top_m_mechanism_smoke_completed: `{status.get('top_m_mechanism_smoke_completed', 0)}`",
         f"- top_m_mechanism_partially_preserved: `{status.get('top_m_mechanism_partially_preserved', 0)}`",
         f"- top_m_pruning_variant_response_bearing: `{status.get('top_m_pruning_variant_response_bearing', 0)}`",
+        f"- top_m_low_rank_core_pruning_loadbearing: `{status.get('top_m_low_rank_core_pruning_loadbearing', 0)}`",
+        f"- top_m_lower_out_degree_capacity_pressure: `{status.get('top_m_lower_out_degree_capacity_pressure', 0)}`",
+        f"- top_m_weakest_edge_pruning_loadbearing: `{status.get('top_m_weakest_edge_pruning_loadbearing', 0)}`",
+        f"- top_m_pruning_ladder_response_bearing: `{status.get('top_m_pruning_ladder_response_bearing', 0)}`",
+        f"- top_m_expansion_response_bearing: `{status.get('top_m_expansion_response_bearing', 0)}`",
         f"- hard_top_m_exact_selection_loadbearing: `{status.get('hard_top_m_exact_selection_loadbearing', 0)}`",
         f"- top_m_geometry_spec_incomplete: `{status.get('top_m_geometry_spec_incomplete', 0)}`",
         f"- not_ready_repair_required: `{status.get('not_ready_repair_required', 0)}`",

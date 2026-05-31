@@ -66,16 +66,15 @@ smooth directional fields:
 
 preservation asymmetry:
   carries aligned amplification under matched controls, but the latest sampler
-  audit suggests the current response is narrow to hard deterministic top-m
-  edge selection; the hard-top-m mechanism medium sweep makes strict pruning /
-  low-rank edge pressure the next target and makes the earlier deterministic
-  positive design-set sensitive
+  and hard-top-m mechanism audits narrow the response to hard top-m pruning
+  geometry; the current live mechanism is weakest selected-edge / core-fringe
+  boundary pressure, not generic lower out-degree
 
 combined asymmetry:
   clean and rerouting-bearing, but not yet synergistic in the sparse tested grid
 ```
 
-The preservation-focused asymmetry-ladder and low-beta scaleups strengthened the preservation-asymmetry read. The cleanest current target is `symbol_histogram_distance`, because it produced aligned amplification, rerouting, reopening, weakening, and no baseline-missing rows. The subsequent MaxEnt and top-m geometry audits narrowed the mechanism: the tested stochastic relaxations stayed stable while deterministic top-m reproduced the response. A hard-top-m mechanism medium sweep then found an informative m-1 / m+1 split: strict pruning stayed response-bearing on broader design groups, while deterministic top-m, boundary jitter, core/fringe randomization, and adding one near-boundary edge stayed stable.
+The preservation-focused asymmetry-ladder and low-beta scaleups strengthened the preservation-asymmetry read. The cleanest current target is `symbol_histogram_distance`, because it produced aligned amplification, rerouting, reopening, weakening, and no baseline-missing rows. The subsequent MaxEnt and top-m geometry audits narrowed the mechanism: the tested stochastic relaxations stayed stable while deterministic top-m reproduced the response on the first design set. The hard-top-m mechanism branch then found that deterministic top-m itself became stable on broader design groups, while `m-1` / weakest-edge pruning remained response-bearing with a weaker `m-2` echo. Random deletion at the same effective degree stayed stable, so the current target is the core/fringe boundary of hard top-m pruning rather than plain capacity reduction.
 
 ## 3. Core vocabulary
 
@@ -303,7 +302,7 @@ The immediate next empirical task is not holdout and not candidate promotion.
 It is:
 
 ```text
-strict-pruning / low-rank edge-pressure audit
+core/fringe boundary pruning audit
 ```
 
 The low-beta and MaxEnt/top-m audits found:
@@ -315,20 +314,21 @@ symbol_histogram_distance:
 softmax/Gibbs, rank-conditioned, and MaxEnt macro-marginal samplers:
   stable in the tested grid
 
-hard-top-m mechanism medium sweep:
-  m-1 strict pruning stayed response-bearing;
-  deterministic top-m, boundary jitter, core/fringe randomization, and m+1 stayed stable
+hard-top-m mechanism pruning-resolution sweep:
+  m-1 / weakest selected-edge pruning stayed response-bearing;
+  m-2 produced a weaker echo;
+  deterministic top-m, m+1, m+2, random deletion, all-local random m-1,
+  strongest-edge deletion, and near-tie jitter stayed stable
 ```
 
 The focus should be:
 
 ```text
 determine what exact feature of hard top-m edge selection carries the response:
-  strict pruning / low-rank edge pressure;
-  cutoff discontinuity;
-  per-state rank boundary;
-  core/fringe edge composition;
-  near-tie behavior;
+  weakest selected-edge removal;
+  core/fringe boundary pressure;
+  pruning-ladder echo;
+  horizon-pair dependence;
   or response-taxonomy interaction.
 ```
 

@@ -9,6 +9,54 @@ patch notes at the top.
 
 ## 2026-06-01
 
+### RFS-MB0 Hard Top-m Pruning Resolution Upper-Medium Sweep
+
+Expanded the hard-top-m mechanism audit with pruning-resolution controls after
+the medium sweep pointed to strict `m-1` pruning.
+
+Retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md`
+
+Local validation output:
+
+- `results/local_runs/20260601_top_m_pruning_resolution_upper_medium/`
+- `results/local_runs/20260601_top_m_pruning_resolution_smoke/`
+
+Run shape:
+
+```text
+status: COMPLETED
+workers: 18
+jobs_completed: 38400 / 38400
+elapsed_seconds: 748.307
+errors: 0
+matrix_count: 6600
+null_replicates: 9
+matched_marginal_detector_null_gate_passed: 1
+synthetic_fixture_contract: passed
+paired_baseline_missing_rows: 0
+readiness_level: top_m_weakest_edge_pruning_loadbearing
+next_action_fork: expand_core_fringe_boundary_pruning_controls
+```
+
+Main read:
+
+```text
+deterministic_top_m, m+1, m+2, random deletion, all-local random m-1,
+near-tie jitter, and strongest-edge deletion stayed stable;
+m-1 / weakest-edge deletion was response-bearing;
+m-2 produced a weaker aligned-amplification echo.
+```
+
+Interpretation:
+
+```text
+The live mechanism is now weakest selected-edge pruning / core-fringe boundary
+pressure, not generic lower out-degree. Random deletion at the same effective
+degree stayed stable.
+```
+
 ### RFS-MB0 Hard Top-m Mechanism Medium Sweep
 
 Implemented the hard-top-m mechanism audit branch and advanced it from tiny

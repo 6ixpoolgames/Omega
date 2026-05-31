@@ -21,8 +21,15 @@ SOFTMAX_PRESERVATION = "softmax_preservation_asymmetry"
 TOP_M_CORE_PRESERVED_FRINGE_RANDOMIZED = "top_m_core_preserved_fringe_randomized"
 TOP_M_CORE_RANDOMIZED_FRINGE_PRESERVED = "top_m_core_randomized_fringe_preserved"
 TOP_M_BOUNDARY_JITTER = "top_m_boundary_jitter"
+TOP_M_NEAR_TIE_JITTER = "top_m_near_tie_jitter"
+TOP_M_M_MINUS_2 = "top_m_m_minus_2"
 TOP_M_M_MINUS_1 = "top_m_m_minus_1"
 TOP_M_M_PLUS_1 = "top_m_m_plus_1"
+TOP_M_M_PLUS_2 = "top_m_m_plus_2"
+TOP_M_RANDOM_DELETE_ONE_FROM_TOP_M = "top_m_random_delete_one_from_top_m"
+TOP_M_RANDOM_M_MINUS_1_FROM_ALL_LOCAL = "top_m_random_m_minus_1_from_all_local"
+TOP_M_DROP_STRONGEST_FROM_TOP_M = "top_m_drop_strongest_from_top_m"
+TOP_M_DROP_WEAKEST_FROM_TOP_M = "top_m_drop_weakest_from_top_m"
 MAX_ENTROPY_LOCAL = "max_entropy_local"
 MAX_ENTROPY_MACRO_INVARIANT = "max_entropy_macro_invariant"
 RANK_CONDITIONED_MAX_ENTROPY = "rank_conditioned_max_entropy"
@@ -31,8 +38,15 @@ TOP_M_MECHANISM_FAMILIES = frozenset({
     TOP_M_CORE_PRESERVED_FRINGE_RANDOMIZED,
     TOP_M_CORE_RANDOMIZED_FRINGE_PRESERVED,
     TOP_M_BOUNDARY_JITTER,
+    TOP_M_NEAR_TIE_JITTER,
+    TOP_M_M_MINUS_2,
     TOP_M_M_MINUS_1,
     TOP_M_M_PLUS_1,
+    TOP_M_M_PLUS_2,
+    TOP_M_RANDOM_DELETE_ONE_FROM_TOP_M,
+    TOP_M_RANDOM_M_MINUS_1_FROM_ALL_LOCAL,
+    TOP_M_DROP_STRONGEST_FROM_TOP_M,
+    TOP_M_DROP_WEAKEST_FROM_TOP_M,
 })
 TOP_M_GEOMETRY_AUDIT_FAMILIES = frozenset({
     PRESERVATION_ASYMMETRY,
@@ -65,10 +79,24 @@ MACRO_INVARIANT_ALIASES = {
     "core-randomized-fringe-preserved": TOP_M_CORE_RANDOMIZED_FRINGE_PRESERVED,
     "boundary_jitter": TOP_M_BOUNDARY_JITTER,
     "boundary-jitter": TOP_M_BOUNDARY_JITTER,
+    "near_tie_jitter": TOP_M_NEAR_TIE_JITTER,
+    "near-tie-jitter": TOP_M_NEAR_TIE_JITTER,
+    "top_m_minus_2": TOP_M_M_MINUS_2,
+    "top-m-minus-2": TOP_M_M_MINUS_2,
     "top_m_minus_1": TOP_M_M_MINUS_1,
     "top-m-minus-1": TOP_M_M_MINUS_1,
     "top_m_plus_1": TOP_M_M_PLUS_1,
     "top-m-plus-1": TOP_M_M_PLUS_1,
+    "top_m_plus_2": TOP_M_M_PLUS_2,
+    "top-m-plus-2": TOP_M_M_PLUS_2,
+    "random_delete_one_from_top_m": TOP_M_RANDOM_DELETE_ONE_FROM_TOP_M,
+    "random-delete-one-from-top-m": TOP_M_RANDOM_DELETE_ONE_FROM_TOP_M,
+    "random_m_minus_1_from_all_local": TOP_M_RANDOM_M_MINUS_1_FROM_ALL_LOCAL,
+    "random-m-minus-1-from-all-local": TOP_M_RANDOM_M_MINUS_1_FROM_ALL_LOCAL,
+    "drop_strongest_from_top_m": TOP_M_DROP_STRONGEST_FROM_TOP_M,
+    "drop-strongest-from-top-m": TOP_M_DROP_STRONGEST_FROM_TOP_M,
+    "drop_weakest_from_top_m": TOP_M_DROP_WEAKEST_FROM_TOP_M,
+    "drop-weakest-from-top-m": TOP_M_DROP_WEAKEST_FROM_TOP_M,
     "directional_asymmetry_field": DIRECTIONAL_ASYMMETRY,
     "combined_directional_preservation": COMBINED_ASYMMETRY,
     "max_entropy_local_transition": MAX_ENTROPY_LOCAL,
@@ -94,8 +122,15 @@ TRANSITION_ENERGY_FAMILIES = (
     TOP_M_CORE_PRESERVED_FRINGE_RANDOMIZED,
     TOP_M_CORE_RANDOMIZED_FRINGE_PRESERVED,
     TOP_M_BOUNDARY_JITTER,
+    TOP_M_NEAR_TIE_JITTER,
+    TOP_M_M_MINUS_2,
     TOP_M_M_MINUS_1,
     TOP_M_M_PLUS_1,
+    TOP_M_M_PLUS_2,
+    TOP_M_RANDOM_DELETE_ONE_FROM_TOP_M,
+    TOP_M_RANDOM_M_MINUS_1_FROM_ALL_LOCAL,
+    TOP_M_DROP_STRONGEST_FROM_TOP_M,
+    TOP_M_DROP_WEAKEST_FROM_TOP_M,
     MAX_ENTROPY_LOCAL,
     MAX_ENTROPY_MACRO_INVARIANT,
     RANK_CONDITIONED_MAX_ENTROPY,
@@ -491,16 +526,30 @@ def top_m_mechanism_edges(
         if not scored:
             edges[source] = tuple()
             continue
-        if family == TOP_M_M_MINUS_1:
+        if family == TOP_M_M_MINUS_2:
+            selected = scored[: max(1, k - 2)]
+        elif family == TOP_M_M_MINUS_1:
             selected = scored[: max(1, k - 1)]
         elif family == TOP_M_M_PLUS_1:
             selected = scored[: min(len(scored), k + 1)]
+        elif family == TOP_M_M_PLUS_2:
+            selected = scored[: min(len(scored), k + 2)]
+        elif family == TOP_M_RANDOM_DELETE_ONE_FROM_TOP_M:
+            selected = stable_ranked_sample(scored[:k], max(1, k - 1), seed, salt, source, "random_delete_one_from_top_m")
+        elif family == TOP_M_RANDOM_M_MINUS_1_FROM_ALL_LOCAL:
+            selected = stable_ranked_sample(scored, max(1, k - 1), seed, salt, source, "random_m_minus_1_from_all_local")
+        elif family == TOP_M_DROP_STRONGEST_FROM_TOP_M:
+            selected = scored[1:k] if k > 1 else scored[:1]
+        elif family == TOP_M_DROP_WEAKEST_FROM_TOP_M:
+            selected = scored[: max(1, k - 1)]
         elif family == TOP_M_CORE_PRESERVED_FRINGE_RANDOMIZED:
             selected = core_preserved_fringe_randomized(scored, k, core_size, fringe_multiplier, seed, salt, source)
         elif family == TOP_M_CORE_RANDOMIZED_FRINGE_PRESERVED:
             selected = core_randomized_fringe_preserved(scored, k, core_size, fringe_multiplier, seed, salt, source)
         elif family == TOP_M_BOUNDARY_JITTER:
             selected = boundary_jittered_top_m(scored, k, boundary_window, seed, salt, source)
+        elif family == TOP_M_NEAR_TIE_JITTER:
+            selected = near_tie_jittered_top_m(scored, k, seed, salt, source, job)
         else:
             selected = scored[:k]
         selected.sort(key=lambda item: (item[0], item[1]))
@@ -514,6 +563,9 @@ def top_m_mechanism_edges(
             TOP_M_CORE_PRESERVED_FRINGE_RANDOMIZED,
             TOP_M_CORE_RANDOMIZED_FRINGE_PRESERVED,
             TOP_M_BOUNDARY_JITTER,
+            TOP_M_NEAR_TIE_JITTER,
+            TOP_M_RANDOM_DELETE_ONE_FROM_TOP_M,
+            TOP_M_RANDOM_M_MINUS_1_FROM_ALL_LOCAL,
         }),
         "core_size": core_size,
         "fringe_pool_size": mean(fringe_pool_sizes) if fringe_pool_sizes else 0.0,
@@ -579,6 +631,29 @@ def boundary_jittered_top_m(
     return [*preserved, *stable_ranked_sample(pool, max(0, k - len(preserved)), seed, salt, source, "boundary_jitter")]
 
 
+def near_tie_jittered_top_m(
+    scored: list[tuple[float, State]],
+    k: int,
+    seed: int,
+    salt: str,
+    source: State,
+    job: dict[str, object],
+) -> list[tuple[float, State]]:
+    if not scored:
+        return []
+    jitter_strength = transition_float(job, "top_m_near_tie_jitter_strength", 0.01)
+    jittered = [
+        (
+            score + jitter_strength * (2.0 * stable_unit(f"{seed}:{salt}:{source}:{target}:near_tie_jitter") - 1.0),
+            score,
+            target,
+        )
+        for score, target in scored
+    ]
+    jittered.sort(key=lambda item: (item[0], item[1], item[2]))
+    return [(score, target) for _jittered_score, score, target in jittered[:k]]
+
+
 def stable_ranked_sample(
     pool: list[tuple[float, State]],
     count: int,
@@ -607,10 +682,24 @@ def top_m_mechanism_selection_rule(family: str) -> str:
         return "top_m_core_randomized_fringe_preserved"
     if family == TOP_M_BOUNDARY_JITTER:
         return "top_m_boundary_jitter"
+    if family == TOP_M_NEAR_TIE_JITTER:
+        return "top_m_near_tie_energy_jitter"
+    if family == TOP_M_M_MINUS_2:
+        return "top_m_lowest_energy_candidates_m_minus_2"
     if family == TOP_M_M_MINUS_1:
         return "top_m_lowest_energy_candidates_m_minus_1"
     if family == TOP_M_M_PLUS_1:
         return "top_m_lowest_energy_candidates_m_plus_1"
+    if family == TOP_M_M_PLUS_2:
+        return "top_m_lowest_energy_candidates_m_plus_2"
+    if family == TOP_M_RANDOM_DELETE_ONE_FROM_TOP_M:
+        return "top_m_random_delete_one_from_top_m"
+    if family == TOP_M_RANDOM_M_MINUS_1_FROM_ALL_LOCAL:
+        return "top_m_random_m_minus_1_from_all_local"
+    if family == TOP_M_DROP_STRONGEST_FROM_TOP_M:
+        return "top_m_drop_strongest_from_top_m"
+    if family == TOP_M_DROP_WEAKEST_FROM_TOP_M:
+        return "top_m_drop_weakest_from_top_m"
     return "top_m_lowest_energy_candidates"
 
 

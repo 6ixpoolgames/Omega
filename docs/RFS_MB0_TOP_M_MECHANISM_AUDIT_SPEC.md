@@ -29,11 +29,16 @@ Run these on the same design set:
 
 ```text
 1. deterministic preservation_asymmetry top-m
-2. top_m_core_preserved_fringe_randomized
-3. top_m_core_randomized_fringe_preserved
-4. top_m_boundary_jitter
-5. top_m_m_minus_1
-6. top_m_m_plus_1
+2. top_m_m_minus_2
+3. top_m_m_minus_1 / lowest-rank-core m-1
+4. deterministic top-m m
+5. top_m_m_plus_1
+6. top_m_m_plus_2
+7. top_m_random_delete_one_from_top_m
+8. top_m_random_m_minus_1_from_all_local
+9. top_m_drop_strongest_from_top_m
+10. top_m_drop_weakest_from_top_m
+11. top_m_near_tie_jitter, optional if cheap
 ```
 
 All variants use the same preservation energy:
@@ -105,21 +110,27 @@ The edge/rank diagnostics must include the mechanism rule where applicable.
 ## 6. Interpretation Fork
 
 ```text
-If boundary jitter recovers the response:
-  exact edge identity may be less loadbearing than near-boundary ordinal geometry.
+If random m-1 deletion from deterministic top-m recovers the response:
+  lower out-degree / successor-capacity pressure is likely loadbearing.
 
-If core/fringe randomized variants recover the response:
-  identify whether the low-rank core or boundary/fringe structure carries the response.
+If random m-1 deletion from all local candidates recovers the response:
+  generic capacity pressure is likely loadbearing and top-m rank geometry is less specific.
+
+If highest-rank-within-top-m deletion recovers while random deletion does not:
+  the weakest selected edge / core-fringe boundary is likely loadbearing.
 
 If m-1 recovers but m+1 does not:
   the response may be tied to sparse strict pruning rather than full top-m identity.
+
+If m-2 and m-1 recover but deterministic m, m+1, and m+2 do not:
+  treat the result as a pruning ladder / successor-capacity phenomenon.
 
 If m-1 recovers while deterministic top-m does not:
   the earlier deterministic read is design-set sensitive; prioritize strict
   pruning / low-rank edge-pressure controls before broadening the substrate.
 
-If m+1 recovers but randomized variants do not:
-  the selected top-m set may be loadbearing while added near-boundary edges are tolerated.
+If m+1 or m+2 recovers:
+  the strict-pruning read is incomplete; split by beta, horizon pair, and response taxonomy.
 
 If only deterministic top-m recovers:
   the current response should be treated as hard-top-m exact-selection narrow until repaired or replaced.

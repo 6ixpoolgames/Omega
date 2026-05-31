@@ -24,11 +24,12 @@ substrate untethering as the active empirical branch, and state clearly that it
 has not passed the scientific gate.
 The current active branch is auditing the mechanism behind the preservation
 asymmetry response. The latest MaxEnt/top-m audits indicate that the observed
-symbol-histogram preservation response is narrow to hard deterministic top-m
-edge selection in the tested design set. The hard-top-m mechanism medium sweep
-now points toward strict pruning / low-rank edge pressure as the next target,
-and makes the earlier deterministic-top-m positive design-set sensitive until
-reproduced or explained.
+symbol-histogram preservation response is narrow to hard top-m selection
+geometry rather than recovered by the tested stochastic relaxations. The
+hard-top-m mechanism pruning-resolution sweep now points toward weakest
+selected-edge pruning / core-fringe boundary pressure. Generic lower out-degree
+is less plausible because random deletion at the same effective degree stayed
+stable.
 ```
 
 Terminology rule:
