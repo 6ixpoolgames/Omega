@@ -633,10 +633,17 @@ response_by_directional_alpha.csv
 response_by_asymmetry_field_smoothness.csv
 response_by_macro_invariant_kind.csv
 response_by_macro_invariant_beta.csv
+selected_edge_overlap_by_beta.csv
 response_by_alpha_beta_pair.csv
 response_class_by_strength_and_horizon_pair.csv
 horizon_response_threshold_table.csv
 ```
+
+`selected_edge_overlap_by_beta.csv` must compare the selected transition graph
+for each sampled preservation-asymmetry beta value against the beta-0 graph for
+the same substrate job. It is an instrumentation guard: a beta response ladder
+should not be interpreted as graded unless this table shows that the selected
+edge set is actually moving across the tested beta range.
 
 Viscosity/diversity outputs:
 

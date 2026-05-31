@@ -158,6 +158,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--raw-state-sample-jobs", type=int, default=0, help="Number of built jobs to sample for raw substrate state frontier heatmaps. Zero disables this local diagnostic.")
     parser.add_argument("--raw-state-sample-starts", type=int, default=1, help="Start states per sampled job for raw substrate state frontier diagnostics.")
     parser.add_argument("--raw-state-sample-states", type=int, default=256, help="Maximum raw substrate states retained per sampled frontier.")
+    parser.add_argument("--selected-edge-overlap-sample-jobs", type=int, default=64, help="Number of unique substrate jobs sampled for selected-edge overlap by beta. Zero disables this audit.")
     parser.add_argument("--min-item-count", type=int, default=1)
     parser.add_argument("--top-k", type=int, default=5)
     parser.add_argument("--null-replicates", type=int, default=5)
@@ -261,6 +262,7 @@ def main() -> None:
         "substrate_family_variant_count": len(substrate_family_variants(args)),
         "raw_state_sample_requested_jobs": int(args.raw_state_sample_jobs),
         "raw_state_sample_enabled": int(args.raw_state_sample_jobs > 0 and not args.fixture_smoke),
+        "selected_edge_overlap_sample_jobs": int(args.selected_edge_overlap_sample_jobs),
     }
     write_json(args.out / status_filename(kind), status)
     raw_state_samples = raw_state_frontier_sample_rows(jobs, horizon_pairs, args) if not args.fixture_smoke else []
@@ -276,7 +278,7 @@ def main() -> None:
     else:
         rows, errors, checkpoints = run_jobs(args, jobs, status, started)
         matrices = build_transport_matrices(rows, args)
-    outputs = compute_outputs(matrices, rows, raw_state_samples, args)
+    outputs = compute_outputs(matrices, rows, raw_state_samples, jobs, args)
     write_outputs(args.out, outputs, matrices, errors, checkpoints, status, started)
 
 
@@ -518,8 +520,11 @@ def expand_jobs_for_substrate_families(jobs: list[dict[str, object]], args: argp
         for job in jobs:
             item = dict(job)
             original_condition = str(item.get("condition_id", ""))
+            original_job_id = str(item.get("job_id", ""))
             item["substrate_family"] = family
             item["substrate_variant"] = variant_id
+            item["substrate_base_condition_id"] = original_condition
+            item["substrate_base_job_id"] = original_job_id
             item["condition_id"] = f"{family}::{variant_id}::{original_condition}"
             item["job_id"] = f"{family}::{variant_id}::{item.get('job_id', '')}"
             item["transition_energy_family"] = family
@@ -1033,6 +1038,7 @@ def compute_outputs(
     matrices: list[TransportMatrix],
     rows: list[dict[str, object]],
     raw_state_samples: list[dict[str, object]],
+    jobs: list[dict[str, object]],
     args: argparse.Namespace,
 ) -> dict[str, list[dict[str, object]]]:
     manifest = matrix_manifest_rows(matrices)
@@ -1087,6 +1093,7 @@ def compute_outputs(
     response_by_potential_beta = response_by_group_rows([row for row in response_classification if row.get("potential_beta") not in (None, "")], ("potential_beta",))
     response_by_macro_invariant_kind = response_by_group_rows([row for row in response_classification if row.get("macro_invariant_kind")], ("macro_invariant_kind",))
     response_by_macro_invariant_beta = response_by_group_rows([row for row in response_classification if row.get("macro_invariant_beta") not in (None, "")], ("macro_invariant_beta",))
+    selected_edge_overlap_by_beta = selected_edge_overlap_by_beta_rows(jobs, args)
     response_by_directional_alpha = response_by_group_rows([row for row in response_classification if row.get("asymmetry_alpha") not in (None, "")], ("asymmetry_alpha",))
     response_by_asymmetry_field_smoothness = response_by_group_rows([row for row in response_classification if row.get("asymmetry_field_smoothness") not in (None, "")], ("asymmetry_field_smoothness",))
     response_by_alpha_beta_pair = response_by_group_rows([row for row in response_classification if row.get("alpha_beta_pair")], ("alpha_beta_pair",))
@@ -1147,6 +1154,7 @@ def compute_outputs(
         "response_by_potential_beta": response_by_potential_beta,
         "response_by_macro_invariant_kind": response_by_macro_invariant_kind,
         "response_by_macro_invariant_beta": response_by_macro_invariant_beta,
+        "selected_edge_overlap_by_beta": selected_edge_overlap_by_beta,
         "response_by_directional_alpha": response_by_directional_alpha,
         "response_by_asymmetry_field_smoothness": response_by_asymmetry_field_smoothness,
         "response_by_alpha_beta_pair": response_by_alpha_beta_pair,
@@ -1159,6 +1167,165 @@ def compute_outputs(
         "matched_by_substrate_variant": matched_by_substrate_variant,
         "context_recommendation": context_recommendation,
     }
+
+
+def selected_edge_overlap_by_beta_rows(jobs: list[dict[str, object]], args: argparse.Namespace) -> list[dict[str, object]]:
+    sample_limit = max(0, int(getattr(args, "selected_edge_overlap_sample_jobs", 0)))
+    if sample_limit <= 0 or not jobs:
+        return []
+    by_group: dict[tuple[str, str, str, str, str], dict[float, dict[str, object]]] = defaultdict(dict)
+    for job in jobs:
+        family = canonical_transition_energy_family(str(job.get("substrate_family", "") or ""))
+        if family not in {PRESERVATION_ASYMMETRY, COMBINED_ASYMMETRY}:
+            continue
+        invariant_kind = str(job.get("macro_invariant_kind", job.get("budget_kind", "")) or "")
+        if not invariant_kind:
+            continue
+        beta = float_or_zero(job.get("macro_invariant_beta"))
+        base_job_id = str(job.get("substrate_base_job_id", job.get("job_id", "")) or "")
+        group_key = (
+            family,
+            invariant_kind,
+            str(job.get("asymmetry_alpha", "")) if family == COMBINED_ASYMMETRY else "",
+            str(job.get("asymmetry_field_smoothness", "")) if family == COMBINED_ASYMMETRY else "",
+            base_job_id,
+        )
+        by_group[group_key].setdefault(beta, job)
+    if not by_group:
+        return []
+
+    bucketed_keys: dict[tuple[str, str, str, str], list[tuple[str, str, str, str, str]]] = defaultdict(list)
+    for key in sorted(by_group):
+        bucketed_keys[key[:4]].append(key)
+    selected_keys: list[tuple[str, str, str, str, str]] = []
+    while len(selected_keys) < sample_limit and any(bucketed_keys.values()):
+        for bucket in sorted(bucketed_keys):
+            if len(selected_keys) >= sample_limit:
+                break
+            if bucketed_keys[bucket]:
+                selected_keys.append(bucketed_keys[bucket].pop(0))
+
+    observations: list[dict[str, object]] = []
+    for key in selected_keys:
+        beta_jobs = by_group[key]
+        family, invariant_kind, alpha, smoothness, base_job_id = key
+        reference_job = beta_jobs.get(0.0)
+        synthetic_reference = 0
+        if reference_job is None:
+            reference_job = dict(beta_jobs[sorted(beta_jobs)[0]])
+            reference_job["macro_invariant_beta"] = 0.0
+            reference_job["budget_weight"] = 0.0
+            synthetic_reference = 1
+        try:
+            reference_edges = selected_edge_set(reference_job)
+        except Exception as exc:  # noqa: BLE001
+            observations.append({
+                "substrate_family": family,
+                "macro_invariant_kind": invariant_kind,
+                "macro_invariant_beta": "",
+                "asymmetry_alpha": alpha,
+                "asymmetry_field_smoothness": smoothness,
+                "sample_status": "reference_error",
+                "sample_error": repr(exc),
+                "sample_count": 1,
+                "synthetic_beta0_reference_count": synthetic_reference,
+                "base_job_id": base_job_id,
+            })
+            continue
+        for beta in sorted(beta_jobs):
+            job = beta_jobs[beta]
+            try:
+                edges = selected_edge_set(job)
+                intersection = len(reference_edges & edges)
+                union = len(reference_edges | edges)
+                reference_count = len(reference_edges)
+                edge_count = len(edges)
+                observations.append({
+                    "substrate_family": family,
+                    "macro_invariant_kind": invariant_kind,
+                    "macro_invariant_beta": beta,
+                    "asymmetry_alpha": alpha,
+                    "asymmetry_field_smoothness": smoothness,
+                    "sample_status": "ok",
+                    "sample_error": "",
+                    "edge_jaccard_vs_beta0": intersection / max(1, union),
+                    "selected_edge_overlap_fraction_vs_beta0": intersection / max(1, reference_count),
+                    "selected_edge_retention_fraction_vs_beta0": intersection / max(1, edge_count),
+                    "selected_edge_symmetric_difference_fraction": (union - intersection) / max(1, union),
+                    "edge_count_delta_vs_beta0": edge_count - reference_count,
+                    "reference_edge_count": reference_count,
+                    "edge_count": edge_count,
+                    "sample_count": 1,
+                    "synthetic_beta0_reference_count": synthetic_reference,
+                    "base_job_id": base_job_id,
+                })
+            except Exception as exc:  # noqa: BLE001
+                observations.append({
+                    "substrate_family": family,
+                    "macro_invariant_kind": invariant_kind,
+                    "macro_invariant_beta": beta,
+                    "asymmetry_alpha": alpha,
+                    "asymmetry_field_smoothness": smoothness,
+                    "sample_status": "target_error",
+                    "sample_error": repr(exc),
+                    "sample_count": 1,
+                    "synthetic_beta0_reference_count": synthetic_reference,
+                    "base_job_id": base_job_id,
+                })
+    return aggregate_selected_edge_overlap_observations(observations)
+
+
+def selected_edge_set(job: dict[str, object]) -> set[tuple[object, object]]:
+    params = job["params"]
+    seed = int(job["seed"])
+    system = generate_job_baseline_system(job, params, seed)  # type: ignore[arg-type]
+    return {(source, target) for source, targets in system.edges.items() for target in targets}
+
+
+def aggregate_selected_edge_overlap_observations(rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    groups: dict[tuple[str, str, str, str, str], list[dict[str, object]]] = defaultdict(list)
+    for row in rows:
+        groups[(
+            str(row.get("substrate_family", "")),
+            str(row.get("macro_invariant_kind", "")),
+            str(row.get("macro_invariant_beta", "")),
+            str(row.get("asymmetry_alpha", "")),
+            str(row.get("asymmetry_field_smoothness", "")),
+        )].append(row)
+    out: list[dict[str, object]] = []
+    for key, items in sorted(groups.items(), key=lambda item: selected_edge_overlap_sort_key(item[0])):
+        family, invariant_kind, beta, alpha, smoothness = key
+        ok_items = [row for row in items if row.get("sample_status") == "ok"]
+        jaccards = [float_or_zero(row.get("edge_jaccard_vs_beta0")) for row in ok_items]
+        overlaps = [float_or_zero(row.get("selected_edge_overlap_fraction_vs_beta0")) for row in ok_items]
+        retentions = [float_or_zero(row.get("selected_edge_retention_fraction_vs_beta0")) for row in ok_items]
+        symdiffs = [float_or_zero(row.get("selected_edge_symmetric_difference_fraction")) for row in ok_items]
+        edge_deltas = [float_or_zero(row.get("edge_count_delta_vs_beta0")) for row in ok_items]
+        out.append({
+            "substrate_family": family,
+            "macro_invariant_kind": invariant_kind,
+            "macro_invariant_beta": beta,
+            "asymmetry_alpha": alpha,
+            "asymmetry_field_smoothness": smoothness,
+            "sample_count": len(items),
+            "ok_sample_count": len(ok_items),
+            "error_sample_count": len(items) - len(ok_items),
+            "synthetic_beta0_reference_count": sum(int(float_or_zero(row.get("synthetic_beta0_reference_count"))) for row in items),
+            "edge_jaccard_vs_beta0_mean": mean(jaccards) if jaccards else 0.0,
+            "edge_jaccard_vs_beta0_min": min(jaccards) if jaccards else 0.0,
+            "edge_jaccard_vs_beta0_median": median(jaccards) if jaccards else 0.0,
+            "selected_edge_overlap_fraction_vs_beta0_mean": mean(overlaps) if overlaps else 0.0,
+            "selected_edge_retention_fraction_vs_beta0_mean": mean(retentions) if retentions else 0.0,
+            "selected_edge_symmetric_difference_fraction_mean": mean(symdiffs) if symdiffs else 0.0,
+            "edge_count_delta_vs_beta0_mean": mean(edge_deltas) if edge_deltas else 0.0,
+            "sample_status": "ok" if len(ok_items) == len(items) else "partial_error",
+        })
+    return out
+
+
+def selected_edge_overlap_sort_key(key: tuple[str, str, str, str, str]) -> tuple[str, str, float, str, str]:
+    family, invariant_kind, beta, alpha, smoothness = key
+    return (family, invariant_kind, float_or_zero(beta), alpha, smoothness)
 
 
 def matrix_manifest_rows(matrices: list[TransportMatrix]) -> list[dict[str, object]]:
@@ -2895,6 +3062,7 @@ def write_outputs(
     write_csv(out_dir / "response_by_asymmetry_field_smoothness.csv", outputs["response_by_asymmetry_field_smoothness"])
     write_csv(out_dir / "response_by_macro_invariant_kind.csv", outputs["response_by_macro_invariant_kind"])
     write_csv(out_dir / "response_by_macro_invariant_beta.csv", outputs["response_by_macro_invariant_beta"])
+    write_csv(out_dir / "selected_edge_overlap_by_beta.csv", outputs["selected_edge_overlap_by_beta"])
     write_csv(out_dir / "response_by_alpha_beta_pair.csv", outputs["response_by_alpha_beta_pair"])
     write_csv(out_dir / "matched_null_pass_by_asymmetry_family.csv", outputs["matched_by_substrate"])
     write_csv(out_dir / "matched_null_pass_by_asymmetry_variant.csv", outputs["matched_by_substrate_variant"])
@@ -2917,6 +3085,7 @@ def write_outputs(
     status["context_recommendation_rows"] = len(outputs["context_recommendation"])
     status["substrate_family_variant_count"] = len(outputs["substrate_variant_manifest"])
     status["response_by_substrate_family_variant_rows"] = len(outputs["response_by_substrate_variant"])
+    status["selected_edge_overlap_by_beta_rows"] = len(outputs["selected_edge_overlap_by_beta"])
     status["fixture_result_rows"] = len(outputs["fixture_results"])
     status["perturbation_response_rows"] = len(outputs["response_classification"])
     status["response_flag_rows"] = len(outputs["response_flags"])
@@ -3459,6 +3628,22 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
                 f"| macro_invariant_beta | {markdown_cell(row.get('macro_invariant_beta', ''))} | {row.get('response_rows', '')} | "
                 f"{markdown_cell(row.get('dominant_response_class', ''))} | {float_or_zero(row.get('aligned_amplification_fraction')):.3f} |"
             )
+        if outputs.get("selected_edge_overlap_by_beta"):
+            lines.extend([
+                "",
+                "## Selected-Edge Overlap By Beta",
+                "",
+                "| family | invariant | beta | samples | mean Jaccard vs beta0 | min Jaccard | mean symmetric difference |",
+                "|---|---|---:|---:|---:|---:|---:|",
+            ])
+            for row in outputs.get("selected_edge_overlap_by_beta", []):
+                lines.append(
+                    f"| {markdown_cell(row.get('substrate_family', ''))} | {markdown_cell(row.get('macro_invariant_kind', ''))} | "
+                    f"{markdown_cell(row.get('macro_invariant_beta', ''))} | {row.get('ok_sample_count', '')} | "
+                    f"{float_or_zero(row.get('edge_jaccard_vs_beta0_mean')):.3f} | "
+                    f"{float_or_zero(row.get('edge_jaccard_vs_beta0_min')):.3f} | "
+                    f"{float_or_zero(row.get('selected_edge_symmetric_difference_fraction_mean')):.3f} |"
+                )
         for row in outputs.get("response_by_alpha_beta_pair", []):
             lines.append(
                 f"| alpha_beta_pair | {markdown_cell(row.get('alpha_beta_pair', ''))} | {row.get('response_rows', '')} | "
