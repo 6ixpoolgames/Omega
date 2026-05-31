@@ -506,12 +506,13 @@ Start here for the pipeline view:
 
 ### For implementation work
 
-1. [Horizon-transport response-surface H128 scaleup spec](docs/RFS_MB0_HORIZON_TRANSPORT_RESPONSE_SURFACE_H128_SCALEUP_SPEC.md)
-2. [Horizon-transport expansion smoke spec](docs/RFS_MB0_HORIZON_TRANSPORT_EXPANSION_SMOKE_SPEC.md)
-3. [Horizon-transport matched null and fixture smoke spec](docs/RFS_MB0_HORIZON_TRANSPORT_MATCHED_NULL_AND_FIXTURE_SMOKE_SPEC.md)
-4. [Horizon-transport spectral response repair spec](docs/RFS_MB0_HORIZON_TRANSPORT_SPECTRAL_RESPONSE_REPAIR_SPEC.md)
-5. [Frontier-transform instrumentation spec](docs/RFS_MB0_FRONTIER_TRANSFORM_INSTRUMENTATION_SPEC.md)
-6. [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
+1. [Horizon-transport runner map](docs/implementation/horizon_transport_runner_map.md)
+2. [Horizon-transport response-surface H128 scaleup spec](docs/RFS_MB0_HORIZON_TRANSPORT_RESPONSE_SURFACE_H128_SCALEUP_SPEC.md)
+3. [Horizon-transport expansion smoke spec](docs/RFS_MB0_HORIZON_TRANSPORT_EXPANSION_SMOKE_SPEC.md)
+4. [Horizon-transport matched null and fixture smoke spec](docs/RFS_MB0_HORIZON_TRANSPORT_MATCHED_NULL_AND_FIXTURE_SMOKE_SPEC.md)
+5. [Horizon-transport spectral response repair spec](docs/RFS_MB0_HORIZON_TRANSPORT_SPECTRAL_RESPONSE_REPAIR_SPEC.md)
+6. [Frontier-transform instrumentation spec](docs/RFS_MB0_FRONTIER_TRANSFORM_INSTRUMENTATION_SPEC.md)
+7. [Reachable Futures Substrate Program](docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
 
 ### For project history
 

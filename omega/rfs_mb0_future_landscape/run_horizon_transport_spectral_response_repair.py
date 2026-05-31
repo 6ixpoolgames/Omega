@@ -1,3 +1,11 @@
+"""Run horizon-transport response-surface instrumentation.
+
+The runner builds directional horizon transport matrices from the Stage B-2
+future-field substrate, applies matched detector nulls, classifies perturbation
+responses, and writes machine-readable audit artifacts. It is not a promotion
+or detection script for Omega, agency, identity, or value.
+"""
+
 from __future__ import annotations
 
 import argparse
@@ -26,6 +34,42 @@ from .run_stage_b2_spectral_future_field_geometry_smoke import (
     run_batch,
     spectral_gap,
 )
+from .horizon_transport_contracts import (
+    COMMON_OUTPUTS,
+    DETECTOR_NULL_FAMILIES,
+    DETECTOR_STATISTICS,
+    INTERPRETATION_CONTROL_FAMILIES,
+    MARGINAL_MATCHED_NULL_FAMILIES,
+    MATCHED_NULL_SPEC_ID,
+    PARENT_SPEC_ID,
+    RUNNER_MODULE,
+    STRUCTURE_DESTROYING_NULL_FAMILIES,
+    active_spec_id,
+    artifact_prefix,
+    attach_horizon_pairs,
+    errors_filename,
+    manifest_filename,
+    parse_horizon_pairs,
+    progress_filename,
+    report_filename,
+    run_config_filename,
+    run_kind,
+    run_phase,
+    status_filename,
+    status_run_kind,
+)
+from .horizon_transport_response_taxonomy import (
+    MEASUREMENT_LIMIT_RESPONSE_CLASSES,
+    RESPONSE_CLASS_AMPLIFIED_ALIGNED,
+    RESPONSE_CLASS_COLLAPSES,
+    RESPONSE_CLASS_REOPENS,
+    RESPONSE_CLASS_REROUTED,
+    RESPONSE_CLASS_STABLE,
+    RESPONSE_CLASS_WEAKENED,
+    classify_response,
+    is_interpretable_response,
+    response_flags,
+)
 from .spectral_contracts import (
     CLAIM_BOUNDARY,
     LOCAL_ONLY_ARTIFACT_POLICY,
@@ -36,70 +80,7 @@ from .spectral_contracts import (
 )
 
 
-PARENT_SPEC_ID = "docs/RFS_MB0_HORIZON_TRANSPORT_SPECTRAL_RESPONSE_REPAIR_SPEC.md"
-MATCHED_NULL_SPEC_ID = "docs/RFS_MB0_HORIZON_TRANSPORT_MATCHED_NULL_AND_FIXTURE_SMOKE_SPEC.md"
-EXPANSION_SPEC_ID = "docs/RFS_MB0_HORIZON_TRANSPORT_EXPANSION_SMOKE_SPEC.md"
-H128_SPEC_ID = "docs/RFS_MB0_HORIZON_TRANSPORT_RESPONSE_SURFACE_H128_SCALEUP_SPEC.md"
-RUNNER_MODULE = "omega.rfs_mb0_future_landscape.run_horizon_transport_spectral_response_repair"
 STOP_REQUESTED = False
-DEFAULT_HORIZON_PAIRS = ((0, 1), (1, 2), (2, 4), (4, 8), (8, 16), (16, 24), (24, 32))
-H128_HORIZON_PAIRS = (*DEFAULT_HORIZON_PAIRS, (32, 48), (48, 64), (64, 96), (96, 128))
-
-COMMON_OUTPUTS = (
-    "horizon_transport_matrix_manifest.csv",
-    "horizon_transport_row_item_manifest.csv",
-    "horizon_transport_column_item_manifest.csv",
-    "horizon_transport_coverage.csv",
-    "horizon_transport_matrix_summary.csv",
-    "horizon_transport_svd_summary.csv",
-    "horizon_transport_subspace_alignment.csv",
-    "horizon_transport_participation_summary.csv",
-    "horizon_transport_entropy_summary.csv",
-    "horizon_transport_detector_null_summary.csv",
-    "horizon_transport_detector_null_anatomy.csv",
-    "horizon_transport_detector_null_gate_results.csv",
-    "horizon_transport_matched_marginal_summary.csv",
-    "horizon_transport_fixture_results.csv",
-    "horizon_transport_perturbation_manifest.csv",
-    "horizon_transport_response_profile_summary.csv",
-    "horizon_transport_response_classification.csv",
-    "horizon_transport_response_flags.csv",
-    "response_class_by_strength_and_horizon_pair.csv",
-    "horizon_response_threshold_table.csv",
-    "horizon_transport_terminal_saturation_summary.csv",
-    "horizon_transport_saturation_by_horizon_pair.csv",
-    "horizon_transport_response_fixture_summary.csv",
-    "horizon_transport_by_probe_summary.csv",
-    "horizon_transport_by_flow_mode_summary.csv",
-    "horizon_transport_by_horizon_pair_summary.csv",
-    "horizon_transport_context_recommendation.csv",
-)
-
-STRUCTURE_DESTROYING_NULL_FAMILIES = (
-    "context_shuffle_transport_null",
-    "horizon_pair_shuffle_transport_null",
-)
-MARGINAL_MATCHED_NULL_FAMILIES = (
-    "row_marginal_matched_transport_null",
-    "column_marginal_matched_transport_null",
-    "row_column_marginal_matched_transport_null",
-)
-INTERPRETATION_CONTROL_FAMILIES = (
-    "label_shuffle_transport_interpretation_control",
-)
-DETECTOR_NULL_FAMILIES = (
-    *STRUCTURE_DESTROYING_NULL_FAMILIES,
-    *MARGINAL_MATCHED_NULL_FAMILIES,
-    *INTERPRETATION_CONTROL_FAMILIES,
-)
-DETECTOR_STATISTICS = (
-    "positive_or_nonzero_spectral_mass",
-    "singular_spectral_mass",
-    "effective_rank",
-    "singular_effective_rank",
-    "transport_concentration",
-    "marginal_residual_fraction",
-)
 
 
 @dataclass(frozen=True)
@@ -131,66 +112,6 @@ class TransportMatrix:
     singular_values: np.ndarray
     left_vectors: np.ndarray
     right_vectors: np.ndarray
-
-
-def run_kind(args: argparse.Namespace) -> str:
-    if args.h128_scaleup:
-        return "h128"
-    if args.expansion_smoke:
-        return "expansion"
-    return "repair"
-
-
-def active_spec_id(args: argparse.Namespace) -> str:
-    if args.h128_scaleup:
-        return H128_SPEC_ID
-    if args.expansion_smoke:
-        return EXPANSION_SPEC_ID
-    return MATCHED_NULL_SPEC_ID
-
-
-def artifact_prefix(kind: str) -> str:
-    if kind == "h128":
-        return "horizon_transport_h128"
-    return "horizon_transport_expansion" if kind == "expansion" else "horizon_transport_repair"
-
-
-def run_phase(kind: str) -> str:
-    if kind == "h128":
-        return "rfs_mb0_horizon_transport_response_surface_h128_scaleup"
-    return "rfs_mb0_horizon_transport_expansion_smoke" if kind == "expansion" else "rfs_mb0_horizon_transport_spectral_response_repair"
-
-
-def run_config_filename(kind: str) -> str:
-    return f"{artifact_prefix(kind)}_run_config.json"
-
-
-def status_filename(kind: str) -> str:
-    return f"{artifact_prefix(kind)}_status.json"
-
-
-def progress_filename(kind: str) -> str:
-    return f"{artifact_prefix(kind)}_progress_checkpoints.csv"
-
-
-def errors_filename(kind: str) -> str:
-    return f"{artifact_prefix(kind)}_errors.csv"
-
-
-def manifest_filename(kind: str) -> str:
-    return f"{artifact_prefix(kind)}_output_manifest.json"
-
-
-def report_filename(kind: str) -> str:
-    if kind == "h128":
-        return "rfs_mb0_horizon_transport_response_surface_h128_scaleup_result.md"
-    if kind == "expansion":
-        return "rfs_mb0_horizon_transport_expansion_smoke_result.md"
-    return "rfs_mb0_horizon_transport_spectral_response_repair_result.md"
-
-
-def status_run_kind(status: dict[str, object]) -> str:
-    return str(status.get("run_kind", "repair"))
 
 
 def parse_args() -> argparse.Namespace:
@@ -309,25 +230,6 @@ def install_signal_handlers() -> None:
         signum = getattr(signal, name, None)
         if signum is not None:
             signal.signal(signum, handle_stop)
-
-
-def parse_horizon_pairs(raw: str, *, use_h128: bool) -> tuple[tuple[int, int], ...]:
-    if not raw.strip():
-        return H128_HORIZON_PAIRS if use_h128 else DEFAULT_HORIZON_PAIRS
-    pairs: list[tuple[int, int]] = []
-    for item in raw.split(","):
-        value = item.strip()
-        if not value:
-            continue
-        left, right = value.split("->", 1)
-        pairs.append((int(left.strip()), int(right.strip())))
-    return tuple(pairs) or (H128_HORIZON_PAIRS if use_h128 else DEFAULT_HORIZON_PAIRS)
-
-
-def attach_horizon_pairs(jobs: list[dict[str, object]], horizon_pairs: tuple[tuple[int, int], ...]) -> None:
-    serializable_pairs = tuple((int(left), int(right)) for left, right in horizon_pairs)
-    for job in jobs:
-        job["horizon_pairs"] = serializable_pairs
 
 
 def run_jobs(
@@ -1267,12 +1169,12 @@ def horizon_response_threshold_rows(response_classification: list[dict[str, obje
             "perturbation_strength": key[1],
             "probe_key": key[2],
             "flow_mode": key[3],
-            "first_nonstable_horizon": first_response_horizon(ordered, lambda row: row.get("response_class") != "transport_stable"),
-            "first_amplified_aligned_horizon": first_response_horizon(ordered, lambda row: row.get("response_class") == "transport_amplified_aligned"),
-            "first_weakened_horizon": first_response_horizon(ordered, lambda row: row.get("response_class") == "transport_weakened"),
-            "first_rerouted_horizon": first_response_horizon(ordered, lambda row: row.get("response_class") == "transport_rerouted"),
-            "first_reopened_horizon": first_response_horizon(ordered, lambda row: row.get("response_class") == "transport_reopens"),
-            "first_collapsed_horizon": first_response_horizon(ordered, lambda row: row.get("response_class") == "transport_collapses"),
+            "first_nonstable_horizon": first_response_horizon(ordered, lambda row: row.get("response_class") != RESPONSE_CLASS_STABLE),
+            "first_amplified_aligned_horizon": first_response_horizon(ordered, lambda row: row.get("response_class") == RESPONSE_CLASS_AMPLIFIED_ALIGNED),
+            "first_weakened_horizon": first_response_horizon(ordered, lambda row: row.get("response_class") == RESPONSE_CLASS_WEAKENED),
+            "first_rerouted_horizon": first_response_horizon(ordered, lambda row: row.get("response_class") == RESPONSE_CLASS_REROUTED),
+            "first_reopened_horizon": first_response_horizon(ordered, lambda row: row.get("response_class") == RESPONSE_CLASS_REOPENS),
+            "first_collapsed_horizon": first_response_horizon(ordered, lambda row: row.get("response_class") == RESPONSE_CLASS_COLLAPSES),
             "terminal_saturation_horizon": first_response_horizon(sat_items, lambda row: int(float_or_zero(row.get("terminal_saturation_flag"))) == 1),
             "latest_interpretable_horizon": latest_response_horizon(sat_items, lambda row: row.get("allowed_interpretation_level") == "normal_horizon_response"),
         })
@@ -1318,7 +1220,7 @@ def context_recommendation_rows(
         response_counts = Counter(str(row.get("response_class", "")) for row in response_rows)
         interpretable_responses = [
             row for row in response_rows
-            if row.get("response_class") not in {"transport_resolution_mismatch", "transport_response_underpowered"}
+            if is_interpretable_response(row.get("response_class"))
         ]
         passed_families = {
             str(row.get("null_family", ""))
@@ -1579,12 +1481,12 @@ def fixture_result_rows(null_anatomy: list[dict[str, object]], response_classifi
 
     block_pass = any(int(float_or_zero(row.get("null_gate_passed"))) for row in block_rows)
     fakeout_pass = bool(fakeout_rows) and not any(int(float_or_zero(row.get("null_gate_passed"))) for row in fakeout_rows)
-    corridor_pass = any(row.get("response_class") == "transport_stable" for row in corridor_rows)
-    trap_pass = any(row.get("response_class") == "transport_collapses" for row in trap_rows)
-    amplified_pass = any(row.get("response_class") == "transport_amplified_aligned" for row in amplified_rows)
-    weakened_pass = any(row.get("response_class") == "transport_weakened" for row in weakened_rows)
-    rerouted_pass = any(row.get("response_class") == "transport_rerouted" for row in rerouted_rows)
-    reopens_pass = any(row.get("response_class") == "transport_reopens" for row in reopens_rows)
+    corridor_pass = any(row.get("response_class") == RESPONSE_CLASS_STABLE for row in corridor_rows)
+    trap_pass = any(row.get("response_class") == RESPONSE_CLASS_COLLAPSES for row in trap_rows)
+    amplified_pass = any(row.get("response_class") == RESPONSE_CLASS_AMPLIFIED_ALIGNED for row in amplified_rows)
+    weakened_pass = any(row.get("response_class") == RESPONSE_CLASS_WEAKENED for row in weakened_rows)
+    rerouted_pass = any(row.get("response_class") == RESPONSE_CLASS_REROUTED for row in rerouted_rows)
+    reopens_pass = any(row.get("response_class") == RESPONSE_CLASS_REOPENS for row in reopens_rows)
 
     return [
         {
@@ -1606,7 +1508,7 @@ def fixture_result_rows(null_anatomy: list[dict[str, object]], response_classifi
         {
             "fixture_id": "corridor_stable_response",
             "fixture_question": "does a tiny corridor perturbation stay in the stable response class",
-            "expected_behavior": "transport_stable",
+            "expected_behavior": RESPONSE_CLASS_STABLE,
             "observed": observed_fixture_read(corridor_rows, "response_class"),
             "passed": int(corridor_pass),
             "source_table": "horizon_transport_response_classification.csv",
@@ -1614,7 +1516,7 @@ def fixture_result_rows(null_anatomy: list[dict[str, object]], response_classifi
         {
             "fixture_id": "trap_collapse_response",
             "fixture_question": "does a trap collapse perturbation enter the collapse response class",
-            "expected_behavior": "transport_collapses",
+            "expected_behavior": RESPONSE_CLASS_COLLAPSES,
             "observed": observed_fixture_read(trap_rows, "response_class"),
             "passed": int(trap_pass),
             "source_table": "horizon_transport_response_classification.csv",
@@ -1622,7 +1524,7 @@ def fixture_result_rows(null_anatomy: list[dict[str, object]], response_classifi
         {
             "fixture_id": "amplified_aligned_response",
             "fixture_question": "does aligned mass growth enter the amplified-aligned response class",
-            "expected_behavior": "transport_amplified_aligned",
+            "expected_behavior": RESPONSE_CLASS_AMPLIFIED_ALIGNED,
             "observed": observed_fixture_read(amplified_rows, "response_class"),
             "passed": int(amplified_pass),
             "source_table": "horizon_transport_response_classification.csv",
@@ -1630,7 +1532,7 @@ def fixture_result_rows(null_anatomy: list[dict[str, object]], response_classifi
         {
             "fixture_id": "weakened_response",
             "fixture_question": "does non-collapsing mass loss enter the weakened response class",
-            "expected_behavior": "transport_weakened",
+            "expected_behavior": RESPONSE_CLASS_WEAKENED,
             "observed": observed_fixture_read(weakened_rows, "response_class"),
             "passed": int(weakened_pass),
             "source_table": "horizon_transport_response_classification.csv",
@@ -1638,7 +1540,7 @@ def fixture_result_rows(null_anatomy: list[dict[str, object]], response_classifi
         {
             "fixture_id": "rerouted_response",
             "fixture_question": "does low-alignment transport reorganization enter the rerouted response class",
-            "expected_behavior": "transport_rerouted",
+            "expected_behavior": RESPONSE_CLASS_REROUTED,
             "observed": observed_fixture_read(rerouted_rows, "response_class"),
             "passed": int(rerouted_pass),
             "source_table": "horizon_transport_response_classification.csv",
@@ -1646,7 +1548,7 @@ def fixture_result_rows(null_anatomy: list[dict[str, object]], response_classifi
         {
             "fixture_id": "reopens_response",
             "fixture_question": "does entropy-increasing transport spread enter the reopens response class",
-            "expected_behavior": "transport_reopens",
+            "expected_behavior": RESPONSE_CLASS_REOPENS,
             "observed": observed_fixture_read(reopens_rows, "response_class"),
             "passed": int(reopens_pass),
             "source_table": "horizon_transport_response_classification.csv",
@@ -1699,49 +1601,6 @@ def response_payload(baseline: TransportMatrix | None, matrix: TransportMatrix, 
             float(np.linalg.norm(pert_sub - base_sub) / max(1e-12, np.linalg.norm(base_sub))),
         ),
     }
-
-
-def response_flags(left_alignment: float, right_alignment: float, mass_delta: float, entropy_delta: float, magnitude: float) -> str:
-    flags = []
-    mean_alignment = (left_alignment + right_alignment) / 2.0
-    if mean_alignment >= 0.80:
-        flags.append("aligned")
-    if mean_alignment < 0.80:
-        flags.append("subspace_shifted")
-    if mean_alignment < 0.50:
-        flags.append("low_alignment")
-    if mass_delta <= -0.50:
-        flags.append("mass_collapse")
-    elif mass_delta <= -0.15:
-        flags.append("mass_weakened")
-    elif mass_delta >= 0.15:
-        flags.append("mass_amplified")
-    if entropy_delta >= 0.20:
-        flags.append("entropy_reopened")
-    if magnitude >= 0.25:
-        flags.append("large_entry_response")
-    return ",".join(flags) if flags else "none"
-
-
-def classify_response(row: dict[str, object]) -> str:
-    if row.get("response_status") != "computed":
-        return "transport_resolution_mismatch"
-    alignment = float_or_zero(row.get("mean_subspace_alignment"))
-    mass_delta = float_or_zero(row.get("spectral_mass_delta_fraction"))
-    entropy_delta = float_or_zero(row.get("transport_entropy_delta"))
-    if mass_delta <= -0.50:
-        return "transport_collapses"
-    if mass_delta <= -0.15:
-        return "transport_weakened"
-    if entropy_delta >= 0.20:
-        return "transport_reopens"
-    if alignment < 0.80 and mass_delta > -0.15:
-        return "transport_rerouted"
-    if alignment >= 0.80 and mass_delta >= 0.15:
-        return "transport_amplified_aligned"
-    if alignment >= 0.80 and abs(mass_delta) <= 0.15:
-        return "transport_stable"
-    return "transport_control_equivalent"
 
 
 def horizon_pair_alignment_rows(matrices: list[TransportMatrix], args: argparse.Namespace) -> list[dict[str, object]]:
@@ -1847,7 +1706,7 @@ def decision_fields(outputs: dict[str, list[dict[str, object]]], status: dict[st
     fixture_rows = outputs["fixture_results"]
     fixture_required = bool(fixture_rows)
     fixture_gate = (not fixture_required) or all(int(float_or_zero(row.get("passed"))) for row in fixture_rows)
-    response_rows = [row for row in outputs["response_classification"] if row.get("response_class") not in {"transport_resolution_mismatch", "transport_response_underpowered"}]
+    response_rows = [row for row in outputs["response_classification"] if is_interpretable_response(row.get("response_class"))]
     response_interpretable = bool(response_rows)
     if status_run_kind(status) == "h128":
         readiness, next_action = h128_decision(outputs, matrix_gate, null_gate, null_power_gate, matched_marginal_gate, response_interpretable, fixture_gate)
@@ -1922,8 +1781,8 @@ def h128_decision(
         str(row.get("response_class", ""))
         for row in outputs.get("response_classification", [])
     }
-    nonstable = classes - {"", "transport_stable", "transport_resolution_mismatch", "transport_response_underpowered"}
-    if "transport_amplified_aligned" in nonstable and len(nonstable) >= 1:
+    nonstable = classes - {"", RESPONSE_CLASS_STABLE} - set(MEASUREMENT_LIMIT_RESPONSE_CLASSES)
+    if RESPONSE_CLASS_AMPLIFIED_ALIGNED in nonstable and len(nonstable) >= 1:
         return "ready_for_horizon_transport_theory_note", "write_horizon_transport_theory_note"
     if response_interpretable and nonstable:
         return "ready_for_horizon_transport_context_narrowing", "narrow_to_horizon_response_context"
