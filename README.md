@@ -251,6 +251,7 @@ The current empirical program is still only a first step. It does not validate a
 - [Transition-Energy Substrate Atlas](docs/research_notes/omega_theory/transition_energy_substrate_atlas.md)
 - [Asymmetry-ladder transition-energy result](docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_transition_energy_result.md)
 - [Asymmetry-ladder preservation scaleup result](docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
+- [Low-beta preservation sensitivity scaleup result](docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
 - [Asymmetry-ladder preservation scaleup figures](docs/research_notes/validation_results/figures/20260531_asymmetry_ladder_preservation_scaleup/README.md)
 - [Asymmetry-ladder transition-energy spec](docs/RFS_MB0_ASYMMETRY_LADDER_TRANSITION_ENERGY_SUBSTRATE_SPEC.md)
 - [Macro-invariant due-diligence result](docs/research_notes/validation_results/rfs_mb0_macro_invariant_due_diligence_result.md)
@@ -278,9 +279,11 @@ The current next step is to continue the transition-energy substrate program usi
 
 ```text
 near-term options:
-  resolve low-beta preservation-asymmetry sensitivity below beta 0.25;
-  optionally repair total-coordinate-mass paired-baseline availability;
-  move toward a max-entropy local transition ensemble with explicit macro-invariant constraints;
+  use the low-beta preservation sensitivity result as the calibration map;
+  move toward a max-entropy local transition ensemble preflight;
+  prioritize symbol_histogram_distance as the clean preservation target;
+  keep hamming_weight_or_nonzero_count as the simple comparator;
+  use total_coordinate_mass only with explicit paired-baseline availability guards;
   keep grammar-neutral probes such as relation_role and full_state_hash;
   preserve matched-marginal detector gates and response-profile taxonomy;
   compare response surfaces across substrate families and scales;

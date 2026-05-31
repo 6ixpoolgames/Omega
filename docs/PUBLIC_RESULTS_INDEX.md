@@ -100,6 +100,7 @@ Current result notes:
 - `rfs_mb0_transition_energy_substrate_characterization_result.md`
 - `rfs_mb0_asymmetry_ladder_transition_energy_result.md`
 - `rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`
+- `rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md`
 - `rfs_mb0_macro_invariant_due_diligence_result.md`
 - `rfs_mb0_option_a_budget_coverage_small_result.md`
 - `rfs_mb0_substrate_untethering_transition_energy_sweep_result.md`
@@ -222,6 +223,14 @@ Result in one line:
   `expand_preservation_asymmetry_family`: locality-only stayed a clean
   baseline, directional and combined asymmetry produced rerouting without
   aligned amplification, and preservation asymmetry carried aligned response.
+- The low-beta preservation sensitivity scaleup completed `14976 / 14976` jobs
+  with `0` errors, `18` workers, `9` null replicates, `10026` matrices, all
+  detector gates passing, and a new `selected_edge_overlap_by_beta.csv` audit.
+  The audit showed beta is wired and changes the selected transition graph even
+  at `0.005`, while aligned response first appeared around beta `0.05` and
+  strengthened through `0.10-0.25`. Symbol-composition preservation remains the
+  cleanest current target; total-coordinate mass remains live but
+  paired-baseline limited.
 - The preservation-focused asymmetry-ladder scaleup completed `14976 / 14976`
   jobs with `0` errors, `18` workers, `9` null replicates, and `9846`
   horizon-transport matrices. All detector/null/fixture gates passed and the

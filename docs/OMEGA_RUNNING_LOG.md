@@ -9,6 +9,45 @@ patch notes at the top.
 
 ## 2026-05-31
 
+### RFS-MB0 Low-Beta Preservation Sensitivity Scaleup
+
+Ran the repaired low-beta preservation-asymmetry sensitivity scaleup.
+
+Retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md`
+
+Local validation output:
+
+- `results/local_runs/20260531_low_beta_preservation_sensitivity_scaleup/`
+
+Run shape:
+
+```text
+status: COMPLETED
+workers: 18
+jobs_completed: 14976 / 14976
+elapsed_seconds: 4776.098
+errors: 0
+matrix_count: 10026
+null_replicates: 9
+selected_edge_overlap_by_beta_rows: 24
+matched_marginal_detector_null_gate_passed: 1
+synthetic_fixture_contract: passed
+terminal_saturation_flagged_rows: 0
+readiness_level: preservation_asymmetry_loadbearing
+next_action_fork: expand_preservation_asymmetry_family
+```
+
+Main read:
+
+```text
+beta is wired and changes selected transition edges at 0.005;
+aligned response first appears around beta 0.05;
+symbol_histogram_distance remains the cleanest preservation target;
+total_coordinate_mass remains live but paired-baseline limited.
+```
+
 ### RFS-MB0 Asymmetry-Ladder Preservation Scaleup
 
 Ran the preservation-focused asymmetry-ladder scaleup recommended after the
