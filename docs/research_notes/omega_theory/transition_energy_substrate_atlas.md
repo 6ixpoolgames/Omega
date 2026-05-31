@@ -4,18 +4,11 @@ Status: theory / instrument atlas note after transition-energy substrate charact
 Scope: RFS-MB0 horizon-transport branch and transition-energy substrate program  
 Claim boundary: not Omega detection, not agency detection, not valuer detection, not identity detection, not life detection, not candidate promotion
 
-Terminology update:
-
-```text
-Use "macro-invariant" in public-facing prose.
-Use "asymmetry-constrained transition energy" in theory-facing prose.
-The raw implementation/output name "budget_conservation" is retained only for
-backward compatibility with scripts and CSVs.
-```
-
 ## 0. One-sentence update
 
 The transition-energy characterization run turns the horizon-transport branch from a single-substrate detector into a **substrate-response atlas**: different transition-energy laws express different horizon-transport response profiles, and those differences are signal rather than noise.
+
+Terminology correction: the invariant-preserving family should be called **macro-invariant / asymmetry-preservation**, not budget.
 
 In compact form:
 
@@ -23,11 +16,11 @@ In compact form:
 locality alone:
   clean baseline; no aligned amplification in the tested grid
 
-smooth random potential:
+smooth directional field:
   response-bearing; rerouting/reopening/weakening appear, but no aligned amplification in this grid
 
-macro-invariant / asymmetry-constrained transition energy:
-  aligned response appears; total-coordinate-mass is strongest but coverage-limited
+macro-invariant / asymmetry-preservation:
+  aligned response appears; total-coordinate-mass is strongest but paired-baseline-limited
 
 constraint template comparator:
   still positive; no longer unique
@@ -78,6 +71,19 @@ write_transition_energy_substrate_atlas_note
 
 This note is that atlas.
 
+Follow-up due diligence:
+
+```text
+docs/research_notes/validation_results/rfs_mb0_macro_invariant_due_diligence_result.md
+```
+
+The guarded Option A run repaired retained-matrix coverage to `1.0 / 1.0`
+mean/min for every tested macro-invariant variant, separated
+`transport_baseline_missing` from true `transport_resolution_mismatch`, and
+reached the formal `macro_invariant_loadbearing` read. The remaining
+total-coordinate-mass caveat is paired-baseline availability in constrained
+window flow, not matrix coverage.
+
 ## 2. Why this atlas matters
 
 The project has been trying to avoid discovering artifacts of its own hand-built machinery.
@@ -107,8 +113,8 @@ The characterization run shows that the instrument does not merely light up ever
 
 ```text
 locality-only behaves like a baseline;
-smooth potential generates differentiated response without aligned amplification;
-macro-invariant / asymmetry-constrained transition energy produces aligned response;
+smooth directional fields generate differentiated response without aligned amplification;
+macro-invariant preservation produces aligned response;
 constraint templates remain positive but no longer exclusive.
 ```
 
@@ -143,7 +149,7 @@ If locality-only eventually produces aligned amplification under a different set
 locality alone is not the H128 object.
 ```
 
-### 3.2 Smooth random potential
+### 3.2 Smooth directional field
 
 Result:
 
@@ -161,7 +167,7 @@ reopened rows: 231
 Interpretation:
 
 ```text
-smooth potential is response-bearing but not aligned-amplifying in this beta/smoothness grid.
+smooth directional field structure is response-bearing but not aligned-amplifying in this alpha/smoothness grid.
 ```
 
 This is not a dead branch. It may be the better family for studying differentiated responses such as rerouting and reopening.
@@ -169,19 +175,19 @@ This is not a dead branch. It may be the better family for studying differentiat
 Current read:
 
 ```text
-smooth-potential law supports response diversity;
+smooth directional substrate law supports response diversity;
 it does not currently support the aligned-amplification object.
 ```
 
 Next questions:
 
 ```text
-Does a different smoothness / beta / roughness regime produce aligned amplification?
-Is smooth potential a route to rerouting/reopening rather than amplification?
-Can smooth-potential response diversity be made cleaner under max-entropy control?
+Does a different smoothness / alpha / roughness regime produce aligned amplification?
+Is the smooth directional field a route to rerouting/reopening rather than amplification?
+Can smooth-directional response diversity be made cleaner under max-entropy control?
 ```
 
-### 3.3 Macro-Invariant / Asymmetry-Constrained Transition Energy
+### 3.3 Macro-invariant / asymmetry-preservation
 
 Result:
 
@@ -198,13 +204,13 @@ reopened rows: 258
 resolution mismatch rows: 270
 ```
 
-Invariant kinds:
+Macro-invariant coordinates:
 
 ```text
 total_coordinate_mass:
   aligned fraction: 0.203
   strongest aligned fraction;
-  but 270 resolution-mismatch rows
+  but 270 rows later diagnosed as paired-baseline availability limits
 
 hamming_weight_or_nonzero_count:
   aligned fraction: 0.084
@@ -220,19 +226,21 @@ symbol_histogram_distance:
 Interpretation:
 
 ```text
-approximate invariants appear to be a productive generic lawlike ingredient.
+preserving coarse asymmetry structure appears to be a productive generic lawlike ingredient.
 ```
 
 But the note should remain cautious:
 
 ```text
-Macro-invariant / asymmetry-constrained transition energy is promising, but total-coordinate-mass cannot be declared the winner without coverage / paired-baseline repair.
+Macro-invariant preservation is promising. After the due-diligence follow-up,
+coverage is repaired; total-coordinate-mass still should not be declared cleanly
+dominant until paired-baseline availability is repaired or gated.
 ```
 
 Current read:
 
 ```text
-macro-invariant / asymmetry-constrained terms are the strongest non-template route to aligned amplification;
+macro-invariant / asymmetry-preservation terms are the strongest non-template route to aligned amplification;
 they should guide the next substrate repair and max-entropy design.
 ```
 
@@ -275,10 +283,10 @@ A useful atlas may look like:
 locality-only:
   baseline / diffusion / bounded branching
 
-smooth-potential:
+smooth directional field:
   rerouting / reopening / differentiated response
 
-macro-invariant / asymmetry-constrained:
+macro-invariant preservation:
   aligned amplification / high-viscosity transport
 
 constraint-template:
@@ -289,7 +297,7 @@ This is not failure to converge. It is the beginning of substrate taxonomy.
 
 ## 5. Current ontology of substrate families
 
-The current atlas suggests a provisional substrate-law taxonomy:
+The current atlas suggests a provisional substrate-law taxonomy.
 
 ### 5.1 Baseline local branching
 
@@ -304,11 +312,11 @@ signature:
   useful null-like comparator.
 ```
 
-### 5.2 Landscape response substrate
+### 5.2 Directional landscape response substrate
 
 ```text
 family:
-  smooth_random_potential
+  smooth_directional_field
 
 signature:
   stable dominant response;
@@ -316,17 +324,16 @@ signature:
   aligned amplification absent in tested grid.
 ```
 
-### 5.3 Invariant-constrained amplifier
+### 5.3 Macro-invariant aligned amplifier
 
 ```text
 family:
-  macro_invariant / asymmetry_constrained
-  raw implementation alias: budget_conservation
+  macro_invariant_preservation
 
 signature:
   aligned amplification appears;
   high-viscosity aligned-amplifier read plausible;
-  coverage / resolution mismatch must be repaired.
+  paired-baseline availability must be repaired or gated.
 ```
 
 ### 5.4 Symbolic-law comparator
@@ -364,11 +371,11 @@ Substrate families differ by the generic lawlike ingredients used to shape `E(s,
 locality:
   distance in distinction space
 
-potential:
-  smooth scalar landscape over states
+smooth directional field:
+  scalar field whose directional delta shapes transition selection
 
-macro-invariant / asymmetry-constrained:
-  approximate invariant or resource-like macro quantity
+macro-invariant / asymmetry-preservation:
+  coarse asymmetry structure whose change is penalized
 
 constraint templates:
   named symbolic relations, now demoted to comparator
@@ -376,9 +383,9 @@ constraint templates:
 
 The important move is that `E(s,t)` concentrates assumptions into an explicit, inspectable object rather than scattering them across opaque constraint vocabularies.
 
-## 7. Why Macro-Invariants Are Theoretically Interesting
+## 7. Why macro-invariants are theoretically interesting
 
-The macro-invariant / asymmetry-constrained family is currently the most interesting non-template route to aligned amplification.
+The macro-invariant preservation family is currently the most interesting non-template route to aligned amplification.
 
 This may matter because invariants are what make a substrate feel universe-like:
 
@@ -389,19 +396,19 @@ some trajectories preserve macro-structure;
 some deformations are possible but expensive.
 ```
 
-A future-bearing object may require more than locality and smoothness. It may require an approximately conserved structure that lets transport persist, concentrate, and amplify without immediately diffusing.
+A future-bearing object may require more than locality and directional smoothness. It may require an approximately conserved asymmetry structure that lets transport persist, concentrate, and amplify without immediately diffusing.
 
 This is still speculative. The current empirical statement is narrower:
 
 ```text
 macro-invariant transition-energy terms produced aligned amplification in this grid;
 locality-only did not;
-smooth-potential did not, though it produced other response classes.
+smooth directional fields did not, though they produced other response classes.
 ```
 
-## 8. Why smooth potential is still useful
+## 8. Why the smooth directional field is still useful
 
-The smooth-potential family did not produce aligned amplification here. But it produced rerouting and reopening rows.
+The smooth directional field family did not produce aligned amplification here. But it produced rerouting and reopening rows.
 
 This makes it valuable for a different question:
 
@@ -409,7 +416,7 @@ This makes it valuable for a different question:
 What substrate laws support differentiated response rather than aligned amplification?
 ```
 
-The project should not collapse all progress into the aligned-amplification class. A richer life-like branch may require response diversity. Smooth potential may be a candidate family for that later branch.
+The project should not collapse all progress into the aligned-amplification class. A richer life-like branch may require response diversity. Smooth directional fields may be a candidate family for that later branch.
 
 ## 9. What this does not show
 
@@ -430,10 +437,10 @@ holdout generalization.
 It also does not yet show:
 
 ```text
-macro-invariant transition energy cleanly wins;
+macro-invariant preservation cleanly wins without paired-baseline caveats;
 max-entropy local transition ensemble is implemented;
 aligned amplification is substrate-general across all generic laws;
-smooth potential cannot produce aligned amplification under any parameterization.
+smooth directional fields cannot produce aligned amplification under any parameterization.
 ```
 
 The atlas is a map of current instrument behavior, not a final substrate theory.
@@ -449,17 +456,17 @@ write_transition_energy_substrate_atlas_note
 Then choose between:
 
 ```text
-repair_budget_coverage
+repair_macro_invariant_paired_baselines
 implement_max_entropy_local_transition
 ```
 
 This note recommends a hybrid sequence:
 
 ```text
-1. repair macro-invariant coverage / paired-baseline availability;
+1. repair macro-invariant paired-baseline availability if total-coordinate-mass must be closed cleanly;
 2. use macro-invariant marginal constraints to design the first max-entropy local transition ensemble;
 3. keep locality-only as a baseline family;
-4. keep smooth-potential as a differentiated-response branch;
+4. keep smooth directional fields as a differentiated-response branch;
 5. keep constraint-template only as comparator.
 ```
 
@@ -484,7 +491,7 @@ Reason:
 
 ```text
 locality-only is too weak for aligned amplification;
-macro-invariant constraints appear loadbearing;
+macro-invariant preservation appears loadbearing;
 max-entropy should preserve only macro constraints needed to make the substrate generative, not hand-picked symbolic laws.
 ```
 
@@ -499,16 +506,16 @@ A next spec should probably be one of two things.
 Purpose:
 
 ```text
-Resolve whether macro-invariant / asymmetry-constrained aligned amplification remains strong after coverage / baseline-availability repair.
+Resolve whether macro-invariant aligned amplification remains strong after coverage / paired-baseline repair.
 ```
 
 Focus:
 
 ```text
-total coordinate-mass invariant;
-nonzero-support invariant;
-symbol-composition invariant;
-coverage and paired-baseline availability;
+total_coordinate_mass;
+hamming_weight_or_nonzero_count;
+symbol_histogram_distance;
+coverage and paired-baseline improvements;
 matched-null stability;
 response thresholds by invariant weight.
 ```
@@ -532,11 +539,13 @@ optional macro-invariant marginal;
 no named symbolic law templates.
 ```
 
-My recommendation:
+Recommendation:
 
 ```text
-Do Option A first if the goal is empirical cleanliness.
-Do Option B first if the goal is substrate-principle progress.
+Option A due diligence is now sufficient for project direction.
+Do a narrow total-coordinate-mass paired-baseline repair only if empirical
+cleanliness is preferred before Option B.
+Do Option B next if the goal is substrate-principle progress.
 ```
 
 A hybrid preflight is acceptable if kept small.
@@ -545,7 +554,7 @@ A hybrid preflight is acceptable if kept small.
 
 ### Principled
 
-The atlas organizes substrate families by explicit transition-law ingredients: locality, smooth potential, macro-invariance/asymmetry constraint, and symbolic constraint templates.
+The atlas organizes substrate families by explicit transition-law ingredients: locality, smooth directional fields, macro-invariant preservation, and symbolic constraint templates.
 
 ### Parsimonious
 
@@ -557,8 +566,8 @@ The atlas produces testable predictions:
 
 ```text
 locality-only should remain a baseline unless roughness/out-degree changes move it into response-bearing regimes;
-macro-invariant constraints should continue to support aligned amplification if coverage is repaired;
-smooth-potential should continue to support differentiated response, and may or may not amplify under different beta/smoothness;
+macro-invariant preservation should continue to support aligned amplification if coverage is repaired;
+smooth directional fields should continue to support differentiated response, and may or may not amplify under different alpha/smoothness;
 max-entropy with macro-invariant marginals should be more promising than max-entropy locality-only.
 ```
 
