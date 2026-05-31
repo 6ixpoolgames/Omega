@@ -6,7 +6,7 @@ Claim boundary: not Omega detection, not agent detection, not value detection, n
 
 ## 0. One-sentence update
 
-The current relation-generated substrate still uses hand-built constraint templates; before promoting the horizon-transport instrument, the project should test whether matched-marginal-separated horizon transport persists when transformations are generated from generic transition-energy families instead of a named constraint vocabulary.
+The current relation-generated substrate still uses hand-built constraint templates. Before promoting the horizon-transport instrument, the project should test whether matched-marginal-separated horizon transport persists when transformations are generated from explicit transition-energy families instead of a named symbolic constraint vocabulary.
 
 In compact form:
 
@@ -19,6 +19,13 @@ next substrate repair:
 
 purpose:
   separate horizon-transport phenomena from artifacts of modular/equality/difference constraint grammar
+```
+
+Terminology correction:
+
+```text
+Do not call the invariant-preserving family a budget family.
+The theory concept is macro-invariant / asymmetry-preservation.
 ```
 
 ## 1. Why this note exists
@@ -68,7 +75,7 @@ asymmetry:
   transformations can have non-equivalent future consequences
 ```
 
-A transition-energy formalism makes the relation-generation step explicit.
+A transition-energy formalism makes relation generation explicit.
 
 Let:
 
@@ -80,7 +87,7 @@ Q(s -> t):
   local proposal kernel / neighborhood relation
 
 E(s,t):
-  transition energy or transition score
+  transition energy or edge-selection score
 
 R:
   selection rule that converts Q and E into directed edges
@@ -104,9 +111,9 @@ or probabilistically:
 P(s -> t) proportional to exp(-beta E(s,t))
 ```
 
-Here `energy` or `cost` means edge-selection score. It is not moral value, utility, thermodynamic energy, or Omega.
+Here `energy` means edge-selection score. It is not moral value, utility, thermodynamic energy, or Omega.
 
-## 3. Distance is not the same as cost
+## 3. Distance is not the same as transition energy
 
 A distance or metric defines how states are near or far:
 
@@ -119,7 +126,7 @@ A transition energy defines how favored a directed transformation is:
 
 ```text
 E(s,t):
-  how easy / likely / selected the move s -> t is under the substrate law
+  how selected the move s -> t is under the substrate law
 ```
 
 A simple distance is often symmetric:
@@ -137,141 +144,124 @@ E(s,t) != E(t,s)
 For instance:
 
 ```text
-E(s,t) = d(s,t) + beta * (V(t) - V(s)) + epsilon * roughness(s,t)
+E(s,t) = d(s,t) + alpha * (A(t) - A(s)) + epsilon * roughness(s,t)
 ```
 
-If `V(t) < V(s)`, moving from `s` to `t` can be cheaper than moving from `t` to `s`.
+If `A(t) < A(s)`, moving from `s` to `t` can be selected differently than moving from `t` to `s`.
 
 This induces asymmetry without requiring a named symbolic constraint like equality or modular sum.
 
-## 4. Invariants as minimal lawlike structure
+## 4. Two minimal asymmetry ingredients
 
-The point of `E(s,t)` is not to remove all assumptions. That is impossible.
+The formulation should separate two kinds of asymmetry.
 
-The point is to make assumptions:
+### 4.1 Directional asymmetry
 
-```text
-explicit;
-generic;
-sweepable;
-less semantically loaded;
-less tied to a hand-picked law vocabulary.
-```
-
-Invariants are a principled way to define a universe-like substrate. They specify what is conserved, approximately conserved, expensive to change, or structurally smooth.
-
-Examples:
+A scalar asymmetry field:
 
 ```text
-locality:
-  nearby states are easier to reach than distant states
-
-out-degree:
-  each state has bounded branching
-
-smooth potential:
-  neighboring states have related scalar field values
-
-budget / conservation:
-  some total mass, histogram, Hamming weight, or coarse macro-statistic is hard to change
-
-reversibility fraction:
-  some transitions have return paths while others do not
-
-roughness:
-  deterministic seeded micro-variation breaks ties and near-ties
+A(s):
+  directional asymmetry coordinate over states
 ```
 
-These are still design choices. The virtue is that they are generic macro-structure choices rather than named symbolic laws.
-
-## 5. Why this is not a retreat from asymmetry
-
-Asymmetry is not lost when hand-built constraints are removed.
-
-Asymmetry can enter through:
+adds a directional term:
 
 ```text
-potential descent/ascent terms;
-non-symmetric E(s,t);
-directed edge selection from local neighborhoods;
-bounded out-degree selection;
-roughness-induced tie-breaking;
-reversibility fraction less than 1;
-macro-invariant gradients or budgets.
+A(t) - A(s)
 ```
 
-The important distinction is:
+This makes one direction across the field different from the reverse direction.
+
+### 4.2 Preservation asymmetry
+
+A macro-invariant:
 
 ```text
-current substrate asymmetry:
-  direction shaped partly by hand-built symbolic constraint templates
-
-transition-energy substrate asymmetry:
-  direction shaped by generic local geometry, potentials, invariants, and edge-selection rules
+I(s):
+  coarse asymmetry structure / macro-invariant over states
 ```
 
-The second is more appropriate for testing whether horizon transport is a general future-field phenomenon rather than an artifact of the constraint grammar.
+adds a preservation term:
 
-## 6. Candidate transition-energy families
+```text
+|I(t) - I(s)|
+```
+
+This makes erasing or changing a coarse distinction less available than preserving it.
+
+Directional asymmetry creates preferred flow.
+
+Preservation asymmetry creates resistance to erasure of coarse structure.
+
+Both are asymmetry. They play different roles.
+
+## 5. Minimal transition-energy ladder
+
+The substrate ladder should be stated without semantic labels.
 
 ### E0: locality only
-
-Minimal null-like substrate.
 
 ```text
 E_0(s,t) = d_H(s,t) + epsilon * roughness(s,t)
 ```
 
-Expected behavior:
+Expected role:
 
 ```text
+baseline for bounded local branching;
 may diffuse or saturate trivially;
-may be too structureless;
-useful as a lower baseline.
+useful as a lower comparator.
 ```
 
-### E1: locality plus smooth random potential
-
-Best first serious replacement for the current constraint grammar.
+### E1: locality plus directional asymmetry
 
 ```text
-E_1(s,t) = d_H(s,t) + beta * (V(t) - V(s)) + epsilon * roughness(s,t)
+E_1(s,t) = d_H(s,t) + alpha * (A(t) - A(s)) + epsilon * roughness(s,t)
 ```
 
-where `V` is a seeded smooth random field over `X`.
-
-Expected behavior:
+Expected role:
 
 ```text
-locality, directionality, smooth landscape structure, and roughness;
-no named modular/equality/difference laws.
+minimal directional lawlike flow;
+no named symbolic constraint templates.
 ```
 
-### E2: locality plus budget / conservation
-
-Adds a generic macro-invariant.
+### E2: locality plus preservation asymmetry
 
 ```text
-E_2(s,t) = d_H(s,t) + lambda * |B(t) - B(s)| + epsilon * roughness(s,t)
+E_2(s,t) = d_H(s,t) + beta * |I(t) - I(s)| + epsilon * roughness(s,t)
 ```
 
-where `B` may be:
+`I(s)` may be mechanically generated from coarse state summaries such as:
 
 ```text
-symbol histogram;
-Hamming weight;
 total coordinate mass;
-coarse resource budget.
+symbol histogram;
+nonzero-coordinate count;
+other preregistered macro-invariant coordinates.
 ```
 
-Expected behavior:
+Expected role:
 
 ```text
-lawlike structure through approximate conservation;
-not tied to specific symbolic constraints.
+minimal invariant-preserving lawlike structure;
+tests whether coherent horizon transport requires persistence of coarse distinctions.
 ```
 
-### E3: maximum-entropy local transition ensemble
+### E3: combined directional and preservation asymmetry
+
+```text
+E_3(s,t) = d_H(s,t) + alpha * (A(t) - A(s)) + beta * |I(t) - I(s)| + epsilon * roughness(s,t)
+```
+
+Expected role:
+
+```text
+minimal universe-like transition substrate:
+locality + direction + preservation + roughness.
+```
+
+### E4: maximum-entropy local transition ensemble
 
 Longer-term target.
 
@@ -282,53 +272,71 @@ state count;
 locality radius;
 out-degree distribution;
 reversibility fraction;
-smoothness level;
 roughness level;
-optional energy marginal distribution.
+directional-asymmetry marginal, if used;
+macro-invariant marginal, if used.
 ```
 
 Then sample transition graphs from the maximum-entropy ensemble satisfying those macros.
 
-Expected behavior:
+## 6. Why this is not a retreat from asymmetry
+
+Asymmetry is not lost when hand-built constraints are removed.
+
+Asymmetry can enter through:
 
 ```text
-best long-term anti-smuggling substrate;
-more implementation work;
-less appropriate as the first repair unless E0/E1/E2 are insufficient.
+directional asymmetry fields;
+macro-invariant preservation terms;
+non-symmetric E(s,t);
+directed edge selection from local neighborhoods;
+bounded out-degree selection;
+roughness-induced tie-breaking;
+reversibility fraction less than 1.
 ```
+
+The important distinction is:
+
+```text
+current substrate asymmetry:
+  direction shaped partly by hand-built symbolic constraint templates
+
+transition-energy substrate asymmetry:
+  direction and preservation shaped by explicit locality, asymmetry fields, macro-invariants, roughness, and edge selection
+```
+
+The second is more appropriate for testing whether horizon transport is a general future-field phenomenon rather than an artifact of the constraint grammar.
 
 ## 7. What must be tested
 
 The core empirical question is:
 
 ```text
-Does matched-marginal-separated horizon transport with aligned amplification persist when the named constraint vocabulary is removed?
+Does matched-marginal-separated horizon transport with aligned amplification persist when named constraint vocabulary is removed?
 ```
 
 Possible outcomes:
 
 ```text
-persists across E1/E2:
-  horizon transport is less likely to be a grammar artifact
+E1 works:
+  directional asymmetry may be sufficient
 
-appears only in current constraint-template substrate:
-  grammar-artifact risk is high
+E2 works:
+  preservation asymmetry / macro-invariants may be needed
 
-locality-only trivial, E1 works:
-  generic smooth landscape structure may be sufficient
+E3 works better than either alone:
+  direction and preservation may be complementary
 
-E2 works but E1 does not:
-  conservation/budget-like invariants may be needed
+E0 works:
+  aligned amplification may be generic to bounded local branching and requires stronger nulls
 
 none work:
-  current H128 object may depend on hand-built constraint grammar or current detector assumptions
+  the current H128 object may depend on hand-built constraint grammar or current detector assumptions
 ```
 
 ## 8. Relationship to the H128 result
 
-The H128 result remains important.
-
-It established the current live object:
+The H128 result remains important. It established the current live object:
 
 ```text
 matched-marginal-separated horizon transport with horizon-dependent aligned amplification
@@ -344,7 +352,7 @@ This note says the next repair should be substrate untethering, not immediate pr
 
 ## 9. Claim boundary
 
-Even if the transition-energy substrates reproduce aligned amplification, the result would not show:
+Even if transition-energy substrates reproduce aligned amplification, the result would not show:
 
 ```text
 Omega;
@@ -369,11 +377,11 @@ That would be a major instrument/substrate robustness result, but still not a ca
 
 ### Principled
 
-Transition energy makes the lawlike substrate assumptions explicit: state space, locality, invariants, potential, roughness, and selection rule.
+Transition energy makes substrate assumptions explicit: state space, locality, directional asymmetry, preservation asymmetry, roughness, and selection rule.
 
 ### Parsimonious
 
-Start with the smallest generic families: locality only, locality plus smooth potential, and locality plus budget/conservation.
+Start with the smallest generic families: locality only, locality plus directional asymmetry, locality plus preservation asymmetry, and their combination.
 
 ### Predictive
 
@@ -389,5 +397,5 @@ The next principled move is:
 
 ```text
 replace hand-built constraint templates with explicit transition-energy families,
-then test whether horizon transport and aligned amplification persist.
+then test which minimal asymmetry ingredients produce which horizon-transport response profiles.
 ```
