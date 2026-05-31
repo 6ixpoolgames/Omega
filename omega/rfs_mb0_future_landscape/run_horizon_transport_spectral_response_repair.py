@@ -3496,6 +3496,7 @@ def decision_fields(outputs: dict[str, list[dict[str, object]]], status: dict[st
         "max_entropy_preflight_smoke_completed": int(readiness == "max_entropy_preflight_smoke_completed"),
         "max_entropy_preflight_completed": int(readiness == "max_entropy_preflight_completed"),
         "max_entropy_local_response_bearing": int(readiness == "max_entropy_local_response_bearing"),
+        "deterministic_top_m_geometry_loadbearing": int(readiness == "deterministic_top_m_geometry_loadbearing"),
         "locality_only_baseline_confirmed": int(readiness == "locality_only_baseline_confirmed"),
         "locality_only_response_bearing": int(readiness == "locality_only_response_bearing"),
         "constraint_template_no_longer_primary": int(readiness == "constraint_template_no_longer_primary"),
@@ -3574,19 +3575,29 @@ def max_entropy_preflight_decision(
         row for row in outputs.get("max_entropy_marginal_match_summary", [])
         if int(float_or_zero(row.get("target_marginal_applied_count"))) > 0
     ]
-    if any(row.get("marginal_match_status") != "ok" for row in match_rows):
+    primary_match_rows = [
+        row for row in match_rows
+        if str(row.get("macro_invariant_kind", "")) == "symbol_histogram_distance"
+    ] or match_rows
+    if any(row.get("marginal_match_status") != "ok" for row in primary_match_rows):
         return "not_ready_repair_required", "repair_max_entropy_sampler"
     if not response_interpretable:
         return "max_entropy_preflight_smoke_completed", "continue_max_entropy_preflight"
 
-    response_by_family = {
+    response_by_max_entropy_family = {
         str(row.get("substrate_family", "")): row
         for row in outputs.get("response_by_max_entropy_family", [])
     }
-    local = response_by_family.get(MAX_ENTROPY_LOCAL, {})
-    macro = response_by_family.get(MAX_ENTROPY_MACRO_INVARIANT, {})
+    response_by_family = {
+        str(row.get("substrate_family", "")): row
+        for row in outputs.get("response_by_substrate", [])
+    }
+    local = response_by_max_entropy_family.get(MAX_ENTROPY_LOCAL, {})
+    macro = response_by_max_entropy_family.get(MAX_ENTROPY_MACRO_INVARIANT, {})
+    deterministic = response_by_family.get(PRESERVATION_ASYMMETRY, {})
     local_aligned = float_or_zero(local.get("aligned_amplification_fraction"))
     macro_aligned = float_or_zero(macro.get("aligned_amplification_fraction"))
+    deterministic_aligned = float_or_zero(deterministic.get("aligned_amplification_fraction"))
     jobs_requested = int(float_or_zero(status.get("jobs_requested")))
     response_rows = len(outputs.get("response_classification", []))
     if jobs_requested < 256 or response_rows < 250:
@@ -3595,6 +3606,8 @@ def max_entropy_preflight_decision(
         return "max_entropy_transition_ready", "expand_max_entropy_macro_invariant_family"
     if local_aligned > 0.0:
         return "max_entropy_local_response_bearing", "demote_or_repair_max_entropy_macro_invariant_claim"
+    if deterministic_aligned > 0.0 and macro_aligned == 0.0:
+        return "deterministic_top_m_geometry_loadbearing", "audit_top_m_geometry_or_refine_max_entropy_sampler"
     return "max_entropy_preflight_completed", "continue_max_entropy_preflight"
 
 
@@ -4202,6 +4215,9 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
         f"- fixture_contract_passed: `{status.get('fixture_contract_passed', 0)}`",
         f"- ready_for_fixture_horizon_transport_tests: `{status.get('ready_for_fixture_horizon_transport_tests', 0)}`",
         f"- ready_for_direct_channel_diagnostics: `{status.get('ready_for_direct_channel_diagnostics', 0)}`",
+        f"- max_entropy_transition_ready: `{status.get('max_entropy_transition_ready', 0)}`",
+        f"- max_entropy_local_response_bearing: `{status.get('max_entropy_local_response_bearing', 0)}`",
+        f"- deterministic_top_m_geometry_loadbearing: `{status.get('deterministic_top_m_geometry_loadbearing', 0)}`",
         f"- not_ready_repair_required: `{status.get('not_ready_repair_required', 0)}`",
         "",
         "## Next-Action Fork",
