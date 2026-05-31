@@ -1,140 +1,139 @@
-# Future Field Atlas Phase 0/1 Clean Slate Smoke Result
+# Future Field Atlas Phase 0/1 Publication-Schema Smoke Result
 
-Status: clean instrument-build smoke completed after schema teardown
-Primary output: `results/future_field_atlas/20260601_phase0_1_clean_slate_h32/`
+Status: clean instrument-build smoke completed after publication-schema repair
+Primary output: `results/future_field_atlas/20260601_phase0_1_publication_schema_h32/`
 Runner: `omega.future_field_atlas.run_future_field_atlas`
 Spec: `docs/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md`
 Glossary: `docs/FUTURE_FIELD_ATLAS_GLOSSARY.md`
 
 ## Executive Summary
 
-The Future Field Atlas Phase 0/1 smoke completed cleanly after removing the
-legacy treatment-arm adapter surface from the runtime path.
+The Future Field Atlas Phase 0/1 smoke completed cleanly after another strict
+schema pass. The goal of this pass was to make the formal atlas object lead and
+make the rank-boundary result clearly secondary as a calibration fixture.
 
 ```text
 status: COMPLETED
-instrument_version: 0.2.0
+instrument_version: 0.3.0
 workers: 4
 conditions: 8
 scans_completed: 8 / 8
-elapsed_seconds: 15.997
+elapsed_seconds: 18.58
 errors: 0
 horizon_max: 32
-frontier_node_rows: 30801
-frontier_edge_rows: 107409
-target_rank_core_distance_rows: 8
+frontier_node_rows: 30461
+frontier_edge_rows: 106431
+selection_operator_geometry_rows: 8
 ```
 
 This remains an instrument smoke, not a science result and not an Omega
-validation result. The purpose was to verify that the atlas can express the
-calibration branch through mathematical operators rather than historical
-treatment-arm names.
+validation result.
 
-## What Changed
+## Formal Object
 
-The clean atlas runtime now uses:
+The clean runtime now organizes every scan around first-class specs:
 
 ```text
 StateSpaceSpec
 TransformationLawSpec
 SelectionOperatorSpec
 ObservableSpec
+FrontierScanSpec
 ```
 
-Runtime outputs no longer emit:
+Rows emitted by the scanner now carry state-space, law, observable, selection
+operator, and frontier-scan identifiers. The object can be described without
+the old top-m result:
+
+```text
+A Future Field Atlas scans a finite state space under lawful transformations,
+records frontier topology over horizon, and emits reconstructible feature maps
+of reachable-future geometry.
+```
+
+## What Changed
+
+The runtime package now has zero hits for historical treatment-arm and response
+terms such as:
 
 ```text
 boundary_control
 condition_role
-human_label
-legacy_boundary_control_alias
-legacy_role_alias
-base_m
-effective_m
-perturbation_family
-perturbation_strength
-known_mechanism_recovery_summary.csv
+known_mechanism
+baseline_m3
+drop_weakest
+response_bearing
 ```
 
-The historical translations were moved to
-`docs/FUTURE_FIELD_ATLAS_GLOSSARY.md`. That document is for humans only and is
-not imported by the runner.
-
-## Native Operator Interface
-
-The smoke used the clean operator syntax:
+Primary artifact names were also changed:
 
 ```text
-rank_prefix:m=3
-rank_prefix:m=4
-rank_prefix:m=5
-rank_subset:m=4:retain=1|2|3:remove=4
-rank_subset:m=5:retain=1|2|3:remove=4|5
-stochastic_rank_subset:m=4:effective=3
-stochastic_rank_subset:m=5:effective=3
-rank_subset:m=4:retain=2|3|4:remove=1
+selection_operator_geometry_summary.csv
+rank_boundary_geometry_by_horizon.csv
+rank_boundary_geometry_by_horizon_summary.csv
+rank_boundary_geometry_by_horizon_pair.csv
 ```
 
-The runner no longer accepts `--boundary-controls`.
+The previous rank-core-centered artifact names are no longer emitted.
 
-## Primary Artifacts
+## Artifact Semantics
 
-The clean smoke emitted:
+Frontier node and edge rows now expose explicit artifact status and retention
+policy:
 
 ```text
-future_field_atlas_manifest.json
-future_field_atlas_run_config.json
-future_field_atlas_status.json
-future_field_atlas_progress.csv
-future_field_atlas_errors.csv
-future_field_atlas_report.md
-frontier_nodes_by_horizon.csv
-frontier_edges_by_step.csv
-frontier_profile_by_horizon.csv
-frontier_membership_timeseries.csv
-core_fringe_boundary_by_horizon.csv
-raw_transport_matrices_adjacent.npz
-raw_transport_matrices_adjacent_manifest.csv
-raw_transport_matrices_multiscale.npz
-raw_transport_matrices_multiscale_manifest.csv
-transport_flow_composition_residuals.csv
-target_rank_core_distance_summary.csv
-rank_core_recovery_by_horizon.csv
-boundary_recovery_by_horizon_pair.csv
+complete
+lossless_compressed
+sampled
+truncated_noninterpretable
 ```
 
-Generated CSV/NPZ artifacts remain local and should not be pushed to the repos.
+The H32 smoke emitted complete in-memory feature maps. CSV row artifacts still
+carry retention-policy columns, so later larger runs can mark any truncation as
+non-interpretable rather than silently treating sorted-prefix output as full
+topology.
+
+Transport composition now separates:
+
+```text
+support composition
+path-count composition
+weighted-flow composition status
+```
+
+Weighted flow is marked `not_defined_unit_edge_weights_only` in this smoke.
 
 ## Calibration Readout
 
-The clean atlas expresses the known calibration split as continuous
-rank-boundary geometry, not as a boolean recovery label.
+As a calibration fixture, the atlas still expresses the known rank-boundary
+split as continuous geometry:
 
 ```text
-rank_prefix:m=3                            distance 0.000
-rank_prefix:m=4                            distance 0.188
-rank_prefix:m=5                            distance 0.300
-rank_subset:m=4:retain=1|2|3:remove=4      distance 0.000
-rank_subset:m=5:retain=1|2|3:remove=4|5    distance 0.000
-rank_subset:m=4:retain=2|3|4:remove=1      distance 0.375
+rank_prefix:m=3                            operator distance 0.000
+rank_prefix:m=4                            operator distance 0.188
+rank_prefix:m=5                            operator distance 0.300
+rank_subset:m=4:retain=1|2|3:remove=4      operator distance 0.000
+rank_subset:m=5:retain=1|2|3:remove=4|5    operator distance 0.000
+rank_subset:m=4:retain=2|3|4:remove=1      operator distance 0.375
 ```
 
-The stochastic rank-subset controls are retained as raw sampled operators with
-blank target-rank distance where no deterministic retained-rank set exists.
+The calibration fixture is downstream of the formal atlas object. It is not the
+definition of the instrument.
 
 ## Interpretation
 
-The teardown succeeded. The Future Field Atlas runtime is now much closer to
-the intended formal layer:
+The package is now closer to publication-clean as an instrument:
 
 ```text
-lawful finite state space
-transformation law
+state space
+candidate successor rule
+energy/scoring law
 selection operator
 frontier scan
 observable map
-continuous distance readout
+transport composition readout
+calibration view
 ```
 
-The next code extension should add new formal specs or operators directly.
-Historical names should stay in the glossary and in old result notes only.
+The next expansion should preserve this order. New empirical patterns should
+add formal specs or observables first, then optional human-facing labels.

@@ -16,15 +16,26 @@ CLAIM_BOUNDARY = (
 @dataclass(frozen=True)
 class StateSpaceSpec:
     state_space_id: str
+    coordinate_set_id: str
     coordinate_count: int
+    symbol_domain_id: str
     alphabet_size: int
     state_count: int
+    state_id_schema: str
+    metric_id: str
+    adjacency_rule_id: str
 
 
 @dataclass(frozen=True)
 class TransformationLawSpec:
     law_id: str
     law_family: str
+    candidate_successor_rule_id: str
+    candidate_successor_params_json: str
+    energy_function_id: str
+    energy_params_json: str
+    admissibility_predicate_id: str
+    stochastic_flag: int
     law_params_json: str
     macro_invariant_kind: str
     macro_invariant_beta: float
@@ -37,7 +48,6 @@ class SelectionOperatorSpec:
     operator_params_json: str
     base_out_degree: int
     effective_out_degree: int
-    core_rank_k: int
     retained_rank_set: tuple[int, ...]
     removed_rank_set: tuple[int, ...]
     stochastic_flag: int
@@ -49,7 +59,22 @@ class SelectionOperatorSpec:
 class ObservableSpec:
     observable_set_id: str
     observable_family: str
+    rank_boundary_k: int
+    feature_map_ids: tuple[str, ...]
     observable_params_json: str
+
+
+@dataclass(frozen=True)
+class FrontierScanSpec:
+    frontier_scan_id: str
+    frontier_expansion_rule_id: str
+    horizon_schedule_id: str
+    horizon_schedule: tuple[int, ...]
+    horizon_max: int
+    node_artifact_retention_policy: str
+    edge_artifact_retention_policy: str
+    max_frontier_nodes_per_horizon: int
+    max_frontier_edges_per_step: int
 
 
 @dataclass(frozen=True)
@@ -64,8 +89,8 @@ class ConditionSpec:
     observable: ObservableSpec
 
     @property
-    def core_rank_k(self) -> int:
-        return self.selection_operator.core_rank_k
+    def rank_boundary_k(self) -> int:
+        return self.observable.rank_boundary_k
 
     @property
     def macro_invariant_kind(self) -> str:
@@ -83,17 +108,17 @@ class EdgeAnatomy:
     candidate_rank: int
     candidate_energy: float
     selected_flag: int
-    baseline_selected_flag: int
-    rank_offset_from_core_boundary: int
+    reference_selected_flag: int
+    rank_offset_from_boundary: int
     perturbation_changed_flag: int
 
     @property
-    def core_flag(self) -> int:
-        return int(self.rank_offset_from_core_boundary <= 0)
+    def inside_rank_boundary_flag(self) -> int:
+        return int(self.rank_offset_from_boundary <= 0)
 
     @property
-    def fringe_flag(self) -> int:
-        return int(self.rank_offset_from_core_boundary > 0)
+    def outside_rank_boundary_flag(self) -> int:
+        return int(self.rank_offset_from_boundary > 0)
 
 
 @dataclass(frozen=True)
@@ -102,35 +127,61 @@ class GeneratedCondition:
     system: LandscapeSystem
     candidate_anatomy: dict[tuple[State, State], EdgeAnatomy]
     selected_edge_keys: frozenset[tuple[State, State]]
-    baseline_edge_keys: frozenset[tuple[State, State]]
+    reference_edge_keys: frozenset[tuple[State, State]]
 
 
 @dataclass(frozen=True)
 class ScanTask:
     scan_id: str
     condition: GeneratedCondition
+    frontier_scan: FrontierScanSpec
     start_index: int
     start_state: State
-    horizon_max: int
-    horizon_schedule: tuple[int, ...]
-    max_frontier_nodes_per_horizon: int
-    max_frontier_edges_per_step: int
+
+    @property
+    def horizon_max(self) -> int:
+        return self.frontier_scan.horizon_max
+
+    @property
+    def horizon_schedule(self) -> tuple[int, ...]:
+        return self.frontier_scan.horizon_schedule
+
+    @property
+    def max_frontier_nodes_per_horizon(self) -> int:
+        return self.frontier_scan.max_frontier_nodes_per_horizon
+
+    @property
+    def max_frontier_edges_per_step(self) -> int:
+        return self.frontier_scan.max_frontier_edges_per_step
 
 
 @dataclass
 class RawScan:
     scan_id: str
     spec: ConditionSpec
+    frontier_scan: FrontierScanSpec
     start_index: int
     start_state: State
-    horizon_schedule: tuple[int, ...]
-    horizon_max: int
-    max_frontier_nodes_per_horizon: int
-    max_frontier_edges_per_step: int
     frontiers: dict[int, frozenset[State]]
     step_edges: dict[int, tuple[tuple[State, State], ...]]
     node_rows: list[dict[str, object]]
     edge_rows: list[dict[str, object]]
+
+    @property
+    def horizon_max(self) -> int:
+        return self.frontier_scan.horizon_max
+
+    @property
+    def horizon_schedule(self) -> tuple[int, ...]:
+        return self.frontier_scan.horizon_schedule
+
+    @property
+    def max_frontier_nodes_per_horizon(self) -> int:
+        return self.frontier_scan.max_frontier_nodes_per_horizon
+
+    @property
+    def max_frontier_edges_per_step(self) -> int:
+        return self.frontier_scan.max_frontier_edges_per_step
 
 
 @dataclass

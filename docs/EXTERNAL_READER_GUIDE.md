@@ -33,7 +33,7 @@ The immediate predecessor instrument is **horizon transport**:
 T_{H_a -> H_b}
 ```
 
-It measures how structures in earlier reachable-future frontiers become structures in later reachable-future frontiers. The atlas rebuild keeps that lesson, but makes raw frontier topology and core/fringe anatomy the primary data product before response labels are applied. Current atlas conditions are represented by state-space, transition-law, selection-operator, and observable specs. Historical treatment names are translation aids in the atlas glossary, not runtime primitives.
+It measures how structures in earlier reachable-future frontiers become structures in later reachable-future frontiers. The atlas rebuild keeps that lesson, but makes raw frontier topology and rank-boundary anatomy the primary data product before response labels are applied. Current atlas conditions are represented by state-space, transition-law, selection-operator, observable, and frontier-scan specs. Historical treatment names are translation aids in the atlas glossary, not runtime primitives.
 
 The current live substrate program uses explicit **transition energy**:
 
@@ -85,7 +85,7 @@ combined asymmetry:
   clean and rerouting-bearing, but not yet synergistic in the sparse tested grid
 ```
 
-The preservation-focused asymmetry-ladder and low-beta scaleups strengthened the preservation-asymmetry read. The cleanest current target is `symbol_histogram_distance`, because it produced aligned amplification, rerouting, reopening, weakening, and no baseline-missing rows. The subsequent MaxEnt and top-m geometry audits narrowed the mechanism: the tested stochastic relaxations stayed stable while deterministic top-m reproduced the response on the first design set. The hard-top-m mechanism branch then found a cleaner rank-boundary pattern: rank-prefix `m=3`, rank-subset `m=4` retaining ranks `1;2;3`, and rank-subset `m=5` retaining ranks `1;2;3` were response-bearing. Random deletion at matched effective degree stayed stable, so the current target is the shared low-rank successor core rather than plain capacity reduction. The current Future Field Atlas rebuild is an implementation reset designed to recover that low-rank-core anatomy from raw topology before moving to coupled future fields.
+The preservation-focused asymmetry-ladder and low-beta scaleups strengthened the preservation-asymmetry read. The cleanest current target is `symbol_histogram_distance`, because it produced aligned amplification, rerouting, reopening, weakening, and no baseline-missing rows. The subsequent MaxEnt and top-m geometry audits narrowed the mechanism: the tested stochastic relaxations stayed stable while deterministic top-m reproduced the response on the first design set. The hard-top-m mechanism branch then found a cleaner rank-boundary pattern: rank-prefix `m=3`, rank-subset `m=4` retaining ranks `1;2;3`, and rank-subset `m=5` retaining ranks `1;2;3` were response-bearing. Random deletion at matched effective degree stayed stable, so the current target is the shared low-rank successor boundary rather than plain capacity reduction. The current Future Field Atlas rebuild is an implementation reset designed to express that rank-boundary calibration pattern from raw topology before moving to coupled future fields.
 
 ## 3. Core vocabulary
 
@@ -313,7 +313,7 @@ The immediate next empirical task is not holdout and not candidate promotion.
 It is:
 
 ```text
-coupled-frontier smoke using low-rank successor-core boundary pressure
+coupled-frontier smoke using low-rank successor-boundary pressure
 ```
 
 The low-beta and MaxEnt/top-m audits found:
@@ -334,9 +334,9 @@ The focus should be:
 
 ```text
 use the resolved hard-top-m feature as a coupling primitive:
-  shared low-rank successor core;
-  core/fringe boundary pressure;
-  non-erasure of the retained strong core;
+  shared low-rank successor boundary;
+  rank-boundary pressure;
+  non-erasure of the retained low-rank prefix;
   horizon-pair focus from 16->24 onward.
 ```
 

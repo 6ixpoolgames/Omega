@@ -14,11 +14,11 @@ from pathlib import Path
 from typing import Iterable
 
 from .analyzer import (
-    boundary_recovery_by_horizon_pair,
-    rank_core_recovery_by_horizon,
-    target_rank_core_distance_summary,
+    rank_boundary_geometry_by_horizon,
+    rank_boundary_geometry_by_horizon_pair,
+    selection_operator_geometry_summary,
 )
-from .contracts import CLAIM_BOUNDARY, ScanBundle, ScanTask, instrument_metadata
+from .contracts import CLAIM_BOUNDARY, FrontierScanSpec, ScanBundle, ScanTask, instrument_metadata
 from .generator import DEFAULT_SELECTION_OPERATORS, build_generated_conditions, select_start_states
 from .mapper import map_scan
 from .scanner import scan_task
@@ -48,7 +48,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--horizon-pairs", type=str, default="")
     parser.add_argument("--macro-invariant-kind", type=str, default="symbol_histogram_distance")
     parser.add_argument("--macro-invariant-beta-list", type=str, default="0.10")
-    parser.add_argument("--core-rank-k", type=int, default=3)
+    parser.add_argument("--rank-boundary-k", type=int, default=3)
     parser.add_argument(
         "--selection-operators",
         type=str,
@@ -92,7 +92,7 @@ def main() -> None:
         selection_operators=selection_operators,
         macro_invariant_kind=args.macro_invariant_kind,
         macro_invariant_betas=macro_betas,
-        core_rank_k=args.core_rank_k,
+        rank_boundary_k=args.rank_boundary_k,
         base_seed=args.base_seed,
     )
     tasks = build_scan_tasks(
@@ -131,6 +131,23 @@ def build_scan_tasks(
     max_frontier_edges_per_step: int,
 ) -> list[ScanTask]:
     tasks: list[ScanTask] = []
+    frontier_scan = FrontierScanSpec(
+        frontier_scan_id=f"frontier_scan__{safe_token(str(horizon_schedule))}__H{horizon_max}",
+        frontier_expansion_rule_id="iterated_selected_successor_image",
+        horizon_schedule_id=f"explicit_horizon_schedule__{safe_token(str(horizon_schedule))}",
+        horizon_schedule=horizon_schedule,
+        horizon_max=horizon_max,
+        node_artifact_retention_policy=(
+            f"sorted_prefix_limit_{max_frontier_nodes_per_horizon}"
+            if max_frontier_nodes_per_horizon > 0 else "complete"
+        ),
+        edge_artifact_retention_policy=(
+            f"sorted_prefix_limit_{max_frontier_edges_per_step}"
+            if max_frontier_edges_per_step > 0 else "complete"
+        ),
+        max_frontier_nodes_per_horizon=max_frontier_nodes_per_horizon,
+        max_frontier_edges_per_step=max_frontier_edges_per_step,
+    )
     for condition in conditions:
         starts = select_start_states(condition, start_samples)  # type: ignore[arg-type]
         for start_index, start in enumerate(starts):
@@ -142,12 +159,9 @@ def build_scan_tasks(
                 ScanTask(
                     scan_id=scan_id,
                     condition=condition,  # type: ignore[arg-type]
+                    frontier_scan=frontier_scan,
                     start_index=start_index,
                     start_state=start,
-                    horizon_max=horizon_max,
-                    horizon_schedule=horizon_schedule,
-                    max_frontier_nodes_per_horizon=max_frontier_nodes_per_horizon,
-                    max_frontier_edges_per_step=max_frontier_edges_per_step,
                 )
             )
     return tasks
@@ -287,9 +301,9 @@ def write_all_outputs(
     multiscale_pairs = expand_horizon_pair_closure(horizon_pairs)
     multiscale = multiscale_transport_matrices(mapped_scans, multiscale_pairs)  # type: ignore[arg-type]
     residual_rows = flow_composition_residual_rows(multiscale)
-    target_core_summary = target_rank_core_distance_summary(mapped_scans)  # type: ignore[arg-type]
-    rank_core_rows = rank_core_recovery_by_horizon(mapped_scans)  # type: ignore[arg-type]
-    boundary_pair_rows = boundary_recovery_by_horizon_pair(mapped_scans, horizon_pairs)  # type: ignore[arg-type]
+    operator_geometry_summary = selection_operator_geometry_summary(mapped_scans)  # type: ignore[arg-type]
+    rank_boundary_rows = rank_boundary_geometry_by_horizon(mapped_scans)  # type: ignore[arg-type]
+    boundary_pair_rows = rank_boundary_geometry_by_horizon_pair(mapped_scans, horizon_pairs)  # type: ignore[arg-type]
 
     output_files = [
         "future_field_atlas_manifest.json",
@@ -302,36 +316,36 @@ def write_all_outputs(
         "frontier_edges_by_step.csv",
         "frontier_profile_by_horizon.csv",
         "frontier_membership_timeseries.csv",
-        "core_fringe_boundary_by_horizon.csv",
+        "rank_boundary_geometry_by_horizon.csv",
         "raw_transport_matrices_adjacent.npz",
         "raw_transport_matrices_adjacent_manifest.csv",
         "raw_transport_matrices_multiscale.npz",
         "raw_transport_matrices_multiscale_manifest.csv",
         "transport_flow_composition_residuals.csv",
-        "target_rank_core_distance_summary.csv",
-        "rank_core_recovery_by_horizon.csv",
-        "boundary_recovery_by_horizon_pair.csv",
+        "selection_operator_geometry_summary.csv",
+        "rank_boundary_geometry_by_horizon_summary.csv",
+        "rank_boundary_geometry_by_horizon_pair.csv",
     ]
     write_csv(out_dir / "frontier_nodes_by_horizon.csv", node_rows)
     write_csv(out_dir / "frontier_edges_by_step.csv", edge_rows)
     write_csv(out_dir / "frontier_profile_by_horizon.csv", profile_rows)
     write_csv(out_dir / "frontier_membership_timeseries.csv", membership_rows)
-    write_csv(out_dir / "core_fringe_boundary_by_horizon.csv", boundary_rows)
+    write_csv(out_dir / "rank_boundary_geometry_by_horizon.csv", boundary_rows)
     write_sparse_npz(out_dir / "raw_transport_matrices_adjacent.npz", adjacent)
     write_csv(out_dir / "raw_transport_matrices_adjacent_manifest.csv", matrix_manifest_rows(adjacent))
     write_sparse_npz(out_dir / "raw_transport_matrices_multiscale.npz", multiscale)
     write_csv(out_dir / "raw_transport_matrices_multiscale_manifest.csv", matrix_manifest_rows(multiscale))
     write_csv(out_dir / "transport_flow_composition_residuals.csv", residual_rows)
-    write_csv(out_dir / "target_rank_core_distance_summary.csv", target_core_summary)
-    write_csv(out_dir / "rank_core_recovery_by_horizon.csv", rank_core_rows)
-    write_csv(out_dir / "boundary_recovery_by_horizon_pair.csv", boundary_pair_rows)
+    write_csv(out_dir / "selection_operator_geometry_summary.csv", operator_geometry_summary)
+    write_csv(out_dir / "rank_boundary_geometry_by_horizon_summary.csv", rank_boundary_rows)
+    write_csv(out_dir / "rank_boundary_geometry_by_horizon_pair.csv", boundary_pair_rows)
     status["completed_utc"] = utc_now()
     status["elapsed_seconds"] = round(time.perf_counter() - started_perf, 3)
     status["frontier_node_rows"] = len(node_rows)
     status["frontier_edge_rows"] = len(edge_rows)
-    status["target_rank_core_distance_rows"] = len(target_core_summary)
+    status["selection_operator_geometry_rows"] = len(operator_geometry_summary)
     write_partial(out_dir, status, progress, errors, started_perf)
-    write_report(out_dir, status, target_core_summary)
+    write_report(out_dir, status, operator_geometry_summary)
     manifest = {
         **instrument_metadata(),
         "run_status": status.get("status"),
@@ -354,14 +368,14 @@ def write_all_outputs(
     write_json(out_dir / "future_field_atlas_manifest.json", manifest)
 
 
-def write_report(out_dir: Path, status: dict[str, object], target_core_rows: list[dict[str, object]]) -> None:
+def write_report(out_dir: Path, status: dict[str, object], operator_geometry_rows: list[dict[str, object]]) -> None:
     deterministic = [
-        row for row in target_core_rows
-        if str(row.get("distance_to_target_core_geometry", "")) != ""
+        row for row in operator_geometry_rows
+        if str(row.get("operator_rank_boundary_distance", "")) != ""
     ]
     near_zero = [
         row for row in deterministic
-        if float(row.get("distance_to_target_core_geometry", 1.0)) <= 0.05
+        if float(row.get("operator_rank_boundary_distance", 1.0)) <= 0.05
     ]
     lines = [
         "# Future Field Atlas Phase 0/1 Smoke",
@@ -374,21 +388,21 @@ def write_report(out_dir: Path, status: dict[str, object], target_core_rows: lis
         "## Readout",
         "",
         (
-            "Raw topology produced near-zero target-core distance in "
+            "Raw topology produced near-zero operator rank-boundary distance in "
             f"{len(near_zero)} of {len(deterministic)} deterministic operator summaries."
         ),
         "",
-        "The report-level read uses continuous rank-set and core/fringe distance metrics. It does not use the old response taxonomy.",
+        "The report-level read uses continuous rank-boundary geometry metrics. It does not use the old response taxonomy.",
         "",
         "## Primary Artifacts",
         "",
         "- `frontier_nodes_by_horizon.csv`",
         "- `frontier_edges_by_step.csv`",
         "- `frontier_profile_by_horizon.csv`",
-        "- `core_fringe_boundary_by_horizon.csv`",
+        "- `rank_boundary_geometry_by_horizon.csv`",
         "- `raw_transport_matrices_adjacent.npz`",
         "- `raw_transport_matrices_multiscale.npz`",
-        "- `target_rank_core_distance_summary.csv`",
+        "- `selection_operator_geometry_summary.csv`",
     ]
     (out_dir / "future_field_atlas_report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 

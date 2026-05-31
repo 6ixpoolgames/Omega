@@ -9,21 +9,21 @@ patch notes at the top.
 
 ## 2026-06-01
 
-### Future Field Atlas Phase 0/1 Clean Slate Smoke
+### Future Field Atlas Phase 0/1 Publication-Schema Smoke
 
 Implemented the first clean Future Field Atlas package as an instrumentation
 reset. The new package separates substrate generation, frontier scanning,
-geometry mapping, transport matrix construction, and rank-core distance analysis.
+geometry mapping, transport matrix construction, and operator-geometry analysis.
 The scanner records raw topology and does not classify responses.
 
-After audit, tore down the remaining compatibility adapter surface. Condition
-identity is mathematical: `StateSpaceSpec`, `TransformationLawSpec`,
-`SelectionOperatorSpec`, and `ObservableSpec`. Historical treatment-arm names
-now live only in the Future Field Atlas glossary. Runtime outputs no longer
-emit `boundary_control`, `condition_role`, `human_label`, `legacy_*`, `base_m`,
-`effective_m`, `perturbation_family`, `perturbation_strength`, or
-`known_mechanism_recovery_summary.csv`. Boolean recovery labels were replaced by
-continuous target-rank-core distance metrics.
+After audit, tore down the remaining compatibility adapter surface and then
+demoted rank-core recovery from the center of the instrument into a calibration
+fixture. Condition identity is mathematical: `StateSpaceSpec`,
+`TransformationLawSpec`, `SelectionOperatorSpec`, `ObservableSpec`, and
+`FrontierScanSpec`. Historical treatment-arm names live only in the Future Field
+Atlas glossary. Runtime package search returns zero hits for historical
+treatment-arm and response terms. Boolean recovery labels were replaced by
+continuous operator and rank-boundary geometry metrics.
 
 Retained note:
 
@@ -36,7 +36,7 @@ Spec:
 
 Local validation output:
 
-- `results/future_field_atlas/20260601_phase0_1_clean_slate_h32/`
+- `results/future_field_atlas/20260601_phase0_1_publication_schema_h32/`
 
 Run shape:
 
@@ -48,25 +48,25 @@ scans_completed: 8 / 8
 elapsed_seconds: 15.997
 errors: 0
 horizon_max: 32
-frontier_node_rows: 30801
-frontier_edge_rows: 107409
-target_rank_core_distance_rows: 8
+frontier_node_rows: 30461
+frontier_edge_rows: 106431
+selection_operator_geometry_rows: 8
 ```
 
 Main read:
 
 ```text
-near-zero target-core distance:
+near-zero operator rank-boundary distance:
   rank_prefix:m=3
   rank_subset:m=4:retain=1|2|3:remove=4
   rank_subset:m=5:retain=1|2|3:remove=4|5
 
-nonzero target-core distance:
-  rank_prefix:m=4 and rank_prefix:m=5 with fringe present
+nonzero operator rank-boundary distance:
+  rank_prefix:m=4 and rank_prefix:m=5 with outside-boundary ranks present
   rank_subset:m=4:retain=2|3|4:remove=1
 
 sampled stochastic controls:
-  emitted core/fringe fractions but no deterministic rank-set distance
+  emitted boundary fractions but no deterministic rank-set distance
 ```
 
 Interpretation:
@@ -74,8 +74,8 @@ Interpretation:
 ```text
 This is an instrument-build smoke, not a validation result. It supports moving
 from the old response-classifier-first runner toward a raw-geometry-first atlas.
-Do not implement coupled future-field scans until a slightly larger Phase 1
-calibration confirms that the raw artifacts remain sufficient.
+The atlas object now leads; the rank-boundary split is documented as a
+calibration fixture.
 ```
 
 ### RFS-MB0 Hard Top-m Boundary Resolution Medium Sweep

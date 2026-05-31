@@ -110,9 +110,9 @@ def matrix_manifest_rows(matrices: list[SparseMatrixRecord]) -> list[dict[str, o
             "row_item_count": len(matrix.row_labels),
             "column_item_count": len(matrix.column_labels),
             "nonzero_count": len(matrix.values),
-            "transport_mass_total": total,
-            "retained_transport_mass": total,
-            "dropped_transport_mass": 0.0,
+            "matrix_value_semantics": "path_count_or_edge_multiplicity",
+            "matrix_value_total": total,
+            "dropped_entry_count_due_to_artifact_policy": 0,
         })
     return rows
 
@@ -172,30 +172,36 @@ def composition_residual(
     left_dense = dense_matrix(left, source_labels, mid_labels)
     right_dense = dense_matrix(right, mid_labels, target_labels)
     direct_dense = dense_matrix(direct, source_labels, target_labels)
-    composed_mass = left_dense @ right_dense
-    composed = composed_mass > 0
+    composed_path_count = left_dense @ right_dense
+    composed = composed_path_count > 0
     direct_bool = direct_dense > 0
     support_diff = direct_bool.astype(float) - composed.astype(float)
     support_residual_l1 = float(np.abs(support_diff).sum())
     support_residual_fro = float(np.sqrt((support_diff * support_diff).sum()))
-    direct_mass = float(direct_bool.sum())
-    mass_diff = direct_dense - composed_mass
-    mass_residual_l1 = float(np.abs(mass_diff).sum())
-    mass_residual_fro = float(np.sqrt((mass_diff * mass_diff).sum()))
+    direct_support_weight = float(direct_bool.sum())
+    path_count_diff = direct_dense - composed_path_count
+    path_count_residual_l1 = float(np.abs(path_count_diff).sum())
+    path_count_residual_fro = float(np.sqrt((path_count_diff * path_count_diff).sum()))
     direct_weight = float(direct_dense.sum())
     return {
         "composition_status": status,
-        "composition_kind": "support_and_path_count",
+        "composition_kind": "support_and_path_count_unit_edge_weight",
+        "support_composition_status": status,
         "support_composition_residual_l1": support_residual_l1,
         "support_composition_residual_frobenius": support_residual_fro,
-        "support_composition_residual_mass_fraction": support_residual_l1 / max(1.0, direct_mass),
+        "support_composition_residual_fraction": support_residual_l1 / max(1.0, direct_support_weight),
         "support_rank_direct": int(np.linalg.matrix_rank(direct_bool)),
         "support_rank_composed": int(np.linalg.matrix_rank(composed)),
-        "path_count_composition_residual_l1": mass_residual_l1,
-        "path_count_composition_residual_frobenius": mass_residual_fro,
-        "path_count_composition_residual_mass_fraction": mass_residual_l1 / max(1.0, direct_weight),
+        "path_count_composition_status": status,
+        "path_count_composition_residual_l1": path_count_residual_l1,
+        "path_count_composition_residual_frobenius": path_count_residual_fro,
+        "path_count_composition_residual_fraction": path_count_residual_l1 / max(1.0, direct_weight),
         "path_count_rank_direct": int(np.linalg.matrix_rank(direct_dense)),
-        "path_count_rank_composed": int(np.linalg.matrix_rank(composed_mass)),
+        "path_count_rank_composed": int(np.linalg.matrix_rank(composed_path_count)),
+        "weighted_flow_composition_status": "not_defined_unit_edge_weights_only",
+        "weighted_flow_composition_residual_l1": "",
+        "weighted_flow_composition_residual_frobenius": "",
+        "weighted_flow_composition_residual_fraction": "",
     }
 
 

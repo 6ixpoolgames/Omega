@@ -6,7 +6,7 @@ from .contracts import MappedScan
 from .util import mean
 
 
-def target_rank_core_distance_summary(scans: list[MappedScan]) -> list[dict[str, object]]:
+def selection_operator_geometry_summary(scans: list[MappedScan]) -> list[dict[str, object]]:
     grouped: dict[str, list[dict[str, object]]] = defaultdict(list)
     profile_grouped: dict[str, list[dict[str, object]]] = defaultdict(list)
     for scan in scans:
@@ -19,23 +19,33 @@ def target_rank_core_distance_summary(scans: list[MappedScan]) -> list[dict[str,
         first = boundary_rows[0]
         evaluable_rows = [
             row for row in boundary_rows
-            if int(row.get("baseline_core_edge_count", 0) or 0) > 0
-            and (int(row.get("core_edge_count", 0) or 0) + int(row.get("fringe_edge_count", 0) or 0)) > 0
+            if int(row.get("reference_inside_rank_boundary_edge_count", 0) or 0) > 0
+            and (
+                int(row.get("inside_rank_boundary_edge_count", 0) or 0)
+                + int(row.get("outside_rank_boundary_edge_count", 0) or 0)
+            ) > 0
         ] or boundary_rows
         profiles = profile_grouped.get(condition_id, [])
-        selected_core_fraction = mean([float(row["selected_core_fraction"]) for row in evaluable_rows])
-        selected_fringe_fraction = mean([float(row["selected_fringe_fraction"]) for row in evaluable_rows])
-        core_retention = mean([float(row["core_retention_fraction_vs_baseline"]) for row in evaluable_rows if row["core_retention_fraction_vs_baseline"] != ""])
-        fringe_retention_values = [float(row["fringe_retention_fraction_vs_baseline"]) for row in evaluable_rows if row["fringe_retention_fraction_vs_baseline"] != ""]
-        fringe_retention = mean(fringe_retention_values)
-        effective_m = int(first["effective_out_degree"])
-        core_rank_k = int(first["core_rank_k"])
-        rank_metrics = target_core_rank_set_metrics(first)
-        calibration_distance = distance_to_target_core(
-            selected_core_fraction=selected_core_fraction,
-            selected_fringe_fraction=selected_fringe_fraction,
-            core_retention=core_retention,
-            rank_set_distance=rank_metrics["distance_to_target_rank_core"],
+        inside_fraction = mean([float(row["selected_inside_rank_boundary_fraction"]) for row in evaluable_rows])
+        outside_fraction = mean([float(row["selected_outside_rank_boundary_fraction"]) for row in evaluable_rows])
+        inside_retention = mean([
+            float(row["inside_rank_boundary_retention_fraction_vs_reference"])
+            for row in evaluable_rows
+            if row["inside_rank_boundary_retention_fraction_vs_reference"] != ""
+        ])
+        outside_retention_values = [
+            float(row["outside_rank_boundary_retention_fraction_vs_reference"])
+            for row in evaluable_rows
+            if row["outside_rank_boundary_retention_fraction_vs_reference"] != ""
+        ]
+        outside_retention = mean(outside_retention_values)
+        rank_boundary_k = int(first["rank_boundary_k"])
+        rank_metrics = observable_prefix_rank_set_metrics(first)
+        boundary_distance = rank_boundary_distance(
+            selected_inside_fraction=inside_fraction,
+            selected_outside_fraction=outside_fraction,
+            inside_retention=inside_retention,
+            rank_set_distance=rank_metrics["rank_set_distance_to_observable_prefix"],
         )
         rows.append({
             "condition_id": condition_id,
@@ -45,24 +55,26 @@ def target_rank_core_distance_summary(scans: list[MappedScan]) -> list[dict[str,
             "group_id": first["group_id"],
             "macro_invariant_beta": first["macro_invariant_beta"],
             "base_out_degree": first["base_out_degree"],
-            "effective_out_degree": effective_m,
-            "core_rank_k": core_rank_k,
+            "effective_out_degree": first["effective_out_degree"],
+            "rank_boundary_k": rank_boundary_k,
             "retained_rank_set": first["retained_rank_set"],
             "removed_rank_set": first["removed_rank_set"],
             "stochastic_selection_flag": first["stochastic_selection_flag"],
             **rank_metrics,
-            "mean_selected_core_fraction": selected_core_fraction,
-            "mean_selected_fringe_fraction": selected_fringe_fraction,
-            "mean_core_retention_fraction_vs_baseline": core_retention,
-            "mean_fringe_retention_fraction_vs_baseline": fringe_retention if fringe_retention_values else "",
-            "distance_to_target_core_geometry": calibration_distance,
+            "mean_selected_inside_rank_boundary_fraction": inside_fraction,
+            "mean_selected_outside_rank_boundary_fraction": outside_fraction,
+            "mean_inside_rank_boundary_retention_fraction_vs_reference": inside_retention,
+            "mean_outside_rank_boundary_retention_fraction_vs_reference": (
+                outside_retention if outside_retention_values else ""
+            ),
+            "operator_rank_boundary_distance": boundary_distance,
             "mean_frontier_state_count": mean([float(row["frontier_state_count"]) for row in profiles]),
             "mean_frontier_component_count": mean([float(row["frontier_component_count"]) for row in profiles]),
         })
     return rows
 
 
-def rank_core_recovery_by_horizon(scans: list[MappedScan]) -> list[dict[str, object]]:
+def rank_boundary_geometry_by_horizon(scans: list[MappedScan]) -> list[dict[str, object]]:
     grouped: dict[tuple[str, int], list[dict[str, object]]] = defaultdict(list)
     for scan in scans:
         for row in scan.boundary_rows:
@@ -78,20 +90,35 @@ def rank_core_recovery_by_horizon(scans: list[MappedScan]) -> list[dict[str, obj
             "horizon": first["horizon"],
             "base_out_degree": first["base_out_degree"],
             "effective_out_degree": first["effective_out_degree"],
-            "core_rank_k": first["core_rank_k"],
+            "rank_boundary_k": first["rank_boundary_k"],
             "retained_rank_set": first["retained_rank_set"],
             "removed_rank_set": first["removed_rank_set"],
-            "selected_core_fraction": mean([float(row["selected_core_fraction"]) for row in rows]),
-            "selected_fringe_fraction": mean([float(row["selected_fringe_fraction"]) for row in rows]),
-            "core_retention_fraction_vs_baseline": mean([float(row["core_retention_fraction_vs_baseline"]) for row in rows if row["core_retention_fraction_vs_baseline"] != ""]),
-            "fringe_retention_fraction_vs_baseline": mean([float(row["fringe_retention_fraction_vs_baseline"]) for row in rows if row["fringe_retention_fraction_vs_baseline"] != ""]),
-            "core_edge_count": mean([float(row["core_edge_count"]) for row in rows]),
-            "fringe_edge_count": mean([float(row["fringe_edge_count"]) for row in rows]),
+            "selected_inside_rank_boundary_fraction": mean([
+                float(row["selected_inside_rank_boundary_fraction"]) for row in rows
+            ]),
+            "selected_outside_rank_boundary_fraction": mean([
+                float(row["selected_outside_rank_boundary_fraction"]) for row in rows
+            ]),
+            "inside_rank_boundary_retention_fraction_vs_reference": mean([
+                float(row["inside_rank_boundary_retention_fraction_vs_reference"])
+                for row in rows
+                if row["inside_rank_boundary_retention_fraction_vs_reference"] != ""
+            ]),
+            "outside_rank_boundary_retention_fraction_vs_reference": mean([
+                float(row["outside_rank_boundary_retention_fraction_vs_reference"])
+                for row in rows
+                if row["outside_rank_boundary_retention_fraction_vs_reference"] != ""
+            ]),
+            "inside_rank_boundary_edge_count": mean([float(row["inside_rank_boundary_edge_count"]) for row in rows]),
+            "outside_rank_boundary_edge_count": mean([float(row["outside_rank_boundary_edge_count"]) for row in rows]),
         })
     return out
 
 
-def boundary_recovery_by_horizon_pair(scans: list[MappedScan], horizon_pairs: tuple[tuple[int, int], ...]) -> list[dict[str, object]]:
+def rank_boundary_geometry_by_horizon_pair(
+    scans: list[MappedScan],
+    horizon_pairs: tuple[tuple[int, int], ...],
+) -> list[dict[str, object]]:
     by_scan_h: dict[tuple[str, int], dict[str, object]] = {}
     for scan in scans:
         for row in scan.boundary_rows:
@@ -111,53 +138,66 @@ def boundary_recovery_by_horizon_pair(scans: list[MappedScan], horizon_pairs: tu
                 "group_id": scan.raw.spec.group_id,
                 "source_horizon": left,
                 "target_horizon": right,
-                "core_fraction_delta": float(end["selected_core_fraction"]) - float(start["selected_core_fraction"]),
-                "fringe_fraction_delta": float(end["selected_fringe_fraction"]) - float(start["selected_fringe_fraction"]),
-                "core_retention_target": end["core_retention_fraction_vs_baseline"],
-                "fringe_retention_target": end["fringe_retention_fraction_vs_baseline"],
+                "inside_rank_boundary_fraction_delta": (
+                    float(end["selected_inside_rank_boundary_fraction"])
+                    - float(start["selected_inside_rank_boundary_fraction"])
+                ),
+                "outside_rank_boundary_fraction_delta": (
+                    float(end["selected_outside_rank_boundary_fraction"])
+                    - float(start["selected_outside_rank_boundary_fraction"])
+                ),
+                "inside_rank_boundary_retention_target": (
+                    end["inside_rank_boundary_retention_fraction_vs_reference"]
+                ),
+                "outside_rank_boundary_retention_target": (
+                    end["outside_rank_boundary_retention_fraction_vs_reference"]
+                ),
             })
     return rows
 
 
-def target_core_rank_set_metrics(row: dict[str, object]) -> dict[str, object]:
-    core_rank_k = int(row["core_rank_k"])
-    target = set(range(1, core_rank_k + 1))
+def observable_prefix_rank_set_metrics(row: dict[str, object]) -> dict[str, object]:
+    rank_boundary_k = int(row["rank_boundary_k"])
+    observable_prefix = set(range(1, rank_boundary_k + 1))
     retained = parse_rank_set(row.get("retained_rank_set", ""))
     if not retained:
         return {
-            "target_core_rank_set": rank_set_text(tuple(sorted(target))),
-            "rank_set_jaccard_to_target_core": "",
-            "rank_set_precision_to_target_core": "",
-            "rank_set_recall_to_target_core": "",
-            "distance_to_target_rank_core": "",
+            "observable_prefix_rank_set": rank_set_text(tuple(sorted(observable_prefix))),
+            "rank_set_jaccard_to_observable_prefix": "",
+            "rank_set_precision_to_observable_prefix": "",
+            "rank_set_recall_to_observable_prefix": "",
+            "rank_set_symmetric_difference_from_observable_prefix": "",
+            "rank_set_distance_to_observable_prefix": "",
         }
-    intersection = retained & target
-    union = retained | target
+    intersection = retained & observable_prefix
+    union = retained | observable_prefix
+    symmetric_difference = retained ^ observable_prefix
     jaccard = len(intersection) / max(1, len(union))
     precision = len(intersection) / max(1, len(retained))
-    recall = len(intersection) / max(1, len(target))
+    recall = len(intersection) / max(1, len(observable_prefix))
     return {
-        "target_core_rank_set": rank_set_text(tuple(sorted(target))),
-        "rank_set_jaccard_to_target_core": jaccard,
-        "rank_set_precision_to_target_core": precision,
-        "rank_set_recall_to_target_core": recall,
-        "distance_to_target_rank_core": 1.0 - jaccard,
+        "observable_prefix_rank_set": rank_set_text(tuple(sorted(observable_prefix))),
+        "rank_set_jaccard_to_observable_prefix": jaccard,
+        "rank_set_precision_to_observable_prefix": precision,
+        "rank_set_recall_to_observable_prefix": recall,
+        "rank_set_symmetric_difference_from_observable_prefix": rank_set_text(tuple(sorted(symmetric_difference))),
+        "rank_set_distance_to_observable_prefix": 1.0 - jaccard,
     }
 
 
-def distance_to_target_core(
+def rank_boundary_distance(
     *,
-    selected_core_fraction: float,
-    selected_fringe_fraction: float,
-    core_retention: float,
+    selected_inside_fraction: float,
+    selected_outside_fraction: float,
+    inside_retention: float,
     rank_set_distance: object,
 ) -> object:
     if rank_set_distance == "":
         return ""
     return (
-        abs(1.0 - selected_core_fraction)
-        + abs(selected_fringe_fraction)
-        + abs(1.0 - core_retention)
+        abs(1.0 - selected_inside_fraction)
+        + abs(selected_outside_fraction)
+        + abs(1.0 - inside_retention)
         + float(rank_set_distance)
     ) / 4.0
 

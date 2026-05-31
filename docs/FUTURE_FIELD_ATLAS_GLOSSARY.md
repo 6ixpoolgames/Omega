@@ -26,6 +26,10 @@ each state. This is the native condition identity for the Future Field Atlas.
 observables include frontier topology, rank-boundary anatomy, and transport
 matrices.
 
+`FrontierScanSpec`
+: Declares how reachable frontiers are unfolded and retained: expansion rule,
+horizon schedule, horizon cap, and artifact retention policy.
+
 `frontier`
 : Set of states reachable at a horizon from a start state under a specified
 law and selection operator.
@@ -37,13 +41,13 @@ law and selection operator.
 : Rank of a candidate successor under the local transition energy. Rank `1` is
 the lowest-energy candidate.
 
-`core_rank_k`
-: Calibration boundary used to compare a retained rank set against a target
-low-rank core. It is an instrument parameter, not a theory primitive.
+`rank_boundary_k`
+: Calibration boundary used to compare retained rank sets against an observable
+low-rank prefix. It is an instrument parameter, not a theory primitive.
 
-`rank_offset_from_core_boundary`
-: `candidate_rank - core_rank_k`. Nonpositive values are inside the current
-calibration core; positive values are outside it.
+`rank_offset_from_boundary`
+: `candidate_rank - rank_boundary_k`. Nonpositive values are inside the current
+calibration boundary; positive values are outside it.
 
 `retained_rank_set`
 : Candidate ranks retained by a deterministic selection operator.
@@ -61,9 +65,9 @@ calibration core; positive values are outside it.
 : Operator sampling a lower effective out-degree from the top-ranked candidate
 set under a stable seeded policy.
 
-`target_rank_core_distance_summary.csv`
-: Primary Phase 0/1 calibration summary. It reports continuous distances and
-fractions, not a boolean mechanism-recovery label.
+`selection_operator_geometry_summary.csv`
+: Primary Phase 0/1 calibration summary. It reports continuous operator and
+rank-boundary geometry, not a boolean mechanism-recovery label.
 
 ## Historical Translation
 
@@ -91,7 +95,7 @@ selection operator
 frontier topology
 reachable-future geometry
 transport composition residual
-distance to target rank core
+operator rank-boundary distance
 ```
 
 Avoid as runtime terms:

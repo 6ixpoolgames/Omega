@@ -35,25 +35,36 @@ def profile_rows_for_scan(raw: RawScan, condition: GeneratedCondition) -> list[d
         new_states = len([state for state in frontier if first_seen.get(state) == horizon])
         extinct_states = len(previous_frontier - frontier) if horizon > 0 else 0
         returning_states = len([state for state in frontier if first_seen.get(state, horizon) < horizon and state not in previous_frontier])
-        core_edges, fringe_edges = edge_class_counts(raw.step_edges.get(max(0, horizon - 1), ()), condition)
+        inside_boundary_edges, outside_boundary_edges = edge_class_counts(
+            raw.step_edges.get(max(0, horizon - 1), ()),
+            condition,
+        )
         node_truncated = len(frontier) > raw.max_frontier_nodes_per_horizon
         edge_truncated = len(raw.step_edges.get(horizon, ())) > raw.max_frontier_edges_per_step
         rows.append({
             **profile_base_fields(raw),
             "horizon": horizon,
             "feature_status": "complete_from_in_memory_frontier",
-            "node_artifact_status": "complete" if not node_truncated else "truncated_sorted_prefix_noninterpretable",
-            "edge_artifact_status": "complete" if not edge_truncated else "truncated_sorted_prefix_noninterpretable",
+            "node_artifact_status": "complete" if not node_truncated else "truncated_noninterpretable",
+            "edge_artifact_status": "complete" if not edge_truncated else "truncated_noninterpretable",
             "frontier_state_count": len(frontier),
             "frontier_edge_count": len(raw.step_edges.get(horizon, ())),
             "frontier_component_count": component_count,
             "largest_component_fraction": largest_fraction,
             "frontier_entropy": entropy_from_weights([1.0 for _state in frontier]),
-            "core_state_count": state_class_count(raw.step_edges.get(max(0, horizon - 1), ()), condition, "core"),
-            "fringe_state_count": state_class_count(raw.step_edges.get(max(0, horizon - 1), ()), condition, "fringe"),
-            "core_edge_count": core_edges,
-            "fringe_edge_count": fringe_edges,
-            "core_fringe_ratio": core_edges / max(1, fringe_edges),
+            "inside_rank_boundary_state_count": state_class_count(
+                raw.step_edges.get(max(0, horizon - 1), ()),
+                condition,
+                "inside",
+            ),
+            "outside_rank_boundary_state_count": state_class_count(
+                raw.step_edges.get(max(0, horizon - 1), ()),
+                condition,
+                "outside",
+            ),
+            "inside_rank_boundary_edge_count": inside_boundary_edges,
+            "outside_rank_boundary_edge_count": outside_boundary_edges,
+            "inside_outside_rank_boundary_ratio": inside_boundary_edges / max(1, outside_boundary_edges),
             "new_state_count": new_states,
             "extinct_state_count": extinct_states,
             "returning_state_count": returning_states,
@@ -64,8 +75,8 @@ def profile_rows_for_scan(raw: RawScan, condition: GeneratedCondition) -> list[d
 
 def membership_rows_for_scan(raw: RawScan, condition: GeneratedCondition) -> list[dict[str, object]]:
     presence: dict[State, list[int]] = defaultdict(list)
-    core_counts: dict[State, int] = defaultdict(int)
-    fringe_counts: dict[State, int] = defaultdict(int)
+    inside_boundary_counts: dict[State, int] = defaultdict(int)
+    outside_boundary_counts: dict[State, int] = defaultdict(int)
     for horizon in range(raw.horizon_max + 1):
         for state in raw.frontiers[horizon]:
             presence[state].append(horizon)
@@ -74,8 +85,8 @@ def membership_rows_for_scan(raw: RawScan, condition: GeneratedCondition) -> lis
             anatomy = condition.candidate_anatomy.get((source, target))
             if not anatomy:
                 continue
-            core_counts[target] += int(anatomy.core_flag)
-            fringe_counts[target] += int(anatomy.fringe_flag)
+            inside_boundary_counts[target] += int(anatomy.inside_rank_boundary_flag)
+            outside_boundary_counts[target] += int(anatomy.outside_rank_boundary_flag)
     rows: list[dict[str, object]] = []
     for state, horizons in sorted(presence.items(), key=lambda item: item[0]):
         rows.append({
@@ -85,8 +96,8 @@ def membership_rows_for_scan(raw: RawScan, condition: GeneratedCondition) -> lis
             "last_seen_horizon": max(horizons),
             "horizon_presence_sparse_list": ";".join(str(horizon) for horizon in horizons),
             "presence_count": len(horizons),
-            "core_presence_count": core_counts.get(state, 0),
-            "fringe_presence_count": fringe_counts.get(state, 0),
+            "inside_rank_boundary_presence_count": inside_boundary_counts.get(state, 0),
+            "outside_rank_boundary_presence_count": outside_boundary_counts.get(state, 0),
         })
     return rows
 
@@ -103,55 +114,67 @@ def boundary_rows_for_scan(raw: RawScan, condition: GeneratedCondition) -> list[
         else:
             edges = raw.step_edges.get(horizon - 1, tuple())
             sources = raw.frontiers.get(horizon - 1, frozenset())
-        selected_core = 0
-        selected_fringe = 0
+        selected_inside_boundary = 0
+        selected_outside_boundary = 0
         boundary = 0
-        core_energies: list[float] = []
-        fringe_energies: list[float] = []
-        retained_core = 0
-        retained_fringe = 0
-        baseline_core_total = 0
-        baseline_fringe_total = 0
+        inside_boundary_energies: list[float] = []
+        outside_boundary_energies: list[float] = []
+        retained_inside_boundary = 0
+        retained_outside_boundary = 0
+        reference_inside_boundary_total = 0
+        reference_outside_boundary_total = 0
         selected_keys = set(edges)
         for source in sources:
             for target, anatomy in candidates_by_source.get(source, []):
-                if not anatomy.baseline_selected_flag:
+                if not anatomy.reference_selected_flag:
                     continue
-                if anatomy.candidate_rank <= raw.spec.core_rank_k:
-                    baseline_core_total += 1
-                    retained_core += int((source, target) in selected_keys)
+                if anatomy.candidate_rank <= raw.spec.rank_boundary_k:
+                    reference_inside_boundary_total += 1
+                    retained_inside_boundary += int((source, target) in selected_keys)
                 else:
-                    baseline_fringe_total += 1
-                    retained_fringe += int((source, target) in selected_keys)
+                    reference_outside_boundary_total += 1
+                    retained_outside_boundary += int((source, target) in selected_keys)
         for source, target in edges:
             anatomy = condition.candidate_anatomy.get((source, target))
             if not anatomy:
                 continue
-            selected_core += int(anatomy.core_flag)
-            selected_fringe += int(anatomy.fringe_flag)
-            boundary += int(anatomy.candidate_rank in {raw.spec.core_rank_k, raw.spec.core_rank_k + 1})
-            if anatomy.core_flag:
-                core_energies.append(anatomy.candidate_energy)
-            if anatomy.fringe_flag:
-                fringe_energies.append(anatomy.candidate_energy)
-        weakest_core = max(core_energies) if core_energies else ""
-        strongest_fringe = min(fringe_energies) if fringe_energies else ""
-        gap = (float(strongest_fringe) - float(weakest_core)) if strongest_fringe != "" and weakest_core != "" else ""
+            selected_inside_boundary += int(anatomy.inside_rank_boundary_flag)
+            selected_outside_boundary += int(anatomy.outside_rank_boundary_flag)
+            boundary += int(anatomy.candidate_rank in {raw.spec.rank_boundary_k, raw.spec.rank_boundary_k + 1})
+            if anatomy.inside_rank_boundary_flag:
+                inside_boundary_energies.append(anatomy.candidate_energy)
+            if anatomy.outside_rank_boundary_flag:
+                outside_boundary_energies.append(anatomy.candidate_energy)
+        weakest_inside = max(inside_boundary_energies) if inside_boundary_energies else ""
+        strongest_outside = min(outside_boundary_energies) if outside_boundary_energies else ""
+        gap = (float(strongest_outside) - float(weakest_inside)) if strongest_outside != "" and weakest_inside != "" else ""
         rows.append({
             **profile_base_fields(raw),
             "horizon": horizon,
-            "core_edge_count": selected_core,
-            "fringe_edge_count": selected_fringe,
-            "boundary_edge_count": boundary,
-            "weakest_core_energy_mean": weakest_core,
-            "strongest_fringe_energy_mean": strongest_fringe,
-            "core_fringe_energy_gap_mean": gap,
-            "core_retention_fraction_vs_baseline": retained_core / baseline_core_total if baseline_core_total else "",
-            "fringe_retention_fraction_vs_baseline": retained_fringe / baseline_fringe_total if baseline_fringe_total else "",
-            "selected_core_fraction": selected_core / max(1, selected_core + selected_fringe),
-            "selected_fringe_fraction": selected_fringe / max(1, selected_core + selected_fringe),
-            "baseline_core_edge_count": baseline_core_total,
-            "baseline_fringe_edge_count": baseline_fringe_total,
+            "inside_rank_boundary_edge_count": selected_inside_boundary,
+            "outside_rank_boundary_edge_count": selected_outside_boundary,
+            "rank_boundary_edge_count": boundary,
+            "weakest_inside_rank_boundary_energy": weakest_inside,
+            "strongest_outside_rank_boundary_energy": strongest_outside,
+            "rank_boundary_energy_gap": gap,
+            "inside_rank_boundary_retention_fraction_vs_reference": (
+                retained_inside_boundary / reference_inside_boundary_total
+                if reference_inside_boundary_total else ""
+            ),
+            "outside_rank_boundary_retention_fraction_vs_reference": (
+                retained_outside_boundary / reference_outside_boundary_total
+                if reference_outside_boundary_total else ""
+            ),
+            "selected_inside_rank_boundary_fraction": selected_inside_boundary / max(
+                1,
+                selected_inside_boundary + selected_outside_boundary,
+            ),
+            "selected_outside_rank_boundary_fraction": selected_outside_boundary / max(
+                1,
+                selected_inside_boundary + selected_outside_boundary,
+            ),
+            "reference_inside_rank_boundary_edge_count": reference_inside_boundary_total,
+            "reference_outside_rank_boundary_edge_count": reference_outside_boundary_total,
         })
     return rows
 
@@ -159,6 +182,7 @@ def boundary_rows_for_scan(raw: RawScan, condition: GeneratedCondition) -> list[
 def profile_base_fields(raw: RawScan) -> dict[str, object]:
     spec = raw.spec
     operator = spec.selection_operator
+    frontier_scan = raw.frontier_scan
     return {
         "scan_id": raw.scan_id,
         "condition_id": spec.condition_id,
@@ -166,9 +190,25 @@ def profile_base_fields(raw: RawScan) -> dict[str, object]:
         "group_id": spec.group_id,
         "seed": spec.seed,
         "state_space_id": spec.state_space.state_space_id,
+        "coordinate_set_id": spec.state_space.coordinate_set_id,
+        "symbol_domain_id": spec.state_space.symbol_domain_id,
+        "state_id_schema": spec.state_space.state_id_schema,
+        "metric_id": spec.state_space.metric_id,
+        "adjacency_rule_id": spec.state_space.adjacency_rule_id,
         "law_id": spec.transformation_law.law_id,
         "law_family": spec.transformation_law.law_family,
+        "candidate_successor_rule_id": spec.transformation_law.candidate_successor_rule_id,
+        "candidate_successor_params_json": spec.transformation_law.candidate_successor_params_json,
+        "energy_function_id": spec.transformation_law.energy_function_id,
+        "energy_params_json": spec.transformation_law.energy_params_json,
+        "admissibility_predicate_id": spec.transformation_law.admissibility_predicate_id,
         "observable_set_id": spec.observable.observable_set_id,
+        "observable_family": spec.observable.observable_family,
+        "observable_params_json": spec.observable.observable_params_json,
+        "frontier_scan_id": frontier_scan.frontier_scan_id,
+        "frontier_expansion_rule_id": frontier_scan.frontier_expansion_rule_id,
+        "horizon_schedule_id": frontier_scan.horizon_schedule_id,
+        "frontier_artifact_status_domain": "complete|lossless_compressed|sampled|truncated_noninterpretable",
         "selection_operator_id": operator.selection_operator_id,
         "selection_operator_family": operator.operator_family,
         "selection_operator_params_json": operator.operator_params_json,
@@ -182,7 +222,7 @@ def profile_base_fields(raw: RawScan) -> dict[str, object]:
         "start_state_id": state_id(raw.start_state),
         "macro_invariant_kind": spec.macro_invariant_kind,
         "macro_invariant_beta": spec.macro_invariant_beta,
-        "core_rank_k": spec.core_rank_k,
+        "rank_boundary_k": spec.rank_boundary_k,
     }
 
 
@@ -220,14 +260,14 @@ def component_summary(frontier: frozenset[State], edges: dict[State, tuple[State
 
 
 def edge_class_counts(edges: tuple[tuple[State, State], ...], condition: GeneratedCondition) -> tuple[int, int]:
-    core = 0
-    fringe = 0
+    inside_boundary = 0
+    outside_boundary = 0
     for source, target in edges:
         anatomy = condition.candidate_anatomy.get((source, target))
         if anatomy:
-            core += int(anatomy.core_flag)
-            fringe += int(anatomy.fringe_flag)
-    return core, fringe
+            inside_boundary += int(anatomy.inside_rank_boundary_flag)
+            outside_boundary += int(anatomy.outside_rank_boundary_flag)
+    return inside_boundary, outside_boundary
 
 
 def state_class_count(edges: tuple[tuple[State, State], ...], condition: GeneratedCondition, kind: str) -> int:
@@ -236,8 +276,8 @@ def state_class_count(edges: tuple[tuple[State, State], ...], condition: Generat
         anatomy = condition.candidate_anatomy.get((source, target))
         if not anatomy:
             continue
-        if kind == "core" and anatomy.core_flag:
+        if kind == "inside" and anatomy.inside_rank_boundary_flag:
             states.add(target)
-        elif kind == "fringe" and anatomy.fringe_flag:
+        elif kind == "outside" and anatomy.outside_rank_boundary_flag:
             states.add(target)
     return len(states)

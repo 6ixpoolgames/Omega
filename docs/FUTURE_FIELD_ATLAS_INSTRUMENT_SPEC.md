@@ -55,7 +55,7 @@ Allowed claim language:
 
 ```text
 The instrument scanned future-field topology for a specified finite substrate.
-The instrument emitted raw frontier, transition, core/fringe, and transport-flow artifacts.
+The instrument emitted raw frontier, transition, rank-boundary, and transport-flow artifacts.
 A downstream analysis may map features of those artifacts.
 ```
 
@@ -81,7 +81,7 @@ state space
 transformation rule
 frontier expansion rule
 horizon schedule
-core/fringe rule
+observable rank-boundary rule
 perturbation rule
 raw topology emitted
 feature maps derived
@@ -93,7 +93,7 @@ Do not rebuild the full empirical program. Keep the first implementation narrow 
 
 ```text
 single-frontier scanner smoke
-rank-core calibration recovery from raw topology
+rank-boundary calibration recovery from raw topology
 then coupled-frontier scan
 ```
 
@@ -107,7 +107,7 @@ Primary questions:
 
 ```text
 What frontier shape emerges over horizon?
-Where do boundaries, cores, fringes, bottlenecks, splits, merges, and corridors appear?
+Where do boundaries, bottlenecks, splits, merges, and corridors appear?
 How does perturbation deform the topology?
 Can known relation-geometry signals be recovered without response labels?
 How do two future fields later compose, interfere, capture, erase, or support each other?
@@ -128,6 +128,7 @@ StateSpaceSpec
 TransformationLawSpec
 SelectionOperatorSpec
 ObservableSpec
+FrontierScanSpec
 ```
 
 For rank-based calibration, the selection operator should record:
@@ -137,7 +138,6 @@ selection_operator_id
 selection_operator_family
 base_out_degree
 effective_out_degree
-core_rank_k
 retained_rank_set
 removed_rank_set
 stochastic_flag
@@ -167,9 +167,9 @@ frontier support count
 component count
 branching factor
 edge rank statistics
-core retention
-fringe retention
-transport mass
+inside-rank-boundary retention
+outside-rank-boundary retention
+transport matrix value totals
 transport concentration
 composition residual
 ```
@@ -184,7 +184,7 @@ Examples:
 baseline vs perturbation raw difference
 joint vs product residual
 cross-perturbation effect
-core/fringe deformation
+rank-boundary deformation
 component collapse / recovery
 ```
 
@@ -217,9 +217,9 @@ no coupled frontiers
 no semantic labels
 ```
 
-### Phase 1: rank-core calibration recovery
+### Phase 1: rank-boundary calibration recovery
 
-Goal: recover the known fixed low-rank core boundary pattern from raw topology.
+Goal: recover a fixed low-rank boundary calibration pattern from raw topology.
 
 Calibration target from prior branch:
 
@@ -227,11 +227,11 @@ Calibration target from prior branch:
 primary invariant:
   symbol_histogram_distance
 
-live mechanism:
-  fixed low-rank successor core / core-fringe boundary pressure
+live calibration pattern:
+  fixed low-rank successor prefix / rank-boundary pressure
 
-known response-bearing condition:
-  retained top-3 low-energy successor core
+calibration condition:
+  retained low-energy prefix under a rank-boundary observable
 ```
 
 The recovery should be argued from raw atlas features, not from `transport_amplified_aligned` labels.
@@ -278,11 +278,23 @@ A scanned substrate instance should record:
 ```text
 substrate_id
 state_space_id
+coordinate_set_id
+symbol_domain_id
+state_id_schema
+metric_id
+adjacency_rule_id
 start_state_id
 seed
 law_id
 law_family
+candidate_successor_rule_id
+candidate_successor_params_json
+energy_function_id
+energy_params_json
+admissibility_predicate_id
 observable_set_id
+observable_family
+observable_params_json
 selection_operator_id
 selection_operator_family
 selection_operator_params_json
@@ -292,7 +304,10 @@ retained_rank_set
 removed_rank_set
 stochastic_selection_flag
 seed_policy
+frontier_scan_id
+frontier_expansion_rule_id
 horizon_schedule_id
+frontier_artifact_status_domain
 ```
 
 ## 6. Horizon schedule
@@ -338,9 +353,10 @@ Known active region to emphasize in diagnostics:
 
 But the scanner should save enough per-horizon data to permit finer analysis around onset.
 
-## 7. Core/fringe boundary contract
+## 7. Rank-boundary observable contract
 
-The first calibration target should preserve the known low-rank core boundary primitive.
+The first calibration target should preserve the low-rank boundary primitive as
+one observable, not as the whole atlas.
 
 For each source state and candidate successor set, record edge rank information:
 
@@ -350,7 +366,7 @@ target_state_id
 candidate_rank
 candidate_energy
 selected_flag
-rank_offset_from_core_boundary
+rank_offset_from_boundary
 selection_operator_id
 selection_operator_family
 base_out_degree
@@ -359,14 +375,15 @@ retained_rank_set
 removed_rank_set
 ```
 
-Default calibration rule:
+Default calibration observable:
 
 ```text
-core = retained top-3 low-energy successor set
-fringe = candidate successors outside retained top-3 but near the selected boundary
+inside rank boundary = candidate ranks <= rank_boundary_k
+outside rank boundary = candidate ranks > rank_boundary_k
 ```
 
-Do not hard-code top-3 as theory. Treat it as the current calibration primitive.
+Do not hard-code the default rank boundary as theory. Treat it as the current
+calibration observable.
 
 ## 8. Primary raw artifacts
 
@@ -416,8 +433,8 @@ state_id
 state_payload_hash
 frontier_membership_weight
 first_seen_horizon
-core_membership_flag
-fringe_membership_flag
+incoming_inside_rank_boundary_flag
+incoming_outside_rank_boundary_flag
 component_id
 ```
 
@@ -443,9 +460,11 @@ edge_weight
 candidate_rank
 candidate_energy
 selected_flag
-core_flag
-fringe_flag
+inside_rank_boundary_flag
+outside_rank_boundary_flag
+rank_offset_from_boundary
 perturbation_changed_flag
+reference_selected_flag
 ```
 
 ### 8.5 Frontier profile
@@ -465,11 +484,11 @@ frontier_edge_count
 frontier_component_count
 largest_component_fraction
 frontier_entropy
-core_state_count
-fringe_state_count
-core_edge_count
-fringe_edge_count
-core_fringe_ratio
+inside_rank_boundary_state_count
+outside_rank_boundary_state_count
+inside_rank_boundary_edge_count
+outside_rank_boundary_edge_count
+inside_outside_rank_boundary_ratio
 new_state_count
 extinct_state_count
 returning_state_count
@@ -490,13 +509,13 @@ state_id
 first_seen_horizon
 last_seen_horizon
 horizon_presence_bitset_or_sparse_list
-core_presence_count
-fringe_presence_count
+inside_rank_boundary_presence_count
+outside_rank_boundary_presence_count
 ```
 
-### 8.7 Core/fringe boundary by horizon
+### 8.7 Rank-boundary geometry by horizon
 
-`core_fringe_boundary_by_horizon.csv`
+`rank_boundary_geometry_by_horizon.csv`
 
 Required columns:
 
@@ -506,14 +525,17 @@ condition_id
 horizon
 base_out_degree
 effective_out_degree
-core_edge_count
-fringe_edge_count
-boundary_edge_count
-weakest_core_energy_mean
-strongest_fringe_energy_mean
-core_fringe_energy_gap_mean
-core_retention_fraction_vs_baseline
-fringe_retention_fraction_vs_baseline
+rank_boundary_k
+inside_rank_boundary_edge_count
+outside_rank_boundary_edge_count
+rank_boundary_edge_count
+weakest_inside_rank_boundary_energy
+strongest_outside_rank_boundary_energy
+rank_boundary_energy_gap
+inside_rank_boundary_retention_fraction_vs_reference
+outside_rank_boundary_retention_fraction_vs_reference
+selected_inside_rank_boundary_fraction
+selected_outside_rank_boundary_fraction
 ```
 
 ### 8.8 Adjacent transport matrices
@@ -537,9 +559,9 @@ target_horizon
 row_item_count
 column_item_count
 nonzero_count
-transport_mass_total
-retained_transport_mass
-dropped_transport_mass
+matrix_value_semantics
+matrix_value_total
+dropped_entry_count_due_to_artifact_policy
 ```
 
 ### 8.9 Multiscale transport matrices
@@ -571,32 +593,38 @@ left_matrix_id
 right_matrix_id
 composition_status
 composition_kind
+support_composition_status
 support_composition_residual_l1
 support_composition_residual_frobenius
-support_composition_residual_mass_fraction
+support_composition_residual_fraction
 support_rank_direct
 support_rank_composed
+path_count_composition_status
 path_count_composition_residual_l1
 path_count_composition_residual_frobenius
-path_count_composition_residual_mass_fraction
+path_count_composition_residual_fraction
 path_count_rank_direct
 path_count_rank_composed
+weighted_flow_composition_status
+weighted_flow_composition_residual_l1
+weighted_flow_composition_residual_frobenius
+weighted_flow_composition_residual_fraction
 ```
 
 This is a primary atlas feature, not a label.
 
-## 9. Phase 1 recovery outputs
+## 9. Phase 1 calibration outputs
 
 The operator-native calibration pass should additionally emit:
 
 ```text
-target_rank_core_distance_summary.csv
-rank_core_recovery_by_horizon.csv
-boundary_recovery_by_horizon_pair.csv
+selection_operator_geometry_summary.csv
+rank_boundary_geometry_by_horizon_summary.csv
+rank_boundary_geometry_by_horizon_pair.csv
 ```
 
-The primary artifact uses continuous rank-core distance metrics rather than
-boolean recovery labels. Do not emit `known_mechanism_recovery_summary.csv` in
+The primary artifact uses continuous operator and rank-boundary geometry metrics
+rather than boolean recovery labels. Do not emit historical recovery aliases in
 the clean runtime path.
 
 Required recovery comparisons:
@@ -610,17 +638,17 @@ rank_subset:m=5:retain=1|2|3:remove=4|5
 stochastic_rank_subset controls if cheap
 ```
 
-Success criterion for instrument smoke:
+Calibration criterion for instrument smoke:
 
 ```text
-The raw topology features distinguish retained top-3 low-rank core conditions
-from baseline m=4/m=5 and random deletion controls without relying on response labels.
+The raw topology features distinguish selected operators by rank-boundary
+geometry without relying on response labels.
 ```
 
 Failure criterion:
 
 ```text
-If raw topology features cannot distinguish the calibration mechanism,
+If raw topology features cannot distinguish the calibration pattern,
 repair the scanner/mapper before building coupled-frontier scan.
 ```
 
@@ -638,7 +666,7 @@ joint_vs_product_residual_by_horizon.csv
 cross_perturbation_A_to_B_by_horizon.csv
 cross_perturbation_B_to_A_by_horizon.csv
 marginal_retention_by_horizon.csv
-joint_core_fringe_boundary_by_horizon.csv
+joint_rank_boundary_geometry_by_horizon.csv
 ```
 
 Coupled phase must include product baselines.
@@ -654,11 +682,11 @@ joint_minus_product_support
 joint_vs_product_residual
 A_to_B_cross_perturbation_delta
 B_to_A_cross_perturbation_delta
-A_core_retention
-B_core_retention
-joint_core_retention
-A_fringe_loss
-B_fringe_loss
+A_inside_rank_boundary_retention
+B_inside_rank_boundary_retention
+joint_inside_rank_boundary_retention
+A_outside_rank_boundary_loss
+B_outside_rank_boundary_loss
 ```
 
 Candidate labels are secondary only.
@@ -719,7 +747,7 @@ Initial runner options:
 --macro-invariant-kind
 --macro-invariant-beta-list
 --frontier-scan-mode
---core-rank-k
+--rank-boundary-k
 --selection-operators
 --raw-state-payload-sample-limit
 --max-frontier-nodes-per-horizon
@@ -734,7 +762,7 @@ Suggested defaults for first smoke:
 horizon_max: 128
 horizon_schedule: dense_to_32_plus_h128
 macro_invariant_kind: symbol_histogram_distance
-core_rank_k: 3
+rank_boundary_k: 3
 selection_operators: rank_prefix:m=3,rank_prefix:m=4,rank_prefix:m=5,rank_subset:m=4:retain=1|2|3:remove=4,rank_subset:m=5:retain=1|2|3:remove=4|5
 ```
 
@@ -767,8 +795,8 @@ Stop and repair if:
 
 ```text
 raw frontier artifacts are not sufficient to reconstruct derived summaries;
-labels are needed to decide whether Phase 1 recovered the rank-core calibration pattern;
-frontier truncation hides core/fringe structure;
+labels are needed to decide whether Phase 1 recovered the rank-boundary calibration pattern;
+frontier truncation hides rank-boundary or topology structure;
 matched nulls cannot be computed from raw artifacts;
 run output is dominated by response-class tables;
 Phase 2 coupled-frontier implementation begins before Phase 1 scanner recovery passes.
@@ -782,9 +810,8 @@ Minimal Codex task:
 
 ```text
 Create `omega.future_field_atlas` with a runner that scans single-frontier topology,
-writes raw frontier node/edge/profile/core-fringe artifacts, and demonstrates
-rank-core calibration recovery for retained top-3 low-rank successor-core
-boundary pressure without using response labels.
+writes raw frontier node/edge/profile/rank-boundary artifacts, and demonstrates
+rank-boundary calibration recovery without using response labels.
 ```
 
 Do not implement coupled-frontier interaction until the atlas artifacts are adequate.
@@ -795,8 +822,8 @@ The instrument build succeeds when we can say:
 
 ```text
 Future Field Atlas scans lawful frontier evolution, preserves the topology needed
-for downstream mapping, and recovers the known low-rank-core boundary signal from
-raw geometry rather than response labels.
+for downstream mapping, and expresses calibration patterns as continuous
+operator and rank-boundary geometry rather than response labels.
 ```
 
 At that point, coupled future-field scanning can be specced or implemented as the next phase.

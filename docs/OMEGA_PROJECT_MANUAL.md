@@ -25,10 +25,11 @@ not passed the scientific gate.
 The current active implementation branch is the Future Field Atlas clean
 rebuild: raw reachable-frontier topology first, response labels last. After the
 schema teardown, condition identity is operator-native: state-space specs,
-transition-law specs, selection-operator specs, and observable specs. Historical
-treatment names are documented only in the Future Field Atlas glossary. The
-instrument is being calibrated against the latest hard-top-m mechanism result,
-which points toward a fixed low-rank successor core: rank-prefix `m=3`,
+transition-law specs, selection-operator specs, observable specs, and
+frontier-scan specs. Historical treatment names are documented only in the
+Future Field Atlas glossary. The instrument is calibrated against the latest
+hard-top-m mechanism result as a fixture, which points toward a fixed low-rank
+successor boundary: rank-prefix `m=3`,
 rank-subset `m=4` retaining ranks `1;2;3`, and rank-subset `m=5` retaining
 ranks `1;2;3` were response-bearing.
 Generic lower out-degree is less plausible because random deletion at matched
@@ -94,7 +95,7 @@ The current empirical question is:
 
 ```text
 Can raw horizon-indexed reachable-frontier topology distinguish structured
-future-field deformation, low-rank core/fringe anatomy, transport flow, and
+future-field deformation, rank-boundary anatomy, transport flow, and
 matched-control artifacts before any semantic or response label is applied?
 ```
 

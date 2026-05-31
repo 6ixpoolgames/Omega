@@ -51,7 +51,7 @@ def build_generated_conditions(
     selection_operators: tuple[str, ...],
     macro_invariant_kind: str,
     macro_invariant_betas: tuple[float, ...],
-    core_rank_k: int,
+    rank_boundary_k: int,
     base_seed: int,
 ) -> list[GeneratedCondition]:
     out: list[GeneratedCondition] = []
@@ -61,7 +61,7 @@ def build_generated_conditions(
             seed = base_seed + group_index * 10_000 + fresh_index * 101
             for beta in macro_invariant_betas:
                 for operator_text in operator_texts:
-                    operator = parse_selection_operator(operator_text, core_rank_k)
+                    operator = parse_selection_operator(operator_text)
                     params = relation_params(group_index, operator.base_out_degree)
                     condition_id = (
                         f"g{group_index:02d}_s{fresh_index:02d}_"
@@ -88,13 +88,44 @@ def build_generated_conditions(
                         substrate_id=system.system_id,
                         state_space=StateSpaceSpec(
                             state_space_id=f"Z{params.alphabet_size}^{params.coordinate_count}",
+                            coordinate_set_id=f"coordinate_index_set__n{params.coordinate_count}",
                             coordinate_count=params.coordinate_count,
+                            symbol_domain_id=f"integer_symbols_0_to_{params.alphabet_size - 1}",
                             alphabet_size=params.alphabet_size,
                             state_count=len(system.states),
+                            state_id_schema="tuple_coordinate_payload",
+                            metric_id="hamming_distance",
+                            adjacency_rule_id=(
+                                f"hamming_ball_without_self__radius_{params.neighborhood_radius}"
+                                f"__footprint_{params.update_footprint}"
+                            ),
                         ),
                         transformation_law=TransformationLawSpec(
                             law_id=f"{operator.implementation_family}__{macro_invariant_kind}__beta_{beta:g}",
                             law_family=operator.implementation_family,
+                            candidate_successor_rule_id=(
+                                f"hamming_ball_without_self__alphabet_{params.alphabet_size}"
+                                f"__footprint_{params.update_footprint}"
+                            ),
+                            candidate_successor_params_json=json.dumps(
+                                {
+                                    "alphabet_size": params.alphabet_size,
+                                    "update_footprint": params.update_footprint,
+                                    "neighborhood_radius": params.neighborhood_radius,
+                                },
+                                sort_keys=True,
+                            ),
+                            energy_function_id="hamming_plus_macro_invariant_delta_plus_seeded_roughness",
+                            energy_params_json=json.dumps(
+                                {
+                                    "macro_invariant_kind": macro_invariant_kind,
+                                    "macro_invariant_beta": beta,
+                                    "roughness_strength": params.roughness_strength,
+                                },
+                                sort_keys=True,
+                            ),
+                            admissibility_predicate_id="candidate_successor_in_local_hamming_ball",
+                            stochastic_flag=operator.stochastic_flag,
                             law_params_json=json.dumps(
                                 {
                                     "macro_invariant_kind": macro_invariant_kind,
@@ -109,20 +140,27 @@ def build_generated_conditions(
                         ),
                         selection_operator=operator,
                         observable=ObservableSpec(
-                            observable_set_id=f"rank_core_k{core_rank_k}__{macro_invariant_kind}",
-                            observable_family="rank_core_boundary_and_frontier_topology",
+                            observable_set_id=f"rank_boundary_k{rank_boundary_k}__{macro_invariant_kind}",
+                            observable_family="rank_boundary_and_frontier_topology",
+                            rank_boundary_k=rank_boundary_k,
+                            feature_map_ids=(
+                                "frontier_topology_by_horizon",
+                                "rank_boundary_geometry_by_horizon",
+                                "transport_composition_residuals",
+                                "selection_operator_geometry_summary",
+                            ),
                             observable_params_json=json.dumps(
-                                {"core_rank_k": core_rank_k, "macro_invariant_kind": macro_invariant_kind},
+                                {"rank_boundary_k": rank_boundary_k, "macro_invariant_kind": macro_invariant_kind},
                                 sort_keys=True,
                             ),
                         ),
                     )
-                    candidate_anatomy, selected, baseline = edge_anatomy_for_condition(
+                    candidate_anatomy, selected, reference = edge_anatomy_for_condition(
                         system_edges=system.edges,
                         params=params,
                         seed=seed,
                         job=job,
-                        core_rank_k=core_rank_k,
+                        rank_boundary_k=rank_boundary_k,
                         reference_operator=operator.operator_family == "rank_prefix",
                     )
                     out.append(
@@ -131,7 +169,7 @@ def build_generated_conditions(
                             system=system,
                             candidate_anatomy=candidate_anatomy,
                             selected_edge_keys=frozenset(selected),
-                            baseline_edge_keys=frozenset(baseline),
+                            reference_edge_keys=frozenset(reference),
                         )
                     )
     return out
@@ -165,11 +203,11 @@ def relation_params(group_index: int, out_degree_target: int) -> RelationParams:
     return replace(base, out_degree_target=out_degree_target)
 
 
-def parse_selection_operator(raw: str, core_rank_k: int) -> SelectionOperatorSpec:
+def parse_selection_operator(raw: str) -> SelectionOperatorSpec:
     operator_family, options = parse_operator_text(raw)
     if operator_family == "rank_prefix":
         base_out_degree = required_int(options, "m", raw)
-        return rank_prefix_operator(base_out_degree, core_rank_k, PRESERVATION_ASYMMETRY)
+        return rank_prefix_operator(base_out_degree, PRESERVATION_ASYMMETRY)
     if operator_family == "rank_subset":
         base_out_degree = required_int(options, "m", raw)
         retained = parse_rank_set(required_text(options, "retain", raw))
@@ -177,12 +215,12 @@ def parse_selection_operator(raw: str, core_rank_k: int) -> SelectionOperatorSpe
         if not removed:
             removed = tuple(rank for rank in range(1, base_out_degree + 1) if rank not in set(retained))
         implementation_family = rank_subset_implementation_family(base_out_degree, retained, removed, raw)
-        return rank_subset_operator(base_out_degree, retained, removed, core_rank_k, implementation_family)
+        return rank_subset_operator(base_out_degree, retained, removed, implementation_family)
     if operator_family == "stochastic_rank_subset":
         base_out_degree = required_int(options, "m", raw)
         effective_out_degree = required_int(options, "effective", raw)
         implementation_family = stochastic_rank_subset_implementation_family(base_out_degree, effective_out_degree, raw)
-        return stochastic_rank_subset_operator(base_out_degree, effective_out_degree, core_rank_k, implementation_family)
+        return stochastic_rank_subset_operator(base_out_degree, effective_out_degree, implementation_family)
     raise ValueError(
         f"unknown selection operator family in {raw!r}; expected rank_prefix, "
         "rank_subset, or stochastic_rank_subset"
@@ -267,13 +305,12 @@ def stochastic_rank_subset_implementation_family(
     )
 
 
-def rank_prefix_operator(base_out_degree: int, core_rank_k: int, family: str) -> SelectionOperatorSpec:
+def rank_prefix_operator(base_out_degree: int, family: str) -> SelectionOperatorSpec:
     retained = tuple(range(1, base_out_degree + 1))
     return selection_operator(
         operator_family="rank_prefix",
         base_out_degree=base_out_degree,
         effective_out_degree=base_out_degree,
-        core_rank_k=core_rank_k,
         retained_rank_set=retained,
         removed_rank_set=tuple(),
         stochastic_flag=0,
@@ -286,14 +323,12 @@ def rank_subset_operator(
     base_out_degree: int,
     retained_rank_set: tuple[int, ...],
     removed_rank_set: tuple[int, ...],
-    core_rank_k: int,
     family: str,
 ) -> SelectionOperatorSpec:
     return selection_operator(
         operator_family="rank_subset",
         base_out_degree=base_out_degree,
         effective_out_degree=len(retained_rank_set),
-        core_rank_k=core_rank_k,
         retained_rank_set=retained_rank_set,
         removed_rank_set=removed_rank_set,
         stochastic_flag=0,
@@ -305,14 +340,12 @@ def rank_subset_operator(
 def stochastic_rank_subset_operator(
     base_out_degree: int,
     effective_out_degree: int,
-    core_rank_k: int,
     family: str,
 ) -> SelectionOperatorSpec:
     return selection_operator(
         operator_family="stochastic_rank_subset",
         base_out_degree=base_out_degree,
         effective_out_degree=effective_out_degree,
-        core_rank_k=core_rank_k,
         retained_rank_set=tuple(),
         removed_rank_set=tuple(),
         stochastic_flag=1,
@@ -326,7 +359,6 @@ def selection_operator(
     operator_family: str,
     base_out_degree: int,
     effective_out_degree: int,
-    core_rank_k: int,
     retained_rank_set: tuple[int, ...],
     removed_rank_set: tuple[int, ...],
     stochastic_flag: int,
@@ -337,7 +369,6 @@ def selection_operator(
         "operator_family": operator_family,
         "base_out_degree": base_out_degree,
         "effective_out_degree": effective_out_degree,
-        "core_rank_k": core_rank_k,
         "retained_rank_set": list(retained_rank_set),
         "removed_rank_set": list(removed_rank_set),
         "stochastic_flag": stochastic_flag,
@@ -349,13 +380,12 @@ def selection_operator(
     return SelectionOperatorSpec(
         selection_operator_id=(
             f"{operator_family}__m{base_out_degree}_to_{effective_out_degree}"
-            f"__k{core_rank_k}__retain_{retained_token}__remove_{removed_token}"
+            f"__retain_{retained_token}__remove_{removed_token}"
         ),
         operator_family=operator_family,
         operator_params_json=json.dumps(params, sort_keys=True),
         base_out_degree=base_out_degree,
         effective_out_degree=effective_out_degree,
-        core_rank_k=core_rank_k,
         retained_rank_set=retained_rank_set,
         removed_rank_set=removed_rank_set,
         stochastic_flag=stochastic_flag,
@@ -370,7 +400,7 @@ def edge_anatomy_for_condition(
     params: RelationParams,
     seed: int,
     job: dict[str, object],
-    core_rank_k: int,
+    rank_boundary_k: int,
     reference_operator: bool,
 ) -> tuple[dict[tuple[State, State], EdgeAnatomy], set[tuple[State, State]], set[tuple[State, State]]]:
     states = enumerate_states(params.coordinate_count, params.alphabet_size)
@@ -390,7 +420,7 @@ def edge_anatomy_for_condition(
         budget,
         calibration_job,
     )
-    baseline_edge_keys: set[tuple[State, State]] = set()
+    reference_edge_keys: set[tuple[State, State]] = set()
     selected_edge_keys = {
         (source, target)
         for source, targets in system_edges.items()
@@ -398,22 +428,22 @@ def edge_anatomy_for_condition(
     }
     anatomy: dict[tuple[State, State], EdgeAnatomy] = {}
     for source, scored in scored_by_source.items():
-        baseline_targets = {target for _energy, target in scored[: max(1, params.out_degree_target)]}
-        baseline_edge_keys.update((source, target) for target in baseline_targets)
+        reference_targets = {target for _energy, target in scored[: max(1, params.out_degree_target)]}
+        reference_edge_keys.update((source, target) for target in reference_targets)
         for rank_index, (energy, target) in enumerate(scored, start=1):
             selected = int((source, target) in selected_edge_keys)
-            baseline_selected = int(target in baseline_targets)
+            reference_selected = int(target in reference_targets)
             anatomy[(source, target)] = EdgeAnatomy(
                 source_state=source,
                 target_state=target,
                 candidate_rank=rank_index,
                 candidate_energy=float(energy),
                 selected_flag=selected,
-                baseline_selected_flag=baseline_selected,
-                rank_offset_from_core_boundary=rank_index - core_rank_k,
-                perturbation_changed_flag=int(not reference_operator and selected != baseline_selected),
+                reference_selected_flag=reference_selected,
+                rank_offset_from_boundary=rank_index - rank_boundary_k,
+                perturbation_changed_flag=int(not reference_operator and selected != reference_selected),
             )
-    return anatomy, selected_edge_keys, baseline_edge_keys
+    return anatomy, selected_edge_keys, reference_edge_keys
 
 
 def select_start_states(condition: GeneratedCondition, start_samples: int) -> tuple[State, ...]:
