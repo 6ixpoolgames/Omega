@@ -81,6 +81,7 @@ COMMON_OUTPUTS = (
     "response_by_asymmetry_field_smoothness.csv",
     "response_by_macro_invariant_kind.csv",
     "response_by_macro_invariant_beta.csv",
+    "selected_edge_overlap_by_beta.csv",
     "response_by_alpha_beta_pair.csv",
     "matched_null_pass_by_asymmetry_family.csv",
     "matched_null_pass_by_asymmetry_variant.csv",
