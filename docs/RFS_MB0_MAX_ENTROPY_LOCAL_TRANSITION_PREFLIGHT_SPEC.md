@@ -36,7 +36,7 @@ contracts pass.
 Primary question:
 
 ```text
-If we keep local graph constraints plus a symbol-histogram ΔI edge-marginal,
+If we keep local graph constraints plus a symbol-histogram `delta_I` edge-marginal,
 does aligned horizon transport reappear near the beta 0.05-0.10 threshold
 without deterministic top-m preservation scoring?
 ```
@@ -51,7 +51,7 @@ deterministic E2 preservation_asymmetry:
 MaxEnt-P preflight:
   sample local transition graphs with matched macro constraints;
   do not rank every candidate edge by explicit preservation energy;
-  audit whether the sampled edge ensemble matches the target ΔI marginal.
+  audit whether the sampled edge ensemble matches the target `delta_I` marginal.
 ```
 
 ## 4. Objects under test
@@ -86,7 +86,7 @@ max_entropy_local:
 
 max_entropy_macro_invariant:
   MEP macro-invariant marginal family
-  constraints: ME0 constraints plus target ΔI edge-marginal
+  constraints: ME0 constraints plus target `delta_I` edge-marginal
 ```
 
 Optional after the required preflight works:
@@ -98,7 +98,7 @@ max_entropy_directional:
 
 max_entropy_combined:
   MEC combined marginal family
-  constraints: ME0 constraints plus both ΔI and directional edge-marginals
+  constraints: ME0 constraints plus both `delta_I` and directional edge-marginals
 ```
 
 Do not block the required ME0/MEP preflight on MED/MEC.
@@ -138,7 +138,7 @@ equivalent_beta_target:
   0.15
 ```
 
-Each `equivalent_beta_target` means: match the target ΔI edge-marginal induced by deterministic E2 preservation asymmetry at that beta, then sample a maximum-entropy local transition graph under that marginal constraint.
+Each `equivalent_beta_target` means: match the target `delta_I` edge-marginal induced by deterministic E2 preservation asymmetry at that beta, then sample a maximum-entropy local transition graph under that marginal constraint.
 
 If exact beta `0.04` or `0.075` calibration is not available yet, the implementation may either run deterministic calibration jobs for those values or mark those rows `calibration_missing` and skip interpretation.
 
@@ -154,10 +154,10 @@ conditional local edge sampling:
 
 edge-swap Markov chain:
   start from a local graph and perform swaps preserving out-degree/locality while
-  driving the aggregate ΔI marginal toward the target;
+  driving the aggregate `delta_I` marginal toward the target;
 
 stratified candidate sampling:
-  bin candidate edges by ΔI and sample per-state edges to approximate the target
+  bin candidate edges by `delta_I` and sample per-state edges to approximate the target
   aggregate marginal.
 ```
 
@@ -396,7 +396,7 @@ Mark deterministic top-m geometry as loadbearing if:
 
 ```text
 deterministic preservation_asymmetry reproduces the low-beta threshold;
-MEP matches the ΔI marginal successfully;
+MEP matches the `delta_I` marginal successfully;
 MEP does not produce aligned response under otherwise comparable conditions.
 ```
 
@@ -444,7 +444,7 @@ Codex should comment on these before executing a full preflight:
 1. Which MaxEnt sampler strategy is simplest and least artifact-prone in the
    current codebase?
 
-2. Can the sampler preserve locality and out-degree exactly while matching ΔI
+2. Can the sampler preserve locality and out-degree exactly while matching `delta_I`
    marginals well enough for interpretation?
 
 3. What metric should define macro_invariant_delta_match_error?

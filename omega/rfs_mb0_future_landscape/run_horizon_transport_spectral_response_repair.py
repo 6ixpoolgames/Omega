@@ -43,6 +43,7 @@ from .horizon_transport_contracts import (
     INTERPRETATION_CONTROL_FAMILIES,
     MARGINAL_MATCHED_NULL_FAMILIES,
     MATCHED_NULL_SPEC_ID,
+    MAX_ENTROPY_PREFLIGHT,
     PARENT_SPEC_ID,
     RUNNER_MODULE,
     STRUCTURE_DESTROYING_NULL_FAMILIES,
@@ -89,6 +90,9 @@ from .transition_energy_substrates import (
     CONSTRAINT_TEMPLATE_CURRENT,
     DIRECTIONAL_ASYMMETRY,
     LOCALITY_ONLY,
+    MAX_ENTROPY_FAMILIES,
+    MAX_ENTROPY_LOCAL,
+    MAX_ENTROPY_MACRO_INVARIANT,
     PRESERVATION_ASYMMETRY,
     SMOOTH_RANDOM_POTENTIAL,
     TRANSITION_ENERGY_FAMILIES,
@@ -192,6 +196,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--budget-weights", type=str, default="", help="Characterization invariant-weight variants; retained implementation name.")
     parser.add_argument("--invariant-weights", "--asymmetry-penalty-weights", dest="budget_weights", type=str, help="Public/theory alias for --budget-weights.")
     parser.add_argument("--macro-invariant-beta-list", type=str, default="", help="Preservation-asymmetry beta variants.")
+    parser.add_argument("--equivalent-beta-target-list", type=str, default="", help="MaxEnt calibration beta targets for deterministic preservation-asymmetry edge-marginal matching.")
+    parser.add_argument("--max-entropy-sampler-draws", type=int, default=16, help="Deterministic weighted sampling draws per MaxEnt macro-invariant substrate job.")
+    parser.add_argument("--max-entropy-delta-match-error-max", type=float, default=0.10, help="Total-variation tolerance for MaxEnt macro-invariant delta marginal matching.")
     parser.add_argument("--asymmetry-alpha-list", type=str, default="", help="Directional-asymmetry alpha variants.")
     parser.add_argument("--asymmetry-field-smoothness-list", type=str, default="", help="Directional-asymmetry field-smoothness variants.")
     parser.add_argument("--combined-alpha-beta-pairs", type=str, default="", help="Sparse combined-asymmetry pairs like 0.25:0.5,0.5:1.0.")
@@ -304,7 +311,7 @@ def substrate_families(args: argparse.Namespace) -> list[str]:
 
 def substrate_family_variants(args: argparse.Namespace) -> list[dict[str, object]]:
     variants: list[dict[str, object]] = []
-    characterization = run_kind(args) in {TRANSITION_ENERGY_CHARACTERIZATION, ASYMMETRY_LADDER}
+    characterization = run_kind(args) in {TRANSITION_ENERGY_CHARACTERIZATION, ASYMMETRY_LADDER, MAX_ENTROPY_PREFLIGHT}
     for family in substrate_families(args):
         if not characterization:
             variants.append(default_substrate_variant(family, args))
@@ -388,6 +395,38 @@ def substrate_family_variants(args: argparse.Namespace) -> list[dict[str, object
                         "macro_invariant_beta": beta,
                         "alpha_beta_pair": f"{float_label(alpha)}:{float_label(beta)}",
                     })
+        elif family == MAX_ENTROPY_LOCAL:
+            invariant_kinds = string_list_or_default(args.budget_kinds, ("symbol_histogram_distance",))
+            for invariant_kind in invariant_kinds:
+                for beta in equivalent_beta_targets(args):
+                    variants.append({
+                        "substrate_family": family,
+                        "substrate_variant": f"equivalent_beta_{float_label(beta)}__invariant_{safe_id(invariant_kind)}",
+                        "variant_role": "max_entropy_local_beta_axis_comparator",
+                        "budget_kind": invariant_kind,
+                        "macro_invariant_kind": invariant_kind,
+                        "budget_weight": beta,
+                        "macro_invariant_beta": beta,
+                        "equivalent_beta_target": beta,
+                        "max_entropy_sampler_draws": args.max_entropy_sampler_draws,
+                        "max_entropy_delta_match_error_max": args.max_entropy_delta_match_error_max,
+                    })
+        elif family == MAX_ENTROPY_MACRO_INVARIANT:
+            invariant_kinds = string_list_or_default(args.budget_kinds, ("symbol_histogram_distance",))
+            for invariant_kind in invariant_kinds:
+                for beta in equivalent_beta_targets(args):
+                    variants.append({
+                        "substrate_family": family,
+                        "substrate_variant": f"equivalent_beta_{float_label(beta)}__invariant_{safe_id(invariant_kind)}",
+                        "variant_role": "max_entropy_macro_invariant_delta_marginal_sweep",
+                        "budget_kind": invariant_kind,
+                        "macro_invariant_kind": invariant_kind,
+                        "budget_weight": beta,
+                        "macro_invariant_beta": beta,
+                        "equivalent_beta_target": beta,
+                        "max_entropy_sampler_draws": args.max_entropy_sampler_draws,
+                        "max_entropy_delta_match_error_max": args.max_entropy_delta_match_error_max,
+                    })
     return variants
 
 
@@ -434,6 +473,17 @@ def default_substrate_variant(family: str, args: argparse.Namespace) -> dict[str
             "macro_invariant_beta": beta,
             "alpha_beta_pair": f"{float_label(args.asymmetry_alpha)}:{float_label(beta)}",
         })
+    if family in MAX_ENTROPY_FAMILIES:
+        beta = equivalent_beta_targets(args)[0]
+        row.update({
+            "budget_kind": args.budget_kind,
+            "budget_weight": beta,
+            "macro_invariant_kind": args.budget_kind,
+            "macro_invariant_beta": beta,
+            "equivalent_beta_target": beta,
+            "max_entropy_sampler_draws": args.max_entropy_sampler_draws,
+            "max_entropy_delta_match_error_max": args.max_entropy_delta_match_error_max,
+        })
     if args.transition_roughness_strength >= 0:
         row["transition_roughness_strength"] = args.transition_roughness_strength
     return row
@@ -470,6 +520,10 @@ def string_list_or_default(raw: str, default: tuple[str, ...]) -> tuple[str, ...
 def macro_invariant_beta_default(args: argparse.Namespace) -> float:
     value = getattr(args, "macro_invariant_beta", None)
     return float(value) if value is not None else float(args.budget_weight)
+
+
+def equivalent_beta_targets(args: argparse.Namespace) -> tuple[float, ...]:
+    return list_or_default(args.equivalent_beta_target_list or args.macro_invariant_beta_list, (0.05, 0.10))
 
 
 def combined_alpha_beta_pairs(args: argparse.Namespace) -> tuple[tuple[float, float], ...]:
@@ -537,6 +591,9 @@ def expand_jobs_for_substrate_families(jobs: list[dict[str, object]], args: argp
             item["budget_weight"] = variant.get("budget_weight", args.budget_weight)
             item["macro_invariant_kind"] = variant.get("macro_invariant_kind", item["budget_kind"])
             item["macro_invariant_beta"] = variant.get("macro_invariant_beta", macro_invariant_beta_default(args))
+            item["equivalent_beta_target"] = variant.get("equivalent_beta_target", item["macro_invariant_beta"])
+            item["max_entropy_sampler_draws"] = variant.get("max_entropy_sampler_draws", args.max_entropy_sampler_draws)
+            item["max_entropy_delta_match_error_max"] = variant.get("max_entropy_delta_match_error_max", args.max_entropy_delta_match_error_max)
             item["asymmetry_alpha"] = variant.get("asymmetry_alpha", args.asymmetry_alpha)
             item["asymmetry_field_seed"] = int(item.get("seed", 0)) + 73_001
             item["asymmetry_field_smoothness"] = variant.get("asymmetry_field_smoothness", args.asymmetry_field_smoothness)
@@ -563,6 +620,10 @@ def transition_energy_form_label(family: str) -> str:
         return "hamming_distance_plus_beta_macro_invariant_delta_penalty_plus_seeded_roughness"
     if family == COMBINED_ASYMMETRY:
         return "hamming_distance_plus_alpha_directional_delta_plus_beta_macro_invariant_delta_plus_seeded_roughness"
+    if family == MAX_ENTROPY_LOCAL:
+        return "maximum_entropy_sample_over_local_candidate_edges_with_exact_out_degree"
+    if family == MAX_ENTROPY_MACRO_INVARIANT:
+        return "maximum_entropy_sample_over_local_edges_matched_to_macro_invariant_delta_marginal"
     return "current_constraint_template_scored_relation"
 
 
@@ -1094,6 +1155,13 @@ def compute_outputs(
     response_by_macro_invariant_kind = response_by_group_rows([row for row in response_classification if row.get("macro_invariant_kind")], ("macro_invariant_kind",))
     response_by_macro_invariant_beta = response_by_group_rows([row for row in response_classification if row.get("macro_invariant_beta") not in (None, "")], ("macro_invariant_beta",))
     selected_edge_overlap_by_beta = selected_edge_overlap_by_beta_rows(jobs, args)
+    max_entropy_constraint_manifest = max_entropy_constraint_manifest_rows(rows)
+    max_entropy_marginal_match_summary = max_entropy_marginal_match_summary_rows(rows)
+    max_entropy_sampler_diagnostics = max_entropy_sampler_diagnostics_rows(rows)
+    max_entropy_edge_match_to_calibration = max_entropy_edge_match_to_calibration_rows(jobs, args)
+    response_by_max_entropy_family = response_by_group_rows([row for row in response_classification if row.get("substrate_family") in MAX_ENTROPY_FAMILIES], ("substrate_family",))
+    response_by_equivalent_beta_target = response_by_group_rows([row for row in response_classification if row.get("equivalent_beta_target") not in (None, "")], ("equivalent_beta_target",))
+    paired_baseline_availability_by_max_entropy_variant = paired_baseline_availability_by_max_entropy_variant_rows(response_classification)
     response_by_directional_alpha = response_by_group_rows([row for row in response_classification if row.get("asymmetry_alpha") not in (None, "")], ("asymmetry_alpha",))
     response_by_asymmetry_field_smoothness = response_by_group_rows([row for row in response_classification if row.get("asymmetry_field_smoothness") not in (None, "")], ("asymmetry_field_smoothness",))
     response_by_alpha_beta_pair = response_by_group_rows([row for row in response_classification if row.get("alpha_beta_pair")], ("alpha_beta_pair",))
@@ -1155,6 +1223,13 @@ def compute_outputs(
         "response_by_macro_invariant_kind": response_by_macro_invariant_kind,
         "response_by_macro_invariant_beta": response_by_macro_invariant_beta,
         "selected_edge_overlap_by_beta": selected_edge_overlap_by_beta,
+        "max_entropy_constraint_manifest": max_entropy_constraint_manifest,
+        "max_entropy_marginal_match_summary": max_entropy_marginal_match_summary,
+        "max_entropy_sampler_diagnostics": max_entropy_sampler_diagnostics,
+        "max_entropy_edge_match_to_calibration": max_entropy_edge_match_to_calibration,
+        "response_by_max_entropy_family": response_by_max_entropy_family,
+        "response_by_equivalent_beta_target": response_by_equivalent_beta_target,
+        "paired_baseline_availability_by_max_entropy_variant": paired_baseline_availability_by_max_entropy_variant,
         "response_by_directional_alpha": response_by_directional_alpha,
         "response_by_asymmetry_field_smoothness": response_by_asymmetry_field_smoothness,
         "response_by_alpha_beta_pair": response_by_alpha_beta_pair,
@@ -1323,6 +1398,214 @@ def aggregate_selected_edge_overlap_observations(rows: list[dict[str, object]]) 
     return out
 
 
+def unique_max_entropy_baseline_rows(rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    seen: set[str] = set()
+    out: list[dict[str, object]] = []
+    for row in rows:
+        family = canonical_transition_energy_family(str(row.get("substrate_family", "") or substrate_family_from_condition_id(row.get("condition_id", ""))))
+        if family not in MAX_ENTROPY_FAMILIES or row.get("actual_control_name") != BASELINE_CONTROL:
+            continue
+        key = str(row.get("baseline_system_id", row.get("condition_id", "")))
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append(row)
+    return out
+
+
+def max_entropy_constraint_manifest_rows(rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    out: list[dict[str, object]] = []
+    for row in unique_max_entropy_baseline_rows(rows):
+        out.append({
+            "baseline_system_id": row.get("baseline_system_id", ""),
+            "condition_id": row.get("condition_id", ""),
+            "substrate_family": row.get("substrate_family", ""),
+            "substrate_variant": row.get("substrate_variant", ""),
+            "max_entropy_family": row.get("max_entropy_family", row.get("substrate_family", "")),
+            "constraint_profile": row.get("max_entropy_constraint_profile", ""),
+            "proposal_kernel": "hamming_ball_without_self",
+            "locality_constraint_exact": int(float_or_zero(row.get("max_entropy_locality_violation_count")) == 0),
+            "out_degree_constraint_exact": int(float_or_zero(row.get("max_entropy_out_degree_violation_count")) == 0),
+            "target_marginal_applied": row.get("max_entropy_target_marginal_applied", ""),
+            "equivalent_beta_target": row.get("equivalent_beta_target", row.get("max_entropy_equivalent_beta_target", "")),
+            "macro_invariant_kind": row.get("macro_invariant_kind", ""),
+            "macro_invariant_delta_match_tolerance": row.get("macro_invariant_delta_match_tolerance", ""),
+            "macro_invariant_delta_match_metric": row.get("macro_invariant_delta_match_metric", ""),
+            "macro_invariant_delta_target_distribution": row.get("macro_invariant_delta_target_distribution", ""),
+        })
+    return out
+
+
+def max_entropy_marginal_match_summary_rows(rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    grouped: dict[tuple[str, str, str, str], list[dict[str, object]]] = defaultdict(list)
+    for row in unique_max_entropy_baseline_rows(rows):
+        grouped[(
+            str(row.get("substrate_family", "")),
+            str(row.get("substrate_variant", "")),
+            str(row.get("macro_invariant_kind", "")),
+            str(row.get("equivalent_beta_target", row.get("max_entropy_equivalent_beta_target", ""))),
+        )].append(row)
+    out: list[dict[str, object]] = []
+    for (family, variant, invariant_kind, beta), items in sorted(grouped.items()):
+        errors = [float_or_zero(row.get("macro_invariant_delta_match_error")) for row in items if row.get("macro_invariant_delta_match_error") not in (None, "")]
+        tolerances = [float_or_zero(row.get("macro_invariant_delta_match_tolerance")) for row in items if row.get("macro_invariant_delta_match_tolerance") not in (None, "")]
+        target_applied = sum(int(float_or_zero(row.get("max_entropy_target_marginal_applied"))) for row in items)
+        tolerance = max(tolerances) if tolerances else 0.0
+        out.append({
+            "substrate_family": family,
+            "substrate_variant": variant,
+            "macro_invariant_kind": invariant_kind,
+            "equivalent_beta_target": beta,
+            "baseline_system_count": len(items),
+            "target_marginal_applied_count": target_applied,
+            "macro_invariant_delta_match_error_mean": mean(errors) if errors else "",
+            "macro_invariant_delta_match_error_max": max(errors) if errors else "",
+            "macro_invariant_delta_match_tolerance": tolerance if tolerances else "",
+            "macro_invariant_delta_match_pass_fraction": sum(int(value <= tolerance) for value in errors) / max(1, len(errors)) if errors and tolerance else "",
+            "marginal_match_status": "not_applicable" if target_applied == 0 else "ok" if errors and max(errors) <= tolerance else "repair_required",
+        })
+    return out
+
+
+def max_entropy_sampler_diagnostics_rows(rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    out: list[dict[str, object]] = []
+    for row in unique_max_entropy_baseline_rows(rows):
+        out.append({
+            "baseline_system_id": row.get("baseline_system_id", ""),
+            "condition_id": row.get("condition_id", ""),
+            "substrate_family": row.get("substrate_family", ""),
+            "substrate_variant": row.get("substrate_variant", ""),
+            "equivalent_beta_target": row.get("equivalent_beta_target", row.get("max_entropy_equivalent_beta_target", "")),
+            "macro_invariant_kind": row.get("macro_invariant_kind", ""),
+            "max_entropy_sampler_status": row.get("max_entropy_sampler_status", ""),
+            "max_entropy_sampler_draws": row.get("max_entropy_sampler_draws", ""),
+            "max_entropy_sampler_best_draw_index": row.get("max_entropy_sampler_best_draw_index", ""),
+            "max_entropy_sampler_weight_iterations": row.get("max_entropy_sampler_weight_iterations", ""),
+            "max_entropy_calibration_family": row.get("max_entropy_calibration_family", ""),
+            "max_entropy_calibration_edge_count": row.get("max_entropy_calibration_edge_count", ""),
+            "edge_count": row.get("edge_count", ""),
+            "mean_out_degree": row.get("mean_out_degree", ""),
+            "max_entropy_locality_violation_count": row.get("max_entropy_locality_violation_count", ""),
+            "max_entropy_out_degree_violation_count": row.get("max_entropy_out_degree_violation_count", ""),
+            "max_entropy_empty_successor_source_count": row.get("max_entropy_empty_successor_source_count", ""),
+            "macro_invariant_delta_match_error": row.get("macro_invariant_delta_match_error", ""),
+            "macro_invariant_delta_match_tolerance": row.get("macro_invariant_delta_match_tolerance", ""),
+            "macro_invariant_delta_observed_distribution": row.get("macro_invariant_delta_observed_distribution", ""),
+        })
+    return out
+
+
+def max_entropy_edge_match_to_calibration_rows(jobs: list[dict[str, object]], args: argparse.Namespace) -> list[dict[str, object]]:
+    sample_limit = max(0, int(getattr(args, "selected_edge_overlap_sample_jobs", 0)))
+    if sample_limit <= 0:
+        return []
+    candidates = [
+        job for job in jobs
+        if canonical_transition_energy_family(str(job.get("substrate_family", "") or "")) in MAX_ENTROPY_FAMILIES
+    ]
+    buckets: dict[tuple[str, str, str], list[dict[str, object]]] = defaultdict(list)
+    for job in candidates:
+        family = canonical_transition_energy_family(str(job.get("substrate_family", "") or ""))
+        invariant_kind = str(job.get("macro_invariant_kind", job.get("budget_kind", "")) or "")
+        beta = str(job.get("equivalent_beta_target", job.get("macro_invariant_beta", "")) or "")
+        buckets[(family, invariant_kind, beta)].append(job)
+    selected: list[dict[str, object]] = []
+    while len(selected) < sample_limit and any(buckets.values()):
+        for key in sorted(buckets, key=lambda item: (item[0], item[1], float_or_zero(item[2]))):
+            if len(selected) >= sample_limit:
+                break
+            if buckets[key]:
+                selected.append(buckets[key].pop(0))
+    observations: list[dict[str, object]] = []
+    for job in selected:
+        family = canonical_transition_energy_family(str(job.get("substrate_family", "") or ""))
+        invariant_kind = str(job.get("macro_invariant_kind", job.get("budget_kind", "")) or "")
+        beta = float_or_zero(job.get("equivalent_beta_target", job.get("macro_invariant_beta", "")))
+        calibration_job = dict(job)
+        calibration_job.update({
+            "substrate_family": PRESERVATION_ASYMMETRY,
+            "transition_energy_family": PRESERVATION_ASYMMETRY,
+            "macro_invariant_beta": beta,
+            "budget_weight": beta,
+            "apply_reversibility": False,
+        })
+        try:
+            calibration_edges = selected_edge_set(calibration_job)
+            sampled_edges = selected_edge_set(job)
+            intersection = len(calibration_edges & sampled_edges)
+            union = len(calibration_edges | sampled_edges)
+            observations.append({
+                "substrate_family": family,
+                "substrate_variant": job.get("substrate_variant", ""),
+                "macro_invariant_kind": invariant_kind,
+                "equivalent_beta_target": beta,
+                "sample_status": "ok",
+                "sample_error": "",
+                "edge_jaccard_vs_calibration": intersection / max(1, union),
+                "selected_edge_overlap_fraction_vs_calibration": intersection / max(1, len(calibration_edges)),
+                "selected_edge_retention_fraction_vs_calibration": intersection / max(1, len(sampled_edges)),
+                "selected_edge_symmetric_difference_fraction": (union - intersection) / max(1, union),
+                "calibration_edge_count": len(calibration_edges),
+                "sampled_edge_count": len(sampled_edges),
+            })
+        except Exception as exc:  # noqa: BLE001
+            observations.append({
+                "substrate_family": family,
+                "substrate_variant": job.get("substrate_variant", ""),
+                "macro_invariant_kind": invariant_kind,
+                "equivalent_beta_target": beta,
+                "sample_status": "error",
+                "sample_error": repr(exc),
+            })
+    grouped: dict[tuple[str, str, str], list[dict[str, object]]] = defaultdict(list)
+    for row in observations:
+        grouped[(
+            str(row.get("substrate_family", "")),
+            str(row.get("macro_invariant_kind", "")),
+            str(row.get("equivalent_beta_target", "")),
+        )].append(row)
+    out: list[dict[str, object]] = []
+    for (family, invariant_kind, beta), items in sorted(grouped.items(), key=lambda item: (item[0][0], item[0][1], float_or_zero(item[0][2]))):
+        ok_items = [row for row in items if row.get("sample_status") == "ok"]
+        out.append({
+            "substrate_family": family,
+            "macro_invariant_kind": invariant_kind,
+            "equivalent_beta_target": beta,
+            "sample_count": len(items),
+            "ok_sample_count": len(ok_items),
+            "error_sample_count": len(items) - len(ok_items),
+            "edge_jaccard_vs_calibration_mean": mean([float_or_zero(row.get("edge_jaccard_vs_calibration")) for row in ok_items]) if ok_items else 0.0,
+            "selected_edge_overlap_fraction_vs_calibration_mean": mean([float_or_zero(row.get("selected_edge_overlap_fraction_vs_calibration")) for row in ok_items]) if ok_items else 0.0,
+            "selected_edge_retention_fraction_vs_calibration_mean": mean([float_or_zero(row.get("selected_edge_retention_fraction_vs_calibration")) for row in ok_items]) if ok_items else 0.0,
+            "selected_edge_symmetric_difference_fraction_mean": mean([float_or_zero(row.get("selected_edge_symmetric_difference_fraction")) for row in ok_items]) if ok_items else 0.0,
+            "sample_status": "ok" if len(ok_items) == len(items) else "partial_error",
+        })
+    return out
+
+
+def paired_baseline_availability_by_max_entropy_variant_rows(rows: list[dict[str, object]]) -> list[dict[str, object]]:
+    grouped: dict[tuple[str, str, str], list[dict[str, object]]] = defaultdict(list)
+    for row in rows:
+        family = str(row.get("substrate_family", ""))
+        if family not in MAX_ENTROPY_FAMILIES:
+            continue
+        grouped[(family, str(row.get("substrate_variant", "")), str(row.get("equivalent_beta_target", "")))].append(row)
+    out: list[dict[str, object]] = []
+    for (family, variant, beta), items in sorted(grouped.items()):
+        missing = [row for row in items if row.get("response_status") == "baseline_missing" or row.get("response_class") == "transport_baseline_missing"]
+        out.append({
+            "substrate_family": family,
+            "substrate_variant": variant,
+            "equivalent_beta_target": beta,
+            "response_rows": len(items),
+            "paired_baseline_available_rows": len(items) - len(missing),
+            "paired_baseline_missing_rows": len(missing),
+            "paired_baseline_available_fraction": (len(items) - len(missing)) / max(1, len(items)),
+            "paired_baseline_status": "ok" if not missing else "response_baseline_missing",
+        })
+    return out
+
+
 def selected_edge_overlap_sort_key(key: tuple[str, str, str, str, str]) -> tuple[str, str, float, str, str]:
     family, invariant_kind, beta, alpha, smoothness = key
     return (family, invariant_kind, float_or_zero(beta), alpha, smoothness)
@@ -1383,7 +1666,7 @@ def substrate_family_manifest_rows(matrices: list[TransportMatrix], args: argpar
             "matrix_count": matrix_counts.get(family, 0),
             "uses_hand_built_constraint_templates": int(family == CONSTRAINT_TEMPLATE_CURRENT),
             "proposal_kernel": "current_relation_generator" if family == CONSTRAINT_TEMPLATE_CURRENT else "hamming_ball_without_self",
-            "selection_rule": "current_constraint_scored_top_m" if family == CONSTRAINT_TEMPLATE_CURRENT else "top_m_lowest_energy_candidates",
+            "selection_rule": substrate_selection_rule(family),
         }
         for family in families
     ]
@@ -1403,9 +1686,19 @@ def substrate_family_variant_manifest_rows(matrices: list[TransportMatrix], args
             "matrix_count": matrix_counts.get((family, variant_id), 0),
             "uses_hand_built_constraint_templates": int(family == CONSTRAINT_TEMPLATE_CURRENT),
             "proposal_kernel": "current_relation_generator" if family == CONSTRAINT_TEMPLATE_CURRENT else "hamming_ball_without_self",
-            "selection_rule": "current_constraint_scored_top_m" if family == CONSTRAINT_TEMPLATE_CURRENT else "top_m_lowest_energy_candidates",
+            "selection_rule": substrate_selection_rule(family),
         })
     return rows
+
+
+def substrate_selection_rule(family: str) -> str:
+    if family == CONSTRAINT_TEMPLATE_CURRENT:
+        return "current_constraint_scored_top_m"
+    if family == MAX_ENTROPY_LOCAL:
+        return "uniform_local_without_macro_constraint"
+    if family == MAX_ENTROPY_MACRO_INVARIANT:
+        return "maximum_entropy_local_matched_macro_invariant_delta"
+    return "top_m_lowest_energy_candidates"
 
 
 def transition_energy_family_summary_rows(args: argparse.Namespace) -> list[dict[str, object]]:
@@ -1415,7 +1708,7 @@ def transition_energy_family_summary_rows(args: argparse.Namespace) -> list[dict
             "substrate_family": family,
             "transition_energy_form": transition_energy_form_label(family),
             "hand_built_constraint_vocabulary_removed": int(family != CONSTRAINT_TEMPLATE_CURRENT),
-            "probabilistic_sampling_used": 0,
+            "probabilistic_sampling_used": int(family in MAX_ENTROPY_FAMILIES),
         })
     return rows
 
@@ -1434,8 +1727,11 @@ def transition_energy_parameter_summary_rows(args: argparse.Namespace) -> list[d
             "potential_scale": variant.get("potential_scale", "") if family == SMOOTH_RANDOM_POTENTIAL else "",
             "budget_kind": variant.get("budget_kind", "") if family == BUDGET_CONSERVATION else "",
             "budget_weight": variant.get("budget_weight", "") if family == BUDGET_CONSERVATION else "",
-            "macro_invariant_kind": variant.get("macro_invariant_kind", "") if family in {PRESERVATION_ASYMMETRY, COMBINED_ASYMMETRY} else "",
-            "macro_invariant_beta": variant.get("macro_invariant_beta", "") if family in {PRESERVATION_ASYMMETRY, COMBINED_ASYMMETRY} else "",
+            "macro_invariant_kind": variant.get("macro_invariant_kind", "") if family in {PRESERVATION_ASYMMETRY, COMBINED_ASYMMETRY, *MAX_ENTROPY_FAMILIES} else "",
+            "macro_invariant_beta": variant.get("macro_invariant_beta", "") if family in {PRESERVATION_ASYMMETRY, COMBINED_ASYMMETRY, *MAX_ENTROPY_FAMILIES} else "",
+            "equivalent_beta_target": variant.get("equivalent_beta_target", "") if family in MAX_ENTROPY_FAMILIES else "",
+            "max_entropy_sampler_draws": variant.get("max_entropy_sampler_draws", "") if family in MAX_ENTROPY_FAMILIES else "",
+            "max_entropy_delta_match_error_max": variant.get("max_entropy_delta_match_error_max", "") if family in MAX_ENTROPY_FAMILIES else "",
             "asymmetry_alpha": variant.get("asymmetry_alpha", "") if family in {DIRECTIONAL_ASYMMETRY, COMBINED_ASYMMETRY} else "",
             "asymmetry_field_smoothness": variant.get("asymmetry_field_smoothness", "") if family in {DIRECTIONAL_ASYMMETRY, COMBINED_ASYMMETRY} else "",
             "asymmetry_field_scale": variant.get("asymmetry_field_scale", "") if family in {DIRECTIONAL_ASYMMETRY, COMBINED_ASYMMETRY} else "",
@@ -3063,6 +3359,13 @@ def write_outputs(
     write_csv(out_dir / "response_by_macro_invariant_kind.csv", outputs["response_by_macro_invariant_kind"])
     write_csv(out_dir / "response_by_macro_invariant_beta.csv", outputs["response_by_macro_invariant_beta"])
     write_csv(out_dir / "selected_edge_overlap_by_beta.csv", outputs["selected_edge_overlap_by_beta"])
+    write_csv(out_dir / "max_entropy_constraint_manifest.csv", outputs["max_entropy_constraint_manifest"])
+    write_csv(out_dir / "max_entropy_marginal_match_summary.csv", outputs["max_entropy_marginal_match_summary"])
+    write_csv(out_dir / "max_entropy_sampler_diagnostics.csv", outputs["max_entropy_sampler_diagnostics"])
+    write_csv(out_dir / "max_entropy_edge_match_to_calibration.csv", outputs["max_entropy_edge_match_to_calibration"])
+    write_csv(out_dir / "response_by_max_entropy_family.csv", outputs["response_by_max_entropy_family"])
+    write_csv(out_dir / "response_by_equivalent_beta_target.csv", outputs["response_by_equivalent_beta_target"])
+    write_csv(out_dir / "paired_baseline_availability_by_max_entropy_variant.csv", outputs["paired_baseline_availability_by_max_entropy_variant"])
     write_csv(out_dir / "response_by_alpha_beta_pair.csv", outputs["response_by_alpha_beta_pair"])
     write_csv(out_dir / "matched_null_pass_by_asymmetry_family.csv", outputs["matched_by_substrate"])
     write_csv(out_dir / "matched_null_pass_by_asymmetry_variant.csv", outputs["matched_by_substrate_variant"])
@@ -3086,6 +3389,11 @@ def write_outputs(
     status["substrate_family_variant_count"] = len(outputs["substrate_variant_manifest"])
     status["response_by_substrate_family_variant_rows"] = len(outputs["response_by_substrate_variant"])
     status["selected_edge_overlap_by_beta_rows"] = len(outputs["selected_edge_overlap_by_beta"])
+    status["max_entropy_constraint_manifest_rows"] = len(outputs["max_entropy_constraint_manifest"])
+    status["max_entropy_marginal_match_summary_rows"] = len(outputs["max_entropy_marginal_match_summary"])
+    status["max_entropy_sampler_diagnostics_rows"] = len(outputs["max_entropy_sampler_diagnostics"])
+    status["max_entropy_edge_match_to_calibration_rows"] = len(outputs["max_entropy_edge_match_to_calibration"])
+    status["paired_baseline_availability_by_max_entropy_variant_rows"] = len(outputs["paired_baseline_availability_by_max_entropy_variant"])
     status["fixture_result_rows"] = len(outputs["fixture_results"])
     status["perturbation_response_rows"] = len(outputs["response_classification"])
     status["response_flag_rows"] = len(outputs["response_flags"])
@@ -3123,6 +3431,8 @@ def decision_fields(outputs: dict[str, list[dict[str, object]]], status: dict[st
     kind = status_run_kind(status)
     if kind == TRANSITION_ENERGY_CHARACTERIZATION:
         readiness, next_action = transition_characterization_decision(outputs, status, matrix_gate, null_gate, null_power_gate, matched_marginal_gate, response_interpretable, fixture_gate)
+    elif kind == MAX_ENTROPY_PREFLIGHT:
+        readiness, next_action = max_entropy_preflight_decision(outputs, status, matrix_gate, null_gate, null_power_gate, matched_marginal_gate, response_interpretable, fixture_gate)
     elif kind == "substrate_untethering":
         readiness, next_action = substrate_untethering_decision(outputs, status, matrix_gate, null_gate, null_power_gate, matched_marginal_gate, response_interpretable, fixture_gate)
     elif kind == ASYMMETRY_LADDER:
@@ -3183,6 +3493,9 @@ def decision_fields(outputs: dict[str, list[dict[str, object]]], status: dict[st
         "combined_asymmetry_loadbearing": int(readiness == "combined_asymmetry_loadbearing"),
         "combined_asymmetry_not_yet_clean": int(readiness == "combined_asymmetry_not_yet_clean"),
         "max_entropy_asymmetry_ready": int(readiness == "max_entropy_asymmetry_ready"),
+        "max_entropy_preflight_smoke_completed": int(readiness == "max_entropy_preflight_smoke_completed"),
+        "max_entropy_preflight_completed": int(readiness == "max_entropy_preflight_completed"),
+        "max_entropy_local_response_bearing": int(readiness == "max_entropy_local_response_bearing"),
         "locality_only_baseline_confirmed": int(readiness == "locality_only_baseline_confirmed"),
         "locality_only_response_bearing": int(readiness == "locality_only_response_bearing"),
         "constraint_template_no_longer_primary": int(readiness == "constraint_template_no_longer_primary"),
@@ -3241,6 +3554,48 @@ def substrate_untethering_decision(
     if aligned.get(CONSTRAINT_TEMPLATE_CURRENT, 0.0) > 0:
         return "constraint_template_specific_signal", "write_substrate_artifact_risk_note"
     return "untethering_underpowered", "continue_transition_energy_substrates"
+
+
+def max_entropy_preflight_decision(
+    outputs: dict[str, list[dict[str, object]]],
+    status: dict[str, object],
+    matrix_gate: bool,
+    null_gate: bool,
+    null_power_gate: bool,
+    matched_marginal_gate: bool,
+    response_interpretable: bool,
+    fixture_gate: bool,
+) -> tuple[str, str]:
+    if not matrix_gate or not null_gate or not null_power_gate or not fixture_gate:
+        return "not_ready_repair_required", "repair_max_entropy_preflight_plumbing"
+    if not matched_marginal_gate:
+        return "coverage_repair_required", "repair_max_entropy_paired_baselines"
+    match_rows = [
+        row for row in outputs.get("max_entropy_marginal_match_summary", [])
+        if int(float_or_zero(row.get("target_marginal_applied_count"))) > 0
+    ]
+    if any(row.get("marginal_match_status") != "ok" for row in match_rows):
+        return "not_ready_repair_required", "repair_max_entropy_sampler"
+    if not response_interpretable:
+        return "max_entropy_preflight_smoke_completed", "continue_max_entropy_preflight"
+
+    response_by_family = {
+        str(row.get("substrate_family", "")): row
+        for row in outputs.get("response_by_max_entropy_family", [])
+    }
+    local = response_by_family.get(MAX_ENTROPY_LOCAL, {})
+    macro = response_by_family.get(MAX_ENTROPY_MACRO_INVARIANT, {})
+    local_aligned = float_or_zero(local.get("aligned_amplification_fraction"))
+    macro_aligned = float_or_zero(macro.get("aligned_amplification_fraction"))
+    jobs_requested = int(float_or_zero(status.get("jobs_requested")))
+    response_rows = len(outputs.get("response_classification", []))
+    if jobs_requested < 256 or response_rows < 250:
+        return "max_entropy_preflight_smoke_completed", "run_max_entropy_phase1_preflight"
+    if macro_aligned > 0.0 and local_aligned == 0.0:
+        return "max_entropy_transition_ready", "expand_max_entropy_macro_invariant_family"
+    if local_aligned > 0.0:
+        return "max_entropy_local_response_bearing", "demote_or_repair_max_entropy_macro_invariant_claim"
+    return "max_entropy_preflight_completed", "continue_max_entropy_preflight"
 
 
 def asymmetry_ladder_decision(
@@ -3924,6 +4279,7 @@ def key_row(key: TransportKey) -> dict[str, object]:
     family = substrate_family_from_condition_id(key.condition_id)
     variant = substrate_variant_from_condition_id(key.condition_id)
     macro_beta = variant_parameter(variant, "beta") if family in {PRESERVATION_ASYMMETRY, COMBINED_ASYMMETRY} else ""
+    equivalent_beta = variant_parameter(variant, "equivalent_beta") if family in MAX_ENTROPY_FAMILIES else ""
     asymmetry_alpha = variant_parameter(variant, "alpha") if family in {DIRECTIONAL_ASYMMETRY, COMBINED_ASYMMETRY} else ""
     asymmetry_smoothness = variant_parameter(variant, "smoothness") if family in {DIRECTIONAL_ASYMMETRY, COMBINED_ASYMMETRY} else ""
     return {
@@ -3934,8 +4290,9 @@ def key_row(key: TransportKey) -> dict[str, object]:
         "potential_beta": variant_parameter(variant, "beta") if family == SMOOTH_RANDOM_POTENTIAL else "",
         "budget_kind": budget_kind_from_variant(variant) if family == BUDGET_CONSERVATION else "",
         "budget_weight": variant_parameter(variant, "weight") if family == BUDGET_CONSERVATION else "",
-        "macro_invariant_kind": invariant_kind_from_variant(variant) if family in {PRESERVATION_ASYMMETRY, COMBINED_ASYMMETRY} else "",
-        "macro_invariant_beta": macro_beta,
+        "macro_invariant_kind": invariant_kind_from_variant(variant) if family in {PRESERVATION_ASYMMETRY, COMBINED_ASYMMETRY, *MAX_ENTROPY_FAMILIES} else "",
+        "macro_invariant_beta": macro_beta or equivalent_beta,
+        "equivalent_beta_target": equivalent_beta,
         "asymmetry_alpha": asymmetry_alpha,
         "asymmetry_field_smoothness": asymmetry_smoothness,
         "alpha_beta_pair": f"{asymmetry_alpha}:{macro_beta}" if asymmetry_alpha and macro_beta else "",

@@ -341,7 +341,7 @@ A spec should ask:
 
 ```text
 Does a max-entropy local transition ensemble matched on the symbol-histogram
-ΔI edge marginal reproduce the beta-threshold aligned response?
+`delta_I` edge marginal reproduce the beta-threshold aligned response?
 ```
 
 ## 15. Recommended spec template
