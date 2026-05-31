@@ -9,6 +9,66 @@ patch notes at the top.
 
 ## 2026-05-31
 
+### RFS-MB0 Option A Budget-Coverage Small Smoke
+
+Ran the small Option A follow-up from
+`docs/research_notes/omega_theory/transition_energy_substrate_atlas.md`.
+
+Retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_option_a_budget_coverage_small_result.md`
+
+Local validation output:
+
+- `results/local_runs/20260531_option_a_budget_coverage_small/`
+
+Run shape:
+
+```text
+status: COMPLETED
+workers: 18
+jobs_completed: 396 / 396
+elapsed_seconds: 463.18
+errors: 0
+matrix_count: 3915
+substrate_family_variant_count: 9
+null_replicates: 13
+matched_marginal_detector_null_gate_passed: 1
+synthetic_fixture_contract: passed
+readiness_level: substrate_characterization_underpowered
+next_action_fork: continue_transition_energy_characterization
+```
+
+Compact read:
+
+```text
+budget coverage repair:
+  succeeded mechanically
+
+hamming_weight_or_nonzero_count:
+  cleanest support and matched-null behavior;
+  weak aligned-amplification fraction
+
+symbol_histogram_distance:
+  near-complete matrix coverage;
+  moderate aligned response and response diversity;
+  best current middle path
+
+total_coordinate_mass:
+  strongest aligned-amplification fraction;
+  still limited by missing late-horizon constrained-window baseline matrices
+```
+
+Interpretation:
+
+```text
+The earlier budget-conservation coverage caveat is mostly repaired. The
+remaining total-coordinate-mass caveat is an instrumentation/baseline-availability
+issue, not simple retained-matrix loss. Next repair should enforce or gate
+paired baseline availability before using late-horizon constrained-window
+response rows for total-coordinate-mass ranking.
+```
+
 ### RFS-MB0 Transition-Energy Substrate Characterization Larger Smoke
 
 Pulled and implemented `docs/RFS_MB0_TRANSITION_ENERGY_SUBSTRATE_CHARACTERIZATION_RUN_SPEC.md`.

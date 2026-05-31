@@ -60,6 +60,11 @@ Status:
   not aligned-amplifying in the tested grid, and budget-conservation carried
   aligned response with coverage caveats; this remains below any holdout,
   candidate-promotion, or Omega/agency/value claim;
+- a small Option A budget-coverage follow-up repaired the budget-conservation
+  retained-matrix coverage caveat into the 0.96-1.00 range and showed that the
+  remaining total-coordinate-mass limitation is mainly paired-baseline
+  availability for constrained-window response rows, not simple matrix retention
+  loss;
 - VAL0-G and VAL1-MF are reconnaissance evidence for viability dynamics and
   substrate limitations;
 - VAL0-CT showed reproducible anchor wins and clean dense controls, but no
@@ -81,6 +86,7 @@ Directory:
 Current result notes:
 
 - `rfs_mb0_transition_energy_substrate_characterization_result.md`
+- `rfs_mb0_option_a_budget_coverage_small_result.md`
 - `rfs_mb0_substrate_untethering_transition_energy_sweep_result.md`
 - `rfs_mb0_horizon_transport_response_surface_h128_scaleup_result.md`
 - `rfs_mb0_horizon_transport_response_resolution_scaleup_result.md`
@@ -167,6 +173,14 @@ Result in one line:
   response with total-coordinate-mass strongest but coverage-limited. The next
   action is `write_transition_energy_substrate_atlas_note`, not holdout,
   candidate promotion, graph causality, or Omega validation.
+- The Option A budget-coverage small smoke completed `396 / 396` jobs with `0`
+  errors, `18` workers, `13` null replicates, and `3915` matrices across 9
+  budget-conservation variants. Matrix coverage rose to `0.9627-0.9994` mean by
+  variant. `symbol_histogram_distance` is the best current middle path:
+  near-complete coverage, nontrivial response diversity, and moderate aligned
+  response. `total_coordinate_mass` remains live but instrument-limited because
+  late-horizon constrained-window perturbation rows lack paired baseline
+  matrices. This is a coverage/instrument smoke only.
 - The desktop Phase B / Stage A / Stage B branch shifted the current live
   empirical hook from marginal recurrence toward preregistered joint signed
   syndromes. Stage B-2 is now implemented as a preservation-first mechanism

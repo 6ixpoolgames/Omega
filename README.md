@@ -20,7 +20,7 @@ The active empirical question is currently narrower than agency, identity, or va
 
 Current status, in one line:
 
-**VAL0/VAL1 were useful reconnaissance probes; RFS-MB0 has now reoriented from endpoint support/distribution deformation and static coflow spectra toward directional horizon-transport instrumentation. The H128 horizon-transport response-surface scaleup passed matched-marginal instrument gates and surfaced a stable-to-amplified-aligned response surface. The latest transition-energy substrate characterization run turns that into a substrate-response atlas: locality-only remains a baseline, smooth-potential is response-bearing but not aligned-amplifying in the tested grid, and budget-conservation carries aligned response with coverage caveats. This is still not a scientific validation gate, candidate promotion, or Omega/agency/value claim.**
+**VAL0/VAL1 were useful reconnaissance probes; RFS-MB0 has now reoriented from endpoint support/distribution deformation and static coflow spectra toward directional horizon-transport instrumentation. The H128 horizon-transport response-surface scaleup passed matched-marginal instrument gates and surfaced a stable-to-amplified-aligned response surface. The latest transition-energy substrate characterization run turns that into a substrate-response atlas: locality-only remains a baseline, smooth-potential is response-bearing but not aligned-amplifying in the tested grid, and budget-conservation carries aligned response with coverage caveats. A small Option A follow-up repaired budget matrix coverage into the 0.96-1.00 range and narrowed the remaining total-coordinate-mass caveat to baseline availability, not simple matrix retention. This is still not a scientific validation gate, candidate promotion, or Omega/agency/value claim.**
 
 ## Current empirical branch: horizon transport
 
@@ -80,6 +80,7 @@ The current intermediate theory object is described in:
 
 - [Horizon Transport and Aligned Amplification](docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md)
 - [Transition Energy and Constraint Untethering](docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
+- [Option A budget-coverage small smoke result](docs/research_notes/validation_results/rfs_mb0_option_a_budget_coverage_small_result.md)
 - [Transition-energy substrate characterization result](docs/research_notes/validation_results/rfs_mb0_transition_energy_substrate_characterization_result.md)
 - [Transition-energy substrate characterization spec](docs/RFS_MB0_TRANSITION_ENERGY_SUBSTRATE_CHARACTERIZATION_RUN_SPEC.md)
 - [Substrate-untethering transition-energy larger smoke result](docs/research_notes/validation_results/rfs_mb0_substrate_untethering_transition_energy_sweep_result.md)
