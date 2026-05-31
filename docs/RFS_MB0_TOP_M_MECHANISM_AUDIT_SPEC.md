@@ -1,6 +1,6 @@
 # RFS-MB0 Hard Top-m Mechanism Audit Spec
 
-Status: small smoke implemented / medium run pending
+Status: medium sweep completed / pruning-resolution run pending
 Builds on:
 - `docs/RFS_MB0_TOP_M_GEOMETRY_AUDIT_SPEC.md`
 - `docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md`
@@ -113,6 +113,10 @@ If core/fringe randomized variants recover the response:
 
 If m-1 recovers but m+1 does not:
   the response may be tied to sparse strict pruning rather than full top-m identity.
+
+If m-1 recovers while deterministic top-m does not:
+  the earlier deterministic read is design-set sensitive; prioritize strict
+  pruning / low-rank edge-pressure controls before broadening the substrate.
 
 If m+1 recovers but randomized variants do not:
   the selected top-m set may be loadbearing while added near-boundary edges are tolerated.

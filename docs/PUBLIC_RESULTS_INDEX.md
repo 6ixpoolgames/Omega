@@ -22,7 +22,7 @@ graph-channel causality
 
 The current claim is modest:
 
-> Directional horizon-transport instrumentation can measure matched-control-separated response profiles in neutral finite transition substrates. Transition-energy substrate laws express different response regimes. Preservation asymmetry is currently the strongest non-template substrate hook for aligned amplification, with low-beta sensitivity now mapped below beta `0.25`; the latest MaxEnt/top-m audits indicate that the current preservation response is narrow to hard deterministic top-m edge selection rather than recovered by the tested stochastic relaxations. A first hard-top-m mechanism smoke points toward strict pruning / low-rank edge pressure as the next target, not a broad Omega claim.
+> Directional horizon-transport instrumentation can measure matched-control-separated response profiles in neutral finite transition substrates. Transition-energy substrate laws express different response regimes. Preservation asymmetry is currently the strongest non-template substrate hook for aligned amplification, with low-beta sensitivity now mapped below beta `0.25`; the latest MaxEnt/top-m audits indicate that the current preservation response is narrow to hard deterministic top-m edge selection rather than recovered by the tested stochastic relaxations. The hard-top-m mechanism medium sweep now points toward strict pruning / low-rank edge pressure as the next target, not a broad Omega claim.
 
 ## Best onboarding path
 
@@ -104,7 +104,7 @@ combined asymmetry:
 
 ## Most important current results
 
-### Hard top-m mechanism smoke
+### Hard top-m mechanism medium sweep
 
 Result note:
 
@@ -113,25 +113,25 @@ Result note:
 Run summary:
 
 ```text
-jobs_completed: 180 / 180
+jobs_completed: 8640 / 8640
 errors: 0
-matrix_count: 720
+matrix_count: 1980
 workers: 18
 matched_marginal_detector_null_gate_passed: 1
 synthetic_fixture_contract: 8 / 8
 paired_baseline_missing_rows: 0
-readiness_level: top_m_mechanism_smoke_completed
-next_action_fork: run_top_m_mechanism_medium
+readiness_level: top_m_pruning_variant_response_bearing
+next_action_fork: expand_strict_pruning_controls_and_inspect_deterministic_reproducibility
 ```
 
-Smoke read:
+Medium sweep update:
 
 ```text
 deterministic_top_m:
-  aligned rows present
+  stable on broader design groups
 
 top_m_m_minus_1:
-  aligned rows present
+  response-bearing across all tested betas; strongest at beta 0.10
 
 boundary jitter / core-fringe randomized / m+1:
   stable
@@ -140,8 +140,9 @@ boundary jitter / core-fringe randomized / m+1:
 Interpretation:
 
 ```text
-This is only a smoke. The m-1 / m+1 split makes strict pruning or low-rank
-edge pressure the immediate next target for a medium mechanism audit.
+The strict pruning / low-rank edge-pressure branch is now the immediate target.
+The earlier deterministic-top-m positive is design-set sensitive until
+reproduced or explained.
 ```
 
 ### Top-m geometry audit

@@ -25,9 +25,10 @@ has not passed the scientific gate.
 The current active branch is auditing the mechanism behind the preservation
 asymmetry response. The latest MaxEnt/top-m audits indicate that the observed
 symbol-histogram preservation response is narrow to hard deterministic top-m
-edge selection in the tested design set. The first hard-top-m mechanism smoke
-points toward strict pruning / low-rank edge pressure as the next medium-run
-target.
+edge selection in the tested design set. The hard-top-m mechanism medium sweep
+now points toward strict pruning / low-rank edge pressure as the next target,
+and makes the earlier deterministic-top-m positive design-set sensitive until
+reproduced or explained.
 ```
 
 Terminology rule:

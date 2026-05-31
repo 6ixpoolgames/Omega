@@ -9,10 +9,11 @@ patch notes at the top.
 
 ## 2026-06-01
 
-### RFS-MB0 Hard Top-m Mechanism Smoke
+### RFS-MB0 Hard Top-m Mechanism Medium Sweep
 
-Implemented and ran the first hard-top-m mechanism smoke after the top-m
-geometry audit forked to `audit_hard_top_m_mechanism`.
+Implemented the hard-top-m mechanism audit branch and advanced it from tiny
+smoke to a corrected medium design-group sweep after the top-m geometry audit
+forked to `audit_hard_top_m_mechanism`.
 
 Retained note:
 
@@ -24,41 +25,42 @@ Spec:
 
 Local validation output:
 
+- `results/local_runs/20260601_top_m_mechanism_medium_dg12_v2/`
 - `results/local_runs/20260601_top_m_mechanism_smoke/`
 
-Run shape:
+Medium run shape:
 
 ```text
 status: COMPLETED
 workers: 18
-jobs_completed: 180 / 180
-elapsed_seconds: 8.199
+jobs_completed: 8640 / 8640
+elapsed_seconds: 213.430
 errors: 0
-matrix_count: 720
-null_replicates: 3
+matrix_count: 1980
+null_replicates: 7
 matched_marginal_detector_null_gate_passed: 1
 synthetic_fixture_contract: passed
 paired_baseline_missing_rows: 0
-readiness_level: top_m_mechanism_smoke_completed
-next_action_fork: run_top_m_mechanism_medium
+readiness_level: top_m_pruning_variant_response_bearing
+next_action_fork: expand_strict_pruning_controls_and_inspect_deterministic_reproducibility
 ```
 
 Main read:
 
 ```text
-deterministic_top_m reproduced aligned rows;
-top_m_m_minus_1 also produced aligned rows and exceeded deterministic in this
-small smoke;
+deterministic_top_m went stable on broader design groups;
+top_m_m_minus_1 remained response-bearing across all tested betas and was
+strongest at beta 0.10;
 top_m_boundary_jitter, core/fringe randomization, and top_m_m_plus_1 stayed stable.
 ```
 
 Interpretation:
 
 ```text
-The smoke is not a theory validation result. It is enough to justify a medium
-mechanism audit. The m-1 / m+1 split is the highest-signal feature: preserving
-all top-m edges plus one near-boundary edge did not recover the response, while
-strictly pruning to m-1 did.
+This is not a theory validation result. The current mechanism fork is strict
+pruning / low-rank edge pressure, not deterministic top-m edge identity by
+itself. The earlier deterministic-top-m positive is design-set sensitive until
+reproduced or explained.
 ```
 
 ## 2026-05-31

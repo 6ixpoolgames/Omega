@@ -3852,6 +3852,7 @@ def decision_fields(outputs: dict[str, list[dict[str, object]]], status: dict[st
         "algorithmically_narrow_top_m_geometry": int(readiness == "algorithmically_narrow_top_m_geometry"),
         "top_m_mechanism_smoke_completed": int(readiness == "top_m_mechanism_smoke_completed"),
         "top_m_mechanism_partially_preserved": int(readiness == "top_m_mechanism_partially_preserved"),
+        "top_m_pruning_variant_response_bearing": int(readiness == "top_m_pruning_variant_response_bearing"),
         "hard_top_m_exact_selection_loadbearing": int(readiness == "hard_top_m_exact_selection_loadbearing"),
         "top_m_geometry_audit_underpowered": int(readiness == "top_m_geometry_audit_underpowered"),
         "top_m_geometry_spec_incomplete": int(readiness == "top_m_geometry_spec_incomplete"),
@@ -4098,11 +4099,6 @@ def top_m_mechanism_audit_decision(
         str(row.get("sampler_family", "")): row
         for row in response_by_group_rows(primary_rows, ("sampler_family",))
     }
-    deterministic = sampler_rows.get("deterministic_top_m", {})
-    deterministic_aligned = float_or_zero(deterministic.get("aligned_amplification_fraction")) > 0.0
-    if not deterministic_aligned:
-        return "top_m_geometry_audit_underpowered", "inspect_deterministic_reproducibility"
-
     jobs_requested = int(float_or_zero(status.get("jobs_requested")))
     response_rows = len(primary_rows)
     if jobs_requested < 256 or response_rows < 250:
@@ -4112,6 +4108,12 @@ def top_m_mechanism_audit_decision(
         family for family in mechanism_samplers
         if float_or_zero(sampler_rows.get(family, {}).get("aligned_amplification_fraction")) > 0.0
     ]
+    deterministic = sampler_rows.get("deterministic_top_m", {})
+    deterministic_aligned = float_or_zero(deterministic.get("aligned_amplification_fraction")) > 0.0
+    if not deterministic_aligned and mechanism_aligned:
+        return "top_m_pruning_variant_response_bearing", "expand_strict_pruning_controls_and_inspect_deterministic_reproducibility"
+    if not deterministic_aligned:
+        return "top_m_geometry_audit_underpowered", "inspect_deterministic_reproducibility"
     if mechanism_aligned:
         return "top_m_mechanism_partially_preserved", "expand_top_m_mechanism_variant_resolution"
     return "hard_top_m_exact_selection_loadbearing", "demote_or_repair_deterministic_top_m_effect"
@@ -4802,6 +4804,7 @@ def write_report(out_dir: Path, status: dict[str, object], outputs: dict[str, li
         f"- algorithmically_narrow_top_m_geometry: `{status.get('algorithmically_narrow_top_m_geometry', 0)}`",
         f"- top_m_mechanism_smoke_completed: `{status.get('top_m_mechanism_smoke_completed', 0)}`",
         f"- top_m_mechanism_partially_preserved: `{status.get('top_m_mechanism_partially_preserved', 0)}`",
+        f"- top_m_pruning_variant_response_bearing: `{status.get('top_m_pruning_variant_response_bearing', 0)}`",
         f"- hard_top_m_exact_selection_loadbearing: `{status.get('hard_top_m_exact_selection_loadbearing', 0)}`",
         f"- top_m_geometry_spec_incomplete: `{status.get('top_m_geometry_spec_incomplete', 0)}`",
         f"- not_ready_repair_required: `{status.get('not_ready_repair_required', 0)}`",
