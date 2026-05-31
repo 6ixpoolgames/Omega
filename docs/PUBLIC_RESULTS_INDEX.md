@@ -57,14 +57,17 @@ Status:
   claim is open;
 - the active substrate question is now a substrate-response atlas question:
   locality-only remained a baseline, smooth-potential was response-bearing but
-  not aligned-amplifying in the tested grid, and budget-conservation carried
-  aligned response with coverage caveats; this remains below any holdout,
-  candidate-promotion, or Omega/agency/value claim;
-- a small Option A budget-coverage follow-up repaired the budget-conservation
-  retained-matrix coverage caveat into the 0.96-1.00 range and showed that the
+  not aligned-amplifying in the tested grid, and macro-invariant /
+  asymmetry-constrained transition energy carried aligned response; this remains
+  below any holdout, candidate-promotion, or Omega/agency/value claim;
+- a small Option A macro-invariant coverage follow-up repaired the raw
+  `budget_conservation` retained-matrix coverage caveat into the 0.96-1.00 range and showed that the
   remaining total-coordinate-mass limitation is mainly paired-baseline
   availability for constrained-window response rows, not simple matrix retention
   loss;
+- a guarded Option A due-diligence follow-up then reached the formal
+  loadbearing read for the macro-invariant / asymmetry-constrained family, with
+  full matrix coverage and explicit `transport_baseline_missing` separation;
 - VAL0-G and VAL1-MF are reconnaissance evidence for viability dynamics and
   substrate limitations;
 - VAL0-CT showed reproducible anchor wins and clean dense controls, but no
@@ -86,6 +89,7 @@ Directory:
 Current result notes:
 
 - `rfs_mb0_transition_energy_substrate_characterization_result.md`
+- `rfs_mb0_macro_invariant_due_diligence_result.md`
 - `rfs_mb0_option_a_budget_coverage_small_result.md`
 - `rfs_mb0_substrate_untethering_transition_energy_sweep_result.md`
 - `rfs_mb0_horizon_transport_response_surface_h128_scaleup_result.md`
@@ -155,7 +159,9 @@ Result in one line:
 - The substrate-untethering transition-energy larger smoke completed `896 / 896`
   jobs with `0` errors, `18` workers, `13` null replicates, and `1160`
   horizon-transport matrices across `constraint_template_current`,
-  `locality_only`, `smooth_random_potential`, and `budget_conservation`.
+  `locality_only`, `smooth_random_potential`, and macro-invariant /
+  asymmetry-constrained transition energy. Raw outputs name the last family
+  `budget_conservation`.
   The matched-marginal detector gate passed and the decision was
   `horizon_transport_generalizes_beyond_constraint_vocabulary`.
   Budget-conservation showed the strongest aligned-amplification fraction;
@@ -169,18 +175,29 @@ Result in one line:
   matched-marginal gate and fixture contract passed. The decision was
   `locality_only_baseline_confirmed`: locality-only produced no aligned
   amplification, smooth-potential produced stable/rerouted/reopened response
-  without aligned amplification, and budget-conservation produced aligned
-  response with total-coordinate-mass strongest but coverage-limited. The next
+  without aligned amplification, and macro-invariant / asymmetry-constrained
+  transition energy produced aligned response with total-coordinate-mass
+  strongest but coverage-limited. The next
   action is `write_transition_energy_substrate_atlas_note`, not holdout,
   candidate promotion, graph causality, or Omega validation.
-- The Option A budget-coverage small smoke completed `396 / 396` jobs with `0`
+- The Option A macro-invariant coverage small smoke completed `396 / 396` jobs with `0`
   errors, `18` workers, `13` null replicates, and `3915` matrices across 9
-  budget-conservation variants. Matrix coverage rose to `0.9627-0.9994` mean by
+  raw `budget_conservation` variants. Matrix coverage rose to `0.9627-0.9994` mean by
   variant. `symbol_histogram_distance` is the best current middle path:
   near-complete coverage, nontrivial response diversity, and moderate aligned
   response. `total_coordinate_mass` remains live but instrument-limited because
   late-horizon constrained-window perturbation rows lack paired baseline
   matrices. This is a coverage/instrument smoke only.
+- The macro-invariant due-diligence run completed `4620 / 4620` jobs with `0`
+  errors, `18` workers, `13` null replicates, and `6720` matrices across 15
+  invariant variants. Matrix coverage was `1.0 / 1.0` mean/min for every
+  variant, the matched-marginal detector gate passed, and the formal read was
+  `budget_conservation_loadbearing`, translated publicly as
+  `macro_invariant_loadbearing`. Total coordinate mass retained the strongest
+  aligned response but still has paired-baseline availability limits;
+  symbol-composition is the cleanest diversified invariant; nonzero support is
+  the clean low-signal comparator. This closes Option A enough to proceed to a
+  max-entropy local transition preflight.
 - The desktop Phase B / Stage A / Stage B branch shifted the current live
   empirical hook from marginal recurrence toward preregistered joint signed
   syndromes. Stage B-2 is now implemented as a preservation-first mechanism

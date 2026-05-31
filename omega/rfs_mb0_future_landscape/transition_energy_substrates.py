@@ -14,6 +14,17 @@ CONSTRAINT_TEMPLATE_CURRENT = "constraint_template_current"
 LOCALITY_ONLY = "locality_only"
 SMOOTH_RANDOM_POTENTIAL = "smooth_random_potential"
 BUDGET_CONSERVATION = "budget_conservation"
+MACRO_INVARIANT_ALIASES = {
+    "macro_invariant": BUDGET_CONSERVATION,
+    "macro-invariant": BUDGET_CONSERVATION,
+    "macro_asymmetry_constrained": BUDGET_CONSERVATION,
+    "asymmetry_constrained": BUDGET_CONSERVATION,
+    "asymmetry-constrained": BUDGET_CONSERVATION,
+    "asymmetry_constrained_transition_energy": BUDGET_CONSERVATION,
+    "asymmetry-constrained_transition_energy": BUDGET_CONSERVATION,
+    "conserved_distinction": BUDGET_CONSERVATION,
+    "invariant_constrained": BUDGET_CONSERVATION,
+}
 TRANSITION_ENERGY_FAMILIES = (
     CONSTRAINT_TEMPLATE_CURRENT,
     LOCALITY_ONLY,
@@ -23,11 +34,15 @@ TRANSITION_ENERGY_FAMILIES = (
 
 
 def generate_job_baseline_system(job: dict[str, object], params: RelationParams, seed: int) -> LandscapeSystem:
-    family = str(job.get("substrate_family", CONSTRAINT_TEMPLATE_CURRENT) or CONSTRAINT_TEMPLATE_CURRENT)
+    family = canonical_transition_energy_family(str(job.get("substrate_family", CONSTRAINT_TEMPLATE_CURRENT) or CONSTRAINT_TEMPLATE_CURRENT))
     if family == CONSTRAINT_TEMPLATE_CURRENT:
         system = generate_relation_system(params, seed)
         return with_substrate_metadata(system, family, {})
     return generate_transition_energy_system(params, seed, job, family)
+
+
+def canonical_transition_energy_family(family: str) -> str:
+    return MACRO_INVARIANT_ALIASES.get(str(family), str(family))
 
 
 def generate_transition_energy_system(

@@ -16,6 +16,8 @@ ENTROPY_REOPENED_MIN_DELTA = 0.20
 LARGE_ENTRY_RESPONSE_MIN_MAGNITUDE = 0.25
 
 RESPONSE_CLASS_RESOLUTION_MISMATCH = "transport_resolution_mismatch"
+RESPONSE_CLASS_BASELINE_MISSING = "transport_baseline_missing"
+RESPONSE_CLASS_INSUFFICIENT_COMMON_ITEMS = "transport_insufficient_common_items"
 RESPONSE_CLASS_RESPONSE_UNDERPOWERED = "transport_response_underpowered"
 RESPONSE_CLASS_COLLAPSES = "transport_collapses"
 RESPONSE_CLASS_WEAKENED = "transport_weakened"
@@ -27,6 +29,8 @@ RESPONSE_CLASS_CONTROL_EQUIVALENT = "transport_control_equivalent"
 
 MEASUREMENT_LIMIT_RESPONSE_CLASSES = frozenset({
     RESPONSE_CLASS_RESOLUTION_MISMATCH,
+    RESPONSE_CLASS_BASELINE_MISSING,
+    RESPONSE_CLASS_INSUFFICIENT_COMMON_ITEMS,
     RESPONSE_CLASS_RESPONSE_UNDERPOWERED,
 })
 INTERPRETABLE_RESPONSE_CLASSES = frozenset({
@@ -41,6 +45,8 @@ INTERPRETABLE_RESPONSE_CLASSES = frozenset({
 
 RESPONSE_CLASS_DESCRIPTIONS = {
     RESPONSE_CLASS_RESOLUTION_MISMATCH: "baseline and perturbation did not share enough row/column support",
+    RESPONSE_CLASS_BASELINE_MISSING: "paired baseline matrix was unavailable for this perturbation context",
+    RESPONSE_CLASS_INSUFFICIENT_COMMON_ITEMS: "paired baseline and perturbation shared too little row/column support",
     RESPONSE_CLASS_RESPONSE_UNDERPOWERED: "response statistics were insufficient for classification",
     RESPONSE_CLASS_COLLAPSES: "transport mass collapsed relative to baseline",
     RESPONSE_CLASS_WEAKENED: "transport mass weakened without full collapse",
@@ -81,7 +87,12 @@ def classify_response(row: dict[str, object]) -> str:
     before entropy reopening; reroute requires subspace shift without collapse;
     aligned amplification is intentionally distinct from control equivalence.
     """
-    if row.get("response_status") != "computed":
+    response_status = str(row.get("response_status", ""))
+    if response_status == "baseline_missing":
+        return RESPONSE_CLASS_BASELINE_MISSING
+    if response_status == "insufficient_common_transport_items":
+        return RESPONSE_CLASS_INSUFFICIENT_COMMON_ITEMS
+    if response_status != "computed":
         return RESPONSE_CLASS_RESOLUTION_MISMATCH
     alignment = _float_or_zero(row.get("mean_subspace_alignment"))
     mass_delta = _float_or_zero(row.get("spectral_mass_delta_fraction"))

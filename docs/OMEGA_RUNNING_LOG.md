@@ -9,7 +9,107 @@ patch notes at the top.
 
 ## 2026-05-31
 
-### RFS-MB0 Option A Budget-Coverage Small Smoke
+### RFS-MB0 Macro-Invariant Due-Diligence Run
+
+Ran the guarded Option A due-diligence follow-up before moving to the
+max-entropy local transition preflight.
+
+Terminology update:
+
+```text
+public-facing:
+  macro-invariant transition substrate
+
+theory-facing:
+  asymmetry-constrained transition energy
+
+raw implementation/output compatibility:
+  budget_conservation
+  budget_kind
+  budget_weight
+  budget_delta
+```
+
+Retained note:
+
+- `docs/research_notes/validation_results/rfs_mb0_macro_invariant_due_diligence_result.md`
+
+Local validation output:
+
+- `results/local_runs/20260531_option_a_budget_due_diligence_guarded/`
+
+Implementation repair:
+
+```text
+Response taxonomy now separates transport_baseline_missing from true
+transport_resolution_mismatch and insufficient common row/column support.
+The runner also accepts macro_invariant / asymmetry_constrained aliases while
+canonicalizing to the retained implementation family name budget_conservation.
+```
+
+Run shape:
+
+```text
+status: COMPLETED
+workers: 18
+jobs_completed: 4620 / 4620
+elapsed_seconds: 1658.146
+errors: 0
+matrix_count: 6720
+substrate_family_variant_count: 15
+null_replicates: 13
+matched_marginal_detector_null_gate_passed: 1
+synthetic_fixture_contract: passed
+terminal_saturation_flagged_rows: 0
+readiness_level: budget_conservation_loadbearing
+next_action_fork: expand_budget_conservation_family
+```
+
+Translated read:
+
+```text
+readiness_level:
+  macro_invariant_loadbearing
+
+next action:
+  proceed to Option B unless doing a very narrow total-coordinate-mass
+  baseline-availability repair
+```
+
+Compact result:
+
+```text
+all variants:
+  coverage_mean: 1.0
+  coverage_min: 1.0
+
+nonzero-support invariant:
+  aligned fraction: 0.061
+  matched-null pass: 0.985-1.000
+  clean low-signal comparator
+
+symbol-composition invariant:
+  aligned fraction: 0.106
+  matched-null pass: 0.780-0.811
+  best response diversity with no baseline-missing rows
+
+total coordinate-mass invariant:
+  aligned fraction: 0.203 overall, 0.273 among interpretable rows
+  matched-null pass: 0.795-0.833
+  strongest aligned response, still limited by paired-baseline availability
+```
+
+Interpretation:
+
+```text
+Option A is sufficiently resolved for project direction. Macro-invariant /
+asymmetry-constrained transition energy is loadbearing under the current
+instrument, but the next stronger substrate test is Option B: a max-entropy
+local transition ensemble using explicit macro constraints rather than named
+symbolic law templates.
+```
+
+### RFS-MB0 Option A Macro-Invariant Coverage Small Smoke
 
 Ran the small Option A follow-up from
 `docs/research_notes/omega_theory/transition_energy_substrate_atlas.md`.
@@ -62,7 +162,7 @@ total_coordinate_mass:
 Interpretation:
 
 ```text
-The earlier budget-conservation coverage caveat is mostly repaired. The
+The earlier macro-invariant coverage caveat is mostly repaired. The
 remaining total-coordinate-mass caveat is an instrumentation/baseline-availability
 issue, not simple retained-matrix loss. Next repair should enforce or gate
 paired baseline availability before using late-horizon constrained-window
@@ -120,7 +220,7 @@ smooth_random_potential:
   response-bearing but not aligned-amplifying in the tested smoothness/beta grid;
   mostly stable with rerouted/reopened rows
 
-budget_conservation:
+macro-invariant / asymmetry-constrained transition energy:
   aligned response present;
   total-coordinate-mass strongest but coverage-limited;
   hamming-weight/nonzero variants have cleaner matched-null behavior
@@ -134,7 +234,7 @@ Interpretation:
 ```text
 This is a substrate-response atlas result for the instrument, not a theory
 validation gate. It supports writing a transition-energy substrate atlas note
-and deciding between budget-coverage repair and a more principled
+and deciding between macro-invariant coverage repair and a more principled
 max-entropy-local-transition substrate.
 ```
 
@@ -174,13 +274,13 @@ Substrate families:
 constraint_template_current
 locality_only
 smooth_random_potential
-budget_conservation
+macro-invariant / asymmetry-constrained transition energy
 ```
 
 Compact result:
 
 ```text
-budget_conservation: 42 aligned-amplification rows, modal stable, high-viscosity aligned amplifier
+macro-invariant / asymmetry-constrained transition energy: 42 aligned-amplification rows, modal stable, high-viscosity aligned amplifier
 smooth_random_potential: 19 aligned-amplification rows, modal rerouted
 constraint_template_current: 17 aligned-amplification rows, modal rerouted
 locality_only: 0 aligned-amplification rows, modal reopens

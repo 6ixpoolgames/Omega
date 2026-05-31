@@ -4,6 +4,15 @@ Status: theory / instrument atlas note after transition-energy substrate charact
 Scope: RFS-MB0 horizon-transport branch and transition-energy substrate program  
 Claim boundary: not Omega detection, not agency detection, not valuer detection, not identity detection, not life detection, not candidate promotion
 
+Terminology update:
+
+```text
+Use "macro-invariant" in public-facing prose.
+Use "asymmetry-constrained transition energy" in theory-facing prose.
+The raw implementation/output name "budget_conservation" is retained only for
+backward compatibility with scripts and CSVs.
+```
+
 ## 0. One-sentence update
 
 The transition-energy characterization run turns the horizon-transport branch from a single-substrate detector into a **substrate-response atlas**: different transition-energy laws express different horizon-transport response profiles, and those differences are signal rather than noise.
@@ -17,7 +26,7 @@ locality alone:
 smooth random potential:
   response-bearing; rerouting/reopening/weakening appear, but no aligned amplification in this grid
 
-budget conservation:
+macro-invariant / asymmetry-constrained transition energy:
   aligned response appears; total-coordinate-mass is strongest but coverage-limited
 
 constraint template comparator:
@@ -99,7 +108,7 @@ The characterization run shows that the instrument does not merely light up ever
 ```text
 locality-only behaves like a baseline;
 smooth potential generates differentiated response without aligned amplification;
-budget conservation produces aligned response;
+macro-invariant / asymmetry-constrained transition energy produces aligned response;
 constraint templates remain positive but no longer exclusive.
 ```
 
@@ -172,7 +181,7 @@ Is smooth potential a route to rerouting/reopening rather than amplification?
 Can smooth-potential response diversity be made cleaner under max-entropy control?
 ```
 
-### 3.3 Budget conservation
+### 3.3 Macro-Invariant / Asymmetry-Constrained Transition Energy
 
 Result:
 
@@ -189,7 +198,7 @@ reopened rows: 258
 resolution mismatch rows: 270
 ```
 
-Budget kinds:
+Invariant kinds:
 
 ```text
 total_coordinate_mass:
@@ -217,13 +226,13 @@ approximate invariants appear to be a productive generic lawlike ingredient.
 But the note should remain cautious:
 
 ```text
-Budget conservation is promising, but total-coordinate-mass cannot be declared the winner without coverage / resolution-mismatch repair.
+Macro-invariant / asymmetry-constrained transition energy is promising, but total-coordinate-mass cannot be declared the winner without coverage / paired-baseline repair.
 ```
 
 Current read:
 
 ```text
-budget-like invariants are the strongest non-template route to aligned amplification;
+macro-invariant / asymmetry-constrained terms are the strongest non-template route to aligned amplification;
 they should guide the next substrate repair and max-entropy design.
 ```
 
@@ -269,7 +278,7 @@ locality-only:
 smooth-potential:
   rerouting / reopening / differentiated response
 
-budget-conservation:
+macro-invariant / asymmetry-constrained:
   aligned amplification / high-viscosity transport
 
 constraint-template:
@@ -311,7 +320,8 @@ signature:
 
 ```text
 family:
-  budget_conservation
+  macro_invariant / asymmetry_constrained
+  raw implementation alias: budget_conservation
 
 signature:
   aligned amplification appears;
@@ -357,7 +367,7 @@ locality:
 potential:
   smooth scalar landscape over states
 
-budget / conservation:
+macro-invariant / asymmetry-constrained:
   approximate invariant or resource-like macro quantity
 
 constraint templates:
@@ -366,9 +376,9 @@ constraint templates:
 
 The important move is that `E(s,t)` concentrates assumptions into an explicit, inspectable object rather than scattering them across opaque constraint vocabularies.
 
-## 7. Why budget-like invariants are theoretically interesting
+## 7. Why Macro-Invariants Are Theoretically Interesting
 
-The budget-conservation family is currently the most interesting non-template route to aligned amplification.
+The macro-invariant / asymmetry-constrained family is currently the most interesting non-template route to aligned amplification.
 
 This may matter because invariants are what make a substrate feel universe-like:
 
@@ -384,7 +394,7 @@ A future-bearing object may require more than locality and smoothness. It may re
 This is still speculative. The current empirical statement is narrower:
 
 ```text
-budget-like transition-energy terms produced aligned amplification in this grid;
+macro-invariant transition-energy terms produced aligned amplification in this grid;
 locality-only did not;
 smooth-potential did not, though it produced other response classes.
 ```
@@ -420,7 +430,7 @@ holdout generalization.
 It also does not yet show:
 
 ```text
-budget conservation cleanly wins;
+macro-invariant transition energy cleanly wins;
 max-entropy local transition ensemble is implemented;
 aligned amplification is substrate-general across all generic laws;
 smooth potential cannot produce aligned amplification under any parameterization.
@@ -446,8 +456,8 @@ implement_max_entropy_local_transition
 This note recommends a hybrid sequence:
 
 ```text
-1. repair budget-conservation coverage / resolution mismatch;
-2. use budget-like marginal constraints to design the first max-entropy local transition ensemble;
+1. repair macro-invariant coverage / paired-baseline availability;
+2. use macro-invariant marginal constraints to design the first max-entropy local transition ensemble;
 3. keep locality-only as a baseline family;
 4. keep smooth-potential as a differentiated-response branch;
 5. keep constraint-template only as comparator.
@@ -457,7 +467,7 @@ This note recommends a hybrid sequence:
 
 The next major substrate should not be an unconstrained random graph.
 
-It should be a max-entropy local transition ensemble with explicit macro constraints, likely including budget-like marginals:
+It should be a max-entropy local transition ensemble with explicit macro constraints, likely including macro-invariant marginals:
 
 ```text
 state count;
@@ -467,14 +477,14 @@ local proposal radius;
 out-degree distribution;
 reversibility fraction;
 roughness / energy marginal profile;
-optional budget or invariant marginal constraints.
+optional macro-invariant marginal constraints.
 ```
 
 Reason:
 
 ```text
 locality-only is too weak for aligned amplification;
-budget-like invariants appear loadbearing;
+macro-invariant constraints appear loadbearing;
 max-entropy should preserve only macro constraints needed to make the substrate generative, not hand-picked symbolic laws.
 ```
 
@@ -484,23 +494,23 @@ This is the cleanest path away from hand-built constraint vocabulary while prese
 
 A next spec should probably be one of two things.
 
-### Option A: Budget coverage repair
+### Option A: Macro-invariant coverage repair
 
 Purpose:
 
 ```text
-Resolve whether budget-conservation aligned amplification remains strong after coverage / resolution-mismatch repair.
+Resolve whether macro-invariant / asymmetry-constrained aligned amplification remains strong after coverage / baseline-availability repair.
 ```
 
 Focus:
 
 ```text
-total_coordinate_mass;
-hamming_weight_or_nonzero_count;
-symbol_histogram_distance;
-coverage improvements;
+total coordinate-mass invariant;
+nonzero-support invariant;
+symbol-composition invariant;
+coverage and paired-baseline availability;
 matched-null stability;
-response thresholds by budget weight.
+response thresholds by invariant weight.
 ```
 
 ### Option B: Max-entropy local transition preflight
@@ -518,7 +528,7 @@ locality;
 out-degree;
 reversibility;
 roughness;
-optional budget marginal;
+optional macro-invariant marginal;
 no named symbolic law templates.
 ```
 
@@ -535,7 +545,7 @@ A hybrid preflight is acceptable if kept small.
 
 ### Principled
 
-The atlas organizes substrate families by explicit transition-law ingredients: locality, smooth potential, budget/invariance, and symbolic constraint templates.
+The atlas organizes substrate families by explicit transition-law ingredients: locality, smooth potential, macro-invariance/asymmetry constraint, and symbolic constraint templates.
 
 ### Parsimonious
 
@@ -547,9 +557,9 @@ The atlas produces testable predictions:
 
 ```text
 locality-only should remain a baseline unless roughness/out-degree changes move it into response-bearing regimes;
-budget-like invariants should continue to support aligned amplification if coverage is repaired;
+macro-invariant constraints should continue to support aligned amplification if coverage is repaired;
 smooth-potential should continue to support differentiated response, and may or may not amplify under different beta/smoothness;
-max-entropy with budget-like marginals should be more promising than max-entropy locality-only.
+max-entropy with macro-invariant marginals should be more promising than max-entropy locality-only.
 ```
 
 ## 14. Bottom line
@@ -568,4 +578,4 @@ The next substrate target should preserve this lesson:
 Do not erase substrate-law differences by forcing all families into one response curve.
 ```
 
-The project should proceed either to budget-coverage repair or to a max-entropy local transition preflight with budget-like macro constraints, while keeping the claim boundary closed.
+The project should proceed either to a narrow macro-invariant paired-baseline repair or to a max-entropy local transition preflight with macro-invariant constraints, while keeping the claim boundary closed.

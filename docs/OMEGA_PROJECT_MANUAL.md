@@ -24,10 +24,20 @@ substrate untethering as the active empirical branch, and state clearly that it
 has not passed the scientific gate.
 ```
 
+Terminology rule:
+
+```text
+Use "macro-invariant" in public-facing prose.
+Use "asymmetry-constrained transition energy" in theory-facing prose.
+Treat "budget_conservation", "budget_kind", "budget_weight", and
+"budget_delta" as retained raw implementation/output names only.
+```
+
 Primary current design note:
 
 - `docs/RFS_MB0_TRANSITION_ENERGY_SUBSTRATE_CHARACTERIZATION_RUN_SPEC.md`
 - `docs/research_notes/omega_theory/transition_energy_substrate_atlas.md`
+- `docs/research_notes/validation_results/rfs_mb0_macro_invariant_due_diligence_result.md`
 - `docs/research_notes/validation_results/rfs_mb0_option_a_budget_coverage_small_result.md`
 - `docs/RFS_MB0_SUBSTRATE_UNTETHERING_TRANSITION_ENERGY_SWEEP_SPEC.md`
 - `docs/RFS_MB0_HORIZON_TRANSPORT_RESPONSE_SURFACE_H128_SCALEUP_SPEC.md`
@@ -107,6 +117,7 @@ as the canonical internal definition anchor.
    - `docs/research_notes/omega_theory/transition_energy_substrate_atlas.md`
    - `docs/RFS_MB0_TRANSITION_ENERGY_SUBSTRATE_CHARACTERIZATION_RUN_SPEC.md`
    - `docs/research_notes/validation_results/rfs_mb0_transition_energy_substrate_characterization_result.md`
+   - `docs/research_notes/validation_results/rfs_mb0_macro_invariant_due_diligence_result.md`
    - `docs/research_notes/validation_results/rfs_mb0_option_a_budget_coverage_small_result.md`
    - `docs/RFS_MB0_SUBSTRATE_UNTETHERING_TRANSITION_ENERGY_SWEEP_SPEC.md`
    - `docs/research_notes/validation_results/rfs_mb0_substrate_untethering_transition_energy_sweep_result.md`

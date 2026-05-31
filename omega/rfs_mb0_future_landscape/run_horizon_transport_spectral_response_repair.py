@@ -82,7 +82,13 @@ from .spectral_contracts import (
     utc_now,
     write_json,
 )
-from .transition_energy_substrates import CONSTRAINT_TEMPLATE_CURRENT, TRANSITION_ENERGY_FAMILIES, generate_job_baseline_system
+from .transition_energy_substrates import (
+    BUDGET_CONSERVATION,
+    CONSTRAINT_TEMPLATE_CURRENT,
+    TRANSITION_ENERGY_FAMILIES,
+    canonical_transition_energy_family,
+    generate_job_baseline_system,
+)
 
 
 STOP_REQUESTED = False
@@ -160,14 +166,18 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--potential-beta", type=float, default=0.5, help="Smooth-potential transition-energy beta for transition-energy substrates.")
     parser.add_argument("--potential-smoothness", type=float, default=0.85, help="Additive smoothness of the random potential field.")
     parser.add_argument("--potential-scale", type=float, default=1.0, help="Scale of the smooth random potential field.")
-    parser.add_argument("--budget-kind", type=str, default="total_coordinate_mass", help="Budget statistic for budget_conservation substrates.")
-    parser.add_argument("--budget-weight", type=float, default=1.0, help="Budget penalty weight for budget_conservation substrates.")
+    parser.add_argument("--budget-kind", type=str, default="total_coordinate_mass", help="Implementation name for invariant statistic in macro-invariant substrates.")
+    parser.add_argument("--invariant-kind", dest="budget_kind", type=str, help="Public alias for --budget-kind.")
+    parser.add_argument("--budget-weight", type=float, default=1.0, help="Implementation name for invariant penalty weight in macro-invariant substrates.")
+    parser.add_argument("--invariant-weight", "--asymmetry-penalty-weight", dest="budget_weight", type=float, help="Public/theory alias for --budget-weight.")
     parser.add_argument("--transition-roughness-strength", type=float, default=-1.0, help="Override transition-energy roughness strength. Negative uses RelationParams roughness_strength.")
     parser.add_argument("--locality-roughness-strengths", type=str, default="", help="Characterization roughness variants for locality_only. Use comma-separated floats plus optional current.")
     parser.add_argument("--potential-smoothness-list", type=str, default="", help="Characterization smooth-potential smoothness variants.")
     parser.add_argument("--potential-beta-list", type=str, default="", help="Characterization smooth-potential beta variants.")
-    parser.add_argument("--budget-kinds", type=str, default="", help="Characterization budget variants.")
-    parser.add_argument("--budget-weights", type=str, default="", help="Characterization budget weight variants.")
+    parser.add_argument("--budget-kinds", type=str, default="", help="Characterization invariant variants; retained implementation name.")
+    parser.add_argument("--invariant-kinds", dest="budget_kinds", type=str, help="Public alias for --budget-kinds.")
+    parser.add_argument("--budget-weights", type=str, default="", help="Characterization invariant-weight variants; retained implementation name.")
+    parser.add_argument("--invariant-weights", "--asymmetry-penalty-weights", dest="budget_weights", type=str, help="Public/theory alias for --budget-weights.")
     return parser.parse_args()
 
 
@@ -267,7 +277,7 @@ def install_signal_handlers() -> None:
 
 
 def substrate_families(args: argparse.Namespace) -> list[str]:
-    families = [item.strip() for item in str(args.substrate_families).split(",") if item.strip()]
+    families = [canonical_transition_energy_family(item.strip()) for item in str(args.substrate_families).split(",") if item.strip()]
     unknown = [family for family in families if family not in TRANSITION_ENERGY_FAMILIES]
     if unknown:
         raise ValueError(f"unknown substrate family/families: {', '.join(unknown)}")
@@ -308,7 +318,7 @@ def substrate_family_variants(args: argparse.Namespace) -> list[dict[str, object
                         "potential_beta": beta,
                         "potential_scale": args.potential_scale,
                     })
-        elif family == "budget_conservation":
+        elif family == BUDGET_CONSERVATION:
             budget_kinds = string_list_or_default(args.budget_kinds, ("total_coordinate_mass", "symbol_histogram_distance", "hamming_weight_or_nonzero_count"))
             for budget_kind in budget_kinds:
                 for weight in list_or_default(args.budget_weights, (0.25, 1.00, 2.00)):
@@ -334,7 +344,7 @@ def default_substrate_variant(family: str, args: argparse.Namespace) -> dict[str
             "potential_smoothness": args.potential_smoothness,
             "potential_scale": args.potential_scale,
         })
-    if family == "budget_conservation":
+    if family == BUDGET_CONSERVATION:
         row.update({
             "budget_kind": args.budget_kind,
             "budget_weight": args.budget_weight,
@@ -419,7 +429,7 @@ def transition_energy_form_label(family: str) -> str:
         return "hamming_distance_plus_seeded_roughness"
     if family == "smooth_random_potential":
         return "hamming_distance_plus_beta_potential_delta_plus_seeded_roughness"
-    if family == "budget_conservation":
+    if family == BUDGET_CONSERVATION:
         return "hamming_distance_plus_budget_delta_penalty_plus_seeded_roughness"
     return "current_constraint_template_scored_relation"
 

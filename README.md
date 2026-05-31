@@ -20,7 +20,7 @@ The active empirical question is currently narrower than agency, identity, or va
 
 Current status, in one line:
 
-**VAL0/VAL1 were useful reconnaissance probes; RFS-MB0 has now reoriented from endpoint support/distribution deformation and static coflow spectra toward directional horizon-transport instrumentation. The H128 horizon-transport response-surface scaleup passed matched-marginal instrument gates and surfaced a stable-to-amplified-aligned response surface. The latest transition-energy substrate characterization run turns that into a substrate-response atlas: locality-only remains a baseline, smooth-potential is response-bearing but not aligned-amplifying in the tested grid, and budget-conservation carries aligned response with coverage caveats. A small Option A follow-up repaired budget matrix coverage into the 0.96-1.00 range and narrowed the remaining total-coordinate-mass caveat to baseline availability, not simple matrix retention. This is still not a scientific validation gate, candidate promotion, or Omega/agency/value claim.**
+**VAL0/VAL1 were useful reconnaissance probes; RFS-MB0 has now reoriented from endpoint support/distribution deformation and static coflow spectra toward directional horizon-transport instrumentation. The H128 horizon-transport response-surface scaleup passed matched-marginal instrument gates and surfaced a stable-to-amplified-aligned response surface. The latest transition-energy substrate characterization run turns that into a substrate-response atlas: locality-only remains a baseline, smooth-potential is response-bearing but not aligned-amplifying in the tested grid, and macro-invariant / asymmetry-constrained transition energy carries aligned response. The Option A due-diligence run repaired matrix coverage, separated baseline-missing rows from true resolution mismatch, and reached the formal loadbearing read for this substrate family. This is still not a scientific validation gate, candidate promotion, or Omega/agency/value claim.**
 
 ## Current empirical branch: horizon transport
 
@@ -80,7 +80,8 @@ The current intermediate theory object is described in:
 
 - [Horizon Transport and Aligned Amplification](docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md)
 - [Transition Energy and Constraint Untethering](docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
-- [Option A budget-coverage small smoke result](docs/research_notes/validation_results/rfs_mb0_option_a_budget_coverage_small_result.md)
+- [Macro-invariant due-diligence result](docs/research_notes/validation_results/rfs_mb0_macro_invariant_due_diligence_result.md)
+- [Option A macro-invariant coverage small smoke result](docs/research_notes/validation_results/rfs_mb0_option_a_budget_coverage_small_result.md)
 - [Transition-energy substrate characterization result](docs/research_notes/validation_results/rfs_mb0_transition_energy_substrate_characterization_result.md)
 - [Transition-energy substrate characterization spec](docs/RFS_MB0_TRANSITION_ENERGY_SUBSTRATE_CHARACTERIZATION_RUN_SPEC.md)
 - [Substrate-untethering transition-energy larger smoke result](docs/research_notes/validation_results/rfs_mb0_substrate_untethering_transition_energy_sweep_result.md)
@@ -303,10 +304,10 @@ horizon transport:
   current live empirical branch; H128 scaleup surfaced matched-marginal-separated stable-to-amplified-aligned response surface
 
 next task:
-  write a transition-energy substrate atlas note;
-  repair coverage around budget-conservation, especially total coordinate mass;
-  move toward a max-entropy local transition ensemble only after preserving
-  the substrate-law distinctions surfaced by the characterization run
+  macro-invariant due diligence is retained;
+  total coordinate mass remains strongest but still baseline-availability-limited;
+  move toward a max-entropy local transition ensemble while preserving the
+  substrate-law distinctions surfaced by the characterization run
 ```
 
 ## Important current docs
@@ -315,6 +316,7 @@ next task:
 
 - [Horizon Transport and Aligned Amplification](docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md)
 - [Transition Energy and Constraint Untethering](docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
+- [Macro-invariant due-diligence result](docs/research_notes/validation_results/rfs_mb0_macro_invariant_due_diligence_result.md)
 - [Transition-energy substrate characterization result](docs/research_notes/validation_results/rfs_mb0_transition_energy_substrate_characterization_result.md)
 - [Transition-energy substrate characterization spec](docs/RFS_MB0_TRANSITION_ENERGY_SUBSTRATE_CHARACTERIZATION_RUN_SPEC.md)
 - [Substrate-untethering transition-energy larger smoke result](docs/research_notes/validation_results/rfs_mb0_substrate_untethering_transition_energy_sweep_result.md)
@@ -545,9 +547,9 @@ The current next step is to write the transition-energy substrate atlas note and
 
 ```text
 near-term options:
-  repair budget-conservation coverage before ranking total mass too highly;
-  write the transition-energy substrate atlas note;
-  move toward a max-entropy local transition ensemble;
+  optionally repair total-coordinate-mass paired-baseline availability;
+  move toward a max-entropy local transition ensemble using explicit
+  macro-invariant constraints;
   keep grammar-neutral probes such as relation_role and full_state_hash;
   preserve matched-marginal detector gates and response-profile taxonomy;
   compare response surfaces across substrate families and scales;

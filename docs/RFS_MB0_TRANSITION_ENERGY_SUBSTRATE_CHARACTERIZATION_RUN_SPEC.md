@@ -1,5 +1,31 @@
 # RFS-MB0 Transition-Energy Substrate Characterization Run Spec
 
+## Terminology Update
+
+Use this translation in public-facing summaries and follow-up specs:
+
+```text
+budget_conservation:
+  raw implementation/output family name only
+
+macro-invariant:
+  public-facing substrate name
+
+asymmetry-constrained transition energy:
+  theory-facing substrate name
+
+budget_kind / budget_weight / budget_delta:
+  raw implementation/output field names
+
+invariant_kind / invariant_weight / invariant_delta:
+  public-facing translations
+
+asymmetry_penalty_weight / macro_asymmetry_delta:
+  theory-facing translations
+```
+
+Existing scripts and CSVs retain the `budget_*` fields for reproducibility.
+
 Status: larger design-set substrate-characterization spec  
 Builds on: `docs/research_notes/validation_results/rfs_mb0_substrate_untethering_transition_energy_sweep_result.md` and `docs/RFS_MB0_SUBSTRATE_UNTETHERING_TRANSITION_ENERGY_SWEEP_SPEC.md`  
 Claim boundary: no holdout scoring, no candidate promotion, no Omega detection, no agency detection, no identity detection, no valuer detection
@@ -32,7 +58,7 @@ It showed that horizon transport remains measurable beyond the original hand-bui
 It also showed that substrate families differ meaningfully:
 
 ```text
-budget_conservation:
+budget_conservation / macro-invariant:
   strongest aligned-amplification fraction;
   high-viscosity aligned-amplifier read;
   but weaker matched/interpretable context coverage in the larger smoke.
@@ -60,7 +86,7 @@ Allowed claims:
 
 ```text
 transition-energy substrate families produce different horizon-transport response profiles;
-budget / smooth-potential / locality-only families are more or less generative under the current instrument;
+macro-invariant / smooth-potential / locality-only families are more or less generative under the current instrument;
 matched marginal detector-null separation does or does not hold by substrate family;
 response diversity, viscosity, and horizon thresholds differ by substrate family;
 which substrate families deserve further scaling or repair.
@@ -98,7 +124,7 @@ Do not penalize a family for having a different response mode if matched-null an
 A good run may show:
 
 ```text
-budget_conservation:
+budget_conservation / macro-invariant:
   stable / amplified-aligned / high-viscosity profile
 
 smooth_random_potential:
@@ -121,7 +147,7 @@ Required families:
 constraint_template_current
 locality_only
 smooth_random_potential
-budget_conservation
+budget_conservation / macro-invariant
 ```
 
 Optional if already implemented cleanly:
@@ -206,29 +232,29 @@ test whether approximate invariants support high-viscosity aligned amplification
 Required sweeps:
 
 ```text
-budget_kind:
+budget_kind / invariant_kind:
   total_coordinate_mass
   symbol_histogram_distance
   hamming_weight_or_nonzero_count, if meaningful for alphabet
 
-budget_weight / lambda:
+budget_weight / invariant_weight / lambda:
   low, medium, high
 ```
 
 Required diagnostics:
 
 ```text
-budget_delta_distribution
-budget_violation_distribution
-frontier_support_by_budget_kind
-matched_interpretable_contexts_by_budget_kind
-aligned_amplification_by_budget_kind
+invariant_delta_distribution
+invariant_violation_distribution
+frontier_support_by_invariant_kind
+matched_interpretable_contexts_by_invariant_kind
+aligned_amplification_by_invariant_kind
 ```
 
 Decision interest:
 
 ```text
-Does budget-conservation remain the strongest aligned-amplification family after coverage repair?
+Does macro-invariant / asymmetry-constrained transition energy remain the strongest aligned-amplification family after coverage repair?
 Which invariant, if any, is loadbearing?
 ```
 
@@ -252,7 +278,7 @@ Suggested baseline:
 substrate_families: 4 required families
 family_parameter_variants: 1 to 9 per family depending on implementation
 families prioritized:
-  budget_conservation
+  budget_conservation / macro-invariant
   smooth_random_potential
   locality_only
   constraint_template_current comparator
@@ -270,7 +296,7 @@ shutdown_cushion_seconds: 1800
 If compute is limited, prioritize:
 
 ```text
-1. budget_conservation coverage repair and budget-kind sweep
+1. macro-invariant coverage repair and invariant-kind sweep
 2. smooth_random_potential beta/smoothness sweep
 3. locality_only baseline repeat
 4. constraint_template comparator repeat
@@ -412,7 +438,7 @@ Required fixture contract:
 
 ## 11. Coverage and interpretability requirements
 
-The prior powered smoke showed lower matched/interpretable contexts for budget_conservation.
+The prior powered smoke showed lower matched/interpretable contexts for the macro-invariant family, whose raw implementation name is `budget_conservation`.
 
 This run must report by substrate family:
 
@@ -533,7 +559,7 @@ Executive summary must answer:
 Which substrate families generated interpretable horizon transport?
 Which families passed matched marginal nulls?
 Which families produced aligned amplification, rerouting, reopening, weakening, or collapse?
-Did budget-conservation remain strongest after coverage repair?
+Did macro-invariant / asymmetry-constrained transition energy remain strongest after coverage repair?
 Did smooth-potential become more interpretable under parameter sweeps?
 Did locality-only remain a baseline or become response-bearing?
 What should run next?
@@ -545,7 +571,7 @@ Allowed:
 
 ```text
 transition_energy_substrates_characterized
-budget_conservation_loadbearing
+budget_conservation_loadbearing / macro_invariant_loadbearing
 smooth_potential_loadbearing
 locality_only_baseline_confirmed
 locality_only_response_bearing
@@ -575,9 +601,9 @@ Emit exactly one:
 
 ```text
 implement_max_entropy_local_transition
-expand_budget_conservation_family
+expand_budget_conservation_family / expand_macro_invariant_family
 expand_smooth_potential_family
-repair_budget_coverage
+repair_macro_invariant_coverage
 repair_smooth_potential_resolution
 continue_transition_energy_characterization
 write_transition_energy_substrate_atlas_note
@@ -599,8 +625,8 @@ approximate invariants may be a productive generic lawlike ingredient.
 Next:
 
 ```text
-expand budget kinds and weights;
-consider max-entropy ensemble with budget marginal constraints.
+expand invariant kinds and weights;
+consider max-entropy ensemble with macro-invariant marginal constraints.
 ```
 
 ### 16.2 Smooth potential becomes strong under parameter sweep
@@ -653,7 +679,7 @@ move toward max-entropy local transition ensemble.
 
 ### Principled
 
-The run studies generic transition-law families expressed through explicit transition energy, locality, potential, budget, and roughness.
+The run studies generic transition-law families expressed through explicit transition energy, locality, potential, macro-invariance, and roughness.
 
 ### Parsimonious
 

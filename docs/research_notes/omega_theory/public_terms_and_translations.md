@@ -46,6 +46,7 @@ future-profile deformation
 matched-null comparison
 saturation diagnostics
 control-relative structure
+macro-invariant transition substrates
 ```
 
 Use **Omega** for the wider theory and long-term hypothesis. Use established
@@ -76,6 +77,35 @@ Detector v1.1 plus the long-horizon audit layer can measure neutral future
 landscapes, separate local profile candidates from aggregate claims, and test
 whether H16 ended too early. It has not validated the target object: no
 non-control, non-saturated family currently earns an aggregate structure pass.
+```
+
+## Current substrate-language update
+
+Use this translation for current transition-energy work:
+
+```text
+Public-facing:
+  macro-invariant transition substrate
+
+Theory-facing:
+  asymmetry-constrained transition energy
+
+Raw implementation/output names:
+  budget_conservation
+  budget_kind
+  budget_weight
+  budget_delta
+```
+
+Do not lead public prose with `budget_conservation`. Treat it as a backwards
+compatible implementation identifier in scripts and CSVs.
+
+Recommended phrasing:
+
+```text
+The current loadbearing non-template substrate is a macro-invariant transition
+substrate: an asymmetry-constrained transition-energy family that penalizes
+changes in a coarse invariant.
 ```
 
 ## Core theory terms

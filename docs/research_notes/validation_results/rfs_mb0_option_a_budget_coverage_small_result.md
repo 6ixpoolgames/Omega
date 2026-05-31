@@ -1,4 +1,4 @@
-# RFS-MB0 Option A Budget-Coverage Small Smoke Result
+# RFS-MB0 Option A Macro-Invariant Coverage Small Smoke Result
 
 Date: 2026-05-31
 
@@ -6,6 +6,22 @@ Local output:
 
 ```text
 results/local_runs/20260531_option_a_budget_coverage_small/
+```
+
+Terminology update:
+
+```text
+public-facing:
+  macro-invariant transition substrate
+
+theory-facing:
+  asymmetry-constrained transition energy
+
+raw implementation/output compatibility:
+  budget_conservation
+  budget_kind
+  budget_weight
+  budget_delta
 ```
 
 Runner:
@@ -17,9 +33,9 @@ omega.rfs_mb0_future_landscape.run_horizon_transport_spectral_response_repair
 ## Purpose
 
 This was a deliberately small Option A follow-up to the transition-energy
-substrate atlas note. It tested whether the budget-conservation coverage caveat
-from the larger substrate-characterization run was mainly a retained-matrix
-resolution issue.
+substrate atlas note. It tested whether the macro-invariant /
+asymmetry-constrained coverage caveat from the larger substrate-characterization
+run was mainly a retained-matrix resolution issue.
 
 This is not a theory-validation run, not a candidate-promotion gate, and not a
 claim about Omega, agency, identity, value, or valuerhood.
@@ -46,15 +62,16 @@ guard expects a much larger run. That label is expected for this small smoke.
 
 ## Tested Variants
 
-Only `budget_conservation` substrates were tested, with:
+Only macro-invariant / asymmetry-constrained substrates were tested. Raw
+implementation output labels them as `budget_conservation`, with:
 
 ```text
-budget kind:
+invariant kind:
   total_coordinate_mass
   hamming_weight_or_nonzero_count
   symbol_histogram_distance
 
-budget weight:
+invariant weight:
   0.25
   1
   2
@@ -81,7 +98,7 @@ total_coordinate_mass:
   coverage_min: 0.8722
 ```
 
-Compared with the larger characterization run, the budget-conservation coverage
+Compared with the larger characterization run, the macro-invariant coverage
 caveat is substantially repaired. The remaining limitation is no longer simple
 matrix-retention loss.
 
@@ -149,8 +166,8 @@ baseline matrix was not available.
 
 ## Interpretation
 
-Option A succeeded at its narrow purpose: budget-conservation matrix coverage can
-be repaired without changing the substrate family.
+Option A succeeded at its narrow purpose: macro-invariant matrix coverage can be
+repaired without changing the substrate family.
 
 The ranking after repair is more nuanced:
 
@@ -171,7 +188,7 @@ total_coordinate_mass:
 The most conservative next read is:
 
 ```text
-budget conservation remains live;
+macro-invariant / asymmetry-constrained transition energy remains live;
 symbol-histogram budget distance deserves a widened characterization run;
 total-coordinate mass should not be promoted or demoted until baseline symmetry
 is repaired or response summaries filter contexts without paired baselines.
@@ -179,7 +196,7 @@ is repaired or response summaries filter contexts without paired baselines.
 
 ## Recommended Next Step
 
-Before another large budget-conservation run, repair or explicitly gate response
+Before another large macro-invariant run, repair or explicitly gate response
 classification so baseline/perturbation matrix availability is symmetric across:
 
 ```text
@@ -196,7 +213,7 @@ Then rerun a small targeted check on `total_coordinate_mass` and
 If the goal is only to proceed pragmatically, the next larger smoke should favor:
 
 ```text
-budget kind:
+invariant kind:
   symbol_histogram_distance
   total_coordinate_mass
 

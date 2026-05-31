@@ -48,9 +48,10 @@ The core correction in the current stack is that relation is more primitive than
 Current empirical posture:
 
 ```text
-The empirical arm now studies neutral future landscapes first.
-The near-term target is matched-control separation of future-profile structure,
-not a claim that Omega has already been detected.
+The empirical arm now studies neutral future landscapes and horizon transport
+first. The current substrate branch treats macro-invariant / asymmetry-
+constrained transition energy as a loadbearing non-template family, not as a
+validated Omega object.
 ```
 
 ## Onboarding description
@@ -99,6 +100,32 @@ future reachable set
 
 Reachable futures are not automatically good, valuable, or Omega-compatible.
 They are the empirical object whose structure must be classified.
+
+### Macro-invariant transition substrate
+
+A macro-invariant transition substrate is a neutral transition-energy substrate
+where local transitions are penalized when they change a coarse invariant too
+much.
+
+Theory-facing phrase:
+
+```text
+asymmetry-constrained transition energy
+```
+
+Raw implementation names retained for reproducibility:
+
+```text
+budget_conservation
+budget_kind
+budget_weight
+budget_delta
+```
+
+The term is not meant to imply economic budget, preference budget, moral budget,
+or resource accounting. It means that a coarse distinction-level quantity is
+approximately conserved or expensive to change, making some future transitions
+less symmetric than others.
 
 ### Viability
 
