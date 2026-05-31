@@ -23,7 +23,9 @@ Present RFS-MB0 horizon-transport instrumentation and transition-energy
 substrate untethering as the empirical lineage, and state clearly that it has
 not passed the scientific gate.
 The current active implementation branch is the Future Field Atlas clean
-rebuild: raw reachable-frontier topology first, response labels last. It is
+rebuild: raw reachable-frontier topology first, response labels last. After the
+first audit repair, condition identity is operator-native: state-space specs,
+transition-law specs, selection-operator specs, and observable specs. It is
 being calibrated against the latest hard-top-m mechanism result, which points
 toward a fixed low-rank successor core: baseline `m=3`, `m=4` with one weakest
 edge removed, and `m=5` with two weakest edges removed were response-bearing.

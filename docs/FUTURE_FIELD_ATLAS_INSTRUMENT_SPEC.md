@@ -117,6 +117,37 @@ How do two future fields later compose, interfere, capture, erase, or support ea
 
 The instrument must separate four layers.
 
+### 3.0 Operator-native condition identity
+
+Implementation should treat human-readable treatment names as aliases, not
+condition primitives. Native condition identity should be expressed through:
+
+```text
+StateSpaceSpec
+TransformationLawSpec
+SelectionOperatorSpec
+ObservableSpec
+```
+
+For rank-based calibration, the selection operator should record:
+
+```text
+selection_operator_id
+selection_operator_family
+base_out_degree
+effective_out_degree
+core_rank_k
+retained_rank_set
+removed_rank_set
+stochastic_flag
+seed_policy
+selection_operator_params_json
+```
+
+Legacy labels such as `baseline_m3` or `drop_weakest_m4_to_core3` may remain in
+manifests as `human_label` or `legacy_boundary_control_alias`, but they should
+not be the primary mathematical identity of a condition.
+
 ### 3.1 Scanner
 
 Generates lawful frontier evolution and saves topology.
@@ -313,11 +344,13 @@ target_state_id
 candidate_rank
 candidate_energy
 selected_flag
-core_flag
-fringe_flag
-boundary_control
-base_m
-effective_m
+rank_offset_from_core_boundary
+selection_operator_id
+selection_operator_family
+base_out_degree
+effective_out_degree
+retained_rank_set
+removed_rank_set
 ```
 
 Default calibration rule:
@@ -530,24 +563,35 @@ target_horizon
 direct_matrix_id
 left_matrix_id
 right_matrix_id
-composition_residual_l1
-composition_residual_frobenius
-composition_residual_mass_fraction
-rank_change_direct
-rank_change_composed
+composition_status
+composition_kind
+support_composition_residual_l1
+support_composition_residual_frobenius
+support_composition_residual_mass_fraction
+support_rank_direct
+support_rank_composed
+path_count_composition_residual_l1
+path_count_composition_residual_frobenius
+path_count_composition_residual_mass_fraction
+path_count_rank_direct
+path_count_rank_composed
 ```
 
 This is a primary atlas feature, not a label.
 
 ## 9. Phase 1 recovery outputs
 
-The known-mechanism recovery pass should additionally emit:
+The operator-native calibration pass should additionally emit:
 
 ```text
-known_mechanism_recovery_summary.csv
+target_rank_core_distance_summary.csv
 rank_core_recovery_by_horizon.csv
 boundary_recovery_by_horizon_pair.csv
 ```
+
+`known_mechanism_recovery_summary.csv` may be retained as a compatibility alias
+for early Phase 0/1 output, but the primary artifact should use continuous
+rank-core distance metrics rather than boolean recovery labels.
 
 Required recovery comparisons:
 
@@ -670,7 +714,8 @@ Initial runner options:
 --macro-invariant-beta-list
 --frontier-scan-mode
 --core-rank-k
---boundary-controls
+--selection-operators
+--boundary-controls  # legacy alias for calibration presets
 --perturbation-families
 --perturbation-strengths
 --raw-state-payload-sample-limit
@@ -687,7 +732,7 @@ horizon_max: 128
 horizon_schedule: dense_to_32_plus_h128
 macro_invariant_kind: symbol_histogram_distance
 core_rank_k: 3
-boundary_controls: baseline_m3,baseline_m4,baseline_m5,drop_weakest_m4_to_core3,drop_two_weakest_m5_to_core3
+selection_operators: rank_prefix_m3,rank_prefix_m4,rank_prefix_m5,rank_subset_m4_keep_1_2_3,rank_subset_m5_keep_1_2_3
 perturbation_families: small_edge_resample_control,asymmetric_edge_flip_control
 ```
 

@@ -36,9 +36,14 @@ def profile_rows_for_scan(raw: RawScan, condition: GeneratedCondition) -> list[d
         extinct_states = len(previous_frontier - frontier) if horizon > 0 else 0
         returning_states = len([state for state in frontier if first_seen.get(state, horizon) < horizon and state not in previous_frontier])
         core_edges, fringe_edges = edge_class_counts(raw.step_edges.get(max(0, horizon - 1), ()), condition)
+        node_truncated = len(frontier) > raw.max_frontier_nodes_per_horizon
+        edge_truncated = len(raw.step_edges.get(horizon, ())) > raw.max_frontier_edges_per_step
         rows.append({
             **profile_base_fields(raw),
             "horizon": horizon,
+            "feature_status": "complete_from_in_memory_frontier",
+            "node_artifact_status": "complete" if not node_truncated else "truncated_sorted_prefix_noninterpretable",
+            "edge_artifact_status": "complete" if not edge_truncated else "truncated_sorted_prefix_noninterpretable",
             "frontier_state_count": len(frontier),
             "frontier_edge_count": len(raw.step_edges.get(horizon, ())),
             "frontier_component_count": component_count,
@@ -155,12 +160,29 @@ def boundary_rows_for_scan(raw: RawScan, condition: GeneratedCondition) -> list[
 
 def profile_base_fields(raw: RawScan) -> dict[str, object]:
     spec = raw.spec
+    operator = spec.selection_operator
     return {
         "scan_id": raw.scan_id,
         "condition_id": spec.condition_id,
         "substrate_id": spec.substrate_id,
         "group_id": spec.group_id,
         "seed": spec.seed,
+        "state_space_id": spec.state_space.state_space_id,
+        "law_id": spec.transformation_law.law_id,
+        "law_family": spec.transformation_law.law_family,
+        "observable_set_id": spec.observable.observable_set_id,
+        "selection_operator_id": operator.selection_operator_id,
+        "selection_operator_family": operator.operator_family,
+        "selection_operator_params_json": operator.operator_params_json,
+        "base_out_degree": operator.base_out_degree,
+        "effective_out_degree": operator.effective_out_degree,
+        "retained_rank_set": rank_set_text(operator.retained_rank_set),
+        "removed_rank_set": rank_set_text(operator.removed_rank_set),
+        "stochastic_selection_flag": operator.stochastic_flag,
+        "seed_policy": operator.seed_policy,
+        "human_label": spec.human_label,
+        "legacy_boundary_control_alias": spec.legacy_boundary_control_alias,
+        "legacy_role_alias": spec.legacy_role_alias,
         "substrate_family": spec.substrate_family,
         "substrate_variant": spec.substrate_variant,
         "boundary_control": spec.boundary_control,
@@ -171,6 +193,10 @@ def profile_base_fields(raw: RawScan) -> dict[str, object]:
         "macro_invariant_beta": spec.macro_invariant_beta,
         "core_rank_k": spec.core_rank_k,
     }
+
+
+def rank_set_text(values: tuple[int, ...]) -> str:
+    return ";".join(str(value) for value in values)
 
 
 def component_summary(frontier: frozenset[State], edges: dict[State, tuple[State, ...]]) -> tuple[int, float]:

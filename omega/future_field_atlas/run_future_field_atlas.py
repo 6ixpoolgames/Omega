@@ -49,6 +49,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--macro-invariant-kind", type=str, default="symbol_histogram_distance")
     parser.add_argument("--macro-invariant-beta-list", type=str, default="0.10")
     parser.add_argument("--core-rank-k", type=int, default=3)
+    parser.add_argument("--selection-operators", type=str, default="", help="Comma-separated operator-native calibration presets. Empty uses --boundary-controls.")
     parser.add_argument("--boundary-controls", type=str, default=",".join(DEFAULT_BOUNDARY_CONTROLS))
     parser.add_argument("--max-frontier-nodes-per-horizon", type=int, default=512)
     parser.add_argument("--max-frontier-edges-per-step", type=int, default=2048)
@@ -69,7 +70,8 @@ def main() -> None:
     horizon_pairs = parse_horizon_pairs(args.horizon_pairs, args.horizon_max)
     start_samples = max(parse_int_list(args.start_samples_list) or [1])
     macro_betas = tuple(parse_float_list(args.macro_invariant_beta_list) or [0.10])
-    boundary_controls = tuple(item.strip() for item in args.boundary_controls.split(",") if item.strip())
+    operator_source = args.selection_operators or args.boundary_controls
+    boundary_controls = tuple(item.strip() for item in operator_source.split(",") if item.strip())
     config = {
         **instrument_metadata(),
         **vars(args),
@@ -78,6 +80,7 @@ def main() -> None:
         "horizon_schedule_resolved": list(horizon_schedule),
         "horizon_pairs_resolved": [f"{left}->{right}" for left, right in horizon_pairs],
         "macro_invariant_betas": list(macro_betas),
+        "selection_operators_resolved": list(boundary_controls),
         "boundary_controls_resolved": list(boundary_controls),
     }
     write_json(args.out / "future_field_atlas_run_config.json", config)
@@ -282,7 +285,7 @@ def write_all_outputs(
     multiscale_pairs = expand_horizon_pair_closure(horizon_pairs)
     multiscale = multiscale_transport_matrices(mapped_scans, multiscale_pairs)  # type: ignore[arg-type]
     residual_rows = flow_composition_residual_rows(multiscale)
-    recovery_summary = known_mechanism_recovery_summary(mapped_scans)  # type: ignore[arg-type]
+    target_core_summary = known_mechanism_recovery_summary(mapped_scans)  # type: ignore[arg-type]
     rank_core_rows = rank_core_recovery_by_horizon(mapped_scans)  # type: ignore[arg-type]
     boundary_pair_rows = boundary_recovery_by_horizon_pair(mapped_scans, horizon_pairs)  # type: ignore[arg-type]
 
@@ -303,6 +306,7 @@ def write_all_outputs(
         "raw_transport_matrices_multiscale.npz",
         "raw_transport_matrices_multiscale_manifest.csv",
         "transport_flow_composition_residuals.csv",
+        "target_rank_core_distance_summary.csv",
         "known_mechanism_recovery_summary.csv",
         "rank_core_recovery_by_horizon.csv",
         "boundary_recovery_by_horizon_pair.csv",
@@ -317,16 +321,18 @@ def write_all_outputs(
     write_sparse_npz(out_dir / "raw_transport_matrices_multiscale.npz", multiscale)
     write_csv(out_dir / "raw_transport_matrices_multiscale_manifest.csv", matrix_manifest_rows(multiscale))
     write_csv(out_dir / "transport_flow_composition_residuals.csv", residual_rows)
-    write_csv(out_dir / "known_mechanism_recovery_summary.csv", recovery_summary)
+    write_csv(out_dir / "target_rank_core_distance_summary.csv", target_core_summary)
+    write_csv(out_dir / "known_mechanism_recovery_summary.csv", target_core_summary)
     write_csv(out_dir / "rank_core_recovery_by_horizon.csv", rank_core_rows)
     write_csv(out_dir / "boundary_recovery_by_horizon_pair.csv", boundary_pair_rows)
     status["completed_utc"] = utc_now()
     status["elapsed_seconds"] = round(time.perf_counter() - started_perf, 3)
     status["frontier_node_rows"] = len(node_rows)
     status["frontier_edge_rows"] = len(edge_rows)
-    status["known_mechanism_recovery_rows"] = len(recovery_summary)
+    status["target_rank_core_distance_rows"] = len(target_core_summary)
+    status["known_mechanism_recovery_rows"] = len(target_core_summary)
     write_partial(out_dir, status, progress, errors, started_perf)
-    write_report(out_dir, status, recovery_summary)
+    write_report(out_dir, status, target_core_summary)
     manifest = {
         **instrument_metadata(),
         "run_status": status.get("status"),
@@ -349,9 +355,15 @@ def write_all_outputs(
     write_json(out_dir / "future_field_atlas_manifest.json", manifest)
 
 
-def write_report(out_dir: Path, status: dict[str, object], recovery_rows: list[dict[str, object]]) -> None:
-    recovered = sum(int(row.get("raw_topology_recovers_retained_core3", 0)) for row in recovery_rows)
-    total = len(recovery_rows)
+def write_report(out_dir: Path, status: dict[str, object], target_core_rows: list[dict[str, object]]) -> None:
+    deterministic = [
+        row for row in target_core_rows
+        if str(row.get("distance_to_target_core_geometry", "")) != ""
+    ]
+    near_zero = [
+        row for row in deterministic
+        if float(row.get("distance_to_target_core_geometry", 1.0)) <= 0.05
+    ]
     lines = [
         "# Future Field Atlas Phase 0/1 Smoke",
         "",
@@ -362,9 +374,12 @@ def write_report(out_dir: Path, status: dict[str, object], recovery_rows: list[d
         "",
         "## Readout",
         "",
-        f"Raw topology recovered retained low-rank core geometry in {recovered} of {total} condition summaries.",
+        (
+            "Raw topology produced near-zero target-core distance in "
+            f"{len(near_zero)} of {len(deterministic)} deterministic operator summaries."
+        ),
         "",
-        "The recovery criterion uses raw core/fringe rank anatomy, core retention, and fringe retention. It does not use the old response taxonomy.",
+        "The report-level read uses continuous rank-set and core/fringe distance metrics. It does not use the old response taxonomy.",
         "",
         "## Primary Artifacts",
         "",
@@ -374,7 +389,7 @@ def write_report(out_dir: Path, status: dict[str, object], recovery_rows: list[d
         "- `core_fringe_boundary_by_horizon.csv`",
         "- `raw_transport_matrices_adjacent.npz`",
         "- `raw_transport_matrices_multiscale.npz`",
-        "- `known_mechanism_recovery_summary.csv`",
+        "- `target_rank_core_distance_summary.csv`",
     ]
     (out_dir / "future_field_atlas_report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 

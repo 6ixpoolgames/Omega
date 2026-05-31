@@ -9,12 +9,18 @@ patch notes at the top.
 
 ## 2026-06-01
 
-### Future Field Atlas Phase 0/1 Clean-Build Smoke
+### Future Field Atlas Phase 0/1 Operator-Native Clean-Build Smoke
 
 Implemented the first clean Future Field Atlas package as an instrumentation
 reset. The new package separates substrate generation, frontier scanning,
 geometry mapping, transport matrix construction, and known-mechanism analysis.
 The scanner records raw topology and does not classify responses.
+
+After audit, repaired the first build so condition identity is mathematical:
+`StateSpaceSpec`, `TransformationLawSpec`, `SelectionOperatorSpec`, and
+`ObservableSpec`. Legacy boundary-control names remain only as aliases.
+Boolean recovery labels were replaced by continuous target-rank-core distance
+metrics.
 
 Retained note:
 
@@ -26,7 +32,7 @@ Spec:
 
 Local validation output:
 
-- `results/future_field_atlas/20260601_phase0_1_h32_smoke/`
+- `results/future_field_atlas/20260601_phase0_1_operator_refactor_h32/`
 
 Run shape:
 
@@ -35,25 +41,28 @@ status: COMPLETED
 workers: 4
 conditions: 8
 scans_completed: 8 / 8
-elapsed_seconds: 14.517
+elapsed_seconds: 17.274
 errors: 0
 horizon_max: 32
-frontier_node_rows: 30273
-frontier_edge_rows: 105867
+frontier_node_rows: 30801
+frontier_edge_rows: 107409
+target_rank_core_distance_rows: 8
 ```
 
 Main read:
 
 ```text
-raw topology recovered the retained top-3 low-rank successor-core anatomy in:
-  baseline m=3
-  m=4 with one weakest edge removed
-  m=5 with two weakest edges removed
+near-zero target-core distance:
+  rank_prefix m=3 retaining ranks 1;2;3
+  rank_subset m=4 retaining ranks 1;2;3 and removing rank 4
+  rank_subset m=5 retaining ranks 1;2;3 and removing ranks 4;5
 
-raw topology did not identify the top-3 core for:
-  baseline m=4/m=5 with fringe present
-  random deletion controls
-  strongest-edge deletion control
+nonzero target-core distance:
+  rank_prefix m=4/m=5 with fringe present
+  rank_subset m=4 retaining ranks 2;3;4 and removing rank 1
+
+sampled stochastic controls:
+  emitted core/fringe fractions but no deterministic rank-set distance
 ```
 
 Interpretation:

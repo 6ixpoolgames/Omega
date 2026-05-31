@@ -33,7 +33,7 @@ The immediate predecessor instrument is **horizon transport**:
 T_{H_a -> H_b}
 ```
 
-It measures how structures in earlier reachable-future frontiers become structures in later reachable-future frontiers. The atlas rebuild keeps that lesson, but makes raw frontier topology and core/fringe anatomy the primary data product before response labels are applied.
+It measures how structures in earlier reachable-future frontiers become structures in later reachable-future frontiers. The atlas rebuild keeps that lesson, but makes raw frontier topology and core/fringe anatomy the primary data product before response labels are applied. Current atlas conditions are represented by state-space, transition-law, selection-operator, and observable specs; legacy treatment names are aliases, not primitives.
 
 The current live substrate program uses explicit **transition energy**:
 

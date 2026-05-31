@@ -137,7 +137,7 @@ def flow_composition_residual_rows(matrices: list[SparseMatrixRecord]) -> list[d
                     right = by_key.get((*scan_key, mid_h, target_h))
                     if direct is None or left is None or right is None:
                         continue
-                    residual_l1, residual_fro, residual_fraction, rank_direct, rank_composed = composition_residual(direct, left, right)
+                    residual = composition_residual(direct, left, right)
                     rows.append({
                         "scan_id": scan_key[0],
                         "condition_id": scan_key[1],
@@ -147,11 +147,7 @@ def flow_composition_residual_rows(matrices: list[SparseMatrixRecord]) -> list[d
                         "direct_matrix_id": direct.matrix_id,
                         "left_matrix_id": left.matrix_id,
                         "right_matrix_id": right.matrix_id,
-                        "composition_residual_l1": residual_l1,
-                        "composition_residual_frobenius": residual_fro,
-                        "composition_residual_mass_fraction": residual_fraction,
-                        "rank_change_direct": rank_direct,
-                        "rank_change_composed": rank_composed,
+                        **residual,
                     })
     return rows
 
@@ -160,27 +156,47 @@ def composition_residual(
     direct: SparseMatrixRecord,
     left: SparseMatrixRecord,
     right: SparseMatrixRecord,
-) -> tuple[float, float, float, int, int]:
+) -> dict[str, object]:
     direct_rows = list(direct.row_labels)
     direct_cols = list(direct.column_labels)
     left_rows = list(left.row_labels)
     left_cols = list(left.column_labels)
     right_rows = list(right.row_labels)
     right_cols = list(right.column_labels)
+    status = "ok"
     if direct_rows != left_rows or direct_cols != right_cols:
-        return 0.0, 0.0, 0.0, len(direct.values), 0
+        status = "label_mismatch_union_aligned"
+    source_labels = sorted(set(direct_rows) | set(left_rows))
+    target_labels = sorted(set(direct_cols) | set(right_cols))
     mid_labels = sorted(set(left_cols) | set(right_rows))
-    left_dense = dense_matrix(left, left_rows, mid_labels)
-    right_dense = dense_matrix(right, mid_labels, right_cols)
-    direct_dense = dense_matrix(direct, direct_rows, direct_cols)
-    composed = (left_dense @ right_dense) > 0
+    left_dense = dense_matrix(left, source_labels, mid_labels)
+    right_dense = dense_matrix(right, mid_labels, target_labels)
+    direct_dense = dense_matrix(direct, source_labels, target_labels)
+    composed_mass = left_dense @ right_dense
+    composed = composed_mass > 0
     direct_bool = direct_dense > 0
-    diff = direct_bool.astype(float) - composed.astype(float)
-    residual_l1 = float(np.abs(diff).sum())
-    residual_fro = float(np.sqrt((diff * diff).sum()))
+    support_diff = direct_bool.astype(float) - composed.astype(float)
+    support_residual_l1 = float(np.abs(support_diff).sum())
+    support_residual_fro = float(np.sqrt((support_diff * support_diff).sum()))
     direct_mass = float(direct_bool.sum())
-    residual_fraction = residual_l1 / max(1.0, direct_mass)
-    return residual_l1, residual_fro, residual_fraction, int(np.linalg.matrix_rank(direct_bool)), int(np.linalg.matrix_rank(composed))
+    mass_diff = direct_dense - composed_mass
+    mass_residual_l1 = float(np.abs(mass_diff).sum())
+    mass_residual_fro = float(np.sqrt((mass_diff * mass_diff).sum()))
+    direct_weight = float(direct_dense.sum())
+    return {
+        "composition_status": status,
+        "composition_kind": "support_and_path_count",
+        "support_composition_residual_l1": support_residual_l1,
+        "support_composition_residual_frobenius": support_residual_fro,
+        "support_composition_residual_mass_fraction": support_residual_l1 / max(1.0, direct_mass),
+        "support_rank_direct": int(np.linalg.matrix_rank(direct_bool)),
+        "support_rank_composed": int(np.linalg.matrix_rank(composed)),
+        "path_count_composition_residual_l1": mass_residual_l1,
+        "path_count_composition_residual_frobenius": mass_residual_fro,
+        "path_count_composition_residual_mass_fraction": mass_residual_l1 / max(1.0, direct_weight),
+        "path_count_rank_direct": int(np.linalg.matrix_rank(direct_dense)),
+        "path_count_rank_composed": int(np.linalg.matrix_rank(composed_mass)),
+    }
 
 
 def dense_matrix(matrix: SparseMatrixRecord, row_labels: list[str], col_labels: list[str]) -> np.ndarray:
@@ -231,4 +247,3 @@ def write_sparse_npz(path: Path, matrices: list[SparseMatrixRecord]) -> None:
         col_label_matrix_index=np.array(col_label_matrix_index, dtype=np.int64),
         col_labels=np.array(col_labels, dtype=str),
     )
-

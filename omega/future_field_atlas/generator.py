@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from dataclasses import replace
 
 from omega.rfs_mb0_future_landscape.relation_generator import RelationParams
@@ -19,7 +20,15 @@ from omega.rfs_mb0_future_landscape.transition_energy_substrates import (
     preservation_scored_candidates,
 )
 
-from .contracts import ConditionSpec, EdgeAnatomy, GeneratedCondition
+from .contracts import (
+    ConditionSpec,
+    EdgeAnatomy,
+    GeneratedCondition,
+    ObservableSpec,
+    SelectionOperatorSpec,
+    StateSpaceSpec,
+    TransformationLawSpec,
+)
 from .util import safe_token
 
 
@@ -52,18 +61,18 @@ def build_generated_conditions(
             seed = base_seed + group_index * 10_000 + fresh_index * 101
             for beta in macro_invariant_betas:
                 for control in controls:
-                    family, base_m, effective_m, role = boundary_control_spec(control, core_rank_k)
-                    params = relation_params(group_index, base_m)
+                    operator, role = selection_operator_from_alias(control, core_rank_k)
+                    params = relation_params(group_index, operator.base_out_degree)
                     condition_id = (
                         f"g{group_index:02d}_s{fresh_index:02d}_"
-                        f"beta{safe_token(f'{beta:g}')}_{safe_token(control)}"
+                        f"beta{safe_token(f'{beta:g}')}_{safe_token(operator.selection_operator_id)}"
                     )
                     job = {
                         "job_id": condition_id,
                         "condition_id": condition_id,
-                        "substrate_family": family,
-                        "transition_energy_family": family,
-                        "substrate_variant": control,
+                        "substrate_family": operator.implementation_family,
+                        "transition_energy_family": operator.implementation_family,
+                        "substrate_variant": operator.selection_operator_id,
                         "macro_invariant_kind": macro_invariant_kind,
                         "budget_kind": macro_invariant_kind,
                         "macro_invariant_beta": beta,
@@ -76,18 +85,40 @@ def build_generated_conditions(
                         condition_id=condition_id,
                         group_id=f"group_{group_index:02d}",
                         seed=seed,
-                        substrate_family=family,
-                        substrate_variant=control,
                         substrate_id=system.system_id,
-                        boundary_control=control,
-                        role=role,
-                        base_m=base_m,
-                        effective_m=effective_m,
-                        core_rank_k=core_rank_k,
-                        macro_invariant_kind=macro_invariant_kind,
-                        macro_invariant_beta=beta,
-                        perturbation_family="none" if role == "baseline" else control,
-                        perturbation_strength=0.0 if role == "baseline" else 1.0,
+                        state_space=StateSpaceSpec(
+                            state_space_id=f"Z{params.alphabet_size}^{params.coordinate_count}",
+                            coordinate_count=params.coordinate_count,
+                            alphabet_size=params.alphabet_size,
+                            state_count=len(system.states),
+                        ),
+                        transformation_law=TransformationLawSpec(
+                            law_id=f"{operator.implementation_family}__{macro_invariant_kind}__beta_{beta:g}",
+                            law_family=operator.implementation_family,
+                            law_params_json=json.dumps(
+                                {
+                                    "macro_invariant_kind": macro_invariant_kind,
+                                    "macro_invariant_beta": beta,
+                                    "roughness_strength": params.roughness_strength,
+                                    "apply_reversibility": False,
+                                },
+                                sort_keys=True,
+                            ),
+                            macro_invariant_kind=macro_invariant_kind,
+                            macro_invariant_beta=beta,
+                        ),
+                        selection_operator=operator,
+                        observable=ObservableSpec(
+                            observable_set_id=f"rank_core_k{core_rank_k}__{macro_invariant_kind}",
+                            observable_family="rank_core_fringe_and_frontier_topology",
+                            observable_params_json=json.dumps(
+                                {"core_rank_k": core_rank_k, "macro_invariant_kind": macro_invariant_kind},
+                                sort_keys=True,
+                            ),
+                        ),
+                        human_label=control,
+                        legacy_boundary_control_alias=control,
+                        legacy_role_alias=role,
                     )
                     candidate_anatomy, selected, baseline = edge_anatomy_for_condition(
                         system_edges=system.edges,
@@ -137,27 +168,131 @@ def relation_params(group_index: int, out_degree_target: int) -> RelationParams:
     return replace(base, out_degree_target=out_degree_target)
 
 
-def boundary_control_spec(control: str, core_rank_k: int) -> tuple[str, int, int, str]:
-    if control == "baseline_m3":
-        return PRESERVATION_ASYMMETRY, 3, 3, "baseline"
-    if control == "baseline_m4":
-        return PRESERVATION_ASYMMETRY, 4, 4, "baseline"
-    if control == "baseline_m5":
-        return PRESERVATION_ASYMMETRY, 5, 5, "baseline"
-    if control == "drop_weakest_m4_to_core3":
-        return TOP_M_DROP_WEAKEST_FROM_TOP_M, 4, max(1, 4 - 1), "weakest_edge_pruning"
-    if control == "drop_two_weakest_m5_to_core3":
-        return TOP_M_DROP_TWO_WEAKEST_FROM_TOP_M, 5, max(1, 5 - 2), "weakest_edge_pruning"
-    if control == "random_delete_one_m4_to_core3":
-        return TOP_M_RANDOM_DELETE_ONE_FROM_TOP_M, 4, max(1, 4 - 1), "random_top_m_pruning_control"
-    if control == "random_delete_two_m5_to_core3":
-        return TOP_M_RANDOM_DELETE_TWO_FROM_TOP_M, 5, max(1, 5 - 2), "random_top_m_pruning_control"
-    if control == "drop_strongest_m4_to_m3":
-        return TOP_M_DROP_STRONGEST_FROM_TOP_M, 4, max(1, 4 - 1), "strongest_edge_pruning_control"
+def selection_operator_from_alias(control: str, core_rank_k: int) -> tuple[SelectionOperatorSpec, str]:
+    if control in {"baseline_m3", "rank_prefix_m3"}:
+        return rank_prefix_operator(3, core_rank_k, control, PRESERVATION_ASYMMETRY), "baseline"
+    if control in {"baseline_m4", "rank_prefix_m4"}:
+        return rank_prefix_operator(4, core_rank_k, control, PRESERVATION_ASYMMETRY), "baseline"
+    if control in {"baseline_m5", "rank_prefix_m5"}:
+        return rank_prefix_operator(5, core_rank_k, control, PRESERVATION_ASYMMETRY), "baseline"
+    if control in {"drop_weakest_m4_to_core3", "rank_subset_m4_keep_1_2_3"}:
+        return rank_subset_operator(4, (1, 2, 3), (4,), core_rank_k, control, TOP_M_DROP_WEAKEST_FROM_TOP_M), "weakest_edge_pruning"
+    if control in {"drop_two_weakest_m5_to_core3", "rank_subset_m5_keep_1_2_3"}:
+        return rank_subset_operator(5, (1, 2, 3), (4, 5), core_rank_k, control, TOP_M_DROP_TWO_WEAKEST_FROM_TOP_M), "weakest_edge_pruning"
+    if control in {"random_delete_one_m4_to_core3", "stochastic_rank_subset_m4_to_3_from_top_m"}:
+        return stochastic_rank_subset_operator(4, 3, core_rank_k, control, TOP_M_RANDOM_DELETE_ONE_FROM_TOP_M), "random_top_m_pruning_control"
+    if control in {"random_delete_two_m5_to_core3", "stochastic_rank_subset_m5_to_3_from_top_m"}:
+        return stochastic_rank_subset_operator(5, 3, core_rank_k, control, TOP_M_RANDOM_DELETE_TWO_FROM_TOP_M), "random_top_m_pruning_control"
+    if control in {"drop_strongest_m4_to_m3", "rank_subset_m4_keep_2_3_4"}:
+        return rank_subset_operator(4, (2, 3, 4), (1,), core_rank_k, control, TOP_M_DROP_STRONGEST_FROM_TOP_M), "strongest_edge_pruning_control"
     if control.startswith("baseline_m"):
         value = int(control.removeprefix("baseline_m"))
-        return PRESERVATION_ASYMMETRY, value, value, "baseline"
+        return rank_prefix_operator(value, core_rank_k, control, PRESERVATION_ASYMMETRY), "baseline"
     raise ValueError(f"unknown boundary control: {control}")
+
+
+def rank_prefix_operator(base_m: int, core_rank_k: int, alias: str, family: str) -> SelectionOperatorSpec:
+    retained = tuple(range(1, base_m + 1))
+    return selection_operator(
+        operator_family="rank_prefix",
+        base_out_degree=base_m,
+        effective_out_degree=base_m,
+        core_rank_k=core_rank_k,
+        retained_rank_set=retained,
+        removed_rank_set=tuple(),
+        stochastic_flag=0,
+        seed_policy="deterministic_rank_order",
+        implementation_family=family,
+        alias=alias,
+    )
+
+
+def rank_subset_operator(
+    base_m: int,
+    retained_rank_set: tuple[int, ...],
+    removed_rank_set: tuple[int, ...],
+    core_rank_k: int,
+    alias: str,
+    family: str,
+) -> SelectionOperatorSpec:
+    return selection_operator(
+        operator_family="rank_subset",
+        base_out_degree=base_m,
+        effective_out_degree=len(retained_rank_set),
+        core_rank_k=core_rank_k,
+        retained_rank_set=retained_rank_set,
+        removed_rank_set=removed_rank_set,
+        stochastic_flag=0,
+        seed_policy="deterministic_rank_order",
+        implementation_family=family,
+        alias=alias,
+    )
+
+
+def stochastic_rank_subset_operator(
+    base_m: int,
+    effective_m: int,
+    core_rank_k: int,
+    alias: str,
+    family: str,
+) -> SelectionOperatorSpec:
+    return selection_operator(
+        operator_family="stochastic_rank_subset",
+        base_out_degree=base_m,
+        effective_out_degree=effective_m,
+        core_rank_k=core_rank_k,
+        retained_rank_set=tuple(),
+        removed_rank_set=tuple(),
+        stochastic_flag=1,
+        seed_policy="stable_ranked_sample_from_top_m",
+        implementation_family=family,
+        alias=alias,
+    )
+
+
+def selection_operator(
+    *,
+    operator_family: str,
+    base_out_degree: int,
+    effective_out_degree: int,
+    core_rank_k: int,
+    retained_rank_set: tuple[int, ...],
+    removed_rank_set: tuple[int, ...],
+    stochastic_flag: int,
+    seed_policy: str,
+    implementation_family: str,
+    alias: str,
+) -> SelectionOperatorSpec:
+    params = {
+        "operator_family": operator_family,
+        "base_out_degree": base_out_degree,
+        "effective_out_degree": effective_out_degree,
+        "core_rank_k": core_rank_k,
+        "retained_rank_set": list(retained_rank_set),
+        "removed_rank_set": list(removed_rank_set),
+        "stochastic_flag": stochastic_flag,
+        "seed_policy": seed_policy,
+        "implementation_family": implementation_family,
+        "legacy_alias": alias,
+    }
+    retained_token = "sampled" if stochastic_flag else "_".join(str(rank) for rank in retained_rank_set)
+    removed_token = "sampled" if stochastic_flag else ("none" if not removed_rank_set else "_".join(str(rank) for rank in removed_rank_set))
+    return SelectionOperatorSpec(
+        selection_operator_id=(
+            f"{operator_family}__m{base_out_degree}_to_{effective_out_degree}"
+            f"__k{core_rank_k}__retain_{retained_token}__remove_{removed_token}"
+        ),
+        operator_family=operator_family,
+        operator_params_json=json.dumps(params, sort_keys=True),
+        base_out_degree=base_out_degree,
+        effective_out_degree=effective_out_degree,
+        core_rank_k=core_rank_k,
+        retained_rank_set=retained_rank_set,
+        removed_rank_set=removed_rank_set,
+        stochastic_flag=stochastic_flag,
+        seed_policy=seed_policy,
+        implementation_family=implementation_family,
+    )
 
 
 def edge_anatomy_for_condition(
@@ -205,9 +340,8 @@ def edge_anatomy_for_condition(
                 candidate_rank=rank_index,
                 candidate_energy=float(energy),
                 selected_flag=selected,
-                core_flag=int(rank_index <= core_rank_k),
-                fringe_flag=int(rank_index > core_rank_k),
                 baseline_selected_flag=baseline_selected,
+                rank_offset_from_core_boundary=rank_index - core_rank_k,
                 perturbation_changed_flag=int(
                     condition_role != "baseline" and selected and not baseline_selected
                 ),
@@ -220,4 +354,3 @@ def select_start_states(condition: GeneratedCondition, start_samples: int) -> tu
     count = max(1, min(start_samples, len(states)))
     offset = condition.spec.seed % len(states)
     return tuple(states[(offset + index * 17) % len(states)] for index in range(count))
-

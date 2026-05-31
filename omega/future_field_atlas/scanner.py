@@ -50,6 +50,8 @@ def scan_task(task: ScanTask) -> RawScan:
         start_state=task.start_state,
         horizon_schedule=schedule,
         horizon_max=task.horizon_max,
+        max_frontier_nodes_per_horizon=task.max_frontier_nodes_per_horizon,
+        max_frontier_edges_per_step=task.max_frontier_edges_per_step,
         frontiers=frontiers,
         step_edges=step_edges,
         node_rows=node_rows,
@@ -67,6 +69,7 @@ def node_rows_for_frontier(
     rows: list[dict[str, object]] = []
     component_ids = weak_component_ids(frontier, task.condition.system.edges)
     truncated = len(frontier) > task.max_frontier_nodes_per_horizon
+    artifact_status = "complete" if not truncated else "truncated_sorted_prefix_noninterpretable"
     for rank, state in enumerate(sorted(frontier)[: task.max_frontier_nodes_per_horizon], start=1):
         rows.append({
             **base_scan_fields(task),
@@ -77,6 +80,7 @@ def node_rows_for_frontier(
             "frontier_rank": rank,
             "frontier_state_count_full": len(frontier),
             "frontier_nodes_truncated": int(truncated),
+            "node_artifact_status": artifact_status,
             "core_membership_flag": int(incoming_core.get(state, 0) > 0),
             "fringe_membership_flag": int(incoming_fringe.get(state, 0) > 0),
             "component_id": component_ids.get(state, -1),
@@ -87,6 +91,7 @@ def node_rows_for_frontier(
 def edge_rows_for_step(task: ScanTask, horizon: int, edges: list[tuple[State, State]]) -> list[dict[str, object]]:
     rows: list[dict[str, object]] = []
     truncated = len(edges) > task.max_frontier_edges_per_step
+    artifact_status = "complete" if not truncated else "truncated_sorted_prefix_noninterpretable"
     for rank, (source, target) in enumerate(edges[: task.max_frontier_edges_per_step], start=1):
         anatomy = task.condition.candidate_anatomy.get((source, target))
         rows.append({
@@ -98,6 +103,7 @@ def edge_rows_for_step(task: ScanTask, horizon: int, edges: list[tuple[State, St
             "edge_rank_within_step_sample": rank,
             "frontier_edge_count_full": len(edges),
             "frontier_edges_truncated": int(truncated),
+            "edge_artifact_status": artifact_status,
             "edge_weight": 1.0,
             **edge_anatomy_fields(anatomy),
         })
@@ -112,6 +118,7 @@ def edge_anatomy_fields(anatomy: EdgeAnatomy | None) -> dict[str, object]:
             "selected_flag": "",
             "core_flag": "",
             "fringe_flag": "",
+            "rank_offset_from_core_boundary": "",
             "perturbation_changed_flag": "",
             "baseline_selected_flag": "",
         }
@@ -121,6 +128,7 @@ def edge_anatomy_fields(anatomy: EdgeAnatomy | None) -> dict[str, object]:
         "selected_flag": anatomy.selected_flag,
         "core_flag": anatomy.core_flag,
         "fringe_flag": anatomy.fringe_flag,
+        "rank_offset_from_core_boundary": anatomy.rank_offset_from_core_boundary,
         "perturbation_changed_flag": anatomy.perturbation_changed_flag,
         "baseline_selected_flag": anatomy.baseline_selected_flag,
     }
@@ -128,12 +136,29 @@ def edge_anatomy_fields(anatomy: EdgeAnatomy | None) -> dict[str, object]:
 
 def base_scan_fields(task: ScanTask) -> dict[str, object]:
     spec = task.condition.spec
+    operator = spec.selection_operator
     return {
         "scan_id": task.scan_id,
         "substrate_id": spec.substrate_id,
         "condition_id": spec.condition_id,
         "group_id": spec.group_id,
         "seed": spec.seed,
+        "state_space_id": spec.state_space.state_space_id,
+        "law_id": spec.transformation_law.law_id,
+        "law_family": spec.transformation_law.law_family,
+        "observable_set_id": spec.observable.observable_set_id,
+        "selection_operator_id": operator.selection_operator_id,
+        "selection_operator_family": operator.operator_family,
+        "selection_operator_params_json": operator.operator_params_json,
+        "base_out_degree": operator.base_out_degree,
+        "effective_out_degree": operator.effective_out_degree,
+        "retained_rank_set": rank_set_text(operator.retained_rank_set),
+        "removed_rank_set": rank_set_text(operator.removed_rank_set),
+        "stochastic_selection_flag": operator.stochastic_flag,
+        "seed_policy": operator.seed_policy,
+        "human_label": spec.human_label,
+        "legacy_boundary_control_alias": spec.legacy_boundary_control_alias,
+        "legacy_role_alias": spec.legacy_role_alias,
         "substrate_family": spec.substrate_family,
         "substrate_variant": spec.substrate_variant,
         "boundary_control": spec.boundary_control,
@@ -148,6 +173,10 @@ def base_scan_fields(task: ScanTask) -> dict[str, object]:
         "perturbation_family": spec.perturbation_family,
         "perturbation_strength": spec.perturbation_strength,
     }
+
+
+def rank_set_text(values: tuple[int, ...]) -> str:
+    return ";".join(str(value) for value in values)
 
 
 def weak_component_ids(frontier: frozenset[State], edges: dict[State, tuple[State, ...]]) -> dict[State, int]:
@@ -173,4 +202,3 @@ def weak_component_ids(frontier: frozenset[State], edges: dict[State, tuple[Stat
                     stack.append(neighbor)
         component += 1
     return component_ids
-
