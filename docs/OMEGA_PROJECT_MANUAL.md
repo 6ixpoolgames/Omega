@@ -45,6 +45,11 @@ This preserves logical CSV schemas while cutting compact H32 storage from about
 59.7 MB to about 3.1 MB. Use `--csv-output-mode plain` only for local debugging
 or `--csv-output-mode both` when a plain CSV compatibility copy is explicitly
 needed.
+The medium H128 calibration pass completed cleanly with 128 / 128 scans,
+complete artifacts, and passing reconstruction audits. It also showed that the
+next scaling bottleneck is post-scan finalization: worker scans finished in
+about 19 seconds, while artifact construction and writing dominated the
+29.4-minute wall time.
 ```
 
 Terminology rule:
@@ -64,6 +69,7 @@ Primary current design note:
 - `docs/research_notes/validation_results/future_field_atlas_phase0_1_smoke_result.md`
 - `docs/research_notes/validation_results/future_field_atlas_compact_manageability_h64_result.md`
 - `docs/research_notes/validation_results/future_field_atlas_default_gzip_compression_smoke.md`
+- `docs/research_notes/validation_results/future_field_atlas_h128_calibration_pass_result.md`
 - `docs/RFS_MB0_TOP_M_MECHANISM_AUDIT_SPEC.md`
 - `docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md`
 - `docs/RFS_MB0_TOP_M_GEOMETRY_AUDIT_SPEC.md`

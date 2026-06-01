@@ -9,6 +9,63 @@ patch notes at the top.
 
 ## 2026-06-01
 
+### Future Field Atlas H128 Calibration Pass
+
+Ran a medium H128 Future Field Atlas calibration pass using the default gzip
+CSV storage mode.
+
+Retained note:
+
+- `docs/research_notes/validation_results/future_field_atlas_h128_calibration_pass_result.md`
+
+Local validation output:
+
+- `results/future_field_atlas/20260601_phase0_1_calibration_h128_g4_fresh2_start2/`
+
+Run shape:
+
+```text
+status: COMPLETED
+workers: 18
+conditions: 64
+scans_completed: 128 / 128
+errors: 0
+elapsed_seconds: 1762.763
+frontier_node_rows: 564213
+frontier_edge_rows: 7767333
+csv_output_mode: gzip
+reconstruction_audit_passed: 1
+artifact_completeness_statuses: complete
+```
+
+Output manageability:
+
+```text
+total output size: about 172.7 MB
+frontier_edges_by_step.csv.gz: about 143.6 MB
+raw_transport_matrices_multiscale.npz: about 14.4 MB
+frontier_nodes_by_horizon.csv.gz: about 10.2 MB
+```
+
+Key operational read:
+
+```text
+worker scan phase completed all 128 scans by elapsed_seconds: 18.872
+final status completed at elapsed_seconds: 1762.763
+post-scan finalization time: about 1743.9 seconds
+```
+
+Interpretation:
+
+```text
+The medium calibration pass is clean: all reconstruction audits passed and all
+topology-derived artifacts are complete. The scaling bottleneck is no longer
+the scan workers; it is post-scan artifact construction, matrix construction,
+compression, and final manifest/report writing. Before much larger atlas runs,
+repair finalization with phase timing, chunked/streamed raw topology, optional
+deferred matrix construction, or a columnar backend.
+```
+
 ### Future Field Atlas Default-Gzip Compression Smoke
 
 Patched the atlas runner so primary CSV artifacts default to gzip output:

@@ -37,15 +37,16 @@ Start here:
 3. [`docs/research_notes/validation_results/future_field_atlas_phase0_1_smoke_result.md`](research_notes/validation_results/future_field_atlas_phase0_1_smoke_result.md)
 4. [`docs/research_notes/validation_results/future_field_atlas_compact_manageability_h64_result.md`](research_notes/validation_results/future_field_atlas_compact_manageability_h64_result.md)
 5. [`docs/research_notes/validation_results/future_field_atlas_default_gzip_compression_smoke.md`](research_notes/validation_results/future_field_atlas_default_gzip_compression_smoke.md)
-6. [`docs/FUTURE_FIELD_ATLAS_GLOSSARY.md`](FUTURE_FIELD_ATLAS_GLOSSARY.md)
-7. [`docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md`](research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md)
-8. [`docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md`](research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md)
-9. [`docs/research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md`](research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md)
-10. [`docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`](research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
-11. [`docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md`](research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
-12. [`docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md`](research_notes/omega_theory/horizon_transport_aligned_amplification.md)
-13. [`docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md`](research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
-14. [`docs/research_notes/omega_theory/transition_energy_substrate_atlas.md`](research_notes/omega_theory/transition_energy_substrate_atlas.md)
+6. [`docs/research_notes/validation_results/future_field_atlas_h128_calibration_pass_result.md`](research_notes/validation_results/future_field_atlas_h128_calibration_pass_result.md)
+7. [`docs/FUTURE_FIELD_ATLAS_GLOSSARY.md`](FUTURE_FIELD_ATLAS_GLOSSARY.md)
+8. [`docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md`](research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md)
+9. [`docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md`](research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md)
+10. [`docs/research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md`](research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md)
+11. [`docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`](research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
+12. [`docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md`](research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
+13. [`docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md`](research_notes/omega_theory/horizon_transport_aligned_amplification.md)
+14. [`docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md`](research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
+15. [`docs/research_notes/omega_theory/transition_energy_substrate_atlas.md`](research_notes/omega_theory/transition_energy_substrate_atlas.md)
 
 ## Current live branch
 
@@ -195,6 +196,35 @@ Read:
 Primary atlas CSV artifacts now write as `.csv.gz` by default. On the compact
 H32 smoke shape, this reduced output from about 59.7 MB to about 3.1 MB while
 preserving all reconstruction audits.
+```
+
+### Future Field Atlas H128 calibration pass
+
+Result note:
+
+- [`future_field_atlas_h128_calibration_pass_result.md`](research_notes/validation_results/future_field_atlas_h128_calibration_pass_result.md)
+
+Run summary:
+
+```text
+status: COMPLETED
+scans_completed: 128 / 128
+frontier_node_rows: 564213
+frontier_edge_rows: 7767333
+csv_output_mode: gzip
+reconstruction_audit_passed: 1
+artifact_completeness_statuses: complete
+total_output_size: about 172.7 MB
+```
+
+Read:
+
+```text
+The H128 medium calibration pass stayed reconstructible and complete. The
+selection-operator calibration geometry behaved as expected, but the run also
+exposed that post-scan finalization dominates wall time: all scans finished by
+about 19 seconds, while final artifact construction completed at about 29.4
+minutes. The next scaling repair is finalization throughput, not more workers.
 ```
 
 ### Hard top-m mechanism boundary-resolution sweep
