@@ -38,6 +38,8 @@ The current H32 atlas smoke now emits formal spec manifests,
 condition-identity manifests, artifact-completeness summaries, and
 reconstruction audits, so derived topology summaries are treated as
 reconstructible measurements rather than unsupported report labels.
+The current compact output path also emits `scan_manifest.csv` so high-volume
+raw node/edge rows do not repeat full formal metadata on every row.
 ```
 
 Terminology rule:

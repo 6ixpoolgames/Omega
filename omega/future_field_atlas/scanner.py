@@ -143,60 +143,13 @@ def edge_anatomy_fields(anatomy: EdgeAnatomy | None) -> dict[str, object]:
 
 def base_scan_fields(task: ScanTask) -> dict[str, object]:
     spec = task.condition.spec
-    operator = spec.selection_operator
     frontier_scan = task.frontier_scan
     return {
         "scan_id": task.scan_id,
-        "substrate_id": spec.substrate_id,
         "condition_id": spec.condition_id,
-        "group_id": spec.group_id,
-        "seed": spec.seed,
-        "state_space_id": spec.state_space.state_space_id,
-        "coordinate_set_id": spec.state_space.coordinate_set_id,
-        "symbol_domain_id": spec.state_space.symbol_domain_id,
-        "state_id_schema": spec.state_space.state_id_schema,
-        "metric_id": spec.state_space.metric_id,
-        "adjacency_rule_id": spec.state_space.adjacency_rule_id,
-        "state_space_params_json": spec.state_space.state_space_params_json,
-        "law_id": spec.transformation_law.law_id,
-        "law_family": spec.transformation_law.law_family,
-        "candidate_successor_rule_id": spec.transformation_law.candidate_successor_rule_id,
-        "candidate_successor_params_json": spec.transformation_law.candidate_successor_params_json,
-        "energy_function_id": spec.transformation_law.energy_function_id,
-        "energy_params_json": spec.transformation_law.energy_params_json,
-        "admissibility_predicate_id": spec.transformation_law.admissibility_predicate_id,
-        "invariant_observable_id": spec.transformation_law.invariant_observable_id,
-        "invariant_params_json": spec.transformation_law.invariant_params_json,
-        "asymmetry_term_id": spec.transformation_law.asymmetry_term_id,
-        "roughness_term_id": spec.transformation_law.roughness_term_id,
-        "transformation_law_seed_policy": spec.transformation_law.seed_policy,
-        "observable_set_id": spec.observable.observable_set_id,
-        "observable_family": spec.observable.observable_family,
-        "observable_params_json": spec.observable.observable_params_json,
         "frontier_scan_id": frontier_scan.frontier_scan_id,
-        "frontier_expansion_rule_id": frontier_scan.frontier_expansion_rule_id,
-        "horizon_schedule_id": frontier_scan.horizon_schedule_id,
-        "frontier_scan_params_json": frontier_scan.frontier_scan_params_json,
-        "frontier_artifact_status_domain": "complete|lossless_compressed|sampled|truncated_noninterpretable",
-        "selection_operator_id": operator.selection_operator_id,
-        "selection_operator_family": operator.operator_family,
-        "selection_operator_params_json": operator.operator_params_json,
-        "base_out_degree": operator.base_out_degree,
-        "effective_out_degree": operator.effective_out_degree,
-        "retained_rank_set": rank_set_text(operator.retained_rank_set),
-        "removed_rank_set": rank_set_text(operator.removed_rank_set),
-        "stochastic_selection_flag": operator.stochastic_flag,
-        "seed_policy": operator.seed_policy,
-        "start_state_id": state_id(task.start_state),
         "start_index": task.start_index,
-        "rank_boundary_k": spec.rank_boundary_k,
-        "macro_invariant_kind": spec.macro_invariant_kind,
-        "macro_invariant_beta": spec.macro_invariant_beta,
     }
-
-
-def rank_set_text(values: tuple[int, ...]) -> str:
-    return ";".join(str(value) for value in values)
 
 
 def weak_component_ids(frontier: frozenset[State], edges: dict[State, tuple[State, ...]]) -> dict[State, int]:

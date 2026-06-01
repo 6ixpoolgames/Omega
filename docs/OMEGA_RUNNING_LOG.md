@@ -9,6 +9,56 @@ patch notes at the top.
 
 ## 2026-06-01
 
+### Future Field Atlas Compact Manageability H64 Run
+
+Patched the atlas raw topology output to remove repeated formal spec metadata
+from high-volume node and edge rows. The normalized output now keeps formal
+identity in:
+
+- `formal_spec_manifest.csv`
+- `condition_identity_manifest.csv`
+- `scan_manifest.csv`
+
+Retained note:
+
+- `docs/research_notes/validation_results/future_field_atlas_compact_manageability_h64_result.md`
+
+Local validation output:
+
+- `results/future_field_atlas/20260601_phase0_1_compact_manageability_h64_g4_start2/`
+
+Run shape:
+
+```text
+status: COMPLETED
+workers: 18
+conditions: 32
+scans_completed: 64 / 64
+elapsed_seconds: 314.261
+frontier_node_rows: 264567
+frontier_edge_rows: 1866167
+reconstruction_audit_passed: 1
+artifact_completeness_statuses: complete
+```
+
+Manageability read:
+
+```text
+compact H32 output: about 59.7 MB
+prior publication-audit H32 output: about 370.7 MB
+compact H64 manageability output: about 907.2 MB
+dominant remaining file: frontier_edges_by_step.csv at about 758.0 MB
+```
+
+Interpretation:
+
+```text
+Normalized manifests reduce redundant raw topology output by about 6x at H32
+without breaking reconstruction audits. This is good enough for the next
+pre-coupling scale step, but long/large atlas runs should add a lossless
+columnar or compressed raw topology artifact before scaling much further.
+```
+
 ### Future Field Atlas Phase 0/1 Publication-Schema Audit Smoke
 
 Implemented the first clean Future Field Atlas package as an instrumentation

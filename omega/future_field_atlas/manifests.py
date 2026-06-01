@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from .contracts import MappedScan, spec_canonical_json, spec_digest
-from .util import canonical_json, stable_hash
+from .util import canonical_json, stable_hash, state_id
 
 
 def formal_spec_manifest_rows(scans: list[MappedScan]) -> list[dict[str, object]]:
@@ -63,3 +63,31 @@ def condition_identity_manifest_rows(scans: list[MappedScan]) -> list[dict[str, 
             "condition_identity_json": identity_json,
         })
     return sorted(rows, key=lambda row: str(row["condition_id"]))
+
+
+def scan_manifest_rows(scans: list[MappedScan]) -> list[dict[str, object]]:
+    rows: list[dict[str, object]] = []
+    for scan in scans:
+        spec = scan.raw.spec
+        frontier_scan = scan.raw.frontier_scan
+        rows.append({
+            "scan_id": scan.raw.scan_id,
+            "condition_id": spec.condition_id,
+            "group_id": spec.group_id,
+            "seed": spec.seed,
+            "seed_policy": spec.transformation_law.seed_policy,
+            "substrate_id": spec.substrate_id,
+            "start_index": scan.raw.start_index,
+            "start_state_id": state_id(scan.raw.start_state),
+            "state_space_id": spec.state_space.state_space_id,
+            "state_space_digest": spec_digest(spec.state_space),
+            "law_id": spec.transformation_law.law_id,
+            "law_digest": spec_digest(spec.transformation_law),
+            "selection_operator_id": spec.selection_operator.selection_operator_id,
+            "selection_operator_digest": spec_digest(spec.selection_operator),
+            "observable_set_id": spec.observable.observable_set_id,
+            "observable_digest": spec_digest(spec.observable),
+            "frontier_scan_id": frontier_scan.frontier_scan_id,
+            "frontier_scan_digest": spec_digest(frontier_scan),
+        })
+    return sorted(rows, key=lambda row: str(row["scan_id"]))

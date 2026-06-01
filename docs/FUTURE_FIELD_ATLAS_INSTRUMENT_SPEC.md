@@ -479,6 +479,34 @@ condition_identity_digest
 condition_identity_json
 ```
 
+`scan_manifest.csv`
+
+One row per scan/start-state instance. High-volume raw topology rows should
+refer to this manifest instead of repeating full formal spec metadata.
+
+Required columns:
+
+```text
+scan_id
+condition_id
+group_id
+seed
+seed_policy
+substrate_id
+start_index
+start_state_id
+state_space_id
+state_space_digest
+law_id
+law_digest
+selection_operator_id
+selection_operator_digest
+observable_set_id
+observable_digest
+frontier_scan_id
+frontier_scan_digest
+```
+
 ### 8.2 Run config
 
 `future_field_atlas_run_config.json`
@@ -495,9 +523,9 @@ Required columns:
 
 ```text
 scan_id
-substrate_id
 condition_id
-start_state_id
+frontier_scan_id
+start_index
 horizon
 state_id
 state_payload_hash
@@ -520,8 +548,9 @@ Required columns:
 
 ```text
 scan_id
-substrate_id
 condition_id
+frontier_scan_id
+start_index
 source_horizon
 target_horizon
 source_state_id

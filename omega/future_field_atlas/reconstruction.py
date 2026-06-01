@@ -18,11 +18,13 @@ def reconstruction_audit_rows(
     adjacent_matrices: list[SparseMatrixRecord],
     operator_geometry_rows: list[dict[str, object]],
     condition_identity_rows: list[dict[str, object]],
+    scan_manifest_rows: list[dict[str, object]],
 ) -> list[dict[str, object]]:
     return [
         audit_condition_identity_traceability(
             all_rows=[node_rows, edge_rows, profile_rows, rank_boundary_rows, operator_geometry_rows],
             condition_identity_rows=condition_identity_rows,
+            scan_manifest_rows=scan_manifest_rows,
         ),
         audit_frontier_profile_reconstruction(node_rows, edge_rows, profile_rows),
         audit_rank_boundary_reconstruction(edge_rows, rank_boundary_rows),
@@ -35,8 +37,10 @@ def audit_condition_identity_traceability(
     *,
     all_rows: list[list[dict[str, object]]],
     condition_identity_rows: list[dict[str, object]],
+    scan_manifest_rows: list[dict[str, object]],
 ) -> dict[str, object]:
     by_condition = {str(row["condition_id"]): row for row in condition_identity_rows}
+    by_scan = {str(row["scan_id"]): row for row in scan_manifest_rows}
     checked = 0
     failed = 0
     for rows in all_rows:
@@ -45,8 +49,12 @@ def audit_condition_identity_traceability(
             if not condition_id:
                 continue
             checked += 1
-            identity = by_condition.get(condition_id)
+            scan_identity = by_scan.get(str(row.get("scan_id", "")))
+            identity = scan_identity or by_condition.get(condition_id)
             if identity is None:
+                failed += 1
+                continue
+            if scan_identity is not None and condition_id != str(scan_identity.get("condition_id", "")):
                 failed += 1
                 continue
             for field in ("state_space_id", "law_id", "selection_operator_id", "observable_set_id", "frontier_scan_id"):

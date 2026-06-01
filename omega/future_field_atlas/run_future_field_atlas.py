@@ -20,7 +20,7 @@ from .analyzer import (
 )
 from .contracts import CLAIM_BOUNDARY, FrontierScanSpec, ScanBundle, ScanTask, instrument_metadata
 from .generator import DEFAULT_SELECTION_OPERATORS, build_generated_conditions, select_start_states
-from .manifests import condition_identity_manifest_rows, formal_spec_manifest_rows
+from .manifests import condition_identity_manifest_rows, formal_spec_manifest_rows, scan_manifest_rows
 from .mapper import map_scan
 from .reconstruction import reconstruction_audit_rows
 from .scanner import scan_task
@@ -340,6 +340,7 @@ def write_all_outputs(
     boundary_pair_rows = rank_boundary_geometry_by_horizon_pair(mapped_scans, horizon_pairs)  # type: ignore[arg-type]
     spec_manifest_rows = formal_spec_manifest_rows(mapped_scans)  # type: ignore[arg-type]
     condition_identity_rows = condition_identity_manifest_rows(mapped_scans)  # type: ignore[arg-type]
+    scan_manifest = scan_manifest_rows(mapped_scans)  # type: ignore[arg-type]
     adjacent_manifest = matrix_manifest_rows(adjacent)
     multiscale_manifest = matrix_manifest_rows(multiscale)
     reconstruction_rows = reconstruction_audit_rows(
@@ -351,6 +352,7 @@ def write_all_outputs(
         adjacent_matrices=adjacent,
         operator_geometry_rows=operator_geometry_summary,
         condition_identity_rows=condition_identity_rows,
+        scan_manifest_rows=scan_manifest,
     )
     completeness_rows = artifact_completeness_rows(
         node_rows=node_rows,
@@ -367,6 +369,7 @@ def write_all_outputs(
         "future_field_atlas_report.md",
         "formal_spec_manifest.csv",
         "condition_identity_manifest.csv",
+        "scan_manifest.csv",
         "frontier_nodes_by_horizon.csv",
         "frontier_edges_by_step.csv",
         "frontier_profile_by_horizon.csv",
@@ -385,6 +388,7 @@ def write_all_outputs(
     ]
     write_csv(out_dir / "formal_spec_manifest.csv", spec_manifest_rows)
     write_csv(out_dir / "condition_identity_manifest.csv", condition_identity_rows)
+    write_csv(out_dir / "scan_manifest.csv", scan_manifest)
     write_csv(out_dir / "frontier_nodes_by_horizon.csv", node_rows)
     write_csv(out_dir / "frontier_edges_by_step.csv", edge_rows)
     write_csv(out_dir / "frontier_profile_by_horizon.csv", profile_rows)
@@ -422,6 +426,7 @@ def write_all_outputs(
         "horizon_schedule": sorted({row["horizon"] for row in profile_rows}) if profile_rows else [],
         "formal_spec_manifest": "formal_spec_manifest.csv",
         "condition_identity_manifest": "condition_identity_manifest.csv",
+        "scan_manifest": "scan_manifest.csv",
         "reconstruction_audit_summary": "reconstruction_audit_summary.csv",
         "artifact_completeness_summary": "artifact_completeness_summary.csv",
         "output_files": [
@@ -490,6 +495,7 @@ def write_report(
         "- `frontier_profile_by_horizon.csv`",
         "- `formal_spec_manifest.csv`",
         "- `condition_identity_manifest.csv`",
+        "- `scan_manifest.csv`",
         "- `rank_boundary_geometry_by_horizon.csv`",
         "- `raw_transport_matrices_adjacent.npz`",
         "- `raw_transport_matrices_multiscale.npz`",

@@ -79,6 +79,11 @@ rank-boundary geometry, not a boolean mechanism-recovery label.
 : Manifest tying each condition to state-space, transformation-law,
 selection-operator, observable, frontier-scan, and seed identity.
 
+`scan_manifest.csv`
+: Manifest tying each concrete scan/start-state instance to condition identity
+and formal spec digests. Bulk raw topology rows refer to this file instead of
+repeating all spec metadata.
+
 `reconstruction_audit_summary.csv`
 : Audit file reporting whether derived atlas artifacts reconstruct from raw
 rows and formal specs.
