@@ -16,12 +16,13 @@ For the current project state, read these first:
 2. [Omega Formal Core v0.2: Future-Distinction Dynamics](docs/research_notes/omega_theory/omega_formal_core_v0_2_future_distinction_dynamics.md)
 3. [Future Field Atlas Instrument Spec](docs/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md)
 4. [Future Field Atlas Glossary](docs/FUTURE_FIELD_ATLAS_GLOSSARY.md)
-5. [Coupled H64 Ladder Result](docs/research_notes/validation_results/future_field_atlas_coupled_h64_ladder_result.md)
-6. [Coupled H64 Broad Sweep Result](docs/research_notes/validation_results/future_field_atlas_coupled_h64_broad_sweep_result.md)
-7. [Coupled Worker-Spool Scale Validation](docs/research_notes/validation_results/future_field_atlas_coupled_worker_spool_scale_validation_result.md)
-8. [Coupled H128 Depth and Triadic Profile Smoke](docs/research_notes/validation_results/future_field_atlas_coupled_h128_and_triadic_profile_smoke_result.md)
-9. [Future Field Atlas H128 Calibration Pass](docs/research_notes/validation_results/future_field_atlas_h128_calibration_pass_result.md)
-10. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
+5. [Coupled H64 Mechanism-Resolution Result](docs/research_notes/validation_results/future_field_atlas_coupled_h64_mechanism_resolution_result.md)
+6. [Coupled H64 Ladder Result](docs/research_notes/validation_results/future_field_atlas_coupled_h64_ladder_result.md)
+7. [Coupled H64 Broad Sweep Result](docs/research_notes/validation_results/future_field_atlas_coupled_h64_broad_sweep_result.md)
+8. [Coupled Worker-Spool Scale Validation](docs/research_notes/validation_results/future_field_atlas_coupled_worker_spool_scale_validation_result.md)
+9. [Coupled H128 Depth and Triadic Profile Smoke](docs/research_notes/validation_results/future_field_atlas_coupled_h128_and_triadic_profile_smoke_result.md)
+10. [Future Field Atlas H128 Calibration Pass](docs/research_notes/validation_results/future_field_atlas_h128_calibration_pass_result.md)
+11. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
 
 Historical RFS-MB0 results are still retained, but they are now background. Future Field Atlas is the fresh active frame.
 
@@ -42,13 +43,23 @@ Future Field Atlas:
 
 The single-field atlas has passed H128 calibration with complete artifacts and reconstruction audits. The coupled atlas has passed small hardening runs, an H64 pair8 breadth sweep, selected H128 depth checks, and a first H64 coupling-strength ladder.
 
-The latest coupled H64 ladder found a threshold-like behavior in the current rank-boundary mismatch operator:
+The coupled H64 ladder first found threshold-like behavior in the current rank-boundary mismatch operator:
 
 ```text
 0.00 differs from positive penalty;
 0.05, 0.10, 0.25, and 0.50 are topology-identical at this resolution;
 positive penalty preserves A/B marginal reachability in the primary readout;
 pair005 is anomalous and becomes much more joint-restrictive at H64.
+```
+
+The follow-up mechanism-resolution pass refined that read:
+
+```text
+0.001 differs from 0.000;
+0.001, 0.002, 0.005, and 0.010 are distinct in compact topology digests;
+0.020 and 0.050 saturate to the same compact topology digest;
+true product selection differs from zero-penalty joint rank-prefix selection;
+pair005 remains a heavy-pair / critical-pair clue and persists in targeted H128.
 ```
 
 This is not an Omega result. It is a clean product-vs-coupled future-field geometry result under a formal operator.
@@ -163,6 +174,8 @@ raw frontier artifacts and compact summaries can be reconstructed and audited;
 single-field H128 calibration is complete and reconstruction-passing;
 coupled H64 pair8 breadth is operationally manageable with sharded/compact output;
 coupled H64 ladder shows threshold-like zero-vs-positive rank-boundary mismatch geometry;
+near-zero mechanism resolution shows scalar mismatch effects through 0.010 and saturation by 0.020;
+zero-penalty joint rank-prefix selection is not product-equivalent;
 pair-level heterogeneity matters, especially pair005.
 ```
 
@@ -185,41 +198,22 @@ graph-channel causality shown.
 
 ## Current next step
 
-The next empirical step is **mechanism resolution**, not broad scale expansion.
+The next empirical step is **operator choice**, not broad H128 scale expansion.
 
-Near-term run target:
-
-```text
-H64 near-zero coupled ladder:
-  coupling_strength = 0.000, 0.001, 0.002, 0.005, 0.010, 0.020, 0.050
-
-true product-selector sanity run:
-  joint_selection_family = product
-
-pair-aware analysis:
-  separate pair005 from non-pair005 aggregate
-  report pair-level residual and marginal geometry
-  inspect horizon-of-divergence and joint-candidate crossings if available
-```
-
-Decision logic:
+Current decision point:
 
 ```text
-if any positive strength collapses to the same topology:
-  scalar coupling strength is exhausted;
-  move toward rank-order-native or shared-capacity coupling.
+if scalar-threshold detail remains important:
+  bracket pair005 between coupling_strength 0.002 and 0.005;
+  add selected and nonselected candidate-rank/near-tie diagnostics.
 
-if a near-zero critical threshold appears:
-  bracket it and inspect candidate crossings.
-
-if product selector differs from zero-penalty joint rank-prefix:
-  joint rank-prefix selection itself is already a coupled constraint.
-
-if pair005 remains anomalous:
-  treat it as a critical-pair / heavy-pair mechanism clue and run targeted depth checks.
+otherwise:
+  begin a rank-order-native or shared-capacity coupled operator;
+  use joint_selection_family = product as the neutral reference;
+  keep pair-aware summaries mandatory.
 ```
 
-Broad H128 coupled surveys remain blocked on worker-side spooling or pair-indexed heavy-pair handling. H128 should stay targeted until the H64 mechanism question is resolved.
+Broad H128 coupled surveys remain premature. H128 should stay targeted until the next coupled operator is better justified.
 
 ## How to read the project
 
@@ -294,7 +288,8 @@ Future Field Atlas:
   raw topology first;
   formal spec identity;
   coupled product-vs-joint future-field scans;
-  current result: H64 threshold-like rank-boundary mismatch geometry with pair005 caveat
+  current result: H64 near-zero mechanism resolution, scalar saturation by 0.020,
+  product selector distinct from zero-penalty joint rank-prefix, pair005 heavy-pair clue
 
 Theory arm:
   current active formal frame;
@@ -302,8 +297,9 @@ Theory arm:
   phase ladder, atlas interface, falsification criteria, and terminal-object sketch
 
 Next coupled operators:
-  after mechanism resolution, consider rank-order-native, shared-capacity,
-  boundary-collision, or asymmetric-deformation operators
+  consider rank-order-native, shared-capacity, boundary-collision, or
+  asymmetric-deformation operators; shared-capacity is the current leading
+  principled candidate
 
 Scale hierarchy / constructor-like branches:
   only after future-field instrumentation and formal claim ladder mature enough
@@ -313,4 +309,4 @@ Scale hierarchy / constructor-like branches:
 
 The current scientific claim is modest:
 
-> Future Field Atlas can measure reconstructible finite future-field topology under lawful transition substrates. Current coupled H64 results show threshold-like product-vs-coupled geometry for a rank-boundary mismatch operator, with pair-level heterogeneity and a pair005 caveat. Omega-compatible subobjects have not been demonstrated.
+> Future Field Atlas can measure reconstructible finite future-field topology under lawful transition substrates. Current coupled H64 results show near-zero scalar mismatch sensitivity that saturates by `0.020`, a true product selector distinct from zero-penalty joint rank-prefix selection, and a persistent pair005 heavy-pair clue. Omega-compatible subobjects have not been demonstrated.
