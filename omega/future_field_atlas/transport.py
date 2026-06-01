@@ -117,10 +117,14 @@ def matrix_manifest_rows(matrices: list[SparseMatrixRecord]) -> list[dict[str, o
     return rows
 
 
-def flow_composition_residual_rows(matrices: list[SparseMatrixRecord]) -> list[dict[str, object]]:
+def flow_composition_residual_rows(
+    matrices: list[SparseMatrixRecord],
+    horizon_triples: tuple[tuple[int, int, int], ...] | None = None,
+) -> list[dict[str, object]]:
     by_key = {(m.scan_id, m.condition_id, m.source_horizon, m.target_horizon): m for m in matrices}
     rows: list[dict[str, object]] = []
     horizons_by_scan: dict[tuple[str, str], set[int]] = {}
+    allowed_triples = set(horizon_triples) if horizon_triples is not None else None
     for matrix in matrices:
         horizons_by_scan.setdefault((matrix.scan_id, matrix.condition_id), set()).update(
             {matrix.source_horizon, matrix.target_horizon}
@@ -131,6 +135,8 @@ def flow_composition_residual_rows(matrices: list[SparseMatrixRecord]) -> list[d
             for mid_h in ordered:
                 for target_h in ordered:
                     if not source_h < mid_h < target_h:
+                        continue
+                    if allowed_triples is not None and (source_h, mid_h, target_h) not in allowed_triples:
                         continue
                     direct = by_key.get((*scan_key, source_h, target_h))
                     left = by_key.get((*scan_key, source_h, mid_h))

@@ -87,3 +87,13 @@ The H32 writeout smoke before deletion suggested raw topology writing was not
 the dominant small-run bottleneck; multiscale matrix construction and residual
 construction dominated at that scale. The new finalization timing fields should
 make the true large-run bottleneck explicit before further optimization.
+
+Follow-up update:
+
+```text
+omega.future_field_atlas.cleanup_runs
+```
+
+was added as an age-based dry-run-first cleanup utility. The standing policy is
+to retain recent calibration outputs for a short review grace period, then clean
+older unpromoted run directories unless a run is explicitly promoted.

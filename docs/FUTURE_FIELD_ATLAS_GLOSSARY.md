@@ -110,6 +110,17 @@ default is `sharded`: logical `frontier_nodes_by_horizon.csv` and
 matrix construction, residual construction, audits, shard writes, and parallel
 artifact writes. It is operational instrumentation, not a science metric.
 
+`transport_output_mode`
+: Controls how much non-adjacent transport is materialized. `adjacent_only`
+emits adjacent transport only. `selected_multiscale` emits the current selected
+milestone transport set. `full` emits the full horizon-pair closure and should
+be used only for targeted audits.
+
+`composition_residual_mode`
+: Controls transport-composition residual audits. `none` skips them, `selected`
+computes consecutive-milestone residuals, and `full` computes all available
+closure residuals. Full residuals require full transport output.
+
 ## Historical Translation
 
 These names appeared in old notes and early smoke outputs. They should be read

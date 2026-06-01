@@ -438,6 +438,19 @@ The logical artifact names remain `frontier_nodes_by_horizon.csv` and
 filter. Consolidated raw topology output remains available with
 `--raw-topology-output-mode consolidated` or `--raw-topology-output-mode both`.
 
+Default transport retention is selected rather than full closure:
+
+```text
+--transport-output-mode selected_multiscale
+--composition-residual-mode selected
+```
+
+This retains adjacent transport, selected milestone multiscale transport, and
+selected consecutive-milestone composition residuals. Use
+`--transport-output-mode full --composition-residual-mode full` only for
+targeted audits. Use `--transport-output-mode adjacent_only
+--composition-residual-mode none` for fast raw-topology calibration.
+
 ### 8.1 Manifest
 
 `future_field_atlas_manifest.json`
@@ -454,6 +467,10 @@ seed_policy
 csv_output_mode
 gzip_compresslevel
 raw_topology_output_mode
+transport_output_mode
+composition_residual_mode
+multiscale_transport_pair_count
+composition_residual_triple_count
 artifact_write_workers
 finalization_timings_json
 substrate_count
@@ -966,6 +983,10 @@ Only override it when needed:
 --csv-output-mode both
 --raw-topology-output-mode consolidated
 --raw-topology-output-mode both
+--transport-output-mode adjacent_only
+--composition-residual-mode none
+--transport-output-mode full
+--composition-residual-mode full
 ```
 
 The current default gzip compression level is `1`. This trades a modest amount

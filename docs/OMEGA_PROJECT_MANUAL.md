@@ -75,6 +75,7 @@ Primary current design note:
 - `docs/research_notes/validation_results/future_field_atlas_default_gzip_compression_smoke.md`
 - `docs/research_notes/validation_results/future_field_atlas_h128_calibration_pass_result.md`
 - `docs/research_notes/validation_results/future_field_atlas_writeout_path_repair_note.md`
+- `docs/research_notes/validation_results/future_field_atlas_transport_mode_timing_result.md`
 - `docs/RFS_MB0_TOP_M_MECHANISM_AUDIT_SPEC.md`
 - `docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md`
 - `docs/RFS_MB0_TOP_M_GEOMETRY_AUDIT_SPEC.md`
@@ -290,9 +291,37 @@ requires the older consolidated form:
 --raw-topology-output-mode sharded
 ```
 
+Default transport output should remain selected unless a run specifically needs
+full closure:
+
+```text
+--transport-output-mode selected_multiscale
+--composition-residual-mode selected
+```
+
+Use adjacent-only mode for fast calibration and raw-topology checks:
+
+```text
+--transport-output-mode adjacent_only
+--composition-residual-mode none
+```
+
 Bulky local calibration outputs should be deleted after the retained note and
-logs are updated unless the run carries strong evidence or is explicitly
-promoted as a retained dataset.
+logs are updated unless the run is still inside the short local review grace
+period, carries strong evidence, or is explicitly promoted as a retained
+dataset.
+
+Use dry-run cleanup first:
+
+```powershell
+.\.venv\Scripts\python.exe -m omega.future_field_atlas.cleanup_runs --older-than-days 3
+```
+
+Delete only after reviewing the candidates:
+
+```powershell
+.\.venv\Scripts\python.exe -m omega.future_field_atlas.cleanup_runs --older-than-days 3 --delete
+```
 
 Do not add new root-level `*_results` folders. If a historical script defaults
 to root-level output, override its output directory when rerunning it.

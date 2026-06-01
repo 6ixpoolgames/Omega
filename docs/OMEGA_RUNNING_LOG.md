@@ -9,6 +9,72 @@ patch notes at the top.
 
 ## 2026-06-01
 
+### Future Field Atlas Transport Mode Timing
+
+Added explicit transport and residual modes:
+
+```text
+--transport-output-mode adjacent_only | selected_multiscale | full
+--composition-residual-mode none | selected | full
+```
+
+Default mode is now:
+
+```text
+transport_output_mode: selected_multiscale
+composition_residual_mode: selected
+```
+
+Retained note:
+
+- `docs/research_notes/validation_results/future_field_atlas_transport_mode_timing_result.md`
+
+Validation:
+
+```text
+H8 default selected smoke: COMPLETED, reconstruction_audit_passed: 1
+H8 adjacent-only smoke: COMPLETED, reconstruction_audit_passed: 1
+```
+
+H128 timing comparison on the same 32-scan shape:
+
+```text
+selected_multiscale + selected:
+  elapsed_seconds: 119.445
+  scan phase completed by: 5.643s
+  multiscale_transport_pair_count: 21
+  composition_residual_triple_count: 10
+  total output: about 66.6 MB
+  multiscale_transport_matrices: 75.394s
+  composition_residuals: 6.091s
+
+adjacent_only + none:
+  elapsed_seconds: 33.948
+  scan phase completed by: 5.565s
+  multiscale_transport_pair_count: 0
+  composition_residual_triple_count: 0
+  total output: about 64.8 MB
+  multiscale_transport_matrices: 0.000s
+  composition_residuals: 0.000s
+```
+
+Read:
+
+```text
+The next runtime lever is transport materialization, not CSV writing.
+Adjacent-only mode is the right fast calibration mode. Selected multiscale is
+the right default for medium pre-coupling checks. Full/full should be reserved
+for targeted audits.
+```
+
+Local data policy update:
+
+```text
+Keep recent calibration outputs for a short review grace period; clean older
+unpromoted run directories by age. Do not immediately purge every calibration
+run unless storage pressure requires it.
+```
+
 ### Future Field Atlas Write-Out Path Repair
 
 Implemented a minimal write-out repair after the H128 calibration pass exposed

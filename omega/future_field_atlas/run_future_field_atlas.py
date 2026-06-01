@@ -71,6 +71,18 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--gzip-compresslevel", type=int, default=1)
     parser.add_argument(
+        "--transport-output-mode",
+        choices=("adjacent_only", "selected_multiscale", "full"),
+        default="selected_multiscale",
+        help="Control multiscale transport retention. Adjacent matrices are always emitted.",
+    )
+    parser.add_argument(
+        "--composition-residual-mode",
+        choices=("none", "selected", "full"),
+        default="selected",
+        help="Control transport composition residual audits.",
+    )
+    parser.add_argument(
         "--raw-topology-output-mode",
         choices=("sharded", "consolidated", "both"),
         default="sharded",
@@ -89,6 +101,7 @@ def main() -> None:
     groups = int(args.design_groups) if args.design_groups is not None else int(args.groups)
     horizon_schedule = parse_horizon_schedule(args.horizon_schedule, args.horizon_max)
     horizon_pairs = parse_horizon_pairs(args.horizon_pairs, args.horizon_max)
+    validate_transport_modes(args.transport_output_mode, args.composition_residual_mode)
     start_samples = max(parse_int_list(args.start_samples_list) or [1])
     macro_betas = tuple(parse_float_list(args.macro_invariant_beta_list) or [0.10])
     selection_operators = tuple(item.strip() for item in args.selection_operators.split(",") if item.strip())
@@ -148,6 +161,8 @@ def main() -> None:
         args.raw_topology_output_mode,
         args.raw_topology_shard_scan_count,
         args.artifact_write_workers,
+        args.transport_output_mode,
+        args.composition_residual_mode,
     )
 
 
@@ -357,6 +372,8 @@ def write_all_outputs(
     raw_topology_output_mode: str,
     raw_topology_shard_scan_count: int,
     artifact_write_workers: int,
+    transport_output_mode: str,
+    composition_residual_mode: str,
 ) -> None:
     finalization_timings: dict[str, float] = {}
     phase_started = time.perf_counter()
@@ -373,12 +390,22 @@ def write_all_outputs(
     finalization_timings["adjacent_transport_matrices"] = round(time.perf_counter() - phase_started, 3)
 
     phase_started = time.perf_counter()
-    multiscale_pairs = expand_horizon_pair_closure(horizon_pairs)
+    multiscale_pairs = multiscale_pairs_for_modes(
+        horizon_pairs,
+        transport_output_mode,
+        composition_residual_mode,
+    )
     multiscale = multiscale_transport_matrices(mapped_scans, multiscale_pairs)  # type: ignore[arg-type]
     finalization_timings["multiscale_transport_matrices"] = round(time.perf_counter() - phase_started, 3)
 
     phase_started = time.perf_counter()
-    residual_rows = flow_composition_residual_rows(multiscale)
+    residual_triples = composition_triples_for_mode(horizon_pairs, composition_residual_mode)
+    residual_rows = (
+        []
+        if composition_residual_mode == "none"
+        else flow_composition_residual_rows(multiscale, residual_triples)
+    )
+    residual_triple_count: object = "full" if residual_triples is None else len(residual_triples)
     finalization_timings["composition_residuals"] = round(time.perf_counter() - phase_started, 3)
 
     phase_started = time.perf_counter()
@@ -541,6 +568,10 @@ def write_all_outputs(
     status["gzip_compresslevel"] = gzip_compresslevel
     status["raw_topology_output_mode"] = raw_topology_output_mode
     status["artifact_write_workers"] = artifact_write_workers
+    status["transport_output_mode"] = transport_output_mode
+    status["composition_residual_mode"] = composition_residual_mode
+    status["multiscale_transport_pair_count"] = len(multiscale_pairs)
+    status["composition_residual_triple_count"] = residual_triple_count
     status["finalization_timings_json"] = finalization_timings
     write_partial(out_dir, status, progress, errors, started_perf)
     write_report(
@@ -551,6 +582,8 @@ def write_all_outputs(
         completeness_rows,
         csv_output_mode,
         raw_topology_output_mode,
+        transport_output_mode,
+        composition_residual_mode,
         finalization_timings,
     )
     manifest = {
@@ -559,6 +592,10 @@ def write_all_outputs(
         "csv_output_mode": csv_output_mode,
         "gzip_compresslevel": gzip_compresslevel,
         "raw_topology_output_mode": raw_topology_output_mode,
+        "transport_output_mode": transport_output_mode,
+        "composition_residual_mode": composition_residual_mode,
+        "multiscale_transport_pair_count": len(multiscale_pairs),
+        "composition_residual_triple_count": residual_triple_count,
         "artifact_write_workers": artifact_write_workers,
         "raw_topology_shard_scan_count": raw_topology_shard_scan_count,
         "finalization_timings_json": finalization_timings,
@@ -594,6 +631,8 @@ def write_report(
     completeness_rows: list[dict[str, object]],
     csv_output_mode: str,
     raw_topology_output_mode: str,
+    transport_output_mode: str,
+    composition_residual_mode: str,
     finalization_timings: dict[str, float],
 ) -> None:
     deterministic = [
@@ -639,6 +678,10 @@ def write_report(
         "",
         f"- CSV output mode: `{csv_output_mode}`",
         f"- Raw topology output mode: `{raw_topology_output_mode}`",
+        f"- Transport output mode: `{transport_output_mode}`",
+        f"- Composition residual mode: `{composition_residual_mode}`",
+        f"- Multiscale transport pair count: `{status.get('multiscale_transport_pair_count', '')}`",
+        f"- Composition residual triple count: `{status.get('composition_residual_triple_count', '')}`",
         f"- Gzip compression level: `{status.get('gzip_compresslevel', '')}`",
         f"- Artifact write workers: `{status.get('artifact_write_workers', '')}`",
         "",
@@ -898,6 +941,52 @@ def parse_horizon_pairs(raw: str, horizon_max: int) -> tuple[tuple[int, int], ..
         return tuple(pairs)
     default = ((0, 1), (1, 2), (2, 4), (4, 8), (8, 16), (16, 24), (24, 32), (32, 48), (48, 64), (64, 96), (96, 128))
     return tuple(pair for pair in default if pair[1] <= horizon_max)
+
+
+def validate_transport_modes(transport_output_mode: str, composition_residual_mode: str) -> None:
+    if transport_output_mode == "adjacent_only" and composition_residual_mode != "none":
+        raise ValueError("adjacent_only transport requires --composition-residual-mode none")
+    if transport_output_mode != "full" and composition_residual_mode == "full":
+        raise ValueError("full composition residuals require --transport-output-mode full")
+
+
+def multiscale_pairs_for_modes(
+    horizon_pairs: tuple[tuple[int, int], ...],
+    transport_output_mode: str,
+    composition_residual_mode: str,
+) -> tuple[tuple[int, int], ...]:
+    if transport_output_mode == "adjacent_only":
+        return tuple()
+    if transport_output_mode == "full":
+        return expand_horizon_pair_closure(horizon_pairs)
+    pairs = set(horizon_pairs)
+    if composition_residual_mode == "selected":
+        for source_h, _mid_h, target_h in selected_composition_triples(horizon_pairs):
+            pairs.add((source_h, _mid_h))
+            pairs.add((_mid_h, target_h))
+            pairs.add((source_h, target_h))
+    return tuple(sorted(pairs))
+
+
+def composition_triples_for_mode(
+    horizon_pairs: tuple[tuple[int, int], ...],
+    composition_residual_mode: str,
+) -> tuple[tuple[int, int, int], ...] | None:
+    if composition_residual_mode == "none":
+        return tuple()
+    if composition_residual_mode == "full":
+        return None
+    return selected_composition_triples(horizon_pairs)
+
+
+def selected_composition_triples(
+    horizon_pairs: tuple[tuple[int, int], ...],
+) -> tuple[tuple[int, int, int], ...]:
+    horizons = sorted({value for pair in horizon_pairs for value in pair})
+    return tuple(
+        (horizons[index], horizons[index + 1], horizons[index + 2])
+        for index in range(max(0, len(horizons) - 2))
+    )
 
 
 def expand_horizon_pair_closure(horizon_pairs: tuple[tuple[int, int], ...]) -> tuple[tuple[int, int], ...]:
