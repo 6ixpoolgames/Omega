@@ -424,6 +424,20 @@ the physical names in `future_field_atlas_manifest.json`. Use
 `--csv-output-mode plain` for plain CSV debugging or `--csv-output-mode both`
 when compatibility copies are needed.
 
+Default physical storage for high-volume raw topology is sharded:
+
+```text
+frontier_nodes_by_horizon_shard_manifest.csv.gz
+frontier_nodes_by_horizon_shards/part-*.csv.gz
+frontier_edges_by_step_shard_manifest.csv.gz
+frontier_edges_by_step_shards/part-*.csv.gz
+```
+
+The logical artifact names remain `frontier_nodes_by_horizon.csv` and
+`frontier_edges_by_step.csv`. Shards are a storage layout, not a semantic
+filter. Consolidated raw topology output remains available with
+`--raw-topology-output-mode consolidated` or `--raw-topology-output-mode both`.
+
 ### 8.1 Manifest
 
 `future_field_atlas_manifest.json`
@@ -438,6 +452,10 @@ started_utc
 completed_utc
 seed_policy
 csv_output_mode
+gzip_compresslevel
+raw_topology_output_mode
+artifact_write_workers
+finalization_timings_json
 substrate_count
 frontier_count
 horizon_schedule
@@ -946,7 +964,13 @@ Only override it when needed:
 ```powershell
 --csv-output-mode plain
 --csv-output-mode both
+--raw-topology-output-mode consolidated
+--raw-topology-output-mode both
 ```
+
+The current default gzip compression level is `1`. This trades a modest amount
+of compressed size for materially faster artifact writing while retaining
+lossless CSV semantics.
 
 ## 15. Stop conditions
 

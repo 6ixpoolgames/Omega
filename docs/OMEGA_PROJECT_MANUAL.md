@@ -45,6 +45,10 @@ This preserves logical CSV schemas while cutting compact H32 storage from about
 59.7 MB to about 3.1 MB. Use `--csv-output-mode plain` only for local debugging
 or `--csv-output-mode both` when a plain CSV compatibility copy is explicitly
 needed.
+Raw topology artifacts now default to sharded physical output:
+`frontier_nodes_by_horizon_shards/part-*.csv.gz` and
+`frontier_edges_by_step_shards/part-*.csv.gz`, with shard manifests preserving
+row counts and physical file identities.
 The medium H128 calibration pass completed cleanly with 128 / 128 scans,
 complete artifacts, and passing reconstruction audits. It also showed that the
 next scaling bottleneck is post-scan finalization: worker scans finished in
@@ -70,6 +74,7 @@ Primary current design note:
 - `docs/research_notes/validation_results/future_field_atlas_compact_manageability_h64_result.md`
 - `docs/research_notes/validation_results/future_field_atlas_default_gzip_compression_smoke.md`
 - `docs/research_notes/validation_results/future_field_atlas_h128_calibration_pass_result.md`
+- `docs/research_notes/validation_results/future_field_atlas_writeout_path_repair_note.md`
 - `docs/RFS_MB0_TOP_M_MECHANISM_AUDIT_SPEC.md`
 - `docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md`
 - `docs/RFS_MB0_TOP_M_GEOMETRY_AUDIT_SPEC.md`
@@ -277,6 +282,17 @@ mode unless there is a concrete compatibility reason not to:
 This keeps logical CSV schemas but writes physical `.csv.gz` artifacts. Plain
 CSV output is still available with `--csv-output-mode plain`; compatibility
 runs can write both forms with `--csv-output-mode both`.
+
+Default raw topology output should remain sharded unless a compatibility check
+requires the older consolidated form:
+
+```text
+--raw-topology-output-mode sharded
+```
+
+Bulky local calibration outputs should be deleted after the retained note and
+logs are updated unless the run carries strong evidence or is explicitly
+promoted as a retained dataset.
 
 Do not add new root-level `*_results` folders. If a historical script defaults
 to root-level output, override its output directory when rerunning it.

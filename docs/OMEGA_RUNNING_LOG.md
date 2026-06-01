@@ -9,6 +9,51 @@ patch notes at the top.
 
 ## 2026-06-01
 
+### Future Field Atlas Write-Out Path Repair
+
+Implemented a minimal write-out repair after the H128 calibration pass exposed
+post-scan finalization as the dominant wall-clock cost.
+
+Retained note:
+
+- `docs/research_notes/validation_results/future_field_atlas_writeout_path_repair_note.md`
+
+Repair contents:
+
+```text
+gzip_compresslevel default: 1
+raw_topology_output_mode default: sharded
+artifact write path: parallelized across independent artifacts
+finalization timings: recorded in status, manifest, and report
+```
+
+Default raw topology physical layout:
+
+```text
+frontier_nodes_by_horizon_shard_manifest.csv.gz
+frontier_nodes_by_horizon_shards/part-*.csv.gz
+frontier_edges_by_step_shard_manifest.csv.gz
+frontier_edges_by_step_shards/part-*.csv.gz
+```
+
+Verification:
+
+```text
+tiny H4 traceability smoke: COMPLETED
+scans_completed: 8 / 8
+reconstruction_audit_passed: 1
+artifact_completeness_statuses: complete
+manifest listed physical shard files with row counts
+```
+
+Local data disposal:
+
+```text
+Deleted bulky local calibration/writeout directories after verification.
+No generated raw topology from these calibration iterations was retained.
+Docs and code changes are the retained record.
+```
+
 ### Future Field Atlas H128 Calibration Pass
 
 Ran a medium H128 Future Field Atlas calibration pass using the default gzip

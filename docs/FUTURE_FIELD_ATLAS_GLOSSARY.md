@@ -98,6 +98,18 @@ logical artifacts such as `frontier_edges_by_step.csv` normally appear on disk
 as `frontier_edges_by_step.csv.gz`. `plain` and `both` are available for local
 debugging or compatibility, but gzip is the normal atlas storage posture.
 
+`raw_topology_output_mode`
+: Physical storage mode for the large raw node/edge topology artifacts. The
+default is `sharded`: logical `frontier_nodes_by_horizon.csv` and
+`frontier_edges_by_step.csv` are represented by shard manifests and
+`part-*.csv.gz` shard files. `consolidated` writes the older single-file form;
+`both` writes both layouts for compatibility checks.
+
+`finalization_timings_json`
+: Status/manifest field reporting coarse timings for row flattening, transport
+matrix construction, residual construction, audits, shard writes, and parallel
+artifact writes. It is operational instrumentation, not a science metric.
+
 ## Historical Translation
 
 These names appeared in old notes and early smoke outputs. They should be read

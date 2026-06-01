@@ -37,11 +37,10 @@ def write_json(path: Path, payload: object) -> None:
     path.write_text(json.dumps(payload, indent=2, sort_keys=True, default=str), encoding="utf-8")
 
 
-def write_csv(path: Path, rows: list[dict[str, object]]) -> None:
+def write_csv(path: Path, rows: list[dict[str, object]], *, gzip_compresslevel: int = 1) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     if not rows:
-        opener = gzip.open if is_gzip_path(path) else open
-        with opener(path, "wt", newline="", encoding="utf-8") as handle:
+        with open_text(path, "wt", gzip_compresslevel=gzip_compresslevel) as handle:
             handle.write("empty\n")
         return
     fields: list[str] = []
@@ -49,8 +48,7 @@ def write_csv(path: Path, rows: list[dict[str, object]]) -> None:
         for field in row:
             if field not in fields:
                 fields.append(field)
-    opener = gzip.open if is_gzip_path(path) else open
-    with opener(path, "wt", newline="", encoding="utf-8") as handle:
+    with open_text(path, "wt", gzip_compresslevel=gzip_compresslevel) as handle:
         writer = csv.writer(handle)
         writer.writerow(fields)
         writer.writerows(([row.get(field, "") for field in fields] for row in rows))
@@ -79,6 +77,18 @@ def is_csv_path(path: Path) -> bool:
 def is_gzip_path(path: Path) -> bool:
     suffixes = [suffix.lower() for suffix in path.suffixes]
     return suffixes[-2:] == [".csv", ".gz"]
+
+
+def open_text(path: Path, mode: str, *, gzip_compresslevel: int = 1):
+    if is_gzip_path(path):
+        return gzip.open(
+            path,
+            mode,
+            newline="",
+            encoding="utf-8",
+            compresslevel=max(1, min(9, int(gzip_compresslevel))),
+        )
+    return open(path, mode, newline="", encoding="utf-8")
 
 
 def mean(values: list[float]) -> float:
