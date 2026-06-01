@@ -9,6 +9,51 @@ when a run or decision changes the project state.
 
 ## 2026-06-01
 
+### Coupled Worker-Side Spooling
+
+Added coupled runner output mode:
+
+```text
+--raw-topology-output-mode worker_spool
+```
+
+Each worker writes pair-local raw and summary artifacts under:
+
+```text
+coupled_pair_spool/<pair_id>/
+```
+
+The parent process receives only a compact descriptor and later aggregates:
+
+```text
+coupled_pair_spool_manifest.csv.gz
+coupled_joint_frontier_nodes_by_horizon_spool_manifest.csv.gz
+coupled_joint_frontier_edges_by_step_spool_manifest.csv.gz
+```
+
+This is the first repair for the H128 Windows multiprocessing result-transfer
+failure. It avoids returning huge raw node/edge row lists through IPC.
+
+Validation smokes:
+
+```text
+H8 pair2 worker_spool:
+  status: COMPLETED
+  pairs: 2 / 2
+  errors: 0
+  caps: 0
+  edge rows: 201743
+  finalization_seconds: 0.079
+
+H16 pair2 worker_spool:
+  status: COMPLETED
+  pairs: 2 / 2
+  errors: 0
+  caps: 0
+  edge rows: 1069650
+  finalization_seconds: 0.084
+```
+
 ### Rebuild Contract Metadata
 
 Added a run-level rebuild contract emitted by current Future Field Atlas

@@ -7,6 +7,7 @@ from omega.future_field_atlas.coupled import (
     coupled_operator_digest,
     scan_coupled_probe,
 )
+from omega.future_field_atlas.coupled_spool import spooled_raw_topology_manifest_rows
 from omega.future_field_atlas.generator import build_generated_conditions
 from omega.future_field_atlas.lossless_blocks import (
     expand_lossless_topology_blocks,
@@ -19,9 +20,10 @@ from omega.future_field_atlas.run_coupled_future_field_atlas import (
     coupled_scan_manifest_rows,
     mark_completed_attempts_status,
     medium_scale_readiness_rows,
+    run_one_spooled,
     write_raw_topology_shards,
 )
-from omega.future_field_atlas.util import csv_row_count
+from omega.future_field_atlas.util import csv_row_count, read_csv
 
 
 def test_cap_poison_propagates_to_descendant_rows() -> None:
@@ -151,6 +153,31 @@ def test_coupled_raw_topology_shards_are_manifest_backed(tmp_path) -> None:
     assert csv_row_count(edge_file) == len(result.edge_rows)
     assert node_manifest[0]["logical_artifact_name"] == "coupled_joint_frontier_nodes_by_horizon.csv"
     assert edge_manifest[0]["logical_artifact_name"] == "coupled_joint_frontier_edges_by_step.csv"
+
+
+def test_coupled_worker_spool_writes_pair_local_artifacts(tmp_path) -> None:
+    task = build_test_tasks(horizon_max=1)[0]
+
+    spool, errors = run_one_spooled(
+        task,
+        tmp_path,
+        csv_output_mode="gzip",
+        gzip_compresslevel=1,
+    )
+
+    assert not errors
+    assert spool is not None
+    assert (tmp_path / spool.node_file).exists()
+    assert (tmp_path / spool.edge_file).exists()
+    assert (tmp_path / spool.manifest_file).exists()
+    assert csv_row_count(tmp_path / spool.node_file) == spool.node_rows
+    assert csv_row_count(tmp_path / spool.edge_file) == spool.edge_rows
+    assert read_csv(tmp_path / spool.profile_file)
+
+    node_manifest = spooled_raw_topology_manifest_rows([spool], "nodes", "gzip", 1)
+    assert node_manifest[0]["artifact_storage_kind"] == "worker_spooled_csv"
+    assert node_manifest[0]["physical_artifact_name"] == spool.node_file
+    assert node_manifest[0]["row_count"] == spool.node_rows
 
 
 def test_lossless_topology_blocks_reconstruct_logical_rows() -> None:

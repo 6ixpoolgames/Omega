@@ -18,6 +18,17 @@ from .coupled import (
     coupled_operator_digest,
     scan_coupled_probe,
 )
+from .coupled_spool import (
+    CoupledSpoolResult,
+    aggregate_artifact_completeness_rows,
+    aggregate_reconstruction_audit_rows,
+    pair_spool_manifest_rows,
+    read_spooled_rows,
+    spooled_output_files,
+    spooled_raw_topology_manifest_rows,
+    spooled_row_counts,
+    write_pair_spool,
+)
 from .generator import build_generated_conditions, select_start_states
 from .lossless_blocks import (
     compression_ratio,
@@ -76,11 +87,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--gzip-compresslevel", type=int, default=1)
     parser.add_argument(
         "--raw-topology-output-mode",
-        choices=("lossless_blocks", "sharded", "consolidated", "both"),
+        choices=("lossless_blocks", "sharded", "consolidated", "both", "worker_spool"),
         default="sharded",
         help=(
             "Write high-volume coupled node/edge topology as lossless repeated-horizon "
-            "blocks, shards, consolidated files, or sharded plus consolidated files."
+            "blocks, shards, worker-local spools, consolidated files, or sharded plus consolidated files."
         ),
     )
     parser.add_argument("--raw-topology-shard-pair-count", type=int, default=1)
@@ -153,8 +164,12 @@ def main() -> None:
         "workers": max(1, args.workers),
     }
     write_json(args.out / "coupled_future_field_atlas_status.json", status)
-    completed, errors, progress = run_tasks(args, tasks, status, started_perf)
-    write_outputs(args, completed, errors, progress, status, tasks, started_perf)
+    if args.raw_topology_output_mode == "worker_spool":
+        completed_spools, errors, progress = run_spooled_tasks(args, tasks, status, started_perf)
+        write_spooled_outputs(args, completed_spools, errors, progress, status, tasks, started_perf)
+    else:
+        completed, errors, progress = run_tasks(args, tasks, status, started_perf)
+        write_outputs(args, completed, errors, progress, status, tasks, started_perf)
 
 
 def build_coupled_tasks(
@@ -212,6 +227,125 @@ def run_one(task: CoupledProbeTask) -> tuple[CoupledProbeResult | None, list[dic
             "B_condition_id": task.field_b.spec.condition_id,
             "error": repr(exc),
         }]
+
+
+def run_one_spooled(
+    task: CoupledProbeTask,
+    out_dir: Path,
+    csv_output_mode: str,
+    gzip_compresslevel: int,
+) -> tuple[CoupledSpoolResult | None, list[dict[str, object]]]:
+    try:
+        result = scan_coupled_probe(task)
+        reconstruction_rows = reconstruction_audit_rows(
+            result.node_rows,
+            result.profile_rows,
+            result.marginal_rows,
+            result.residual_rows,
+        )
+        completeness_rows = artifact_completeness_rows(
+            result.node_rows,
+            result.edge_rows,
+            result.profile_rows,
+            result.marginal_rows,
+            result.residual_rows,
+            result.marginal_projection_rows,
+            result.internal_cap_rows,
+            raw_topology_output_mode="worker_spool",
+        )
+        return write_pair_spool(
+            out_dir=out_dir,
+            result=result,
+            reconstruction_rows=reconstruction_rows,
+            completeness_rows=completeness_rows,
+            csv_output_mode=csv_output_mode,
+            gzip_compresslevel=gzip_compresslevel,
+        ), []
+    except Exception as exc:  # noqa: BLE001
+        return None, [{
+            "pair_id": task.pair_id,
+            "A_condition_id": task.field_a.spec.condition_id,
+            "B_condition_id": task.field_b.spec.condition_id,
+            "error": repr(exc),
+        }]
+
+
+def run_spooled_tasks(
+    args: argparse.Namespace,
+    tasks: list[CoupledProbeTask],
+    status: dict[str, object],
+    started_perf: float,
+) -> tuple[list[CoupledSpoolResult], list[dict[str, object]], list[dict[str, object]]]:
+    completed: list[CoupledSpoolResult] = []
+    errors: list[dict[str, object]] = []
+    progress: list[dict[str, object]] = []
+    pending = list(tasks)
+    last_checkpoint = 0
+    if max(1, args.workers) == 1:
+        for task in pending:
+            if should_stop(args, started_perf):
+                status["status"] = "PARTIAL_TIME_LIMIT_REACHED" if not STOP_REQUESTED else "PARTIAL_INTERRUPTED"
+                status["finalization_reason"] = "shutdown_cushion_or_signal"
+                break
+            result, task_errors = run_one_spooled(task, args.out, args.csv_output_mode, args.gzip_compresslevel)
+            if result is not None:
+                completed.append(result)
+            errors.extend(task_errors)
+            status["coupled_pairs_submitted"] = int(status["coupled_pairs_submitted"]) + 1
+            status["coupled_pairs_completed"] = len(completed)
+            status["coupled_pairs_failed"] = len(errors)
+            if len(completed) - last_checkpoint >= max(1, args.checkpoint_every_pairs):
+                progress.append(progress_row(status, completed, errors, started_perf))
+                last_checkpoint = len(completed)
+                write_partial(args.out, status, progress, errors, started_perf)
+        if status.get("status") == "RUNNING":
+            mark_completed_attempts_status(status, errors)
+        progress.append(progress_row(status, completed, errors, started_perf))
+        write_partial(args.out, status, progress, errors, started_perf)
+        return completed, errors, progress
+
+    futures = {}
+    executor = ProcessPoolExecutor(max_workers=max(1, args.workers))
+    try:
+        while pending or futures:
+            if should_stop(args, started_perf):
+                status["status"] = "PARTIAL_TIME_LIMIT_REACHED" if not STOP_REQUESTED else "PARTIAL_INTERRUPTED"
+                status["finalization_reason"] = "shutdown_cushion_or_signal"
+                break
+            while pending and len(futures) < max(1, args.workers):
+                task = pending.pop(0)
+                futures[executor.submit(run_one_spooled, task, args.out, args.csv_output_mode, args.gzip_compresslevel)] = task
+                status["coupled_pairs_submitted"] = int(status["coupled_pairs_submitted"]) + 1
+            done, _not_done = wait(futures, timeout=1.0, return_when=FIRST_COMPLETED)
+            for future in done:
+                task = futures.pop(future)
+                try:
+                    result, task_errors = future.result()
+                except Exception as exc:  # noqa: BLE001
+                    result = None
+                    task_errors = [{"pair_id": task.pair_id, "error": repr(exc)}]
+                if result is not None:
+                    completed.append(result)
+                errors.extend(task_errors)
+                status["coupled_pairs_completed"] = len(completed)
+                status["coupled_pairs_failed"] = len(errors)
+                if len(completed) - last_checkpoint >= max(1, args.checkpoint_every_pairs):
+                    progress.append(progress_row(status, completed, errors, started_perf))
+                    last_checkpoint = len(completed)
+                    write_partial(args.out, status, progress, errors, started_perf)
+    finally:
+        if futures:
+            for future in futures:
+                future.cancel()
+            status["coupled_pairs_cancelled"] = len(futures)
+            executor.shutdown(wait=False, cancel_futures=True)
+        else:
+            executor.shutdown(wait=True, cancel_futures=False)
+    if status.get("status") == "RUNNING":
+        mark_completed_attempts_status(status, errors)
+    progress.append(progress_row(status, completed, errors, started_perf))
+    write_partial(args.out, status, progress, errors, started_perf)
+    return completed, errors, progress
 
 
 def run_tasks(
@@ -588,6 +722,213 @@ def write_outputs(
             "coupled_artifact_completeness_summary.csv",
             args.csv_output_mode,
         ),
+        "output_files": [
+            {
+                "file": name,
+                "exists": True if name == "coupled_future_field_atlas_manifest.json" else (args.out / name).exists(),
+                "row_count": output_row_count(args.out, name, row_counts),
+            }
+            for name in ["future_field_atlas_rebuild_contract.json", *output_files]
+        ],
+    }
+    write_json(args.out / "coupled_future_field_atlas_manifest.json", manifest)
+    write_report(
+        args.out,
+        status,
+        reconstruction_rows,
+        completeness_rows,
+        readiness_rows,
+        args.csv_output_mode,
+        args.raw_topology_output_mode,
+        finalization_timings,
+    )
+
+
+def write_spooled_outputs(
+    args: argparse.Namespace,
+    spools: list[CoupledSpoolResult],
+    errors: list[dict[str, object]],
+    progress: list[dict[str, object]],
+    status: dict[str, object],
+    tasks: list[CoupledProbeTask],
+    started_perf: float,
+) -> None:
+    finalization_started = time.perf_counter()
+    finalization_timings: dict[str, float] = {}
+
+    phase_started = time.perf_counter()
+    profile_rows = read_spooled_rows(args.out, spools, "profile_file")
+    marginal_rows = read_spooled_rows(args.out, spools, "marginal_file")
+    residual_rows = read_spooled_rows(args.out, spools, "residual_file")
+    marginal_projection_rows = read_spooled_rows(args.out, spools, "marginal_projection_file")
+    internal_cap_rows = read_spooled_rows(args.out, spools, "internal_cap_file")
+    pair_reconstruction_rows = read_spooled_rows(args.out, spools, "reconstruction_audit_file")
+    pair_completeness_rows = read_spooled_rows(args.out, spools, "artifact_completeness_file")
+    finalization_timings["read_spool_summaries"] = round(time.perf_counter() - phase_started, 3)
+
+    phase_started = time.perf_counter()
+    condition_manifest = coupled_condition_manifest_rows(tasks)
+    scan_manifest = coupled_scan_manifest_rows(tasks)
+    coupled_operator_manifest = coupled_operator_manifest_rows(tasks)
+    node_spool_manifest = spooled_raw_topology_manifest_rows(spools, "nodes", args.csv_output_mode, args.gzip_compresslevel)
+    edge_spool_manifest = spooled_raw_topology_manifest_rows(spools, "edges", args.csv_output_mode, args.gzip_compresslevel)
+    pair_spool_manifest = pair_spool_manifest_rows(spools)
+    completeness_rows = aggregate_artifact_completeness_rows(pair_completeness_rows)
+    reconstruction_rows = aggregate_reconstruction_audit_rows(pair_reconstruction_rows)
+    readiness_rows = medium_scale_readiness_rows(completeness_rows, reconstruction_rows, internal_cap_rows, errors)
+    finalization_timings["summaries_manifests_audits"] = round(time.perf_counter() - phase_started, 3)
+
+    csv_jobs = [
+        ("coupled_operator_manifest.csv", coupled_operator_manifest),
+        ("coupled_condition_manifest.csv", condition_manifest),
+        ("coupled_scan_manifest.csv", scan_manifest),
+        ("coupled_pair_spool_manifest.csv", pair_spool_manifest),
+        ("coupled_joint_frontier_nodes_by_horizon_spool_manifest.csv", node_spool_manifest),
+        ("coupled_joint_frontier_edges_by_step_spool_manifest.csv", edge_spool_manifest),
+        ("coupled_joint_frontier_profile_by_horizon.csv", profile_rows),
+        ("coupled_marginal_retention_by_horizon.csv", marginal_rows),
+        ("coupled_joint_vs_product_residual_by_horizon.csv", residual_rows),
+        ("coupled_marginal_projection_delta_by_horizon.csv", marginal_projection_rows),
+        ("coupled_internal_frontier_cap_events.csv", internal_cap_rows),
+        ("coupled_reconstruction_audit_summary.csv", reconstruction_rows),
+        ("coupled_artifact_completeness_summary.csv", completeness_rows),
+        ("coupled_medium_scale_readiness_summary.csv", readiness_rows),
+    ]
+    phase_started = time.perf_counter()
+    write_output_artifacts_parallel(
+        out_dir=args.out,
+        csv_write_jobs=csv_jobs,
+        csv_output_mode=args.csv_output_mode,
+        gzip_compresslevel=args.gzip_compresslevel,
+        artifact_write_workers=args.artifact_write_workers,
+    )
+    finalization_timings["parallel_artifact_writes"] = round(time.perf_counter() - phase_started, 3)
+
+    node_rows = sum(spool.node_rows for spool in spools)
+    edge_rows = sum(spool.edge_rows for spool in spools)
+    status["completed_utc"] = utc_now()
+    status["elapsed_seconds"] = round(time.perf_counter() - started_perf, 3)
+    status["coupled_pairs_completed"] = len(spools)
+    status["coupled_pairs_failed"] = len(errors)
+    status["error_count"] = len(errors)
+    status["joint_node_rows"] = node_rows
+    status["joint_edge_rows"] = edge_rows
+    status["profile_rows"] = len(profile_rows)
+    status["marginal_rows"] = len(marginal_rows)
+    status["residual_rows"] = len(residual_rows)
+    status["marginal_projection_rows"] = len(marginal_projection_rows)
+    status["internal_cap_events"] = len(internal_cap_rows)
+    status["reconstruction_audit_clean_pass"] = int(all(row.get("status") == "PASS" for row in reconstruction_rows))
+    status["reconstruction_audit_interpretable_pass"] = int(
+        all(row.get("status") in {"PASS", "PASS_WITH_SKIPS"} for row in reconstruction_rows)
+    )
+    status["reconstruction_audit_passed"] = status["reconstruction_audit_clean_pass"]
+    status["artifact_completeness_statuses"] = ",".join(
+        sorted({str(row["artifact_status"]) for row in completeness_rows})
+    )
+    status["audit_status_counts_json"] = audit_status_counts(reconstruction_rows)
+    status["medium_sweep_interpretation_allowed"] = readiness_rows[0]["medium_sweep_interpretation_allowed"] if readiness_rows else 0
+    status["csv_output_mode"] = args.csv_output_mode
+    status["gzip_compresslevel"] = args.gzip_compresslevel
+    status["raw_topology_output_mode"] = args.raw_topology_output_mode
+    status["raw_topology_shard_pair_count"] = args.raw_topology_shard_pair_count
+    status["artifact_write_workers"] = args.artifact_write_workers
+    status["raw_topology_node_physical_rows"] = node_rows
+    status["raw_topology_edge_physical_rows"] = edge_rows
+    status["raw_topology_node_compression_ratio"] = 1.0
+    status["raw_topology_edge_compression_ratio"] = 1.0
+    status["raw_topology_node_lossless_blocks"] = 0
+    status["raw_topology_edge_lossless_blocks"] = 0
+    status["finalization_timings_json"] = finalization_timings
+    status["finalization_seconds"] = round(time.perf_counter() - finalization_started, 3)
+    write_partial(args.out, status, progress, errors, started_perf)
+
+    csv_output_files = [
+        "coupled_operator_manifest.csv",
+        "coupled_condition_manifest.csv",
+        "coupled_scan_manifest.csv",
+        "coupled_pair_spool_manifest.csv",
+        "coupled_joint_frontier_nodes_by_horizon_spool_manifest.csv",
+        "coupled_joint_frontier_edges_by_step_spool_manifest.csv",
+        "coupled_joint_frontier_profile_by_horizon.csv",
+        "coupled_marginal_retention_by_horizon.csv",
+        "coupled_joint_vs_product_residual_by_horizon.csv",
+        "coupled_marginal_projection_delta_by_horizon.csv",
+        "coupled_internal_frontier_cap_events.csv",
+        "coupled_reconstruction_audit_summary.csv",
+        "coupled_artifact_completeness_summary.csv",
+        "coupled_medium_scale_readiness_summary.csv",
+    ]
+    output_files = [
+        "coupled_future_field_atlas_manifest.json",
+        "coupled_future_field_atlas_run_config.json",
+        "coupled_future_field_atlas_status.json",
+        "coupled_future_field_atlas_progress.csv",
+        "coupled_future_field_atlas_errors.csv",
+        "coupled_future_field_atlas_report.md",
+    ]
+    output_files.extend(expand_csv_output_files(csv_output_files, args.csv_output_mode))
+    output_files.extend(spooled_output_files(spools))
+    row_counts = spooled_row_counts(
+        spools,
+        {
+            "coupled_operator_manifest.csv": len(coupled_operator_manifest),
+            "coupled_condition_manifest.csv": len(condition_manifest),
+            "coupled_scan_manifest.csv": len(scan_manifest),
+            "coupled_pair_spool_manifest.csv": len(pair_spool_manifest),
+            "coupled_joint_frontier_nodes_by_horizon_spool_manifest.csv": len(node_spool_manifest),
+            "coupled_joint_frontier_edges_by_step_spool_manifest.csv": len(edge_spool_manifest),
+            "coupled_joint_frontier_nodes_by_horizon.csv": node_rows,
+            "coupled_joint_frontier_edges_by_step.csv": edge_rows,
+            "coupled_joint_frontier_profile_by_horizon.csv": len(profile_rows),
+            "coupled_marginal_retention_by_horizon.csv": len(marginal_rows),
+            "coupled_joint_vs_product_residual_by_horizon.csv": len(residual_rows),
+            "coupled_marginal_projection_delta_by_horizon.csv": len(marginal_projection_rows),
+            "coupled_internal_frontier_cap_events.csv": len(internal_cap_rows),
+            "coupled_reconstruction_audit_summary.csv": len(reconstruction_rows),
+            "coupled_artifact_completeness_summary.csv": len(completeness_rows),
+            "coupled_medium_scale_readiness_summary.csv": len(readiness_rows),
+        },
+    )
+    manifest = {
+        **instrument_metadata(),
+        "claim_boundary": COUPLED_CLAIM_BOUNDARY,
+        "run_status": status.get("status"),
+        "rebuild_contract": "future_field_atlas_rebuild_contract.json",
+        "artifact_schema_version": ARTIFACT_SCHEMA_VERSION,
+        "runner_version": RUNNER_VERSION,
+        "protocol_version": PROTOCOL_VERSION,
+        "started_utc": status.get("started_utc"),
+        "completed_utc": status.get("completed_utc"),
+        "csv_output_mode": args.csv_output_mode,
+        "gzip_compresslevel": args.gzip_compresslevel,
+        "raw_topology_output_mode": args.raw_topology_output_mode,
+        "raw_topology_node_physical_rows": node_rows,
+        "raw_topology_edge_physical_rows": edge_rows,
+        "raw_topology_node_compression_ratio": 1.0,
+        "raw_topology_edge_compression_ratio": 1.0,
+        "raw_topology_node_lossless_blocks": 0,
+        "raw_topology_edge_lossless_blocks": 0,
+        "raw_topology_lossless_reconstruction_rule": "",
+        "artifact_write_workers": args.artifact_write_workers,
+        "finalization_timings_json": finalization_timings,
+        "horizon_max": args.horizon_max,
+        "horizon_schedule": parse_horizon_schedule(args.horizon_schedule, args.horizon_max),
+        "condition_pairing_policy": CONDITION_PAIRING_POLICY,
+        "start_pairing_policy": START_PAIRING_POLICY,
+        "pair_count_requested": args.pair_count,
+        "pair_count_realized": len(tasks),
+        "field_A_condition_count": len({task.field_a.spec.condition_id for task in tasks}),
+        "field_B_condition_count": len({task.field_b.spec.condition_id for task in tasks}),
+        "joint_selection_family": args.joint_selection_family,
+        "joint_effective_out_degree": args.joint_effective_out_degree,
+        "coupling_strength": args.coupling_strength,
+        "coupled_operator_manifest": primary_csv_artifact_name("coupled_operator_manifest.csv", args.csv_output_mode),
+        "coupled_condition_manifest": primary_csv_artifact_name("coupled_condition_manifest.csv", args.csv_output_mode),
+        "coupled_scan_manifest": primary_csv_artifact_name("coupled_scan_manifest.csv", args.csv_output_mode),
+        "coupled_pair_spool_manifest": primary_csv_artifact_name("coupled_pair_spool_manifest.csv", args.csv_output_mode),
+        "coupled_reconstruction_audit_summary": primary_csv_artifact_name("coupled_reconstruction_audit_summary.csv", args.csv_output_mode),
+        "coupled_artifact_completeness_summary": primary_csv_artifact_name("coupled_artifact_completeness_summary.csv", args.csv_output_mode),
         "output_files": [
             {
                 "file": name,
@@ -1213,6 +1554,14 @@ def raw_topology_report_artifacts(raw_topology_output_mode: str, csv_output_mode
             f"- `{csv_artifact_display_name('coupled_joint_frontier_nodes_by_horizon_shard_manifest.csv', csv_output_mode)}`",
             "- `coupled_joint_frontier_edges_by_step_shards/part-*.csv[.gz]`",
             f"- `{csv_artifact_display_name('coupled_joint_frontier_edges_by_step_shard_manifest.csv', csv_output_mode)}`",
+        ])
+    if raw_topology_output_mode == "worker_spool":
+        lines.extend([
+            "- `coupled_pair_spool/*/coupled_joint_frontier_nodes_by_horizon.csv[.gz]`",
+            "- `coupled_pair_spool/*/coupled_joint_frontier_edges_by_step.csv[.gz]`",
+            f"- `{csv_artifact_display_name('coupled_pair_spool_manifest.csv', csv_output_mode)}`",
+            f"- `{csv_artifact_display_name('coupled_joint_frontier_nodes_by_horizon_spool_manifest.csv', csv_output_mode)}`",
+            f"- `{csv_artifact_display_name('coupled_joint_frontier_edges_by_step_spool_manifest.csv', csv_output_mode)}`",
         ])
     if raw_topology_output_mode in {"consolidated", "both"}:
         lines.extend([

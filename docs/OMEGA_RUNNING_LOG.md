@@ -9,6 +9,58 @@ patch notes at the top.
 
 ## 2026-06-01
 
+### Future Field Atlas Coupled Worker-Side Spooling
+
+Implemented the first data-plane repair for H128 coupled scaling:
+
+```text
+--raw-topology-output-mode worker_spool
+```
+
+In this mode each worker writes pair-local raw topology and compact summaries:
+
+```text
+coupled_pair_spool/<pair_id>/
+  coupled_joint_frontier_nodes_by_horizon.csv.gz
+  coupled_joint_frontier_edges_by_step.csv.gz
+  coupled_joint_frontier_profile_by_horizon.csv.gz
+  coupled_reconstruction_audit_summary.csv.gz
+  coupled_artifact_completeness_summary.csv.gz
+  pair_spool_manifest.json
+```
+
+The parent process receives compact pair descriptors, then merges summary
+tables and spool manifests. This avoids the Windows multiprocessing result
+transfer failure observed in the H128 pair4 attempt.
+
+Validation:
+
+```text
+unit tests: coupled spool path covered
+
+H8 pair2 worker_spool:
+  status: COMPLETED
+  errors: 0
+  internal_cap_events: 0
+  edge rows: 201743
+  finalization_seconds: 0.079
+
+H16 pair2 worker_spool:
+  status: COMPLETED
+  errors: 0
+  internal_cap_events: 0
+  edge rows: 1069650
+  finalization_seconds: 0.084
+```
+
+Read:
+
+```text
+Spooling does not reduce raw data volume. It removes the parent-process IPC
+payload bottleneck and collapses finalization time for raw topology because
+workers already wrote the heavy artifacts.
+```
+
 ### Future Field Atlas Rebuild And Retention Metadata
 
 Added a small data-plane metadata layer for future runs:

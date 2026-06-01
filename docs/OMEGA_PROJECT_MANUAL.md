@@ -71,10 +71,12 @@ completed cleanly with no caps, all reconstruction audits passing, and about
 write-out dominance. The H128 coupled pair2 serial depth gate completed cleanly
 with about 0.746 GiB of compressed output and no caps, while a H128 pair4
 parallel attempt failed on two heavy pairs through a Windows multiprocessing
-result-transfer limit. Before broad H128 coupled surveys, add worker-side
-spooling or pair-indexed heavy-pair handling. A short three-frontier H6 smoke
-now exists as a profile-only interface probe; it does not emit raw triadic
-topology and should not be treated as a coupled science result.
+result-transfer limit. The first repair is now implemented as
+`--raw-topology-output-mode worker_spool`, which writes pair-local raw topology
+inside worker processes and lets the parent merge compact manifests. Use
+`worker_spool` for coupled H128 breadth attempts. A short three-frontier H6
+smoke now exists as a profile-only interface probe; it does not emit raw
+triadic topology and should not be treated as a coupled science result.
 ```
 
 Terminology rule:

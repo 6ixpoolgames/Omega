@@ -523,6 +523,30 @@ optional unless a run demonstrates real compression benefit. The H32 pair2 audit
 found no exact repeated topology, so sharded remains the default coupled output
 mode.
 
+For heavy coupled runs, especially H128 breadth, use worker-side spooling:
+
+```text
+--raw-topology-output-mode worker_spool
+```
+
+In this mode each worker writes its own pair-local artifacts:
+
+```text
+coupled_pair_spool/<pair_id>/coupled_joint_frontier_nodes_by_horizon.csv.gz
+coupled_pair_spool/<pair_id>/coupled_joint_frontier_edges_by_step.csv.gz
+coupled_pair_spool/<pair_id>/coupled_joint_frontier_profile_by_horizon.csv.gz
+coupled_pair_spool/<pair_id>/coupled_reconstruction_audit_summary.csv.gz
+coupled_pair_spool/<pair_id>/coupled_artifact_completeness_summary.csv.gz
+coupled_pair_spool/<pair_id>/pair_spool_manifest.json
+```
+
+The parent process receives only pair-local descriptors, then merges compact
+summaries and spool manifests. This avoids returning large raw topology payloads
+through Windows multiprocessing IPC. Logical artifact identity remains
+`coupled_joint_frontier_nodes_by_horizon.csv` and
+`coupled_joint_frontier_edges_by_step.csv`; `worker_spool` is a physical
+storage and process-isolation layout.
+
 Default transport retention is selected rather than full closure:
 
 ```text

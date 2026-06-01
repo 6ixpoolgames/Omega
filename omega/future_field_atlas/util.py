@@ -54,6 +54,16 @@ def write_csv(path: Path, rows: list[dict[str, object]], *, gzip_compresslevel: 
         writer.writerows(([row.get(field, "") for field in fields] for row in rows))
 
 
+def read_csv(path: Path) -> list[dict[str, object]]:
+    if not path.exists() or not is_csv_path(path):
+        return []
+    with open_text(path, "rt") as handle:
+        reader = csv.DictReader(handle)
+        if reader.fieldnames == ["empty"]:
+            return []
+        return [dict(row) for row in reader]
+
+
 def csv_row_count(path: Path) -> int:
     if not path.exists() or not is_csv_path(path):
         return 0
