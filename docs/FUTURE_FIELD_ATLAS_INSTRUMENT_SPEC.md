@@ -497,6 +497,20 @@ The logical artifact names remain `frontier_nodes_by_horizon.csv` and
 filter. Consolidated raw topology output remains available with
 `--raw-topology-output-mode consolidated` or `--raw-topology-output-mode both`.
 
+The coupled atlas runner uses the same logical/physical rule for joint
+topology. Its default physical layout is:
+
+```text
+coupled_joint_frontier_nodes_by_horizon_shard_manifest.csv.gz
+coupled_joint_frontier_nodes_by_horizon_shards/part-*.csv.gz
+coupled_joint_frontier_edges_by_step_shard_manifest.csv.gz
+coupled_joint_frontier_edges_by_step_shards/part-*.csv.gz
+```
+
+The logical coupled raw artifacts remain
+`coupled_joint_frontier_nodes_by_horizon.csv` and
+`coupled_joint_frontier_edges_by_step.csv`.
+
 Default transport retention is selected rather than full closure:
 
 ```text
@@ -531,6 +545,7 @@ composition_residual_mode
 multiscale_transport_pair_count
 composition_residual_triple_count
 artifact_write_workers
+raw_topology_shard_scan_count or raw_topology_shard_pair_count
 finalization_timings_json
 substrate_count
 frontier_count

@@ -5,8 +5,9 @@ from __future__ import annotations
 import argparse
 import signal
 import time
-from concurrent.futures import FIRST_COMPLETED, ProcessPoolExecutor, wait
+from concurrent.futures import FIRST_COMPLETED, ProcessPoolExecutor, ThreadPoolExecutor, as_completed, wait
 from pathlib import Path
+from typing import Callable
 
 from .contracts import instrument_metadata, spec_digest
 from .coupled import (
@@ -62,6 +63,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--shutdown-cushion-seconds", type=int, default=20)
     parser.add_argument("--csv-output-mode", choices=("plain", "gzip", "both"), default="gzip")
     parser.add_argument("--gzip-compresslevel", type=int, default=1)
+    parser.add_argument(
+        "--raw-topology-output-mode",
+        choices=("sharded", "consolidated", "both"),
+        default="sharded",
+        help="Write high-volume coupled node/edge topology as shards, consolidated files, or both.",
+    )
+    parser.add_argument("--raw-topology-shard-pair-count", type=int, default=1)
+    parser.add_argument("--artifact-write-workers", type=int, default=8)
     return parser.parse_args()
 
 
@@ -269,6 +278,8 @@ def write_outputs(
     started_perf: float,
 ) -> None:
     finalization_started = time.perf_counter()
+    finalization_timings: dict[str, float] = {}
+    phase_started = time.perf_counter()
     node_rows = [row for result in results for row in result.node_rows]
     edge_rows = [row for result in results for row in result.edge_rows]
     profile_rows = [row for result in results for row in result.profile_rows]
@@ -276,6 +287,9 @@ def write_outputs(
     residual_rows = [row for result in results for row in result.residual_rows]
     marginal_projection_rows = [row for result in results for row in result.marginal_projection_rows]
     internal_cap_rows = [row for result in results for row in result.internal_cap_rows]
+    finalization_timings["flatten_rows"] = round(time.perf_counter() - phase_started, 3)
+
+    phase_started = time.perf_counter()
     condition_manifest = coupled_condition_manifest_rows(tasks)
     scan_manifest = coupled_scan_manifest_rows(tasks)
     coupled_operator_manifest = coupled_operator_manifest_rows(tasks)
@@ -290,12 +304,52 @@ def write_outputs(
     )
     reconstruction_rows = reconstruction_audit_rows(node_rows, profile_rows, marginal_rows, residual_rows)
     readiness_rows = medium_scale_readiness_rows(completeness_rows, reconstruction_rows, internal_cap_rows)
+    finalization_timings["summaries_manifests_audits"] = round(time.perf_counter() - phase_started, 3)
+
+    csv_output_files = [
+        "coupled_operator_manifest.csv",
+        "coupled_condition_manifest.csv",
+        "coupled_scan_manifest.csv",
+        "coupled_joint_frontier_profile_by_horizon.csv",
+        "coupled_marginal_retention_by_horizon.csv",
+        "coupled_joint_vs_product_residual_by_horizon.csv",
+        "coupled_marginal_projection_delta_by_horizon.csv",
+        "coupled_internal_frontier_cap_events.csv",
+        "coupled_reconstruction_audit_summary.csv",
+        "coupled_artifact_completeness_summary.csv",
+        "coupled_medium_scale_readiness_summary.csv",
+    ]
+    raw_topology_files = [
+        "coupled_joint_frontier_nodes_by_horizon.csv",
+        "coupled_joint_frontier_edges_by_step.csv",
+    ]
+    raw_shard_manifest_files = [
+        "coupled_joint_frontier_nodes_by_horizon_shard_manifest.csv",
+        "coupled_joint_frontier_edges_by_step_shard_manifest.csv",
+    ]
+    if args.raw_topology_output_mode in {"consolidated", "both"}:
+        csv_output_files.extend(raw_topology_files)
+    if args.raw_topology_output_mode in {"sharded", "both"}:
+        csv_output_files.extend(raw_shard_manifest_files)
+
+    phase_started = time.perf_counter()
+    node_shard_manifest: list[dict[str, object]] = []
+    edge_shard_manifest: list[dict[str, object]] = []
+    if args.raw_topology_output_mode in {"sharded", "both"}:
+        node_shard_manifest, edge_shard_manifest = write_raw_topology_shards(
+            out_dir=args.out,
+            results=results,
+            csv_output_mode=args.csv_output_mode,
+            shard_pair_count=args.raw_topology_shard_pair_count,
+            gzip_compresslevel=args.gzip_compresslevel,
+            artifact_write_workers=args.artifact_write_workers,
+        )
+    finalization_timings["raw_topology_shard_writes"] = round(time.perf_counter() - phase_started, 3)
+
     csv_jobs = [
         ("coupled_operator_manifest.csv", coupled_operator_manifest),
         ("coupled_condition_manifest.csv", condition_manifest),
         ("coupled_scan_manifest.csv", scan_manifest),
-        ("coupled_joint_frontier_nodes_by_horizon.csv", node_rows),
-        ("coupled_joint_frontier_edges_by_step.csv", edge_rows),
         ("coupled_joint_frontier_profile_by_horizon.csv", profile_rows),
         ("coupled_marginal_retention_by_horizon.csv", marginal_rows),
         ("coupled_joint_vs_product_residual_by_horizon.csv", residual_rows),
@@ -305,8 +359,27 @@ def write_outputs(
         ("coupled_artifact_completeness_summary.csv", completeness_rows),
         ("coupled_medium_scale_readiness_summary.csv", readiness_rows),
     ]
-    for logical_name, rows in csv_jobs:
-        write_csv_artifact(args.out, logical_name, rows, args.csv_output_mode, args.gzip_compresslevel)
+    if args.raw_topology_output_mode in {"consolidated", "both"}:
+        csv_jobs.extend([
+            ("coupled_joint_frontier_nodes_by_horizon.csv", node_rows),
+            ("coupled_joint_frontier_edges_by_step.csv", edge_rows),
+        ])
+    if args.raw_topology_output_mode in {"sharded", "both"}:
+        csv_jobs.extend([
+            ("coupled_joint_frontier_nodes_by_horizon_shard_manifest.csv", node_shard_manifest),
+            ("coupled_joint_frontier_edges_by_step_shard_manifest.csv", edge_shard_manifest),
+        ])
+
+    phase_started = time.perf_counter()
+    write_output_artifacts_parallel(
+        out_dir=args.out,
+        csv_write_jobs=csv_jobs,
+        csv_output_mode=args.csv_output_mode,
+        gzip_compresslevel=args.gzip_compresslevel,
+        artifact_write_workers=args.artifact_write_workers,
+    )
+    finalization_timings["parallel_artifact_writes"] = round(time.perf_counter() - phase_started, 3)
+
     status["completed_utc"] = utc_now()
     status["elapsed_seconds"] = round(time.perf_counter() - started_perf, 3)
     status["joint_node_rows"] = len(node_rows)
@@ -326,6 +399,10 @@ def write_outputs(
     status["medium_sweep_interpretation_allowed"] = readiness_rows[0]["medium_sweep_interpretation_allowed"] if readiness_rows else 0
     status["csv_output_mode"] = args.csv_output_mode
     status["gzip_compresslevel"] = args.gzip_compresslevel
+    status["raw_topology_output_mode"] = args.raw_topology_output_mode
+    status["raw_topology_shard_pair_count"] = args.raw_topology_shard_pair_count
+    status["artifact_write_workers"] = args.artifact_write_workers
+    status["finalization_timings_json"] = finalization_timings
     status["finalization_seconds"] = round(time.perf_counter() - finalization_started, 3)
     write_partial(args.out, status, progress, errors, started_perf)
     output_files = [
@@ -335,15 +412,44 @@ def write_outputs(
         "coupled_future_field_atlas_progress.csv",
         "coupled_future_field_atlas_errors.csv",
         "coupled_future_field_atlas_report.md",
-        *expand_csv_output_files([name for name, _rows in csv_jobs], args.csv_output_mode),
     ]
-    row_counts = {name: len(rows) for name, rows in csv_jobs}
+    output_files.extend(expand_csv_output_files(csv_output_files, args.csv_output_mode))
+    if args.raw_topology_output_mode in {"sharded", "both"}:
+        output_files.extend(
+            str(row["physical_artifact_name"])
+            for row in node_shard_manifest + edge_shard_manifest
+        )
+    row_counts = {
+        "coupled_operator_manifest.csv": len(coupled_operator_manifest),
+        "coupled_condition_manifest.csv": len(condition_manifest),
+        "coupled_scan_manifest.csv": len(scan_manifest),
+        "coupled_joint_frontier_nodes_by_horizon.csv": len(node_rows),
+        "coupled_joint_frontier_edges_by_step.csv": len(edge_rows),
+        "coupled_joint_frontier_profile_by_horizon.csv": len(profile_rows),
+        "coupled_marginal_retention_by_horizon.csv": len(marginal_rows),
+        "coupled_joint_vs_product_residual_by_horizon.csv": len(residual_rows),
+        "coupled_marginal_projection_delta_by_horizon.csv": len(marginal_projection_rows),
+        "coupled_internal_frontier_cap_events.csv": len(internal_cap_rows),
+        "coupled_reconstruction_audit_summary.csv": len(reconstruction_rows),
+        "coupled_artifact_completeness_summary.csv": len(completeness_rows),
+        "coupled_medium_scale_readiness_summary.csv": len(readiness_rows),
+        "coupled_joint_frontier_nodes_by_horizon_shard_manifest.csv": len(node_shard_manifest),
+        "coupled_joint_frontier_edges_by_step_shard_manifest.csv": len(edge_shard_manifest),
+    }
+    for row in node_shard_manifest + edge_shard_manifest:
+        row_counts[str(row["physical_artifact_name"])] = int(row["row_count"])
     manifest = {
         **instrument_metadata(),
         "claim_boundary": COUPLED_CLAIM_BOUNDARY,
         "run_status": status.get("status"),
         "started_utc": status.get("started_utc"),
         "completed_utc": status.get("completed_utc"),
+        "csv_output_mode": args.csv_output_mode,
+        "gzip_compresslevel": args.gzip_compresslevel,
+        "raw_topology_output_mode": args.raw_topology_output_mode,
+        "raw_topology_shard_pair_count": args.raw_topology_shard_pair_count,
+        "artifact_write_workers": args.artifact_write_workers,
+        "finalization_timings_json": finalization_timings,
         "horizon_max": args.horizon_max,
         "horizon_schedule": parse_horizon_schedule(args.horizon_schedule, args.horizon_max),
         "condition_pairing_policy": CONDITION_PAIRING_POLICY,
@@ -355,6 +461,26 @@ def write_outputs(
         "joint_selection_family": args.joint_selection_family,
         "joint_effective_out_degree": args.joint_effective_out_degree,
         "coupling_strength": args.coupling_strength,
+        "coupled_operator_manifest": primary_csv_artifact_name(
+            "coupled_operator_manifest.csv",
+            args.csv_output_mode,
+        ),
+        "coupled_condition_manifest": primary_csv_artifact_name(
+            "coupled_condition_manifest.csv",
+            args.csv_output_mode,
+        ),
+        "coupled_scan_manifest": primary_csv_artifact_name(
+            "coupled_scan_manifest.csv",
+            args.csv_output_mode,
+        ),
+        "coupled_reconstruction_audit_summary": primary_csv_artifact_name(
+            "coupled_reconstruction_audit_summary.csv",
+            args.csv_output_mode,
+        ),
+        "coupled_artifact_completeness_summary": primary_csv_artifact_name(
+            "coupled_artifact_completeness_summary.csv",
+            args.csv_output_mode,
+        ),
         "output_files": [
             {
                 "file": name,
@@ -365,7 +491,16 @@ def write_outputs(
         ],
     }
     write_json(args.out / "coupled_future_field_atlas_manifest.json", manifest)
-    write_report(args.out, status, reconstruction_rows, completeness_rows, readiness_rows)
+    write_report(
+        args.out,
+        status,
+        reconstruction_rows,
+        completeness_rows,
+        readiness_rows,
+        args.csv_output_mode,
+        args.raw_topology_output_mode,
+        finalization_timings,
+    )
 
 
 def coupled_condition_manifest_rows(tasks: list[CoupledProbeTask]) -> list[dict[str, object]]:
@@ -709,6 +844,9 @@ def write_report(
     reconstruction_rows: list[dict[str, object]],
     completeness_rows: list[dict[str, object]],
     readiness_rows: list[dict[str, object]],
+    csv_output_mode: str,
+    raw_topology_output_mode: str,
+    finalization_timings: dict[str, float],
 ) -> None:
     readiness = readiness_rows[0] if readiness_rows else {}
     lines = [
@@ -733,6 +871,20 @@ def write_report(
         f"- Reconstruction clean pass: `{status.get('reconstruction_audit_clean_pass', '')}`",
         f"- Reconstruction interpretable pass: `{status.get('reconstruction_audit_interpretable_pass', '')}`",
         f"- Medium-sweep interpretation allowed: `{status.get('medium_sweep_interpretation_allowed', '')}`",
+        "",
+        "## Storage",
+        "",
+        f"- CSV output mode: `{csv_output_mode}`",
+        f"- Raw topology output mode: `{raw_topology_output_mode}`",
+        f"- Gzip compression level: `{status.get('gzip_compresslevel', '')}`",
+        f"- Artifact write workers: `{status.get('artifact_write_workers', '')}`",
+        "",
+        "## Finalization Timings",
+        "",
+        *[
+            f"- `{name}`: {seconds}s"
+            for name, seconds in finalization_timings.items()
+        ],
         "",
         "## Reconstruction Audits",
         "",
@@ -760,8 +912,7 @@ def write_report(
         "- `coupled_operator_manifest.csv[.gz]`",
         "- `coupled_condition_manifest.csv[.gz]`",
         "- `coupled_scan_manifest.csv[.gz]`",
-        "- `coupled_joint_frontier_nodes_by_horizon.csv[.gz]`",
-        "- `coupled_joint_frontier_edges_by_step.csv[.gz]`",
+        *raw_topology_report_artifacts(raw_topology_output_mode, csv_output_mode),
         "- `coupled_joint_frontier_profile_by_horizon.csv[.gz]`",
         "- `coupled_marginal_retention_by_horizon.csv[.gz]`",
         "- `coupled_joint_vs_product_residual_by_horizon.csv[.gz]`",
@@ -784,6 +935,117 @@ def write_csv_artifact(
         write_csv(out_dir / name, rows, gzip_compresslevel=gzip_compresslevel)
 
 
+def write_output_artifacts_parallel(
+    *,
+    out_dir: Path,
+    csv_write_jobs: list[tuple[str, list[dict[str, object]]]],
+    csv_output_mode: str,
+    gzip_compresslevel: int,
+    artifact_write_workers: int,
+) -> None:
+    jobs: list[Callable[[], None]] = []
+    for logical_name, rows in csv_write_jobs:
+        jobs.append(
+            lambda logical_name=logical_name, rows=rows: write_csv_artifact(
+                out_dir,
+                logical_name,
+                rows,
+                csv_output_mode,
+                gzip_compresslevel,
+            )
+        )
+    run_parallel_jobs(jobs, artifact_write_workers)
+
+
+def write_raw_topology_shards(
+    *,
+    out_dir: Path,
+    results: list[CoupledProbeResult],
+    csv_output_mode: str,
+    shard_pair_count: int,
+    gzip_compresslevel: int,
+    artifact_write_workers: int,
+) -> tuple[list[dict[str, object]], list[dict[str, object]]]:
+    shard_size = max(1, int(shard_pair_count))
+    chunks = [results[index:index + shard_size] for index in range(0, len(results), shard_size)]
+    node_manifest: list[dict[str, object]] = []
+    edge_manifest: list[dict[str, object]] = []
+    jobs: list[Callable[[], None]] = []
+    for logical_name, directory_name, row_attr, manifest_rows in (
+        (
+            "coupled_joint_frontier_nodes_by_horizon.csv",
+            "coupled_joint_frontier_nodes_by_horizon_shards",
+            "node_rows",
+            node_manifest,
+        ),
+        (
+            "coupled_joint_frontier_edges_by_step.csv",
+            "coupled_joint_frontier_edges_by_step_shards",
+            "edge_rows",
+            edge_manifest,
+        ),
+    ):
+        shard_count = len(chunks)
+        for shard_index, chunk in enumerate(chunks):
+            row_count = sum(len(getattr(result, row_attr)) for result in chunk)
+            first_pair_id = str(chunk[0].pair_id) if chunk else ""
+            last_pair_id = str(chunk[-1].pair_id) if chunk else ""
+            base_name = f"{directory_name}/part-{shard_index:05d}.csv"
+            physical_names = expand_csv_output_files([base_name], csv_output_mode)
+            for physical_name in physical_names:
+                manifest_rows.append({
+                    "logical_artifact_name": logical_name,
+                    "physical_artifact_name": physical_name,
+                    "artifact_storage_kind": "sharded_csv",
+                    "shard_index": shard_index,
+                    "shard_count": shard_count,
+                    "shard_pair_count": len(chunk),
+                    "row_count": row_count,
+                    "first_pair_id": first_pair_id,
+                    "last_pair_id": last_pair_id,
+                    "csv_output_mode": csv_output_mode,
+                    "gzip_compresslevel": gzip_compresslevel,
+                })
+                jobs.append(
+                    lambda physical_name=physical_name, chunk=tuple(chunk), row_attr=row_attr: (
+                        write_result_row_shard(
+                            out_dir,
+                            physical_name,
+                            chunk,
+                            row_attr,
+                            gzip_compresslevel,
+                        )
+                    )
+                )
+    run_parallel_jobs(jobs, artifact_write_workers)
+    return node_manifest, edge_manifest
+
+
+def write_result_row_shard(
+    out_dir: Path,
+    physical_name: str,
+    results: tuple[CoupledProbeResult, ...],
+    row_attr: str,
+    gzip_compresslevel: int,
+) -> None:
+    rows = [row for result in results for row in getattr(result, row_attr)]
+    write_csv(out_dir / physical_name, rows, gzip_compresslevel=gzip_compresslevel)
+
+
+def run_parallel_jobs(jobs: list[Callable[[], None]], artifact_write_workers: int) -> None:
+    if not jobs:
+        return
+    workers = max(1, min(len(jobs), int(artifact_write_workers)))
+    if workers == 1:
+        for job in jobs:
+            job()
+        return
+    with ThreadPoolExecutor(max_workers=workers) as executor:
+        futures = [executor.submit(job) for job in jobs]
+        for future in as_completed(futures):
+            future.result()
+
+
 def expand_csv_output_files(logical_names: list[str], csv_output_mode: str) -> list[str]:
     if csv_output_mode == "plain":
         return list(logical_names)
@@ -792,6 +1054,37 @@ def expand_csv_output_files(logical_names: list[str], csv_output_mode: str) -> l
     if csv_output_mode == "both":
         return [item for name in logical_names for item in (name, f"{name}.gz")]
     raise ValueError(f"unknown csv output mode: {csv_output_mode}")
+
+
+def csv_artifact_display_name(logical_name: str, csv_output_mode: str) -> str:
+    if csv_output_mode == "gzip":
+        return f"{logical_name}.gz"
+    if csv_output_mode == "both":
+        return f"{logical_name} / {logical_name}.gz"
+    return logical_name
+
+
+def raw_topology_report_artifacts(raw_topology_output_mode: str, csv_output_mode: str) -> list[str]:
+    lines: list[str] = []
+    if raw_topology_output_mode in {"sharded", "both"}:
+        lines.extend([
+            "- `coupled_joint_frontier_nodes_by_horizon_shards/part-*.csv[.gz]`",
+            f"- `{csv_artifact_display_name('coupled_joint_frontier_nodes_by_horizon_shard_manifest.csv', csv_output_mode)}`",
+            "- `coupled_joint_frontier_edges_by_step_shards/part-*.csv[.gz]`",
+            f"- `{csv_artifact_display_name('coupled_joint_frontier_edges_by_step_shard_manifest.csv', csv_output_mode)}`",
+        ])
+    if raw_topology_output_mode in {"consolidated", "both"}:
+        lines.extend([
+            f"- `{csv_artifact_display_name('coupled_joint_frontier_nodes_by_horizon.csv', csv_output_mode)}`",
+            f"- `{csv_artifact_display_name('coupled_joint_frontier_edges_by_step.csv', csv_output_mode)}`",
+        ])
+    return lines
+
+
+def primary_csv_artifact_name(logical_name: str, csv_output_mode: str) -> str:
+    if csv_output_mode == "gzip":
+        return f"{logical_name}.gz"
+    return logical_name
 
 
 def output_row_count(out_dir: Path, name: str, csv_row_counts: dict[str, int]) -> int | str:

@@ -13,7 +13,9 @@ from omega.future_field_atlas.run_coupled_future_field_atlas import (
     build_coupled_tasks,
     coupled_condition_manifest_rows,
     coupled_scan_manifest_rows,
+    write_raw_topology_shards,
 )
+from omega.future_field_atlas.util import csv_row_count
 
 
 def test_cap_poison_propagates_to_descendant_rows() -> None:
@@ -89,6 +91,31 @@ def test_marginal_projection_rows_do_not_claim_causality() -> None:
         for row in result.marginal_projection_rows
     } == {"product_vs_coupled_marginal_set_delta"}
     assert {row["causal_interpretation"] for row in result.marginal_projection_rows} == {"none"}
+
+
+def test_coupled_raw_topology_shards_are_manifest_backed(tmp_path) -> None:
+    task = build_test_tasks(horizon_max=1)[0]
+    result = scan_coupled_probe(task)
+
+    node_manifest, edge_manifest = write_raw_topology_shards(
+        out_dir=tmp_path,
+        results=[result],
+        csv_output_mode="gzip",
+        shard_pair_count=1,
+        gzip_compresslevel=1,
+        artifact_write_workers=2,
+    )
+
+    assert len(node_manifest) == 1
+    assert len(edge_manifest) == 1
+    node_file = tmp_path / str(node_manifest[0]["physical_artifact_name"])
+    edge_file = tmp_path / str(edge_manifest[0]["physical_artifact_name"])
+    assert node_file.exists()
+    assert edge_file.exists()
+    assert csv_row_count(node_file) == len(result.node_rows)
+    assert csv_row_count(edge_file) == len(result.edge_rows)
+    assert node_manifest[0]["logical_artifact_name"] == "coupled_joint_frontier_nodes_by_horizon.csv"
+    assert edge_manifest[0]["logical_artifact_name"] == "coupled_joint_frontier_edges_by_step.csv"
 
 
 def build_test_tasks(

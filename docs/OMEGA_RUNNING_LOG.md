@@ -9,6 +9,86 @@ patch notes at the top.
 
 ## 2026-06-01
 
+### Future Field Atlas Coupled Sharded Staged Sweep
+
+Implemented sharded physical output for coupled raw topology and ran staged
+H8 -> H16 -> H32 -> H64 coupled infrastructure gates.
+
+Retained note:
+
+- `docs/research_notes/validation_results/future_field_atlas_coupled_sharded_staged_sweep_result.md`
+
+Implementation:
+
+```text
+raw_topology_output_mode default: sharded
+raw_topology_shard_pair_count: pair scans per shard
+artifact_write_workers: parallel artifact writer count
+
+default coupled raw topology layout:
+  coupled_joint_frontier_nodes_by_horizon_shard_manifest.csv.gz
+  coupled_joint_frontier_nodes_by_horizon_shards/part-*.csv.gz
+  coupled_joint_frontier_edges_by_step_shard_manifest.csv.gz
+  coupled_joint_frontier_edges_by_step_shards/part-*.csv.gz
+```
+
+Validation:
+
+```text
+ruff check omega/future_field_atlas tests/test_coupled_atlas_hardening.py
+compileall omega/future_field_atlas tests
+pytest tests/test_coupled_atlas_hardening.py -q
+git diff --check
+
+tests: 6 passed
+```
+
+Staged run readout:
+
+```text
+H8 pair1:
+  elapsed_seconds: 0.363
+  joint_node_rows: 1169
+  joint_edge_rows: 6588
+  total_output_size: about 0.40 MB
+  audits: PASS 3
+
+H16 pair2:
+  elapsed_seconds: 55.248
+  joint_node_rows: 173279
+  joint_edge_rows: 1069650
+  total_output_size: about 60.39 MB
+  audits: PASS 3
+
+H32 pair2:
+  elapsed_seconds: 146.745
+  joint_node_rows: 445487
+  joint_edge_rows: 2855522
+  total_output_size: about 160.83 MB
+  audits: PASS 3
+
+H64 pair2:
+  elapsed_seconds: 331.432
+  joint_node_rows: 989903
+  joint_edge_rows: 6427266
+  total_output_size: about 361.72 MB
+  audits: PASS 3
+```
+
+Read:
+
+```text
+The coupled runner is infrastructure-clean through bounded H64 pair2: no caps,
+complete artifacts, all reconstruction audits PASS, explicit product baseline,
+and manifest-backed coupled operator identity.
+
+The frontier saturated by about H16 in this design, but the runner still emits
+full repeated step-edge topology through H64. Before many-pair H64/H128 coupled
+runs, add a lossless steady-state or repeated-block topology compressor that
+marks compressed artifacts as lossless_compressed and preserves reconstruction
+semantics.
+```
+
 ### Future Field Atlas Coupled Hardening
 
 Implemented coupled-runner infrastructure hardening before any medium coupled

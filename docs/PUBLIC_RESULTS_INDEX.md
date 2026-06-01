@@ -38,15 +38,17 @@ Start here:
 4. [`docs/research_notes/validation_results/future_field_atlas_compact_manageability_h64_result.md`](research_notes/validation_results/future_field_atlas_compact_manageability_h64_result.md)
 5. [`docs/research_notes/validation_results/future_field_atlas_default_gzip_compression_smoke.md`](research_notes/validation_results/future_field_atlas_default_gzip_compression_smoke.md)
 6. [`docs/research_notes/validation_results/future_field_atlas_h128_calibration_pass_result.md`](research_notes/validation_results/future_field_atlas_h128_calibration_pass_result.md)
-7. [`docs/FUTURE_FIELD_ATLAS_GLOSSARY.md`](FUTURE_FIELD_ATLAS_GLOSSARY.md)
-8. [`docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md`](research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md)
-9. [`docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md`](research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md)
-10. [`docs/research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md`](research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md)
-11. [`docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`](research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
-12. [`docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md`](research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
-13. [`docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md`](research_notes/omega_theory/horizon_transport_aligned_amplification.md)
-14. [`docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md`](research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
-15. [`docs/research_notes/omega_theory/transition_energy_substrate_atlas.md`](research_notes/omega_theory/transition_energy_substrate_atlas.md)
+7. [`docs/research_notes/validation_results/future_field_atlas_coupled_hardening_result.md`](research_notes/validation_results/future_field_atlas_coupled_hardening_result.md)
+8. [`docs/research_notes/validation_results/future_field_atlas_coupled_sharded_staged_sweep_result.md`](research_notes/validation_results/future_field_atlas_coupled_sharded_staged_sweep_result.md)
+9. [`docs/FUTURE_FIELD_ATLAS_GLOSSARY.md`](FUTURE_FIELD_ATLAS_GLOSSARY.md)
+10. [`docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md`](research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md)
+11. [`docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md`](research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md)
+12. [`docs/research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md`](research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md)
+13. [`docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`](research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
+14. [`docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md`](research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
+15. [`docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md`](research_notes/omega_theory/horizon_transport_aligned_amplification.md)
+16. [`docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md`](research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
+17. [`docs/research_notes/omega_theory/transition_energy_substrate_atlas.md`](research_notes/omega_theory/transition_energy_substrate_atlas.md)
 
 ## Current live branch
 
@@ -225,6 +227,39 @@ selection-operator calibration geometry behaved as expected, but the run also
 exposed that post-scan finalization dominates wall time: all scans finished by
 about 19 seconds, while final artifact construction completed at about 29.4
 minutes. The next scaling repair is finalization throughput, not more workers.
+```
+
+### Coupled Future Field Atlas infrastructure
+
+Result notes:
+
+- [`future_field_atlas_coupled_hardening_result.md`](research_notes/validation_results/future_field_atlas_coupled_hardening_result.md)
+- [`future_field_atlas_coupled_sharded_staged_sweep_result.md`](research_notes/validation_results/future_field_atlas_coupled_sharded_staged_sweep_result.md)
+
+Run summary:
+
+```text
+H64 pair2 status: COMPLETED
+joint_node_rows: 989903
+joint_edge_rows: 6427266
+internal_cap_events: 0
+artifact_completeness_statuses: complete
+audit status counts: PASS 3
+total_output_size: about 361.7 MB
+```
+
+Read:
+
+```text
+The coupled atlas infrastructure now has explicit product baseline,
+manifest-backed coupled operator identity, marginal readout,
+joint-versus-product residuals, completeness propagation, reconstruction
+audits, and sharded raw topology output. This is still infrastructure only:
+it does not claim interaction, compatibility, support, capture, erasure,
+agency, identity, value, valuerhood, or Omega.
+
+The next scaling repair is a lossless steady-state or repeated-block topology
+compressor before many-pair H64/H128 coupled runs.
 ```
 
 ### Hard top-m mechanism boundary-resolution sweep

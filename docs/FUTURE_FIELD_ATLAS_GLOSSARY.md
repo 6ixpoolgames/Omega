@@ -105,6 +105,14 @@ default is `sharded`: logical `frontier_nodes_by_horizon.csv` and
 `part-*.csv.gz` shard files. `consolidated` writes the older single-file form;
 `both` writes both layouts for compatibility checks.
 
+`raw_topology_shard_pair_count`
+: Coupled-runner shard parameter. It controls how many completed coupled pair
+scans are packed into each physical raw-topology shard. The default physical
+coupled layout is
+`coupled_joint_frontier_nodes_by_horizon_shards/part-*.csv.gz` and
+`coupled_joint_frontier_edges_by_step_shards/part-*.csv.gz`, with shard
+manifests preserving logical artifact identity and row counts.
+
 `finalization_timings_json`
 : Status/manifest field reporting coarse timings for row flattening, transport
 matrix construction, residual construction, audits, shard writes, and parallel
@@ -162,6 +170,13 @@ artifact's coupled geometry.
 : Coupled-branch artifact comparing product and coupled marginal sets. It must
 carry `projection_semantics = product_vs_coupled_marginal_set_delta` and
 `causal_interpretation = none`.
+
+`lossless_compressed`
+: Artifact-completeness status reserved for topology represented by a
+mathematically exact compressed form. For coupled scaling, the next likely use is
+a steady-state or repeated-block topology compressor that stores one repeated
+frontier/edge block plus the horizon interval it covers, while retaining
+reconstructibility of the logical per-horizon artifact.
 
 ## Historical Translation
 

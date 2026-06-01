@@ -49,11 +49,21 @@ Raw topology artifacts now default to sharded physical output:
 `frontier_nodes_by_horizon_shards/part-*.csv.gz` and
 `frontier_edges_by_step_shards/part-*.csv.gz`, with shard manifests preserving
 row counts and physical file identities.
+The coupled atlas runner now follows the same posture for high-volume joint
+topology: `coupled_joint_frontier_nodes_by_horizon_shards/part-*.csv.gz` and
+`coupled_joint_frontier_edges_by_step_shards/part-*.csv.gz` are the default
+physical layout, with shard manifests preserving logical artifact identity.
 The medium H128 calibration pass completed cleanly with 128 / 128 scans,
 complete artifacts, and passing reconstruction audits. It also showed that the
 next scaling bottleneck is post-scan finalization: worker scans finished in
 about 19 seconds, while artifact construction and writing dominated the
 29.4-minute wall time.
+The coupled sharded staged sweep completed bounded H64 pair2 cleanly with no
+caps, complete topology-derived artifacts, all reconstruction audits passing,
+and about 361.7 MB compressed output. The next coupled scaling repair should be
+a lossless steady-state or repeated-block topology compressor before many-pair
+H64/H128 runs, because late-horizon frontiers can stabilize while full raw
+step-edge topology is still re-emitted.
 ```
 
 Terminology rule:
@@ -78,6 +88,7 @@ Primary current design note:
 - `docs/research_notes/validation_results/future_field_atlas_transport_mode_timing_result.md`
 - `docs/research_notes/validation_results/future_field_atlas_coupled_probe_result.md`
 - `docs/research_notes/validation_results/future_field_atlas_coupled_hardening_result.md`
+- `docs/research_notes/validation_results/future_field_atlas_coupled_sharded_staged_sweep_result.md`
 - `docs/RFS_MB0_TOP_M_MECHANISM_AUDIT_SPEC.md`
 - `docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md`
 - `docs/RFS_MB0_TOP_M_GEOMETRY_AUDIT_SPEC.md`
