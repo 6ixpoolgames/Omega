@@ -9,6 +9,39 @@ when a run or decision changes the project state.
 
 ## 2026-06-01
 
+### Worker-Spool Scale Validation
+
+Validated `worker_spool` beyond smoke scale:
+
+```text
+H64 pair2 equivalence:
+  exact logical row match with prior sharded baseline
+  finalization_seconds: 0.102
+
+H64 pair8 breadth:
+  status: COMPLETED
+  edge rows: 22127782
+  elapsed_seconds: 372.369
+  finalization_seconds: 0.561
+
+H128 pair4 retry:
+  status: COMPLETED
+  edge rows: 28945038
+  elapsed_seconds: 960.732
+  finalization_seconds: 0.317
+
+H128 pair8 breadth:
+  status: COMPLETED
+  edge rows: 46568294
+  elapsed_seconds: 1226.621
+  finalization_seconds: 0.644
+```
+
+All scale runs completed with zero pair failures, zero internal caps, complete
+artifact status, and reconstruction audits `PASS 3`. This validates the spool
+path as the coupled default for medium and larger raw-topology runs. Remaining
+pressure is output retention and summarization, not parent-process IPC.
+
 ### Coupled Worker-Side Spooling
 
 Added coupled runner output mode:

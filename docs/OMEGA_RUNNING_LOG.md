@@ -9,6 +9,61 @@ patch notes at the top.
 
 ## 2026-06-01
 
+### Future Field Atlas Coupled Worker-Spool Scale Validation
+
+Validated worker-side spooling across H64/H128 coupled breadth and depth runs:
+
+```text
+H64 pair2 equivalence:
+  status: COMPLETED
+  edge rows: 6427266
+  node rows: 989903
+  audits: PASS 3
+  finalization_seconds: 0.102
+  logical rows matched prior sharded baseline exactly
+
+H64 pair8 breadth:
+  status: COMPLETED
+  edge rows: 22127782
+  node rows: 3231039
+  audits: PASS 3
+  finalization_seconds: 0.561
+  elapsed_seconds: 372.369
+  output size: 1295150487 bytes
+
+H128 pair4 retry:
+  status: COMPLETED
+  edge rows: 28945038
+  node rows: 4426138
+  audits: PASS 3
+  finalization_seconds: 0.317
+  elapsed_seconds: 960.732
+  output size: 1706908962 bytes
+
+H128 pair8 breadth:
+  status: COMPLETED
+  edge rows: 46568294
+  node rows: 6757727
+  audits: PASS 3
+  finalization_seconds: 0.644
+  elapsed_seconds: 1226.621
+  output size: 2724341761 bytes
+```
+
+Read:
+
+```text
+Worker-side spooling fixes the H128 Windows IPC failure and makes parent
+finalization negligible. It does not reduce raw topology volume. The next
+scaling problem is retention policy and compact summarization, not IPC.
+```
+
+Retained note:
+
+```text
+docs/research_notes/validation_results/future_field_atlas_coupled_worker_spool_scale_validation_result.md
+```
+
 ### Future Field Atlas Coupled Worker-Side Spooling
 
 Implemented the first data-plane repair for H128 coupled scaling:
