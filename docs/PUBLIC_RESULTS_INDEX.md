@@ -41,16 +41,17 @@ Start here:
 7. [`docs/research_notes/validation_results/future_field_atlas_coupled_hardening_result.md`](research_notes/validation_results/future_field_atlas_coupled_hardening_result.md)
 8. [`docs/research_notes/validation_results/future_field_atlas_coupled_sharded_staged_sweep_result.md`](research_notes/validation_results/future_field_atlas_coupled_sharded_staged_sweep_result.md)
 9. [`docs/research_notes/validation_results/future_field_atlas_coupled_lossless_block_audit_result.md`](research_notes/validation_results/future_field_atlas_coupled_lossless_block_audit_result.md)
-10. [`docs/research_notes/validation_results/future_field_atlas_coupled_h128_and_triadic_profile_smoke_result.md`](research_notes/validation_results/future_field_atlas_coupled_h128_and_triadic_profile_smoke_result.md)
-11. [`docs/FUTURE_FIELD_ATLAS_GLOSSARY.md`](FUTURE_FIELD_ATLAS_GLOSSARY.md)
-12. [`docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md`](research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md)
-13. [`docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md`](research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md)
-14. [`docs/research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md`](research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md)
-15. [`docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`](research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
-16. [`docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md`](research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
-17. [`docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md`](research_notes/omega_theory/horizon_transport_aligned_amplification.md)
-18. [`docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md`](research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
-19. [`docs/research_notes/omega_theory/transition_energy_substrate_atlas.md`](research_notes/omega_theory/transition_energy_substrate_atlas.md)
+10. [`docs/research_notes/validation_results/future_field_atlas_coupled_h64_broad_sweep_result.md`](research_notes/validation_results/future_field_atlas_coupled_h64_broad_sweep_result.md)
+11. [`docs/research_notes/validation_results/future_field_atlas_coupled_h128_and_triadic_profile_smoke_result.md`](research_notes/validation_results/future_field_atlas_coupled_h128_and_triadic_profile_smoke_result.md)
+12. [`docs/FUTURE_FIELD_ATLAS_GLOSSARY.md`](FUTURE_FIELD_ATLAS_GLOSSARY.md)
+13. [`docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md`](research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md)
+14. [`docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md`](research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md)
+15. [`docs/research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md`](research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md)
+16. [`docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`](research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
+17. [`docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md`](research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
+18. [`docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md`](research_notes/omega_theory/horizon_transport_aligned_amplification.md)
+19. [`docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md`](research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
+20. [`docs/research_notes/omega_theory/transition_energy_substrate_atlas.md`](research_notes/omega_theory/transition_energy_substrate_atlas.md)
 
 ## Current live branch
 
@@ -266,6 +267,35 @@ H32 pair2: frontier counts stabilized, but raw state/edge identities continued
 changing. Keep sharded output as the coupled default. If storage becomes
 limiting, the next plausible repair is dictionary/factorized topology or exact
 delta topology with reconstruction tests.
+```
+
+### Coupled H64 broad sweep
+
+Result note:
+
+- [`future_field_atlas_coupled_h64_broad_sweep_result.md`](research_notes/validation_results/future_field_atlas_coupled_h64_broad_sweep_result.md)
+
+Run summary:
+
+```text
+status: COMPLETED
+horizon_max: 64
+coupled_pairs_completed: 8 / 8
+coupled_pairs_failed: 0
+joint_node_rows: 3231039
+joint_edge_rows: 22127782
+internal_cap_events: 0
+audits: PASS 3
+total_output_size: about 1.21 GiB
+```
+
+Read:
+
+```text
+H64 pair8 is the current breadth baseline. It completed cleanly and remained
+interpretable, but output was highly skewed: three heavy pairs accounted for
+most rows and most storage. This supports H64 breadth plus selected H128 serial
+depth checks until worker-side spooling is implemented.
 ```
 
 ### Coupled H128 depth and triadic profile smoke

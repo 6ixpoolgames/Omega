@@ -9,6 +9,48 @@ patch notes at the top.
 
 ## 2026-06-01
 
+### Future Field Atlas Coupled H64 Broad Sweep
+
+Ran the missing broad H64 coupled breadth gate after the H128 depth pass.
+
+Retained note:
+
+- `docs/research_notes/validation_results/future_field_atlas_coupled_h64_broad_sweep_result.md`
+
+Readout:
+
+```text
+horizon_max: 64
+pair_count: 8
+workers: 4
+status: COMPLETED
+elapsed_seconds: 1182.177
+coupled_pairs_completed: 8 / 8
+coupled_pairs_failed: 0
+joint_node_rows: 3231039
+joint_edge_rows: 22127782
+internal_cap_events: 0
+artifact_completeness_statuses: complete
+audit status counts: PASS 3
+medium_sweep_interpretation_allowed: 1
+total_output_size: about 1.21 GiB
+```
+
+Read:
+
+```text
+Broad H64 is clean and operationally manageable at pair8. The output is highly
+skewed: three heavy pairs account for most of the 22.1M edge rows and most of
+the compressed output. Finalization/write-out still dominates wall time.
+```
+
+Next:
+
+```text
+Use H64 pair8 as the current breadth baseline. For broader H64 or any broad
+H128, add worker-side spooling or pair-indexed heavy-pair handling.
+```
+
 ### Future Field Atlas H128 Coupled Depth Gate And Triadic Profile Smoke
 
 Ran a bounded H128 coupled depth gate and a short three-frontier profile-only

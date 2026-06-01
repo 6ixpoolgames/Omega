@@ -65,14 +65,16 @@ more careful than a simple steady-state compressor: the exact repeated-block
 audit found that counts stabilize but raw state/edge identities do not repeat.
 Keep sharded output as the coupled default. If storage becomes limiting, prefer
 dictionary/factorized topology or exact delta topology with reconstruction
-tests before many-pair H64/H128 runs. A subsequent H128 coupled pair2 serial
-depth gate completed cleanly with about 0.746 GiB of compressed output and no
-caps, while a H128 pair4 parallel attempt failed on two heavy pairs through a
-Windows multiprocessing result-transfer limit. Before broad H128 coupled
-surveys, add worker-side spooling or pair-indexed heavy-pair handling. A short
-three-frontier H6 smoke now exists as a profile-only interface probe; it does
-not emit raw triadic topology and should not be treated as a coupled science
-result.
+tests before many-pair H64/H128 runs. A subsequent broad H64 pair8 sweep
+completed cleanly with no caps, all reconstruction audits passing, and about
+1.21 GiB of compressed output, but confirmed severe heavy-pair skew and
+write-out dominance. The H128 coupled pair2 serial depth gate completed cleanly
+with about 0.746 GiB of compressed output and no caps, while a H128 pair4
+parallel attempt failed on two heavy pairs through a Windows multiprocessing
+result-transfer limit. Before broad H128 coupled surveys, add worker-side
+spooling or pair-indexed heavy-pair handling. A short three-frontier H6 smoke
+now exists as a profile-only interface probe; it does not emit raw triadic
+topology and should not be treated as a coupled science result.
 ```
 
 Terminology rule:
@@ -99,6 +101,7 @@ Primary current design note:
 - `docs/research_notes/validation_results/future_field_atlas_coupled_hardening_result.md`
 - `docs/research_notes/validation_results/future_field_atlas_coupled_sharded_staged_sweep_result.md`
 - `docs/research_notes/validation_results/future_field_atlas_coupled_lossless_block_audit_result.md`
+- `docs/research_notes/validation_results/future_field_atlas_coupled_h64_broad_sweep_result.md`
 - `docs/research_notes/validation_results/future_field_atlas_coupled_h128_and_triadic_profile_smoke_result.md`
 - `docs/RFS_MB0_TOP_M_MECHANISM_AUDIT_SPEC.md`
 - `docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md`
