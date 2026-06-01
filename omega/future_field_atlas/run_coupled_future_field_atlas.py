@@ -9,7 +9,14 @@ from concurrent.futures import FIRST_COMPLETED, ProcessPoolExecutor, wait
 from pathlib import Path
 
 from .contracts import instrument_metadata, spec_digest
-from .coupled import CoupledProbeResult, CoupledProbeTask, scan_coupled_probe
+from .coupled import (
+    CoupledProbeResult,
+    CoupledProbeTask,
+    build_coupled_operator_spec,
+    coupled_operator_canonical_json,
+    coupled_operator_digest,
+    scan_coupled_probe,
+)
 from .generator import build_generated_conditions, select_start_states
 from .util import csv_row_count, safe_token, utc_now, write_csv, write_json
 
@@ -19,6 +26,8 @@ COUPLED_CLAIM_BOUNDARY = (
     "coupled infrastructure probe only: scans product and coupled future-field topology; "
     "no Omega, agency, identity, valuerhood, value, candidate-promotion, holdout, or causal claim"
 )
+CONDITION_PAIRING_POLICY = "index_matched"
+START_PAIRING_POLICY = "zip_selected_starts"
 
 
 def parse_args() -> argparse.Namespace:
@@ -69,6 +78,8 @@ def main() -> None:
         **vars(args),
         "horizon_schedule_resolved": list(horizon_schedule),
         "macro_invariant_betas": list(macro_betas),
+        "condition_pairing_policy": CONDITION_PAIRING_POLICY,
+        "start_pairing_policy": START_PAIRING_POLICY,
     }
     write_json(args.out / "coupled_future_field_atlas_run_config.json", config)
     conditions_a = build_generated_conditions(
@@ -98,6 +109,10 @@ def main() -> None:
         "out_dir": str(args.out),
         "field_A_conditions": len(conditions_a),
         "field_B_conditions": len(conditions_b),
+        "condition_pairing_policy": CONDITION_PAIRING_POLICY,
+        "start_pairing_policy": START_PAIRING_POLICY,
+        "pair_count_requested": args.pair_count,
+        "pair_count_realized": len(tasks),
         "coupled_pairs_requested": len(tasks),
         "coupled_pairs_submitted": 0,
         "coupled_pairs_completed": 0,
@@ -117,6 +132,11 @@ def build_coupled_tasks(
 ) -> list[CoupledProbeTask]:
     tasks: list[CoupledProbeTask] = []
     pair_limit = min(max(1, args.pair_count), len(conditions_a), len(conditions_b))
+    coupled_operator = build_coupled_operator_spec(
+        joint_selection_family=args.joint_selection_family,
+        joint_effective_out_degree=max(1, args.joint_effective_out_degree),
+        coupling_strength=float(args.coupling_strength),
+    )
     for pair_index in range(pair_limit):
         field_a = conditions_a[pair_index]
         field_b = conditions_b[pair_index]
@@ -140,6 +160,7 @@ def build_coupled_tasks(
                     joint_selection_family=args.joint_selection_family,
                     joint_effective_out_degree=max(1, args.joint_effective_out_degree),
                     coupling_strength=float(args.coupling_strength),
+                    coupled_operator=coupled_operator,
                     max_joint_frontier_nodes_per_horizon=max(1, args.max_joint_frontier_nodes_per_horizon),
                     max_joint_edges_per_step=max(1, args.max_joint_edges_per_step),
                     max_internal_joint_frontier_states=max(1, args.max_internal_joint_frontier_states),
@@ -253,21 +274,24 @@ def write_outputs(
     profile_rows = [row for result in results for row in result.profile_rows]
     marginal_rows = [row for result in results for row in result.marginal_rows]
     residual_rows = [row for result in results for row in result.residual_rows]
-    cross_projection_rows = [row for result in results for row in result.cross_projection_rows]
+    marginal_projection_rows = [row for result in results for row in result.marginal_projection_rows]
     internal_cap_rows = [row for result in results for row in result.internal_cap_rows]
     condition_manifest = coupled_condition_manifest_rows(tasks)
     scan_manifest = coupled_scan_manifest_rows(tasks)
+    coupled_operator_manifest = coupled_operator_manifest_rows(tasks)
     completeness_rows = artifact_completeness_rows(
         node_rows,
         edge_rows,
         profile_rows,
         marginal_rows,
         residual_rows,
-        cross_projection_rows,
+        marginal_projection_rows,
         internal_cap_rows,
     )
     reconstruction_rows = reconstruction_audit_rows(node_rows, profile_rows, marginal_rows, residual_rows)
+    readiness_rows = medium_scale_readiness_rows(completeness_rows, reconstruction_rows, internal_cap_rows)
     csv_jobs = [
+        ("coupled_operator_manifest.csv", coupled_operator_manifest),
         ("coupled_condition_manifest.csv", condition_manifest),
         ("coupled_scan_manifest.csv", scan_manifest),
         ("coupled_joint_frontier_nodes_by_horizon.csv", node_rows),
@@ -275,10 +299,11 @@ def write_outputs(
         ("coupled_joint_frontier_profile_by_horizon.csv", profile_rows),
         ("coupled_marginal_retention_by_horizon.csv", marginal_rows),
         ("coupled_joint_vs_product_residual_by_horizon.csv", residual_rows),
-        ("coupled_cross_projection_delta_by_horizon.csv", cross_projection_rows),
+        ("coupled_marginal_projection_delta_by_horizon.csv", marginal_projection_rows),
         ("coupled_internal_frontier_cap_events.csv", internal_cap_rows),
         ("coupled_reconstruction_audit_summary.csv", reconstruction_rows),
         ("coupled_artifact_completeness_summary.csv", completeness_rows),
+        ("coupled_medium_scale_readiness_summary.csv", readiness_rows),
     ]
     for logical_name, rows in csv_jobs:
         write_csv_artifact(args.out, logical_name, rows, args.csv_output_mode, args.gzip_compresslevel)
@@ -289,10 +314,16 @@ def write_outputs(
     status["profile_rows"] = len(profile_rows)
     status["marginal_rows"] = len(marginal_rows)
     status["residual_rows"] = len(residual_rows)
-    status["cross_projection_rows"] = len(cross_projection_rows)
+    status["marginal_projection_rows"] = len(marginal_projection_rows)
     status["internal_cap_events"] = len(internal_cap_rows)
-    status["reconstruction_audit_passed"] = int(all(row.get("status") == "PASS" for row in reconstruction_rows))
+    status["reconstruction_audit_clean_pass"] = int(all(row.get("status") == "PASS" for row in reconstruction_rows))
+    status["reconstruction_audit_interpretable_pass"] = int(
+        all(row.get("status") in {"PASS", "PASS_WITH_SKIPS"} for row in reconstruction_rows)
+    )
+    status["reconstruction_audit_passed"] = status["reconstruction_audit_clean_pass"]
     status["artifact_completeness_statuses"] = ",".join(sorted({str(row["artifact_status"]) for row in completeness_rows}))
+    status["audit_status_counts_json"] = audit_status_counts(reconstruction_rows)
+    status["medium_sweep_interpretation_allowed"] = readiness_rows[0]["medium_sweep_interpretation_allowed"] if readiness_rows else 0
     status["csv_output_mode"] = args.csv_output_mode
     status["gzip_compresslevel"] = args.gzip_compresslevel
     status["finalization_seconds"] = round(time.perf_counter() - finalization_started, 3)
@@ -315,6 +346,12 @@ def write_outputs(
         "completed_utc": status.get("completed_utc"),
         "horizon_max": args.horizon_max,
         "horizon_schedule": parse_horizon_schedule(args.horizon_schedule, args.horizon_max),
+        "condition_pairing_policy": CONDITION_PAIRING_POLICY,
+        "start_pairing_policy": START_PAIRING_POLICY,
+        "pair_count_requested": args.pair_count,
+        "pair_count_realized": len(tasks),
+        "field_A_condition_count": len({task.field_a.spec.condition_id for task in tasks}),
+        "field_B_condition_count": len({task.field_b.spec.condition_id for task in tasks}),
         "joint_selection_family": args.joint_selection_family,
         "joint_effective_out_degree": args.joint_effective_out_degree,
         "coupling_strength": args.coupling_strength,
@@ -328,7 +365,7 @@ def write_outputs(
         ],
     }
     write_json(args.out / "coupled_future_field_atlas_manifest.json", manifest)
-    write_report(args.out, status, reconstruction_rows, completeness_rows)
+    write_report(args.out, status, reconstruction_rows, completeness_rows, readiness_rows)
 
 
 def coupled_condition_manifest_rows(tasks: list[CoupledProbeTask]) -> list[dict[str, object]]:
@@ -340,6 +377,8 @@ def coupled_condition_manifest_rows(tasks: list[CoupledProbeTask]) -> list[dict[
         seen.add(task.pair_id)
         rows.append({
             "pair_id": task.pair_id,
+            "condition_pairing_policy": CONDITION_PAIRING_POLICY,
+            "start_pairing_policy": START_PAIRING_POLICY,
             "A_condition_id": task.field_a.spec.condition_id,
             "B_condition_id": task.field_b.spec.condition_id,
             "A_state_space_id": task.field_a.spec.state_space.state_space_id,
@@ -350,6 +389,10 @@ def coupled_condition_manifest_rows(tasks: list[CoupledProbeTask]) -> list[dict[
             "B_selection_operator_id": task.field_b.spec.selection_operator.selection_operator_id,
             "A_condition_digest": spec_digest(task.field_a.spec),
             "B_condition_digest": spec_digest(task.field_b.spec),
+            "coupled_operator_id": task.coupled_operator.coupled_operator_id,
+            "coupled_operator_family": task.coupled_operator.coupled_operator_family,
+            "coupled_operator_digest": coupled_operator_digest(task.coupled_operator),
+            "coupled_operator_canonical_json": coupled_operator_canonical_json(task.coupled_operator),
             "joint_selection_family": task.joint_selection_family,
             "joint_effective_out_degree": task.joint_effective_out_degree,
             "coupling_strength": task.coupling_strength,
@@ -358,10 +401,40 @@ def coupled_condition_manifest_rows(tasks: list[CoupledProbeTask]) -> list[dict[
     return rows
 
 
+def coupled_operator_manifest_rows(tasks: list[CoupledProbeTask]) -> list[dict[str, object]]:
+    rows: list[dict[str, object]] = []
+    seen: set[str] = set()
+    for task in tasks:
+        spec = task.coupled_operator
+        if spec.coupled_operator_id in seen:
+            continue
+        seen.add(spec.coupled_operator_id)
+        rows.append({
+            "spec_type": "coupled_operator",
+            "coupled_operator_id": spec.coupled_operator_id,
+            "coupled_operator_family": spec.coupled_operator_family,
+            "coupled_operator_digest": coupled_operator_digest(spec),
+            "product_baseline_definition": spec.product_baseline_definition,
+            "joint_candidate_set_definition": spec.joint_candidate_set_definition,
+            "joint_energy_function_id": spec.joint_energy_function_id,
+            "joint_energy_params_json": spec.joint_energy_params_json,
+            "coupling_term_id": spec.coupling_term_id,
+            "coupling_strength": spec.coupling_strength,
+            "joint_selection_family": spec.joint_selection_family,
+            "joint_effective_out_degree": spec.joint_effective_out_degree,
+            "stochastic_flag": spec.stochastic_flag,
+            "seed_policy": spec.seed_policy,
+            "canonical_json": coupled_operator_canonical_json(spec),
+        })
+    return sorted(rows, key=lambda row: str(row["coupled_operator_id"]))
+
+
 def coupled_scan_manifest_rows(tasks: list[CoupledProbeTask]) -> list[dict[str, object]]:
     return [
         {
             "pair_id": task.pair_id,
+            "condition_pairing_policy": CONDITION_PAIRING_POLICY,
+            "start_pairing_policy": START_PAIRING_POLICY,
             "A_condition_id": task.field_a.spec.condition_id,
             "B_condition_id": task.field_b.spec.condition_id,
             "start_index": task.start_index,
@@ -371,6 +444,8 @@ def coupled_scan_manifest_rows(tasks: list[CoupledProbeTask]) -> list[dict[str, 
             "horizon_schedule": ";".join(str(value) for value in task.horizon_schedule),
             "joint_selection_family": task.joint_selection_family,
             "joint_effective_out_degree": task.joint_effective_out_degree,
+            "coupled_operator_id": task.coupled_operator.coupled_operator_id,
+            "coupled_operator_digest": coupled_operator_digest(task.coupled_operator),
             "coupling_strength": task.coupling_strength,
         }
         for task in tasks
@@ -507,13 +582,77 @@ def nodes_by_pair_mode_horizon(
 
 
 def audit_result(audit_name: str, checked: int, failed: int, skipped: int) -> dict[str, object]:
+    if failed > 0:
+        status = "FAIL"
+    elif checked == 0 and skipped > 0:
+        status = "NO_COMPLETE_ROWS"
+    elif skipped > 0:
+        status = "PASS_WITH_SKIPS"
+    else:
+        status = "PASS"
     return {
         "audit_name": audit_name,
-        "status": "PASS" if failed == 0 else "FAIL",
+        "status": status,
         "checked_items": checked,
         "failed_items": failed,
         "skipped_items": skipped,
     }
+
+
+def audit_status_counts(reconstruction_rows: list[dict[str, object]]) -> dict[str, int]:
+    counts = {"PASS": 0, "PASS_WITH_SKIPS": 0, "NO_COMPLETE_ROWS": 0, "FAIL": 0}
+    for row in reconstruction_rows:
+        status = str(row.get("status", ""))
+        if status not in counts:
+            counts[status] = 0
+        counts[status] += 1
+    return counts
+
+
+def medium_scale_readiness_rows(
+    completeness_rows: list[dict[str, object]],
+    reconstruction_rows: list[dict[str, object]],
+    internal_cap_rows: list[dict[str, object]],
+) -> list[dict[str, object]]:
+    artifact_counts: dict[str, int] = {"complete": 0, "sampled": 0, "truncated_noninterpretable": 0}
+    for row in completeness_rows:
+        status = str(row.get("artifact_status", ""))
+        artifact_counts[status] = artifact_counts.get(status, 0) + int(row.get("row_count", 0) or 0)
+    audit_counts = audit_status_counts(reconstruction_rows)
+    primary_comparison_no_complete = any(
+        row.get("status") == "NO_COMPLETE_ROWS"
+        for row in reconstruction_rows
+        if row.get("audit_name") in {
+            "coupled_marginal_retention_reconstructs_from_node_rows",
+            "coupled_joint_residual_reconstructs_from_node_rows",
+        }
+    )
+    has_fail = audit_counts.get("FAIL", 0) > 0
+    has_skips = audit_counts.get("PASS_WITH_SKIPS", 0) > 0
+    interpretation_allowed = int(not has_fail and not primary_comparison_no_complete and not internal_cap_rows)
+    if primary_comparison_no_complete:
+        recommendation = "do_not_interpret_coupled_geometry_no_complete_primary_comparison_rows"
+    elif has_fail:
+        recommendation = "repair_failed_reconstruction_audits_before_medium_sweep"
+    elif internal_cap_rows:
+        recommendation = "medium_sweep_allowed_only_as_operational_probe_or_after_cap_limit_adjustment"
+    elif has_skips:
+        recommendation = "interpret_complete_rows_only"
+    else:
+        recommendation = "medium_sweep_infrastructure_ready"
+    return [{
+        "complete_rows": artifact_counts.get("complete", 0),
+        "sampled_rows": artifact_counts.get("sampled", 0),
+        "truncated_noninterpretable_rows": artifact_counts.get("truncated_noninterpretable", 0),
+        "internal_cap_events": len(internal_cap_rows),
+        "audits_PASS": audit_counts.get("PASS", 0),
+        "audits_PASS_WITH_SKIPS": audit_counts.get("PASS_WITH_SKIPS", 0),
+        "audits_NO_COMPLETE_ROWS": audit_counts.get("NO_COMPLETE_ROWS", 0),
+        "audits_FAIL": audit_counts.get("FAIL", 0),
+        "medium_sweep_interpretation_allowed": interpretation_allowed,
+        "interpretation_scope": "complete_rows_only" if has_skips else "all_primary_rows_complete",
+        "recommendation": recommendation,
+    }]
 
 
 def artifact_completeness_rows(
@@ -522,7 +661,7 @@ def artifact_completeness_rows(
     profile_rows: list[dict[str, object]],
     marginal_rows: list[dict[str, object]],
     residual_rows: list[dict[str, object]],
-    cross_projection_rows: list[dict[str, object]],
+    marginal_projection_rows: list[dict[str, object]],
     internal_cap_rows: list[dict[str, object]],
 ) -> list[dict[str, object]]:
     rows: list[dict[str, object]] = []
@@ -532,7 +671,7 @@ def artifact_completeness_rows(
         ("coupled_joint_frontier_profile_by_horizon.csv", profile_rows, "feature_status"),
         ("coupled_marginal_retention_by_horizon.csv", marginal_rows, "feature_status"),
         ("coupled_joint_vs_product_residual_by_horizon.csv", residual_rows, "feature_status"),
-        ("coupled_cross_projection_delta_by_horizon.csv", cross_projection_rows, "feature_status"),
+        ("coupled_marginal_projection_delta_by_horizon.csv", marginal_projection_rows, "feature_status"),
         ("coupled_internal_frontier_cap_events.csv", internal_cap_rows, "artifact_status"),
     ):
         counts: dict[str, int] = {}
@@ -569,7 +708,9 @@ def write_report(
     status: dict[str, object],
     reconstruction_rows: list[dict[str, object]],
     completeness_rows: list[dict[str, object]],
+    readiness_rows: list[dict[str, object]],
 ) -> None:
+    readiness = readiness_rows[0] if readiness_rows else {}
     lines = [
         "# Coupled Future Field Atlas Smoke",
         "",
@@ -589,6 +730,9 @@ def write_report(
         f"- Joint edge rows: `{status.get('joint_edge_rows', '')}`",
         f"- Internal cap events: `{status.get('internal_cap_events', '')}`",
         f"- Artifact completeness statuses: `{status.get('artifact_completeness_statuses', '')}`",
+        f"- Reconstruction clean pass: `{status.get('reconstruction_audit_clean_pass', '')}`",
+        f"- Reconstruction interpretable pass: `{status.get('reconstruction_audit_interpretable_pass', '')}`",
+        f"- Medium-sweep interpretation allowed: `{status.get('medium_sweep_interpretation_allowed', '')}`",
         "",
         "## Reconstruction Audits",
         "",
@@ -604,8 +748,16 @@ def write_report(
             for row in completeness_rows
         ],
         "",
+        "## Medium-Scale Readiness Guard",
+        "",
+        *[
+            f"- `{key}`: {value}"
+            for key, value in readiness.items()
+        ],
+        "",
         "## Primary Artifacts",
         "",
+        "- `coupled_operator_manifest.csv[.gz]`",
         "- `coupled_condition_manifest.csv[.gz]`",
         "- `coupled_scan_manifest.csv[.gz]`",
         "- `coupled_joint_frontier_nodes_by_horizon.csv[.gz]`",
@@ -613,9 +765,10 @@ def write_report(
         "- `coupled_joint_frontier_profile_by_horizon.csv[.gz]`",
         "- `coupled_marginal_retention_by_horizon.csv[.gz]`",
         "- `coupled_joint_vs_product_residual_by_horizon.csv[.gz]`",
-        "- `coupled_cross_projection_delta_by_horizon.csv[.gz]`",
+        "- `coupled_marginal_projection_delta_by_horizon.csv[.gz]`",
         "- `coupled_reconstruction_audit_summary.csv[.gz]`",
         "- `coupled_artifact_completeness_summary.csv[.gz]`",
+        "- `coupled_medium_scale_readiness_summary.csv[.gz]`",
     ]
     (out_dir / "coupled_future_field_atlas_report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 

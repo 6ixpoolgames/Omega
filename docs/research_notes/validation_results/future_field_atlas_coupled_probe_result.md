@@ -3,6 +3,12 @@
 Status: coupled infrastructure probe completed  
 Runner: `omega.future_field_atlas.run_coupled_future_field_atlas`
 
+Superseded operationally by:
+
+```text
+docs/research_notes/validation_results/future_field_atlas_coupled_hardening_result.md
+```
+
 ## Summary
 
 This was a coupled Future Field Atlas infrastructure probe, not a science run.

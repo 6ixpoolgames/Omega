@@ -9,6 +9,74 @@ patch notes at the top.
 
 ## 2026-06-01
 
+### Future Field Atlas Coupled Hardening
+
+Implemented coupled-runner infrastructure hardening before any medium coupled
+sweep.
+
+Retained note:
+
+- `docs/research_notes/validation_results/future_field_atlas_coupled_hardening_result.md`
+
+Repair contents:
+
+```text
+persistent cap poisoning
+audit statuses: PASS, PASS_WITH_SKIPS, NO_COMPLETE_ROWS, FAIL
+run-level reconstruction_audit_clean_pass and reconstruction_audit_interpretable_pass
+first-class coupled_operator_manifest.csv.gz
+pairing policy manifest fields
+renamed marginal projection artifact:
+  coupled_marginal_projection_delta_by_horizon.csv.gz
+projection_semantics: product_vs_coupled_marginal_set_delta
+causal_interpretation: none
+medium-scale readiness guard
+```
+
+Unit tests:
+
+```text
+tests/test_coupled_atlas_hardening.py
+5 passed
+```
+
+Forced low-cap H16 pair2:
+
+```text
+status: COMPLETED
+elapsed_seconds: 0.322
+internal_cap_events: 64
+artifact_completeness_statuses: complete,truncated_noninterpretable
+audit status counts: PASS_WITH_SKIPS 3
+reconstruction_audit_clean_pass: 0
+reconstruction_audit_interpretable_pass: 1
+medium_sweep_interpretation_allowed: 0
+```
+
+High-limit complete H16 pair2:
+
+```text
+status: COMPLETED
+elapsed_seconds: 55.696
+joint_node_rows: 173279
+joint_edge_rows: 1069650
+artifact_completeness_statuses: complete
+audit status counts: PASS 3
+reconstruction_audit_clean_pass: 1
+reconstruction_audit_interpretable_pass: 1
+medium_sweep_interpretation_allowed: 1
+output: about 63.3 MB
+```
+
+Read:
+
+```text
+The coupled infrastructure is now hardened enough for a medium infrastructure
+sweep. The next engineering risk is output growth: before many-pair H64/H128,
+add sharded coupled raw topology or run explicitly bounded high-limit complete
+designs.
+```
+
 ### Future Field Atlas Coupled Probe
 
 Implemented and smoked the first clean coupled Future Field Atlas infrastructure

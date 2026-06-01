@@ -138,6 +138,31 @@ baseline joint support. It is a topology residual, not an interpretive label.
 : Coupled-branch feature reporting how much A and B marginal support remains in
 the coupled joint frontier relative to the product baseline.
 
+`CoupledOperatorSpec`
+: First-class formal identity for the current coupled probe operator. It records
+the product baseline definition, joint candidate set, joint energy function,
+coupling term, coupling strength, joint selection family, effective out-degree,
+stochastic flag, seed policy, canonical JSON, and stable digest.
+
+`cap_poisoned_flag`
+: Coupled-branch completeness flag. Once a product or coupled frontier is
+internally capped, all later descendants from that mode are poisoned and must be
+treated as `truncated_noninterpretable`.
+
+`PASS_WITH_SKIPS`
+: Reconstruction audit status meaning at least one complete row was checked,
+zero checked rows failed, and at least one non-complete row was skipped.
+
+`NO_COMPLETE_ROWS`
+: Reconstruction audit status meaning all candidate rows were skipped because
+none were complete. This is not a clean pass and blocks interpretation of that
+artifact's coupled geometry.
+
+`coupled_marginal_projection_delta_by_horizon.csv`
+: Coupled-branch artifact comparing product and coupled marginal sets. It must
+carry `projection_semantics = product_vs_coupled_marginal_set_delta` and
+`causal_interpretation = none`.
+
 ## Historical Translation
 
 These names appeared in old notes and early smoke outputs. They should be read

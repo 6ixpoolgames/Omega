@@ -5,10 +5,26 @@ from dataclasses import dataclass
 from omega.rfs_mb0_future_landscape.substrate import State
 
 from .contracts import GeneratedCondition
-from .util import stable_hash, state_id
+from .util import canonical_json, stable_hash, state_id
 
 
 JointState = tuple[State, State]
+
+
+@dataclass(frozen=True)
+class CoupledOperatorSpec:
+    coupled_operator_id: str
+    coupled_operator_family: str
+    product_baseline_definition: str
+    joint_candidate_set_definition: str
+    joint_energy_function_id: str
+    joint_energy_params_json: str
+    coupling_term_id: str
+    coupling_strength: float
+    joint_selection_family: str
+    joint_effective_out_degree: int
+    stochastic_flag: int
+    seed_policy: str
 
 
 @dataclass(frozen=True)
@@ -24,6 +40,7 @@ class CoupledProbeTask:
     joint_selection_family: str
     joint_effective_out_degree: int
     coupling_strength: float
+    coupled_operator: CoupledOperatorSpec
     max_joint_frontier_nodes_per_horizon: int
     max_joint_edges_per_step: int
     max_internal_joint_frontier_states: int
@@ -37,7 +54,7 @@ class CoupledProbeResult:
     profile_rows: list[dict[str, object]]
     marginal_rows: list[dict[str, object]]
     residual_rows: list[dict[str, object]]
-    cross_projection_rows: list[dict[str, object]]
+    marginal_projection_rows: list[dict[str, object]]
     internal_cap_rows: list[dict[str, object]]
 
 
@@ -67,12 +84,12 @@ def scan_coupled_probe(task: CoupledProbeTask) -> CoupledProbeResult:
     profile_rows: list[dict[str, object]] = []
     marginal_rows: list[dict[str, object]] = []
     residual_rows: list[dict[str, object]] = []
-    cross_projection_rows: list[dict[str, object]] = []
+    marginal_projection_rows: list[dict[str, object]] = []
     internal_cap_rows: list[dict[str, object]] = []
     product_current = frozenset({(task.start_a, task.start_b)})
     coupled_current = frozenset({(task.start_a, task.start_b)})
-    product_internal_capped: dict[int, int] = {}
-    coupled_internal_capped: dict[int, int] = {}
+    product_cap_poisoned = 0
+    coupled_cap_poisoned = 0
     for horizon in range(task.horizon_max + 1):
         product_frontiers[horizon] = product_current
         coupled_frontiers[horizon] = coupled_current
@@ -81,24 +98,24 @@ def scan_coupled_probe(task: CoupledProbeTask) -> CoupledProbeResult:
                 task,
                 product_current,
                 coupled_current,
-                product_internal_capped.get(horizon, 0),
-                coupled_internal_capped.get(horizon, 0),
+                product_cap_poisoned,
+                coupled_cap_poisoned,
             )
-            node_rows.extend(node_rows_for_frontier(task, "product_baseline", horizon, product_current, product_internal_capped.get(horizon, 0)))
-            node_rows.extend(node_rows_for_frontier(task, "coupled", horizon, coupled_current, coupled_internal_capped.get(horizon, 0)))
-            profile_rows.append(profile_row(task, "product_baseline", horizon, product_current, product_edges_by_step.get(horizon, tuple()), product_internal_capped.get(horizon, 0)))
-            profile_rows.append(profile_row(task, "coupled", horizon, coupled_current, coupled_edges_by_step.get(horizon, tuple()), coupled_internal_capped.get(horizon, 0)))
+            node_rows.extend(node_rows_for_frontier(task, "product_baseline", horizon, product_current, product_cap_poisoned))
+            node_rows.extend(node_rows_for_frontier(task, "coupled", horizon, coupled_current, coupled_cap_poisoned))
+            profile_rows.append(profile_row(task, "product_baseline", horizon, product_current, product_edges_by_step.get(horizon, tuple()), product_cap_poisoned))
+            profile_rows.append(profile_row(task, "coupled", horizon, coupled_current, coupled_edges_by_step.get(horizon, tuple()), coupled_cap_poisoned))
             marginal_rows.append(marginal_retention_row(task, horizon, product_current, coupled_current, comparison_status))
             residual_rows.append(joint_vs_product_residual_row(task, horizon, product_current, coupled_current, comparison_status))
-            cross_projection_rows.extend(make_cross_projection_rows(task, horizon, product_current, coupled_current, comparison_status))
+            marginal_projection_rows.extend(make_marginal_projection_rows(task, horizon, product_current, coupled_current, comparison_status))
         if horizon >= task.horizon_max:
             break
         product_edges = expand_joint_edges(task, product_current, "product_baseline")
         coupled_edges = expand_joint_edges(task, coupled_current, "coupled")
         product_edges_by_step[horizon] = tuple(product_edges)
         coupled_edges_by_step[horizon] = tuple(coupled_edges)
-        edge_rows.extend(edge_rows_for_step(task, "product_baseline", horizon, product_edges))
-        edge_rows.extend(edge_rows_for_step(task, "coupled", horizon, coupled_edges))
+        edge_rows.extend(edge_rows_for_step(task, "product_baseline", horizon, product_edges, product_cap_poisoned))
+        edge_rows.extend(edge_rows_for_step(task, "coupled", horizon, coupled_edges, coupled_cap_poisoned))
         product_next, product_capped = cap_frontier(
             {edge.target for edge in product_edges},
             task.max_internal_joint_frontier_states,
@@ -108,11 +125,11 @@ def scan_coupled_probe(task: CoupledProbeTask) -> CoupledProbeResult:
             task.max_internal_joint_frontier_states,
         )
         if product_capped:
-            product_internal_capped[horizon + 1] = 1
             internal_cap_rows.append(internal_cap_row(task, "product_baseline", horizon + 1, len({edge.target for edge in product_edges}), len(product_next)))
         if coupled_capped:
-            coupled_internal_capped[horizon + 1] = 1
             internal_cap_rows.append(internal_cap_row(task, "coupled", horizon + 1, len({edge.target for edge in coupled_edges}), len(coupled_next)))
+        product_cap_poisoned = int(product_cap_poisoned or product_capped)
+        coupled_cap_poisoned = int(coupled_cap_poisoned or coupled_capped)
         product_current = frozenset(product_next)
         coupled_current = frozenset(coupled_next)
     return CoupledProbeResult(
@@ -122,7 +139,7 @@ def scan_coupled_probe(task: CoupledProbeTask) -> CoupledProbeResult:
         profile_rows=profile_rows,
         marginal_rows=marginal_rows,
         residual_rows=residual_rows,
-        cross_projection_rows=cross_projection_rows,
+        marginal_projection_rows=marginal_projection_rows,
         internal_cap_rows=internal_cap_rows,
     )
 
@@ -196,6 +213,7 @@ def node_rows_for_frontier(
             "joint_frontier_state_count_full": len(frontier),
             "joint_frontier_nodes_truncated": int(row_truncated),
             "internal_frontier_capped": int(internal_capped),
+            "cap_poisoned_flag": int(internal_capped),
             "node_artifact_status": artifact_status,
         })
     return rows
@@ -206,10 +224,11 @@ def edge_rows_for_step(
     mode: str,
     horizon: int,
     edges: list[JointEdge],
+    cap_poisoned: int,
 ) -> list[dict[str, object]]:
     row_limit = max(0, task.max_joint_edges_per_step)
     row_truncated = row_limit > 0 and len(edges) > row_limit
-    artifact_status = artifact_status_for(row_truncated, 0)
+    artifact_status = artifact_status_for(row_truncated, cap_poisoned)
     rows: list[dict[str, object]] = []
     for rank, edge in enumerate(edges[:row_limit], start=1):
         a_source, b_source = edge.source
@@ -228,6 +247,7 @@ def edge_rows_for_step(
             "joint_edge_rank_within_step_sample": rank,
             "joint_frontier_edge_count_full": len(edges),
             "joint_frontier_edges_truncated": int(row_truncated),
+            "cap_poisoned_flag": int(cap_poisoned),
             "edge_artifact_status": artifact_status,
             "edge_weight": 1.0,
             "A_candidate_rank": edge.a_candidate_rank,
@@ -240,6 +260,7 @@ def edge_rows_for_step(
             "joint_transition_energy": edge.joint_transition_energy,
             "joint_selection_family": task.joint_selection_family,
             "joint_effective_out_degree": task.joint_effective_out_degree,
+            "coupled_operator_id": task.coupled_operator.coupled_operator_id,
             "coupling_strength": task.coupling_strength,
         })
     return rows
@@ -271,6 +292,7 @@ def profile_row(
         "marginal_product_state_count": len(a_marginal) * len(b_marginal),
         "joint_density_vs_marginal_product": len(frontier) / max(1, len(a_marginal) * len(b_marginal)),
         "internal_frontier_capped": int(internal_capped),
+        "cap_poisoned_flag": int(internal_capped),
     }
 
 
@@ -287,6 +309,7 @@ def marginal_retention_row(
         **base_fields(task),
         "horizon": horizon,
         "feature_status": feature_status,
+        "coupled_operator_id": task.coupled_operator.coupled_operator_id,
         "A_product_marginal_count": len(product_a),
         "A_coupled_marginal_count": len(coupled_a),
         "A_marginal_intersection_count": len(product_a & coupled_a),
@@ -315,6 +338,7 @@ def joint_vs_product_residual_row(
         **base_fields(task),
         "horizon": horizon,
         "feature_status": feature_status,
+        "coupled_operator_id": task.coupled_operator.coupled_operator_id,
         "product_joint_support_count": len(product_frontier),
         "coupled_joint_support_count": len(coupled_frontier),
         "joint_support_intersection_count": len(intersection),
@@ -326,7 +350,7 @@ def joint_vs_product_residual_row(
     }
 
 
-def make_cross_projection_rows(
+def make_marginal_projection_rows(
     task: CoupledProbeTask,
     horizon: int,
     product_frontier: frozenset[JointState],
@@ -336,16 +360,16 @@ def make_cross_projection_rows(
     product_a, product_b = marginals(product_frontier)
     coupled_a, coupled_b = marginals(coupled_frontier)
     return [
-        cross_projection_row(task, horizon, "A", "B", product_a, coupled_a, feature_status),
-        cross_projection_row(task, horizon, "B", "A", product_b, coupled_b, feature_status),
+        marginal_projection_row(task, horizon, "A", "B", product_a, coupled_a, feature_status),
+        marginal_projection_row(task, horizon, "B", "A", product_b, coupled_b, feature_status),
     ]
 
 
-def cross_projection_row(
+def marginal_projection_row(
     task: CoupledProbeTask,
     horizon: int,
-    target_field: str,
-    conditioning_field: str,
+    projected_field: str,
+    paired_field: str,
     product_marginal: set[State],
     coupled_marginal: set[State],
     feature_status: str,
@@ -356,8 +380,11 @@ def cross_projection_row(
         **base_fields(task),
         "horizon": horizon,
         "feature_status": feature_status,
-        "target_field": target_field,
-        "conditioning_field": conditioning_field,
+        "projection_semantics": "product_vs_coupled_marginal_set_delta",
+        "causal_interpretation": "none",
+        "coupled_operator_id": task.coupled_operator.coupled_operator_id,
+        "projected_field": projected_field,
+        "paired_field": paired_field,
         "product_marginal_count": len(product_marginal),
         "coupled_marginal_count": len(coupled_marginal),
         "marginal_intersection_count": len(intersection),
@@ -390,6 +417,8 @@ def internal_cap_row(
 def base_fields(task: CoupledProbeTask) -> dict[str, object]:
     return {
         "pair_id": task.pair_id,
+        "condition_pairing_policy": "index_matched",
+        "start_pairing_policy": "zip_selected_starts",
         "A_condition_id": task.field_a.spec.condition_id,
         "B_condition_id": task.field_b.spec.condition_id,
         "A_substrate_id": task.field_a.spec.substrate_id,
@@ -398,6 +427,8 @@ def base_fields(task: CoupledProbeTask) -> dict[str, object]:
         "B_selection_operator_id": task.field_b.spec.selection_operator.selection_operator_id,
         "A_law_id": task.field_a.spec.transformation_law.law_id,
         "B_law_id": task.field_b.spec.transformation_law.law_id,
+        "coupled_operator_id": task.coupled_operator.coupled_operator_id,
+        "coupled_operator_family": task.coupled_operator.coupled_operator_family,
         "start_index": task.start_index,
         "A_start_state_id": state_id(task.start_a),
         "B_start_state_id": state_id(task.start_b),
@@ -433,6 +464,51 @@ def comparison_feature_status(
         or len(coupled_frontier) > task.max_joint_frontier_nodes_per_horizon
     )
     return artifact_status_for(truncated, int(product_internal_capped or coupled_internal_capped))
+
+
+def build_coupled_operator_spec(
+    *,
+    joint_selection_family: str,
+    joint_effective_out_degree: int,
+    coupling_strength: float,
+) -> CoupledOperatorSpec:
+    params_json = canonical_json({
+        "coupling_strength": coupling_strength,
+        "coupling_term_id": "rank_boundary_offset_absolute_difference_penalty",
+        "joint_candidate_set_definition": "cartesian_product_of_component_selected_successors",
+        "joint_effective_out_degree": joint_effective_out_degree,
+        "joint_energy_function_id": "component_energy_sum_plus_rank_boundary_offset_mismatch_penalty",
+        "joint_selection_family": joint_selection_family,
+        "product_baseline_definition": "cartesian_product_of_component_selected_successors",
+    })
+    return CoupledOperatorSpec(
+        coupled_operator_id=(
+            f"coupled_operator__{joint_selection_family}"
+            f"__k{int(joint_effective_out_degree)}"
+            f"__rank_offset_absdiff_strength_{stable_hash(float(coupling_strength), length=8)}"
+        ),
+        coupled_operator_family="rank_boundary_mismatch_penalized_joint_selector",
+        product_baseline_definition="cartesian_product_of_component_selected_successors",
+        joint_candidate_set_definition="cartesian_product_of_component_selected_successors",
+        joint_energy_function_id="component_energy_sum_plus_rank_boundary_offset_mismatch_penalty",
+        joint_energy_params_json=params_json,
+        coupling_term_id="rank_boundary_offset_absolute_difference_penalty",
+        coupling_strength=float(coupling_strength),
+        joint_selection_family=joint_selection_family,
+        joint_effective_out_degree=int(joint_effective_out_degree),
+        stochastic_flag=0,
+        seed_policy="deterministic_joint_energy_rank_order",
+    )
+
+
+def coupled_operator_canonical_json(spec: CoupledOperatorSpec) -> str:
+    from dataclasses import asdict
+
+    return canonical_json(asdict(spec))
+
+
+def coupled_operator_digest(spec: CoupledOperatorSpec) -> str:
+    return stable_hash(coupled_operator_canonical_json(spec), length=20)
 
 
 def joint_state_id(joint_state: JointState) -> str:

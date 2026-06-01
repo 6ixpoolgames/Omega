@@ -77,6 +77,7 @@ Primary current design note:
 - `docs/research_notes/validation_results/future_field_atlas_writeout_path_repair_note.md`
 - `docs/research_notes/validation_results/future_field_atlas_transport_mode_timing_result.md`
 - `docs/research_notes/validation_results/future_field_atlas_coupled_probe_result.md`
+- `docs/research_notes/validation_results/future_field_atlas_coupled_hardening_result.md`
 - `docs/RFS_MB0_TOP_M_MECHANISM_AUDIT_SPEC.md`
 - `docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md`
 - `docs/RFS_MB0_TOP_M_GEOMETRY_AUDIT_SPEC.md`
@@ -345,6 +346,28 @@ baselines, marginal-retention rows, joint-vs-product residual rows, and
 reconstruction audits before any interpretation. Do not report Omega, agency,
 value, identity, valuerhood, or candidate-promotion language from coupled probe
 outputs.
+
+Current hardening requirements:
+
+```text
+coupled_operator_manifest.csv.gz must identify the coupled operator by canonical JSON and digest
+condition_pairing_policy = index_matched
+start_pairing_policy = zip_selected_starts
+cap poisoning must persist after any internal frontier cap
+PASS_WITH_SKIPS is not a clean reconstruction pass
+NO_COMPLETE_ROWS blocks interpretation
+medium-scale readiness must be checked before any coupled sweep is interpreted
+```
+
+Use `coupled_marginal_projection_delta_by_horizon.csv[.gz]` for product-vs-
+coupled marginal-set deltas. It must carry:
+
+```text
+projection_semantics = product_vs_coupled_marginal_set_delta
+causal_interpretation = none
+```
+
+Do not use marginal projection rows as directional-causal evidence.
 
 ## Context From The Theory/Paper Side
 

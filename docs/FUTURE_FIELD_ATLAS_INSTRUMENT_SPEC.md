@@ -302,6 +302,38 @@ joint_transition_energy:
 
 This joint selector is a first probe operator, not a theory conclusion.
 
+Coupled hardening requirements:
+
+```text
+CoupledOperatorSpec / coupled_operator_manifest.csv
+condition_pairing_policy
+start_pairing_policy
+persistent cap poisoning
+audit statuses:
+  PASS
+  PASS_WITH_SKIPS
+  NO_COMPLETE_ROWS
+  FAIL
+reconstruction_audit_clean_pass
+reconstruction_audit_interpretable_pass
+coupled_medium_scale_readiness_summary.csv
+```
+
+Coupled marginal projection rows are non-causal product-vs-coupled marginal-set
+deltas:
+
+```text
+artifact:
+  coupled_marginal_projection_delta_by_horizon.csv
+required fields:
+  projection_semantics = product_vs_coupled_marginal_set_delta
+  causal_interpretation = none
+```
+
+If a product or coupled frontier is internally capped at horizon `h`, all
+descendant topology for that mode must be marked `truncated_noninterpretable`.
+Any comparison row depending on a poisoned mode must inherit the worst status.
+
 ### Phase 3: interaction feature mapping
 
 Goal: map candidate interaction patterns from raw data.
