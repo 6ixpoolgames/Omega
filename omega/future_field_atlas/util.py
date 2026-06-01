@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import csv
+import gzip
 import hashlib
 import json
 from datetime import datetime, timezone
@@ -39,27 +40,45 @@ def write_json(path: Path, payload: object) -> None:
 def write_csv(path: Path, rows: list[dict[str, object]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     if not rows:
-        path.write_text("empty\n", encoding="utf-8")
+        opener = gzip.open if is_gzip_path(path) else open
+        with opener(path, "wt", newline="", encoding="utf-8") as handle:
+            handle.write("empty\n")
         return
     fields: list[str] = []
     for row in rows:
         for field in row:
             if field not in fields:
                 fields.append(field)
-    with path.open("w", newline="", encoding="utf-8", buffering=1024 * 1024) as handle:
+    opener = gzip.open if is_gzip_path(path) else open
+    with opener(path, "wt", newline="", encoding="utf-8") as handle:
         writer = csv.writer(handle)
         writer.writerow(fields)
         writer.writerows(([row.get(field, "") for field in fields] for row in rows))
 
 
 def csv_row_count(path: Path) -> int:
-    if not path.exists() or path.suffix.lower() != ".csv":
+    if not path.exists() or not is_csv_path(path):
         return 0
-    with path.open("r", newline="", encoding="utf-8") as handle:
-        rows = list(csv.reader(handle))
-    if not rows or rows[0] == ["empty"]:
-        return 0
-    return max(0, len(rows) - 1)
+    opener = gzip.open if is_gzip_path(path) else open
+    with opener(path, "rt", newline="", encoding="utf-8") as handle:
+        reader = csv.reader(handle)
+        try:
+            header = next(reader)
+        except StopIteration:
+            return 0
+        if header == ["empty"]:
+            return 0
+        return sum(1 for _row in reader)
+
+
+def is_csv_path(path: Path) -> bool:
+    suffixes = [suffix.lower() for suffix in path.suffixes]
+    return suffixes[-1:] == [".csv"] or suffixes[-2:] == [".csv", ".gz"]
+
+
+def is_gzip_path(path: Path) -> bool:
+    suffixes = [suffix.lower() for suffix in path.suffixes]
+    return suffixes[-2:] == [".csv", ".gz"]
 
 
 def mean(values: list[float]) -> float:

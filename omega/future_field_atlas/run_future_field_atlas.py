@@ -63,6 +63,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--checkpoint-every-scans", type=int, default=2)
     parser.add_argument("--max-runtime-seconds", type=int, default=1800)
     parser.add_argument("--shutdown-cushion-seconds", type=int, default=30)
+    parser.add_argument(
+        "--csv-output-mode",
+        choices=("plain", "gzip", "both"),
+        default="gzip",
+        help="Write primary CSV artifacts as plain .csv, gzip .csv.gz, or both.",
+    )
     return parser.parse_args()
 
 
@@ -120,7 +126,7 @@ def main() -> None:
     }
     write_json(args.out / "future_field_atlas_status.json", status)
     completed, errors, progress = run_tasks(args, tasks, status, started_perf)
-    write_all_outputs(args.out, completed, errors, progress, status, started_perf, horizon_pairs)
+    write_all_outputs(args.out, completed, errors, progress, status, started_perf, horizon_pairs, args.csv_output_mode)
 
 
 def build_scan_tasks(
@@ -324,6 +330,7 @@ def write_all_outputs(
     status: dict[str, object],
     started_perf: float,
     horizon_pairs: tuple[tuple[int, int], ...],
+    csv_output_mode: str,
 ) -> None:
     mapped_scans = list(scans)
     node_rows = [row for scan in mapped_scans for row in scan.raw.node_rows]  # type: ignore[attr-defined]
@@ -360,13 +367,7 @@ def write_all_outputs(
         profile_rows=profile_rows,
     )
 
-    output_files = [
-        "future_field_atlas_manifest.json",
-        "future_field_atlas_run_config.json",
-        "future_field_atlas_status.json",
-        "future_field_atlas_progress.csv",
-        "future_field_atlas_errors.csv",
-        "future_field_atlas_report.md",
+    csv_output_files = [
         "formal_spec_manifest.csv",
         "condition_identity_manifest.csv",
         "scan_manifest.csv",
@@ -375,9 +376,7 @@ def write_all_outputs(
         "frontier_profile_by_horizon.csv",
         "frontier_membership_timeseries.csv",
         "rank_boundary_geometry_by_horizon.csv",
-        "raw_transport_matrices_adjacent.npz",
         "raw_transport_matrices_adjacent_manifest.csv",
-        "raw_transport_matrices_multiscale.npz",
         "raw_transport_matrices_multiscale_manifest.csv",
         "transport_flow_composition_residuals.csv",
         "selection_operator_geometry_summary.csv",
@@ -386,24 +385,53 @@ def write_all_outputs(
         "reconstruction_audit_summary.csv",
         "artifact_completeness_summary.csv",
     ]
-    write_csv(out_dir / "formal_spec_manifest.csv", spec_manifest_rows)
-    write_csv(out_dir / "condition_identity_manifest.csv", condition_identity_rows)
-    write_csv(out_dir / "scan_manifest.csv", scan_manifest)
-    write_csv(out_dir / "frontier_nodes_by_horizon.csv", node_rows)
-    write_csv(out_dir / "frontier_edges_by_step.csv", edge_rows)
-    write_csv(out_dir / "frontier_profile_by_horizon.csv", profile_rows)
-    write_csv(out_dir / "frontier_membership_timeseries.csv", membership_rows)
-    write_csv(out_dir / "rank_boundary_geometry_by_horizon.csv", boundary_rows)
+    csv_row_counts = {
+        "formal_spec_manifest.csv": len(spec_manifest_rows),
+        "condition_identity_manifest.csv": len(condition_identity_rows),
+        "scan_manifest.csv": len(scan_manifest),
+        "frontier_nodes_by_horizon.csv": len(node_rows),
+        "frontier_edges_by_step.csv": len(edge_rows),
+        "frontier_profile_by_horizon.csv": len(profile_rows),
+        "frontier_membership_timeseries.csv": len(membership_rows),
+        "rank_boundary_geometry_by_horizon.csv": len(boundary_rows),
+        "raw_transport_matrices_adjacent_manifest.csv": len(adjacent_manifest),
+        "raw_transport_matrices_multiscale_manifest.csv": len(multiscale_manifest),
+        "transport_flow_composition_residuals.csv": len(residual_rows),
+        "selection_operator_geometry_summary.csv": len(operator_geometry_summary),
+        "rank_boundary_geometry_by_horizon_summary.csv": len(rank_boundary_rows),
+        "rank_boundary_geometry_by_horizon_pair.csv": len(boundary_pair_rows),
+        "reconstruction_audit_summary.csv": len(reconstruction_rows),
+        "artifact_completeness_summary.csv": len(completeness_rows),
+    }
+    output_files = [
+        "future_field_atlas_manifest.json",
+        "future_field_atlas_run_config.json",
+        "future_field_atlas_status.json",
+        "future_field_atlas_progress.csv",
+        "future_field_atlas_errors.csv",
+        "future_field_atlas_report.md",
+        "raw_transport_matrices_adjacent.npz",
+        "raw_transport_matrices_multiscale.npz",
+    ]
+    output_files.extend(expand_csv_output_files(csv_output_files, csv_output_mode))
+    write_csv_artifact(out_dir, "formal_spec_manifest.csv", spec_manifest_rows, csv_output_mode)
+    write_csv_artifact(out_dir, "condition_identity_manifest.csv", condition_identity_rows, csv_output_mode)
+    write_csv_artifact(out_dir, "scan_manifest.csv", scan_manifest, csv_output_mode)
+    write_csv_artifact(out_dir, "frontier_nodes_by_horizon.csv", node_rows, csv_output_mode)
+    write_csv_artifact(out_dir, "frontier_edges_by_step.csv", edge_rows, csv_output_mode)
+    write_csv_artifact(out_dir, "frontier_profile_by_horizon.csv", profile_rows, csv_output_mode)
+    write_csv_artifact(out_dir, "frontier_membership_timeseries.csv", membership_rows, csv_output_mode)
+    write_csv_artifact(out_dir, "rank_boundary_geometry_by_horizon.csv", boundary_rows, csv_output_mode)
     write_sparse_npz(out_dir / "raw_transport_matrices_adjacent.npz", adjacent)
-    write_csv(out_dir / "raw_transport_matrices_adjacent_manifest.csv", adjacent_manifest)
+    write_csv_artifact(out_dir, "raw_transport_matrices_adjacent_manifest.csv", adjacent_manifest, csv_output_mode)
     write_sparse_npz(out_dir / "raw_transport_matrices_multiscale.npz", multiscale)
-    write_csv(out_dir / "raw_transport_matrices_multiscale_manifest.csv", multiscale_manifest)
-    write_csv(out_dir / "transport_flow_composition_residuals.csv", residual_rows)
-    write_csv(out_dir / "selection_operator_geometry_summary.csv", operator_geometry_summary)
-    write_csv(out_dir / "rank_boundary_geometry_by_horizon_summary.csv", rank_boundary_rows)
-    write_csv(out_dir / "rank_boundary_geometry_by_horizon_pair.csv", boundary_pair_rows)
-    write_csv(out_dir / "reconstruction_audit_summary.csv", reconstruction_rows)
-    write_csv(out_dir / "artifact_completeness_summary.csv", completeness_rows)
+    write_csv_artifact(out_dir, "raw_transport_matrices_multiscale_manifest.csv", multiscale_manifest, csv_output_mode)
+    write_csv_artifact(out_dir, "transport_flow_composition_residuals.csv", residual_rows, csv_output_mode)
+    write_csv_artifact(out_dir, "selection_operator_geometry_summary.csv", operator_geometry_summary, csv_output_mode)
+    write_csv_artifact(out_dir, "rank_boundary_geometry_by_horizon_summary.csv", rank_boundary_rows, csv_output_mode)
+    write_csv_artifact(out_dir, "rank_boundary_geometry_by_horizon_pair.csv", boundary_pair_rows, csv_output_mode)
+    write_csv_artifact(out_dir, "reconstruction_audit_summary.csv", reconstruction_rows, csv_output_mode)
+    write_csv_artifact(out_dir, "artifact_completeness_summary.csv", completeness_rows, csv_output_mode)
     status["completed_utc"] = utc_now()
     status["elapsed_seconds"] = round(time.perf_counter() - started_perf, 3)
     status["frontier_node_rows"] = len(node_rows)
@@ -414,26 +442,27 @@ def write_all_outputs(
         sorted({str(row["artifact_status"]) for row in completeness_rows})
     )
     write_partial(out_dir, status, progress, errors, started_perf)
-    write_report(out_dir, status, operator_geometry_summary, reconstruction_rows, completeness_rows)
+    write_report(out_dir, status, operator_geometry_summary, reconstruction_rows, completeness_rows, csv_output_mode)
     manifest = {
         **instrument_metadata(),
         "run_status": status.get("status"),
+        "csv_output_mode": csv_output_mode,
         "started_utc": status.get("started_utc"),
         "completed_utc": status.get("completed_utc"),
         "seed_policy": "deterministic base_seed plus group/fresh-seed offsets",
         "substrate_count": len({scan.raw.spec.substrate_id for scan in mapped_scans}),  # type: ignore[attr-defined]
         "frontier_count": len(mapped_scans),
         "horizon_schedule": sorted({row["horizon"] for row in profile_rows}) if profile_rows else [],
-        "formal_spec_manifest": "formal_spec_manifest.csv",
-        "condition_identity_manifest": "condition_identity_manifest.csv",
-        "scan_manifest": "scan_manifest.csv",
-        "reconstruction_audit_summary": "reconstruction_audit_summary.csv",
-        "artifact_completeness_summary": "artifact_completeness_summary.csv",
+        "formal_spec_manifest": primary_csv_artifact_name("formal_spec_manifest.csv", csv_output_mode),
+        "condition_identity_manifest": primary_csv_artifact_name("condition_identity_manifest.csv", csv_output_mode),
+        "scan_manifest": primary_csv_artifact_name("scan_manifest.csv", csv_output_mode),
+        "reconstruction_audit_summary": primary_csv_artifact_name("reconstruction_audit_summary.csv", csv_output_mode),
+        "artifact_completeness_summary": primary_csv_artifact_name("artifact_completeness_summary.csv", csv_output_mode),
         "output_files": [
             {
                 "file": name,
                 "exists": True if name == "future_field_atlas_manifest.json" else (out_dir / name).exists(),
-                "row_count": csv_row_count(out_dir / name) if name.endswith(".csv") else "",
+                "row_count": output_row_count(out_dir, name, csv_row_counts),
             }
             for name in output_files
         ],
@@ -448,6 +477,7 @@ def write_report(
     operator_geometry_rows: list[dict[str, object]],
     reconstruction_rows: list[dict[str, object]],
     completeness_rows: list[dict[str, object]],
+    csv_output_mode: str,
 ) -> None:
     deterministic = [
         row for row in operator_geometry_rows
@@ -490,20 +520,63 @@ def write_report(
         "",
         "## Primary Artifacts",
         "",
-        "- `frontier_nodes_by_horizon.csv`",
-        "- `frontier_edges_by_step.csv`",
-        "- `frontier_profile_by_horizon.csv`",
-        "- `formal_spec_manifest.csv`",
-        "- `condition_identity_manifest.csv`",
-        "- `scan_manifest.csv`",
-        "- `rank_boundary_geometry_by_horizon.csv`",
+        f"- `{csv_artifact_display_name('frontier_nodes_by_horizon.csv', csv_output_mode)}`",
+        f"- `{csv_artifact_display_name('frontier_edges_by_step.csv', csv_output_mode)}`",
+        f"- `{csv_artifact_display_name('frontier_profile_by_horizon.csv', csv_output_mode)}`",
+        f"- `{csv_artifact_display_name('formal_spec_manifest.csv', csv_output_mode)}`",
+        f"- `{csv_artifact_display_name('condition_identity_manifest.csv', csv_output_mode)}`",
+        f"- `{csv_artifact_display_name('scan_manifest.csv', csv_output_mode)}`",
+        f"- `{csv_artifact_display_name('rank_boundary_geometry_by_horizon.csv', csv_output_mode)}`",
         "- `raw_transport_matrices_adjacent.npz`",
         "- `raw_transport_matrices_multiscale.npz`",
-        "- `selection_operator_geometry_summary.csv`",
-        "- `reconstruction_audit_summary.csv`",
-        "- `artifact_completeness_summary.csv`",
+        f"- `{csv_artifact_display_name('selection_operator_geometry_summary.csv', csv_output_mode)}`",
+        f"- `{csv_artifact_display_name('reconstruction_audit_summary.csv', csv_output_mode)}`",
+        f"- `{csv_artifact_display_name('artifact_completeness_summary.csv', csv_output_mode)}`",
     ]
     (out_dir / "future_field_atlas_report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def write_csv_artifact(
+    out_dir: Path,
+    logical_name: str,
+    rows: list[dict[str, object]],
+    csv_output_mode: str,
+) -> None:
+    for name in expand_csv_output_files([logical_name], csv_output_mode):
+        write_csv(out_dir / name, rows)
+
+
+def expand_csv_output_files(logical_names: list[str], csv_output_mode: str) -> list[str]:
+    if csv_output_mode == "plain":
+        return list(logical_names)
+    if csv_output_mode == "gzip":
+        return [f"{name}.gz" for name in logical_names]
+    if csv_output_mode == "both":
+        return [item for name in logical_names for item in (name, f"{name}.gz")]
+    raise ValueError(f"unknown csv output mode: {csv_output_mode}")
+
+
+def csv_artifact_display_name(logical_name: str, csv_output_mode: str) -> str:
+    if csv_output_mode == "gzip":
+        return f"{logical_name}.gz"
+    if csv_output_mode == "both":
+        return f"{logical_name} / {logical_name}.gz"
+    return logical_name
+
+
+def primary_csv_artifact_name(logical_name: str, csv_output_mode: str) -> str:
+    if csv_output_mode == "gzip":
+        return f"{logical_name}.gz"
+    return logical_name
+
+
+def output_row_count(out_dir: Path, name: str, csv_row_counts: dict[str, int]) -> int | str:
+    logical_name = name.removesuffix(".gz") if name.endswith(".csv.gz") else name
+    if logical_name in csv_row_counts:
+        return csv_row_counts[logical_name]
+    if name.endswith((".csv", ".csv.gz")):
+        return csv_row_count(out_dir / name)
+    return ""
 
 
 def artifact_completeness_rows(

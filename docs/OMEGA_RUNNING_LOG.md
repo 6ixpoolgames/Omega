@@ -9,6 +9,63 @@ patch notes at the top.
 
 ## 2026-06-01
 
+### Future Field Atlas Default-Gzip Compression Smoke
+
+Patched the atlas runner so primary CSV artifacts default to gzip output:
+
+```text
+--csv-output-mode gzip
+```
+
+The runner still supports:
+
+```text
+--csv-output-mode plain
+--csv-output-mode both
+```
+
+Retained note:
+
+- `docs/research_notes/validation_results/future_field_atlas_default_gzip_compression_smoke.md`
+
+Local validation output:
+
+- `results/future_field_atlas/20260601_phase0_1_default_gzip_h32_rerun/`
+
+Run shape:
+
+```text
+status: COMPLETED
+workers: 4
+conditions: 8
+scans_completed: 8 / 8
+elapsed_seconds: 16.274
+frontier_node_rows: 30671
+frontier_edge_rows: 107034
+csv_output_mode: gzip
+reconstruction_audit_passed: 1
+artifact_completeness_statuses: complete
+```
+
+Compression read:
+
+```text
+compact plain H32 output: about 59.7 MB
+default-gzip H32 output: about 3.1 MB
+reduction: about 19x
+manual selected-CSV gzip ratio: about 23.5x
+```
+
+Interpretation:
+
+```text
+Gzip is now the default storage posture for atlas CSV artifacts. It is lossless
+and preserves reconstruction audits while cutting the compact H32 footprint by
+roughly one order of magnitude again. Larger atlas runs may still need a
+columnar backend, but gzip is the correct default for current smoke and medium
+scale work.
+```
+
 ### Future Field Atlas Compact Manageability H64 Run
 
 Patched the atlas raw topology output to remove repeated formal spec metadata

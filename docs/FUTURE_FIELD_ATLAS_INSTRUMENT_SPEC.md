@@ -418,6 +418,11 @@ calibration observable.
 ## 8. Primary raw artifacts
 
 These are mandatory for Phase 0 / Phase 1 unless explicitly marked optional.
+Artifact names in this spec are logical schema names. The runner writes primary
+CSV artifacts as `.csv.gz` by default for lossless storage efficiency and records
+the physical names in `future_field_atlas_manifest.json`. Use
+`--csv-output-mode plain` for plain CSV debugging or `--csv-output-mode both`
+when compatibility copies are needed.
 
 ### 8.1 Manifest
 
@@ -432,6 +437,7 @@ run_status
 started_utc
 completed_utc
 seed_policy
+csv_output_mode
 substrate_count
 frontier_count
 horizon_schedule
@@ -926,6 +932,21 @@ run_future_field_atlas.py
 ```
 
 Do not import the old heavy runner into the core scanner. Reuse small substrate-generation utilities only where they are clean and auditable.
+
+Default CSV storage should stay gzip:
+
+```powershell
+.\.venv\Scripts\python.exe -m omega.future_field_atlas.run_future_field_atlas `
+  --out results\future_field_atlas\<run_id> `
+  --workers 18
+```
+
+Only override it when needed:
+
+```powershell
+--csv-output-mode plain
+--csv-output-mode both
+```
 
 ## 15. Stop conditions
 

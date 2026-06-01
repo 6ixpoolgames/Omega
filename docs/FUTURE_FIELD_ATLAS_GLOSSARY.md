@@ -92,6 +92,12 @@ rows and formal specs.
 : Audit file reporting whether topology-derived artifacts are complete,
 losslessly compressed, sampled, or truncated/non-interpretable.
 
+`csv_output_mode`
+: Runner storage mode for primary CSV artifacts. The default is `gzip`, so
+logical artifacts such as `frontier_edges_by_step.csv` normally appear on disk
+as `frontier_edges_by_step.csv.gz`. `plain` and `both` are available for local
+debugging or compatibility, but gzip is the normal atlas storage posture.
+
 ## Historical Translation
 
 These names appeared in old notes and early smoke outputs. They should be read

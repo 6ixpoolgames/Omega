@@ -40,6 +40,11 @@ reconstruction audits, so derived topology summaries are treated as
 reconstructible measurements rather than unsupported report labels.
 The current compact output path also emits `scan_manifest.csv` so high-volume
 raw node/edge rows do not repeat full formal metadata on every row.
+Primary Future Field Atlas CSV artifacts now write as `.csv.gz` by default.
+This preserves logical CSV schemas while cutting compact H32 storage from about
+59.7 MB to about 3.1 MB. Use `--csv-output-mode plain` only for local debugging
+or `--csv-output-mode both` when a plain CSV compatibility copy is explicitly
+needed.
 ```
 
 Terminology rule:
@@ -57,6 +62,8 @@ Primary current design note:
 - `docs/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md`
 - `docs/FUTURE_FIELD_ATLAS_GLOSSARY.md`
 - `docs/research_notes/validation_results/future_field_atlas_phase0_1_smoke_result.md`
+- `docs/research_notes/validation_results/future_field_atlas_compact_manageability_h64_result.md`
+- `docs/research_notes/validation_results/future_field_atlas_default_gzip_compression_smoke.md`
 - `docs/RFS_MB0_TOP_M_MECHANISM_AUDIT_SPEC.md`
 - `docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md`
 - `docs/RFS_MB0_TOP_M_GEOMETRY_AUDIT_SPEC.md`
@@ -253,6 +260,17 @@ explicitly promoted. The public record should normally be:
 ```text
 docs/research_notes/validation_results/<retained_result_note>.md
 ```
+
+For Future Field Atlas runs, primary CSV artifacts should use the default gzip
+mode unless there is a concrete compatibility reason not to:
+
+```text
+--csv-output-mode gzip
+```
+
+This keeps logical CSV schemas but writes physical `.csv.gz` artifacts. Plain
+CSV output is still available with `--csv-output-mode plain`; compatibility
+runs can write both forms with `--csv-output-mode both`.
 
 Do not add new root-level `*_results` folders. If a historical script defaults
 to root-level output, override its output directory when rerunning it.
