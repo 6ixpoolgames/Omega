@@ -9,6 +9,76 @@ patch notes at the top.
 
 ## 2026-06-02
 
+### Future Field Atlas Coupled H64 Ladder
+
+Ran the first constrained coupled Future Field Atlas science pass after the
+worker-spool and compact-retention repairs:
+
+```text
+horizon_max: 64
+pair_count: 8
+workers: 4
+coupling_strength ladder:
+  0.00
+  0.05
+  0.10
+  0.25
+  0.50
+```
+
+All five stages completed cleanly:
+
+```text
+coupled_pairs_completed: 8 / 8
+coupled_pairs_failed: 0
+internal_cap_events: 0
+artifact_completeness_statuses: complete
+reconstruction audits: PASS 3
+medium_sweep_interpretation_allowed: 1
+raw spools pruned after compact retention summary: yes
+```
+
+Run-level read:
+
+```text
+0.00:
+  edge rows: 22866722
+  node rows: 3419750
+  mean joint-vs-product residual: 0.191149
+  mean joint retention: 0.808851
+  A/B marginal retention means: 0.980608 / 0.972859
+
+0.05 through 0.50:
+  edge rows: 22127782
+  node rows: 3231039
+  mean joint-vs-product residual: 0.183363
+  mean joint retention: 0.816637
+  A/B marginal retention means: 1.0 / 1.0
+```
+
+Interpretation:
+
+```text
+The tested positive mismatch penalties are numerically identical after sorting
+rows and ignoring operator identity fields. This looks thresholded at the
+current resolution: zero penalty differs from positive penalty, but 0.05,
+0.10, 0.25, and 0.50 do not form a graded ladder.
+```
+
+Pair-level caveat:
+
+```text
+At horizon 64, positive penalty lowers residual for seven of eight pairs, but
+pair005 jumps from 0.244091 residual at 0.00 to 0.752364 at positive strengths.
+Aggregate summaries must be pair-aware.
+```
+
+Retained note:
+
+```text
+docs/research_notes/validation_results/future_field_atlas_coupled_h64_ladder_result.md
+```
+
 ### Future Field Atlas Compact Retention Utility
 
 Implemented a compact retention utility:

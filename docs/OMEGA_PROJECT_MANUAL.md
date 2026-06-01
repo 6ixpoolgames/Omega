@@ -82,7 +82,15 @@ raw topology, run `python -m omega.future_field_atlas.retention_summary --run
 marginal summaries, audits, readiness rows, and rebuild metadata. A short
 three-frontier H6 smoke now exists as a profile-only interface probe; it does
 not emit raw triadic topology and should not be treated as a coupled science
-result.
+result. The first constrained coupled H64 ladder completed cleanly across
+coupling strengths `0.00`, `0.05`, `0.10`, `0.25`, and `0.50`. The live
+instrument read is threshold-like rather than smoothly graded: zero penalty
+differs from positive penalty, while the tested positive strengths are
+numerically identical in topology-derived summaries after sorting rows and
+ignoring operator identity fields. Positive penalty preserved component
+marginal reachability in that run, but one heavy pair became much more
+joint-restrictive at the final horizon, so future coupled analysis must remain
+pair-aware.
 ```
 
 Terminology rule:
@@ -113,6 +121,8 @@ Primary current design note:
 - `docs/research_notes/validation_results/future_field_atlas_coupled_lossless_block_audit_result.md`
 - `docs/research_notes/validation_results/future_field_atlas_coupled_h64_broad_sweep_result.md`
 - `docs/research_notes/validation_results/future_field_atlas_coupled_h128_and_triadic_profile_smoke_result.md`
+- `docs/research_notes/validation_results/future_field_atlas_coupled_worker_spool_scale_validation_result.md`
+- `docs/research_notes/validation_results/future_field_atlas_coupled_h64_ladder_result.md`
 - `docs/RFS_MB0_TOP_M_MECHANISM_AUDIT_SPEC.md`
 - `docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md`
 - `docs/RFS_MB0_TOP_M_GEOMETRY_AUDIT_SPEC.md`

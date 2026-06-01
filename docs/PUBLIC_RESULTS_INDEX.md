@@ -44,15 +44,16 @@ Start here:
 10. [`docs/research_notes/validation_results/future_field_atlas_coupled_h64_broad_sweep_result.md`](research_notes/validation_results/future_field_atlas_coupled_h64_broad_sweep_result.md)
 11. [`docs/research_notes/validation_results/future_field_atlas_coupled_h128_and_triadic_profile_smoke_result.md`](research_notes/validation_results/future_field_atlas_coupled_h128_and_triadic_profile_smoke_result.md)
 12. [`docs/research_notes/validation_results/future_field_atlas_coupled_worker_spool_scale_validation_result.md`](research_notes/validation_results/future_field_atlas_coupled_worker_spool_scale_validation_result.md)
-13. [`docs/FUTURE_FIELD_ATLAS_GLOSSARY.md`](FUTURE_FIELD_ATLAS_GLOSSARY.md)
-14. [`docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md`](research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md)
-15. [`docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md`](research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md)
-16. [`docs/research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md`](research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md)
-17. [`docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`](research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
-18. [`docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md`](research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
-19. [`docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md`](research_notes/omega_theory/horizon_transport_aligned_amplification.md)
-20. [`docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md`](research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
-21. [`docs/research_notes/omega_theory/transition_energy_substrate_atlas.md`](research_notes/omega_theory/transition_energy_substrate_atlas.md)
+13. [`docs/research_notes/validation_results/future_field_atlas_coupled_h64_ladder_result.md`](research_notes/validation_results/future_field_atlas_coupled_h64_ladder_result.md)
+14. [`docs/FUTURE_FIELD_ATLAS_GLOSSARY.md`](FUTURE_FIELD_ATLAS_GLOSSARY.md)
+15. [`docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md`](research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md)
+16. [`docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md`](research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md)
+17. [`docs/research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md`](research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md)
+18. [`docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`](research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
+19. [`docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md`](research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
+20. [`docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md`](research_notes/omega_theory/horizon_transport_aligned_amplification.md)
+21. [`docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md`](research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
+22. [`docs/research_notes/omega_theory/transition_energy_substrate_atlas.md`](research_notes/omega_theory/transition_energy_substrate_atlas.md)
 
 ## Current live branch
 
@@ -377,6 +378,36 @@ finalization negligible at current coupled scales. H128 pair8 is feasible on
 the desktop, but raw topology volume is now the limiting issue. The next
 engineering need is compact retention and summarization policy, not more IPC
 work.
+```
+
+### Coupled H64 ladder
+
+Result note:
+
+- [`future_field_atlas_coupled_h64_ladder_result.md`](research_notes/validation_results/future_field_atlas_coupled_h64_ladder_result.md)
+
+Run summary:
+
+```text
+horizon_max: 64
+pair_count: 8
+coupling_strength: 0.00, 0.05, 0.10, 0.25, 0.50
+all stages: COMPLETED
+pair failures: 0
+internal cap events: 0
+audits: PASS 3
+raw topology: compact-retained, raw spools pruned
+```
+
+Read:
+
+```text
+The current coupled rank-boundary mismatch penalty looks thresholded in this
+design: 0.00 differs from positive penalty, but 0.05, 0.10, 0.25, and 0.50
+produce identical topology-derived summaries after sorting rows and ignoring
+operator identity fields. Positive penalty preserves A/B marginal reachability
+in this run while changing joint support geometry. Pair005 is a strong caveat:
+it becomes much more joint-restrictive at the final horizon.
 ```
 
 ### Hard top-m mechanism boundary-resolution sweep
