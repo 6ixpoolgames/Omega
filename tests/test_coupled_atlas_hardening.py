@@ -17,6 +17,8 @@ from omega.future_field_atlas.run_coupled_future_field_atlas import (
     build_coupled_tasks,
     coupled_condition_manifest_rows,
     coupled_scan_manifest_rows,
+    mark_completed_attempts_status,
+    medium_scale_readiness_rows,
     write_raw_topology_shards,
 )
 from omega.future_field_atlas.util import csv_row_count
@@ -55,6 +57,35 @@ def test_audit_statuses_distinguish_skipped_only_and_mixed_rows() -> None:
     assert audit_result("mixed", checked=2, failed=0, skipped=3)["status"] == "PASS_WITH_SKIPS"
     assert audit_result("skipped_only", checked=0, failed=0, skipped=3)["status"] == "NO_COMPLETE_ROWS"
     assert audit_result("failed", checked=2, failed=1, skipped=3)["status"] == "FAIL"
+
+
+def test_completed_attempt_status_distinguishes_errors() -> None:
+    clean_status = {"status": "RUNNING"}
+    mark_completed_attempts_status(clean_status, [])
+    assert clean_status["status"] == "COMPLETED"
+    assert clean_status["finalization_reason"] == "all_pairs_completed"
+
+    error_status = {"status": "RUNNING"}
+    mark_completed_attempts_status(error_status, [{"pair_id": "p0", "error": "boom"}])
+    assert error_status["status"] == "COMPLETED_WITH_ERRORS"
+    assert error_status["finalization_reason"] == "all_pairs_attempted_with_errors"
+
+
+def test_medium_readiness_blocks_run_errors() -> None:
+    rows = medium_scale_readiness_rows(
+        completeness_rows=[{"artifact_status": "complete", "row_count": 10}],
+        reconstruction_rows=[
+            {"audit_name": "coupled_profile_reconstructs_from_node_rows", "status": "PASS"},
+            {"audit_name": "coupled_marginal_retention_reconstructs_from_node_rows", "status": "PASS"},
+            {"audit_name": "coupled_joint_residual_reconstructs_from_node_rows", "status": "PASS"},
+        ],
+        internal_cap_rows=[],
+        errors=[{"pair_id": "p0", "error": "boom"}],
+    )
+
+    assert rows[0]["medium_sweep_interpretation_allowed"] == 0
+    assert rows[0]["run_error_count"] == 1
+    assert rows[0]["recommendation"] == "do_not_interpret_coupled_geometry_run_errors_present"
 
 
 def test_coupled_operator_digest_is_stable() -> None:

@@ -133,6 +133,7 @@ def main() -> None:
         "coupled_pairs_requested": len(tasks),
         "coupled_pairs_submitted": 0,
         "coupled_pairs_completed": 0,
+        "coupled_pairs_failed": 0,
         "coupled_pairs_cancelled": 0,
         "workers": max(1, args.workers),
     }
@@ -221,13 +222,13 @@ def run_tasks(
             errors.extend(task_errors)
             status["coupled_pairs_submitted"] = int(status["coupled_pairs_submitted"]) + 1
             status["coupled_pairs_completed"] = len(completed)
+            status["coupled_pairs_failed"] = len(errors)
             if len(completed) - last_checkpoint >= max(1, args.checkpoint_every_pairs):
                 progress.append(progress_row(status, completed, errors, started_perf))
                 last_checkpoint = len(completed)
                 write_partial(args.out, status, progress, errors, started_perf)
         if status.get("status") == "RUNNING":
-            status["status"] = "COMPLETED"
-            status["finalization_reason"] = "all_pairs_completed"
+            mark_completed_attempts_status(status, errors)
         progress.append(progress_row(status, completed, errors, started_perf))
         write_partial(args.out, status, progress, errors, started_perf)
         return completed, errors, progress
@@ -256,6 +257,7 @@ def run_tasks(
                     completed.append(result)
                 errors.extend(task_errors)
                 status["coupled_pairs_completed"] = len(completed)
+                status["coupled_pairs_failed"] = len(errors)
                 if len(completed) - last_checkpoint >= max(1, args.checkpoint_every_pairs):
                     progress.append(progress_row(status, completed, errors, started_perf))
                     last_checkpoint = len(completed)
@@ -269,8 +271,7 @@ def run_tasks(
         else:
             executor.shutdown(wait=True, cancel_futures=False)
     if status.get("status") == "RUNNING":
-        status["status"] = "COMPLETED"
-        status["finalization_reason"] = "all_pairs_completed"
+        mark_completed_attempts_status(status, errors)
     progress.append(progress_row(status, completed, errors, started_perf))
     write_partial(args.out, status, progress, errors, started_perf)
     return completed, errors, progress
@@ -312,7 +313,7 @@ def write_outputs(
         raw_topology_output_mode=args.raw_topology_output_mode,
     )
     reconstruction_rows = reconstruction_audit_rows(node_rows, profile_rows, marginal_rows, residual_rows)
-    readiness_rows = medium_scale_readiness_rows(completeness_rows, reconstruction_rows, internal_cap_rows)
+    readiness_rows = medium_scale_readiness_rows(completeness_rows, reconstruction_rows, internal_cap_rows, errors)
     finalization_timings["summaries_manifests_audits"] = round(time.perf_counter() - phase_started, 3)
 
     csv_output_files = [
@@ -437,6 +438,8 @@ def write_outputs(
     status["residual_rows"] = len(residual_rows)
     status["marginal_projection_rows"] = len(marginal_projection_rows)
     status["internal_cap_events"] = len(internal_cap_rows)
+    status["coupled_pairs_failed"] = len(errors)
+    status["error_count"] = len(errors)
     status["reconstruction_audit_clean_pass"] = int(all(row.get("status") == "PASS" for row in reconstruction_rows))
     status["reconstruction_audit_interpretable_pass"] = int(
         all(row.get("status") in {"PASS", "PASS_WITH_SKIPS"} for row in reconstruction_rows)
@@ -833,6 +836,7 @@ def medium_scale_readiness_rows(
     completeness_rows: list[dict[str, object]],
     reconstruction_rows: list[dict[str, object]],
     internal_cap_rows: list[dict[str, object]],
+    errors: list[dict[str, object]],
 ) -> list[dict[str, object]]:
     artifact_counts: dict[str, int] = {
         "complete": 0,
@@ -854,8 +858,11 @@ def medium_scale_readiness_rows(
     )
     has_fail = audit_counts.get("FAIL", 0) > 0
     has_skips = audit_counts.get("PASS_WITH_SKIPS", 0) > 0
-    interpretation_allowed = int(not has_fail and not primary_comparison_no_complete and not internal_cap_rows)
-    if primary_comparison_no_complete:
+    has_errors = bool(errors)
+    interpretation_allowed = int(not has_errors and not has_fail and not primary_comparison_no_complete and not internal_cap_rows)
+    if has_errors:
+        recommendation = "do_not_interpret_coupled_geometry_run_errors_present"
+    elif primary_comparison_no_complete:
         recommendation = "do_not_interpret_coupled_geometry_no_complete_primary_comparison_rows"
     elif has_fail:
         recommendation = "repair_failed_reconstruction_audits_before_medium_sweep"
@@ -875,6 +882,7 @@ def medium_scale_readiness_rows(
         "audits_PASS_WITH_SKIPS": audit_counts.get("PASS_WITH_SKIPS", 0),
         "audits_NO_COMPLETE_ROWS": audit_counts.get("NO_COMPLETE_ROWS", 0),
         "audits_FAIL": audit_counts.get("FAIL", 0),
+        "run_error_count": len(errors),
         "medium_sweep_interpretation_allowed": interpretation_allowed,
         "interpretation_scope": "complete_or_lossless_rows_only" if has_skips else "all_primary_rows_complete_or_lossless",
         "recommendation": recommendation,
@@ -966,6 +974,7 @@ def write_report(
         "## Counts",
         "",
         f"- Coupled pairs completed: `{status.get('coupled_pairs_completed', '')}` / `{status.get('coupled_pairs_requested', '')}`",
+        f"- Coupled pairs failed: `{status.get('coupled_pairs_failed', '')}`",
         f"- Joint node rows: `{status.get('joint_node_rows', '')}`",
         f"- Joint edge rows: `{status.get('joint_edge_rows', '')}`",
         f"- Internal cap events: `{status.get('internal_cap_events', '')}`",
@@ -1223,8 +1232,18 @@ def progress_row(
         "status": status.get("status", ""),
         "coupled_pairs_submitted": status.get("coupled_pairs_submitted", 0),
         "coupled_pairs_completed": len(completed),
+        "coupled_pairs_failed": len(errors),
         "errors": len(errors),
     }
+
+
+def mark_completed_attempts_status(status: dict[str, object], errors: list[dict[str, object]]) -> None:
+    if errors:
+        status["status"] = "COMPLETED_WITH_ERRORS"
+        status["finalization_reason"] = "all_pairs_attempted_with_errors"
+    else:
+        status["status"] = "COMPLETED"
+        status["finalization_reason"] = "all_pairs_completed"
 
 
 def parse_horizon_schedule(raw: str, horizon_max: int) -> tuple[int, ...]:

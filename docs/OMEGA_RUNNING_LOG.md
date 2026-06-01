@@ -9,6 +9,94 @@ patch notes at the top.
 
 ## 2026-06-01
 
+### Future Field Atlas H128 Coupled Depth Gate And Triadic Profile Smoke
+
+Ran a bounded H128 coupled depth gate and a short three-frontier profile-only
+smoke.
+
+Retained note:
+
+- `docs/research_notes/validation_results/future_field_atlas_coupled_h128_and_triadic_profile_smoke_result.md`
+
+H128 pair4 parallel attempt:
+
+```text
+workers: 4
+coupled_pairs_requested: 4
+coupled_pairs_completed: 2
+coupled_pairs_failed: 2
+elapsed_seconds: 651.267
+joint_node_rows: 266977
+joint_edge_rows: 1737824
+total_output_size: about 0.096 GiB
+```
+
+Read:
+
+```text
+The pair4 attempt exposed a Windows multiprocessing result-transfer limit on
+heavy H128 pairs. The partial output is an engineering signal, not a clean
+scale result. The runner now distinguishes completed-with-errors from clean
+completion and blocks medium-sweep interpretation readiness when run errors
+are present.
+```
+
+H128 pair2 serial depth gate:
+
+```text
+workers: 1
+coupled_pairs_completed: 2 / 2
+elapsed_seconds: 624.553
+finalization_seconds: 402.605
+joint_node_rows: 2078735
+joint_edge_rows: 13570754
+internal_cap_events: 0
+artifact_completeness_statuses: complete
+audit status counts: PASS 3
+total_output_size: about 0.746 GiB
+```
+
+Read:
+
+```text
+H128 coupled depth is feasible for small pair counts. The bottleneck is skewed
+raw topology size, worker result transfer, and shard write-out time, not CPU
+arithmetic.
+```
+
+Triadic H6 profile-only smoke:
+
+```text
+status: COMPLETED
+elapsed_seconds: 6.277
+triple_count_completed: 1 / 1
+internal_cap_events: 0
+artifact_completeness_statuses: complete
+product_baseline H6: 60830 joint states
+triadic H6: 9101 joint states
+terminal residual: 0.8504
+raw_topology_retention: not_emitted_profile_only_smoke
+```
+
+Validation:
+
+```text
+ruff check omega/future_field_atlas tests/test_coupled_atlas_hardening.py tests/test_triadic_future_field_smoke.py
+python -m compileall omega/future_field_atlas tests
+python -m pytest tests/test_coupled_atlas_hardening.py tests/test_triadic_future_field_smoke.py -q
+git diff --check
+
+tests: 10 passed
+```
+
+Next:
+
+```text
+Before broad H128 coupled surveys, add worker-side spooling or pair-indexed
+heavy-pair handling. Keep triadic profile-only until the coupled two-frontier
+path has a stable high-volume output strategy.
+```
+
 ### Future Field Atlas Coupled Lossless-Block Audit
 
 Implemented an optional, modular exact repeated-horizon block compressor for
