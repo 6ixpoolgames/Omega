@@ -22,6 +22,10 @@ def stable_hash(value: object, length: int = 16) -> str:
     return hashlib.sha1(payload.encode("utf-8")).hexdigest()[:length]
 
 
+def canonical_json(value: object) -> str:
+    return json.dumps(value, sort_keys=True, separators=(",", ":"), default=str)
+
+
 def safe_token(value: object) -> str:
     token = "".join(char if char.isalnum() else "_" for char in str(value))
     return token.strip("_") or "empty"

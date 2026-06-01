@@ -137,7 +137,7 @@ def flow_composition_residual_rows(matrices: list[SparseMatrixRecord]) -> list[d
                     right = by_key.get((*scan_key, mid_h, target_h))
                     if direct is None or left is None or right is None:
                         continue
-                    residual = composition_residual(direct, left, right)
+                    residual = transport_composition_metrics(direct, left, right)
                     rows.append({
                         "scan_id": scan_key[0],
                         "condition_id": scan_key[1],
@@ -152,7 +152,7 @@ def flow_composition_residual_rows(matrices: list[SparseMatrixRecord]) -> list[d
     return rows
 
 
-def composition_residual(
+def transport_composition_metrics(
     direct: SparseMatrixRecord,
     left: SparseMatrixRecord,
     right: SparseMatrixRecord,
@@ -164,8 +164,8 @@ def composition_residual(
     right_rows = list(right.row_labels)
     right_cols = list(right.column_labels)
     status = "ok"
-    if direct_rows != left_rows or direct_cols != right_cols:
-        status = "label_mismatch_union_aligned"
+    if direct_rows != left_rows or direct_cols != right_cols or left_cols != right_rows:
+        status = "label_mismatch"
     source_labels = sorted(set(direct_rows) | set(left_rows))
     target_labels = sorted(set(direct_cols) | set(right_cols))
     mid_labels = sorted(set(left_cols) | set(right_rows))
@@ -186,6 +186,7 @@ def composition_residual(
     return {
         "composition_status": status,
         "composition_kind": "support_and_path_count_unit_edge_weight",
+        "composition_alignment_policy": "exact_labels" if status == "ok" else "union_aligned_for_diagnostic",
         "support_composition_status": status,
         "support_composition_residual_l1": support_residual_l1,
         "support_composition_residual_frobenius": support_residual_fro,
@@ -198,10 +199,10 @@ def composition_residual(
         "path_count_composition_residual_fraction": path_count_residual_l1 / max(1.0, direct_weight),
         "path_count_rank_direct": int(np.linalg.matrix_rank(direct_dense)),
         "path_count_rank_composed": int(np.linalg.matrix_rank(composed_path_count)),
-        "weighted_flow_composition_status": "not_defined_unit_edge_weights_only",
-        "weighted_flow_composition_residual_l1": "",
-        "weighted_flow_composition_residual_frobenius": "",
-        "weighted_flow_composition_residual_fraction": "",
+        "weighted_mass_composition_status": "not_defined_unit_edge_weights_only",
+        "weighted_mass_composition_residual_l1": "",
+        "weighted_mass_composition_residual_frobenius": "",
+        "weighted_mass_composition_residual_fraction": "",
     }
 
 

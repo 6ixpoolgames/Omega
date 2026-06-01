@@ -31,7 +31,8 @@ def profile_rows_for_scan(raw: RawScan, condition: GeneratedCondition) -> list[d
         if horizon not in raw.horizon_schedule:
             previous_frontier = frontier
             continue
-        component_count, largest_fraction = component_summary(frontier, condition.system.edges)
+        step_edges = raw.step_edges.get(horizon, tuple())
+        component_count, largest_fraction = component_summary(frontier, step_edges)
         new_states = len([state for state in frontier if first_seen.get(state) == horizon])
         extinct_states = len(previous_frontier - frontier) if horizon > 0 else 0
         returning_states = len([state for state in frontier if first_seen.get(state, horizon) < horizon and state not in previous_frontier])
@@ -40,15 +41,15 @@ def profile_rows_for_scan(raw: RawScan, condition: GeneratedCondition) -> list[d
             condition,
         )
         node_truncated = len(frontier) > raw.max_frontier_nodes_per_horizon
-        edge_truncated = len(raw.step_edges.get(horizon, ())) > raw.max_frontier_edges_per_step
+        edge_truncated = len(step_edges) > raw.max_frontier_edges_per_step
         rows.append({
             **profile_base_fields(raw),
             "horizon": horizon,
-            "feature_status": "complete_from_in_memory_frontier",
+            "feature_status": "complete" if not node_truncated and not edge_truncated else "truncated_noninterpretable",
             "node_artifact_status": "complete" if not node_truncated else "truncated_noninterpretable",
             "edge_artifact_status": "complete" if not edge_truncated else "truncated_noninterpretable",
             "frontier_state_count": len(frontier),
-            "frontier_edge_count": len(raw.step_edges.get(horizon, ())),
+            "frontier_edge_count": len(step_edges),
             "frontier_component_count": component_count,
             "largest_component_fraction": largest_fraction,
             "frontier_entropy": entropy_from_weights([1.0 for _state in frontier]),
@@ -104,36 +105,16 @@ def membership_rows_for_scan(raw: RawScan, condition: GeneratedCondition) -> lis
 
 def boundary_rows_for_scan(raw: RawScan, condition: GeneratedCondition) -> list[dict[str, object]]:
     rows: list[dict[str, object]] = []
-    candidates_by_source: dict[State, list[tuple[State, object]]] = defaultdict(list)
-    for (source, target), anatomy in condition.candidate_anatomy.items():
-        candidates_by_source[source].append((target, anatomy))
     for horizon in raw.horizon_schedule:
         if horizon == 0:
             edges: tuple[tuple[State, State], ...] = tuple()
-            sources: frozenset[State] = frozenset({raw.start_state})
         else:
             edges = raw.step_edges.get(horizon - 1, tuple())
-            sources = raw.frontiers.get(horizon - 1, frozenset())
         selected_inside_boundary = 0
         selected_outside_boundary = 0
         boundary = 0
         inside_boundary_energies: list[float] = []
         outside_boundary_energies: list[float] = []
-        retained_inside_boundary = 0
-        retained_outside_boundary = 0
-        reference_inside_boundary_total = 0
-        reference_outside_boundary_total = 0
-        selected_keys = set(edges)
-        for source in sources:
-            for target, anatomy in candidates_by_source.get(source, []):
-                if not anatomy.reference_selected_flag:
-                    continue
-                if anatomy.candidate_rank <= raw.spec.rank_boundary_k:
-                    reference_inside_boundary_total += 1
-                    retained_inside_boundary += int((source, target) in selected_keys)
-                else:
-                    reference_outside_boundary_total += 1
-                    retained_outside_boundary += int((source, target) in selected_keys)
         for source, target in edges:
             anatomy = condition.candidate_anatomy.get((source, target))
             if not anatomy:
@@ -157,14 +138,6 @@ def boundary_rows_for_scan(raw: RawScan, condition: GeneratedCondition) -> list[
             "weakest_inside_rank_boundary_energy": weakest_inside,
             "strongest_outside_rank_boundary_energy": strongest_outside,
             "rank_boundary_energy_gap": gap,
-            "inside_rank_boundary_retention_fraction_vs_reference": (
-                retained_inside_boundary / reference_inside_boundary_total
-                if reference_inside_boundary_total else ""
-            ),
-            "outside_rank_boundary_retention_fraction_vs_reference": (
-                retained_outside_boundary / reference_outside_boundary_total
-                if reference_outside_boundary_total else ""
-            ),
             "selected_inside_rank_boundary_fraction": selected_inside_boundary / max(
                 1,
                 selected_inside_boundary + selected_outside_boundary,
@@ -173,8 +146,6 @@ def boundary_rows_for_scan(raw: RawScan, condition: GeneratedCondition) -> list[
                 1,
                 selected_inside_boundary + selected_outside_boundary,
             ),
-            "reference_inside_rank_boundary_edge_count": reference_inside_boundary_total,
-            "reference_outside_rank_boundary_edge_count": reference_outside_boundary_total,
         })
     return rows
 
@@ -195,6 +166,7 @@ def profile_base_fields(raw: RawScan) -> dict[str, object]:
         "state_id_schema": spec.state_space.state_id_schema,
         "metric_id": spec.state_space.metric_id,
         "adjacency_rule_id": spec.state_space.adjacency_rule_id,
+        "state_space_params_json": spec.state_space.state_space_params_json,
         "law_id": spec.transformation_law.law_id,
         "law_family": spec.transformation_law.law_family,
         "candidate_successor_rule_id": spec.transformation_law.candidate_successor_rule_id,
@@ -202,12 +174,18 @@ def profile_base_fields(raw: RawScan) -> dict[str, object]:
         "energy_function_id": spec.transformation_law.energy_function_id,
         "energy_params_json": spec.transformation_law.energy_params_json,
         "admissibility_predicate_id": spec.transformation_law.admissibility_predicate_id,
+        "invariant_observable_id": spec.transformation_law.invariant_observable_id,
+        "invariant_params_json": spec.transformation_law.invariant_params_json,
+        "asymmetry_term_id": spec.transformation_law.asymmetry_term_id,
+        "roughness_term_id": spec.transformation_law.roughness_term_id,
+        "transformation_law_seed_policy": spec.transformation_law.seed_policy,
         "observable_set_id": spec.observable.observable_set_id,
         "observable_family": spec.observable.observable_family,
         "observable_params_json": spec.observable.observable_params_json,
         "frontier_scan_id": frontier_scan.frontier_scan_id,
         "frontier_expansion_rule_id": frontier_scan.frontier_expansion_rule_id,
         "horizon_schedule_id": frontier_scan.horizon_schedule_id,
+        "frontier_scan_params_json": frontier_scan.frontier_scan_params_json,
         "frontier_artifact_status_domain": "complete|lossless_compressed|sampled|truncated_noninterpretable",
         "selection_operator_id": operator.selection_operator_id,
         "selection_operator_family": operator.operator_family,
@@ -230,16 +208,19 @@ def rank_set_text(values: tuple[int, ...]) -> str:
     return ";".join(str(value) for value in values)
 
 
-def component_summary(frontier: frozenset[State], edges: dict[State, tuple[State, ...]]) -> tuple[int, float]:
+def component_summary(frontier: frozenset[State], step_edges: tuple[tuple[State, State], ...]) -> tuple[int, float]:
     if not frontier:
         return 0, 0.0
-    frontier_set = set(frontier)
     adjacency: dict[State, set[State]] = {state: set() for state in frontier}
-    for source in frontier:
-        for target in edges.get(source, ()):
-            if target in frontier_set:
-                adjacency[source].add(target)
-                adjacency[target].add(source)
+    sources_by_target: dict[State, list[State]] = defaultdict(list)
+    for source, target in step_edges:
+        if source in adjacency:
+            sources_by_target[target].append(source)
+    for sources in sources_by_target.values():
+        for left in sources:
+            for right in sources:
+                if left != right:
+                    adjacency[left].add(right)
     seen: set[State] = set()
     sizes: list[int] = []
     for state in frontier:

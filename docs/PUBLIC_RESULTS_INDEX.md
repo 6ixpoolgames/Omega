@@ -26,7 +26,7 @@ graph-channel causality
 
 The current claim is modest:
 
-> Directional horizon-transport instrumentation can measure matched-control-separated response profiles in neutral finite transition substrates. Transition-energy substrate laws express different response regimes. Preservation asymmetry is currently the strongest non-template substrate hook for aligned amplification, with low-beta sensitivity now mapped below beta `0.25`; the latest MaxEnt/top-m audits indicate that the current preservation response is narrow to hard top-m selection geometry rather than recovered by the tested stochastic relaxations. The hard-top-m mechanism branch now points toward a fixed low-rank successor-boundary pattern: response appears when the retained selected-edge set is the low-energy rank prefix, not under generic lower out-degree, random deletion, or expansion. The current implementation work is now rebuilding the instrument as a Future Field Atlas so raw topology, rank-boundary anatomy, and transport matrices are emitted before any response labels. Conditions are represented by state-space, transition-law, selection-operator, observable, and frontier-scan specs; historical treatment names are documentation-only translation aids.
+> Directional horizon-transport instrumentation can measure matched-control-separated response profiles in neutral finite transition substrates. Transition-energy substrate laws express different response regimes. Preservation asymmetry is currently the strongest non-template substrate hook for aligned amplification, with low-beta sensitivity now mapped below beta `0.25`; the latest MaxEnt/top-m audits indicate that the current preservation response is narrow to hard top-m selection geometry rather than recovered by the tested stochastic relaxations. The hard-top-m mechanism branch now points toward a fixed low-rank successor-boundary pattern: response appears when the retained selected-edge set is the low-energy rank prefix, not under generic lower out-degree, random deletion, or expansion. The current implementation work is now rebuilding the instrument as a Future Field Atlas so raw topology, rank-boundary anatomy, and transport matrices are emitted before any response labels. Conditions are represented by state-space, transition-law, selection-operator, observable, and frontier-scan specs; formal spec manifests, condition-identity manifests, completeness summaries, and reconstruction audits are now part of the smoke output. Historical treatment names are documentation-only translation aids.
 
 ## Best onboarding path
 
@@ -123,9 +123,11 @@ status: COMPLETED
 scans_completed: 8 / 8
 errors: 0
 horizon_max: 32
-frontier_node_rows: 30461
-frontier_edge_rows: 106431
+frontier_node_rows: 30671
+frontier_edge_rows: 107034
 selection_operator_geometry_rows: 8
+reconstruction_audit_passed: 1
+artifact_completeness_statuses: complete
 ```
 
 Read:
@@ -134,6 +136,7 @@ Read:
 The clean atlas build expresses the rank-boundary calibration pattern as
 selection-operator geometry and continuous operator-distance
 metrics from raw topology, without using the old response taxonomy.
+All required reconstruction audits passed in the H32 publication-schema smoke.
 ```
 
 This is an instrument-build result only. It supports the rebuild, not an Omega

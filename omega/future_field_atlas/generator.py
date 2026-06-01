@@ -4,20 +4,15 @@ import json
 from dataclasses import replace
 
 from omega.rfs_mb0_future_landscape.relation_generator import RelationParams
-from omega.rfs_mb0_future_landscape.substrate import State
+from omega.rfs_mb0_future_landscape.substrate import LandscapeSystem, State
 from omega.rfs_mb0_future_landscape.transition_energy_substrates import (
     PRESERVATION_ASYMMETRY,
-    TOP_M_DROP_STRONGEST_FROM_TOP_M,
-    TOP_M_DROP_TWO_WEAKEST_FROM_TOP_M,
-    TOP_M_DROP_WEAKEST_FROM_TOP_M,
-    TOP_M_RANDOM_DELETE_ONE_FROM_TOP_M,
-    TOP_M_RANDOM_DELETE_TWO_FROM_TOP_M,
     budget_field,
     candidate_successors,
     deterministic_preservation_job,
     enumerate_states,
-    generate_job_baseline_system,
     preservation_scored_candidates,
+    stable_ranked_sample,
 )
 
 from .contracts import (
@@ -62,6 +57,7 @@ def build_generated_conditions(
             for beta in macro_invariant_betas:
                 for operator_text in operator_texts:
                     operator = parse_selection_operator(operator_text)
+                    require_supported_calibration_operator(operator, operator_text)
                     params = relation_params(group_index, operator.base_out_degree)
                     condition_id = (
                         f"g{group_index:02d}_s{fresh_index:02d}_"
@@ -70,8 +66,8 @@ def build_generated_conditions(
                     job = {
                         "job_id": condition_id,
                         "condition_id": condition_id,
-                        "substrate_family": operator.implementation_family,
-                        "transition_energy_family": operator.implementation_family,
+                        "substrate_family": PRESERVATION_ASYMMETRY,
+                        "transition_energy_family": PRESERVATION_ASYMMETRY,
                         "substrate_variant": operator.selection_operator_id,
                         "macro_invariant_kind": macro_invariant_kind,
                         "budget_kind": macro_invariant_kind,
@@ -80,12 +76,22 @@ def build_generated_conditions(
                         "apply_reversibility": False,
                         "sampler_postprocess_policy": "future_field_atlas_no_reversibility",
                     }
-                    system = generate_job_baseline_system(job, params, seed)
+                    substrate_id = (
+                        f"{params.parameter_set_id}__{safe_token(operator.selection_operator_id)}"
+                        f"__seed{seed}"
+                    )
+                    system, scored_by_source = build_condition_system(
+                        substrate_id=substrate_id,
+                        params=params,
+                        seed=seed,
+                        job=job,
+                        operator=operator,
+                    )
                     spec = ConditionSpec(
                         condition_id=condition_id,
                         group_id=f"group_{group_index:02d}",
                         seed=seed,
-                        substrate_id=system.system_id,
+                        substrate_id=substrate_id,
                         state_space=StateSpaceSpec(
                             state_space_id=f"Z{params.alphabet_size}^{params.coordinate_count}",
                             coordinate_set_id=f"coordinate_index_set__n{params.coordinate_count}",
@@ -99,10 +105,23 @@ def build_generated_conditions(
                                 f"hamming_ball_without_self__radius_{params.neighborhood_radius}"
                                 f"__footprint_{params.update_footprint}"
                             ),
+                            state_space_params_json=json.dumps(
+                                {
+                                    "coordinate_count": params.coordinate_count,
+                                    "alphabet_size": params.alphabet_size,
+                                    "state_id_schema": "tuple_coordinate_payload",
+                                    "metric_id": "hamming_distance",
+                                    "adjacency_rule_id": (
+                                        f"hamming_ball_without_self__radius_{params.neighborhood_radius}"
+                                        f"__footprint_{params.update_footprint}"
+                                    ),
+                                },
+                                sort_keys=True,
+                            ),
                         ),
                         transformation_law=TransformationLawSpec(
-                            law_id=f"{operator.implementation_family}__{macro_invariant_kind}__beta_{beta:g}",
-                            law_family=operator.implementation_family,
+                            law_id=f"preservation_asymmetry__{macro_invariant_kind}__beta_{beta:g}",
+                            law_family=PRESERVATION_ASYMMETRY,
                             candidate_successor_rule_id=(
                                 f"hamming_ball_without_self__alphabet_{params.alphabet_size}"
                                 f"__footprint_{params.update_footprint}"
@@ -125,13 +144,34 @@ def build_generated_conditions(
                                 sort_keys=True,
                             ),
                             admissibility_predicate_id="candidate_successor_in_local_hamming_ball",
-                            stochastic_flag=operator.stochastic_flag,
-                            law_params_json=json.dumps(
+                            invariant_observable_id=macro_invariant_kind,
+                            invariant_params_json=json.dumps(
                                 {
                                     "macro_invariant_kind": macro_invariant_kind,
+                                    "state_space_id": f"Z{params.alphabet_size}^{params.coordinate_count}",
+                                },
+                                sort_keys=True,
+                            ),
+                            asymmetry_term_id="absolute_invariant_delta_penalty",
+                            roughness_term_id="seeded_uniform_transition_roughness",
+                            stochastic_flag=0,
+                            seed_policy="deterministic_base_seed_plus_group_and_operator_salts",
+                            law_params_json=json.dumps(
+                                {
+                                    "candidate_successor_rule_id": (
+                                        f"hamming_ball_without_self__alphabet_{params.alphabet_size}"
+                                        f"__footprint_{params.update_footprint}"
+                                    ),
+                                    "energy_function_id": "hamming_plus_macro_invariant_delta_plus_seeded_roughness",
+                                    "macro_invariant_kind": macro_invariant_kind,
                                     "macro_invariant_beta": beta,
+                                    "invariant_observable_id": macro_invariant_kind,
+                                    "asymmetry_term_id": "absolute_invariant_delta_penalty",
                                     "roughness_strength": params.roughness_strength,
+                                    "roughness_term_id": "seeded_uniform_transition_roughness",
                                     "apply_reversibility": False,
+                                    "stochastic_flag": 0,
+                                    "seed_policy": "deterministic_base_seed_plus_group_and_operator_salts",
                                 },
                                 sort_keys=True,
                             ),
@@ -158,8 +198,7 @@ def build_generated_conditions(
                     candidate_anatomy, selected, reference = edge_anatomy_for_condition(
                         system_edges=system.edges,
                         params=params,
-                        seed=seed,
-                        job=job,
+                        scored_by_source=scored_by_source,
                         rank_boundary_k=rank_boundary_k,
                         reference_operator=operator.operator_family == "rank_prefix",
                     )
@@ -207,20 +246,18 @@ def parse_selection_operator(raw: str) -> SelectionOperatorSpec:
     operator_family, options = parse_operator_text(raw)
     if operator_family == "rank_prefix":
         base_out_degree = required_int(options, "m", raw)
-        return rank_prefix_operator(base_out_degree, PRESERVATION_ASYMMETRY)
+        return rank_prefix_operator(base_out_degree)
     if operator_family == "rank_subset":
         base_out_degree = required_int(options, "m", raw)
         retained = parse_rank_set(required_text(options, "retain", raw))
         removed = parse_rank_set(options.get("remove", ""))
         if not removed:
             removed = tuple(rank for rank in range(1, base_out_degree + 1) if rank not in set(retained))
-        implementation_family = rank_subset_implementation_family(base_out_degree, retained, removed, raw)
-        return rank_subset_operator(base_out_degree, retained, removed, implementation_family)
+        return rank_subset_operator(base_out_degree, retained, removed)
     if operator_family == "stochastic_rank_subset":
         base_out_degree = required_int(options, "m", raw)
         effective_out_degree = required_int(options, "effective", raw)
-        implementation_family = stochastic_rank_subset_implementation_family(base_out_degree, effective_out_degree, raw)
-        return stochastic_rank_subset_operator(base_out_degree, effective_out_degree, implementation_family)
+        return stochastic_rank_subset_operator(base_out_degree, effective_out_degree)
     raise ValueError(
         f"unknown selection operator family in {raw!r}; expected rank_prefix, "
         "rank_subset, or stochastic_rank_subset"
@@ -271,138 +308,57 @@ def parse_rank_set(raw: str) -> tuple[int, ...]:
     return tuple(sorted(ranks))
 
 
-def rank_subset_implementation_family(
-    base_out_degree: int,
-    retained_rank_set: tuple[int, ...],
-    removed_rank_set: tuple[int, ...],
-    raw: str,
-) -> str:
-    if base_out_degree == 4 and retained_rank_set == (1, 2, 3) and removed_rank_set == (4,):
-        return TOP_M_DROP_WEAKEST_FROM_TOP_M
-    if base_out_degree == 5 and retained_rank_set == (1, 2, 3) and removed_rank_set == (4, 5):
-        return TOP_M_DROP_TWO_WEAKEST_FROM_TOP_M
-    if base_out_degree == 4 and retained_rank_set == (2, 3, 4) and removed_rank_set == (1,):
-        return TOP_M_DROP_STRONGEST_FROM_TOP_M
+def require_supported_calibration_operator(operator: SelectionOperatorSpec, raw: str) -> None:
+    if operator.operator_family == "rank_prefix":
+        return
+    if (
+        operator.operator_family == "rank_subset"
+        and operator.base_out_degree == 4
+        and operator.retained_rank_set == (1, 2, 3)
+        and operator.removed_rank_set == (4,)
+    ):
+        return
+    if (
+        operator.operator_family == "rank_subset"
+        and operator.base_out_degree == 5
+        and operator.retained_rank_set == (1, 2, 3)
+        and operator.removed_rank_set == (4, 5)
+    ):
+        return
+    if (
+        operator.operator_family == "rank_subset"
+        and operator.base_out_degree == 4
+        and operator.retained_rank_set == (2, 3, 4)
+        and operator.removed_rank_set == (1,)
+    ):
+        return
+    if (
+        operator.operator_family == "stochastic_rank_subset"
+        and operator.base_out_degree == 4
+        and operator.effective_out_degree == 3
+    ):
+        return
+    if (
+        operator.operator_family == "stochastic_rank_subset"
+        and operator.base_out_degree == 5
+        and operator.effective_out_degree == 3
+    ):
+        return
     raise ValueError(
-        f"selection operator {raw!r} has no calibration generator implementation. "
-        "The clean atlas runtime only accepts mathematically named operators, but "
+        f"selection operator {raw!r} has no calibration generator path. "
+        "The clean atlas runtime accepts mathematically named operators, but "
         "the current Phase 0/1 generator still supports a narrow audited calibration subset."
     )
 
 
-def stochastic_rank_subset_implementation_family(
-    base_out_degree: int,
-    effective_out_degree: int,
-    raw: str,
-) -> str:
-    if base_out_degree == 4 and effective_out_degree == 3:
-        return TOP_M_RANDOM_DELETE_ONE_FROM_TOP_M
-    if base_out_degree == 5 and effective_out_degree == 3:
-        return TOP_M_RANDOM_DELETE_TWO_FROM_TOP_M
-    raise ValueError(
-        f"selection operator {raw!r} has no calibration generator implementation. "
-        "Supported stochastic calibration operators are m=4,effective=3 and m=5,effective=3."
-    )
-
-
-def rank_prefix_operator(base_out_degree: int, family: str) -> SelectionOperatorSpec:
-    retained = tuple(range(1, base_out_degree + 1))
-    return selection_operator(
-        operator_family="rank_prefix",
-        base_out_degree=base_out_degree,
-        effective_out_degree=base_out_degree,
-        retained_rank_set=retained,
-        removed_rank_set=tuple(),
-        stochastic_flag=0,
-        seed_policy="deterministic_rank_order",
-        implementation_family=family,
-    )
-
-
-def rank_subset_operator(
-    base_out_degree: int,
-    retained_rank_set: tuple[int, ...],
-    removed_rank_set: tuple[int, ...],
-    family: str,
-) -> SelectionOperatorSpec:
-    return selection_operator(
-        operator_family="rank_subset",
-        base_out_degree=base_out_degree,
-        effective_out_degree=len(retained_rank_set),
-        retained_rank_set=retained_rank_set,
-        removed_rank_set=removed_rank_set,
-        stochastic_flag=0,
-        seed_policy="deterministic_rank_order",
-        implementation_family=family,
-    )
-
-
-def stochastic_rank_subset_operator(
-    base_out_degree: int,
-    effective_out_degree: int,
-    family: str,
-) -> SelectionOperatorSpec:
-    return selection_operator(
-        operator_family="stochastic_rank_subset",
-        base_out_degree=base_out_degree,
-        effective_out_degree=effective_out_degree,
-        retained_rank_set=tuple(),
-        removed_rank_set=tuple(),
-        stochastic_flag=1,
-        seed_policy="stable_ranked_sample_from_top_m",
-        implementation_family=family,
-    )
-
-
-def selection_operator(
+def build_condition_system(
     *,
-    operator_family: str,
-    base_out_degree: int,
-    effective_out_degree: int,
-    retained_rank_set: tuple[int, ...],
-    removed_rank_set: tuple[int, ...],
-    stochastic_flag: int,
-    seed_policy: str,
-    implementation_family: str,
-) -> SelectionOperatorSpec:
-    params = {
-        "operator_family": operator_family,
-        "base_out_degree": base_out_degree,
-        "effective_out_degree": effective_out_degree,
-        "retained_rank_set": list(retained_rank_set),
-        "removed_rank_set": list(removed_rank_set),
-        "stochastic_flag": stochastic_flag,
-        "seed_policy": seed_policy,
-        "implementation_family": implementation_family,
-    }
-    retained_token = "sampled" if stochastic_flag else "_".join(str(rank) for rank in retained_rank_set)
-    removed_token = "sampled" if stochastic_flag else ("none" if not removed_rank_set else "_".join(str(rank) for rank in removed_rank_set))
-    return SelectionOperatorSpec(
-        selection_operator_id=(
-            f"{operator_family}__m{base_out_degree}_to_{effective_out_degree}"
-            f"__retain_{retained_token}__remove_{removed_token}"
-        ),
-        operator_family=operator_family,
-        operator_params_json=json.dumps(params, sort_keys=True),
-        base_out_degree=base_out_degree,
-        effective_out_degree=effective_out_degree,
-        retained_rank_set=retained_rank_set,
-        removed_rank_set=removed_rank_set,
-        stochastic_flag=stochastic_flag,
-        seed_policy=seed_policy,
-        implementation_family=implementation_family,
-    )
-
-
-def edge_anatomy_for_condition(
-    *,
-    system_edges: dict[State, tuple[State, ...]],
+    substrate_id: str,
     params: RelationParams,
     seed: int,
     job: dict[str, object],
-    rank_boundary_k: int,
-    reference_operator: bool,
-) -> tuple[dict[tuple[State, State], EdgeAnatomy], set[tuple[State, State]], set[tuple[State, State]]]:
+    operator: SelectionOperatorSpec,
+) -> tuple[LandscapeSystem, dict[State, list[tuple[float, State]]]]:
     states = enumerate_states(params.coordinate_count, params.alphabet_size)
     candidates_by_state = {
         state: candidate_successors(state, params.alphabet_size, params.update_footprint)
@@ -420,6 +376,147 @@ def edge_anatomy_for_condition(
         budget,
         calibration_job,
     )
+    edges = select_edges_from_scores(scored_by_source, operator, seed)
+    out_degrees = [len(edges.get(state, ())) for state in states]
+    system = LandscapeSystem(
+        system_id=substrate_id,
+        seed=seed,
+        family="future_field_atlas_calibration",
+        states=states,
+        edges=edges,
+        transform_names=("ranked_successor_selection",),
+        metadata={
+            "state_coordinate_count": params.coordinate_count,
+            "alphabet_size": params.alphabet_size,
+            "state_count": len(states),
+            "edge_count": sum(out_degrees),
+            "mean_out_degree": sum(out_degrees) / max(1, len(out_degrees)),
+            "transition_energy_family": PRESERVATION_ASYMMETRY,
+            "selection_operator_family": operator.operator_family,
+            "base_out_degree": operator.base_out_degree,
+            "effective_out_degree": operator.effective_out_degree,
+        },
+    )
+    return system, scored_by_source
+
+
+def select_edges_from_scores(
+    scored_by_source: dict[State, list[tuple[float, State]]],
+    operator: SelectionOperatorSpec,
+    seed: int,
+) -> dict[State, tuple[State, ...]]:
+    edges: dict[State, tuple[State, ...]] = {}
+    retained = set(operator.retained_rank_set)
+    for source, scored in scored_by_source.items():
+        if operator.stochastic_flag:
+            pool = scored[: max(1, operator.base_out_degree)]
+            selected = stable_ranked_sample(
+                pool,
+                max(1, operator.effective_out_degree),
+                seed,
+                operator.selection_operator_id,
+                source,
+                "selection_operator_sample",
+            )
+        else:
+            selected = [
+                item for rank, item in enumerate(scored, start=1)
+                if rank in retained
+            ]
+        selected.sort(key=lambda item: (item[0], item[1]))
+        edges[source] = tuple(target for _score, target in selected)
+    return edges
+
+
+def rank_prefix_operator(base_out_degree: int) -> SelectionOperatorSpec:
+    retained = tuple(range(1, base_out_degree + 1))
+    return selection_operator(
+        operator_family="rank_prefix",
+        base_out_degree=base_out_degree,
+        effective_out_degree=base_out_degree,
+        retained_rank_set=retained,
+        removed_rank_set=tuple(),
+        stochastic_flag=0,
+        seed_policy="deterministic_rank_order",
+    )
+
+
+def rank_subset_operator(
+    base_out_degree: int,
+    retained_rank_set: tuple[int, ...],
+    removed_rank_set: tuple[int, ...],
+) -> SelectionOperatorSpec:
+    return selection_operator(
+        operator_family="rank_subset",
+        base_out_degree=base_out_degree,
+        effective_out_degree=len(retained_rank_set),
+        retained_rank_set=retained_rank_set,
+        removed_rank_set=removed_rank_set,
+        stochastic_flag=0,
+        seed_policy="deterministic_rank_order",
+    )
+
+
+def stochastic_rank_subset_operator(
+    base_out_degree: int,
+    effective_out_degree: int,
+) -> SelectionOperatorSpec:
+    return selection_operator(
+        operator_family="stochastic_rank_subset",
+        base_out_degree=base_out_degree,
+        effective_out_degree=effective_out_degree,
+        retained_rank_set=tuple(),
+        removed_rank_set=tuple(),
+        stochastic_flag=1,
+        seed_policy="stable_ranked_sample_from_base_rank_set",
+    )
+
+
+def selection_operator(
+    *,
+    operator_family: str,
+    base_out_degree: int,
+    effective_out_degree: int,
+    retained_rank_set: tuple[int, ...],
+    removed_rank_set: tuple[int, ...],
+    stochastic_flag: int,
+    seed_policy: str,
+) -> SelectionOperatorSpec:
+    params = {
+        "operator_family": operator_family,
+        "base_out_degree": base_out_degree,
+        "effective_out_degree": effective_out_degree,
+        "retained_rank_set": list(retained_rank_set),
+        "removed_rank_set": list(removed_rank_set),
+        "stochastic_flag": stochastic_flag,
+        "seed_policy": seed_policy,
+    }
+    retained_token = "sampled" if stochastic_flag else "_".join(str(rank) for rank in retained_rank_set)
+    removed_token = "sampled" if stochastic_flag else ("none" if not removed_rank_set else "_".join(str(rank) for rank in removed_rank_set))
+    return SelectionOperatorSpec(
+        selection_operator_id=(
+            f"{operator_family}__m{base_out_degree}_to_{effective_out_degree}"
+            f"__retain_{retained_token}__remove_{removed_token}"
+        ),
+        operator_family=operator_family,
+        operator_params_json=json.dumps(params, sort_keys=True),
+        base_out_degree=base_out_degree,
+        effective_out_degree=effective_out_degree,
+        retained_rank_set=retained_rank_set,
+        removed_rank_set=removed_rank_set,
+        stochastic_flag=stochastic_flag,
+        seed_policy=seed_policy,
+    )
+
+
+def edge_anatomy_for_condition(
+    *,
+    system_edges: dict[State, tuple[State, ...]],
+    params: RelationParams,
+    scored_by_source: dict[State, list[tuple[float, State]]],
+    rank_boundary_k: int,
+    reference_operator: bool,
+) -> tuple[dict[tuple[State, State], EdgeAnatomy], set[tuple[State, State]], set[tuple[State, State]]]:
     reference_edge_keys: set[tuple[State, State]] = set()
     selected_edge_keys = {
         (source, target)

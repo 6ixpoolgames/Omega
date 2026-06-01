@@ -15,7 +15,10 @@ uses `Z3^5`, meaning five coordinates with three symbols per coordinate.
 `TransformationLawSpec`
 : Lawful local transition rule that generates candidate futures and scores
 successor states. Current calibration uses the preservation-asymmetry energy
-machinery as a narrow backend, not as an Omega claim.
+machinery as a narrow backend, not as an Omega claim. The invariant/asymmetry
+engine belongs here: candidate successor rule, admissibility predicate, energy
+function, invariant observable, preservation/asymmetry term, roughness term, and
+seed policy.
 
 `SelectionOperatorSpec`
 : Mathematical rule selecting which ranked successors remain available from
@@ -68,6 +71,21 @@ set under a stable seeded policy.
 `selection_operator_geometry_summary.csv`
 : Primary Phase 0/1 calibration summary. It reports continuous operator and
 rank-boundary geometry, not a boolean mechanism-recovery label.
+
+`formal_spec_manifest.csv`
+: Manifest of first-class formal specs with canonical JSON and stable digests.
+
+`condition_identity_manifest.csv`
+: Manifest tying each condition to state-space, transformation-law,
+selection-operator, observable, frontier-scan, and seed identity.
+
+`reconstruction_audit_summary.csv`
+: Audit file reporting whether derived atlas artifacts reconstruct from raw
+rows and formal specs.
+
+`artifact_completeness_summary.csv`
+: Audit file reporting whether topology-derived artifacts are complete,
+losslessly compressed, sampled, or truncated/non-interpretable.
 
 ## Historical Translation
 

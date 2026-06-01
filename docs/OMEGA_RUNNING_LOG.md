@@ -9,7 +9,7 @@ patch notes at the top.
 
 ## 2026-06-01
 
-### Future Field Atlas Phase 0/1 Publication-Schema Smoke
+### Future Field Atlas Phase 0/1 Publication-Schema Audit Smoke
 
 Implemented the first clean Future Field Atlas package as an instrumentation
 reset. The new package separates substrate generation, frontier scanning,
@@ -23,7 +23,10 @@ fixture. Condition identity is mathematical: `StateSpaceSpec`,
 `FrontierScanSpec`. Historical treatment-arm names live only in the Future Field
 Atlas glossary. Runtime package search returns zero hits for historical
 treatment-arm and response terms. Boolean recovery labels were replaced by
-continuous operator and rank-boundary geometry metrics.
+continuous operator and rank-boundary geometry metrics. The final audit pass
+added formal spec manifests, condition-identity manifests,
+artifact-completeness summaries, and reconstruction audits proving that the
+primary derived artifacts reconstruct from raw rows and specs.
 
 Retained note:
 
@@ -36,7 +39,7 @@ Spec:
 
 Local validation output:
 
-- `results/future_field_atlas/20260601_phase0_1_publication_schema_h32/`
+- `results/future_field_atlas/20260601_phase0_1_publication_audit_h32/`
 
 Run shape:
 
@@ -45,12 +48,24 @@ status: COMPLETED
 workers: 4
 conditions: 8
 scans_completed: 8 / 8
-elapsed_seconds: 15.997
+elapsed_seconds: 20.551
 errors: 0
 horizon_max: 32
-frontier_node_rows: 30461
-frontier_edge_rows: 106431
+frontier_node_rows: 30671
+frontier_edge_rows: 107034
 selection_operator_geometry_rows: 8
+reconstruction_audit_passed: 1
+artifact_completeness_statuses: complete
+```
+
+Reconstruction audit:
+
+```text
+condition_identity_traceability: PASS
+frontier_profile_reconstructs_from_node_and_edge_rows: PASS
+rank_boundary_geometry_reconstructs_from_edge_rows: PASS
+adjacent_transport_matrices_reconstruct_from_edge_rows: PASS
+selection_operator_geometry_reconstructs_from_rank_boundary_rows: PASS
 ```
 
 Main read:

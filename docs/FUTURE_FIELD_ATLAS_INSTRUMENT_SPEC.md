@@ -149,6 +149,29 @@ The runner should not emit `boundary_control`, `condition_role`, `human_label`,
 or `legacy_*` columns. Human-readable historical translation is documentation,
 not runtime identity.
 
+Each formal spec must be serializable and manifest-backed:
+
+```text
+canonical JSON serialization
+stable deterministic digest
+explicit params JSON
+manifest entry
+condition identity traceability
+```
+
+`TransformationLawSpec` owns the invariant/asymmetry engine:
+
+```text
+candidate successor rule
+admissibility predicate
+energy / scoring function
+invariant observable used by the law
+asymmetry or preservation term
+roughness / noise term
+deterministic or stochastic status
+seed policy
+```
+
 ### 3.1 Scanner
 
 Generates lawful frontier evolution and saves topology.
@@ -167,11 +190,11 @@ frontier support count
 component count
 branching factor
 edge rank statistics
-inside-rank-boundary retention
-outside-rank-boundary retention
+inside-rank-boundary selected fraction
+outside-rank-boundary selected fraction
 transport matrix value totals
 transport concentration
-composition residual
+support and path-count composition residuals
 ```
 
 ### 3.3 Analyzer
@@ -283,6 +306,7 @@ symbol_domain_id
 state_id_schema
 metric_id
 adjacency_rule_id
+state_space_params_json
 start_state_id
 seed
 law_id
@@ -292,6 +316,11 @@ candidate_successor_params_json
 energy_function_id
 energy_params_json
 admissibility_predicate_id
+invariant_observable_id
+invariant_params_json
+asymmetry_term_id
+roughness_term_id
+transformation_law_seed_policy
 observable_set_id
 observable_family
 observable_params_json
@@ -307,6 +336,7 @@ seed_policy
 frontier_scan_id
 frontier_expansion_rule_id
 horizon_schedule_id
+frontier_scan_params_json
 frontier_artifact_status_domain
 ```
 
@@ -407,6 +437,46 @@ frontier_count
 horizon_schedule
 output_files
 claim_boundary
+```
+
+`formal_spec_manifest.csv`
+
+One row per formal spec object needed to reconstruct a scan.
+
+Required columns:
+
+```text
+spec_type
+spec_id
+spec_digest
+params_json
+canonical_json
+```
+
+`condition_identity_manifest.csv`
+
+One row per scan condition, tying runtime condition identity to formal specs.
+
+Required columns:
+
+```text
+condition_id
+group_id
+seed
+seed_policy
+substrate_id
+state_space_id
+state_space_digest
+law_id
+law_digest
+selection_operator_id
+selection_operator_digest
+observable_set_id
+observable_digest
+frontier_scan_id
+frontier_scan_digest
+condition_identity_digest
+condition_identity_json
 ```
 
 ### 8.2 Run config
@@ -532,8 +602,6 @@ rank_boundary_edge_count
 weakest_inside_rank_boundary_energy
 strongest_outside_rank_boundary_energy
 rank_boundary_energy_gap
-inside_rank_boundary_retention_fraction_vs_reference
-outside_rank_boundary_retention_fraction_vs_reference
 selected_inside_rank_boundary_fraction
 selected_outside_rank_boundary_fraction
 ```
@@ -593,6 +661,7 @@ left_matrix_id
 right_matrix_id
 composition_status
 composition_kind
+composition_alignment_policy
 support_composition_status
 support_composition_residual_l1
 support_composition_residual_frobenius
@@ -605,13 +674,53 @@ path_count_composition_residual_frobenius
 path_count_composition_residual_fraction
 path_count_rank_direct
 path_count_rank_composed
-weighted_flow_composition_status
-weighted_flow_composition_residual_l1
-weighted_flow_composition_residual_frobenius
-weighted_flow_composition_residual_fraction
+weighted_mass_composition_status
+weighted_mass_composition_residual_l1
+weighted_mass_composition_residual_frobenius
+weighted_mass_composition_residual_fraction
 ```
 
 This is a primary atlas feature, not a label.
+
+`composition_status` and the per-kind status fields must use explicit
+mathematical semantics:
+
+```text
+ok
+label_mismatch
+projection_required
+not_comparable
+```
+
+Zero residual means actual agreement. It must not mean a skipped comparison.
+
+### 8.11 Reconstruction and completeness audits
+
+`reconstruction_audit_summary.csv`
+
+Required audits:
+
+```text
+condition_identity_traceability
+frontier_profile_reconstructs_from_node_and_edge_rows
+rank_boundary_geometry_reconstructs_from_edge_rows
+adjacent_transport_matrices_reconstruct_from_edge_rows
+selection_operator_geometry_reconstructs_from_rank_boundary_rows
+```
+
+`artifact_completeness_summary.csv`
+
+Every topology-derived artifact must carry or inherit one of:
+
+```text
+complete
+lossless_compressed
+sampled
+truncated_noninterpretable
+```
+
+No downstream topology feature may masquerade as complete if it came from
+sampled or truncated topology.
 
 ## 9. Phase 1 calibration outputs
 

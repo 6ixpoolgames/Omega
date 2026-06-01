@@ -19,8 +19,7 @@ def selection_operator_geometry_summary(scans: list[MappedScan]) -> list[dict[st
         first = boundary_rows[0]
         evaluable_rows = [
             row for row in boundary_rows
-            if int(row.get("reference_inside_rank_boundary_edge_count", 0) or 0) > 0
-            and (
+            if (
                 int(row.get("inside_rank_boundary_edge_count", 0) or 0)
                 + int(row.get("outside_rank_boundary_edge_count", 0) or 0)
             ) > 0
@@ -28,23 +27,11 @@ def selection_operator_geometry_summary(scans: list[MappedScan]) -> list[dict[st
         profiles = profile_grouped.get(condition_id, [])
         inside_fraction = mean([float(row["selected_inside_rank_boundary_fraction"]) for row in evaluable_rows])
         outside_fraction = mean([float(row["selected_outside_rank_boundary_fraction"]) for row in evaluable_rows])
-        inside_retention = mean([
-            float(row["inside_rank_boundary_retention_fraction_vs_reference"])
-            for row in evaluable_rows
-            if row["inside_rank_boundary_retention_fraction_vs_reference"] != ""
-        ])
-        outside_retention_values = [
-            float(row["outside_rank_boundary_retention_fraction_vs_reference"])
-            for row in evaluable_rows
-            if row["outside_rank_boundary_retention_fraction_vs_reference"] != ""
-        ]
-        outside_retention = mean(outside_retention_values)
         rank_boundary_k = int(first["rank_boundary_k"])
         rank_metrics = observable_prefix_rank_set_metrics(first)
         boundary_distance = rank_boundary_distance(
             selected_inside_fraction=inside_fraction,
             selected_outside_fraction=outside_fraction,
-            inside_retention=inside_retention,
             rank_set_distance=rank_metrics["rank_set_distance_to_observable_prefix"],
         )
         rows.append({
@@ -63,10 +50,6 @@ def selection_operator_geometry_summary(scans: list[MappedScan]) -> list[dict[st
             **rank_metrics,
             "mean_selected_inside_rank_boundary_fraction": inside_fraction,
             "mean_selected_outside_rank_boundary_fraction": outside_fraction,
-            "mean_inside_rank_boundary_retention_fraction_vs_reference": inside_retention,
-            "mean_outside_rank_boundary_retention_fraction_vs_reference": (
-                outside_retention if outside_retention_values else ""
-            ),
             "operator_rank_boundary_distance": boundary_distance,
             "mean_frontier_state_count": mean([float(row["frontier_state_count"]) for row in profiles]),
             "mean_frontier_component_count": mean([float(row["frontier_component_count"]) for row in profiles]),
@@ -98,16 +81,6 @@ def rank_boundary_geometry_by_horizon(scans: list[MappedScan]) -> list[dict[str,
             ]),
             "selected_outside_rank_boundary_fraction": mean([
                 float(row["selected_outside_rank_boundary_fraction"]) for row in rows
-            ]),
-            "inside_rank_boundary_retention_fraction_vs_reference": mean([
-                float(row["inside_rank_boundary_retention_fraction_vs_reference"])
-                for row in rows
-                if row["inside_rank_boundary_retention_fraction_vs_reference"] != ""
-            ]),
-            "outside_rank_boundary_retention_fraction_vs_reference": mean([
-                float(row["outside_rank_boundary_retention_fraction_vs_reference"])
-                for row in rows
-                if row["outside_rank_boundary_retention_fraction_vs_reference"] != ""
             ]),
             "inside_rank_boundary_edge_count": mean([float(row["inside_rank_boundary_edge_count"]) for row in rows]),
             "outside_rank_boundary_edge_count": mean([float(row["outside_rank_boundary_edge_count"]) for row in rows]),
@@ -146,12 +119,6 @@ def rank_boundary_geometry_by_horizon_pair(
                     float(end["selected_outside_rank_boundary_fraction"])
                     - float(start["selected_outside_rank_boundary_fraction"])
                 ),
-                "inside_rank_boundary_retention_target": (
-                    end["inside_rank_boundary_retention_fraction_vs_reference"]
-                ),
-                "outside_rank_boundary_retention_target": (
-                    end["outside_rank_boundary_retention_fraction_vs_reference"]
-                ),
             })
     return rows
 
@@ -189,7 +156,6 @@ def rank_boundary_distance(
     *,
     selected_inside_fraction: float,
     selected_outside_fraction: float,
-    inside_retention: float,
     rank_set_distance: object,
 ) -> object:
     if rank_set_distance == "":
@@ -197,9 +163,8 @@ def rank_boundary_distance(
     return (
         abs(1.0 - selected_inside_fraction)
         + abs(selected_outside_fraction)
-        + abs(1.0 - inside_retention)
         + float(rank_set_distance)
-    ) / 4.0
+    ) / 3.0
 
 
 def parse_rank_set(raw: object) -> set[int]:

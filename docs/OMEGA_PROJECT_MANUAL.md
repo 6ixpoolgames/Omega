@@ -34,6 +34,10 @@ rank-subset `m=4` retaining ranks `1;2;3`, and rank-subset `m=5` retaining
 ranks `1;2;3` were response-bearing.
 Generic lower out-degree is less plausible because random deletion at matched
 effective degree stayed stable.
+The current H32 atlas smoke now emits formal spec manifests,
+condition-identity manifests, artifact-completeness summaries, and
+reconstruction audits, so derived topology summaries are treated as
+reconstructible measurements rather than unsupported report labels.
 ```
 
 Terminology rule:

@@ -1,10 +1,11 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 
 from omega.rfs_mb0_future_landscape.substrate import LandscapeSystem, State
 
 from . import INSTRUMENT_NAME, INSTRUMENT_VERSION
+from .util import canonical_json, stable_hash
 
 
 CLAIM_BOUNDARY = (
@@ -24,6 +25,7 @@ class StateSpaceSpec:
     state_id_schema: str
     metric_id: str
     adjacency_rule_id: str
+    state_space_params_json: str
 
 
 @dataclass(frozen=True)
@@ -35,7 +37,12 @@ class TransformationLawSpec:
     energy_function_id: str
     energy_params_json: str
     admissibility_predicate_id: str
+    invariant_observable_id: str
+    invariant_params_json: str
+    asymmetry_term_id: str
+    roughness_term_id: str
     stochastic_flag: int
+    seed_policy: str
     law_params_json: str
     macro_invariant_kind: str
     macro_invariant_beta: float
@@ -52,7 +59,6 @@ class SelectionOperatorSpec:
     removed_rank_set: tuple[int, ...]
     stochastic_flag: int
     seed_policy: str
-    implementation_family: str
 
 
 @dataclass(frozen=True)
@@ -73,6 +79,7 @@ class FrontierScanSpec:
     horizon_max: int
     node_artifact_retention_policy: str
     edge_artifact_retention_policy: str
+    frontier_scan_params_json: str
     max_frontier_nodes_per_horizon: int
     max_frontier_edges_per_step: int
 
@@ -204,3 +211,15 @@ def instrument_metadata() -> dict[str, object]:
         "instrument_version": INSTRUMENT_VERSION,
         "claim_boundary": CLAIM_BOUNDARY,
     }
+
+
+def spec_payload(spec: object) -> dict[str, object]:
+    return asdict(spec)  # type: ignore[arg-type]
+
+
+def spec_canonical_json(spec: object) -> str:
+    return canonical_json(spec_payload(spec))
+
+
+def spec_digest(spec: object) -> str:
+    return stable_hash(spec_canonical_json(spec), length=20)

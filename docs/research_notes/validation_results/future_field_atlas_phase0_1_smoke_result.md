@@ -1,7 +1,7 @@
 # Future Field Atlas Phase 0/1 Publication-Schema Smoke Result
 
-Status: clean instrument-build smoke completed after publication-schema repair
-Primary output: `results/future_field_atlas/20260601_phase0_1_publication_schema_h32/`
+Status: clean instrument-build smoke completed after publication-schema audit
+Primary output: `results/future_field_atlas/20260601_phase0_1_publication_audit_h32/`
 Runner: `omega.future_field_atlas.run_future_field_atlas`
 Spec: `docs/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md`
 Glossary: `docs/FUTURE_FIELD_ATLAS_GLOSSARY.md`
@@ -18,12 +18,14 @@ instrument_version: 0.3.0
 workers: 4
 conditions: 8
 scans_completed: 8 / 8
-elapsed_seconds: 18.58
+elapsed_seconds: 20.551
 errors: 0
 horizon_max: 32
-frontier_node_rows: 30461
-frontier_edge_rows: 106431
+frontier_node_rows: 30671
+frontier_edge_rows: 107034
 selection_operator_geometry_rows: 8
+reconstruction_audit_passed: 1
+artifact_completeness_statuses: complete
 ```
 
 This remains an instrument smoke, not a science result and not an Omega
@@ -49,6 +51,13 @@ the old top-m result:
 A Future Field Atlas scans a finite state space under lawful transformations,
 records frontier topology over horizon, and emits reconstructible feature maps
 of reachable-future geometry.
+```
+
+The smoke also emitted formal spec and condition identity manifests:
+
+```text
+formal_spec_manifest.csv
+condition_identity_manifest.csv
 ```
 
 ## What Changed
@@ -98,10 +107,32 @@ Transport composition now separates:
 ```text
 support composition
 path-count composition
-weighted-flow composition status
+weighted-mass composition status
 ```
 
-Weighted flow is marked `not_defined_unit_edge_weights_only` in this smoke.
+Weighted mass is marked `not_defined_unit_edge_weights_only` in this smoke.
+Composition rows include an explicit label-alignment policy so zero residual is
+not used as a substitute for a skipped comparison.
+
+## Reconstruction Audits
+
+All required reconstruction audits passed:
+
+```text
+condition_identity_traceability: PASS
+frontier_profile_reconstructs_from_node_and_edge_rows: PASS
+rank_boundary_geometry_reconstructs_from_edge_rows: PASS
+adjacent_transport_matrices_reconstruct_from_edge_rows: PASS
+selection_operator_geometry_reconstructs_from_rank_boundary_rows: PASS
+```
+
+Completeness distribution:
+
+```text
+frontier_nodes_by_horizon.csv: complete, 30671 rows
+frontier_edges_by_step.csv: complete, 107034 rows
+frontier_profile_by_horizon.csv: complete, 264 rows
+```
 
 ## Calibration Readout
 
@@ -110,11 +141,11 @@ split as continuous geometry:
 
 ```text
 rank_prefix:m=3                            operator distance 0.000
-rank_prefix:m=4                            operator distance 0.188
-rank_prefix:m=5                            operator distance 0.300
+rank_prefix:m=4                            operator distance 0.250
+rank_prefix:m=5                            operator distance 0.400
 rank_subset:m=4:retain=1|2|3:remove=4      operator distance 0.000
 rank_subset:m=5:retain=1|2|3:remove=4|5    operator distance 0.000
-rank_subset:m=4:retain=2|3|4:remove=1      operator distance 0.375
+rank_subset:m=4:retain=2|3|4:remove=1      operator distance 0.389
 ```
 
 The calibration fixture is downstream of the formal atlas object. It is not the
