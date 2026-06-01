@@ -9,6 +9,39 @@ when a run or decision changes the project state.
 
 ## 2026-06-02
 
+### Coupled Mechanism Summary Utility
+
+Added:
+
+```text
+omega.future_field_atlas.coupled_mechanism_summary
+```
+
+The utility postprocesses coupled Future Field Atlas mechanism-resolution runs
+into compact CSV summaries:
+
+```text
+run_gate_summary.csv
+coupling_ladder_summary.csv
+near_zero_threshold_summary.csv
+pair_level_residual_summary.csv
+pair005_forensic_summary.csv
+product_selector_sanity_summary.csv
+horizon_of_divergence_summary.csv
+joint_candidate_crossing_summary.csv
+mechanism_summary_manifest.json
+```
+
+Also added `--pair-indexes` to the coupled runner so targeted forensic passes
+can run a specific pair without pretending that a pair-count slice is the same
+object.
+
+Tests:
+
+```text
+tests/test_coupled_atlas_hardening.py
+```
+
 ### Compact Retention Summarizer
 
 Added:

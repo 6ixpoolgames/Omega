@@ -90,7 +90,13 @@ numerically identical in topology-derived summaries after sorting rows and
 ignoring operator identity fields. Positive penalty preserved component
 marginal reachability in that run, but one heavy pair became much more
 joint-restrictive at the final horizon, so future coupled analysis must remain
-pair-aware.
+pair-aware. The follow-up H64 mechanism-resolution pass showed that this read
+was too coarse: near-zero strengths `0.001` through `0.010` are distinguishable,
+while `0.020` and `0.050` saturate to the same compact topology digest in the
+tested design. The true product selector is distinct from zero-penalty joint
+rank-prefix selection, so product-selector runs are the neutral reference for
+future coupled comparisons. Pair005 remains a heavy-pair / critical-pair clue
+and persisted in a targeted H128 depth check.
 ```
 
 Terminology rule:
@@ -123,6 +129,7 @@ Primary current design note:
 - `docs/research_notes/validation_results/future_field_atlas_coupled_h128_and_triadic_profile_smoke_result.md`
 - `docs/research_notes/validation_results/future_field_atlas_coupled_worker_spool_scale_validation_result.md`
 - `docs/research_notes/validation_results/future_field_atlas_coupled_h64_ladder_result.md`
+- `docs/research_notes/validation_results/future_field_atlas_coupled_h64_mechanism_resolution_result.md`
 - `docs/RFS_MB0_TOP_M_MECHANISM_AUDIT_SPEC.md`
 - `docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md`
 - `docs/RFS_MB0_TOP_M_GEOMETRY_AUDIT_SPEC.md`
@@ -413,6 +420,22 @@ causal_interpretation = none
 ```
 
 Do not use marginal projection rows as directional-causal evidence.
+
+Mechanism-resolution rule after the H64 near-zero pass:
+
+```text
+Do not treat coupling_strength = 0.000 under joint_energy_rank_prefix as a
+product-equivalence baseline. It is already a joint selector over additive
+energy. Use joint_selection_family = product when a true product reference is
+needed.
+
+Do not broaden scalar mismatch sweeps unless a specific threshold bracket is
+being tested. In the current H64 pair8 design, scalar effects remain distinct
+through 0.010 and saturate by 0.020.
+
+Keep pair-aware summaries mandatory. Pair005 is currently a heavy-pair /
+critical-pair clue, not a row to average away.
+```
 
 ## Context From The Theory/Paper Side
 

@@ -213,9 +213,9 @@ def pair_level_residual_summary(loaded: dict[str, dict[str, object]]) -> list[di
                 "pair_id": pair_id,
                 "residual_mean": mean_metric(residual_rows, "joint_support_residual_fraction"),
                 "residual_max": max_metric(residual_rows, "joint_support_residual_fraction"),
-                "residual_final_h64": float_value(final_residual.get("joint_support_residual_fraction")),
+                "residual_final_horizon": float_value(final_residual.get("joint_support_residual_fraction")),
                 "joint_retention_mean": mean_metric(marginal_rows, "joint_retention_fraction"),
-                "joint_retention_final_h64": float_value(final_marginal.get("joint_retention_fraction")),
+                "joint_retention_final_horizon": float_value(final_marginal.get("joint_retention_fraction")),
                 "A_retention_mean": mean_metric(marginal_rows, "A_marginal_retention_fraction"),
                 "B_retention_mean": mean_metric(marginal_rows, "B_marginal_retention_fraction"),
             })
@@ -229,7 +229,9 @@ def near_zero_threshold_summary(loaded: dict[str, dict[str, object]], *, zero_la
     rows: list[dict[str, object]] = []
     positive_labels = [
         label for label, data in loaded.items()
-        if label != zero_label and data["config"].get("joint_selection_family") == "joint_energy_rank_prefix"  # type: ignore[index]
+        if label != zero_label
+        and is_numeric_label(label)
+        and data["config"].get("joint_selection_family") == "joint_energy_rank_prefix"  # type: ignore[index]
     ]
     positive_labels = sorted(positive_labels, key=label_sort_key)
     first_diff = ""
@@ -300,7 +302,11 @@ def horizon_of_divergence_summary(
     comparisons: list[tuple[str, str, str]] = []
     if zero_label in loaded:
         for label in sorted(loaded, key=label_sort_key):
-            if label != zero_label and loaded[label]["config"].get("joint_selection_family") == "joint_energy_rank_prefix":  # type: ignore[index]
+            if (
+                label != zero_label
+                and is_numeric_label(label)
+                and loaded[label]["config"].get("joint_selection_family") == "joint_energy_rank_prefix"  # type: ignore[index]
+            ):
                 comparisons.append((f"{label}_vs_{zero_label}", zero_label, label))
     if product_label in loaded and zero_label in loaded:
         comparisons.append((f"{product_label}_vs_{zero_label}", product_label, zero_label))
@@ -524,6 +530,14 @@ def label_sort_key(label: str) -> tuple[int, float | str]:
         return (0, float(label))
     except ValueError:
         return (1, label)
+
+
+def is_numeric_label(label: str) -> bool:
+    try:
+        float(label)
+    except ValueError:
+        return False
+    return True
 
 
 if __name__ == "__main__":

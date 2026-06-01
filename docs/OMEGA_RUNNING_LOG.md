@@ -9,6 +9,77 @@ patch notes at the top.
 
 ## 2026-06-02
 
+### Future Field Atlas Coupled H64 Mechanism Resolution
+
+Ran the follow-up H64 mechanism-resolution pass requested after the first
+coupled ladder:
+
+```text
+near-zero ladder:
+  0.000
+  0.001
+  0.002
+  0.005
+  0.010
+  0.020
+  0.050
+product-selector sanity run: complete
+pair005 H64 forensics: complete
+pair005 H128 targeted depth check: complete
+```
+
+All retained runs passed operational gates:
+
+```text
+status: COMPLETED
+coupled_pairs_failed: 0
+internal_cap_events: 0
+artifact_completeness_statuses: complete
+reconstruction audits: PASS
+medium_sweep_interpretation_allowed: 1
+raw spools pruned after compact retention: yes
+```
+
+Main read:
+
+```text
+The earlier "any positive strength" read was too coarse. The scalar mismatch
+penalty changes topology immediately at 0.001 and remains distinct through
+0.010, but 0.020 and 0.050 are compact-digest identical in this H64 pair8
+design. The true product selector is distinct from zero-penalty joint
+rank-prefix selection, so zero penalty is not a neutral product baseline.
+```
+
+Pair005:
+
+```text
+H64 pair005 final residual:
+  0.000: 0.244091
+  0.002: 0.172364
+  0.005: 0.755909
+  0.020: 0.752364
+
+H128 pair005 final residual:
+  0.000: 0.244091
+  0.020: 0.752364
+  0.050: 0.752364
+```
+
+Retained note:
+
+```text
+docs/research_notes/validation_results/future_field_atlas_coupled_h64_mechanism_resolution_result.md
+```
+
+Operational next recommendation:
+
+```text
+Do not broaden to H128 yet. If scalar detail matters, bracket pair005 between
+0.002 and 0.005. Otherwise begin designing a rank-order-native or
+shared-capacity coupled operator, using product-selector runs as the neutral
+reference.
+```
+
 ### Future Field Atlas Coupled H64 Ladder
 
 Ran the first constrained coupled Future Field Atlas science pass after the

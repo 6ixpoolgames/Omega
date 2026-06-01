@@ -26,7 +26,7 @@ graph-channel causality
 
 The current claim is modest:
 
-> Directional horizon-transport instrumentation can measure matched-control-separated response profiles in neutral finite transition substrates. Transition-energy substrate laws express different response regimes. Preservation asymmetry is currently the strongest non-template substrate hook for aligned amplification, with low-beta sensitivity now mapped below beta `0.25`; the latest MaxEnt/top-m audits indicate that the current preservation response is narrow to hard top-m selection geometry rather than recovered by the tested stochastic relaxations. The hard-top-m mechanism branch now points toward a fixed low-rank successor-boundary pattern: response appears when the retained selected-edge set is the low-energy rank prefix, not under generic lower out-degree, random deletion, or expansion. The current implementation work is now rebuilding the instrument as a Future Field Atlas so raw topology, rank-boundary anatomy, and transport matrices are emitted before any response labels. Conditions are represented by state-space, transition-law, selection-operator, observable, and frontier-scan specs; formal spec manifests, condition-identity manifests, completeness summaries, and reconstruction audits are now part of the smoke output. Historical treatment names are documentation-only translation aids.
+> Directional horizon-transport instrumentation can measure matched-control-separated response profiles in neutral finite transition substrates. Transition-energy substrate laws express different response regimes. Preservation asymmetry is currently the strongest non-template substrate hook for aligned amplification, with low-beta sensitivity now mapped below beta `0.25`; the latest MaxEnt/top-m audits indicate that the current preservation response is narrow to hard top-m selection geometry rather than recovered by the tested stochastic relaxations. The hard-top-m mechanism branch now points toward a fixed low-rank successor-boundary pattern: response appears when the retained selected-edge set is the low-energy rank prefix, not under generic lower out-degree, random deletion, or expansion. The current implementation work is now rebuilding the instrument as a Future Field Atlas so raw topology, rank-boundary anatomy, and transport matrices are emitted before any response labels. Conditions are represented by state-space, transition-law, selection-operator, observable, and frontier-scan specs; formal spec manifests, condition-identity manifests, completeness summaries, and reconstruction audits are now part of the smoke output. The coupled branch now separates true product-selector behavior from zero-penalty joint rank-prefix selection; near-zero scalar mismatch effects are detectable but saturate by `0.020` in the tested H64 pair8 design, with pair005 remaining a heavy-pair mechanism clue. Historical treatment names are documentation-only translation aids.
 
 ## Best onboarding path
 
@@ -45,15 +45,16 @@ Start here:
 11. [`docs/research_notes/validation_results/future_field_atlas_coupled_h128_and_triadic_profile_smoke_result.md`](research_notes/validation_results/future_field_atlas_coupled_h128_and_triadic_profile_smoke_result.md)
 12. [`docs/research_notes/validation_results/future_field_atlas_coupled_worker_spool_scale_validation_result.md`](research_notes/validation_results/future_field_atlas_coupled_worker_spool_scale_validation_result.md)
 13. [`docs/research_notes/validation_results/future_field_atlas_coupled_h64_ladder_result.md`](research_notes/validation_results/future_field_atlas_coupled_h64_ladder_result.md)
-14. [`docs/FUTURE_FIELD_ATLAS_GLOSSARY.md`](FUTURE_FIELD_ATLAS_GLOSSARY.md)
-15. [`docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md`](research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md)
-16. [`docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md`](research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md)
-17. [`docs/research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md`](research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md)
-18. [`docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`](research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
-19. [`docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md`](research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
-20. [`docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md`](research_notes/omega_theory/horizon_transport_aligned_amplification.md)
-21. [`docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md`](research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
-22. [`docs/research_notes/omega_theory/transition_energy_substrate_atlas.md`](research_notes/omega_theory/transition_energy_substrate_atlas.md)
+14. [`docs/research_notes/validation_results/future_field_atlas_coupled_h64_mechanism_resolution_result.md`](research_notes/validation_results/future_field_atlas_coupled_h64_mechanism_resolution_result.md)
+15. [`docs/FUTURE_FIELD_ATLAS_GLOSSARY.md`](FUTURE_FIELD_ATLAS_GLOSSARY.md)
+16. [`docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md`](research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md)
+17. [`docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md`](research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md)
+18. [`docs/research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md`](research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md)
+19. [`docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`](research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
+20. [`docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md`](research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
+21. [`docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md`](research_notes/omega_theory/horizon_transport_aligned_amplification.md)
+22. [`docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md`](research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
+23. [`docs/research_notes/omega_theory/transition_energy_substrate_atlas.md`](research_notes/omega_theory/transition_energy_substrate_atlas.md)
 
 ## Current live branch
 
@@ -408,6 +409,46 @@ produce identical topology-derived summaries after sorting rows and ignoring
 operator identity fields. Positive penalty preserves A/B marginal reachability
 in this run while changing joint support geometry. Pair005 is a strong caveat:
 it becomes much more joint-restrictive at the final horizon.
+```
+
+### Coupled H64 mechanism resolution
+
+Result note:
+
+- [`future_field_atlas_coupled_h64_mechanism_resolution_result.md`](research_notes/validation_results/future_field_atlas_coupled_h64_mechanism_resolution_result.md)
+
+Run summary:
+
+```text
+horizon_max: 64
+pair_count: 8
+near-zero coupling_strength ladder:
+  0.000
+  0.001
+  0.002
+  0.005
+  0.010
+  0.020
+  0.050
+product-selector sanity run: complete
+pair005 H64 forensics: complete
+pair005 H128 targeted depth check: complete
+pair failures: 0
+internal cap events: 0
+audits: PASS
+raw topology: compact-retained, raw spools pruned
+```
+
+Read:
+
+```text
+The "any positive strength" read was too coarse. The current scalar mismatch
+penalty changes topology immediately at 0.001 and remains distinct through
+0.010, but 0.020 and 0.050 are compact-digest identical in this design. The
+true product selector is separate from zero-penalty joint rank-prefix
+selection, so zero penalty is not a neutral product baseline. Pair005 remains a
+real heavy-pair / critical-pair clue and persists under a targeted H128 depth
+check.
 ```
 
 ### Hard top-m mechanism boundary-resolution sweep
