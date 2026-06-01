@@ -180,6 +180,44 @@ def test_coupled_worker_spool_writes_pair_local_artifacts(tmp_path) -> None:
     assert node_manifest[0]["row_count"] == spool.node_rows
 
 
+def test_explicit_pair_indexes_select_nonprefix_pair() -> None:
+    conditions_a = build_generated_conditions(
+        groups=6,
+        fresh_seeds_per_group=1,
+        selection_operators=("rank_prefix:m=3",),
+        macro_invariant_kind="symbol_histogram_distance",
+        macro_invariant_betas=(0.10,),
+        rank_boundary_k=3,
+        base_seed=61_001,
+    )
+    conditions_b = build_generated_conditions(
+        groups=6,
+        fresh_seeds_per_group=1,
+        selection_operators=("rank_subset:m=4:retain=1|2|3:remove=4",),
+        macro_invariant_kind="symbol_histogram_distance",
+        macro_invariant_betas=(0.10,),
+        rank_boundary_k=3,
+        base_seed=561_001,
+    )
+    args = SimpleNamespace(
+        pair_count=1,
+        pair_indexes="5",
+        start_samples=1,
+        horizon_max=1,
+        joint_selection_family="joint_energy_rank_prefix",
+        joint_effective_out_degree=4,
+        coupling_strength=0.25,
+        max_joint_frontier_nodes_per_horizon=2048,
+        max_joint_edges_per_step=8192,
+        max_internal_joint_frontier_states=20_000,
+    )
+
+    tasks = build_coupled_tasks(args, conditions_a, conditions_b, (0, 1))
+
+    assert len(tasks) == 1
+    assert tasks[0].pair_id.startswith("pair005__")
+
+
 def test_lossless_topology_blocks_reconstruct_logical_rows() -> None:
     node_rows = [
         {
@@ -250,6 +288,7 @@ def build_test_tasks(
     )
     args = SimpleNamespace(
         pair_count=1,
+        pair_indexes="",
         start_samples=1,
         horizon_max=horizon_max,
         joint_selection_family="joint_energy_rank_prefix",

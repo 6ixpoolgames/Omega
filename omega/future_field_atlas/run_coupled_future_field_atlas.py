@@ -61,6 +61,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--base-seed", type=int, default=61_001)
     parser.add_argument("--field-b-seed-offset", type=int, default=500_000)
     parser.add_argument("--pair-count", type=int, default=1)
+    parser.add_argument(
+        "--pair-indexes",
+        type=str,
+        default="",
+        help="Optional comma-separated condition pair indexes to run, e.g. '5' for pair005.",
+    )
     parser.add_argument("--start-samples", type=int, default=1)
     parser.add_argument("--horizon-max", type=int, default=16)
     parser.add_argument("--horizon-schedule", type=str, default="dense")
@@ -118,13 +124,6 @@ def main() -> None:
         "condition_pairing_policy": CONDITION_PAIRING_POLICY,
         "start_pairing_policy": START_PAIRING_POLICY,
     }
-    write_json(args.out / "coupled_future_field_atlas_run_config.json", config)
-    write_rebuild_contract(
-        args.out,
-        runner_module="omega.future_field_atlas.run_coupled_future_field_atlas",
-        config=config,
-        raw_data_retention="retained_local_raw_topology",
-    )
     conditions_a = build_generated_conditions(
         groups=args.groups,
         fresh_seeds_per_group=args.fresh_seeds_per_group,
@@ -143,6 +142,16 @@ def main() -> None:
         rank_boundary_k=args.rank_boundary_k,
         base_seed=args.base_seed + args.field_b_seed_offset,
     )
+    pair_indexes = resolve_pair_indexes(args, conditions_a, conditions_b)
+    config["pair_index_policy"] = "explicit_index_list" if args.pair_indexes else "prefix_range"
+    config["pair_indexes_resolved"] = list(pair_indexes)
+    write_json(args.out / "coupled_future_field_atlas_run_config.json", config)
+    write_rebuild_contract(
+        args.out,
+        runner_module="omega.future_field_atlas.run_coupled_future_field_atlas",
+        config=config,
+        raw_data_retention="retained_local_raw_topology",
+    )
     tasks = build_coupled_tasks(args, conditions_a, conditions_b, horizon_schedule)
     status: dict[str, object] = {
         **instrument_metadata(),
@@ -154,6 +163,8 @@ def main() -> None:
         "field_B_conditions": len(conditions_b),
         "condition_pairing_policy": CONDITION_PAIRING_POLICY,
         "start_pairing_policy": START_PAIRING_POLICY,
+        "pair_index_policy": config["pair_index_policy"],
+        "pair_indexes_resolved": list(pair_indexes),
         "pair_count_requested": args.pair_count,
         "pair_count_realized": len(tasks),
         "coupled_pairs_requested": len(tasks),
@@ -179,13 +190,13 @@ def build_coupled_tasks(
     horizon_schedule: tuple[int, ...],
 ) -> list[CoupledProbeTask]:
     tasks: list[CoupledProbeTask] = []
-    pair_limit = min(max(1, args.pair_count), len(conditions_a), len(conditions_b))
+    pair_indexes = resolve_pair_indexes(args, conditions_a, conditions_b)
     coupled_operator = build_coupled_operator_spec(
         joint_selection_family=args.joint_selection_family,
         joint_effective_out_degree=max(1, args.joint_effective_out_degree),
         coupling_strength=float(args.coupling_strength),
     )
-    for pair_index in range(pair_limit):
+    for pair_index in pair_indexes:
         field_a = conditions_a[pair_index]
         field_b = conditions_b[pair_index]
         starts_a = select_start_states(field_a, args.start_samples)  # type: ignore[arg-type]
@@ -215,6 +226,22 @@ def build_coupled_tasks(
                 )
             )
     return tasks
+
+
+def resolve_pair_indexes(
+    args: argparse.Namespace,
+    conditions_a: list[object],
+    conditions_b: list[object],
+) -> tuple[int, ...]:
+    max_index = min(len(conditions_a), len(conditions_b))
+    explicit = parse_int_list(str(getattr(args, "pair_indexes", "") or ""))
+    if explicit:
+        invalid = [index for index in explicit if index < 0 or index >= max_index]
+        if invalid:
+            raise ValueError(f"pair indexes out of range 0..{max_index - 1}: {invalid}")
+        return tuple(dict.fromkeys(explicit))
+    pair_limit = min(max(1, int(getattr(args, "pair_count", 1))), max_index)
+    return tuple(range(pair_limit))
 
 
 def run_one(task: CoupledProbeTask) -> tuple[CoupledProbeResult | None, list[dict[str, object]]]:
@@ -1627,6 +1654,10 @@ def parse_horizon_schedule(raw: str, horizon_max: int) -> tuple[int, ...]:
 
 def parse_float_list(raw: str) -> list[float]:
     return [float(item.strip()) for item in str(raw or "").split(",") if item.strip()]
+
+
+def parse_int_list(raw: str) -> list[int]:
+    return [int(item.strip()) for item in str(raw or "").split(",") if item.strip()]
 
 
 def should_stop(args: argparse.Namespace, started_perf: float) -> bool:
