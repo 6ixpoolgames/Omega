@@ -19,6 +19,11 @@ from .coupled import (
     scan_coupled_probe,
 )
 from .generator import build_generated_conditions, select_start_states
+from .lossless_blocks import (
+    compression_ratio,
+    lossless_topology_blocks,
+    physical_raw_row_count,
+)
 from .util import csv_row_count, safe_token, utc_now, write_csv, write_json
 
 
@@ -65,9 +70,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--gzip-compresslevel", type=int, default=1)
     parser.add_argument(
         "--raw-topology-output-mode",
-        choices=("sharded", "consolidated", "both"),
+        choices=("lossless_blocks", "sharded", "consolidated", "both"),
         default="sharded",
-        help="Write high-volume coupled node/edge topology as shards, consolidated files, or both.",
+        help=(
+            "Write high-volume coupled node/edge topology as lossless repeated-horizon "
+            "blocks, shards, consolidated files, or sharded plus consolidated files."
+        ),
     )
     parser.add_argument("--raw-topology-shard-pair-count", type=int, default=1)
     parser.add_argument("--artifact-write-workers", type=int, default=8)
@@ -301,6 +309,7 @@ def write_outputs(
         residual_rows,
         marginal_projection_rows,
         internal_cap_rows,
+        raw_topology_output_mode=args.raw_topology_output_mode,
     )
     reconstruction_rows = reconstruction_audit_rows(node_rows, profile_rows, marginal_rows, residual_rows)
     readiness_rows = medium_scale_readiness_rows(completeness_rows, reconstruction_rows, internal_cap_rows)
@@ -327,14 +336,29 @@ def write_outputs(
         "coupled_joint_frontier_nodes_by_horizon_shard_manifest.csv",
         "coupled_joint_frontier_edges_by_step_shard_manifest.csv",
     ]
+    raw_block_files = [
+        "coupled_joint_frontier_nodes_by_horizon_lossless_blocks.csv",
+        "coupled_joint_frontier_edges_by_step_lossless_blocks.csv",
+    ]
+    raw_block_manifest_files = [
+        "coupled_joint_frontier_nodes_by_horizon_lossless_block_manifest.csv",
+        "coupled_joint_frontier_edges_by_step_lossless_block_manifest.csv",
+    ]
     if args.raw_topology_output_mode in {"consolidated", "both"}:
         csv_output_files.extend(raw_topology_files)
     if args.raw_topology_output_mode in {"sharded", "both"}:
         csv_output_files.extend(raw_shard_manifest_files)
+    if args.raw_topology_output_mode == "lossless_blocks":
+        csv_output_files.extend(raw_block_files)
+        csv_output_files.extend(raw_block_manifest_files)
 
     phase_started = time.perf_counter()
     node_shard_manifest: list[dict[str, object]] = []
     edge_shard_manifest: list[dict[str, object]] = []
+    node_block_rows: list[dict[str, object]] = []
+    edge_block_rows: list[dict[str, object]] = []
+    node_block_manifest: list[dict[str, object]] = []
+    edge_block_manifest: list[dict[str, object]] = []
     if args.raw_topology_output_mode in {"sharded", "both"}:
         node_shard_manifest, edge_shard_manifest = write_raw_topology_shards(
             out_dir=args.out,
@@ -345,6 +369,23 @@ def write_outputs(
             artifact_write_workers=args.artifact_write_workers,
         )
     finalization_timings["raw_topology_shard_writes"] = round(time.perf_counter() - phase_started, 3)
+
+    phase_started = time.perf_counter()
+    if args.raw_topology_output_mode == "lossless_blocks":
+        node_block_rows, node_block_manifest = lossless_topology_blocks(
+            node_rows,
+            logical_artifact_name="coupled_joint_frontier_nodes_by_horizon.csv",
+            row_kind="nodes",
+        )
+        edge_block_rows, edge_block_manifest = lossless_topology_blocks(
+            edge_rows,
+            logical_artifact_name="coupled_joint_frontier_edges_by_step.csv",
+            row_kind="edges",
+        )
+    finalization_timings["raw_topology_lossless_block_build"] = round(
+        time.perf_counter() - phase_started,
+        3,
+    )
 
     csv_jobs = [
         ("coupled_operator_manifest.csv", coupled_operator_manifest),
@@ -368,6 +409,13 @@ def write_outputs(
         csv_jobs.extend([
             ("coupled_joint_frontier_nodes_by_horizon_shard_manifest.csv", node_shard_manifest),
             ("coupled_joint_frontier_edges_by_step_shard_manifest.csv", edge_shard_manifest),
+        ])
+    if args.raw_topology_output_mode == "lossless_blocks":
+        csv_jobs.extend([
+            ("coupled_joint_frontier_nodes_by_horizon_lossless_blocks.csv", node_block_rows),
+            ("coupled_joint_frontier_edges_by_step_lossless_blocks.csv", edge_block_rows),
+            ("coupled_joint_frontier_nodes_by_horizon_lossless_block_manifest.csv", node_block_manifest),
+            ("coupled_joint_frontier_edges_by_step_lossless_block_manifest.csv", edge_block_manifest),
         ])
 
     phase_started = time.perf_counter()
@@ -402,6 +450,28 @@ def write_outputs(
     status["raw_topology_output_mode"] = args.raw_topology_output_mode
     status["raw_topology_shard_pair_count"] = args.raw_topology_shard_pair_count
     status["artifact_write_workers"] = args.artifact_write_workers
+    status["raw_topology_node_physical_rows"] = physical_raw_row_count(
+        args.raw_topology_output_mode,
+        node_rows,
+        node_shard_manifest,
+        node_block_rows,
+    )
+    status["raw_topology_edge_physical_rows"] = physical_raw_row_count(
+        args.raw_topology_output_mode,
+        edge_rows,
+        edge_shard_manifest,
+        edge_block_rows,
+    )
+    status["raw_topology_node_compression_ratio"] = compression_ratio(
+        logical_rows=len(node_rows),
+        physical_rows=int(status["raw_topology_node_physical_rows"]),
+    )
+    status["raw_topology_edge_compression_ratio"] = compression_ratio(
+        logical_rows=len(edge_rows),
+        physical_rows=int(status["raw_topology_edge_physical_rows"]),
+    )
+    status["raw_topology_node_lossless_blocks"] = len(node_block_manifest)
+    status["raw_topology_edge_lossless_blocks"] = len(edge_block_manifest)
     status["finalization_timings_json"] = finalization_timings
     status["finalization_seconds"] = round(time.perf_counter() - finalization_started, 3)
     write_partial(args.out, status, progress, errors, started_perf)
@@ -435,6 +505,10 @@ def write_outputs(
         "coupled_medium_scale_readiness_summary.csv": len(readiness_rows),
         "coupled_joint_frontier_nodes_by_horizon_shard_manifest.csv": len(node_shard_manifest),
         "coupled_joint_frontier_edges_by_step_shard_manifest.csv": len(edge_shard_manifest),
+        "coupled_joint_frontier_nodes_by_horizon_lossless_blocks.csv": len(node_block_rows),
+        "coupled_joint_frontier_edges_by_step_lossless_blocks.csv": len(edge_block_rows),
+        "coupled_joint_frontier_nodes_by_horizon_lossless_block_manifest.csv": len(node_block_manifest),
+        "coupled_joint_frontier_edges_by_step_lossless_block_manifest.csv": len(edge_block_manifest),
     }
     for row in node_shard_manifest + edge_shard_manifest:
         row_counts[str(row["physical_artifact_name"])] = int(row["row_count"])
@@ -448,6 +522,17 @@ def write_outputs(
         "gzip_compresslevel": args.gzip_compresslevel,
         "raw_topology_output_mode": args.raw_topology_output_mode,
         "raw_topology_shard_pair_count": args.raw_topology_shard_pair_count,
+        "raw_topology_node_physical_rows": status["raw_topology_node_physical_rows"],
+        "raw_topology_edge_physical_rows": status["raw_topology_edge_physical_rows"],
+        "raw_topology_node_compression_ratio": status["raw_topology_node_compression_ratio"],
+        "raw_topology_edge_compression_ratio": status["raw_topology_edge_compression_ratio"],
+        "raw_topology_node_lossless_blocks": len(node_block_manifest),
+        "raw_topology_edge_lossless_blocks": len(edge_block_manifest),
+        "raw_topology_lossless_reconstruction_rule": (
+            "expand each block over its inclusive horizon interval and reset horizon fields"
+            if args.raw_topology_output_mode == "lossless_blocks"
+            else ""
+        ),
         "artifact_write_workers": args.artifact_write_workers,
         "finalization_timings_json": finalization_timings,
         "horizon_max": args.horizon_max,
@@ -749,7 +834,12 @@ def medium_scale_readiness_rows(
     reconstruction_rows: list[dict[str, object]],
     internal_cap_rows: list[dict[str, object]],
 ) -> list[dict[str, object]]:
-    artifact_counts: dict[str, int] = {"complete": 0, "sampled": 0, "truncated_noninterpretable": 0}
+    artifact_counts: dict[str, int] = {
+        "complete": 0,
+        "lossless_compressed": 0,
+        "sampled": 0,
+        "truncated_noninterpretable": 0,
+    }
     for row in completeness_rows:
         status = str(row.get("artifact_status", ""))
         artifact_counts[status] = artifact_counts.get(status, 0) + int(row.get("row_count", 0) or 0)
@@ -777,6 +867,7 @@ def medium_scale_readiness_rows(
         recommendation = "medium_sweep_infrastructure_ready"
     return [{
         "complete_rows": artifact_counts.get("complete", 0),
+        "lossless_compressed_rows": artifact_counts.get("lossless_compressed", 0),
         "sampled_rows": artifact_counts.get("sampled", 0),
         "truncated_noninterpretable_rows": artifact_counts.get("truncated_noninterpretable", 0),
         "internal_cap_events": len(internal_cap_rows),
@@ -785,7 +876,7 @@ def medium_scale_readiness_rows(
         "audits_NO_COMPLETE_ROWS": audit_counts.get("NO_COMPLETE_ROWS", 0),
         "audits_FAIL": audit_counts.get("FAIL", 0),
         "medium_sweep_interpretation_allowed": interpretation_allowed,
-        "interpretation_scope": "complete_rows_only" if has_skips else "all_primary_rows_complete",
+        "interpretation_scope": "complete_or_lossless_rows_only" if has_skips else "all_primary_rows_complete_or_lossless",
         "recommendation": recommendation,
     }]
 
@@ -798,6 +889,8 @@ def artifact_completeness_rows(
     residual_rows: list[dict[str, object]],
     marginal_projection_rows: list[dict[str, object]],
     internal_cap_rows: list[dict[str, object]],
+    *,
+    raw_topology_output_mode: str = "sharded",
 ) -> list[dict[str, object]]:
     rows: list[dict[str, object]] = []
     for artifact_name, artifact_rows, status_field in (
@@ -812,6 +905,15 @@ def artifact_completeness_rows(
         counts: dict[str, int] = {}
         for row in artifact_rows:
             status = str(row.get(status_field, "complete") or "complete")
+            if (
+                raw_topology_output_mode == "lossless_blocks"
+                and artifact_name in {
+                    "coupled_joint_frontier_nodes_by_horizon.csv",
+                    "coupled_joint_frontier_edges_by_step.csv",
+                }
+                and status == "complete"
+            ):
+                status = "lossless_compressed"
             counts[status] = counts.get(status, 0) + 1
         if not counts:
             counts["complete"] = 0
@@ -878,6 +980,10 @@ def write_report(
         f"- Raw topology output mode: `{raw_topology_output_mode}`",
         f"- Gzip compression level: `{status.get('gzip_compresslevel', '')}`",
         f"- Artifact write workers: `{status.get('artifact_write_workers', '')}`",
+        f"- Raw node physical rows: `{status.get('raw_topology_node_physical_rows', '')}`",
+        f"- Raw edge physical rows: `{status.get('raw_topology_edge_physical_rows', '')}`",
+        f"- Raw node compression ratio: `{status.get('raw_topology_node_compression_ratio', '')}`",
+        f"- Raw edge compression ratio: `{status.get('raw_topology_edge_compression_ratio', '')}`",
         "",
         "## Finalization Timings",
         "",
@@ -1066,6 +1172,13 @@ def csv_artifact_display_name(logical_name: str, csv_output_mode: str) -> str:
 
 def raw_topology_report_artifacts(raw_topology_output_mode: str, csv_output_mode: str) -> list[str]:
     lines: list[str] = []
+    if raw_topology_output_mode == "lossless_blocks":
+        lines.extend([
+            f"- `{csv_artifact_display_name('coupled_joint_frontier_nodes_by_horizon_lossless_blocks.csv', csv_output_mode)}`",
+            f"- `{csv_artifact_display_name('coupled_joint_frontier_nodes_by_horizon_lossless_block_manifest.csv', csv_output_mode)}`",
+            f"- `{csv_artifact_display_name('coupled_joint_frontier_edges_by_step_lossless_blocks.csv', csv_output_mode)}`",
+            f"- `{csv_artifact_display_name('coupled_joint_frontier_edges_by_step_lossless_block_manifest.csv', csv_output_mode)}`",
+        ])
     if raw_topology_output_mode in {"sharded", "both"}:
         lines.extend([
             "- `coupled_joint_frontier_nodes_by_horizon_shards/part-*.csv[.gz]`",

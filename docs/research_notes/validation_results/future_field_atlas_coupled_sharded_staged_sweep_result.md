@@ -295,6 +295,13 @@ This should be lossless and schema-native, not an interpretive pruning step. If
 implemented cleanly, repeated H16-H64 output could collapse substantially while
 still reconstructing per-horizon logical artifacts when needed.
 
+Update after follow-up audit: an exact repeated-horizon block compressor was
+implemented and tested, but H32 pair2 showed `1.0x` compression because raw
+state/edge identities did not repeat even after frontier counts stabilized. See
+`future_field_atlas_coupled_lossless_block_audit_result.md`. Keep sharded output
+as the coupled default; future compression should use dictionary/factorized
+topology or exact delta topology with reconstruction tests.
+
 ## Claim Boundary
 
 Allowed:

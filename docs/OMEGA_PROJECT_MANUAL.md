@@ -61,9 +61,11 @@ about 19 seconds, while artifact construction and writing dominated the
 The coupled sharded staged sweep completed bounded H64 pair2 cleanly with no
 caps, complete topology-derived artifacts, all reconstruction audits passing,
 and about 361.7 MB compressed output. The next coupled scaling repair should be
-a lossless steady-state or repeated-block topology compressor before many-pair
-H64/H128 runs, because late-horizon frontiers can stabilize while full raw
-step-edge topology is still re-emitted.
+more careful than a simple steady-state compressor: the exact repeated-block
+audit found that counts stabilize but raw state/edge identities do not repeat.
+Keep sharded output as the coupled default. If storage becomes limiting, prefer
+dictionary/factorized topology or exact delta topology with reconstruction
+tests before many-pair H64/H128 runs.
 ```
 
 Terminology rule:
@@ -89,6 +91,7 @@ Primary current design note:
 - `docs/research_notes/validation_results/future_field_atlas_coupled_probe_result.md`
 - `docs/research_notes/validation_results/future_field_atlas_coupled_hardening_result.md`
 - `docs/research_notes/validation_results/future_field_atlas_coupled_sharded_staged_sweep_result.md`
+- `docs/research_notes/validation_results/future_field_atlas_coupled_lossless_block_audit_result.md`
 - `docs/RFS_MB0_TOP_M_MECHANISM_AUDIT_SPEC.md`
 - `docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md`
 - `docs/RFS_MB0_TOP_M_GEOMETRY_AUDIT_SPEC.md`

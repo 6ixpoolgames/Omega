@@ -8,6 +8,10 @@ from omega.future_field_atlas.coupled import (
     scan_coupled_probe,
 )
 from omega.future_field_atlas.generator import build_generated_conditions
+from omega.future_field_atlas.lossless_blocks import (
+    expand_lossless_topology_blocks,
+    lossless_topology_blocks,
+)
 from omega.future_field_atlas.run_coupled_future_field_atlas import (
     audit_result,
     build_coupled_tasks,
@@ -116,6 +120,49 @@ def test_coupled_raw_topology_shards_are_manifest_backed(tmp_path) -> None:
     assert csv_row_count(edge_file) == len(result.edge_rows)
     assert node_manifest[0]["logical_artifact_name"] == "coupled_joint_frontier_nodes_by_horizon.csv"
     assert edge_manifest[0]["logical_artifact_name"] == "coupled_joint_frontier_edges_by_step.csv"
+
+
+def test_lossless_topology_blocks_reconstruct_logical_rows() -> None:
+    node_rows = [
+        {
+            "pair_id": "pair0",
+            "joint_scan_mode": "coupled",
+            "horizon": horizon,
+            "joint_state_id": "A(0)|B(0)",
+            "node_artifact_status": "complete",
+        }
+        for horizon in range(3)
+    ]
+    edge_rows = [
+        {
+            "pair_id": "pair0",
+            "joint_scan_mode": "coupled",
+            "source_horizon": horizon,
+            "target_horizon": horizon + 1,
+            "source_joint_state_id": "A(0)|B(0)",
+            "target_joint_state_id": "A(0)|B(0)",
+            "edge_artifact_status": "complete",
+        }
+        for horizon in range(3)
+    ]
+
+    node_blocks, node_manifest = lossless_topology_blocks(
+        node_rows,
+        logical_artifact_name="coupled_joint_frontier_nodes_by_horizon.csv",
+        row_kind="nodes",
+    )
+    edge_blocks, edge_manifest = lossless_topology_blocks(
+        edge_rows,
+        logical_artifact_name="coupled_joint_frontier_edges_by_step.csv",
+        row_kind="edges",
+    )
+
+    assert len(node_blocks) == 1
+    assert len(edge_blocks) == 1
+    assert node_manifest[0]["logical_row_count"] == 3
+    assert edge_manifest[0]["logical_row_count"] == 3
+    assert expand_lossless_topology_blocks(node_blocks, row_kind="nodes") == node_rows
+    assert expand_lossless_topology_blocks(edge_blocks, row_kind="edges") == edge_rows
 
 
 def build_test_tasks(

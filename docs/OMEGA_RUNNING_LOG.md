@@ -9,6 +9,68 @@ patch notes at the top.
 
 ## 2026-06-01
 
+### Future Field Atlas Coupled Lossless-Block Audit
+
+Implemented an optional, modular exact repeated-horizon block compressor for
+coupled raw topology:
+
+```text
+omega/future_field_atlas/lossless_blocks.py
+```
+
+Retained note:
+
+- `docs/research_notes/validation_results/future_field_atlas_coupled_lossless_block_audit_result.md`
+
+Validation:
+
+```text
+ruff check omega/future_field_atlas tests/test_coupled_atlas_hardening.py
+compileall omega/future_field_atlas tests
+pytest tests/test_coupled_atlas_hardening.py -q
+
+tests: 7 passed
+```
+
+H32 pair2 lossless-block audit:
+
+```text
+status: COMPLETED
+elapsed_seconds: 230.923
+joint_node_rows: 445487
+joint_edge_rows: 2855522
+artifact_completeness_statuses: complete,lossless_compressed
+audit status counts: PASS 3
+total_output_size: about 182.46 MB
+
+node compression ratio: 1.0
+edge compression ratio: 1.0
+max node block horizon_count: 1
+max edge block horizon_count: 1
+```
+
+Read:
+
+```text
+Frontier counts stabilized in the earlier H32/H64 runs, but exact raw topology
+did not repeat. State and edge identities continued changing. Therefore exact
+repeated-block compression is not useful as a default and is slower/larger than
+the sharded output path at H32.
+
+Keep coupled raw topology default as sharded. If we need more compression, move
+toward dictionary/factorized topology or exact delta topology with
+reconstruction tests.
+```
+
+Default-mode H4 smoke confirmed:
+
+```text
+raw_topology_output_mode: sharded
+shard manifest emitted: yes
+lossless block artifact emitted: no
+audit status counts: PASS 3
+```
+
 ### Future Field Atlas Coupled Sharded Staged Sweep
 
 Implemented sharded physical output for coupled raw topology and ran staged

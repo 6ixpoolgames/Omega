@@ -173,10 +173,11 @@ carry `projection_semantics = product_vs_coupled_marginal_set_delta` and
 
 `lossless_compressed`
 : Artifact-completeness status reserved for topology represented by a
-mathematically exact compressed form. For coupled scaling, the next likely use is
-a steady-state or repeated-block topology compressor that stores one repeated
-frontier/edge block plus the horizon interval it covers, while retaining
-reconstructibility of the logical per-horizon artifact.
+mathematically exact compressed form. The coupled branch has an optional
+`lossless_blocks` audit mode for exact repeated-horizon blocks, but the H32
+pair2 audit found no repeated exact topology. Future compression should remain
+lossless and reconstructible, for example dictionary/factorized topology or
+exact delta topology.
 
 ## Historical Translation
 

@@ -511,6 +511,18 @@ The logical coupled raw artifacts remain
 `coupled_joint_frontier_nodes_by_horizon.csv` and
 `coupled_joint_frontier_edges_by_step.csv`.
 
+The coupled runner also has an optional audit mode:
+
+```text
+--raw-topology-output-mode lossless_blocks
+```
+
+This stores exact repeated-horizon raw topology blocks with interval metadata
+and marks the logical node/edge artifacts as `lossless_compressed`. It must stay
+optional unless a run demonstrates real compression benefit. The H32 pair2 audit
+found no exact repeated topology, so sharded remains the default coupled output
+mode.
+
 Default transport retention is selected rather than full closure:
 
 ```text
