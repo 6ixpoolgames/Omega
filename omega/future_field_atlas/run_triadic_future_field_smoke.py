@@ -8,6 +8,7 @@ from pathlib import Path
 
 from .contracts import instrument_metadata
 from .generator import build_generated_conditions, select_start_states
+from .rebuild import ARTIFACT_SCHEMA_VERSION, PROTOCOL_VERSION, RUNNER_VERSION, write_rebuild_contract
 from .triadic import TriadicProbeTask, scan_triadic_probe
 from .util import safe_token, utc_now, write_csv, write_json
 
@@ -49,12 +50,21 @@ def main() -> None:
     macro_betas = tuple(parse_float_list(args.macro_invariant_beta_list) or [0.10])
     config = {
         **instrument_metadata(),
+        "artifact_schema_version": ARTIFACT_SCHEMA_VERSION,
+        "runner_version": RUNNER_VERSION,
+        "protocol_version": PROTOCOL_VERSION,
         "claim_boundary": TRIADIC_CLAIM_BOUNDARY,
         **vars(args),
         "macro_invariant_betas": list(macro_betas),
         "raw_topology_retention": "not_emitted_profile_only_smoke",
     }
     write_json(args.out / "triadic_future_field_smoke_config.json", config)
+    write_rebuild_contract(
+        args.out,
+        runner_module="omega.future_field_atlas.run_triadic_future_field_smoke",
+        config=config,
+        raw_data_retention="not_emitted_profile_only_smoke",
+    )
     conditions_a = build_generated_conditions(
         groups=args.groups,
         fresh_seeds_per_group=args.fresh_seeds_per_group,
@@ -92,6 +102,10 @@ def main() -> None:
     write_csv(args.out / "triadic_internal_frontier_cap_events.csv.gz", cap_rows, gzip_compresslevel=args.gzip_compresslevel)
     status = {
         **instrument_metadata(),
+        "artifact_schema_version": ARTIFACT_SCHEMA_VERSION,
+        "runner_version": RUNNER_VERSION,
+        "protocol_version": PROTOCOL_VERSION,
+        "rebuild_contract": "future_field_atlas_rebuild_contract.json",
         "claim_boundary": TRIADIC_CLAIM_BOUNDARY,
         "status": "COMPLETED",
         "completed_utc": utc_now(),

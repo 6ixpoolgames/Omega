@@ -91,6 +91,8 @@ Primary current design note:
 
 - `docs/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md`
 - `docs/FUTURE_FIELD_ATLAS_GLOSSARY.md`
+- `docs/implementation/FUTURE_FIELD_ATLAS_CHANGELOG.md`
+- `docs/implementation/RUN_RETENTION_POLICY.md`
 - `docs/research_notes/validation_results/future_field_atlas_phase0_1_smoke_result.md`
 - `docs/research_notes/validation_results/future_field_atlas_compact_manageability_h64_result.md`
 - `docs/research_notes/validation_results/future_field_atlas_default_gzip_compression_smoke.md`

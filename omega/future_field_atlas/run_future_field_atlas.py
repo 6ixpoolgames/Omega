@@ -23,6 +23,12 @@ from .generator import DEFAULT_SELECTION_OPERATORS, build_generated_conditions, 
 from .manifests import condition_identity_manifest_rows, formal_spec_manifest_rows, scan_manifest_rows
 from .mapper import map_scan
 from .reconstruction import reconstruction_audit_rows
+from .rebuild import (
+    ARTIFACT_SCHEMA_VERSION,
+    PROTOCOL_VERSION,
+    RUNNER_VERSION,
+    write_rebuild_contract,
+)
 from .scanner import scan_task
 from .transport import (
     adjacent_transport_matrices,
@@ -107,6 +113,9 @@ def main() -> None:
     selection_operators = tuple(item.strip() for item in args.selection_operators.split(",") if item.strip())
     config = {
         **instrument_metadata(),
+        "artifact_schema_version": ARTIFACT_SCHEMA_VERSION,
+        "runner_version": RUNNER_VERSION,
+        "protocol_version": PROTOCOL_VERSION,
         **vars(args),
         "groups_resolved": groups,
         "start_samples": start_samples,
@@ -116,6 +125,12 @@ def main() -> None:
         "selection_operators_resolved": list(selection_operators),
     }
     write_json(args.out / "future_field_atlas_run_config.json", config)
+    write_rebuild_contract(
+        args.out,
+        runner_module="omega.future_field_atlas.run_future_field_atlas",
+        config=config,
+        raw_data_retention="retained_local_raw_topology",
+    )
     conditions = build_generated_conditions(
         groups=groups,
         fresh_seeds_per_group=args.fresh_seeds_per_group,
@@ -589,6 +604,10 @@ def write_all_outputs(
     manifest = {
         **instrument_metadata(),
         "run_status": status.get("status"),
+        "rebuild_contract": "future_field_atlas_rebuild_contract.json",
+        "artifact_schema_version": ARTIFACT_SCHEMA_VERSION,
+        "runner_version": RUNNER_VERSION,
+        "protocol_version": PROTOCOL_VERSION,
         "csv_output_mode": csv_output_mode,
         "gzip_compresslevel": gzip_compresslevel,
         "raw_topology_output_mode": raw_topology_output_mode,
@@ -616,7 +635,7 @@ def write_all_outputs(
                 "exists": True if name == "future_field_atlas_manifest.json" else (out_dir / name).exists(),
                 "row_count": output_row_count(out_dir, name, csv_row_counts),
             }
-            for name in output_files
+            for name in ["future_field_atlas_rebuild_contract.json", *output_files]
         ],
         "claim_boundary": CLAIM_BOUNDARY,
     }

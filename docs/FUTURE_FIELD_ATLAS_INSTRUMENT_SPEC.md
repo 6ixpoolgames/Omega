@@ -544,8 +544,12 @@ Should include:
 
 ```text
 instrument_version
+artifact_schema_version
+runner_version
+protocol_version
 runner_module
 run_status
+rebuild_contract
 started_utc
 completed_utc
 seed_policy
@@ -565,6 +569,40 @@ horizon_schedule
 output_files
 claim_boundary
 ```
+
+`future_field_atlas_rebuild_contract.json`
+
+One row-equivalent JSON object describing whether discarded raw data can be
+regenerated from retained metadata and source state.
+
+Required fields:
+
+```text
+rebuild_contract_version
+rebuild_status: exact_rebuild_supported | logical_rebuild_only
+raw_data_retention
+instrument_version
+artifact_schema_version
+runner_version
+protocol_version
+runner_module
+command_line
+python_executable
+python_version
+platform
+config_digest
+git.source_commit
+git.source_branch
+git.source_dirty
+dependency_versions
+exact_rebuild_requirements
+raw_discard_policy
+```
+
+`exact_rebuild_supported` requires a source commit and clean worktree at run
+start. `logical_rebuild_only` is still acceptable for exploratory/calibration
+runs, but raw topology deletion should then be treated as a practical
+verification downgrade.
 
 `formal_spec_manifest.csv`
 

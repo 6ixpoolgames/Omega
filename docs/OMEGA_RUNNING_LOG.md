@@ -9,6 +9,52 @@ patch notes at the top.
 
 ## 2026-06-01
 
+### Future Field Atlas Rebuild And Retention Metadata
+
+Added a small data-plane metadata layer for future runs:
+
+```text
+omega/future_field_atlas/rebuild.py
+future_field_atlas_rebuild_contract.json
+```
+
+New Future Field Atlas runners now emit a rebuild contract with:
+
+```text
+source commit
+dirty-worktree flag
+runner module
+command line
+Python/platform/dependency versions
+artifact schema version
+runner version
+protocol version
+config digest
+raw data retention posture
+```
+
+Added implementation docs:
+
+- `docs/implementation/FUTURE_FIELD_ATLAS_CHANGELOG.md`
+- `docs/implementation/RUN_RETENTION_POLICY.md`
+
+Read:
+
+```text
+Old local runs can still be discarded when redundant or irrelevant. The new
+contract is the target posture for future runs, so deletion decisions can be
+made against explicit retained metadata rather than ad hoc memory.
+```
+
+Verification smoke:
+
+```text
+results/future_field_atlas/20260601_rebuild_contract_triadic_h1_smoke/
+status: COMPLETED
+rebuild_contract emitted: yes
+rebuild_status during local dirty-worktree smoke: logical_rebuild_only
+```
+
 ### Future Field Atlas Coupled H64 Broad Sweep
 
 Ran the missing broad H64 coupled breadth gate after the H128 depth pass.

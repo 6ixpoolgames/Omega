@@ -24,6 +24,12 @@ from .lossless_blocks import (
     lossless_topology_blocks,
     physical_raw_row_count,
 )
+from .rebuild import (
+    ARTIFACT_SCHEMA_VERSION,
+    PROTOCOL_VERSION,
+    RUNNER_VERSION,
+    write_rebuild_contract,
+)
 from .util import csv_row_count, safe_token, utc_now, write_csv, write_json
 
 
@@ -91,6 +97,9 @@ def main() -> None:
     macro_betas = tuple(parse_float_list(args.macro_invariant_beta_list) or [0.10])
     config = {
         **instrument_metadata(),
+        "artifact_schema_version": ARTIFACT_SCHEMA_VERSION,
+        "runner_version": RUNNER_VERSION,
+        "protocol_version": PROTOCOL_VERSION,
         "claim_boundary": COUPLED_CLAIM_BOUNDARY,
         **vars(args),
         "horizon_schedule_resolved": list(horizon_schedule),
@@ -99,6 +108,12 @@ def main() -> None:
         "start_pairing_policy": START_PAIRING_POLICY,
     }
     write_json(args.out / "coupled_future_field_atlas_run_config.json", config)
+    write_rebuild_contract(
+        args.out,
+        runner_module="omega.future_field_atlas.run_coupled_future_field_atlas",
+        config=config,
+        raw_data_retention="retained_local_raw_topology",
+    )
     conditions_a = build_generated_conditions(
         groups=args.groups,
         fresh_seeds_per_group=args.fresh_seeds_per_group,
@@ -519,6 +534,10 @@ def write_outputs(
         **instrument_metadata(),
         "claim_boundary": COUPLED_CLAIM_BOUNDARY,
         "run_status": status.get("status"),
+        "rebuild_contract": "future_field_atlas_rebuild_contract.json",
+        "artifact_schema_version": ARTIFACT_SCHEMA_VERSION,
+        "runner_version": RUNNER_VERSION,
+        "protocol_version": PROTOCOL_VERSION,
         "started_utc": status.get("started_utc"),
         "completed_utc": status.get("completed_utc"),
         "csv_output_mode": args.csv_output_mode,
@@ -575,7 +594,7 @@ def write_outputs(
                 "exists": True if name == "coupled_future_field_atlas_manifest.json" else (args.out / name).exists(),
                 "row_count": output_row_count(args.out, name, row_counts),
             }
-            for name in output_files
+            for name in ["future_field_atlas_rebuild_contract.json", *output_files]
         ],
     }
     write_json(args.out / "coupled_future_field_atlas_manifest.json", manifest)
