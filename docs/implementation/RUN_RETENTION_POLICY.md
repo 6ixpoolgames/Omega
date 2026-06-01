@@ -91,6 +91,71 @@ result note
 Delete only after a newer baseline supersedes it or after an explicit archive
 decision.
 
+## Compact Retention Utility
+
+Use the Future Field Atlas retention summarizer before deleting worker-spooled
+raw topology:
+
+```powershell
+.\.venv\Scripts\python.exe -m omega.future_field_atlas.retention_summary `
+  --run results\future_field_atlas\<run_name>
+```
+
+This writes a compact bundle under:
+
+```text
+results/future_field_atlas/<run_name>/_retention_summary/
+```
+
+The bundle includes:
+
+```text
+retained_run_summary.json
+retained_run_summary.md
+retained_deletion_plan.json
+retained_pair_skew.csv.gz
+retained_metric_summary.csv.gz
+retained_artifact_inventory.csv.gz
+compact_artifacts/
+```
+
+The summarizer copies compact manifests, status/config, rebuild contract,
+readiness summaries, reconstruction audits, completeness summaries, profiles,
+residuals, and marginal summaries. It does not copy high-volume raw node/edge
+spool files.
+
+If the run is complete, uncapped, cleanly audited, and interpretable, the
+deletion plan may recommend:
+
+```text
+delete_raw_spools_allowed
+```
+
+Only then delete worker-spooled raw topology:
+
+```powershell
+.\.venv\Scripts\python.exe -m omega.future_field_atlas.retention_summary `
+  --run results\future_field_atlas\<run_name> `
+  --delete-raw-spools
+```
+
+This removes only:
+
+```text
+coupled_pair_spool/
+```
+
+and writes:
+
+```text
+RAW_TOPOLOGY_DELETED.json
+```
+
+Use `--force` only when intentionally overriding a blocked recommendation.
+Do not use deletion on runs with failed pairs, cap poisoning, failed
+reconstruction audits, or `NO_COMPLETE_ROWS` unless the run is explicitly a
+truncation/operational stress test.
+
 ## Rebuild Contract
 
 New runs should emit:
@@ -135,4 +200,3 @@ Tier 4:
 ```
 
 Not every polish pass should become a full research note.
-

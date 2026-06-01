@@ -7,6 +7,54 @@ Use this file for tooling, schema, retention, and runner polish. Use
 `docs/OMEGA_RUNNING_LOG.md` and `docs/research_notes/validation_results/` only
 when a run or decision changes the project state.
 
+## 2026-06-02
+
+### Compact Retention Summarizer
+
+Added:
+
+```text
+omega.future_field_atlas.retention_summary
+```
+
+The utility builds compact retained bundles for Future Field Atlas run
+directories:
+
+```text
+_retention_summary/
+  retained_run_summary.json
+  retained_run_summary.md
+  retained_deletion_plan.json
+  retained_pair_skew.csv.gz
+  retained_metric_summary.csv.gz
+  retained_artifact_inventory.csv.gz
+  compact_artifacts/
+```
+
+It reads run status/config, rebuild contract, manifests, spool summaries,
+readiness rows, reconstruction audits, completeness rows, residuals, marginal
+summaries, and profiles. It then emits a deletion recommendation. For clean
+worker-spooled coupled runs, `--delete-raw-spools` deletes only
+`coupled_pair_spool/` and writes `RAW_TOPOLOGY_DELETED.json`.
+
+Validated on the retained H64/H128 worker-spool scale runs:
+
+```text
+H64 pair8:
+  raw spool deleted: 1.206111 GiB
+  retained folder size after pruning: about 0.19 MB
+
+H128 pair8:
+  raw spool deleted: 2.537121 GiB
+  retained folder size after pruning: about 0.25 MB
+```
+
+Tests:
+
+```text
+tests/test_retention_summary.py
+```
+
 ## 2026-06-01
 
 ### Worker-Spool Scale Validation

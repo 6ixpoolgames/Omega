@@ -7,6 +7,60 @@ run.
 Entries are organized in rough reverse chronological order, with the most recent
 patch notes at the top.
 
+## 2026-06-02
+
+### Future Field Atlas Compact Retention Utility
+
+Implemented a compact retention utility:
+
+```text
+python -m omega.future_field_atlas.retention_summary --run <run_dir>
+```
+
+It writes:
+
+```text
+_retention_summary/
+  retained_run_summary.json
+  retained_run_summary.md
+  retained_deletion_plan.json
+  retained_pair_skew.csv.gz
+  retained_metric_summary.csv.gz
+  retained_artifact_inventory.csv.gz
+  compact_artifacts/
+```
+
+For clean worker-spooled coupled runs, it can prune raw pair spools:
+
+```text
+python -m omega.future_field_atlas.retention_summary --run <run_dir> --delete-raw-spools
+```
+
+The deletion path removes only `coupled_pair_spool/` and leaves root manifests,
+profiles, residuals, marginal summaries, readiness rows, rebuild contract, and
+the retention bundle intact.
+
+Applied to the retained scale runs:
+
+```text
+H64 pair8 worker_spool:
+  deleted raw spool estimate: 1.206111 GiB
+  retained run folder after pruning: about 0.19 MB
+
+H128 pair8 worker_spool:
+  deleted raw spool estimate: 2.537121 GiB
+  retained run folder after pruning: about 0.25 MB
+```
+
+Read:
+
+```text
+The project can now run multi-GB coupled raw topology passes, retain compact
+auditable summaries, and discard raw spools when the run is complete, uncapped,
+and reconstruction-clean. This makes coupled parameter sweeps operationally
+safe from a storage-management perspective.
+```
+
 ## 2026-06-01
 
 ### Future Field Atlas Coupled Worker-Spool Scale Validation

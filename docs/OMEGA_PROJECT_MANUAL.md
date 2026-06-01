@@ -1,6 +1,6 @@
 # Omega Project Manual
 
-Last updated: 2026-06-01
+Last updated: 2026-06-02
 
 Repository: https://github.com/6ixpoolgames/Omega
 
@@ -74,9 +74,15 @@ parallel attempt failed on two heavy pairs through a Windows multiprocessing
 result-transfer limit. The first repair is now implemented as
 `--raw-topology-output-mode worker_spool`, which writes pair-local raw topology
 inside worker processes and lets the parent merge compact manifests. Use
-`worker_spool` for coupled H128 breadth attempts. A short three-frontier H6
-smoke now exists as a profile-only interface probe; it does not emit raw
-triadic topology and should not be treated as a coupled science result.
+`worker_spool` for coupled H128 breadth attempts. Before deleting worker-spooled
+raw topology, run `python -m omega.future_field_atlas.retention_summary --run
+<run_dir>` and keep the `_retention_summary/` bundle. If the deletion plan says
+`delete_raw_spools_allowed`, `--delete-raw-spools` may remove only
+`coupled_pair_spool/` while leaving compact manifests, profiles, residuals,
+marginal summaries, audits, readiness rows, and rebuild metadata. A short
+three-frontier H6 smoke now exists as a profile-only interface probe; it does
+not emit raw triadic topology and should not be treated as a coupled science
+result.
 ```
 
 Terminology rule:
