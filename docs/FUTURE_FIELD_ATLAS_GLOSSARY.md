@@ -121,6 +121,23 @@ be used only for targeted audits.
 computes consecutive-milestone residuals, and `full` computes all available
 closure residuals. Full residuals require full transport output.
 
+`coupled`
+: Runtime/public term for the two-frontier Future Field Atlas branch. The
+current coupled probe compares product-baseline joint topology against a
+coupled joint selector over the same product successors.
+
+`product_baseline`
+: Coupled-branch baseline that unfolds the cartesian product of A-field and
+B-field selected successors.
+
+`joint_vs_product_residual`
+: Coupled-branch feature comparing coupled joint support against product
+baseline joint support. It is a topology residual, not an interpretive label.
+
+`marginal_retention`
+: Coupled-branch feature reporting how much A and B marginal support remains in
+the coupled joint frontier relative to the product baseline.
+
 ## Historical Translation
 
 These names appeared in old notes and early smoke outputs. They should be read
@@ -136,6 +153,7 @@ as historical shorthand only.
 | `drop_strongest_m4_to_m3` | `rank_subset:m=4:retain=2|3|4:remove=1` |
 | `random_delete_one_m4_to_core3` | `stochastic_rank_subset:m=4:effective=3` |
 | `random_delete_two_m5_to_core3` | `stochastic_rank_subset:m=5:effective=3` |
+| `comField` | `coupled` |
 
 ## Public Language Guidance
 

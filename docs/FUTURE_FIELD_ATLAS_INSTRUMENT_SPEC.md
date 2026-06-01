@@ -275,6 +275,33 @@ joint-vs-product residual
 support / capture / erasure features as downstream analysis only
 ```
 
+Initial coupled implementation status:
+
+```text
+runner: omega.future_field_atlas.run_coupled_future_field_atlas
+module: omega.future_field_atlas.coupled
+public/runtime term: coupled
+deprecated working term: comField
+```
+
+The initial coupled probe is infrastructure only. It compares a product
+baseline against a coupled joint selector over the same product successors:
+
+```text
+product_baseline:
+  cartesian product of A and B selected successors
+
+coupled:
+  joint energy rank-prefix selection over product successors
+
+joint_transition_energy:
+  A_candidate_energy
+  + B_candidate_energy
+  + coupling_strength * abs(A_rank_offset_from_boundary - B_rank_offset_from_boundary)
+```
+
+This joint selector is a first probe operator, not a theory conclusion.
+
 ### Phase 3: interaction feature mapping
 
 Goal: map candidate interaction patterns from raw data.

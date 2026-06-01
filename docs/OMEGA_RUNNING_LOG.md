@@ -9,6 +9,110 @@ patch notes at the top.
 
 ## 2026-06-01
 
+### Future Field Atlas Coupled Probe
+
+Implemented and smoked the first clean coupled Future Field Atlas infrastructure
+layer.
+
+Runtime/public term:
+
+```text
+coupled
+```
+
+Do not use `comField` for this branch.
+
+Retained note:
+
+- `docs/research_notes/validation_results/future_field_atlas_coupled_probe_result.md`
+
+Implemented shape:
+
+```text
+product_baseline:
+  cartesian product of A and B selected successors
+
+coupled:
+  joint energy rank-prefix selection over product successors
+
+joint_transition_energy:
+  A_candidate_energy
+  + B_candidate_energy
+  + coupling_strength * abs(A_rank_offset_from_boundary - B_rank_offset_from_boundary)
+```
+
+Smokes:
+
+```text
+H8:
+  status: COMPLETED
+  elapsed_seconds: 0.331
+  joint_node_rows: 1169
+  joint_edge_rows: 6588
+  output: about 0.40 MB
+  reconstruction_audit_passed: 1
+  artifact_completeness_statuses: complete
+
+H16:
+  status: COMPLETED
+  elapsed_seconds: 0.746
+  joint_node_rows: 2749
+  joint_edge_rows: 16908
+  output: about 1.00 MB
+  reconstruction_audit_passed: 1
+  artifact_completeness_statuses: complete
+
+H32:
+  status: COMPLETED
+  elapsed_seconds: 1.566
+  joint_node_rows: 5909
+  joint_edge_rows: 37548
+  output: about 2.20 MB
+  reconstruction_audit_passed: 1
+  artifact_completeness_statuses: complete
+
+H16 pair2 parallel:
+  status: COMPLETED
+  elapsed_seconds: 15.834
+  workers: 2
+  joint_node_rows: 51924
+  joint_edge_rows: 202406
+  output: about 12.50 MB
+  reconstruction_audit_passed: 1
+  artifact_completeness_statuses: complete,truncated_noninterpretable
+```
+
+Final H32 readout:
+
+```text
+product_joint_support_count: 100
+coupled_joint_support_count: 97
+joint_support_residual_fraction: 0.03
+A_marginal_retention_fraction: 1.0
+B_marginal_retention_fraction: 1.0
+internal_cap_events: 0
+```
+
+Completeness repair:
+
+```text
+The two-pair parallel smoke showed that marginal-retention and joint-residual
+rows must inherit raw topology completeness. The runner now marks coupled
+derived comparison rows with feature_status and reconstruction audits skip
+truncated_noninterpretable rows instead of failing or treating them as complete.
+```
+
+Read:
+
+```text
+Go for a medium coupled infrastructure sweep. Not yet a coupled science run.
+Before scaling pair count, either add sharded coupled raw topology or decide
+that truncated_noninterpretable horizons are acceptable as operational probes.
+First medium pass should vary pair count, coupling strength, and joint effective
+out-degree while keeping product baselines, feature_status, and reconstruction
+audits mandatory.
+```
+
 ### Future Field Atlas Transport Mode Timing
 
 Added explicit transport and residual modes:

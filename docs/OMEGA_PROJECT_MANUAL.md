@@ -76,6 +76,7 @@ Primary current design note:
 - `docs/research_notes/validation_results/future_field_atlas_h128_calibration_pass_result.md`
 - `docs/research_notes/validation_results/future_field_atlas_writeout_path_repair_note.md`
 - `docs/research_notes/validation_results/future_field_atlas_transport_mode_timing_result.md`
+- `docs/research_notes/validation_results/future_field_atlas_coupled_probe_result.md`
 - `docs/RFS_MB0_TOP_M_MECHANISM_AUDIT_SPEC.md`
 - `docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md`
 - `docs/RFS_MB0_TOP_M_GEOMETRY_AUDIT_SPEC.md`
@@ -325,6 +326,25 @@ Delete only after reviewing the candidates:
 
 Do not add new root-level `*_results` folders. If a historical script defaults
 to root-level output, override its output directory when rerunning it.
+
+### Coupled Atlas Runs
+
+Use `coupled`, not `comField`, for the two-frontier Future Field Atlas branch.
+
+Current runner:
+
+```powershell
+.\.venv\Scripts\python.exe -m omega.future_field_atlas.run_coupled_future_field_atlas `
+  --out results\future_field_atlas\<run_id> `
+  --horizon-max 32 `
+  --workers 18
+```
+
+The current coupled layer is an infrastructure probe. It must keep product
+baselines, marginal-retention rows, joint-vs-product residual rows, and
+reconstruction audits before any interpretation. Do not report Omega, agency,
+value, identity, valuerhood, or candidate-promotion language from coupled probe
+outputs.
 
 ## Context From The Theory/Paper Side
 
