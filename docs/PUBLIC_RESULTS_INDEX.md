@@ -59,10 +59,11 @@ Start here:
 1. [`README.md`](../README.md)
 2. [`OMEGA_FORMALISM_PRIMER.md`](OMEGA_FORMALISM_PRIMER.md)
 3. [`EXTERNAL_READER_GUIDE.md`](EXTERNAL_READER_GUIDE.md)
-4. [`research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md)
-5. [`research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md)
-6. [`research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md)
-7. [`FUTURE_FIELD_ATLAS_GLOSSARY.md`](FUTURE_FIELD_ATLAS_GLOSSARY.md)
+4. [`research_notes/omega_theory/README.md`](research_notes/omega_theory/README.md)
+5. [`research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md)
+6. [`research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md)
+7. [`research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md)
+8. [`FUTURE_FIELD_ATLAS_GLOSSARY.md`](FUTURE_FIELD_ATLAS_GLOSSARY.md)
 
 ## Current live branch
 

@@ -2,6 +2,10 @@
 
 Companion glossary for translating internal Omega terminology into clearer public-facing language
 
+Status relative to current stack: supporting translation note / needs periodic refresh
+Current public onboarding: `../../OMEGA_FORMALISM_PRIMER.md`
+Current theory map: `README.md` and `theory_arm_map_v0.md`
+
 ## Purpose
 
 The Omega notes contain several useful internal terms that can read as inbred or opaque to new readers.
@@ -15,8 +19,23 @@ The goal is not to replace the canonical glossary. The goal is to make the vocab
 Canonical definitions remain anchored in:
 
 ```text
+../../OMEGA_FORMALISM_PRIMER.md
+README.md
 docs/research_notes/omega_theory/omega_glossary.md
 ```
+
+The current front-door phrase is no longer only "reachable futures." Public
+writing should now lead with:
+
+```text
+value-bearing futures
+future-distinction dynamics
+recoverable, non-erasing, compatible propagation
+Future Field Atlas as the empirical microscope
+```
+
+Operational empirical summaries may still use reachable-futures and neutral
+future-landscape language when describing the substrate program.
 
 ## Translation principle
 
@@ -52,12 +71,20 @@ macro-invariant transition substrates
 Use **Omega** for the wider theory and long-term hypothesis. Use established
 terms for current measurements.
 
-Recommended public framing:
+Recommended public framing for the older RFS-MB0 empirical branch:
 
 ```text
 We study reachable futures in abstract dynamical substrates: how neutral
 transition relations deform the space of possible continuations across horizons,
 and whether that deformation survives matched controls.
+```
+
+Recommended public framing for the current top-level project:
+
+```text
+Omega studies value-bearing futures through future-distinction dynamics:
+recoverable, non-erasing, compatible propagation of future-relevant
+distinctions under lawful transition structure.
 ```
 
 Recommended ambition statement:
@@ -70,13 +97,23 @@ The current repo is the empirical substrate program needed to test whether
 earlier, neutral precursors to that object can be isolated.
 ```
 
-Current status sentence:
+Historical RFS-MB0 status sentence:
 
 ```text
 Detector v1.1 plus the long-horizon audit layer can measure neutral future
 landscapes, separate local profile candidates from aggregate claims, and test
 whether H16 ended too early. It has not validated the target object: no
 non-control, non-saturated family currently earns an aggregate structure pass.
+```
+
+Current Future Field Atlas status sentence:
+
+```text
+Future Field Atlas can measure reconstructible finite future-field topology.
+The current rank_order_boundary branch shows a marginal-preserving
+joint-restriction class under symbol_histogram_distance, but it does not
+validate Omega or detect valuers, agency, value, compatibility, support,
+capture, or erasure.
 ```
 
 ## Current substrate-language update

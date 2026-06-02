@@ -2,6 +2,10 @@
 
 Canonical working definitions for the current theory stack
 
+Status relative to current stack: supporting glossary / partially historical
+Current public onboarding: `../../OMEGA_FORMALISM_PRIMER.md`
+Current theory map: `README.md` and `theory_arm_map_v0.md`
+
 ## Purpose
 
 This glossary anchors the internal terminology used across the Omega research
@@ -20,12 +24,22 @@ been stated in those external terms.
 Companion glossaries:
 
 ```text
+README.md:
+  theory-note status map for this folder
+
+../../OMEGA_FORMALISM_PRIMER.md:
+  current first-contact formalism primer
+
 public_terms_and_translations.md:
   public-facing translations for internal terms
 
 historical_probe_terms.md:
   older COM/fiber, trajectory-space, DA/DAR/DAX, and probe-result terminology
 ```
+
+If this glossary conflicts with the README or `../../OMEGA_FORMALISM_PRIMER.md`
+on public presentation, prefer the README/primer. This file remains useful for
+internal term history and dense theory-note reading.
 
 The guiding dependency chain is:
 
@@ -62,23 +76,32 @@ Omega is currently best introduced as a structural theory of value-bearing futur
 
 The phrase means that Omega studies the structure of possible continuations in which value-bearing histories can remain recoverable, compatible, and richly continuable under constraint. It preserves the connection to formal value theory, axiology, and alignment work on future-preserving reachability.
 
-For collaborators entering through the empirical repo, the front-door phrase is:
+For collaborators entering through the empirical repo, the current front-door
+phrase is:
+
+```text
+value-bearing futures and future-distinction dynamics
+```
+
+The empirical instrument is Future Field Atlas: a finite microscope for
+reachable-frontier topology under formal transition operators. Older RFS-MB0
+writing often used the front-door phrase:
 
 ```text
 neutral future landscapes under matched-null comparison
 ```
 
-The wider theory remains Omega. The empirical substrate program asks what
-minimal dynamical systems can resolve the distinctions Omega cares about.
+That remains useful for historical empirical notes, but it is no longer the
+main public entry point.
 
 Current implementation status:
 
 ```text
-RFS-MB0 detector v1.1 and the long-horizon audit layer are implemented.
-They measure mechanically probed future-profile deformation through extended
-horizon grids.
-It has not passed the scientific gate because no non-control, non-saturated
-family currently earns an aggregate structure pass.
+Future Field Atlas measures reconstructible finite future-field topology under
+lawful transition substrates. The current rank_order_boundary coupled branch has
+a marginal-preserving joint-restriction class under symbol_histogram_distance,
+but it does not validate Omega or detect valuers, agency, value, compatibility,
+support, capture, or erasure.
 ```
 
 ## External anchor layer

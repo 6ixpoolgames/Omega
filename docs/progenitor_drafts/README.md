@@ -13,6 +13,13 @@ The current empirical status of the project is tracked separately in:
 - `docs/OMEGA_RUNNING_LOG.md`
 - `docs/PUBLIC_RESULTS_INDEX.md`
 
+The current public formalism is tracked in:
+
+- `docs/OMEGA_FORMALISM_PRIMER.md`
+- `docs/research_notes/omega_theory/README.md`
+- `docs/research_notes/omega_theory/theory_arm_map_v0.md`
+- `docs/research_notes/omega_theory/omega_formal_core_v0_2_future_distinction_dynamics.md`
+
 ## Included Drafts
 
 - `intelligent_agency_under_computational_irreducibility.pdf`
@@ -40,12 +47,12 @@ These documents helped motivate the search for:
 The current empirical reset is narrower:
 
 ```text
-reachable futures under viability and compatibility constraints
+future-field topology under formal transition operators
 ```
 
-Near-term work asks what minimal substrate can distinguish generic viable
-continuation from trivial persistence, recoverability, local capture, and
-compatibility-preserving viable propagation.
+Near-term work asks what minimal substrate can distinguish generic continuation
+from recoverable, non-erasing, compatibility-relevant future-distinction
+structure.
 
 Any public interpretation should distinguish:
 
@@ -57,5 +64,6 @@ the empirical repo:
   cautious substrate design and executable probes
 
 current status:
-  Omega is not validated; substrate resolution is the active bottleneck
+  Omega is not validated; formal scaffolding and substrate resolution are the
+  active bottlenecks
 ```

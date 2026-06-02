@@ -22,11 +22,12 @@ For the current project state, read:
 2. [External Reader Guide](docs/EXTERNAL_READER_GUIDE.md)
 3. [Omega Formal Core v0.2](docs/research_notes/omega_theory/omega_formal_core_v0_2_future_distinction_dynamics.md)
 4. [Theory Arm Map v0](docs/research_notes/omega_theory/theory_arm_map_v0.md)
-5. [Future Field Atlas Instrument Spec](docs/specs/current/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md)
-6. [Rank-Order Boundary Class Expansion Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md)
-7. [Rank-Order Boundary Visualization Note](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md)
-8. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
-9. [Project Manual](docs/OMEGA_PROJECT_MANUAL.md)
+5. [Omega Theory Notes Map](docs/research_notes/omega_theory/README.md)
+6. [Future Field Atlas Instrument Spec](docs/specs/current/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md)
+7. [Rank-Order Boundary Class Expansion Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md)
+8. [Rank-Order Boundary Visualization Note](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md)
+9. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
+10. [Project Manual](docs/OMEGA_PROJECT_MANUAL.md)
 
 ## The Core Idea
 
@@ -276,6 +277,9 @@ docs/OMEGA_RUNNING_LOG.md
 
 docs/research_notes/omega_theory/
   dense theory notes and finite theorem scaffolds
+
+docs/research_notes/omega_theory/README.md
+  status map for dense theory notes
 
 docs/research_notes/validation_results/
   retained empirical result notes

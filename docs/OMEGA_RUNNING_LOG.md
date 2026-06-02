@@ -9,6 +9,34 @@ patch notes at the top.
 
 ## 2026-06-03
 
+### Deeper Theory Navigation Pass
+
+Updated the main theory navigation surfaces after the top-level README/primer
+rewrite.
+
+Added:
+
+```text
+docs/research_notes/omega_theory/README.md
+```
+
+Updated:
+
+```text
+docs/research_notes/omega_theory/omega_glossary.md
+docs/research_notes/omega_theory/public_terms_and_translations.md
+docs/current_theory/README.md
+docs/progenitor_drafts/README.md
+```
+
+Intent:
+
+```text
+make dense theory notes easier to classify as current anchors, active
+scaffolds, translation notes, or historical lineage without rewriting the
+source theorem/formal notes themselves.
+```
+
 ### Top-Level Documentation Rewrite
 
 Streamlined the public-facing documentation roles:

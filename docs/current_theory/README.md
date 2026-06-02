@@ -12,13 +12,22 @@ Status:
   claim ladder;
 - no longer the front door for the current validation pivot.
 
+Current front door:
+
+```text
+../OMEGA_FORMALISM_PRIMER.md
+../research_notes/omega_theory/README.md
+../research_notes/omega_theory/theory_arm_map_v0.md
+../research_notes/omega_theory/omega_formal_core_v0_2_future_distinction_dynamics.md
+```
+
 ## Included Draft
 
 - `omega_signature_v0_1.pdf`
 
-## Current Front Door
+## Historical Front Door
 
-The current public-facing theory and validation front door is now:
+The previous public-facing theory and validation front door was:
 
 - `../specs/archive/rfs_mb0/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md`
 - `../research_notes/validation_design/val_ecology_viability_reorientation.md`
@@ -32,10 +41,10 @@ The current public-facing theory and validation front door is now:
 - `../research_notes/omega_theory/formal_stack_v0.md`
 - `../research_notes/omega_theory/omega_glossary.md`
 
-Public-facing terminology should introduce the empirical repo through reachable
-futures and viability first. Omega remains the broader theory: a proposed formal
-account of which possible continuations preserve, expand, trap, or collapse
-recoverable value-bearing trajectory space.
+Those documents remain useful provenance, but the current public-facing
+terminology should introduce the project through value-bearing futures,
+future-distinction dynamics, and Future Field Atlas as the empirical
+microscope.
 
 ## How To Read It
 

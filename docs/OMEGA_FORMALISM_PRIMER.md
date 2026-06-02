@@ -1,7 +1,7 @@
 # Omega Formalism Primer
 
-Status: public onboarding / current best formalism  
-Scope: compact bridge from README to the dense theory notes  
+Status: public onboarding / current best formalism
+Scope: compact bridge from README to the dense theory notes
 Claim boundary: formal orientation only; not empirical validation, not valuer detection, not Omega validation
 
 ## One-Sentence Ambition
@@ -344,11 +344,12 @@ strict reconstruction and claim boundaries.
 For theory:
 
 ```text
-1. docs/research_notes/omega_theory/omega_formal_core_v0_2_future_distinction_dynamics.md
-2. docs/research_notes/omega_theory/theory_arm_map_v0.md
-3. docs/research_notes/omega_theory/finite_omega_completion_theorems_v0.md
-4. docs/research_notes/omega_theory/finite_distinction_measures_v0.md
-5. docs/research_notes/omega_theory/compatibility_audit_taxonomy_v0.md
+1. docs/research_notes/omega_theory/README.md
+2. docs/research_notes/omega_theory/omega_formal_core_v0_2_future_distinction_dynamics.md
+3. docs/research_notes/omega_theory/theory_arm_map_v0.md
+4. docs/research_notes/omega_theory/finite_omega_completion_theorems_v0.md
+5. docs/research_notes/omega_theory/finite_distinction_measures_v0.md
+6. docs/research_notes/omega_theory/compatibility_audit_taxonomy_v0.md
 ```
 
 For empirical status:
