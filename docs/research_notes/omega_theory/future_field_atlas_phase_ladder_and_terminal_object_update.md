@@ -1,7 +1,7 @@
-# Future Field Atlas, Phase Ladder, and Terminal Object Sketch
+# Future Field Atlas, Phase Ladder, and Omega Completion Sketch
 
 Status: research update / orientation note  
-Date: 2026-06-01  
+Date: 2026-06-02  
 Claim boundary: theory-roadmap note, not an empirical validation result
 
 ## Purpose
@@ -12,9 +12,9 @@ the pre-agency claim ladder, and the longer-term Omega formalism ambition.
 It is intentionally not a finished formalism. The purpose is to preserve the
 current reasoning so future context resets do not bury the project-level shape.
 
-The empirical arm has now become strong enough to support a parallel formalism
-arm. The formalism arm should not replace empirical work, and the empirical arm
-should not be asked to carry ontological ambition by itself.
+The empirical arm has become strong enough to support a parallel formalism arm,
+but the empirical arm should not be asked to carry ontological ambition by
+itself.
 
 The near-term split is:
 
@@ -23,8 +23,8 @@ empirical arm:
   Future Field Atlas and coupled future-field scans
 
 formalism arm:
-  phase ladder, falsification criteria, atlas-theory interface, and terminal
-  object sketch
+  phase ladder, falsification criteria, atlas-theory interface, proto-valuer
+  admissibility, and Omega completion sketches
 ```
 
 The shared interface should be narrow:
@@ -52,23 +52,39 @@ labels last, if at all
 
 The single-field atlas has passed H128 calibration with complete artifacts and
 reconstruction audits. The coupled atlas has passed small hardening runs, H128
-serial depth checks, and a broad H64 pair8 breadth sweep. The H64 pair8 run
-completed with no caps, complete artifacts, passing reconstruction audits, and
-manageable but skewed sharded output.
+serial depth checks, broad H64 pair8 breadth, the H64 coupling ladder, the H64
+near-zero mechanism-resolution pass, a retained-output substrate morphology
+atlas, and a first shared-capacity H64 smoke.
 
-The current empirical bottleneck is no longer basic instrument legitimacy. It is
-operational and interpretive:
+The current empirical read is:
 
 ```text
-raw coupled topology grows quickly;
-heavy-pair skew dominates edge output;
-write-out/finalization dominates wall time;
-H128 broad surveys need worker-side spooling or pair-indexed heavy-pair handling;
-interpretation needs a formal phase ladder before the atlas outputs are overnamed.
+rank-boundary mismatch operator:
+  near-zero scalar effects are detectable through 0.010 and saturate by 0.020
+
+product selector:
+  the true product-equivalence reference
+
+zero-penalty joint rank-prefix:
+  not product-neutral; already a coupled selector
+
+pair005:
+  heavy-pair / critical-pair clue; high residual and joint-restrictive under
+  scalar mismatch while preserving A/B marginals
+
+substrate morphology atlas:
+  maps retained coupled outputs before choosing a next operator;
+  retained morphology remains single-observable only: symbol_histogram_distance
+
+shared_capacity v1:
+  operational and reconstruction-clean, but behaves as marginal pruning followed
+  by product-dense closure over surviving marginals;
+  not a scale-up-worthy reproduction of the pair005-like scalar-mismatch
+  signature
 ```
 
 The current claim boundary remains strict. Coupled atlas outputs do not yet
-detect:
+establish:
 
 ```text
 interaction
@@ -80,18 +96,61 @@ agency
 identity
 value
 valuerhood
+proto-valuerhood
 Omega
 ```
 
 They establish only that formal coupled-operator infrastructure can scan product
 and coupled future fields while preserving raw topology, product baselines,
-reconstruction audits, and artifact-completeness semantics.
+reconstruction audits, artifact-completeness semantics, and compact morphology
+summaries.
 
-## Why a separate formalism arm is now warranted
+## Current theory stack
+
+The formalism is now best read as a stack rather than a single definition.
+
+```text
+v0.2:
+  Future-Distinction Dynamics
+
+admissibility enrichment note:
+  process-bundle designations, identity-decay nulls, and maintenance gaps
+
+proto-valuer note:
+  pre-proto-valuers, proto-valuers, induced asymmetry-preferences, and maximal
+  compatibility completions
+
+future target:
+  Omega as a family / space of maximal admissible compatibility completions
+```
+
+The unifying relation is not a forgetful map. The project should not say richer
+structure is recovered by forgetting. The universe is not forgetful.
+
+The unifying relation is an admissibility ladder:
+
+```text
+base future-distinction dynamics:
+  relation, distinction, asymmetry, dynamics
+
+v0.2 admissibility:
+  recoverable, non-erasing, compatible future-distinction propagation
+
+proto-valuer admissibility:
+  an admissible process-bundle designation maintains distinctions through churn,
+  remains recoverable under perturbation, outperforms a matched identity-decay
+  null, and self-conditions toward continued distinction-maintaining capacity
+
+Omega-completion admissibility:
+  families of proto-valuer-bearing dynamics compose without systematic
+  irreversible destruction of one another's distinction-content
+```
+
+## Why a separate formalism arm is warranted
 
 The empirical arm is producing increasingly rich future-field artifacts. Without
 a formal claim ladder, there is a risk of prematurely naming geometric patterns
-as interaction, capture, proto-agency, or Omega relevance.
+as interaction, capture, proto-agency, valuerhood, or Omega relevance.
 
 The formal arm should answer:
 
@@ -101,26 +160,21 @@ What counts as deformation?
 What counts as persistent deformation?
 What counts as recoverability?
 What counts as proto-designation?
+What counts as pre-proto-valuerhood?
+What counts as proto-valuerhood?
 What counts as coupled compatibility or erasure?
 What would falsify each claim?
 What atlas artifact is allowed to support each claim?
 ```
-
-This is also a response to a serious external-style critique: the empirical arm
-is disciplined and honest, but still early; scale, hand-designed invariants,
-explicit falsification criteria, and the bridge from toy deformation to the
-large ontological ambition remain the core weaknesses.
-
-That critique is useful. It should not push the project into grandiose claims.
-It should push the project into a clearer claim ladder.
 
 ## The pre-agency analogy
 
 The current instrument is more likely to find the analogue of self-replicating
 molecules than life.
 
-That is not a failure. The molecule-level object matters because agency-like
-structure should not be assumed. It should be earned from future-field evidence.
+That is not a failure. The molecule-level object matters because agency-like or
+valuer-like structure should not be assumed. It should be earned from
+future-field evidence.
 
 Current analogy:
 
@@ -129,18 +183,18 @@ self-replicating molecule:
   a local precursor structure that makes life possible but is not itself life
 
 future-field channeling:
-  a lawful deformation precursor that may make agency-like structure possible
-  but is not itself agency
+  a lawful deformation precursor that may make proto-valuer-like structure
+  possible but is not itself agency or valuerhood
 ```
 
 This maps naturally to the Gradient Ethics intuition of a pre-first phase
 transition of agency. The atlas may reveal the substrate below agency: the layer
 where lawful invariant/asymmetry structure begins to channel futures into
-persistent, recoverable, and eventually designation-worthy patterns.
+persistent, recoverable, eventually designation-worthy patterns.
 
 ## Phase ladder
 
-The following ladder is a draft. It is deliberately conservative.
+The following ladder is deliberately conservative.
 
 ### Phase 0: Instrumental visibility
 
@@ -159,12 +213,6 @@ formal spec manifests
 condition identity manifests
 artifact completeness summaries
 reconstruction audits
-```
-
-Current status:
-
-```text
-achieved for single-field calibration and small/broad coupled infrastructure
 ```
 
 Claim allowed:
@@ -209,8 +257,8 @@ substrate.
 Failure mode:
 
 ```text
-The apparent channeling reduces to frontier size, saturation, cap artifacts,
-or hand-chosen invariant tuning.
+The apparent channeling reduces to frontier size, saturation, cap artifacts, or
+hand-chosen invariant tuning.
 ```
 
 ### Phase 2: Structured deformation
@@ -243,7 +291,8 @@ specified formal conditions.
 Claim not allowed:
 
 ```text
-The deformation is interaction, support, capture, or erasure.
+The deformation is interaction, support, capture, erasure, compatibility, or
+agency.
 ```
 
 ### Phase 3: Persistent deformation
@@ -262,7 +311,7 @@ horizon persistence
 start recurrence
 seed recurrence
 operator-setting recurrence
-selected H128 depth checks after H64 breadth
+selected depth checks after breadth sweeps
 ```
 
 Claim allowed:
@@ -304,7 +353,7 @@ Some future-field structure is recoverable under specified perturbations.
 Claim not allowed:
 
 ```text
-The system is agentic or value-bearing.
+The system is agentic, valuer-bearing, or value-bearing.
 ```
 
 ### Phase 5: Proto-designation
@@ -343,13 +392,78 @@ Failure mode:
 Deformation exists but does not localize to any stable designation or quotient.
 ```
 
-### Phase 6: Coupled compatibility / capture / erasure
+### Phase 6: Pre-proto-valuer tests
 
 Question:
 
 ```text
-When two or more future fields are coupled, do they compose in ways that preserve,
-support, erase, capture, or destabilize future-bearing structure?
+Does an admissible process-bundle designation maintain nontrivial distinction-
+content, propagate a sufficient subset recoverably under perturbation, and
+outperform a matched identity-decay null?
+```
+
+Required formal ingredients:
+
+```text
+process-bundle designation P
+weighted or finite distinction measure M_Q(D_t(P))
+perturbation class Pi
+matched identity-decay null N_P
+maintenance-gap metric C_K^Pi(P,H) - C_{N_P}^Pi(P,H)
+```
+
+Claim allowed:
+
+```text
+The process bundle satisfies declared pre-proto-valuer criteria in the tested
+substrate.
+```
+
+Claim not allowed:
+
+```text
+The process is a valuer, agent, or identity-bearing self.
+```
+
+### Phase 7: Proto-valuer tests
+
+Question:
+
+```text
+Does the process bundle self-condition its transition environment toward future
+pre-proto-valuerhood relative to a matched passive / non-self-conditioning
+baseline?
+```
+
+Required evidence:
+
+```text
+declared activity channel a_P
+activity-present dynamics K^{act(P)}
+passive / ablated baseline K^{pass(P)}
+future pre-proto-valuer criteria
+self-conditioning gap gamma
+```
+
+Claim allowed:
+
+```text
+The process bundle satisfies declared proto-valuer criteria.
+```
+
+Claim not allowed:
+
+```text
+Full valuerhood, agency, consciousness, moral status, or Omega compatibility.
+```
+
+### Phase 8: Compatibility / capture / erasure candidates
+
+Question:
+
+```text
+When two or more proto-valuer-bearing dynamics compose, are their recoverable
+future-distinctions preserved, supported, erased, captured, or destabilized?
 ```
 
 Atlas evidence:
@@ -360,6 +474,7 @@ marginal retention asymmetry
 quotient/fiber survival
 non-erasure diagnostics
 recoverability after coupled perturbation
+identity-decay-null comparisons under coupling
 ```
 
 Claim boundary:
@@ -369,14 +484,23 @@ support/capture/erasure should remain candidate feature labels until backed by
 formal criteria and recurrence across controls.
 ```
 
-### Phase 7: Omega-relevant candidate structure
+Important current lesson:
+
+```text
+marginal continuation is not compatibility.
+```
+
+A coupled system can preserve or lose component marginals while changing the
+joint future field. Compatibility must be joint-field-sensitive.
+
+### Phase 9: Omega-compatible completion candidates
 
 Question:
 
 ```text
-Does a process bundle support recoverable, non-erasing, viable propagation of
-future-relevant distinctions while composing compatibly with other future-bearing
-structures?
+Does a family of proto-valuer-bearing dynamics form a maximal admissible
+compatibility completion without systematic irreversible destruction of one
+another's distinction-content?
 ```
 
 This is the first layer where Omega-compatible substrate language might become
@@ -384,39 +508,40 @@ admissible.
 
 It is not currently achieved.
 
-## Terminal object sketch
+## Omega completion sketch
 
 The grand ambition should remain visible, but it should not be prematurely
 claimed.
 
-A possible terminal-object sketch:
+A safer current sketch:
 
 ```text
-Omega is the terminal compatibility structure of boundary-nonprivileged future
-fields under admissible designation, preserving recoverable, non-erasing
-propagation of future-relevant distinctions across lawful transformations.
+Omega is the family / space of maximal admissible compatibility completions in
+which proto-valuer-bearing dynamics propagate recoverably and non-erasingly
+without systematic irreversible destruction of one another's distinction-content.
 ```
 
 This phrase is not yet a theorem. It is an organizing target.
 
-A more categorical sketch:
+Why a family rather than a single terminal object?
 
 ```text
-Objects:
-  finite or generalized transition systems equipped with future frontiers,
-  observables/quotients, admissible designations, and propagation structure
-
-Morphisms:
-  maps or simulations preserving future-relevant distinctions, transport
-  structure, recoverability, non-erasure, and compatibility constraints
-
-Omega-like terminal object:
-  a universal compatibility object into which admissible future-bearing
-  structures map when their distinctions propagate recoverably and non-erasingly
+compatibility is not monotone in general;
+A may be compatible with B;
+A may be compatible with C;
+but A may fail to be compatible with B and C jointly.
 ```
 
-The value of this sketch is not that we can prove it now. The value is that it
-clarifies the target:
+Therefore a unique greatest fixed point should not be assumed. If special
+assumptions later imply a greatest admissible structure, that should be a theorem
+or special case, not the starting point.
+
+In finite toy systems, completions may be represented as subsets of trajectory or
+process-bundle identifiers. In richer systems, completions may need to be
+weighted, branching, or measure-valued. Subset maximality is a finite-support
+special case, not the final ontology.
+
+The target remains:
 
 ```text
 not an agent
@@ -425,17 +550,58 @@ not a privileged boundary
 not a scalar value
 not survival alone
 not entropy alone
+not a cosmic dissolution law
 
-but a compatibility structure over future-bearing propagation
+but a compatibility-completion structure over recoverable, non-erasing,
+proto-valuer-bearing future propagation
 ```
+
+## Current empirical pressure points for the formalism
+
+The latest coupled results force several distinctions:
+
+```text
+product selector:
+  true product-equivalence reference
+
+zero-penalty joint rank-prefix:
+  a distinct coupled selector, not product-neutral
+
+scalar mismatch:
+  near-zero sensitivity through 0.010 and compact saturation by 0.020
+
+pair005:
+  high residual / joint-restrictive under scalar mismatch while preserving A/B
+  marginals; useful as stress exemplar, not a branch basis alone
+
+shared_capacity v1:
+  operational but marginal-pruning; not a clean match for the retained object
+
+observable coverage:
+  still single-observable only; blocks invariant-robustness claims
+```
+
+The next empirical move should prioritize:
+
+```text
+rank-order-native coupled operators;
+observable-extension passes;
+recoverability metrics;
+identity-decay-null construction;
+self-conditioning audits;
+compatibility-completion diagnostics.
+```
+
+A marginal-coverage-preserving shared-capacity v2 remains possible only if
+finite shared capacity is theoretically needed.
 
 ## What the formalism arm should produce first
 
-The formalism arm should start with modest but durable artifacts.
+The formalism arm should produce modest but durable artifacts.
 
-### 1. Phase ladder document
+### 1. Claim ladder definitions
 
-Define each phase in the ladder above with:
+Define each phase with:
 
 ```text
 informal intuition
@@ -457,7 +623,7 @@ joint_support_residual_fraction:
   evidence of product-breaking deformation, not interaction by itself
 
 marginal_retention_fraction:
-  evidence of marginal set preservation, not causal support
+  evidence of marginal set preservation/loss, not compatibility
 
 rank_boundary_geometry:
   evidence of selection-operator channeling, not value
@@ -488,19 +654,28 @@ coupled atlas has not found field deformation.
 
 If deformation never localizes to a stable quotient, fiber, or designation,
 proto-identity language should remain blocked.
+
+If no identity-decay null separates candidate process bundles from passive or
+randomized baselines, pre-proto-valuer language should remain blocked.
+
+If self-conditioning cannot be distinguished from passive persistence, proto-
+valuer language should remain blocked.
 ```
 
-### 4. Terminal object sketch
+### 4. Completion-object formal note
 
-Write a short formal note that tries to state Omega as a universal compatibility
-object, but keeps it explicitly provisional.
+Write a short formal note that states Omega as a family of maximal admissible
+compatibility completions, while keeping it explicitly provisional.
 
 This note should include:
 
 ```text
-objects
-morphisms
-candidate terminal property
+candidate process bundles
+identity-decay nulls
+pre-proto-valuer criteria
+proto-valuer criteria
+admissible completion predicate
+maximality condition
 what must be preserved
 what would make the construction fail
 how the atlas can probe finite approximants
@@ -522,72 +697,6 @@ explicit falsification batteries.
 Caution:
 
 ```text
-Do not define Omega as a Wasserstein distance.
-Do not define Omega as persistent homology bars.
-Do not define Omega as a terminal coalgebra before the finite object is clear.
-Do not use learned invariants before admissibility criteria exist.
-Do not let mathematical elegance outrun empirical claim boundaries.
+Do not let external machinery reintroduce primitive agents, boundaries,
+utilities, or semantic labels.
 ```
-
-These tools are useful if they remain subordinate to the formal core:
-
-```text
-recoverable, non-erasing propagation of future-relevant distinctions under
-boundary-nonprivileged admissible designation and compatibility constraints
-```
-
-## Empirical arm next moves
-
-Current empirical posture:
-
-```text
-H64 pair8 is the current coupled breadth baseline.
-H128 broad coupled surveys are blocked on worker-side spooling or pair-indexed
-heavy-pair handling.
-Triadic path is profile-only and should not be interpreted as science.
-```
-
-Near-term empirical moves:
-
-```text
-1. Add worker-side spooling or heavy-pair handling.
-2. Run H64 pair8/pair12 over coupling strength and operator settings.
-3. Use selected H128 serial depth checks on informative pair classes.
-4. If rank-boundary alignment is bland, pivot to shared-capacity interaction.
-5. Consider entropic/quotient transport only as a calibrated downstream
-   diagnostic, not as replacement for exact topology.
-```
-
-## Theory arm next moves
-
-Near-term theory moves:
-
-```text
-1. Draft the phase ladder as a formal claim ladder.
-2. Draft atlas-theory interface rules.
-3. Draft falsification criteria.
-4. Sketch terminal object as ambition, not claim.
-5. Identify the smallest finite counterexamples that would stress the ladder.
-```
-
-## Closing orientation
-
-The project should keep the grand ambition visible without using it as a current
-claim.
-
-A useful motto:
-
-```text
-The atlas searches for the prebiotic chemistry of agency, not life.
-```
-
-Another useful boundary:
-
-```text
-The empirical arm builds and stresses the microscope.
-The formal arm defines what would count as seeing.
-```
-
-The next phase should attack the problem from both sides: exact future-field
-instrumentation on one side, and a disciplined phase ladder / terminal-object
-sketch on the other.
