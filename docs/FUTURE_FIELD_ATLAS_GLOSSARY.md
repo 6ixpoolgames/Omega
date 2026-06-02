@@ -158,6 +158,15 @@ the product baseline definition, joint candidate set, joint energy function,
 coupling term, coupling strength, joint selection family, effective out-degree,
 stochastic flag, seed policy, canonical JSON, and stable digest.
 
+`shared_capacity`
+: Coupled `joint_selection_family` added as a mechanical selector, not a theory
+claim. Current v1 orders product-successor candidates by component-energy sum,
+selects up to the joint effective out-degree, and limits repeated use of the
+same A/B marginal successor before deterministically filling any underfilled
+slots. The H64 smoke showed this v1 behaves as marginal pruning followed by
+product-dense closure over surviving marginals, so it should not be scaled
+without a marginal-coverage-preserving redesign.
+
 `cap_poisoned_flag`
 : Coupled-branch completeness flag. Once a product or coupled frontier is
 internally capped, all later descendants from that mode are poisoned and must be

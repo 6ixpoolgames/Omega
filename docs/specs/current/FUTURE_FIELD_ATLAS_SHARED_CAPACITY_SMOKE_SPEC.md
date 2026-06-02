@@ -1,10 +1,21 @@
 # Future Field Atlas Shared-Capacity Coupled Smoke Spec
 
-Status: active small smoke
+Status: completed cleanly; do not scale `shared_capacity` v1 as-is
 
 Target runner: `omega.future_field_atlas.run_coupled_future_field_atlas`
 
 New selector: `joint_selection_family = shared_capacity`
+
+Retained result:
+`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_shared_capacity_h64_smoke_result.md`
+
+Outcome:
+
+```text
+The selector is operational, but v1 prunes component marginal support and then
+becomes product-dense over surviving marginals. This does not reproduce the
+desired marginal-preserving joint-restriction signature.
+```
 
 ## Purpose
 

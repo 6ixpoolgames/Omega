@@ -9,6 +9,79 @@ patch notes at the top.
 
 ## 2026-06-02
 
+### Future Field Atlas Shared-Capacity H64 Smoke
+
+Implemented and smoked the first `shared_capacity` coupled selector.
+
+Clean run:
+
+```text
+results/future_field_atlas/20260602_shared_capacity_h64_pairset_smoke_clean/
+```
+
+Retained note:
+
+```text
+docs/research_notes/validation_results/future_field_atlas/future_field_atlas_shared_capacity_h64_smoke_result.md
+```
+
+Gate results:
+
+```text
+status: COMPLETED
+horizon_max: 64
+pair_count_realized: 4 / 4
+coupled_pairs_failed: 0
+internal_cap_events: 0
+artifact_completeness_statuses: complete
+reconstruction audits: PASS 3
+elapsed_seconds: 349.824
+source_git_commit: f8b778129269b2b561d1f60b464b5a95d56b71d5
+source_git_dirty: false
+```
+
+Final H64 read:
+
+```text
+pair000:
+  residual 0.200000
+  joint retention 0.800000
+  A/B retention 1.000000 / 0.800000
+
+pair001:
+  residual 0.266342
+  joint retention 0.733658
+  A/B retention 0.898990 / 0.816092
+
+pair002:
+  residual 0.289000
+  joint retention 0.711000
+  A/B retention 0.900000 / 0.790000
+
+pair005:
+  residual 0.249455
+  joint retention 0.750545
+  A/B retention 0.860000 / 0.872727
+```
+
+Interpretation:
+
+```text
+shared_capacity v1 is operational but not a promising branch to scale. It
+prunes component marginal support and then becomes product-dense over surviving
+marginals. It does not reproduce the desired pair005-like scalar-mismatch
+signature, where A/B marginals were preserved while joint combinations were
+restricted.
+```
+
+Next recommendation:
+
+```text
+Do not scale shared_capacity v1. Move to a rank-order-native coupled operator,
+or redesign shared capacity as a marginal-coverage-preserving v2 only if the
+theory side specifically needs finite shared capacity.
+```
+
 ### Future Field Atlas Substrate Morphology Atlas
 
 Built the first substrate morphology atlas over retained Future Field Atlas

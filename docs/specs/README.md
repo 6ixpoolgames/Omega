@@ -11,11 +11,12 @@ or historical run instructions here.
 - `current/` is the active spec inbox. Future Codex instances should check this
   folder first whenever the user says a new spec is in the repo.
 
-Current active spec:
+Current active and recent live-instrument specs:
 
 - `current/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md`
 - `current/FUTURE_FIELD_ATLAS_SUBSTRATE_MORPHOLOGY_SWEEP_SPEC.md`
-- `current/FUTURE_FIELD_ATLAS_SHARED_CAPACITY_SMOKE_SPEC.md`
+- `current/FUTURE_FIELD_ATLAS_SHARED_CAPACITY_SMOKE_SPEC.md` (completed; v1 not
+  recommended for scale-up)
 
 ## Archive
 

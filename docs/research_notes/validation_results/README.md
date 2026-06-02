@@ -11,6 +11,8 @@ small, curated, and useful.
 
 Start with:
 
+- `future_field_atlas/future_field_atlas_shared_capacity_h64_smoke_result.md`
+- `future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md`
 - `future_field_atlas/future_field_atlas_coupled_h64_mechanism_resolution_result.md`
 - `future_field_atlas/future_field_atlas_coupled_h64_ladder_result.md`
 - `future_field_atlas/future_field_atlas_coupled_worker_spool_scale_validation_result.md`

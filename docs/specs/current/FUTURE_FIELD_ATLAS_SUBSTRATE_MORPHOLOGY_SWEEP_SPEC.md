@@ -571,6 +571,14 @@ These can test whether joint restriction becomes recoverable/non-erasing or
 merely narrowing.
 ```
 
+Post-smoke update:
+
+```text
+shared_capacity v1 was tested and should not be scaled as-is. It produced
+marginal pruning followed by dense closure over surviving marginals, not
+marginal-preserving joint restriction.
+```
+
 ### If marginal loss appears under some operators
 
 ```text
@@ -597,6 +605,16 @@ Consider new substrate families or quotient diagnostics.
 
 Only after morphology summary is produced, spec a small shared-capacity operator
 smoke.
+
+Post-smoke update:
+
+```text
+This was completed in
+docs/research_notes/validation_results/future_field_atlas/future_field_atlas_shared_capacity_h64_smoke_result.md.
+The next operator branch should be rank-order-native by default, or a
+marginal-coverage-preserving shared-capacity v2 if finite capacity remains
+theory-critical.
+```
 
 Provisional shared-capacity idea:
 

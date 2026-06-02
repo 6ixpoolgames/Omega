@@ -98,15 +98,21 @@ rank-prefix selection, so product-selector runs are the neutral reference for
 future coupled comparisons. Pair005 remains a heavy-pair / critical-pair clue
 and persisted in a targeted H128 depth check.
 The first substrate morphology atlas has now postprocessed retained coupled
-outputs directly. It ingested 25 coupled run directories and 2 compact summary
-directories, all clean-gated. Pair005 remains the only high-residual /
-joint-restrictive exemplar in the retained set, so it should be used with
-low/medium controls rather than treated as a branch basis by itself. The next
-small operator smoke should test shared-capacity coupling at H64 with pair005,
-pair000, pair001, and pair002, while preserving product-selector and
-zero-penalty joint-selector controls. Retained coupled morphology is still
-single-observable only (`symbol_histogram_distance`), so observable extension is
-also a priority before stronger substrate-general claims.
+outputs directly. After the shared-capacity smoke it ingests 26 coupled run
+directories and 2 compact summary directories, all clean-gated. Pair005 remains
+the only high-residual / joint-restrictive exemplar in the retained set, so it
+should be used with low/medium controls rather than treated as a branch basis by
+itself. The shared-capacity v1 H64 smoke completed cleanly with no caps,
+complete artifacts, and passing reconstruction audits, but it should not be
+scaled as-is: it prunes A/B marginal support and then becomes product-dense over
+the surviving marginals. That does not reproduce the desired scalar-mismatch
+signature, where pair005 preserved A/B marginals while restricting joint
+combinations. The next coupled operator branch should therefore be either a
+rank-order-native coupled operator or a marginal-coverage-preserving
+shared-capacity v2. Rank-order-native is the cleaner default unless the theory
+side specifically needs finite shared capacity. Retained coupled morphology is
+still single-observable only (`symbol_histogram_distance`), so observable
+extension is also a priority before stronger substrate-general claims.
 ```
 
 Terminology rule:
@@ -123,11 +129,13 @@ Primary current design note:
 
 - `docs/specs/current/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md`
 - `docs/specs/current/FUTURE_FIELD_ATLAS_SUBSTRATE_MORPHOLOGY_SWEEP_SPEC.md`
+- `docs/specs/current/FUTURE_FIELD_ATLAS_SHARED_CAPACITY_SMOKE_SPEC.md`
 - `docs/FUTURE_FIELD_ATLAS_GLOSSARY.md`
 - `docs/implementation/FUTURE_FIELD_ATLAS_CHANGELOG.md`
 - `docs/implementation/RUN_RETENTION_POLICY.md`
 - `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_phase0_1_smoke_result.md`
 - `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_compact_manageability_h64_result.md`
+- `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_shared_capacity_h64_smoke_result.md`
 - `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_default_gzip_compression_smoke.md`
 - `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_h128_calibration_pass_result.md`
 - `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_writeout_path_repair_note.md`

@@ -27,6 +27,11 @@ introduced.
 The shared-capacity selector ignores the scalar rank-boundary mismatch penalty
 so it remains a distinct operator-family smoke, not a scalar-mismatch variant.
 
+The H64 smoke completed cleanly, but `shared_capacity` v1 should not be scaled
+as-is: it prunes marginal support and then becomes product-dense over surviving
+marginals. See
+`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_shared_capacity_h64_smoke_result.md`.
+
 Tests:
 
 ```text
@@ -67,8 +72,9 @@ frontier_growth_regime_summary.csv
 ```
 
 Validated on the retained coupled H64/H128 broad runs, scalar ladders,
-mechanism-resolution runs, and pair005 forensics. The first atlas pass ingested
-25 clean coupled run directories and 2 compact summary directories.
+mechanism-resolution runs, pair005 forensics, and the shared-capacity H64
+smoke. The regenerated atlas pass ingests 26 clean coupled run directories and
+2 compact summary directories.
 
 Tests:
 

@@ -326,31 +326,37 @@ The immediate next empirical task is not holdout and not candidate promotion.
 It is:
 
 ```text
-coupled-frontier smoke using low-rank successor-boundary pressure
+coupled Future Field Atlas operator resolution
 ```
 
-The low-beta and MaxEnt/top-m audits found:
+The current atlas-side read is:
 
 ```text
-symbol_histogram_distance:
-  deterministic preservation-asymmetry response appears at beta 0.075+
+product selector:
+  true product-equivalence reference
 
-softmax/Gibbs, rank-conditioned, and MaxEnt macro-marginal samplers:
-  stable in the tested grid
+zero-penalty joint rank-prefix:
+  already a coupled constraint, not neutral product behavior
 
-hard-top-m mechanism boundary-resolution sweep:
-  baseline m=3, m=4 with one weakest edge removed, and m=5 with two weakest edges removed responded;
-  expansion, random deletion, and strongest-edge deletion stayed stable
+scalar rank-boundary mismatch:
+  near-zero effects are visible but saturate by 0.020 in the tested H64 design
+
+pair005:
+  heavy-pair / critical-pair clue under scalar mismatch, with preserved marginals
+
+shared_capacity v1:
+  operational but not promising as-is; it prunes marginals and becomes dense over
+  surviving marginal support
 ```
 
 The focus should be:
 
 ```text
-use the resolved hard-top-m feature as a coupling primitive:
-  shared low-rank successor boundary;
-  rank-boundary pressure;
-  non-erasure of the retained low-rank prefix;
-  horizon-pair focus from 16->24 onward.
+do not scale shared_capacity v1;
+choose either:
+  rank-order-native coupled operator;
+  or marginal-coverage-preserving shared-capacity v2;
+add observable-extension work before stronger substrate-general claims.
 ```
 
 ## 8. How to evaluate a result note
