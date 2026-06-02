@@ -9,6 +9,37 @@ patch notes at the top.
 
 ## 2026-06-02
 
+### Future Field Atlas Rank-Order Boundary Visualizations
+
+Added a compact retained-output visualization utility:
+
+```text
+omega.future_field_atlas.visualize_coupled_morphology
+```
+
+Generated figures:
+
+```text
+docs/research_notes/validation_results/figures/future_field_atlas_rank_order_boundary/rank_order_boundary_landscape_scatter.png
+docs/research_notes/validation_results/figures/future_field_atlas_rank_order_boundary/rank_order_boundary_horizon_residual_traces.png
+docs/research_notes/validation_results/figures/future_field_atlas_rank_order_boundary/rank_order_boundary_exemplar_metric_heatmap.png
+```
+
+Retained note:
+
+```text
+docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md
+```
+
+Readout:
+
+```text
+The compact topology views separate pair005, pair012, pair014, and pair026 from
+typical low-residual controls. The figures do not inspect raw joint edges
+because raw spools were intentionally pruned; future raw-spool-retained smokes
+should add substrate-native joint support matrices.
+```
+
 ### Future Field Atlas Rank-Order Boundary Class Expansion
 
 Ran the next rank-order-boundary class-expansion pass after the neighbor /
