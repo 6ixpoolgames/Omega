@@ -580,8 +580,9 @@ marginal-preserving joint restriction.
 
 rank_order_boundary was then tested and recovered the small-set
 marginal-preserving joint-restriction pattern. The medium sweep and neighbor /
-observable sweep are now complete. The current target is rank_order_boundary
-class expansion with pair005, pair012, and pair014.
+observable sweep are now complete. The class expansion added pair026. The
+current target is a rank_order_boundary representative-control panel with
+pair005, pair012, pair014, and pair026.
 ```
 
 ### If marginal loss appears under some operators

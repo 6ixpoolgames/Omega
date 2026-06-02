@@ -37,9 +37,9 @@ It measures how structures in earlier reachable-future frontiers become structur
 
 The current atlas posture is now morphology-first. Retained coupled runs are
 postprocessed into pair-aware morphology tables before designing richer coupled
-operators. The rank-order-boundary branch now has three high-yield
-symbol_histogram_distance exemplars: pair005, pair012, and pair014. Pair012 and
-pair014 were confirmed under targeted H128. The observable-extension smoke did
+operators. The rank-order-boundary branch now has four high-yield
+symbol_histogram_distance exemplars: pair005, pair012, pair014, and pair026.
+Pair012, pair014, and pair026 were confirmed under targeted H128. The observable-extension smoke did
 not reproduce the high-yield signature under `hamming_weight_or_nonzero_count`
 or `total_coordinate_mass`.
 
@@ -98,10 +98,10 @@ The preservation-focused asymmetry-ladder and low-beta scaleups strengthened the
 The current Future Field Atlas rebuild expresses that calibration pattern from
 raw topology and has moved into coupled future-field morphology. The latest
 retained result is not a broad scale expansion; it is a rank-order-boundary
-neighbor / observable sweep. It recommends class expansion around pair005,
-pair012, and pair014 before broad H128 scale expansion, with product-selector,
-zero-penalty joint-selector, scalar 0.020, and shared-capacity v1 references
-retained as controls.
+class expansion. It recommends a compact representative-control panel around
+pair005, pair012, pair014, and pair026 before broad H128 scale expansion, with
+product-selector, zero-penalty joint-selector, scalar 0.020, and
+shared-capacity v1 references retained as controls.
 
 ## 3. Core vocabulary
 
@@ -353,8 +353,8 @@ shared_capacity v1:
 
 rank_order_boundary:
   operational as a symbol_histogram_distance class signal; pair005, pair012,
-  and pair014 are high-residual / joint-restrictive while preserving A/B
-  marginals; targeted H128 confirms pair012 and pair014
+  pair014, and pair026 are high-residual / joint-restrictive while preserving
+  A/B marginals; targeted H128 confirms pair012, pair014, and pair026
 
 observable smokes:
   hamming_weight_or_nonzero_count and total_coordinate_mass did not reproduce
@@ -365,7 +365,7 @@ The focus should be:
 
 ```text
 do not scale shared_capacity v1;
-run rank_order_boundary class expansion before broad H128;
+run rank_order_boundary representative controls before broad H128;
 continue observable design before stronger substrate-general claims.
 ```
 

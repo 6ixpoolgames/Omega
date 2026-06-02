@@ -6,8 +6,8 @@ Runner: `omega.future_field_atlas.substrate_morphology_summary`
 
 Spec: `docs/specs/current/FUTURE_FIELD_ATLAS_SUBSTRATE_MORPHOLOGY_SWEEP_SPEC.md`
 
-Latest update: regenerated after the rank-order-boundary neighbor / observable
-sweep with 35 clean coupled run directories.
+Latest update: regenerated after the rank-order-boundary class expansion with
+37 clean coupled run directories.
 
 ## Summary
 
@@ -46,12 +46,12 @@ results/future_field_atlas/20260602_substrate_morphology_atlas_summary/
 Latest manifest:
 
 ```text
-source_run_count: 35
+source_run_count: 37
 source_summary_dir_count: 0
-manifest_digest: 4ee4a299c59439319c61d1d2
+manifest_digest: fe1acb0093468d1e3fb48fe6
 ```
 
-All 35 coupled run directories used here passed the clean infrastructure gates:
+All 37 coupled run directories used here passed the clean infrastructure gates:
 
 ```text
 status: COMPLETED
@@ -66,8 +66,8 @@ reconstruction_audit_clean_pass: 1
 The postprocessor emitted:
 
 ```text
-field_morphology_summary.csv                 370 rows
-pair_morphology_summary.csv                  185 rows
+field_morphology_summary.csv                 420 rows
+pair_morphology_summary.csv                  210 rows
 operator_sensitivity_summary.csv          133742 rows
 horizon_onset_summary.csv                   2030 rows
 observable_geometry_summary.csv              926 rows
@@ -90,24 +90,24 @@ Pair-level descriptive classes across retained rows:
 
 ```text
 pair_size_class:
-  light: 62
-  medium: 62
-  heavy: 61
+  light: 71
+  medium: 70
+  heavy: 69
 
 joint_residual_class:
-  low_residual: 124
-  medium_residual: 36
-  high_residual: 25
+  low_residual: 144
+  medium_residual: 39
+  high_residual: 27
 
 marginal_retention_class:
-  marginal_preserving: 167
+  marginal_preserving: 192
   marginal_loss_B: 12
   marginal_loss_both: 6
 
 joint_density_class:
-  product_dense: 136
-  product_sparse: 24
-  joint_restrictive: 25
+  product_dense: 156
+  product_sparse: 27
+  joint_restrictive: 27
 ```
 
 The high-residual / joint-restrictive rank-order-boundary rows are no longer
@@ -118,6 +118,7 @@ are:
 pair005
 pair012
 pair014
+pair026
 ```
 
 Current strongest retained exemplar:
@@ -126,6 +127,16 @@ Current strongest retained exemplar:
 pair012:
   final residual: 0.842202
   final joint retention: 0.157798
+  A/B marginal retention: 1.0 / 1.0
+  confirmed at targeted H128
+```
+
+Newest retained exemplar:
+
+```text
+pair026:
+  final residual: 0.510390
+  final joint retention: 0.489610
   A/B marginal retention: 1.0 / 1.0
   confirmed at targeted H128
 ```
@@ -190,19 +201,19 @@ Therefore substrate-general observable language remains blocked.
 Current most useful next target:
 
 ```text
-rank_order_boundary_class_expansion
+rank_order_boundary_class_expansion / representative-control panel
 ```
 
 Recommended shape:
 
 ```text
 rank_order_boundary_class_expansion:
-  carry pair005, pair012, and pair014 as high-yield representatives;
+  carry pair005, pair012, pair014, and pair026 as high-yield representatives;
   keep low/medium controls;
   preserve product-selector, zero-penalty joint rank-prefix, scalar 0.020, and
   shared_capacity v1 controls;
-  run H64 breadth first;
-  use targeted H128 only for new high-yield representatives.
+  run a compact H64 representative-control panel first;
+  use targeted H128 only for new or contradictory high-yield behavior.
 
 observable_extension:
   continue observable design; the two tested alternates did not reproduce the

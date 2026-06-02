@@ -9,6 +9,104 @@ patch notes at the top.
 
 ## 2026-06-02
 
+### Future Field Atlas Rank-Order Boundary Class Expansion
+
+Ran the next rank-order-boundary class-expansion pass after the neighbor /
+observable sweep.
+
+Retained note:
+
+```text
+docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md
+```
+
+H64 class expansion:
+
+```text
+run dir:
+  results/future_field_atlas/20260602_rank_order_boundary_h64_class_expansion_p24_47/
+
+config:
+  horizon_max: 64
+  pair_indexes: 24-47
+  groups: 48
+  workers: 6
+  joint_selection_family: rank_order_boundary
+  macro_invariant_kind: symbol_histogram_distance
+
+gates:
+  status: COMPLETED
+  coupled_pairs_completed: 24 / 24
+  coupled_pairs_failed: 0
+  internal_cap_events: 0
+  artifact_completeness_statuses: complete
+  reconstruction_audit_clean_pass: 1
+  audits_PASS: 3
+  medium_sweep_interpretation_allowed: 1
+
+storage:
+  joint_edge_rows: 85698582
+  joint_node_rows: 13112603
+  raw_delete_candidate_gib: 4.670432
+  raw_spools_deleted: yes
+```
+
+H64 readout:
+
+```text
+pair026:
+  final residual: 0.5103896103896104
+  final joint retention: 0.4896103896103896
+  A/B marginal retention: 1.0 / 1.0
+
+next highest final residual:
+  pair045: 0.12836438923395446
+```
+
+Targeted H128:
+
+```text
+run dir:
+  results/future_field_atlas/20260602_rank_order_boundary_h128_pair026_depth/
+
+pair026 H128:
+  final residual: 0.5103896103896104
+  final joint retention: 0.4896103896103896
+  A/B marginal retention: 1.0 / 1.0
+  gates: clean
+  raw_spools_deleted: yes
+```
+
+Regenerated morphology atlas:
+
+```text
+source_run_count: 37
+manifest_digest: fe1acb0093468d1e3fb48fe6
+pair_morphology_rows: 210
+high_residual_rows: 27
+high_residual_marginal_preserving_rows: 27
+```
+
+Updated read:
+
+```text
+rank_order_boundary is no longer pair005-only under symbol_histogram_distance.
+The current high-yield representatives are pair005, pair012, pair014, and
+pair026. Pair012, pair014, and pair026 are confirmed under targeted H128.
+```
+
+Next recommendation:
+
+```text
+Run a compact representative-control panel before broad H128:
+  high-yield reps: pair005;pair012;pair014;pair026
+  low/medium controls retained
+  product selector
+  zero-penalty joint rank-prefix
+  scalar mismatch 0.020
+  shared_capacity v1 reference
+```
+
 ### Future Field Atlas Rank-Order Boundary Neighbor / Observable Sweep
 
 Pulled and ran the new rank-order-boundary neighbor / observable sweep spec.
