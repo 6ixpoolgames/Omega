@@ -152,6 +152,45 @@ Primary current design note:
 - `docs/specs/archive/rfs_mb0/RFS_MB0_FUTURE_LANDSCAPE_LONG_HORIZON_ENVIRONMENT_AUDIT.md`
 - `docs/specs/archive/rfs_mb0/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md`
 
+## Spec Inbox
+
+Always check this folder first for new run specs:
+
+```text
+docs/specs/current/
+```
+
+This is the active spec inbox. When the user says a new spec is "in the repo",
+"live", "uploaded", or "next up", look in `docs/specs/current/` before
+searching the rest of the repository.
+
+Naming convention:
+
+```text
+docs/specs/current/FUTURE_FIELD_ATLAS_<SHORT_NAME>_SPEC.md
+```
+
+Examples:
+
+```text
+docs/specs/current/FUTURE_FIELD_ATLAS_COUPLED_SHARED_CAPACITY_SMOKE_SPEC.md
+docs/specs/current/FUTURE_FIELD_ATLAS_PAIR005_THRESHOLD_BRACKET_SPEC.md
+```
+
+Lifecycle:
+
+```text
+1. User or assistant adds active/new specs to docs/specs/current/.
+2. Assistant reads docs/specs/current/ first when starting a new run.
+3. After completion, write retained result notes under
+   docs/research_notes/validation_results/future_field_atlas/.
+4. When a spec is superseded, move it to docs/specs/archive/<branch>/ and
+   update public-facing indexes if it remains important.
+```
+
+Do not add new run specs to the repo root, `docs/` root, or the flat
+`validation_results/` root.
+
 Project stance:
 
 - scientific and skeptical;
