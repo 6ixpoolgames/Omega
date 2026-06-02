@@ -682,12 +682,11 @@ def run_metric_values(run: CoupledRun) -> dict[tuple[str, int, str], float]:
 
 
 def comparison_pairs(runs: list[CoupledRun]) -> list[tuple[str, str]]:
-    by_horizon_paircount: dict[tuple[int, int], list[CoupledRun]] = defaultdict(list)
+    by_horizon: dict[int, list[CoupledRun]] = defaultdict(list)
     for run in runs:
-        key = (int_value(run.config.get("horizon_max")), int_value(run.status.get("pair_count_realized")))
-        by_horizon_paircount[key].append(run)
+        by_horizon[int_value(run.config.get("horizon_max"))].append(run)
     comparisons: list[tuple[str, str]] = []
-    for grouped in by_horizon_paircount.values():
+    for grouped in by_horizon.values():
         product = next((run for run in grouped if run.config.get("joint_selection_family") == "product"), None)
         zero = next(
             (
@@ -705,10 +704,31 @@ def comparison_pairs(runs: list[CoupledRun]) -> list[tuple[str, str]]:
             ],
             key=lambda run: float_value(run.config.get("coupling_strength")),
         )
+        non_product_operators = sorted(
+            [
+                run for run in grouped
+                if run.config.get("joint_selection_family") != "product"
+            ],
+            key=lambda run: (
+                str(run.config.get("joint_selection_family", "")),
+                float_value(run.config.get("coupling_strength")),
+                run.ref.run_id,
+            ),
+        )
         if product and zero:
             comparisons.append((product.ref.run_id, zero.ref.run_id))
+        if product:
+            comparisons.extend(
+                (product.ref.run_id, run.ref.run_id)
+                for run in non_product_operators
+                if run.ref.run_id != (zero.ref.run_id if zero else "")
+            )
         if zero:
-            comparisons.extend((zero.ref.run_id, run.ref.run_id) for run in positives)
+            comparisons.extend(
+                (zero.ref.run_id, run.ref.run_id)
+                for run in non_product_operators
+                if run.ref.run_id != zero.ref.run_id
+            )
     return dedupe_pairs(comparisons)
 
 

@@ -9,6 +9,30 @@ when a run or decision changes the project state.
 
 ## 2026-06-02
 
+### Shared-Capacity Coupled Selector
+
+Added a new coupled selector family:
+
+```text
+joint_selection_family = shared_capacity
+```
+
+For each joint source, the selector constructs the same product successors used
+by the coupled runner, orders them by component energy, and selects up to
+`joint_effective_out_degree` while limiting repeated use of the same A/B
+marginal successor. The per-marginal cap is derived from the joint effective
+out-degree and candidate marginal counts; no extra tuned capacity parameter was
+introduced.
+
+The shared-capacity selector ignores the scalar rank-boundary mismatch penalty
+so it remains a distinct operator-family smoke, not a scalar-mismatch variant.
+
+Tests:
+
+```text
+tests/test_coupled_atlas_hardening.py
+```
+
 ### Substrate Morphology Summary Utility
 
 Added:

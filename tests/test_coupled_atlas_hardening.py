@@ -105,6 +105,18 @@ def test_coupled_operator_digest_is_stable() -> None:
     assert coupled_operator_digest(left) == coupled_operator_digest(right)
 
 
+def test_shared_capacity_operator_is_manifest_backed_and_scans() -> None:
+    task = build_test_tasks(horizon_max=1, joint_selection_family="shared_capacity")[0]
+    result = scan_coupled_probe(task)
+    condition_rows = coupled_condition_manifest_rows([task])
+
+    assert result.profile_rows
+    assert task.coupled_operator.coupled_operator_family == "shared_capacity_joint_selector"
+    assert task.coupled_operator.coupling_term_id == "balanced_marginal_successor_capacity"
+    assert condition_rows[0]["joint_selection_family"] == "shared_capacity"
+    assert condition_rows[0]["coupled_operator_id"] == task.coupled_operator.coupled_operator_id
+
+
 def test_pairing_policy_and_operator_identity_appear_in_manifests() -> None:
     task = build_test_tasks(horizon_max=1)[0]
     condition_rows = coupled_condition_manifest_rows([task])
@@ -264,6 +276,7 @@ def test_lossless_topology_blocks_reconstruct_logical_rows() -> None:
 def build_test_tasks(
     *,
     horizon_max: int,
+    joint_selection_family: str = "joint_energy_rank_prefix",
     max_internal_joint_frontier_states: int = 20_000,
     max_joint_frontier_nodes_per_horizon: int = 2048,
     max_joint_edges_per_step: int = 8192,
@@ -291,7 +304,7 @@ def build_test_tasks(
         pair_indexes="",
         start_samples=1,
         horizon_max=horizon_max,
-        joint_selection_family="joint_energy_rank_prefix",
+        joint_selection_family=joint_selection_family,
         joint_effective_out_degree=4,
         coupling_strength=0.25,
         max_joint_frontier_nodes_per_horizon=max_joint_frontier_nodes_per_horizon,

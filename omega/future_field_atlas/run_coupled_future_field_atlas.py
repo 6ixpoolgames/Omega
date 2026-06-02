@@ -77,7 +77,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--selection-operator-b", type=str, default="rank_subset:m=4:retain=1|2|3:remove=4")
     parser.add_argument(
         "--joint-selection-family",
-        choices=("joint_energy_rank_prefix", "product"),
+        choices=("joint_energy_rank_prefix", "product", "shared_capacity"),
         default="joint_energy_rank_prefix",
     )
     parser.add_argument("--joint-effective-out-degree", type=int, default=4)
@@ -1065,11 +1065,18 @@ def coupled_scan_manifest_rows(tasks: list[CoupledProbeTask]) -> list[dict[str, 
 def coupled_operator_params_json(task: CoupledProbeTask) -> str:
     from .util import canonical_json
 
+    if task.joint_selection_family == "shared_capacity":
+        coupling_term = (
+            "select up to joint_effective_out_degree product successors by component-energy order "
+            "while limiting repeated use of the same A/B marginal successor"
+        )
+    else:
+        coupling_term = "coupling_strength * abs(A_rank_offset_from_boundary - B_rank_offset_from_boundary)"
     return canonical_json({
         "joint_selection_family": task.joint_selection_family,
         "joint_effective_out_degree": task.joint_effective_out_degree,
         "coupling_strength": task.coupling_strength,
-        "coupling_energy_term": "coupling_strength * abs(A_rank_offset_from_boundary - B_rank_offset_from_boundary)",
+        "coupling_energy_term": coupling_term,
         "product_baseline": "cartesian_product_of_component_selected_successors",
     })
 

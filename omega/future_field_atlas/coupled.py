@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
 
 from omega.rfs_mb0_future_landscape.substrate import State
@@ -153,9 +154,7 @@ def expand_joint_edges(task: CoupledProbeTask, frontier: frozenset[JointState], 
             a_anatomy = task.field_a.candidate_anatomy[(a_source, a_target)]
             for b_target in task.field_b.system.edges.get(b_source, ()):
                 b_anatomy = task.field_b.candidate_anatomy[(b_source, b_target)]
-                penalty = task.coupling_strength * abs(
-                    a_anatomy.rank_offset_from_boundary - b_anatomy.rank_offset_from_boundary
-                )
+                penalty = coupling_penalty(task, a_anatomy.rank_offset_from_boundary, b_anatomy.rank_offset_from_boundary)
                 candidates.append(
                     JointEdge(
                         source=source,
@@ -182,9 +181,52 @@ def expand_joint_edges(task: CoupledProbeTask, frontier: frozenset[JointState], 
             edges.extend(candidates)
         elif task.joint_selection_family == "joint_energy_rank_prefix":
             edges.extend(candidates[: max(1, task.joint_effective_out_degree)])
+        elif task.joint_selection_family == "shared_capacity":
+            edges.extend(select_shared_capacity_edges(candidates, max(1, task.joint_effective_out_degree)))
         else:
             raise ValueError(f"unsupported joint selection family: {task.joint_selection_family}")
     return edges
+
+
+def coupling_penalty(task: CoupledProbeTask, a_offset: int, b_offset: int) -> float:
+    if task.joint_selection_family == "shared_capacity":
+        return 0.0
+    return float(task.coupling_strength) * abs(int(a_offset) - int(b_offset))
+
+
+def select_shared_capacity_edges(candidates: list[JointEdge], joint_capacity: int) -> list[JointEdge]:
+    if len(candidates) <= joint_capacity:
+        return list(candidates)
+    a_targets = {edge.target[0] for edge in candidates}
+    b_targets = {edge.target[1] for edge in candidates}
+    a_capacity = max(1, math.ceil(joint_capacity / max(1, len(a_targets))))
+    b_capacity = max(1, math.ceil(joint_capacity / max(1, len(b_targets))))
+    selected: list[JointEdge] = []
+    a_load: dict[State, int] = {}
+    b_load: dict[State, int] = {}
+    for edge in candidates:
+        a_target, b_target = edge.target
+        if a_load.get(a_target, 0) >= a_capacity:
+            continue
+        if b_load.get(b_target, 0) >= b_capacity:
+            continue
+        selected.append(edge)
+        a_load[a_target] = a_load.get(a_target, 0) + 1
+        b_load[b_target] = b_load.get(b_target, 0) + 1
+        if len(selected) >= joint_capacity:
+            return selected
+    selected_ids = {edge_identity(edge) for edge in selected}
+    for edge in candidates:
+        if edge_identity(edge) in selected_ids:
+            continue
+        selected.append(edge)
+        if len(selected) >= joint_capacity:
+            break
+    return selected
+
+
+def edge_identity(edge: JointEdge) -> tuple[str, str]:
+    return joint_state_id(edge.source), joint_state_id(edge.target)
 
 
 def node_rows_for_frontier(
@@ -472,33 +514,61 @@ def build_coupled_operator_spec(
     joint_effective_out_degree: int,
     coupling_strength: float,
 ) -> CoupledOperatorSpec:
+    coupled_operator_family = coupled_operator_family_for(joint_selection_family)
+    joint_energy_function_id = joint_energy_function_for(joint_selection_family)
+    coupling_term_id = coupling_term_for(joint_selection_family)
     params_json = canonical_json({
         "coupling_strength": coupling_strength,
-        "coupling_term_id": "rank_boundary_offset_absolute_difference_penalty",
+        "coupling_term_id": coupling_term_id,
         "joint_candidate_set_definition": "cartesian_product_of_component_selected_successors",
         "joint_effective_out_degree": joint_effective_out_degree,
-        "joint_energy_function_id": "component_energy_sum_plus_rank_boundary_offset_mismatch_penalty",
+        "joint_energy_function_id": joint_energy_function_id,
         "joint_selection_family": joint_selection_family,
         "product_baseline_definition": "cartesian_product_of_component_selected_successors",
+        "shared_capacity_policy": shared_capacity_policy_for(joint_selection_family),
     })
     return CoupledOperatorSpec(
         coupled_operator_id=(
             f"coupled_operator__{joint_selection_family}"
             f"__k{int(joint_effective_out_degree)}"
-            f"__rank_offset_absdiff_strength_{stable_hash(float(coupling_strength), length=8)}"
+            f"__{stable_hash(params_json, length=12)}"
         ),
-        coupled_operator_family="rank_boundary_mismatch_penalized_joint_selector",
+        coupled_operator_family=coupled_operator_family,
         product_baseline_definition="cartesian_product_of_component_selected_successors",
         joint_candidate_set_definition="cartesian_product_of_component_selected_successors",
-        joint_energy_function_id="component_energy_sum_plus_rank_boundary_offset_mismatch_penalty",
+        joint_energy_function_id=joint_energy_function_id,
         joint_energy_params_json=params_json,
-        coupling_term_id="rank_boundary_offset_absolute_difference_penalty",
+        coupling_term_id=coupling_term_id,
         coupling_strength=float(coupling_strength),
         joint_selection_family=joint_selection_family,
         joint_effective_out_degree=int(joint_effective_out_degree),
         stochastic_flag=0,
         seed_policy="deterministic_joint_energy_rank_order",
     )
+
+
+def coupled_operator_family_for(joint_selection_family: str) -> str:
+    if joint_selection_family == "shared_capacity":
+        return "shared_capacity_joint_selector"
+    return "rank_boundary_mismatch_penalized_joint_selector"
+
+
+def joint_energy_function_for(joint_selection_family: str) -> str:
+    if joint_selection_family == "shared_capacity":
+        return "component_energy_sum_with_balanced_marginal_capacity_filter"
+    return "component_energy_sum_plus_rank_boundary_offset_mismatch_penalty"
+
+
+def coupling_term_for(joint_selection_family: str) -> str:
+    if joint_selection_family == "shared_capacity":
+        return "balanced_marginal_successor_capacity"
+    return "rank_boundary_offset_absolute_difference_penalty"
+
+
+def shared_capacity_policy_for(joint_selection_family: str) -> str:
+    if joint_selection_family != "shared_capacity":
+        return "not_applicable"
+    return "per_source_balanced_marginal_usage_cap_ceil(joint_effective_out_degree / marginal_successor_count)"
 
 
 def coupled_operator_canonical_json(spec: CoupledOperatorSpec) -> str:
