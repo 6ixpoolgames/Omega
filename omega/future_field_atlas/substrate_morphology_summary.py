@@ -542,8 +542,45 @@ def morphology_next_target_rows(pair_rows: list[dict[str, object]], observable_r
     exemplar_set = ordered_unique(high_pair_ids + low_control_ids + medium_control_ids)
     exemplar_pairs = ";".join(exemplar_set) if exemplar_set else "select_high_residual_marginal_preserving_pairs_with_low_and_medium_controls"
     pair005_seen = any(row.get("pair_id") == "pair005" for row in pair_rows)
-    rows = [
-        {
+    rows: list[dict[str, object]] = []
+    shared_rows = [row for row in pair_rows if row.get("joint_selection_family") == "shared_capacity"]
+    rank_order_rows = [row for row in pair_rows if row.get("joint_selection_family") == "rank_order_boundary"]
+    rank_order_high_preserving = [
+        row for row in rank_order_rows
+        if row.get("marginal_retention_class") == "marginal_preserving"
+        and row.get("joint_density_class") == "joint_restrictive"
+    ]
+    rank_order_low_controls = [
+        row for row in rank_order_rows
+        if row.get("marginal_retention_class") == "marginal_preserving"
+        and row.get("joint_residual_class") == "low_residual"
+    ]
+    if rank_order_high_preserving and rank_order_low_controls:
+        rows.append({
+            "target_id": "rank_order_boundary_medium_pair_sweep",
+            "target_type": "rank_order_native_scale_candidate",
+            "reason": "rank_order_boundary produced marginal-preserving joint restriction on a high-residual exemplar while low/medium controls stayed marginal-preserving and low-residual",
+            "recommended_operator": "rank_order_boundary",
+            "recommended_horizon": "H64_then_targeted_H128",
+            "recommended_pairs": exemplar_pairs,
+            "required_controls": "product_selector;zero_penalty_joint_selector;scalar_mismatch_0.020;shared_capacity_v1_reference",
+            "expected_disambiguation": "tests whether ordinal rank-boundary alignment defines a broader pair morphology class beyond pair005",
+            "claim_boundary": CLAIM_BOUNDARY,
+        })
+    if shared_rows:
+        rows.append({
+            "target_id": "shared_capacity_v2_marginal_coverage_repair",
+            "target_type": "shared_capacity_repair_candidate",
+            "reason": "shared_capacity v1 was operational but pruned marginals; only revisit if finite shared capacity remains theory-critical",
+            "recommended_operator": "marginal_coverage_preserving_shared_capacity_v2",
+            "recommended_horizon": "H32_or_H64",
+            "recommended_pairs": exemplar_pairs,
+            "required_controls": "shared_capacity_v1;product_selector;rank_order_boundary",
+            "expected_disambiguation": "tests whether capacity can restrict joint combinations without erasing component marginal support",
+            "claim_boundary": CLAIM_BOUNDARY,
+        })
+    else:
+        rows.append({
             "target_id": "shared_capacity_marginal_preserving_high_residual",
             "target_type": "shared_capacity_candidate",
             "reason": "retained morphology contains preserved-marginal high-residual exemplars; include low and medium controls so pair005 does not anchor the branch alone",
@@ -553,8 +590,9 @@ def morphology_next_target_rows(pair_rows: list[dict[str, object]], observable_r
             "required_controls": "product_selector;zero_penalty_joint_selector;matched_pair_set",
             "expected_disambiguation": "tests whether finite shared continuation capacity explains joint restriction better than scalar mismatch strength",
             "claim_boundary": CLAIM_BOUNDARY,
-        },
-        {
+        })
+    if not rank_order_rows:
+        rows.append({
             "target_id": "rank_order_native_operator",
             "target_type": "rank_order_native_candidate",
             "reason": "near-zero scalar ladder changes quickly and saturates; rank order may be the native control surface",
@@ -564,19 +602,18 @@ def morphology_next_target_rows(pair_rows: list[dict[str, object]], observable_r
             "required_controls": "product_selector;scalar_mismatch_0.020;low_residual_pair_controls",
             "expected_disambiguation": "separates scalar penalty magnitude from ordinal candidate ordering",
             "claim_boundary": CLAIM_BOUNDARY,
-        },
-        {
-            "target_id": "observable_extension",
-            "target_type": "observable_extension",
-            "reason": "current retained coupled morphology is single-observable only",
-            "recommended_operator": "none_postprocessing_or_small_rescan",
-            "recommended_horizon": "H32_or_H64",
-            "recommended_pairs": "representative_low_medium_high_residual_pairs",
-            "required_controls": "paired_baselines;artifact_completeness;reconstruction_audits",
-            "expected_disambiguation": "checks whether morphology is tied to symbol_histogram_distance only",
-            "claim_boundary": CLAIM_BOUNDARY,
-        },
-    ]
+        })
+    rows.append({
+        "target_id": "observable_extension",
+        "target_type": "observable_extension",
+        "reason": "current retained coupled morphology is single-observable only",
+        "recommended_operator": "none_postprocessing_or_small_rescan",
+        "recommended_horizon": "H32_or_H64",
+        "recommended_pairs": "representative_low_medium_high_residual_pairs",
+        "required_controls": "paired_baselines;artifact_completeness;reconstruction_audits",
+        "expected_disambiguation": "checks whether morphology is tied to symbol_histogram_distance only",
+        "claim_boundary": CLAIM_BOUNDARY,
+    })
     if pair005_seen:
         rows.append(
             {
