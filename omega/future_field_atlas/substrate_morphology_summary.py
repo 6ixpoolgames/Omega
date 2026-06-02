@@ -545,6 +545,7 @@ def morphology_next_target_rows(pair_rows: list[dict[str, object]], observable_r
     rows: list[dict[str, object]] = []
     shared_rows = [row for row in pair_rows if row.get("joint_selection_family") == "shared_capacity"]
     rank_order_rows = [row for row in pair_rows if row.get("joint_selection_family") == "rank_order_boundary"]
+    rank_order_h64_rows = [row for row in rank_order_rows if str(row.get("horizon_max")) == "64"]
     rank_order_high_preserving = [
         row for row in rank_order_rows
         if row.get("marginal_retention_class") == "marginal_preserving"
@@ -555,7 +556,38 @@ def morphology_next_target_rows(pair_rows: list[dict[str, object]], observable_r
         if row.get("marginal_retention_class") == "marginal_preserving"
         and row.get("joint_residual_class") == "low_residual"
     ]
-    if rank_order_high_preserving and rank_order_low_controls:
+    rank_order_h64_pairs = sorted({str(row.get("pair_id")) for row in rank_order_h64_rows if row.get("pair_id")})
+    rank_order_h64_high_preserving = [
+        row for row in rank_order_h64_rows
+        if row.get("marginal_retention_class") == "marginal_preserving"
+        and float_value(row.get("joint_support_residual_final")) >= 0.4
+    ]
+    rank_order_h64_high_pair_ids = sorted({str(row.get("pair_id")) for row in rank_order_h64_high_preserving})
+    if len(rank_order_h64_pairs) >= 8 and len(rank_order_h64_high_pair_ids) == 1:
+        rows.append({
+            "target_id": "rank_order_boundary_pair005_neighbor_search",
+            "target_type": "rank_order_native_followup",
+            "reason": "rank_order_boundary pair8 breadth found a single high-residual marginal-preserving exemplar; test whether pair005 has neighbors before claiming a broader class",
+            "recommended_operator": "rank_order_boundary",
+            "recommended_horizon": "H64_neighbor_design_then_targeted_H128",
+            "recommended_pairs": f"{rank_order_h64_high_pair_ids[0]};nearest_heavy_or_high_product_pairs;low_residual_controls",
+            "required_controls": "product_selector;zero_penalty_joint_selector;scalar_mismatch_0.020;shared_capacity_v1_reference",
+            "expected_disambiguation": "distinguishes single critical-pair behavior from a broader rank-order boundary morphology class",
+            "claim_boundary": CLAIM_BOUNDARY,
+        })
+    elif len(rank_order_h64_pairs) >= 8 and len(rank_order_h64_high_pair_ids) > 1:
+        rows.append({
+            "target_id": "rank_order_boundary_class_expansion",
+            "target_type": "rank_order_native_scale_candidate",
+            "reason": "rank_order_boundary pair8 breadth found multiple high-residual marginal-preserving exemplars",
+            "recommended_operator": "rank_order_boundary",
+            "recommended_horizon": "targeted_H128_then_medium_plus_H64",
+            "recommended_pairs": ";".join(rank_order_h64_high_pair_ids[:8]),
+            "required_controls": "product_selector;zero_penalty_joint_selector;scalar_mismatch_0.020;shared_capacity_v1_reference",
+            "expected_disambiguation": "tests whether the high-residual marginal-preserving class is stable across horizon depth",
+            "claim_boundary": CLAIM_BOUNDARY,
+        })
+    elif rank_order_high_preserving and rank_order_low_controls:
         rows.append({
             "target_id": "rank_order_boundary_medium_pair_sweep",
             "target_type": "rank_order_native_scale_candidate",
