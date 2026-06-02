@@ -111,46 +111,46 @@ Treat "budget_conservation", "budget_kind", "budget_weight", and
 
 Primary current design note:
 
-- `docs/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md`
+- `docs/specs/current/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md`
 - `docs/FUTURE_FIELD_ATLAS_GLOSSARY.md`
 - `docs/implementation/FUTURE_FIELD_ATLAS_CHANGELOG.md`
 - `docs/implementation/RUN_RETENTION_POLICY.md`
-- `docs/research_notes/validation_results/future_field_atlas_phase0_1_smoke_result.md`
-- `docs/research_notes/validation_results/future_field_atlas_compact_manageability_h64_result.md`
-- `docs/research_notes/validation_results/future_field_atlas_default_gzip_compression_smoke.md`
-- `docs/research_notes/validation_results/future_field_atlas_h128_calibration_pass_result.md`
-- `docs/research_notes/validation_results/future_field_atlas_writeout_path_repair_note.md`
-- `docs/research_notes/validation_results/future_field_atlas_transport_mode_timing_result.md`
-- `docs/research_notes/validation_results/future_field_atlas_coupled_probe_result.md`
-- `docs/research_notes/validation_results/future_field_atlas_coupled_hardening_result.md`
-- `docs/research_notes/validation_results/future_field_atlas_coupled_sharded_staged_sweep_result.md`
-- `docs/research_notes/validation_results/future_field_atlas_coupled_lossless_block_audit_result.md`
-- `docs/research_notes/validation_results/future_field_atlas_coupled_h64_broad_sweep_result.md`
-- `docs/research_notes/validation_results/future_field_atlas_coupled_h128_and_triadic_profile_smoke_result.md`
-- `docs/research_notes/validation_results/future_field_atlas_coupled_worker_spool_scale_validation_result.md`
-- `docs/research_notes/validation_results/future_field_atlas_coupled_h64_ladder_result.md`
-- `docs/research_notes/validation_results/future_field_atlas_coupled_h64_mechanism_resolution_result.md`
-- `docs/RFS_MB0_TOP_M_MECHANISM_AUDIT_SPEC.md`
-- `docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md`
-- `docs/RFS_MB0_TOP_M_GEOMETRY_AUDIT_SPEC.md`
-- `docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md`
-- `docs/RFS_MB0_MAX_ENTROPY_LOCAL_TRANSITION_PREFLIGHT_SPEC.md`
-- `docs/research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md`
-- `docs/RFS_MB0_ASYMMETRY_LADDER_TRANSITION_ENERGY_SUBSTRATE_SPEC.md`
-- `docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_transition_energy_result.md`
-- `docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`
-- `docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md`
-- `docs/RFS_MB0_TRANSITION_ENERGY_SUBSTRATE_CHARACTERIZATION_RUN_SPEC.md`
+- `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_phase0_1_smoke_result.md`
+- `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_compact_manageability_h64_result.md`
+- `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_default_gzip_compression_smoke.md`
+- `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_h128_calibration_pass_result.md`
+- `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_writeout_path_repair_note.md`
+- `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_transport_mode_timing_result.md`
+- `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_probe_result.md`
+- `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_hardening_result.md`
+- `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_sharded_staged_sweep_result.md`
+- `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_lossless_block_audit_result.md`
+- `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_broad_sweep_result.md`
+- `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h128_and_triadic_profile_smoke_result.md`
+- `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_worker_spool_scale_validation_result.md`
+- `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_ladder_result.md`
+- `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_mechanism_resolution_result.md`
+- `docs/specs/archive/rfs_mb0/RFS_MB0_TOP_M_MECHANISM_AUDIT_SPEC.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_top_m_mechanism_audit_result.md`
+- `docs/specs/archive/rfs_mb0/RFS_MB0_TOP_M_GEOMETRY_AUDIT_SPEC.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_top_m_geometry_audit_result.md`
+- `docs/specs/archive/rfs_mb0/RFS_MB0_MAX_ENTROPY_LOCAL_TRANSITION_PREFLIGHT_SPEC.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md`
+- `docs/specs/archive/rfs_mb0/RFS_MB0_ASYMMETRY_LADDER_TRANSITION_ENERGY_SUBSTRATE_SPEC.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_asymmetry_ladder_transition_energy_result.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md`
+- `docs/specs/archive/rfs_mb0/RFS_MB0_TRANSITION_ENERGY_SUBSTRATE_CHARACTERIZATION_RUN_SPEC.md`
 - `docs/research_notes/omega_theory/transition_energy_substrate_atlas.md`
-- `docs/research_notes/validation_results/rfs_mb0_macro_invariant_due_diligence_result.md`
-- `docs/research_notes/validation_results/rfs_mb0_option_a_budget_coverage_small_result.md`
-- `docs/RFS_MB0_SUBSTRATE_UNTETHERING_TRANSITION_ENERGY_SWEEP_SPEC.md`
-- `docs/RFS_MB0_HORIZON_TRANSPORT_RESPONSE_SURFACE_H128_SCALEUP_SPEC.md`
-- `docs/RFS_MB0_HORIZON_TRANSPORT_EXPANSION_SMOKE_SPEC.md`
-- `docs/RFS_MB0_FUTURE_LANDSCAPE_PATTERN_SPEC.md`
-- `docs/RFS_MB0_FUTURE_LANDSCAPE_DETECTOR_V1_HANDOFF.md`
-- `docs/RFS_MB0_FUTURE_LANDSCAPE_LONG_HORIZON_ENVIRONMENT_AUDIT.md`
-- `docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_macro_invariant_due_diligence_result.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_option_a_budget_coverage_small_result.md`
+- `docs/specs/archive/rfs_mb0/RFS_MB0_SUBSTRATE_UNTETHERING_TRANSITION_ENERGY_SWEEP_SPEC.md`
+- `docs/specs/archive/rfs_mb0/RFS_MB0_HORIZON_TRANSPORT_RESPONSE_SURFACE_H128_SCALEUP_SPEC.md`
+- `docs/specs/archive/rfs_mb0/RFS_MB0_HORIZON_TRANSPORT_EXPANSION_SMOKE_SPEC.md`
+- `docs/specs/archive/rfs_mb0/RFS_MB0_FUTURE_LANDSCAPE_PATTERN_SPEC.md`
+- `docs/specs/archive/rfs_mb0/RFS_MB0_FUTURE_LANDSCAPE_DETECTOR_V1_HANDOFF.md`
+- `docs/specs/archive/rfs_mb0/RFS_MB0_FUTURE_LANDSCAPE_LONG_HORIZON_ENVIRONMENT_AUDIT.md`
+- `docs/specs/archive/rfs_mb0/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md`
 
 Project stance:
 
@@ -193,40 +193,40 @@ as the canonical internal definition anchor.
 2. Read `docs/OMEGA_RUNNING_LOG.md`.
 3. Read `README.md`.
 4. Read the current validation-design notes:
-   - `docs/RFS_MB0_FUTURE_LANDSCAPE_PATTERN_SPEC.md`
-   - `docs/RFS_MB0_FUTURE_LANDSCAPE_DETECTOR_V1_HANDOFF.md`
-   - `docs/RFS_MB0_FUTURE_LANDSCAPE_V1_1_CODE_TARGETS.md`
-   - `docs/research_notes/validation_results/rfs_mb0_future_landscape_detector_v1_1_smoke_result.md`
-   - `docs/research_notes/validation_results/rfs_mb0_future_landscape_long_horizon_environment_audit_result.md`
-   - `docs/RFS_MB0_ACTION_GENERATED_RELATION_SUBSTRATE_SPEC.md`
-   - `docs/research_notes/validation_results/rfs_mb0_action_generated_relation_atlas_v0_calibration_result.md`
-   - `docs/RFS_MB0_RELATION_ATLAS_5H_BATCH_RUN_SPEC.md`
-   - `docs/research_notes/validation_results/rfs_mb0_relation_atlas_5h_batch_result.md`
-   - `docs/RFS_MB0_RELATION_ATLAS_BATCH_RUNNER_REPAIR_SPEC.md`
-   - `docs/research_notes/validation_results/rfs_mb0_relation_atlas_repaired_batch_result.md`
-   - `docs/RFS_MB0_STAGE_B2_EXPLORATORY_ITERATION_PASS_SPEC.md`
-   - `docs/research_notes/validation_results/rfs_mb0_stage_b2_exploratory_iteration_pass_result.md`
-   - `docs/RFS_MB0_STAGE_B2_SPECTRAL_FUTURE_FIELD_GEOMETRY_SMOKE_SPEC.md`
-   - `docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_future_field_geometry_smoke_result.md`
-   - `docs/RFS_MB0_STAGE_B2_SPECTRAL_CHANNEL_EDGE_SMOKE_REPAIR_PREP_SPEC.md`
-   - `docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_channel_edge_smoke_repair_prep_result.md`
-   - `docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_channel_high_loading_repair_result.md`
-   - `docs/RFS_MB0_STAGE_B2_LAPTOP_SPECTRAL_CONTROL_MAPPING_SMOKE_SPEC.md`
-   - `docs/research_notes/validation_results/rfs_mb0_laptop_spectral_control_mapping_smoke_result.md`
-   - `docs/RFS_MB0_HORIZON_TRANSPORT_MATCHED_NULL_AND_FIXTURE_SMOKE_SPEC.md`
-   - `docs/research_notes/validation_results/rfs_mb0_horizon_transport_matched_null_fixture_smoke_result.md`
-   - `docs/RFS_MB0_HORIZON_TRANSPORT_EXPANSION_SMOKE_SPEC.md`
-   - `docs/research_notes/validation_results/rfs_mb0_horizon_transport_expansion_smoke_result.md`
+   - `docs/specs/archive/rfs_mb0/RFS_MB0_FUTURE_LANDSCAPE_PATTERN_SPEC.md`
+   - `docs/specs/archive/rfs_mb0/RFS_MB0_FUTURE_LANDSCAPE_DETECTOR_V1_HANDOFF.md`
+   - `docs/specs/archive/rfs_mb0/RFS_MB0_FUTURE_LANDSCAPE_V1_1_CODE_TARGETS.md`
+   - `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_future_landscape_detector_v1_1_smoke_result.md`
+   - `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_future_landscape_long_horizon_environment_audit_result.md`
+   - `docs/specs/archive/rfs_mb0/RFS_MB0_ACTION_GENERATED_RELATION_SUBSTRATE_SPEC.md`
+   - `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_action_generated_relation_atlas_v0_calibration_result.md`
+   - `docs/specs/archive/rfs_mb0/RFS_MB0_RELATION_ATLAS_5H_BATCH_RUN_SPEC.md`
+   - `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_relation_atlas_5h_batch_result.md`
+   - `docs/specs/archive/rfs_mb0/RFS_MB0_RELATION_ATLAS_BATCH_RUNNER_REPAIR_SPEC.md`
+   - `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_relation_atlas_repaired_batch_result.md`
+   - `docs/specs/archive/rfs_mb0/RFS_MB0_STAGE_B2_EXPLORATORY_ITERATION_PASS_SPEC.md`
+   - `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_stage_b2_exploratory_iteration_pass_result.md`
+   - `docs/specs/archive/rfs_mb0/RFS_MB0_STAGE_B2_SPECTRAL_FUTURE_FIELD_GEOMETRY_SMOKE_SPEC.md`
+   - `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_stage_b2_spectral_future_field_geometry_smoke_result.md`
+   - `docs/specs/archive/rfs_mb0/RFS_MB0_STAGE_B2_SPECTRAL_CHANNEL_EDGE_SMOKE_REPAIR_PREP_SPEC.md`
+   - `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_stage_b2_spectral_channel_edge_smoke_repair_prep_result.md`
+   - `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_stage_b2_spectral_channel_high_loading_repair_result.md`
+   - `docs/specs/archive/rfs_mb0/RFS_MB0_STAGE_B2_LAPTOP_SPECTRAL_CONTROL_MAPPING_SMOKE_SPEC.md`
+   - `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_laptop_spectral_control_mapping_smoke_result.md`
+   - `docs/specs/archive/rfs_mb0/RFS_MB0_HORIZON_TRANSPORT_MATCHED_NULL_AND_FIXTURE_SMOKE_SPEC.md`
+   - `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_horizon_transport_matched_null_fixture_smoke_result.md`
+   - `docs/specs/archive/rfs_mb0/RFS_MB0_HORIZON_TRANSPORT_EXPANSION_SMOKE_SPEC.md`
+   - `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_horizon_transport_expansion_smoke_result.md`
    - `docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md`
    - `docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md`
    - `docs/research_notes/omega_theory/transition_energy_substrate_atlas.md`
-   - `docs/RFS_MB0_TRANSITION_ENERGY_SUBSTRATE_CHARACTERIZATION_RUN_SPEC.md`
-   - `docs/research_notes/validation_results/rfs_mb0_transition_energy_substrate_characterization_result.md`
-   - `docs/research_notes/validation_results/rfs_mb0_macro_invariant_due_diligence_result.md`
-   - `docs/research_notes/validation_results/rfs_mb0_option_a_budget_coverage_small_result.md`
-   - `docs/RFS_MB0_SUBSTRATE_UNTETHERING_TRANSITION_ENERGY_SWEEP_SPEC.md`
-   - `docs/research_notes/validation_results/rfs_mb0_substrate_untethering_transition_energy_sweep_result.md`
-   - `docs/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md`
+   - `docs/specs/archive/rfs_mb0/RFS_MB0_TRANSITION_ENERGY_SUBSTRATE_CHARACTERIZATION_RUN_SPEC.md`
+   - `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_transition_energy_substrate_characterization_result.md`
+   - `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_macro_invariant_due_diligence_result.md`
+   - `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_option_a_budget_coverage_small_result.md`
+   - `docs/specs/archive/rfs_mb0/RFS_MB0_SUBSTRATE_UNTETHERING_TRANSITION_ENERGY_SWEEP_SPEC.md`
+   - `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_substrate_untethering_transition_energy_sweep_result.md`
+   - `docs/specs/archive/rfs_mb0/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md`
    - `docs/research_notes/validation_design/val_ecology_viability_reorientation.md`
    - `docs/research_notes/validation_design/README.md`
 5. Read the current theory-pivot notes:
@@ -586,13 +586,13 @@ omega/rfs_mb0_future_landscape/
 Latest result:
 
 ```text
-docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_future_field_geometry_smoke_result.md
-docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_channel_edge_smoke_repair_prep_result.md
-docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_channel_high_loading_repair_result.md
-docs/research_notes/validation_results/rfs_mb0_horizon_transport_response_surface_h128_scaleup_result.md
-docs/research_notes/validation_results/rfs_mb0_horizon_transport_response_resolution_scaleup_result.md
-docs/research_notes/validation_results/rfs_mb0_horizon_transport_expansion_smoke_result.md
-docs/research_notes/validation_results/rfs_mb0_stage_b2_exploratory_iteration_pass_result.md
+docs/research_notes/validation_results/rfs_mb0/rfs_mb0_stage_b2_spectral_future_field_geometry_smoke_result.md
+docs/research_notes/validation_results/rfs_mb0/rfs_mb0_stage_b2_spectral_channel_edge_smoke_repair_prep_result.md
+docs/research_notes/validation_results/rfs_mb0/rfs_mb0_stage_b2_spectral_channel_high_loading_repair_result.md
+docs/research_notes/validation_results/rfs_mb0/rfs_mb0_horizon_transport_response_surface_h128_scaleup_result.md
+docs/research_notes/validation_results/rfs_mb0/rfs_mb0_horizon_transport_response_resolution_scaleup_result.md
+docs/research_notes/validation_results/rfs_mb0/rfs_mb0_horizon_transport_expansion_smoke_result.md
+docs/research_notes/validation_results/rfs_mb0/rfs_mb0_stage_b2_exploratory_iteration_pass_result.md
 ```
 
 Current live read:

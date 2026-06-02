@@ -230,8 +230,8 @@ Read:
 
 1. `README.md`
 2. this guide
-3. `docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md`
-4. `docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`
+3. `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_top_m_geometry_audit_result.md`
+4. `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`
 
 Goal: understand what the live result is and what it does not claim.
 
@@ -242,10 +242,10 @@ Read:
 1. `docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md`
 2. `docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md`
 3. `docs/research_notes/omega_theory/transition_energy_substrate_atlas.md`
-4. `docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_transition_energy_result.md`
-5. `docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`
-6. `docs/research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md`
-7. `docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md`
+4. `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_asymmetry_ladder_transition_energy_result.md`
+5. `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`
+6. `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md`
+7. `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_top_m_geometry_audit_result.md`
 
 Goal: understand why the project moved from hand-built constraint templates toward transition-energy asymmetry families.
 
@@ -253,12 +253,12 @@ Goal: understand why the project moved from hand-built constraint templates towa
 
 Read:
 
-1. `docs/RFS_MB0_ASYMMETRY_LADDER_TRANSITION_ENERGY_SUBSTRATE_SPEC.md`
-2. `docs/RFS_MB0_MAX_ENTROPY_LOCAL_TRANSITION_PREFLIGHT_SPEC.md`
-3. `docs/RFS_MB0_TOP_M_GEOMETRY_AUDIT_SPEC.md`
-4. `docs/RFS_MB0_TRANSITION_ENERGY_SUBSTRATE_CHARACTERIZATION_RUN_SPEC.md`
+1. `docs/specs/archive/rfs_mb0/RFS_MB0_ASYMMETRY_LADDER_TRANSITION_ENERGY_SUBSTRATE_SPEC.md`
+2. `docs/specs/archive/rfs_mb0/RFS_MB0_MAX_ENTROPY_LOCAL_TRANSITION_PREFLIGHT_SPEC.md`
+3. `docs/specs/archive/rfs_mb0/RFS_MB0_TOP_M_GEOMETRY_AUDIT_SPEC.md`
+4. `docs/specs/archive/rfs_mb0/RFS_MB0_TRANSITION_ENERGY_SUBSTRATE_CHARACTERIZATION_RUN_SPEC.md`
 5. `docs/implementation/horizon_transport_runner_map.md`
-6. `docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md`
+6. `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_top_m_geometry_audit_result.md`
 
 Goal: understand what the runner emits, what controls are required, and how result notes should be interpreted.
 

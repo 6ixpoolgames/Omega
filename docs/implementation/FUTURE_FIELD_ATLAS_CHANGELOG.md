@@ -9,6 +9,29 @@ when a run or decision changes the project state.
 
 ## 2026-06-02
 
+### Documentation Directory Cleanup
+
+Reorganized repository-facing documentation to reduce root-folder clutter:
+
+```text
+docs/specs/current/
+  active instrument specs
+
+docs/specs/archive/<branch>/
+  historical branch specs, handoffs, addenda, and runbooks
+
+docs/research_notes/validation_results/future_field_atlas/
+  current retained Future Field Atlas result notes
+
+docs/research_notes/validation_results/<archived_branch>/
+  retained historical branch result notes
+```
+
+Added README policy files for `docs/specs/` and
+`docs/research_notes/validation_results/`. Future specs and retained result
+notes should use those branch folders rather than returning to the flat
+`docs/` and `validation_results/` roots.
+
 ### Coupled Mechanism Summary Utility
 
 Added:

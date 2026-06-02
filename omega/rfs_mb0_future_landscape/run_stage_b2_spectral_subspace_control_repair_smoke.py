@@ -21,7 +21,7 @@ from .spectral_contracts import (
 )
 
 
-SPEC_ID = "docs/RFS_MB0_STAGE_B2_SPECTRAL_SUBSPACE_CONTROL_REPAIR_SMOKE_SPEC.md"
+SPEC_ID = "docs/specs/archive/rfs_mb0/RFS_MB0_STAGE_B2_SPECTRAL_SUBSPACE_CONTROL_REPAIR_SMOKE_SPEC.md"
 RUNNER_MODULE = "omega.rfs_mb0_future_landscape.run_stage_b2_spectral_subspace_control_repair_smoke"
 BASE_RUNNER_MODULE = "omega.rfs_mb0_future_landscape.run_stage_b2_laptop_spectral_control_mapping_smoke"
 

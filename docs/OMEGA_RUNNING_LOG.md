@@ -68,7 +68,7 @@ H128 pair005 final residual:
 Retained note:
 
 ```text
-docs/research_notes/validation_results/future_field_atlas_coupled_h64_mechanism_resolution_result.md
+docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_mechanism_resolution_result.md
 ```
 
 Operational next recommendation:
@@ -147,7 +147,7 @@ Aggregate summaries must be pair-aware.
 Retained note:
 
 ```text
-docs/research_notes/validation_results/future_field_atlas_coupled_h64_ladder_result.md
+docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_ladder_result.md
 ```
 
 ### Future Field Atlas Compact Retention Utility
@@ -256,7 +256,7 @@ scaling problem is retention policy and compact summarization, not IPC.
 Retained note:
 
 ```text
-docs/research_notes/validation_results/future_field_atlas_coupled_worker_spool_scale_validation_result.md
+docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_worker_spool_scale_validation_result.md
 ```
 
 ### Future Field Atlas Coupled Worker-Side Spooling
@@ -363,7 +363,7 @@ Ran the missing broad H64 coupled breadth gate after the H128 depth pass.
 
 Retained note:
 
-- `docs/research_notes/validation_results/future_field_atlas_coupled_h64_broad_sweep_result.md`
+- `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_broad_sweep_result.md`
 
 Readout:
 
@@ -406,7 +406,7 @@ smoke.
 
 Retained note:
 
-- `docs/research_notes/validation_results/future_field_atlas_coupled_h128_and_triadic_profile_smoke_result.md`
+- `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h128_and_triadic_profile_smoke_result.md`
 
 H128 pair4 parallel attempt:
 
@@ -498,7 +498,7 @@ omega/future_field_atlas/lossless_blocks.py
 
 Retained note:
 
-- `docs/research_notes/validation_results/future_field_atlas_coupled_lossless_block_audit_result.md`
+- `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_lossless_block_audit_result.md`
 
 Validation:
 
@@ -556,7 +556,7 @@ H8 -> H16 -> H32 -> H64 coupled infrastructure gates.
 
 Retained note:
 
-- `docs/research_notes/validation_results/future_field_atlas_coupled_sharded_staged_sweep_result.md`
+- `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_sharded_staged_sweep_result.md`
 
 Implementation:
 
@@ -636,7 +636,7 @@ sweep.
 
 Retained note:
 
-- `docs/research_notes/validation_results/future_field_atlas_coupled_hardening_result.md`
+- `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_hardening_result.md`
 
 Repair contents:
 
@@ -712,7 +712,7 @@ Do not use `comField` for this branch.
 
 Retained note:
 
-- `docs/research_notes/validation_results/future_field_atlas_coupled_probe_result.md`
+- `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_probe_result.md`
 
 Implemented shape:
 
@@ -819,7 +819,7 @@ composition_residual_mode: selected
 
 Retained note:
 
-- `docs/research_notes/validation_results/future_field_atlas_transport_mode_timing_result.md`
+- `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_transport_mode_timing_result.md`
 
 Validation:
 
@@ -874,7 +874,7 @@ post-scan finalization as the dominant wall-clock cost.
 
 Retained note:
 
-- `docs/research_notes/validation_results/future_field_atlas_writeout_path_repair_note.md`
+- `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_writeout_path_repair_note.md`
 
 Repair contents:
 
@@ -919,7 +919,7 @@ CSV storage mode.
 
 Retained note:
 
-- `docs/research_notes/validation_results/future_field_atlas_h128_calibration_pass_result.md`
+- `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_h128_calibration_pass_result.md`
 
 Local validation output:
 
@@ -986,7 +986,7 @@ The runner still supports:
 
 Retained note:
 
-- `docs/research_notes/validation_results/future_field_atlas_default_gzip_compression_smoke.md`
+- `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_default_gzip_compression_smoke.md`
 
 Local validation output:
 
@@ -1038,7 +1038,7 @@ identity in:
 
 Retained note:
 
-- `docs/research_notes/validation_results/future_field_atlas_compact_manageability_h64_result.md`
+- `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_compact_manageability_h64_result.md`
 
 Local validation output:
 
@@ -1097,11 +1097,11 @@ primary derived artifacts reconstruct from raw rows and specs.
 
 Retained note:
 
-- `docs/research_notes/validation_results/future_field_atlas_phase0_1_smoke_result.md`
+- `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_phase0_1_smoke_result.md`
 
 Spec:
 
-- `docs/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md`
+- `docs/specs/current/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md`
 - `docs/FUTURE_FIELD_ATLAS_GLOSSARY.md`
 
 Local validation output:
@@ -1169,7 +1169,7 @@ strongest-edge deletion, and one-edge expansion.
 
 Retained note:
 
-- `docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_top_m_mechanism_audit_result.md`
 
 Local validation output:
 
@@ -1225,7 +1225,7 @@ the medium sweep pointed to strict `m-1` pruning.
 
 Retained note:
 
-- `docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_top_m_mechanism_audit_result.md`
 
 Local validation output:
 
@@ -1274,11 +1274,11 @@ forked to `audit_hard_top_m_mechanism`.
 
 Retained note:
 
-- `docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_top_m_mechanism_audit_result.md`
 
 Spec:
 
-- `docs/RFS_MB0_TOP_M_MECHANISM_AUDIT_SPEC.md`
+- `docs/specs/archive/rfs_mb0/RFS_MB0_TOP_M_MECHANISM_AUDIT_SPEC.md`
 
 Local validation output:
 
@@ -1359,7 +1359,7 @@ preflight.
 
 Retained note:
 
-- `docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_top_m_geometry_audit_result.md`
 
 Local validation output:
 
@@ -1406,7 +1406,7 @@ Ran the first real MaxEnt comparator pass after Phase 0 plumbing.
 
 Retained note:
 
-- `docs/research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md`
 
 Local validation output:
 
@@ -1444,7 +1444,7 @@ Ran the repaired low-beta preservation-asymmetry sensitivity scaleup.
 
 Retained note:
 
-- `docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md`
 
 Local validation output:
 
@@ -1484,7 +1484,7 @@ first implementation batch.
 
 Retained note:
 
-- `docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`
 
 Local validation output:
 
@@ -1590,7 +1590,7 @@ seed-scaled design-set batch.
 
 Retained note:
 
-- `docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_transition_energy_result.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_asymmetry_ladder_transition_energy_result.md`
 
 Local validation outputs:
 
@@ -1694,7 +1694,7 @@ aligned_amplification_fraction_all_rows remains available as an audit value.
 
 Spec update:
 
-- `docs/RFS_MB0_ASYMMETRY_LADDER_TRANSITION_ENERGY_SUBSTRATE_SPEC.md`
+- `docs/specs/archive/rfs_mb0/RFS_MB0_ASYMMETRY_LADDER_TRANSITION_ENERGY_SUBSTRATE_SPEC.md`
 
 Local validation outputs:
 
@@ -1783,7 +1783,7 @@ raw implementation/output compatibility:
 
 Retained note:
 
-- `docs/research_notes/validation_results/rfs_mb0_macro_invariant_due_diligence_result.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_macro_invariant_due_diligence_result.md`
 
 Local validation output:
 
@@ -1867,7 +1867,7 @@ Ran the small Option A follow-up from
 
 Retained note:
 
-- `docs/research_notes/validation_results/rfs_mb0_option_a_budget_coverage_small_result.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_option_a_budget_coverage_small_result.md`
 
 Local validation output:
 
@@ -1922,11 +1922,11 @@ response rows for total-coordinate-mass ranking.
 
 ### RFS-MB0 Transition-Energy Substrate Characterization Larger Smoke
 
-Pulled and implemented `docs/RFS_MB0_TRANSITION_ENERGY_SUBSTRATE_CHARACTERIZATION_RUN_SPEC.md`.
+Pulled and implemented `docs/specs/archive/rfs_mb0/RFS_MB0_TRANSITION_ENERGY_SUBSTRATE_CHARACTERIZATION_RUN_SPEC.md`.
 
 Retained note:
 
-- `docs/research_notes/validation_results/rfs_mb0_transition_energy_substrate_characterization_result.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_transition_energy_substrate_characterization_result.md`
 
 Local validation outputs:
 
@@ -1992,12 +1992,12 @@ max-entropy-local-transition substrate.
 ### RFS-MB0 Substrate Untethering Transition-Energy Larger Smoke
 
 Ran the larger transition-energy substrate untethering smoke from
-`docs/RFS_MB0_SUBSTRATE_UNTETHERING_TRANSITION_ENERGY_SWEEP_SPEC.md` after the
+`docs/specs/archive/rfs_mb0/RFS_MB0_SUBSTRATE_UNTETHERING_TRANSITION_ENERGY_SWEEP_SPEC.md` after the
 initial tiny implementation smoke and decision-guard audit.
 
 Retained note:
 
-- `docs/research_notes/validation_results/rfs_mb0_substrate_untethering_transition_energy_sweep_result.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_substrate_untethering_transition_energy_sweep_result.md`
 
 Local validation output:
 
@@ -2058,11 +2058,11 @@ and matched-null behavior are stable.
 ### RFS-MB0 Horizon-Transport Response Surface H128 Scaleup
 
 Implemented the H128 response-surface instrumentation requested by
-`docs/RFS_MB0_HORIZON_TRANSPORT_RESPONSE_SURFACE_H128_SCALEUP_SPEC.md`.
+`docs/specs/archive/rfs_mb0/RFS_MB0_HORIZON_TRANSPORT_RESPONSE_SURFACE_H128_SCALEUP_SPEC.md`.
 
 Retained note:
 
-- `docs/research_notes/validation_results/rfs_mb0_horizon_transport_response_surface_h128_scaleup_result.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_horizon_transport_response_surface_h128_scaleup_result.md`
 
 Local validation outputs:
 
@@ -2143,7 +2143,7 @@ resolution.
 
 Retained note:
 
-- `docs/research_notes/validation_results/rfs_mb0_horizon_transport_response_resolution_scaleup_result.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_horizon_transport_response_resolution_scaleup_result.md`
 
 Local validation outputs:
 
@@ -2216,12 +2216,12 @@ or Omega/agency/value claims.
 
 Implemented expansion-smoke reporting for the horizon-transport runner and ran
 the proper desktop-shape smoke requested by
-`docs/RFS_MB0_HORIZON_TRANSPORT_EXPANSION_SMOKE_SPEC.md`.
+`docs/specs/archive/rfs_mb0/RFS_MB0_HORIZON_TRANSPORT_EXPANSION_SMOKE_SPEC.md`.
 
 Retained spec and note:
 
-- `docs/RFS_MB0_HORIZON_TRANSPORT_EXPANSION_SMOKE_SPEC.md`
-- `docs/research_notes/validation_results/rfs_mb0_horizon_transport_expansion_smoke_result.md`
+- `docs/specs/archive/rfs_mb0/RFS_MB0_HORIZON_TRANSPORT_EXPANSION_SMOKE_SPEC.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_horizon_transport_expansion_smoke_result.md`
 
 Local validation output:
 
@@ -2297,8 +2297,8 @@ known transport-association, marginal-fakeout, corridor, and trap cases.
 
 Retained spec and note:
 
-- `docs/RFS_MB0_HORIZON_TRANSPORT_MATCHED_NULL_AND_FIXTURE_SMOKE_SPEC.md`
-- `docs/research_notes/validation_results/rfs_mb0_horizon_transport_matched_null_fixture_smoke_result.md`
+- `docs/specs/archive/rfs_mb0/RFS_MB0_HORIZON_TRANSPORT_MATCHED_NULL_AND_FIXTURE_SMOKE_SPEC.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_horizon_transport_matched_null_fixture_smoke_result.md`
 
 Local validation outputs:
 
@@ -2369,7 +2369,7 @@ separate from candidate perturbation-response profiles.
 
 Retained note:
 
-- `docs/research_notes/validation_results/rfs_mb0_horizon_transport_spectral_response_repair_result.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_horizon_transport_spectral_response_repair_result.md`
 
 Local validation outputs:
 
@@ -2425,7 +2425,7 @@ on where/how the controls fail, not to rescue the data into a favorable claim.
 
 Retained note:
 
-- `docs/research_notes/validation_results/rfs_mb0_laptop_spectral_subspace_control_repair_smoke_result.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_laptop_spectral_subspace_control_repair_smoke_result.md`
 
 Local outputs:
 
@@ -2502,7 +2502,7 @@ schema_version: 2026-05-30.3
 
 Retained note:
 
-- `docs/research_notes/validation_results/rfs_mb0_laptop_spectral_control_mapping_smoke_result.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_laptop_spectral_control_mapping_smoke_result.md`
 
 Local validation outputs:
 
@@ -2565,7 +2565,7 @@ readiness split into spectral-control, analysis-only, tiny graph, and larger gra
 
 Retained note:
 
-- `docs/research_notes/validation_results/rfs_mb0_laptop_spectral_control_mapping_smoke_result.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_laptop_spectral_control_mapping_smoke_result.md`
 
 Local outputs:
 
@@ -2703,7 +2703,7 @@ matrix-level stable-item-set perturbation
 
 Retained note:
 
-- `docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_channel_high_loading_repair_result.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_stage_b2_spectral_channel_high_loading_repair_result.md`
 
 Local output:
 
@@ -2772,11 +2772,11 @@ perturbation smoke.
 ### RFS-MB0 Stage B-2 Spectral Channel-Edge Smoke Repair Prep
 
 Implemented the repair-prep layer requested by
-`docs/RFS_MB0_STAGE_B2_SPECTRAL_CHANNEL_EDGE_SMOKE_REPAIR_PREP_SPEC.md`.
+`docs/specs/archive/rfs_mb0/RFS_MB0_STAGE_B2_SPECTRAL_CHANNEL_EDGE_SMOKE_REPAIR_PREP_SPEC.md`.
 
 Retained note:
 
-- `docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_channel_edge_smoke_repair_prep_result.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_stage_b2_spectral_channel_edge_smoke_repair_prep_result.md`
 
 Local outputs:
 
@@ -2843,11 +2843,11 @@ against frequency/degree/baseline-flow matched item sets.
 
 Implemented and smoked the optional Stage B-2 spectral future-field geometry
 branch requested by
-`docs/RFS_MB0_STAGE_B2_SPECTRAL_FUTURE_FIELD_GEOMETRY_SMOKE_SPEC.md`.
+`docs/specs/archive/rfs_mb0/RFS_MB0_STAGE_B2_SPECTRAL_FUTURE_FIELD_GEOMETRY_SMOKE_SPEC.md`.
 
 Retained note:
 
-- `docs/research_notes/validation_results/rfs_mb0_stage_b2_spectral_future_field_geometry_smoke_result.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_stage_b2_spectral_future_field_geometry_smoke_result.md`
 
 Local outputs:
 
@@ -2922,11 +2922,11 @@ and matched controls before any stronger spectral-gauge interpretation.
 ### RFS-MB0 Stage B-2 Exploratory Iteration Pass
 
 Implemented the Stage B-2 long-run I/O path and completed the exploratory
-iteration pass requested by `docs/RFS_MB0_STAGE_B2_EXPLORATORY_ITERATION_PASS_SPEC.md`.
+iteration pass requested by `docs/specs/archive/rfs_mb0/RFS_MB0_STAGE_B2_EXPLORATORY_ITERATION_PASS_SPEC.md`.
 
 Retained note:
 
-- `docs/research_notes/validation_results/rfs_mb0_stage_b2_exploratory_iteration_pass_result.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_stage_b2_exploratory_iteration_pass_result.md`
 
 Local outputs:
 
@@ -3005,7 +3005,7 @@ identity and proxy discipline.
 
 Retained note:
 
-- `docs/research_notes/validation_results/rfs_mb0_stage_b2_mechanism_calibration_smokes_result.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_stage_b2_mechanism_calibration_smokes_result.md`
 
 Local outputs:
 
@@ -3087,7 +3087,7 @@ read-only Stage A syndrome audit, and Stage B mechanism-control smoke.
 
 Retained note:
 
-- `docs/research_notes/validation_results/rfs_mb0_desktop_phase_b_stage_a_b_validation_result.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_desktop_phase_b_stage_a_b_validation_result.md`
 
 Local outputs:
 
@@ -3181,7 +3181,7 @@ after the Stage A addendum gate allowed a mechanism-profile pass.
 
 Retained note:
 
-- `docs/research_notes/validation_results/rfs_mb0_laptop_stage_b_mechanism_smoke_30m_result.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_laptop_stage_b_mechanism_smoke_30m_result.md`
 
 Primary output:
 
@@ -3276,7 +3276,7 @@ syndrome audit path.
 
 Retained note:
 
-- `docs/research_notes/validation_results/rfs_mb0_frontier_transform_syndrome_laptop_validation_result.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_frontier_transform_syndrome_laptop_validation_result.md`
 
 Local outputs:
 
@@ -3431,7 +3431,7 @@ phase_b_syndrome_component_scores.csv: identical
 
 Added the next audit spec after Phase B showed control-equivalent marginal recurrence:
 
-- `docs/RFS_MB0_FRONTIER_TRANSFORM_SYNDROME_AND_MECHANISM_CONTROL_AUDIT_SPEC.md`
+- `docs/specs/archive/rfs_mb0/RFS_MB0_FRONTIER_TRANSFORM_SYNDROME_AND_MECHANISM_CONTROL_AUDIT_SPEC.md`
 
 Reason:
 
@@ -3483,7 +3483,7 @@ Omega-positive claims
 
 Implemented and ran the larger design-set recurrence pass requested by:
 
-- `docs/RFS_MB0_FRONTIER_TRANSFORM_PHASE_B_10H_DESIGN_RECURRENCE_SPEC.md`
+- `docs/specs/archive/rfs_mb0/RFS_MB0_FRONTIER_TRANSFORM_PHASE_B_10H_DESIGN_RECURRENCE_SPEC.md`
 
 Runner:
 
@@ -3491,7 +3491,7 @@ Runner:
 
 Primary retained note:
 
-- `docs/research_notes/validation_results/rfs_mb0_frontier_transform_phase_b_10h_result.md`
+- `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_frontier_transform_phase_b_10h_result.md`
 
 Primary output:
 
@@ -3570,7 +3570,7 @@ Next work should test preregistered joint syndromes and mechanism-dependency con
 
 Implemented the control/flow semantic repair pass requested by:
 
-- `docs/RFS_MB0_FRONTIER_TRANSFORM_PHASE_B0_CONTROL_FLOW_REPAIR_SPEC.md`
+- `docs/specs/archive/rfs_mb0/RFS_MB0_FRONTIER_TRANSFORM_PHASE_B0_CONTROL_FLOW_REPAIR_SPEC.md`
 
 Primary output:
 
@@ -3622,7 +3622,7 @@ After endpoint/quotient probe instrumentation failed to produce adequate indepen
 
 Spec:
 
-- `docs/RFS_MB0_FRONTIER_TRANSFORM_INSTRUMENTATION_SPEC.md`
+- `docs/specs/archive/rfs_mb0/RFS_MB0_FRONTIER_TRANSFORM_INSTRUMENTATION_SPEC.md`
 
 Primary output:
 
@@ -3672,8 +3672,8 @@ This was not a detection claim.
 
 Added and implemented documentation for the instrumentation pivot:
 
-- `docs/RFS_MB0_INSTRUMENTATION_BRANCH_PIVOT_AND_PROBE_PANEL_SPEC.md`
-- `docs/RFS_MB0_BOUNDARY_DEFORMATION_GUARDRAIL_AND_QUOTIENT_PROBE_SPEC.md`
+- `docs/specs/archive/rfs_mb0/RFS_MB0_INSTRUMENTATION_BRANCH_PIVOT_AND_PROBE_PANEL_SPEC.md`
+- `docs/specs/archive/rfs_mb0/RFS_MB0_BOUNDARY_DEFORMATION_GUARDRAIL_AND_QUOTIENT_PROBE_SPEC.md`
 
 Current read at that point:
 
@@ -3722,7 +3722,7 @@ This motivated the instrumentation branch and ultimately the frontier-transform 
 ### RFS0 Strict Reachable Futures Small Smoke
 
 Implemented the first RFS0 exact finite reachable-futures substrate batch from
-`docs/RFS0_STRICT_REACHABLE_FUTURES_BATCH_SPEC.md`.
+`docs/specs/archive/rfs0/RFS0_STRICT_REACHABLE_FUTURES_BATCH_SPEC.md`.
 
 Code changes:
 
@@ -3737,7 +3737,7 @@ Code changes:
 
 Primary result:
 
-- `docs/research_notes/validation_results/rfs0_strict_reachable_futures_small_smoke_result.md`
+- `docs/research_notes/validation_results/rfs0/rfs0_strict_reachable_futures_small_smoke_result.md`
 - `results/rfs0/20260522_strict_reachable_futures_small_smoke/summary.md`
 
 Run shape:
@@ -3809,7 +3809,7 @@ positives.
 ### VAL1-MF Interference Audit Smoke
 
 Implemented the sampled counterfactual interference audit requested by
-`docs/VAL1_MF_INTERFERENCE_AUDIT_SPEC.md`.
+`docs/specs/archive/val1/VAL1_MF_INTERFERENCE_AUDIT_SPEC.md`.
 
 Code changes:
 
@@ -3822,7 +3822,7 @@ Code changes:
 
 Primary result:
 
-- `docs/research_notes/validation_results/val1_mf_interference_audit_smoke_result.md`
+- `docs/research_notes/validation_results/val1/val1_mf_interference_audit_smoke_result.md`
 - `results/val1_mf/20260521_interference_audit_smoke/summary.md`
 
 Run shape:
@@ -3880,7 +3880,7 @@ Code changes:
 
 Primary result:
 
-- `docs/research_notes/validation_results/val1_mf_two_field_compatibility_smoke_result.md`
+- `docs/research_notes/validation_results/val1/val1_mf_two_field_compatibility_smoke_result.md`
 - `results/val1_mf/20260521_two_field_compatibility_smoke_cap4096/summary.md`
 
 Run shape:
@@ -3937,7 +3937,7 @@ Code changes:
 
 Primary result:
 
-- `docs/research_notes/validation_results/val0_g_neutral_grammar_stability_probe_result.md`
+- `docs/research_notes/validation_results/val0/val0_g_neutral_grammar_stability_probe_result.md`
 - `results/val0_g/20260521_neutral_grammar_stability_probe_cap2048/summary.md`
 
 Run shape:
@@ -3994,7 +3994,7 @@ Implemented the first VAL0-G smoke substrate:
 
 Primary result:
 
-- `docs/research_notes/validation_results/val0_g_neutral_grammar_smoke_result.md`
+- `docs/research_notes/validation_results/val0/val0_g_neutral_grammar_smoke_result.md`
 - `results/val0_g/20260521_neutral_grammar_smoke_v2/summary.md`
 
 Run shape:

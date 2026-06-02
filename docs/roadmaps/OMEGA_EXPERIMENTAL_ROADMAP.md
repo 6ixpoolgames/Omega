@@ -126,7 +126,7 @@ future-bearing reachability
 
 Follow:
 
-- `docs/VAL0_G_NEUTRAL_GRAMMAR_GEOMETRY_ATLAS_SPEC.md`
+- `docs/specs/archive/val0/VAL0_G_NEUTRAL_GRAMMAR_GEOMETRY_ATLAS_SPEC.md`
 
 Implementation order:
 

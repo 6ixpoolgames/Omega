@@ -27,7 +27,7 @@ viability-kernel, and capture/recovery-basin measurements
 
 ## Current Entry Points
 
-1. [`../../REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md`](../../REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
+1. [`../../specs/archive/rfs_mb0/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md`](../../specs/archive/rfs_mb0/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md)
 
    Current empirical reset and substrate ladder.
 
@@ -35,11 +35,11 @@ viability-kernel, and capture/recovery-basin measurements
 
    Theory-side reorientation after VAL0/VAL1 reconnaissance.
 
-3. [`../../VAL0_G_NEUTRAL_GRAMMAR_GEOMETRY_ATLAS_SPEC.md`](../../VAL0_G_NEUTRAL_GRAMMAR_GEOMETRY_ATLAS_SPEC.md)
+3. [`../../specs/archive/val0/VAL0_G_NEUTRAL_GRAMMAR_GEOMETRY_ATLAS_SPEC.md`](../../specs/archive/val0/VAL0_G_NEUTRAL_GRAMMAR_GEOMETRY_ATLAS_SPEC.md)
 
    Historical neutral-grammar reconnaissance design.
 
-4. [`../validation_results/val0_ct_12h_unlabeled_geometry_battery_result.md`](../validation_results/val0_ct_12h_unlabeled_geometry_battery_result.md)
+4. [`../validation_results/val0/val0_ct_12h_unlabeled_geometry_battery_result.md`](../validation_results/val0/val0_ct_12h_unlabeled_geometry_battery_result.md)
 
    Result note explaining why the project moved from direct R1 validation to
    neutral geometry discovery.

@@ -74,7 +74,7 @@ This note is that atlas.
 Follow-up due diligence:
 
 ```text
-docs/research_notes/validation_results/rfs_mb0_macro_invariant_due_diligence_result.md
+docs/research_notes/validation_results/rfs_mb0/rfs_mb0_macro_invariant_due_diligence_result.md
 ```
 
 The guarded Option A run repaired retained-matrix coverage to `1.0 / 1.0`

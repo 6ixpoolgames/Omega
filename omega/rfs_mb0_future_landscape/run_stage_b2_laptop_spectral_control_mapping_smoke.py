@@ -15,7 +15,6 @@ from .run_stage_b2_spectral_future_field_geometry_smoke import (
     context_manifest_rows,
     run_batches,
     selected_syndrome_ids,
-    shuffle_status,
     write_outputs,
     write_status,
 )
@@ -32,7 +31,7 @@ from .spectral_contracts import (
 )
 
 
-SPEC_ID = "docs/RFS_MB0_STAGE_B2_LAPTOP_SPECTRAL_CONTROL_MAPPING_SMOKE_SPEC.md"
+SPEC_ID = "docs/specs/archive/rfs_mb0/RFS_MB0_STAGE_B2_LAPTOP_SPECTRAL_CONTROL_MAPPING_SMOKE_SPEC.md"
 RUNNER_MODULE = "omega.rfs_mb0_future_landscape.run_stage_b2_laptop_spectral_control_mapping_smoke"
 
 LAPTOP_OUTPUTS = (
@@ -104,7 +103,6 @@ ALIASES = {
     "spectral_high_loading_items_smoke.csv": "laptop_spectral_high_loading_items.csv",
     "spectral_item_loading_summary_smoke.csv": "laptop_spectral_item_loading_summary.csv",
     "spectral_item_manifest.csv": "laptop_spectral_item_vocab_manifest.csv",
-    "spectral_item_mapping_smoke_report.md": "laptop_spectral_high_loading_export_report.md",
     "spectral_item_to_edge_mapping_smoke.csv": "laptop_spectral_item_to_edge_mapping.csv",
     "spectral_mapping_coverage_smoke.csv": "laptop_spectral_mapping_coverage.csv",
     "spectral_item_mapping_smoke_report.md": "laptop_spectral_mapping_report.md",

@@ -34,24 +34,24 @@ Start here:
 
 1. [`docs/EXTERNAL_READER_GUIDE.md`](EXTERNAL_READER_GUIDE.md)
 2. [`README.md`](../README.md)
-3. [`docs/research_notes/validation_results/future_field_atlas_phase0_1_smoke_result.md`](research_notes/validation_results/future_field_atlas_phase0_1_smoke_result.md)
-4. [`docs/research_notes/validation_results/future_field_atlas_compact_manageability_h64_result.md`](research_notes/validation_results/future_field_atlas_compact_manageability_h64_result.md)
-5. [`docs/research_notes/validation_results/future_field_atlas_default_gzip_compression_smoke.md`](research_notes/validation_results/future_field_atlas_default_gzip_compression_smoke.md)
-6. [`docs/research_notes/validation_results/future_field_atlas_h128_calibration_pass_result.md`](research_notes/validation_results/future_field_atlas_h128_calibration_pass_result.md)
-7. [`docs/research_notes/validation_results/future_field_atlas_coupled_hardening_result.md`](research_notes/validation_results/future_field_atlas_coupled_hardening_result.md)
-8. [`docs/research_notes/validation_results/future_field_atlas_coupled_sharded_staged_sweep_result.md`](research_notes/validation_results/future_field_atlas_coupled_sharded_staged_sweep_result.md)
-9. [`docs/research_notes/validation_results/future_field_atlas_coupled_lossless_block_audit_result.md`](research_notes/validation_results/future_field_atlas_coupled_lossless_block_audit_result.md)
-10. [`docs/research_notes/validation_results/future_field_atlas_coupled_h64_broad_sweep_result.md`](research_notes/validation_results/future_field_atlas_coupled_h64_broad_sweep_result.md)
-11. [`docs/research_notes/validation_results/future_field_atlas_coupled_h128_and_triadic_profile_smoke_result.md`](research_notes/validation_results/future_field_atlas_coupled_h128_and_triadic_profile_smoke_result.md)
-12. [`docs/research_notes/validation_results/future_field_atlas_coupled_worker_spool_scale_validation_result.md`](research_notes/validation_results/future_field_atlas_coupled_worker_spool_scale_validation_result.md)
-13. [`docs/research_notes/validation_results/future_field_atlas_coupled_h64_ladder_result.md`](research_notes/validation_results/future_field_atlas_coupled_h64_ladder_result.md)
-14. [`docs/research_notes/validation_results/future_field_atlas_coupled_h64_mechanism_resolution_result.md`](research_notes/validation_results/future_field_atlas_coupled_h64_mechanism_resolution_result.md)
+3. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_phase0_1_smoke_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_phase0_1_smoke_result.md)
+4. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_compact_manageability_h64_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_compact_manageability_h64_result.md)
+5. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_default_gzip_compression_smoke.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_default_gzip_compression_smoke.md)
+6. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_h128_calibration_pass_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_h128_calibration_pass_result.md)
+7. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_hardening_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_hardening_result.md)
+8. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_sharded_staged_sweep_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_sharded_staged_sweep_result.md)
+9. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_lossless_block_audit_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_lossless_block_audit_result.md)
+10. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_broad_sweep_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_broad_sweep_result.md)
+11. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h128_and_triadic_profile_smoke_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h128_and_triadic_profile_smoke_result.md)
+12. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_worker_spool_scale_validation_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_worker_spool_scale_validation_result.md)
+13. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_ladder_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_ladder_result.md)
+14. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_mechanism_resolution_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_mechanism_resolution_result.md)
 15. [`docs/FUTURE_FIELD_ATLAS_GLOSSARY.md`](FUTURE_FIELD_ATLAS_GLOSSARY.md)
-16. [`docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md`](research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md)
-17. [`docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md`](research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md)
-18. [`docs/research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md`](research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md)
-19. [`docs/research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`](research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
-20. [`docs/research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md`](research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
+16. [`docs/research_notes/validation_results/rfs_mb0/rfs_mb0_top_m_mechanism_audit_result.md`](research_notes/validation_results/rfs_mb0/rfs_mb0_top_m_mechanism_audit_result.md)
+17. [`docs/research_notes/validation_results/rfs_mb0/rfs_mb0_top_m_geometry_audit_result.md`](research_notes/validation_results/rfs_mb0/rfs_mb0_top_m_geometry_audit_result.md)
+18. [`docs/research_notes/validation_results/rfs_mb0/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md`](research_notes/validation_results/rfs_mb0/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md)
+19. [`docs/research_notes/validation_results/rfs_mb0/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`](research_notes/validation_results/rfs_mb0/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
+20. [`docs/research_notes/validation_results/rfs_mb0/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md`](research_notes/validation_results/rfs_mb0/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
 21. [`docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md`](research_notes/omega_theory/horizon_transport_aligned_amplification.md)
 22. [`docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md`](research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
 23. [`docs/research_notes/omega_theory/transition_energy_substrate_atlas.md`](research_notes/omega_theory/transition_energy_substrate_atlas.md)
@@ -125,7 +125,7 @@ combined asymmetry:
 
 Result note:
 
-- [`future_field_atlas_phase0_1_smoke_result.md`](research_notes/validation_results/future_field_atlas_phase0_1_smoke_result.md)
+- [`future_field_atlas_phase0_1_smoke_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_phase0_1_smoke_result.md)
 
 Run summary:
 
@@ -157,7 +157,7 @@ or coupled-frontier claim.
 
 Result note:
 
-- [`future_field_atlas_compact_manageability_h64_result.md`](research_notes/validation_results/future_field_atlas_compact_manageability_h64_result.md)
+- [`future_field_atlas_compact_manageability_h64_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_compact_manageability_h64_result.md)
 
 Run summary:
 
@@ -183,7 +183,7 @@ edge CSV itself, not repeated formal metadata.
 
 Result note:
 
-- [`future_field_atlas_default_gzip_compression_smoke.md`](research_notes/validation_results/future_field_atlas_default_gzip_compression_smoke.md)
+- [`future_field_atlas_default_gzip_compression_smoke.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_default_gzip_compression_smoke.md)
 
 Run summary:
 
@@ -210,7 +210,7 @@ preserving all reconstruction audits.
 
 Result note:
 
-- [`future_field_atlas_h128_calibration_pass_result.md`](research_notes/validation_results/future_field_atlas_h128_calibration_pass_result.md)
+- [`future_field_atlas_h128_calibration_pass_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_h128_calibration_pass_result.md)
 
 Run summary:
 
@@ -239,9 +239,9 @@ minutes. The next scaling repair is finalization throughput, not more workers.
 
 Result notes:
 
-- [`future_field_atlas_coupled_hardening_result.md`](research_notes/validation_results/future_field_atlas_coupled_hardening_result.md)
-- [`future_field_atlas_coupled_sharded_staged_sweep_result.md`](research_notes/validation_results/future_field_atlas_coupled_sharded_staged_sweep_result.md)
-- [`future_field_atlas_coupled_lossless_block_audit_result.md`](research_notes/validation_results/future_field_atlas_coupled_lossless_block_audit_result.md)
+- [`future_field_atlas_coupled_hardening_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_hardening_result.md)
+- [`future_field_atlas_coupled_sharded_staged_sweep_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_sharded_staged_sweep_result.md)
+- [`future_field_atlas_coupled_lossless_block_audit_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_lossless_block_audit_result.md)
 
 Run summary:
 
@@ -276,7 +276,7 @@ delta topology with reconstruction tests.
 
 Result note:
 
-- [`future_field_atlas_coupled_h64_broad_sweep_result.md`](research_notes/validation_results/future_field_atlas_coupled_h64_broad_sweep_result.md)
+- [`future_field_atlas_coupled_h64_broad_sweep_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_broad_sweep_result.md)
 
 Run summary:
 
@@ -305,7 +305,7 @@ depth checks until worker-side spooling is implemented.
 
 Result note:
 
-- [`future_field_atlas_coupled_h128_and_triadic_profile_smoke_result.md`](research_notes/validation_results/future_field_atlas_coupled_h128_and_triadic_profile_smoke_result.md)
+- [`future_field_atlas_coupled_h128_and_triadic_profile_smoke_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h128_and_triadic_profile_smoke_result.md)
 
 Run summary:
 
@@ -345,7 +345,7 @@ emit raw triadic topology and does not make an interaction claim.
 
 Result note:
 
-- [`future_field_atlas_coupled_worker_spool_scale_validation_result.md`](research_notes/validation_results/future_field_atlas_coupled_worker_spool_scale_validation_result.md)
+- [`future_field_atlas_coupled_worker_spool_scale_validation_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_worker_spool_scale_validation_result.md)
 
 Run summary:
 
@@ -385,7 +385,7 @@ work.
 
 Result note:
 
-- [`future_field_atlas_coupled_h64_ladder_result.md`](research_notes/validation_results/future_field_atlas_coupled_h64_ladder_result.md)
+- [`future_field_atlas_coupled_h64_ladder_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_ladder_result.md)
 
 Run summary:
 
@@ -415,7 +415,7 @@ it becomes much more joint-restrictive at the final horizon.
 
 Result note:
 
-- [`future_field_atlas_coupled_h64_mechanism_resolution_result.md`](research_notes/validation_results/future_field_atlas_coupled_h64_mechanism_resolution_result.md)
+- [`future_field_atlas_coupled_h64_mechanism_resolution_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_mechanism_resolution_result.md)
 
 Run summary:
 
@@ -455,7 +455,7 @@ check.
 
 Result note:
 
-- [`rfs_mb0_top_m_mechanism_audit_result.md`](research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md)
+- [`rfs_mb0_top_m_mechanism_audit_result.md`](research_notes/validation_results/rfs_mb0/rfs_mb0_top_m_mechanism_audit_result.md)
 
 Run summary:
 
@@ -500,7 +500,7 @@ effective degree stayed stable.
 
 Result note:
 
-- [`rfs_mb0_top_m_geometry_audit_result.md`](research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md)
+- [`rfs_mb0_top_m_geometry_audit_result.md`](research_notes/validation_results/rfs_mb0/rfs_mb0_top_m_geometry_audit_result.md)
 
 Run summary:
 
@@ -543,7 +543,7 @@ an Omega claim.
 
 Result note:
 
-- [`rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md`](research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md)
+- [`rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md`](research_notes/validation_results/rfs_mb0/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md)
 
 Run summary:
 
@@ -567,7 +567,7 @@ deterministic preservation_asymmetry reproduced the symbol-histogram response.
 
 Result note:
 
-- [`rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`](research_notes/validation_results/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
+- [`rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`](research_notes/validation_results/rfs_mb0/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
 
 Figure bundle:
 
@@ -632,7 +632,7 @@ total_coordinate_mass remains live but paired-baseline limited.
 
 Result note:
 
-- [`rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md`](research_notes/validation_results/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
+- [`rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md`](research_notes/validation_results/rfs_mb0/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
 
 Run summary:
 
@@ -662,7 +662,7 @@ next branch is a max-entropy local transition ensemble preflight, not holdout.
 
 Result note:
 
-- [`rfs_mb0_asymmetry_ladder_transition_energy_result.md`](research_notes/validation_results/rfs_mb0_asymmetry_ladder_transition_energy_result.md)
+- [`rfs_mb0_asymmetry_ladder_transition_energy_result.md`](research_notes/validation_results/rfs_mb0/rfs_mb0_asymmetry_ladder_transition_energy_result.md)
 
 Summary:
 
@@ -680,7 +680,7 @@ This run first separated the response modes of locality-only, directional asymme
 
 Result note:
 
-- [`rfs_mb0_transition_energy_substrate_characterization_result.md`](research_notes/validation_results/rfs_mb0_transition_energy_substrate_characterization_result.md)
+- [`rfs_mb0_transition_energy_substrate_characterization_result.md`](research_notes/validation_results/rfs_mb0/rfs_mb0_transition_energy_substrate_characterization_result.md)
 
 Summary:
 
@@ -713,7 +713,7 @@ constraint-template substrate:
 
 Result note:
 
-- [`rfs_mb0_horizon_transport_response_surface_h128_scaleup_result.md`](research_notes/validation_results/rfs_mb0_horizon_transport_response_surface_h128_scaleup_result.md)
+- [`rfs_mb0_horizon_transport_response_surface_h128_scaleup_result.md`](research_notes/validation_results/rfs_mb0/rfs_mb0_horizon_transport_response_surface_h128_scaleup_result.md)
 
 Summary:
 
@@ -731,10 +731,10 @@ This established the stable-to-amplified-aligned horizon response surface and mo
 
 Use these to understand current implementation targets:
 
-- [`RFS_MB0_ASYMMETRY_LADDER_TRANSITION_ENERGY_SUBSTRATE_SPEC.md`](RFS_MB0_ASYMMETRY_LADDER_TRANSITION_ENERGY_SUBSTRATE_SPEC.md)
-- [`RFS_MB0_TRANSITION_ENERGY_SUBSTRATE_CHARACTERIZATION_RUN_SPEC.md`](RFS_MB0_TRANSITION_ENERGY_SUBSTRATE_CHARACTERIZATION_RUN_SPEC.md)
-- [`RFS_MB0_HORIZON_TRANSPORT_RESPONSE_SURFACE_H128_SCALEUP_SPEC.md`](RFS_MB0_HORIZON_TRANSPORT_RESPONSE_SURFACE_H128_SCALEUP_SPEC.md)
-- [`RFS_MB0_HORIZON_TRANSPORT_MATCHED_NULL_AND_FIXTURE_SMOKE_SPEC.md`](RFS_MB0_HORIZON_TRANSPORT_MATCHED_NULL_AND_FIXTURE_SMOKE_SPEC.md)
+- [`RFS_MB0_ASYMMETRY_LADDER_TRANSITION_ENERGY_SUBSTRATE_SPEC.md`](specs/archive/rfs_mb0/RFS_MB0_ASYMMETRY_LADDER_TRANSITION_ENERGY_SUBSTRATE_SPEC.md)
+- [`RFS_MB0_TRANSITION_ENERGY_SUBSTRATE_CHARACTERIZATION_RUN_SPEC.md`](specs/archive/rfs_mb0/RFS_MB0_TRANSITION_ENERGY_SUBSTRATE_CHARACTERIZATION_RUN_SPEC.md)
+- [`RFS_MB0_HORIZON_TRANSPORT_RESPONSE_SURFACE_H128_SCALEUP_SPEC.md`](specs/archive/rfs_mb0/RFS_MB0_HORIZON_TRANSPORT_RESPONSE_SURFACE_H128_SCALEUP_SPEC.md)
+- [`RFS_MB0_HORIZON_TRANSPORT_MATCHED_NULL_AND_FIXTURE_SMOKE_SPEC.md`](specs/archive/rfs_mb0/RFS_MB0_HORIZON_TRANSPORT_MATCHED_NULL_AND_FIXTURE_SMOKE_SPEC.md)
 
 ## Theory notes for the current branch
 

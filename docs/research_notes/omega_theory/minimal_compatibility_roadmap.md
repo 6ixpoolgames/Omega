@@ -883,7 +883,7 @@ A later result may support the foundational stack. It may also revise or discard
 The implementation companion is:
 
 ```text
-docs/RFS_MB0_PAIRWISE_COMPATIBILITY_SMOKE_SPEC.md
+docs/specs/archive/rfs_mb0/RFS_MB0_PAIRWISE_COMPATIBILITY_SMOKE_SPEC.md
 ```
 
 That spec asks Codex to implement the first Gate 2 smoke:

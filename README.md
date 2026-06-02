@@ -14,14 +14,14 @@ For the current project state, read these first:
 
 1. [External Reader Guide](docs/EXTERNAL_READER_GUIDE.md)
 2. [Omega Formal Core v0.2: Future-Distinction Dynamics](docs/research_notes/omega_theory/omega_formal_core_v0_2_future_distinction_dynamics.md)
-3. [Future Field Atlas Instrument Spec](docs/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md)
+3. [Future Field Atlas Instrument Spec](docs/specs/current/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md)
 4. [Future Field Atlas Glossary](docs/FUTURE_FIELD_ATLAS_GLOSSARY.md)
-5. [Coupled H64 Mechanism-Resolution Result](docs/research_notes/validation_results/future_field_atlas_coupled_h64_mechanism_resolution_result.md)
-6. [Coupled H64 Ladder Result](docs/research_notes/validation_results/future_field_atlas_coupled_h64_ladder_result.md)
-7. [Coupled H64 Broad Sweep Result](docs/research_notes/validation_results/future_field_atlas_coupled_h64_broad_sweep_result.md)
-8. [Coupled Worker-Spool Scale Validation](docs/research_notes/validation_results/future_field_atlas_coupled_worker_spool_scale_validation_result.md)
-9. [Coupled H128 Depth and Triadic Profile Smoke](docs/research_notes/validation_results/future_field_atlas_coupled_h128_and_triadic_profile_smoke_result.md)
-10. [Future Field Atlas H128 Calibration Pass](docs/research_notes/validation_results/future_field_atlas_h128_calibration_pass_result.md)
+5. [Coupled H64 Mechanism-Resolution Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_mechanism_resolution_result.md)
+6. [Coupled H64 Ladder Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_ladder_result.md)
+7. [Coupled H64 Broad Sweep Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_broad_sweep_result.md)
+8. [Coupled Worker-Spool Scale Validation](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_worker_spool_scale_validation_result.md)
+9. [Coupled H128 Depth and Triadic Profile Smoke](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h128_and_triadic_profile_smoke_result.md)
+10. [Future Field Atlas H128 Calibration Pass](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_h128_calibration_pass_result.md)
 11. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
 
 Historical RFS-MB0 results are still retained, but they are now background. Future Field Atlas is the fresh active frame.
@@ -228,13 +228,13 @@ Broad H128 coupled surveys remain premature. H128 should stay targeted until the
 
 ### Instrument orientation
 
-1. [Future Field Atlas Instrument Spec](docs/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md)
+1. [Future Field Atlas Instrument Spec](docs/specs/current/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md)
 2. [Future Field Atlas Glossary](docs/FUTURE_FIELD_ATLAS_GLOSSARY.md)
-3. [Future Field Atlas Phase 0/1 Smoke](docs/research_notes/validation_results/future_field_atlas_phase0_1_smoke_result.md)
-4. [Future Field Atlas H128 Calibration Pass](docs/research_notes/validation_results/future_field_atlas_h128_calibration_pass_result.md)
-5. [Coupled Hardening Result](docs/research_notes/validation_results/future_field_atlas_coupled_hardening_result.md)
-6. [Coupled H64 Broad Sweep](docs/research_notes/validation_results/future_field_atlas_coupled_h64_broad_sweep_result.md)
-7. [Coupled H64 Ladder](docs/research_notes/validation_results/future_field_atlas_coupled_h64_ladder_result.md)
+3. [Future Field Atlas Phase 0/1 Smoke](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_phase0_1_smoke_result.md)
+4. [Future Field Atlas H128 Calibration Pass](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_h128_calibration_pass_result.md)
+5. [Coupled Hardening Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_hardening_result.md)
+6. [Coupled H64 Broad Sweep](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_broad_sweep_result.md)
+7. [Coupled H64 Ladder](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_ladder_result.md)
 
 ### Historical orientation
 
@@ -242,9 +242,9 @@ Broad H128 coupled surveys remain premature. H128 should stay targeted until the
 2. [Running Log](docs/OMEGA_RUNNING_LOG.md)
 3. [Project Manual](docs/OMEGA_PROJECT_MANUAL.md)
 4. [Historical Probe Terms](docs/research_notes/omega_theory/historical_probe_terms.md)
-5. [Hard Top-M Mechanism Result](docs/research_notes/validation_results/rfs_mb0_top_m_mechanism_audit_result.md)
-6. [Top-M Geometry Audit Result](docs/research_notes/validation_results/rfs_mb0_top_m_geometry_audit_result.md)
-7. [MaxEnt Local Transition Phase 1 Preflight Result](docs/research_notes/validation_results/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md)
+5. [Hard Top-M Mechanism Result](docs/research_notes/validation_results/rfs_mb0/rfs_mb0_top_m_mechanism_audit_result.md)
+6. [Top-M Geometry Audit Result](docs/research_notes/validation_results/rfs_mb0/rfs_mb0_top_m_geometry_audit_result.md)
+7. [MaxEnt Local Transition Phase 1 Preflight Result](docs/research_notes/validation_results/rfs_mb0/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md)
 
 ## Why this matters for alignment
 
