@@ -6,16 +6,17 @@ Runner: `omega.future_field_atlas.substrate_morphology_summary`
 
 Spec: `docs/specs/current/FUTURE_FIELD_ATLAS_SUBSTRATE_MORPHOLOGY_SWEEP_SPEC.md`
 
-Update after shared-capacity smoke: regenerated with 26 coupled run directories.
-The earlier shared-capacity target was tested cleanly, but `shared_capacity` v1
-should not be scaled because it prunes marginals rather than preserving
-marginals while restricting joint combinations.
+Update after rank-order-boundary smoke: regenerated with 27 coupled run
+directories and 2 compact summary directories. The earlier shared-capacity
+target was tested cleanly but should not be scaled as v1. The
+rank-order-boundary target was also tested cleanly and is now the current
+medium-sweep candidate.
 
 ## Summary
 
 This pass built the first compact substrate morphology atlas over existing
 Future Field Atlas outputs. It did not launch a new broad scan. The regenerated
-bundle ingests 26 retained coupled run directories plus 2 compact summary
+bundle ingests 27 retained coupled run directories plus 2 compact summary
 directories and emits
 pair-aware morphology, operator sensitivity, horizon-onset, observable-coverage,
 and next-target tables.
@@ -53,9 +54,9 @@ pair005 H128 targeted depth checks
 H64 ladder and mechanism compact summary directories
 ```
 
-After the shared-capacity smoke, the regenerated local morphology bundle ingests
-26 coupled run directories plus 2 compact summary directories. All 26 coupled
-run directories used here passed the clean infrastructure gates:
+After the rank-order-boundary smoke, the regenerated local morphology bundle
+ingests 27 coupled run directories plus 2 compact summary directories. All 27
+coupled run directories used here passed the clean infrastructure gates:
 
 ```text
 status: COMPLETED
@@ -76,16 +77,16 @@ results/future_field_atlas/20260602_substrate_morphology_atlas_summary/
 The postprocessor emitted:
 
 ```text
-field_morphology_summary.csv                 268 rows
-pair_morphology_summary.csv                  134 rows
-operator_sensitivity_summary.csv          103719 rows
-horizon_onset_summary.csv                   1575 rows
-observable_geometry_summary.csv              671 rows
+field_morphology_summary.csv                 276 rows
+pair_morphology_summary.csv                  138 rows
+operator_sensitivity_summary.csv          107359 rows
+horizon_onset_summary.csv                   1631 rows
+observable_geometry_summary.csv              691 rows
 pair_class_exemplar_summary.csv                6 rows
 morphology_next_targets.csv                    4 rows
 joint_candidate_crossing_morphology.csv        2 rows
 rank_boundary_offset_morphology.csv            2 rows
-frontier_growth_regime_summary.csv           268 rows
+frontier_growth_regime_summary.csv           276 rows
 composition_residual_morphology.csv            1 status row
 substrate_morphology_manifest.json
 substrate_morphology_report.md
@@ -101,24 +102,24 @@ Pair-level descriptive classes across retained rows:
 
 ```text
 pair_size_class:
-  light: 46
-  medium: 49
-  heavy: 39
+  light: 47
+  medium: 51
+  heavy: 40
 
 joint_residual_class:
-  low_residual: 90
+  low_residual: 93
   medium_residual: 28
-  high_residual: 16
+  high_residual: 17
 
 marginal_retention_class:
-  marginal_preserving: 120
+  marginal_preserving: 124
   marginal_loss_B: 11
   marginal_loss_both: 3
 
 joint_density_class:
-  product_dense: 97
+  product_dense: 100
   product_sparse: 21
-  joint_restrictive: 16
+  joint_restrictive: 17
 ```
 
 The high-residual / joint-restrictive rows are currently pair005-only in the
@@ -213,24 +214,35 @@ shared_capacity_h64:
   pair005: medium_residual / marginal_loss_both / product_dense
 ```
 
+The rank-order-native target has also been tested:
+
+```text
+rank_order_boundary_h64:
+  pair000: low_residual / marginal_preserving / product_dense
+  pair001: low_residual / marginal_preserving / product_dense
+  pair002: low_residual / marginal_preserving / product_dense
+  pair005: high_residual / marginal_preserving / joint_restrictive
+```
+
 ## Recommendation
 
 Do not scale `shared_capacity` v1. It prunes component marginal support and then
 becomes dense over the surviving marginals, which is not the desired
 pair005-like scalar-mismatch signature.
 
-The next coupled-operator branch should be either:
+Proceed to a medium pair-aware `rank_order_boundary` sweep before any broad
+H128 survey:
 
 ```text
-rank-order-native coupled operator:
-  cleaner default after scalar mismatch saturation and product-vs-zero
-  separation;
+rank_order_boundary_medium_pair_sweep:
+  H64 breadth first;
+  targeted H128 only for high-yield exemplars;
+  preserve product-selector, zero-penalty joint rank-prefix, scalar 0.020, and
+  shared_capacity v1 controls.
 
-or:
-
-marginal-coverage-preserving shared-capacity v2:
-  only if the theory side specifically needs finite shared capacity as the
-  next primitive.
+shared_capacity_v2_marginal_coverage_repair:
+  only if the theory side specifically needs finite shared capacity as the next
+  primitive.
 ```
 
 Also plan an observable-extension pass. The current morphology is useful, but it

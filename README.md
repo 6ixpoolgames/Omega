@@ -17,14 +17,15 @@ For the current project state, read these first:
 3. [Future Field Atlas Instrument Spec](docs/specs/current/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md)
 4. [Future Field Atlas Glossary](docs/FUTURE_FIELD_ATLAS_GLOSSARY.md)
 5. [Substrate Morphology Atlas Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md)
-6. [Shared-Capacity H64 Smoke Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_shared_capacity_h64_smoke_result.md)
-7. [Coupled H64 Mechanism-Resolution Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_mechanism_resolution_result.md)
-8. [Coupled H64 Ladder Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_ladder_result.md)
-9. [Coupled H64 Broad Sweep Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_broad_sweep_result.md)
-10. [Coupled Worker-Spool Scale Validation](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_worker_spool_scale_validation_result.md)
-11. [Coupled H128 Depth and Triadic Profile Smoke](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h128_and_triadic_profile_smoke_result.md)
-12. [Future Field Atlas H128 Calibration Pass](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_h128_calibration_pass_result.md)
-13. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
+6. [Rank-Order Boundary H64 Smoke Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_h64_smoke_result.md)
+7. [Shared-Capacity H64 Smoke Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_shared_capacity_h64_smoke_result.md)
+8. [Coupled H64 Mechanism-Resolution Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_mechanism_resolution_result.md)
+9. [Coupled H64 Ladder Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_ladder_result.md)
+10. [Coupled H64 Broad Sweep Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_broad_sweep_result.md)
+11. [Coupled Worker-Spool Scale Validation](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_worker_spool_scale_validation_result.md)
+12. [Coupled H128 Depth and Triadic Profile Smoke](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h128_and_triadic_profile_smoke_result.md)
+13. [Future Field Atlas H128 Calibration Pass](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_h128_calibration_pass_result.md)
+14. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
 
 Historical RFS-MB0 results are still retained, but they are now background. Future Field Atlas is the fresh active frame.
 
@@ -68,8 +69,8 @@ The first substrate morphology atlas now maps the retained coupled outputs
 directly instead of treating any single operator ladder as the whole object:
 
 ```text
-26 retained coupled run directories and 2 compact summary directories ingested;
-all 26 coupled inputs passed clean gates;
+27 retained coupled run directories and 2 compact summary directories ingested;
+all 27 coupled inputs passed clean gates;
 pair005 remains the only high-residual / joint-restrictive exemplar in the retained set;
 observable coverage is still single-observable only: symbol_histogram_distance.
 ```
@@ -86,6 +87,17 @@ shared_capacity v1:
 desired pair005-like scalar-mismatch signature:
   preserved A/B marginals;
   restricted joint combinations.
+```
+
+The first rank-order-boundary H64 smoke then recovered the desired small-set
+pattern:
+
+```text
+rank_order_boundary:
+  operational in the coupled atlas;
+  no caps, complete artifacts, reconstruction audits PASS;
+  pair000/pair001/pair002 stayed low-residual and marginal-preserving;
+  pair005 became high-residual and joint-restrictive while preserving A/B marginals.
 ```
 
 This is not an Omega result. It is a clean product-vs-coupled future-field geometry result under a formal operator.
@@ -207,6 +219,8 @@ substrate morphology is now summarized across retained coupled outputs before
 choosing the next operator.
 shared_capacity v1 is operational but currently behaves as marginal pruning,
 not as marginal-preserving joint restriction.
+rank_order_boundary reproduces the pair005-like marginal-preserving joint
+restriction pattern on the small H64 pair set.
 ```
 
 Current results do **not** mean:
@@ -234,19 +248,19 @@ shared-capacity v1 scale-up.
 Current decision point:
 
 ```text
-choose between:
-  rank-order-native coupled operator;
-  or a marginal-coverage-preserving shared-capacity v2.
-
-rank-order-native is the cleaner next branch unless theory specifically needs
-finite shared capacity.
+run a medium pair-aware rank_order_boundary sweep:
+  H64 breadth first;
+  targeted H128 only for high-yield exemplars;
+  preserve product, zero-penalty joint rank-prefix, scalar 0.020, and
+  shared_capacity v1 controls.
 
 observable-extension remains a priority because retained coupled morphology is
 still single-observable only: symbol_histogram_distance.
 ```
 
 Broad H128 coupled surveys remain premature. H128 should stay targeted until a
-rank-order-native operator or marginal-preserving capacity repair is justified.
+rank-order-native morphology class is clearer or a marginal-preserving capacity
+repair is explicitly needed.
 
 ## How to read the project
 
@@ -270,7 +284,8 @@ rank-order-native operator or marginal-preserving capacity repair is justified.
 7. [Coupled H64 Ladder](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_ladder_result.md)
 8. [Coupled H64 Mechanism Resolution](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_mechanism_resolution_result.md)
 9. [Substrate Morphology Atlas](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md)
-10. [Shared-Capacity H64 Smoke](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_shared_capacity_h64_smoke_result.md)
+10. [Rank-Order Boundary H64 Smoke](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_h64_smoke_result.md)
+11. [Shared-Capacity H64 Smoke](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_shared_capacity_h64_smoke_result.md)
 
 ### Historical orientation
 

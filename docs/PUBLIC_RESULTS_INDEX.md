@@ -26,16 +26,19 @@ graph-channel causality
 
 The current claim is modest:
 
-> Directional horizon-transport instrumentation can measure matched-control-separated response profiles in neutral finite transition substrates. Transition-energy substrate laws express different response regimes. Preservation asymmetry is currently the strongest non-template substrate hook for aligned amplification, with low-beta sensitivity now mapped below beta `0.25`; the latest MaxEnt/top-m audits indicate that the current preservation response is narrow to hard top-m selection geometry rather than recovered by the tested stochastic relaxations. The hard-top-m mechanism branch now points toward a fixed low-rank successor-boundary pattern: response appears when the retained selected-edge set is the low-energy rank prefix, not under generic lower out-degree, random deletion, or expansion. The current implementation work is now rebuilding the instrument as a Future Field Atlas so raw topology, rank-boundary anatomy, and transport matrices are emitted before any response labels. Conditions are represented by state-space, transition-law, selection-operator, observable, and frontier-scan specs; formal spec manifests, condition-identity manifests, completeness summaries, and reconstruction audits are now part of the smoke output. The coupled branch now separates true product-selector behavior from zero-penalty joint rank-prefix selection; near-zero scalar mismatch effects are detectable but saturate by `0.020` in the tested H64 pair8 design, with pair005 remaining a heavy-pair mechanism clue. The first shared-capacity selector smoke completed cleanly but should not be scaled as-is because it prunes component marginal support instead of preserving marginals while restricting joint combinations. Historical treatment names are documentation-only translation aids.
+> Directional horizon-transport instrumentation can measure matched-control-separated response profiles in neutral finite transition substrates. Transition-energy substrate laws express different response regimes. Preservation asymmetry is currently the strongest non-template substrate hook for aligned amplification, with low-beta sensitivity now mapped below beta `0.25`; the latest MaxEnt/top-m audits indicate that the current preservation response is narrow to hard top-m selection geometry rather than recovered by the tested stochastic relaxations. The hard-top-m mechanism branch now points toward a fixed low-rank successor-boundary pattern: response appears when the retained selected-edge set is the low-energy rank prefix, not under generic lower out-degree, random deletion, or expansion. The current implementation work is now rebuilding the instrument as a Future Field Atlas so raw topology, rank-boundary anatomy, and transport matrices are emitted before any response labels. Conditions are represented by state-space, transition-law, selection-operator, observable, and frontier-scan specs; formal spec manifests, condition-identity manifests, completeness summaries, and reconstruction audits are now part of the smoke output. The coupled branch now separates true product-selector behavior from zero-penalty joint rank-prefix selection; near-zero scalar mismatch effects are detectable but saturate by `0.020` in the tested H64 pair8 design, with pair005 remaining a heavy-pair mechanism clue. The first shared-capacity selector smoke completed cleanly but should not be scaled as-is because it prunes component marginal support instead of preserving marginals while restricting joint combinations. The first rank-order-boundary selector smoke completed cleanly and recovered the pair005-like marginal-preserving joint-restriction pattern on the small H64 pair set. Historical treatment names are documentation-only translation aids.
 
 The latest state is an atlas posture: retained coupled outputs are now mapped
 with a substrate morphology postprocessor before designing the next operator.
 That morphology pass identifies pair005 as the only high-residual /
 joint-restrictive exemplar in the retained set, pairs it with low/medium
 controls for follow-up, and marks observable coverage as single-observable
-only. The first shared-capacity follow-up answered the target negatively for
+only. The first shared-capacity follow-up answered that target negatively for
 v1: the operator is operational, but it behaves like marginal pruning followed
-by product-dense closure over surviving marginals.
+by product-dense closure over surviving marginals. The follow-up
+rank-order-boundary smoke is the current positive mechanism result: controls
+stay low-residual and marginal-preserving while pair005 becomes
+joint-restrictive with preserved marginals.
 
 ## Best onboarding path
 
@@ -56,16 +59,17 @@ Start here:
 13. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_ladder_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_ladder_result.md)
 14. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_mechanism_resolution_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_mechanism_resolution_result.md)
 15. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md)
-16. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_shared_capacity_h64_smoke_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_shared_capacity_h64_smoke_result.md)
-17. [`docs/FUTURE_FIELD_ATLAS_GLOSSARY.md`](FUTURE_FIELD_ATLAS_GLOSSARY.md)
-18. [`docs/research_notes/validation_results/rfs_mb0/rfs_mb0_top_m_mechanism_audit_result.md`](research_notes/validation_results/rfs_mb0/rfs_mb0_top_m_mechanism_audit_result.md)
-19. [`docs/research_notes/validation_results/rfs_mb0/rfs_mb0_top_m_geometry_audit_result.md`](research_notes/validation_results/rfs_mb0/rfs_mb0_top_m_geometry_audit_result.md)
-20. [`docs/research_notes/validation_results/rfs_mb0/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md`](research_notes/validation_results/rfs_mb0/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md)
-21. [`docs/research_notes/validation_results/rfs_mb0/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`](research_notes/validation_results/rfs_mb0/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
-22. [`docs/research_notes/validation_results/rfs_mb0/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md`](research_notes/validation_results/rfs_mb0/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
-23. [`docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md`](research_notes/omega_theory/horizon_transport_aligned_amplification.md)
-24. [`docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md`](research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
-25. [`docs/research_notes/omega_theory/transition_energy_substrate_atlas.md`](research_notes/omega_theory/transition_energy_substrate_atlas.md)
+16. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_h64_smoke_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_h64_smoke_result.md)
+17. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_shared_capacity_h64_smoke_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_shared_capacity_h64_smoke_result.md)
+18. [`docs/FUTURE_FIELD_ATLAS_GLOSSARY.md`](FUTURE_FIELD_ATLAS_GLOSSARY.md)
+19. [`docs/research_notes/validation_results/rfs_mb0/rfs_mb0_top_m_mechanism_audit_result.md`](research_notes/validation_results/rfs_mb0/rfs_mb0_top_m_mechanism_audit_result.md)
+20. [`docs/research_notes/validation_results/rfs_mb0/rfs_mb0_top_m_geometry_audit_result.md`](research_notes/validation_results/rfs_mb0/rfs_mb0_top_m_geometry_audit_result.md)
+21. [`docs/research_notes/validation_results/rfs_mb0/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md`](research_notes/validation_results/rfs_mb0/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md)
+22. [`docs/research_notes/validation_results/rfs_mb0/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`](research_notes/validation_results/rfs_mb0/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
+23. [`docs/research_notes/validation_results/rfs_mb0/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md`](research_notes/validation_results/rfs_mb0/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
+24. [`docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md`](research_notes/omega_theory/horizon_transport_aligned_amplification.md)
+25. [`docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md`](research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
+26. [`docs/research_notes/omega_theory/transition_energy_substrate_atlas.md`](research_notes/omega_theory/transition_energy_substrate_atlas.md)
 
 ## Current live branch
 

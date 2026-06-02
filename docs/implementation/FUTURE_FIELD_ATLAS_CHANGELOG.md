@@ -34,6 +34,11 @@ The selector does not use scalar `coupling_strength` as a tuning control. It is
 intended as the clean next mechanism probe after scalar mismatch saturation and
 the negative shared-capacity v1 smoke.
 
+The first H64 smoke completed cleanly and is retained in
+`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_h64_smoke_result.md`.
+It recovered the pair005-like marginal-preserving joint-restriction pattern on
+the small pair set.
+
 Tests:
 
 ```text

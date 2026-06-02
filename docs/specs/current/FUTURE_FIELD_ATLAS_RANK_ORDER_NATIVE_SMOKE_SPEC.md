@@ -1,10 +1,21 @@
 # Future Field Atlas Rank-Order-Native Coupled Smoke Spec
 
-Status: active small smoke
+Status: completed cleanly; rank-order boundary is the current medium-sweep candidate
 
 Target runner: `omega.future_field_atlas.run_coupled_future_field_atlas`
 
 New selector: `joint_selection_family = rank_order_boundary`
+
+Retained result:
+`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_h64_smoke_result.md`
+
+Outcome:
+
+```text
+The selector is operational and recovered the pair005-like
+marginal-preserving joint-restriction pattern on the small H64 pair set.
+Next target: medium pair-aware rank_order_boundary sweep.
+```
 
 ## Purpose
 

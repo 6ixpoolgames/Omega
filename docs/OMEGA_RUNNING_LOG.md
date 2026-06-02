@@ -9,6 +9,82 @@ patch notes at the top.
 
 ## 2026-06-02
 
+### Future Field Atlas Rank-Order Boundary H64 Smoke
+
+Implemented and smoked the first ordinal rank-boundary coupled selector:
+
+```text
+joint_selection_family: rank_order_boundary
+```
+
+Run:
+
+```text
+results/future_field_atlas/20260602_rank_order_boundary_h64_pairset_smoke/
+```
+
+Retained note:
+
+```text
+docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_h64_smoke_result.md
+```
+
+Gate results:
+
+```text
+status: COMPLETED
+horizon_max: 64
+pair_count_realized: 4 / 4
+coupled_pairs_failed: 0
+internal_cap_events: 0
+artifact_completeness_statuses: complete
+reconstruction audits: PASS 3
+elapsed_seconds: 304.784
+source_git_commit: ff7bff2176727d05f6339871a7c308cff5ae0bda
+source_git_dirty: false
+```
+
+Final H64 read:
+
+```text
+pair000:
+  residual 0.040000
+  joint retention 0.960000
+  A/B retention 1.000000 / 1.000000
+
+pair001:
+  residual 0.050853
+  joint retention 0.949147
+  A/B retention 1.000000 / 1.000000
+
+pair002:
+  residual 0.084000
+  joint retention 0.916000
+  A/B retention 1.000000 / 1.000000
+
+pair005:
+  residual 0.753455
+  joint retention 0.246545
+  A/B retention 1.000000 / 1.000000
+```
+
+Interpretation:
+
+```text
+This is the best coupled-operator smoke so far. Rank-order-boundary alignment
+recovers the pair005-like marginal-preserving joint restriction without scalar
+tuning and without the marginal loss produced by shared_capacity v1.
+```
+
+Next recommendation:
+
+```text
+Run a medium pair-aware rank_order_boundary sweep before broad H128. Preserve
+product, zero-penalty joint rank-prefix, scalar mismatch 0.020, and
+shared_capacity v1 controls. Keep observable extension on the roadmap because
+the retained coupled morphology is still symbol_histogram_distance-only.
+```
+
 ### Future Field Atlas Shared-Capacity H64 Smoke
 
 Implemented and smoked the first `shared_capacity` coupled selector.

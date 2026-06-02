@@ -170,8 +170,9 @@ without a marginal-coverage-preserving redesign.
 `rank_order_boundary`
 : Coupled `joint_selection_family` that selects product-successor candidates by
 ordinal rank-boundary alignment instead of scalar energy magnitude or tunable
-coupling strength. It is the current small-smoke target after scalar mismatch
-saturation and the negative shared-capacity v1 result.
+coupling strength. Its H64 smoke recovered the pair005-like
+marginal-preserving joint-restriction pattern and made it the current
+medium-sweep candidate.
 
 `cap_poisoned_flag`
 : Coupled-branch completeness flag. Once a product or coupled frontier is

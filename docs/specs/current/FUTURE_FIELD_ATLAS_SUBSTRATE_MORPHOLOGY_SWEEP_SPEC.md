@@ -577,6 +577,10 @@ Post-smoke update:
 shared_capacity v1 was tested and should not be scaled as-is. It produced
 marginal pruning followed by dense closure over surviving marginals, not
 marginal-preserving joint restriction.
+
+rank_order_boundary was then tested and recovered the small-set
+marginal-preserving joint-restriction pattern. It is now the medium-sweep
+candidate.
 ```
 
 ### If marginal loss appears under some operators
@@ -611,9 +615,11 @@ Post-smoke update:
 ```text
 This was completed in
 docs/research_notes/validation_results/future_field_atlas/future_field_atlas_shared_capacity_h64_smoke_result.md.
-The next operator branch should be rank-order-native by default, or a
-marginal-coverage-preserving shared-capacity v2 if finite capacity remains
-theory-critical.
+The follow-up rank_order_boundary smoke was also completed in
+docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_h64_smoke_result.md.
+The next operator branch should be a medium pair-aware rank_order_boundary
+sweep, with marginal-coverage-preserving shared-capacity v2 retained only as a
+repair option if finite capacity remains theory-critical.
 ```
 
 Provisional shared-capacity idea:

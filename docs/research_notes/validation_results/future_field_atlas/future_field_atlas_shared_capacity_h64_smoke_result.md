@@ -6,6 +6,10 @@ Runner: `omega.future_field_atlas.run_coupled_future_field_atlas`
 
 Spec: `docs/specs/current/FUTURE_FIELD_ATLAS_SHARED_CAPACITY_SMOKE_SPEC.md`
 
+Follow-up: the rank-order-boundary smoke has now completed and is the current
+medium-sweep candidate. See
+`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_h64_smoke_result.md`.
+
 ## Summary
 
 This pass implemented and smoked the first `shared_capacity` coupled selector.

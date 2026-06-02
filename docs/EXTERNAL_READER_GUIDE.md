@@ -347,15 +347,18 @@ pair005:
 shared_capacity v1:
   operational but not promising as-is; it prunes marginals and becomes dense over
   surviving marginal support
+
+rank_order_boundary:
+  operational and promising in the small H64 smoke; it keeps low/medium controls
+  low-residual and marginal-preserving while reproducing pair005-like
+  marginal-preserving joint restriction
 ```
 
 The focus should be:
 
 ```text
 do not scale shared_capacity v1;
-choose either:
-  rank-order-native coupled operator;
-  or marginal-coverage-preserving shared-capacity v2;
+run a medium pair-aware rank_order_boundary sweep before broad H128;
 add observable-extension work before stronger substrate-general claims.
 ```
 
