@@ -24,7 +24,13 @@ This note begins defining when future-distinction dynamics become **proto-valuer
 
 It does not replace v0.2. It depends on v0.2.
 
-It also does not claim that current Future Field Atlas results instantiate proto-valuers, valuers, or Omega. Current FFA results can only test precursors: distinction maintenance, product-vs-coupled deformation, marginal retention, operator sensitivity, horizon onset, observable coverage, and eventually recoverability / anti-dissolution / self-conditioning once those metrics exist.
+It also does not claim that current Future Field Atlas results instantiate proto-valuers, valuers, or Omega. Current FFA results can only test precursors: distinction maintenance, product-vs-coupled deformation, marginal retention, operator sensitivity, horizon onset, observable coverage, and eventually recoverability / identity-decay-null / self-conditioning once those metrics exist.
+
+Related clarification note:
+
+```text
+docs/research_notes/omega_theory/admissibility_enrichment_and_identity_decay_nulls.md
+```
 
 ## 1. Motivating intuition
 
@@ -39,23 +45,28 @@ The formal challenge is to define **valuer** without making self, identity, cons
 The working move is:
 
 ```text
-a valuer-like process is first a distinction-maintaining pattern under relational asymmetry against dissolution.
+a valuer-like process is first a distinction-maintaining pattern under relational asymmetry through churn.
 ```
 
 The valuing relation is then not assumed. It is induced by the pattern's differential coupling to asymmetries that preserve or expand the conditions of its own continued valuerhood.
 
-This is the gradient/filter intuition:
+This is the gradient/filter intuition, but stated without making dissolution fundamental:
 
 ```text
-gradient:
-  default asymmetry toward dissolution, decay, equilibration, or unrecoverability
+statistical identity-decay:
+  expected loss of recoverable distinction-content when maintaining activity is
+  absent, passivized, randomized, ablated, or unsupported
 
 filter:
-  selection of patterns that maintain distinctions against that gradient
+  selection of patterns that maintain distinctions through churn better than
+  the matched identity-decay null
 
 proto-valuer:
-  a filtered pattern that self-conditions its transition environment toward continued distinction-maintaining capacity
+  a filtered pattern that self-conditions its transition environment toward
+  continued distinction-maintaining capacity
 ```
+
+Dissolution is not a primitive feature of the universe in this formalism. It is the statistical loss of recoverability for a candidate pattern under a declared null.
 
 ## 2. Relation to v0.2
 
@@ -67,7 +78,7 @@ future-relevant distinctions persist to terminus in a recoverable, non-erasing,
 and compatible manner.
 ```
 
-This note adds a higher layer:
+This note adds a higher admissibility layer:
 
 ```text
 v0.2:
@@ -88,12 +99,50 @@ proto-valuer designation before valuer language;
 valuer-bearing dynamics before Omega-compatible completion claims.
 ```
 
-## 3. Relational substrate with null and perturbation class
+This is not a forgetful projection from proto-valuers back to v0.2. The universe is not forgetful. The later layers are admissibility enrichments over the same unfolding future field.
 
-Let a substrate be:
+## 3. 3P admissibility discipline
+
+This note should follow the project mantra:
 
 ```text
-S = (X, K, Q_adm, Pi, G)
+principled;
+parsimonious;
+predictive / revelatory.
+```
+
+### Principled
+
+Do not introduce agency, self, valuerhood, identity, boundary, utility, or cosmic dissolution as primitives.
+
+Every higher-order designation must be earned from future-field structure, recoverability, perturbation behavior, and comparison against declared controls.
+
+### Parsimonious
+
+Do not add a new metaphysical feature when a declared null comparison is enough.
+
+Identity-decay is not a fundamental law. It is the statistically expected loss of recoverable distinction-content when a maintaining pattern is unsupported, passivized, randomized, ablated, or otherwise deprived of the activity that sustains its vortex-like identity.
+
+### Predictive / revelatory
+
+The layer must imply concrete tests:
+
+```text
+What process bundle is being designated?
+What distinction-content does it maintain?
+What perturbation class is used?
+What matched identity-decay null is used?
+What maintenance gap is measured?
+What activity channel distinguishes self-conditioning from passive persistence?
+What compatibility audit blocks overpromotion?
+```
+
+## 4. Relational substrate and declared nulls
+
+Let the underlying substrate/dynamics layer be:
+
+```text
+D = (X, R, K, Q_adm, Pi)
 ```
 
 where:
@@ -101,6 +150,9 @@ where:
 ```text
 X:
   finite or measurable state / trajectory space
+
+R:
+  admissible transition relation
 
 K:
   actual transition law, successor-selection rule, or stochastic kernel
@@ -110,15 +162,33 @@ Q_adm:
 
 Pi:
   declared perturbation class or perturbation distribution family
-
-G:
-  declared dissolution/null dynamics representing matched passive, unsupported,
-  or default distinction decay
 ```
 
-`G` is not a metaphysical principle. It is a declared reference dynamics. Anti-dissolution claims are always relative to `G`.
+Do **not** put a dissolution gradient into the substrate tuple as a primitive.
 
-## 4. Distinction content
+Instead, for each candidate process bundle `P`, define a declared matched reference:
+
+```text
+N_P = N(P; D, Q_adm, Pi, H)
+```
+
+where `N_P` is the **identity-decay null** for `P` under dynamics `D`, admissible observables `Q_adm`, perturbation class `Pi`, and horizon `H`.
+
+`N_P` may be constructed by:
+
+```text
+passivizing P's activity channel;
+ablating P's maintaining transitions;
+randomizing P-conditioned asymmetries while preserving low-level marginals;
+using matched unsupported evolution;
+using matched passive baselines;
+using controlled nulls that preserve substrate size, degree, frontier scale, or
+other declared nuisance variables.
+```
+
+The null is valid only if it is declared, reproducible, and control-audited.
+
+## 5. Distinction content
 
 A distinction is a difference that remains visible under at least one admissible observable and horizon regime.
 
@@ -146,7 +216,7 @@ where `M_Q` may eventually be a rank, entropy, persistence, quotient-fiber, tran
 
 This prevents the formalism from assuming that every microscopic distinction is equally relevant.
 
-## 5. Process bundles are admissible designations
+## 6. Process bundles are admissible designations
 
 A process bundle `P` is not a primitive agent, self, object, boundary, or valuer.
 
@@ -161,7 +231,34 @@ identity is not primitive;
 recoverability is evidential.
 ```
 
-## 6. Perturbation-robust recoverability
+To keep notation explicit:
+
+```text
+tau:
+  realized trajectory or trajectory segment
+
+P:
+  admissible designation / pattern schema over trajectories
+
+[P]:
+  fiber, class, or ensemble of trajectories matching designation P
+
+a_P:
+  declared activity channel associated with P
+
+K^{act(P)}:
+  transition law with P-associated activity present
+
+K^{pass(P)} or N_P:
+  matched passive / ablated / non-self-conditioning identity-decay reference
+
+D_t(P; tau):
+  observable distinction-content of designation P along trajectory tau at time t
+```
+
+A process bundle does not magically condition the transition law. It conditions the transition law only through a declared activity channel, intervention channel, or measurable pattern-conditioned transition difference.
+
+## 7. Perturbation-robust recoverability
 
 A distinction `d in D_t(P)` is recoverable over horizon `H` when its relevant pattern can be reconstructed, transported, or reidentified under admissible maps despite declared perturbations.
 
@@ -192,45 +289,57 @@ Rec_H^Pi(P)
 
 for the perturbation-robust recoverable distinction-content of `P` over horizon `H`.
 
-## 7. Anti-dissolution relative to a declared null
+## 8. Anti-dissolution as maintenance gap
 
-Let `C(P_t)` measure recoverable distinction-maintenance of `P` at time `t`, relative to `Q_adm`.
+Let `C(P, H)` measure recoverable distinction-maintenance of process bundle `P` over horizon `H` under admissible observables and perturbations.
 
-Anti-dissolution is not mere persistence. It is improvement over the declared null/dissolution dynamics.
-
-One-step form:
-
-```text
-E_K[Delta C(P_t)] - E_G[Delta C(P_t)] >= eta
-```
+Anti-dissolution is not mere persistence. It is improvement over the declared identity-decay null.
 
 Horizon form:
 
 ```text
-C_K^Pi(P, H) - C_G^Pi(P, H) >= eta
+C_K^Pi(P, H) - C_{N_P}^Pi(P, H) >= eta
 ```
 
-where the superscript `Pi` indicates evaluation under the declared perturbation class.
-
-This keeps the gradient/filter idea operational:
+where:
 
 ```text
-G supplies the matched dissolution reference;
-K supplies the actual dynamics;
-anti-dissolution is measured by the gap.
+K:
+  actual or activity-present dynamics
+
+N_P:
+  matched identity-decay null for P
+
+Pi:
+  declared perturbation class
+
+eta:
+  declared maintenance-gap threshold
 ```
 
-## 8. Proto-valuer
+This keeps the gradient/filter idea operational without making dissolution ontological:
 
-A **proto-valuer** is an admissibly designated process bundle `P` that satisfies four tests relative to `(X, K, Q_adm, Pi, G)` and thresholds `(epsilon, delta, eta, gamma, H)`.
+```text
+N_P supplies the matched identity-decay reference;
+K supplies the actual dynamics;
+anti-dissolution is measured by the maintenance gap.
+```
 
-### 8.1 Nontrivial distinction maintenance
+## 9. Pre-proto, proto, and valuer ladder
+
+To avoid circularity, split the ladder.
+
+### 9.1 Pre-proto-valuer
+
+A **pre-proto-valuer** is an admissibly designated process bundle `P` that satisfies three tests relative to `(D, Q_adm, Pi, N_P)` and thresholds `(epsilon, delta, eta, H)`.
+
+#### Nontrivial distinction maintenance
 
 ```text
 M_Q(D_t(P)) > 0
 ```
 
-### 8.2 Perturbation-robust recoverable propagation
+#### Perturbation-robust recoverable propagation
 
 ```text
 inf_{pi in Pi}
@@ -238,36 +347,47 @@ Pr_{K^pi}[ M_Q(Rec_H^Pi(P)) >= epsilon * M_Q(D_t(P)) ]
 >= 1 - delta
 ```
 
-### 8.3 Anti-dissolution
+#### Maintenance gap over identity-decay null
 
 ```text
-C_K^Pi(P, H) - C_G^Pi(P, H) >= eta
+C_K^Pi(P, H) - C_{N_P}^Pi(P, H) >= eta
 ```
 
-### 8.4 Self-conditioning toward continued proto-valuerhood
-
-Let `K_P` be the transition structure conditioned by the process bundle's own activity, and let `K_null` be a matched passive or non-self-conditioning baseline.
-
-Then:
+A pre-proto-valuer is therefore:
 
 ```text
-Pr(P_{t+H} satisfies proto-valuer criteria | K_P)
+distinction-maintaining;
+recoverably propagating under perturbation;
+anti-dissolutive relative to a declared identity-decay null.
+```
+
+### 9.2 Proto-valuer
+
+A **proto-valuer** is a pre-proto-valuer whose declared activity channel increases the probability of future pre-proto-valuerhood relative to a matched passive/null baseline.
+
+Schematic self-conditioning test:
+
+```text
+Pr(P_{t+H} satisfies pre-proto-valuer criteria | K^{act(P)})
 >
-Pr(P_{t+H} satisfies proto-valuer criteria | K_null) + gamma
+Pr(P_{t+H} satisfies pre-proto-valuer criteria | K^{pass(P)}) + gamma
 ```
 
 A proto-valuer is therefore:
 
 ```text
-distinction-maintaining;
-recoverably propagating under perturbation;
-anti-dissolutive relative to a declared null;
-self-conditioning toward continued proto-valuerhood.
+a pre-proto-valuer that self-conditions toward continued distinction-maintaining capacity.
 ```
 
 It need not have consciousness, explicit preferences, a fixed boundary, a self-model, or primitive utility.
 
-## 9. Valuing as induced preference over asymmetries
+### 9.3 Valuer
+
+A full valuer may later be defined as a proto-valuer whose induced asymmetry-preferences survive compatibility audits.
+
+This prevents simple feedback systems, stable structures, crystals, passive attractors, or autocatalytic cycles from being promoted too early.
+
+## 10. Valuing as induced preference over asymmetries
 
 A proto-valuer does not need primitive preferences.
 
@@ -277,19 +397,20 @@ For two admissible asymmetry laws, interventions, or successor-selection regimes
 A >=_P B
 ```
 
-when `A` preserves or expands robust proto-valuer-continuation at least as well as `B`, under recoverability, perturbation, anti-dissolution, and compatibility constraints.
+when `A` preserves or expands robust pre-proto/proto-valuer continuation at least as well as `B`, under recoverability, perturbation, identity-decay-null, and compatibility constraints.
 
 This is not utility maximization. It is a constraint-induced preference over asymmetries.
 
 Informally:
 
 ```text
-a proto-valuer prefers asymmetries and distinction-sets that continue its proto-valuerness.
+a proto-valuer prefers asymmetries and distinction-sets that continue its
+valuer-capacity.
 ```
 
-A full valuer may later be defined as a proto-valuer whose induced asymmetry-preferences survive compatibility audits. This prevents simple feedback systems, stable structures, or autocatalytic cycles from being promoted too early.
+A full valuer requires later compatibility audits.
 
-## 10. Compatibility is not monotone in general
+## 11. Compatibility is not monotone in general
 
 A previous sketch considered defining Omega as a greatest fixed point:
 
@@ -314,7 +435,7 @@ Adding more proto-valuer-bearing trajectories can break compatibility. Therefore
 
 The safer object is a family of maximal compatibility completions.
 
-## 11. Maximal admissible compatibility completions
+## 12. Maximal admissible compatibility completions
 
 Let:
 
@@ -322,7 +443,7 @@ Let:
 T_PV
 ```
 
-be the class of robust proto-valuer-bearing trajectories in the substrate.
+be the class of robust proto-valuer-bearing trajectories in the dynamics.
 
 Define an admissibility predicate:
 
@@ -350,7 +471,9 @@ Omega is the space/family of maximal admissible compatibility completions of pro
 
 If later assumptions imply that a greatest admissible set exists, then this family may collapse to a single greatest Omega object. That should be a theorem or special case, not a starting assumption.
 
-## 12. Omega-derivations
+In finite toy systems, `Y` may be represented as a subset of trajectory or process-bundle identifiers. In richer systems, completions may need to be weighted, branching, or measure-valued. Subset maximality is a finite-support special case, not the final ontology.
+
+## 13. Omega-derivations
 
 An Omega-derivation is a sequence of admissible additions, removals, repairs, or reweightings of proto-valuer-bearing trajectories that preserves recoverable, non-erasing compatibility at each step and terminates in a maximal compatible structure.
 
@@ -376,7 +499,7 @@ the space of terminal admissible compatibility derivations.
 
 This makes Omega a compatibility-completion problem, not necessarily a single global set.
 
-## 13. Relevance to current Future Field Atlas results
+## 14. Relevance to current Future Field Atlas results
 
 Current FFA results do not establish proto-valuers or Omega.
 
@@ -394,29 +517,33 @@ observable coverage;
 reconstruction and completeness gates.
 ```
 
-The latest substrate morphology atlas adds an important formal pressure point:
+The latest substrate morphology and shared-capacity results add an important formal pressure point:
 
 ```text
 marginal continuation is not compatibility.
 ```
 
-A coupled run may preserve A/B marginal reachability while sharply restricting the joint future field. Therefore compatibility must be joint-field-sensitive, not reducible to marginal persistence.
+A coupled run may preserve or lose A/B marginal reachability while changing the joint future field. Therefore compatibility must be joint-field-sensitive, not reducible to marginal persistence.
+
+Shared-capacity v1 was operational but behaved as marginal pruning followed by product-dense closure over surviving marginals. It did not reproduce the pair005-like scalar mismatch signature of preserved marginals with restricted joint combinations. This pushes the next empirical branch toward rank-order-native operators or marginal-coverage-preserving capacity variants.
 
 This motivates the next empirical direction:
 
 ```text
-shared-capacity operator tests;
 rank-order-native operator tests;
+marginal-coverage-preserving shared-capacity v2 only if needed;
 observable-extension passes;
-future recoverability, anti-dissolution, and self-conditioning metrics.
+future recoverability, identity-decay-null, maintenance-gap, and
+self-conditioning metrics.
 ```
 
-## 14. Claim boundary
+## 15. Claim boundary
 
 This note does not claim:
 
 ```text
 Omega validation;
+pre-proto-valuer detection;
 proto-valuer detection;
 valuer detection;
 agency;
@@ -434,7 +561,7 @@ This note sketches a candidate formal layer above Future-Distinction Dynamics:
 proto-valuer-bearing dynamics and maximal admissible compatibility completions.
 ```
 
-## 15. Summary
+## 16. Summary
 
 The revised stack is:
 
@@ -460,9 +587,16 @@ non-erasure:
 compatibility:
   prevents local persistence from destroying other future-bearing structure
 
+identity-decay null:
+  declared matched reference for recoverability loss when a candidate pattern's
+  maintaining activity is absent, passivized, randomized, ablated, or unsupported
+
+pre-proto-valuer:
+  a process-bundle designation that maintains recoverable distinction-content
+  better than its matched identity-decay null
+
 proto-valuer:
-  a distinction-maintaining, perturbation-robust, anti-dissolutive,
-  self-conditioning process bundle
+  a pre-proto-valuer that self-conditions toward continued pre-proto-valuerhood
 
 valuer:
   a proto-valuer whose induced asymmetry-preferences survive compatibility audits
@@ -474,7 +608,7 @@ Omega family:
 Compact formulation:
 
 ```text
-A proto-valuer is an admissibly designated process bundle that maintains future-relevant distinctions, propagates a sufficient subset recoverably under perturbation, resists declared dissolution nulls, and self-conditions its transition environment toward continued proto-valuerhood.
+A proto-valuer is an admissibly designated process bundle that maintains future-relevant distinctions, propagates a sufficient subset recoverably under perturbation, resists a declared identity-decay null, and self-conditions its transition environment toward continued distinction-maintaining capacity.
 
 Omega is the space of maximal admissible compatibility completions in which proto-valuer dynamics propagate recoverably and non-erasingly without systematic irreversible destruction of one another's distinction-content.
 ```
