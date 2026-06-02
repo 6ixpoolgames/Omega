@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from types import SimpleNamespace
 
+import pytest
+
 from omega.future_field_atlas.coupled import (
     JointEdge,
     build_coupled_operator_spec,
@@ -22,6 +24,7 @@ from omega.future_field_atlas.run_coupled_future_field_atlas import (
     coupled_scan_manifest_rows,
     mark_completed_attempts_status,
     medium_scale_readiness_rows,
+    resolve_pair_indexes,
     run_one_spooled,
     write_raw_topology_shards,
 )
@@ -261,6 +264,44 @@ def test_explicit_pair_indexes_select_nonprefix_pair() -> None:
 
     assert len(tasks) == 1
     assert tasks[0].pair_id.startswith("pair005__")
+
+
+def test_pair_indexes_beyond_generated_condition_count_are_rejected() -> None:
+    conditions_a = build_generated_conditions(
+        groups=8,
+        fresh_seeds_per_group=1,
+        selection_operators=("rank_prefix:m=3",),
+        macro_invariant_kind="symbol_histogram_distance",
+        macro_invariant_betas=(0.10,),
+        rank_boundary_k=3,
+        base_seed=61_001,
+    )
+    conditions_b = build_generated_conditions(
+        groups=8,
+        fresh_seeds_per_group=1,
+        selection_operators=("rank_subset:m=4:retain=1|2|3:remove=4",),
+        macro_invariant_kind="symbol_histogram_distance",
+        macro_invariant_betas=(0.10,),
+        rank_boundary_k=3,
+        base_seed=561_001,
+    )
+    args = SimpleNamespace(pair_count=1, pair_indexes="8")
+
+    with pytest.raises(ValueError, match="pair indexes out of range"):
+        resolve_pair_indexes(args, conditions_a, conditions_b)
+
+
+def test_unknown_macro_invariant_kind_is_rejected() -> None:
+    with pytest.raises(ValueError, match="unsupported macro_invariant_kind"):
+        build_generated_conditions(
+            groups=1,
+            fresh_seeds_per_group=1,
+            selection_operators=("rank_prefix:m=3",),
+            macro_invariant_kind="hamming_weight_distance",
+            macro_invariant_betas=(0.10,),
+            rank_boundary_k=3,
+            base_seed=61_001,
+        )
 
 
 def test_lossless_topology_blocks_reconstruct_logical_rows() -> None:

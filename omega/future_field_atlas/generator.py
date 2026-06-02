@@ -38,6 +38,15 @@ DEFAULT_SELECTION_OPERATORS = (
     "rank_subset:m=4:retain=2|3|4:remove=1",
 )
 
+SUPPORTED_MACRO_INVARIANT_KINDS = (
+    "symbol_histogram_distance",
+    "symbol_histogram_l2",
+    "hamming_weight_or_nonzero_count",
+    "hamming_weight",
+    "nonzero_count",
+    "total_coordinate_mass",
+)
+
 
 def build_generated_conditions(
     *,
@@ -50,6 +59,7 @@ def build_generated_conditions(
     base_seed: int,
 ) -> list[GeneratedCondition]:
     out: list[GeneratedCondition] = []
+    require_supported_macro_invariant_kind(macro_invariant_kind)
     operator_texts = selection_operators or DEFAULT_SELECTION_OPERATORS
     for group_index in range(max(1, groups)):
         for fresh_index in range(max(1, fresh_seeds_per_group)):
@@ -240,6 +250,19 @@ def relation_params(group_index: int, out_degree_target: int) -> RelationParams:
         constraint_arity=2,
     )
     return replace(base, out_degree_target=out_degree_target)
+
+
+def supported_macro_invariant_kinds() -> tuple[str, ...]:
+    return SUPPORTED_MACRO_INVARIANT_KINDS
+
+
+def require_supported_macro_invariant_kind(macro_invariant_kind: str) -> None:
+    if macro_invariant_kind not in SUPPORTED_MACRO_INVARIANT_KINDS:
+        supported = ", ".join(SUPPORTED_MACRO_INVARIANT_KINDS)
+        raise ValueError(
+            f"unsupported macro_invariant_kind {macro_invariant_kind!r}; "
+            f"supported values: {supported}"
+        )
 
 
 def parse_selection_operator(raw: str) -> SelectionOperatorSpec:

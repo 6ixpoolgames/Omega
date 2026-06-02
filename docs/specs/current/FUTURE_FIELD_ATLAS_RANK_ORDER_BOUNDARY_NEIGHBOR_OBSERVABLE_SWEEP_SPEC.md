@@ -149,7 +149,7 @@ results/future_field_atlas/20260602_rank_order_boundary_h64_neighbor_batch_b/
 ```text
 horizon_max: 64
 horizon_schedule: dense
-groups: 8
+groups: 24
 fresh_seeds_per_group: 1
 start_samples: 1
 workers: 4
@@ -173,6 +173,15 @@ max_joint_frontier_nodes_per_horizon: 100000
 max_joint_edges_per_step: 1000000
 max_runtime_seconds: 7200
 shutdown_cushion_seconds: 120
+```
+
+Implementation note:
+
+```text
+The explicit pair indexes 8-23 require at least 24 generated paired conditions
+in the current runner because pair indexes address generated condition indexes
+directly. Run Study A with groups: 24, not groups: 8, unless the runner is later
+changed to use a separate pair-neighbor generator.
 ```
 
 ### After each batch
@@ -248,12 +257,22 @@ If supported, choose up to two non-semantic alternate observables from the
 available registry. Prefer observables that do not introduce valuer/agent/identity
 semantics.
 
-Suggested candidates if supported by the runtime:
+Supported atlas macro-invariant kinds at this spec revision:
 
 ```text
-hamming_weight_distance
-total_coordinate_mass_distance
-coordinate_mass_distance
+symbol_histogram_distance
+symbol_histogram_l2
+hamming_weight_or_nonzero_count
+hamming_weight
+nonzero_count
+total_coordinate_mass
+```
+
+Preferred alternate observables for this smoke:
+
+```text
+hamming_weight_or_nonzero_count
+total_coordinate_mass
 ```
 
 ### Pair set

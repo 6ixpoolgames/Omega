@@ -29,7 +29,7 @@ from .coupled_spool import (
     spooled_row_counts,
     write_pair_spool,
 )
-from .generator import build_generated_conditions, select_start_states
+from .generator import build_generated_conditions, select_start_states, supported_macro_invariant_kinds
 from .lossless_blocks import (
     compression_ratio,
     lossless_topology_blocks,
@@ -71,6 +71,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--horizon-max", type=int, default=16)
     parser.add_argument("--horizon-schedule", type=str, default="dense")
     parser.add_argument("--macro-invariant-kind", type=str, default="symbol_histogram_distance")
+    parser.add_argument(
+        "--list-supported-macro-invariant-kinds",
+        action="store_true",
+        help="Print supported macro invariant kinds for atlas runs and exit.",
+    )
     parser.add_argument("--macro-invariant-beta-list", type=str, default="0.10")
     parser.add_argument("--rank-boundary-k", type=int, default=3)
     parser.add_argument("--selection-operator-a", type=str, default="rank_prefix:m=3")
@@ -107,6 +112,10 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
+    if args.list_supported_macro_invariant_kinds:
+        for kind in supported_macro_invariant_kinds():
+            print(kind)
+        return
     install_signal_handlers()
     started_perf = time.perf_counter()
     args.out.mkdir(parents=True, exist_ok=True)
