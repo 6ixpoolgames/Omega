@@ -17,16 +17,17 @@ For the current project state, read these first:
 3. [Future Field Atlas Instrument Spec](docs/specs/current/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md)
 4. [Future Field Atlas Glossary](docs/FUTURE_FIELD_ATLAS_GLOSSARY.md)
 5. [Substrate Morphology Atlas Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md)
-6. [Rank-Order Boundary Medium Sweep Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_medium_sweep_result.md)
-7. [Rank-Order Boundary H64 Smoke Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_h64_smoke_result.md)
-8. [Shared-Capacity H64 Smoke Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_shared_capacity_h64_smoke_result.md)
-9. [Coupled H64 Mechanism-Resolution Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_mechanism_resolution_result.md)
-10. [Coupled H64 Ladder Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_ladder_result.md)
-11. [Coupled H64 Broad Sweep Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_broad_sweep_result.md)
-12. [Coupled Worker-Spool Scale Validation](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_worker_spool_scale_validation_result.md)
-13. [Coupled H128 Depth and Triadic Profile Smoke](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h128_and_triadic_profile_smoke_result.md)
-14. [Future Field Atlas H128 Calibration Pass](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_h128_calibration_pass_result.md)
-15. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
+6. [Rank-Order Boundary Neighbor / Observable Sweep Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_neighbor_observable_sweep_result.md)
+7. [Rank-Order Boundary Medium Sweep Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_medium_sweep_result.md)
+8. [Rank-Order Boundary H64 Smoke Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_h64_smoke_result.md)
+9. [Shared-Capacity H64 Smoke Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_shared_capacity_h64_smoke_result.md)
+10. [Coupled H64 Mechanism-Resolution Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_mechanism_resolution_result.md)
+11. [Coupled H64 Ladder Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_ladder_result.md)
+12. [Coupled H64 Broad Sweep Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_broad_sweep_result.md)
+13. [Coupled Worker-Spool Scale Validation](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_worker_spool_scale_validation_result.md)
+14. [Coupled H128 Depth and Triadic Profile Smoke](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h128_and_triadic_profile_smoke_result.md)
+15. [Future Field Atlas H128 Calibration Pass](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_h128_calibration_pass_result.md)
+16. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
 
 Historical RFS-MB0 results are still retained, but they are now background. Future Field Atlas is the fresh active frame.
 
@@ -70,10 +71,12 @@ The first substrate morphology atlas now maps the retained coupled outputs
 directly instead of treating any single operator ladder as the whole object:
 
 ```text
-29 retained coupled run directories and 2 compact summary directories ingested;
-all 29 coupled inputs passed clean gates;
-pair005 remains the only high-residual / joint-restrictive exemplar in the retained set;
-observable coverage is still single-observable only: symbol_histogram_distance.
+35 retained coupled run directories ingested;
+all 35 coupled inputs passed clean gates;
+pair005, pair012, and pair014 are high-residual / joint-restrictive
+rank_order_boundary exemplars under symbol_histogram_distance;
+observable coverage now includes hamming_weight_or_nonzero_count,
+symbol_histogram_distance, and total_coordinate_mass smokes.
 ```
 
 The first shared-capacity H64 smoke completed cleanly, but it did **not** earn
@@ -104,6 +107,13 @@ rank_order_boundary medium sweep:
   H64 pair8 completed cleanly;
   pair005 was the only high-residual marginal-preserving pair;
   targeted H128 pair005 confirmed the same final geometry.
+
+rank_order_boundary neighbor / observable sweep:
+  H64 neighbor search found new high-residual marginal-preserving pairs:
+    pair012 and pair014;
+  targeted H128 confirmed pair012 and pair014 final geometry;
+  hamming_weight_or_nonzero_count and total_coordinate_mass smokes did not
+  reproduce the high-yield signature.
 ```
 
 This is not an Omega result. It is a clean product-vs-coupled future-field geometry result under a formal operator.
@@ -225,9 +235,10 @@ substrate morphology is now summarized across retained coupled outputs before
 choosing the next operator.
 shared_capacity v1 is operational but currently behaves as marginal pruning,
 not as marginal-preserving joint restriction.
-rank_order_boundary reproduces the pair005-like marginal-preserving joint
-restriction pattern across H64 pair8, but only pair005 is high-residual in the
-current retained pair set; targeted H128 confirms pair005 final geometry.
+rank_order_boundary reproduces marginal-preserving joint restriction for
+pair005, pair012, and pair014 under symbol_histogram_distance; targeted H128
+confirms these high-yield representatives. The two tested alternate observables
+did not reproduce the high-yield signature.
 ```
 
 Current results do **not** mean:
@@ -255,14 +266,14 @@ shared-capacity v1 scale-up.
 Current decision point:
 
 ```text
-run rank_order_boundary pair005-neighbor / observable-extension work:
-  search for pair005-like neighbors before claiming a broader class;
-  keep low-residual controls;
+run rank_order_boundary class-expansion work:
+  carry pair005, pair012, and pair014 as high-yield representatives;
+  keep low/medium controls;
   keep product, zero-penalty joint rank-prefix, scalar 0.020, and shared_capacity v1 references;
-  run H64 first, targeted H128 only if new high-yield pairs appear.
+  run H64 breadth first, targeted H128 only for new high-yield representatives.
 
-observable-extension remains a priority because retained coupled morphology is
-still single-observable only: symbol_histogram_distance.
+observable-extension remains a priority because the tested alternates did not
+reproduce the symbol_histogram_distance high-yield signature.
 ```
 
 Broad H128 coupled surveys remain premature. H128 should stay targeted until a
@@ -356,7 +367,7 @@ Theory arm:
   phase ladder, atlas interface, falsification criteria, and terminal-object sketch
 
 Next coupled operators:
-  rank-order-boundary pair005-neighbor search and observable extension first;
+  rank-order-boundary class expansion and observable extension first;
   shared-capacity v1 remains a negative control / repair target, not the current
   scale-up branch
 
@@ -368,4 +379,4 @@ Scale hierarchy / constructor-like branches:
 
 The current scientific claim is modest:
 
-> Future Field Atlas can measure reconstructible finite future-field topology under lawful transition substrates. Current coupled H64 results show near-zero scalar mismatch sensitivity that saturates by `0.020`, a true product selector distinct from zero-penalty joint rank-prefix selection, and a persistent pair005 heavy-pair clue. Omega-compatible subobjects have not been demonstrated.
+> Future Field Atlas can measure reconstructible finite future-field topology under lawful transition substrates. Current rank-order-boundary coupled results show a marginal-preserving joint-restriction class under `symbol_histogram_distance` with high-yield representatives `pair005`, `pair012`, and `pair014`; the two tested alternate observables did not reproduce the high-yield signature. Omega-compatible subobjects have not been demonstrated.

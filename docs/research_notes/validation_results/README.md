@@ -11,6 +11,7 @@ small, curated, and useful.
 
 Start with:
 
+- `future_field_atlas/future_field_atlas_rank_order_boundary_neighbor_observable_sweep_result.md`
 - `future_field_atlas/future_field_atlas_rank_order_boundary_medium_sweep_result.md`
 - `future_field_atlas/future_field_atlas_rank_order_boundary_h64_smoke_result.md`
 - `future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md`

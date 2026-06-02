@@ -14,6 +14,8 @@ or historical run instructions here.
 Current active and recent live-instrument specs:
 
 - `current/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md`
+- `current/FUTURE_FIELD_ATLAS_RANK_ORDER_BOUNDARY_NEIGHBOR_OBSERVABLE_SWEEP_SPEC.md`
+  (completed cleanly; opened rank-order class expansion target)
 - `current/FUTURE_FIELD_ATLAS_RANK_ORDER_BOUNDARY_MEDIUM_SWEEP_SPEC.md`
   (completed cleanly; yielded pair005-only H64/H128 result)
 - `current/FUTURE_FIELD_ATLAS_RANK_ORDER_NATIVE_SMOKE_SPEC.md` (completed;

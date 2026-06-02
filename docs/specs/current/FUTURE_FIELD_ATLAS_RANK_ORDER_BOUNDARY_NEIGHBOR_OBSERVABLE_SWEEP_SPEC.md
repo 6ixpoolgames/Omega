@@ -1,6 +1,6 @@
 # Future Field Atlas Rank-Order Boundary Neighbor / Observable Sweep Spec
 
-Status: current spec / pending implementation
+Status: completed cleanly
 
 Target runner: `omega.future_field_atlas.run_coupled_future_field_atlas`
 
@@ -8,6 +8,16 @@ Selector: `joint_selection_family = rank_order_boundary`
 
 Expected retained result:
 `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_neighbor_observable_sweep_result.md`
+
+Outcome:
+
+```text
+H64 neighbor search found pair012 and pair014 as new high-residual
+marginal-preserving rank_order_boundary exemplars under symbol_histogram_distance.
+Targeted H128 confirmed pair012 and pair014 final geometry.
+hamming_weight_or_nonzero_count and total_coordinate_mass smokes did not
+reproduce the high-yield signature.
+```
 
 ## Purpose
 

@@ -1,6 +1,6 @@
 # Future Field Atlas Substrate Morphology Sweep Spec
 
-Status: current spec / pending implementation  
+Status: completed; retained morphology atlas continues to be regenerated after coupled runs  
 Project posture: atlas-first, no Omega claims  
 Target package: `omega.future_field_atlas`  
 Preferred new utility: `omega.future_field_atlas.substrate_morphology_summary`
@@ -579,8 +579,9 @@ marginal pruning followed by dense closure over surviving marginals, not
 marginal-preserving joint restriction.
 
 rank_order_boundary was then tested and recovered the small-set
-marginal-preserving joint-restriction pattern. It is now the medium-sweep
-candidate.
+marginal-preserving joint-restriction pattern. The medium sweep and neighbor /
+observable sweep are now complete. The current target is rank_order_boundary
+class expansion with pair005, pair012, and pair014.
 ```
 
 ### If marginal loss appears under some operators
@@ -617,9 +618,10 @@ This was completed in
 docs/research_notes/validation_results/future_field_atlas/future_field_atlas_shared_capacity_h64_smoke_result.md.
 The follow-up rank_order_boundary smoke was also completed in
 docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_h64_smoke_result.md.
-The next operator branch should be a medium pair-aware rank_order_boundary
-sweep, with marginal-coverage-preserving shared-capacity v2 retained only as a
-repair option if finite capacity remains theory-critical.
+The rank_order_boundary medium sweep and neighbor / observable sweep were also
+completed. The next operator branch should be rank_order_boundary class
+expansion, with marginal-coverage-preserving shared-capacity v2 retained only
+as a repair option if finite capacity remains theory-critical.
 ```
 
 Provisional shared-capacity idea:

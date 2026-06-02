@@ -9,6 +9,130 @@ patch notes at the top.
 
 ## 2026-06-02
 
+### Future Field Atlas Rank-Order Boundary Neighbor / Observable Sweep
+
+Pulled and ran the new rank-order-boundary neighbor / observable sweep spec.
+Before running, repaired two preflight issues:
+
+```text
+pair_indexes 8-23 require groups: 24 in the current runner;
+supported macro-invariant kinds are now explicit and unknown names are rejected.
+```
+
+Retained note:
+
+```text
+docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_neighbor_observable_sweep_result.md
+```
+
+Study A H64 neighbor search:
+
+```text
+batch A:
+  pairs: 0,1,2,5,8,9,10,11,12,13,14,15
+  status: COMPLETED
+  elapsed_seconds: 858.244
+  joint edge rows: 44,252,061
+  joint node rows: 6,322,649
+  caps: 0
+  audits: PASS 3
+
+batch B:
+  pairs: 0,1,2,5,16,17,18,19,20,21,22,23
+  status: COMPLETED
+  elapsed_seconds: 308.174
+  joint edge rows: 17,448,543
+  joint node rows: 2,513,241
+  caps: 0
+  audits: PASS 3
+```
+
+New H64 high-yield marginal-preserving neighbors:
+
+```text
+pair012:
+  residual: 0.842202
+  joint retention: 0.157798
+  A/B retention: 1.0 / 1.0
+
+pair014:
+  residual: 0.512554
+  joint retention: 0.487446
+  A/B retention: 1.0 / 1.0
+```
+
+Study B targeted H128:
+
+```text
+pairs: 12,14
+status: COMPLETED
+elapsed_seconds: 632.427
+joint edge rows: 17,177,855
+joint node rows: 2,130,038
+caps: 0
+audits: PASS 3
+```
+
+Final H128:
+
+```text
+pair012:
+  residual: 0.842202
+  joint retention: 0.157798
+  A/B retention: 1.0 / 1.0
+
+pair014:
+  residual: 0.512554
+  joint retention: 0.487446
+  A/B retention: 1.0 / 1.0
+```
+
+Study C observable smokes:
+
+```text
+hamming_weight_or_nonzero_count:
+  status: COMPLETED
+  pair005 residual: 0.040138
+  no high-yield reproduction
+
+total_coordinate_mass:
+  status: COMPLETED
+  pair005 residual: 0.109172
+  no high-yield reproduction
+```
+
+Updated morphology atlas:
+
+```text
+source_run_count: 35
+manifest_digest: 4ee4a299c59439319c61d1d2
+pair morphology rows: 185
+high-residual marginal-preserving rows: 25
+observable coverage:
+  hamming_weight_or_nonzero_count
+  symbol_histogram_distance
+  total_coordinate_mass
+```
+
+Current read:
+
+```text
+rank_order_boundary is no longer pair005-only under symbol_histogram_distance.
+The current high-yield representatives are pair005, pair012, and pair014.
+The tested alternate observables do not reproduce the high-yield signature.
+```
+
+Next recommendation:
+
+```text
+rank_order_boundary_class_expansion:
+  pair005;pair012;pair014 plus low/medium controls;
+  H64 breadth first;
+  targeted H128 only for new high-yield representatives;
+  keep product, zero-penalty joint rank-prefix, scalar 0.020, and
+  shared_capacity v1 controls.
+```
+
 ### Future Field Atlas Rank-Order Boundary Medium Sweep
 
 Ran the first medium pair-aware `rank_order_boundary` coupled selector pass and

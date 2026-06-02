@@ -97,26 +97,22 @@ tested design. The true product selector is distinct from zero-penalty joint
 rank-prefix selection, so product-selector runs are the neutral reference for
 future coupled comparisons. Pair005 remains a heavy-pair / critical-pair clue
 and persisted in a targeted H128 depth check.
-The first substrate morphology atlas has now postprocessed retained coupled
-outputs directly. After the rank-order-boundary medium sweep it ingests 29
-coupled run directories and 2 compact summary directories, all clean-gated.
-Pair005 remains the only high-residual / joint-restrictive exemplar in the
-retained set, so it should be used with low/medium controls rather than treated
-as a branch basis by itself. The shared-capacity v1 H64 smoke completed cleanly
-with no caps, complete artifacts, and passing reconstruction audits, but it
-should not be scaled as-is: it prunes A/B marginal support and then becomes
-product-dense over the surviving marginals. That does not reproduce the desired
-scalar-mismatch signature, where pair005 preserved A/B marginals while
-restricting joint combinations. The rank-order-boundary H64 smoke recovered the
-desired small-set pattern, and the H64 pair8 medium sweep then showed that only
-pair005 becomes high-residual and joint-restrictive while all eight pairs
-preserve A/B marginals. The targeted H128 pair005 depth check reproduced the
-same final geometry as H64. The next coupled branch should search for
-pair005-like neighbors and extend observables, while retaining product,
-zero-penalty joint rank-prefix, scalar `0.020`, and shared-capacity v1 controls.
-Retained coupled morphology is still single-observable only
-(`symbol_histogram_distance`), so observable extension is a priority before
-stronger substrate-general claims.
+The substrate morphology atlas now postprocesses retained coupled outputs
+directly. After the rank-order-boundary neighbor / observable sweep it ingests
+35 coupled run directories, all clean-gated. The rank-order-boundary branch is
+no longer pair005-only: H64 neighbor search found pair012 and pair014 as new
+high-residual marginal-preserving exemplars, and targeted H128 confirmed their
+final geometry. Pair012 is currently the strongest retained exemplar. The
+shared-capacity v1 H64 smoke completed cleanly with no caps, complete artifacts,
+and passing reconstruction audits, but it should not be scaled as-is: it prunes
+A/B marginal support and then becomes product-dense over the surviving
+marginals. The two tested alternate observables,
+`hamming_weight_or_nonzero_count` and `total_coordinate_mass`, did not reproduce
+the high-yield rank-order signature, so the current class remains
+`symbol_histogram_distance`-specific. The next coupled branch should be
+rank-order-boundary class expansion with pair005, pair012, pair014, low/medium
+controls, and retained product, zero-penalty joint rank-prefix, scalar `0.020`,
+and shared-capacity v1 controls.
 ```
 
 Terminology rule:
@@ -139,6 +135,7 @@ Primary current design note:
 - `docs/implementation/RUN_RETENTION_POLICY.md`
 - `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_phase0_1_smoke_result.md`
 - `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_compact_manageability_h64_result.md`
+- `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_neighbor_observable_sweep_result.md`
 - `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_medium_sweep_result.md`
 - `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_h64_smoke_result.md`
 - `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_shared_capacity_h64_smoke_result.md`
