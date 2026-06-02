@@ -3,9 +3,11 @@ from __future__ import annotations
 from types import SimpleNamespace
 
 from omega.future_field_atlas.coupled import (
+    JointEdge,
     build_coupled_operator_spec,
     coupled_operator_digest,
     scan_coupled_probe,
+    select_rank_order_boundary_edges,
 )
 from omega.future_field_atlas.coupled_spool import spooled_raw_topology_manifest_rows
 from omega.future_field_atlas.generator import build_generated_conditions
@@ -115,6 +117,37 @@ def test_shared_capacity_operator_is_manifest_backed_and_scans() -> None:
     assert task.coupled_operator.coupling_term_id == "balanced_marginal_successor_capacity"
     assert condition_rows[0]["joint_selection_family"] == "shared_capacity"
     assert condition_rows[0]["coupled_operator_id"] == task.coupled_operator.coupled_operator_id
+
+
+def test_rank_order_boundary_operator_is_manifest_backed_and_scans() -> None:
+    task = build_test_tasks(horizon_max=1, joint_selection_family="rank_order_boundary")[0]
+    result = scan_coupled_probe(task)
+    condition_rows = coupled_condition_manifest_rows([task])
+
+    assert result.profile_rows
+    assert task.coupled_operator.coupled_operator_family == "rank_order_boundary_alignment_joint_selector"
+    assert task.coupled_operator.coupling_term_id == "rank_boundary_offset_ordinal_alignment"
+    assert condition_rows[0]["joint_selection_family"] == "rank_order_boundary"
+    assert condition_rows[0]["coupled_operator_id"] == task.coupled_operator.coupled_operator_id
+
+
+def test_rank_order_boundary_selector_prefers_ordinal_alignment_over_energy() -> None:
+    source = ((0, 0, 0, 0, 0), (1, 1, 1, 1, 1))
+    candidates = [
+        rank_test_edge(source, (3, 1), energy=0.0),
+        rank_test_edge(source, (1, 1), energy=99.0),
+        rank_test_edge(source, (2, 2), energy=99.0),
+        rank_test_edge(source, (3, 3), energy=99.0),
+        rank_test_edge(source, (1, 3), energy=0.0),
+    ]
+
+    selected = select_rank_order_boundary_edges(candidates, 3)
+
+    assert [(edge.a_candidate_rank, edge.b_candidate_rank) for edge in selected] == [
+        (1, 1),
+        (2, 2),
+        (3, 3),
+    ]
 
 
 def test_pairing_policy_and_operator_identity_appear_in_manifests() -> None:
@@ -312,3 +345,21 @@ def build_test_tasks(
         max_internal_joint_frontier_states=max_internal_joint_frontier_states,
     )
     return build_coupled_tasks(args, conditions_a, conditions_b, tuple(range(horizon_max + 1)))
+
+
+def rank_test_edge(source, ranks: tuple[int, int], *, energy: float) -> JointEdge:
+    a_rank, b_rank = ranks
+    a_target = (a_rank, 0, 0, 0, 0)
+    b_target = (b_rank, 1, 1, 1, 1)
+    return JointEdge(
+        source=source,
+        target=(a_target, b_target),
+        a_energy=energy,
+        b_energy=energy,
+        a_candidate_rank=a_rank,
+        b_candidate_rank=b_rank,
+        a_rank_offset_from_boundary=a_rank - 3,
+        b_rank_offset_from_boundary=b_rank - 3,
+        coupling_penalty=float(abs(a_rank - b_rank)),
+        joint_transition_energy=2.0 * energy + float(abs(a_rank - b_rank)),
+    )

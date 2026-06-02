@@ -77,7 +77,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--selection-operator-b", type=str, default="rank_subset:m=4:retain=1|2|3:remove=4")
     parser.add_argument(
         "--joint-selection-family",
-        choices=("joint_energy_rank_prefix", "product", "shared_capacity"),
+        choices=("joint_energy_rank_prefix", "product", "shared_capacity", "rank_order_boundary"),
         default="joint_energy_rank_prefix",
     )
     parser.add_argument("--joint-effective-out-degree", type=int, default=4)
@@ -1069,6 +1069,11 @@ def coupled_operator_params_json(task: CoupledProbeTask) -> str:
         coupling_term = (
             "select up to joint_effective_out_degree product successors by component-energy order "
             "while limiting repeated use of the same A/B marginal successor"
+        )
+    elif task.joint_selection_family == "rank_order_boundary":
+        coupling_term = (
+            "select product successors lexicographically by rank-boundary offset alignment "
+            "and candidate-rank tuple; coupling_strength is not used"
         )
     else:
         coupling_term = "coupling_strength * abs(A_rank_offset_from_boundary - B_rank_offset_from_boundary)"

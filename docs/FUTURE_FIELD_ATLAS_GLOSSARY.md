@@ -167,6 +167,12 @@ slots. The H64 smoke showed this v1 behaves as marginal pruning followed by
 product-dense closure over surviving marginals, so it should not be scaled
 without a marginal-coverage-preserving redesign.
 
+`rank_order_boundary`
+: Coupled `joint_selection_family` that selects product-successor candidates by
+ordinal rank-boundary alignment instead of scalar energy magnitude or tunable
+coupling strength. It is the current small-smoke target after scalar mismatch
+saturation and the negative shared-capacity v1 result.
+
 `cap_poisoned_flag`
 : Coupled-branch completeness flag. Once a product or coupled frontier is
 internally capped, all later descendants from that mode are poisoned and must be

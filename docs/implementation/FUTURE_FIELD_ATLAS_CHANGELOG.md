@@ -9,6 +9,37 @@ when a run or decision changes the project state.
 
 ## 2026-06-02
 
+### Rank-Order Boundary Coupled Selector
+
+Added a new coupled selector family:
+
+```text
+joint_selection_family = rank_order_boundary
+```
+
+For each joint source, the selector constructs the same product successors used
+by the coupled runner and selects up to `joint_effective_out_degree` by an
+ordinal rank-boundary tuple:
+
+```text
+abs(A_rank_offset_from_boundary - B_rank_offset_from_boundary)
+A_candidate_rank + B_candidate_rank
+max(A_candidate_rank, B_candidate_rank)
+min(A_candidate_rank, B_candidate_rank)
+abs(A_rank_offset_from_boundary) + abs(B_rank_offset_from_boundary)
+target_joint_state_id
+```
+
+The selector does not use scalar `coupling_strength` as a tuning control. It is
+intended as the clean next mechanism probe after scalar mismatch saturation and
+the negative shared-capacity v1 smoke.
+
+Tests:
+
+```text
+tests/test_coupled_atlas_hardening.py
+```
+
 ### Shared-Capacity Coupled Selector
 
 Added a new coupled selector family:

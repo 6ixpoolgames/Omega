@@ -14,6 +14,8 @@ or historical run instructions here.
 Current active and recent live-instrument specs:
 
 - `current/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md`
+- `current/FUTURE_FIELD_ATLAS_RANK_ORDER_NATIVE_SMOKE_SPEC.md` (active next
+  coupled-operator smoke)
 - `current/FUTURE_FIELD_ATLAS_SUBSTRATE_MORPHOLOGY_SWEEP_SPEC.md`
 - `current/FUTURE_FIELD_ATLAS_SHARED_CAPACITY_SMOKE_SPEC.md` (completed; v1 not
   recommended for scale-up)
