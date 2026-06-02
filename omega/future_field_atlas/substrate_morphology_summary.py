@@ -420,6 +420,20 @@ def horizon_onset_rows(runs: list[CoupledRun]) -> list[dict[str, object]]:
 
 
 def observable_geometry_rows(runs: list[CoupledRun]) -> list[dict[str, object]]:
+    observable_ids = sorted({
+        str(run.config.get("macro_invariant_kind", "")) or "unknown"
+        for run in runs
+    })
+    if len(observable_ids) <= 1:
+        coverage_note = (
+            "single_observable_only: "
+            f"{observable_ids[0] if observable_ids else 'unknown'} is the only law observable present "
+            "in retained coupled runs"
+        )
+        row_note = "observable_coverage: single_observable_only"
+    else:
+        coverage_note = "multi_observable_smoke: " + ";".join(observable_ids)
+        row_note = "observable_coverage: multi_observable_smoke"
     rows: list[dict[str, object]] = [
         {
             "observable_id": "observable_coverage",
@@ -432,7 +446,7 @@ def observable_geometry_rows(runs: list[CoupledRun]) -> list[dict[str, object]]:
             "value_max": "",
             "value_final": "",
             "artifact_completeness_status": "",
-            "notes": "single_observable_only: symbol_histogram_distance is the only law observable present in retained coupled runs",
+            "notes": coverage_note,
         }
     ]
     for run in runs:
@@ -463,7 +477,7 @@ def observable_geometry_rows(runs: list[CoupledRun]) -> list[dict[str, object]]:
                         "value_max": max_metric(source_rows, field),
                         "value_final": float_value(final_horizon_row(source_rows).get(field)),
                         "artifact_completeness_status": run.status.get("artifact_completeness_statuses", ""),
-                        "notes": "observable_coverage: single_observable_only",
+                        "notes": row_note,
                     }
                 )
     return rows
@@ -635,15 +649,32 @@ def morphology_next_target_rows(pair_rows: list[dict[str, object]], observable_r
             "expected_disambiguation": "separates scalar penalty magnitude from ordinal candidate ordering",
             "claim_boundary": CLAIM_BOUNDARY,
         })
+    observable_ids = sorted({
+        str(row.get("observable_id", ""))
+        for row in observable_rows
+        if row.get("observable_family") == "macro_invariant_law_observable"
+    })
+    if len(observable_ids) <= 1:
+        observable_reason = "current retained coupled morphology is single-observable only"
+        observable_disambiguation = "checks whether morphology is tied to symbol_histogram_distance only"
+    else:
+        observable_reason = (
+            "alternate observable smokes exist, but the high-yield rank-order signature remains "
+            "observable-specific in the tested compact readout"
+        )
+        observable_disambiguation = (
+            "tests whether new admissible observables can reproduce or explain the symbol_histogram_distance "
+            "rank-order signature"
+        )
     rows.append({
         "target_id": "observable_extension",
         "target_type": "observable_extension",
-        "reason": "current retained coupled morphology is single-observable only",
+        "reason": observable_reason,
         "recommended_operator": "none_postprocessing_or_small_rescan",
         "recommended_horizon": "H32_or_H64",
         "recommended_pairs": "representative_low_medium_high_residual_pairs",
         "required_controls": "paired_baselines;artifact_completeness;reconstruction_audits",
-        "expected_disambiguation": "checks whether morphology is tied to symbol_histogram_distance only",
+        "expected_disambiguation": observable_disambiguation,
         "claim_boundary": CLAIM_BOUNDARY,
     })
     if pair005_seen:
@@ -853,6 +884,23 @@ def write_morphology_report(
         row for row in operator_rows
         if str(row.get("baseline_operator", "")).startswith("product")
     ]
+    observable_ids = sorted({
+        str(row.get("observable_id", ""))
+        for row in observable_rows
+        if row.get("observable_family") == "macro_invariant_law_observable"
+    })
+    if len(observable_ids) <= 1:
+        observable_coverage_text = (
+            "Observable coverage is currently single-observable only for retained coupled runs: "
+            f"`{observable_ids[0] if observable_ids else 'unknown'}` is the law observable available "
+            "in these compact outputs."
+        )
+    else:
+        observable_coverage_text = (
+            "Observable coverage now includes smoke-level retained coupled runs for: "
+            f"`{'; '.join(observable_ids)}`. The high-yield rank-order-boundary signature remains "
+            "specific to `symbol_histogram_distance` in the tested alternate-observable smokes."
+        )
     first_target = target_rows[0] if target_rows else {}
     lines = [
         "# Future Field Atlas Substrate Morphology Atlas Result",
@@ -927,7 +975,7 @@ def write_morphology_report(
         "",
         "## Observable Coverage",
         "",
-        "Observable coverage is currently single-observable only for retained coupled runs: `symbol_histogram_distance` is the law observable available in these compact outputs.",
+        observable_coverage_text,
         "",
         "## Pair Exemplars",
         "",
