@@ -9,6 +9,52 @@ patch notes at the top.
 
 ## 2026-06-02
 
+### Future Field Atlas Substrate Morphology Atlas
+
+Built the first substrate morphology atlas over retained Future Field Atlas
+coupled outputs. This was a postprocess over existing compact artifacts, not a
+new broad scan.
+
+Inputs:
+
+```text
+coupled run directories: 25
+compact summary directories: 2
+clean-gated coupled inputs: 25 / 25
+```
+
+Local output bundle:
+
+```text
+results/future_field_atlas/20260602_substrate_morphology_atlas_summary/
+```
+
+Retained note:
+
+```text
+docs/research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md
+```
+
+Main read:
+
+```text
+The retained coupled outputs now have a pair-aware morphology map. Pair005
+remains the only high-residual / joint-restrictive exemplar in this retained
+set, so it is useful as a stress exemplar but should not anchor a new branch
+without controls. Product selector remains the product-equivalence reference;
+zero-penalty joint rank-prefix remains a distinct coupled selector. Observable
+coverage is still single-observable only: symbol_histogram_distance.
+```
+
+Next recommendation:
+
+```text
+Run a small H64 shared-capacity smoke with pair005 plus pair000, pair001, and
+pair002 controls. Preserve product-selector and zero-penalty joint-selector
+controls. Add observable-extension work before stronger substrate-general
+claims.
+```
+
 ### Future Field Atlas Coupled H64 Mechanism Resolution
 
 Ran the follow-up H64 mechanism-resolution pass requested after the first

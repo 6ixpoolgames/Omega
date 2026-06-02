@@ -97,6 +97,16 @@ tested design. The true product selector is distinct from zero-penalty joint
 rank-prefix selection, so product-selector runs are the neutral reference for
 future coupled comparisons. Pair005 remains a heavy-pair / critical-pair clue
 and persisted in a targeted H128 depth check.
+The first substrate morphology atlas has now postprocessed retained coupled
+outputs directly. It ingested 25 coupled run directories and 2 compact summary
+directories, all clean-gated. Pair005 remains the only high-residual /
+joint-restrictive exemplar in the retained set, so it should be used with
+low/medium controls rather than treated as a branch basis by itself. The next
+small operator smoke should test shared-capacity coupling at H64 with pair005,
+pair000, pair001, and pair002, while preserving product-selector and
+zero-penalty joint-selector controls. Retained coupled morphology is still
+single-observable only (`symbol_histogram_distance`), so observable extension is
+also a priority before stronger substrate-general claims.
 ```
 
 Terminology rule:
@@ -112,6 +122,7 @@ Treat "budget_conservation", "budget_kind", "budget_weight", and
 Primary current design note:
 
 - `docs/specs/current/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md`
+- `docs/specs/current/FUTURE_FIELD_ATLAS_SUBSTRATE_MORPHOLOGY_SWEEP_SPEC.md`
 - `docs/FUTURE_FIELD_ATLAS_GLOSSARY.md`
 - `docs/implementation/FUTURE_FIELD_ATLAS_CHANGELOG.md`
 - `docs/implementation/RUN_RETENTION_POLICY.md`
@@ -130,6 +141,7 @@ Primary current design note:
 - `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_worker_spool_scale_validation_result.md`
 - `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_ladder_result.md`
 - `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_mechanism_resolution_result.md`
+- `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md`
 - `docs/specs/archive/rfs_mb0/RFS_MB0_TOP_M_MECHANISM_AUDIT_SPEC.md`
 - `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_top_m_mechanism_audit_result.md`
 - `docs/specs/archive/rfs_mb0/RFS_MB0_TOP_M_GEOMETRY_AUDIT_SPEC.md`

@@ -14,6 +14,7 @@ or historical run instructions here.
 Current active spec:
 
 - `current/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md`
+- `current/FUTURE_FIELD_ATLAS_SUBSTRATE_MORPHOLOGY_SWEEP_SPEC.md`
 
 ## Archive
 

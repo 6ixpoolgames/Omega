@@ -9,6 +9,49 @@ when a run or decision changes the project state.
 
 ## 2026-06-02
 
+### Substrate Morphology Summary Utility
+
+Added:
+
+```text
+omega.future_field_atlas.substrate_morphology_summary
+```
+
+The utility postprocesses retained Future Field Atlas coupled outputs into a
+compact morphology atlas:
+
+```text
+field_morphology_summary.csv
+pair_morphology_summary.csv
+operator_sensitivity_summary.csv
+horizon_onset_summary.csv
+observable_geometry_summary.csv
+pair_class_exemplar_summary.csv
+morphology_next_targets.csv
+substrate_morphology_manifest.json
+substrate_morphology_report.md
+```
+
+It also emits optional/status morphology tables when retained inputs support
+them:
+
+```text
+rank_boundary_offset_morphology.csv
+joint_candidate_crossing_morphology.csv
+composition_residual_morphology.csv
+frontier_growth_regime_summary.csv
+```
+
+Validated on the retained coupled H64/H128 broad runs, scalar ladders,
+mechanism-resolution runs, and pair005 forensics. The first atlas pass ingested
+25 clean coupled run directories and 2 compact summary directories.
+
+Tests:
+
+```text
+tests/test_substrate_morphology_summary.py
+```
+
 ### Documentation Directory Cleanup
 
 Reorganized repository-facing documentation to reduce root-folder clutter:

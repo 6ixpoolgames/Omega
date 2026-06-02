@@ -146,6 +146,12 @@ baseline joint support. It is a topology residual, not an interpretive label.
 : Coupled-branch feature reporting how much A and B marginal support remains in
 the coupled joint frontier relative to the product baseline.
 
+`substrate_morphology_summary`
+: Postprocessing layer that maps retained Future Field Atlas outputs into
+field, pair, operator-sensitivity, horizon-onset, observable-coverage, exemplar,
+and next-target tables. It is an atlas over existing measurements, not a new
+semantic detector or validation claim.
+
 `CoupledOperatorSpec`
 : First-class formal identity for the current coupled probe operator. It records
 the product baseline definition, joint candidate set, joint energy function,
