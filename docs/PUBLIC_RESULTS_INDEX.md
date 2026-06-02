@@ -38,8 +38,11 @@ The current claim is modest:
 > results show a marginal-preserving joint-restriction class under
 > `symbol_histogram_distance` with high-yield representatives `pair005`,
 > `pair012`, `pair014`, and `pair026`. The two tested alternate observables did
-> not reproduce the high-yield signature. Historical treatment names are
-> documentation-only translation aids.
+> not reproduce the high-yield signature. The first formal-interface distinction
+> panel now maps this representative/control set into declared finite
+> distinction-measure artifacts with 40 / 40 cells available and 0 missing or
+> blocked cells. Historical treatment names are documentation-only translation
+> aids.
 
 The latest state is an atlas posture: retained coupled outputs are now mapped
 with a substrate morphology postprocessor before designing the next operator.
@@ -48,9 +51,11 @@ pair005, pair012, pair014, and pair026 are high-residual / joint-restrictive
 while preserving component marginals under `symbol_histogram_distance`. The
 observable-extension smoke is negative for the tested alternates:
 `hamming_weight_or_nonzero_count` and `total_coordinate_mass` did not reproduce
-the high-yield signature. The current next target is a rank-order-boundary
-representative-control panel with low/medium controls, not broad H128 scale
-expansion.
+the high-yield signature. The formal-interface distinction panel is now the
+current bridge artifact: it compares representatives and controls against
+product, zero-penalty joint rank-prefix, scalar mismatch 0.020,
+shared_capacity v1, and rank_order_boundary references without semantic
+promotion.
 
 ## Best onboarding path
 
@@ -60,10 +65,11 @@ Start here:
 2. [`OMEGA_FORMALISM_PRIMER.md`](OMEGA_FORMALISM_PRIMER.md)
 3. [`EXTERNAL_READER_GUIDE.md`](EXTERNAL_READER_GUIDE.md)
 4. [`research_notes/omega_theory/README.md`](research_notes/omega_theory/README.md)
-5. [`research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md)
-6. [`research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md)
-7. [`research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md)
-8. [`FUTURE_FIELD_ATLAS_GLOSSARY.md`](FUTURE_FIELD_ATLAS_GLOSSARY.md)
+5. [`research_notes/validation_results/future_field_atlas/future_field_atlas_formal_interface_distinction_panel_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_formal_interface_distinction_panel_result.md)
+6. [`research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md)
+7. [`research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md)
+8. [`research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md)
+9. [`FUTURE_FIELD_ATLAS_GLOSSARY.md`](FUTURE_FIELD_ATLAS_GLOSSARY.md)
 
 ## Current live branch
 

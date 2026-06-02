@@ -24,10 +24,11 @@ For the current project state, read:
 4. [Theory Arm Map v0](docs/research_notes/omega_theory/theory_arm_map_v0.md)
 5. [Omega Theory Notes Map](docs/research_notes/omega_theory/README.md)
 6. [Future Field Atlas Instrument Spec](docs/specs/current/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md)
-7. [Rank-Order Boundary Class Expansion Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md)
-8. [Rank-Order Boundary Visualization Note](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md)
-9. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
-10. [Project Manual](docs/OMEGA_PROJECT_MANUAL.md)
+7. [Formal Interface Distinction Panel Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_formal_interface_distinction_panel_result.md)
+8. [Rank-Order Boundary Class Expansion Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md)
+9. [Rank-Order Boundary Visualization Note](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md)
+10. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
+11. [Project Manual](docs/OMEGA_PROJECT_MANUAL.md)
 
 ## The Core Idea
 
@@ -231,9 +232,10 @@ results.
 
 ## Current Next Step
 
-The next empirical step is not broad H128 scale expansion.
+The latest empirical step completed the compact representative-control
+formal-interface panel.
 
-The current recommended pass is a compact representative-control panel:
+It emits declared finite distinction-measure artifacts over:
 
 ```text
 high-yield representatives:
@@ -249,6 +251,10 @@ controls:
   scalar mismatch 0.020
   shared_capacity v1 reference
 ```
+
+The panel has 40 / 40 requested cells available, 0 missing or blocked cells, and
+separates the four high-yield representatives from the low/medium controls under
+the declared rank_order_boundary joint-vs-marginal finite measure.
 
 The current formal next step is to keep tightening the bridge from
 future-distinction dynamics to admissible process-bundle, identity-decay-null,

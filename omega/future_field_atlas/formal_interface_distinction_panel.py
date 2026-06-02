@@ -928,6 +928,24 @@ def render_report(
     high_yield_statuses = sorted({str(row.get("final_signature_class", "")) for row in high_yield_rank})
     control_statuses = sorted({str(row.get("final_signature_class", "")) for row in control_rank})
     complete_delta_rows = sum(1 for row in delta_rows if int_value(row.get("both_cells_available")) == 1)
+    gate_statuses = sorted({str(row.get("cell_status", "")) for row in condition_rows})
+    high_yield_lines = [
+        (
+            f"- {row.get('pair_id')}: residual={row.get('final_residual')}, "
+            f"density={row.get('final_joint_density_vs_marginal_product')}, "
+            f"full-window={row.get('full_window_signature_fraction')}, "
+            f"final-quarter={row.get('final_quarter_signature_fraction')}"
+        )
+        for row in high_yield_rank
+    ]
+    control_lines = [
+        (
+            f"- {row.get('pair_id')}: residual={row.get('final_residual')}, "
+            f"density={row.get('final_joint_density_vs_marginal_product')}, "
+            f"class={row.get('final_signature_class')}"
+        )
+        for row in control_rank
+    ]
     lines = [
         "# Future Field Atlas Formal Interface Distinction Panel",
         "",
@@ -946,6 +964,47 @@ def render_report(
         "",
         f"- high-yield rank-order-boundary final classes: {', '.join(high_yield_statuses) or 'none'}",
         f"- control rank-order-boundary final classes: {', '.join(control_statuses) or 'none'}",
+        "",
+        "High-yield rank-order-boundary cells:",
+        *high_yield_lines,
+        "",
+        "Control rank-order-boundary cells:",
+        *control_lines,
+        "",
+        "## Operator References",
+        "",
+        "- product_selector: true product-equivalence reference.",
+        "- zero_penalty_joint_rank_prefix: additive-energy joint rank-prefix at zero mismatch penalty.",
+        "- scalar_mismatch_0.020: scalar rank-boundary mismatch reference.",
+        "- shared_capacity_v1: marginal-pruning repair-target reference.",
+        "- rank_order_boundary: current live ordinal boundary operator.",
+        "",
+        "## Artifact Gates",
+        "",
+        f"- condition cell statuses: {', '.join(gate_statuses) or 'none'}",
+        "- interpretable cells require completed runs, no pair failures, no internal caps, complete artifacts, PASS reconstruction audits, and medium-sweep interpretation allowed.",
+        "",
+        "## Distinction Measure Manifest",
+        "",
+        "- marginal_preserving_joint_restrictive_indicator",
+        "- joint_density_vs_surviving_marginals",
+        "- high_yield_signature_horizon_persistence",
+        "- residual_delta_vs_product",
+        "- residual_delta_vs_zero_penalty_joint_rank_prefix",
+        "- residual_delta_vs_scalar_0.020",
+        "- residual_delta_vs_shared_capacity_v1",
+        "",
+        "## Joint-Vs-Marginal Retention",
+        "",
+        "The primary retained quantities are marginal retention, joint residual, joint retention, and joint density over surviving marginals. Missing or incomplete cells are not filled with zero.",
+        "",
+        "## Horizon Persistence",
+        "",
+        "Persistence is reported over full, post-onset, and final-quarter windows where available.",
+        "",
+        "## Operator Deltas",
+        "",
+        f"Operator-reference delta rows with both cells available: {complete_delta_rows}.",
         "",
         "## Missing Cells And Limits",
         "",

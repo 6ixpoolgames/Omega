@@ -16,6 +16,7 @@ For the project pitch and current formalism, read:
 
 Start with:
 
+- `future_field_atlas/future_field_atlas_formal_interface_distinction_panel_result.md`
 - `future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md`
 - `future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md`
 - `future_field_atlas/future_field_atlas_rank_order_boundary_neighbor_observable_sweep_result.md`

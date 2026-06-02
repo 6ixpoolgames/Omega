@@ -9,6 +9,47 @@ patch notes at the top.
 
 ## 2026-06-03
 
+### Future Field Atlas Formal Interface Distinction Panel
+
+Implemented and ran the first formal-interface distinction panel:
+
+```text
+omega.future_field_atlas.formal_interface_distinction_panel
+```
+
+Result note:
+
+```text
+docs/research_notes/validation_results/future_field_atlas/future_field_atlas_formal_interface_distinction_panel_result.md
+```
+
+Panel status:
+
+```text
+requested cells: 40
+available cells: 40
+missing or blocked cells: 0
+artifact completeness: complete
+reconstruction audits: PASS
+panel digest: f7a2c13f1b192751c0334936
+```
+
+Phase B filled missing H64 reference cells for `pair012`, `pair014`, `pair026`,
+and `pair045` across product, zero-penalty joint rank-prefix, scalar mismatch
+0.020, and shared_capacity v1 references. Completion runs consumed about 24.5
+minutes total and retained about 2.5 GiB locally after raw-spool deletion.
+
+Read:
+
+```text
+rank_order_boundary separates the four high-yield representatives from the
+low/medium controls under declared joint-vs-marginal finite distinction
+measures.
+
+This remains formal-interface geometry only, not proto-valuer, valuer,
+compatibility, support/capture/erasure, or Omega evidence.
+```
+
 ### Deeper Theory Navigation Pass
 
 Updated the main theory navigation surfaces after the top-level README/primer

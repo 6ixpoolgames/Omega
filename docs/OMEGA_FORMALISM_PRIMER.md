@@ -313,6 +313,12 @@ total_coordinate_mass
 
 did not reproduce the high-yield signature.
 
+The first formal-interface distinction panel is now complete. It maps the
+high-yield representatives and low/medium controls into declared finite
+distinction-measure artifacts across product, zero-penalty joint rank-prefix,
+scalar mismatch 0.020, shared_capacity v1, and rank_order_boundary references.
+The panel has 40 / 40 cells available and 0 missing or blocked cells.
+
 ## What Is Not Claimed
 
 The project does not currently claim:
@@ -355,10 +361,11 @@ For theory:
 For empirical status:
 
 ```text
-1. docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md
-2. docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md
-3. docs/research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md
-4. docs/PUBLIC_RESULTS_INDEX.md
+1. docs/research_notes/validation_results/future_field_atlas/future_field_atlas_formal_interface_distinction_panel_result.md
+2. docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md
+3. docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md
+4. docs/research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md
+5. docs/PUBLIC_RESULTS_INDEX.md
 ```
 
 For operations:
