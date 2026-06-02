@@ -15,9 +15,9 @@ Current active and recent live-instrument specs:
 
 - `current/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md`
 - `current/FUTURE_FIELD_ATLAS_RANK_ORDER_BOUNDARY_MEDIUM_SWEEP_SPEC.md`
-  (active next run)
+  (completed cleanly; yielded pair005-only H64/H128 result)
 - `current/FUTURE_FIELD_ATLAS_RANK_ORDER_NATIVE_SMOKE_SPEC.md` (completed;
-  rank-order boundary is current medium-sweep candidate)
+  rank-order boundary remains the current live coupled operator)
 - `current/FUTURE_FIELD_ATLAS_SUBSTRATE_MORPHOLOGY_SWEEP_SPEC.md`
 - `current/FUTURE_FIELD_ATLAS_SHARED_CAPACITY_SMOKE_SPEC.md` (completed; v1 not
   recommended for scale-up)

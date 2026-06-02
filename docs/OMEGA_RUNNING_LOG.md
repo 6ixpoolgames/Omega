@@ -9,6 +9,122 @@ patch notes at the top.
 
 ## 2026-06-02
 
+### Future Field Atlas Rank-Order Boundary Medium Sweep
+
+Ran the first medium pair-aware `rank_order_boundary` coupled selector pass and
+the conditional targeted H128 depth check.
+
+Retained note:
+
+```text
+docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_medium_sweep_result.md
+```
+
+H64 pair8 run:
+
+```text
+results/future_field_atlas/20260602_rank_order_boundary_h64_pair8_medium/
+```
+
+Gate results:
+
+```text
+status: COMPLETED
+horizon_max: 64
+pair_count_realized: 8 / 8
+coupled_pairs_failed: 0
+internal_cap_events: 0
+artifact_completeness_statuses: complete
+reconstruction audits: PASS 3
+medium_sweep_interpretation_allowed: 1
+elapsed_seconds: 397.633
+source_git_commit: eb594186cc0900be7c135460fc6129afbd2d4e12
+source_git_dirty: false
+```
+
+Final H64 read:
+
+```text
+pair000: residual 0.040000, A/B retention 1.000000 / 1.000000
+pair001: residual 0.050853, A/B retention 1.000000 / 1.000000
+pair002: residual 0.084000, A/B retention 1.000000 / 1.000000
+pair003: residual 0.064157, A/B retention 1.000000 / 1.000000
+pair004: residual 0.031818, A/B retention 1.000000 / 1.000000
+pair005: residual 0.753455, A/B retention 1.000000 / 1.000000
+pair006: residual 0.062222, A/B retention 1.000000 / 1.000000
+pair007: residual 0.064444, A/B retention 1.000000 / 1.000000
+```
+
+Only `pair005` qualified for targeted H128 depth under the high-residual,
+marginal-preserving gate.
+
+Targeted H128 run:
+
+```text
+results/future_field_atlas/20260602_rank_order_boundary_h128_pair005_depth/
+```
+
+Gate results:
+
+```text
+status: COMPLETED
+horizon_max: 128
+pair_count_realized: 1 / 1
+coupled_pairs_failed: 0
+internal_cap_events: 0
+artifact_completeness_statuses: complete
+reconstruction audits: PASS 3
+medium_sweep_interpretation_allowed: 1
+elapsed_seconds: 610.052
+source_git_commit: eb594186cc0900be7c135460fc6129afbd2d4e12
+source_git_dirty: false
+```
+
+Final H128 pair005 read:
+
+```text
+residual: 0.753455
+joint retention: 0.246545
+A/B retention: 1.000000 / 1.000000
+product support: 11000
+coupled support: 2712
+```
+
+The H128 final read equals the H64 final read for pair005, so the retained
+pair005 rank-order geometry is stable by H64 in this design.
+
+Regenerated the morphology atlas:
+
+```text
+source_run_count: 29
+source_summary_dir_count: 2
+manifest_digest: 81257330781d13a4499551a1
+```
+
+Updated next target:
+
+```text
+rank_order_boundary_pair005_neighbor_search
+```
+
+Interpretation:
+
+```text
+Rank-order-boundary alignment is clean across the H64 pair8 design and
+reproduces the pair005 marginal-preserving joint-restriction signature. The
+current evidence does not yet show a broad morphology class; it shows one robust
+high-yield exemplar, pair005, with seven low-residual marginal-preserving H64
+controls.
+```
+
+Next recommendation:
+
+```text
+Search for pair005-like neighbors and extend observables before any broad H128
+rank-order expansion. Keep product, zero-penalty joint rank-prefix, scalar
+0.020, and shared_capacity v1 as references.
+```
+
 ### Future Field Atlas Rank-Order Boundary H64 Smoke
 
 Implemented and smoked the first ordinal rank-boundary coupled selector:

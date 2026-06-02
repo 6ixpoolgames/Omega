@@ -241,6 +241,14 @@ Updated morphology target:
 rank_order_boundary_medium_pair_sweep
 ```
 
+Follow-up status:
+
+```text
+The medium pair-aware rank_order_boundary sweep has now completed cleanly.
+Only pair005 was high-residual and marginal-preserving in the H64 pair8 set.
+Targeted H128 pair005 reproduced the same final geometry.
+```
+
 ## Mechanism Read
 
 The result is the strongest coupled-operator smoke so far.
@@ -259,7 +267,9 @@ alignment than as scalar mismatch strength or generic shared capacity.
 
 ## Recommendation
 
-Run a medium pair-aware rank-order-boundary sweep before any broad H128 survey.
+The medium pair-aware rank-order-boundary sweep is complete. The next job is
+not broad H128 for its own sake; it is pair005-neighbor search and observable
+extension.
 
 Suggested next shape:
 
@@ -268,8 +278,8 @@ operator:
   rank_order_boundary
 
 horizon:
-  H64 breadth first
-  targeted H128 only for high-yield exemplars
+  H64 neighbor search first
+  targeted H128 only if new high-yield exemplars appear
 
 pairs:
   include pair005

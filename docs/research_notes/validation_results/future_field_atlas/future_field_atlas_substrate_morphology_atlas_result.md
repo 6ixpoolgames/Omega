@@ -6,17 +6,17 @@ Runner: `omega.future_field_atlas.substrate_morphology_summary`
 
 Spec: `docs/specs/current/FUTURE_FIELD_ATLAS_SUBSTRATE_MORPHOLOGY_SWEEP_SPEC.md`
 
-Update after rank-order-boundary smoke: regenerated with 27 coupled run
+Update after rank-order-boundary medium sweep: regenerated with 29 coupled run
 directories and 2 compact summary directories. The earlier shared-capacity
 target was tested cleanly but should not be scaled as v1. The
-rank-order-boundary target was also tested cleanly and is now the current
-medium-sweep candidate.
+rank-order-boundary medium sweep completed cleanly and isolated pair005 as the
+only high-residual marginal-preserving exemplar in the H64 pair8 set.
 
 ## Summary
 
 This pass built the first compact substrate morphology atlas over existing
 Future Field Atlas outputs. It did not launch a new broad scan. The regenerated
-bundle ingests 27 retained coupled run directories plus 2 compact summary
+bundle ingests 29 retained coupled run directories plus 2 compact summary
 directories and emits
 pair-aware morphology, operator sensitivity, horizon-onset, observable-coverage,
 and next-target tables.
@@ -54,8 +54,8 @@ pair005 H128 targeted depth checks
 H64 ladder and mechanism compact summary directories
 ```
 
-After the rank-order-boundary smoke, the regenerated local morphology bundle
-ingests 27 coupled run directories plus 2 compact summary directories. All 27
+After the rank-order-boundary medium sweep, the regenerated local morphology bundle
+ingests 29 coupled run directories plus 2 compact summary directories. All 29
 coupled run directories used here passed the clean infrastructure gates:
 
 ```text
@@ -77,16 +77,16 @@ results/future_field_atlas/20260602_substrate_morphology_atlas_summary/
 The postprocessor emitted:
 
 ```text
-field_morphology_summary.csv                 276 rows
-pair_morphology_summary.csv                  138 rows
-operator_sensitivity_summary.csv          107359 rows
-horizon_onset_summary.csv                   1631 rows
-observable_geometry_summary.csv              691 rows
+field_morphology_summary.csv                 294 rows
+pair_morphology_summary.csv                  147 rows
+operator_sensitivity_summary.csv          115542 rows
+horizon_onset_summary.csv                   1750 rows
+observable_geometry_summary.csv              736 rows
 pair_class_exemplar_summary.csv                6 rows
 morphology_next_targets.csv                    4 rows
 joint_candidate_crossing_morphology.csv        2 rows
 rank_boundary_offset_morphology.csv            2 rows
-frontier_growth_regime_summary.csv           276 rows
+frontier_growth_regime_summary.csv           294 rows
 composition_residual_morphology.csv            1 status row
 substrate_morphology_manifest.json
 substrate_morphology_report.md
@@ -102,24 +102,24 @@ Pair-level descriptive classes across retained rows:
 
 ```text
 pair_size_class:
-  light: 47
-  medium: 51
-  heavy: 40
+  light: 50
+  medium: 54
+  heavy: 43
 
 joint_residual_class:
-  low_residual: 93
+  low_residual: 100
   medium_residual: 28
-  high_residual: 17
+  high_residual: 19
 
 marginal_retention_class:
-  marginal_preserving: 124
+  marginal_preserving: 133
   marginal_loss_B: 11
   marginal_loss_both: 3
 
 joint_density_class:
-  product_dense: 100
+  product_dense: 107
   product_sparse: 21
-  joint_restrictive: 17
+  joint_restrictive: 19
 ```
 
 The high-residual / joint-restrictive rows are currently pair005-only in the
@@ -224,21 +224,41 @@ rank_order_boundary_h64:
   pair005: high_residual / marginal_preserving / joint_restrictive
 ```
 
+The medium rank-order-boundary sweep has now completed:
+
+```text
+rank_order_boundary_h64_pair8:
+  pair000, pair001, pair002, pair003, pair004, pair006, pair007:
+    low_residual / marginal_preserving
+  pair005:
+    high_residual / marginal_preserving / joint_restrictive
+
+rank_order_boundary_h128_pair005:
+  final residual: 0.753455
+  final joint retention: 0.246545
+  A/B marginal retention: 1.0 / 1.0
+```
+
 ## Recommendation
 
 Do not scale `shared_capacity` v1. It prunes component marginal support and then
 becomes dense over the surviving marginals, which is not the desired
 pair005-like scalar-mismatch signature.
 
-Proceed to a medium pair-aware `rank_order_boundary` sweep before any broad
-H128 survey:
+The medium pair-aware `rank_order_boundary` sweep is complete. Do not broaden
+H128 just for scale yet; the current result is pair005-only. Proceed to a
+targeted neighbor/observable pass:
 
 ```text
-rank_order_boundary_medium_pair_sweep:
-  H64 breadth first;
-  targeted H128 only for high-yield exemplars;
+rank_order_boundary_pair005_neighbor_search:
+  find whether pair005 has nearby high-yield neighbors;
+  keep low/medium controls;
   preserve product-selector, zero-penalty joint rank-prefix, scalar 0.020, and
   shared_capacity v1 controls.
+
+observable_extension:
+  add at least one additional observable before stronger invariant-robustness
+  language.
 
 shared_capacity_v2_marginal_coverage_repair:
   only if the theory side specifically needs finite shared capacity as the next

@@ -1,6 +1,6 @@
 # Future Field Atlas Rank-Order Boundary Medium Sweep Spec
 
-Status: active next run
+Status: completed cleanly
 
 Target runner: `omega.future_field_atlas.run_coupled_future_field_atlas`
 
@@ -29,6 +29,20 @@ pair005:
 The live question is whether ordinal rank-boundary alignment defines a broader
 pair morphology class, or whether pair005 remains a single critical-pair
 exemplar.
+
+Outcome:
+
+```text
+H64 pair8 completed cleanly.
+Only pair005 was high-residual and marginal-preserving.
+Targeted H128 pair005 completed cleanly and reproduced the same final geometry.
+```
+
+Retained result:
+
+```text
+docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_medium_sweep_result.md
+```
 
 ## Claim Boundary
 

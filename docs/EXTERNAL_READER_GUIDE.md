@@ -39,7 +39,10 @@ The current atlas posture is now morphology-first. Retained coupled runs are
 postprocessed into pair-aware morphology tables before designing richer coupled
 operators. The first morphology atlas keeps pair005 as a high-residual exemplar
 but pairs it with low/medium controls before follow-up; it also marks the
-retained coupled read as single-observable only.
+retained coupled read as single-observable only. The rank-order-boundary medium
+sweep then completed the first pair8 check: all pairs preserved A/B marginals,
+only pair005 was high-residual / joint-restrictive, and targeted H128 pair005
+reproduced the H64 final geometry.
 
 The current live substrate program uses explicit **transition energy**:
 
@@ -95,10 +98,11 @@ The preservation-focused asymmetry-ladder and low-beta scaleups strengthened the
 
 The current Future Field Atlas rebuild expresses that calibration pattern from
 raw topology and has moved into coupled future-field morphology. The latest
-retained result is not a broad scale expansion; it is an atlas summary over
-existing coupled outputs. It recommends a small H64 shared-capacity probe using
-pair005 plus low/medium controls, with product-selector and zero-penalty
-joint-selector references.
+retained result is not a broad scale expansion; it is a rank-order-boundary
+mechanism-resolution pass over H64 pair8 with targeted H128 pair005 depth. It
+recommends pair005-neighbor search and observable extension before broad H128
+scale expansion, with product-selector, zero-penalty joint-selector, scalar
+0.020, and shared-capacity v1 references retained as controls.
 
 ## 3. Core vocabulary
 
@@ -349,16 +353,17 @@ shared_capacity v1:
   surviving marginal support
 
 rank_order_boundary:
-  operational and promising in the small H64 smoke; it keeps low/medium controls
-  low-residual and marginal-preserving while reproducing pair005-like
-  marginal-preserving joint restriction
+  operational in the H64 pair8 medium sweep; seven pairs stayed low-residual and
+  marginal-preserving, while pair005 remained high-residual / joint-restrictive
+  with A/B retention 1.0 / 1.0; targeted H128 pair005 reproduced the H64 final
+  geometry
 ```
 
 The focus should be:
 
 ```text
 do not scale shared_capacity v1;
-run a medium pair-aware rank_order_boundary sweep before broad H128;
+search for pair005-like neighbors before broad H128;
 add observable-extension work before stronger substrate-general claims.
 ```
 
