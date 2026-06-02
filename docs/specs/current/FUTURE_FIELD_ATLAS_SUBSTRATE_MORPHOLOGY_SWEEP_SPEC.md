@@ -1,6 +1,6 @@
 # Future Field Atlas Substrate Morphology Sweep Spec
 
-Status: spec inbox / pending implementation  
+Status: current spec / pending implementation  
 Project posture: atlas-first, no Omega claims  
 Target package: `omega.future_field_atlas`  
 Preferred new utility: `omega.future_field_atlas.substrate_morphology_summary`
