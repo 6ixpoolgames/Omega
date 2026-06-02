@@ -1,6 +1,6 @@
 # Omega Project Manual
 
-Last updated: 2026-06-02
+Last updated: 2026-06-03
 
 Repository: https://github.com/6ixpoolgames/Omega
 
@@ -10,6 +10,33 @@ This repository is the local validation workspace for the Omega theory project.
 Its purpose is not to prove the theory by simulation. Its purpose is to extract
 candidate mathematical objects, make them operational, test them against nulls,
 and force clear failure modes.
+
+## Documentation Roles
+
+The top-level documentation now has separated jobs:
+
+```text
+README.md:
+  public pitch and current state
+
+docs/OMEGA_FORMALISM_PRIMER.md:
+  readable bridge to the current formal stack
+
+docs/EXTERNAL_READER_GUIDE.md:
+  longer collaborator onboarding guide
+
+docs/OMEGA_PROJECT_MANUAL.md:
+  operations, local commands, run workflow, retention, repo process
+
+docs/PUBLIC_RESULTS_INDEX.md:
+  empirical result index
+
+docs/OMEGA_RUNNING_LOG.md:
+  chronological project log
+```
+
+Do not make this manual the canonical public pitch. Keep public-facing summary
+language in `README.md` and formal onboarding in `docs/OMEGA_FORMALISM_PRIMER.md`.
 
 Current public posture:
 

@@ -5,6 +5,11 @@ human-readable retained notes, not raw run output. Large generated artifacts
 belong under local `results/` and should only be pushed when they are explicitly
 small, curated, and useful.
 
+For the project pitch and current formalism, read:
+
+- `../../../README.md`
+- `../../OMEGA_FORMALISM_PRIMER.md`
+
 ## Current Branch
 
 - `future_field_atlas/` contains the current active empirical branch.

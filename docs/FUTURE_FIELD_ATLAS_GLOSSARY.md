@@ -6,6 +6,10 @@ Scope: terminology, historical translation, and onboarding for the clean atlas b
 This document is not imported by the runtime. The clean atlas code should use
 mathematical specs and operator fields, not historical treatment-arm names.
 
+For the broader Omega formalism, read `docs/OMEGA_FORMALISM_PRIMER.md`. This
+glossary is narrower: it translates Future Field Atlas runtime and result
+vocabulary.
+
 ## Runtime Vocabulary
 
 `StateSpaceSpec`

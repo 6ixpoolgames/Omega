@@ -7,6 +7,36 @@ run.
 Entries are organized in rough reverse chronological order, with the most recent
 patch notes at the top.
 
+## 2026-06-03
+
+### Top-Level Documentation Rewrite
+
+Streamlined the public-facing documentation roles:
+
+```text
+README.md:
+  public pitch and current state
+
+docs/OMEGA_FORMALISM_PRIMER.md:
+  readable bridge to the current formal stack
+
+docs/EXTERNAL_READER_GUIDE.md:
+  longer collaborator onboarding guide
+
+docs/OMEGA_PROJECT_MANUAL.md:
+  operations, local commands, run workflow, retention, repo process
+
+docs/PUBLIC_RESULTS_INDEX.md:
+  empirical result index
+
+docs/OMEGA_RUNNING_LOG.md:
+  chronological project log
+```
+
+The README now frontloads the project ambition and the current best formalism
+before the operational details. The manual remains the place for local workflow
+and run mechanics.
+
 ## 2026-06-02
 
 ### Future Field Atlas Rank-Order Boundary Visualizations

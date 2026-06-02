@@ -2,6 +2,13 @@
 
 This index is for outside readers who want to understand the current empirical state of the Omega / Reachable Futures repository without reading every historical artifact.
 
+For the project pitch and current formal stack, start with:
+
+```text
+README.md
+docs/OMEGA_FORMALISM_PRIMER.md
+```
+
 The repository contains many exploratory runs. The current active branch is a
 clean **Future Field Atlas** rebuild over the RFS-MB0 horizon-transport lessons:
 raw reachable-frontier topology first, response labels last. Older VAL0/VAL1/RFS0
@@ -26,7 +33,13 @@ graph-channel causality
 
 The current claim is modest:
 
-> Directional horizon-transport instrumentation can measure matched-control-separated response profiles in neutral finite transition substrates. Transition-energy substrate laws express different response regimes. Preservation asymmetry is currently the strongest non-template substrate hook for aligned amplification, with low-beta sensitivity now mapped below beta `0.25`; the latest MaxEnt/top-m audits indicate that the current preservation response is narrow to hard top-m selection geometry rather than recovered by the tested stochastic relaxations. The hard-top-m mechanism branch now points toward a fixed low-rank successor-boundary pattern: response appears when the retained selected-edge set is the low-energy rank prefix, not under generic lower out-degree, random deletion, or expansion. The current implementation work is now rebuilding the instrument as a Future Field Atlas so raw topology, rank-boundary anatomy, and transport matrices are emitted before any response labels. Conditions are represented by state-space, transition-law, selection-operator, observable, and frontier-scan specs; formal spec manifests, condition-identity manifests, completeness summaries, and reconstruction audits are now part of the smoke output. The coupled branch now separates true product-selector behavior from zero-penalty joint rank-prefix selection; near-zero scalar mismatch effects are detectable but saturate by `0.020` in the tested H64 pair8 design. The first shared-capacity selector smoke completed cleanly but should not be scaled as-is because it prunes component marginal support instead of preserving marginals while restricting joint combinations. The rank-order-boundary selector now has a clean symbol_histogram_distance class signal: pair005, pair012, pair014, and pair026 are high-residual / marginal-preserving, with targeted H128 confirming pair012, pair014, and pair026. The two tested alternate observables did not reproduce the high-yield signature. Historical treatment names are documentation-only translation aids.
+> Future Field Atlas can measure reconstructible finite future-field topology
+> under lawful transition substrates. Current rank-order-boundary coupled
+> results show a marginal-preserving joint-restriction class under
+> `symbol_histogram_distance` with high-yield representatives `pair005`,
+> `pair012`, `pair014`, and `pair026`. The two tested alternate observables did
+> not reproduce the high-yield signature. Historical treatment names are
+> documentation-only translation aids.
 
 The latest state is an atlas posture: retained coupled outputs are now mapped
 with a substrate morphology postprocessor before designing the next operator.
@@ -43,36 +56,13 @@ expansion.
 
 Start here:
 
-1. [`docs/EXTERNAL_READER_GUIDE.md`](EXTERNAL_READER_GUIDE.md)
-2. [`README.md`](../README.md)
-3. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_phase0_1_smoke_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_phase0_1_smoke_result.md)
-4. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_compact_manageability_h64_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_compact_manageability_h64_result.md)
-5. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_default_gzip_compression_smoke.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_default_gzip_compression_smoke.md)
-6. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_h128_calibration_pass_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_h128_calibration_pass_result.md)
-7. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_hardening_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_hardening_result.md)
-8. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_sharded_staged_sweep_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_sharded_staged_sweep_result.md)
-9. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_lossless_block_audit_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_lossless_block_audit_result.md)
-10. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_broad_sweep_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_broad_sweep_result.md)
-11. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h128_and_triadic_profile_smoke_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h128_and_triadic_profile_smoke_result.md)
-12. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_worker_spool_scale_validation_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_worker_spool_scale_validation_result.md)
-13. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_ladder_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_ladder_result.md)
-14. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_mechanism_resolution_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_mechanism_resolution_result.md)
-15. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md)
-16. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md)
-17. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md)
-18. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_neighbor_observable_sweep_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_neighbor_observable_sweep_result.md)
-19. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_medium_sweep_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_medium_sweep_result.md)
-20. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_h64_smoke_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_h64_smoke_result.md)
-21. [`docs/research_notes/validation_results/future_field_atlas/future_field_atlas_shared_capacity_h64_smoke_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_shared_capacity_h64_smoke_result.md)
-22. [`docs/FUTURE_FIELD_ATLAS_GLOSSARY.md`](FUTURE_FIELD_ATLAS_GLOSSARY.md)
-23. [`docs/research_notes/validation_results/rfs_mb0/rfs_mb0_top_m_mechanism_audit_result.md`](research_notes/validation_results/rfs_mb0/rfs_mb0_top_m_mechanism_audit_result.md)
-24. [`docs/research_notes/validation_results/rfs_mb0/rfs_mb0_top_m_geometry_audit_result.md`](research_notes/validation_results/rfs_mb0/rfs_mb0_top_m_geometry_audit_result.md)
-25. [`docs/research_notes/validation_results/rfs_mb0/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md`](research_notes/validation_results/rfs_mb0/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md)
-26. [`docs/research_notes/validation_results/rfs_mb0/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`](research_notes/validation_results/rfs_mb0/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md)
-27. [`docs/research_notes/validation_results/rfs_mb0/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md`](research_notes/validation_results/rfs_mb0/rfs_mb0_low_beta_preservation_sensitivity_scaleup_result.md)
-28. [`docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md`](research_notes/omega_theory/horizon_transport_aligned_amplification.md)
-29. [`docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md`](research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
-30. [`docs/research_notes/omega_theory/transition_energy_substrate_atlas.md`](research_notes/omega_theory/transition_energy_substrate_atlas.md)
+1. [`README.md`](../README.md)
+2. [`OMEGA_FORMALISM_PRIMER.md`](OMEGA_FORMALISM_PRIMER.md)
+3. [`EXTERNAL_READER_GUIDE.md`](EXTERNAL_READER_GUIDE.md)
+4. [`research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md)
+5. [`research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md)
+6. [`research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md)
+7. [`FUTURE_FIELD_ATLAS_GLOSSARY.md`](FUTURE_FIELD_ATLAS_GLOSSARY.md)
 
 ## Current live branch
 

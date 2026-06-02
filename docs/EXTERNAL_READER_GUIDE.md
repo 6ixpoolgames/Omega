@@ -8,6 +8,17 @@ Claim boundary: this repository does not claim Omega validation, agency detectio
 
 This repository is an empirical research workspace for the Omega / Reachable Futures project.
 
+For the shortest public overview, read the repository README first. For the
+current formal stack, read:
+
+```text
+docs/OMEGA_FORMALISM_PRIMER.md
+```
+
+This guide is the longer collaborator tour: it explains how the formal ambition
+connects to the current Future Field Atlas empirical branch and what the current
+results do and do not mean.
+
 The current work asks a narrow question:
 
 ```text

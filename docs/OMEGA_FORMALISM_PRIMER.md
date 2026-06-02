@@ -1,0 +1,367 @@
+# Omega Formalism Primer
+
+Status: public onboarding / current best formalism  
+Scope: compact bridge from README to the dense theory notes  
+Claim boundary: formal orientation only; not empirical validation, not valuer detection, not Omega validation
+
+## One-Sentence Ambition
+
+Omega is an attempt to formalize **value-bearing futures** without taking
+reward, utility, moral rules, fixed agents, fixed selves, or privileged valuers
+as primitives.
+
+The project asks whether there is a substrate-neutral structure beneath those
+later concepts:
+
+```text
+future-bearing distinctions that propagate recoverably, non-erasingly, and
+compatibly through lawful dynamics.
+```
+
+The empirical arm is not trying to detect value directly. It is building a
+finite microscope for the precursor geometry.
+
+## The Current Formal Object
+
+The current formal core is **future-distinction dynamics**.
+
+The base grammar is:
+
+```text
+relation -> distinction -> asymmetry -> dynamics
+```
+
+Where:
+
+```text
+relation:
+  the substrate condition; what can follow what
+
+distinction:
+  future-bearing content; a difference whose consequences remain separable
+  under declared admissible observables
+
+asymmetry:
+  lawful non-neutrality; the channeling rule that orders possible futures
+
+dynamics:
+  the iterated unfolding of future-distinctions through relations under
+  asymmetry
+```
+
+The compact working definition is:
+
+```text
+Omega is the admissible subset of future-field dynamics for which
+future-relevant distinctions persist to terminus in a recoverable, non-erasing,
+and compatible manner.
+```
+
+The newer completion-layer target is:
+
+```text
+Omega is the space of maximal admissible compatibility completions in which
+proto-valuer-bearing dynamics propagate recoverably and non-erasingly without
+systematic irreversible destruction of one another's distinction-content.
+```
+
+This is the target formal object. It is not an empirical result.
+
+## Why This Is Not Utility, Reward, or Ethics
+
+Omega is not defined as:
+
+```text
+maximizing reward;
+maximizing utility;
+maximizing entropy;
+minimizing suffering;
+preserving life;
+preserving agents;
+obeying a moral rule;
+protecting a privileged valuer.
+```
+
+Those may be downstream interpretations in some substrates. They are not
+allowed as primitives.
+
+The project starts lower:
+
+```text
+Can futures carry distinctions?
+Can those distinctions remain recoverable?
+Can they avoid erasing one another under composition?
+Can a process maintain distinction-content through churn better than matched
+identity-decay nulls?
+Can such processes compose into maximal compatibility completions?
+```
+
+## Layered Formal Stack
+
+The current theory arm is organized as a ladder.
+
+### Layer 0: Future-Distinction Dynamics
+
+Primary note:
+
+```text
+docs/research_notes/omega_theory/omega_formal_core_v0_2_future_distinction_dynamics.md
+```
+
+Defines:
+
+```text
+future fields;
+admissible observables;
+future-distinctions;
+future-distinction capacity;
+recoverability;
+non-erasure;
+compatibility;
+proto-Omega / Omega claim discipline.
+```
+
+Key correction:
+
+```text
+Persistent distinction does not mean "different under every quotient forever."
+It means separable under a declared admissible observable family over a declared
+horizon regime.
+```
+
+### Layer 1: Admissibility and Identity-Decay Nulls
+
+Primary notes:
+
+```text
+docs/research_notes/omega_theory/admissibility_enrichment_and_identity_decay_nulls.md
+docs/research_notes/omega_theory/identity_decay_null_taxonomy_v0.md
+```
+
+Purpose:
+
+```text
+Define candidate process bundles, activity channels, matched nulls, and
+maintenance gaps without making self, identity, or dissolution primitive.
+```
+
+Key correction:
+
+```text
+Identity-decay is not a cosmic law. It is a declared matched null comparison:
+what distinction-content would be expected to decay when the maintaining
+activity is passivized, randomized, ablated, unsupported, or otherwise removed.
+```
+
+### Layer 2: Proto-Valuer Ladder
+
+Primary notes:
+
+```text
+docs/research_notes/omega_theory/omega_proto_valuer_compatibility_completions.md
+docs/research_notes/omega_theory/finite_proto_valuer_separation_theorems_v0.md
+docs/research_notes/omega_theory/tiny_transition_system_witnesses_v0.md
+```
+
+The ladder is:
+
+```text
+future-distinction capacity
+-> process-bundle designation
+-> maintenance over identity-decay null
+-> self-conditioning of transition environment
+-> proto-valuer
+-> compatibility-audited valuer
+```
+
+Important boundary:
+
+```text
+Current empirical results do not instantiate proto-valuers or valuers.
+```
+
+The ladder exists to prevent overpromotion from local persistence or high
+residuals into value language.
+
+### Layer 3: Compatibility Completions
+
+Primary notes:
+
+```text
+docs/research_notes/omega_theory/finite_omega_completion_theorems_v0.md
+docs/research_notes/omega_theory/compatibility_audit_taxonomy_v0.md
+```
+
+The completion layer asks:
+
+```text
+Which candidate future-bearing units can jointly propagate without systematic
+irreversible destruction of each other's distinction-content?
+```
+
+Finite theorem scaffolds currently establish:
+
+```text
+finite maximal admissible completions exist when the admissible family is
+nonempty;
+
+a greatest completion need not exist;
+
+pairwise compatibility does not imply joint compatibility;
+
+marginal continuation does not imply joint-field compatibility;
+
+finite completions are computable by exhaustive enumeration in principle.
+```
+
+These are small finite facts, not a proof that Omega exists physically.
+
+### Layer 4: Finite Distinction Measures
+
+Primary note:
+
+```text
+docs/research_notes/omega_theory/finite_distinction_measures_v0.md
+```
+
+Purpose:
+
+```text
+Prevent the metric from becoming a back door.
+```
+
+Finite distinction measures must be:
+
+```text
+predeclared;
+finite;
+reconstructible;
+observable-indexed;
+horizon-scoped;
+control-auditable;
+claim-bounded.
+```
+
+They may measure finite distinction structure. They do not detect value,
+valuerhood, agency, identity, support, capture, erasure, compatibility, or
+Omega.
+
+### Layer 5: Empirical Interface
+
+Primary empirical instrument:
+
+```text
+Future Field Atlas
+```
+
+It emits:
+
+```text
+formal spec identity;
+reachable-frontier topology;
+product and coupled future-field baselines;
+artifact completeness status;
+reconstruction audits;
+operator and observable summaries;
+compact retained morphology.
+```
+
+The empirical arm must eventually add:
+
+```text
+process-bundle manifests;
+admissible observable manifests;
+identity-decay null manifests;
+maintenance-gap rows;
+self-conditioning rows;
+compatibility-audit rows.
+```
+
+Those are future targets, not current claims.
+
+## Current Empirical Status
+
+The current empirical result is modest but useful.
+
+Future Field Atlas can measure reconstructible finite future-field topology
+under lawful transition substrates.
+
+Current coupled rank-order-boundary results show a marginal-preserving
+joint-restriction class under `symbol_histogram_distance`:
+
+```text
+pair005
+pair012
+pair014
+pair026
+```
+
+The observed pattern:
+
+```text
+A and B marginal support are preserved;
+joint support is restricted relative to the product baseline;
+the effect is visible in compact topology summaries and targeted H128 depth.
+```
+
+The tested alternate observables:
+
+```text
+hamming_weight_or_nonzero_count
+total_coordinate_mass
+```
+
+did not reproduce the high-yield signature.
+
+## What Is Not Claimed
+
+The project does not currently claim:
+
+```text
+Omega validation;
+proto-valuer detection;
+valuer detection;
+agent detection;
+identity detection;
+value detection;
+compatibility detection;
+support / capture / erasure detection;
+life or self-replication detection;
+holdout readiness;
+substrate-general theory validation.
+```
+
+The strongest current claim is:
+
+```text
+We have a formal target, finite scaffolds that block several easy collapses,
+and an empirical atlas that can probe precursor future-field topology under
+strict reconstruction and claim boundaries.
+```
+
+## Recommended Reading Order
+
+For theory:
+
+```text
+1. docs/research_notes/omega_theory/omega_formal_core_v0_2_future_distinction_dynamics.md
+2. docs/research_notes/omega_theory/theory_arm_map_v0.md
+3. docs/research_notes/omega_theory/finite_omega_completion_theorems_v0.md
+4. docs/research_notes/omega_theory/finite_distinction_measures_v0.md
+5. docs/research_notes/omega_theory/compatibility_audit_taxonomy_v0.md
+```
+
+For empirical status:
+
+```text
+1. docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md
+2. docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md
+3. docs/research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md
+4. docs/PUBLIC_RESULTS_INDEX.md
+```
+
+For operations:
+
+```text
+docs/OMEGA_PROJECT_MANUAL.md
+```

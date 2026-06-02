@@ -1,135 +1,62 @@
 # Omega / Reachable Futures Lab
 
-This repository is the working lab for the **Omega / Reachable Futures** research project.
+This repository is the working lab for the **Omega / Reachable Futures**
+research project.
 
-The current active program is **Future Field Atlas**: a topology-first instrument for scanning finite future fields under lawful transformations. It records raw reachable-frontier structure, preserves formal condition identity, checks reconstruction audits, and only then supports downstream interpretation.
+Omega is an attempt to formalize **value-bearing futures** without starting
+from reward, utility, moral rules, fixed agent boundaries, fixed selves, or
+privileged valuers.
 
-The long-term Omega ambition is broader: a substrate-neutral account of value-bearing futures and alignment-relevant failure modes that does not begin from rewards, utility functions, moral rules, fixed agent boundaries, or privileged valuers.
-
-This repository does **not** prove Omega. It builds instruments, finite theorem scaffolds, and formal objects that let weak formulations fail.
-
-## Start here
-
-For the current project state, read these first:
-
-1. [External Reader Guide](docs/EXTERNAL_READER_GUIDE.md)
-2. [Omega Formal Core v0.2: Future-Distinction Dynamics](docs/research_notes/omega_theory/omega_formal_core_v0_2_future_distinction_dynamics.md)
-3. [Theory Arm Map v0](docs/research_notes/omega_theory/theory_arm_map_v0.md)
-4. [Future Field Atlas Instrument Spec](docs/specs/current/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md)
-5. [Future Field Atlas Glossary](docs/FUTURE_FIELD_ATLAS_GLOSSARY.md)
-6. [Substrate Morphology Atlas Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md)
-7. [Rank-Order Boundary Class Expansion Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md)
-8. [Rank-Order Boundary Visualization Note](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md)
-9. [Rank-Order Boundary Neighbor / Observable Sweep Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_neighbor_observable_sweep_result.md)
-10. [Rank-Order Boundary Medium Sweep Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_medium_sweep_result.md)
-11. [Rank-Order Boundary H64 Smoke Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_h64_smoke_result.md)
-12. [Shared-Capacity H64 Smoke Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_shared_capacity_h64_smoke_result.md)
-13. [Coupled H64 Mechanism-Resolution Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_mechanism_resolution_result.md)
-14. [Coupled H64 Ladder Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_ladder_result.md)
-15. [Coupled H64 Broad Sweep Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_broad_sweep_result.md)
-16. [Coupled Worker-Spool Scale Validation](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_worker_spool_scale_validation_result.md)
-17. [Coupled H128 Depth and Triadic Profile Smoke](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h128_and_triadic_profile_smoke_result.md)
-18. [Future Field Atlas H128 Calibration Pass](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_h128_calibration_pass_result.md)
-19. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
-
-Historical RFS-MB0 results are still retained, but they are now background. Future Field Atlas is the fresh active empirical frame. The old theory notes remain useful provenance, but the active theory arm is now the v0.2 formal core plus the finite admissibility / theorem scaffold listed below.
-
-## Current status
-
-The live empirical object is **not** the old response-classifier runner. It is:
+The project is ambitious, but the current claim is deliberately modest:
 
 ```text
-Future Field Atlas:
-  formal spec identity;
-  raw reachable-frontier topology;
-  product and coupled future-field baselines;
-  artifact completeness semantics;
-  reconstruction audits;
-  compact retention summaries;
-  labels last, if at all.
+We are building formal scaffolds and empirical instruments for finite
+future-field dynamics. We are not claiming Omega validation.
 ```
 
-The single-field atlas has passed H128 calibration with complete artifacts and reconstruction audits. The coupled atlas has passed small hardening runs, H64 pair8 breadth, selected H128 depth checks, coupling-strength ladders, mechanism-resolution passes, substrate morphology postprocessing, shared-capacity smoke, and rank-order-boundary operator probes.
+## Start Here
 
-The coupled H64 ladder first found threshold-like behavior in the current rank-boundary mismatch operator:
+For the current project state, read:
+
+1. [Omega Formalism Primer](docs/OMEGA_FORMALISM_PRIMER.md)
+2. [External Reader Guide](docs/EXTERNAL_READER_GUIDE.md)
+3. [Omega Formal Core v0.2](docs/research_notes/omega_theory/omega_formal_core_v0_2_future_distinction_dynamics.md)
+4. [Theory Arm Map v0](docs/research_notes/omega_theory/theory_arm_map_v0.md)
+5. [Future Field Atlas Instrument Spec](docs/specs/current/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md)
+6. [Rank-Order Boundary Class Expansion Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md)
+7. [Rank-Order Boundary Visualization Note](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md)
+8. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
+9. [Project Manual](docs/OMEGA_PROJECT_MANUAL.md)
+
+## The Core Idea
+
+The current formal core is **future-distinction dynamics**.
+
+The base grammar is:
 
 ```text
-0.00 differs from positive penalty;
-0.05, 0.10, 0.25, and 0.50 are topology-identical at this resolution;
-positive penalty preserves A/B marginal reachability in the primary readout;
-pair005 is anomalous and becomes much more joint-restrictive at H64.
+relation -> distinction -> asymmetry -> dynamics
 ```
 
-The follow-up mechanism-resolution pass refined that read:
+Where:
 
 ```text
-0.001 differs from 0.000;
-0.001, 0.002, 0.005, and 0.010 are distinct in compact topology digests;
-0.020 and 0.050 saturate to the same compact topology digest;
-true product selection differs from zero-penalty joint rank-prefix selection;
-pair005 remains a heavy-pair / critical-pair clue and persists in targeted H128.
+relation:
+  what can follow what
+
+distinction:
+  future-bearing content; differences whose consequences remain separable
+  under declared admissible observables
+
+asymmetry:
+  lawful non-neutrality; how possible futures are channeled
+
+dynamics:
+  the iterated unfolding of future-distinctions through relations under
+  asymmetry
 ```
 
-The first substrate morphology atlas now maps the retained coupled outputs directly instead of treating any single operator ladder as the whole object:
-
-```text
-37 retained coupled run directories ingested;
-all 37 coupled inputs passed clean gates;
-pair005, pair012, pair014, and pair026 are high-residual / joint-restrictive
-rank_order_boundary exemplars under symbol_histogram_distance;
-observable coverage now includes hamming_weight_or_nonzero_count,
-symbol_histogram_distance, and total_coordinate_mass smokes.
-```
-
-The first shared-capacity H64 smoke completed cleanly, but it did **not** earn scale-up as a mechanism branch:
-
-```text
-shared_capacity v1:
-  operational in the coupled atlas;
-  no caps, complete artifacts, reconstruction audits PASS;
-  prunes A/B marginal support and then becomes product-dense over surviving marginals.
-
-desired pair005-like scalar-mismatch signature:
-  preserved A/B marginals;
-  restricted joint combinations.
-```
-
-The first rank-order-boundary H64 smoke then recovered the desired small-set pattern:
-
-```text
-rank_order_boundary:
-  operational in the coupled atlas;
-  no caps, complete artifacts, reconstruction audits PASS;
-  pair000/pair001/pair002 stayed low-residual and marginal-preserving;
-  pair005 became high-residual and joint-restrictive while preserving A/B marginals.
-
-rank_order_boundary medium sweep:
-  H64 pair8 completed cleanly;
-  pair005 was the only high-residual marginal-preserving pair;
-  targeted H128 pair005 confirmed the same final geometry.
-
-rank_order_boundary neighbor / observable sweep:
-  H64 neighbor search found new high-residual marginal-preserving pairs:
-    pair012 and pair014;
-  targeted H128 confirmed pair012 and pair014 final geometry;
-  hamming_weight_or_nonzero_count and total_coordinate_mass smokes did not
-  reproduce the high-yield signature.
-
-rank_order_boundary class expansion:
-  H64 pair indexes 24-47 completed cleanly;
-  pair026 became an additional high-residual marginal-preserving exemplar;
-  targeted H128 confirmed pair026 final geometry;
-  the current high-yield representative set is pair005, pair012, pair014,
-  and pair026 under symbol_histogram_distance.
-```
-
-This is not an Omega result. It is clean product-vs-coupled future-field geometry under formal operators.
-
-## Current formal core and formal arm
-
-The current formal anchor remains [Omega Formal Core v0.2: Future-Distinction Dynamics](docs/research_notes/omega_theory/omega_formal_core_v0_2_future_distinction_dynamics.md).
-
-The compact working definition is:
+Compact working definition:
 
 ```text
 Omega is the admissible subset of future-field dynamics for which
@@ -137,343 +64,236 @@ future-relevant distinctions persist to terminus in a recoverable, non-erasing,
 and compatible manner.
 ```
 
-The cleaned ontology is:
+The current completion-layer target is:
 
 ```text
-relation:
-  the substrate condition; what can follow what
-
-distinction:
-  the future-bearing content; what differences can matter across futures
-
-asymmetry:
-  the channeling law; how futures are non-neutrally ordered
-
-dynamics:
-  the iterated unfolding of future-distinctions through relations under asymmetry
-
-recoverability:
-  operational identity of distinction-patterns without privileged self-boundaries
-
-non-erasure:
-  the target property that prevents fake success by survival, entropy, collapse,
-  or local persistence
-
-compatibility:
-  composition without trivial capture, erasure, or collapse of other future-
-  bearing structure
+Omega is the space of maximal admissible compatibility completions in which
+proto-valuer-bearing dynamics propagate recoverably and non-erasingly without
+systematic irreversible destruction of one another's distinction-content.
 ```
 
-The strongest clean statement currently allowed is:
+This is the target formal object, not an empirical result.
+
+## Why This Is Not Utility or Reward
+
+Omega is not defined as:
 
 ```text
-Wherever value-bearing structure exists, its substrate-general form must involve
-recoverable, non-erasing, compatible propagation of future-relevant distinctions.
+maximizing reward;
+maximizing utility;
+maximizing entropy;
+preserving a fixed agent;
+preserving a fixed self;
+obeying a moral rule;
+protecting a privileged valuer.
 ```
 
-That is a theory-arm conjectural bridge, not an empirical result.
+Those may be downstream interpretations in some substrates. They are not
+allowed as primitives.
 
-The active formal arm now has a layered map:
+The project starts lower:
 
 ```text
-v0.2:
-  Future-Distinction Dynamics; the base ontology and claim grammar.
-
-admissibility enrichment:
-  process-bundle designations, activity channels, identity-decay nulls,
-  and maintenance gaps.
-
-proto-valuer layer:
-  pre-proto-valuers, proto-valuers, induced asymmetry-preferences, and valuers
-  as compatibility-audited proto-valuers.
-
-completion layer:
-  Omega as the family / space of maximal admissible compatibility completions
-  of proto-valuer-bearing dynamics.
-
-finite theorem scaffolds:
-  completion theorems, proto-valuer separation theorems, tiny transition-system
-  witnesses, finite distinction measures, and compatibility-audit taxonomy.
+Can futures carry distinctions?
+Can those distinctions remain recoverable?
+Can they avoid erasing one another under composition?
+Can process-like structures maintain distinction-content through churn better
+than matched identity-decay nulls?
+Can such structures compose into maximal compatibility completions?
 ```
 
-Current formal notes in the active stack:
+## Formal Stack
 
-1. [Theory Arm Map v0](docs/research_notes/omega_theory/theory_arm_map_v0.md)
-2. [Omega Formal Core v0.2: Future-Distinction Dynamics](docs/research_notes/omega_theory/omega_formal_core_v0_2_future_distinction_dynamics.md)
-3. [Admissibility Enrichment and Identity-Decay Nulls](docs/research_notes/omega_theory/admissibility_enrichment_and_identity_decay_nulls.md)
-4. [Omega as Maximal Compatibility Completions of Proto-Valuer Dynamics](docs/research_notes/omega_theory/omega_proto_valuer_compatibility_completions.md)
-5. [Finite Omega Completion Theorems v0](docs/research_notes/omega_theory/finite_omega_completion_theorems_v0.md)
-6. [Identity-Decay Null Taxonomy v0](docs/research_notes/omega_theory/identity_decay_null_taxonomy_v0.md)
-7. [Finite Proto-Valuer Separation Theorems v0](docs/research_notes/omega_theory/finite_proto_valuer_separation_theorems_v0.md)
-8. [Tiny Transition-System Witnesses v0](docs/research_notes/omega_theory/tiny_transition_system_witnesses_v0.md)
-9. [Finite Distinction Measures v0](docs/research_notes/omega_theory/finite_distinction_measures_v0.md)
-10. [Compatibility Audit Taxonomy v0](docs/research_notes/omega_theory/compatibility_audit_taxonomy_v0.md)
-11. [Future Field Atlas, Phase Ladder, and Omega Completion Sketch](docs/research_notes/omega_theory/future_field_atlas_phase_ladder_and_terminal_object_update.md)
-
-The older theory notes are now background/provenance. They should not be read as the current formal core unless explicitly marked otherwise:
+The active theory arm is layered:
 
 ```text
-Omega Formal Core v0:
-  historical precursor to v0.2.
+Layer 0: Future-Distinction Dynamics
+  relation, distinction, asymmetry, dynamics, recoverability, non-erasure,
+  compatibility
 
-Boundary Non-Privileging and Field-Deformation Theory Note:
-  still relevant to no-primitive-boundary discipline, but background to v0.2.
+Layer 1: Admissibility and Identity-Decay Nulls
+  process-bundle designations, activity channels, matched nulls, maintenance
+  gaps
 
-Horizon Transport and Aligned Amplification:
-  empirical/theory lineage for RFS-MB0, now background to Future Field Atlas.
+Layer 2: Proto-Valuer Ladder
+  pre-proto-valuers, proto-valuers, induced asymmetry-preferences,
+  compatibility-audited valuers
 
-Transition Energy and Constraint Untethering:
-  substrate-lineage note, not the active formal core.
+Layer 3: Completion Layer
+  Omega as maximal admissible compatibility completions of proto-valuer-bearing
+  dynamics
+
+Layer 4: Finite Theorem Scaffolds
+  small finite proofs and witnesses showing that the ladder properties do not
+  collapse into one another
+
+Layer 5: Empirical Interface Targets
+  finite distinction measures, null manifests, maintenance-gap rows,
+  self-conditioning rows, compatibility-audit rows
 ```
 
-## Future Field Atlas
-
-Future Field Atlas replaces the older classifier-first posture with a scanner-first posture:
+Finite scaffolds currently establish:
 
 ```text
-old posture:
-  generate substrate;
-  build selected horizon-pair matrices;
-  classify response;
-  aggregate labels.
+finite maximal admissible completions exist when the admissible family is
+nonempty;
 
-new posture:
-  generate lawful substrate;
-  scan frontier evolution;
-  preserve topology;
-  map raw features;
-  audit reconstruction;
-  analyze downstream;
-  label last, if useful.
+a greatest completion need not exist;
+
+pairwise compatibility does not imply joint compatibility;
+
+marginal continuation does not imply joint-field compatibility;
+
+finite completions are computable by exhaustive enumeration in principle.
 ```
 
-Current package targets:
+These are mathematical scaffolds, not physical-world validation.
+
+## Empirical Arm: Future Field Atlas
+
+The active empirical instrument is **Future Field Atlas**.
+
+It scans finite transition substrates by:
 
 ```text
-omega.future_field_atlas
-omega.future_field_atlas.run_future_field_atlas
-omega.future_field_atlas.run_coupled_future_field_atlas
+generating lawful state spaces and transition laws;
+unfolding reachable frontiers across horizons;
+recording raw or retained frontier topology;
+comparing product and coupled future-field baselines;
+checking artifact completeness and reconstruction audits;
+emitting compact morphology summaries;
+leaving interpretation downstream.
 ```
 
-Core formal identities:
+The instrument is designed to prevent premature semantic promotion. It does not
+start with labels like agent, valuer, support, capture, erasure, or value.
+
+## Current Empirical Result
+
+The current positive empirical pattern is narrow:
 
 ```text
-StateSpaceSpec
-TransformationLawSpec
-SelectionOperatorSpec
-ObservableSpec
-FrontierScanSpec
-CoupledOperatorSpec
+rank_order_boundary under symbol_histogram_distance
 ```
 
-Current instrument discipline:
+High-yield representatives:
 
 ```text
-historical treatment names are glossary-only;
-runtime conditions are spec/operator based;
-raw topology is primary;
-derived summaries must reconstruct from raw rows and manifests;
-truncated topology is non-interpretable;
-marginal projection deltas are non-causal;
-product-vs-coupled residuals are geometry, not interaction claims.
+pair005
+pair012
+pair014
+pair026
 ```
 
-## What current results do and do not mean
-
-Current results mean:
+Observed compact topology:
 
 ```text
-Future Field Atlas can scan finite future-field topology with formal condition identity;
-raw frontier artifacts and compact summaries can be reconstructed and audited;
-single-field H128 calibration is complete and reconstruction-passing;
-coupled H64 pair8 breadth is operationally manageable with sharded/compact output;
-coupled H64 ladder shows threshold-like zero-vs-positive rank-boundary mismatch geometry;
-near-zero mechanism resolution shows scalar mismatch effects through 0.010 and saturation by 0.020;
-zero-penalty joint rank-prefix selection is not product-equivalent;
-pair-level heterogeneity matters, especially pair005;
-substrate morphology is now summarized across retained coupled outputs before choosing the next operator;
-shared_capacity v1 is operational but currently behaves as marginal pruning, not as marginal-preserving joint restriction;
-rank_order_boundary reproduces marginal-preserving joint restriction for pair005, pair012, pair014, and pair026 under symbol_histogram_distance;
-targeted H128 confirms these high-yield representatives;
-the two tested alternate observables did not reproduce the high-yield signature.
+A and B marginal support are preserved;
+joint support is restricted relative to the product baseline;
+the effect persists in targeted H128 depth checks for pair012, pair014, and
+pair026;
+typical controls remain low-residual and high-retention.
 ```
 
-Current formal scaffolding means:
+The two tested alternate observables did not reproduce the high-yield
+signature:
 
 ```text
-finite completion structures can be made mathematically precise;
-maximal completions need not be unique;
-pairwise compatibility and marginal continuation are not enough for compatibility;
-persistence, recoverability, maintenance gap, self-conditioning, valuerhood, and completion compatibility are formally separable;
-identity-decay nulls, finite distinction measures, and compatibility audits now have initial control-taxonomy notes.
+hamming_weight_or_nonzero_count
+total_coordinate_mass
 ```
 
-Current results do **not** mean:
+This is not an Omega result. It is product-vs-coupled future-field geometry
+under a formal operator.
+
+## What Is Not Claimed
+
+This repository does **not** currently claim:
 
 ```text
-Omega detected;
-proto-valuer detected;
-valuer detected;
-agent detected;
-identity detected;
-value detected;
-life detected;
-self-replication detected;
-compatibility detected;
-support/capture/erasure demonstrated;
-scientific validation gate passed;
-holdout ready;
-graph-channel causality shown.
+Omega validation;
+proto-valuer detection;
+valuer detection;
+agent detection;
+identity detection;
+value detection;
+compatibility detection;
+support / capture / erasure detection;
+life detection;
+self-replication detection;
+holdout readiness;
+substrate-general theory validation.
 ```
 
-## Current next step
+Positive results should be read as instrument and substrate-characterization
+results.
 
-The next empirical step is **not broad H128 scale expansion** and not shared-capacity v1 scale-up.
+## Current Next Step
 
-Current empirical decision point:
+The next empirical step is not broad H128 scale expansion.
+
+The current recommended pass is a compact representative-control panel:
 
 ```text
-run a compact rank_order_boundary representative-control panel:
-  carry pair005, pair012, pair014, and pair026 as high-yield representatives;
-  keep low/medium controls;
-  keep product, zero-penalty joint rank-prefix, scalar 0.020, and shared_capacity v1 references;
-  run H64 first, targeted H128 only for new or contradictory high-yield behavior.
+high-yield representatives:
+  pair005
+  pair012
+  pair014
+  pair026
 
-observable-extension remains a priority because the tested alternates did not
-reproduce the symbol_histogram_distance high-yield signature.
+controls:
+  low/medium residual pairs
+  product selector
+  zero-penalty joint rank-prefix
+  scalar mismatch 0.020
+  shared_capacity v1 reference
 ```
 
-Current formal decision point:
+The current formal next step is to keep tightening the bridge from
+future-distinction dynamics to admissible process-bundle, identity-decay-null,
+maintenance-gap, self-conditioning, and compatibility-audit instrumentation.
+
+## Repository Map
 
 ```text
-keep v0.2 as the formal anchor;
-keep newer notes as active next-layer scaffolding;
-do not promote proto-valuer, valuer, compatibility, or Omega language into the empirical readout;
-next formal work should focus on threshold discipline, finite measure separation,
-compatibility-audit witnesses, and instrument schemas for distinction measures / nulls.
+README.md
+  public pitch and current state
+
+docs/OMEGA_FORMALISM_PRIMER.md
+  readable bridge to the current formal stack
+
+docs/EXTERNAL_READER_GUIDE.md
+  longer collaborator onboarding guide
+
+docs/OMEGA_PROJECT_MANUAL.md
+  operational workflow, local commands, run retention, repo process
+
+docs/PUBLIC_RESULTS_INDEX.md
+  empirical result index
+
+docs/OMEGA_RUNNING_LOG.md
+  chronological project log
+
+docs/research_notes/omega_theory/
+  dense theory notes and finite theorem scaffolds
+
+docs/research_notes/validation_results/
+  retained empirical result notes
+
+omega/future_field_atlas/
+  current empirical instrument code
 ```
 
-Broad H128 coupled surveys remain premature. H128 should stay targeted until a rank-order-native morphology class is clearer or a marginal-preserving capacity repair is explicitly needed.
+## Project Posture
 
-## How to read the project
-
-### Active theory orientation
-
-1. [Theory Arm Map v0](docs/research_notes/omega_theory/theory_arm_map_v0.md)
-2. [Omega Formal Core v0.2: Future-Distinction Dynamics](docs/research_notes/omega_theory/omega_formal_core_v0_2_future_distinction_dynamics.md)
-3. [Admissibility Enrichment and Identity-Decay Nulls](docs/research_notes/omega_theory/admissibility_enrichment_and_identity_decay_nulls.md)
-4. [Omega as Maximal Compatibility Completions of Proto-Valuer Dynamics](docs/research_notes/omega_theory/omega_proto_valuer_compatibility_completions.md)
-5. [Finite Omega Completion Theorems v0](docs/research_notes/omega_theory/finite_omega_completion_theorems_v0.md)
-6. [Identity-Decay Null Taxonomy v0](docs/research_notes/omega_theory/identity_decay_null_taxonomy_v0.md)
-7. [Finite Proto-Valuer Separation Theorems v0](docs/research_notes/omega_theory/finite_proto_valuer_separation_theorems_v0.md)
-8. [Tiny Transition-System Witnesses v0](docs/research_notes/omega_theory/tiny_transition_system_witnesses_v0.md)
-9. [Finite Distinction Measures v0](docs/research_notes/omega_theory/finite_distinction_measures_v0.md)
-10. [Compatibility Audit Taxonomy v0](docs/research_notes/omega_theory/compatibility_audit_taxonomy_v0.md)
-11. [Future Field Atlas, Phase Ladder, and Omega Completion Sketch](docs/research_notes/omega_theory/future_field_atlas_phase_ladder_and_terminal_object_update.md)
-
-### Instrument orientation
-
-1. [Future Field Atlas Instrument Spec](docs/specs/current/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md)
-2. [Future Field Atlas Glossary](docs/FUTURE_FIELD_ATLAS_GLOSSARY.md)
-3. [Future Field Atlas Phase 0/1 Smoke](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_phase0_1_smoke_result.md)
-4. [Future Field Atlas H128 Calibration Pass](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_h128_calibration_pass_result.md)
-5. [Coupled Hardening Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_hardening_result.md)
-6. [Coupled H64 Broad Sweep](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_broad_sweep_result.md)
-7. [Coupled H64 Ladder](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_ladder_result.md)
-8. [Coupled H64 Mechanism Resolution](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_coupled_h64_mechanism_resolution_result.md)
-9. [Substrate Morphology Atlas](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md)
-10. [Rank-Order Boundary Medium Sweep](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_medium_sweep_result.md)
-11. [Rank-Order Boundary H64 Smoke](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_h64_smoke_result.md)
-12. [Shared-Capacity H64 Smoke](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_shared_capacity_h64_smoke_result.md)
-
-### Historical orientation
-
-Read only after the active formal stack is clear:
-
-1. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
-2. [Running Log](docs/OMEGA_RUNNING_LOG.md)
-3. [Project Manual](docs/OMEGA_PROJECT_MANUAL.md)
-4. [Historical Probe Terms](docs/research_notes/omega_theory/historical_probe_terms.md)
-5. [Omega Formal Core v0](docs/research_notes/omega_theory/omega_formal_core_v0.md)
-6. [Boundary Non-Privileging and Field-Deformation Theory Note](docs/research_notes/omega_theory/boundary_nonprivileging_and_field_deformation.md)
-7. [Horizon Transport and Aligned Amplification](docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md)
-8. [Transition Energy and Constraint Untethering](docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md)
-9. [Hard Top-M Mechanism Result](docs/research_notes/validation_results/rfs_mb0/rfs_mb0_top_m_mechanism_audit_result.md)
-10. [Top-M Geometry Audit Result](docs/research_notes/validation_results/rfs_mb0/rfs_mb0_top_m_geometry_audit_result.md)
-11. [MaxEnt Local Transition Phase 1 Preflight Result](docs/research_notes/validation_results/rfs_mb0/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md)
-
-## Why this matters for alignment
-
-Omega is motivated by a central alignment problem:
-
-> A system can become highly capable, persistent, and effective while degrading the broader conditions under which value-bearing futures remain possible.
-
-Future Field Atlas does not validate alignment. It builds the measurement discipline needed before the earliest precursor can be resolved:
-
-> Can future-field deformation be measured well enough to distinguish nontrivial future-structuring effects from saturation, trivial persistence, collapse, clock artifacts, probe artifacts, generic finite-frontier dynamics, and product/matched-control equivalence?
-
-The current formal core states the target without assuming a self, agent, valuer, or utility function first:
+The stance is:
 
 ```text
-recoverable, non-erasing, compatible propagation of future-relevant distinctions.
+principled;
+parsimonious;
+predictive / revelatory;
+skeptically open.
 ```
 
-The current next-layer formal arm asks what extra controls would be needed before process-bundle, pre-proto-valuer, proto-valuer, valuer, or Omega-completion language became admissible.
-
-## Workflow
-
-This repository is developed through a human-directed, AI-assisted research workflow.
-
-The core theoretical motivation, branch selection, interpretive standards, and key pivots are human-generated. AI systems are used as implementation and critique accelerators: they draft specs, modify runners, generate reports, audit code, summarize results, propose follow-up experiments, and stress-test formal claim boundaries.
-
-## Roadmap
-
-```text
-VAL0/VAL1:
-  historical reconnaissance; useful but not the active empirical frame
-
-RFS0:
-  exact finite reachability measurement-floor smoke; insufficient control separation
-
-RFS-MB0 / horizon-transport lineage:
-  neutral future-landscape deformation program;
-  endpoint support/distribution and quotient probes became measurement-limited;
-  horizon transport and transition-energy substrates revealed useful anatomy;
-  hard top-m audits narrowed the preservation response to low-rank successor-boundary geometry
-
-Future Field Atlas:
-  current active empirical frame;
-  raw topology first;
-  formal spec identity;
-  coupled product-vs-joint future-field scans;
-  current empirical result: rank_order_boundary reproduces the pair005-like
-  marginal-preserving joint restriction pattern across pair005, pair012,
-  pair014, and pair026 under symbol_histogram_distance
-
-Theory arm:
-  current active formal frame;
-  Omega Formal Core v0.2 remains the anchor;
-  active next-layer stack covers admissibility enrichment, identity-decay nulls,
-  finite completion theorems, proto-valuer separation theorems, tiny transition
-  witnesses, finite distinction measures, and compatibility audit taxonomy
-
-Next empirical targets:
-  rank_order_boundary representative-control panel with pair005, pair012,
-  pair014, and pair026;
-  observable extension beyond the two tested alternates;
-  future distinction-measure and null-manifest instrument schemas
-
-Next coupled operators:
-  rank-order-boundary representative controls and observable extension first;
-  shared-capacity v1 remains a negative control / repair target, not the current
-  scale-up branch
-
-Scale hierarchy / constructor-like branches:
-  only after future-field instrumentation and formal claim ladder mature enough
-```
-
-## Important caveat
-
-The current scientific claim is modest:
-
-> Future Field Atlas can measure reconstructible finite future-field topology under lawful transition substrates. Current rank-order-boundary coupled results show a marginal-preserving joint-restriction class under `symbol_histogram_distance` with high-yield representatives `pair005`, `pair012`, `pair014`, and `pair026`; the two tested alternate observables did not reproduce the high-yield signature. The formal arm now has finite scaffolds for completion, null, distinction-measure, proto-valuer-separation, and compatibility-audit discipline. Omega-compatible subobjects, proto-valuers, valuers, compatibility, support, capture, erasure, agency, identity, and value have not been demonstrated.
+The goal is not to protect a theory. The goal is to build a formal object and
+an empirical instrument strong enough that weak formulations can fail.

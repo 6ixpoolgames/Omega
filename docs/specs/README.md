@@ -42,6 +42,15 @@ successor-instrument specs under `docs/specs/current/` unless the spec is a
 branch archive. Once a branch is superseded, move its specs under
 `docs/specs/archive/<branch>/` and update public-facing indexes.
 
+For project-level orientation, do not use specs as onboarding prose. Use:
+
+```text
+README.md
+docs/OMEGA_FORMALISM_PRIMER.md
+docs/EXTERNAL_READER_GUIDE.md
+docs/OMEGA_PROJECT_MANUAL.md
+```
+
 Recommended active spec naming:
 
 ```text
