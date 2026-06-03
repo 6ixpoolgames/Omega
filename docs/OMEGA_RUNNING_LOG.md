@@ -9,6 +9,90 @@ patch notes at the top.
 
 ## 2026-06-03
 
+### Finite Channel / Partition Presentation Lean Smoke
+
+Implemented the exact channel recovery presentation:
+
+```text
+formal/lean/OmegaCore/Presentations/FiniteChannel.lean
+```
+
+Checked:
+
+```text
+channelTransport:
+  exact decoder recovery through channel support satisfies DistTransport
+  closure
+
+exactRecovers_id_iff_refines:
+  identity channel recovery is exactly distinction refinement
+
+exactRecovers_comp:
+  exact channel recovery composes through support-channel composition
+
+channelTransport_comp_subset:
+  channel composition induces the required lax composition inclusion
+
+exact_recovers_changed_carrier_comp:
+  exact recovery composes across changed carrier types without shared literal
+  state identity
+
+not_exact_recovers_constant_bit:
+  a constant channel erases a nontrivial bit distinction
+
+exact_recovers_constant_trivial:
+  the same constant channel recovers the trivial source distinction
+```
+
+Status:
+
+```text
+PASS
+lake build OmegaCore
+```
+
+Scope boundary: this is a finite channel / partition presentation of Omega
+Primitive Calculus v0. It is exact support-channel recovery, not probabilistic
+Shannon theory, not an empirical adapter, not Future Field Atlas semantics, not
+compatibility semantics, not valuerhood, and not Omega validation.
+
+### Boolean Relation Support Presentation Lean Smoke
+
+Implemented the first worked presentation layer:
+
+```text
+formal/lean/OmegaCore/Presentations/FiniteBoolean.lean
+```
+
+Checked:
+
+```text
+supportTransport:
+  relation-induced support recovery satisfies DistTransport closure
+
+supportTransport_id_iff:
+  the identity relation induces the root identity transport at relation level
+
+supportTransport_comp_subset:
+  relational composition induces the required lax composition inclusion
+
+changed_carrier_composite_recovery:
+  support recovery composes across changed carrier types without shared literal
+  state identity
+```
+
+Status:
+
+```text
+PASS
+lake build OmegaCore
+```
+
+Scope boundary: this is a Boolean relation support presentation of Omega
+Primitive Calculus v0. It validates possibility/support recovery, not universal
+preservation. It is not an empirical adapter, Future Field Atlas semantics,
+compatibility semantics, valuerhood, ethics, or Omega validation.
+
 ### Adapter Failure Examples Lean Smoke
 
 Implemented finite theorem-transfer failure examples:

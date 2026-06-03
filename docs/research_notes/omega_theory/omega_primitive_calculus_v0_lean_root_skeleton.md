@@ -45,6 +45,8 @@ formal/lean/OmegaCore/Recurrent.lean
 formal/lean/OmegaCore/Completion.lean
 formal/lean/OmegaCore/Counterexamples.lean
 formal/lean/OmegaCore/MarginalJoint.lean
+formal/lean/OmegaCore/Presentations/FiniteBoolean.lean
+formal/lean/OmegaCore/Presentations/FiniteChannel.lean
 ```
 
 Build command:
@@ -331,6 +333,115 @@ apply.
 These are failure examples only. They do not define empirical adapters, Future
 Field Atlas semantics, compatibility, valuerhood, or Omega validation.
 
+## Batch 8: Boolean Relation Support Presentation
+
+`Presentations/FiniteBoolean.lean` defines the first worked presentation layer:
+
+```text
+Event alpha:
+  Boolean event predicates alpha -> Prop
+
+Rel alpha beta:
+  binary relations alpha -> beta -> Prop
+
+EventLe:
+  support-inclusion order, P <= Q iff every P-point is also a Q-point
+
+SupportRecovers:
+  existential forward-image support recovery
+
+supportTransport:
+  relation-induced DistTransport on event frames
+```
+
+Checked presentation facts:
+
+```text
+supportTransport:
+  satisfies the DistTransport source-weakening / target-strengthening closure
+  laws
+
+supportTransport_id_iff:
+  the identity relation induces the root identity transport at relation level
+
+supportTransport_comp_subset:
+  relational composition induces the required lax composition inclusion
+
+changed_carrier_composite_recovery:
+  support recovery composes across changed carrier types with no shared literal
+  state identity
+```
+
+Interpretation:
+
+```text
+The Boolean relation support presentation instantiates the root calculus in a
+classical support setting. It validates possibility/support recovery, not
+universal preservation.
+```
+
+This is a worked presentation of Omega Primitive Calculus v0. It is not an
+empirical adapter, not Future Field Atlas semantics, not compatibility
+semantics, not valuerhood, and not Omega validation.
+
+## Batch 9: Finite Channel / Partition Presentation
+
+`Presentations/FiniteChannel.lean` defines an exact channel recovery
+presentation:
+
+```text
+ObsDist X:
+  observable labeling / partition of a carrier X
+
+Refines D E:
+  E is fine enough to decode D
+
+ExactRecovers K D E:
+  every output allowed by channel support K carries enough target distinction
+  to decode the source distinction
+
+channelTransport:
+  support-channel-induced DistTransport over observable distinctions
+```
+
+Checked presentation facts:
+
+```text
+channelTransport:
+  satisfies the DistTransport closure laws by composing decoders
+
+exactRecovers_id_iff_refines:
+  identity channel recovery is exactly distinction refinement
+
+exactRecovers_comp:
+  exact channel recovery composes through support-channel composition
+
+channelTransport_comp_subset:
+  channel composition induces the required lax composition inclusion
+
+exact_recovers_changed_carrier_comp:
+  exact recovery composes across changed carrier types with no shared literal
+  state identity
+
+not_exact_recovers_constant_bit:
+  a constant channel erases a nontrivial bit distinction
+
+exact_recovers_constant_trivial:
+  the same constant channel recovers the trivial source distinction
+```
+
+Interpretation:
+
+```text
+The finite channel / partition presentation instantiates the root calculus in
+an exact decoder-reconstruction setting. Distinctions are observable labelings,
+and recoverability is exact reconstruction through channel support.
+```
+
+This is not probabilistic Shannon theory, not an empirical adapter, not Future
+Field Atlas semantics, not compatibility semantics, not valuerhood, and not
+Omega validation.
+
 ## Scientific Read
 
 This is a stronger root formalization target than the earlier quantale-presheaf
@@ -355,8 +466,9 @@ erasure has been detected.
 ## Remaining Lean Targets
 
 1. Nontrivial finite normal-lax models.
-2. A finite transition-system adapter sketch.
-3. Richer finite examples connecting abstract admissibility to declared
+2. A universal-preservation Boolean presentation variant, if needed.
+3. A finite transition-system adapter sketch.
+4. Richer finite examples connecting abstract admissibility to declared
    distinction-transport obligations without adding valuer semantics.
 
 ## Allowed Claim
@@ -373,7 +485,12 @@ greatest admissible completion need not exist. Finally, it checks a finite
 DistTransport counterexample showing that marginal-like non-erasure does not
 imply strictly joint non-erasure, and finite adapter-failure examples showing
 that theorem transfer fails without source-weakening closure,
-target-strengthening closure, or lax composition inclusion.
+target-strengthening closure, or lax composition inclusion. The first worked
+Boolean relation support presentation also checks that relation-induced support
+transport instantiates the root laws and composes across changed carrier types.
+The finite channel / partition presentation checks exact decoder recovery,
+identity-channel refinement, channel composition, changed-carrier exact
+recovery, and erasure of nontrivial distinctions by a constant channel.
 ```
 
 ## Blocked Claim

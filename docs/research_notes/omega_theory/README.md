@@ -59,6 +59,8 @@ OmegaCore/Recurrent.lean
 OmegaCore/Completion.lean
 OmegaCore/Counterexamples.lean
 OmegaCore/MarginalJoint.lean
+OmegaCore/Presentations/FiniteBoolean.lean
+OmegaCore/Presentations/FiniteChannel.lean
 ```
 
 Current checked scope:
@@ -73,7 +75,11 @@ non-unique maximal completions, and nonexistence of a greatest completion;
 finite distinction-transport counterexample for marginal-like non-erasure not
 implying strictly joint non-erasure;
 adapter-failure examples showing theorem transfer failure without closure or
-laxity laws.
+laxity laws;
+Boolean relation support presentation with relation-induced transports,
+identity relation, relational composition, and changed-carrier recovery;
+finite channel / partition presentation with exact decoder recovery, channel
+composition, changed-carrier recovery, and constant-channel erasure.
 ```
 
 This is formal infrastructure only. It does not instantiate an empirical

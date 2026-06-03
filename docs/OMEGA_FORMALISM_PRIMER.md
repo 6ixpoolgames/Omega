@@ -150,7 +150,9 @@ finite-enumeration maximal completion existence;
 Finset/Fintype maximal completion existence;
 finite completion counterexamples;
 marginal-like non-erasure not implying strictly joint non-erasure;
-adapter-failure examples for missing closure or laxity laws.
+adapter-failure examples for missing closure or laxity laws;
+Boolean relation support presentation;
+finite channel / partition presentation.
 ```
 
 ### Layer 0a: Future-Distinction Dynamics

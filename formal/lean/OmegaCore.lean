@@ -5,5 +5,7 @@ import OmegaCore.Counterexamples
 import OmegaCore.DistTrans
 import OmegaCore.MarginalJoint
 import OmegaCore.NormalLax
+import OmegaCore.Presentations.FiniteBoolean
+import OmegaCore.Presentations.FiniteChannel
 import OmegaCore.PrimitiveWitness
 import OmegaCore.Recurrent

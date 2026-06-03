@@ -412,6 +412,12 @@ recoverability, and finite maximal completion existence including the
 Finset/Fintype specialization. The current counterexample layer also checks
 finite completion separations, marginal-like non-erasure versus strictly joint
 non-erasure, and adapter-failure examples for missing closure or laxity laws.
+The first worked presentation layer is
+`formal/lean/OmegaCore/Presentations/FiniteBoolean.lean`, which validates
+Boolean relation support recovery as a root-calculus presentation. The second
+worked presentation layer is
+`formal/lean/OmegaCore/Presentations/FiniteChannel.lean`, which validates exact
+decoder recovery through finite support channels / observable partitions.
 
 Historical executable probes live under:
 

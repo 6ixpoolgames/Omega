@@ -221,6 +221,89 @@ These examples show that theorem transfer requires actual satisfaction of the
 root laws. Invalid or extended adapters must report which laws fail and which
 theorems no longer apply.
 
+`OmegaCore/Presentations/FiniteBoolean.lean` defines the first worked
+presentation layer:
+
+```text
+Event alpha:
+  Boolean event predicates alpha -> Prop
+
+Rel alpha beta:
+  binary relations alpha -> beta -> Prop
+
+EventLe:
+  support-inclusion order
+
+SupportRecovers:
+  existential forward-image support recovery
+
+supportTransport:
+  relation-induced DistTransport on event frames
+```
+
+Checked presentation facts:
+
+```text
+supportTransport_id_iff:
+  the identity relation induces the root identity transport at relation level
+
+supportTransport_comp_subset:
+  relational composition induces the required lax composition inclusion
+
+changed_carrier_composite_recovery:
+  support recovery composes across changed carrier types without shared literal
+  state identity
+```
+
+This is a Boolean relation support presentation. It validates
+possibility/support recovery, not universal preservation. It is not an
+empirical adapter, compatibility semantics, Future Field Atlas semantics,
+proto-valuerhood, valuerhood, ethics, or Omega validation.
+
+`OmegaCore/Presentations/FiniteChannel.lean` defines the finite channel /
+partition presentation:
+
+```text
+ObsDist X:
+  observable labeling / partition of a carrier X
+
+Refines D E:
+  E is fine enough to decode D
+
+ExactRecovers K D E:
+  exact decoder reconstruction through channel support
+
+channelTransport:
+  support-channel-induced DistTransport over observable distinctions
+```
+
+Checked presentation facts:
+
+```text
+exactRecovers_id_iff_refines:
+  identity channel recovery is exactly distinction refinement
+
+exactRecovers_comp:
+  exact channel recovery composes through support-channel composition
+
+channelTransport_comp_subset:
+  channel composition induces the required lax composition inclusion
+
+exact_recovers_changed_carrier_comp:
+  exact recovery composes across changed carrier types without shared literal
+  state identity
+
+not_exact_recovers_constant_bit:
+  a constant channel erases a nontrivial bit distinction
+
+exact_recovers_constant_trivial:
+  the same constant channel recovers the trivial source distinction
+```
+
+This is exact support-channel recovery. It is not probabilistic Shannon theory,
+an empirical adapter, compatibility semantics, Future Field Atlas semantics,
+proto-valuerhood, valuerhood, ethics, or Omega validation.
+
 `OmegaCore/Basic.lean` defines:
 
 ```text
@@ -298,8 +381,9 @@ empirical hypothesis
 
 1. Add nontrivial finite examples for `NormalLaxDistinctionTransport`.
 2. Add finite examples that instantiate `DistinctionFrame` and `ValueFrame`.
-3. Add a finite transition-system adapter sketch.
-4. Add richer finite completion examples tied to declared distinction-transport
+3. Add a universal-preservation Boolean presentation variant, if needed.
+4. Add a finite transition-system adapter sketch.
+5. Add richer finite completion examples tied to declared distinction-transport
    obligations, while keeping valuer semantics out of the root skeleton.
-5. Only then lift toward enriched presentations such as the historical
+6. Only then lift toward enriched presentations such as the historical
    presheaf/profunctor/quantale kernel.

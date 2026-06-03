@@ -177,6 +177,8 @@ formal/lean/OmegaCore/Completion.lean
 formal/lean/OmegaCore/Counterexamples.lean
 formal/lean/OmegaCore/MarginalJoint.lean
 formal/lean/OmegaCore/AdapterFailures.lean
+formal/lean/OmegaCore/Presentations/FiniteBoolean.lean
+formal/lean/OmegaCore/Presentations/FiniteChannel.lean
 ```
 
 Checked results include DistTrans closure, relation-level identity and
@@ -190,7 +192,12 @@ completion need not exist. The marginal/joint counterexample layer checks that
 preserving each component-like distinction does not force preservation of a
 strictly joint distinction. The adapter-failure layer checks that theorem
 transfer fails without source-weakening closure, target-strengthening closure,
-or lax composition inclusion.
+or lax composition inclusion. The first worked presentation layer checks that
+Boolean relation support recovery induces valid distinction transports and
+composes across changed carrier types. The finite channel presentation checks
+exact decoder recovery over observable partitions, including identity-channel
+refinement, channel composition, changed-carrier recovery, and constant-channel
+erasure.
 
 ## Empirical Arm: Future Field Atlas
 
