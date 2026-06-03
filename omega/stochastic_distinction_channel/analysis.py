@@ -492,20 +492,74 @@ def best_recoverability_index(recoverability: list[dict[str, object]]) -> dict[t
     return best
 
 
+def fixed_declared_recoverability_index(recoverability: list[dict[str, object]]) -> dict[tuple[str, str], dict[str, object]]:
+    rows_by_declared_target: dict[tuple[str, str, str], dict[str, object]] = {}
+    for row in recoverability:
+        if row["decoder_kind"] != "bayes_optimal_decoder":
+            continue
+        key = (str(row["channel_id"]), str(row["source_distinction_id"]), str(row["target_distinction_id"]))
+        rows_by_declared_target[key] = row
+
+    fixed: dict[tuple[str, str], dict[str, object]] = {}
+    channel_sources = sorted(
+        {
+            (str(row["channel_id"]), str(row["source_distinction_id"]), str(row["target_carrier_id"]))
+            for row in recoverability
+            if row["decoder_kind"] == "bayes_optimal_decoder"
+        }
+    )
+    for channel_id, source_distinction_id, target_carrier_id in channel_sources:
+        target_distinction_id = declared_target_distinction_id(source_distinction_id, target_carrier_id)
+        if not target_distinction_id:
+            continue
+        row = rows_by_declared_target.get((channel_id, source_distinction_id, target_distinction_id))
+        if row is not None:
+            fixed[(channel_id, source_distinction_id)] = row
+    return fixed
+
+
+def declared_target_distinction_id(source_distinction_id: str, target_carrier_id: str) -> str:
+    mapping = {
+        ("D_A", "Y2"): "E_A",
+        ("D_A", "Y_A"): "E_A_marg",
+        ("D_B", "Y2"): "E_B",
+        ("D_B", "Y_B"): "E_B_marg",
+        ("D_joint", "Y2"): "E_joint",
+        ("D_parity", "Y2"): "E_parity",
+        ("D_trivial", "Y2"): "E_trivial",
+        ("D_trivial", "Y_A"): "E_trivial_A",
+        ("D_trivial", "Y_B"): "E_trivial_B",
+        ("D_trivial", "Y_star"): "E_trivial_star",
+        ("E_A", "Y2"): "E_A",
+        ("E_B", "Y2"): "E_B",
+        ("E_joint", "Y2"): "E_joint",
+        ("E_parity", "Y2"): "E_parity",
+        ("E_trivial", "Y2"): "E_trivial",
+    }
+    return mapping.get((source_distinction_id, target_carrier_id), "")
+
+
+def policy_indexes(recoverability: list[dict[str, object]]) -> dict[str, dict[tuple[str, str], dict[str, object]]]:
+    return {
+        "bayes_best_target_distinction": best_recoverability_index(recoverability),
+        "fixed_declared_target_distinction": fixed_declared_recoverability_index(recoverability),
+    }
+
+
 def decoder_policy_manifest() -> list[dict[str, object]]:
     return [
         {
             "decoder_policy_id": "bayes_best_target_distinction",
             "decoder_policy_family": "empirical_best_observation",
             "selection_rule": "select the bayes_optimal_decoder row with maximal success over declared target distinctions",
-            "formal_consumption_status": "diagnostic_policy_not_fixed_observation_semantics",
+            "formal_consumption_status": "co_primary_diagnostic_policy",
             "claim_boundary": CLAIM_BOUNDARY,
         },
         {
             "decoder_policy_id": "fixed_declared_target_distinction",
             "decoder_policy_family": "declared_observation",
             "selection_rule": "use predeclared source-target observation pairs such as D_A->E_A and D_joint->E_joint",
-            "formal_consumption_status": "preferred_policy_for_strict_adapter_claims",
+            "formal_consumption_status": "co_primary_strict_observation_policy",
             "claim_boundary": CLAIM_BOUNDARY,
         },
         {
@@ -535,88 +589,90 @@ def non_erasure_tables(recoverability: list[dict[str, object]]) -> tuple[list[di
         }
         for req_id, dist_ids in requirement_rows
     ]
-    best = best_recoverability_index(recoverability)
+    indexes = policy_indexes(recoverability)
     channel_ids = sorted({str(row["channel_id"]) for row in recoverability if str(row["source_carrier_id"]) == "X2"})
     rows = []
     for channel_id in channel_ids:
-        for req_id, dist_ids in requirement_rows:
-            recovered = [dist for dist in dist_ids if best.get((channel_id, dist), {}).get("passes_threshold") in (1, "1")]
-            selected_rows = {dist: best.get((channel_id, dist), {}) for dist in dist_ids}
-            selected_targets = [
-                f"{dist}={selected_rows[dist].get('target_distinction_id', '')}"
-                for dist in dist_ids
-                if selected_rows[dist]
-            ]
-            selected_decoders = [
-                f"{dist}={selected_rows[dist].get('decoder_id', '')}"
-                for dist in dist_ids
-                if selected_rows[dist]
-            ]
-            rows.append(
-                {
-                    "requirement_set_id": req_id,
-                    "channel_id": channel_id,
-                    "decoder_policy_id": "bayes_best_target_distinction",
-                    "threshold_id": "high_recovery",
-                    "required_count": len(dist_ids),
-                    "recovered_count": len(recovered),
-                    "not_recovered_count": len(dist_ids) - len(recovered),
-                    "non_erasing_status": "PASS" if len(recovered) == len(dist_ids) else "FAIL",
-                    "recovered_distinction_ids": ";".join(recovered),
-                    "selected_target_distinction_ids": ";".join(selected_targets),
-                    "selected_decoder_ids": ";".join(selected_decoders),
-                    "claim_boundary": CLAIM_BOUNDARY,
-                }
-            )
+        for decoder_policy_id, index in indexes.items():
+            for req_id, dist_ids in requirement_rows:
+                recovered = [dist for dist in dist_ids if index.get((channel_id, dist), {}).get("passes_threshold") in (1, "1")]
+                selected_rows = {dist: index.get((channel_id, dist), {}) for dist in dist_ids}
+                selected_targets = [
+                    f"{dist}={selected_rows[dist].get('target_distinction_id', '')}"
+                    for dist in dist_ids
+                    if selected_rows[dist]
+                ]
+                selected_decoders = [
+                    f"{dist}={selected_rows[dist].get('decoder_id', '')}"
+                    for dist in dist_ids
+                    if selected_rows[dist]
+                ]
+                rows.append(
+                    {
+                        "requirement_set_id": req_id,
+                        "channel_id": channel_id,
+                        "decoder_policy_id": decoder_policy_id,
+                        "threshold_id": "high_recovery",
+                        "required_count": len(dist_ids),
+                        "recovered_count": len(recovered),
+                        "not_recovered_count": len(dist_ids) - len(recovered),
+                        "non_erasing_status": "PASS" if len(recovered) == len(dist_ids) else "FAIL",
+                        "recovered_distinction_ids": ";".join(recovered),
+                        "selected_target_distinction_ids": ";".join(selected_targets),
+                        "selected_decoder_ids": ";".join(selected_decoders),
+                        "claim_boundary": CLAIM_BOUNDARY,
+                    }
+                )
     return manifest, rows
 
 
 def marginal_joint_diagnostic(recoverability: list[dict[str, object]]) -> list[dict[str, object]]:
-    best = best_recoverability_index(recoverability)
+    indexes = policy_indexes(recoverability)
     channel_ids = sorted({str(row["channel_id"]) for row in recoverability if str(row["source_carrier_id"]) == "X2"})
     rows = []
     for channel_id in channel_ids:
-        values = {dist: best.get((channel_id, dist), {}) for dist in ["D_A", "D_B", "D_joint", "D_parity"]}
-        passes = {dist: values[dist].get("passes_threshold") in (1, "1") for dist in values}
-        if passes["D_A"] and passes["D_B"] and passes["D_joint"]:
-            diagnostic_class = "marginal_and_joint_recovered"
-        elif passes["D_A"] and passes["D_B"] and not passes["D_joint"]:
-            diagnostic_class = "marginal_recovered_joint_not_recovered"
-        elif passes["D_joint"] and not (passes["D_A"] and passes["D_B"]):
-            diagnostic_class = "joint_recovered_marginal_not_recovered"
-        elif not any(passes.values()):
-            diagnostic_class = "all_nontrivial_lost"
-        else:
-            diagnostic_class = "mixed_or_partial"
-        rows.append(
-            {
-                "channel_id": channel_id,
-                "prior_id": "uniform_X2",
-                "decoder_policy_id": "bayes_best_target_distinction",
-                "A_success": values["D_A"].get("decoder_success_probability", ""),
-                "B_success": values["D_B"].get("decoder_success_probability", ""),
-                "joint_success": values["D_joint"].get("decoder_success_probability", ""),
-                "parity_success": values["D_parity"].get("decoder_success_probability", ""),
-                "A_selected_target_distinction_id": values["D_A"].get("target_distinction_id", ""),
-                "B_selected_target_distinction_id": values["D_B"].get("target_distinction_id", ""),
-                "joint_selected_target_distinction_id": values["D_joint"].get("target_distinction_id", ""),
-                "parity_selected_target_distinction_id": values["D_parity"].get("target_distinction_id", ""),
-                "A_selected_decoder_id": values["D_A"].get("decoder_id", ""),
-                "B_selected_decoder_id": values["D_B"].get("decoder_id", ""),
-                "joint_selected_decoder_id": values["D_joint"].get("decoder_id", ""),
-                "parity_selected_decoder_id": values["D_parity"].get("decoder_id", ""),
-                "A_observation_scope": values["D_A"].get("observation_scope", ""),
-                "B_observation_scope": values["D_B"].get("observation_scope", ""),
-                "joint_observation_scope": values["D_joint"].get("observation_scope", ""),
-                "parity_observation_scope": values["D_parity"].get("observation_scope", ""),
-                "A_passes_threshold": int(passes["D_A"]),
-                "B_passes_threshold": int(passes["D_B"]),
-                "joint_passes_threshold": int(passes["D_joint"]),
-                "parity_passes_threshold": int(passes["D_parity"]),
-                "diagnostic_class": diagnostic_class,
-                "claim_boundary": CLAIM_BOUNDARY,
-            }
-        )
+        for decoder_policy_id, index in indexes.items():
+            values = {dist: index.get((channel_id, dist), {}) for dist in ["D_A", "D_B", "D_joint", "D_parity"]}
+            passes = {dist: values[dist].get("passes_threshold") in (1, "1") for dist in values}
+            if passes["D_A"] and passes["D_B"] and passes["D_joint"]:
+                diagnostic_class = "marginal_and_joint_recovered"
+            elif passes["D_A"] and passes["D_B"] and not passes["D_joint"]:
+                diagnostic_class = "marginal_recovered_joint_not_recovered"
+            elif passes["D_joint"] and not (passes["D_A"] and passes["D_B"]):
+                diagnostic_class = "joint_recovered_marginal_not_recovered"
+            elif not any(passes.values()):
+                diagnostic_class = "all_nontrivial_lost"
+            else:
+                diagnostic_class = "mixed_or_partial"
+            rows.append(
+                {
+                    "channel_id": channel_id,
+                    "prior_id": "uniform_X2",
+                    "decoder_policy_id": decoder_policy_id,
+                    "A_success": values["D_A"].get("decoder_success_probability", ""),
+                    "B_success": values["D_B"].get("decoder_success_probability", ""),
+                    "joint_success": values["D_joint"].get("decoder_success_probability", ""),
+                    "parity_success": values["D_parity"].get("decoder_success_probability", ""),
+                    "A_selected_target_distinction_id": values["D_A"].get("target_distinction_id", ""),
+                    "B_selected_target_distinction_id": values["D_B"].get("target_distinction_id", ""),
+                    "joint_selected_target_distinction_id": values["D_joint"].get("target_distinction_id", ""),
+                    "parity_selected_target_distinction_id": values["D_parity"].get("target_distinction_id", ""),
+                    "A_selected_decoder_id": values["D_A"].get("decoder_id", ""),
+                    "B_selected_decoder_id": values["D_B"].get("decoder_id", ""),
+                    "joint_selected_decoder_id": values["D_joint"].get("decoder_id", ""),
+                    "parity_selected_decoder_id": values["D_parity"].get("decoder_id", ""),
+                    "A_observation_scope": values["D_A"].get("observation_scope", ""),
+                    "B_observation_scope": values["D_B"].get("observation_scope", ""),
+                    "joint_observation_scope": values["D_joint"].get("observation_scope", ""),
+                    "parity_observation_scope": values["D_parity"].get("observation_scope", ""),
+                    "A_passes_threshold": int(passes["D_A"]),
+                    "B_passes_threshold": int(passes["D_B"]),
+                    "joint_passes_threshold": int(passes["D_joint"]),
+                    "parity_passes_threshold": int(passes["D_parity"]),
+                    "diagnostic_class": diagnostic_class,
+                    "claim_boundary": CLAIM_BOUNDARY,
+                }
+            )
     return rows
 
 
@@ -661,6 +717,51 @@ def support_vs_probability_summary(
                 "any_exact_support_recoverable": int(exact_support),
                 "exact_support_target_distinction_ids": ";".join(exact_targets),
                 "support_probability_relation": relation,
+                "claim_boundary": CLAIM_BOUNDARY,
+            }
+        )
+    return rows
+
+
+def declared_target_policy_summary(recoverability: list[dict[str, object]]) -> list[dict[str, object]]:
+    best = best_recoverability_index(recoverability)
+    fixed = fixed_declared_recoverability_index(recoverability)
+    channel_sources = sorted(
+        {
+            (str(row["channel_id"]), str(row["source_distinction_id"]), str(row["target_carrier_id"]))
+            for row in recoverability
+            if row["decoder_kind"] == "bayes_optimal_decoder"
+        }
+    )
+    rows = []
+    seen: set[tuple[str, str]] = set()
+    for channel_id, source_distinction_id, target_carrier_id in channel_sources:
+        key = (channel_id, source_distinction_id)
+        if key in seen:
+            continue
+        seen.add(key)
+        fixed_target = declared_target_distinction_id(source_distinction_id, target_carrier_id)
+        fixed_row = fixed.get(key, {})
+        best_row = best.get(key, {})
+        fixed_available = bool(fixed_row)
+        fixed_success = float(fixed_row.get("decoder_success_probability", 0)) if fixed_available else 0.0
+        best_success = float(best_row.get("decoder_success_probability", 0)) if best_row else 0.0
+        rows.append(
+            {
+                "channel_id": channel_id,
+                "source_distinction_id": source_distinction_id,
+                "target_carrier_id": target_carrier_id,
+                "fixed_target_distinction_id": fixed_target,
+                "fixed_target_available": int(fixed_available),
+                "fixed_decoder_id": fixed_row.get("decoder_id", ""),
+                "fixed_success_probability": fixed_row.get("decoder_success_probability", ""),
+                "fixed_success_fraction": fixed_row.get("decoder_success_fraction", ""),
+                "fixed_passes_high_recovery": fixed_row.get("passes_threshold", 0),
+                "fixed_exact_recoverable_support": fixed_row.get("exact_recoverable_support", 0),
+                "bayes_best_target_distinction_id": best_row.get("target_distinction_id", ""),
+                "bayes_best_success_probability": best_row.get("decoder_success_probability", ""),
+                "success_delta_fixed_minus_bayes_best": fixed_success - best_success,
+                "policy_comparison_status": "fixed_target_available" if fixed_available else "fixed_target_unavailable",
                 "claim_boundary": CLAIM_BOUNDARY,
             }
         )

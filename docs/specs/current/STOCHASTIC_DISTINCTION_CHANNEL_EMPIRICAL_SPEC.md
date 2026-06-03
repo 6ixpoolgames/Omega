@@ -4,7 +4,7 @@ Status: completed v0
 Target package: `omega.stochastic_distinction_channel`
 Runner: `omega.stochastic_distinction_channel.probe`
 Initial output: `results/stochastic_distinction_channel/20260603_stochastic_channel_probe_v0/`
-Current tightened output: `results/stochastic_distinction_channel/20260604_stochastic_channel_probe_v0_tightened/`
+Current output: `results/stochastic_distinction_channel/20260604_stochastic_channel_probe_v0_fixed_policy/`
 
 ## Purpose
 
@@ -58,6 +58,7 @@ The current tightened implementation also emits:
 
 ```text
 decoder_policy_manifest.csv
+declared_target_policy_summary.csv
 support_vs_probability_summary.csv
 theorem_transfer_readiness_summary.csv
 formal_channel_consumption_bundle.json
@@ -84,6 +85,7 @@ decoder_policy_manifest.csv
 decoder_table.csv
 threshold_manifest.csv
 recoverability_by_distinction.csv
+declared_target_policy_summary.csv
 asymmetry_summary_by_channel.csv
 confusion_matrix_by_distinction.csv
 non_erasure_requirement_manifest.csv
@@ -152,7 +154,7 @@ Current tightening command:
 
 ```powershell
 .\.venv\Scripts\python.exe -m omega.stochastic_distinction_channel.probe `
-  --out results\stochastic_distinction_channel\20260604_stochastic_channel_probe_v0_tightened `
+  --out results\stochastic_distinction_channel\20260604_stochastic_channel_probe_v0_fixed_policy `
   --csv-output-mode plain
 ```
 

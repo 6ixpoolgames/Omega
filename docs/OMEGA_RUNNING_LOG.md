@@ -9,6 +9,56 @@ patch notes at the top.
 
 ## 2026-06-04
 
+### Stochastic Distinction Channel Fixed Policy Repair
+
+Added fixed declared target observations as a co-primary summary policy beside
+Bayes-best target selection.
+
+Spec:
+
+```text
+docs/specs/current/STOCHASTIC_DISTINCTION_CHANNEL_FIXED_POLICY_SPEC.md
+```
+
+Result note:
+
+```text
+docs/research_notes/validation_results/stochastic_distinction_channel/stochastic_distinction_channel_fixed_policy_result.md
+```
+
+Output:
+
+```text
+results/stochastic_distinction_channel/20260604_stochastic_channel_probe_v0_fixed_policy/
+```
+
+Summary:
+
+```text
+channel_count: 22
+distinction_count: 15
+recoverability_rows: 849
+artifact_count: 34
+artifact_manifest_digest: df8b6413e001f4e5cf30b79c
+formal_consumption_status: support_level_ready_probabilistic_measurement_only
+output_size: about 3.280 MB
+```
+
+Read:
+
+```text
+Bayes-best and fixed-declared target policies agree on the main identity,
+bit-flip, and marginal-joint rows. Divergences are now explicit for projection,
+random-like, and total-erasure channels.
+```
+
+Verification:
+
+```text
+pytest -q: 25 passed
+compileall omega/stochastic_distinction_channel: passed
+```
+
 ### Stochastic Distinction Channel Instrument Tightening
 
 Tightened the first finite stochastic channel bridge for formal consumption:

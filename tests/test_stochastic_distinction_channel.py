@@ -15,6 +15,7 @@ def test_stochastic_channel_tightening_outputs_formal_consumption_bundle(tmp_pat
     bundle = json.loads((out / "formal_channel_consumption_bundle.json").read_text(encoding="utf-8"))
     assert bundle["strict_support_consumption"] == 1
     assert bundle["consumption_artifacts"]["decoder_policy_manifest"] == "decoder_policy_manifest.csv"
+    assert bundle["consumption_artifacts"]["declared_target_policy_summary"] == "declared_target_policy_summary.csv"
 
     support_probability = read_csv(out / "support_vs_probability_summary.csv")
     identity_joint = one_row(support_probability, "identity_channel", "D_joint")
@@ -29,10 +30,24 @@ def test_stochastic_channel_tightening_outputs_formal_consumption_bundle(tmp_pat
     identity_marginals = [
         row
         for row in non_erasure
-        if row["channel_id"] == "identity_channel" and row["requirement_set_id"] == "req_marginals"
+        if row["channel_id"] == "identity_channel"
+        and row["requirement_set_id"] == "req_marginals"
+        and row["decoder_policy_id"] == "fixed_declared_target_distinction"
     ][0]
     assert "D_A=E_A" in identity_marginals["selected_target_distinction_ids"]
     assert "D_B=E_B" in identity_marginals["selected_target_distinction_ids"]
+
+    marginal_joint_rows = read_csv(out / "marginal_joint_recoverability_diagnostic.csv")
+    assert {
+        row["decoder_policy_id"]
+        for row in marginal_joint_rows
+        if row["channel_id"] == "marginal_joint_degrade_q_0_10"
+    } == {"bayes_best_target_distinction", "fixed_declared_target_distinction"}
+
+    fixed_policy = read_csv(out / "declared_target_policy_summary.csv")
+    parity_fixed = one_policy_row(fixed_policy, "marginal_joint_degrade_q_0_10", "D_parity")
+    assert parity_fixed["fixed_target_distinction_id"] == "E_parity"
+    assert parity_fixed["bayes_best_target_distinction_id"] == "E_joint"
 
     support_rows = read_csv(out / "support_recoverability.csv")
     noisy_a = [
@@ -55,3 +70,7 @@ def one_row(rows: list[dict[str, str]], channel_id: str, source_distinction_id: 
     ]
     assert len(matches) == 1
     return matches[0]
+
+
+def one_policy_row(rows: list[dict[str, str]], channel_id: str, source_distinction_id: str) -> dict[str, str]:
+    return one_row(rows, channel_id, source_distinction_id)

@@ -14,6 +14,7 @@ from .analysis import (
     build_recoverability,
     channel_baseline_summary_for_report,
     composition_recoverability_checks,
+    declared_target_policy_summary,
     decoder_policy_manifest,
     decoder_totality_audit,
     distinction_partition_audit,
@@ -100,6 +101,7 @@ def run_probe(
         recoverability_bundle["recoverability"],
         recoverability_bundle["support_recoverability"],
     )
+    fixed_policy_rows = declared_target_policy_summary(recoverability_bundle["recoverability"])
     baseline_manifest, baseline_comparison = baseline_tables(recoverability_bundle["recoverability"])
     asymmetry_summary = asymmetry_summary_by_channel(
         channel_rows=all_channel_rows,
@@ -142,6 +144,7 @@ def run_probe(
         "non_erasure_requirement_manifest.csv": non_erasure_manifest,
         "non_erasure_by_channel.csv": non_erasure_rows,
         "marginal_joint_recoverability_diagnostic.csv": marginal_joint_rows,
+        "declared_target_policy_summary.csv": fixed_policy_rows,
         "support_vs_probability_summary.csv": support_probability_rows,
         "channel_baseline_manifest.csv": baseline_manifest,
         "channel_baseline_comparison.csv": baseline_comparison,
@@ -171,6 +174,7 @@ def run_probe(
         non_erasure=non_erasure_rows,
         marginal_joint=marginal_joint_rows,
         decoder_policy=decoder_policy_rows,
+        fixed_policy=fixed_policy_rows,
         support_probability=support_probability_rows,
         baseline_comparison=baseline_comparison,
         composition_checks=composition_check_rows,
@@ -227,6 +231,7 @@ def build_probe_manifest(
         "tightening_notes": canonical_json(
             {
                 "decoder_policy_manifest": True,
+                "declared_target_policy_summary": True,
                 "formal_channel_consumption_bundle": True,
                 "observation_scope_explicit": True,
                 "exact_vs_probabilistic_recovery_separated": True,
@@ -276,6 +281,7 @@ def build_formal_consumption_bundle(
         "source_observation_table": artifact_paths["source_observation_table.csv"],
         "target_observation_table": artifact_paths["target_observation_table.csv"],
         "decoder_policy_manifest": artifact_paths["decoder_policy_manifest.csv"],
+        "declared_target_policy_summary": artifact_paths["declared_target_policy_summary.csv"],
         "recoverability_by_distinction": artifact_paths["recoverability_by_distinction.csv"],
         "non_erasure_by_channel": artifact_paths["non_erasure_by_channel.csv"],
         "support_vs_probability_summary": artifact_paths["support_vs_probability_summary.csv"],
@@ -349,6 +355,7 @@ def render_report(
     non_erasure: list[dict[str, object]],
     marginal_joint: list[dict[str, object]],
     decoder_policy: list[dict[str, object]],
+    fixed_policy: list[dict[str, object]],
     support_probability: list[dict[str, object]],
     baseline_comparison: list[dict[str, object]],
     composition_checks: list[dict[str, object]],
@@ -360,7 +367,6 @@ def render_report(
     }
     exact_identity = selected_success(recoverability, "identity_channel", "D_joint")
     erasure_joint = selected_success(recoverability, "total_erasure_channel", "D_joint")
-    mj_class_counts = count_by(marginal_joint, "diagnostic_class")
     return "\n".join(
         [
             "# Stochastic Distinction Channel Probe v0",
@@ -373,9 +379,8 @@ def render_report(
             "erasure does not, and nonzero stochastic noise separates support-level exact "
             "recoverability from probabilistic decoder success. This tightened pass adds "
             "formal decoder policies, selected target-observation provenance, support-vs-"
-            "probability summaries, and theorem-transfer readiness. The probe is suitable "
-            "as a formal-consumption bridge only; it makes no Omega, agency, identity, "
-            "value, compatibility, or ethical claim.",
+            "probability summaries, fixed declared target summaries, and theorem-transfer "
+            "readiness. Scope is finite channel recovery and formal consumption.",
             "",
             "## Summary",
             "",
@@ -385,7 +390,7 @@ def render_report(
             f"- identity joint best success: {exact_identity:.6f}",
             f"- total erasure joint best success: {erasure_joint:.6f}",
             "",
-            "## Claim Boundary",
+            "## Scope",
             "",
             CLAIM_BOUNDARY,
             "",
@@ -412,6 +417,11 @@ def render_report(
             "",
             *(f"- `{row['decoder_policy_id']}`: {row['formal_consumption_status']}" for row in decoder_policy),
             "",
+            "The fixed-declared-observation policy is co-primary with Bayes-best for summary "
+            "reads, so target observations are visible rather than optimized silently.",
+            "",
+            *fixed_policy_summary_for_report(fixed_policy),
+            "",
             "## Audit Summary",
             "",
             *(f"- `{name}` failures: {count}" for name, count in sorted(audit_failures.items())),
@@ -431,10 +441,9 @@ def render_report(
             "",
             "## Marginal-Versus-Joint Diagnostic",
             "",
-            *(f"- `{key}`: {value}" for key, value in sorted(mj_class_counts.items())),
+            *marginal_joint_policy_summary_for_report(marginal_joint),
             "",
-            "The diagnostic is finite stochastic-channel structure only. It is not compatibility "
-            "or ethical erasure.",
+            "The diagnostic reports finite channel structure under the declared policies.",
             "",
             "## Baseline Comparisons",
             "",
@@ -462,11 +471,11 @@ def render_report(
             "the formal arm should consume. Support-level exact rows are separated from "
             "probabilistic measurement rows.",
             "",
-            "## Limitations",
+            "## Limits",
             "",
             "The carrier is tiny, thresholds are conventional rather than discovered, and all "
-            "distinctions are hand-declared finite labels. This is a clean formal bridge, not a "
-            "scientific validation result.",
+            "distinctions are hand-declared finite labels. Larger scientific interpretation "
+            "depends on subsequent formal and empirical work.",
             "",
             "## Recommended Next Formal Target",
             "",
@@ -494,10 +503,10 @@ def summarize_non_erasure(rows: list[dict[str, object]]) -> list[str]:
         if row["channel_id"] not in ("identity_channel", "total_erasure_channel", "marginal_joint_degrade_q_0_10"):
             continue
         out.append(
-            f"- `{row['channel_id']}` / `{row['requirement_set_id']}`: "
+            f"- `{row['decoder_policy_id']}` / `{row['channel_id']}` / `{row['requirement_set_id']}`: "
             f"{row['recovered_count']}/{row['required_count']} recovered at `{row['threshold_id']}`"
         )
-    return out[:18]
+    return out[:24]
 
 
 def support_probability_summary_for_report(rows: list[dict[str, object]]) -> list[str]:
@@ -521,6 +530,40 @@ def support_probability_summary_for_report(rows: list[dict[str, object]]) -> lis
             f"success {float(row['best_probability_success']):.6f})"
         )
     return out
+
+
+def fixed_policy_summary_for_report(rows: list[dict[str, object]]) -> list[str]:
+    wanted = {
+        ("identity_channel", "D_joint"),
+        ("bit_flip_p_0_05", "D_A"),
+        ("bit_flip_p_0_05", "D_joint"),
+        ("marginal_joint_degrade_q_0_10", "D_A"),
+        ("marginal_joint_degrade_q_0_10", "D_joint"),
+        ("total_erasure_channel", "D_joint"),
+    }
+    out = []
+    for row in rows:
+        key = (str(row["channel_id"]), str(row["source_distinction_id"]))
+        if key not in wanted:
+            continue
+        out.append(
+            f"- fixed `{row['channel_id']}` / `{row['source_distinction_id']}` -> "
+            f"`{row['fixed_target_distinction_id'] or 'unavailable'}`: "
+            f"success {float(row['fixed_success_probability'] or 0):.6f}, "
+            f"delta vs Bayes-best {float(row['success_delta_fixed_minus_bayes_best']):.6f}"
+        )
+    return out
+
+
+def marginal_joint_policy_summary_for_report(rows: list[dict[str, object]]) -> list[str]:
+    counts: dict[tuple[str, str], int] = {}
+    for row in rows:
+        key = (str(row["decoder_policy_id"]), str(row["diagnostic_class"]))
+        counts[key] = counts.get(key, 0) + 1
+    return [
+        f"- `{policy}` / `{diagnostic}`: {count}"
+        for (policy, diagnostic), count in sorted(counts.items())
+    ]
 
 
 def count_by(rows: list[dict[str, object]], field: str) -> dict[str, int]:

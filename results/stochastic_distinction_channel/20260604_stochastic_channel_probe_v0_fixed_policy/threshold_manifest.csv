@@ -1,0 +1,5 @@
+threshold_id,metric,operator,threshold_value,predeclared,claim_boundary
+exact_error_zero,decoder_error_probability,==,0,1,"finite stochastic channel probe; scope limited to declared channel, distinction, decoder, threshold, and formal-consumption measurements"
+high_recovery,decoder_success_probability,>=,0.95,1,"finite stochastic channel probe; scope limited to declared channel, distinction, decoder, threshold, and formal-consumption measurements"
+moderate_recovery,decoder_success_probability,>=,0.75,1,"finite stochastic channel probe; scope limited to declared channel, distinction, decoder, threshold, and formal-consumption measurements"
+chance_baseline,decoder_success_probability,compare_to,best_constant_decoder_under_same_prior,1,"finite stochastic channel probe; scope limited to declared channel, distinction, decoder, threshold, and formal-consumption measurements"

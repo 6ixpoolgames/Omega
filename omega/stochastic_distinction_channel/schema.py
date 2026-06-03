@@ -8,10 +8,9 @@ from pathlib import Path
 
 
 CLAIM_BOUNDARY = (
-    "prebiotic stochastic channel probe only; no Omega validation, no valuer "
-    "detection, no agency, no identity, no compatibility detection, no ethical claim"
+    "finite stochastic channel probe; scope limited to declared channel, distinction, decoder, threshold, and formal-consumption measurements"
 )
-DEFAULT_OUT = Path("results/stochastic_distinction_channel/20260604_stochastic_channel_probe_v0_tightened")
+DEFAULT_OUT = Path("results/stochastic_distinction_channel/20260604_stochastic_channel_probe_v0_fixed_policy")
 
 
 def fraction_text(value: Fraction) -> str:
