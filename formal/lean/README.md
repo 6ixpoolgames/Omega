@@ -2,10 +2,9 @@
 
 Status: local proof-assistant pressure test
 
-This directory contains the first Lean 4 sandbox for the Omega formalism. It is
-not the full quantale-presheaf formalization yet. The current target is to make
-small recoverability fragments checkable before the project treats them as
-stable mathematical infrastructure.
+This directory contains the Lean 4 sandbox for the Omega formalism. It is not
+the full quantale-presheaf formalization. The current root target is the
+support-level normal lax distinction-transport calculus.
 
 ## Local Toolchain
 
@@ -29,6 +28,58 @@ lake build OmegaCore
 ```
 
 ## Current Checked Content
+
+`OmegaCore/DistTrans.lean` defines the support-level category target:
+
+```text
+PreorderFrame:
+  minimal preorder frame
+
+DistTransport:
+  source-weakening / target-strengthening closed relation
+
+DistTransport.id:
+  identity transport as refinement
+
+DistTransport.compose:
+  ordinary relational composition of transports
+```
+
+Checked relation-level category laws:
+
+```text
+DistTransport.id_closed
+DistTransport.compose_closed
+DistTransport.left_id_iff
+DistTransport.right_id_iff
+DistTransport.assoc_iff
+```
+
+`OmegaCore/NormalLax.lean` defines the current root Lean skeleton:
+
+```text
+ContextCategory:
+  relational contexts and composable unfoldings
+
+NormalLaxDistinctionTransport:
+  normal lax assignment from contexts/unfoldings to DistTrans
+
+NormalLaxDistinctionTransport.Recovers:
+  recoverability as support-level distinction transport
+
+NormalLaxDistinctionTransport.NonErasing:
+  non-erasure for declared distinction requirements
+```
+
+Checked normal-lax consequences:
+
+```text
+NormalLaxDistinctionTransport.identity_recoverability
+NormalLaxDistinctionTransport.recoverability_weaken_source
+NormalLaxDistinctionTransport.recoverability_strengthen_target
+NormalLaxDistinctionTransport.compositional_recoverability
+NormalLaxDistinctionTransport.non_erasure_monotonicity
+```
 
 `OmegaCore/Basic.lean` defines:
 
@@ -55,8 +106,8 @@ non_erasure_monotonicity
 compositional_recoverability
 ```
 
-`OmegaCore/PrimitiveWitness.lean` defines a substrate-independent witness
-calculus for the proposed Omega Primitive Calculus v0:
+`OmegaCore/PrimitiveWitness.lean` defines a prior substrate-independent witness
+calculus smoke:
 
 ```text
 PrimitiveCalculus:
@@ -83,7 +134,8 @@ PrimitiveWitness.compositional_recoverability
 ```
 
 `PrimitiveWitness.IndiscreteUnit` is a deliberately trivial type-checking model.
-It is not an empirical adapter and not evidence for Omega.
+It is not an empirical adapter and not evidence for Omega. The normal-lax
+`DistTrans` layer is now the preferred root skeleton.
 
 The file currently contains no `sorry`, `admit`, or Lean `axiom` declarations.
 
@@ -104,11 +156,12 @@ empirical hypothesis
 
 ## Next Formal Targets
 
-1. Add nontrivial finite examples for `PrimitiveCalculus`.
-2. Add finite examples that instantiate `DistinctionFrame` and `ValueFrame`.
-3. Add a finite transition-system adapter sketch.
-4. Add explicit failure examples where a theorem cannot be stated because an
+1. Add finite maximal-completion existence for finite candidate families.
+2. Add recurrent recoverability over finite chains.
+3. Add nontrivial finite examples for `NormalLaxDistinctionTransport`.
+4. Add finite examples that instantiate `DistinctionFrame` and `ValueFrame`.
+5. Add a finite transition-system adapter sketch.
+6. Add explicit failure examples where a theorem cannot be stated because an
    adapter lacks monotonicity, pullback functoriality, or compositional support.
-5. Add a stricter category/setoid layer for witness associativity and identity
-   laws before calling A4/A5 fully formalized.
-6. Only then lift toward the full presheaf/profunctor/quantale kernel.
+7. Only then lift toward enriched presentations such as the historical
+   presheaf/profunctor/quantale kernel.

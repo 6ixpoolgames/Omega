@@ -2,9 +2,20 @@
 
 A triadic quantale-presheaf kernel for recoverable distinction propagation
 
-Status: strict formal-kernel draft  
+Status: historical strict-presentation exploration  
 Date: 2026-06-03  
 Claim boundary: axiomatic scaffold only; not empirical validation, not valuer detection, not Omega validation, and not ethical completion
+
+Current posture:
+
+```text
+This note is no longer the root formalism. Treat it as a historical
+quantale-presheaf / strict enriched-presentation exploration.
+
+The current root support-level formalism is documented in:
+
+omega_primitive_calculus_v0_lean_root_skeleton.md
+```
 
 ## 0. Purpose
 

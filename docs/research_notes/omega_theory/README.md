@@ -12,6 +12,7 @@ Start with:
 ```text
 ../../../README.md
 ../../OMEGA_FORMALISM_PRIMER.md
+omega_primitive_calculus_v0_lean_root_skeleton.md
 theory_arm_map_v0.md
 omega_formal_core_v0_2_future_distinction_dynamics.md
 ```
@@ -21,7 +22,8 @@ omega_formal_core_v0_2_future_distinction_dynamics.md
 The current best formal stack is:
 
 ```text
-Layer 0: Future-Distinction Dynamics
+Layer 0: Omega Primitive Calculus v0
+Layer 0a: Future-Distinction Dynamics
 Layer 1: Admissibility and Identity-Decay Nulls
 Layer 2: Proto-Valuer Ladder
 Layer 3: Compatibility Completions
@@ -44,7 +46,7 @@ This is a formal target, not an empirical result.
 Read these as current active anchors:
 
 ```text
-omega_core_axioms_v0.md
+omega_primitive_calculus_v0_lean_root_skeleton.md
 lean_formalization_smoke_v0.md
 primitive_witness_calculus_lean_smoke_v0.md
 omega_formal_core_v0_2_future_distinction_dynamics.md
@@ -92,6 +94,7 @@ These notes remain useful provenance, but they should not be treated as the
 current front door:
 
 ```text
+omega_core_axioms_v0.md
 omega_formal_core_v0.md
 formal_stack_v0.md
 minimal_reachable_futures_formalism.md

@@ -9,6 +9,46 @@ patch notes at the top.
 
 ## 2026-06-03
 
+### Omega Primitive Calculus v0 Lean Root Skeleton
+
+Implemented the refined support-level root formalism in Lean:
+
+```text
+formal/lean/OmegaCore/DistTrans.lean
+formal/lean/OmegaCore/NormalLax.lean
+```
+
+Checked:
+
+```text
+DistTrans identity closure
+DistTrans composition closure
+DistTrans left/right identity laws as relation-level iff
+DistTrans associativity as relation-level iff
+normal-lax identity recoverability
+recoverability weakening
+recoverability strengthening
+compositional recoverability from laxity
+non-erasure monotonicity
+```
+
+Build status:
+
+```text
+PASS
+lake build OmegaCore
+no sorry / admit / axiom in formal/lean
+```
+
+Result note:
+
+```text
+docs/research_notes/omega_theory/omega_primitive_calculus_v0_lean_root_skeleton.md
+```
+
+Posture update: `omega_core_axioms_v0.md` is now marked as a historical
+strict-presentation exploration rather than the root formalism.
+
 ### Primitive Witness Calculus Lean Smoke
 
 Added a Lean pressure test for the proposed Omega Primitive Calculus v0:
