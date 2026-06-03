@@ -9,6 +9,48 @@ patch notes at the top.
 
 ## 2026-06-03
 
+### Lean Formalization Smoke
+
+Set up a local Lean 4 proof-assistant sandbox:
+
+```text
+formal/lean/
+```
+
+Toolchain:
+
+```text
+Lean 4.30.0
+Lake 5.0.0
+```
+
+Checked file:
+
+```text
+formal/lean/OmegaCore/Basic.lean
+```
+
+Build command:
+
+```powershell
+cd formal\lean
+lake build OmegaCore
+```
+
+Status:
+
+```text
+PASS
+no sorry / admit / axiom in formal/lean
+```
+
+Checked only the minimal order-theoretic recoverability fragment, not the full
+quantale-presheaf Omega Core. Result note:
+
+```text
+docs/research_notes/omega_theory/lean_formalization_smoke_v0.md
+```
+
 ### Future Field Atlas Formal Interface Distinction Panel
 
 Implemented and ran the first formal-interface distinction panel:

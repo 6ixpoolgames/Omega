@@ -44,6 +44,8 @@ This is a formal target, not an empirical result.
 Read these as current active anchors:
 
 ```text
+omega_core_axioms_v0.md
+lean_formalization_smoke_v0.md
 omega_formal_core_v0_2_future_distinction_dynamics.md
 theory_arm_map_v0.md
 admissibility_enrichment_and_identity_decay_nulls.md
