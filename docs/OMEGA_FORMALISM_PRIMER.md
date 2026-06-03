@@ -143,6 +143,7 @@ formal/lean/OmegaCore/AdapterFailures.lean
 formal/lean/OmegaCore/Presentations/FiniteBoolean.lean
 formal/lean/OmegaCore/Presentations/FiniteChannel.lean
 formal/lean/OmegaCore/Presentations/ProbabilisticChannel.lean
+formal/lean/OmegaCore/Presentations/ProbabilisticChannelPolicy.lean
 ```
 
 Checked:
@@ -177,8 +178,10 @@ a full-support prior implies exact support recovery; perfect recovery under a
 non-full-support prior and high probabilistic recovery do not in general imply
 exact support recovery; and composite decoder failure over a finite channel
 cascade is bounded by first-stage plus second-stage decoder failure over the
-same path ensemble. It also keeps Bayes-best target selection distinct from
-fixed declared target observations.
+same path ensemble. It also checks that fixed-declared and Bayes-best target
+policies can diverge in a tiny finite example, which is why the empirical
+channel instrument reports both provenance-preserving and best-available
+recovery views.
 
 ### Layer 0a: Future-Distinction Dynamics
 

@@ -58,7 +58,8 @@ adapter-failure examples for missing closure or laxity laws;
 Boolean relation support presentation;
 finite channel / partition presentation;
 probabilistic channel presentation, including exact/probabilistic separation,
-full-support converse, and finite cascade error bound.
+full-support converse, finite cascade error bound, and fixed-declared versus
+Bayes-best policy separation.
 ```
 
 Key files:
@@ -70,6 +71,7 @@ formal/lean/OmegaCore/NormalLax.lean
 formal/lean/OmegaCore/Presentations/FiniteBoolean.lean
 formal/lean/OmegaCore/Presentations/FiniteChannel.lean
 formal/lean/OmegaCore/Presentations/ProbabilisticChannel.lean
+formal/lean/OmegaCore/Presentations/ProbabilisticChannelPolicy.lean
 docs/research_notes/omega_theory/omega_primitive_calculus_v0_lean_root_skeleton.md
 docs/research_notes/omega_theory/probabilistic_channel_presentation_v0.md
 ```

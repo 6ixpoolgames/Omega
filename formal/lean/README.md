@@ -305,7 +305,8 @@ an empirical adapter, compatibility semantics, Future Field Atlas semantics,
 proto-valuerhood, valuerhood, ethics, or Omega validation.
 
 `OmegaCore/Presentations/ProbabilisticChannel.lean` defines the finite
-probabilistic channel enrichment:
+probabilistic channel enrichment. `OmegaCore/Presentations/ProbabilisticChannelPolicy.lean`
+adds the finite fixed-declared versus Bayes-best policy-separation example:
 
 ```text
 Supports K x y:
@@ -363,6 +364,14 @@ cascadeTotalMass_eq_totalMass_chanComp:
 cascadeCompositeErrorMass_eq_errorMass_chanComp:
   cascade composite error mass agrees with ordinary error mass over the
   composed channel and composed decoder
+
+bayes_best_can_exceed_fixed_declared:
+  an available alternate target observation can recover perfectly while the
+  fixed-declared target fails a declared threshold
+
+bayes_best_is_alternate_in_two_candidate_example:
+  in the explicit two-candidate example, the alternate target observation
+  dominates the fixed-declared target by success mass
 ```
 
 This is a finite stochastic measurement layer over the support calculus. It
@@ -447,10 +456,9 @@ empirical hypothesis
 2. Add finite examples that instantiate `DistinctionFrame` and `ValueFrame`.
 3. Add a universal-preservation Boolean presentation variant, if needed.
 4. Add a finite transition-system adapter sketch.
-5. Prove a fixed-declared versus Bayes-best policy separation result.
-6. Add a normalized or constant-row-total variant of probabilistic cascade
+5. Add a normalized or constant-row-total variant of probabilistic cascade
    composition, if needed for downstream adapter transfer.
-7. Add richer finite completion examples tied to declared distinction-transport
+6. Add richer finite completion examples tied to declared distinction-transport
    obligations, while keeping valuer semantics out of the root skeleton.
-8. Only then lift toward enriched presentations such as the historical
+7. Only then lift toward enriched presentations such as the historical
    presheaf/profunctor/quantale kernel.

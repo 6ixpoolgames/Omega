@@ -16,6 +16,7 @@ Added the probabilistic channel presentation draft and Lean skeleton:
 ```text
 docs/research_notes/omega_theory/probabilistic_channel_presentation_v0.md
 formal/lean/OmegaCore/Presentations/ProbabilisticChannel.lean
+formal/lean/OmegaCore/Presentations/ProbabilisticChannelPolicy.lean
 ```
 
 Purpose:
@@ -58,6 +59,14 @@ cascade_composite_error_le_stage_errors:
 
 cascade_error_bound_same_denominator:
   same-denominator threshold form of the finite cascade error bound
+
+bayes_best_can_exceed_fixed_declared:
+  an available alternate target observation can recover perfectly while the
+  fixed-declared target fails a declared threshold
+
+bayes_best_is_alternate_in_two_candidate_example:
+  the alternate target observation dominates the fixed-declared target in an
+  explicit two-candidate policy example
 ```
 
 Validation:

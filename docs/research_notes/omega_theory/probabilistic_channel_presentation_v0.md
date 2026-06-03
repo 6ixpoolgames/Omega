@@ -10,6 +10,7 @@ Lean status:
 
 ```text
 formal/lean/OmegaCore/Presentations/ProbabilisticChannel.lean
+formal/lean/OmegaCore/Presentations/ProbabilisticChannelPolicy.lean
 
 Checked:
   exact support recovery implies perfect probabilistic recovery;
@@ -19,10 +20,11 @@ Checked:
   exact support recovery;
   high probabilistic recovery need not imply exact support recovery;
   composite decoder error over a finite cascade is bounded by first-stage plus
-  second-stage decoder error over the same path ensemble.
+  second-stage decoder error over the same path ensemble;
+  fixed-declared and Bayes-best target policies can diverge in a finite
+  two-candidate example.
 
 Pending:
-  fixed-declared versus Bayes-best policy separation;
   normalized or constant-row-total cascade variants, if needed.
 ```
 
@@ -588,6 +590,13 @@ perfectProb_fullPrior_implies_exactSupport
 ### Target 5: Fixed-Declared Versus Bayes-Best Policy Separation
 
 Show that Bayes-best success can exceed fixed-declared success.
+
+Checked in Lean as:
+
+```text
+bayes_best_can_exceed_fixed_declared
+bayes_best_is_alternate_in_two_candidate_example
+```
 
 ### Target 6: Composition Error Bound
 

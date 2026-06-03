@@ -8,5 +8,6 @@ import OmegaCore.NormalLax
 import OmegaCore.Presentations.FiniteBoolean
 import OmegaCore.Presentations.FiniteChannel
 import OmegaCore.Presentations.ProbabilisticChannel
+import OmegaCore.Presentations.ProbabilisticChannelPolicy
 import OmegaCore.PrimitiveWitness
 import OmegaCore.Recurrent

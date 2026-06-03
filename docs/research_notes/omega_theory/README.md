@@ -62,6 +62,7 @@ OmegaCore/MarginalJoint.lean
 OmegaCore/Presentations/FiniteBoolean.lean
 OmegaCore/Presentations/FiniteChannel.lean
 OmegaCore/Presentations/ProbabilisticChannel.lean
+OmegaCore/Presentations/ProbabilisticChannelPolicy.lean
 ```
 
 Current checked scope:
@@ -83,7 +84,9 @@ finite channel / partition presentation with exact decoder recovery, channel
 composition, changed-carrier recovery, and constant-channel erasure;
 probabilistic channel presentation with exact/probabilistic separation,
 full-support converse, high-probability counterexample, and finite cascade
-error bound.
+error bound;
+finite policy-separation example showing that Bayes-best target recovery can
+strictly exceed fixed-declared target recovery.
 ```
 
 This is formal infrastructure only. It does not instantiate an empirical

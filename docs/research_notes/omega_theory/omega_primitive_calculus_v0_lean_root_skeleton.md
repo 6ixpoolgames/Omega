@@ -48,6 +48,7 @@ formal/lean/OmegaCore/MarginalJoint.lean
 formal/lean/OmegaCore/Presentations/FiniteBoolean.lean
 formal/lean/OmegaCore/Presentations/FiniteChannel.lean
 formal/lean/OmegaCore/Presentations/ProbabilisticChannel.lean
+formal/lean/OmegaCore/Presentations/ProbabilisticChannelPolicy.lean
 ```
 
 Build command:
@@ -498,6 +499,14 @@ cascadeTotalMass_eq_totalMass_chanComp:
 
 cascadeCompositeErrorMass_eq_errorMass_chanComp:
   path-ensemble composite error agrees with composed-channel error mass
+
+bayes_best_can_exceed_fixed_declared:
+  an available alternate target observation can recover perfectly while the
+  fixed-declared target fails a declared recovery threshold
+
+bayes_best_is_alternate_in_two_candidate_example:
+  the alternate target observation dominates all candidates in the explicit
+  two-candidate example
 ```
 
 Interpretation:
@@ -506,14 +515,6 @@ Interpretation:
 Probabilistic channel recovery enriches the finite channel presentation. Exact
 support recovery remains the root theorem-transfer object; probabilistic
 success is measured by finite natural-weight mass comparisons.
-```
-
-Pending:
-
-```text
-fixed-declared versus Bayes-best separation:
-  Bayes-best target selection should be able to exceed a fixed declared target
-  policy in finite examples
 ```
 
 ## Scientific Read
@@ -542,10 +543,9 @@ erasure has been detected.
 1. Nontrivial finite normal-lax models.
 2. A universal-preservation Boolean presentation variant, if needed.
 3. A finite transition-system adapter sketch.
-4. Fixed-declared versus Bayes-best policy separation.
-5. Normalized or constant-row-total cascade variants, if needed for adapter
+4. Normalized or constant-row-total cascade variants, if needed for adapter
    transfer.
-6. Richer finite examples connecting abstract admissibility to declared
+5. Richer finite examples connecting abstract admissibility to declared
    distinction-transport obligations without adding valuer semantics.
 
 ## Allowed Claim
@@ -576,6 +576,9 @@ exact support recovery. It also checks a finite cascade union bound: composite
 decoder error is bounded by first-stage plus second-stage decoder error over the
 same natural-weight path ensemble. Bridge lemmas tie the path-ensemble total and
 composite-error masses back to the composed natural-weight channel `chanComp`.
+The policy-separation example checks that fixed-declared and Bayes-best
+target-observation policies can diverge, so stochastic-channel instruments
+should report both.
 ```
 
 ## Blocked Claim
