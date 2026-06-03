@@ -68,7 +68,7 @@ structure PrimitiveCalculus where
       Wit r d e -> Wit s h z -> dle h e -> Wit (comp r s) d z
 
   /-- Witness composition preserves witness strengthening. This is the first
-  formal version of Axiom A6. -/
+  formal version of the A6 monotonicity law. -/
   compose_mono :
     forall {X Y Z : Ctx} {r : Rel X Y} {s : Rel Y Z}
       {d d' : Dist X} {e e' h h' : Dist Y} {z z' : Dist Z}

@@ -27,6 +27,15 @@ cd formal\lean
 lake build OmegaCore
 ```
 
+The sandbox now depends on `mathlib` through `lakefile.lean`:
+
+```text
+mathlib4 v4.30.0
+```
+
+The local cache fetch may fail on this Windows workspace, so required mathlib
+modules can be built from source by `lake build OmegaCore`.
+
 ## Current Checked Content
 
 `OmegaCore/DistTrans.lean` defines the support-level category target:
@@ -80,6 +89,56 @@ NormalLaxDistinctionTransport.recoverability_strengthen_target
 NormalLaxDistinctionTransport.compositional_recoverability
 NormalLaxDistinctionTransport.non_erasure_monotonicity
 ```
+
+`OmegaCore/Recurrent.lean` defines finite-chain recurrent recoverability:
+
+```text
+Chain:
+  finite composable chain of relational unfoldings
+
+Chain.toHom:
+  composite unfolding induced by a chain
+
+RecoverChain:
+  stepwise local recovery along a declared finite chain
+```
+
+Checked recurrent-recoverability theorem:
+
+```text
+recoverChain_sound:
+  if a distinction is recovered stepwise along a finite chain, then it is
+  recovered through the composed unfolding.
+```
+
+This formalizes repeated recovery across a declared unfolding sequence.
+Nontriviality, churn, turnover, perturbation, or renewal conditions remain
+adapter-specific and are not part of the Lean root skeleton.
+
+`OmegaCore/Completion.lean` defines the finite maximal-completion skeleton:
+
+```text
+SubsetMaximal:
+  admissible family with no one-way admissible extension
+
+MaxSizedInList:
+  admissible listed family whose size dominates every listed admissible family
+
+exists_subsetMaximal_of_finite_enumeration:
+  if admissible families are covered by a finite list and at least one is
+  admissible, then a subset-maximal admissible family exists.
+
+exists_subsetMaximal_finset:
+  if `alpha` is finite and at least one `Finset alpha` candidate family is
+  admissible, then a subset-maximal admissible family exists.
+```
+
+This file stays abstract over family type, inclusion-like relation, size, and
+admissibility. It does not define compatibility, proto-valuers, valuers, ethics,
+Future Field Atlas semantics, or empirical adapters.
+
+The explicit `List` theorem remains as the minimal finite-search constructor.
+The `Finset`/`Fintype` specialization is now checked with mathlib.
 
 `OmegaCore/Basic.lean` defines:
 
@@ -156,12 +215,11 @@ empirical hypothesis
 
 ## Next Formal Targets
 
-1. Add finite maximal-completion existence for finite candidate families.
-2. Add recurrent recoverability over finite chains.
-3. Add nontrivial finite examples for `NormalLaxDistinctionTransport`.
-4. Add finite examples that instantiate `DistinctionFrame` and `ValueFrame`.
-5. Add a finite transition-system adapter sketch.
-6. Add explicit failure examples where a theorem cannot be stated because an
+1. Add nontrivial finite examples for `NormalLaxDistinctionTransport`.
+2. Add finite examples that instantiate `DistinctionFrame` and `ValueFrame`.
+3. Add a finite transition-system adapter sketch.
+4. Add explicit failure examples where a theorem cannot be stated because an
    adapter lacks monotonicity, pullback functoriality, or compositional support.
-7. Only then lift toward enriched presentations such as the historical
+5. Add concrete finite `Finset` examples for the completion theorem.
+6. Only then lift toward enriched presentations such as the historical
    presheaf/profunctor/quantale kernel.

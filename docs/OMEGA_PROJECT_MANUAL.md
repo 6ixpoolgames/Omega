@@ -374,6 +374,43 @@ If the root formalism changes, update those files in the same commit as the
 technical proof or theory note. Older notes should be marked as historical or
 strict-presentation explorations rather than silently deleted.
 
+## Lean Formalism Workflow
+
+The Lean sandbox lives under:
+
+```text
+formal/lean/
+```
+
+Use the portable Lean toolchain from the repository root:
+
+```powershell
+$env:PATH = (Resolve-Path '.tools\lean-4.30.0\lean-4.30.0-windows\bin').Path + ';' + $env:PATH
+cd formal\lean
+lake build OmegaCore
+```
+
+Current proof-side dependency:
+
+```text
+mathlib4 v4.30.0
+```
+
+The Windows cache fetch may be unreliable locally. If `lake exe cache get`
+fails, continue with source builds as long as `lake build OmegaCore` succeeds.
+
+Before promoting a formalism update, verify:
+
+```powershell
+lake build OmegaCore
+Select-String -Path formal\lean\OmegaCore\*.lean -Pattern 'sorry|admit|axiom'
+```
+
+Current checked Lean scope includes support-level distinction transport,
+normal-lax recoverability/non-erasure consequences, finite-chain recurrent
+recoverability, and finite maximal completion existence including the
+Finset/Fintype specialization.
+
 Historical executable probes live under:
 
 - `scripts/historical_probes/`

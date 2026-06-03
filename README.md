@@ -151,7 +151,7 @@ Finite scaffolds currently establish:
 
 ```text
 finite maximal admissible completions exist when the admissible family is
-nonempty;
+nonempty, including a Lean-checked Finset/Fintype specialization;
 
 a greatest completion need not exist;
 
@@ -169,11 +169,15 @@ The current Lean formalization checks the support-level root skeleton:
 ```text
 formal/lean/OmegaCore/DistTrans.lean
 formal/lean/OmegaCore/NormalLax.lean
+formal/lean/OmegaCore/Recurrent.lean
+formal/lean/OmegaCore/Completion.lean
 ```
 
 Checked results include DistTrans closure, relation-level identity and
 associativity laws, recoverability weakening/strengthening, compositional
-recoverability from laxity, and non-erasure monotonicity.
+recoverability from laxity, non-erasure monotonicity, finite-chain recurrent
+recoverability, finite-enumeration maximal completion existence, and
+Finset/Fintype maximal completion existence.
 
 ## Empirical Arm: Future Field Atlas
 
@@ -280,10 +284,10 @@ The panel has 40 / 40 requested cells available, 0 missing or blocked cells, and
 separates the four high-yield representatives from the low/medium controls under
 the declared rank_order_boundary joint-vs-marginal finite measure.
 
-The current formal next step is to extend the Lean root skeleton toward
-finite-chain recurrent recoverability and finite maximal-completion existence,
-then tighten the bridge into admissible process-bundle, identity-decay-null,
-maintenance-gap, self-conditioning, and compatibility-audit instrumentation.
+The current formal next step is to add nontrivial finite examples, failed
+adapter examples, and a tighter bridge from the Lean root skeleton into
+admissible process-bundle, identity-decay-null, maintenance-gap,
+self-conditioning, and compatibility-audit instrumentation.
 
 ## Repository Map
 

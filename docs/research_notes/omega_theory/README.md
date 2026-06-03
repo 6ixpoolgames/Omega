@@ -41,6 +41,35 @@ systematic irreversible destruction of one another's distinction-content.
 
 This is a formal target, not an empirical result.
 
+## Lean Status
+
+The current Lean root skeleton lives in:
+
+```text
+../../../formal/lean/
+```
+
+Checked files now include:
+
+```text
+OmegaCore/DistTrans.lean
+OmegaCore/NormalLax.lean
+OmegaCore/Recurrent.lean
+OmegaCore/Completion.lean
+```
+
+Current checked scope:
+
+```text
+support-level distinction transport;
+normal-lax recoverability and non-erasure consequences;
+finite-chain recurrent recoverability;
+finite maximal completion existence, including Finset/Fintype specialization.
+```
+
+This is formal infrastructure only. It does not instantiate an empirical
+adapter, prove valuerhood, prove compatibility in the data, or validate Omega.
+
 ## Current Anchors
 
 Read these as current active anchors:

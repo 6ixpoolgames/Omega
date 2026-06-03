@@ -32,6 +32,18 @@ Lean currently checks the support-level skeleton:
 A : C -> DistTrans
 ```
 
+The checked Lean layer now includes:
+
+```text
+DistTrans closure and relation-level category laws;
+recoverability weakening / strengthening;
+compositional recoverability from laxity;
+non-erasure monotonicity;
+finite-chain recurrent recoverability;
+finite-enumeration maximal completion existence;
+Finset/Fintype maximal completion existence.
+```
+
 Future Field Atlas is not Omega proper. It is an empirical instrument that tries
 to expose finite reachable-future substrates to that root grammar.
 

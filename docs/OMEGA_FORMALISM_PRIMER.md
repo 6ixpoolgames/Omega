@@ -144,7 +144,10 @@ relation-level identity and associativity laws;
 recoverability weakening;
 recoverability strengthening;
 compositional recoverability from laxity;
-non-erasure monotonicity.
+non-erasure monotonicity;
+finite-chain recurrent recoverability;
+finite-enumeration maximal completion existence;
+Finset/Fintype maximal completion existence.
 ```
 
 ### Layer 0a: Future-Distinction Dynamics
@@ -250,7 +253,7 @@ Finite theorem scaffolds currently establish:
 
 ```text
 finite maximal admissible completions exist when the admissible family is
-nonempty;
+nonempty, including the Finset/Fintype specialization now checked in Lean;
 
 a greatest completion need not exist;
 

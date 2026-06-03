@@ -9,6 +9,106 @@ patch notes at the top.
 
 ## 2026-06-03
 
+### Lean Mathlib / Finset Tooling Upgrade
+
+Added mathlib to the local Lean sandbox:
+
+```text
+formal/lean/lakefile.lean
+formal/lean/lake-manifest.json
+```
+
+Tooling status:
+
+```text
+mathlib4 v4.30.0
+lake build OmegaCore: PASS
+```
+
+The Windows cache fetch remained unreliable locally, but required mathlib
+modules built successfully from source. This gives the formal arm access to
+`Finset`/`Fintype` machinery without relying on ad hoc list encodings only.
+
+Updated `Completion.lean` with:
+
+```text
+exists_subsetMaximal_finset:
+  if the candidate universe is finite and at least one Finset candidate family
+  is admissible, then a subset-maximal admissible family exists.
+```
+
+The earlier explicit finite-list theorem is retained as a minimal
+finite-search constructor. Scope boundary remains unchanged: this is finite
+completion infrastructure only, not compatibility, valuerhood, ethics,
+empirical adapter instantiation, or Omega validation.
+
+### Finite Maximal Completion Lean Smoke
+
+Implemented the finite completion skeleton:
+
+```text
+formal/lean/OmegaCore/Completion.lean
+```
+
+Checked:
+
+```text
+SubsetMaximal:
+  admissible family with no one-way admissible extension
+
+exists_subsetMaximal_of_finite_enumeration:
+  if admissible families are covered by an explicit finite enumeration and at
+  least one is admissible, a subset-maximal admissible family exists
+```
+
+Status:
+
+```text
+PASS
+lake build OmegaCore
+```
+
+Scope boundary: this proves finite completion structure only. It does not define
+compatibility, proto-valuers, valuers, ethics, empirical adapters, or Omega
+validation. The initial proof used explicit finite enumeration by `List`; the
+mathlib pass now adds the `Finset`/`Fintype` specialization while retaining the
+list theorem as the minimal constructor.
+
+### Finite-Chain Recurrent Recoverability Lean Smoke
+
+Implemented the first recurrent-recoverability layer:
+
+```text
+formal/lean/OmegaCore/Recurrent.lean
+```
+
+Checked:
+
+```text
+Chain:
+  finite composable unfolding sequence
+
+Chain.toHom:
+  composite unfolding
+
+RecoverChain:
+  local stepwise recovery
+
+recoverChain_sound:
+  local finite-chain recovery implies recovery through the composite unfolding
+```
+
+Status:
+
+```text
+PASS
+lake build OmegaCore
+```
+
+Scope boundary: recurrent recoverability here is finite-chain compositional
+recoverability. Nontriviality, churn, turnover, perturbation, or renewal
+conditions remain adapter-specific and are not part of the Lean root skeleton.
+
 ### Public Front-Door Housekeeping After Lean Root Pivot
 
 Updated public-facing docs so the first-contact repo posture matches the new

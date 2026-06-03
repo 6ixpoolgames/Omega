@@ -40,6 +40,8 @@ Files:
 ```text
 formal/lean/OmegaCore/DistTrans.lean
 formal/lean/OmegaCore/NormalLax.lean
+formal/lean/OmegaCore/Recurrent.lean
+formal/lean/OmegaCore/Completion.lean
 ```
 
 Build command:
@@ -121,6 +123,78 @@ compositional recoverability from laxity
 non-erasure monotonicity
 ```
 
+## Batch 3: Recurrent Recoverability
+
+`Recurrent.lean` defines:
+
+```text
+Chain:
+  finite composable chain of relational unfoldings
+
+Chain.toHom:
+  composite unfolding induced by a chain
+
+RecoverChain:
+  local stepwise recovery along the chain
+```
+
+Checked theorem:
+
+```text
+recoverChain_sound:
+  local finite-chain recovery implies recovery through the composite unfolding
+```
+
+Interpretation:
+
+```text
+Recurrent recoverability is finite-chain compositional recoverability.
+It formalizes repeated recovery across a declared unfolding sequence.
+Nontriviality / churn is adapter-specific and not part of the Lean root
+skeleton.
+```
+
+## Batch 4: Finite Maximal Completion
+
+`Completion.lean` defines:
+
+```text
+SubsetMaximal:
+  admissible family with no one-way admissible extension
+
+MaxSizedInList:
+  admissible listed family whose size dominates all listed admissible families
+
+exists_subsetMaximal_of_finite_enumeration:
+  finite-enumeration maximal completion existence
+
+exists_subsetMaximal_finset:
+  Finset/Fintype maximal completion existence
+```
+
+Interpretation:
+
+```text
+If admissible candidate families are covered by an explicit finite enumeration
+and at least one family is admissible, then a subset-maximal admissible family
+exists.
+
+If the candidate universe is finite, then the same subset-maximal existence
+result specializes to `Finset` candidate families.
+```
+
+This proves the finite completion skeleton only. It does not define
+compatibility, proto-valuers, valuers, value, empirical adapters, or Future
+Field Atlas semantics.
+
+Implementation note:
+
+```text
+The Lean sandbox now includes mathlib v4.30.0. The explicit List theorem is
+retained as the minimal finite-search constructor, and the Finset/Fintype
+specialization is checked with mathlib.
+```
+
 ## Scientific Read
 
 This is a stronger root formalization target than the earlier quantale-presheaf
@@ -144,19 +218,19 @@ erasure has been detected.
 
 ## Remaining Lean Targets
 
-1. Finite maximal-completion existence under finite candidate space and at
-   least one admissible subset.
-2. Recurrent recoverability over finite chains.
-3. Nontrivial finite normal-lax models.
-4. Failed-adapter examples showing which theorems stop transferring when a law
+1. Nontrivial finite normal-lax models.
+2. Failed-adapter examples showing which theorems stop transferring when a law
    is absent.
+3. Add concrete finite Finset examples for the completion theorem.
 
 ## Allowed Claim
 
 ```text
 The support-level normal lax distinction-transport skeleton for Omega Primitive
-Calculus v0 is Lean-checkable for DistTrans closure/category laws and the basic
-recoverability/non-erasure consequences.
+Calculus v0 is Lean-checkable for DistTrans closure/category laws, the basic
+recoverability/non-erasure consequences, and finite-chain recurrent
+recoverability, finite-enumeration maximal completion existence, and
+Finset/Fintype maximal completion existence.
 ```
 
 ## Blocked Claim
