@@ -140,6 +140,87 @@ Future Field Atlas semantics, or empirical adapters.
 The explicit `List` theorem remains as the minimal finite-search constructor.
 The `Finset`/`Fintype` specialization is now checked with mathlib.
 
+`OmegaCore/Counterexamples.lean` defines finite completion counterexamples:
+
+```text
+AdmAtMostTwo:
+  all two-element families in Fin 3 are admissible, while the full
+  three-element family is not
+
+AdmFork:
+  downward-closed fork admissibility with two incompatible maximal branches
+
+GreatestFinset:
+  admissible family containing every admissible family
+```
+
+Checked counterexamples:
+
+```text
+pairwise_admissible_not_joint
+distinct_maximal_completions
+no_greatest_completion
+```
+
+These show that completion structure is n-ary, subset-maximal, and generally
+family-valued. They remain abstract finite admissibility examples and do not
+define compatibility, proto-valuers, valuers, ethics, Future Field Atlas
+semantics, or empirical adapters.
+
+`OmegaCore/MarginalJoint.lean` defines a finite distinction-transport
+counterexample:
+
+```text
+SrcD:
+  source distinctions bot, margA, margB, joint
+
+TgtD:
+  target distinctions bot, outA, outB
+
+Phi:
+  a DistTransport that carries margA to outA and margB to outB, but does not
+  carry the strictly joint distinction
+```
+
+Checked theorem:
+
+```text
+marginal_non_erasure_not_joint_non_erasure:
+  marginal-like non-erasure does not imply strictly joint non-erasure
+```
+
+This is the support-level root-calculus analogue of "marginal continuation is
+not compatibility." It does not define compatibility, joint field semantics,
+Future Field Atlas semantics, proto-valuers, valuers, ethics, or empirical
+adapters.
+
+`OmegaCore/AdapterFailures.lean` defines finite transfer-boundary examples:
+
+```text
+raw_source_weakening_failure:
+  a raw relation can fail source-weakening closure
+
+rawPhi_not_distTransport_exact:
+  no exact DistTransport can package that source-weakening-failing relation
+
+raw_target_strengthening_failure:
+  a raw relation can fail target-strengthening closure
+
+rawPsi_not_distTransport_exact:
+  no exact DistTransport can package that target-strengthening-failing relation
+
+raw_laxity_failure:
+  local recoveries can exist while the declared composite recovery is absent
+
+laxity_subset_failure:
+  valid one-step transports still fail theorem transfer when the declared
+  composite transport does not contain their composed support
+```
+
+These examples show that theorem transfer requires actual satisfaction of the
+root laws. Invalid or extended adapters must report which laws fail and which
+theorems no longer apply.
+
 `OmegaCore/Basic.lean` defines:
 
 ```text
@@ -218,8 +299,7 @@ empirical hypothesis
 1. Add nontrivial finite examples for `NormalLaxDistinctionTransport`.
 2. Add finite examples that instantiate `DistinctionFrame` and `ValueFrame`.
 3. Add a finite transition-system adapter sketch.
-4. Add explicit failure examples where a theorem cannot be stated because an
-   adapter lacks monotonicity, pullback functoriality, or compositional support.
-5. Add concrete finite `Finset` examples for the completion theorem.
-6. Only then lift toward enriched presentations such as the historical
+4. Add richer finite completion examples tied to declared distinction-transport
+   obligations, while keeping valuer semantics out of the root skeleton.
+5. Only then lift toward enriched presentations such as the historical
    presheaf/profunctor/quantale kernel.

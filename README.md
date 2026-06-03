@@ -153,11 +153,14 @@ Finite scaffolds currently establish:
 finite maximal admissible completions exist when the admissible family is
 nonempty, including a Lean-checked Finset/Fintype specialization;
 
-a greatest completion need not exist;
+a greatest completion need not exist, now checked as a finite Lean
+counterexample;
 
-pairwise compatibility does not imply joint compatibility;
+pairwise admissibility does not imply joint admissibility, now checked as a
+finite Lean counterexample;
 
-marginal continuation does not imply joint-field compatibility;
+marginal-like non-erasure does not imply strictly joint non-erasure, now checked
+as a finite Lean distinction-transport counterexample;
 
 finite completions are computable by exhaustive enumeration in principle.
 ```
@@ -171,13 +174,23 @@ formal/lean/OmegaCore/DistTrans.lean
 formal/lean/OmegaCore/NormalLax.lean
 formal/lean/OmegaCore/Recurrent.lean
 formal/lean/OmegaCore/Completion.lean
+formal/lean/OmegaCore/Counterexamples.lean
+formal/lean/OmegaCore/MarginalJoint.lean
+formal/lean/OmegaCore/AdapterFailures.lean
 ```
 
 Checked results include DistTrans closure, relation-level identity and
 associativity laws, recoverability weakening/strengthening, compositional
 recoverability from laxity, non-erasure monotonicity, finite-chain recurrent
 recoverability, finite-enumeration maximal completion existence, and
-Finset/Fintype maximal completion existence.
+Finset/Fintype maximal completion existence. The finite counterexample layer
+also checks that pairwise admissibility does not imply joint admissibility,
+maximal admissible completions need not be unique, and a greatest admissible
+completion need not exist. The marginal/joint counterexample layer checks that
+preserving each component-like distinction does not force preservation of a
+strictly joint distinction. The adapter-failure layer checks that theorem
+transfer fails without source-weakening closure, target-strengthening closure,
+or lax composition inclusion.
 
 ## Empirical Arm: Future Field Atlas
 

@@ -41,7 +41,10 @@ compositional recoverability from laxity;
 non-erasure monotonicity;
 finite-chain recurrent recoverability;
 finite-enumeration maximal completion existence;
-Finset/Fintype maximal completion existence.
+Finset/Fintype maximal completion existence;
+finite completion counterexamples;
+marginal-like non-erasure not implying strictly joint non-erasure;
+adapter-failure examples for missing closure or laxity laws.
 ```
 
 Future Field Atlas is not Omega proper. It is an empirical instrument that tries

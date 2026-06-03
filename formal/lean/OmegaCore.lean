@@ -1,6 +1,9 @@
+import OmegaCore.AdapterFailures
 import OmegaCore.Basic
 import OmegaCore.Completion
+import OmegaCore.Counterexamples
 import OmegaCore.DistTrans
+import OmegaCore.MarginalJoint
 import OmegaCore.NormalLax
 import OmegaCore.PrimitiveWitness
 import OmegaCore.Recurrent

@@ -409,7 +409,9 @@ Select-String -Path formal\lean\OmegaCore\*.lean -Pattern 'sorry|admit|axiom'
 Current checked Lean scope includes support-level distinction transport,
 normal-lax recoverability/non-erasure consequences, finite-chain recurrent
 recoverability, and finite maximal completion existence including the
-Finset/Fintype specialization.
+Finset/Fintype specialization. The current counterexample layer also checks
+finite completion separations, marginal-like non-erasure versus strictly joint
+non-erasure, and adapter-failure examples for missing closure or laxity laws.
 
 Historical executable probes live under:
 

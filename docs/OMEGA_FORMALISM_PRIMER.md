@@ -147,7 +147,10 @@ compositional recoverability from laxity;
 non-erasure monotonicity;
 finite-chain recurrent recoverability;
 finite-enumeration maximal completion existence;
-Finset/Fintype maximal completion existence.
+Finset/Fintype maximal completion existence;
+finite completion counterexamples;
+marginal-like non-erasure not implying strictly joint non-erasure;
+adapter-failure examples for missing closure or laxity laws.
 ```
 
 ### Layer 0a: Future-Distinction Dynamics
@@ -255,11 +258,14 @@ Finite theorem scaffolds currently establish:
 finite maximal admissible completions exist when the admissible family is
 nonempty, including the Finset/Fintype specialization now checked in Lean;
 
-a greatest completion need not exist;
+a greatest completion need not exist, now checked as a finite Lean
+counterexample;
 
-pairwise compatibility does not imply joint compatibility;
+pairwise admissibility does not imply joint admissibility, now checked as a
+finite Lean counterexample;
 
-marginal continuation does not imply joint-field compatibility;
+marginal-like non-erasure does not imply strictly joint non-erasure, now checked
+as a finite Lean distinction-transport counterexample;
 
 finite completions are computable by exhaustive enumeration in principle.
 ```

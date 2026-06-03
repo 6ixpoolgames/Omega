@@ -53,9 +53,12 @@ Checked files now include:
 
 ```text
 OmegaCore/DistTrans.lean
+OmegaCore/AdapterFailures.lean
 OmegaCore/NormalLax.lean
 OmegaCore/Recurrent.lean
 OmegaCore/Completion.lean
+OmegaCore/Counterexamples.lean
+OmegaCore/MarginalJoint.lean
 ```
 
 Current checked scope:
@@ -64,7 +67,13 @@ Current checked scope:
 support-level distinction transport;
 normal-lax recoverability and non-erasure consequences;
 finite-chain recurrent recoverability;
-finite maximal completion existence, including Finset/Fintype specialization.
+finite maximal completion existence, including Finset/Fintype specialization;
+finite completion counterexamples for pairwise-vs-joint admissibility,
+non-unique maximal completions, and nonexistence of a greatest completion;
+finite distinction-transport counterexample for marginal-like non-erasure not
+implying strictly joint non-erasure;
+adapter-failure examples showing theorem transfer failure without closure or
+laxity laws.
 ```
 
 This is formal infrastructure only. It does not instantiate an empirical

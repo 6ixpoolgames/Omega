@@ -9,6 +9,112 @@ patch notes at the top.
 
 ## 2026-06-03
 
+### Adapter Failure Examples Lean Smoke
+
+Implemented finite theorem-transfer failure examples:
+
+```text
+formal/lean/OmegaCore/AdapterFailures.lean
+```
+
+Checked:
+
+```text
+raw_source_weakening_failure:
+  a raw relation can fail source-weakening closure
+
+rawPhi_not_distTransport_exact:
+  no exact DistTransport can package that source-weakening-failing relation
+
+raw_target_strengthening_failure:
+  a raw relation can fail target-strengthening closure
+
+rawPsi_not_distTransport_exact:
+  no exact DistTransport can package that target-strengthening-failing relation
+
+raw_laxity_failure:
+  local recoveries can exist while the declared composite recovery is absent
+
+laxity_subset_failure:
+  valid one-step transports still fail theorem transfer when the declared
+  composite transport does not contain their composed support
+```
+
+Status:
+
+```text
+PASS
+lake build OmegaCore
+```
+
+Scope boundary: theorem transfer requires actual satisfaction of the root
+laws. Invalid or extended adapters must report which laws fail and which
+theorems no longer apply. This does not define empirical adapters,
+compatibility, valuerhood, Future Field Atlas semantics, or Omega validation.
+
+### Marginal-Like Non-Erasure Lean Counterexample
+
+Implemented the finite distinction-transport counterexample:
+
+```text
+formal/lean/OmegaCore/MarginalJoint.lean
+```
+
+Checked:
+
+```text
+marginal_non_erasure_not_joint_non_erasure:
+  a DistTransport can be non-erasing for component/marginal distinctions
+  margA and margB while failing to be non-erasing for a strictly joint
+  distinction joint
+```
+
+Status:
+
+```text
+PASS
+lake build OmegaCore
+```
+
+Scope boundary: this validates the support-level root-calculus analogue of
+"marginal continuation is not compatibility." It does not define compatibility,
+joint field semantics, Future Field Atlas semantics, valuerhood, empirical
+adapters, or Omega validation.
+
+### Finite Completion Counterexamples Lean Smoke
+
+Implemented the first finite completion counterexample layer:
+
+```text
+formal/lean/OmegaCore/Counterexamples.lean
+```
+
+Checked:
+
+```text
+pairwise_admissible_not_joint:
+  all two-element families in Fin 3 are admissible under an at-most-two
+  predicate, while the full three-element family is not
+
+distinct_maximal_completions:
+  a downward-closed fork has two distinct subset-maximal admissible families
+
+no_greatest_completion:
+  the same fork has no greatest admissible family
+```
+
+Status:
+
+```text
+PASS
+lake build OmegaCore
+```
+
+Scope boundary: these are abstract finite admissibility counterexamples only.
+They support the completion-layer discipline that completion is n-ary,
+subset-maximal, and generally family-valued. They do not define compatibility,
+valuerhood, ethics, empirical adapters, or Omega validation.
+
 ### Lean Mathlib / Finset Tooling Upgrade
 
 Added mathlib to the local Lean sandbox:

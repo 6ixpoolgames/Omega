@@ -24,6 +24,30 @@ It proves small finite facts about compatibility completions:
 
 The goal is to harden the completion layer before attempting theorem-grade proto-valuerhood.
 
+Lean status as of 2026-06-03:
+
+```text
+formal/lean/OmegaCore/Completion.lean:
+  checks finite maximal admissible completion existence, including the
+  Finset/Fintype specialization
+
+formal/lean/OmegaCore/Counterexamples.lean:
+  checks abstract finite admissibility counterexamples for:
+    pairwise-style admissibility not implying joint admissibility;
+    non-unique maximal admissible completions;
+    nonexistence of a greatest admissible completion.
+
+formal/lean/OmegaCore/MarginalJoint.lean:
+  checks a finite DistTransport counterexample where component/marginal
+  distinctions are non-erased but a strictly joint distinction is not.
+```
+
+The Lean counterexamples are deliberately phrased at the abstract
+`Adm : Finset alpha -> Prop` level. They support the completion-layer structure
+but do not yet formalize the stronger prose compatibility or marginal
+continuation examples in this note. `MarginalJoint.lean` separately checks the
+root distinction-transport analogue of the marginal/joint separation.
+
 ## 1. Relation to the current stack
 
 The current stack is:

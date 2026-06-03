@@ -39,9 +39,12 @@ Files:
 
 ```text
 formal/lean/OmegaCore/DistTrans.lean
+formal/lean/OmegaCore/AdapterFailures.lean
 formal/lean/OmegaCore/NormalLax.lean
 formal/lean/OmegaCore/Recurrent.lean
 formal/lean/OmegaCore/Completion.lean
+formal/lean/OmegaCore/Counterexamples.lean
+formal/lean/OmegaCore/MarginalJoint.lean
 ```
 
 Build command:
@@ -195,6 +198,139 @@ retained as the minimal finite-search constructor, and the Finset/Fintype
 specialization is checked with mathlib.
 ```
 
+## Batch 5: Finite Completion Counterexamples
+
+`Counterexamples.lean` defines:
+
+```text
+AdmAtMostTwo:
+  abstract admissibility on Fin 3 where families of size at most two are
+  admissible
+
+AdmFork:
+  downward-closed fork admissibility with two incompatible maximal branches
+
+GreatestFinset:
+  admissible family containing every admissible family
+```
+
+Checked counterexamples:
+
+```text
+pairwise_admissible_not_joint:
+  all two-element families are admissible under AdmAtMostTwo, but the full
+  three-element family is not
+
+distinct_maximal_completions:
+  the downward-closed fork has two distinct subset-maximal admissible families
+
+no_greatest_completion:
+  the downward-closed fork has no greatest admissible family
+```
+
+Interpretation:
+
+```text
+Finite completion structure is n-ary, subset-maximal, and generally
+family-valued. Pairwise admissibility does not force joint admissibility;
+maximal completions need not be unique; and maximal completions need not
+assemble into a greatest completion.
+```
+
+These are abstract finite completion counterexamples only. They do not define
+compatibility, valuerhood, empirical adapters, or Omega validation.
+
+## Batch 6: Marginal-Like Non-Erasure Is Not Joint Non-Erasure
+
+`MarginalJoint.lean` defines:
+
+```text
+SrcD:
+  source distinctions bot, margA, margB, joint
+
+TgtD:
+  target distinctions bot, outA, outB
+
+Phi:
+  a DistTransport carrying margA to outA and margB to outB, with no target
+  distinction capable of carrying the strictly joint source distinction
+
+TransportNonErasing:
+  transport-level non-erasure for a declared source requirement set
+```
+
+Checked counterexample:
+
+```text
+marginal_non_erasure_not_joint_non_erasure:
+  Phi is non-erasing for the marginal requirement set {margA, margB}, but is
+  not non-erasing for the joint requirement set {joint}
+```
+
+Interpretation:
+
+```text
+Preserving each component/marginal distinction does not force preservation of
+a strictly joint distinction. This is the support-level root-calculus analogue
+of the empirical lesson that marginal continuation is not compatibility.
+```
+
+This result remains at the abstract distinction-transport layer. It does not
+define compatibility, joint field semantics, Future Field Atlas semantics,
+valuerhood, or Omega validation.
+
+## Batch 7: Adapter Failure Examples
+
+`AdapterFailures.lean` defines finite failure examples for invalid adapters:
+
+```text
+RawPhi:
+  raw relation that carries a source distinction a but fails to carry the
+  weaker distinction bot
+
+RawPsi:
+  raw relation that carries a target distinction out but fails to carry the
+  stronger target top
+
+R01, R12, R02:
+  valid one-step DistTrans transports and a valid declared composite transport
+  where the required lax composition inclusion fails
+```
+
+Checked failures:
+
+```text
+raw_source_weakening_failure:
+  a raw non-closed relation can fail recoverability weakening
+
+rawPhi_not_distTransport_exact:
+  no exact DistTransport can package that source-weakening-failing relation
+
+raw_target_strengthening_failure:
+  a raw non-closed relation can fail recoverability strengthening
+
+rawPsi_not_distTransport_exact:
+  no exact DistTransport can package that target-strengthening-failing relation
+
+raw_laxity_failure:
+  local recoveries can exist while the declared composite recovery is absent
+
+laxity_subset_failure:
+  valid one-step transports still fail theorem transfer when the declared
+  composite transport does not contain their composed support
+```
+
+Interpretation:
+
+```text
+Theorem transfer requires actual satisfaction of the root laws. Invalid or
+extended adapters must report which laws fail and which theorems no longer
+apply.
+```
+
+These are failure examples only. They do not define empirical adapters, Future
+Field Atlas semantics, compatibility, valuerhood, or Omega validation.
+
 ## Scientific Read
 
 This is a stronger root formalization target than the earlier quantale-presheaf
@@ -219,9 +355,9 @@ erasure has been detected.
 ## Remaining Lean Targets
 
 1. Nontrivial finite normal-lax models.
-2. Failed-adapter examples showing which theorems stop transferring when a law
-   is absent.
-3. Add concrete finite Finset examples for the completion theorem.
+2. A finite transition-system adapter sketch.
+3. Richer finite examples connecting abstract admissibility to declared
+   distinction-transport obligations without adding valuer semantics.
 
 ## Allowed Claim
 
@@ -230,7 +366,14 @@ The support-level normal lax distinction-transport skeleton for Omega Primitive
 Calculus v0 is Lean-checkable for DistTrans closure/category laws, the basic
 recoverability/non-erasure consequences, and finite-chain recurrent
 recoverability, finite-enumeration maximal completion existence, and
-Finset/Fintype maximal completion existence.
+Finset/Fintype maximal completion existence. It also checks finite completion
+counterexamples showing that pairwise admissibility does not imply joint
+admissibility, maximal admissible completions need not be unique, and a
+greatest admissible completion need not exist. Finally, it checks a finite
+DistTransport counterexample showing that marginal-like non-erasure does not
+imply strictly joint non-erasure, and finite adapter-failure examples showing
+that theorem transfer fails without source-weakening closure,
+target-strengthening closure, or lax composition inclusion.
 ```
 
 ## Blocked Claim
