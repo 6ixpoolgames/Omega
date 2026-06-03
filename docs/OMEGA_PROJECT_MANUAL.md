@@ -63,6 +63,11 @@ conformance is not claimed. The follow-up raw/closed gap report confirms that
 root-law theorem transfer depends on generated closure, while the passing
 finite non-erasure rows are not inflated by closure-only recoveries. Keep
 `raw_observed` and closure-derived support kinds separate in future reports.
+The stochastic distinction-channel probe is the current clean channel
+presentation bridge. It separates support-level exact recovery from
+probabilistic decoder recovery under declared finite distinctions, priors,
+decoders, and thresholds. Treat it as prebiotic channel formalization only, not
+as Omega validation or semantic detection.
 The instrument is calibrated against the latest
 hard-top-m mechanism result as a fixture, which points toward a fixed low-rank
 successor boundary: rank-prefix `m=3`,

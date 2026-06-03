@@ -142,6 +142,35 @@ combined asymmetry:
 
 ## Most important current results
 
+### Stochastic distinction-channel formal bridge
+
+Result note:
+
+- [`stochastic_distinction_channel_probe_v0_result.md`](research_notes/validation_results/stochastic_distinction_channel/stochastic_distinction_channel_probe_v0_result.md)
+
+Run summary:
+
+```text
+channel_count: 22
+distinction_count: 15
+recoverability_rows: 849
+row-stochastic audit failures: 0
+decoder totality audit failures: 0
+```
+
+Read:
+
+```text
+The finite stochastic channel probe separates support-level exact recovery from
+probabilistic decoder recovery. It recovers all declared distinctions under
+identity, loses nontrivial distinctions under total erasure, and gives a tiny
+thresholded example where A/B marginals pass high recovery while the joint
+distinction does not.
+```
+
+This is a prebiotic formal bridge only, not Omega validation and not semantic
+detection.
+
 ### Future Field Atlas formal adapter conformance package
 
 Result note:

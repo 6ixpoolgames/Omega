@@ -13,6 +13,8 @@ or historical run instructions here.
 
 Current active and recent live-instrument specs:
 
+- `current/STOCHASTIC_DISTINCTION_CHANNEL_EMPIRICAL_SPEC.md`
+  (completed; finite stochastic channel bridge with support/probabilistic recovery separation)
 - `current/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md`
 - `current/FUTURE_FIELD_ATLAS_FORMAL_ADAPTER_RAW_CLOSED_GAP_REPORT_SPEC.md`
   (completed; quantifies closure dependence in the formal adapter package)

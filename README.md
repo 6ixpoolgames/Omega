@@ -124,6 +124,11 @@ distinction fibers, preorders, transport witnesses, closed transports, law
 checks, and theorem-transfer status. The generated closed presentation passes
 the checked root laws; strict raw conformance is not claimed.
 
+A newer **stochastic distinction-channel** bridge tests the same primitive roles
+in a cleaner prebiotic substrate: stochastic relation `K(y|x)`, declared finite
+distinctions, named decoders, support-level exact recovery, and probabilistic
+decoder success. It is a formal-consumption probe, not a validation claim.
+
 ## What This Repository Does Not Claim
 
 This repository does not currently claim:

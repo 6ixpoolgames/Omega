@@ -9,6 +9,84 @@ patch notes at the top.
 
 ## 2026-06-03
 
+### Stochastic Distinction Channel Probe v0
+
+Implemented and ran the first finite stochastic distinction-channel bridge:
+
+```text
+omega.stochastic_distinction_channel.probe
+```
+
+Spec:
+
+```text
+docs/specs/current/STOCHASTIC_DISTINCTION_CHANNEL_EMPIRICAL_SPEC.md
+```
+
+Result note:
+
+```text
+docs/research_notes/validation_results/stochastic_distinction_channel/stochastic_distinction_channel_probe_v0_result.md
+```
+
+Output:
+
+```text
+results/stochastic_distinction_channel/20260603_stochastic_channel_probe_v0/
+```
+
+Summary:
+
+```text
+channel_count: 22
+distinction_count: 15
+recoverability_rows: 849
+artifact_manifest_digest: a9c7a29dbf4cc5f2aa4422ed
+output_size: about 3.302 MB
+```
+
+Audits:
+
+```text
+channel_row_stochastic_audit failures: 0
+distinction_partition_audit failures: 0
+decoder_totality_audit failures: 0
+threshold_application_audit failures: 0
+```
+
+Key read:
+
+```text
+identity_channel:
+  D_joint best success 1.000000
+
+total_erasure_channel:
+  D_joint best success 0.250000
+
+bit_flip_p_0_05:
+  A/B success 0.950000
+  joint success 0.902500
+  marginal_recovered_joint_not_recovered
+
+marginal_joint_degrade_q_0_10:
+  A/B success 0.950000
+  joint success 0.900000
+  marginal_recovered_joint_not_recovered
+```
+
+Read:
+
+```text
+The channel substrate cleanly separates support-level exact recovery from
+probabilistic decoder recovery. It also gives a tiny finite example where
+predeclared marginal recovery can pass while joint recovery fails at the same
+high-recovery threshold.
+```
+
+Scope boundary: prebiotic stochastic channel probe only. No Omega validation,
+proto-valuer detection, valuer detection, agency, identity, value,
+compatibility, ethical erasure, maintenance gap, or identity-decay null claim.
+
 ### Future Field Atlas Formal Adapter Raw/Closed Gap Report
 
 Implemented and ran the compact A-lite gap postprocessor:
