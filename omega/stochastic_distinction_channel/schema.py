@@ -11,7 +11,7 @@ CLAIM_BOUNDARY = (
     "prebiotic stochastic channel probe only; no Omega validation, no valuer "
     "detection, no agency, no identity, no compatibility detection, no ethical claim"
 )
-DEFAULT_OUT = Path("results/stochastic_distinction_channel/20260603_stochastic_channel_probe_v0")
+DEFAULT_OUT = Path("results/stochastic_distinction_channel/20260604_stochastic_channel_probe_v0_tightened")
 
 
 def fraction_text(value: Fraction) -> str:

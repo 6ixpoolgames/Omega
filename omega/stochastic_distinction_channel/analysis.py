@@ -177,7 +177,18 @@ def analyze_pair(
             joint[(source_label, target_label)] += mass
             if probability > 0:
                 support_sources_by_target[target_label].add(source_label)
-    exact_support = all(len(support_sources_by_target[label]) <= 1 for label in target_labels)
+    positive_source_labels = {label for label, mass in source_label_prior.items() if mass > 0}
+    support_target_nonambiguous = all(len(support_sources_by_target[label]) <= 1 for label in target_labels)
+    support_recovered_source_labels: set[str] = set()
+    ambiguous_support_target_label_count = 0
+    for target_label in target_labels:
+        sources = support_sources_by_target[target_label]
+        if len(sources) == 1:
+            support_recovered_source_labels.update(sources)
+        elif len(sources) > 1:
+            ambiguous_support_target_label_count += 1
+    support_source_label_coverage_complete = positive_source_labels.issubset(support_recovered_source_labels)
+    exact_support = support_target_nonambiguous and support_source_label_coverage_complete
     bayes_mapping = {}
     for target_label in target_labels:
         best = max(
@@ -201,6 +212,11 @@ def analyze_pair(
         "bayes_mapping": bayes_mapping,
         "exact_mapping": exact_mapping,
         "exact_support": exact_support,
+        "support_target_nonambiguous": support_target_nonambiguous,
+        "support_source_label_coverage_complete": support_source_label_coverage_complete,
+        "positive_source_labels": sorted(positive_source_labels),
+        "support_recovered_source_labels": sorted(support_recovered_source_labels),
+        "ambiguous_support_target_label_count": ambiguous_support_target_label_count,
         "chance_success": chance,
     }
 
@@ -328,6 +344,11 @@ def recoverability_row(
         "prior_id": prior_id,
         "observation_scope": target_dist["observation_scope"],
         "exact_recoverable_support": int(bool(pair["exact_support"])),
+        "support_target_nonambiguous": int(bool(pair["support_target_nonambiguous"])),
+        "support_source_label_coverage_complete": int(bool(pair["support_source_label_coverage_complete"])),
+        "support_source_label_count": len(pair["positive_source_labels"]),  # type: ignore[arg-type]
+        "support_recovered_source_label_count": len(pair["support_recovered_source_labels"]),  # type: ignore[arg-type]
+        "ambiguous_support_target_label_count": pair["ambiguous_support_target_label_count"],
         "decoder_success_probability": float(success),
         "decoder_success_fraction": fraction_text(success),
         "decoder_error_probability": float(metric["error"]),
@@ -387,6 +408,11 @@ def support_recoverability_row(
         "support_relation_rule": "K(y|x) > 0",
         "exact_support_recoverability": int(bool(pair["exact_support"])),
         "disttrans_candidate": int(bool(pair["exact_support"])),
+        "support_target_nonambiguous": int(bool(pair["support_target_nonambiguous"])),
+        "support_source_label_coverage_complete": int(bool(pair["support_source_label_coverage_complete"])),
+        "support_source_label_count": len(pair["positive_source_labels"]),  # type: ignore[arg-type]
+        "support_recovered_source_label_count": len(pair["support_recovered_source_labels"]),  # type: ignore[arg-type]
+        "ambiguous_support_target_label_count": pair["ambiguous_support_target_label_count"],
         "observation_scope": target_dist["observation_scope"],
         "claim_boundary": CLAIM_BOUNDARY,
     }
@@ -466,6 +492,32 @@ def best_recoverability_index(recoverability: list[dict[str, object]]) -> dict[t
     return best
 
 
+def decoder_policy_manifest() -> list[dict[str, object]]:
+    return [
+        {
+            "decoder_policy_id": "bayes_best_target_distinction",
+            "decoder_policy_family": "empirical_best_observation",
+            "selection_rule": "select the bayes_optimal_decoder row with maximal success over declared target distinctions",
+            "formal_consumption_status": "diagnostic_policy_not_fixed_observation_semantics",
+            "claim_boundary": CLAIM_BOUNDARY,
+        },
+        {
+            "decoder_policy_id": "fixed_declared_target_distinction",
+            "decoder_policy_family": "declared_observation",
+            "selection_rule": "use predeclared source-target observation pairs such as D_A->E_A and D_joint->E_joint",
+            "formal_consumption_status": "preferred_policy_for_strict_adapter_claims",
+            "claim_boundary": CLAIM_BOUNDARY,
+        },
+        {
+            "decoder_policy_id": "support_exact_candidate",
+            "decoder_policy_family": "support_projection",
+            "selection_rule": "use exact support-recoverability rows where all positive-prior source labels are covered by nonambiguous target support",
+            "formal_consumption_status": "support_level_root_calculus_candidate",
+            "claim_boundary": CLAIM_BOUNDARY,
+        },
+    ]
+
+
 def non_erasure_tables(recoverability: list[dict[str, object]]) -> tuple[list[dict[str, object]], list[dict[str, object]]]:
     requirement_rows = [
         ("req_marginals", ["D_A", "D_B"]),
@@ -489,17 +541,30 @@ def non_erasure_tables(recoverability: list[dict[str, object]]) -> tuple[list[di
     for channel_id in channel_ids:
         for req_id, dist_ids in requirement_rows:
             recovered = [dist for dist in dist_ids if best.get((channel_id, dist), {}).get("passes_threshold") in (1, "1")]
+            selected_rows = {dist: best.get((channel_id, dist), {}) for dist in dist_ids}
+            selected_targets = [
+                f"{dist}={selected_rows[dist].get('target_distinction_id', '')}"
+                for dist in dist_ids
+                if selected_rows[dist]
+            ]
+            selected_decoders = [
+                f"{dist}={selected_rows[dist].get('decoder_id', '')}"
+                for dist in dist_ids
+                if selected_rows[dist]
+            ]
             rows.append(
                 {
                     "requirement_set_id": req_id,
                     "channel_id": channel_id,
-                    "decoder_policy": "bayes_best_target_distinction",
+                    "decoder_policy_id": "bayes_best_target_distinction",
                     "threshold_id": "high_recovery",
                     "required_count": len(dist_ids),
                     "recovered_count": len(recovered),
                     "not_recovered_count": len(dist_ids) - len(recovered),
                     "non_erasing_status": "PASS" if len(recovered) == len(dist_ids) else "FAIL",
                     "recovered_distinction_ids": ";".join(recovered),
+                    "selected_target_distinction_ids": ";".join(selected_targets),
+                    "selected_decoder_ids": ";".join(selected_decoders),
                     "claim_boundary": CLAIM_BOUNDARY,
                 }
             )
@@ -527,11 +592,19 @@ def marginal_joint_diagnostic(recoverability: list[dict[str, object]]) -> list[d
             {
                 "channel_id": channel_id,
                 "prior_id": "uniform_X2",
-                "decoder_policy": "bayes_best_target_distinction",
+                "decoder_policy_id": "bayes_best_target_distinction",
                 "A_success": values["D_A"].get("decoder_success_probability", ""),
                 "B_success": values["D_B"].get("decoder_success_probability", ""),
                 "joint_success": values["D_joint"].get("decoder_success_probability", ""),
                 "parity_success": values["D_parity"].get("decoder_success_probability", ""),
+                "A_selected_target_distinction_id": values["D_A"].get("target_distinction_id", ""),
+                "B_selected_target_distinction_id": values["D_B"].get("target_distinction_id", ""),
+                "joint_selected_target_distinction_id": values["D_joint"].get("target_distinction_id", ""),
+                "parity_selected_target_distinction_id": values["D_parity"].get("target_distinction_id", ""),
+                "A_selected_decoder_id": values["D_A"].get("decoder_id", ""),
+                "B_selected_decoder_id": values["D_B"].get("decoder_id", ""),
+                "joint_selected_decoder_id": values["D_joint"].get("decoder_id", ""),
+                "parity_selected_decoder_id": values["D_parity"].get("decoder_id", ""),
                 "A_observation_scope": values["D_A"].get("observation_scope", ""),
                 "B_observation_scope": values["D_B"].get("observation_scope", ""),
                 "joint_observation_scope": values["D_joint"].get("observation_scope", ""),
@@ -545,6 +618,112 @@ def marginal_joint_diagnostic(recoverability: list[dict[str, object]]) -> list[d
             }
         )
     return rows
+
+
+def support_vs_probability_summary(
+    recoverability: list[dict[str, object]],
+    support_recoverability: list[dict[str, object]],
+) -> list[dict[str, object]]:
+    best_probability = best_recoverability_index(recoverability)
+    exact_support_targets: dict[tuple[str, str], list[str]] = defaultdict(list)
+    for row in support_recoverability:
+        if row["exact_support_recoverability"] not in (1, "1"):
+            continue
+        key = (str(row["channel_id"]), str(row["source_distinction_id"]))
+        exact_support_targets[key].append(str(row["target_distinction_id"]))
+
+    rows = []
+    for key in sorted(best_probability):
+        channel_id, source_distinction_id = key
+        best_row = best_probability[key]
+        exact_targets = sorted(set(exact_support_targets.get(key, [])))
+        high_probability = best_row.get("passes_threshold") in (1, "1")
+        exact_support = bool(exact_targets)
+        if exact_support and high_probability:
+            relation = "exact_and_high_probability"
+        elif exact_support and not high_probability:
+            relation = "exact_without_high_probability"
+        elif not exact_support and high_probability:
+            relation = "probabilistic_without_exact_support"
+        else:
+            relation = "neither_exact_nor_high"
+        rows.append(
+            {
+                "channel_id": channel_id,
+                "source_distinction_id": source_distinction_id,
+                "best_probability_target_distinction_id": best_row["target_distinction_id"],
+                "best_probability_decoder_id": best_row["decoder_id"],
+                "best_probability_success": best_row["decoder_success_probability"],
+                "best_probability_success_fraction": best_row["decoder_success_fraction"],
+                "best_probability_passes_high_recovery": int(high_probability),
+                "chance_success_probability": best_row["chance_success_probability"],
+                "normalized_recovery_advantage": best_row["normalized_recovery_advantage"],
+                "any_exact_support_recoverable": int(exact_support),
+                "exact_support_target_distinction_ids": ";".join(exact_targets),
+                "support_probability_relation": relation,
+                "claim_boundary": CLAIM_BOUNDARY,
+            }
+        )
+    return rows
+
+
+def theorem_transfer_readiness_summary(
+    *,
+    audits: dict[str, list[dict[str, object]]],
+    support_probability: list[dict[str, object]],
+    composition_checks: list[dict[str, object]],
+) -> list[dict[str, object]]:
+    audit_failures = sum(1 for rows in audits.values() for row in rows if row.get("status") == "FAIL")
+    support_rows_present = bool(support_probability)
+    composition_rows_present = bool(composition_checks)
+    support_ready = audit_failures == 0 and support_rows_present
+    return [
+        {
+            "formal_object": "support_level_exact_channel_presentation",
+            "required_artifacts": "channel_support.csv;support_relation.csv;support_recoverability.csv",
+            "readiness_status": "ready_for_formal_support_consumption" if support_ready else "blocked",
+            "claim_allowed": "support-level exact recoverability candidate rows",
+            "claim_blocked": "probabilistic or Omega-level recovery claims",
+            "notes": "Exact support rows now require nonambiguous target support and positive-prior source-label coverage.",
+            "claim_boundary": CLAIM_BOUNDARY,
+        },
+        {
+            "formal_object": "probabilistic_recovery_layer",
+            "required_artifacts": "recoverability_by_distinction.csv;confusion_matrix_by_distinction.csv",
+            "readiness_status": "measurement_only_pending_formal_theorem" if audit_failures == 0 else "blocked",
+            "claim_allowed": "decoder success probabilities under declared priors and decoders",
+            "claim_blocked": "theorem transfer without a probabilistic presentation",
+            "notes": "Bayes-optimal rows are measurements; they are not support-level DistTrans witnesses by default.",
+            "claim_boundary": CLAIM_BOUNDARY,
+        },
+        {
+            "formal_object": "thresholded_non_erasure_layer",
+            "required_artifacts": "threshold_manifest.csv;non_erasure_by_channel.csv;decoder_policy_manifest.csv",
+            "readiness_status": "measurement_only_thresholded" if audit_failures == 0 else "blocked",
+            "claim_allowed": "finite thresholded recovery counts",
+            "claim_blocked": "ethical erasure or compatibility interpretation",
+            "notes": "Non-erasure rows identify selected target distinctions and decoder policy.",
+            "claim_boundary": CLAIM_BOUNDARY,
+        },
+        {
+            "formal_object": "composition_probability_bounds",
+            "required_artifacts": "channel_composition_manifest.csv;composition_recoverability_check.csv",
+            "readiness_status": "measurement_only_pending_formal_bound" if composition_rows_present else "blocked",
+            "claim_allowed": "measured composed success and simple product-success reference",
+            "claim_blocked": "probabilistic composition theorem",
+            "notes": "Composition table is empirical measurement, not a proved lower bound.",
+            "claim_boundary": CLAIM_BOUNDARY,
+        },
+        {
+            "formal_object": "completion_or_candidate_family",
+            "required_artifacts": "candidate_family_manifest.csv;admissibility_predicate_manifest.csv",
+            "readiness_status": "not_applicable",
+            "claim_allowed": "none",
+            "claim_blocked": "completion, compatibility, agency, value, or Omega claims",
+            "notes": "This probe declares channels and distinctions only; no candidate family space is present.",
+            "claim_boundary": CLAIM_BOUNDARY,
+        },
+    ]
 
 
 def baseline_tables(recoverability: list[dict[str, object]]) -> tuple[list[dict[str, object]], list[dict[str, object]]]:

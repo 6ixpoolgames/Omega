@@ -7,6 +7,73 @@ run.
 Entries are organized in rough reverse chronological order, with the most recent
 patch notes at the top.
 
+## 2026-06-04
+
+### Stochastic Distinction Channel Instrument Tightening
+
+Tightened the first finite stochastic channel bridge for formal consumption:
+
+```text
+omega.stochastic_distinction_channel.probe
+```
+
+Spec:
+
+```text
+docs/specs/current/STOCHASTIC_DISTINCTION_CHANNEL_TIGHTENING_SPEC.md
+```
+
+Result note:
+
+```text
+docs/research_notes/validation_results/stochastic_distinction_channel/stochastic_distinction_channel_tightening_result.md
+```
+
+Output:
+
+```text
+results/stochastic_distinction_channel/20260604_stochastic_channel_probe_v0_tightened/
+```
+
+Summary:
+
+```text
+channel_count: 22
+distinction_count: 15
+recoverability_rows: 849
+artifact_count: 33
+artifact_manifest_digest: 1e662b260ea92303a91df284
+formal_consumption_status: support_level_ready_probabilistic_measurement_only
+output_size: about 3.375 MB
+```
+
+Audits:
+
+```text
+channel_row_stochastic_audit failures: 0
+distinction_partition_audit failures: 0
+decoder_totality_audit failures: 0
+threshold_application_audit failures: 0
+```
+
+Tightening:
+
+```text
+decoder_policy_manifest.csv emitted
+support_vs_probability_summary.csv emitted
+theorem_transfer_readiness_summary.csv emitted
+formal_channel_consumption_bundle.json emitted
+selected target-distinction and decoder provenance emitted
+exact support now requires nonambiguous support and source-label coverage
+```
+
+Verification:
+
+```text
+pytest tests/test_stochastic_distinction_channel.py -q: 1 passed
+compileall omega/stochastic_distinction_channel: passed
+```
+
 ## 2026-06-03
 
 ### Stochastic Distinction Channel Probe v0

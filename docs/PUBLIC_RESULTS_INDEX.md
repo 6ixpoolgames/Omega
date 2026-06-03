@@ -61,6 +61,10 @@ promotion.
 The formal adapter conformance package is the current bridge to the Lean/formal
 stack: it achieved generated-presentation conformance for the checked root laws,
 while explicitly not claiming strict raw conformance or semantic detection.
+The stochastic distinction-channel branch is the current prebiotic channel
+bridge: a tiny finite channel substrate now emits decoder policies, support
+projections, probabilistic recovery measurements, formal-consumption bundle
+metadata, and theorem-transfer readiness without semantic promotion.
 
 ## Best onboarding path
 
@@ -71,11 +75,12 @@ Start here:
 3. [`EXTERNAL_READER_GUIDE.md`](EXTERNAL_READER_GUIDE.md)
 4. [`research_notes/omega_theory/README.md`](research_notes/omega_theory/README.md)
 5. [`research_notes/validation_results/future_field_atlas/future_field_atlas_formal_adapter_conformance_package_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_formal_adapter_conformance_package_result.md)
-6. [`research_notes/validation_results/future_field_atlas/future_field_atlas_formal_interface_distinction_panel_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_formal_interface_distinction_panel_result.md)
-7. [`research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md)
-8. [`research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md)
-9. [`research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md)
-10. [`FUTURE_FIELD_ATLAS_GLOSSARY.md`](FUTURE_FIELD_ATLAS_GLOSSARY.md)
+6. [`research_notes/validation_results/stochastic_distinction_channel/stochastic_distinction_channel_tightening_result.md`](research_notes/validation_results/stochastic_distinction_channel/stochastic_distinction_channel_tightening_result.md)
+7. [`research_notes/validation_results/future_field_atlas/future_field_atlas_formal_interface_distinction_panel_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_formal_interface_distinction_panel_result.md)
+8. [`research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md)
+9. [`research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md)
+10. [`research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md)
+11. [`FUTURE_FIELD_ATLAS_GLOSSARY.md`](FUTURE_FIELD_ATLAS_GLOSSARY.md)
 
 ## Current live branch
 

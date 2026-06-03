@@ -14,8 +14,11 @@ from .analysis import (
     build_recoverability,
     channel_baseline_summary_for_report,
     composition_recoverability_checks,
+    decoder_policy_manifest,
     decoder_totality_audit,
     distinction_partition_audit,
+    support_vs_probability_summary,
+    theorem_transfer_readiness_summary,
     marginal_joint_diagnostic,
     matrix_rows,
     non_erasure_tables,
@@ -92,6 +95,11 @@ def run_probe(
     )
     non_erasure_manifest, non_erasure_rows = non_erasure_tables(recoverability_bundle["recoverability"])
     marginal_joint_rows = marginal_joint_diagnostic(recoverability_bundle["recoverability"])
+    decoder_policy_rows = decoder_policy_manifest()
+    support_probability_rows = support_vs_probability_summary(
+        recoverability_bundle["recoverability"],
+        recoverability_bundle["support_recoverability"],
+    )
     baseline_manifest, baseline_comparison = baseline_tables(recoverability_bundle["recoverability"])
     asymmetry_summary = asymmetry_summary_by_channel(
         channel_rows=all_channel_rows,
@@ -109,6 +117,11 @@ def run_probe(
         ),
         "threshold_application_audit.csv": threshold_application_audit(recoverability_bundle["recoverability"]),
     }
+    theorem_readiness_rows = theorem_transfer_readiness_summary(
+        audits=audit_rows,
+        support_probability=support_probability_rows,
+        composition_checks=composition_check_rows,
+    )
 
     csv_outputs: dict[str, list[dict[str, object]]] = {
         "carrier_manifest.csv": carrier_rows,
@@ -120,6 +133,7 @@ def run_probe(
         "source_observation_table.csv": source_obs,
         "target_observation_table.csv": target_obs,
         "decoder_manifest.csv": recoverability_bundle["decoder_manifest"],
+        "decoder_policy_manifest.csv": decoder_policy_rows,
         "decoder_table.csv": recoverability_bundle["decoder_table"],
         "threshold_manifest.csv": threshold_rows,
         "recoverability_by_distinction.csv": recoverability_bundle["recoverability"],
@@ -128,6 +142,7 @@ def run_probe(
         "non_erasure_requirement_manifest.csv": non_erasure_manifest,
         "non_erasure_by_channel.csv": non_erasure_rows,
         "marginal_joint_recoverability_diagnostic.csv": marginal_joint_rows,
+        "support_vs_probability_summary.csv": support_probability_rows,
         "channel_baseline_manifest.csv": baseline_manifest,
         "channel_baseline_comparison.csv": baseline_comparison,
         "channel_composition_manifest.csv": composition_manifest,
@@ -135,6 +150,7 @@ def run_probe(
         "composition_recoverability_check.csv": composition_check_rows,
         "support_relation.csv": support_relation_rows,
         "support_recoverability.csv": recoverability_bundle["support_recoverability"],
+        "theorem_transfer_readiness_summary.csv": theorem_readiness_rows,
         **audit_rows,
     }
     artifact_paths = {name: csv_name(name, csv_output_mode) for name in csv_outputs}
@@ -154,8 +170,11 @@ def run_probe(
         recoverability=recoverability_bundle["recoverability"],
         non_erasure=non_erasure_rows,
         marginal_joint=marginal_joint_rows,
+        decoder_policy=decoder_policy_rows,
+        support_probability=support_probability_rows,
         baseline_comparison=baseline_comparison,
         composition_checks=composition_check_rows,
+        theorem_readiness=theorem_readiness_rows,
     )
     (out_dir / "stochastic_channel_probe_report.md").write_text(report, encoding="utf-8")
     artifact_manifest = build_artifact_manifest(
@@ -165,6 +184,15 @@ def run_probe(
         extra_files=["channel_probe_manifest.json", "stochastic_channel_probe_report.md"],
     )
     write_json(out_dir / "artifact_manifest.json", artifact_manifest)
+    formal_bundle = build_formal_consumption_bundle(
+        out_dir=out_dir,
+        probe_manifest=probe_manifest,
+        artifact_manifest=artifact_manifest,
+        artifact_paths=artifact_paths,
+        audit_rows=audit_rows,
+        theorem_readiness=theorem_readiness_rows,
+    )
+    write_json(out_dir / "formal_channel_consumption_bundle.json", formal_bundle)
     return {
         "probe_id": probe_manifest["probe_id"],
         "out_dir": str(out_dir),
@@ -172,6 +200,7 @@ def run_probe(
         "recoverability_rows": len(recoverability_bundle["recoverability"]),
         "claim_boundary": CLAIM_BOUNDARY,
         "artifact_manifest_digest": artifact_manifest["artifact_manifest_digest"],
+        "formal_consumption_status": formal_bundle["formal_consumption_status"],
     }
 
 
@@ -197,14 +226,82 @@ def build_probe_manifest(
         "distinction_count": len(distinctions),
         "tightening_notes": canonical_json(
             {
+                "decoder_policy_manifest": True,
+                "formal_channel_consumption_bundle": True,
                 "observation_scope_explicit": True,
                 "exact_vs_probabilistic_recovery_separated": True,
+                "exact_support_requires_source_label_coverage": True,
                 "normalized_recovery_over_chance": True,
+                "selected_target_distinctions_emitted": True,
+                "support_vs_probability_summary": True,
+                "theorem_transfer_readiness_summary": True,
                 "executive_summary_in_report": True,
             }
         ),
         "claim_boundary": CLAIM_BOUNDARY,
         "probe_digest": stable_hash(payload, length=24),
+    }
+
+
+def build_formal_consumption_bundle(
+    *,
+    out_dir: Path,
+    probe_manifest: dict[str, object],
+    artifact_manifest: dict[str, object],
+    artifact_paths: dict[str, str],
+    audit_rows: dict[str, list[dict[str, object]]],
+    theorem_readiness: list[dict[str, object]],
+) -> dict[str, object]:
+    audit_failures = sum(1 for rows in audit_rows.values() for row in rows if row.get("status") == "FAIL")
+    support_ready = any(
+        row["formal_object"] == "support_level_exact_channel_presentation"
+        and row["readiness_status"] == "ready_for_formal_support_consumption"
+        for row in theorem_readiness
+    )
+    status = (
+        "support_level_ready_probabilistic_measurement_only"
+        if support_ready and audit_failures == 0
+        else "blocked_audit_failure"
+    )
+    consumption_artifacts = {
+        "channel_probe_manifest": "channel_probe_manifest.json",
+        "artifact_manifest": "artifact_manifest.json",
+        "carrier_manifest": artifact_paths["carrier_manifest.csv"],
+        "channel_manifest": artifact_paths["channel_manifest.csv"],
+        "channel_matrix": artifact_paths["channel_matrix.csv"],
+        "channel_support": artifact_paths["channel_support.csv"],
+        "support_relation": artifact_paths["support_relation.csv"],
+        "support_recoverability": artifact_paths["support_recoverability.csv"],
+        "distinction_manifest": artifact_paths["distinction_manifest.csv"],
+        "source_observation_table": artifact_paths["source_observation_table.csv"],
+        "target_observation_table": artifact_paths["target_observation_table.csv"],
+        "decoder_policy_manifest": artifact_paths["decoder_policy_manifest.csv"],
+        "recoverability_by_distinction": artifact_paths["recoverability_by_distinction.csv"],
+        "non_erasure_by_channel": artifact_paths["non_erasure_by_channel.csv"],
+        "support_vs_probability_summary": artifact_paths["support_vs_probability_summary.csv"],
+        "theorem_transfer_readiness_summary": artifact_paths["theorem_transfer_readiness_summary.csv"],
+        "report": "stochastic_channel_probe_report.md",
+    }
+    payload = {
+        "probe_digest": probe_manifest["probe_digest"],
+        "artifact_manifest_digest": artifact_manifest["artifact_manifest_digest"],
+        "consumption_artifacts": consumption_artifacts,
+        "formal_consumption_status": status,
+    }
+    return {
+        "adapter_id": "stochastic_distinction_channel_support_v0",
+        "adapter_schema_version": "0.2.0",
+        "presentation_type": "finite stochastic channel with support projection and probabilistic recovery layer",
+        "probe_id": probe_manifest["probe_id"],
+        "probe_digest": probe_manifest["probe_digest"],
+        "artifact_manifest_digest": artifact_manifest["artifact_manifest_digest"],
+        "output_directory": str(out_dir),
+        "consumption_artifacts": consumption_artifacts,
+        "formal_consumption_status": status,
+        "strict_support_consumption": int(support_ready and audit_failures == 0),
+        "probabilistic_consumption": "measurement_only_pending_formal_theorem",
+        "claim_boundary": CLAIM_BOUNDARY,
+        "bundle_digest": stable_hash(payload, length=24),
     }
 
 
@@ -251,8 +348,11 @@ def render_report(
     recoverability: list[dict[str, object]],
     non_erasure: list[dict[str, object]],
     marginal_joint: list[dict[str, object]],
+    decoder_policy: list[dict[str, object]],
+    support_probability: list[dict[str, object]],
     baseline_comparison: list[dict[str, object]],
     composition_checks: list[dict[str, object]],
+    theorem_readiness: list[dict[str, object]],
 ) -> str:
     audit_failures = {
         name: sum(1 for row in rows if row.get("status") == "FAIL")
@@ -271,9 +371,11 @@ def render_report(
             "distinctions, priors, decoders, thresholds, support projections, and "
             "composition checks. Identity recovers the declared joint distinction, total "
             "erasure does not, and nonzero stochastic noise separates support-level exact "
-            "recoverability from probabilistic decoder success. The probe is suitable as a "
-            "formal-consumption bridge only; it makes no Omega, agency, identity, value, "
-            "compatibility, or ethical claim.",
+            "recoverability from probabilistic decoder success. This tightened pass adds "
+            "formal decoder policies, selected target-observation provenance, support-vs-"
+            "probability summaries, and theorem-transfer readiness. The probe is suitable "
+            "as a formal-consumption bridge only; it makes no Omega, agency, identity, "
+            "value, compatibility, or ethical claim.",
             "",
             "## Summary",
             "",
@@ -306,6 +408,10 @@ def render_report(
             "emitted for all distinction pairs; exact decoders are emitted when support-level "
             "exact recovery exists; declared same-label decoders are emitted when label sets match.",
             "",
+            "Decoder policies are explicit:",
+            "",
+            *(f"- `{row['decoder_policy_id']}`: {row['formal_consumption_status']}" for row in decoder_policy),
+            "",
             "## Audit Summary",
             "",
             *(f"- `{name}` failures: {count}" for name, count in sorted(audit_failures.items())),
@@ -314,7 +420,10 @@ def render_report(
             "",
             "Support-level exact recoverability and probabilistic decoder success are separate "
             "columns. For stochastic channels with full support, exact support recovery can fail "
-            "while Bayes success remains above chance.",
+            "while Bayes success remains above chance. Exact support recovery now requires both "
+            "nonambiguous target support and coverage of all positive-prior source labels.",
+            "",
+            *support_probability_summary_for_report(support_probability),
             "",
             "## Non-Erasure Requirement Sets",
             "",
@@ -342,6 +451,16 @@ def render_report(
             "`support_relation.csv` and `support_recoverability.csv` expose `K(y|x) > 0` and "
             "exact support-recoverability candidates so the formal arm can compare support-level "
             "root calculus against probabilistic recovery.",
+            "",
+            "## Theorem Transfer Readiness",
+            "",
+            *(f"- `{row['formal_object']}`: {row['readiness_status']}" for row in theorem_readiness),
+            "",
+            "## Formal Consumption Bundle",
+            "",
+            "`formal_channel_consumption_bundle.json` identifies the compact artifact set that "
+            "the formal arm should consume. Support-level exact rows are separated from "
+            "probabilistic measurement rows.",
             "",
             "## Limitations",
             "",
@@ -379,6 +498,29 @@ def summarize_non_erasure(rows: list[dict[str, object]]) -> list[str]:
             f"{row['recovered_count']}/{row['required_count']} recovered at `{row['threshold_id']}`"
         )
     return out[:18]
+
+
+def support_probability_summary_for_report(rows: list[dict[str, object]]) -> list[str]:
+    wanted = {
+        ("identity_channel", "D_joint"),
+        ("total_erasure_channel", "D_joint"),
+        ("bit_flip_p_0_05", "D_A"),
+        ("bit_flip_p_0_05", "D_joint"),
+        ("marginal_joint_degrade_q_0_10", "D_A"),
+        ("marginal_joint_degrade_q_0_10", "D_joint"),
+    }
+    out = []
+    for row in rows:
+        key = (str(row["channel_id"]), str(row["source_distinction_id"]))
+        if key not in wanted:
+            continue
+        out.append(
+            f"- `{row['channel_id']}` / `{row['source_distinction_id']}`: "
+            f"{row['support_probability_relation']} "
+            f"(best target `{row['best_probability_target_distinction_id']}`, "
+            f"success {float(row['best_probability_success']):.6f})"
+        )
+    return out
 
 
 def count_by(rows: list[dict[str, object]], field: str) -> dict[str, int]:

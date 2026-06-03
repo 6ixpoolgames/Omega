@@ -3,7 +3,8 @@
 Status: completed v0
 Target package: `omega.stochastic_distinction_channel`
 Runner: `omega.stochastic_distinction_channel.probe`
-Output: `results/stochastic_distinction_channel/20260603_stochastic_channel_probe_v0/`
+Initial output: `results/stochastic_distinction_channel/20260603_stochastic_channel_probe_v0/`
+Current tightened output: `results/stochastic_distinction_channel/20260604_stochastic_channel_probe_v0_tightened/`
 
 ## Purpose
 
@@ -53,6 +54,18 @@ normalized_recovery_advantage
 This prevents a marginal/joint result from being a hidden artifact of what the
 target observation exposes.
 
+The current tightened implementation also emits:
+
+```text
+decoder_policy_manifest.csv
+support_vs_probability_summary.csv
+theorem_transfer_readiness_summary.csv
+formal_channel_consumption_bundle.json
+```
+
+Exact support recoverability requires both target support non-ambiguity and
+positive-prior source-label coverage.
+
 ## Required Artifacts
 
 ```text
@@ -67,6 +80,7 @@ distinction_manifest.csv
 source_observation_table.csv
 target_observation_table.csv
 decoder_manifest.csv
+decoder_policy_manifest.csv
 decoder_table.csv
 threshold_manifest.csv
 recoverability_by_distinction.csv
@@ -82,10 +96,13 @@ composed_channel_matrix.csv
 composition_recoverability_check.csv
 support_relation.csv
 support_recoverability.csv
+support_vs_probability_summary.csv
+theorem_transfer_readiness_summary.csv
 channel_row_stochastic_audit.csv
 distinction_partition_audit.csv
 decoder_totality_audit.csv
 threshold_application_audit.csv
+formal_channel_consumption_bundle.json
 stochastic_channel_probe_report.md
 ```
 
@@ -128,6 +145,14 @@ no semantic promotion
 ```powershell
 .\.venv\Scripts\python.exe -m omega.stochastic_distinction_channel.probe `
   --out results\stochastic_distinction_channel\20260603_stochastic_channel_probe_v0 `
+  --csv-output-mode plain
+```
+
+Current tightening command:
+
+```powershell
+.\.venv\Scripts\python.exe -m omega.stochastic_distinction_channel.probe `
+  --out results\stochastic_distinction_channel\20260604_stochastic_channel_probe_v0_tightened `
   --csv-output-mode plain
 ```
 
