@@ -13,6 +13,8 @@ For the project pitch and current formalism, read:
 ## Current Branch
 
 - `future_field_atlas/` contains the current active empirical branch.
+- `stochastic_distinction_channel/` contains the finite stochastic-channel
+  bridge into the formal probabilistic channel presentation.
 
 Start with:
 
@@ -28,6 +30,8 @@ Start with:
 - `future_field_atlas/future_field_atlas_coupled_h64_ladder_result.md`
 - `future_field_atlas/future_field_atlas_coupled_worker_spool_scale_validation_result.md`
 - `future_field_atlas/future_field_atlas_h128_calibration_pass_result.md`
+- `stochastic_distinction_channel/stochastic_channel_theorem_transfer_audit_result.md`
+- `stochastic_distinction_channel/stochastic_distinction_channel_fixed_policy_result.md`
 
 ## Archived Branches
 

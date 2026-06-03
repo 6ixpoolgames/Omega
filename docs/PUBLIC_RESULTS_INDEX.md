@@ -69,6 +69,9 @@ beside Bayes-best summaries.
 The supporting formal target is now the probabilistic channel presentation:
 exact support recovery remains the root-calculus bridge, while probabilistic
 decoder success is a measured enrichment with separate theorem obligations.
+The latest stochastic-channel audit now instantiates the checked finite cascade
+error-bound theorem on retained fixed-policy outputs by measuring all stage and
+composite errors over a shared path ensemble.
 
 ## Best onboarding path
 
@@ -79,14 +82,15 @@ Start here:
 3. [`EXTERNAL_READER_GUIDE.md`](EXTERNAL_READER_GUIDE.md)
 4. [`research_notes/omega_theory/README.md`](research_notes/omega_theory/README.md)
 5. [`research_notes/validation_results/future_field_atlas/future_field_atlas_formal_adapter_conformance_package_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_formal_adapter_conformance_package_result.md)
-6. [`research_notes/validation_results/stochastic_distinction_channel/stochastic_distinction_channel_fixed_policy_result.md`](research_notes/validation_results/stochastic_distinction_channel/stochastic_distinction_channel_fixed_policy_result.md)
-7. [`research_notes/omega_theory/probabilistic_channel_presentation_v0.md`](research_notes/omega_theory/probabilistic_channel_presentation_v0.md)
-8. [`research_notes/validation_results/stochastic_distinction_channel/stochastic_distinction_channel_tightening_result.md`](research_notes/validation_results/stochastic_distinction_channel/stochastic_distinction_channel_tightening_result.md)
-9. [`research_notes/validation_results/future_field_atlas/future_field_atlas_formal_interface_distinction_panel_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_formal_interface_distinction_panel_result.md)
-10. [`research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md)
-11. [`research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md)
-12. [`research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md)
-13. [`FUTURE_FIELD_ATLAS_GLOSSARY.md`](FUTURE_FIELD_ATLAS_GLOSSARY.md)
+6. [`research_notes/validation_results/stochastic_distinction_channel/stochastic_channel_theorem_transfer_audit_result.md`](research_notes/validation_results/stochastic_distinction_channel/stochastic_channel_theorem_transfer_audit_result.md)
+7. [`research_notes/validation_results/stochastic_distinction_channel/stochastic_distinction_channel_fixed_policy_result.md`](research_notes/validation_results/stochastic_distinction_channel/stochastic_distinction_channel_fixed_policy_result.md)
+8. [`research_notes/omega_theory/probabilistic_channel_presentation_v0.md`](research_notes/omega_theory/probabilistic_channel_presentation_v0.md)
+9. [`research_notes/validation_results/stochastic_distinction_channel/stochastic_distinction_channel_tightening_result.md`](research_notes/validation_results/stochastic_distinction_channel/stochastic_distinction_channel_tightening_result.md)
+10. [`research_notes/validation_results/future_field_atlas/future_field_atlas_formal_interface_distinction_panel_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_formal_interface_distinction_panel_result.md)
+11. [`research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md)
+12. [`research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md)
+13. [`research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md)
+14. [`FUTURE_FIELD_ATLAS_GLOSSARY.md`](FUTURE_FIELD_ATLAS_GLOSSARY.md)
 
 ## Current live branch
 
@@ -101,7 +105,8 @@ Future Field Atlas:
 
 Stochastic distinction channel:
   finite channel recovery under declared distinctions, decoders, priors, and
-  support/probabilistic theorem-transfer boundaries
+  support/probabilistic theorem-transfer boundaries; the latest audit checks
+  cascade error bounds over a shared path ensemble
 ```
 
 The current public read is not a validation claim. It is a bridge status:

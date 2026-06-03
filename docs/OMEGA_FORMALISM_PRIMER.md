@@ -183,6 +183,17 @@ policies can diverge in a tiny finite example, which is why the empirical
 channel instrument reports both provenance-preserving and best-available
 recovery views.
 
+The current empirical theorem-transfer audit for this layer is:
+
+```text
+docs/research_notes/validation_results/stochastic_distinction_channel/stochastic_channel_theorem_transfer_audit_result.md
+```
+
+It verifies that the retained fixed-policy channel output can instantiate the
+finite cascade error-bound theorem using exact natural weights and a shared
+path ensemble denominator. Thresholded non-erasure remains a measurement layer
+pending a separate theorem.
+
 ### Layer 0a: Future-Distinction Dynamics
 
 Primary note:

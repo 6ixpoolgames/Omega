@@ -377,6 +377,16 @@ bayes_best_is_alternate_in_two_candidate_example:
 This is a finite stochastic measurement layer over the support calculus. It
 keeps exact support recovery separate from probabilistic decoder success.
 
+The matching empirical theorem-transfer audit is retained at:
+
+```text
+docs/research_notes/validation_results/stochastic_distinction_channel/stochastic_channel_theorem_transfer_audit_result.md
+```
+
+It checks that fixed-policy stochastic-channel cascade rows use exact
+natural-weight path ensembles and a shared denominator, matching the finite
+cascade theorem assumptions above.
+
 `OmegaCore/Basic.lean` defines:
 
 ```text

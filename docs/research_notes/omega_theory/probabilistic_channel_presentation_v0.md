@@ -28,6 +28,24 @@ Pending:
   normalized or constant-row-total cascade variants, if needed.
 ```
 
+Empirical theorem-transfer audit:
+
+```text
+docs/research_notes/validation_results/stochastic_distinction_channel/stochastic_channel_theorem_transfer_audit_result.md
+results/stochastic_distinction_channel/20260604_stochastic_channel_theorem_transfer_audit_v0/
+```
+
+Status:
+
+```text
+support_and_probabilistic_transfer_ready
+```
+
+The audit converts retained fixed-policy stochastic-channel outputs into exact
+natural-weight path ensembles and checks the finite cascade error-bound
+conditions over a shared denominator. It also keeps Bayes-best policy rows
+diagnostic rather than using them as declared composition proofs.
+
 ## 0. Purpose
 
 The Omega Primitive Calculus root is support-level:

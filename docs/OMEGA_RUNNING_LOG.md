@@ -9,6 +9,47 @@ patch notes at the top.
 
 ## 2026-06-04
 
+### Stochastic Channel Theorem-Transfer Audit
+
+Added a theorem-transfer audit postprocessor for the fixed-policy stochastic
+channel output:
+
+```text
+omega/stochastic_distinction_channel/theorem_transfer_audit.py
+docs/specs/current/STOCHASTIC_DISTINCTION_CHANNEL_THEOREM_TRANSFER_AUDIT_SPEC.md
+docs/research_notes/validation_results/stochastic_distinction_channel/stochastic_channel_theorem_transfer_audit_result.md
+```
+
+Output:
+
+```text
+results/stochastic_distinction_channel/20260604_stochastic_channel_theorem_transfer_audit_v0/
+```
+
+Read:
+
+```text
+overall_status: support_and_probabilistic_transfer_ready
+cascade_bound_rows: 10
+cascade_bound_passes: 10
+theorem_applicable_cascade_rows: 10
+cascade_path_rows: 640
+decoder_audit_failures: 0
+```
+
+The audit constructs exact rational/natural-weight realizations and measures
+first-stage, second-stage, and composite cascade errors over the same path
+ensemble. This makes the Lean finite cascade error-bound theorem empirically
+instantiable for declared fixed-policy composition rows. Bayes-best rows remain
+diagnostic and are not substituted into composition proofs.
+
+Validation:
+
+```text
+.venv\Scripts\python.exe -m pytest tests\test_stochastic_theorem_transfer_audit.py tests\test_stochastic_distinction_channel.py
+  3 passed
+```
+
 ### Probabilistic Channel Presentation v0
 
 Added the probabilistic channel presentation draft and Lean skeleton:
