@@ -14,6 +14,8 @@ or historical run instructions here.
 Current active and recent live-instrument specs:
 
 - `current/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md`
+- `current/FUTURE_FIELD_ATLAS_FORMAL_ADAPTER_RAW_CLOSED_GAP_REPORT_SPEC.md`
+  (completed; quantifies closure dependence in the formal adapter package)
 - `current/FUTURE_FIELD_ATLAS_FORMAL_ADAPTER_CONFORMANCE_PACKAGE_SPEC.md`
   (completed; compiles the formal-interface panel into a primitive-calculus-facing adapter bundle)
 - `current/FUTURE_FIELD_ATLAS_FORMAL_INTERFACE_DISTINCTION_PANEL_SPEC.md`

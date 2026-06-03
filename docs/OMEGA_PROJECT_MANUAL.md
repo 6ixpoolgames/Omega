@@ -59,7 +59,11 @@ the retained formal-interface panel into primitive-calculus-facing contexts,
 unfoldings, distinction fibers, distinction preorders, transport witnesses,
 closed transports, law checks, non-erasure tables, and theorem-transfer status.
 Its current status is `generated_presentation_conformance`; strict raw
-conformance is not claimed. The instrument is calibrated against the latest
+conformance is not claimed. The follow-up raw/closed gap report confirms that
+root-law theorem transfer depends on generated closure, while the passing
+finite non-erasure rows are not inflated by closure-only recoveries. Keep
+`raw_observed` and closure-derived support kinds separate in future reports.
+The instrument is calibrated against the latest
 hard-top-m mechanism result as a fixture, which points toward a fixed low-rank
 successor boundary: rank-prefix `m=3`,
 rank-subset `m=4` retaining ranks `1;2;3`, and rank-subset `m=5` retaining

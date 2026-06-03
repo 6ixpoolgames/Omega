@@ -147,6 +147,7 @@ combined asymmetry:
 Result note:
 
 - [`future_field_atlas_formal_adapter_conformance_package_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_formal_adapter_conformance_package_result.md)
+- [`future_field_atlas_formal_adapter_raw_closed_gap_report_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_formal_adapter_raw_closed_gap_report_result.md)
 
 Run summary:
 
@@ -172,6 +173,10 @@ laws. Strict raw conformance is not claimed.
 
 This is adapter-conformance infrastructure only, not Omega validation and not
 semantic detection.
+
+The follow-up raw/closed gap report keeps the claim boundary tight: theorem
+transfer depends on generated closure, strict raw conformance is still blocked,
+and the finite non-erasure pass rows were not inflated by closure-only recoveries.
 
 ### Future Field Atlas Phase 0/1 smoke
 

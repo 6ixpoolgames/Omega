@@ -9,6 +9,73 @@ patch notes at the top.
 
 ## 2026-06-03
 
+### Future Field Atlas Formal Adapter Raw/Closed Gap Report
+
+Implemented and ran the compact A-lite gap postprocessor:
+
+```text
+omega.future_field_atlas.formal_adapter_gap_report
+```
+
+Input:
+
+```text
+results/future_field_atlas/20260603_formal_adapter_conformance_package/
+input adapter status: generated_presentation_conformance
+input bundle digest: ec392eb6a78f05e810497c99
+```
+
+Output:
+
+```text
+results/future_field_atlas/20260603_formal_adapter_raw_closed_gap_report/
+report digest: 8ff5e37fad6f14b0c5661116
+compressed output size: about 0.120 MB
+```
+
+Result note:
+
+```text
+docs/research_notes/validation_results/future_field_atlas/future_field_atlas_formal_adapter_raw_closed_gap_report_result.md
+```
+
+Law gap read:
+
+```text
+identity transport:
+  raw 0 / 55120
+  closed 55120 / 55120
+
+source weakening:
+  raw 59811 / 195463
+  closed 195463 / 195463
+
+target strengthening:
+  raw 60541 / 225655
+  closed 225655 / 225655
+
+lax composition:
+  raw 28823 / 44211
+  closed 44211 / 44211
+```
+
+Non-erasure rows showed no closure-only inflation: raw and closed non-erasing
+counts matched for the four declared requirement sets.
+
+Read:
+
+```text
+The adapter remains formally consumable as a generated closed presentation.
+Strict raw conformance remains blocked. The next empirical repair, if requested,
+should materialize explicit witness provenance for target strengthening, source
+weakening, and lax composition before adding candidate-family or admissibility
+machinery.
+```
+
+Scope boundary: raw/closed adapter-gap audit only. This is not Omega validation,
+proto-valuer detection, valuer detection, compatibility detection, or
+support/capture/erasure detection.
+
 ### Future Field Atlas Formal Adapter Conformance Package
 
 Implemented and ran the primitive-calculus-facing adapter compiler:
