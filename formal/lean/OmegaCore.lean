@@ -7,5 +7,6 @@ import OmegaCore.MarginalJoint
 import OmegaCore.NormalLax
 import OmegaCore.Presentations.FiniteBoolean
 import OmegaCore.Presentations.FiniteChannel
+import OmegaCore.Presentations.ProbabilisticChannel
 import OmegaCore.PrimitiveWitness
 import OmegaCore.Recurrent

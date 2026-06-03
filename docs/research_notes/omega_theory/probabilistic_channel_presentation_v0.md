@@ -6,6 +6,24 @@ Scope: finite stochastic channel recovery under declared carriers, distinctions,
 target observations, decoders, priors, thresholds, and formal-consumption
 policies
 
+Lean status:
+
+```text
+formal/lean/OmegaCore/Presentations/ProbabilisticChannel.lean
+
+Checked:
+  exact support recovery implies perfect probabilistic recovery;
+  perfect probabilistic recovery under a full-support prior implies exact
+  support recovery;
+  perfect probabilistic recovery under a non-full-support prior need not imply
+  exact support recovery;
+  high probabilistic recovery need not imply exact support recovery.
+
+Pending:
+  fixed-declared versus Bayes-best policy separation;
+  probabilistic composition error-bound theorem.
+```
+
 ## 0. Purpose
 
 The Omega Primitive Calculus root is support-level:
@@ -301,9 +319,9 @@ A stronger converse requires a full-support prior:
 for all x, pi(x) > 0
 ```
 
-Under a full-support prior, success exactly `1`, and ordinary finite
-row-stochastic support semantics, decoding is correct on all support
-transitions.
+The Lean skeleton checks the corresponding finite natural-weight theorem:
+under a full-support prior, perfect probabilistic recovery forces exact support
+recovery.
 
 ## 10. High Probabilistic Recovery Does Not Imply Exact Support Recovery
 
@@ -526,6 +544,13 @@ Prove:
 Exact support recovery => Success = 1
 ```
 
+Checked in Lean as:
+
+```text
+exactSupport_implies_perfectProb
+exactSupport_implies_probAtLeast_100
+```
+
 ### Target 2: High Probability Does Not Imply Exact Support
 
 Provide a finite counterexample.
@@ -535,11 +560,28 @@ Provide a finite counterexample.
 Show that `Success = 1` under a non-full-support prior does not imply exact
 support recovery.
 
-### Target 4: Fixed-Declared Versus Bayes-Best Policy Separation
+Checked in Lean as:
+
+```text
+perfectProb_not_exact_without_full_prior
+```
+
+### Target 4: Full-Support Converse
+
+Show that `Success = 1` under a full-support prior implies exact support
+recovery.
+
+Checked in Lean as:
+
+```text
+perfectProb_fullPrior_implies_exactSupport
+```
+
+### Target 5: Fixed-Declared Versus Bayes-Best Policy Separation
 
 Show that Bayes-best success can exceed fixed-declared success.
 
-### Target 5: Composition Error Bound
+### Target 6: Composition Error Bound
 
 Prove a finite error-bound theorem for composed channels under declared decoder
 composition assumptions.

@@ -304,6 +304,50 @@ This is exact support-channel recovery. It is not probabilistic Shannon theory,
 an empirical adapter, compatibility semantics, Future Field Atlas semantics,
 proto-valuerhood, valuerhood, ethics, or Omega validation.
 
+`OmegaCore/Presentations/ProbabilisticChannel.lean` defines the finite
+probabilistic channel enrichment:
+
+```text
+Supports K x y:
+  positive natural-number channel support
+
+rowSum / priorSum:
+  finite natural-weight totals
+
+successMass / errorMass / totalMass:
+  unnormalized finite decoder-success, decoder-error, and channel/prior masses
+
+PositiveRows / NonzeroPrior / PositiveTotalMass / ThresholdValid:
+  well-formedness predicates for meaningful probabilistic readings
+
+PerfectProbRecovers:
+  successMass = totalMass
+
+ProbRecoversAtLeast:
+  cross-multiplied threshold comparison
+```
+
+Checked presentation facts:
+
+```text
+exactSupport_implies_perfectProb:
+  exact support recovery implies perfect probabilistic recovery for every prior
+
+perfectProb_fullPrior_implies_exactSupport:
+  perfect probabilistic recovery under a full-support prior implies exact
+  support recovery
+
+perfectProb_not_exact_without_full_prior:
+  perfect probabilistic recovery under a non-full-support prior need not imply
+  exact support recovery
+
+highProb_not_exactSupport:
+  high probabilistic recovery can coexist with support-level ambiguity
+```
+
+This is a finite stochastic measurement layer over the support calculus. It
+keeps exact support recovery separate from probabilistic decoder success.
+
 `OmegaCore/Basic.lean` defines:
 
 ```text
@@ -360,7 +404,7 @@ PrimitiveWitness.compositional_recoverability
 It is not an empirical adapter and not evidence for Omega. The normal-lax
 `DistTrans` layer is now the preferred root skeleton.
 
-The file currently contains no `sorry`, `admit`, or Lean `axiom` declarations.
+The files currently contain no `sorry`, `admit`, or Lean `axiom` declarations.
 
 ## Discipline Rule
 
@@ -383,7 +427,9 @@ empirical hypothesis
 2. Add finite examples that instantiate `DistinctionFrame` and `ValueFrame`.
 3. Add a universal-preservation Boolean presentation variant, if needed.
 4. Add a finite transition-system adapter sketch.
-5. Add richer finite completion examples tied to declared distinction-transport
+5. Prove a fixed-declared versus Bayes-best policy separation result.
+6. Prove a probabilistic composition error-bound theorem for channel cascades.
+7. Add richer finite completion examples tied to declared distinction-transport
    obligations, while keeping valuer semantics out of the root skeleton.
-6. Only then lift toward enriched presentations such as the historical
+8. Only then lift toward enriched presentations such as the historical
    presheaf/profunctor/quantale kernel.

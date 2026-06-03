@@ -47,6 +47,7 @@ formal/lean/OmegaCore/Counterexamples.lean
 formal/lean/OmegaCore/MarginalJoint.lean
 formal/lean/OmegaCore/Presentations/FiniteBoolean.lean
 formal/lean/OmegaCore/Presentations/FiniteChannel.lean
+formal/lean/OmegaCore/Presentations/ProbabilisticChannel.lean
 ```
 
 Build command:
@@ -442,6 +443,66 @@ This is not probabilistic Shannon theory, not an empirical adapter, not Future
 Field Atlas semantics, not compatibility semantics, not valuerhood, and not
 Omega validation.
 
+## Batch 10: Probabilistic Channel Presentation
+
+`Presentations/ProbabilisticChannel.lean` defines a finite natural-weight
+stochastic channel enrichment:
+
+```text
+Supports K x y:
+  positive natural-number channel support
+
+successMass K pi D E dec:
+  unnormalized finite decoder-success mass
+
+totalMass K pi:
+  unnormalized finite channel/prior mass
+
+PerfectProbRecovers:
+  successMass = totalMass
+
+ProbRecoversAtLeast:
+  cross-multiplied finite threshold comparison
+```
+
+Checked presentation facts:
+
+```text
+exactSupport_implies_perfectProb:
+  exact support recovery implies perfect probabilistic recovery for every prior
+
+perfectProb_fullPrior_implies_exactSupport:
+  perfect probabilistic recovery under a full-support prior implies exact
+  support recovery
+
+perfectProb_not_exact_without_full_prior:
+  perfect probabilistic recovery under a non-full-support prior need not imply
+  exact support recovery
+
+highProb_not_exactSupport:
+  high probabilistic recovery can coexist with support-level ambiguity
+```
+
+Interpretation:
+
+```text
+Probabilistic channel recovery enriches the finite channel presentation. Exact
+support recovery remains the root theorem-transfer object; probabilistic
+success is measured by finite natural-weight mass comparisons.
+```
+
+Pending:
+
+```text
+fixed-declared versus Bayes-best separation:
+  Bayes-best target selection should be able to exceed a fixed declared target
+  policy in finite examples
+
+composition error bound:
+  composed probabilistic recovery needs an explicit pushed-forward-prior and
+  decoder-composition theorem
+```
+
 ## Scientific Read
 
 This is a stronger root formalization target than the earlier quantale-presheaf
@@ -468,7 +529,9 @@ erasure has been detected.
 1. Nontrivial finite normal-lax models.
 2. A universal-preservation Boolean presentation variant, if needed.
 3. A finite transition-system adapter sketch.
-4. Richer finite examples connecting abstract admissibility to declared
+4. Fixed-declared versus Bayes-best policy separation.
+5. Probabilistic composition error-bound theorem for channel cascades.
+6. Richer finite examples connecting abstract admissibility to declared
    distinction-transport obligations without adding valuer semantics.
 
 ## Allowed Claim
@@ -490,7 +553,12 @@ Boolean relation support presentation also checks that relation-induced support
 transport instantiates the root laws and composes across changed carrier types.
 The finite channel / partition presentation checks exact decoder recovery,
 identity-channel refinement, channel composition, changed-carrier exact
-recovery, and erasure of nontrivial distinctions by a constant channel.
+recovery, and erasure of nontrivial distinctions by a constant channel. The
+probabilistic channel presentation checks that exact support recovery implies
+perfect probabilistic recovery and that perfect recovery under a full-support
+prior implies exact support recovery, while perfect recovery under a
+non-full-support prior and high probabilistic recovery do not in general imply
+exact support recovery.
 ```
 
 ## Blocked Claim

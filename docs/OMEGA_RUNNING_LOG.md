@@ -11,10 +11,11 @@ patch notes at the top.
 
 ### Probabilistic Channel Presentation v0
 
-Added the probabilistic channel presentation draft:
+Added the probabilistic channel presentation draft and Lean skeleton:
 
 ```text
 docs/research_notes/omega_theory/probabilistic_channel_presentation_v0.md
+formal/lean/OmegaCore/Presentations/ProbabilisticChannel.lean
 ```
 
 Purpose:
@@ -31,6 +32,32 @@ Read:
 Exact support recovery remains the root theorem-transfer object.
 Probabilistic recovery is a measurement enrichment and needs its own theorems
 for threshold and composition claims.
+```
+
+Lean checked:
+
+```text
+exactSupport_implies_perfectProb:
+  exact support recovery implies perfect probabilistic recovery
+
+perfectProb_fullPrior_implies_exactSupport:
+  perfect probabilistic recovery under a full-support prior implies exact
+  support recovery
+
+perfectProb_not_exact_without_full_prior:
+  perfect probabilistic recovery under a non-full-support prior need not imply
+  exact support recovery
+
+highProb_not_exactSupport:
+  high probabilistic recovery need not imply exact support recovery
+```
+
+Validation:
+
+```text
+lake build OmegaCore: passed
+sorry/admit/axiom scan: clean
+git diff --check: clean
 ```
 
 ### Stochastic Distinction Channel Fixed Policy Repair

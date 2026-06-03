@@ -142,6 +142,7 @@ formal/lean/OmegaCore/MarginalJoint.lean
 formal/lean/OmegaCore/AdapterFailures.lean
 formal/lean/OmegaCore/Presentations/FiniteBoolean.lean
 formal/lean/OmegaCore/Presentations/FiniteChannel.lean
+formal/lean/OmegaCore/Presentations/ProbabilisticChannel.lean
 ```
 
 Checked:
@@ -160,18 +161,22 @@ finite completion counterexamples;
 marginal-like non-erasure not implying strictly joint non-erasure;
 adapter-failure examples for missing closure or laxity laws;
 Boolean relation support presentation;
-finite channel / partition presentation.
+finite channel / partition presentation;
+finite probabilistic channel enrichment.
 ```
 
-Current probabilistic enrichment draft:
+Current probabilistic enrichment note:
 
 ```text
 docs/research_notes/omega_theory/probabilistic_channel_presentation_v0.md
 ```
 
-This separates exact support recovery from probabilistic decoder success, and
-keeps Bayes-best target selection distinct from fixed declared target
-observations.
+The matching Lean skeleton checks the exact/probabilistic boundary: exact
+support recovery implies perfect probabilistic recovery; perfect recovery under
+a full-support prior implies exact support recovery; perfect recovery under a
+non-full-support prior and high probabilistic recovery do not in general imply
+exact support recovery. It also keeps Bayes-best target selection distinct from
+fixed declared target observations.
 
 ### Layer 0a: Future-Distinction Dynamics
 
