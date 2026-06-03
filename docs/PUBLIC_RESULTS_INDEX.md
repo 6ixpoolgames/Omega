@@ -41,8 +41,10 @@ The current claim is modest:
 > not reproduce the high-yield signature. The first formal-interface distinction
 > panel now maps this representative/control set into declared finite
 > distinction-measure artifacts with 40 / 40 cells available and 0 missing or
-> blocked cells. Historical treatment names are documentation-only translation
-> aids.
+> blocked cells. The formal adapter conformance package now compiles that panel
+> into contexts, unfoldings, distinction fibers, preorders, transport witnesses,
+> closed transports, law checks, and theorem-transfer status for formal-arm
+> consumption. Historical treatment names are documentation-only translation aids.
 
 The latest state is an atlas posture: retained coupled outputs are now mapped
 with a substrate morphology postprocessor before designing the next operator.
@@ -56,6 +58,9 @@ current bridge artifact: it compares representatives and controls against
 product, zero-penalty joint rank-prefix, scalar mismatch 0.020,
 shared_capacity v1, and rank_order_boundary references without semantic
 promotion.
+The formal adapter conformance package is the current bridge to the Lean/formal
+stack: it achieved generated-presentation conformance for the checked root laws,
+while explicitly not claiming strict raw conformance or semantic detection.
 
 ## Best onboarding path
 
@@ -65,11 +70,12 @@ Start here:
 2. [`OMEGA_FORMALISM_PRIMER.md`](OMEGA_FORMALISM_PRIMER.md)
 3. [`EXTERNAL_READER_GUIDE.md`](EXTERNAL_READER_GUIDE.md)
 4. [`research_notes/omega_theory/README.md`](research_notes/omega_theory/README.md)
-5. [`research_notes/validation_results/future_field_atlas/future_field_atlas_formal_interface_distinction_panel_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_formal_interface_distinction_panel_result.md)
-6. [`research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md)
-7. [`research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md)
-8. [`research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md)
-9. [`FUTURE_FIELD_ATLAS_GLOSSARY.md`](FUTURE_FIELD_ATLAS_GLOSSARY.md)
+5. [`research_notes/validation_results/future_field_atlas/future_field_atlas_formal_adapter_conformance_package_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_formal_adapter_conformance_package_result.md)
+6. [`research_notes/validation_results/future_field_atlas/future_field_atlas_formal_interface_distinction_panel_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_formal_interface_distinction_panel_result.md)
+7. [`research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md)
+8. [`research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md)
+9. [`research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md)
+10. [`FUTURE_FIELD_ATLAS_GLOSSARY.md`](FUTURE_FIELD_ATLAS_GLOSSARY.md)
 
 ## Current live branch
 
@@ -135,6 +141,37 @@ combined asymmetry:
 ```
 
 ## Most important current results
+
+### Future Field Atlas formal adapter conformance package
+
+Result note:
+
+- [`future_field_atlas_formal_adapter_conformance_package_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_formal_adapter_conformance_package_result.md)
+
+Run summary:
+
+```text
+adapter_status: generated_presentation_conformance
+contexts: 2600
+unfoldings: 7720
+distinction fiber rows: 26520
+raw witnesses: 40141
+closed transport rows: 114158
+root law failures: 0
+total compressed output size: about 17.2 MB
+```
+
+Read:
+
+```text
+The retained formal-interface panel now compiles into a finite formal adapter
+bundle consumable by the formal arm. The generated closed presentation satisfies
+the checked identity, source-weakening, target-strengthening, and lax-composition
+laws. Strict raw conformance is not claimed.
+```
+
+This is adapter-conformance infrastructure only, not Omega validation and not
+semantic detection.
 
 ### Future Field Atlas Phase 0/1 smoke
 

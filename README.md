@@ -85,7 +85,9 @@ unfolding reachable frontiers across horizons;
 recording frontier topology;
 comparing product and coupled future-field baselines;
 checking artifact completeness and reconstruction audits;
-emitting compact morphology summaries.
+emitting compact morphology summaries;
+compiling retained panels into formal adapter bundles for theorem-transfer
+audits.
 ```
 
 The current empirical pattern is narrow:
@@ -115,6 +117,12 @@ tested alternate observables did not reproduce the high-yield signature.
 
 This is not an Omega result. It is a finite product-vs-coupled future-field
 geometry result under declared operators and observables.
+
+The current bridge artifact is the **formal adapter conformance package**. It
+compiles the retained formal-interface panel into contexts, unfoldings,
+distinction fibers, preorders, transport witnesses, closed transports, law
+checks, and theorem-transfer status. The generated closed presentation passes
+the checked root laws; strict raw conformance is not claimed.
 
 ## What This Repository Does Not Claim
 

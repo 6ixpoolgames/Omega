@@ -14,6 +14,10 @@ or historical run instructions here.
 Current active and recent live-instrument specs:
 
 - `current/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md`
+- `current/FUTURE_FIELD_ATLAS_FORMAL_ADAPTER_CONFORMANCE_PACKAGE_SPEC.md`
+  (completed; compiles the formal-interface panel into a primitive-calculus-facing adapter bundle)
+- `current/FUTURE_FIELD_ATLAS_FORMAL_INTERFACE_DISTINCTION_PANEL_SPEC.md`
+  (completed; emits the retained finite distinction-measure panel used by the adapter bundle)
 - `current/FUTURE_FIELD_ATLAS_RANK_ORDER_BOUNDARY_CLASS_EXPANSION_SPEC.md`
   (completed cleanly; added pair026 and opened representative-control target)
 - `current/FUTURE_FIELD_ATLAS_RANK_ORDER_BOUNDARY_NEIGHBOR_OBSERVABLE_SWEEP_SPEC.md`

@@ -9,6 +9,66 @@ patch notes at the top.
 
 ## 2026-06-03
 
+### Future Field Atlas Formal Adapter Conformance Package
+
+Implemented and ran the primitive-calculus-facing adapter compiler:
+
+```text
+omega.future_field_atlas.formal_adapter_conformance_package
+```
+
+Result note:
+
+```text
+docs/research_notes/validation_results/future_field_atlas/future_field_atlas_formal_adapter_conformance_package_result.md
+```
+
+Local output:
+
+```text
+results/future_field_atlas/20260603_formal_adapter_conformance_package/
+```
+
+Input panel digest:
+
+```text
+f7a2c13f1b192751c0334936
+```
+
+Adapter status:
+
+```text
+generated_presentation_conformance
+```
+
+Emitted:
+
+```text
+contexts: 2600
+unfoldings: 7720
+distinction fiber rows: 26520
+raw witnesses: 40141
+closed transport rows: 114158
+root law failures: 0
+preorder failures: 0
+compressed output size: about 17.2 MB
+```
+
+Read:
+
+```text
+The retained formal-interface panel now compiles into contexts, unfoldings,
+distinction fibers, preorders, transport witnesses, closed transports, law
+checks, non-erasure tables, and theorem-transfer status.
+
+The generated closed presentation satisfies the checked root laws. Strict raw
+conformance is not claimed.
+```
+
+Scope boundary: adapter formalization only. This is not Omega validation,
+proto-valuer detection, valuer detection, compatibility detection,
+support/capture/erasure detection, or substrate-general validation.
+
 ### Public Front Page Cleanup After Lean Presentation Layer
 
 Cleaned up the first-contact documentation after the Lean presentation-layer

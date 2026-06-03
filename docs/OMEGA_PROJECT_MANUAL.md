@@ -54,7 +54,12 @@ rebuild: raw reachable-frontier topology first, response labels last. After the
 schema teardown, condition identity is operator-native: state-space specs,
 transition-law specs, selection-operator specs, observable specs, and
 frontier-scan specs. Historical treatment names are documented only in the
-Future Field Atlas glossary. The instrument is calibrated against the latest
+Future Field Atlas glossary. The formal adapter conformance package now compiles
+the retained formal-interface panel into primitive-calculus-facing contexts,
+unfoldings, distinction fibers, distinction preorders, transport witnesses,
+closed transports, law checks, non-erasure tables, and theorem-transfer status.
+Its current status is `generated_presentation_conformance`; strict raw
+conformance is not claimed. The instrument is calibrated against the latest
 hard-top-m mechanism result as a fixture, which points toward a fixed low-rank
 successor boundary: rank-prefix `m=3`,
 rank-subset `m=4` retaining ranks `1;2;3`, and rank-subset `m=5` retaining
