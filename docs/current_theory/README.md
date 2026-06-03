@@ -16,6 +16,7 @@ Current front door:
 
 ```text
 ../OMEGA_FORMALISM_PRIMER.md
+../research_notes/omega_theory/omega_primitive_calculus_v0_lean_root_skeleton.md
 ../research_notes/omega_theory/README.md
 ../research_notes/omega_theory/theory_arm_map_v0.md
 ../research_notes/omega_theory/omega_formal_core_v0_2_future_distinction_dynamics.md
@@ -43,8 +44,8 @@ The previous public-facing theory and validation front door was:
 
 Those documents remain useful provenance, but the current public-facing
 terminology should introduce the project through value-bearing futures,
-future-distinction dynamics, and Future Field Atlas as the empirical
-microscope.
+Omega Primitive Calculus v0, Future-Distinction Dynamics as a working
+presentation, and Future Field Atlas as the empirical microscope.
 
 ## How To Read It
 

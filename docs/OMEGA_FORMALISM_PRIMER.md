@@ -23,33 +23,41 @@ finite microscope for the precursor geometry.
 
 ## The Current Formal Object
 
-The current formal core is **future-distinction dynamics**.
+The current root formalism is **Omega Primitive Calculus v0**.
 
-The base grammar is:
+The root grammar is:
 
 ```text
-relation -> distinction -> asymmetry -> dynamics
+relation -> distinction -> asymmetry
 ```
 
 Where:
 
 ```text
 relation:
-  the substrate condition; what can follow what
+  composable consequential connectedness
 
 distinction:
-  future-bearing content; a difference whose consequences remain separable
-  under declared admissible observables
+  preordered non-equivalence structure; a difference capable of preservation,
+  transformation, collapse, or recovery
 
 asymmetry:
-  lawful non-neutrality; the channeling rule that orders possible futures
-
-dynamics:
-  the iterated unfolding of future-distinctions through relations under
-  asymmetry
+  normal lax distinction transport through relation
 ```
 
-The compact working definition is:
+The compact Lean target is:
+
+```text
+A : C -> DistTrans
+```
+
+where `C` is a category of relational contexts and `DistTrans` is the
+support-level category of preorder-indexed distinction transports.
+
+Future-Distinction Dynamics is the current working presentation of this root
+calculus for reachable-futures modeling.
+
+The compact working target is:
 
 ```text
 Omega is the admissible subset of future-field dynamics for which
@@ -100,7 +108,46 @@ Can such processes compose into maximal compatibility completions?
 
 The current theory arm is organized as a ladder.
 
-### Layer 0: Future-Distinction Dynamics
+### Layer 0: Omega Primitive Calculus v0
+
+Primary note:
+
+```text
+docs/research_notes/omega_theory/omega_primitive_calculus_v0_lean_root_skeleton.md
+```
+
+Defines:
+
+```text
+relation;
+distinction;
+asymmetry;
+recoverability;
+recurrent recoverability;
+non-erasure;
+joint compatibility;
+completion.
+```
+
+Lean root files:
+
+```text
+formal/lean/OmegaCore/DistTrans.lean
+formal/lean/OmegaCore/NormalLax.lean
+```
+
+Checked:
+
+```text
+DistTrans closure;
+relation-level identity and associativity laws;
+recoverability weakening;
+recoverability strengthening;
+compositional recoverability from laxity;
+non-erasure monotonicity.
+```
+
+### Layer 0a: Future-Distinction Dynamics
 
 Primary note:
 

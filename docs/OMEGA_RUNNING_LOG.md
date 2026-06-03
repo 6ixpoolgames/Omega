@@ -9,6 +9,31 @@ patch notes at the top.
 
 ## 2026-06-03
 
+### Public Front-Door Housekeeping After Lean Root Pivot
+
+Updated public-facing docs so the first-contact repo posture matches the new
+Lean root skeleton:
+
+```text
+README.md
+docs/OMEGA_FORMALISM_PRIMER.md
+docs/EXTERNAL_READER_GUIDE.md
+docs/current_theory/README.md
+docs/OMEGA_PROJECT_MANUAL.md
+```
+
+Current front-door framing:
+
+```text
+Omega Primitive Calculus v0 is the root formalism.
+Future-Distinction Dynamics is a working reachable-futures presentation.
+Future Field Atlas is the empirical instrument, not Omega proper.
+```
+
+Manual update: root-layout policy now includes `formal/`, `omega/`, and
+`tests/`, and requires future formal pivots to update README, primer, external
+guide, and theory map together.
+
 ### Omega Primitive Calculus v0 Lean Root Skeleton
 
 Implemented the refined support-level root formalism in Lean:

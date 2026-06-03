@@ -356,9 +356,23 @@ Keep the repository root uncluttered.
 Current root-level folders should stay limited to:
 
 - `docs/`
+- `formal/`
+- `omega/`
 - `scripts/`
+- `tests/`
 - `results/`
 - local/private or environment folders that are ignored
+
+Public front-door files should stay synchronized after a formal pivot:
+
+- `README.md`
+- `docs/OMEGA_FORMALISM_PRIMER.md`
+- `docs/EXTERNAL_READER_GUIDE.md`
+- `docs/research_notes/omega_theory/README.md`
+
+If the root formalism changes, update those files in the same commit as the
+technical proof or theory note. Older notes should be marked as historical or
+strict-presentation explorations rather than silently deleted.
 
 Historical executable probes live under:
 

@@ -20,45 +20,54 @@ For the current project state, read:
 
 1. [Omega Formalism Primer](docs/OMEGA_FORMALISM_PRIMER.md)
 2. [External Reader Guide](docs/EXTERNAL_READER_GUIDE.md)
-3. [Omega Formal Core v0.2](docs/research_notes/omega_theory/omega_formal_core_v0_2_future_distinction_dynamics.md)
-4. [Theory Arm Map v0](docs/research_notes/omega_theory/theory_arm_map_v0.md)
-5. [Omega Theory Notes Map](docs/research_notes/omega_theory/README.md)
-6. [Future Field Atlas Instrument Spec](docs/specs/current/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md)
-7. [Formal Interface Distinction Panel Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_formal_interface_distinction_panel_result.md)
-8. [Rank-Order Boundary Class Expansion Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md)
-9. [Rank-Order Boundary Visualization Note](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md)
-10. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
-11. [Project Manual](docs/OMEGA_PROJECT_MANUAL.md)
+3. [Omega Primitive Calculus v0 Lean Root Skeleton](docs/research_notes/omega_theory/omega_primitive_calculus_v0_lean_root_skeleton.md)
+4. [Omega Formal Core v0.2](docs/research_notes/omega_theory/omega_formal_core_v0_2_future_distinction_dynamics.md)
+5. [Theory Arm Map v0](docs/research_notes/omega_theory/theory_arm_map_v0.md)
+6. [Omega Theory Notes Map](docs/research_notes/omega_theory/README.md)
+7. [Future Field Atlas Instrument Spec](docs/specs/current/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md)
+8. [Formal Interface Distinction Panel Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_formal_interface_distinction_panel_result.md)
+9. [Rank-Order Boundary Class Expansion Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md)
+10. [Rank-Order Boundary Visualization Note](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md)
+11. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
+12. [Project Manual](docs/OMEGA_PROJECT_MANUAL.md)
 
 ## The Core Idea
 
-The current formal core is **future-distinction dynamics**.
+The current root formalism is **Omega Primitive Calculus v0**.
 
-The base grammar is:
+Its support-level grammar is:
 
 ```text
-relation -> distinction -> asymmetry -> dynamics
+relation -> distinction -> asymmetry
 ```
 
 Where:
 
 ```text
 relation:
-  what can follow what
+  composable consequential connectedness
 
 distinction:
-  future-bearing content; differences whose consequences remain separable
-  under declared admissible observables
+  preordered non-equivalence structure; differences capable of preservation,
+  transformation, collapse, or recovery
 
 asymmetry:
-  lawful non-neutrality; how possible futures are channeled
-
-dynamics:
-  the iterated unfolding of future-distinctions through relations under
-  asymmetry
+  normal lax distinction transport along relation
 ```
 
-Compact working definition:
+Compact root object:
+
+```text
+A : C -> DistTrans
+```
+
+where `C` is a category of relational contexts and `DistTrans` is the
+support-level category of preorder-indexed distinction transports.
+
+Future-Distinction Dynamics is the current working presentation of that root
+calculus for reachable-futures modeling.
+
+Compact working target:
 
 ```text
 Omega is the admissible subset of future-field dynamics for which
@@ -109,7 +118,11 @@ Can such structures compose into maximal compatibility completions?
 The active theory arm is layered:
 
 ```text
-Layer 0: Future-Distinction Dynamics
+Layer 0: Omega Primitive Calculus v0
+  relation, distinction, asymmetry, recoverability, recurrent recoverability,
+  non-erasure, compatibility, completion
+
+Layer 0a: Future-Distinction Dynamics
   relation, distinction, asymmetry, dynamics, recoverability, non-erasure,
   compatibility
 
@@ -150,6 +163,17 @@ finite completions are computable by exhaustive enumeration in principle.
 ```
 
 These are mathematical scaffolds, not physical-world validation.
+
+The current Lean formalization checks the support-level root skeleton:
+
+```text
+formal/lean/OmegaCore/DistTrans.lean
+formal/lean/OmegaCore/NormalLax.lean
+```
+
+Checked results include DistTrans closure, relation-level identity and
+associativity laws, recoverability weakening/strengthening, compositional
+recoverability from laxity, and non-erasure monotonicity.
 
 ## Empirical Arm: Future Field Atlas
 
@@ -256,8 +280,9 @@ The panel has 40 / 40 requested cells available, 0 missing or blocked cells, and
 separates the four high-yield representatives from the low/medium controls under
 the declared rank_order_boundary joint-vs-marginal finite measure.
 
-The current formal next step is to keep tightening the bridge from
-future-distinction dynamics to admissible process-bundle, identity-decay-null,
+The current formal next step is to extend the Lean root skeleton toward
+finite-chain recurrent recoverability and finite maximal-completion existence,
+then tighten the bridge into admissible process-bundle, identity-decay-null,
 maintenance-gap, self-conditioning, and compatibility-audit instrumentation.
 
 ## Repository Map
@@ -274,6 +299,9 @@ docs/EXTERNAL_READER_GUIDE.md
 
 docs/OMEGA_PROJECT_MANUAL.md
   operational workflow, local commands, run retention, repo process
+
+formal/lean/
+  Lean proof-assistant sandbox for the root formal skeleton
 
 docs/PUBLIC_RESULTS_INDEX.md
   empirical result index

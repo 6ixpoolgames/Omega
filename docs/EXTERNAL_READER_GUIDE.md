@@ -13,11 +13,27 @@ current formal stack, read:
 
 ```text
 docs/OMEGA_FORMALISM_PRIMER.md
+docs/research_notes/omega_theory/omega_primitive_calculus_v0_lean_root_skeleton.md
 ```
 
 This guide is the longer collaborator tour: it explains how the formal ambition
 connects to the current Future Field Atlas empirical branch and what the current
 results do and do not mean.
+
+The current root formalism is **Omega Primitive Calculus v0**:
+
+```text
+relation -> distinction -> asymmetry
+```
+
+Lean currently checks the support-level skeleton:
+
+```text
+A : C -> DistTrans
+```
+
+Future Field Atlas is not Omega proper. It is an empirical instrument that tries
+to expose finite reachable-future substrates to that root grammar.
 
 The current work asks a narrow question:
 
