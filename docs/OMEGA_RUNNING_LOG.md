@@ -9,6 +9,30 @@ patch notes at the top.
 
 ## 2026-06-04
 
+### Probabilistic Channel Presentation v0
+
+Added the probabilistic channel presentation draft:
+
+```text
+docs/research_notes/omega_theory/probabilistic_channel_presentation_v0.md
+```
+
+Purpose:
+
+```text
+Layer probabilistic decoder success, thresholded recovery, fixed-declared
+target observations, Bayes-best target selection, and composition error bounds
+over the support-level finite channel presentation.
+```
+
+Read:
+
+```text
+Exact support recovery remains the root theorem-transfer object.
+Probabilistic recovery is a measurement enrichment and needs its own theorems
+for threshold and composition claims.
+```
+
 ### Stochastic Distinction Channel Fixed Policy Repair
 
 Added fixed declared target observations as a co-primary summary policy beside

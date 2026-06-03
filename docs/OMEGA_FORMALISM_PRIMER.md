@@ -163,6 +163,16 @@ Boolean relation support presentation;
 finite channel / partition presentation.
 ```
 
+Current probabilistic enrichment draft:
+
+```text
+docs/research_notes/omega_theory/probabilistic_channel_presentation_v0.md
+```
+
+This separates exact support recovery from probabilistic decoder success, and
+keeps Bayes-best target selection distinct from fixed declared target
+observations.
+
 ### Layer 0a: Future-Distinction Dynamics
 
 Primary note:

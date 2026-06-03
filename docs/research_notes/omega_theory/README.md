@@ -80,6 +80,8 @@ Boolean relation support presentation with relation-induced transports,
 identity relation, relational composition, and changed-carrier recovery;
 finite channel / partition presentation with exact decoder recovery, channel
 composition, changed-carrier recovery, and constant-channel erasure.
+Probabilistic channel recovery is now specified as a presentation draft layered
+over the support-level channel presentation.
 ```
 
 This is formal infrastructure only. It does not instantiate an empirical
@@ -99,6 +101,7 @@ admissibility_enrichment_and_identity_decay_nulls.md
 omega_proto_valuer_compatibility_completions.md
 finite_omega_completion_theorems_v0.md
 finite_distinction_measures_v0.md
+probabilistic_channel_presentation_v0.md
 compatibility_audit_taxonomy_v0.md
 ```
 
@@ -115,6 +118,7 @@ minimal_compatibility_roadmap.md
 transition_energy_substrate_atlas.md
 transition_energy_and_constraint_untethering.md
 horizon_transport_aligned_amplification.md
+probabilistic_channel_presentation_v0.md
 ```
 
 ## Translation And Glossary Notes
