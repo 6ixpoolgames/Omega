@@ -59,8 +59,12 @@ COM-like multi-step viable propagation through certified fibers
 in the F,T attractive multifield toy substrate
 ```
 
-The current pivot is the reachable-futures substrate reset. VAL0-G and VAL1-MF
-are now reconnaissance evidence: they showed stable viability regimes,
-cap-censoring limits, and constructive support-like interference, but they did
-not demonstrate clean Omega-compatible subobjects. The active bottleneck is
-minimal substrate resolution.
+The reachable-futures substrate reset and VAL0-G / VAL1-MF work are now
+reconnaissance evidence: they showed stable viability regimes, cap-censoring
+limits, and constructive support-like interference, but they did not
+demonstrate clean Omega-compatible subobjects.
+
+The current checkpoint is now downstream of that reset: Omega Primitive Calculus
+v0 has a Lean-checked support-level skeleton and worked finite presentations,
+while Future Field Atlas and the stochastic distinction-channel probe serve as
+formal-consumption empirical bridges.

@@ -1,6 +1,6 @@
 # Omega Project Manual
 
-Last updated: 2026-06-03
+Last updated: 2026-06-04
 
 Repository: https://github.com/6ixpoolgames/Omega
 
@@ -37,6 +37,22 @@ docs/OMEGA_RUNNING_LOG.md:
 
 Do not make this manual the canonical public pitch. Keep public-facing summary
 language in `README.md` and formal onboarding in `docs/OMEGA_FORMALISM_PRIMER.md`.
+
+Current checkpoint:
+
+```text
+Formal arm:
+  Omega Primitive Calculus v0 is Lean-backed at the support level. Current
+  checked presentations include Boolean relation support, finite channel /
+  partition recovery, and probabilistic channel recovery with finite cascade
+  error bounds.
+
+Empirical arm:
+  Future Field Atlas is the current reachable-future microscope. The stochastic
+  distinction-channel probe is the clean finite channel bridge for formal
+  consumption. Historical RFS/VAL/DAX branches are provenance, not the public
+  front door.
+```
 
 Current public posture:
 
@@ -295,9 +311,18 @@ as the canonical internal definition anchor.
 ## How A New Codex Instance Should Start
 
 1. Read this file.
-2. Read `docs/OMEGA_RUNNING_LOG.md`.
-3. Read `README.md`.
-4. Read the current validation-design notes:
+2. Read `README.md`.
+3. Read `docs/OMEGA_FORMALISM_PRIMER.md`.
+4. Read `docs/specs/README.md` and check `docs/specs/current/` for live specs.
+5. Read the current status anchors:
+   - `formal/lean/README.md`
+   - `docs/research_notes/omega_theory/README.md`
+   - `docs/research_notes/omega_theory/omega_primitive_calculus_v0_lean_root_skeleton.md`
+   - `docs/research_notes/omega_theory/probabilistic_channel_presentation_v0.md`
+   - `docs/PUBLIC_RESULTS_INDEX.md`
+6. Skim `docs/OMEGA_RUNNING_LOG.md` for the latest chronological changes.
+7. Use the historical validation-design notes below only when provenance is
+   needed:
    - `docs/specs/archive/rfs_mb0/RFS_MB0_FUTURE_LANDSCAPE_PATTERN_SPEC.md`
    - `docs/specs/archive/rfs_mb0/RFS_MB0_FUTURE_LANDSCAPE_DETECTOR_V1_HANDOFF.md`
    - `docs/specs/archive/rfs_mb0/RFS_MB0_FUTURE_LANDSCAPE_V1_1_CODE_TARGETS.md`
@@ -1409,11 +1434,13 @@ Interpretation:
 What we can say:
 
 - We have not validated Omega as a scientific theory.
-- The current validation target is VAL0-G: a neutral-grammar geometry atlas in
-  constructor-style task algebras.
-- The main near-term empirical question is whether neutral constructor-like
-  task spaces generate measurable recoverable-continuation geometries under
-  asymmetric transformation dynamics.
+- The current formal target is Omega Primitive Calculus v0 plus checked finite
+  presentations that make theorem transfer and failure modes explicit.
+- The current empirical target is bridge discipline: Future Field Atlas and the
+  stochastic distinction-channel probe should emit formal-consumption artifacts
+  without semantic promotion.
+- VAL0-G and VAL1-MF are historical reconnaissance layers, not the current
+  validation center.
 - VAL0-CT remains the preceding calibration layer: R1 anchor wins reproduced,
   dense controls stayed clean, but broad held-out or unlabeled generalization
   was not established.

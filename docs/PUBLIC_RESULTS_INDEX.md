@@ -90,7 +90,27 @@ Start here:
 
 ## Current live branch
 
-### Horizon transport
+### Future Field Atlas and stochastic channel bridge
+
+The current empirical branch has two front-door instruments:
+
+```text
+Future Field Atlas:
+  finite reachable-frontier topology, product/coupled baselines, formal adapter
+  conformance packages
+
+Stochastic distinction channel:
+  finite channel recovery under declared distinctions, decoders, priors, and
+  support/probabilistic theorem-transfer boundaries
+```
+
+The current public read is not a validation claim. It is a bridge status:
+Future Field Atlas exposes finite future-field topology to the formal stack,
+and the stochastic distinction-channel branch gives a cleaner finite channel
+presentation where support-level exact recovery and probabilistic decoder
+success can be separated.
+
+### Horizon transport lineage
 
 Horizon transport asks what earlier reachable-future structures become at later horizons:
 
@@ -107,9 +127,10 @@ transport_stable
 transport_amplified_aligned
 ```
 
-This made horizon transport the live instrument, but it did not validate Omega.
+This made horizon transport the predecessor instrument to Future Field Atlas,
+but it did not validate Omega.
 
-### Transition-energy substrates
+### Transition-energy substrate lineage
 
 The current substrate program uses explicit transition energy:
 

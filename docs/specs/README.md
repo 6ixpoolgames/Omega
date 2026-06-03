@@ -15,6 +15,10 @@ Current active and recent live-instrument specs:
 
 - `current/STOCHASTIC_DISTINCTION_CHANNEL_EMPIRICAL_SPEC.md`
   (completed; finite stochastic channel bridge with support/probabilistic recovery separation)
+- `current/STOCHASTIC_DISTINCTION_CHANNEL_TIGHTENING_SPEC.md`
+  (completed; instrument audits, provenance, and formal-consumption tightening)
+- `current/STOCHASTIC_DISTINCTION_CHANNEL_FIXED_POLICY_SPEC.md`
+  (completed; fixed-declared target policy alongside Bayes-best summaries)
 - `current/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md`
 - `current/FUTURE_FIELD_ATLAS_FORMAL_ADAPTER_RAW_CLOSED_GAP_REPORT_SPEC.md`
   (completed; quantifies closure dependence in the formal adapter package)

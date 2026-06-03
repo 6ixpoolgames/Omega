@@ -56,7 +56,9 @@ finite counterexamples for pairwise-vs-joint and greatest-vs-maximal collapse;
 marginal-like non-erasure not implying strictly joint non-erasure;
 adapter-failure examples for missing closure or laxity laws;
 Boolean relation support presentation;
-finite channel / partition presentation.
+finite channel / partition presentation;
+probabilistic channel presentation, including exact/probabilistic separation,
+full-support converse, and finite cascade error bound.
 ```
 
 Key files:
@@ -67,7 +69,9 @@ formal/lean/OmegaCore/DistTrans.lean
 formal/lean/OmegaCore/NormalLax.lean
 formal/lean/OmegaCore/Presentations/FiniteBoolean.lean
 formal/lean/OmegaCore/Presentations/FiniteChannel.lean
+formal/lean/OmegaCore/Presentations/ProbabilisticChannel.lean
 docs/research_notes/omega_theory/omega_primitive_calculus_v0_lean_root_skeleton.md
+docs/research_notes/omega_theory/probabilistic_channel_presentation_v0.md
 ```
 
 The formal work is not a proof of physical or ethical claims. It is a way to
@@ -127,7 +131,10 @@ the checked root laws; strict raw conformance is not claimed.
 A newer **stochastic distinction-channel** bridge tests the same primitive roles
 in a cleaner prebiotic substrate: stochastic relation `K(y|x)`, declared finite
 distinctions, named decoders, support-level exact recovery, and probabilistic
-decoder success. It is a formal-consumption probe, not a validation claim.
+decoder success. The matching Lean presentation now checks how exact support
+recovery relates to probabilistic success and how decoder error composes across
+finite channel cascades. It is a formal-consumption bridge, not a validation
+claim.
 
 ## What This Repository Does Not Claim
 

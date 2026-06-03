@@ -46,7 +46,9 @@ finite completion counterexamples;
 marginal-like non-erasure not implying strictly joint non-erasure;
 adapter-failure examples for missing closure or laxity laws;
 Boolean relation support presentation;
-finite channel / partition presentation.
+finite channel / partition presentation;
+probabilistic channel presentation with exact/probabilistic separation,
+full-support converse, and finite cascade error bound.
 ```
 
 Future Field Atlas is not Omega proper. It is an empirical instrument that tries
@@ -311,38 +313,41 @@ reachable-future instrument.
 Read:
 
 1. `README.md`
-2. this guide
-3. `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_top_m_geometry_audit_result.md`
-4. `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`
+2. `docs/OMEGA_FORMALISM_PRIMER.md`
+3. this guide
+4. `docs/research_notes/omega_theory/omega_primitive_calculus_v0_lean_root_skeleton.md`
 
-Goal: understand what the live result is and what it does not claim.
+Goal: understand the current formal root, empirical microscope, and claim
+boundary before reading older probe results.
 
 ### 60-minute technical orientation
 
 Read:
 
-1. `docs/research_notes/omega_theory/horizon_transport_aligned_amplification.md`
-2. `docs/research_notes/omega_theory/transition_energy_and_constraint_untethering.md`
-3. `docs/research_notes/omega_theory/transition_energy_substrate_atlas.md`
-4. `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_asymmetry_ladder_transition_energy_result.md`
-5. `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_asymmetry_ladder_preservation_scaleup_result.md`
-6. `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_max_entropy_local_transition_phase1_preflight_result.md`
-7. `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_top_m_geometry_audit_result.md`
+1. `docs/research_notes/omega_theory/README.md`
+2. `docs/research_notes/omega_theory/probabilistic_channel_presentation_v0.md`
+3. `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_formal_adapter_conformance_package_result.md`
+4. `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_formal_interface_distinction_panel_result.md`
+5. `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md`
+6. `docs/research_notes/validation_results/stochastic_distinction_channel/stochastic_distinction_channel_fixed_policy_result.md`
+7. `docs/PUBLIC_RESULTS_INDEX.md`
 
-Goal: understand why the project moved from hand-built constraint templates toward transition-energy asymmetry families.
+Goal: understand how the formal stack, Future Field Atlas, and stochastic
+channel bridge currently fit together.
 
 ### Implementation orientation
 
 Read:
 
-1. `docs/specs/archive/rfs_mb0/RFS_MB0_ASYMMETRY_LADDER_TRANSITION_ENERGY_SUBSTRATE_SPEC.md`
-2. `docs/specs/archive/rfs_mb0/RFS_MB0_MAX_ENTROPY_LOCAL_TRANSITION_PREFLIGHT_SPEC.md`
-3. `docs/specs/archive/rfs_mb0/RFS_MB0_TOP_M_GEOMETRY_AUDIT_SPEC.md`
-4. `docs/specs/archive/rfs_mb0/RFS_MB0_TRANSITION_ENERGY_SUBSTRATE_CHARACTERIZATION_RUN_SPEC.md`
-5. `docs/implementation/horizon_transport_runner_map.md`
-6. `docs/research_notes/validation_results/rfs_mb0/rfs_mb0_top_m_geometry_audit_result.md`
+1. `docs/specs/current/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md`
+2. `docs/specs/current/FUTURE_FIELD_ATLAS_FORMAL_ADAPTER_CONFORMANCE_PACKAGE_SPEC.md`
+3. `docs/specs/current/STOCHASTIC_DISTINCTION_CHANNEL_EMPIRICAL_SPEC.md`
+4. `docs/specs/current/STOCHASTIC_DISTINCTION_CHANNEL_FIXED_POLICY_SPEC.md`
+5. `formal/lean/README.md`
+6. `docs/OMEGA_PROJECT_MANUAL.md`
 
-Goal: understand what the runner emits, what controls are required, and how result notes should be interpreted.
+Goal: understand what the current instruments emit, what formal artifacts are
+consumable, and where active specs belong.
 
 ### Historical orientation
 

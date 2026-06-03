@@ -61,6 +61,7 @@ OmegaCore/Counterexamples.lean
 OmegaCore/MarginalJoint.lean
 OmegaCore/Presentations/FiniteBoolean.lean
 OmegaCore/Presentations/FiniteChannel.lean
+OmegaCore/Presentations/ProbabilisticChannel.lean
 ```
 
 Current checked scope:
@@ -79,9 +80,10 @@ laxity laws;
 Boolean relation support presentation with relation-induced transports,
 identity relation, relational composition, and changed-carrier recovery;
 finite channel / partition presentation with exact decoder recovery, channel
-composition, changed-carrier recovery, and constant-channel erasure.
-Probabilistic channel recovery is now specified as a presentation draft layered
-over the support-level channel presentation.
+composition, changed-carrier recovery, and constant-channel erasure;
+probabilistic channel presentation with exact/probabilistic separation,
+full-support converse, high-probability counterexample, and finite cascade
+error bound.
 ```
 
 This is formal infrastructure only. It does not instantiate an empirical
