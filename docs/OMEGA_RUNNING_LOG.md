@@ -9,6 +9,41 @@ patch notes at the top.
 
 ## 2026-06-03
 
+### Primitive Witness Calculus Lean Smoke
+
+Added a Lean pressure test for the proposed Omega Primitive Calculus v0:
+
+```text
+formal/lean/OmegaCore/PrimitiveWitness.lean
+```
+
+Checked derived witness-calculus lemmas:
+
+```text
+recoverability_weaken_source
+recoverability_strengthen_target
+compositional_recoverability
+non_erasure_monotonicity
+```
+
+Build status:
+
+```text
+PASS
+lake build OmegaCore
+no sorry / admit / axiom in formal/lean
+```
+
+Result note:
+
+```text
+docs/research_notes/omega_theory/primitive_witness_calculus_lean_smoke_v0.md
+```
+
+Scope boundary: this checks the primitive witness fragment only. It does not
+prove the full quantale-presheaf presentation, does not prove A4/A5 at the
+category/setoid level, and does not instantiate an empirical adapter.
+
 ### Lean Formalization Smoke
 
 Set up a local Lean 4 proof-assistant sandbox:
