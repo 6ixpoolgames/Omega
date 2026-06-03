@@ -17,11 +17,13 @@ Checked:
   support recovery;
   perfect probabilistic recovery under a non-full-support prior need not imply
   exact support recovery;
-  high probabilistic recovery need not imply exact support recovery.
+  high probabilistic recovery need not imply exact support recovery;
+  composite decoder error over a finite cascade is bounded by first-stage plus
+  second-stage decoder error over the same path ensemble.
 
 Pending:
   fixed-declared versus Bayes-best policy separation;
-  probabilistic composition error-bound theorem.
+  normalized or constant-row-total cascade variants, if needed.
 ```
 
 ## 0. Purpose
@@ -474,19 +476,25 @@ composite failure subset
   {dec1(E(Y)) != D(X)} union {dec2(F(Z)) != E(Y)}
 ```
 
-The exact formal theorem must declare:
+The checked finite natural-weight theorem works at cascade path-ensemble level.
+It declares:
 
 ```text
 source prior pi on X
-pushed-forward prior on Y induced by K
 decoder dec1 : E.Label -> D.Label
 decoder dec2 : F.Label -> E.Label
 composed decoder dec1 o dec2
 channel composition L o K
+first-stage and second-stage decoder-error masses over the same path ensemble
 ```
 
-The empirical arm should report measured composed success and should not assume
-a composition theorem unless the formal assumptions are satisfied.
+The empirical arm should report measured composed success and should not replace
+this cascade-level theorem with independently normalized stage-error claims
+unless additional normalization assumptions are supplied.
+
+The Lean presentation also checks that the cascade path-ensemble total mass and
+composite error mass agree with the corresponding `chanComp` total/error masses.
+This ties the path-level proof back to the composed natural-weight channel.
 
 ## 14. Support Projection For Root Theorem Transfer
 
@@ -585,6 +593,15 @@ Show that Bayes-best success can exceed fixed-declared success.
 
 Prove a finite error-bound theorem for composed channels under declared decoder
 composition assumptions.
+
+Checked in Lean as:
+
+```text
+cascade_composite_error_le_stage_errors
+cascade_error_bound_same_denominator
+cascadeTotalMass_eq_totalMass_chanComp
+cascadeCompositeErrorMass_eq_errorMass_chanComp
+```
 
 ## 17. Empirical-Arm Contract
 

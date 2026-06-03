@@ -463,6 +463,9 @@ PerfectProbRecovers:
 
 ProbRecoversAtLeast:
   cross-multiplied finite threshold comparison
+
+chanComp / cascadeTotalMass:
+  natural-weight finite channel cascade and path-ensemble mass
 ```
 
 Checked presentation facts:
@@ -481,6 +484,20 @@ perfectProb_not_exact_without_full_prior:
 
 highProb_not_exactSupport:
   high probabilistic recovery can coexist with support-level ambiguity
+
+cascade_composite_error_le_stage_errors:
+  composite decoder error over a finite channel cascade is bounded by the
+  union of first-stage and second-stage decoder errors over the same path
+  ensemble
+
+cascade_error_bound_same_denominator:
+  same-denominator threshold form of the finite cascade error bound
+
+cascadeTotalMass_eq_totalMass_chanComp:
+  path-ensemble total mass agrees with composed-channel total mass
+
+cascadeCompositeErrorMass_eq_errorMass_chanComp:
+  path-ensemble composite error agrees with composed-channel error mass
 ```
 
 Interpretation:
@@ -497,10 +514,6 @@ Pending:
 fixed-declared versus Bayes-best separation:
   Bayes-best target selection should be able to exceed a fixed declared target
   policy in finite examples
-
-composition error bound:
-  composed probabilistic recovery needs an explicit pushed-forward-prior and
-  decoder-composition theorem
 ```
 
 ## Scientific Read
@@ -530,7 +543,8 @@ erasure has been detected.
 2. A universal-preservation Boolean presentation variant, if needed.
 3. A finite transition-system adapter sketch.
 4. Fixed-declared versus Bayes-best policy separation.
-5. Probabilistic composition error-bound theorem for channel cascades.
+5. Normalized or constant-row-total cascade variants, if needed for adapter
+   transfer.
 6. Richer finite examples connecting abstract admissibility to declared
    distinction-transport obligations without adding valuer semantics.
 
@@ -558,7 +572,10 @@ probabilistic channel presentation checks that exact support recovery implies
 perfect probabilistic recovery and that perfect recovery under a full-support
 prior implies exact support recovery, while perfect recovery under a
 non-full-support prior and high probabilistic recovery do not in general imply
-exact support recovery.
+exact support recovery. It also checks a finite cascade union bound: composite
+decoder error is bounded by first-stage plus second-stage decoder error over the
+same natural-weight path ensemble. Bridge lemmas tie the path-ensemble total and
+composite-error masses back to the composed natural-weight channel `chanComp`.
 ```
 
 ## Blocked Claim

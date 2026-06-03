@@ -50,6 +50,14 @@ perfectProb_not_exact_without_full_prior:
 
 highProb_not_exactSupport:
   high probabilistic recovery need not imply exact support recovery
+
+cascade_composite_error_le_stage_errors:
+  composite decoder error over a finite channel cascade is bounded by the
+  union of first-stage and second-stage decoder errors over the same path
+  ensemble
+
+cascade_error_bound_same_denominator:
+  same-denominator threshold form of the finite cascade error bound
 ```
 
 Validation:

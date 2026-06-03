@@ -175,7 +175,9 @@ The matching Lean skeleton checks the exact/probabilistic boundary: exact
 support recovery implies perfect probabilistic recovery; perfect recovery under
 a full-support prior implies exact support recovery; perfect recovery under a
 non-full-support prior and high probabilistic recovery do not in general imply
-exact support recovery. It also keeps Bayes-best target selection distinct from
+exact support recovery; and composite decoder failure over a finite channel
+cascade is bounded by first-stage plus second-stage decoder failure over the
+same path ensemble. It also keeps Bayes-best target selection distinct from
 fixed declared target observations.
 
 ### Layer 0a: Future-Distinction Dynamics

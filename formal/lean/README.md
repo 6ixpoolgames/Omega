@@ -325,6 +325,12 @@ PerfectProbRecovers:
 
 ProbRecoversAtLeast:
   cross-multiplied threshold comparison
+
+chanComp / cascadeTotalMass:
+  natural-weight finite channel cascade and path-ensemble mass
+
+cascadeCompositeErrorMass / cascadeFirstErrorMass / cascadeSecondErrorMass:
+  composite and stage decoder-error masses over the same cascade path ensemble
 ```
 
 Checked presentation facts:
@@ -343,6 +349,20 @@ perfectProb_not_exact_without_full_prior:
 
 highProb_not_exactSupport:
   high probabilistic recovery can coexist with support-level ambiguity
+
+cascade_composite_error_le_stage_errors:
+  composite decoder error over a finite cascade is bounded by the sum of
+  first-stage and second-stage decoder errors over the same path ensemble
+
+cascade_error_bound_same_denominator:
+  same-denominator threshold form of the finite cascade error bound
+
+cascadeTotalMass_eq_totalMass_chanComp:
+  cascade path-ensemble total mass agrees with the composed channel total mass
+
+cascadeCompositeErrorMass_eq_errorMass_chanComp:
+  cascade composite error mass agrees with ordinary error mass over the
+  composed channel and composed decoder
 ```
 
 This is a finite stochastic measurement layer over the support calculus. It
@@ -428,7 +448,8 @@ empirical hypothesis
 3. Add a universal-preservation Boolean presentation variant, if needed.
 4. Add a finite transition-system adapter sketch.
 5. Prove a fixed-declared versus Bayes-best policy separation result.
-6. Prove a probabilistic composition error-bound theorem for channel cascades.
+6. Add a normalized or constant-row-total variant of probabilistic cascade
+   composition, if needed for downstream adapter transfer.
 7. Add richer finite completion examples tied to declared distinction-transport
    obligations, while keeping valuer semantics out of the root skeleton.
 8. Only then lift toward enriched presentations such as the historical
