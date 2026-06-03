@@ -9,6 +9,30 @@ patch notes at the top.
 
 ## 2026-06-03
 
+### Public Front Page Cleanup After Lean Presentation Layer
+
+Cleaned up the first-contact documentation after the Lean presentation-layer
+passes.
+
+Updated:
+
+```text
+README.md
+docs/EXTERNAL_READER_GUIDE.md
+```
+
+Intent:
+
+```text
+make the public front page shorter and clearer;
+put Omega Primitive Calculus v0 and Future Field Atlas in the correct current
+roles;
+demote transition-energy / horizon-transport wording to historical substrate
+context;
+preserve the claim boundary that current formal and empirical work is not Omega
+validation.
+```
+
 ### Finite Channel / Partition Presentation Lean Smoke
 
 Implemented the exact channel recovery presentation:

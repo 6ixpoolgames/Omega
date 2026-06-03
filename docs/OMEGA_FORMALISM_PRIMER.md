@@ -132,8 +132,16 @@ completion.
 Lean root files:
 
 ```text
+formal/lean/OmegaCore.lean
 formal/lean/OmegaCore/DistTrans.lean
 formal/lean/OmegaCore/NormalLax.lean
+formal/lean/OmegaCore/Recurrent.lean
+formal/lean/OmegaCore/Completion.lean
+formal/lean/OmegaCore/Counterexamples.lean
+formal/lean/OmegaCore/MarginalJoint.lean
+formal/lean/OmegaCore/AdapterFailures.lean
+formal/lean/OmegaCore/Presentations/FiniteBoolean.lean
+formal/lean/OmegaCore/Presentations/FiniteChannel.lean
 ```
 
 Checked:

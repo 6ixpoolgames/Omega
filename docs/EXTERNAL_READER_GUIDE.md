@@ -1,7 +1,7 @@
 # External Reader Guide
 
-Status: onboarding guide for outside collaborators  
-Scope: current Future Field Atlas rebuild over the RFS-MB0 horizon-transport / transition-energy substrate lineage  
+Status: onboarding guide for outside collaborators
+Scope: current Omega Primitive Calculus / Future Field Atlas workspace
 Claim boundary: this repository does not claim Omega validation, agency detection, value detection, identity detection, life detection, candidate promotion, holdout readiness, or graph-channel causality.
 
 ## 0. What this repository is
@@ -87,7 +87,7 @@ Pair012, pair014, and pair026 were confirmed under targeted H128. The observable
 not reproduce the high-yield signature under `hamming_weight_or_nonzero_count`
 or `total_coordinate_mass`.
 
-The current live substrate program uses explicit **transition energy**:
+The historical substrate lineage used explicit **transition energy**:
 
 ```text
 E(s,t)
@@ -116,36 +116,51 @@ Positive results should be read as **instrument and substrate-characterization r
 
 ## 2. Current result in plain English
 
-The project has moved from static endpoint/co-occurrence probes toward directional horizon transport.
+The project now has a checked formal root and a bounded empirical instrument.
 
-The strongest current pattern is:
+Formal side:
 
 ```text
-locality-only substrates:
-  behave like a baseline
-
-smooth directional fields:
-  produce rerouting/reopening/differentiated response, but not aligned amplification in the tested grid
-
-preservation asymmetry:
-  carries aligned amplification under matched controls, but the latest sampler
-  and hard-top-m mechanism audits narrow the response to hard top-m pruning
-  geometry; the current live mechanism is fixed low-rank successor-core
-  boundary pressure, not generic lower out-degree
-
-combined asymmetry:
-  clean and rerouting-bearing, but not yet synergistic in the sparse tested grid
+Omega Primitive Calculus v0 has a Lean-checked support-level root skeleton.
+It also has finite counterexamples, adapter-failure examples, and two worked
+presentations: Boolean relation support and finite channel / partition
+recovery.
 ```
 
-The preservation-focused asymmetry-ladder and low-beta scaleups strengthened the preservation-asymmetry read. The cleanest current target is `symbol_histogram_distance`, because it produced aligned amplification, rerouting, reopening, weakening, and no baseline-missing rows. The subsequent MaxEnt and top-m geometry audits narrowed the mechanism: the tested stochastic relaxations stayed stable while deterministic top-m reproduced the response on the first design set. The hard-top-m mechanism branch then found a cleaner rank-boundary pattern: rank-prefix `m=3`, rank-subset `m=4` retaining ranks `1;2;3`, and rank-subset `m=5` retaining ranks `1;2;3` were response-bearing. Random deletion at matched effective degree stayed stable, so the current target is the shared low-rank successor boundary rather than plain capacity reduction.
+Empirical side:
 
-The current Future Field Atlas rebuild expresses that calibration pattern from
-raw topology and has moved into coupled future-field morphology. The latest
-retained result is not a broad scale expansion; it is a rank-order-boundary
-class expansion. It recommends a compact representative-control panel around
-pair005, pair012, pair014, and pair026 before broad H128 scale expansion, with
-product-selector, zero-penalty joint-selector, scalar 0.020, and
-shared-capacity v1 references retained as controls.
+```text
+Future Field Atlas measures finite reachable-frontier topology under declared
+operators and observables.
+```
+
+The strongest current empirical pattern is narrow:
+
+```text
+rank_order_boundary under symbol_histogram_distance
+```
+
+High-yield representatives:
+
+```text
+pair005
+pair012
+pair014
+pair026
+```
+
+Observed geometry:
+
+```text
+A and B marginal support are preserved;
+joint support is restricted relative to the product baseline;
+the effect persists in targeted H128 depth checks for pair012, pair014, and
+pair026;
+tested alternate observables did not reproduce the high-yield signature.
+```
+
+This is not an Omega result. It is a product-vs-coupled finite future-field
+geometry result under declared operators.
 
 ## 3. Core vocabulary
 
@@ -248,9 +263,12 @@ control-equivalent
 measurement-limited
 ```
 
-## 4. Current transition-energy ladder
+## 4. Historical transition-energy substrate context
 
-The current minimal substrate ladder is:
+The transition-energy ladder is important historical context for how the
+empirical instrument reached its current coupled Future Field Atlas form.
+
+Earlier substrate work used:
 
 ```text
 E0 locality only:
@@ -266,7 +284,7 @@ E3 combined asymmetry:
   E(s,t) = d(s,t) + alpha * (A(t)-A(s)) + beta * |I(t)-I(s)| + roughness
 ```
 
-The current evidence supports this provisional read:
+The historical read was:
 
 ```text
 E0:
@@ -276,11 +294,15 @@ E1:
   differentiated response / rerouting
 
 E2:
-  aligned amplification
+  preservation-asymmetry response in the tested substrate family
 
 E3:
-  clean but not yet tuned or synergistic
+  clean but not yet tuned or synergistic in the sparse tested grid
 ```
+
+This is no longer the public front-door claim. The current public-facing center
+is the Lean-checked root calculus plus Future Field Atlas as a finite
+reachable-future instrument.
 
 ## 5. Best first reading path
 
@@ -338,78 +360,64 @@ Goal: understand the failed and demoted branches that led to the current instrum
 The current empirical state is:
 
 ```text
-horizon transport:
-  mature enough for substrate-response characterization
+Future Field Atlas:
+  current empirical microscope
 
-matched marginal nulls:
-  mandatory and currently passing in the live branch
+formal spec identity:
+  required before result interpretation
 
-fixture contract:
-  required before response classes are interpreted
+artifact completeness and reconstruction audits:
+  mandatory gates
 
-locality-only:
-  baseline
+product baseline:
+  true product-equivalence reference for coupled scans
 
-directional asymmetry:
-  rerouting / differentiated response
+rank_order_boundary:
+  current high-yield coupled morphology operator under symbol_histogram_distance
 
-preservation asymmetry:
-  current loadbearing branch for aligned amplification, but mechanism-narrow
+high-yield representatives:
+  pair005, pair012, pair014, pair026
 
-symbol-composition preservation:
-  current cleanest target inside preservation asymmetry
+alternate observables:
+  hamming_weight_or_nonzero_count and total_coordinate_mass did not reproduce
+  the high-yield signature
 
-MaxEnt / stochastic relaxations:
-  stable in the latest audits; they did not recover the deterministic response
-
-combined asymmetry:
-  not yet abandoned; needs better parameterization after preservation is resolved
+claim boundary:
+  no Omega, value, valuerhood, identity, support/capture/erasure, or
+  compatibility detection
 ```
 
 ## 7. Current next step
 
-The immediate next empirical task is not holdout and not candidate promotion.
+The immediate next task is not holdout and not candidate promotion.
 
 It is:
 
 ```text
-coupled Future Field Atlas operator resolution
+bridge discipline
 ```
 
-The current atlas-side read is:
+That means:
 
 ```text
-product selector:
-  true product-equivalence reference
+formal side:
+  add finite transition-system / adapter sketches only when the root-law
+  obligations are explicit
 
-zero-penalty joint rank-prefix:
-  already a coupled constraint, not neutral product behavior
+empirical side:
+  keep Future Field Atlas outputs reconstructible, operator-native, and
+  claim-bounded
 
-scalar rank-boundary mismatch:
-  near-zero effects are visible but saturate by 0.020 in the tested H64 design
-
-pair005:
-  heavy-pair / critical-pair clue under scalar mismatch, with preserved marginals
-
-shared_capacity v1:
-  operational but not promising as-is; it prunes marginals and becomes dense over
-  surviving marginal support
-
-rank_order_boundary:
-  operational as a symbol_histogram_distance class signal; pair005, pair012,
-  pair014, and pair026 are high-residual / joint-restrictive while preserving
-  A/B marginals; targeted H128 confirms pair012, pair014, and pair026
-
-observable smokes:
-  hamming_weight_or_nonzero_count and total_coordinate_mass did not reproduce
-  the high-yield signature
+theory side:
+  connect admissible observables, identity-decay nulls, maintenance gaps, and
+  compatibility audits without importing valuer semantics too early
 ```
 
 The focus should be:
 
 ```text
-do not scale shared_capacity v1;
-run rank_order_boundary representative controls before broad H128;
+make the bridge from formal presentation to empirical adapter explicit;
+avoid semantic promotion;
 continue observable design before stronger substrate-general claims.
 ```
 
