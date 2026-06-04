@@ -183,11 +183,17 @@ machinery:
 
 ```text
 OmegaAdapters/FiniteBoolean.lean
+OmegaAdapters/FiniteBooleanNative.lean
 OmegaAdapters/FiniteChannel.lean
 OmegaAdapters/ProbabilisticChannel.lean
 OmegaAdapters/ProbabilisticChannelPolicy.lean
 OmegaAdapters/Audit/AdapterFailures.lean
 ```
+
+`OmegaAdapters/FiniteBooleanNative.lean` rebuilds the finite Boolean support
+presentation over Alpha-native event frames and native transport. The stable
+`OmegaAdapters/FiniteBoolean.lean` adapter path now imports that native
+implementation.
 
 `OmegaProper` preserves downstream candidate-theory scaffolds:
 
@@ -392,8 +398,8 @@ These examples show that theorem transfer requires actual satisfaction of the
 root laws. Invalid or extended adapters must report which laws fail and which
 theorems no longer apply.
 
-`OmegaCore/Presentations/FiniteBoolean.lean` defines the first worked
-presentation layer:
+`OmegaAdapters/FiniteBooleanNative.lean` defines the native finite Boolean
+adapter presentation:
 
 ```text
 Event alpha:

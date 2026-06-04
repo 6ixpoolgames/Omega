@@ -240,6 +240,10 @@ rebuilds finite-chain recoverability over native recoverability models.
 `ProtoOmega.Separations.MarginalJointNative` is the fourth native conversion:
 it rebuilds the finite marginal/joint separation over native transport.
 
+`OmegaAdapters.FiniteBooleanNative` is the first native adapter conversion: it
+rebuilds the finite Boolean relation-support presentation over Alpha-native
+event frames and native transport.
+
 Current probabilistic enrichment note:
 
 ```text

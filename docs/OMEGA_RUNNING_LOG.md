@@ -9,6 +9,22 @@ patch notes at the top.
 
 ## 2026-06-05
 
+### OmegaAdapters Native Finite Boolean Adapter
+
+Converted the finite Boolean support presentation from a legacy facade into an
+Alpha-native adapter implementation:
+
+```text
+formal/lean/OmegaAdapters/FiniteBooleanNative.lean
+formal/lean/OmegaAdapters/FiniteBoolean.lean
+docs/research_notes/omega_theory/omega_adapters_finite_boolean_native_v0.md
+```
+
+The native adapter rebuilds event predicates, support-inclusion order,
+relation-induced native transport, identity transport equivalence,
+composition-laxity, and changed-carrier recovery over
+`ProtoOmega.Transport.Native`.
+
 ### ProtoOmega Native Marginal/Joint Separation
 
 Rebuilt the finite marginal/joint separation over native transport:

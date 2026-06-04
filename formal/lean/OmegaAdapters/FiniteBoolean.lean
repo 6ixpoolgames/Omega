@@ -1,8 +1,11 @@
-import OmegaCore.Presentations.FiniteBoolean
+import OmegaAdapters.FiniteBooleanNative
 
 /-!
 OmegaAdapters.FiniteBoolean
 
-Finite Boolean support presentation facade over the checked legacy
-`OmegaCore.Presentations.FiniteBoolean` module.
+Finite Boolean support presentation adapter entry point.
+
+This file now imports the Alpha-native
+`OmegaAdapters.FiniteBooleanNative` implementation. It remains as the stable
+adapter-facing module path during migration.
 -/

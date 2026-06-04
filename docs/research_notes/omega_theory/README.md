@@ -73,6 +73,7 @@ ProtoOmega/Recoverability/Recurrent.lean
 ProtoOmega/Separations/MarginalJointNative.lean
 ProtoOmega/Separations/MarginalJoint.lean
 OmegaAdapters/FiniteBoolean.lean
+OmegaAdapters/FiniteBooleanNative.lean
 OmegaAdapters/FiniteChannel.lean
 OmegaAdapters/ProbabilisticChannel.lean
 OmegaAdapters/ProbabilisticChannelPolicy.lean
@@ -113,8 +114,9 @@ finite distinction-transport counterexample for marginal-like non-erasure not
 implying strictly joint non-erasure;
 adapter-failure examples showing theorem transfer failure without closure or
 laxity laws;
-Boolean relation support presentation with relation-induced transports,
-identity relation, relational composition, and changed-carrier recovery;
+Alpha-native Boolean relation support presentation with relation-induced
+transports, identity relation, relational composition, and changed-carrier
+recovery;
 finite channel / partition presentation with exact decoder recovery, channel
 composition, changed-carrier recovery, and constant-channel erasure;
 probabilistic channel presentation with exact/probabilistic separation,

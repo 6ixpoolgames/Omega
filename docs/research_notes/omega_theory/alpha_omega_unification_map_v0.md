@@ -115,7 +115,7 @@ them.
 | `OmegaCore/Recurrent.lean` | ProtoOmega | `ProtoOmega/Recoverability/RecurrentNative.lean`; `ProtoOmega/Recoverability/RecurrentNativeExamples.lean`; `ProtoOmega/Recoverability/Recurrent.lean` | Alpha-native finite-chain recoverability plus temporary legacy facade | derived recoverability dynamics | native replacement |
 | `OmegaCore/MarginalJoint.lean` | ProtoOmega | `ProtoOmega/Separations/MarginalJointNative.lean`; `ProtoOmega/Separations/MarginalJoint.lean` | Alpha-native marginal-vs-joint distinction-transport separation plus temporary legacy facade | separation theorem, not semantic detection | native replacement |
 | `OmegaCore/AdapterFailures.lean` | OmegaAdapters | `OmegaAdapters/Audit/AdapterFailures.lean` | adapter theorem-transfer failure examples | adapter audit boundary | facade import |
-| `OmegaCore/Presentations/FiniteBoolean.lean` | OmegaAdapters | `OmegaAdapters/FiniteBoolean.lean` | finite Boolean support presentation | substrate/presentation-specific | facade import |
+| `OmegaCore/Presentations/FiniteBoolean.lean` | OmegaAdapters | `OmegaAdapters/FiniteBooleanNative.lean`; `OmegaAdapters/FiniteBoolean.lean` | Alpha-native finite Boolean support presentation plus stable adapter entry point | substrate/presentation-specific | native replacement |
 | `OmegaCore/Presentations/FiniteChannel.lean` | OmegaAdapters | `OmegaAdapters/FiniteChannel.lean` | finite channel / partition presentation | substrate/presentation-specific | facade import |
 | `OmegaCore/Presentations/ProbabilisticChannel.lean` | OmegaAdapters | `OmegaAdapters/ProbabilisticChannel.lean` | finite stochastic channel enrichment | measurement/presentation layer | facade import |
 | `OmegaCore/Presentations/ProbabilisticChannelPolicy.lean` | OmegaAdapters | `OmegaAdapters/ProbabilisticChannelPolicy.lean` | fixed-declared vs Bayes-best policy separation | policy separation example | facade import |
@@ -183,6 +183,11 @@ through the chain composite.
 `ProtoOmega.Separations.MarginalJointNative` is the fourth Alpha-native
 replacement: it rebuilds the finite transport counterexample showing that
 marginal coverage need not imply strictly joint coverage.
+
+`OmegaAdapters.FiniteBooleanNative` is the first Alpha-native adapter
+replacement: it rebuilds the Boolean relation support presentation over
+Alpha-native event frames and native transport, including identity,
+composition-laxity, and changed-carrier recovery.
 
 Physical namespace migration for the remaining modules is deferred to later
 passes, after the layer map is stable.
