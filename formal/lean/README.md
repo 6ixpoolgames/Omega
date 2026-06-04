@@ -151,6 +151,8 @@ ProtoOmega/Recoverability/Native.lean
 ProtoOmega/Recoverability/LegacyBridge.lean
 ProtoOmega/Recoverability/NativeExamples.lean
 ProtoOmega/Recoverability/NormalLax.lean
+ProtoOmega/Recoverability/RecurrentNative.lean
+ProtoOmega/Recoverability/RecurrentNativeExamples.lean
 ProtoOmega/Recoverability/Recurrent.lean
 ProtoOmega/Separations/MarginalJoint.lean
 ```
@@ -167,6 +169,10 @@ requirement-relative `NonErasing`, identity recoverability, source weakening,
 target strengthening, compositional recoverability, and non-erasure
 monotonicity. It does not include the old joint-presentation or compatibility
 scaffolds.
+
+`ProtoOmega/Recoverability/RecurrentNative.lean` rebuilds finite-chain
+recoverability over `NativeModel`, proving that stepwise recovery along a
+declared finite chain transfers to recovery through the chain composite.
 
 `OmegaAdapters` classifies finite presentation and theorem-transfer audit
 machinery:

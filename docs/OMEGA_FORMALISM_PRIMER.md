@@ -235,6 +235,8 @@ and provides a one-way bridge back to legacy `OmegaCore.DistTrans`.
 `ProtoOmega.Recoverability.Native` is the second native conversion: it rebuilds
 recoverability and requirement-relative non-erasure over native transport while
 leaving joint-presentation and compatibility scaffolds downstream.
+`ProtoOmega.Recoverability.RecurrentNative` is the third native conversion: it
+rebuilds finite-chain recoverability over native recoverability models.
 
 Current probabilistic enrichment note:
 

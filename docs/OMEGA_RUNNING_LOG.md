@@ -9,6 +9,29 @@ patch notes at the top.
 
 ## 2026-06-05
 
+### ProtoOmega Native Recurrent Recoverability Conversion
+
+Rebuilt finite-chain recurrent recoverability over native recoverability models:
+
+```text
+formal/lean/ProtoOmega/Recoverability/RecurrentNative.lean
+formal/lean/ProtoOmega/Recoverability/RecurrentNativeExamples.lean
+docs/research_notes/omega_theory/proto_omega_recurrent_native_v0.md
+```
+
+Read:
+
+```text
+Chain:
+  finite composable chain of declared unfoldings
+
+RecoverChain:
+  stepwise recovery along a chain
+
+recoverChain_sound:
+  stepwise recovery transfers to recovery through the chain composite
+```
+
 ### ProtoOmega Native Recoverability Conversion
 
 Rebuilt the recoverability subset of legacy `OmegaCore.NormalLax` over native

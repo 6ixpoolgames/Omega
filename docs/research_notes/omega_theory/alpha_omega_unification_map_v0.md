@@ -112,7 +112,7 @@ them.
 |---|---|---|---|---|---|
 | `OmegaCore/DistTrans.lean` | ProtoOmega | `ProtoOmega/Transport/Native.lean`; `ProtoOmega/Transport/LegacyBridge.lean`; `ProtoOmega/Transport/Preorder.lean` | Alpha-native distinction transport plus legacy bridge; temporary legacy facade | derived transport presentation | native replacement plus one-way bridge |
 | `OmegaCore/NormalLax.lean` | ProtoOmega / OmegaProper | `ProtoOmega/Recoverability/Native.lean`; `ProtoOmega/Recoverability/LegacyBridge.lean`; `ProtoOmega/Recoverability/NormalLax.lean`; `OmegaProper/Compatibility/JointPresentation.lean` | Alpha-native recoverability plus legacy bridge; temporary legacy facade; downstream joint-presentation scaffold | derived recoverability; downstream compatibility scaffold | native replacement plus one-way bridge for recoverability subset |
-| `OmegaCore/Recurrent.lean` | ProtoOmega | `ProtoOmega/Recoverability/Recurrent.lean` | finite-chain recurrent recoverability | derived recoverability dynamics | facade import |
+| `OmegaCore/Recurrent.lean` | ProtoOmega | `ProtoOmega/Recoverability/RecurrentNative.lean`; `ProtoOmega/Recoverability/RecurrentNativeExamples.lean`; `ProtoOmega/Recoverability/Recurrent.lean` | Alpha-native finite-chain recoverability plus temporary legacy facade | derived recoverability dynamics | native replacement |
 | `OmegaCore/MarginalJoint.lean` | ProtoOmega | `ProtoOmega/Separations/MarginalJoint.lean` | marginal-vs-joint distinction-transport separation | separation theorem, not semantic detection | facade import |
 | `OmegaCore/AdapterFailures.lean` | OmegaAdapters | `OmegaAdapters/Audit/AdapterFailures.lean` | adapter theorem-transfer failure examples | adapter audit boundary | facade import |
 | `OmegaCore/Presentations/FiniteBoolean.lean` | OmegaAdapters | `OmegaAdapters/FiniteBoolean.lean` | finite Boolean support presentation | substrate/presentation-specific | facade import |
@@ -174,6 +174,11 @@ transport, including `Recovers`, requirement-relative `NonErasing`, identity
 recoverability, weakening/strengthening, compositional recoverability, and
 non-erasure monotonicity. It excludes `ProcessBundle`, `JointPresentation`, and
 `Compatible`.
+
+`ProtoOmega.Recoverability.RecurrentNative` is the third Alpha-native
+replacement: it rebuilds finite-chain recoverability over `NativeModel`, proving
+that stepwise recovery along a declared finite chain transfers to recovery
+through the chain composite.
 
 Physical namespace migration for the remaining modules is deferred to later
 passes, after the layer map is stable.

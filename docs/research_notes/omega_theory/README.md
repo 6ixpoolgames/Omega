@@ -67,6 +67,8 @@ ProtoOmega/Recoverability/Native.lean
 ProtoOmega/Recoverability/LegacyBridge.lean
 ProtoOmega/Recoverability/NativeExamples.lean
 ProtoOmega/Recoverability/NormalLax.lean
+ProtoOmega/Recoverability/RecurrentNative.lean
+ProtoOmega/Recoverability/RecurrentNativeExamples.lean
 ProtoOmega/Recoverability/Recurrent.lean
 ProtoOmega/Separations/MarginalJoint.lean
 OmegaAdapters/FiniteBoolean.lean
