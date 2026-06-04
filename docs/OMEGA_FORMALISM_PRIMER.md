@@ -232,6 +232,9 @@ now classified by role rather than treated as the active conceptual root.
 `ProtoOmega.Transport.Native` is the first real native conversion: it imports
 `AlphaCore`, adds presentation-level distinction order over Alpha distinctions,
 and provides a one-way bridge back to legacy `OmegaCore.DistTrans`.
+`ProtoOmega.Recoverability.Native` is the second native conversion: it rebuilds
+recoverability and requirement-relative non-erasure over native transport while
+leaving joint-presentation and compatibility scaffolds downstream.
 
 Current probabilistic enrichment note:
 

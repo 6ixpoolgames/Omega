@@ -63,6 +63,9 @@ ProtoOmega/Transport/Native.lean
 ProtoOmega/Transport/LegacyBridge.lean
 ProtoOmega/Transport/NativeExamples.lean
 ProtoOmega/Transport/Preorder.lean
+ProtoOmega/Recoverability/Native.lean
+ProtoOmega/Recoverability/LegacyBridge.lean
+ProtoOmega/Recoverability/NativeExamples.lean
 ProtoOmega/Recoverability/NormalLax.lean
 ProtoOmega/Recoverability/Recurrent.lean
 ProtoOmega/Separations/MarginalJoint.lean

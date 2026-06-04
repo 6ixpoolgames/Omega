@@ -7,6 +7,42 @@ run.
 Entries are organized in rough reverse chronological order, with the most recent
 patch notes at the top.
 
+## 2026-06-05
+
+### ProtoOmega Native Recoverability Conversion
+
+Rebuilt the recoverability subset of legacy `OmegaCore.NormalLax` over native
+transport:
+
+```text
+formal/lean/ProtoOmega/Recoverability/Native.lean
+formal/lean/ProtoOmega/Recoverability/LegacyBridge.lean
+formal/lean/ProtoOmega/Recoverability/NativeExamples.lean
+docs/research_notes/omega_theory/proto_omega_recoverability_native_v0.md
+```
+
+Read:
+
+```text
+Recovers:
+  native transport along a declared unfolding
+
+NonErasing:
+  requirement-relative transport coverage
+
+NativeModel:
+  context category, Alpha frame per context, distinction order per frame,
+  native transport per unfolding, identity normality, and lax composition
+```
+
+Excluded from this native pass:
+
+```text
+ProcessBundle
+JointPresentation
+Compatible
+```
+
 ## 2026-06-04
 
 ### ProtoOmega Native Transport Conversion
