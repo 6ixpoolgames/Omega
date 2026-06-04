@@ -9,6 +9,33 @@ patch notes at the top.
 
 ## 2026-06-04
 
+### ProtoOmega Native Transport Conversion
+
+Replaced the first legacy facade with an Alpha-native ProtoOmega module:
+
+```text
+formal/lean/ProtoOmega/Transport/Native.lean
+formal/lean/ProtoOmega/Transport/LegacyBridge.lean
+formal/lean/ProtoOmega/Transport/NativeExamples.lean
+```
+
+Read:
+
+```text
+DistOrder:
+  presentation-level order over Alpha distinctions
+
+NativeTransport:
+  closed transport relation between ordered Alpha distinction presentations
+
+LegacyBridge:
+  one-way translation into the old OmegaCore.DistTrans object
+```
+
+This keeps AlphaCore primitive and clean. The old `Preorder.lean` facade remains
+temporarily for compatibility, but `Native.lean` is the active Alpha-native
+transport target.
+
 ### AlphaOmega Facade Unification Map
 
 Added the first Alpha/Omega unification facade pass:

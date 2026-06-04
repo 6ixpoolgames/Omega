@@ -40,6 +40,9 @@ OLD_OMEGA_CORE_FILES = [
     "OmegaCore/Presentations/ProbabilisticChannelPolicy.lean",
 ]
 
+TRANSPORT_NATIVE = LEAN / "ProtoOmega" / "Transport" / "Native.lean"
+TRANSPORT_LEGACY_BRIDGE = LEAN / "ProtoOmega" / "Transport" / "LegacyBridge.lean"
+
 
 def _lean_files_under(path: Path) -> list[Path]:
     return sorted(path.rglob("*.lean"))
@@ -53,6 +56,27 @@ def test_alpha_core_imports_no_downstream_layers() -> None:
         for module in DOWNSTREAM_MODULES:
             if re.search(rf"^\s*import\s+{re.escape(module)}(\.|\s|$)", text, re.MULTILINE):
                 offenders.append(f"{path.relative_to(ROOT)} imports {module}")
+    assert offenders == []
+
+
+def test_protoomega_transport_native_imports_alpha_core_not_omega_core() -> None:
+    text = TRANSPORT_NATIVE.read_text(encoding="utf-8")
+    assert re.search(r"^\s*import\s+AlphaCore(\.|\s|$)", text, re.MULTILINE)
+    assert not re.search(r"^\s*import\s+OmegaCore(\.|\s|$)", text, re.MULTILINE)
+
+
+def test_only_legacy_bridge_imports_omega_core_in_new_transport_files() -> None:
+    offenders: list[str] = []
+    new_transport_files = [
+        TRANSPORT_NATIVE,
+        TRANSPORT_LEGACY_BRIDGE,
+        LEAN / "ProtoOmega" / "Transport" / "NativeExamples.lean",
+    ]
+    for path in new_transport_files:
+        text = path.read_text(encoding="utf-8")
+        if re.search(r"^\s*import\s+OmegaCore(\.|\s|$)", text, re.MULTILINE):
+            if path != TRANSPORT_LEGACY_BRIDGE:
+                offenders.append(str(path.relative_to(ROOT)))
     assert offenders == []
 
 

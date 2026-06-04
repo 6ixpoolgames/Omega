@@ -193,7 +193,8 @@ Layer roles:
 
 ```text
 ProtoOmega:
-  distinction transport, recoverability, recurrence, marginal/joint separation
+  Alpha-native distinction transport, recoverability, recurrence,
+  marginal/joint separation
 
 OmegaAdapters:
   finite Boolean, finite channel, probabilistic channel, and adapter audit
@@ -228,6 +229,9 @@ finite probabilistic channel enrichment.
 
 The old `OmegaCore` files remain buildable during this migration, but they are
 now classified by role rather than treated as the active conceptual root.
+`ProtoOmega.Transport.Native` is the first real native conversion: it imports
+`AlphaCore`, adds presentation-level distinction order over Alpha distinctions,
+and provides a one-way bridge back to legacy `OmegaCore.DistTrans`.
 
 Current probabilistic enrichment note:
 

@@ -59,6 +59,9 @@ AlphaOmega.lean
 AlphaCore/Primitive.lean
 AlphaCore/Reachability.lean
 AlphaCore/Examples.lean
+ProtoOmega/Transport/Native.lean
+ProtoOmega/Transport/LegacyBridge.lean
+ProtoOmega/Transport/NativeExamples.lean
 ProtoOmega/Transport/Preorder.lean
 ProtoOmega/Recoverability/NormalLax.lean
 ProtoOmega/Recoverability/Recurrent.lean

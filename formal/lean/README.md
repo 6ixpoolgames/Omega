@@ -140,14 +140,23 @@ compatibility, valuerhood, viability, completion, or empirical semantics.
 ### AlphaOmega Facade Layers
 
 `ProtoOmega` currently re-exports checked legacy modules under their new
-derived role:
+derived role, except for the first native transport conversion:
 
 ```text
+ProtoOmega/Transport/Native.lean
+ProtoOmega/Transport/LegacyBridge.lean
+ProtoOmega/Transport/NativeExamples.lean
 ProtoOmega/Transport/Preorder.lean
 ProtoOmega/Recoverability/NormalLax.lean
 ProtoOmega/Recoverability/Recurrent.lean
 ProtoOmega/Separations/MarginalJoint.lean
 ```
+
+`ProtoOmega/Transport/Native.lean` imports `AlphaCore`, not `OmegaCore`. It
+defines `DistOrder` as presentation structure over Alpha distinctions and
+`NativeTransport` as a source-weakening / target-strengthening closed transport
+relation. `LegacyBridge.lean` is the explicit one-way bridge back to the old
+`OmegaCore.DistTrans` object.
 
 `OmegaAdapters` classifies finite presentation and theorem-transfer audit
 machinery:

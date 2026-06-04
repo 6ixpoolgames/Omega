@@ -110,7 +110,7 @@ them.
 
 | Old file | New layer | New target path | Role | Claim boundary | Migration status |
 |---|---|---|---|---|---|
-| `OmegaCore/DistTrans.lean` | ProtoOmega | `ProtoOmega/Transport/Preorder.lean` | preorder-indexed distinction transport | derived transport presentation | facade import |
+| `OmegaCore/DistTrans.lean` | ProtoOmega | `ProtoOmega/Transport/Native.lean`; `ProtoOmega/Transport/LegacyBridge.lean`; `ProtoOmega/Transport/Preorder.lean` | Alpha-native distinction transport plus legacy bridge; temporary legacy facade | derived transport presentation | native replacement plus one-way bridge |
 | `OmegaCore/NormalLax.lean` | ProtoOmega / OmegaProper | `ProtoOmega/Recoverability/NormalLax.lean`; `OmegaProper/Compatibility/JointPresentation.lean` | normal-lax recoverability plus joint-presentation scaffold | derived recoverability; downstream compatibility scaffold | facade imports |
 | `OmegaCore/Recurrent.lean` | ProtoOmega | `ProtoOmega/Recoverability/Recurrent.lean` | finite-chain recurrent recoverability | derived recoverability dynamics | facade import |
 | `OmegaCore/MarginalJoint.lean` | ProtoOmega | `ProtoOmega/Separations/MarginalJoint.lean` | marginal-vs-joint distinction-transport separation | separation theorem, not semantic detection | facade import |
@@ -158,12 +158,18 @@ The old OmegaCore namespace remains buildable during the facade migration.
 
 ## Current Migration Status
 
-This is Pass 1: facade/re-export migration.
+This is Pass 1 plus the first native conversion.
 
-The old checked theorem content remains in `OmegaCore`. The new modules classify
-that content into the Alpha/Omega architecture and build as separate Lean
-libraries. Physical namespace migration is deferred to a later pass, after the
-layer map is stable.
+Most old checked theorem content remains in `OmegaCore`. The new modules
+classify that content into the Alpha/Omega architecture and build as separate
+Lean libraries. `ProtoOmega.Transport.Native` is the first Alpha-native
+replacement: it imports `AlphaCore`, defines presentation-level distinction
+orders over Alpha distinctions, defines closed transports, proves identity and
+composition laws, and bridges one-way into legacy `OmegaCore.DistTrans` through
+`ProtoOmega.Transport.LegacyBridge`.
+
+Physical namespace migration for the remaining modules is deferred to later
+passes, after the layer map is stable.
 
 ## Validation Targets
 
