@@ -42,10 +42,11 @@ Current checkpoint:
 
 ```text
 Formal arm:
-  Omega Primitive Calculus v0 is Lean-backed at the support level. Current
-  checked presentations include Boolean relation support, finite channel /
-  partition recovery, and probabilistic channel recovery with finite cascade
-  error bounds.
+  AlphaCore is now the standalone primitive floor over relation, distinction,
+  and asymmetry. OmegaCore remains the older Lean-backed support/recoverability
+  and presentation stack. Current checked OmegaCore presentations include
+  Boolean relation support, finite channel / partition recovery, and
+  probabilistic channel recovery with finite cascade error bounds.
 
 Empirical arm:
   Future Field Atlas is the current reachable-future microscope. The stochastic
@@ -317,6 +318,7 @@ as the canonical internal definition anchor.
 5. Read the current status anchors:
    - `formal/lean/README.md`
    - `docs/research_notes/omega_theory/README.md`
+   - `docs/research_notes/omega_theory/alpha_primitive_core_v0.md`
    - `docs/research_notes/omega_theory/omega_primitive_calculus_v0_lean_root_skeleton.md`
    - `docs/research_notes/omega_theory/probabilistic_channel_presentation_v0.md`
    - `docs/PUBLIC_RESULTS_INDEX.md`
@@ -426,6 +428,7 @@ Use the portable Lean toolchain from the repository root:
 ```powershell
 $env:PATH = (Resolve-Path '.tools\lean-4.30.0\lean-4.30.0-windows\bin').Path + ';' + $env:PATH
 cd formal\lean
+lake build AlphaCore
 lake build OmegaCore
 ```
 
@@ -437,15 +440,18 @@ mathlib4 v4.30.0
 
 The Windows cache fetch may be unreliable locally. If `lake exe cache get`
 fails, continue with source builds as long as `lake build OmegaCore` succeeds.
+For Alpha-specific edits, `lake build AlphaCore` must also pass.
 
 Before promoting a formalism update, verify:
 
 ```powershell
+lake build AlphaCore
 lake build OmegaCore
-Select-String -Path formal\lean\OmegaCore\*.lean -Pattern 'sorry|admit|axiom'
+Select-String -Path formal\lean\AlphaCore\*.lean,formal\lean\OmegaCore\*.lean,formal\lean\OmegaCore\Presentations\*.lean -Pattern 'sorry|admit|axiom'
 ```
 
-Current checked Lean scope includes support-level distinction transport,
+Current checked Lean scope includes standalone Alpha primitives, Alpha
+reachability/separation examples, support-level distinction transport,
 normal-lax recoverability/non-erasure consequences, finite-chain recurrent
 recoverability, and finite maximal completion existence including the
 Finset/Fintype specialization. The current counterexample layer also checks

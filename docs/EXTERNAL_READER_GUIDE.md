@@ -1,7 +1,7 @@
 # External Reader Guide
 
 Status: onboarding guide for outside collaborators
-Scope: current Omega Primitive Calculus / Future Field Atlas workspace
+Scope: current Alpha primitive floor, Omega support stack, and Future Field Atlas workspace
 Claim boundary: this repository does not claim Omega validation, agency detection, value detection, identity detection, life detection, candidate promotion, holdout readiness, or graph-channel causality.
 
 ## 0. What this repository is
@@ -13,6 +13,7 @@ current formal stack, read:
 
 ```text
 docs/OMEGA_FORMALISM_PRIMER.md
+docs/research_notes/omega_theory/alpha_primitive_core_v0.md
 docs/research_notes/omega_theory/omega_primitive_calculus_v0_lean_root_skeleton.md
 ```
 
@@ -20,13 +21,13 @@ This guide is the longer collaborator tour: it explains how the formal ambition
 connects to the current Future Field Atlas empirical branch and what the current
 results do and do not mean.
 
-The current root formalism is **Omega Primitive Calculus v0**:
+The current primitive floor is **Alpha Primitive Core v0**:
 
 ```text
 relation -> distinction -> asymmetry
 ```
 
-Lean currently checks the support-level skeleton:
+Lean separately checks the older OmegaCore support/recoverability skeleton:
 
 ```text
 A : C -> DistTrans
@@ -36,6 +37,7 @@ The checked Lean layer now includes:
 
 ```text
 DistTrans closure and relation-level category laws;
+Alpha primitive frame and finite separation examples;
 recoverability weakening / strengthening;
 compositional recoverability from laxity;
 non-erasure monotonicity;

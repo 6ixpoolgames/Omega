@@ -8,3 +8,6 @@ require mathlib from git
 
 lean_lib OmegaCore where
   roots := #[`OmegaCore]
+
+lean_lib AlphaCore where
+  roots := #[`AlphaCore]

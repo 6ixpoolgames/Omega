@@ -24,9 +24,14 @@ The project now has two active arms.
 
 ### 1. Formal Arm
 
-The current root formalism is **Omega Primitive Calculus v0**.
+The current primitive floor is **Alpha Primitive Core v0**: relation,
+distinction, and asymmetry. Alpha is separate from Omega and is not nested under
+OmegaCore.
 
-Compact Lean target:
+OmegaCore remains the checked support/recoverability stack that can be ingested
+or refactored after Alpha is established.
+
+Current OmegaCore compact Lean target:
 
 ```text
 A : C -> DistTrans
@@ -46,6 +51,8 @@ DistTrans:
 The Lean sandbox currently checks:
 
 ```text
+Alpha primitive frame over relation, distinction, and asymmetry;
+Alpha reachability and finite separation examples;
 root transport laws;
 recoverability weakening / strengthening;
 compositional recoverability;
@@ -65,6 +72,10 @@ Bayes-best policy separation.
 Key files:
 
 ```text
+formal/lean/AlphaCore.lean
+formal/lean/AlphaCore/Primitive.lean
+formal/lean/AlphaCore/Reachability.lean
+formal/lean/AlphaCore/Examples.lean
 formal/lean/OmegaCore.lean
 formal/lean/OmegaCore/DistTrans.lean
 formal/lean/OmegaCore/NormalLax.lean
@@ -73,6 +84,7 @@ formal/lean/OmegaCore/Presentations/FiniteChannel.lean
 formal/lean/OmegaCore/Presentations/ProbabilisticChannel.lean
 formal/lean/OmegaCore/Presentations/ProbabilisticChannelPolicy.lean
 docs/research_notes/omega_theory/omega_primitive_calculus_v0_lean_root_skeleton.md
+docs/research_notes/omega_theory/alpha_primitive_core_v0.md
 docs/research_notes/omega_theory/probabilistic_channel_presentation_v0.md
 ```
 

@@ -9,6 +9,46 @@ patch notes at the top.
 
 ## 2026-06-04
 
+### Alpha Primitive Core Lean Split
+
+Added a standalone `AlphaCore` Lean library:
+
+```text
+formal/lean/AlphaCore.lean
+formal/lean/AlphaCore/Primitive.lean
+formal/lean/AlphaCore/Reachability.lean
+formal/lean/AlphaCore/Examples.lean
+docs/research_notes/omega_theory/alpha_primitive_core_v0.md
+```
+
+Read:
+
+```text
+Alpha is now the primitive floor: relation, distinction, asymmetry.
+AlphaCore is separate from OmegaCore.
+OmegaCore remains the older support/recoverability and presentation stack.
+Unification is deferred until Alpha is established.
+```
+
+Lean checked:
+
+```text
+asymmetry implies relation
+asymmetry implies distinction
+asymmetry separates its endpoints
+asymmetry instantiates the three Alpha roles in the minimal frame
+reachability transitivity
+distinction without asymmetry
+local asymmetry without global reach irreversibility
+local nonreciprocity without global reach irreversibility
+```
+
+Validation:
+
+```text
+lake build AlphaCore: passed
+```
+
 ### Thresholded Probabilistic Non-Erasure Package
 
 Added a thresholded probabilistic non-erasure compiler over retained stochastic

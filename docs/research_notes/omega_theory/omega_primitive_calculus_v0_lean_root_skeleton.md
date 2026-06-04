@@ -1,8 +1,22 @@
 # Omega Primitive Calculus v0 Lean Root Skeleton
 
-Status: Lean-checked support-level root skeleton
+Status: Lean-checked support-level recovery skeleton; superseded as primitive floor by AlphaCore
 Date: 2026-06-03
 Claim boundary: formal skeleton only; not empirical validation, not valuer detection, not Omega validation, not ethical completion
+
+## Current Position
+
+As of 2026-06-04, `AlphaCore` is the standalone primitive floor over relation,
+distinction, and asymmetry:
+
+```text
+docs/research_notes/omega_theory/alpha_primitive_core_v0.md
+formal/lean/AlphaCore.lean
+```
+
+The `OmegaCore` material in this note remains checked and useful, but should now
+be read as the older support/recoverability stack that may later be ingested
+into, or translated through, Alpha. It is not Alpha's parent namespace.
 
 ## Purpose
 
