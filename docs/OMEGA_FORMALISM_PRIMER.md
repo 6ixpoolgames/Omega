@@ -244,6 +244,10 @@ it rebuilds the finite marginal/joint separation over native transport.
 rebuilds the finite Boolean relation-support presentation over Alpha-native
 event frames and native transport.
 
+`OmegaAdapters.FiniteChannelNative` is the second native adapter conversion: it
+rebuilds exact support-channel recovery over Alpha-native observable
+distinctions and native transport.
+
 Current probabilistic enrichment note:
 
 ```text

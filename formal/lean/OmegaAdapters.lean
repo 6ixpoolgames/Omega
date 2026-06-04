@@ -2,6 +2,7 @@ import OmegaAdapters.Audit.AdapterFailures
 import OmegaAdapters.FiniteBoolean
 import OmegaAdapters.FiniteBooleanNative
 import OmegaAdapters.FiniteChannel
+import OmegaAdapters.FiniteChannelNative
 import OmegaAdapters.ProbabilisticChannel
 import OmegaAdapters.ProbabilisticChannelPolicy
 

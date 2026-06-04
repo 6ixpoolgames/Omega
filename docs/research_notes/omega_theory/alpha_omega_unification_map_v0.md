@@ -116,7 +116,7 @@ them.
 | `OmegaCore/MarginalJoint.lean` | ProtoOmega | `ProtoOmega/Separations/MarginalJointNative.lean`; `ProtoOmega/Separations/MarginalJoint.lean` | Alpha-native marginal-vs-joint distinction-transport separation plus temporary legacy facade | separation theorem, not semantic detection | native replacement |
 | `OmegaCore/AdapterFailures.lean` | OmegaAdapters | `OmegaAdapters/Audit/AdapterFailures.lean` | adapter theorem-transfer failure examples | adapter audit boundary | facade import |
 | `OmegaCore/Presentations/FiniteBoolean.lean` | OmegaAdapters | `OmegaAdapters/FiniteBooleanNative.lean`; `OmegaAdapters/FiniteBoolean.lean` | Alpha-native finite Boolean support presentation plus stable adapter entry point | substrate/presentation-specific | native replacement |
-| `OmegaCore/Presentations/FiniteChannel.lean` | OmegaAdapters | `OmegaAdapters/FiniteChannel.lean` | finite channel / partition presentation | substrate/presentation-specific | facade import |
+| `OmegaCore/Presentations/FiniteChannel.lean` | OmegaAdapters | `OmegaAdapters/FiniteChannelNative.lean`; `OmegaAdapters/FiniteChannel.lean` | Alpha-native finite channel / observable-partition presentation plus stable adapter entry point | substrate/presentation-specific | native replacement |
 | `OmegaCore/Presentations/ProbabilisticChannel.lean` | OmegaAdapters | `OmegaAdapters/ProbabilisticChannel.lean` | finite stochastic channel enrichment | measurement/presentation layer | facade import |
 | `OmegaCore/Presentations/ProbabilisticChannelPolicy.lean` | OmegaAdapters | `OmegaAdapters/ProbabilisticChannelPolicy.lean` | fixed-declared vs Bayes-best policy separation | policy separation example | facade import |
 | `OmegaCore/Completion.lean` | OmegaProper | `OmegaProper/Scaffolds/FiniteMaximal.lean` | finite maximal-family scaffold | downstream candidate-theory scaffold | facade import |
@@ -188,6 +188,11 @@ marginal coverage need not imply strictly joint coverage.
 replacement: it rebuilds the Boolean relation support presentation over
 Alpha-native event frames and native transport, including identity,
 composition-laxity, and changed-carrier recovery.
+
+`OmegaAdapters.FiniteChannelNative` is the second Alpha-native adapter
+replacement: it rebuilds exact support-channel recovery over Alpha-native
+observable-distinction frames and native transport, including identity,
+composition-laxity, changed-carrier recovery, and constant-channel separation.
 
 Physical namespace migration for the remaining modules is deferred to later
 passes, after the layer map is stable.

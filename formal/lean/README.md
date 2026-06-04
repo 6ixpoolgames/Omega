@@ -185,6 +185,7 @@ machinery:
 OmegaAdapters/FiniteBoolean.lean
 OmegaAdapters/FiniteBooleanNative.lean
 OmegaAdapters/FiniteChannel.lean
+OmegaAdapters/FiniteChannelNative.lean
 OmegaAdapters/ProbabilisticChannel.lean
 OmegaAdapters/ProbabilisticChannelPolicy.lean
 OmegaAdapters/Audit/AdapterFailures.lean
@@ -194,6 +195,11 @@ OmegaAdapters/Audit/AdapterFailures.lean
 presentation over Alpha-native event frames and native transport. The stable
 `OmegaAdapters/FiniteBoolean.lean` adapter path now imports that native
 implementation.
+
+`OmegaAdapters/FiniteChannelNative.lean` rebuilds exact support-channel
+recovery over Alpha-native observable-distinction frames and native transport.
+The stable `OmegaAdapters/FiniteChannel.lean` adapter path now imports that
+native implementation.
 
 `OmegaProper` preserves downstream candidate-theory scaffolds:
 
@@ -437,8 +443,8 @@ possibility/support recovery, not universal preservation. It is not an
 empirical adapter, compatibility semantics, Future Field Atlas semantics,
 proto-valuerhood, valuerhood, ethics, or Omega validation.
 
-`OmegaCore/Presentations/FiniteChannel.lean` defines the finite channel /
-partition presentation:
+`OmegaAdapters/FiniteChannelNative.lean` defines the native finite channel /
+partition adapter presentation:
 
 ```text
 ObsDist X:

@@ -75,6 +75,7 @@ ProtoOmega/Separations/MarginalJoint.lean
 OmegaAdapters/FiniteBoolean.lean
 OmegaAdapters/FiniteBooleanNative.lean
 OmegaAdapters/FiniteChannel.lean
+OmegaAdapters/FiniteChannelNative.lean
 OmegaAdapters/ProbabilisticChannel.lean
 OmegaAdapters/ProbabilisticChannelPolicy.lean
 OmegaAdapters/Audit/AdapterFailures.lean
@@ -117,8 +118,9 @@ laxity laws;
 Alpha-native Boolean relation support presentation with relation-induced
 transports, identity relation, relational composition, and changed-carrier
 recovery;
-finite channel / partition presentation with exact decoder recovery, channel
-composition, changed-carrier recovery, and constant-channel erasure;
+Alpha-native finite channel / partition presentation with exact decoder
+recovery, channel composition, changed-carrier recovery, and constant-channel
+separation;
 probabilistic channel presentation with exact/probabilistic separation,
 full-support converse, high-probability counterexample, and finite cascade
 error bound;

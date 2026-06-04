@@ -9,6 +9,22 @@ patch notes at the top.
 
 ## 2026-06-05
 
+### OmegaAdapters Native Finite Channel Adapter
+
+Converted the finite channel / observable-partition presentation from a legacy
+facade into an Alpha-native adapter implementation:
+
+```text
+formal/lean/OmegaAdapters/FiniteChannelNative.lean
+formal/lean/OmegaAdapters/FiniteChannel.lean
+docs/research_notes/omega_theory/omega_adapters_finite_channel_native_v0.md
+```
+
+The native adapter rebuilds observable distinctions, exact decoder recovery,
+channel-induced native transport, identity/refinement equivalence,
+composition-laxity, changed-carrier recovery, and the constant-channel
+nontrivial/trivial distinction separation over `ProtoOmega.Transport.Native`.
+
 ### OmegaAdapters Native Finite Boolean Adapter
 
 Converted the finite Boolean support presentation from a legacy facade into an
