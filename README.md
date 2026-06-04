@@ -18,6 +18,42 @@ It contains formal scaffolds, worked presentations, and empirical instruments
 for studying finite reachable-future structure.
 ```
 
+## Mission and Vision
+
+Most alignment and value theories start with agents, preferences, rewards, or
+moral objects already on the table. Omega tries to start earlier.
+
+The central move is:
+
+```text
+Before asking what futures should be chosen, ask what it means for futures to
+carry recoverable distinctions at all.
+```
+
+The project is building a stack where:
+
+```text
+Alpha:
+  relation, distinction, and asymmetry as the primitive floor
+
+ProtoOmega:
+  recoverability, transport, recurrence, and separation phenomena derived from
+  that floor
+
+Adapters:
+  finite channels and reachable-future instruments that show exactly what a
+  substrate exposes or fails to expose
+
+Omega proper:
+  downstream compatibility and completion questions, only after the lower
+  layers earn them
+```
+
+The interesting bet is not that current toy systems validate a grand theory.
+The bet is that a disciplined primitive calculus plus small, reconstructible
+empirical instruments can expose where value-bearing futures might become a
+mathematical object rather than a slogan.
+
 ## Current Status
 
 The project now has two active arms.
@@ -28,8 +64,9 @@ The current primitive floor is **Alpha Primitive Core v0**: relation,
 distinction, and asymmetry. Alpha is separate from Omega and is not nested under
 OmegaCore.
 
-OmegaCore remains the checked support/recoverability stack that can be ingested
-or refactored after Alpha is established.
+`AlphaOmega` is the active Lean umbrella for the project stack. `OmegaCore`
+remains the legacy checked support/recoverability stack during the facade
+migration.
 
 Current OmegaCore compact Lean target:
 
@@ -72,6 +109,7 @@ Bayes-best policy separation.
 Key files:
 
 ```text
+formal/lean/AlphaOmega.lean
 formal/lean/AlphaCore.lean
 formal/lean/AlphaCore/Primitive.lean
 formal/lean/AlphaCore/Reachability.lean

@@ -14,6 +14,7 @@ current formal stack, read:
 ```text
 docs/OMEGA_FORMALISM_PRIMER.md
 docs/research_notes/omega_theory/alpha_primitive_core_v0.md
+docs/research_notes/omega_theory/alpha_omega_unification_map_v0.md
 docs/research_notes/omega_theory/omega_primitive_calculus_v0_lean_root_skeleton.md
 ```
 
@@ -36,8 +37,9 @@ A : C -> DistTrans
 The checked Lean layer now includes:
 
 ```text
-DistTrans closure and relation-level category laws;
+AlphaOmega facade stack;
 Alpha primitive frame and finite separation examples;
+DistTrans closure and relation-level category laws;
 recoverability weakening / strengthening;
 compositional recoverability from laxity;
 non-erasure monotonicity;

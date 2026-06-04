@@ -13,6 +13,7 @@ Start with:
 ../../../README.md
 ../../OMEGA_FORMALISM_PRIMER.md
 alpha_primitive_core_v0.md
+alpha_omega_unification_map_v0.md
 omega_primitive_calculus_v0_lean_root_skeleton.md
 theory_arm_map_v0.md
 omega_formal_core_v0_2_future_distinction_dynamics.md
@@ -24,7 +25,7 @@ The current best formal stack is:
 
 ```text
 Layer 0: Alpha Primitive Core v0
-Layer 0b: OmegaCore support / recovery stack
+Layer 0b: AlphaOmega facade stack
 Layer 0c: Future-Distinction Dynamics
 Layer 1: Admissibility and Identity-Decay Nulls
 Layer 2: Proto-Valuer Ladder
@@ -54,9 +55,24 @@ The current Lean root skeleton lives in:
 Checked files now include:
 
 ```text
+AlphaOmega.lean
 AlphaCore/Primitive.lean
 AlphaCore/Reachability.lean
 AlphaCore/Examples.lean
+ProtoOmega/Transport/Preorder.lean
+ProtoOmega/Recoverability/NormalLax.lean
+ProtoOmega/Recoverability/Recurrent.lean
+ProtoOmega/Separations/MarginalJoint.lean
+OmegaAdapters/FiniteBoolean.lean
+OmegaAdapters/FiniteChannel.lean
+OmegaAdapters/ProbabilisticChannel.lean
+OmegaAdapters/ProbabilisticChannelPolicy.lean
+OmegaAdapters/Audit/AdapterFailures.lean
+OmegaProper/Compatibility/JointPresentation.lean
+OmegaProper/Scaffolds/FiniteMaximal.lean
+OmegaProper/Scaffolds/CompletionCounterexamples.lean
+OmegaArchive/Basic.lean
+OmegaArchive/PrimitiveWitness.lean
 OmegaCore/DistTrans.lean
 OmegaCore/AdapterFailures.lean
 OmegaCore/NormalLax.lean
@@ -101,8 +117,8 @@ strictly exceed fixed-declared target recovery.
 
 This is formal infrastructure only. It does not instantiate an empirical
 adapter, prove valuerhood, prove compatibility in the data, or validate Omega.
-Alpha is currently standalone; the old OmegaCore stack is retained for later
-ingestion or translation after Alpha is stable.
+AlphaCore is currently standalone; AlphaOmega is the active facade stack; the
+old OmegaCore namespace is retained for compatibility during migration.
 
 ## Current Anchors
 
@@ -110,6 +126,7 @@ Read these as current active anchors:
 
 ```text
 alpha_primitive_core_v0.md
+alpha_omega_unification_map_v0.md
 omega_primitive_calculus_v0_lean_root_skeleton.md
 lean_formalization_smoke_v0.md
 primitive_witness_calculus_lean_smoke_v0.md

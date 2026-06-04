@@ -5,14 +5,30 @@ Status: local proof-assistant pressure test
 This directory contains the Lean 4 sandbox for the Alpha and Omega formal
 stack. It is not the full quantale-presheaf formalization.
 
-`AlphaCore` is now a standalone primitive floor over relation, distinction, and
+`AlphaCore` is a standalone primitive floor over relation, distinction, and
 asymmetry. It is not nested under `OmegaCore`.
 
-`OmegaCore` remains the older support/recoverability stack: distinction
-transport, normal-lax recovery, finite presentations, completion scaffolds, and
-probabilistic channel enrichment. The intended next step is not to subordinate
-Alpha to Omega, but to establish Alpha first and later decide which parts of
-`OmegaCore` should be ingested or refactored into the Alpha-based stack.
+`AlphaOmega` is the active umbrella for the full project stack:
+
+```text
+AlphaCore:
+  primitive floor
+
+ProtoOmega:
+  derived transport and recoverability
+
+OmegaAdapters:
+  substrate and presentation adapters
+
+OmegaProper:
+  downstream candidate-theory scaffolds
+
+OmegaArchive:
+  recoverable history, not imported by AlphaOmega
+```
+
+`OmegaCore` remains the older checked support/recoverability stack during the
+facade migration.
 
 ## Local Toolchain
 
@@ -33,6 +49,11 @@ Then build:
 ```powershell
 cd formal\lean
 lake build AlphaCore
+lake build ProtoOmega
+lake build OmegaAdapters
+lake build OmegaProper
+lake build AlphaOmega
+lake build OmegaArchive
 lake build OmegaCore
 ```
 
@@ -44,7 +65,7 @@ mathlib4 v4.30.0
 
 The local cache fetch may fail on this Windows workspace, so required mathlib
 modules can be built from source by `lake build AlphaCore` and
-`lake build OmegaCore`.
+`lake build AlphaOmega`.
 
 ## Current Checked Content
 
@@ -115,6 +136,47 @@ tiny_alpha_instantiated:
 
 This is Alpha infrastructure only. It does not define Omega, value,
 compatibility, valuerhood, viability, completion, or empirical semantics.
+
+### AlphaOmega Facade Layers
+
+`ProtoOmega` currently re-exports checked legacy modules under their new
+derived role:
+
+```text
+ProtoOmega/Transport/Preorder.lean
+ProtoOmega/Recoverability/NormalLax.lean
+ProtoOmega/Recoverability/Recurrent.lean
+ProtoOmega/Separations/MarginalJoint.lean
+```
+
+`OmegaAdapters` classifies finite presentation and theorem-transfer audit
+machinery:
+
+```text
+OmegaAdapters/FiniteBoolean.lean
+OmegaAdapters/FiniteChannel.lean
+OmegaAdapters/ProbabilisticChannel.lean
+OmegaAdapters/ProbabilisticChannelPolicy.lean
+OmegaAdapters/Audit/AdapterFailures.lean
+```
+
+`OmegaProper` preserves downstream candidate-theory scaffolds:
+
+```text
+OmegaProper/Compatibility/JointPresentation.lean
+OmegaProper/Scaffolds/FiniteMaximal.lean
+OmegaProper/Scaffolds/CompletionCounterexamples.lean
+```
+
+`OmegaArchive` keeps older checked scaffolds recoverable:
+
+```text
+OmegaArchive/Basic.lean
+OmegaArchive/PrimitiveWitness.lean
+```
+
+`AlphaOmega.lean` imports the active stack and intentionally does not import
+`OmegaArchive`.
 
 ### OmegaCore
 

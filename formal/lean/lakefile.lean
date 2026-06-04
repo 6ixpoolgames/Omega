@@ -11,3 +11,18 @@ lean_lib OmegaCore where
 
 lean_lib AlphaCore where
   roots := #[`AlphaCore]
+
+lean_lib ProtoOmega where
+  roots := #[`ProtoOmega]
+
+lean_lib OmegaAdapters where
+  roots := #[`OmegaAdapters]
+
+lean_lib OmegaProper where
+  roots := #[`OmegaProper]
+
+lean_lib OmegaArchive where
+  roots := #[`OmegaArchive]
+
+lean_lib AlphaOmega where
+  roots := #[`AlphaOmega]

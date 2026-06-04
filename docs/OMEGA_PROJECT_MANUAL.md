@@ -43,10 +43,11 @@ Current checkpoint:
 ```text
 Formal arm:
   AlphaCore is now the standalone primitive floor over relation, distinction,
-  and asymmetry. OmegaCore remains the older Lean-backed support/recoverability
-  and presentation stack. Current checked OmegaCore presentations include
-  Boolean relation support, finite channel / partition recovery, and
-  probabilistic channel recovery with finite cascade error bounds.
+  and asymmetry. AlphaOmega is the active umbrella stack. OmegaCore remains the
+  older Lean-backed support/recoverability and presentation namespace during
+  the facade migration. Current checked presentations include Boolean relation
+  support, finite channel / partition recovery, and probabilistic channel
+  recovery with finite cascade error bounds.
 
 Empirical arm:
   Future Field Atlas is the current reachable-future microscope. The stochastic
@@ -319,6 +320,7 @@ as the canonical internal definition anchor.
    - `formal/lean/README.md`
    - `docs/research_notes/omega_theory/README.md`
    - `docs/research_notes/omega_theory/alpha_primitive_core_v0.md`
+   - `docs/research_notes/omega_theory/alpha_omega_unification_map_v0.md`
    - `docs/research_notes/omega_theory/omega_primitive_calculus_v0_lean_root_skeleton.md`
    - `docs/research_notes/omega_theory/probabilistic_channel_presentation_v0.md`
    - `docs/PUBLIC_RESULTS_INDEX.md`
@@ -429,6 +431,7 @@ Use the portable Lean toolchain from the repository root:
 $env:PATH = (Resolve-Path '.tools\lean-4.30.0\lean-4.30.0-windows\bin').Path + ';' + $env:PATH
 cd formal\lean
 lake build AlphaCore
+lake build AlphaOmega
 lake build OmegaCore
 ```
 
@@ -440,14 +443,20 @@ mathlib4 v4.30.0
 
 The Windows cache fetch may be unreliable locally. If `lake exe cache get`
 fails, continue with source builds as long as `lake build OmegaCore` succeeds.
-For Alpha-specific edits, `lake build AlphaCore` must also pass.
+For Alpha-specific edits, `lake build AlphaCore` must also pass. For layer-map
+or facade edits, `lake build AlphaOmega` must pass.
 
 Before promoting a formalism update, verify:
 
 ```powershell
 lake build AlphaCore
+lake build ProtoOmega
+lake build OmegaAdapters
+lake build OmegaProper
+lake build AlphaOmega
+lake build OmegaArchive
 lake build OmegaCore
-Select-String -Path formal\lean\AlphaCore\*.lean,formal\lean\OmegaCore\*.lean,formal\lean\OmegaCore\Presentations\*.lean -Pattern 'sorry|admit|axiom'
+Select-String -Path formal\lean\AlphaCore\*.lean,formal\lean\ProtoOmega\*.lean,formal\lean\ProtoOmega\*\*.lean,formal\lean\OmegaAdapters\*.lean,formal\lean\OmegaAdapters\*\*.lean,formal\lean\OmegaProper\*.lean,formal\lean\OmegaProper\*\*.lean,formal\lean\OmegaArchive\*.lean,formal\lean\OmegaCore\*.lean,formal\lean\OmegaCore\Presentations\*.lean -Pattern 'sorry|admit|axiom'
 ```
 
 Current checked Lean scope includes standalone Alpha primitives, Alpha

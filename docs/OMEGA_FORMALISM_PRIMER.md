@@ -37,10 +37,11 @@ Omega is now treated as a downstream theory over that primitive floor: a theory
 of which Alpha-instantiated future-bearing structures can recover,
 non-erase, compose, and eventually support compatibility/completion claims.
 
-This is a deliberate separation. Alpha is not a namespace inside Omega. The
-older `OmegaCore` Lean stack remains valuable, but it should be understood as
-the support/recoverability machinery that may later be ingested into a cleaner
-Alpha-based formal stack.
+This is a deliberate separation. `AlphaCore` is the primitive floor.
+`AlphaOmega` is the active umbrella for the broader project stack:
+`AlphaCore`, `ProtoOmega`, `OmegaAdapters`, and `OmegaProper`. The older
+`OmegaCore` Lean stack remains valuable as checked source material during the
+facade migration.
 
 The root grammar is:
 
@@ -169,42 +170,40 @@ local asymmetry need not imply global reach irreversibility;
 local nonreciprocity need not imply global reach irreversibility.
 ```
 
-### Layer 0b: OmegaCore Support / Recovery Stack
+### Layer 0b: AlphaOmega Facade Stack
 
 Primary note:
 
 ```text
+docs/research_notes/omega_theory/alpha_omega_unification_map_v0.md
 docs/research_notes/omega_theory/omega_primitive_calculus_v0_lean_root_skeleton.md
 ```
 
-Defines:
+Active Lean umbrellas:
 
 ```text
-relation;
-distinction;
-asymmetry;
-recoverability;
-recurrent recoverability;
-non-erasure;
-joint compatibility;
-completion.
+formal/lean/AlphaOmega.lean
+formal/lean/ProtoOmega.lean
+formal/lean/OmegaAdapters.lean
+formal/lean/OmegaProper.lean
+formal/lean/OmegaArchive.lean
 ```
 
-Lean files:
+Layer roles:
 
 ```text
-formal/lean/OmegaCore.lean
-formal/lean/OmegaCore/DistTrans.lean
-formal/lean/OmegaCore/NormalLax.lean
-formal/lean/OmegaCore/Recurrent.lean
-formal/lean/OmegaCore/Completion.lean
-formal/lean/OmegaCore/Counterexamples.lean
-formal/lean/OmegaCore/MarginalJoint.lean
-formal/lean/OmegaCore/AdapterFailures.lean
-formal/lean/OmegaCore/Presentations/FiniteBoolean.lean
-formal/lean/OmegaCore/Presentations/FiniteChannel.lean
-formal/lean/OmegaCore/Presentations/ProbabilisticChannel.lean
-formal/lean/OmegaCore/Presentations/ProbabilisticChannelPolicy.lean
+ProtoOmega:
+  distinction transport, recoverability, recurrence, marginal/joint separation
+
+OmegaAdapters:
+  finite Boolean, finite channel, probabilistic channel, and adapter audit
+  presentations
+
+OmegaProper:
+  joint-presentation and finite maximal/completion scaffolds
+
+OmegaArchive:
+  older checked scaffolds, not imported by AlphaOmega
 ```
 
 Checked:
@@ -226,6 +225,9 @@ Boolean relation support presentation;
 finite channel / partition presentation;
 finite probabilistic channel enrichment.
 ```
+
+The old `OmegaCore` files remain buildable during this migration, but they are
+now classified by role rather than treated as the active conceptual root.
 
 Current probabilistic enrichment note:
 

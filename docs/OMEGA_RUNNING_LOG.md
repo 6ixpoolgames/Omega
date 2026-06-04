@@ -9,6 +9,33 @@ patch notes at the top.
 
 ## 2026-06-04
 
+### AlphaOmega Facade Unification Map
+
+Added the first Alpha/Omega unification facade pass:
+
+```text
+formal/lean/AlphaOmega.lean
+formal/lean/ProtoOmega.lean
+formal/lean/OmegaAdapters.lean
+formal/lean/OmegaProper.lean
+formal/lean/OmegaArchive.lean
+docs/research_notes/omega_theory/alpha_omega_unification_map_v0.md
+```
+
+Read:
+
+```text
+AlphaCore remains the primitive floor.
+AlphaOmega is the active umbrella for the full stack.
+ProtoOmega classifies transport, recoverability, recurrence, and separation.
+OmegaAdapters classifies finite presentations and theorem-transfer audits.
+OmegaProper preserves downstream candidate-theory scaffolds.
+OmegaArchive keeps older checked scaffolds recoverable but inactive.
+```
+
+This is a facade/re-export pass. It does not physically rewrite old
+`OmegaCore` namespaces yet, and it does not change theorem content.
+
 ### Alpha Primitive Core Lean Split
 
 Added a standalone `AlphaCore` Lean library:
