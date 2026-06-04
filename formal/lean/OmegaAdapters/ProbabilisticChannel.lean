@@ -1,8 +1,11 @@
-import OmegaCore.Presentations.ProbabilisticChannel
+import OmegaAdapters.ProbabilisticChannelNative
 
 /-!
 OmegaAdapters.ProbabilisticChannel
 
-Finite probabilistic channel enrichment facade over the checked legacy
-`OmegaCore.Presentations.ProbabilisticChannel` module.
+Finite probabilistic channel enrichment adapter entry point.
+
+This file now imports the first Alpha-native
+`OmegaAdapters.ProbabilisticChannelNative` implementation slice. Cascade and
+policy-native passes remain separate migration targets.
 -/

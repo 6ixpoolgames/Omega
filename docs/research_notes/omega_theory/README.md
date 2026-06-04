@@ -77,6 +77,7 @@ OmegaAdapters/FiniteBooleanNative.lean
 OmegaAdapters/FiniteChannel.lean
 OmegaAdapters/FiniteChannelNative.lean
 OmegaAdapters/ProbabilisticChannel.lean
+OmegaAdapters/ProbabilisticChannelNative.lean
 OmegaAdapters/ProbabilisticChannelPolicy.lean
 OmegaAdapters/Audit/AdapterFailures.lean
 OmegaProper/Compatibility/JointPresentation.lean
@@ -121,9 +122,9 @@ recovery;
 Alpha-native finite channel / partition presentation with exact decoder
 recovery, channel composition, changed-carrier recovery, and constant-channel
 separation;
-probabilistic channel presentation with exact/probabilistic separation,
-full-support converse, high-probability counterexample, and finite cascade
-error bound;
+Alpha-native probabilistic channel first slice with exact/probabilistic
+separation, full-support converse, high-probability counterexample, and native
+finite-channel support projection;
 finite policy-separation example showing that Bayes-best target recovery can
 strictly exceed fixed-declared target recovery.
 ```

@@ -4,6 +4,7 @@ import OmegaAdapters.FiniteBooleanNative
 import OmegaAdapters.FiniteChannel
 import OmegaAdapters.FiniteChannelNative
 import OmegaAdapters.ProbabilisticChannel
+import OmegaAdapters.ProbabilisticChannelNative
 import OmegaAdapters.ProbabilisticChannelPolicy
 
 /-!

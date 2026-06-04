@@ -248,6 +248,11 @@ event frames and native transport.
 rebuilds exact support-channel recovery over Alpha-native observable
 distinctions and native transport.
 
+`OmegaAdapters.ProbabilisticChannelNative` is the first native probabilistic
+adapter slice: it rebuilds natural-weight support/probability separation over
+the native finite-channel adapter. Cascade and policy migration remain separate
+pending passes.
+
 Current probabilistic enrichment note:
 
 ```text

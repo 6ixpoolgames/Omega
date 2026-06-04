@@ -9,6 +9,23 @@ patch notes at the top.
 
 ## 2026-06-05
 
+### OmegaAdapters Native Probabilistic Channel First Slice
+
+Converted the exact/probability separation part of the probabilistic channel
+presentation into an Alpha-native adapter implementation:
+
+```text
+formal/lean/OmegaAdapters/ProbabilisticChannelNative.lean
+formal/lean/OmegaAdapters/ProbabilisticChannel.lean
+docs/research_notes/omega_theory/omega_adapters_probabilistic_channel_native_v0.md
+```
+
+The native slice rebuilds positive-weight support, success/error/total masses,
+exact support versus probabilistic recovery, the full-prior converse,
+non-full-prior counterexample, and high-probability-not-exact counterexample
+over `OmegaAdapters.FiniteChannelNative`. Native cascade and policy migration
+remain separate next steps.
+
 ### OmegaAdapters Native Finite Channel Adapter
 
 Converted the finite channel / observable-partition presentation from a legacy

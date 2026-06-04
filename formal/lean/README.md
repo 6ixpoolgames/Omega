@@ -187,6 +187,7 @@ OmegaAdapters/FiniteBooleanNative.lean
 OmegaAdapters/FiniteChannel.lean
 OmegaAdapters/FiniteChannelNative.lean
 OmegaAdapters/ProbabilisticChannel.lean
+OmegaAdapters/ProbabilisticChannelNative.lean
 OmegaAdapters/ProbabilisticChannelPolicy.lean
 OmegaAdapters/Audit/AdapterFailures.lean
 ```
@@ -200,6 +201,12 @@ implementation.
 recovery over Alpha-native observable-distinction frames and native transport.
 The stable `OmegaAdapters/FiniteChannel.lean` adapter path now imports that
 native implementation.
+
+`OmegaAdapters/ProbabilisticChannelNative.lean` rebuilds the first
+probabilistic channel slice over native finite-channel support: positive-weight
+support, success/error/total mass, exact/probability separation, full-prior
+converse, and finite counterexamples. Native cascade and policy passes remain
+pending.
 
 `OmegaProper` preserves downstream candidate-theory scaffolds:
 
@@ -487,9 +494,10 @@ This is exact support-channel recovery. It is not probabilistic Shannon theory,
 an empirical adapter, compatibility semantics, Future Field Atlas semantics,
 proto-valuerhood, valuerhood, ethics, or Omega validation.
 
-`OmegaCore/Presentations/ProbabilisticChannel.lean` defines the finite
-probabilistic channel enrichment. `OmegaCore/Presentations/ProbabilisticChannelPolicy.lean`
-adds the finite fixed-declared versus Bayes-best policy-separation example:
+`OmegaAdapters/ProbabilisticChannelNative.lean` defines the first native finite
+probabilistic channel enrichment slice. The cascade and fixed-declared versus
+Bayes-best policy theorems remain checked in `OmegaCore` pending their native
+migration passes:
 
 ```text
 Supports K x y:
