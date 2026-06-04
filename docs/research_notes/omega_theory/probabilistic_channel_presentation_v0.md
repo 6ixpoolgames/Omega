@@ -46,6 +46,27 @@ natural-weight path ensembles and checks the finite cascade error-bound
 conditions over a shared denominator. It also keeps Bayes-best policy rows
 diagnostic rather than using them as declared composition proofs.
 
+Thresholded probabilistic non-erasure package:
+
+```text
+docs/research_notes/validation_results/stochastic_distinction_channel/stochastic_thresholded_prob_non_erasure_result.md
+results/stochastic_distinction_channel/20260604_thresholded_prob_non_erasure_v0/
+```
+
+Status:
+
+```text
+thresholded_prob_non_erasure_measurement_ready
+```
+
+This package supplies the empirical target for a future Lean definition:
+
+```text
+ProbNonErasing(K, pi, Req, threshold, target_policy)
+```
+
+and for the monotonicity theorem under requirement-set weakening.
+
 ## 0. Purpose
 
 The Omega Primitive Calculus root is support-level:

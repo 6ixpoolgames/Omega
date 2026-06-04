@@ -21,6 +21,8 @@ Current active and recent live-instrument specs:
   (completed; fixed-declared target policy alongside Bayes-best summaries)
 - `current/STOCHASTIC_DISTINCTION_CHANNEL_THEOREM_TRANSFER_AUDIT_SPEC.md`
   (completed; cascade theorem-transfer audit over fixed-policy channel outputs)
+- `current/STOCHASTIC_DISTINCTION_CHANNEL_THRESHOLDED_NON_ERASURE_SPEC.md`
+  (completed; thresholded probabilistic non-erasure over finite requirement sets)
 - `current/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md`
 - `current/FUTURE_FIELD_ATLAS_FORMAL_ADAPTER_RAW_CLOSED_GAP_REPORT_SPEC.md`
   (completed; quantifies closure dependence in the formal adapter package)

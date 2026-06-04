@@ -194,6 +194,16 @@ finite cascade error-bound theorem using exact natural weights and a shared
 path ensemble denominator. Thresholded non-erasure remains a measurement layer
 pending a separate theorem.
 
+The current empirical target for that next theorem layer is:
+
+```text
+docs/research_notes/validation_results/stochastic_distinction_channel/stochastic_thresholded_prob_non_erasure_result.md
+```
+
+It compiles finite requirement-set measurements for
+`ProbNonErasing(K, pi, Req, threshold, target_policy)` and checks monotonicity
+under requirement-set weakening.
+
 ### Layer 0a: Future-Distinction Dynamics
 
 Primary note:

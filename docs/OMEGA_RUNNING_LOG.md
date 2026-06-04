@@ -9,6 +9,53 @@ patch notes at the top.
 
 ## 2026-06-04
 
+### Thresholded Probabilistic Non-Erasure Package
+
+Added a thresholded probabilistic non-erasure compiler over retained stochastic
+channel outputs:
+
+```text
+omega/stochastic_distinction_channel/thresholded_non_erasure.py
+docs/specs/current/STOCHASTIC_DISTINCTION_CHANNEL_THRESHOLDED_NON_ERASURE_SPEC.md
+docs/research_notes/validation_results/stochastic_distinction_channel/stochastic_thresholded_prob_non_erasure_result.md
+```
+
+Output:
+
+```text
+results/stochastic_distinction_channel/20260604_thresholded_prob_non_erasure_v0/
+```
+
+Read:
+
+```text
+overall_status: thresholded_prob_non_erasure_measurement_ready
+thresholded_prob_non_erasure_by_channel rows: 1330
+prob_non_erasure_monotonicity_check rows: 950
+fixed-policy prob_non_erasing rows: 171
+Bayes-best measurement-only rows: 665
+monotonicity failures: 0
+```
+
+Predictive/revelatory fixtures passed:
+
+```text
+identity_channel + req_all_nontrivial + threshold_1_00:
+  passes
+
+bit_flip_p_0_05 + req_marginals + threshold_0_95:
+  passes probabilistically without exact support
+
+bit_flip_p_0_05 + req_joint + threshold_0_95:
+  fails below threshold
+
+total_erasure_channel + req_joint + threshold_0_80:
+  blocks because no fixed declared target exists
+```
+
+This gives the formal arm a clean target for `ProbNonErasing(K, pi, Req,
+threshold, target_policy)` and its monotonicity theorem.
+
 ### Stochastic Channel Theorem-Transfer Audit
 
 Added a theorem-transfer audit postprocessor for the fixed-policy stochastic

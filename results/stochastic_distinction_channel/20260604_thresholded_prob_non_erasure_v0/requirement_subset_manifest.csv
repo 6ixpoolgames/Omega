@@ -1,0 +1,11 @@
+smaller_requirement_set_id,larger_requirement_set_id,smaller_distinction_ids,larger_distinction_ids,is_declared_subset,subset_rule
+req_A,req_all_nontrivial,D_A,D_A;D_B;D_joint;D_parity,1,set inclusion over declared source_distinction_ids
+req_A,req_marginals,D_A,D_A;D_B,1,set inclusion over declared source_distinction_ids
+req_B,req_all_nontrivial,D_B,D_A;D_B;D_joint;D_parity,1,set inclusion over declared source_distinction_ids
+req_B,req_marginals,D_B,D_A;D_B,1,set inclusion over declared source_distinction_ids
+req_joint,req_all_nontrivial,D_joint,D_A;D_B;D_joint;D_parity,1,set inclusion over declared source_distinction_ids
+req_joint,req_joint_and_parity,D_joint,D_joint;D_parity,1,set inclusion over declared source_distinction_ids
+req_joint_and_parity,req_all_nontrivial,D_joint;D_parity,D_A;D_B;D_joint;D_parity,1,set inclusion over declared source_distinction_ids
+req_marginals,req_all_nontrivial,D_A;D_B,D_A;D_B;D_joint;D_parity,1,set inclusion over declared source_distinction_ids
+req_parity,req_all_nontrivial,D_parity,D_A;D_B;D_joint;D_parity,1,set inclusion over declared source_distinction_ids
+req_parity,req_joint_and_parity,D_parity,D_joint;D_parity,1,set inclusion over declared source_distinction_ids

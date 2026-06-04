@@ -387,6 +387,16 @@ It checks that fixed-policy stochastic-channel cascade rows use exact
 natural-weight path ensembles and a shared denominator, matching the finite
 cascade theorem assumptions above.
 
+The current empirical target for the next probabilistic-channel theorem layer is:
+
+```text
+docs/research_notes/validation_results/stochastic_distinction_channel/stochastic_thresholded_prob_non_erasure_result.md
+```
+
+It supplies finite requirement-set measurements for a future
+`ProbNonErasing(K, pi, Req, threshold, target_policy)` definition and
+monotonicity theorem.
+
 `OmegaCore/Basic.lean` defines:
 
 ```text
