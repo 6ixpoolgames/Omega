@@ -70,6 +70,7 @@ ProtoOmega/Recoverability/NormalLax.lean
 ProtoOmega/Recoverability/RecurrentNative.lean
 ProtoOmega/Recoverability/RecurrentNativeExamples.lean
 ProtoOmega/Recoverability/Recurrent.lean
+ProtoOmega/Separations/MarginalJointNative.lean
 ProtoOmega/Separations/MarginalJoint.lean
 OmegaAdapters/FiniteBoolean.lean
 OmegaAdapters/FiniteChannel.lean

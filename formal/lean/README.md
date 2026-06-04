@@ -154,6 +154,7 @@ ProtoOmega/Recoverability/NormalLax.lean
 ProtoOmega/Recoverability/RecurrentNative.lean
 ProtoOmega/Recoverability/RecurrentNativeExamples.lean
 ProtoOmega/Recoverability/Recurrent.lean
+ProtoOmega/Separations/MarginalJointNative.lean
 ProtoOmega/Separations/MarginalJoint.lean
 ```
 
@@ -173,6 +174,9 @@ scaffolds.
 `ProtoOmega/Recoverability/RecurrentNative.lean` rebuilds finite-chain
 recoverability over `NativeModel`, proving that stepwise recovery along a
 declared finite chain transfers to recovery through the chain composite.
+
+`ProtoOmega/Separations/MarginalJointNative.lean` rebuilds the finite
+marginal/joint transport separation over native transport.
 
 `OmegaAdapters` classifies finite presentation and theorem-transfer audit
 machinery:

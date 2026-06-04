@@ -9,6 +9,22 @@ patch notes at the top.
 
 ## 2026-06-05
 
+### ProtoOmega Native Marginal/Joint Separation
+
+Rebuilt the finite marginal/joint separation over native transport:
+
+```text
+formal/lean/ProtoOmega/Separations/MarginalJointNative.lean
+docs/research_notes/omega_theory/proto_omega_marginal_joint_native_v0.md
+```
+
+Read:
+
+```text
+marginal_non_erasure_not_joint_non_erasure:
+  marginal transport coverage does not imply strictly joint transport coverage
+```
+
 ### ProtoOmega Native Recurrent Recoverability Conversion
 
 Rebuilt finite-chain recurrent recoverability over native recoverability models:

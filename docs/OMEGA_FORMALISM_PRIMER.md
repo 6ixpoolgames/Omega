@@ -237,6 +237,8 @@ recoverability and requirement-relative non-erasure over native transport while
 leaving joint-presentation and compatibility scaffolds downstream.
 `ProtoOmega.Recoverability.RecurrentNative` is the third native conversion: it
 rebuilds finite-chain recoverability over native recoverability models.
+`ProtoOmega.Separations.MarginalJointNative` is the fourth native conversion:
+it rebuilds the finite marginal/joint separation over native transport.
 
 Current probabilistic enrichment note:
 
