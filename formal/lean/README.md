@@ -188,6 +188,7 @@ OmegaAdapters/FiniteChannel.lean
 OmegaAdapters/FiniteChannelNative.lean
 OmegaAdapters/ProbabilisticChannel.lean
 OmegaAdapters/ProbabilisticChannelNative.lean
+OmegaAdapters/ProbabilisticChannelCascadeNative.lean
 OmegaAdapters/ProbabilisticChannelPolicy.lean
 OmegaAdapters/Audit/AdapterFailures.lean
 ```
@@ -205,8 +206,11 @@ native implementation.
 `OmegaAdapters/ProbabilisticChannelNative.lean` rebuilds the first
 probabilistic channel slice over native finite-channel support: positive-weight
 support, success/error/total mass, exact/probability separation, full-prior
-converse, and finite counterexamples. Native cascade and policy passes remain
-pending.
+converse, and finite counterexamples.
+
+`OmegaAdapters/ProbabilisticChannelCascadeNative.lean` rebuilds the finite
+cascade error-bound layer over the same path ensemble. Native policy migration
+remains pending.
 
 `OmegaProper` preserves downstream candidate-theory scaffolds:
 
@@ -495,9 +499,9 @@ an empirical adapter, compatibility semantics, Future Field Atlas semantics,
 proto-valuerhood, valuerhood, ethics, or Omega validation.
 
 `OmegaAdapters/ProbabilisticChannelNative.lean` defines the first native finite
-probabilistic channel enrichment slice. The cascade and fixed-declared versus
-Bayes-best policy theorems remain checked in `OmegaCore` pending their native
-migration passes:
+probabilistic channel enrichment slice. `ProbabilisticChannelCascadeNative.lean`
+adds the native cascade theorem. The fixed-declared versus Bayes-best policy
+theorem remains checked in `OmegaCore` pending native migration:
 
 ```text
 Supports K x y:

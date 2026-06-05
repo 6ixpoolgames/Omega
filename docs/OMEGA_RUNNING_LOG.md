@@ -9,6 +9,22 @@ patch notes at the top.
 
 ## 2026-06-05
 
+### OmegaAdapters Native Probabilistic Channel Cascade
+
+Converted the finite probabilistic cascade error-bound theorem into an
+Alpha-native adapter implementation:
+
+```text
+formal/lean/OmegaAdapters/ProbabilisticChannelCascadeNative.lean
+formal/lean/OmegaAdapters/ProbabilisticChannel.lean
+docs/research_notes/omega_theory/omega_adapters_probabilistic_channel_cascade_native_v0.md
+```
+
+The native cascade layer rebuilds natural-weight channel composition,
+path-ensemble total mass, first-stage/second-stage/composite decoder error
+mass, the finite cascade union bound, the same-denominator threshold form, and
+the bridge back to composed-channel total/error mass.
+
 ### OmegaAdapters Native Probabilistic Channel First Slice
 
 Converted the exact/probability separation part of the probabilistic channel
@@ -23,8 +39,8 @@ docs/research_notes/omega_theory/omega_adapters_probabilistic_channel_native_v0.
 The native slice rebuilds positive-weight support, success/error/total masses,
 exact support versus probabilistic recovery, the full-prior converse,
 non-full-prior counterexample, and high-probability-not-exact counterexample
-over `OmegaAdapters.FiniteChannelNative`. Native cascade and policy migration
-remain separate next steps.
+over `OmegaAdapters.FiniteChannelNative`. Native policy migration remains the
+next probabilistic adapter step.
 
 ### OmegaAdapters Native Finite Channel Adapter
 

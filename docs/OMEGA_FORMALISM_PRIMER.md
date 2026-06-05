@@ -250,8 +250,9 @@ distinctions and native transport.
 
 `OmegaAdapters.ProbabilisticChannelNative` is the first native probabilistic
 adapter slice: it rebuilds natural-weight support/probability separation over
-the native finite-channel adapter. Cascade and policy migration remain separate
-pending passes.
+the native finite-channel adapter. `ProbabilisticChannelCascadeNative` adds the
+native finite cascade error-bound layer over the same path ensemble. Policy
+migration remains pending.
 
 Current probabilistic enrichment note:
 

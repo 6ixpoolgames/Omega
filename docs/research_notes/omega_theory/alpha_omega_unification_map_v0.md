@@ -117,7 +117,7 @@ them.
 | `OmegaCore/AdapterFailures.lean` | OmegaAdapters | `OmegaAdapters/Audit/AdapterFailures.lean` | adapter theorem-transfer failure examples | adapter audit boundary | facade import |
 | `OmegaCore/Presentations/FiniteBoolean.lean` | OmegaAdapters | `OmegaAdapters/FiniteBooleanNative.lean`; `OmegaAdapters/FiniteBoolean.lean` | Alpha-native finite Boolean support presentation plus stable adapter entry point | substrate/presentation-specific | native replacement |
 | `OmegaCore/Presentations/FiniteChannel.lean` | OmegaAdapters | `OmegaAdapters/FiniteChannelNative.lean`; `OmegaAdapters/FiniteChannel.lean` | Alpha-native finite channel / observable-partition presentation plus stable adapter entry point | substrate/presentation-specific | native replacement |
-| `OmegaCore/Presentations/ProbabilisticChannel.lean` | OmegaAdapters | `OmegaAdapters/ProbabilisticChannelNative.lean`; `OmegaAdapters/ProbabilisticChannel.lean` | Alpha-native probabilistic exact/probability separation plus stable adapter entry point; cascade still pending native pass | measurement/presentation layer | partial native replacement |
+| `OmegaCore/Presentations/ProbabilisticChannel.lean` | OmegaAdapters | `OmegaAdapters/ProbabilisticChannelNative.lean`; `OmegaAdapters/ProbabilisticChannelCascadeNative.lean`; `OmegaAdapters/ProbabilisticChannel.lean` | Alpha-native probabilistic exact/probability separation and cascade error-bound layer plus stable adapter entry point | measurement/presentation layer | native replacement except policy companion |
 | `OmegaCore/Presentations/ProbabilisticChannelPolicy.lean` | OmegaAdapters | `OmegaAdapters/ProbabilisticChannelPolicy.lean` | fixed-declared vs Bayes-best policy separation | policy separation example | facade import |
 | `OmegaCore/Completion.lean` | OmegaProper | `OmegaProper/Scaffolds/FiniteMaximal.lean` | finite maximal-family scaffold | downstream candidate-theory scaffold | facade import |
 | `OmegaCore/Counterexamples.lean` | OmegaProper | `OmegaProper/Scaffolds/CompletionCounterexamples.lean` | finite completion counterexamples | downstream scaffold separations | facade import |
@@ -194,11 +194,12 @@ replacement: it rebuilds exact support-channel recovery over Alpha-native
 observable-distinction frames and native transport, including identity,
 composition-laxity, changed-carrier recovery, and constant-channel separation.
 
-`OmegaAdapters.ProbabilisticChannelNative` is the first Alpha-native
-probabilistic adapter slice: it rebuilds positive-weight support,
-success/error/total masses, exact/probability separation, the full-prior
-converse, and finite counterexamples. Cascade composition and policy separation
-remain pending native passes.
+`OmegaAdapters.ProbabilisticChannelNative` and
+`OmegaAdapters.ProbabilisticChannelCascadeNative` rebuild the probabilistic
+adapter core: positive-weight support, success/error/total masses,
+exact/probability separation, the full-prior converse, finite counterexamples,
+finite cascade union bound, and composed-channel total/error mass bridges.
+Policy separation remains a pending native pass.
 
 Physical namespace migration for the remaining modules is deferred to later
 passes, after the layer map is stable.

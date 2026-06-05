@@ -1,11 +1,12 @@
 import OmegaAdapters.ProbabilisticChannelNative
+import OmegaAdapters.ProbabilisticChannelCascadeNative
 
 /-!
 OmegaAdapters.ProbabilisticChannel
 
 Finite probabilistic channel enrichment adapter entry point.
 
-This file now imports the first Alpha-native
-`OmegaAdapters.ProbabilisticChannelNative` implementation slice. Cascade and
-policy-native passes remain separate migration targets.
+This file now imports the Alpha-native `ProbabilisticChannelNative` core and
+`ProbabilisticChannelCascadeNative` path-ensemble composition layer.
+Policy-native migration remains a separate target.
 -/

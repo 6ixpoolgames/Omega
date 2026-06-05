@@ -22,8 +22,14 @@ formal/lean/OmegaAdapters/ProbabilisticChannel.lean
 ```
 
 now imports the native first-slice implementation. Native cascade composition
-and fixed-declared versus Bayes-best policy separation remain separate pending
-migration passes.
+has since been migrated in:
+
+```text
+omega_adapters_probabilistic_channel_cascade_native_v0.md
+```
+
+Fixed-declared versus Bayes-best policy separation remains a separate pending
+native migration pass.
 
 ## Lean Artifact
 
@@ -85,15 +91,15 @@ This replaces the exact/probabilistic separation portion of:
 OmegaCore/Presentations/ProbabilisticChannel.lean
 ```
 
-The cascade composition theorem and policy-separation example are not migrated
-in this pass. They remain checked in the old `OmegaCore` namespace until their
-own native passes.
+The cascade composition theorem was not migrated in this first-slice pass; it
+was migrated in the follow-up native cascade pass. The policy-separation example
+remains checked in the old `OmegaCore` namespace until its own native pass.
 
 ## Claim Boundary
 
 This is a finite stochastic measurement presentation over native channel
-support. Cascade, policy, empirical, and compatibility semantics remain outside
-this first slice.
+support. Cascade is handled in the follow-up native cascade module. Policy,
+empirical, and compatibility semantics remain outside this first slice.
 
 ## Next Targets
 
