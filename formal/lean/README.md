@@ -15,7 +15,7 @@ AlphaCore:
   primitive floor
 
 ProtoOmega:
-  derived transport and recoverability
+  presentation-native structures plus derived transport and recoverability
 
 OmegaAdapters:
   substrate and presentation adapters
@@ -137,6 +137,26 @@ tiny_alpha_instantiated:
 This is Alpha infrastructure only. It does not define Omega, value,
 compatibility, valuerhood, viability, completion, or empirical semantics.
 
+`AlphaCore/Independence.lean` gives primitive non-collapse examples:
+
+```text
+relation_without_distinction:
+  relation can exist without distinction
+
+distinction_without_relation:
+  distinction can exist without relation
+
+relation_and_distinction_without_asymmetry:
+  relation and distinction can exist without asymmetry
+
+reach_irreversibility_without_asymmetry:
+  reach irreversibility can exist without an Alpha asymmetry witness
+
+asymmetry_implies_relation_and_distinction:
+  asymmetry still supplies relation and distinction as a typed Alpha-frame
+  consequence
+```
+
 ### AlphaOmega Facade Layers
 
 `ProtoOmega` currently re-exports checked legacy modules under their new
@@ -144,6 +164,7 @@ derived role, except for the native transport and recoverability conversions:
 
 ```text
 ProtoOmega/Transport/Native.lean
+ProtoOmega/Presentation/Native.lean
 ProtoOmega/Transport/LegacyBridge.lean
 ProtoOmega/Transport/NativeExamples.lean
 ProtoOmega/Transport/Preorder.lean
@@ -163,6 +184,21 @@ defines `DistOrder` as presentation structure over Alpha distinctions and
 `NativeTransport` as a source-weakening / target-strengthening closed transport
 relation. `LegacyBridge.lean` is the explicit one-way bridge back to the old
 `OmegaCore.DistTrans` object.
+
+`ProtoOmega/Presentation/Native.lean` defines presentation-native structures
+that do not require full Alpha substrate contact:
+
+```text
+DistPresentation
+SepPresentation
+DistOrder
+Transport
+```
+
+It also defines forgetful bridges from `AlphaCore.Frame` to
+`SepPresentation` and `DistPresentation`. These bridges expose an existing
+Alpha frame as a presentation; they do not turn an arbitrary presentation into
+a substrate bridge.
 
 `ProtoOmega/Recoverability/Native.lean` rebuilds the recoverability subset of
 legacy `OmegaCore.NormalLax` over native transport. It defines `Recovers`,

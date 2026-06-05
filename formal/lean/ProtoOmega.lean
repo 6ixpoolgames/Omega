@@ -1,3 +1,4 @@
+import ProtoOmega.Presentation.Native
 import ProtoOmega.Recoverability.LegacyBridge
 import ProtoOmega.Recoverability.Native
 import ProtoOmega.Recoverability.NativeExamples
@@ -15,8 +16,10 @@ import ProtoOmega.Transport.Preorder
 /-!
 ProtoOmega umbrella.
 
-This layer contains derived transport and recoverability machinery over the
-Alpha primitive floor. `ProtoOmega.Transport.Native` and
+This layer contains derived presentation, transport, and recoverability
+machinery over the Alpha primitive floor. `ProtoOmega.Presentation.Native`
+separates presentation-native distinction/transport structures from full Alpha
+substrates. `ProtoOmega.Transport.Native` and
 `ProtoOmega.Recoverability.Native`, and
 `ProtoOmega.Recoverability.RecurrentNative` are Alpha-native replacements for
 legacy transport/recoverability facades. `MarginalJointNative` is the native

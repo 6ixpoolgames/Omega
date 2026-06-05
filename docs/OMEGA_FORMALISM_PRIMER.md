@@ -143,6 +143,7 @@ formal/lean/AlphaCore.lean
 formal/lean/AlphaCore/Primitive.lean
 formal/lean/AlphaCore/Reachability.lean
 formal/lean/AlphaCore/Examples.lean
+formal/lean/AlphaCore/Independence.lean
 ```
 
 Defines:
@@ -166,6 +167,10 @@ asymmetry separates its endpoints;
 asymmetry alone instantiates the three Alpha roles;
 reachability is transitive;
 distinction can exist without asymmetry;
+relation can exist without distinction;
+distinction can exist without relation;
+relation and distinction can exist without asymmetry;
+reach irreversibility can exist without asymmetry;
 local asymmetry need not imply global reach irreversibility;
 local nonreciprocity need not imply global reach irreversibility.
 ```
@@ -193,8 +198,8 @@ Layer roles:
 
 ```text
 ProtoOmega:
-  Alpha-native distinction transport, recoverability, recurrence,
-  marginal/joint separation
+  presentation-native distinction/order/transport structures, Alpha-native
+  distinction transport, recoverability, recurrence, marginal/joint separation
 
 OmegaAdapters:
   finite Boolean, finite channel, probabilistic channel, and adapter audit
@@ -229,6 +234,13 @@ finite probabilistic channel enrichment.
 
 The old `OmegaCore` files remain buildable during this migration, but they are
 now classified by role rather than treated as the active conceptual root.
+`AlphaCore.Independence` adds primitive non-collapse examples showing that
+relation, distinction, asymmetry, and reach irreversibility do not automatically
+supply one another. `ProtoOmega.Presentation.Native` adds a presentation-native
+layer for distinction presentations, separation presentations,
+presentation-level orders, and presentation-level transports, separating
+presentation machinery from full Alpha substrate contact.
+
 `ProtoOmega.Transport.Native` is the first real native conversion: it imports
 `AlphaCore`, adds presentation-level distinction order over Alpha distinctions,
 and provides a one-way bridge back to legacy `OmegaCore.DistTrans`.

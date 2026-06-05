@@ -9,6 +9,21 @@ patch notes at the top.
 
 ## 2026-06-05
 
+### Alpha Independence and Presentation-Native Repair
+
+Added the first structural anti-self-validation repair:
+
+```text
+formal/lean/AlphaCore/Independence.lean
+formal/lean/ProtoOmega/Presentation/Native.lean
+docs/research_notes/omega_theory/alpha_independence_and_presentation_native_repair_v0.md
+```
+
+`AlphaCore.Independence` checks finite non-collapse examples for relation,
+distinction, asymmetry, and reach irreversibility. `ProtoOmega.Presentation.Native`
+adds presentation-native distinction/order/transport structures so distinction
+presentations can be separated from full Alpha substrate contact.
+
 ### OmegaAdapters Native Probabilistic Channel Cascade
 
 Converted the finite probabilistic cascade error-bound theorem into an
