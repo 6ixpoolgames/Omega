@@ -9,6 +9,44 @@ patch notes at the top.
 
 ## 2026-06-05
 
+### Registry-First Stochastic Channel Probe
+
+Added and ran the first registry-first stochastic-channel probe:
+
+```text
+omega/stochastic_distinction_channel/registry_first_probe.py
+docs/research_notes/validation_results/stochastic_distinction_channel/stochastic_registry_first_probe_result.md
+```
+
+Output:
+
+```text
+results/stochastic_distinction_channel/20260605_registry_first_probe_v0/
+```
+
+Read:
+
+```text
+overall_status: registry_first_theorem_transfer_ready
+registered_rows: 35
+provenance_gap_rows: 35
+registered_vs_existence_gaps: 4
+registered_vs_optimized_gaps: 4
+cascade_evidence_status: path_rows_retained
+```
+
+The run freezes declared decoder registries, requirement sets, and thresholds
+before scoring. Identity-channel controls show that existence-style recovery can
+hold while an empty registry or a bad declared decoder fails, so declared
+registry recovery, channel capacity, and optimized diagnostics remain separate
+artifact classes.
+
+Validation:
+
+```text
+pytest tests/test_stochastic_registry_first_probe.py -q: 4 passed
+```
+
 ### OmegaAdapters Probabilistic Channel Cascade Evidence
 
 Added a generic path-ensemble evidence object for finite cascade error bounds:
