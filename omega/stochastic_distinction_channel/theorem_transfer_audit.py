@@ -96,6 +96,7 @@ def run_theorem_transfer_audit(*, source_dir: Path, out_dir: Path) -> dict[str, 
     recoverability = tables.get("recoverability_by_distinction.csv", [])
     composition_manifest = tables.get("channel_composition_manifest.csv", [])
     composition_checks = tables.get("composition_recoverability_check.csv", [])
+    registry_digest = source_registry_digest(source_dir)
 
     rational_rows = rational_weight_manifest(channel_matrix, source_priors)
     natural_rows, channel_weights = natural_weight_realization(channel_matrix)
@@ -113,6 +114,7 @@ def run_theorem_transfer_audit(*, source_dir: Path, out_dir: Path) -> dict[str, 
         decoder_tables=decoder_table_index(tables.get("decoder_table.csv", [])),
         recoverability=recoverability_index(recoverability),
         recoverability_rows=recoverability,
+        registry_digest=registry_digest,
     )
 
     cascade_artifacts = build_cascade_artifacts(
@@ -123,10 +125,14 @@ def run_theorem_transfer_audit(*, source_dir: Path, out_dir: Path) -> dict[str, 
     no_self_audit = no_self_evidencing_decoder_audit(
         tables.get("decoder_manifest.csv", []),
         tables.get("decoder_table.csv", []),
+        registry_digest=registry_digest,
     )
-    support_boundary = support_probability_theorem_boundary(recoverability, source_priors)
-    threshold_sensitivity = threshold_sensitivity_by_distinction(recoverability)
-    marginal_examples = marginal_joint_theorem_examples(tables.get("marginal_joint_recoverability_diagnostic.csv", []))
+    support_boundary = support_probability_theorem_boundary(recoverability, source_priors, registry_digest=registry_digest)
+    threshold_sensitivity = threshold_sensitivity_by_distinction(recoverability, registry_digest=registry_digest)
+    marginal_examples = marginal_joint_theorem_examples(
+        tables.get("marginal_joint_recoverability_diagnostic.csv", []),
+        registry_digest=registry_digest,
+    )
     readiness = probabilistic_theorem_transfer_readiness_summary(
         input_status=input_status,
         cascade_bound_check=cascade_artifacts["cascade_bound_check.csv"],
@@ -136,6 +142,7 @@ def run_theorem_transfer_audit(*, source_dir: Path, out_dir: Path) -> dict[str, 
         support_boundary=support_boundary,
         non_erasure=tables.get("non_erasure_by_channel.csv", []),
         declared_policy=tables.get("declared_target_policy_summary.csv", []),
+        registry_digest=registry_digest,
     )
 
     csv_outputs: dict[str, list[dict[str, object]]] = {
@@ -164,6 +171,7 @@ def run_theorem_transfer_audit(*, source_dir: Path, out_dir: Path) -> dict[str, 
         source_dir=source_dir,
         out_dir=out_dir,
         source_digest=source_digest,
+        registry_digest=registry_digest,
         csv_outputs=csv_outputs,
         overall_status=overall_status,
     )
@@ -192,6 +200,7 @@ def run_theorem_transfer_audit(*, source_dir: Path, out_dir: Path) -> dict[str, 
         "cascade_bound_rows": len(cascade_artifacts["cascade_bound_check.csv"]),
         "path_rows": len(cascade_artifacts["cascade_path_ensemble_rows.csv"]),
         "bundle_digest": bundle["bundle_digest"],
+        "registry_digest": registry_digest,
     }
 
 
@@ -207,6 +216,7 @@ class AuditContext:
         decoder_tables: dict[str, dict[str, str]],
         recoverability: dict[tuple[str, str, str, str], dict[str, str]],
         recoverability_rows: list[dict[str, object]],
+        registry_digest: str,
     ) -> None:
         self.source_dir = source_dir
         self.channel_weights = channel_weights
@@ -216,6 +226,7 @@ class AuditContext:
         self.decoder_tables = decoder_tables
         self.recoverability = recoverability
         self.recoverability_rows = recoverability_rows
+        self.registry_digest = registry_digest
 
 
 def missing_inputs(source_dir: Path) -> list[str]:
@@ -492,6 +503,9 @@ def build_single_cascade(
                         "composition_id": composition_id,
                         "distinction_id": source_dist,
                         "decoder_policy_id": decoder_policy_id,
+                        "recovery_provenance_class": cascade_recovery_provenance(context.registry_digest),
+                        "registry_digest": context.registry_digest,
+                        "cascade_evidence_status": "path_rows_retained",
                         "source_state": source_state,
                         "intermediate_state": middle_state,
                         "target_state": target_state,
@@ -545,6 +559,9 @@ def build_single_cascade(
         "composed_decoder_id": composed_decoder_id,
         "path_ensemble_rule": "mass(x,y,z)=pi(x)*K(y|x)*L(z|y)",
         "theorem_bridge": "finite cascade error bound over same path ensemble",
+        "recovery_provenance_class": cascade_recovery_provenance(context.registry_digest),
+        "registry_digest": context.registry_digest,
+        "cascade_evidence_status": "path_rows_retained",
         "status": "complete" if total_mass > 0 else "blocked_empty_path_ensemble",
         "claim_boundary": AUDIT_BOUNDARY,
     }
@@ -557,6 +574,9 @@ def build_single_cascade(
         "total_path_mass": total_mass,
         "composed_channel_total_mass": composed_total,
         "path_total_equals_composed_total": int(total_mass == composed_total),
+        "recovery_provenance_class": cascade_recovery_provenance(context.registry_digest),
+        "registry_digest": context.registry_digest,
+        "cascade_evidence_status": "path_rows_retained",
         "status": "PASS" if total_mass == composed_total and total_mass > 0 else "FAIL",
         "notes": "composed total computed from generated natural cascade weights",
     }
@@ -573,6 +593,9 @@ def build_single_cascade(
         "first_stage_error_rate_same_denominator": ratio_text(first_error_mass, total_mass),
         "second_stage_error_rate_same_denominator": ratio_text(second_error_mass, total_mass),
         "composite_error_rate_same_denominator": ratio_text(composite_error_mass, total_mass),
+        "recovery_provenance_class": cascade_recovery_provenance(context.registry_digest),
+        "registry_digest": context.registry_digest,
+        "cascade_evidence_status": "path_rows_retained",
     }
     bound_row = {
         "cascade_id": composition_id,
@@ -588,6 +611,9 @@ def build_single_cascade(
         "composite_error_rate": ratio_text(composite_error_mass, total_mass),
         "stage_error_rate_sum_same_denominator": ratio_text(bound_rhs, total_mass),
         "theorem_applicability_status": theorem_status,
+        "recovery_provenance_class": cascade_recovery_provenance(context.registry_digest),
+        "registry_digest": context.registry_digest,
+        "cascade_evidence_status": "path_rows_retained",
         "notes": "uses same path ensemble denominator; not independently normalized stage errors",
     }
     denominator_row = {
@@ -601,6 +627,9 @@ def build_single_cascade(
         "uses_same_path_ensemble": 1,
         "uses_independently_normalized_stage_errors": 0,
         "denominator_alignment_status": "aligned_same_path_ensemble" if total_mass > 0 else "blocked_empty_path_ensemble",
+        "recovery_provenance_class": cascade_recovery_provenance(context.registry_digest),
+        "registry_digest": context.registry_digest,
+        "cascade_evidence_status": "path_rows_retained",
         "notes": "stage and composite errors are measured on identical path rows",
     }
     policy_row = {
@@ -617,6 +646,9 @@ def build_single_cascade(
         "policy_alignment_status": "aligned_declared_composition"
         if first_decoder_id and second_decoder_id
         else "blocked_missing_composed_decoder",
+        "recovery_provenance_class": cascade_recovery_provenance(context.registry_digest),
+        "registry_digest": context.registry_digest,
+        "cascade_evidence_status": "path_rows_retained",
         "notes": "composed decoder is dec1 after dec2 over declared intermediate distinction",
     }
     return {
@@ -669,8 +701,11 @@ def bayes_best_policy_alignment_row(
         "decoder_composition_declared": 0,
         "composed_decoder_matches_dec1_after_dec2": 0,
         "policy_alignment_status": "measurement_only_best_decoder_comparison",
+        "recovery_provenance_class": "optimized_policy_search",
+        "registry_digest": fixed_policy_row.get("registry_digest", "unregistered_legacy_source"),
+        "cascade_evidence_status": "summary_only_blocked",
         "notes": (
-            "Bayes-best stage rows are useful measurements but are not silently substituted "
+            "Bayes-best stage rows are policy-search measurements but are not silently substituted "
             f"for fixed declared composition `{fixed_policy_row['composed_decoder_id']}`."
         ),
     }
@@ -695,6 +730,8 @@ def theorem_applicability_status(
 def no_self_evidencing_decoder_audit(
     decoder_manifest: list[dict[str, object]],
     decoder_table: list[dict[str, object]],
+    *,
+    registry_digest: str,
 ) -> list[dict[str, object]]:
     table_decoders = {str(row["decoder_id"]) for row in decoder_table}
     rows = []
@@ -715,6 +752,8 @@ def no_self_evidencing_decoder_audit(
                 "uses_declared_target_distinction_only": 1,
                 "allowed_for_recovery_claim": 1 if has_table else 0,
                 "audit_status": "PASS" if has_table else "FAIL",
+                "recovery_provenance_class": decoder_kind_to_provenance(str(decoder["decoder_kind"])),
+                "registry_digest": registry_digest,
                 "notes": "decoder table maps target-observation labels to source labels; no source-state oracle input",
             }
         )
@@ -724,6 +763,8 @@ def no_self_evidencing_decoder_audit(
 def support_probability_theorem_boundary(
     recoverability: list[dict[str, object]],
     source_priors: list[dict[str, object]],
+    *,
+    registry_digest: str,
 ) -> list[dict[str, object]]:
     prior_full_support = full_support_by_prior(source_priors)
     rows = []
@@ -762,13 +803,20 @@ def support_probability_theorem_boundary(
                 "prior_full_support_for_distinction": int(full_prior),
                 "classification": classification,
                 "theorem_boundary_status": status,
+                "recovery_provenance_class": decoder_kind_to_provenance(str(row["decoder_kind"])),
+                "registry_digest": registry_digest,
+                "cascade_evidence_status": "not_applicable",
                 "notes": "support exact recovery and probabilistic success are not collapsed",
             }
         )
     return rows
 
 
-def threshold_sensitivity_by_distinction(recoverability: list[dict[str, object]]) -> list[dict[str, object]]:
+def threshold_sensitivity_by_distinction(
+    recoverability: list[dict[str, object]],
+    *,
+    registry_digest: str,
+) -> list[dict[str, object]]:
     thresholds = [Fraction(4, 5), Fraction(9, 10), Fraction(19, 20), Fraction(99, 100), Fraction(1, 1)]
     rows = []
     for row in recoverability:
@@ -789,13 +837,20 @@ def threshold_sensitivity_by_distinction(recoverability: list[dict[str, object]]
                     "success_fraction": fraction_text(success),
                     "threshold_pass": int(threshold_pass),
                     "diagnostic_class": threshold_diagnostic(success, threshold, exact),
+                    "recovery_provenance_class": decoder_kind_to_provenance(str(row["decoder_kind"])),
+                    "registry_digest": registry_digest,
+                    "cascade_evidence_status": "not_applicable",
                     "notes": "sensitivity row; 0.95 is not treated as the only truth threshold",
                 }
             )
     return rows
 
 
-def marginal_joint_theorem_examples(rows_in: list[dict[str, object]]) -> list[dict[str, object]]:
+def marginal_joint_theorem_examples(
+    rows_in: list[dict[str, object]],
+    *,
+    registry_digest: str,
+) -> list[dict[str, object]]:
     rows = []
     for index, row in enumerate(rows_in):
         diagnostic = str(row["diagnostic_class"])
@@ -815,6 +870,9 @@ def marginal_joint_theorem_examples(rows_in: list[dict[str, object]]) -> list[di
                 "D_parity_pass": row["parity_passes_threshold"],
                 "diagnostic_class": diagnostic,
                 "why_useful_for_formal_arm": marginal_joint_use(diagnostic),
+                "recovery_provenance_class": policy_id_to_provenance(str(row["decoder_policy_id"])),
+                "registry_digest": registry_digest,
+                "cascade_evidence_status": "not_applicable",
                 "notes": "finite stochastic marginal/joint distinction example",
             }
         )
@@ -831,6 +889,7 @@ def probabilistic_theorem_transfer_readiness_summary(
     support_boundary: list[dict[str, object]],
     non_erasure: list[dict[str, object]],
     declared_policy: list[dict[str, object]],
+    registry_digest: str,
 ) -> list[dict[str, object]]:
     inputs_ready = input_status["status"] == "ready"
     exact_rows = [row for row in support_boundary if row["classification"] == "exact_support_and_perfect_probability"]
@@ -851,6 +910,9 @@ def probabilistic_theorem_transfer_readiness_summary(
             "exact support-recoverability rows",
             "probabilistic threshold claims without probabilistic theorem layer",
             "support-level rows remain separated from probabilistic measurements",
+            "existence_capacity",
+            registry_digest,
+            "not_applicable",
         ),
         readiness_row(
             "exact_implies_perfect_probability",
@@ -861,6 +923,9 @@ def probabilistic_theorem_transfer_readiness_summary(
             "exact rows imply perfect probability in the finite channel presentation",
             "converse claims without assumptions",
             f"{len(exact_rows)} exact-and-perfect rows emitted",
+            "existence_capacity",
+            registry_digest,
+            "not_applicable",
         ),
         readiness_row(
             "perfect_full_prior_implies_exact",
@@ -871,6 +936,9 @@ def probabilistic_theorem_transfer_readiness_summary(
             "classification of full-support perfect-probability rows",
             "non-full-support converse",
             "current uniform priors have full support",
+            "probabilistic_measurement",
+            registry_digest,
+            "not_applicable",
         ),
         readiness_row(
             "perfect_nonfull_prior_not_exact_counterexample",
@@ -881,6 +949,9 @@ def probabilistic_theorem_transfer_readiness_summary(
             "boundary category is available if future non-full priors are emitted",
             "automatic support recovery from non-full-prior perfect probability",
             "no non-full prior appears in this tiny input, but the boundary slot is explicit",
+            "probabilistic_measurement",
+            registry_digest,
+            "not_applicable",
         ),
         readiness_row(
             "high_probability_not_exact_counterexample",
@@ -891,6 +962,9 @@ def probabilistic_theorem_transfer_readiness_summary(
             "high probability without exact support rows",
             "support-level theorem transfer from high probability alone",
             f"{len(high_not_exact)} high-probability non-exact rows emitted",
+            "probabilistic_measurement",
+            registry_digest,
+            "not_applicable",
         ),
         readiness_row(
             "cascade_error_bound",
@@ -903,6 +977,9 @@ def probabilistic_theorem_transfer_readiness_summary(
             "finite cascade error bound over same path ensemble",
             "bounds using independently normalized stage errors",
             "same-path-ensemble denominator is explicit",
+            cascade_recovery_provenance(registry_digest),
+            registry_digest,
+            "path_rows_retained" if bound_ready else "summary_only_blocked",
         ),
         readiness_row(
             "cascade_same_denominator_threshold_bound",
@@ -913,6 +990,9 @@ def probabilistic_theorem_transfer_readiness_summary(
             "same-denominator threshold-bound instantiation",
             "threshold-bound claims with denominator mismatch",
             "all fixed cascade rows use identical path denominator",
+            cascade_recovery_provenance(registry_digest),
+            registry_digest,
+            "path_rows_retained" if denominators_ready and bound_ready else "summary_only_blocked",
         ),
         readiness_row(
             "bayes_best_vs_fixed_declared_policy_separation",
@@ -922,7 +1002,10 @@ def probabilistic_theorem_transfer_readiness_summary(
             "ready_for_formal_consumption" if declared_policy else "blocked_missing_artifacts",
             "fixed and Bayes-best policy separation",
             "silent substitution of Bayes-best for fixed declared policy",
-            "Bayes-best cascade rows are marked measurement-only for composition",
+            "Bayes-best cascade rows are marked optimized-policy-search measurements for composition",
+            "optimized_policy_search",
+            registry_digest,
+            "summary_only_blocked",
         ),
         readiness_row(
             "thresholded_non_erasure_layer",
@@ -933,6 +1016,9 @@ def probabilistic_theorem_transfer_readiness_summary(
             "finite thresholded recovery counts",
             "root DistTrans witness claims from thresholds alone",
             "threshold sensitivity emitted",
+            "probabilistic_measurement",
+            registry_digest,
+            "not_applicable",
         ),
         readiness_row(
             "completion_or_candidate_family",
@@ -943,6 +1029,9 @@ def probabilistic_theorem_transfer_readiness_summary(
             "none",
             "completion/candidate-family claims",
             "this audit only covers finite channels and distinctions",
+            "not_applicable",
+            registry_digest,
+            "not_applicable",
         ),
     ]
 
@@ -956,6 +1045,9 @@ def readiness_row(
     claim_allowed: str,
     claim_blocked: str,
     notes: str,
+    recovery_provenance_class: str,
+    registry_digest: str,
+    cascade_evidence_status: str,
 ) -> dict[str, object]:
     return {
         "theorem_or_layer_id": theorem_or_layer_id,
@@ -965,6 +1057,9 @@ def readiness_row(
         "applicability_status": applicability_status,
         "claim_allowed": claim_allowed,
         "claim_blocked": claim_blocked,
+        "recovery_provenance_class": recovery_provenance_class,
+        "registry_digest": registry_digest,
+        "cascade_evidence_status": cascade_evidence_status,
         "notes": notes,
     }
 
@@ -974,12 +1069,14 @@ def build_theorem_transfer_bundle(
     source_dir: Path,
     out_dir: Path,
     source_digest: str,
+    registry_digest: str,
     csv_outputs: dict[str, list[dict[str, object]]],
     overall_status: str,
 ) -> dict[str, object]:
     paths = {name.removesuffix(".csv"): name for name in AUDIT_OUTPUTS}
     payload = {
         "source_probe_digest": source_digest,
+        "registry_digest": registry_digest,
         "outputs": paths,
         "overall_status": overall_status,
         "row_counts": {name: len(rows) for name, rows in csv_outputs.items()},
@@ -987,6 +1084,7 @@ def build_theorem_transfer_bundle(
     return {
         "bundle_schema_version": "0.1.0",
         "source_probe_digest": source_digest,
+        "registry_digest": registry_digest,
         "source_tightened_output_dir": str(source_dir),
         **paths,
         "overall_status": overall_status,
@@ -1178,6 +1276,48 @@ def source_probe_digest(source_dir: Path) -> str:
         payload = json.loads(bundle_path.read_text(encoding="utf-8"))
         return str(payload.get("bundle_digest") or payload.get("probe_digest") or stable_hash(payload, length=24))
     return stable_hash(str(source_dir), length=24)
+
+
+def source_registry_digest(source_dir: Path) -> str:
+    digest_path = source_dir / "registry_digest.json"
+    if digest_path.exists():
+        payload = json.loads(digest_path.read_text(encoding="utf-8"))
+        digest = payload.get("registry_digest")
+        if digest:
+            return str(digest)
+    bundle_path = source_dir / "registry_first_formal_consumption_bundle.json"
+    if bundle_path.exists():
+        payload = json.loads(bundle_path.read_text(encoding="utf-8"))
+        digest = payload.get("registry_digest")
+        if digest:
+            return str(digest)
+    return "unregistered_legacy_source"
+
+
+def cascade_recovery_provenance(registry_digest: str) -> str:
+    if registry_digest and registry_digest != "unregistered_legacy_source":
+        return "declared_registered"
+    return "fixed_declared_policy_no_registry"
+
+
+def decoder_kind_to_provenance(decoder_kind: str) -> str:
+    if decoder_kind == "bayes_optimal_decoder":
+        return "optimized_policy_search"
+    if decoder_kind == "declared_decoder":
+        return "fixed_declared_policy_no_registry"
+    if decoder_kind == "exact_decoder":
+        return "existence_capacity"
+    return "measurement"
+
+
+def policy_id_to_provenance(policy_id: str) -> str:
+    if policy_id == "bayes_best_target_distinction":
+        return "optimized_policy_search"
+    if policy_id == "fixed_declared_target_distinction":
+        return "fixed_declared_policy_no_registry"
+    if policy_id == "support_exact_candidate":
+        return "existence_capacity"
+    return "measurement"
 
 
 def fraction_from_fields(row: dict[str, object]) -> Fraction:

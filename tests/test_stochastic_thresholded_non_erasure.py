@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import csv
+import json
 from pathlib import Path
 
 from omega.future_field_atlas.util import read_csv, write_csv
@@ -19,6 +20,10 @@ def test_thresholded_non_erasure_predictive_fixtures(tmp_path: Path) -> None:
 
     bitflip_marginals = one_non_erasure(rows, "bit_flip_p_0_05", "req_marginals", "threshold_0_95")
     assert bitflip_marginals["prob_non_erasing"] == "1"
+    assert bitflip_marginals["recovery_provenance_class"] == "fixed_declared_policy_no_registry"
+    assert bitflip_marginals["registry_digest"] == "unregistered_legacy_source"
+    assert bitflip_marginals["cascade_evidence_status"] == "path_rows_retained"
+    assert bitflip_marginals["theorem_transfer_class"] == "fixed_declared_policy_unregistered_measurement"
 
     bitflip_joint = one_non_erasure(rows, "bit_flip_p_0_05", "req_joint", "threshold_0_95")
     assert bitflip_joint["prob_non_erasing"] == "0"
@@ -44,6 +49,8 @@ def test_thresholded_non_erasure_monotonicity_and_policy_separation(tmp_path: Pa
     assert bayes_rows
     assert {row["non_erasure_status"] for row in bayes_rows} == {"measurement_only_bayes_best"}
     assert all(row["prob_non_erasing"] == "0" for row in bayes_rows)
+    assert {row["recovery_provenance_class"] for row in bayes_rows} == {"optimized_policy_search"}
+    assert {row["theorem_transfer_class"] for row in bayes_rows} == {"optimized_policy_search_measurement"}
 
     sensitivity = read_csv(out / "threshold_sensitivity_by_requirement.csv")
     one_sensitivity = [
@@ -74,6 +81,9 @@ def test_thresholded_non_erasure_missing_recoverability_blocks(tmp_path: Path) -
     run_thresholded_non_erasure(audit_source=audit, probe_source=probe, out_dir=out)
 
     recovery = read_csv(out / "thresholded_prob_recovery_by_distinction.csv")
+    assert "recovery_provenance_class" in recovery[0]
+    assert "registry_digest" in recovery[0]
+    assert "cascade_evidence_status" in recovery[0]
     blocked = [
         row
         for row in recovery
@@ -93,6 +103,19 @@ def test_thresholded_non_erasure_headers_do_not_promote_reserved_semantics(tmp_p
             header = next(csv.reader(handle))
         normalized = {column.lower() for column in header}
         assert not (reserved & normalized), path.name
+
+
+def test_thresholded_non_erasure_bundle_carries_provenance_status(tmp_path: Path) -> None:
+    _probe, _audit, out = run_all(tmp_path)
+
+    bundle = json.loads((out / "thresholded_prob_non_erasure_bundle.json").read_text(encoding="utf-8"))
+    assert bundle["registry_digest"] == "unregistered_legacy_source"
+    assert bundle["cascade_evidence_status"] == "path_rows_retained"
+
+    summary = read_csv(out / "probabilistic_non_erasure_theorem_transfer_summary.csv")
+    assert summary
+    assert "recovery_provenance_class" in summary[0]
+    assert {row["registry_digest"] for row in summary} == {"unregistered_legacy_source"}
 
 
 def run_all(tmp_path: Path) -> tuple[Path, Path, Path]:

@@ -9,6 +9,29 @@ patch notes at the top.
 
 ## 2026-06-05
 
+### Stochastic Provenance Field Repair
+
+Updated the stochastic theorem-transfer and thresholded non-erasure packages so
+derived rows carry explicit evidence-class fields:
+
+```text
+recovery_provenance_class
+registry_digest
+cascade_evidence_status
+theorem_transfer_class, where applicable
+```
+
+The retained fixed-policy source predates the registry-first probe, so it is
+now marked:
+
+```text
+registry_digest: unregistered_legacy_source
+```
+
+Bayes/optimized rows are classified as `optimized_policy_search` measurements
+rather than substitutes for fixed declared or registry-backed recovery. Cascade
+rows retain `cascade_evidence_status = path_rows_retained`.
+
 ### Registry-First Stochastic Channel Probe
 
 Added and ran the first registry-first stochastic-channel probe:

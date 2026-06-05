@@ -60,7 +60,9 @@ about 1.46 MB
 
 ```text
 overall_status: thresholded_prob_non_erasure_measurement_ready
-bundle_digest: 900b3b4428d674d4cc6cb21b
+bundle_digest: ba2f166d8e375dd5524b18f6
+registry_digest: unregistered_legacy_source
+cascade_evidence_status: path_rows_retained
 thresholded_prob_non_erasure_by_channel rows: 1330
 prob_non_erasure_monotonicity_check rows: 950
 fixed-policy prob_non_erasing rows: 171
@@ -130,12 +132,26 @@ fixed_declared_target_policy:
   default formal-consumption target
 
 bayes_best_target_policy:
-  diagnostic measurement unless formalized as its own policy object
+  optimized policy-search measurement unless formalized as its own frozen
+  policy object
 ```
 
 This is target-policy separation, not decoder-kind separation. Fixed-declared
 target rows may use Bayes-optimal decoders over the fixed declared target
 observation.
+
+Because this source predates the registry-first repair, thresholded rows now
+carry:
+
+```text
+recovery_provenance_class: fixed_declared_policy_no_registry | optimized_policy_search
+registry_digest: unregistered_legacy_source
+cascade_evidence_status: path_rows_retained
+```
+
+The point is not to discard Bayes/optimized rows. The point is to report them as
+policy-search measurements until a policy registry or selection rule is frozen
+and digest-backed.
 
 ## Theorem-Transfer Status
 

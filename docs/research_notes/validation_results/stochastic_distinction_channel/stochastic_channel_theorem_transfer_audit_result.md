@@ -48,7 +48,8 @@ probabilistic_channel_theorem_transfer_bundle.json
 ```text
 overall_status: support_and_probabilistic_transfer_ready
 source_digest: 9777bb7e5f3fba4f554bfb42
-bundle_digest: afa3b621994e9ab2e10e41c2
+bundle_digest: 2e4b7df0859a7fee48fb4648
+registry_digest: unregistered_legacy_source
 cascade_bound_rows: 10
 cascade_bound_passes: 10
 theorem_applicable_cascade_rows: 10
@@ -112,7 +113,17 @@ The audit explicitly reports:
 ```text
 aligned_same_path_ensemble: 10 rows
 uses_independently_normalized_stage_errors: 0 rows
+cascade_evidence_status: path_rows_retained
+recovery_provenance_class: fixed_declared_policy_no_registry
 ```
+
+Because this source predates the registry-first repair, the rows now carry:
+
+```text
+registry_digest: unregistered_legacy_source
+```
+
+That field is intentionally not backfilled with a synthetic registry digest.
 
 ## Support Versus Probability Boundary
 
@@ -142,7 +153,8 @@ aligned_declared_composition: 10
 measurement_only_best_decoder_comparison: 10
 ```
 
-Bayes-best composition rows are kept diagnostic because stagewise Bayes-best
+Bayes-best composition rows are retained as `optimized_policy_search`
+measurements. They are useful policy-search readouts, but stagewise Bayes-best
 choices need not define a declared composable decoder chain.
 
 Decoder audit:

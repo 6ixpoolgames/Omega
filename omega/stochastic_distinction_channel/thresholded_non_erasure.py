@@ -15,6 +15,7 @@ from .theorem_transfer_audit import (
     DEFAULT_AUDIT_OUT,
     as_bool,
     fraction_from_optional,
+    source_registry_digest,
 )
 
 
@@ -87,6 +88,8 @@ def run_thresholded_non_erasure(*, audit_source: Path, probe_source: Path, out_d
     probe_tables = {name: read_input_csv(probe_source, name) for name in SOURCE_INPUTS if name.endswith(".csv")}
     missing_inputs = missing_input_files(audit_source, AUDIT_INPUTS) + missing_input_files(probe_source, SOURCE_INPUTS)
     input_status = "blocked_missing_input" if missing_inputs else "ready"
+    registry_digest = threshold_registry_digest(audit_source, probe_source)
+    cascade_status = threshold_cascade_evidence_status(audit_source)
 
     requirement_rows = probabilistic_requirement_manifest()
     subset_rows = requirement_subset_manifest(requirement_rows)
@@ -100,6 +103,8 @@ def run_thresholded_non_erasure(*, audit_source: Path, probe_source: Path, out_d
         decoder_manifest_rows=probe_tables.get("decoder_manifest.csv", []),
         no_self_rows=audit_tables.get("no_self_evidencing_decoder_audit.csv", []),
         support_boundary_rows=audit_tables.get("support_probability_theorem_boundary.csv", []),
+        registry_digest=registry_digest,
+        cascade_evidence_status=cascade_status,
     )
     eligibility_rows = prob_non_erasure_decoder_eligibility(context)
     recovery_rows = thresholded_prob_recovery_by_distinction(context, eligibility_rows)
@@ -127,6 +132,8 @@ def run_thresholded_non_erasure(*, audit_source: Path, probe_source: Path, out_d
         non_erasure_rows=non_erasure_rows,
         monotonicity_rows=monotonicity_rows,
         support_boundary_rows=support_boundary_rows,
+        registry_digest=registry_digest,
+        cascade_evidence_status=cascade_status,
     )
     status = overall_status(
         input_status=input_status,
@@ -157,6 +164,8 @@ def run_thresholded_non_erasure(*, audit_source: Path, probe_source: Path, out_d
         audit_digest=audit_digest,
         probe_digest=probe_digest,
         status=status,
+        registry_digest=registry_digest,
+        cascade_evidence_status=cascade_status,
     )
     write_json(out_dir / "thresholded_prob_non_erasure_bundle.json", bundle)
     report = render_report(
@@ -193,6 +202,8 @@ class ThresholdContext:
         decoder_manifest_rows: list[dict[str, object]],
         no_self_rows: list[dict[str, object]],
         support_boundary_rows: list[dict[str, object]],
+        registry_digest: str,
+        cascade_evidence_status: str,
     ) -> None:
         self.probe_source = probe_source
         self.audit_source = audit_source
@@ -202,6 +213,8 @@ class ThresholdContext:
         self.decoder_manifest_rows = decoder_manifest_rows
         self.no_self_rows = no_self_rows
         self.support_boundary_rows = support_boundary_rows
+        self.registry_digest = registry_digest
+        self.cascade_evidence_status = cascade_evidence_status
         self.source_channel_ids = sorted(
             {
                 str(row["channel_id"])
@@ -332,6 +345,9 @@ def prob_non_erasure_decoder_eligibility(context: ThresholdContext) -> list[dict
                 "uses_target_observation_only": audit.get("uses_target_observation_only", ""),
                 "allowed_for_prob_non_erasure": allowed,
                 "eligibility_status": status,
+                "recovery_provenance_class": policy_to_provenance(status=status, policy_id=str(audit.get("decoder_policy_id", ""))),
+                "registry_digest": context.registry_digest,
+                "cascade_evidence_status": context.cascade_evidence_status,
                 "notes": eligibility_note(status),
             }
         )
@@ -359,6 +375,8 @@ def thresholded_prob_recovery_by_distinction(
                             threshold=threshold,
                             candidate=candidate,
                             eligibility=eligibility,
+                            registry_digest=context.registry_digest,
+                            cascade_evidence_status=context.cascade_evidence_status,
                         )
                     )
     return rows
@@ -401,6 +419,8 @@ def recovery_row_for_candidate(
     threshold: Fraction,
     candidate: dict[str, object],
     eligibility: dict[str, dict[str, object]],
+    registry_digest: str,
+    cascade_evidence_status: str,
 ) -> dict[str, object]:
     decoder_id = str(candidate.get("decoder_id", ""))
     target_distinction_id = str(candidate.get("target_distinction_id", ""))
@@ -424,6 +444,7 @@ def recovery_row_for_candidate(
         status = "blocked_policy_mismatch"
     else:
         status = "not_recovered_below_threshold"
+    provenance = recovery_policy_provenance(policy_id, allowed=allowed)
     return {
         "channel_id": channel_id,
         "distinction_id": distinction_id,
@@ -442,6 +463,10 @@ def recovery_row_for_candidate(
         "probabilistic_recovered": int(recovered and candidate_status == "ok"),
         "allowed_for_prob_non_erasure": int(allowed),
         "recovery_status": status,
+        "recovery_provenance_class": provenance,
+        "registry_digest": registry_digest,
+        "cascade_evidence_status": cascade_evidence_status,
+        "theorem_transfer_class": recovery_theorem_transfer_class(policy_id, status, registry_digest),
         "notes": recovery_note(policy_id, status),
     }
 
@@ -503,6 +528,9 @@ def non_erasure_row(
         as_bool(row.get("allowed_for_prob_non_erasure")) for row in present
     )
     prob_non_erasing = all_recovered and formal_allowed and not blocked_rows
+    registry_digest = first_present_value(present, "registry_digest")
+    cascade_status = first_present_value(present, "cascade_evidence_status")
+    provenance = non_erasure_provenance(policy_id=policy_id, prob_non_erasing=prob_non_erasing, registry_digest=registry_digest)
     status = non_erasure_status(
         policy_id=policy_id,
         all_recovered=all_recovered,
@@ -536,6 +564,10 @@ def non_erasure_row(
         "min_success_probability": float(min(successes)) if successes else "",
         "mean_success_probability": float(sum(successes, Fraction(0)) / len(successes)) if successes else "",
         "min_normalized_recovery_advantage": min(advantages) if advantages else "",
+        "recovery_provenance_class": provenance,
+        "registry_digest": registry_digest,
+        "cascade_evidence_status": cascade_status,
+        "theorem_transfer_class": non_erasure_theorem_transfer_class(policy_id, status, registry_digest),
         "notes": non_erasure_note(policy_id, status),
     }
 
@@ -588,6 +620,11 @@ def prob_non_erasure_monotonicity_check(
                         "monotonicity_expected": int(expected),
                         "monotonicity_observed": int(observed),
                         "status": status,
+                        "recovery_provenance_class": larger.get("recovery_provenance_class", "")
+                        if larger
+                        else "",
+                        "registry_digest": larger.get("registry_digest", "") if larger else "",
+                        "cascade_evidence_status": larger.get("cascade_evidence_status", "") if larger else "",
                         "notes": "monotonicity checked over fixed-declared target policy rows",
                     }
                 )
@@ -621,6 +658,9 @@ def threshold_sensitivity_by_requirement(non_erasure_rows: list[dict[str, object
                 "highest_threshold_passed": passes[-1] if passes else "",
                 "lowest_threshold_failed": fails[0] if fails else "",
                 "threshold_fragility_class": threshold_fragility_class(passes, by_threshold),
+                "recovery_provenance_class": first_present_value(list(by_threshold.values()), "recovery_provenance_class"),
+                "registry_digest": first_present_value(list(by_threshold.values()), "registry_digest"),
+                "cascade_evidence_status": first_present_value(list(by_threshold.values()), "cascade_evidence_status"),
                 "notes": "diagnostic pass uses all_required_recovered for Bayes-best and prob_non_erasing for fixed policy",
             }
         )
@@ -677,6 +717,9 @@ def thresholded_marginal_joint_summary(
                         "D_joint_success": joint.get("success_probability", ""),
                         "D_parity_success": parity.get("success_probability", ""),
                         "diagnostic_class": marginal_joint_class(req_marginals, req_joint, req_parity, req_all, policy_id),
+                        "recovery_provenance_class": req_marginals.get("recovery_provenance_class", ""),
+                        "registry_digest": req_marginals.get("registry_digest", ""),
+                        "cascade_evidence_status": req_marginals.get("cascade_evidence_status", ""),
                         "notes": "finite stochastic thresholded recovery diagnostic only",
                     }
                 )
@@ -725,6 +768,10 @@ def thresholded_support_probability_boundary(
                 "support_exact_count": support_count,
                 "prob_recovered_count": prob_count,
                 "requirement_count": requirement_count,
+                "recovery_provenance_class": row.get("recovery_provenance_class", ""),
+                "registry_digest": row.get("registry_digest", ""),
+                "cascade_evidence_status": row.get("cascade_evidence_status", ""),
+                "theorem_transfer_class": row.get("theorem_transfer_class", ""),
                 "notes": "exact support and probabilistic threshold recovery are reported separately",
             }
         )
@@ -737,6 +784,8 @@ def probabilistic_non_erasure_theorem_transfer_summary(
     non_erasure_rows: list[dict[str, object]],
     monotonicity_rows: list[dict[str, object]],
     support_boundary_rows: list[dict[str, object]],
+    registry_digest: str,
+    cascade_evidence_status: str,
 ) -> list[dict[str, object]]:
     monotonicity_pass = bool(monotonicity_rows) and all(str(row["status"]) == "pass" for row in monotonicity_rows)
     prob_without_support = any(
@@ -754,6 +803,9 @@ def probabilistic_non_erasure_theorem_transfer_summary(
             "finite thresholded requirement-set recovery measurements",
             "root theorem transfer until Lean definition is added",
             "defines the empirical target for ProbNonErasing",
+            "probabilistic_measurement",
+            registry_digest,
+            cascade_evidence_status,
         ),
         theorem_row(
             "prob_non_erasure_monotonicity",
@@ -764,6 +816,9 @@ def probabilistic_non_erasure_theorem_transfer_summary(
             "empirical monotonicity audit over declared subset pairs",
             "formal monotonicity theorem transfer until Lean theorem is added",
             "all fixed-policy declared subset checks pass" if monotonicity_pass else "monotonicity issue found",
+            "fixed_declared_policy_no_registry",
+            registry_digest,
+            cascade_evidence_status,
         ),
         theorem_row(
             "support_exact_implies_prob_recovery",
@@ -774,6 +829,9 @@ def probabilistic_non_erasure_theorem_transfer_summary(
             "support-exact rows are separated from thresholded probabilistic rows",
             "converse claims without assumptions",
             "reuses probabilistic channel Lean result",
+            "existence_capacity",
+            registry_digest,
+            "not_applicable",
         ),
         theorem_row(
             "prob_recovery_without_support_exact_boundary",
@@ -784,6 +842,9 @@ def probabilistic_non_erasure_theorem_transfer_summary(
             "probability-only recovery boundary cases",
             "support-level recovery claims from probability alone",
             "noisy examples expose probability without support exactness",
+            "probabilistic_measurement",
+            registry_digest,
+            "not_applicable",
         ),
         theorem_row(
             "cascade_error_bound_relevance",
@@ -794,6 +855,9 @@ def probabilistic_non_erasure_theorem_transfer_summary(
             "cascade theorem remains available for future composition of thresholded objects",
             "thresholded composition theorem by itself",
             "composition-bound audit is upstream of this package",
+            "probabilistic_measurement",
+            registry_digest,
+            cascade_evidence_status,
         ),
         theorem_row(
             "thresholded_non_erasure_composition",
@@ -804,6 +868,9 @@ def probabilistic_non_erasure_theorem_transfer_summary(
             "empirical inputs for a future theorem",
             "composition transfer for thresholded non-erasure",
             "requires formal theorem connecting thresholds with cascade bounds",
+            "probabilistic_measurement",
+            registry_digest,
+            cascade_evidence_status,
         ),
         theorem_row(
             "candidate_family_completion",
@@ -814,6 +881,9 @@ def probabilistic_non_erasure_theorem_transfer_summary(
             "none",
             "completion/candidate-family claims",
             "no candidate-family object is declared here",
+            "not_applicable",
+            registry_digest,
+            "not_applicable",
         ),
     ]
 
@@ -827,6 +897,9 @@ def theorem_row(
     claim_allowed: str,
     claim_blocked: str,
     notes: str,
+    recovery_provenance_class: str,
+    registry_digest: str,
+    cascade_evidence_status: str,
 ) -> dict[str, object]:
     return {
         "theorem_or_layer_id": theorem_or_layer_id,
@@ -836,6 +909,9 @@ def theorem_row(
         "applicability_status": applicability_status,
         "claim_allowed": claim_allowed,
         "claim_blocked": claim_blocked,
+        "recovery_provenance_class": recovery_provenance_class,
+        "registry_digest": registry_digest,
+        "cascade_evidence_status": cascade_evidence_status,
         "notes": notes,
     }
 
@@ -861,16 +937,22 @@ def formal_bundle(
     audit_digest: str,
     probe_digest: str,
     status: str,
+    registry_digest: str,
+    cascade_evidence_status: str,
 ) -> dict[str, object]:
     payload = {
         "source_theorem_transfer_audit_digest": audit_digest,
         "source_fixed_policy_probe_digest": probe_digest,
+        "registry_digest": registry_digest,
+        "cascade_evidence_status": cascade_evidence_status,
         "overall_status": status,
     }
     return {
         "bundle_schema_version": "0.1.0",
         "source_theorem_transfer_audit_digest": audit_digest,
         "source_fixed_policy_probe_digest": probe_digest,
+        "registry_digest": registry_digest,
+        "cascade_evidence_status": cascade_evidence_status,
         "probabilistic_requirement_manifest": "probabilistic_requirement_manifest.csv",
         "probabilistic_threshold_manifest": "probabilistic_threshold_manifest.csv",
         "prob_non_erasure_decoder_eligibility": "prob_non_erasure_decoder_eligibility.csv",
@@ -1155,8 +1237,93 @@ def recovery_note(policy_id: str, status: str) -> str:
 
 def non_erasure_note(policy_id: str, status: str) -> str:
     if policy_id == BAYES_POLICY:
-        return "Bayes-best requirement-set result is diagnostic unless formalized as its own policy object"
+        return "Bayes-best requirement-set result is an optimized policy-search measurement unless formalized as its own frozen policy object"
     return f"fixed-declared target-policy status: {status}"
+
+
+def threshold_registry_digest(audit_source: Path, probe_source: Path) -> str:
+    probe_digest = source_registry_digest(probe_source)
+    if probe_digest != "unregistered_legacy_source":
+        return probe_digest
+    bundle_path = audit_source / "probabilistic_channel_theorem_transfer_bundle.json"
+    if bundle_path.exists():
+        payload = json.loads(bundle_path.read_text(encoding="utf-8"))
+        digest = payload.get("registry_digest")
+        if digest:
+            return str(digest)
+    return probe_digest
+
+
+def threshold_cascade_evidence_status(audit_source: Path) -> str:
+    rows = read_input_csv(audit_source, "cascade_bound_check.csv")
+    if not rows:
+        return "summary_only_blocked"
+    statuses = {str(row.get("cascade_evidence_status", "")) for row in rows}
+    if statuses <= {"path_rows_retained"}:
+        return "path_rows_retained"
+    if statuses <= {"losslessly_reconstructible"}:
+        return "losslessly_reconstructible"
+    return "summary_only_blocked"
+
+
+def policy_to_provenance(*, status: str, policy_id: str) -> str:
+    if status == "eligible_fixed_declared":
+        return "fixed_declared_policy_no_registry"
+    if status == "eligible_bayes_best_measurement" or policy_id == "bayes_best_target_distinction":
+        return "optimized_policy_search"
+    if policy_id == "support_exact_candidate":
+        return "existence_capacity"
+    return "measurement"
+
+
+def recovery_policy_provenance(policy_id: str, *, allowed: bool) -> str:
+    if policy_id == BAYES_POLICY:
+        return "optimized_policy_search"
+    if allowed:
+        return "fixed_declared_policy_no_registry"
+    return "measurement"
+
+
+def recovery_theorem_transfer_class(policy_id: str, status: str, registry_digest: str) -> str:
+    if policy_id == BAYES_POLICY:
+        return "optimized_policy_search_measurement"
+    if status == "recovered_fixed_declared" and registry_digest != "unregistered_legacy_source":
+        return "declared_registered_threshold_measurement"
+    if status == "recovered_fixed_declared":
+        return "fixed_declared_policy_unregistered_measurement"
+    if status.startswith("blocked"):
+        return status
+    return "not_recovered"
+
+
+def non_erasure_provenance(*, policy_id: str, prob_non_erasing: bool, registry_digest: str) -> str:
+    if policy_id == BAYES_POLICY:
+        return "optimized_policy_search"
+    if prob_non_erasing and registry_digest != "unregistered_legacy_source":
+        return "declared_registered"
+    if policy_id == FIXED_POLICY:
+        return "fixed_declared_policy_no_registry"
+    return "measurement"
+
+
+def non_erasure_theorem_transfer_class(policy_id: str, status: str, registry_digest: str) -> str:
+    if policy_id == BAYES_POLICY:
+        return "optimized_policy_search_measurement"
+    if status == "prob_non_erasing" and registry_digest != "unregistered_legacy_source":
+        return "declared_registered_threshold_measurement"
+    if status == "prob_non_erasing":
+        return "fixed_declared_policy_unregistered_measurement"
+    if status.startswith("blocked"):
+        return status
+    return "not_non_erasing"
+
+
+def first_present_value(rows: list[dict[str, object]], field: str) -> object:
+    for row in rows:
+        value = row.get(field, "")
+        if value not in ("", None):
+            return value
+    return ""
 
 
 def source_digest(path: Path) -> str:
