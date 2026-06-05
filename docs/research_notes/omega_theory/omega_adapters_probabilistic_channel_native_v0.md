@@ -63,7 +63,10 @@ The native module checks:
 ```text
 exactSupportRecoverable_iff_nativeExactRecovers:
   existential exact support recovery agrees with native finite-channel exact
-  recovery over positive-weight support, in the shared label-universe case
+  recovery over positive-weight support, in the shared label-universe case.
+  This is existence-style recovery; theorem transfer that needs instrument
+  provenance should cite registered or declared decoder evidence from the
+  finite-channel decoder provenance layer.
 
 successMass_add_errorMass_eq_totalMass:
   success and error mass account for total channel/prior mass

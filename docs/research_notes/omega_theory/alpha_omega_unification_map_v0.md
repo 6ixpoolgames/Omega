@@ -120,7 +120,7 @@ them.
 | `OmegaCore/MarginalJoint.lean` | ProtoOmega | `ProtoOmega/Separations/MarginalJointNative.lean`; `ProtoOmega/Separations/MarginalJoint.lean` | Alpha-native marginal-vs-joint distinction-transport separation plus temporary legacy facade | separation theorem, not semantic detection | native replacement |
 | `OmegaCore/AdapterFailures.lean` | OmegaAdapters | `OmegaAdapters/Audit/AdapterFailures.lean` | adapter theorem-transfer failure examples | adapter audit boundary | facade import |
 | `OmegaCore/Presentations/FiniteBoolean.lean` | OmegaAdapters | `OmegaAdapters/FiniteBooleanNative.lean`; `OmegaAdapters/FiniteBoolean.lean` | presentation-native finite Boolean support presentation plus Alpha-frame-compatible stable adapter entry point | substrate/presentation-specific | native replacement plus presentation split |
-| `OmegaCore/Presentations/FiniteChannel.lean` | OmegaAdapters | `OmegaAdapters/FiniteChannelNative.lean`; `OmegaAdapters/FiniteChannel.lean` | presentation-native finite channel / observable-partition presentation plus Alpha-frame-compatible stable adapter entry point | substrate/presentation-specific | native replacement plus presentation split |
+| `OmegaCore/Presentations/FiniteChannel.lean` | OmegaAdapters | `OmegaAdapters/FiniteChannelNative.lean`; `OmegaAdapters/FiniteChannelDecoderNative.lean`; `OmegaAdapters/FiniteChannel.lean` | presentation-native finite channel / observable-partition presentation plus decoder provenance split and Alpha-frame-compatible stable adapter entry point | substrate/presentation-specific | native replacement plus presentation/provenance split |
 | `OmegaCore/Presentations/ProbabilisticChannel.lean` | OmegaAdapters | `OmegaAdapters/ProbabilisticChannelNative.lean`; `OmegaAdapters/ProbabilisticChannelCascadeNative.lean`; `OmegaAdapters/ProbabilisticChannel.lean` | Alpha-native probabilistic exact/probability separation and cascade error-bound layer plus stable adapter entry point | measurement/presentation layer | native replacement except policy companion |
 | `OmegaCore/Presentations/ProbabilisticChannelPolicy.lean` | OmegaAdapters | `OmegaAdapters/ProbabilisticChannelPolicy.lean` | fixed-declared vs Bayes-best policy separation | policy separation example | facade import |
 | `OmegaCore/Completion.lean` | OmegaProper | `OmegaProper/Scaffolds/FiniteMaximal.lean` | finite maximal-family scaffold | downstream candidate-theory scaffold | facade import |
@@ -215,6 +215,12 @@ observable-distinction frames, presentation-native observable structures, and
 native transport, including identity, composition-laxity, changed-carrier
 recovery, and constant-channel separation.
 
+`OmegaAdapters.FiniteChannelDecoderNative` adds the decoder provenance split:
+existence-style recovery remains capacity-only, while registered and declared
+registered recovery require supplied decoder evidence. It includes finite
+counterexamples where existence-style recovery holds but registered/declared
+recovery fails.
+
 `OmegaAdapters.SubstrateBridge` adds explicit `SubstrateBridge` and
 `RelationBridge` objects so presentation-level adapter laws do not masquerade as
 substrate-contact claims.
@@ -244,7 +250,7 @@ lake build OmegaCore
 
 ## Next Step
 
-The next formal target should be the adapter refactor implied by the
-presentation-native split, not a broad OmegaProper expansion. The useful work is
-to separate presentation-native adapters from substrate bridges, then split
-declared decoder recovery from existential decoder recovery.
+The next formal target should be the cascade evidence-object repair, not a
+broad OmegaProper expansion. The useful work is to make path-ensemble evidence
+the object consumed by cascade bounds so independently normalized error
+summaries cannot instantiate the theorem surface.

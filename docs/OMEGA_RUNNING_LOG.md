@@ -9,6 +9,21 @@ patch notes at the top.
 
 ## 2026-06-05
 
+### OmegaAdapters Finite Channel Decoder Provenance
+
+Added a decoder provenance split for finite channel recovery:
+
+```text
+formal/lean/OmegaAdapters/FiniteChannelDecoderNative.lean
+docs/research_notes/omega_theory/omega_adapters_finite_channel_decoder_provenance_v0.md
+```
+
+The older `ExactRecovers` surface is now documented as existence-style recovery:
+some decoder works. The new module separates that capacity result from
+`RegisteredExactRecovers` and `DeclaredRegisteredExactRecovers`, with finite
+counterexamples where existence recovery holds but a declared registry is empty
+or contains only a bad decoder.
+
 ### OmegaAdapters Presentation-Native Bridge Repair
 
 Repaired the finite Boolean/channel adapter architecture after the

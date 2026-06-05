@@ -51,12 +51,22 @@ Refines:
   target observation is fine enough to decode source observation
 
 ExactRecovers:
-  exact decoder recovery through channel support
+  existence-style exact decoder recovery through channel support; some decoder
+  works, without declared decoder provenance
 
 channelTransport:
   support-channel-induced Alpha-frame-compatible native transport over
   observable distinctions
 ```
+
+Decoder provenance is handled in:
+
+```text
+formal/lean/OmegaAdapters/FiniteChannelDecoderNative.lean
+```
+
+That module separates `ExistsExactRecovers` from `RegisteredExactRecovers` and
+`DeclaredRegisteredExactRecovers`.
 
 ## Checked Theorem Surface
 

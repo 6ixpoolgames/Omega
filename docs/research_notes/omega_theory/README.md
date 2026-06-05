@@ -77,6 +77,7 @@ ProtoOmega/Separations/MarginalJoint.lean
 OmegaAdapters/FiniteBoolean.lean
 OmegaAdapters/FiniteBooleanNative.lean
 OmegaAdapters/FiniteChannel.lean
+OmegaAdapters/FiniteChannelDecoderNative.lean
 OmegaAdapters/FiniteChannelNative.lean
 OmegaAdapters/ProbabilisticChannel.lean
 OmegaAdapters/ProbabilisticChannelNative.lean
@@ -130,6 +131,9 @@ identity relation, relational composition, and changed-carrier recovery;
 finite channel / partition presentation with presentation-native
 separation/order/transport, Alpha-frame-compatible exact decoder recovery,
 channel composition, changed-carrier recovery, and constant-channel separation;
+finite channel decoder provenance split separating existence-style recovery
+from registered and declared registered decoder recovery, with counterexamples
+blocking the reverse implication;
 explicit substrate bridge objects separating presentation-level machinery from
 substrate-contact claims;
 Alpha-native probabilistic channel core with exact/probabilistic separation,

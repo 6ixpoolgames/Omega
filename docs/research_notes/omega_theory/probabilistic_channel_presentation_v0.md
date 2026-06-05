@@ -199,6 +199,12 @@ dec : L_E -> L_D
 A decoder is not evidence by itself. It must be evaluated against a channel,
 prior, and source distinction.
 
+For theorem-transfer claims that depend on instrument provenance, the finite
+channel layer now distinguishes existence-style recovery from registered
+decoder recovery. A post-hoc decoder may show channel capacity, but registered
+or declared registered evidence is needed when the claim is about a supplied
+instrument.
+
 Required decoder policies:
 
 ```text

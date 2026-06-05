@@ -262,6 +262,10 @@ rebuilds exact support-channel recovery with a presentation-native
 observable/separation/order/transport surface plus an Alpha-frame-compatible
 native transport surface.
 
+`OmegaAdapters.FiniteChannelDecoderNative` separates existence-style decoder
+recovery from registered and declared registered decoder recovery. This matters
+because channel capacity and instrument provenance are different claims.
+
 `OmegaAdapters.SubstrateBridge` adds explicit bridge objects so presentation
 laws and substrate-contact claims are separate proof obligations.
 

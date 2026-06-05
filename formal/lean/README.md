@@ -221,6 +221,7 @@ machinery:
 OmegaAdapters/FiniteBoolean.lean
 OmegaAdapters/FiniteBooleanNative.lean
 OmegaAdapters/FiniteChannel.lean
+OmegaAdapters/FiniteChannelDecoderNative.lean
 OmegaAdapters/FiniteChannelNative.lean
 OmegaAdapters/ProbabilisticChannel.lean
 OmegaAdapters/ProbabilisticChannelNative.lean
@@ -241,6 +242,24 @@ recovery with a presentation-native observable/separation/order/transport
 surface and an Alpha-frame-compatible native transport surface. The stable
 `OmegaAdapters/FiniteChannel.lean` adapter path now imports that native
 implementation.
+
+`OmegaAdapters/FiniteChannelDecoderNative.lean` separates decoder provenance
+from existence-style recovery:
+
+```text
+ExistsExactRecovers:
+  some decoder works
+
+RegisteredExactRecovers:
+  a decoder drawn from a supplied registry works
+
+DeclaredRegisteredExactRecovers:
+  a declared registry contains a working decoder
+```
+
+It proves registered/declared recovery implies existence-style recovery and
+checks finite counterexamples where existence-style recovery holds but a
+declared registry is empty or contains only a bad decoder.
 
 `OmegaAdapters/SubstrateBridge.lean` defines explicit `SubstrateBridge` and
 `RelationBridge` objects. A presentation can satisfy presentation-level laws
@@ -509,7 +528,10 @@ Refines D E:
   E is fine enough to decode D
 
 ExactRecovers K D E:
-  exact decoder reconstruction through channel support
+  existence-style exact decoder reconstruction through channel support
+
+RegisteredExactRecovers K D E Reg:
+  exact recovery by a supplied decoder registry
 
 channelTransport:
   support-channel-induced DistTransport over observable distinctions

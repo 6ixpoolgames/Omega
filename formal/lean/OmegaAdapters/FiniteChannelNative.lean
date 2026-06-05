@@ -117,7 +117,12 @@ def obsDistOrder (X : Type u) :
   le_refl := refines_refl
   le_trans := @refines_trans X
 
-/-- Exact decoder recovery through a support channel. -/
+/-- Existence-style exact decoder recovery through a support channel.
+
+This proves that some decoder can recover the source distinction from the
+target distinction. It does not assert declared decoder provenance. Use
+`OmegaAdapters.FiniteChannelNative.DecoderProvenance.RegisteredExactRecovers`
+when a theorem needs recovery by a supplied decoder registry. -/
 def ExactRecovers
     {X : Type u} {Y : Type w}
     (K : X -> Y -> Prop)
