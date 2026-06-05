@@ -82,6 +82,7 @@ OmegaAdapters/FiniteChannelNative.lean
 OmegaAdapters/ProbabilisticChannel.lean
 OmegaAdapters/ProbabilisticChannelNative.lean
 OmegaAdapters/ProbabilisticChannelCascadeNative.lean
+OmegaAdapters/ProbabilisticChannelCascadeEvidenceNative.lean
 OmegaAdapters/ProbabilisticChannelPolicy.lean
 OmegaAdapters/SubstrateBridge.lean
 OmegaAdapters/Audit/AdapterFailures.lean
@@ -139,6 +140,8 @@ substrate-contact claims;
 Alpha-native probabilistic channel core with exact/probabilistic separation,
 full-support converse, high-probability counterexample, native finite-channel
 support projection, and finite cascade error bound;
+finite cascade evidence object separating path-ensemble theorem input from
+independently normalized summary rates;
 finite policy-separation example showing that Bayes-best target recovery can
 strictly exceed fixed-declared target recovery.
 ```

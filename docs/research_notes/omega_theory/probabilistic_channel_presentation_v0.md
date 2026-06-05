@@ -539,6 +539,11 @@ The empirical arm should report measured composed success and should not replace
 this cascade-level theorem with independently normalized stage-error claims
 unless additional normalization assumptions are supplied.
 
+The native evidence-object repair now exposes this path ensemble explicitly as
+`CascadeEvidence`. The theorem-transfer surface should consume a path-ensemble
+evidence object or a lossless reconstruction of one, not independently
+normalized stage summaries.
+
 The Lean presentation also checks that the cascade path-ensemble total mass and
 composite error mass agree with the corresponding `chanComp` total/error masses.
 This ties the path-level proof back to the composed natural-weight channel.

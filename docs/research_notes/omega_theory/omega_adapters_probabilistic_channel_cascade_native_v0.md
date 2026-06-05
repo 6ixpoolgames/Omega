@@ -30,6 +30,7 @@ native migration pass.
 
 ```text
 formal/lean/OmegaAdapters/ProbabilisticChannelCascadeNative.lean
+formal/lean/OmegaAdapters/ProbabilisticChannelCascadeEvidenceNative.lean
 ```
 
 The native cascade layer defines:
@@ -50,6 +51,22 @@ cascadeCompositeErrorMass:
 cascadeFirstErrorMass / cascadeSecondErrorMass:
   stage decoder errors lifted to the same path ensemble
 ```
+
+The follow-up evidence-object repair adds:
+
+```text
+CascadeEvidence:
+  explicit finite path-ensemble evidence object
+
+CascadeEvidence.union_bound:
+  generic finite cascade union bound over one evidence object
+
+channel_cascade_bound_from_evidence:
+  channel cascade bound derived from the generic evidence theorem
+```
+
+The evidence-object theorem is the preferred theorem-transfer surface when
+auditing empirical cascade artifacts.
 
 ## Checked Theorem Surface
 
@@ -85,14 +102,15 @@ until the next native pass.
 
 This is a finite stochastic cascade theorem over declared natural-weight
 channels and decoders. Policy, empirical, and compatibility semantics remain
-outside this module.
+outside this module. The evidence-object follow-up prevents independently
+normalized summary rates from serving as theorem input.
 
 ## Next Targets
 
 Recommended next conversions:
 
 ```text
-1. Probabilistic channel policy native pass
-2. Adapter-failure examples native pass
-3. OmegaProper scaffold native cleanup
+1. Registry-first stochastic channel data generation
+2. Probabilistic channel policy native pass
+3. Adapter-failure examples native pass
 ```

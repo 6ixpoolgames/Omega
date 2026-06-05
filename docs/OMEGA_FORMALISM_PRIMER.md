@@ -272,8 +272,10 @@ laws and substrate-contact claims are separate proof obligations.
 `OmegaAdapters.ProbabilisticChannelNative` is the first native probabilistic
 adapter slice: it rebuilds natural-weight support/probability separation over
 the native finite-channel adapter. `ProbabilisticChannelCascadeNative` adds the
-native finite cascade error-bound layer over the same path ensemble. Policy
-migration remains pending.
+native finite cascade error-bound layer over the same path ensemble.
+`ProbabilisticChannelCascadeEvidenceNative` makes the path ensemble an explicit
+evidence object so theorem transfer cannot be driven by independently
+normalized stage summaries.
 
 Current probabilistic enrichment note:
 

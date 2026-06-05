@@ -121,7 +121,7 @@ them.
 | `OmegaCore/AdapterFailures.lean` | OmegaAdapters | `OmegaAdapters/Audit/AdapterFailures.lean` | adapter theorem-transfer failure examples | adapter audit boundary | facade import |
 | `OmegaCore/Presentations/FiniteBoolean.lean` | OmegaAdapters | `OmegaAdapters/FiniteBooleanNative.lean`; `OmegaAdapters/FiniteBoolean.lean` | presentation-native finite Boolean support presentation plus Alpha-frame-compatible stable adapter entry point | substrate/presentation-specific | native replacement plus presentation split |
 | `OmegaCore/Presentations/FiniteChannel.lean` | OmegaAdapters | `OmegaAdapters/FiniteChannelNative.lean`; `OmegaAdapters/FiniteChannelDecoderNative.lean`; `OmegaAdapters/FiniteChannel.lean` | presentation-native finite channel / observable-partition presentation plus decoder provenance split and Alpha-frame-compatible stable adapter entry point | substrate/presentation-specific | native replacement plus presentation/provenance split |
-| `OmegaCore/Presentations/ProbabilisticChannel.lean` | OmegaAdapters | `OmegaAdapters/ProbabilisticChannelNative.lean`; `OmegaAdapters/ProbabilisticChannelCascadeNative.lean`; `OmegaAdapters/ProbabilisticChannel.lean` | Alpha-native probabilistic exact/probability separation and cascade error-bound layer plus stable adapter entry point | measurement/presentation layer | native replacement except policy companion |
+| `OmegaCore/Presentations/ProbabilisticChannel.lean` | OmegaAdapters | `OmegaAdapters/ProbabilisticChannelNative.lean`; `OmegaAdapters/ProbabilisticChannelCascadeNative.lean`; `OmegaAdapters/ProbabilisticChannelCascadeEvidenceNative.lean`; `OmegaAdapters/ProbabilisticChannel.lean` | Alpha-native probabilistic exact/probability separation, cascade error-bound layer, and path-ensemble evidence object plus stable adapter entry point | measurement/presentation layer | native replacement except policy companion |
 | `OmegaCore/Presentations/ProbabilisticChannelPolicy.lean` | OmegaAdapters | `OmegaAdapters/ProbabilisticChannelPolicy.lean` | fixed-declared vs Bayes-best policy separation | policy separation example | facade import |
 | `OmegaCore/Completion.lean` | OmegaProper | `OmegaProper/Scaffolds/FiniteMaximal.lean` | finite maximal-family scaffold | downstream candidate-theory scaffold | facade import |
 | `OmegaCore/Counterexamples.lean` | OmegaProper | `OmegaProper/Scaffolds/CompletionCounterexamples.lean` | finite completion counterexamples | downstream scaffold separations | facade import |
@@ -230,7 +230,10 @@ substrate-contact claims.
 adapter core: positive-weight support, success/error/total masses,
 exact/probability separation, the full-prior converse, finite counterexamples,
 finite cascade union bound, and composed-channel total/error mass bridges.
-Policy separation remains a pending native pass.
+`OmegaAdapters.ProbabilisticChannelCascadeEvidenceNative` makes the finite path
+ensemble an explicit `CascadeEvidence` theorem input and derives the channel
+cascade bound from the generic evidence-object union bound. Policy separation
+remains a pending native pass.
 
 Physical namespace migration for the remaining modules is deferred to later
 passes, after the layer map is stable.
@@ -250,7 +253,6 @@ lake build OmegaCore
 
 ## Next Step
 
-The next formal target should be the cascade evidence-object repair, not a
-broad OmegaProper expansion. The useful work is to make path-ensemble evidence
-the object consumed by cascade bounds so independently normalized error
-summaries cannot instantiate the theorem surface.
+The next formal target should be registry-first stochastic data generation over
+the repaired theorem surfaces, or native policy migration if the formal arm
+wants all policy examples inside `OmegaAdapters`.

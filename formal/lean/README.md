@@ -226,6 +226,7 @@ OmegaAdapters/FiniteChannelNative.lean
 OmegaAdapters/ProbabilisticChannel.lean
 OmegaAdapters/ProbabilisticChannelNative.lean
 OmegaAdapters/ProbabilisticChannelCascadeNative.lean
+OmegaAdapters/ProbabilisticChannelCascadeEvidenceNative.lean
 OmegaAdapters/ProbabilisticChannelPolicy.lean
 OmegaAdapters/SubstrateBridge.lean
 OmegaAdapters/Audit/AdapterFailures.lean
@@ -272,8 +273,23 @@ support, success/error/total mass, exact/probability separation, full-prior
 converse, and finite counterexamples.
 
 `OmegaAdapters/ProbabilisticChannelCascadeNative.lean` rebuilds the finite
-cascade error-bound layer over the same path ensemble. Native policy migration
-remains pending.
+cascade error-bound layer over the same path ensemble.
+
+`OmegaAdapters/ProbabilisticChannelCascadeEvidenceNative.lean` makes that path
+ensemble an explicit theorem input:
+
+```text
+CascadeEvidence:
+  finite path type, path weights, and stage/composite error predicates
+
+CascadeEvidence.union_bound:
+  generic finite union bound over one evidence object
+
+channelCascadeEvidence:
+  constructor from the existing natural-weight channel cascade
+```
+
+The evidence theorem does not consume independently normalized summary rates.
 
 `OmegaProper` preserves downstream candidate-theory scaffolds:
 
@@ -566,8 +582,10 @@ proto-valuerhood, valuerhood, ethics, or Omega validation.
 
 `OmegaAdapters/ProbabilisticChannelNative.lean` defines the first native finite
 probabilistic channel enrichment slice. `ProbabilisticChannelCascadeNative.lean`
-adds the native cascade theorem. The fixed-declared versus Bayes-best policy
-theorem remains checked in `OmegaCore` pending native migration:
+adds the native cascade theorem, and
+`ProbabilisticChannelCascadeEvidenceNative.lean` makes the path ensemble an
+explicit evidence object. The fixed-declared versus Bayes-best policy theorem
+remains checked in `OmegaCore` pending native migration:
 
 ```text
 Supports K x y:
@@ -593,6 +611,10 @@ chanComp / cascadeTotalMass:
 
 cascadeCompositeErrorMass / cascadeFirstErrorMass / cascadeSecondErrorMass:
   composite and stage decoder-error masses over the same cascade path ensemble
+
+CascadeEvidence:
+  explicit finite path-ensemble evidence object with path weights and
+  first-stage, second-stage, and composite error predicates
 ```
 
 Checked presentation facts:
@@ -625,6 +647,12 @@ cascadeTotalMass_eq_totalMass_chanComp:
 cascadeCompositeErrorMass_eq_errorMass_chanComp:
   cascade composite error mass agrees with ordinary error mass over the
   composed channel and composed decoder
+
+CascadeEvidence.union_bound:
+  generic cascade union bound over one explicit evidence object
+
+channel_cascade_bound_from_evidence:
+  obtains the channel cascade bound from `CascadeEvidence.union_bound`
 
 bayes_best_can_exceed_fixed_declared:
   an available alternate target observation can recover perfectly while the

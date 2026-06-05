@@ -9,6 +9,22 @@ patch notes at the top.
 
 ## 2026-06-05
 
+### OmegaAdapters Probabilistic Channel Cascade Evidence
+
+Added a generic path-ensemble evidence object for finite cascade error bounds:
+
+```text
+formal/lean/OmegaAdapters/ProbabilisticChannelCascadeEvidenceNative.lean
+docs/research_notes/omega_theory/omega_adapters_probabilistic_channel_cascade_evidence_native_v0.md
+```
+
+The new `CascadeEvidence` object carries a finite path type, path weights, and
+first-stage/second-stage/composite error predicates. The generic
+`CascadeEvidence.union_bound` theorem consumes that object, and
+`channelCascadeEvidence` bridges the existing finite channel cascade into it.
+This prevents independently normalized summary rates from serving as the theorem
+input.
+
 ### OmegaAdapters Finite Channel Decoder Provenance
 
 Added a decoder provenance split for finite channel recovery:

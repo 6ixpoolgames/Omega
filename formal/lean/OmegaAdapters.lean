@@ -6,6 +6,7 @@ import OmegaAdapters.FiniteChannelDecoderNative
 import OmegaAdapters.FiniteChannelNative
 import OmegaAdapters.ProbabilisticChannel
 import OmegaAdapters.ProbabilisticChannelCascadeNative
+import OmegaAdapters.ProbabilisticChannelCascadeEvidenceNative
 import OmegaAdapters.ProbabilisticChannelNative
 import OmegaAdapters.ProbabilisticChannelPolicy
 import OmegaAdapters.SubstrateBridge
