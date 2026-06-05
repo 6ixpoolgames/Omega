@@ -1,13 +1,21 @@
+import ProtoOmega.Presentation.Native
 import ProtoOmega.Transport.Native
 
 /-!
 OmegaAdapters.FiniteChannelNative
 
-Alpha-native finite channel / observable-partition presentation.
+Finite channel / observable-partition presentation.
 
 Distinctions are observable labelings. A target distinction refines a source
 distinction when the source labels can be decoded from the target labels.
 Channel recovery is exact decoder reconstruction through a support relation.
+
+This module exposes the channel adapter at two levels:
+
+* presentation-native: observable distinction/separation/order/transport
+  structures without full Alpha substrate contact;
+* Alpha-frame compatible: the older observable frame and `NativeTransport`
+  surface kept for downstream modules.
 -/
 
 namespace OmegaAdapters
@@ -33,6 +41,21 @@ theorem obsSep_symm {X : Type u} (D : ObsDist.{u, v} X) (x y : X) :
     ObsSep D x y -> ObsSep D y x := by
   intro h hyx
   exact h (Eq.symm hyx)
+
+/-- Presentation-native observable-distinction separation. -/
+def obsSepPresentation (X : Type u) :
+    ProtoOmega.Presentation.SepPresentation where
+  X := X
+  Dist := ObsDist.{u, v} X
+  Sep := ObsSep
+  sep_irrefl := obsSep_irrefl
+  sep_symm := obsSep_symm
+
+/-- Presentation-native observable distinctions, forgetting carrier separation
+data. -/
+def obsDistPresentation (X : Type u) :
+    ProtoOmega.Presentation.DistPresentation :=
+  (obsSepPresentation (X := X)).toDistPresentation
 
 /-- Alpha frame whose distinctions are observable labelings. The support
 channel itself is external to the frame and appears in `channelTransport`. -/
@@ -80,6 +103,13 @@ theorem refines_trans
                   rw [hDecodeEF x]
                 _ = D.obs x := hDecodeDE x)
 
+/-- Presentation-native observable-distinction order. -/
+def obsPresentationOrder (X : Type u) :
+    ProtoOmega.Presentation.DistOrder (obsDistPresentation (X := X)) where
+  le := Refines
+  le_refl := refines_refl
+  le_trans := @refines_trans X
+
 /-- Observable-distinction order over the Alpha-native observable frame. -/
 def obsDistOrder (X : Type u) :
     ProtoOmega.Transport.DistOrder (obsAlphaFrame (X := X)) where
@@ -95,6 +125,36 @@ def ExactRecovers
     (E : ObsDist.{w, v} Y) : Prop :=
   exists decode : E.Label -> D.Label,
     forall x y, K x y -> decode (E.obs y) = D.obs x
+
+/-- Channel-induced exact-recovery presentation-native transport. -/
+def channelPresentationTransport
+    {X : Type u} {Y : Type w}
+    (K : X -> Y -> Prop) :
+    ProtoOmega.Presentation.Transport
+      (obsPresentationOrder (X := X)) (obsPresentationOrder (X := Y)) where
+  rel := ExactRecovers K
+  closed := by
+    intro D' D E E' hSource hRec hTarget
+    cases hSource with
+    | intro decodeSource hDecodeSource =>
+        cases hRec with
+        | intro decodeRec hDecodeRec =>
+            cases hTarget with
+            | intro decodeTarget hDecodeTarget =>
+                exact Exists.intro
+                  (fun label => decodeSource (decodeRec (decodeTarget label)))
+                  (by
+                    intro x y hK
+                    change
+                      decodeSource (decodeRec (decodeTarget (E'.obs y))) =
+                        D'.obs x
+                    calc
+                      decodeSource (decodeRec (decodeTarget (E'.obs y))) =
+                          decodeSource (decodeRec (E.obs y)) := by
+                        rw [hDecodeTarget y]
+                      _ = decodeSource (D.obs x) := by
+                        rw [hDecodeRec x y hK]
+                      _ = D'.obs x := hDecodeSource x)
 
 /-- Channel-induced exact-recovery native transport. -/
 def channelTransport
@@ -185,6 +245,21 @@ theorem exactRecovers_comp
                     decodeKE (decodeLF (F.obs z)) = decodeKE (E.obs y) := by
                       rw [hDecodeLF y z hy.right]
                     _ = D.obs x := hDecodeKE x y hy.left)
+
+/-- Channel-induced presentation-native transport is lax over channel
+composition. -/
+theorem channelPresentationTransport_comp_subset
+    {X : Type u} {Y : Type w} {Z : Type z}
+    (K : X -> Y -> Prop)
+    (L : Y -> Z -> Prop) :
+    ProtoOmega.Presentation.Transport.Subset
+      (ProtoOmega.Presentation.Transport.compose
+        (channelPresentationTransport K) (channelPresentationTransport L))
+      (channelPresentationTransport (ChanComp K L)) := by
+  intro D F hComp
+  cases hComp with
+  | intro E hE =>
+      exact exactRecovers_comp hE.left hE.right
 
 /-- Channel-induced native transport is lax over channel composition. -/
 theorem channelTransport_comp_subset

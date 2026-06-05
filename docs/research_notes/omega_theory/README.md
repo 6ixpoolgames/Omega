@@ -82,6 +82,7 @@ OmegaAdapters/ProbabilisticChannel.lean
 OmegaAdapters/ProbabilisticChannelNative.lean
 OmegaAdapters/ProbabilisticChannelCascadeNative.lean
 OmegaAdapters/ProbabilisticChannelPolicy.lean
+OmegaAdapters/SubstrateBridge.lean
 OmegaAdapters/Audit/AdapterFailures.lean
 OmegaProper/Compatibility/JointPresentation.lean
 OmegaProper/Scaffolds/FiniteMaximal.lean
@@ -123,12 +124,14 @@ finite distinction-transport counterexample for marginal-like non-erasure not
 implying strictly joint non-erasure;
 adapter-failure examples showing theorem transfer failure without closure or
 laxity laws;
-Alpha-native Boolean relation support presentation with relation-induced
-transports, identity relation, relational composition, and changed-carrier
-recovery;
-Alpha-native finite channel / partition presentation with exact decoder
-recovery, channel composition, changed-carrier recovery, and constant-channel
-separation;
+finite Boolean relation support presentation with presentation-native
+separation/order/transport, Alpha-frame-compatible relation-induced transports,
+identity relation, relational composition, and changed-carrier recovery;
+finite channel / partition presentation with presentation-native
+separation/order/transport, Alpha-frame-compatible exact decoder recovery,
+channel composition, changed-carrier recovery, and constant-channel separation;
+explicit substrate bridge objects separating presentation-level machinery from
+substrate-contact claims;
 Alpha-native probabilistic channel core with exact/probabilistic separation,
 full-support converse, high-probability counterexample, native finite-channel
 support projection, and finite cascade error bound;

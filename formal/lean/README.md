@@ -226,18 +226,26 @@ OmegaAdapters/ProbabilisticChannel.lean
 OmegaAdapters/ProbabilisticChannelNative.lean
 OmegaAdapters/ProbabilisticChannelCascadeNative.lean
 OmegaAdapters/ProbabilisticChannelPolicy.lean
+OmegaAdapters/SubstrateBridge.lean
 OmegaAdapters/Audit/AdapterFailures.lean
 ```
 
 `OmegaAdapters/FiniteBooleanNative.lean` rebuilds the finite Boolean support
-presentation over Alpha-native event frames and native transport. The stable
+presentation with a presentation-native event/separation/order/transport
+surface and an Alpha-frame-compatible native transport surface. The stable
 `OmegaAdapters/FiniteBoolean.lean` adapter path now imports that native
 implementation.
 
 `OmegaAdapters/FiniteChannelNative.lean` rebuilds exact support-channel
-recovery over Alpha-native observable-distinction frames and native transport.
-The stable `OmegaAdapters/FiniteChannel.lean` adapter path now imports that
-native implementation.
+recovery with a presentation-native observable/separation/order/transport
+surface and an Alpha-frame-compatible native transport surface. The stable
+`OmegaAdapters/FiniteChannel.lean` adapter path now imports that native
+implementation.
+
+`OmegaAdapters/SubstrateBridge.lean` defines explicit `SubstrateBridge` and
+`RelationBridge` objects. A presentation can satisfy presentation-level laws
+without thereby proving substrate contact; a bridge is the separate proof
+obligation.
 
 `OmegaAdapters/ProbabilisticChannelNative.lean` rebuilds the first
 probabilistic channel slice over native finite-channel support: positive-weight

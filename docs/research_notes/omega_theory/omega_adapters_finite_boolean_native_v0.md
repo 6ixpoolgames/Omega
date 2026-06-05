@@ -28,11 +28,21 @@ but it now imports the native implementation instead of the old
 formal/lean/OmegaAdapters/FiniteBooleanNative.lean
 ```
 
-The native adapter defines:
+The native adapter now exposes a presentation-native surface and an
+Alpha-frame-compatible surface. It defines:
 
 ```text
 Event:
   Boolean predicates over a carrier
+
+eventSepPresentation:
+  presentation-native event separation
+
+eventPresentationOrder:
+  presentation-native support-inclusion order
+
+supportPresentationTransport:
+  relation-induced presentation-native transport
 
 EventAlphaFrame:
   Alpha frame whose distinctions are event predicates
@@ -44,7 +54,7 @@ SupportRecovers:
   existential forward-image support recovery
 
 supportTransport:
-  relation-induced native transport
+  relation-induced Alpha-frame-compatible native transport
 ```
 
 ## Checked Theorem Surface
@@ -57,6 +67,10 @@ supportTransport_id_iff:
 
 supportTransport_comp_subset:
   relational composition induces the native lax-composition inclusion
+
+supportPresentationTransport_comp_subset:
+  relational composition induces the presentation-native lax-composition
+  inclusion
 
 changed_carrier_composite_recovery:
   support recovery composes across changed carrier types

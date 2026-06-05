@@ -1,13 +1,21 @@
+import ProtoOmega.Presentation.Native
 import ProtoOmega.Transport.Native
 
 /-!
 OmegaAdapters.FiniteBooleanNative
 
-Alpha-native finite Boolean support presentation.
+Finite Boolean support presentation.
 
 Events are predicates over finite or arbitrary carrier types. The event order is
 support inclusion, and a binary relation induces a native transport by
 existential forward-image support recovery.
+
+This module now exposes the Boolean adapter at two levels:
+
+* presentation-native: event/separation/order/transport structures that do not
+  claim full Alpha substrate contact;
+* Alpha-frame compatible: the older event frame and `NativeTransport` surface
+  kept for downstream modules.
 -/
 
 namespace OmegaAdapters
@@ -41,6 +49,21 @@ theorem eventSep_symm {a : Type u} (P : Event a) (x y : a) :
   | inl hleft => exact Or.inr hleft
   | inr hright => exact Or.inl hright
 
+/-- Presentation-native Boolean event separation. -/
+def eventSepPresentation (a : Type u) :
+    ProtoOmega.Presentation.SepPresentation.{u, u} where
+  X := a
+  Dist := Event a
+  Sep := EventSep
+  sep_irrefl := eventSep_irrefl
+  sep_symm := eventSep_symm
+
+/-- Presentation-native Boolean event distinctions, forgetting carrier
+separation data. -/
+def eventDistPresentation (a : Type u) :
+    ProtoOmega.Presentation.DistPresentation.{u} :=
+  (eventSepPresentation a).toDistPresentation
+
 /-- Alpha frame whose distinctions are Boolean events. The adapter relation is
 external to the frame and appears in `supportTransport`. -/
 def EventAlphaFrame (a : Type u) : AlphaCore.Frame.{u, u} where
@@ -72,6 +95,13 @@ theorem eventLe_trans {a : Type u} {P Q Z : Event a} :
   intro hPQ hQZ x hP
   exact hQZ x (hPQ x hP)
 
+/-- Presentation-native event order. -/
+def eventPresentationOrder (a : Type u) :
+    ProtoOmega.Presentation.DistOrder (eventDistPresentation a) where
+  le := EventLe
+  le_refl := eventLe_refl
+  le_trans := @eventLe_trans a
+
 /-- Event preorder over the Alpha-native Boolean event frame. -/
 def eventOrder (a : Type u) :
     ProtoOmega.Transport.DistOrder (EventAlphaFrame a) where
@@ -90,6 +120,21 @@ def SupportRecovers
     (Q : Event b) : Prop :=
   forall x, P x -> exists y, R x y /\ Q y
 
+/-- Relation-induced presentation-native support transport. -/
+def supportPresentationTransport
+    {a : Type u} {b : Type v}
+    (R : Rel a b) :
+    ProtoOmega.Presentation.Transport
+      (eventPresentationOrder a) (eventPresentationOrder b) where
+  rel := SupportRecovers R
+  closed := by
+    intro P' P Q Q' hSource hRec hTarget
+    intro x hP'
+    cases hRec x (hSource x hP') with
+    | intro y hy =>
+        exact Exists.intro y
+          (And.intro hy.left (hTarget y hy.right))
+
 /-- Relation-induced native support transport. -/
 def supportTransport
     {a : Type u} {b : Type v}
@@ -107,6 +152,25 @@ def supportTransport
 /-- Identity relation. -/
 def IdRel (a : Type u) : Rel a a :=
   fun x y => x = y
+
+/-- The identity relation induces presentation-level identity transport under
+support-inclusion event order. -/
+theorem supportPresentationTransport_id_iff
+    {a : Type u}
+    (P Q : Event a) :
+    (supportPresentationTransport (IdRel a)).rel P Q <->
+      (ProtoOmega.Presentation.Transport.id (eventPresentationOrder a)).rel P Q := by
+  constructor
+  case mp =>
+    intro hRec x hP
+    cases hRec x hP with
+    | intro y hy =>
+        rw [hy.left]
+        exact hy.right
+  case mpr =>
+    intro hLe x hP
+    exact Exists.intro x
+      (And.intro rfl (hLe x hP))
 
 /-- The identity relation induces the native identity transport, at relation
 level, under support-inclusion event order. -/
@@ -133,6 +197,29 @@ def RelComp
     (R : Rel a b)
     (S : Rel b c) : Rel a c :=
   fun x z => exists y, R x y /\ S y z
+
+/-- Relation-induced presentation-native support transport is lax over
+relational composition. -/
+theorem supportPresentationTransport_comp_subset
+    {a : Type u} {b : Type v} {c : Type w}
+    (R : Rel a b)
+    (S : Rel b c) :
+    ProtoOmega.Presentation.Transport.Subset
+      (ProtoOmega.Presentation.Transport.compose
+        (supportPresentationTransport R) (supportPresentationTransport S))
+      (supportPresentationTransport (RelComp R S)) := by
+  intro P Z hComp
+  intro x hP
+  cases hComp with
+  | intro Q hQ =>
+      cases hQ.left x hP with
+      | intro y hy =>
+          cases hQ.right y hy.right with
+          | intro z hz =>
+              exact Exists.intro z
+                (And.intro
+                  (Exists.intro y (And.intro hy.left hz.left))
+                  hz.right)
 
 /-- Relation-induced native support transport is lax over relational
 composition. -/

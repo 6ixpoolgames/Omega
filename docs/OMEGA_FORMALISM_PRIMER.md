@@ -202,8 +202,8 @@ ProtoOmega:
   distinction transport, recoverability, recurrence, marginal/joint separation
 
 OmegaAdapters:
-  finite Boolean, finite channel, probabilistic channel, and adapter audit
-  presentations
+  finite Boolean, finite channel, probabilistic channel, substrate bridge, and
+  adapter audit presentations
 
 OmegaProper:
   joint-presentation and finite maximal/completion scaffolds
@@ -253,12 +253,17 @@ rebuilds finite-chain recoverability over native recoverability models.
 it rebuilds the finite marginal/joint separation over native transport.
 
 `OmegaAdapters.FiniteBooleanNative` is the first native adapter conversion: it
-rebuilds the finite Boolean relation-support presentation over Alpha-native
-event frames and native transport.
+rebuilds the finite Boolean relation-support presentation with a
+presentation-native event/separation/order/transport surface plus an
+Alpha-frame-compatible native transport surface.
 
 `OmegaAdapters.FiniteChannelNative` is the second native adapter conversion: it
-rebuilds exact support-channel recovery over Alpha-native observable
-distinctions and native transport.
+rebuilds exact support-channel recovery with a presentation-native
+observable/separation/order/transport surface plus an Alpha-frame-compatible
+native transport surface.
+
+`OmegaAdapters.SubstrateBridge` adds explicit bridge objects so presentation
+laws and substrate-contact claims are separate proof obligations.
 
 `OmegaAdapters.ProbabilisticChannelNative` is the first native probabilistic
 adapter slice: it rebuilds natural-weight support/probability separation over

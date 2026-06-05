@@ -28,11 +28,21 @@ but it now imports the native implementation instead of the old
 formal/lean/OmegaAdapters/FiniteChannelNative.lean
 ```
 
-The native adapter defines:
+The native adapter now exposes a presentation-native surface and an
+Alpha-frame-compatible surface. It defines:
 
 ```text
 ObsDist:
   observable labeling / partition of a carrier
+
+obsSepPresentation:
+  presentation-native observable-distinction separation
+
+obsPresentationOrder:
+  presentation-native observable-distinction order
+
+channelPresentationTransport:
+  channel-induced presentation-native exact-recovery transport
 
 obsAlphaFrame:
   Alpha frame whose distinctions are observable labelings
@@ -44,7 +54,8 @@ ExactRecovers:
   exact decoder recovery through channel support
 
 channelTransport:
-  support-channel-induced native transport over observable distinctions
+  support-channel-induced Alpha-frame-compatible native transport over
+  observable distinctions
 ```
 
 ## Checked Theorem Surface
@@ -60,6 +71,9 @@ exactRecovers_comp:
 
 channelTransport_comp_subset:
   channel composition induces native lax-composition inclusion
+
+channelPresentationTransport_comp_subset:
+  channel composition induces presentation-native lax-composition inclusion
 
 exact_recovers_changed_carrier_comp:
   exact recovery composes across changed carrier types

@@ -7,6 +7,7 @@ import OmegaAdapters.ProbabilisticChannel
 import OmegaAdapters.ProbabilisticChannelCascadeNative
 import OmegaAdapters.ProbabilisticChannelNative
 import OmegaAdapters.ProbabilisticChannelPolicy
+import OmegaAdapters.SubstrateBridge
 
 /-!
 OmegaAdapters umbrella.

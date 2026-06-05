@@ -9,6 +9,23 @@ patch notes at the top.
 
 ## 2026-06-05
 
+### OmegaAdapters Presentation-Native Bridge Repair
+
+Repaired the finite Boolean/channel adapter architecture after the
+presentation-native split:
+
+```text
+formal/lean/OmegaAdapters/FiniteBooleanNative.lean
+formal/lean/OmegaAdapters/FiniteChannelNative.lean
+formal/lean/OmegaAdapters/SubstrateBridge.lean
+docs/research_notes/omega_theory/omega_adapters_presentation_native_bridge_repair_v0.md
+```
+
+The adapters now expose presentation-native separation/order/transport surfaces
+alongside the existing Alpha-frame-compatible native transport paths.
+`SubstrateBridge` and `RelationBridge` make substrate contact an explicit proof
+object rather than an implicit consequence of defining a presentation.
+
 ### Alpha Independence and Presentation-Native Repair
 
 Added the first structural anti-self-validation repair:
