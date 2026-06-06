@@ -9,6 +9,57 @@ patch notes at the top.
 
 ## 2026-06-05
 
+### Probabilistic Non-Erasure Native Lean Layer
+
+Added the finite thresholded probabilistic non-erasure adapter layer:
+
+```text
+formal/lean/OmegaAdapters/ProbabilisticNonErasureNative.lean
+docs/research_notes/omega_theory/omega_adapters_probabilistic_non_erasure_native_v0.md
+```
+
+Read:
+
+```text
+ProbNonErasing Req RecoveredAtThreshold:
+  requirement-set non-erasure over an externally supplied recovery predicate
+
+probNonErasing_mono_requirement:
+  if Small subset Large and Large is non-erasing, then Small is non-erasing
+
+thresholded_nonErasing_not_exactSupport:
+  thresholded probabilistic non-erasure can hold while exact support recovery
+  fails
+```
+
+The definition does not search for a decoder or optimize over targets.
+`RecoveredAtThreshold` is external evidence supplied by a registry or
+measurement layer.
+
+Validation:
+
+```text
+lake build OmegaAdapters: passed
+```
+
+### Lean Toolchain PATH Repair
+
+Installed Elan and the pinned Lean toolchain:
+
+```text
+leanprover/lean4:v4.30.0
+```
+
+Also marked existing Lake package checkouts as Git safe directories for the
+current Windows user and added:
+
+```text
+scripts/setup/invoke_lake.ps1
+```
+
+as a repo-local Lake wrapper that prefers the installed pinned toolchain binary
+and falls back to Elan/PATH discovery.
+
 ### Stochastic Provenance Field Repair
 
 Updated the stochastic theorem-transfer and thresholded non-erasure packages so

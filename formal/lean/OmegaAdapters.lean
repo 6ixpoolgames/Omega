@@ -9,6 +9,7 @@ import OmegaAdapters.ProbabilisticChannelCascadeNative
 import OmegaAdapters.ProbabilisticChannelCascadeEvidenceNative
 import OmegaAdapters.ProbabilisticChannelNative
 import OmegaAdapters.ProbabilisticChannelPolicy
+import OmegaAdapters.ProbabilisticNonErasureNative
 import OmegaAdapters.SubstrateBridge
 
 /-!
