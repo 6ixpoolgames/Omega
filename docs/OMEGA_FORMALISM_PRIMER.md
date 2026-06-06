@@ -39,9 +39,10 @@ non-erase, compose, and eventually support compatibility/completion claims.
 
 This is a deliberate separation. `AlphaCore` is the primitive floor.
 `AlphaOmega` is the active umbrella for the broader project stack:
-`AlphaCore`, `ProtoOmega`, `OmegaAdapters`, and `OmegaProper`. The older
-`OmegaCore` Lean stack remains valuable as checked source material during the
-facade migration.
+`AlphaCore`, `AlphaCalculus`, `AlphaAdapters`, and `Omega`. `ProtoOmega`,
+`OmegaAdapters`, and `OmegaProper` remain compatibility implementation
+namespaces during migration. The older `OmegaCore` Lean stack remains valuable
+as checked source material and archived provenance.
 
 The root grammar is:
 
@@ -175,7 +176,7 @@ local asymmetry need not imply global reach irreversibility;
 local nonreciprocity need not imply global reach irreversibility.
 ```
 
-### Layer 0b: AlphaOmega Facade Stack
+### Layer 0b: AlphaOmega Stack
 
 Primary note:
 
@@ -188,24 +189,24 @@ Active Lean umbrellas:
 
 ```text
 formal/lean/AlphaOmega.lean
-formal/lean/ProtoOmega.lean
-formal/lean/OmegaAdapters.lean
-formal/lean/OmegaProper.lean
+formal/lean/AlphaCalculus.lean
+formal/lean/AlphaAdapters.lean
+formal/lean/Omega.lean
 formal/lean/OmegaArchive.lean
 ```
 
 Layer roles:
 
 ```text
-ProtoOmega:
-  presentation-native distinction/order/transport structures, Alpha-native
-  distinction transport, recoverability, recurrence, marginal/joint separation
+AlphaCalculus:
+  presentation-level distinction/order/transport structures, distinction
+  transport, recoverability, recurrence, marginal/joint separation
 
-OmegaAdapters:
+AlphaAdapters:
   finite Boolean, finite channel, probabilistic channel, substrate bridge, and
   adapter audit presentations
 
-OmegaProper:
+Omega:
   joint-presentation and finite maximal/completion scaffolds
 
 OmegaArchive:
@@ -233,7 +234,9 @@ finite probabilistic channel enrichment.
 ```
 
 The old `OmegaCore` files remain buildable during this migration, but they are
-now classified by role rather than treated as the active conceptual root.
+now classified by role rather than treated as the active conceptual root. The
+old `ProtoOmega`, `OmegaAdapters`, and `OmegaProper` names are implementation
+namespaces behind the new public entrypoints.
 `AlphaCore.Independence` adds primitive non-collapse examples showing that
 relation, distinction, asymmetry, and reach irreversibility do not automatically
 supply one another. `ProtoOmega.Presentation.Native` adds a presentation-native

@@ -101,6 +101,37 @@ def test_registry_first_probe_natural_weights_and_coverage_controls(tmp_path: Pa
     assert bundle["overall_status"] == "registry_first_theorem_transfer_ready"
 
 
+def test_registry_first_probe_medium_panel_expands_gap_surface(tmp_path: Path) -> None:
+    out = tmp_path / "registry_first_medium"
+
+    result = run_registry_first_probe(out_dir=out, panel="medium")
+
+    assert result["panel"] == "medium"
+    assert int(result["channel_count"]) > 5
+
+    manifest = json.loads((out / "registry_first_probe_manifest.json").read_text(encoding="utf-8"))
+    assert manifest["panel"] == "medium"
+    assert manifest["row_counts"]["channel_manifest.csv"] == result["channel_count"]
+
+    channels = read_csv(out / "channel_manifest.csv")
+    channel_ids = {row["channel_id"] for row in channels}
+    assert "swap_bits_channel" in channel_ids
+    assert "joint_cycle_channel" in channel_ids
+    assert "independent_bit_noise_81_9_9_1_channel" in channel_ids
+
+    gap_rows = read_csv(out / "provenance_gap_by_distinction.csv")
+    assert len(gap_rows) > 35
+    swap_a = one_gap(gap_rows, "swap_bits_channel", "reg_declared_D_A_E_A")
+    assert swap_a["registered_recovery"] == "0"
+    assert swap_a["existence_recovery"] == "0"
+    assert swap_a["optimized_recovery"] == "1"
+    assert swap_a["theorem_transfer_class"] == "optimized_diagnostic_only"
+
+    readiness = read_csv(out / "theorem_transfer_readiness.csv")
+    optimized = [row for row in readiness if row["readiness_axis"] == "optimized_diagnostic_only"][0]
+    assert optimized["status"] == "ready"
+
+
 def one_gap(rows: list[dict[str, str]], channel_id: str, registry_id: str) -> dict[str, str]:
     matches = [
         row for row in rows if row["channel_id"] == channel_id and row["registry_id"] == registry_id

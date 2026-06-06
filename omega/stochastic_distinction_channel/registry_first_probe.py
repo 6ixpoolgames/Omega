@@ -1,6 +1,6 @@
 """Registry-first stochastic distinction-channel probe.
 
-This probe is deliberately tiny. It freezes declared decoder registries,
+This probe is deliberately small and staged. It freezes declared decoder registries,
 requirement sets, and thresholds before scoring any channel rows, then compares
 declared/registered recovery with existence-style capacity and optimized
 diagnostics.
@@ -23,9 +23,10 @@ from .schema import canonical_json, fraction_text
 
 DEFAULT_OUT = Path("results/stochastic_distinction_channel/20260605_registry_first_probe_v0")
 PROBE_ID = "registry_first_stochastic_channel_probe_v0"
-PROBE_SCHEMA_VERSION = "0.1.0"
+PROBE_SCHEMA_VERSION = "0.2.0"
 SCOPE = "finite registry-first stochastic channel probe; provenance gap measurement only"
 STATES = ["00", "01", "10", "11"]
+PANELS = {"tiny", "medium"}
 
 
 LabelFn = Callable[[str], str]
@@ -35,16 +36,24 @@ DecoderMap = dict[str, str]
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run registry-first stochastic-channel probe.")
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT)
+    parser.add_argument(
+        "--panel",
+        choices=sorted(PANELS),
+        default="tiny",
+        help="Channel panel to score. 'tiny' preserves the original smoke; 'medium' adds gap-revealing controls.",
+    )
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
-    result = run_registry_first_probe(out_dir=args.out)
+    result = run_registry_first_probe(out_dir=args.out, panel=args.panel)
     print(json.dumps(result, indent=2, sort_keys=True, default=str))
 
 
-def run_registry_first_probe(*, out_dir: Path = DEFAULT_OUT) -> dict[str, object]:
+def run_registry_first_probe(*, out_dir: Path = DEFAULT_OUT, panel: str = "tiny") -> dict[str, object]:
+    if panel not in PANELS:
+        raise ValueError(f"unknown registry-first probe panel: {panel}")
     out_dir.mkdir(parents=True, exist_ok=True)
 
     carrier_rows = carrier_manifest()
@@ -89,13 +98,14 @@ def run_registry_first_probe(*, out_dir: Path = DEFAULT_OUT) -> dict[str, object
         {
             **digests,
             "probe_id": PROBE_ID,
+            "panel": panel,
             "pre_score_artifacts": sorted(pre_score_outputs),
             "digest_available_before_scoring": True,
             "scope": SCOPE,
         },
     )
 
-    channels = channel_definitions()
+    channels = channel_definitions(panel=panel)
     priors = uniform_prior()
     observations = observation_tables()
     channel_rows = channel_manifest(channels)
@@ -148,6 +158,7 @@ def run_registry_first_probe(*, out_dir: Path = DEFAULT_OUT) -> dict[str, object
 
     manifest = probe_manifest(
         out_dir=out_dir,
+        panel=panel,
         pre_score_outputs=pre_score_outputs,
         scored_outputs=scored_outputs,
         digests=digests,
@@ -155,12 +166,14 @@ def run_registry_first_probe(*, out_dir: Path = DEFAULT_OUT) -> dict[str, object
     write_json(out_dir / "registry_first_probe_manifest.json", manifest)
     bundle = formal_consumption_bundle(
         out_dir=out_dir,
+        panel=panel,
         digests=digests,
         manifest=manifest,
         readiness_rows=readiness_rows,
     )
     write_json(out_dir / "registry_first_formal_consumption_bundle.json", bundle)
     report = render_report(
+        panel=panel,
         digests=digests,
         gap_rows=gap_rows,
         readiness_rows=readiness_rows,
@@ -171,9 +184,11 @@ def run_registry_first_probe(*, out_dir: Path = DEFAULT_OUT) -> dict[str, object
 
     return {
         "probe_id": PROBE_ID,
+        "panel": panel,
         "out_dir": str(out_dir),
         "registry_digest": digests["registry_digest"],
         "manifest_bundle_digest": digests["manifest_bundle_digest"],
+        "channel_count": len(channels),
         "registered_rows": len(registered_rows),
         "gap_rows": len(gap_rows),
         "cascade_evidence_status": cascade_summary_rows[0]["cascade_evidence_status"],
@@ -390,7 +405,9 @@ def declared_decoder_registries() -> tuple[list[dict[str, object]], list[dict[st
     return registry_rows, decoder_rows
 
 
-def channel_definitions() -> dict[str, dict[str, dict[str, int]]]:
+def channel_definitions(panel: str = "tiny") -> dict[str, dict[str, dict[str, int]]]:
+    if panel not in PANELS:
+        raise ValueError(f"unknown registry-first probe panel: {panel}")
     channels: dict[str, dict[str, dict[str, int]]] = {}
     channels["identity_channel"] = {
         source: {target: int(source == target) for target in STATES}
@@ -418,7 +435,59 @@ def channel_definitions() -> dict[str, dict[str, dict[str, int]]]:
         }
         for source in STATES
     }
+    if panel == "medium":
+        channels.update(medium_channel_definitions())
     return channels
+
+
+def medium_channel_definitions() -> dict[str, dict[str, dict[str, int]]]:
+    return {
+        "b_preserved_a_erased_channel": {
+            source: {target: int(target[1] == source[1]) for target in STATES}
+            for source in STATES
+        },
+        "a_flip_noise_9_1_channel": {
+            source: {
+                target: (9 if target == source else (1 if target == flip_a(source) else 0))
+                for target in STATES
+            }
+            for source in STATES
+        },
+        "b_flip_noise_3_1_channel": {
+            source: {
+                target: (3 if target == source else (1 if target == flip_b(source) else 0))
+                for target in STATES
+            }
+            for source in STATES
+        },
+        "independent_bit_noise_81_9_9_1_channel": {
+            source: {
+                target: independent_bit_noise_weight(source, target)
+                for target in STATES
+            }
+            for source in STATES
+        },
+        "parity_preserved_scramble_channel": {
+            source: {target: int(parity(target) == parity(source)) for target in STATES}
+            for source in STATES
+        },
+        "joint_cycle_channel": {
+            source: {target: int(target == cycle_state(source)) for target in STATES}
+            for source in STATES
+        },
+        "swap_bits_channel": {
+            source: {target: int(target == swap_bits(source)) for target in STATES}
+            for source in STATES
+        },
+        "copy_a_to_b_channel": {
+            source: {target: int(target == source[0] + source[0]) for target in STATES}
+            for source in STATES
+        },
+    }
+
+
+def flip_a(state: str) -> str:
+    return ("0" if state[0] == "1" else "1") + state[1]
 
 
 def flip_b(state: str) -> str:
@@ -429,6 +498,24 @@ def parity(state: str) -> str:
     return str((int(state[0]) + int(state[1])) % 2)
 
 
+def hamming_distance(a: str, b: str) -> int:
+    return sum(int(left != right) for left, right in zip(a, b))
+
+
+def independent_bit_noise_weight(source: str, target: str) -> int:
+    distance = hamming_distance(source, target)
+    return {0: 81, 1: 9, 2: 1}[distance]
+
+
+def cycle_state(state: str) -> str:
+    order = ["00", "01", "11", "10"]
+    return order[(order.index(state) + 1) % len(order)]
+
+
+def swap_bits(state: str) -> str:
+    return state[1] + state[0]
+
+
 def channel_manifest(channels: dict[str, dict[str, dict[str, int]]]) -> list[dict[str, object]]:
     family = {
         "identity_channel": "identity",
@@ -436,6 +523,14 @@ def channel_manifest(channels: dict[str, dict[str, dict[str, int]]]) -> list[dic
         "a_preserved_b_erased_channel": "selective_distinction_preservation",
         "b_flip_noise_9_1_channel": "natural_weight_bit_noise",
         "parity_projector_channel": "parity_projection",
+        "b_preserved_a_erased_channel": "selective_distinction_preservation",
+        "a_flip_noise_9_1_channel": "natural_weight_bit_noise",
+        "b_flip_noise_3_1_channel": "natural_weight_bit_noise",
+        "independent_bit_noise_81_9_9_1_channel": "natural_weight_independent_bit_noise",
+        "parity_preserved_scramble_channel": "parity_preserving_scramble",
+        "joint_cycle_channel": "deterministic_relabeling",
+        "swap_bits_channel": "deterministic_relabeling",
+        "copy_a_to_b_channel": "deterministic_projection",
     }
     rows = []
     for channel_id in sorted(channels):
@@ -1017,18 +1112,21 @@ def scoring_order_audit(pre_score_outputs: dict[str, list[dict[str, object]]], d
 def probe_manifest(
     *,
     out_dir: Path,
+    panel: str,
     pre_score_outputs: dict[str, list[dict[str, object]]],
     scored_outputs: dict[str, list[dict[str, object]]],
     digests: dict[str, str],
 ) -> dict[str, object]:
     output_rows = {**pre_score_outputs, **scored_outputs}
     payload = {
+        "panel": panel,
         "digests": digests,
         "row_counts": {name: len(rows) for name, rows in output_rows.items()},
     }
     return {
         "probe_id": PROBE_ID,
         "probe_schema_version": PROBE_SCHEMA_VERSION,
+        "panel": panel,
         "output_directory": str(out_dir),
         "registry_digest": digests["registry_digest"],
         "requirement_digest": digests["requirement_digest"],
@@ -1046,6 +1144,7 @@ def probe_manifest(
 def formal_consumption_bundle(
     *,
     out_dir: Path,
+    panel: str,
     digests: dict[str, str],
     manifest: dict[str, object],
     readiness_rows: list[dict[str, object]],
@@ -1059,6 +1158,7 @@ def formal_consumption_bundle(
         else "registry_first_measurement_ready"
     )
     payload = {
+        "panel": panel,
         "registry_digest": digests["registry_digest"],
         "manifest_bundle_digest": digests["manifest_bundle_digest"],
         "ready_axes": ready_axes,
@@ -1067,6 +1167,7 @@ def formal_consumption_bundle(
     return {
         "bundle_schema_version": "0.1.0",
         "probe_id": PROBE_ID,
+        "panel": panel,
         "source_probe_digest": manifest["probe_digest"],
         "output_directory": str(out_dir),
         "registry_manifest": "registry_manifest.csv",
@@ -1089,6 +1190,7 @@ def formal_consumption_bundle(
 
 def render_report(
     *,
+    panel: str,
     digests: dict[str, str],
     gap_rows: list[dict[str, object]],
     readiness_rows: list[dict[str, object]],
@@ -1133,6 +1235,7 @@ def render_report(
             "",
             f"- registry digest: `{digests['registry_digest']}`",
             f"- manifest bundle digest: `{digests['manifest_bundle_digest']}`",
+            f"- panel: `{panel}`",
             f"- registered vs existence gaps: {len(existence_gaps)}",
             f"- registered vs optimized gaps: {len(optimized_gaps)}",
             "",

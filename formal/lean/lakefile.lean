@@ -15,11 +15,20 @@ lean_lib AlphaCore where
 lean_lib ProtoOmega where
   roots := #[`ProtoOmega]
 
+lean_lib AlphaCalculus where
+  roots := #[`AlphaCalculus]
+
 lean_lib OmegaAdapters where
   roots := #[`OmegaAdapters]
 
+lean_lib AlphaAdapters where
+  roots := #[`AlphaAdapters]
+
 lean_lib OmegaProper where
   roots := #[`OmegaProper]
+
+lean_lib Omega where
+  roots := #[`Omega]
 
 lean_lib OmegaArchive where
   roots := #[`OmegaArchive]

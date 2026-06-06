@@ -7,6 +7,59 @@ run.
 Entries are organized in rough reverse chronological order, with the most recent
 patch notes at the top.
 
+## 2026-06-06
+
+### AlphaOmega Public Naming Shim
+
+Added public Lean entrypoints:
+
+```text
+formal/lean/AlphaCalculus.lean
+formal/lean/AlphaAdapters.lean
+formal/lean/Omega.lean
+```
+
+These are the forward-facing names for the active stack:
+
+```text
+AlphaCore:
+  primitive floor
+
+AlphaCalculus:
+  derived formal machinery
+
+AlphaAdapters:
+  finite presentations and empirical bridges
+
+Omega:
+  downstream candidate theory
+```
+
+`ProtoOmega`, `OmegaAdapters`, and `OmegaProper` remain compatibility
+implementation namespaces during migration.
+
+### Registry-First Medium Stochastic Probe
+
+Expanded the registry-first stochastic probe with `--panel medium`, preserving
+the original tiny panel as the default.
+
+Retained result:
+
+```text
+results/stochastic_distinction_channel/20260606_registry_first_probe_medium_v0/
+docs/research_notes/validation_results/stochastic_distinction_channel/stochastic_registry_first_probe_medium_result.md
+```
+
+Summary:
+
+```text
+channel_count: 13
+registered_rows: 91
+provenance_gap_rows: 91
+cascade_evidence_status: path_rows_retained
+overall_status: registry_first_theorem_transfer_ready
+```
+
 ## 2026-06-05
 
 ### Probabilistic Non-Erasure Native Lean Layer

@@ -14,44 +14,48 @@ asymmetry. It is not nested under `OmegaCore`.
 AlphaCore:
   primitive floor
 
-ProtoOmega:
-  presentation-native structures plus derived transport and recoverability
+AlphaCalculus:
+  presentation structures plus derived transport and recoverability
 
-OmegaAdapters:
+AlphaAdapters:
   substrate and presentation adapters
 
-OmegaProper:
+Omega:
   downstream candidate-theory scaffolds
 
 OmegaArchive:
   recoverable history, not imported by AlphaOmega
 ```
 
-`OmegaCore` remains the older checked support/recoverability stack during the
-facade migration.
+`ProtoOmega`, `OmegaAdapters`, and `OmegaProper` remain buildable compatibility
+implementation namespaces during the naming migration. `OmegaCore` remains the
+older checked support/recoverability stack for archive-compatible provenance.
 
 ## Local Toolchain
 
-This workspace uses a portable Lean toolchain:
+This workspace uses the pinned Lean toolchain recorded in:
 
-```powershell
-.tools\lean-4.30.0\lean-4.30.0-windows\bin\lean.exe --version
+```text
+formal/lean/lean-toolchain
 ```
 
-Do not assume Lean is globally installed. From the repository root, use:
+Do not assume Lean/Lake is globally visible in the current shell. From the
+repository root, use the wrapper:
 
 ```powershell
-$env:PATH = (Resolve-Path '.tools\lean-4.30.0\lean-4.30.0-windows\bin').Path + ';' + $env:PATH
+.\scripts\setup\invoke_lake.ps1 build AlphaOmega
 ```
 
-Then build:
+The wrapper runs from `formal/lean`, prefers the installed pinned toolchain
+binary, and falls back to Elan/PATH discovery. Direct builds still work when
+Lake is on PATH:
 
 ```powershell
 cd formal\lean
 lake build AlphaCore
-lake build ProtoOmega
-lake build OmegaAdapters
-lake build OmegaProper
+lake build AlphaCalculus
+lake build AlphaAdapters
+lake build Omega
 lake build AlphaOmega
 lake build OmegaArchive
 lake build OmegaCore

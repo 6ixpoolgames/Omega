@@ -36,15 +36,15 @@ The project is building a stack where:
 Alpha:
   relation, distinction, and asymmetry as the primitive floor
 
-ProtoOmega:
+AlphaCalculus:
   recoverability, transport, recurrence, and separation phenomena derived from
   that floor
 
-Adapters:
+AlphaAdapters:
   finite channels and reachable-future instruments that show exactly what a
   substrate exposes or fails to expose
 
-Omega proper:
+Omega:
   downstream compatibility and completion questions, only after the lower
   layers earn them
 ```
@@ -64,9 +64,10 @@ The current primitive floor is **Alpha Primitive Core v0**: relation,
 distinction, and asymmetry. Alpha is separate from Omega and is not nested under
 OmegaCore.
 
-`AlphaOmega` is the active Lean umbrella for the project stack. `OmegaCore`
-remains the legacy checked support/recoverability stack during the facade
-migration.
+`AlphaOmega` is the active Lean umbrella for the project stack. `AlphaCalculus`,
+`AlphaAdapters`, and `Omega` are the public layer names. `ProtoOmega`,
+`OmegaAdapters`, and `OmegaProper` remain compatibility implementation
+namespaces during migration; `OmegaCore` remains archived checked provenance.
 
 Current OmegaCore compact Lean target:
 
@@ -114,6 +115,9 @@ formal/lean/AlphaCore.lean
 formal/lean/AlphaCore/Primitive.lean
 formal/lean/AlphaCore/Reachability.lean
 formal/lean/AlphaCore/Examples.lean
+formal/lean/AlphaCalculus.lean
+formal/lean/AlphaAdapters.lean
+formal/lean/Omega.lean
 formal/lean/OmegaCore.lean
 formal/lean/OmegaCore/DistTrans.lean
 formal/lean/OmegaCore/NormalLax.lean

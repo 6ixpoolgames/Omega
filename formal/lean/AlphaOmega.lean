@@ -1,7 +1,7 @@
+import AlphaAdapters
 import AlphaCore
-import OmegaAdapters
-import OmegaProper
-import ProtoOmega
+import AlphaCalculus
+import Omega
 
 /-!
 AlphaOmega umbrella.
@@ -9,9 +9,9 @@ AlphaOmega umbrella.
 Active Alpha/Omega formal stack:
 
 * `AlphaCore`: primitive floor.
-* `ProtoOmega`: derived transport and recoverability machinery.
-* `OmegaAdapters`: substrate and presentation adapters.
-* `OmegaProper`: downstream candidate-theory scaffolds.
+* `AlphaCalculus`: derived transport and recoverability machinery.
+* `AlphaAdapters`: substrate and presentation adapters.
+* `Omega`: downstream candidate-theory scaffolds.
 
 Archive modules are intentionally not imported by this umbrella.
 -/
