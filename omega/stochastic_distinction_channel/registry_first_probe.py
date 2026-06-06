@@ -33,6 +33,14 @@ LabelFn = Callable[[str], str]
 DecoderMap = dict[str, str]
 
 
+def row_digest(rows: list[dict[str, object]]) -> str:
+    normalized = [
+        {str(key): str(value) for key, value in sorted(row.items())}
+        for row in rows
+    ]
+    return stable_hash(normalized, length=24)
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run registry-first stochastic-channel probe.")
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT)
@@ -91,6 +99,9 @@ def run_registry_first_probe(*, out_dir: Path = DEFAULT_OUT, panel: str = "tiny"
         "registry_manifest.csv": registry_manifest_rows,
         "declared_decoder_registry.csv": decoder_registry_rows,
     }
+    pre_score_artifact_digests = {
+        name: row_digest(rows) for name, rows in pre_score_outputs.items()
+    }
     for name, rows in pre_score_outputs.items():
         write_csv(out_dir / name, rows)
     write_json(
@@ -100,6 +111,7 @@ def run_registry_first_probe(*, out_dir: Path = DEFAULT_OUT, panel: str = "tiny"
             "probe_id": PROBE_ID,
             "panel": panel,
             "pre_score_artifacts": sorted(pre_score_outputs),
+            "pre_score_artifact_digests": pre_score_artifact_digests,
             "digest_available_before_scoring": True,
             "scope": SCOPE,
         },
@@ -155,6 +167,22 @@ def run_registry_first_probe(*, out_dir: Path = DEFAULT_OUT, panel: str = "tiny"
     }
     for name, rows in scored_outputs.items():
         write_csv(out_dir / name, rows)
+    scored_artifact_digests = {
+        name: row_digest(rows) for name, rows in scored_outputs.items()
+    }
+    digest_chain = {
+        "probe_id": PROBE_ID,
+        "probe_schema_version": PROBE_SCHEMA_VERSION,
+        "panel": panel,
+        "registry_digest": digests["registry_digest"],
+        "requirement_digest": digests["requirement_digest"],
+        "threshold_digest": digests["threshold_digest"],
+        "manifest_bundle_digest": digests["manifest_bundle_digest"],
+        "pre_score_artifact_digests": pre_score_artifact_digests,
+        "scored_artifact_digests": scored_artifact_digests,
+    }
+    digest_chain["digest_chain_digest"] = stable_hash(digest_chain, length=24)
+    write_json(out_dir / "manifest_digest_chain.json", digest_chain)
 
     manifest = probe_manifest(
         out_dir=out_dir,
@@ -162,6 +190,7 @@ def run_registry_first_probe(*, out_dir: Path = DEFAULT_OUT, panel: str = "tiny"
         pre_score_outputs=pre_score_outputs,
         scored_outputs=scored_outputs,
         digests=digests,
+        digest_chain=digest_chain,
     )
     write_json(out_dir / "registry_first_probe_manifest.json", manifest)
     bundle = formal_consumption_bundle(
@@ -1116,6 +1145,7 @@ def probe_manifest(
     pre_score_outputs: dict[str, list[dict[str, object]]],
     scored_outputs: dict[str, list[dict[str, object]]],
     digests: dict[str, str],
+    digest_chain: dict[str, object],
 ) -> dict[str, object]:
     output_rows = {**pre_score_outputs, **scored_outputs}
     payload = {
@@ -1134,8 +1164,10 @@ def probe_manifest(
         "manifest_bundle_digest": digests["manifest_bundle_digest"],
         "pre_score_artifacts": sorted(pre_score_outputs),
         "scored_artifacts": sorted(scored_outputs),
+        "digest_chain_artifact": "manifest_digest_chain.json",
+        "digest_chain_digest": digest_chain["digest_chain_digest"],
         "row_counts": {name: len(rows) for name, rows in output_rows.items()},
-        "deterministic_rebuild_inputs": sorted(pre_score_outputs) + sorted(scored_outputs),
+        "deterministic_rebuild_inputs": sorted(pre_score_outputs) + sorted(scored_outputs) + ["manifest_digest_chain.json"],
         "scope": SCOPE,
         "probe_digest": stable_hash(payload, length=24),
     }
@@ -1181,6 +1213,7 @@ def formal_consumption_bundle(
         "provenance_gap_by_distinction": "provenance_gap_by_distinction.csv",
         "path_ensemble_rows": "path_ensemble_rows.csv",
         "cascade_evidence_summary": "cascade_evidence_summary.csv",
+        "manifest_digest_chain": "manifest_digest_chain.json",
         "theorem_transfer_readiness": "theorem_transfer_readiness.csv",
         "overall_status": overall,
         "scope": SCOPE,

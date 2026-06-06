@@ -9,6 +9,39 @@ patch notes at the top.
 
 ## 2026-06-06
 
+### Registry-First Adversarial Audit
+
+Added:
+
+```text
+omega/stochastic_distinction_channel/registry_first_adversarial_audit.py
+tests/test_stochastic_registry_first_adversarial_audit.py
+```
+
+The audit checks retained registry-first outputs for:
+
+```text
+pre-score artifact digest mutations
+scored artifact digest mutations
+missing registry/manifest digests in scored rows
+optimized diagnostic rows promoted into theorem-transfer rows
+cascade theorem readiness without retained path evidence
+```
+
+Retained audit:
+
+```text
+results/stochastic_distinction_channel/20260606_registry_first_probe_medium_adversarial_audit_v0/
+```
+
+Result:
+
+```text
+overall_status: PASS
+audit_rows: 67
+failure_count: 0
+```
+
 ### AlphaOmega Public Naming Shim
 
 Added public Lean entrypoints:

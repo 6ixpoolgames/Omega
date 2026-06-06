@@ -30,6 +30,8 @@ registry_digest: 7339316e1efaa9778c963da5
 manifest_bundle_digest: d352e73c5ba844a3ed4ae68a
 cascade_evidence_status: path_rows_retained
 output_size: ~146 KB
+adversarial_audit_status: PASS
+adversarial_audit_rows: 67
 ```
 
 Gap classes:
@@ -74,6 +76,42 @@ policy_substitution_blocked: ready
 optimized_diagnostic_only: ready
 substrate_bridge_ready: not_ready
 ```
+
+## Adversarial Provenance Audit
+
+Audit output:
+
+```text
+results/stochastic_distinction_channel/20260606_registry_first_probe_medium_adversarial_audit_v0/
+```
+
+The audit verifies:
+
+```text
+required artifacts are present
+pre-score artifact digests match current files
+scored artifact digests match current files
+scored rows carry the frozen registry and manifest digests
+optimized rows remain diagnostic only
+cascade readiness has retained path evidence
+```
+
+Result:
+
+```text
+overall_status: PASS
+audit_rows: 67
+failure_count: 0
+```
+
+The generator now emits:
+
+```text
+manifest_digest_chain.json
+```
+
+so post-run mutation of registry, requirement, threshold, scored-row, or path
+evidence artifacts is detectable from retained files.
 
 ## Read
 
