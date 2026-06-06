@@ -28,10 +28,12 @@ registered_rows: 91
 provenance_gap_rows: 91
 registry_digest: 7339316e1efaa9778c963da5
 manifest_bundle_digest: d352e73c5ba844a3ed4ae68a
+channel_panel_digest: 706672342008b908e402f389
+scored_outputs_digest: 83b02388c5406e06810d50c2
 cascade_evidence_status: path_rows_retained
 output_size: ~146 KB
 adversarial_audit_status: PASS
-adversarial_audit_rows: 67
+adversarial_audit_rows: 105
 ```
 
 Gap classes:
@@ -89,9 +91,12 @@ The audit verifies:
 
 ```text
 required artifacts are present
+manifest_digest_chain lists all required pre-score and scored artifacts
 pre-score artifact digests match current files
 scored artifact digests match current files
 scored rows carry the frozen registry and manifest digests
+theorem-transfer readiness rows do not cite optimized evidence except as
+diagnostic availability
 optimized rows remain diagnostic only
 cascade readiness has retained path evidence
 ```
@@ -100,7 +105,7 @@ Result:
 
 ```text
 overall_status: PASS
-audit_rows: 67
+audit_rows: 105
 failure_count: 0
 ```
 

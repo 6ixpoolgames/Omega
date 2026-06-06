@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 from omega.future_field_atlas.util import read_csv, write_csv
@@ -64,6 +65,36 @@ def test_registry_first_adversarial_audit_rejects_missing_scored_digest(tmp_path
     assert "scored_registry_digest_consistent" in result["failed_audits"]
 
 
+def test_registry_first_adversarial_audit_rejects_missing_digest_column(tmp_path: Path) -> None:
+    source = tmp_path / "registry_first"
+    run_registry_first_probe(out_dir=source)
+
+    rows = read_csv(source / "registered_recovery_by_distinction.csv")
+    for row in rows:
+        del row["registry_digest"]
+    write_csv(source / "registered_recovery_by_distinction.csv", rows)
+
+    result = audit_registry_first_output(source_dir=source)
+
+    assert result["overall_status"] == "FAIL_BLOCK_THEOREM_TRANSFER"
+    assert "scored_registry_digest_present" in result["failed_audits"]
+
+
+def test_registry_first_adversarial_audit_rejects_missing_manifest_digest_column(tmp_path: Path) -> None:
+    source = tmp_path / "registry_first"
+    run_registry_first_probe(out_dir=source)
+
+    rows = read_csv(source / "registered_recovery_by_distinction.csv")
+    for row in rows:
+        del row["manifest_bundle_digest"]
+    write_csv(source / "registered_recovery_by_distinction.csv", rows)
+
+    result = audit_registry_first_output(source_dir=source)
+
+    assert result["overall_status"] == "FAIL_BLOCK_THEOREM_TRANSFER"
+    assert "scored_manifest_bundle_digest_present" in result["failed_audits"]
+
+
 def test_registry_first_adversarial_audit_rejects_optimized_promotion(tmp_path: Path) -> None:
     source = tmp_path / "registry_first"
     run_registry_first_probe(out_dir=source, panel="medium")
@@ -76,6 +107,36 @@ def test_registry_first_adversarial_audit_rejects_optimized_promotion(tmp_path: 
 
     assert result["overall_status"] == "FAIL_BLOCK_THEOREM_TRANSFER"
     assert "optimized_rows_diagnostic_only" in result["failed_audits"]
+
+
+def test_registry_first_adversarial_audit_rejects_optimized_readiness_promotion(tmp_path: Path) -> None:
+    source = tmp_path / "registry_first"
+    run_registry_first_probe(out_dir=source, panel="medium")
+
+    rows = read_csv(source / "theorem_transfer_readiness.csv")
+    cascade_row = [row for row in rows if row["readiness_axis"] == "cascade_union_bound_ready"][0]
+    cascade_row["recovery_provenance_class"] = "optimized_diagnostic"
+    write_csv(source / "theorem_transfer_readiness.csv", rows)
+
+    result = audit_registry_first_output(source_dir=source)
+
+    assert result["overall_status"] == "FAIL_BLOCK_THEOREM_TRANSFER"
+    assert "readiness_optimized_evidence_not_transfer_ready" in result["failed_audits"]
+
+
+def test_registry_first_adversarial_audit_rejects_digest_chain_omission(tmp_path: Path) -> None:
+    source = tmp_path / "registry_first"
+    run_registry_first_probe(out_dir=source, panel="medium")
+
+    path = source / "manifest_digest_chain.json"
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    del payload["scored_artifact_digests"]["registered_recovery_by_distinction.csv"]
+    path.write_text(json.dumps(payload, indent=2, sort_keys=True), encoding="utf-8")
+
+    result = audit_registry_first_output(source_dir=source)
+
+    assert result["overall_status"] == "FAIL_BLOCK_THEOREM_TRANSFER"
+    assert "digest_chain_required_artifact_listed" in result["failed_audits"]
 
 
 def test_registry_first_adversarial_audit_rejects_missing_path_evidence(tmp_path: Path) -> None:

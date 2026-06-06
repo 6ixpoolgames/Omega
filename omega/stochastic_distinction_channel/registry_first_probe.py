@@ -170,10 +170,14 @@ def run_registry_first_probe(*, out_dir: Path = DEFAULT_OUT, panel: str = "tiny"
     scored_artifact_digests = {
         name: row_digest(rows) for name, rows in scored_outputs.items()
     }
+    channel_panel_digest = row_digest(channel_rows)
+    scored_outputs_digest = stable_hash(scored_artifact_digests, length=24)
     digest_chain = {
         "probe_id": PROBE_ID,
         "probe_schema_version": PROBE_SCHEMA_VERSION,
         "panel": panel,
+        "channel_panel_digest": channel_panel_digest,
+        "scored_outputs_digest": scored_outputs_digest,
         "registry_digest": digests["registry_digest"],
         "requirement_digest": digests["requirement_digest"],
         "threshold_digest": digests["threshold_digest"],
@@ -196,6 +200,7 @@ def run_registry_first_probe(*, out_dir: Path = DEFAULT_OUT, panel: str = "tiny"
     bundle = formal_consumption_bundle(
         out_dir=out_dir,
         panel=panel,
+        digest_chain=digest_chain,
         digests=digests,
         manifest=manifest,
         readiness_rows=readiness_rows,
@@ -217,6 +222,8 @@ def run_registry_first_probe(*, out_dir: Path = DEFAULT_OUT, panel: str = "tiny"
         "out_dir": str(out_dir),
         "registry_digest": digests["registry_digest"],
         "manifest_bundle_digest": digests["manifest_bundle_digest"],
+        "channel_panel_digest": channel_panel_digest,
+        "scored_outputs_digest": scored_outputs_digest,
         "channel_count": len(channels),
         "registered_rows": len(registered_rows),
         "gap_rows": len(gap_rows),
@@ -1177,6 +1184,7 @@ def formal_consumption_bundle(
     *,
     out_dir: Path,
     panel: str,
+    digest_chain: dict[str, object],
     digests: dict[str, str],
     manifest: dict[str, object],
     readiness_rows: list[dict[str, object]],
@@ -1201,6 +1209,9 @@ def formal_consumption_bundle(
         "probe_id": PROBE_ID,
         "panel": panel,
         "source_probe_digest": manifest["probe_digest"],
+        "manifest_digest_chain_digest": digest_chain["digest_chain_digest"],
+        "channel_panel_digest": digest_chain["channel_panel_digest"],
+        "scored_outputs_digest": digest_chain["scored_outputs_digest"],
         "output_directory": str(out_dir),
         "registry_manifest": "registry_manifest.csv",
         "registry_digest_path": "registry_digest.json",

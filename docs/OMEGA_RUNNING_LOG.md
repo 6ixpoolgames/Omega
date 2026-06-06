@@ -23,8 +23,11 @@ The audit checks retained registry-first outputs for:
 ```text
 pre-score artifact digest mutations
 scored artifact digest mutations
+missing scored-row registry/manifest digest columns
+incomplete digest-chain artifact listings
 missing registry/manifest digests in scored rows
 optimized diagnostic rows promoted into theorem-transfer rows
+theorem-transfer readiness rows citing optimized diagnostic evidence
 cascade theorem readiness without retained path evidence
 ```
 
@@ -38,7 +41,7 @@ Result:
 
 ```text
 overall_status: PASS
-audit_rows: 67
+audit_rows: 105
 failure_count: 0
 ```
 

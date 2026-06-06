@@ -27,6 +27,33 @@ REQUIRED_FILES = [
     "theorem_transfer_readiness.csv",
 ]
 
+REQUIRED_PRE_SCORE_ARTIFACTS = [
+    "carrier_manifest.csv",
+    "distinction_manifest.csv",
+    "requirement_set_manifest.csv",
+    "threshold_manifest.csv",
+    "registry_manifest.csv",
+    "declared_decoder_registry.csv",
+]
+
+REQUIRED_SCORED_ARTIFACTS = [
+    "source_prior_manifest.csv",
+    "source_observation_table.csv",
+    "target_observation_table.csv",
+    "channel_manifest.csv",
+    "channel_matrix.csv",
+    "path_ensemble_rows.csv",
+    "registered_recovery_by_distinction.csv",
+    "existence_recovery_by_distinction.csv",
+    "optimized_recovery_diagnostic.csv",
+    "cascade_evidence_summary.csv",
+    "theorem_transfer_readiness.csv",
+    "scoring_order_audit.csv",
+    "decoder_registry_coverage_audit.csv",
+    "provenance_gap_by_distinction.csv",
+    "natural_weight_equivalence_audit.csv",
+]
+
 SCORED_FILES_WITH_DIGESTS = [
     "registered_recovery_by_distinction.csv",
     "existence_recovery_by_distinction.csv",
@@ -103,12 +130,25 @@ def audit_registry_first_output(*, source_dir: Path, out_dir: Path | None = None
 
 def audit_digest_chain(*, source_dir: Path, digest_chain: dict[str, object]) -> list[dict[str, object]]:
     rows = []
-    for section in ["pre_score_artifact_digests", "scored_artifact_digests"]:
+    expected_sections = {
+        "pre_score_artifact_digests": REQUIRED_PRE_SCORE_ARTIFACTS,
+        "scored_artifact_digests": REQUIRED_SCORED_ARTIFACTS,
+    }
+    for section, required_names in expected_sections.items():
         expected = digest_chain.get(section, {})
         if not isinstance(expected, dict):
             rows.append(audit_row("digest_chain_section_present", "FAIL", section))
             continue
         rows.append(audit_row("digest_chain_section_present", "PASS", section))
+        for required_name in required_names:
+            rows.append(
+                audit_row(
+                    "digest_chain_required_artifact_listed",
+                    "PASS" if required_name in expected else "FAIL",
+                    required_name,
+                    section=section,
+                )
+            )
         for name, expected_digest in sorted(expected.items()):
             path = source_dir / str(name)
             actual_digest = row_digest(read_csv(path)) if path.exists() else ""
@@ -137,7 +177,23 @@ def audit_scored_row_digests(
             rows.append(audit_row("scored_file_nonempty", "FAIL", name))
             continue
         rows.append(audit_row("scored_file_nonempty", "PASS", name))
-        if any("registry_digest" in row for row in table):
+        registry_column_present = all("registry_digest" in row for row in table)
+        manifest_column_present = all("manifest_bundle_digest" in row for row in table)
+        rows.append(
+            audit_row(
+                "scored_registry_digest_present",
+                "PASS" if registry_column_present else "FAIL",
+                name,
+            )
+        )
+        rows.append(
+            audit_row(
+                "scored_manifest_bundle_digest_present",
+                "PASS" if manifest_column_present else "FAIL",
+                name,
+            )
+        )
+        if registry_column_present:
             bad = [row for row in table if str(row.get("registry_digest", "")) != registry_digest]
             rows.append(
                 audit_row(
@@ -147,7 +203,7 @@ def audit_scored_row_digests(
                     mismatch_count=len(bad),
                 )
             )
-        if any("manifest_bundle_digest" in row for row in table):
+        if manifest_column_present:
             bad = [row for row in table if str(row.get("manifest_bundle_digest", "")) != manifest_bundle_digest]
             rows.append(
                 audit_row(
@@ -191,6 +247,21 @@ def audit_policy_boundaries(*, source_dir: Path) -> list[dict[str, object]]:
             "PASS" if not optimized_promoted else "FAIL",
             "provenance_gap_by_distinction.csv",
             mismatch_count=len(optimized_promoted),
+        )
+    )
+    readiness = read_csv(source_dir / "theorem_transfer_readiness.csv")
+    optimized_ready_bad = [
+        row
+        for row in readiness
+        if row.get("recovery_provenance_class") == "optimized_diagnostic"
+        and row.get("readiness_axis") != "optimized_diagnostic_only"
+    ]
+    rows.append(
+        audit_row(
+            "readiness_optimized_evidence_not_transfer_ready",
+            "PASS" if not optimized_ready_bad else "FAIL",
+            "theorem_transfer_readiness.csv",
+            mismatch_count=len(optimized_ready_bad),
         )
     )
     return rows
