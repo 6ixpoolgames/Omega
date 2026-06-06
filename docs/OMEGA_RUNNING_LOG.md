@@ -9,6 +9,59 @@ patch notes at the top.
 
 ## 2026-06-06
 
+### Registry-First X3 Stochastic Probe
+
+Added and ran the first staged carrier-size increase for the registry-first
+stochastic-channel protocol:
+
+```text
+omega/stochastic_distinction_channel/registry_first_x3_probe.py
+tests/test_stochastic_registry_first_x3_probe.py
+```
+
+Retained result:
+
+```text
+results/stochastic_distinction_channel/20260606_registry_first_probe_x3_v0/
+docs/research_notes/validation_results/stochastic_distinction_channel/stochastic_registry_first_probe_x3_result.md
+```
+
+Summary:
+
+```text
+carrier_id: X3
+state_count: 8
+channel_count: 15
+registered_rows: 120
+provenance_gap_rows: 120
+cascade_evidence_status: path_rows_retained
+overall_status: registry_first_theorem_transfer_ready
+output_size: ~273 KB
+```
+
+Gap classes:
+
+```text
+declared_registered_recovery_ready: 36
+existence_capacity_only: 13
+optimized_diagnostic_only: 8
+not_recovered: 63
+```
+
+Retained adversarial audit:
+
+```text
+results/stochastic_distinction_channel/20260606_registry_first_probe_x3_adversarial_audit_v0/
+```
+
+Result:
+
+```text
+overall_status: PASS
+audit_rows: 105
+failure_count: 0
+```
+
 ### Registry-First Adversarial Audit
 
 Added:
