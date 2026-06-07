@@ -9,6 +9,28 @@ patch notes at the top.
 
 ## 2026-06-06
 
+### Trajectory Quotient Scaffold Branch
+
+Created branch:
+
+```text
+codex-trajectory-quotient-scaffold
+```
+
+Added the working approach note:
+
+```text
+docs/roadmaps/TRAJECTORY_QUOTIENT_SCAFFOLD_APPROACH_V0.md
+```
+
+Current objective:
+
+```text
+derive non-exact process-boundary recovery from Alpha primitives by using
+trajectory windows, declared signatures / quotients, and recovery relations,
+without assuming self, identity, or valuerhood.
+```
+
 ### Valuer-Trajectory Reorientation Docs
 
 Added public-facing reorientation notes:
