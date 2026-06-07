@@ -1,8 +1,8 @@
 # Trajectory Quotient Scaffold Approach v0
 
-Status: working note for `codex-trajectory-quotient-scaffold`
+Status: working note for `codex-trajectory-quotient-scaffold` plus first Lean scaffold
 
-Scope: near-term formal approach before implementing the next Lean layer
+Scope: near-term formal approach for the trajectory-window quotient layer
 
 Claim boundary: this note does not define valuerhood, validate Omega, or make
 empirical claims. It defines the next formal object and the safeguards around
@@ -47,8 +47,10 @@ relation -> trajectories
 distinction -> signatures / quotients
   A boundary is a declared distinction over states or trajectory windows.
 
-asymmetry -> recovery transport
-  A later window may carry enough structure to recover an earlier signature.
+asymmetry -> later bridge target
+  The first pass does not derive recovery from Alpha asymmetry. It only declares
+  a presentation-level recovery relation over window-signature labels. A later
+  bridge theorem can ask when that relation is induced by substrate structure.
 ```
 
 The central rule is:
@@ -251,23 +253,23 @@ declared-vs-existence-vs-optimized quotient separation
 
 ## First Lean Acceptance Criteria
 
-A useful first Lean pass should define and check:
+A useful first Lean pass should define and check the smallest window-signature
+surface:
 
 ```text
-finite trajectories from relation;
 trajectory windows;
 signature maps over windows;
 declared recovery relation over signature labels;
 RecoveredWindow;
-BundlePersists over a finite list of windows;
-exact window equality implies recovery under identity signature;
-signature recovery does not imply exact state/window equality;
-two signatures can disagree about recovery;
+same window recovers under reflexive recovery;
+signature recovery does not imply same endpoints;
 loose signature can recover everything;
 strict signature can fail where coarse signature succeeds;
 stasis-like signature persistence does not imply nontrivial continuation;
-singleton persistence does not imply joint persistence.
 ```
+
+Later Lean passes can add finite trajectory lists, bundle persistence, singleton
+versus joint persistence, and asymmetry-induced recovery bridges.
 
 Blocked in the first pass:
 
@@ -286,12 +288,6 @@ probabilistic/statistical high-dimensional recovery
 The first deliverable should be a small Lean scaffold, likely:
 
 ```text
-formal/lean/Omega/Trajectory/Quotient.lean
-```
-
-or, if namespacing requires less disruption:
-
-```text
 formal/lean/OmegaProper/Trajectory/Quotient.lean
 ```
 
@@ -306,7 +302,8 @@ talk:
 ```text
 relation supplies paths;
 distinction supplies declared quotient signatures;
-asymmetry supplies directional recovery;
+declared signatures supply presentation-level directional recovery;
+asymmetry-induced recovery remains a later bridge theorem;
 trajectory quotient recovery supplies non-exact process continuity;
 viability and compatibility can then be added without assuming selfhood.
 ```

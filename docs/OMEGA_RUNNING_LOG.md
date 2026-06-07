@@ -9,6 +9,48 @@ patch notes at the top.
 
 ## 2026-06-06
 
+### Trajectory Window Quotient Lean Scaffold
+
+Added the first presentation-level Lean scaffold for trajectory-window quotient
+recovery:
+
+```text
+formal/lean/OmegaProper/Trajectory/Quotient.lean
+```
+
+The scaffold defines one-step relation windows over an Alpha frame, endpoint
+equality, nontrivial windows, declared window signatures, reflexive recovery,
+and directional `RecoveredWindow` over signature labels.
+
+Checked examples:
+
+```text
+same window recovers under reflexive recovery
+coarse signature recovers every window pair
+recovery does not imply same endpoints
+strict endpoint signature can fail where coarse signature succeeds
+loop signature recovery does not imply nontrivial continuation
+```
+
+Scope: this is a presentation-level quotient/signature recovery layer. It does
+not derive recovery from Alpha asymmetry; that remains a later bridge target.
+
+Validation:
+
+```text
+powershell -ExecutionPolicy Bypass -File scripts\setup\invoke_lake.ps1 build AlphaOmega
+rg -n "\b(sorry|admit|axiom)\b" formal/lean -g "*.lean"
+git diff --check
+```
+
+Result:
+
+```text
+AlphaOmega build passed
+no sorry / admit / axiom matches
+diff check clean except Git line-ending warnings
+```
+
 ### Trajectory Quotient Scaffold Branch
 
 Created branch:
