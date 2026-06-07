@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections import Counter
 import json
 from pathlib import Path
 
@@ -11,6 +12,11 @@ def test_registry_first_probe_freezes_digest_before_scoring(tmp_path: Path) -> N
     out = tmp_path / "registry_first"
 
     result = run_registry_first_probe(out_dir=out)
+
+    assert result["carrier_id"] == "X2"
+    assert result["channel_count"] == 5
+    assert result["registered_rows"] == 35
+    assert result["gap_rows"] == 35
 
     digest = json.loads((out / "registry_digest.json").read_text(encoding="utf-8"))
     assert digest["digest_available_before_scoring"] is True
@@ -107,7 +113,9 @@ def test_registry_first_probe_medium_panel_expands_gap_surface(tmp_path: Path) -
     result = run_registry_first_probe(out_dir=out, panel="medium")
 
     assert result["panel"] == "medium"
-    assert int(result["channel_count"]) > 5
+    assert result["channel_count"] == 13
+    assert result["registered_rows"] == 91
+    assert result["gap_rows"] == 91
 
     manifest = json.loads((out / "registry_first_probe_manifest.json").read_text(encoding="utf-8"))
     assert manifest["panel"] == "medium"
@@ -120,7 +128,13 @@ def test_registry_first_probe_medium_panel_expands_gap_surface(tmp_path: Path) -
     assert "independent_bit_noise_81_9_9_1_channel" in channel_ids
 
     gap_rows = read_csv(out / "provenance_gap_by_distinction.csv")
-    assert len(gap_rows) > 35
+    assert len(gap_rows) == 91
+    assert Counter(row["theorem_transfer_class"] for row in gap_rows) == {
+        "declared_registered_recovery_ready": 26,
+        "existence_capacity_only": 11,
+        "optimized_diagnostic_only": 6,
+        "not_recovered": 48,
+    }
     swap_a = one_gap(gap_rows, "swap_bits_channel", "reg_declared_D_A_E_A")
     assert swap_a["registered_recovery"] == "0"
     assert swap_a["existence_recovery"] == "0"

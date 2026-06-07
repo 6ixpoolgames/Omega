@@ -9,6 +9,52 @@ patch notes at the top.
 
 ## 2026-06-06
 
+### Registry-First Shared Engine
+
+Refactored the X2 and X3 registry-first stochastic probes onto a shared engine:
+
+```text
+omega/stochastic_distinction_channel/registry_first_engine.py
+omega/stochastic_distinction_channel/registry_first_probe.py
+omega/stochastic_distinction_channel/registry_first_x3_probe.py
+```
+
+The engine now owns the common artifact contract:
+
+```text
+pre-score manifests
+registry / requirement / threshold digests
+manifest digest chain
+registered / existence / optimized recovery surfaces
+provenance gap table
+path-level cascade evidence
+theorem-transfer readiness vector
+adversarial-audit-compatible outputs
+```
+
+The X2 and X3 modules are now thin carrier/channel configuration wrappers.
+Regression checks pin the current surfaces:
+
+```text
+X2 tiny:
+  channel_count: 5
+  registered_rows: 35
+  provenance_gap_rows: 35
+
+X2 medium:
+  channel_count: 13
+  registered_rows: 91
+  provenance_gap_rows: 91
+
+X3:
+  channel_count: 15
+  registered_rows: 120
+  provenance_gap_rows: 120
+```
+
+This should prevent X2/X3 protocol drift before adding X3 pairwise-joint and
+rank-aware provenance analysis.
+
 ### Registry-First X3 Stochastic Probe
 
 Added and ran the first staged carrier-size increase for the registry-first
