@@ -11,6 +11,8 @@ Start with:
 
 ```text
 ../../../README.md
+../../VALUER_FORMAL_TARGET_V0.md
+../../OMEGA_COMPATIBLE_VALUER_TRAJECTORY_SPACE_V0.md
 ../../OMEGA_FORMALISM_PRIMER.md
 alpha_primitive_core_v0.md
 alpha_omega_unification_map_v0.md
@@ -26,20 +28,20 @@ The current best formal stack is:
 ```text
 Layer 0: Alpha Primitive Core v0
 Layer 0b: AlphaOmega facade stack
-Layer 0c: Future-Distinction Dynamics
-Layer 1: Admissibility and Identity-Decay Nulls
-Layer 2: Proto-Valuer Ladder
-Layer 3: Compatibility Completions
-Layer 4: Finite Theorem Scaffolds
-Layer 5: Empirical Interface Targets
+Layer 0c: distinction transport and recoverability audit machinery
+Layer 1: finite presentations and theorem-transfer adapters
+Layer 2: trajectory families and process-bundle scaffolds
+Layer 3: viability and action-channel scaffolds
+Layer 4: compatible valuer-bearing future target
+Layer 5: empirical interface targets
 ```
 
 Compact target:
 
 ```text
-Omega is the space of maximal admissible compatibility completions in which
-proto-valuer-bearing dynamics propagate recoverably and non-erasingly without
-systematic irreversible destruction of one another's distinction-content.
+Omega is the maximal admissible compatibility structure of future trajectories
+in which robust valuer-like process-bundles can arise, persist, interact,
+self-correct, branch, and continue to generate meaningful future capacity.
 ```
 
 This is a formal target, not an empirical result.
@@ -156,6 +158,8 @@ old OmegaCore namespace is retained for compatibility during migration.
 Read these as current active anchors:
 
 ```text
+../../VALUER_FORMAL_TARGET_V0.md
+../../OMEGA_COMPATIBLE_VALUER_TRAJECTORY_SPACE_V0.md
 alpha_primitive_core_v0.md
 alpha_omega_unification_map_v0.md
 omega_primitive_calculus_v0_lean_root_skeleton.md

@@ -9,6 +9,43 @@ patch notes at the top.
 
 ## 2026-06-06
 
+### Valuer-Trajectory Reorientation Docs
+
+Added public-facing reorientation notes:
+
+```text
+docs/VALUER_FORMAL_TARGET_V0.md
+docs/OMEGA_COMPATIBLE_VALUER_TRAJECTORY_SPACE_V0.md
+```
+
+Updated the README, formalism primer, external reader guide, and theory notes
+map so the project target is no longer framed as distinction preservation
+itself.
+
+Current compact read:
+
+```text
+Alpha:
+  primitive substrate grammar
+
+distinction transport:
+  recoverability and theorem-transfer audit machinery
+
+Omega:
+  compatible valuer-bearing future trajectories under uncertainty,
+  irreversibility, viability, and compatibility constraints
+```
+
+Future Field Atlas is now explicitly demoted to:
+
+```text
+preformal reachable-frontier morphology instrument
+```
+
+The next formal target is finite scaffolding for trajectory families,
+process-bundle persistence, action-channel counterfactuality, viability,
+compatibility, irreversible loss, and singleton-control counterexamples.
+
 ### Registry-First Shared Engine
 
 Refactored the X2 and X3 registry-first stochastic probes onto a shared engine:

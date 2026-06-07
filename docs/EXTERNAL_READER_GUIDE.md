@@ -1,7 +1,7 @@
 # External Reader Guide
 
 Status: onboarding guide for outside collaborators
-Scope: current Alpha primitive floor, Omega support stack, and Future Field Atlas workspace
+Scope: current Alpha primitive floor, Omega support stack, registry-first bridge, and FFA morphology workspace
 Claim boundary: this repository does not claim Omega validation, agency detection, value detection, identity detection, life detection, candidate promotion, holdout readiness, or graph-channel causality.
 
 ## 0. What this repository is
@@ -12,15 +12,18 @@ For the shortest public overview, read the repository README first. For the
 current formal stack, read:
 
 ```text
+docs/VALUER_FORMAL_TARGET_V0.md
+docs/OMEGA_COMPATIBLE_VALUER_TRAJECTORY_SPACE_V0.md
 docs/OMEGA_FORMALISM_PRIMER.md
 docs/research_notes/omega_theory/alpha_primitive_core_v0.md
 docs/research_notes/omega_theory/alpha_omega_unification_map_v0.md
 docs/research_notes/omega_theory/omega_primitive_calculus_v0_lean_root_skeleton.md
 ```
 
-This guide is the longer collaborator tour: it explains how the formal ambition
-connects to the current Future Field Atlas empirical branch and what the current
-results do and do not mean.
+This guide is the longer collaborator tour. The current README is the authority
+for the public framing: Omega is now centered on compatible valuer-bearing
+future trajectories, while distinction transport remains substrate and audit
+machinery.
 
 The current primitive floor is **Alpha Primitive Core v0**:
 
@@ -55,18 +58,23 @@ probabilistic channel presentation with exact/probabilistic separation,
 full-support converse, and finite cascade error bound.
 ```
 
-Future Field Atlas is not Omega proper. It is an empirical instrument that tries
-to expose finite reachable-future substrates to that root grammar.
+Future Field Atlas is not Omega proper. It is now treated as preformal
+reachable-frontier morphology: useful for finite-dynamics stress testing, but
+not the central empirical object for valuerhood.
 
 The current work asks a narrow question:
 
 ```text
-Can neutral finite transition systems produce measurable future-landscape
-structure that separates from matched nulls, without importing semantic labels
-such as agent, valuer, identity, or good?
+Can finite instruments emit reconstructible evidence about recoverability,
+provenance, action-relevant persistence, and future-trajectory structure without
+importing semantic labels such as agent, valuer, identity, or good?
 ```
 
-The current implementation target is **Future Field Atlas** instrumentation:
+The cleanest current empirical-formal bridge is the registry-first stochastic
+channel branch. It separates declared registry recovery, existence/capacity
+recovery, and optimized diagnostic recovery under adversarial provenance audit.
+
+The retained FFA implementation target remains morphology instrumentation:
 
 ```text
 generate lawful substrates;

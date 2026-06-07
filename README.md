@@ -2,95 +2,88 @@
 
 Omega is a research program about **value-bearing futures**.
 
-The project asks whether ideas normally introduced late, such as value,
-valuerhood, agency, identity, preference, or compatibility, can be approached
-from a lower-level formal structure:
+The working north star is:
 
 ```text
-relation -> distinction -> asymmetry
+Value is not a property of arbitrary states.
+Value requires valuers.
+Valuers require robust, recoverable, future-bearing trajectories.
+Omega is the attempt to characterize compatible futures in which such
+valuer-like trajectories can arise, persist, interact, self-correct, branch,
+and continue to generate meaningful future capacity.
 ```
 
 Current claim boundary:
 
 ```text
 This repository does not validate Omega.
-It contains formal scaffolds, worked presentations, and empirical instruments
-for studying finite reachable-future structure.
+It does not detect valuers, value, agency, identity, or compatibility.
+It contains formal scaffolds, checked finite presentations, and empirical
+instruments for studying recoverability, provenance, and finite future
+structure.
 ```
 
 ## Mission and Vision
 
-Most alignment and value theories start with agents, preferences, rewards, or
-moral objects already on the table. Omega tries to start earlier.
+Most alignment and value theories start with agents, preferences, rewards,
+selves, or moral objects already on the table. Omega tries to start earlier
+without pretending that the lower level is already value.
 
-The central move is:
-
-```text
-Before asking what futures should be chosen, ask what it means for futures to
-carry recoverable distinctions at all.
-```
-
-The project is building a stack where:
+The current ladder is:
 
 ```text
 Alpha:
-  relation, distinction, and asymmetry as the primitive floor
+  primitive substrate grammar: relation, distinction, asymmetry
 
 AlphaCalculus:
-  recoverability, transport, recurrence, and separation phenomena derived from
-  that floor
+  recoverability, transport, recurrence, non-erasure, separation, and
+  composition laws
 
 AlphaAdapters:
-  finite channels and reachable-future instruments that show exactly what a
-  substrate exposes or fails to expose
+  finite presentations and empirical bridges that expose what a substrate does
+  or does not provide
+
+Trajectory / viability layer:
+  process-bundles, actions, perturbations, persistence, robustness, and
+  compatible continuation
 
 Omega:
-  downstream compatibility and completion questions, only after the lower
-  layers earn them
+  downstream theory of compatible valuer-bearing futures
 ```
 
-The interesting bet is not that current toy systems validate a grand theory.
-The bet is that a disciplined primitive calculus plus small, reconstructible
-empirical instruments can expose where value-bearing futures might become a
-mathematical object rather than a slogan.
+The central correction is:
+
+```text
+No valuers -> no value.
+No compatible future trajectories -> no durable valuers.
+No substrate distinctions -> no recoverable valuers.
+```
+
+Distinction persistence is therefore a necessary substrate condition, not value
+itself. The target object is a robust valuer-bearing trajectory under
+compatibility and viability constraints.
 
 ## Current Status
 
-The project now has two active arms.
+The project currently has three active layers.
 
 ### 1. Formal Arm
 
-The current primitive floor is **Alpha Primitive Core v0**: relation,
-distinction, and asymmetry. Alpha is separate from Omega and is not nested under
-OmegaCore.
+The primitive floor is **Alpha Primitive Core v0**: relation, distinction, and
+asymmetry.
 
-`AlphaOmega` is the active Lean umbrella for the project stack. `AlphaCalculus`,
-`AlphaAdapters`, and `Omega` are the public layer names. `ProtoOmega`,
-`OmegaAdapters`, and `OmegaProper` remain compatibility implementation
-namespaces during migration; `OmegaCore` remains archived checked provenance.
-
-Current OmegaCore compact Lean target:
-
-```text
-A : C -> DistTrans
-```
-
-where:
-
-```text
-C:
-  relational contexts and composable unfoldings
-
-DistTrans:
-  preorder-indexed distinction transports closed under source weakening and
-  target strengthening
-```
+`AlphaOmega` is the active Lean umbrella for the project stack.
+`AlphaCore`, `AlphaCalculus`, `AlphaAdapters`, and `Omega` are the public layer
+names. `ProtoOmega`, `OmegaAdapters`, and `OmegaProper` remain compatibility
+implementation namespaces during migration. `OmegaCore` remains checked
+provenance from the earlier root-calculus pass.
 
 The Lean sandbox currently checks:
 
 ```text
 Alpha primitive frame over relation, distinction, and asymmetry;
 Alpha reachability and finite separation examples;
+primitive non-collapse examples;
 root transport laws;
 recoverability weakening / strengthening;
 compositional recoverability;
@@ -103,8 +96,8 @@ adapter-failure examples for missing closure or laxity laws;
 Boolean relation support presentation;
 finite channel / partition presentation;
 probabilistic channel presentation, including exact/probabilistic separation,
-full-support converse, finite cascade error bound, and fixed-declared versus
-Bayes-best policy separation.
+full-support converse, finite cascade error bound, fixed-declared versus
+Bayes-best policy separation, and thresholded probabilistic non-erasure.
 ```
 
 Key files:
@@ -112,85 +105,139 @@ Key files:
 ```text
 formal/lean/AlphaOmega.lean
 formal/lean/AlphaCore.lean
-formal/lean/AlphaCore/Primitive.lean
-formal/lean/AlphaCore/Reachability.lean
-formal/lean/AlphaCore/Examples.lean
 formal/lean/AlphaCalculus.lean
 formal/lean/AlphaAdapters.lean
 formal/lean/Omega.lean
 formal/lean/OmegaCore.lean
-formal/lean/OmegaCore/DistTrans.lean
-formal/lean/OmegaCore/NormalLax.lean
-formal/lean/OmegaCore/Presentations/FiniteBoolean.lean
-formal/lean/OmegaCore/Presentations/FiniteChannel.lean
-formal/lean/OmegaCore/Presentations/ProbabilisticChannel.lean
-formal/lean/OmegaCore/Presentations/ProbabilisticChannelPolicy.lean
-docs/research_notes/omega_theory/omega_primitive_calculus_v0_lean_root_skeleton.md
 docs/research_notes/omega_theory/alpha_primitive_core_v0.md
+docs/research_notes/omega_theory/omega_primitive_calculus_v0_lean_root_skeleton.md
 docs/research_notes/omega_theory/probabilistic_channel_presentation_v0.md
 ```
 
 The formal work is not a proof of physical or ethical claims. It is a way to
-make the primitive calculus precise enough to fail, transfer, or separate cleanly.
+make assumptions, theorem transfer, and failure modes explicit.
 
-### 2. Empirical Arm
+### 2. Registry-First Stochastic Channel Arm
 
-The active empirical instrument is **Future Field Atlas**.
+The cleanest current empirical-formal bridge is the registry-first stochastic
+channel branch.
 
-It scans finite transition substrates by:
+It uses finite carriers and exact natural-weight channels to separate:
 
 ```text
-generating lawful state spaces and transition laws;
-unfolding reachable frontiers across horizons;
-recording frontier topology;
-comparing product and coupled future-field baselines;
-checking artifact completeness and reconstruction audits;
-emitting compact morphology summaries;
-compiling retained panels into formal adapter bundles for theorem-transfer
-audits.
+declared registry recovery:
+  a predeclared decoder registry works
+
+existence / capacity recovery:
+  some exact decoder exists, whether or not it was declared
+
+optimized diagnostic recovery:
+  a best available target/decoder choice succeeds after search
 ```
 
-The current empirical pattern is narrow:
+This branch is designed to block a self-validating shortcut:
 
 ```text
-rank_order_boundary under symbol_histogram_distance
+some decoder exists = the declared instrument recovered the distinction
 ```
 
-High-yield representatives:
+The current shared engine is:
 
 ```text
-pair005
-pair012
-pair014
-pair026
+omega/stochastic_distinction_channel/registry_first_engine.py
+```
+
+X2 and X3 are now thin configs over that engine:
+
+```text
+omega/stochastic_distinction_channel/registry_first_probe.py
+omega/stochastic_distinction_channel/registry_first_x3_probe.py
+```
+
+Current retained result:
+
+```text
+results/stochastic_distinction_channel/20260606_registry_first_probe_x3_v0/
+docs/research_notes/validation_results/stochastic_distinction_channel/stochastic_registry_first_probe_x3_result.md
 ```
 
 Current read:
 
 ```text
-A and B marginal support are preserved;
-joint support is restricted relative to the product baseline;
-the effect persists in targeted H128 depth checks for pair012, pair014, and
-pair026;
-tested alternate observables did not reproduce the high-yield signature.
+carrier_id: X3
+state_count: 8
+channel_count: 15
+registered_rows: 120
+provenance_gap_rows: 120
+adversarial_audit: PASS
 ```
 
-This is not an Omega result. It is a finite product-vs-coupled future-field
-geometry result under declared operators and observables.
+The result is a finite presentation/provenance result. It is not value or
+valuer detection.
 
-The current bridge artifact is the **formal adapter conformance package**. It
-compiles the retained formal-interface panel into contexts, unfoldings,
-distinction fibers, preorders, transport witnesses, closed transports, law
-checks, and theorem-transfer status. The generated closed presentation passes
-the checked root laws; strict raw conformance is not claimed.
+### 3. Future Field Atlas
 
-A newer **stochastic distinction-channel** bridge tests the same primitive roles
-in a cleaner prebiotic substrate: stochastic relation `K(y|x)`, declared finite
-distinctions, named decoders, support-level exact recovery, and probabilistic
-decoder success. The matching Lean presentation now checks how exact support
-recovery relates to probabilistic success and how decoder error composes across
-finite channel cascades. It is a formal-consumption bridge, not a validation
-claim.
+Future Field Atlas is retained, but it is now demoted to:
+
+```text
+Future Field Atlas v0:
+  preformal reachable-frontier morphology instrument
+```
+
+FFA scans finite transition substrates by unfolding reachable frontiers,
+recording topology, comparing product and coupled baselines, checking artifact
+completeness, and emitting morphology summaries.
+
+That remains useful as finite-dynamics stress testing. It should not be treated
+as the central empirical object for Omega.
+
+The next empirical target should be trajectory-level:
+
+```text
+process-bundles
+action channels
+viability constraints
+perturbation regimes
+robust continuation
+correction channels
+compatibility audits
+irreversible process loss
+```
+
+FFA features can become subordinate diagnostics inside such a trajectory atlas,
+but frontier morphology alone is not valuerhood.
+
+## Current Reorientation
+
+Two current roadmap notes define the revised target:
+
+```text
+docs/VALUER_FORMAL_TARGET_V0.md
+docs/OMEGA_COMPATIBLE_VALUER_TRAJECTORY_SPACE_V0.md
+```
+
+The compact target is:
+
+```text
+robust recoverable persistence of future-bearing agency under compatibility
+constraints
+```
+
+The next formal work should define finite scaffolds for:
+
+```text
+trajectory families
+process-bundle persistence predicates
+action-channel counterfactuality
+viability predicates
+compatibility predicates
+maximal admissible trajectory families
+irreversible loss examples
+pairwise-vs-joint compatibility failures
+singleton-control counterexamples
+```
+
+Only after that should the empirical branch build a trajectory-level atlas.
 
 ## What This Repository Does Not Claim
 
@@ -211,25 +258,31 @@ holdout readiness;
 substrate-general theory validation.
 ```
 
-Positive empirical results should be read as instrument and
+Positive empirical results should be read as formal, instrumental, or
 substrate-characterization results.
 
 ## Start Here
 
-For a public overview:
+For the current public orientation:
 
-1. [Omega Formalism Primer](docs/OMEGA_FORMALISM_PRIMER.md)
-2. [External Reader Guide](docs/EXTERNAL_READER_GUIDE.md)
-3. [Omega Primitive Calculus v0 Lean Root Skeleton](docs/research_notes/omega_theory/omega_primitive_calculus_v0_lean_root_skeleton.md)
-4. [Omega Theory Notes Map](docs/research_notes/omega_theory/README.md)
-5. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
+1. [Valuer Formal Target v0](docs/VALUER_FORMAL_TARGET_V0.md)
+2. [Omega as Compatible Valuer-Trajectory Space v0](docs/OMEGA_COMPATIBLE_VALUER_TRAJECTORY_SPACE_V0.md)
+3. [Omega Formalism Primer](docs/OMEGA_FORMALISM_PRIMER.md)
+4. [External Reader Guide](docs/EXTERNAL_READER_GUIDE.md)
+5. [Omega Theory Notes Map](docs/research_notes/omega_theory/README.md)
 
-For the empirical branch:
+For checked formal work:
 
-1. [Future Field Atlas Instrument Spec](docs/specs/current/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md)
-2. [Formal Interface Distinction Panel Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_formal_interface_distinction_panel_result.md)
-3. [Rank-Order Boundary Class Expansion Result](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md)
-4. [Rank-Order Boundary Visualization Note](docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md)
+1. [Alpha Primitive Core v0](docs/research_notes/omega_theory/alpha_primitive_core_v0.md)
+2. [Omega Primitive Calculus v0 Lean Root Skeleton](docs/research_notes/omega_theory/omega_primitive_calculus_v0_lean_root_skeleton.md)
+3. [Probabilistic Channel Presentation v0](docs/research_notes/omega_theory/probabilistic_channel_presentation_v0.md)
+
+For empirical results:
+
+1. [Stochastic Registry-First Probe X3 Result](docs/research_notes/validation_results/stochastic_distinction_channel/stochastic_registry_first_probe_x3_result.md)
+2. [Stochastic Registry-First Probe Medium Result](docs/research_notes/validation_results/stochastic_distinction_channel/stochastic_registry_first_probe_medium_result.md)
+3. [Future Field Atlas Instrument Spec](docs/specs/current/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md)
+4. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
 
 For local workflow:
 
@@ -241,10 +294,13 @@ docs/OMEGA_PROJECT_MANUAL.md
 
 ```text
 formal/lean/
-  Lean proof-assistant sandbox for the root calculus and presentations
+  Lean proof-assistant sandbox for Alpha, formal presentations, and adapters
+
+omega/stochastic_distinction_channel/
+  registry-first stochastic-channel probes and theorem-transfer audit machinery
 
 omega/future_field_atlas/
-  current empirical instrument code
+  finite reachable-frontier morphology instrument
 
 docs/research_notes/omega_theory/
   dense theory notes and theorem scaffolds
@@ -258,17 +314,3 @@ docs/specs/current/
 results/
   local and retained result artifacts
 ```
-
-## Project Posture
-
-The stance is:
-
-```text
-principled;
-parsimonious;
-predictive / revelatory;
-skeptically open.
-```
-
-The goal is not to protect a theory. The goal is to build formal objects and
-empirical instruments strong enough that weak formulations can fail.

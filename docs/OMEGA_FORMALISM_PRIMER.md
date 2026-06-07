@@ -14,12 +14,14 @@ The project asks whether there is a substrate-neutral structure beneath those
 later concepts:
 
 ```text
-future-bearing distinctions that propagate recoverably, non-erasingly, and
-compatibly through lawful dynamics.
+compatible future trajectories in which robust valuer-like process-bundles can
+arise, persist, interact, self-correct, branch, and continue to generate
+meaningful future capacity.
 ```
 
-The empirical arm is not trying to detect value directly. It is building a
-finite microscope for the precursor geometry.
+The empirical arm is not trying to detect value directly. It is building finite
+microscopes for precursor structure: recoverability, provenance, action-relevant
+persistence, and eventually trajectory-level viability.
 
 ## The Current Formal Object
 
@@ -78,7 +80,7 @@ floor.
 Future-Distinction Dynamics is the current working presentation of this root
 calculus for reachable-futures modeling.
 
-The compact working target is:
+The earlier compact working target was distinction-centered:
 
 ```text
 Omega is the admissible subset of future-field dynamics for which
@@ -86,15 +88,23 @@ future-relevant distinctions persist to terminus in a recoverable, non-erasing,
 and compatible manner.
 ```
 
-The newer completion-layer target is:
+That should now be read as a substrate and audit condition, not the final
+Omega object. The current target is trajectory-centered:
 
 ```text
-Omega is the space of maximal admissible compatibility completions in which
-proto-valuer-bearing dynamics propagate recoverably and non-erasingly without
-systematic irreversible destruction of one another's distinction-content.
+Omega is the maximal admissible compatibility structure of future trajectories
+in which robust valuer-like process-bundles can arise, persist, interact,
+self-correct, branch, and continue to generate meaningful future capacity.
 ```
 
 This is the target formal object. It is not an empirical result.
+
+The current reorientation notes are:
+
+```text
+docs/VALUER_FORMAL_TARGET_V0.md
+docs/OMEGA_COMPATIBLE_VALUER_TRAJECTORY_SPACE_V0.md
+```
 
 ## Why This Is Not Utility, Reward, or Ethics
 
