@@ -4,6 +4,7 @@ import OmegaProper.Scaffolds.FiniteMaximal
 import OmegaProper.Trajectory.ConsequenceClasses
 import OmegaProper.Trajectory.ConsequenceComparison
 import OmegaProper.Trajectory.ConsequenceDiscipline
+import OmegaProper.Trajectory.ConsequencePanelDiscipline
 import OmegaProper.Trajectory.ConsequenceRelation
 import OmegaProper.Trajectory.Quotient
 

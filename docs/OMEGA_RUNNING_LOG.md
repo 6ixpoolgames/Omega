@@ -9,6 +9,71 @@ patch notes at the top.
 
 ## 2026-06-09
 
+### Consequence Panel Discipline
+
+Added panel-level guardrails for consequence systems:
+
+```text
+formal/lean/OmegaProper/Trajectory/ConsequencePanelDiscipline.lean
+```
+
+Core definitions:
+
+```text
+ContextAllowsPair
+ContextRefusesPair
+EvaluatedContextAllowsPair
+EvaluatedContextRefusesPair
+BalancedContextPanel
+EvaluatedContextsRefuseAllPairs
+```
+
+Checked guardrails:
+
+```text
+an evaluated context refusal separates the corresponding pair
+an evaluated context refusal makes the system noncollapsed
+a balanced panel has an evaluated context
+a balanced panel is not vacuous
+a balanced panel is noncollapsed
+a balanced panel is not universal-on-evaluated comparisons
+absence of evaluated refusals collapses the consequence system
+all-refusing evaluated contexts block balanced panels
+```
+
+Toy checks:
+
+```text
+the non-transitive toy system has a balanced context panel
+the all-refusing toy system is not balanced
+```
+
+Interpretation:
+
+```text
+balanced only means the evaluated panel has at least one allowance and at least
+one refusal
+it does not define relevance, quotient structure, deformers, or upward
+trajectory objects
+one local allowance does not imply global compatibility
+```
+
+Validation:
+
+```text
+powershell -ExecutionPolicy Bypass -File scripts\setup\invoke_lake.ps1 build AlphaOmega
+rg -n "\b(sorry|admit|axiom)\b" formal/lean -g "*.lean"
+git diff --check
+```
+
+Result:
+
+```text
+AlphaOmega build passed
+no sorry / admit / axiom matches
+diff check clean except Git line-ending warnings
+```
+
 ### Consequence Over-Separation Guardrails
 
 Added over-separation checks for consequence systems:
