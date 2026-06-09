@@ -9,6 +9,65 @@ patch notes at the top.
 
 ## 2026-06-09
 
+### Consequence Over-Separation Guardrails
+
+Added over-separation checks for consequence systems:
+
+```text
+formal/lean/OmegaProper/Trajectory/ConsequenceComparison.lean
+```
+
+Core definitions:
+
+```text
+SelfCompatible
+HasCompatiblePair
+HasDistinctCompatiblePair
+AllPairsSeparated
+SelfSeparated
+```
+
+Checked guardrails:
+
+```text
+reflexive comparison implies self-compatibility
+self-compatible nonempty systems have a compatible pair
+all-pairs-separated systems with a fragment are not self-compatible
+all-pairs-separated systems have no distinct compatible pair
+all-pairs-separated nonempty systems are noncollapsed
+```
+
+Toy check:
+
+```text
+the all-refusing toy system is noncollapsed
+the all-refusing toy system is not self-compatible
+noncollapse does not imply self-compatibility
+```
+
+Interpretation:
+
+```text
+noncollapse is not enough
+an apparatus can have teeth and still be pathologically over-separating
+```
+
+Validation:
+
+```text
+powershell -ExecutionPolicy Bypass -File scripts\setup\invoke_lake.ps1 build AlphaOmega
+rg -n "\b(sorry|admit|axiom)\b" formal/lean -g "*.lean"
+git diff --check
+```
+
+Result:
+
+```text
+AlphaOmega build passed
+no sorry / admit / axiom matches
+diff check clean except Git line-ending warnings
+```
+
 ### Consequence Collapse Discipline
 
 Added collapse/noncollapse discipline for consequence systems:
