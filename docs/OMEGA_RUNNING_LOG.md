@@ -9,57 +9,70 @@ patch notes at the top.
 
 ## 2026-06-09
 
-### Future-Response Sufficiency Lean Hook
+### Consequence Relation Lean Bedrock
 
-Added the abstract future-response sufficiency layer:
+Replaced the factored future-response hook with a consequence-native relation
+layer:
+
+```text
+formal/lean/OmegaProper/Trajectory/ConsequenceRelation.lean
+```
+
+Removed the active file:
 
 ```text
 formal/lean/OmegaProper/Trajectory/FutureResponse.lean
 ```
 
-The module defines the response-first formal hook that future empirical
-candidates must instantiate before they can be treated as minimal
-future-deformer candidates:
+Reason: the factored hook still made representation/factorization too central.
+The active foundation now starts from continuation consequences and separation.
+
+Core definitions:
 
 ```text
-FutureResponsePresentation
-ResponseModel
-ResponseSufficient
-FactoredResponseModel
-FactoredResponseSufficient
-FactoredModelCoarser / StrictlyFactoredCoarser
-NontrivialFactorization
-MinimalSufficientFactoredModel
-ResponseContinuation
-DriftWithResponseContinuation
-MinimalFutureDeformerCandidate
+ConsequenceSystem
+ConsequenceCompatible
+ConsequenceSeparated
+AllowedIdentification
+IdentificationRespectsConsequences
+ConsequenceBearingPair
+HasEvaluatedContext
+HasSeparatedPair
+ConsequenceCollapsed
+CompareReflexive / CompareSymmetric / CompareTransitive
 ```
 
-Guardrails checked:
+Checked guardrails:
 
 ```text
-constant response models imply evaluated teacher responses are mutually close,
-  given symmetric/transitive Close
-raw window identity is sufficient when exact prediction and reflexive Close hold
-raw window factored models are sufficient under the same exact-prediction condition
-minimal sufficient factored models block strictly coarser admissible sufficient models
-constant factored models cannot be nontrivial
-constant factored models cannot be minimal future-deformer candidates
-nontrivial minimal candidates rule out admissible sufficient constant factors
-raw window factored models are not minimal when an admissible strictly coarser
-  sufficient factor exists
-response continuation does not imply same endpoints
-shape drift can coexist with response continuation in a toy guardrail example
-sufficiency plus response continuation gives future-response relevance
+compatible pairs are not separated
+separated pairs are not compatible
+no evaluated contexts collapse all identifications
+universal comparison collapses all identifications
+reflexive / symmetric / transitive comparison lifts to compatible fragments
+separated pairs cannot be identified by any consequence-respecting relation
 ```
 
-Scope: this is an abstract formal hook. Minimality is relative to an explicit
-`Admissible` predicate, so leakage/provenance discipline remains an empirical
-adapter responsibility rather than a Lean-side fiction.
+Critical toy counterexample:
 
-Design correction: response-function preservation is primary. Factored
-representations only induce response models; representation recovery is not the
-load-bearing object.
+```text
+a compatible b
+b compatible c
+a separated c
+comparison is not transitive
+```
+
+Interpretation:
+
+```text
+connectedness is not sameness
+do not quotient by paths
+do not take transitive closure for free
+```
+
+Scope: this is not a deformer definition. It is the lower consequence relation
+that future quotients, representations, recoverability claims, and deformer
+candidates must answer to.
 
 Validation:
 
