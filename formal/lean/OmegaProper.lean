@@ -1,6 +1,7 @@
 import OmegaProper.Compatibility.JointPresentation
 import OmegaProper.Scaffolds.CompletionCounterexamples
 import OmegaProper.Scaffolds.FiniteMaximal
+import OmegaProper.Trajectory.ConsequenceClasses
 import OmegaProper.Trajectory.ConsequenceRelation
 import OmegaProper.Trajectory.Quotient
 

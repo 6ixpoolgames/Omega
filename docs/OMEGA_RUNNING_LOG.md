@@ -9,6 +9,61 @@ patch notes at the top.
 
 ## 2026-06-09
 
+### Consequence Class Guardrails
+
+Added class-level guardrails on top of the consequence relation:
+
+```text
+formal/lean/OmegaProper/Trajectory/ConsequenceClasses.lean
+```
+
+Core definitions:
+
+```text
+ClassRespectsConsequences
+ClassHasSeparatedPair
+ChainStepRespectsConsequences
+```
+
+Checked guardrails:
+
+```text
+if a class respects consequences, it contains no separated pair
+if a class contains a separated pair, it does not respect consequences
+under transitive comparison, two compatible steps license endpoint compatibility
+```
+
+Toy non-transitive result:
+
+```text
+the full class {a,b,c} contains a separated pair
+the adjacent chain a-b, b-c respects consequences stepwise
+the chain-connected class still fails pairwise consequence respect
+```
+
+Interpretation:
+
+```text
+chain-connectedness is not enough for a valid class
+classes require pairwise consequence compatibility unless transitivity has been proven
+```
+
+Validation:
+
+```text
+powershell -ExecutionPolicy Bypass -File scripts\setup\invoke_lake.ps1 build AlphaOmega
+rg -n "\b(sorry|admit|axiom)\b" formal/lean -g "*.lean"
+git diff --check
+```
+
+Result:
+
+```text
+AlphaOmega build passed
+no sorry / admit / axiom matches
+diff check clean except Git line-ending warnings
+```
+
 ### Consequence Relation Lean Bedrock
 
 Replaced the factored future-response hook with a consequence-native relation
