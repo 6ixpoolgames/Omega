@@ -9,6 +9,65 @@ patch notes at the top.
 
 ## 2026-06-09
 
+### Consequence Collapse Discipline
+
+Added collapse/noncollapse discipline for consequence systems:
+
+```text
+formal/lean/OmegaProper/Trajectory/ConsequenceDiscipline.lean
+```
+
+Core definitions:
+
+```text
+ComparisonUniversalOnEvaluated
+EvaluationVacuous
+ConsequenceNoncollapsed
+UniversalClass
+```
+
+Checked guardrails:
+
+```text
+vacuous evaluation collapses the consequence relation
+universal comparison collapses the consequence relation
+a separated pair means the system is not collapsed
+not-collapsed systems have a separated pair
+noncollapsed systems have an evaluated context
+noncollapsed systems are not vacuous and do not have universal comparison
+the universal class fails consequence respect in a noncollapsed system
+```
+
+Toy check:
+
+```text
+the non-transitive toy system is noncollapsed
+the toy universal class does not respect consequences
+```
+
+Interpretation:
+
+```text
+the apparatus has teeth only when it can refuse at least one identification
+the universal class is invalid whenever the system is noncollapsed
+```
+
+Validation:
+
+```text
+powershell -ExecutionPolicy Bypass -File scripts\setup\invoke_lake.ps1 build AlphaOmega
+rg -n "\b(sorry|admit|axiom)\b" formal/lean -g "*.lean"
+git diff --check
+```
+
+Result:
+
+```text
+AlphaOmega build passed
+no sorry / admit / axiom matches
+diff check clean except Git line-ending warnings
+```
+
 ### Consequence Class Guardrails
 
 Added class-level guardrails on top of the consequence relation:
