@@ -7,6 +7,76 @@ run.
 Entries are organized in rough reverse chronological order, with the most recent
 patch notes at the top.
 
+## 2026-06-09
+
+### Future-Response Sufficiency Lean Hook
+
+Added the abstract future-response sufficiency layer:
+
+```text
+formal/lean/OmegaProper/Trajectory/FutureResponse.lean
+```
+
+The module defines the response-first formal hook that future empirical
+candidates must instantiate before they can be treated as minimal
+future-deformer candidates:
+
+```text
+FutureResponsePresentation
+ResponseModel
+ResponseSufficient
+FactoredResponseModel
+FactoredResponseSufficient
+FactoredModelCoarser / StrictlyFactoredCoarser
+NontrivialFactorization
+MinimalSufficientFactoredModel
+ResponseContinuation
+DriftWithResponseContinuation
+MinimalFutureDeformerCandidate
+```
+
+Guardrails checked:
+
+```text
+constant response models imply evaluated teacher responses are mutually close,
+  given symmetric/transitive Close
+raw window identity is sufficient when exact prediction and reflexive Close hold
+raw window factored models are sufficient under the same exact-prediction condition
+minimal sufficient factored models block strictly coarser admissible sufficient models
+constant factored models cannot be nontrivial
+constant factored models cannot be minimal future-deformer candidates
+nontrivial minimal candidates rule out admissible sufficient constant factors
+raw window factored models are not minimal when an admissible strictly coarser
+  sufficient factor exists
+response continuation does not imply same endpoints
+shape drift can coexist with response continuation in a toy guardrail example
+sufficiency plus response continuation gives future-response relevance
+```
+
+Scope: this is an abstract formal hook. Minimality is relative to an explicit
+`Admissible` predicate, so leakage/provenance discipline remains an empirical
+adapter responsibility rather than a Lean-side fiction.
+
+Design correction: response-function preservation is primary. Factored
+representations only induce response models; representation recovery is not the
+load-bearing object.
+
+Validation:
+
+```text
+powershell -ExecutionPolicy Bypass -File scripts\setup\invoke_lake.ps1 build AlphaOmega
+rg -n "\b(sorry|admit|axiom)\b" formal/lean -g "*.lean"
+git diff --check
+```
+
+Result:
+
+```text
+AlphaOmega build passed
+no sorry / admit / axiom matches
+diff check clean except Git line-ending warning
+```
+
 ## 2026-06-06
 
 ### Trajectory Window Quotient Lean Scaffold
