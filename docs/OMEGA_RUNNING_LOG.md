@@ -9,6 +9,68 @@ patch notes at the top.
 
 ## 2026-06-10
 
+### Consequence Directionality and Class Repair
+
+Tightened the consequence-native trajectory guardrails:
+
+```text
+formal/lean/OmegaProper/Trajectory/ConsequenceRelation.lean
+formal/lean/OmegaProper/Trajectory/ConsequenceClasses.lean
+formal/lean/OmegaProper/Trajectory/ConsequenceComparison.lean
+```
+
+Core additions:
+
+```text
+ConsequenceAllows
+ConsequenceIdentifiable
+ConsequenceSeparates
+ConsequenceMergeSeparated
+OneWayAllowance
+ClassNonempty
+ClassHasDistinctMembers
+ClassNontrivial
+EvaluationSelfCompatible
+HasEvaluatedCompatiblePair
+HasEvaluatedRefusedPair
+EvaluatedPanelNonpathological
+```
+
+Checked guardrails:
+
+```text
+identification requires both directed allowances
+one-way allowance is not identification
+directional separation blocks identification in the separated direction
+merge separation blocks symmetric identification
+merge separation is symmetric
+identified pairs are not merge-separated
+classes with distinct members are nonempty
+evaluated self-compatibility implies self-compatibility
+an evaluated refused pair makes the system noncollapsed
+evaluated panel nonpathology implies self-compatibility, nonvacuity, and
+noncollapse
+the all-refusing toy panel is not nonpathological
+```
+
+Interpretation:
+
+```text
+directional consequence allowance is not a quotient merge
+valid identification requires both directions unless stronger structure is
+proved
+class nontriviality is separate from consequence-respect
+panel nonpathology is still only a guardrail, not relevance or meaning
+```
+
+Validation:
+
+```text
+AlphaOmega build passed
+no sorry / admit / axiom matches
+diff check clean except Git line-ending warnings
+```
+
 ### AlphaCore Primitive Nondegeneracy
 
 Added Alpha-native primitive nondegeneracy witnesses:

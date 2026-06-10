@@ -159,7 +159,8 @@ independently normalized summary rates;
 finite policy-separation example showing that Bayes-best target recovery can
 strictly exceed fixed-declared target recovery;
 consequence-native trajectory guardrails for separation, consequence-respecting
-classes, collapse/noncollapse, over-separation, and mixed evaluated panels.
+classes, directional allowance versus symmetric identification,
+collapse/noncollapse, over-separation, and mixed evaluated panels.
 ```
 
 This is formal infrastructure only. It does not instantiate an empirical

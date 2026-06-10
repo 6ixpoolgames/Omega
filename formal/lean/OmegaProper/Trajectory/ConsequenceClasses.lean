@@ -26,6 +26,28 @@ def ClassRespectsConsequences (S : ConsequenceSystem.{w, k, o})
     member y ->
     ConsequenceCompatible S x y
 
+/-- A class has at least one member. -/
+def ClassNonempty {S : ConsequenceSystem.{w, k, o}}
+    (member : S.Fragment -> Prop) : Prop :=
+  exists x, member x
+
+/-- A class has at least two distinct members. -/
+def ClassHasDistinctMembers {S : ConsequenceSystem.{w, k, o}}
+    (member : S.Fragment -> Prop) : Prop :=
+  exists x y,
+    member x /\
+    member y /\
+    Not (x = y)
+
+/--
+Class nontriviality is kept separate from consequence-respect. Empty and
+singleton classes may be valid, but they are not evidence of a multi-fragment
+pattern.
+-/
+abbrev ClassNontrivial {S : ConsequenceSystem.{w, k, o}}
+    (member : S.Fragment -> Prop) : Prop :=
+  ClassHasDistinctMembers member
+
 /-- A class contains a separated pair when two members are consequence-separated. -/
 def ClassHasSeparatedPair (S : ConsequenceSystem.{w, k, o})
     (member : S.Fragment -> Prop) : Prop :=
@@ -33,6 +55,18 @@ def ClassHasSeparatedPair (S : ConsequenceSystem.{w, k, o})
     member x /\
     member y /\
     ConsequenceSeparated S x y
+
+/-- A class with distinct members is nonempty. -/
+theorem classHasDistinctMembers_nonempty
+    {S : ConsequenceSystem.{w, k, o}}
+    {member : S.Fragment -> Prop}
+    (h : ClassHasDistinctMembers member) :
+    ClassNonempty member := by
+  match h with
+  | Exists.intro x hx =>
+      match hx with
+      | Exists.intro _y hy =>
+          exact Exists.intro x hy.left
 
 /-- A class that respects consequences contains no separated pair. -/
 theorem class_respects_no_separated_pair

@@ -40,6 +40,20 @@ def ConsequenceCompatible (S : ConsequenceSystem.{w, k, o})
     S.Compare c (S.consequence c x) (S.consequence c y)
 
 /--
+Directional allowance: every evaluated context compares `x`'s consequence to
+`y`'s consequence.
+
+This is not yet a symmetric identification.
+-/
+abbrev ConsequenceAllows (S : ConsequenceSystem.{w, k, o}) :=
+  ConsequenceCompatible S
+
+/-- True identification requires both directed allowances. -/
+def ConsequenceIdentifiable (S : ConsequenceSystem.{w, k, o})
+    (x y : S.Fragment) : Prop :=
+  ConsequenceAllows S x y /\ ConsequenceAllows S y x
+
+/--
 Two fragments are separated when some evaluated context refuses to compare their
 consequences.
 -/
@@ -49,17 +63,31 @@ def ConsequenceSeparated (S : ConsequenceSystem.{w, k, o})
     S.Evaluated c /\
     Not (S.Compare c (S.consequence c x) (S.consequence c y))
 
-/-- A proposed identification is allowed exactly when consequences are compatible. -/
+/-- Directional separation: an evaluated context refuses comparison from `x` to `y`. -/
+abbrev ConsequenceSeparates (S : ConsequenceSystem.{w, k, o}) :=
+  ConsequenceSeparated S
+
+/-- Symmetric merge-blocking separation: either direction is separated. -/
+def ConsequenceMergeSeparated (S : ConsequenceSystem.{w, k, o})
+    (x y : S.Fragment) : Prop :=
+  ConsequenceSeparated S x y \/ ConsequenceSeparated S y x
+
+/-- A proposed identification is allowed only when both directions compare. -/
 abbrev AllowedIdentification (S : ConsequenceSystem.{w, k, o}) :=
-  ConsequenceCompatible S
+  ConsequenceIdentifiable S
+
+/-- A one-way allowance is not by itself an identification. -/
+def OneWayAllowance (S : ConsequenceSystem.{w, k, o})
+    (x y : S.Fragment) : Prop :=
+  ConsequenceAllows S x y /\ Not (ConsequenceAllows S y x)
 
 /--
 A proposed identification relation respects consequences when it never
-identifies fragments separated by the evaluated consequence system.
+identifies fragments unless both directed allowances hold.
 -/
 def IdentificationRespectsConsequences (S : ConsequenceSystem.{w, k, o})
     (R : S.Fragment -> S.Fragment -> Prop) : Prop :=
-  forall {x y}, R x y -> ConsequenceCompatible S x y
+  forall {x y}, R x y -> ConsequenceIdentifiable S x y
 
 /-- A pair carries a consequence-bearing distinction when an evaluated context separates it. -/
 abbrev ConsequenceBearingPair (S : ConsequenceSystem.{w, k, o}) :=
@@ -195,6 +223,66 @@ theorem compatible_trans_of_compare_transitive
     (hxy c hcEval)
     (hyz c hcEval)
 
+theorem identifiable_left
+    {S : ConsequenceSystem.{w, k, o}} {x y : S.Fragment}
+    (h : ConsequenceIdentifiable S x y) :
+    ConsequenceCompatible S x y := by
+  exact h.left
+
+theorem identifiable_right
+    {S : ConsequenceSystem.{w, k, o}} {x y : S.Fragment}
+    (h : ConsequenceIdentifiable S x y) :
+    ConsequenceCompatible S y x := by
+  exact h.right
+
+theorem identifiable_symm
+    {S : ConsequenceSystem.{w, k, o}} {x y : S.Fragment}
+    (h : ConsequenceIdentifiable S x y) :
+    ConsequenceIdentifiable S y x := by
+  exact And.intro h.right h.left
+
+theorem oneWayAllowance_not_identifiable
+    {S : ConsequenceSystem.{w, k, o}} {x y : S.Fragment}
+    (h : OneWayAllowance S x y) :
+    Not (ConsequenceIdentifiable S x y) := by
+  intro hId
+  exact h.right hId.right
+
+theorem separated_blocks_identifiable_left
+    {S : ConsequenceSystem.{w, k, o}} {x y : S.Fragment}
+    (hsep : ConsequenceSeparated S x y) :
+    Not (ConsequenceIdentifiable S x y) := by
+  intro hId
+  exact separated_not_compatible hsep hId.left
+
+theorem separated_blocks_identifiable_right
+    {S : ConsequenceSystem.{w, k, o}} {x y : S.Fragment}
+    (hsep : ConsequenceSeparated S y x) :
+    Not (ConsequenceIdentifiable S x y) := by
+  intro hId
+  exact separated_not_compatible hsep hId.right
+
+theorem mergeSeparated_blocks_identifiable
+    {S : ConsequenceSystem.{w, k, o}} {x y : S.Fragment}
+    (h : ConsequenceMergeSeparated S x y) :
+    Not (ConsequenceIdentifiable S x y) := by
+  intro hId
+  cases h with
+  | inl hsep =>
+      exact separated_not_compatible hsep hId.left
+  | inr hsep =>
+      exact separated_not_compatible hsep hId.right
+
+theorem mergeSeparated_symm
+    {S : ConsequenceSystem.{w, k, o}} {x y : S.Fragment}
+    (h : ConsequenceMergeSeparated S x y) :
+    ConsequenceMergeSeparated S y x := by
+  cases h with
+  | inl hsep =>
+      exact Or.inr hsep
+  | inr hsep =>
+      exact Or.inl hsep
+
 theorem separated_blocks_respected_identification
     {S : ConsequenceSystem.{w, k, o}}
     {R : S.Fragment -> S.Fragment -> Prop}
@@ -203,7 +291,7 @@ theorem separated_blocks_respected_identification
     (hsep : ConsequenceSeparated S x y) :
     Not (R x y) := by
   intro hxy
-  exact separated_not_compatible hsep (hR hxy)
+  exact separated_blocks_identifiable_left hsep (hR hxy)
 
 theorem identified_pair_not_separated
     {S : ConsequenceSystem.{w, k, o}}
@@ -212,7 +300,17 @@ theorem identified_pair_not_separated
     {x y : S.Fragment}
     (hxy : R x y) :
     Not (ConsequenceSeparated S x y) := by
-  exact compatible_not_separated (hR hxy)
+  exact compatible_not_separated (hR hxy).left
+
+theorem identified_pair_merge_not_separated
+    {S : ConsequenceSystem.{w, k, o}}
+    {R : S.Fragment -> S.Fragment -> Prop}
+    (hR : IdentificationRespectsConsequences S R)
+    {x y : S.Fragment}
+    (hxy : R x y) :
+    Not (ConsequenceMergeSeparated S x y) := by
+  intro hsep
+  exact mergeSeparated_blocks_identifiable hsep (hR hxy)
 
 /-! ## Non-transitive toy guardrail -/
 

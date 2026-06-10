@@ -40,12 +40,48 @@ def AllPairsSeparated (S : ConsequenceSystem.{w, k, o}) : Prop :=
 def SelfSeparated (S : ConsequenceSystem.{w, k, o}) : Prop :=
   forall x, ConsequenceSeparated S x x
 
+/-- Every evaluated context compares each fragment consequence with itself. -/
+def EvaluationSelfCompatible (S : ConsequenceSystem.{w, k, o}) : Prop :=
+  forall c x,
+    S.Evaluated c ->
+    S.Compare c (S.consequence c x) (S.consequence c x)
+
+/-- Some evaluated context allows at least one pair. -/
+def HasEvaluatedCompatiblePair (S : ConsequenceSystem.{w, k, o}) : Prop :=
+  exists c x y,
+    S.Evaluated c /\
+    S.Compare c (S.consequence c x) (S.consequence c y)
+
+/-- Some evaluated context refuses at least one pair. -/
+def HasEvaluatedRefusedPair (S : ConsequenceSystem.{w, k, o}) : Prop :=
+  exists c x y,
+    S.Evaluated c /\
+    Not (S.Compare c (S.consequence c x) (S.consequence c y))
+
+/--
+A modest panel check: evaluated self-comparisons pass, and the evaluated panel
+contains at least one allowance and at least one refusal.
+
+This does not prove context relevance or substantive meaning.
+-/
+def EvaluatedPanelNonpathological (S : ConsequenceSystem.{w, k, o}) : Prop :=
+  EvaluationSelfCompatible S /\
+  HasEvaluatedCompatiblePair S /\
+  HasEvaluatedRefusedPair S
+
 theorem compare_reflexive_implies_self_compatible
     {S : ConsequenceSystem.{w, k, o}}
     (h : CompareReflexive S) :
     SelfCompatible S := by
   intro x
   exact compatible_refl_of_compare_reflexive h x
+
+theorem evaluationSelfCompatible_implies_selfCompatible
+    {S : ConsequenceSystem.{w, k, o}}
+    (h : EvaluationSelfCompatible S) :
+    SelfCompatible S := by
+  intro x c hcEval
+  exact h c x hcEval
 
 theorem self_compatible_has_compatible_pair
     {S : ConsequenceSystem.{w, k, o}}
@@ -87,6 +123,51 @@ theorem all_pairs_separated_noncollapsed_with_fragment
       exists x
       exists x
       exact hAll x x
+
+theorem hasEvaluatedCompatiblePair_not_vacuous
+    {S : ConsequenceSystem.{w, k, o}}
+    (h : HasEvaluatedCompatiblePair S) :
+    Not (EvaluationVacuous S) := by
+  intro hvacuous
+  match h with
+  | Exists.intro c hc =>
+      match hc with
+      | Exists.intro _x hx =>
+          match hx with
+          | Exists.intro _y hy =>
+              exact hvacuous c hy.left
+
+theorem hasEvaluatedRefusedPair_noncollapsed
+    {S : ConsequenceSystem.{w, k, o}}
+    (h : HasEvaluatedRefusedPair S) :
+    ConsequenceNoncollapsed S := by
+  match h with
+  | Exists.intro c hc =>
+      match hc with
+      | Exists.intro x hx =>
+          match hx with
+          | Exists.intro y hy =>
+              exact Exists.intro x
+                (Exists.intro y
+                  (Exists.intro c hy))
+
+theorem evaluatedPanelNonpathological_selfCompatible
+    {S : ConsequenceSystem.{w, k, o}}
+    (h : EvaluatedPanelNonpathological S) :
+    SelfCompatible S := by
+  exact evaluationSelfCompatible_implies_selfCompatible h.left
+
+theorem evaluatedPanelNonpathological_not_vacuous
+    {S : ConsequenceSystem.{w, k, o}}
+    (h : EvaluatedPanelNonpathological S) :
+    Not (EvaluationVacuous S) := by
+  exact hasEvaluatedCompatiblePair_not_vacuous h.right.left
+
+theorem evaluatedPanelNonpathological_noncollapsed
+    {S : ConsequenceSystem.{w, k, o}}
+    (h : EvaluatedPanelNonpathological S) :
+    ConsequenceNoncollapsed S := by
+  exact hasEvaluatedRefusedPair_noncollapsed h.right.right
 
 /-! ## All-refusing toy guardrail -/
 
@@ -145,6 +226,12 @@ theorem noncollapsed_does_not_imply_self_compatible :
     ConsequenceNoncollapsed allRefusingSystem /\
     Not (SelfCompatible allRefusingSystem) := by
   exact And.intro all_refusing_noncollapsed all_refusing_not_self_compatible
+
+theorem all_refusing_not_evaluatedPanelNonpathological :
+    Not (EvaluatedPanelNonpathological allRefusingSystem) := by
+  intro h
+  exact all_refusing_not_self_compatible
+    (evaluatedPanelNonpathological_selfCompatible h)
 
 end ConsequenceComparison
 end Trajectory

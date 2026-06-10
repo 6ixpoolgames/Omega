@@ -118,7 +118,9 @@ Boolean relation support presentation;
 finite channel / partition presentation;
 probabilistic channel presentation, including exact/probabilistic separation,
 full-support converse, finite cascade error bound, fixed-declared versus
-Bayes-best policy separation, and thresholded probabilistic non-erasure.
+Bayes-best policy separation, and thresholded probabilistic non-erasure;
+consequence-native guardrails separating directional allowance from symmetric
+identification and blocking invalid class formation.
 ```
 
 Key files:
