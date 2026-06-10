@@ -20,6 +20,10 @@ formal/lean/AlphaCore/Nondegenerate.lean
 Core definitions:
 
 ```text
+JointPrimitiveWitness
+AsymmetryPrimitiveWitness
+HasJointPrimitiveWitness
+HasAsymmetryPrimitiveWitness
 PrimitiveWitness
 PrimitiveNondegenerate
 DirectionalPrimitiveWitness
@@ -31,6 +35,12 @@ AsymmetryCollapse
 Checked guardrails:
 
 ```text
+asymmetry witness supplies a joint relation/separation witness
+joint witness implies relation witness
+joint witness implies distinction witness
+joint witness implies distinct relata
+joint witness blocks identification collapse
+joint witness blocks relation collapse
 primitive witness iff existing HasAsymmetry
 primitive witness implies relation witness
 primitive witness implies distinction witness
@@ -41,7 +51,7 @@ primitive witness blocks relation collapse
 identification collapse blocks primitive witness
 relation collapse blocks primitive witness
 directional primitive witness implies primitive witness
-subsingleton carrier blocks primitive witness
+subsingleton carrier blocks joint witness and primitive witness
 ```
 
 Toy checks:
@@ -57,9 +67,9 @@ chainFrame has a directional primitive witness
 Interpretation:
 
 ```text
-an actual asymmetry-bearing distinction is not decorative
-it forces relation and distinction together
-it blocks total identification collapse
+relation + separation contact blocks total relation and identification collapse
+an actual asymmetry-bearing distinction supplies that contact
+asymmetry is not treated as magical; it factors through the joint witness
 this is an Alpha-side seed condition, not Omega validation
 ```
 

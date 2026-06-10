@@ -192,10 +192,11 @@ theorem tiny_alpha_instantiated :
 
 theorem chainFrame_primitiveWitness :
     Frame.PrimitiveWitness chainFrame := by
-  exact Exists.intro OneDist.d
-    (Exists.intro Two.a
-      (Exists.intro Two.b
-        (And.intro rfl rfl)))
+  exact Nonempty.intro
+    { d := OneDist.d
+      x := Two.a
+      y := Two.b
+      asym := And.intro rfl rfl }
 
 theorem chainFrame_primitiveNondegenerate :
     Frame.PrimitiveNondegenerate chainFrame := by
@@ -213,10 +214,12 @@ theorem chainFrame_not_relationCollapse :
 
 theorem chainFrame_directionalPrimitiveWitness :
     Frame.DirectionalPrimitiveWitness chainFrame := by
-  refine Exists.intro OneDist.d
-    (Exists.intro Two.a
-      (Exists.intro Two.b
-        (And.intro (And.intro rfl rfl) ?_)))
+  refine Exists.intro
+    { d := OneDist.d
+      x := Two.a
+      y := Two.b
+      asym := And.intro rfl rfl }
+    ?_
   intro hReverse
   cases hReverse.left
 
