@@ -9,16 +9,16 @@ formal object isolated by the executable probes.
 
 The current empirical status of the project is tracked separately in:
 
-- `docs/OMEGA_PROJECT_MANUAL.md`
-- `docs/OMEGA_RUNNING_LOG.md`
-- `docs/PUBLIC_RESULTS_INDEX.md`
+- `../../OMEGA_PROJECT_MANUAL.md`
+- `../../OMEGA_RUNNING_LOG.md`
+- `../../PUBLIC_RESULTS_INDEX.md`
 
 The current public formalism is tracked in:
 
-- `docs/OMEGA_FORMALISM_PRIMER.md`
-- `docs/research_notes/omega_theory/README.md`
-- `docs/research_notes/omega_theory/theory_arm_map_v0.md`
-- `docs/research_notes/omega_theory/omega_formal_core_v0_2_future_distinction_dynamics.md`
+- `../../OMEGA_FORMALISM_PRIMER.md`
+- `../../research_notes/omega_theory/README.md`
+- `../../research_notes/omega_theory/theory_arm_map_v0.md`
+- `../../research_notes/omega_theory/omega_formal_core_v0_2_future_distinction_dynamics.md`
 
 ## Included Drafts
 

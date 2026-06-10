@@ -2,7 +2,7 @@
 
 A bridge from the FEP floor to Omega proper
 
-Related progenitor draft: [`gradient_ethics.pdf`](../../progenitor_drafts/gradient_ethics.pdf)
+Related progenitor draft: [`gradient_ethics.pdf`](../../theory_archive/progenitor_drafts/gradient_ethics.pdf)
 
 ## Purpose
 
@@ -268,7 +268,7 @@ Gradient Ethics begins one layer higher: it asks how value-bearing systems shoul
 
 On this framing, a valuer is not defined by consciousness, preference, or utility. It is a bounded historical identity for which different continuations asymmetrically affect recoverable continuability. That preserves the Gradient Ethics intuition while weakening the metaphysical load: valuerhood is a structural precondition for value-bearing, not a completed ethics.
 
-For the broader ethical consequences of this bridge, see [`gradient_ethics.pdf`](../../progenitor_drafts/gradient_ethics.pdf).
+For the broader ethical consequences of this bridge, see [`gradient_ethics.pdf`](../../theory_archive/progenitor_drafts/gradient_ethics.pdf).
 
 ## Relation to Omega proper
 

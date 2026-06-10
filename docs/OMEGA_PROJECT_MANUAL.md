@@ -708,10 +708,10 @@ Older papers and drafts motivate variants of:
   structure through lower-dimensional macro descriptions.
 
 Important caveat: the original papers are not all reproduced inside this repo.
-Some source PDFs are now included under `docs/progenitor_drafts/` as early
+Some source PDFs are now included under `docs/theory_archive/progenitor_drafts/` as early
 theoretical provenance. They are drafts only and should not be treated as
 current validation results, peer-reviewed claims, or final formal statements.
-The current theory/status draft lives under `docs/current_theory/`. Active
+The earlier theory/status draft lives under `docs/theory_archive/current_theory/`. Active
 trajectory-space branch notes live under `docs/research_notes/trajectory_space/`.
 The current formal-stack and glossary notes live under
 `docs/research_notes/omega_theory/`. The primitive/FEP/valuerhood bridge notes

@@ -15,11 +15,11 @@ Status:
 Current front door:
 
 ```text
-../OMEGA_FORMALISM_PRIMER.md
-../research_notes/omega_theory/omega_primitive_calculus_v0_lean_root_skeleton.md
-../research_notes/omega_theory/README.md
-../research_notes/omega_theory/theory_arm_map_v0.md
-../research_notes/omega_theory/omega_formal_core_v0_2_future_distinction_dynamics.md
+../../OMEGA_FORMALISM_PRIMER.md
+../../research_notes/omega_theory/omega_primitive_calculus_v0_lean_root_skeleton.md
+../../research_notes/omega_theory/README.md
+../../research_notes/omega_theory/theory_arm_map_v0.md
+../../research_notes/omega_theory/omega_formal_core_v0_2_future_distinction_dynamics.md
 ```
 
 ## Included Draft
@@ -30,17 +30,17 @@ Current front door:
 
 The previous public-facing theory and validation front door was:
 
-- `../specs/archive/rfs_mb0/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md`
-- `../research_notes/validation_design/val_ecology_viability_reorientation.md`
-- `../specs/archive/val0/VAL0_G_NEUTRAL_GRAMMAR_GEOMETRY_ATLAS_SPEC.md`
-- `../research_notes/validation_design/README.md`
-- `../research_notes/validation_results/val0/val0_ct_12h_unlabeled_geometry_battery_result.md`
-- `../research_notes/validation_design/val0_ct_implementation_spec.md`
-- `../research_notes/validation_design/val0_constructor_task_algebra_probe.md`
-- `../research_notes/omega_theory/constructor_theory_and_omega_axiology.md`
-- `../research_notes/omega_theory/deriving_omega_relevance_from_primitives.md`
-- `../research_notes/omega_theory/formal_stack_v0.md`
-- `../research_notes/omega_theory/omega_glossary.md`
+- `../../specs/archive/rfs_mb0/REACHABLE_FUTURES_SUBSTRATE_PROGRAM.md`
+- `../../research_notes/validation_design/val_ecology_viability_reorientation.md`
+- `../../specs/archive/val0/VAL0_G_NEUTRAL_GRAMMAR_GEOMETRY_ATLAS_SPEC.md`
+- `../../research_notes/validation_design/README.md`
+- `../../research_notes/validation_results/val0/val0_ct_12h_unlabeled_geometry_battery_result.md`
+- `../../research_notes/validation_design/val0_ct_implementation_spec.md`
+- `../../research_notes/validation_design/val0_constructor_task_algebra_probe.md`
+- `../../research_notes/omega_theory/constructor_theory_and_omega_axiology.md`
+- `../../research_notes/omega_theory/deriving_omega_relevance_from_primitives.md`
+- `../../research_notes/omega_theory/formal_stack_v0.md`
+- `../../research_notes/omega_theory/omega_glossary.md`
 
 Those documents remain useful provenance, but the current public-facing
 terminology should introduce the project through value-bearing futures,

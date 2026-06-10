@@ -2138,7 +2138,7 @@ Lean root skeleton:
 README.md
 docs/OMEGA_FORMALISM_PRIMER.md
 docs/EXTERNAL_READER_GUIDE.md
-docs/current_theory/README.md
+docs/theory_archive/current_theory/README.md
 docs/OMEGA_PROJECT_MANUAL.md
 ```
 
@@ -2328,8 +2328,8 @@ Updated:
 ```text
 docs/research_notes/omega_theory/omega_glossary.md
 docs/research_notes/omega_theory/public_terms_and_translations.md
-docs/current_theory/README.md
-docs/progenitor_drafts/README.md
+docs/theory_archive/current_theory/README.md
+docs/theory_archive/progenitor_drafts/README.md
 ```
 
 Intent:
@@ -7066,7 +7066,7 @@ Updated entry points:
 - `docs/roadmaps/OMEGA_EXPERIMENTAL_ROADMAP.md`
 - `docs/PUBLIC_RESULTS_INDEX.md`
 - `docs/OMEGA_PROJECT_MANUAL.md`
-- `docs/current_theory/README.md`
+- `docs/theory_archive/current_theory/README.md`
 - `docs/research_notes/validation_design/README.md`
 
 Current front-door statement:
@@ -7190,7 +7190,7 @@ Probe V0 target:
 
 Added the early theory-side papers to:
 
-- `docs/progenitor_drafts/`
+- `docs/theory_archive/progenitor_drafts/`
 
 Status:
 
@@ -7212,7 +7212,7 @@ Included PDFs:
 
 Added the current theory/status draft to:
 
-- `docs/current_theory/omega_signature_v0_1.pdf`
+- `docs/theory_archive/current_theory/omega_signature_v0_1.pdf`
 
 Status:
 
@@ -7236,7 +7236,7 @@ Framing decision:
 
 - `Project_Omega.pdf` is treated as a current theory/status draft.
 - The trajectory-space PDFs are treated as active research branch notes.
-- The earlier PDFs remain under `docs/progenitor_drafts/` as historical
+- The earlier PDFs remain under `docs/theory_archive/progenitor_drafts/` as historical
   provenance.
 
 ### Repository Setup
