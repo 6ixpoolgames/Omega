@@ -105,6 +105,8 @@ Alpha reachability and finite separation examples;
 primitive non-collapse examples;
 primitive nondegeneracy witnesses blocking total relation and identification
 collapse;
+primitive-preserving maps between Alpha frames, including identity,
+composition, witness preservation, and no-map-to-collapse guardrails;
 root transport laws;
 recoverability weakening / strengthening;
 compositional recoverability;

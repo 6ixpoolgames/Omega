@@ -66,6 +66,7 @@ AlphaCore/Reachability.lean
 AlphaCore/Examples.lean
 AlphaCore/Independence.lean
 AlphaCore/Nondegenerate.lean
+AlphaCore/PrimitiveMap.lean
 ProtoOmega/Presentation/Native.lean
 ProtoOmega/Transport/Native.lean
 ProtoOmega/Transport/LegacyBridge.lean
@@ -137,6 +138,9 @@ and reach irreversibility do not automatically supply one another;
 Alpha primitive nondegeneracy witnesses showing that an actual
 asymmetry-bearing distinction blocks total relation and identification
 collapse;
+primitive-preserving maps between Alpha frames showing identity, composition,
+witness preservation, primitive nondegeneracy preservation, and no-map-to-
+collapse guardrails;
 presentation-native distinction, separation, order, and transport structures
 for separating presentation machinery from full Alpha substrate contact;
 support-level distinction transport;

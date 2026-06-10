@@ -9,6 +9,43 @@ patch notes at the top.
 
 ## 2026-06-11
 
+### Alpha Primitive-Preserving Maps
+
+Added a pre-recoverability map layer:
+
+```text
+formal/lean/AlphaCore/PrimitiveMap.lean
+```
+
+Core definitions:
+
+```text
+PrimitiveMap
+PrimitiveMap.id
+PrimitiveMap.comp
+PrimitiveMap.mapJointWitness
+PrimitiveMap.mapAsymmetryWitness
+```
+
+Checked guardrails:
+
+```text
+primitive maps preserve joint primitive witnesses
+primitive maps preserve asymmetry primitive witnesses
+primitive maps preserve primitive nondegeneracy
+targets with identification collapse cannot receive joint primitive work
+targets with relation collapse cannot receive joint primitive work
+targets with asymmetry collapse cannot receive primitive nondegeneracy
+```
+
+Interpretation:
+
+```text
+this is a strong primitive-preservation notion, not generic coarse-graining
+it does not assert scale invariance
+it is a pre-recoverability bridge for later admissible transformation work
+```
+
 ### Proto-Teleological Profile Bridge
 
 Added the bridge from proto seed conditions to exact profiles:
