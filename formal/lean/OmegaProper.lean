@@ -8,6 +8,8 @@ import OmegaProper.Trajectory.ConsequenceComparison
 import OmegaProper.Trajectory.ConsequenceDiscipline
 import OmegaProper.Trajectory.ConsequencePanelDiscipline
 import OmegaProper.Trajectory.ConsequenceRelation
+import OmegaProper.Trajectory.ProtoTeleologicalSeed
+import OmegaProper.Trajectory.ProtoTeleologicalSeedExamples
 import OmegaProper.Trajectory.Quotient
 
 /-!

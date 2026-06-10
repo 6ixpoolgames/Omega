@@ -9,6 +9,54 @@ patch notes at the top.
 
 ## 2026-06-10
 
+### Proto-Teleological Seed Wrappers
+
+Added the first narrowly scoped seed wrapper:
+
+```text
+formal/lean/OmegaProper/Trajectory/ProtoTeleologicalSeed.lean
+formal/lean/OmegaProper/Trajectory/ProtoTeleologicalSeedExamples.lean
+```
+
+Core definitions:
+
+```text
+JointProtoTeleologicalSeed
+AsymmetryProtoTeleologicalSeed
+ProtoTeleologicalSeed
+```
+
+Checked consequences:
+
+```text
+asymmetry seed implies joint seed
+joint seed implies joint primitive witness
+asymmetry seed implies primitive nondegeneracy
+joint/asymmetry seed implies consequence noncollapse
+joint/asymmetry seed blocks consequence collapse
+seed has a primitive witness whose endpoints block symmetric consequence
+identification
+```
+
+Toy checks:
+
+```text
+chainFrame has a positive asymmetry proto-teleological seed under the
+one-context equality consequence system
+vacuous consequence evaluation gives no seed
+universal consequence comparison gives no seed
+primitive nondegeneracy alone is not sufficient for a proto-teleological seed
+```
+
+Interpretation:
+
+```text
+this is only the wrapper around primitive Alpha contact plus evaluated
+consequence merge-separation
+it does not define purpose, value, agency, identity, deformer structure,
+boundary, valuerhood, Omega-seed, or Omega-terminal
+```
+
 ### Alpha-to-Consequence Seed Bridge
 
 Added the first Alpha-to-consequence bridge:

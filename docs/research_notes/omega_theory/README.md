@@ -97,6 +97,8 @@ OmegaProper/Scaffolds/FiniteMaximal.lean
 OmegaProper/Scaffolds/CompletionCounterexamples.lean
 OmegaProper/Trajectory/AlphaConsequenceSeed.lean
 OmegaProper/Trajectory/AlphaConsequenceSeedExamples.lean
+OmegaProper/Trajectory/ProtoTeleologicalSeed.lean
+OmegaProper/Trajectory/ProtoTeleologicalSeedExamples.lean
 OmegaProper/Trajectory/ConsequenceRelation.lean
 OmegaProper/Trajectory/ConsequenceClasses.lean
 OmegaProper/Trajectory/ConsequenceDiscipline.lean
@@ -164,7 +166,11 @@ consequence-native trajectory guardrails for separation, consequence-respecting
 classes, directional allowance versus symmetric identification,
 collapse/noncollapse, over-separation, and mixed evaluated panels;
 Alpha-to-consequence seed bridge showing that evaluated consequence refusal
-over primitive witness endpoints blocks symmetric consequence identification.
+over primitive witness endpoints blocks symmetric consequence identification;
+proto-teleological seed wrappers showing that primitive Alpha contact plus
+evaluated consequence merge-separation implies primitive nondegeneracy,
+consequence noncollapse, and a witness blocking symmetric consequence
+identification, while primitive nondegeneracy alone is not sufficient.
 ```
 
 This is formal infrastructure only. It does not instantiate an empirical

@@ -122,7 +122,11 @@ Bayes-best policy separation, and thresholded probabilistic non-erasure;
 consequence-native guardrails separating directional allowance from symmetric
 identification and blocking invalid class formation;
 Alpha-to-consequence seed bridge showing that evaluated consequence refusal
-over primitive witness endpoints blocks symmetric consequence identification.
+over primitive witness endpoints blocks symmetric consequence identification;
+proto-teleological seed wrappers showing that primitive Alpha contact plus
+evaluated consequence merge-separation implies primitive nondegeneracy,
+consequence noncollapse, and a witness blocking symmetric consequence
+identification, while primitive nondegeneracy alone is not sufficient.
 ```
 
 Key files:
