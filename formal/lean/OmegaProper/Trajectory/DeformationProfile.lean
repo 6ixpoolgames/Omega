@@ -7,8 +7,8 @@ OmegaProper.Trajectory.DeformationProfile
 Status: speculative formal extension / pre-recoverability bridge.
 
 This file defines exact qualitative profile views over consequence systems and
-profile deformation between two `AlphaConsequenceSystem`s over the same Alpha
-frame.
+strict block-vs-allow profile deformation between two `AlphaConsequenceSystem`s
+over the same Alpha frame.
 
 The shared Alpha carrier is a measurement setup, not an identity claim. This
 file does not define recoverability, identity, persistence, coarse-graining,
@@ -42,6 +42,12 @@ abbrev ProfileAllows
 def HasBlockProfile
     (S : ConsequenceSystem.{u, k, o}) : Prop :=
   exists a b : S.Fragment, ProfileBlocks S a b
+
+theorem profileBlock_implies_hasBlockProfile
+    {S : ConsequenceSystem.{u, k, o}} {a b : S.Fragment}
+    (h : ProfileBlocks S a b) :
+    HasBlockProfile S := by
+  exact Exists.intro a (Exists.intro b h)
 
 theorem profileBlock_not_profileAllow
     {S : ConsequenceSystem.{u, k, o}} {a b : S.Fragment}
@@ -86,8 +92,11 @@ theorem universalComparison_no_blockProfile
   exact collapsed_no_blockProfile (universal_comparison_collapses h)
 
 /--
-The block/allow status of a pair changed between two consequence systems over
-the same Alpha frame.
+The strict block/allow status of a pair changed between two consequence systems
+over the same Alpha frame.
+
+This detects only a clean flip between merge-blocked and merge-allowed. It does
+not detect all possible profile differences.
 -/
 def AlphaProfileBlockChanged
     {A : AlphaCore.Frame.{u, v}}
@@ -100,8 +109,8 @@ def AlphaProfileBlockChanged
     ProfileBlocks T.toConsequenceSystem a b)
 
 /--
-Two Alpha consequence systems deform each other's exact qualitative profile
-when some pair changes between merge-blocked and merge-allowed.
+Two Alpha consequence systems strictly deform each other's exact qualitative
+profile when some pair changes between merge-blocked and merge-allowed.
 -/
 def AlphaProfileDeforms
     {A : AlphaCore.Frame.{u, v}}
