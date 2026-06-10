@@ -102,6 +102,7 @@ OmegaProper/Trajectory/DeformationProfileExamples.lean
 OmegaProper/Trajectory/ProtoTeleologicalSeed.lean
 OmegaProper/Trajectory/ProtoTeleologicalSeedDiscipline.lean
 OmegaProper/Trajectory/ProtoTeleologicalSeedExamples.lean
+OmegaProper/Trajectory/ProfileAbstraction.lean
 OmegaProper/Trajectory/ConsequenceRelation.lean
 OmegaProper/Trajectory/ConsequenceClasses.lean
 OmegaProper/Trajectory/ConsequenceDiscipline.lean
@@ -177,7 +178,9 @@ identification, while primitive nondegeneracy alone and consequence
 noncollapse alone are not sufficient;
 speculative deformation-profile bridge comparing exact merge-block and
 merge-allow profiles between consequence systems over the same Alpha carrier,
-without defining identity or recoverability.
+without defining identity or recoverability;
+profile-abstraction contracts separating coarse allow/block claims from exact
+profiles via explicit soundness and completeness predicates.
 ```
 
 This is formal infrastructure only. It does not instantiate an empirical

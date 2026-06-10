@@ -9,6 +9,50 @@ patch notes at the top.
 
 ## 2026-06-11
 
+### Profile Abstraction Contracts
+
+Added an abstraction-contract layer:
+
+```text
+formal/lean/OmegaProper/Trajectory/ProfileAbstraction.lean
+```
+
+Core definitions:
+
+```text
+Abstraction
+AbstractionAllows
+AbstractionBlocks
+SoundAllows
+SoundBlocks
+SoundProfileAbstraction
+CompleteForAllows
+CompleteForBlocks
+CompleteProfileAbstraction
+```
+
+Checked guardrails:
+
+```text
+sound abstractions cannot both allow and block the same pair
+empty abstraction is sound but incomplete when exact blocks exist
+universal-allow abstraction is unsound when exact blocks exist
+universal-block abstraction is incomplete when exact allows exist
+total abstraction is complete but unsound when exact blocks exist
+soundness alone does not imply completeness
+completeness alone does not imply soundness
+```
+
+Interpretation:
+
+```text
+a coarse profile view is not an identity claim
+coarse allow/block claims are usable only through explicit contracts against
+the exact profile
+this does not define recoverability, identity, persistence, deformer structure,
+boundary, value, valuerhood, agency, Omega-seed, or Omega-terminal
+```
+
 ### Deformation Profile Bridge
 
 Added a speculative pre-recoverability bridge:
