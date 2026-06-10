@@ -7,6 +7,44 @@ run.
 Entries are organized in rough reverse chronological order, with the most recent
 patch notes at the top.
 
+## 2026-06-11
+
+### Proto-Teleological Seed Discipline
+
+Added a guardrail module:
+
+```text
+formal/lean/OmegaProper/Trajectory/ProtoTeleologicalSeedDiscipline.lean
+```
+
+Checked discipline:
+
+```text
+proto seed implies primitive nondegeneracy
+proto seed implies consequence noncollapse
+proto seed blocks consequence collapse
+consequence noncollapse alone does not imply proto seed
+```
+
+Negative control:
+
+```text
+symmetricTwoFrame has separable carrier points and a noncollapsed consequence
+system
+symmetricTwoFrame has no asymmetry witness
+therefore noncollapsed consequence refusal alone is not enough for the current
+proto-teleological seed
+```
+
+Interpretation:
+
+```text
+the seed requires both sides of the hinge:
+primitive Alpha contact plus evaluated consequence merge-separation
+this does not define purpose, value, agency, identity, deformer structure,
+boundary, valuerhood, Omega-seed, or Omega-terminal
+```
+
 ## 2026-06-10
 
 ### Proto-Teleological Seed Wrappers

@@ -98,6 +98,7 @@ OmegaProper/Scaffolds/CompletionCounterexamples.lean
 OmegaProper/Trajectory/AlphaConsequenceSeed.lean
 OmegaProper/Trajectory/AlphaConsequenceSeedExamples.lean
 OmegaProper/Trajectory/ProtoTeleologicalSeed.lean
+OmegaProper/Trajectory/ProtoTeleologicalSeedDiscipline.lean
 OmegaProper/Trajectory/ProtoTeleologicalSeedExamples.lean
 OmegaProper/Trajectory/ConsequenceRelation.lean
 OmegaProper/Trajectory/ConsequenceClasses.lean
@@ -170,7 +171,8 @@ over primitive witness endpoints blocks symmetric consequence identification;
 proto-teleological seed wrappers showing that primitive Alpha contact plus
 evaluated consequence merge-separation implies primitive nondegeneracy,
 consequence noncollapse, and a witness blocking symmetric consequence
-identification, while primitive nondegeneracy alone is not sufficient.
+identification, while primitive nondegeneracy alone and consequence
+noncollapse alone are not sufficient.
 ```
 
 This is formal infrastructure only. It does not instantiate an empirical

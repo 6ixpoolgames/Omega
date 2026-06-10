@@ -126,7 +126,8 @@ over primitive witness endpoints blocks symmetric consequence identification;
 proto-teleological seed wrappers showing that primitive Alpha contact plus
 evaluated consequence merge-separation implies primitive nondegeneracy,
 consequence noncollapse, and a witness blocking symmetric consequence
-identification, while primitive nondegeneracy alone is not sufficient.
+identification, while primitive nondegeneracy alone and consequence
+noncollapse alone are not sufficient.
 ```
 
 Key files:
