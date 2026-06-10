@@ -9,6 +9,64 @@ patch notes at the top.
 
 ## 2026-06-10
 
+### Alpha-to-Consequence Seed Bridge
+
+Added the first Alpha-to-consequence bridge:
+
+```text
+formal/lean/OmegaProper/Trajectory/AlphaConsequenceSeed.lean
+```
+
+Core definitions:
+
+```text
+AlphaConsequenceSystem
+JointWitnessConsequenceSeparated
+JointWitnessReverseConsequenceSeparated
+JointWitnessMergeSeparated
+ConsequenceBearingJointWitness
+AsymmetryWitnessConsequenceSeparated
+AsymmetryWitnessReverseConsequenceSeparated
+AsymmetryWitnessMergeSeparated
+ConsequenceBearingAlphaWitness
+```
+
+Checked bridge theorems:
+
+```text
+joint witness endpoint separation is consequence-bearing
+joint witness endpoint separation implies merge separation
+joint witness reverse endpoint separation implies merge separation
+joint witness merge separation blocks symmetric consequence identification
+asymmetry witness versions factor through AsymmetryPrimitiveWitness.toJoint
+```
+
+Toy check:
+
+```text
+chainFrame has an asymmetry witness whose endpoints are separated by a one
+context equality-based consequence system
+that consequence separation blocks symmetric consequence identification
+```
+
+Interpretation:
+
+```text
+primitive Alpha contact plus evaluated consequence refusal yields a
+merge-blocking consequence-bearing witness
+this is not proto-teleology as a named object yet
+it does not define Omega-seed, deformer, boundary, value, agency, identity, or
+valuerhood
+```
+
+Validation:
+
+```text
+AlphaOmega build passed
+no sorry / admit / axiom matches
+diff check clean except Git line-ending warnings
+```
+
 ### Lean CI and Consequence Bridge Repairs
 
 Added GitHub Actions validation:

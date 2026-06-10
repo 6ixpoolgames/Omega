@@ -120,7 +120,9 @@ probabilistic channel presentation, including exact/probabilistic separation,
 full-support converse, finite cascade error bound, fixed-declared versus
 Bayes-best policy separation, and thresholded probabilistic non-erasure;
 consequence-native guardrails separating directional allowance from symmetric
-identification and blocking invalid class formation.
+identification and blocking invalid class formation;
+Alpha-to-consequence seed bridge showing that evaluated consequence refusal
+over primitive witness endpoints blocks symmetric consequence identification.
 ```
 
 Key files:

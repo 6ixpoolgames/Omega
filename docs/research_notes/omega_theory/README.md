@@ -95,6 +95,7 @@ OmegaAdapters/Audit/AdapterFailures.lean
 OmegaProper/Compatibility/JointPresentation.lean
 OmegaProper/Scaffolds/FiniteMaximal.lean
 OmegaProper/Scaffolds/CompletionCounterexamples.lean
+OmegaProper/Trajectory/AlphaConsequenceSeed.lean
 OmegaProper/Trajectory/ConsequenceRelation.lean
 OmegaProper/Trajectory/ConsequenceClasses.lean
 OmegaProper/Trajectory/ConsequenceDiscipline.lean
@@ -160,7 +161,9 @@ finite policy-separation example showing that Bayes-best target recovery can
 strictly exceed fixed-declared target recovery;
 consequence-native trajectory guardrails for separation, consequence-respecting
 classes, directional allowance versus symmetric identification,
-collapse/noncollapse, over-separation, and mixed evaluated panels.
+collapse/noncollapse, over-separation, and mixed evaluated panels;
+Alpha-to-consequence seed bridge showing that evaluated consequence refusal
+over primitive witness endpoints blocks symmetric consequence identification.
 ```
 
 This is formal infrastructure only. It does not instantiate an empirical
