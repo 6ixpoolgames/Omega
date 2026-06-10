@@ -93,6 +93,13 @@ def IdentificationRespectsConsequences (S : ConsequenceSystem.{w, k, o})
 abbrev ConsequenceBearingPair (S : ConsequenceSystem.{w, k, o}) :=
   ConsequenceSeparated S
 
+/--
+A pair carries merge-blocking consequence structure when either directed
+comparison is separated. Use this for symmetric identification/merge claims.
+-/
+abbrev ConsequenceMergeBearingPair (S : ConsequenceSystem.{w, k, o}) :=
+  ConsequenceMergeSeparated S
+
 def HasEvaluatedContext (S : ConsequenceSystem.{w, k, o}) : Prop :=
   exists c, S.Evaluated c
 
@@ -282,6 +289,18 @@ theorem mergeSeparated_symm
       exact Or.inr hsep
   | inr hsep =>
       exact Or.inl hsep
+
+theorem separated_implies_mergeSeparated
+    {S : ConsequenceSystem.{w, k, o}} {x y : S.Fragment}
+    (h : ConsequenceSeparated S x y) :
+    ConsequenceMergeSeparated S x y := by
+  exact Or.inl h
+
+theorem reverseSeparated_implies_mergeSeparated
+    {S : ConsequenceSystem.{w, k, o}} {x y : S.Fragment}
+    (h : ConsequenceSeparated S y x) :
+    ConsequenceMergeSeparated S x y := by
+  exact Or.inr h
 
 theorem separated_blocks_respected_identification
     {S : ConsequenceSystem.{w, k, o}}

@@ -9,6 +9,43 @@ patch notes at the top.
 
 ## 2026-06-10
 
+### Lean CI and Consequence Bridge Repairs
+
+Added GitHub Actions validation:
+
+```text
+.github/workflows/lean-alphaomega.yml
+```
+
+The workflow builds `AlphaOmega`, scans Lean files for `sorry` / `admit` /
+`axiom`, and runs `git diff --check` on pushes and pull requests targeting
+`master`.
+
+Small formal repairs:
+
+```text
+removed redundant asymmetryWitness_implies_jointWitness conversion name
+kept AsymmetryPrimitiveWitness.toJoint as the canonical conversion
+added ConsequenceMergeBearingPair for symmetric merge-blocking consequence
+added separated-to-merge-separated bridge theorems
+added BalancedContextPanel bridge theorems into evaluated-panel predicates
+```
+
+Claim boundary:
+
+```text
+these are validation and hygiene repairs
+they do not add new deformer, value, agency, identity, or Omega claims
+```
+
+Validation:
+
+```text
+AlphaOmega build passed
+no sorry / admit / axiom matches
+diff check clean except Git line-ending warnings
+```
+
 ### Consequence Directionality and Class Repair
 
 Tightened the consequence-native trajectory guardrails:

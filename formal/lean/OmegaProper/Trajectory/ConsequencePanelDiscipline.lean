@@ -115,6 +115,46 @@ theorem balanced_not_universal_comparison
     Not (ComparisonUniversalOnEvaluated S) := by
   exact noncollapsed_not_universal_comparison (balanced_noncollapsed h)
 
+theorem balanced_has_evaluated_compatible_pair
+    {S : ConsequenceSystem.{w, k, o}}
+    (h : BalancedContextPanel S) :
+    HasEvaluatedCompatiblePair S := by
+  match h.left with
+  | Exists.intro c hc =>
+      match hc.right with
+      | Exists.intro x hx =>
+          match hx with
+          | Exists.intro y hxy =>
+              exact Exists.intro c
+                (Exists.intro x
+                  (Exists.intro y
+                    (And.intro hc.left hxy)))
+
+theorem balanced_has_evaluated_refused_pair
+    {S : ConsequenceSystem.{w, k, o}}
+    (h : BalancedContextPanel S) :
+    HasEvaluatedRefusedPair S := by
+  match h.right with
+  | Exists.intro c hc =>
+      match hc.right with
+      | Exists.intro x hx =>
+          match hx with
+          | Exists.intro y hxy =>
+              exact Exists.intro c
+                (Exists.intro x
+                  (Exists.intro y
+                    (And.intro hc.left hxy)))
+
+theorem balanced_and_selfCompatible_implies_nonpathological
+    {S : ConsequenceSystem.{w, k, o}}
+    (hSelf : EvaluationSelfCompatible S)
+    (h : BalancedContextPanel S) :
+    EvaluatedPanelNonpathological S := by
+  exact And.intro hSelf
+    (And.intro
+      (balanced_has_evaluated_compatible_pair h)
+      (balanced_has_evaluated_refused_pair h))
+
 theorem no_evaluated_refusals_collapses
     {S : ConsequenceSystem.{w, k, o}}
     (h : Not (EvaluatedContextRefusesPair S)) :

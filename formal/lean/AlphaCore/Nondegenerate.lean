@@ -140,12 +140,6 @@ theorem jointWitness_blocks_relationCollapse
   intro hCollapse
   exact hCollapse w.x w.y w.rel
 
-def asymmetryWitness_implies_jointWitness
-    {A : Frame.{u, v}}
-    (w : AsymmetryPrimitiveWitness A) :
-    JointPrimitiveWitness A :=
-  w.toJoint
-
 theorem asymmetryWitness_blocks_identificationCollapse
     {A : Frame.{u, v}}
     (w : AsymmetryPrimitiveWitness A) :
