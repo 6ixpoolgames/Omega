@@ -13,6 +13,7 @@ import OmegaProper.Trajectory.ConsequenceRelation
 import OmegaProper.Trajectory.ProtoTeleologicalSeed
 import OmegaProper.Trajectory.ProtoTeleologicalSeedDiscipline
 import OmegaProper.Trajectory.ProtoTeleologicalSeedExamples
+import OmegaProper.Trajectory.ProtoTeleologicalProfile
 import OmegaProper.Trajectory.ProfileAbstraction
 import OmegaProper.Trajectory.Quotient
 

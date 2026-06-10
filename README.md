@@ -132,7 +132,10 @@ speculative deformation-profile bridge comparing exact merge-block and
 merge-allow profiles between consequence systems over the same Alpha carrier,
 without defining identity or recoverability;
 profile-abstraction contracts separating coarse allow/block claims from exact
-profiles via explicit soundness and completeness predicates.
+profiles via explicit soundness and completeness predicates;
+proto-teleological profile bridge showing that a proto seed supplies a
+nonempty exact merge-block profile and defeats universal-allow abstraction
+soundness.
 ```
 
 Key files:

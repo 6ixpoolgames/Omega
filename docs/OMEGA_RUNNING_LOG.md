@@ -9,6 +9,36 @@ patch notes at the top.
 
 ## 2026-06-11
 
+### Proto-Teleological Profile Bridge
+
+Added the bridge from proto seed conditions to exact profiles:
+
+```text
+formal/lean/OmegaProper/Trajectory/ProtoTeleologicalProfile.lean
+```
+
+Checked bridge:
+
+```text
+joint proto seed implies nonempty exact merge-block profile
+asymmetry proto seed implies nonempty exact merge-block profile
+proto seed implies nonempty exact merge-block profile
+proto seed is incompatible with consequence collapse via the profile layer
+proto seed makes universal-allow abstraction unsound
+```
+
+Interpretation:
+
+```text
+primitive Alpha contact plus evaluated consequence merge-separation creates a
+nonempty exact blocked-merge profile
+naive coarse views that allow every merge erase something the exact profile
+blocks
+this does not define recoverability, identity, persistence, coarse-graining,
+deformer structure, boundary, value, valuerhood, agency, Omega-seed, or
+Omega-terminal
+```
+
 ### Profile Abstraction Contracts
 
 Added an abstraction-contract layer:

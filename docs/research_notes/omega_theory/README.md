@@ -102,6 +102,7 @@ OmegaProper/Trajectory/DeformationProfileExamples.lean
 OmegaProper/Trajectory/ProtoTeleologicalSeed.lean
 OmegaProper/Trajectory/ProtoTeleologicalSeedDiscipline.lean
 OmegaProper/Trajectory/ProtoTeleologicalSeedExamples.lean
+OmegaProper/Trajectory/ProtoTeleologicalProfile.lean
 OmegaProper/Trajectory/ProfileAbstraction.lean
 OmegaProper/Trajectory/ConsequenceRelation.lean
 OmegaProper/Trajectory/ConsequenceClasses.lean
@@ -180,7 +181,10 @@ speculative deformation-profile bridge comparing exact merge-block and
 merge-allow profiles between consequence systems over the same Alpha carrier,
 without defining identity or recoverability;
 profile-abstraction contracts separating coarse allow/block claims from exact
-profiles via explicit soundness and completeness predicates.
+profiles via explicit soundness and completeness predicates;
+proto-teleological profile bridge showing that a proto seed supplies a
+nonempty exact merge-block profile and defeats universal-allow abstraction
+soundness.
 ```
 
 This is formal infrastructure only. It does not instantiate an empirical
