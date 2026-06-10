@@ -96,6 +96,7 @@ OmegaProper/Compatibility/JointPresentation.lean
 OmegaProper/Scaffolds/FiniteMaximal.lean
 OmegaProper/Scaffolds/CompletionCounterexamples.lean
 OmegaProper/Trajectory/AlphaConsequenceSeed.lean
+OmegaProper/Trajectory/AlphaConsequenceSeedExamples.lean
 OmegaProper/Trajectory/ConsequenceRelation.lean
 OmegaProper/Trajectory/ConsequenceClasses.lean
 OmegaProper/Trajectory/ConsequenceDiscipline.lean

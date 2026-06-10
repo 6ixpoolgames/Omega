@@ -15,6 +15,7 @@ Added the first Alpha-to-consequence bridge:
 
 ```text
 formal/lean/OmegaProper/Trajectory/AlphaConsequenceSeed.lean
+formal/lean/OmegaProper/Trajectory/AlphaConsequenceSeedExamples.lean
 ```
 
 Core definitions:
@@ -47,6 +48,7 @@ Toy check:
 chainFrame has an asymmetry witness whose endpoints are separated by a one
 context equality-based consequence system
 that consequence separation blocks symmetric consequence identification
+toy examples live outside the core bridge file
 ```
 
 Interpretation:
