@@ -9,6 +9,68 @@ patch notes at the top.
 
 ## 2026-06-10
 
+### AlphaCore Primitive Nondegeneracy
+
+Added Alpha-native primitive nondegeneracy witnesses:
+
+```text
+formal/lean/AlphaCore/Nondegenerate.lean
+```
+
+Core definitions:
+
+```text
+PrimitiveWitness
+PrimitiveNondegenerate
+DirectionalPrimitiveWitness
+IdentificationCollapse
+RelationCollapse
+AsymmetryCollapse
+```
+
+Checked guardrails:
+
+```text
+primitive witness iff existing HasAsymmetry
+primitive witness implies relation witness
+primitive witness implies distinction witness
+primitive witness implies AlphaInstantiated
+primitive witness implies distinct relata
+primitive witness blocks identification collapse
+primitive witness blocks relation collapse
+identification collapse blocks primitive witness
+relation collapse blocks primitive witness
+directional primitive witness implies primitive witness
+subsingleton carrier blocks primitive witness
+```
+
+Toy checks:
+
+```text
+chainFrame has a primitive witness
+chainFrame is primitive-nondegenerate
+chainFrame is not identification-collapsed
+chainFrame is not relation-collapsed
+chainFrame has a directional primitive witness
+```
+
+Interpretation:
+
+```text
+an actual asymmetry-bearing distinction is not decorative
+it forces relation and distinction together
+it blocks total identification collapse
+this is an Alpha-side seed condition, not Omega validation
+```
+
+Validation:
+
+```text
+AlphaOmega build passed
+no sorry / admit / axiom matches
+diff check clean except Git line-ending warnings
+```
+
 ### AlphaOmega Continuation Reorientation
 
 Added the current theory-spine note:

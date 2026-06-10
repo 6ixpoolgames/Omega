@@ -103,6 +103,8 @@ The Lean sandbox currently checks:
 Alpha primitive frame over relation, distinction, and asymmetry;
 Alpha reachability and finite separation examples;
 primitive non-collapse examples;
+primitive nondegeneracy witnesses blocking total relation and identification
+collapse;
 root transport laws;
 recoverability weakening / strengthening;
 compositional recoverability;

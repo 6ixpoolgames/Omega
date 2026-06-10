@@ -65,6 +65,7 @@ AlphaCore/Primitive.lean
 AlphaCore/Reachability.lean
 AlphaCore/Examples.lean
 AlphaCore/Independence.lean
+AlphaCore/Nondegenerate.lean
 ProtoOmega/Presentation/Native.lean
 ProtoOmega/Transport/Native.lean
 ProtoOmega/Transport/LegacyBridge.lean
@@ -124,6 +125,9 @@ asymmetry without global reach irreversibility, and local nonreciprocity
 without global reach irreversibility;
 finite Alpha independence examples showing relation, distinction, asymmetry,
 and reach irreversibility do not automatically supply one another;
+Alpha primitive nondegeneracy witnesses showing that an actual
+asymmetry-bearing distinction blocks total relation and identification
+collapse;
 presentation-native distinction, separation, order, and transport structures
 for separating presentation machinery from full Alpha substrate contact;
 support-level distinction transport;
