@@ -1,496 +1,374 @@
 # External Reader Guide
 
 Status: onboarding guide for outside collaborators
-Scope: current Alpha primitive floor, Omega support stack, registry-first bridge, and FFA morphology workspace
-Claim boundary: this repository does not claim Omega validation, agency detection, value detection, identity detection, life detection, candidate promotion, holdout readiness, or graph-channel causality.
+Scope: current public framing, checked formal stack, empirical bridges, and contribution paths
+Claim boundary: this repository does not claim Omega validation, value detection, valuer detection, agency detection, identity detection, life detection, candidate promotion, holdout readiness, or substrate-general validation.
 
-## 0. What this repository is
+## 0. What This Repository Is
 
-This repository is an empirical research workspace for the Omega / Reachable Futures project.
+This repository is a research workspace for the Omega / Reachable Futures
+project.
 
-For the shortest public overview, read the repository README first. For the
-current formal stack, read:
-
-```text
-docs/VALUER_FORMAL_TARGET_V0.md
-docs/OMEGA_COMPATIBLE_VALUER_TRAJECTORY_SPACE_V0.md
-docs/OMEGA_FORMALISM_PRIMER.md
-docs/research_notes/omega_theory/alpha_primitive_core_v0.md
-docs/research_notes/omega_theory/alpha_omega_unification_map_v0.md
-docs/research_notes/omega_theory/omega_primitive_calculus_v0_lean_root_skeleton.md
-```
-
-This guide is the longer collaborator tour. The current README is the authority
-for the public framing: Omega is now centered on compatible valuer-bearing
-future trajectories, while distinction transport remains substrate and audit
-machinery.
-
-The current primitive floor is **Alpha Primitive Core v0**:
+The current project is not trying to detect value directly. It is trying to
+build a formal and empirical discipline for a lower question:
 
 ```text
-relation -> distinction -> asymmetry
+When does a difference matter because erasing it changes what can follow?
 ```
 
-Lean separately checks the older OmegaCore support/recoverability skeleton:
+The current public framing is:
 
 ```text
-A : C -> DistTrans
+Alpha names the primitive grammar by which differences can become
+consequence-bearing.
+
+Omega names the possible maximal compatible unfolding of consequence-bearing
+structure across admissible continuations.
 ```
 
-The checked Lean layer now includes:
+This is a one-object thesis. Alpha and Omega are not two unrelated objects.
+Alpha is the primitive face. Omega is the terminal face, if a substrate can
+support one.
+
+Value remains downstream. Value requires valuers. Valuers require robust,
+recoverable, continuation-bearing trajectories. This repository has not
+detected valuers or value.
+
+## 1. What Changed Recently
+
+Earlier public summaries over-centered future fields, distinction transport,
+and Future Field Atlas. Those remain useful, but they are no longer the
+conceptual front door.
+
+The current front door is:
 
 ```text
-AlphaOmega facade stack;
-Alpha primitive frame and finite separation examples;
-DistTrans closure and relation-level category laws;
-recoverability weakening / strengthening;
-compositional recoverability from laxity;
-non-erasure monotonicity;
-finite-chain recurrent recoverability;
-finite-enumeration maximal completion existence;
-Finset/Fintype maximal completion existence;
-finite completion counterexamples;
-marginal-like non-erasure not implying strictly joint non-erasure;
-adapter-failure examples for missing closure or laxity laws;
-Boolean relation support presentation;
-finite channel / partition presentation;
-probabilistic channel presentation with exact/probabilistic separation,
-full-support converse, and finite cascade error bound.
+continuation, not time;
+consequence-induced separation, not labels;
+primitive nondegeneracy, not decorative fields;
+proto-teleological seed, not purpose or value.
 ```
 
-Future Field Atlas is not Omega proper. It is now treated as preformal
-reachable-frontier morphology: useful for finite-dynamics stress testing, but
-not the central empirical object for valuerhood.
+The important correction is that "future" is now treated as the temporal
+adapter of a more general notion: continuation. A continuation can be a
+transition, path, derivation, completion, composition, deformation, or other
+admissible unfolding supplied by a substrate.
 
-The current work asks a narrow question:
+## 2. Current Checked Formal Stack
+
+The current primitive floor is `AlphaCore`:
 
 ```text
-Can finite instruments emit reconstructible evidence about recoverability,
-provenance, action-relevant persistence, and future-trajectory structure without
-importing semantic labels such as agent, valuer, identity, or good?
+relation;
+distinction;
+asymmetry.
 ```
+
+Lean now checks that:
+
+```text
+asymmetry implies relation;
+asymmetry implies distinction;
+asymmetry separates its endpoints;
+relation, distinction, asymmetry, and reach irreversibility do not collapse
+into one another;
+joint primitive witnesses block total relation collapse and total
+identification collapse.
+```
+
+The lower Omega trajectory layer then defines consequence systems:
+
+```text
+fragments;
+continuation contexts;
+outcomes;
+consequence maps;
+comparison relations;
+evaluated context panels.
+```
+
+The key rule is:
+
+```text
+A proposed identification is forbidden when some evaluated continuation
+context separates the consequences.
+```
+
+Recent Lean guardrails check:
+
+```text
+directional allowance is not symmetric identification;
+merge separation blocks symmetric identification;
+classes must be pairwise consequence-compatible unless transitivity is proven;
+vacuous evaluation collapses the apparatus;
+universal comparison collapses the apparatus;
+all-refusing panels are noncollapsed but still pathological;
+Alpha primitive witness endpoints can be consequence-separated;
+proto-teleological seed requires primitive Alpha contact plus evaluated
+consequence merge-separation;
+primitive nondegeneracy alone is not sufficient for such a seed.
+```
+
+The main Lean umbrellas are:
+
+```text
+formal/lean/AlphaOmega.lean
+formal/lean/AlphaCore.lean
+formal/lean/AlphaCalculus.lean
+formal/lean/AlphaAdapters.lean
+formal/lean/Omega.lean
+```
+
+The most relevant current files are:
+
+```text
+formal/lean/AlphaCore/Primitive.lean
+formal/lean/AlphaCore/Nondegenerate.lean
+formal/lean/AlphaCore/Independence.lean
+formal/lean/OmegaProper/Trajectory/ConsequenceRelation.lean
+formal/lean/OmegaProper/Trajectory/ConsequenceClasses.lean
+formal/lean/OmegaProper/Trajectory/ConsequenceDiscipline.lean
+formal/lean/OmegaProper/Trajectory/ConsequenceComparison.lean
+formal/lean/OmegaProper/Trajectory/ConsequencePanelDiscipline.lean
+formal/lean/OmegaProper/Trajectory/AlphaConsequenceSeed.lean
+formal/lean/OmegaProper/Trajectory/ProtoTeleologicalSeed.lean
+```
+
+The older `OmegaCore`, `ProtoOmega`, `OmegaAdapters`, and `OmegaProper`
+namespaces remain important checked implementation/provenance surfaces. They
+should not be read as separate metaphysical objects.
+
+## 3. Empirical Arms
 
 The cleanest current empirical-formal bridge is the registry-first stochastic
-channel branch. It separates declared registry recovery, existence/capacity
-recovery, and optimized diagnostic recovery under adversarial provenance audit.
+channel branch.
 
-The retained FFA implementation target remains morphology instrumentation:
-
-```text
-generate lawful substrates;
-unfold reachable frontiers;
-record raw topology;
-map geometry;
-contrast conditions;
-label only as a derived view.
-```
-
-The immediate predecessor instrument is **horizon transport**:
+It separates:
 
 ```text
-T_{H_a -> H_b}
+declared registry recovery:
+  a predeclared decoder registry works
+
+existence / capacity recovery:
+  some decoder exists
+
+optimized diagnostic recovery:
+  a best available target/decoder succeeds after search
 ```
 
-It measures how structures in earlier reachable-future frontiers become structures in later reachable-future frontiers. The atlas rebuild keeps that lesson, but makes raw frontier topology and rank-boundary anatomy the primary data product before response labels are applied. Current atlas conditions are represented by state-space, transition-law, selection-operator, observable, and frontier-scan specs. The latest H32 publication-schema smoke also emits formal spec manifests, condition-identity manifests, artifact-completeness summaries, and reconstruction audits for derived artifacts. Historical treatment names are translation aids in the atlas glossary, not runtime primitives.
-
-The current atlas posture is now morphology-first. Retained coupled runs are
-postprocessed into pair-aware morphology tables before designing richer coupled
-operators. The rank-order-boundary branch now has four high-yield
-symbol_histogram_distance exemplars: pair005, pair012, pair014, and pair026.
-Pair012, pair014, and pair026 were confirmed under targeted H128. The observable-extension smoke did
-not reproduce the high-yield signature under `hamming_weight_or_nonzero_count`
-or `total_coordinate_mass`.
-
-The historical substrate lineage used explicit **transition energy**:
+This branch is designed to prevent a self-validating inference:
 
 ```text
-E(s,t)
+some decoder exists = the declared instrument recovered the distinction
 ```
 
-where `E(s,t)` is an edge-selection score over possible transitions. It is not utility, reward, fitness, value, thermodynamic energy, or Omega.
+Current retained result:
 
-## 1. What this repository is not claiming
+```text
+results/stochastic_distinction_channel/20260606_registry_first_probe_x3_v0/
+docs/research_notes/validation_results/stochastic_distinction_channel/stochastic_registry_first_probe_x3_result.md
+```
 
-This repository does **not** currently claim:
+Future Field Atlas is retained but demoted:
+
+```text
+Future Field Atlas v0:
+  preformal reachable-frontier morphology instrument
+```
+
+FFA is still useful for finite-dynamics stress testing and morphology feature
+extraction. It is not the central empirical object for valuerhood, and it does
+not detect Omega, value, valuers, agency, identity, support, capture, erasure,
+or compatibility.
+
+## 4. What This Repository Is Not Claiming
+
+This repository does not currently claim:
 
 ```text
 Omega validated;
+Omega-terminal exists in any physical substrate;
 agent detected;
 valuer detected;
 identity detected;
+self detected;
 life detected;
-self-replication detected;
+value detected;
+compatibility detected;
+support / capture / erasure detected;
 candidate promoted;
 holdout ready;
-graph-channel causality established;
-value-bearing structure demonstrated.
+substrate-general theory validated.
 ```
 
-Positive results should be read as **instrument and substrate-characterization results**, not as full theory validation.
+Positive results should be read as formal guardrails, finite presentations,
+instrument checks, provenance checks, or substrate-characterization results
+unless a stronger theorem-transfer path is explicitly shown.
 
-## 2. Current result in plain English
+## 5. Best First Reading Path
 
-The project now has a checked formal root and a bounded empirical instrument.
-
-Formal side:
-
-```text
-Omega Primitive Calculus v0 has a Lean-checked support-level root skeleton.
-It also has finite counterexamples, adapter-failure examples, and two worked
-presentations: Boolean relation support and finite channel / partition
-recovery.
-```
-
-Empirical side:
-
-```text
-Future Field Atlas measures finite reachable-frontier topology under declared
-operators and observables.
-```
-
-The strongest current empirical pattern is narrow:
-
-```text
-rank_order_boundary under symbol_histogram_distance
-```
-
-High-yield representatives:
-
-```text
-pair005
-pair012
-pair014
-pair026
-```
-
-Observed geometry:
-
-```text
-A and B marginal support are preserved;
-joint support is restricted relative to the product baseline;
-the effect persists in targeted H128 depth checks for pair012, pair014, and
-pair026;
-tested alternate observables did not reproduce the high-yield signature.
-```
-
-This is not an Omega result. It is a product-vs-coupled finite future-field
-geometry result under declared operators.
-
-## 3. Core vocabulary
-
-### Distinction
-
-A finite state space:
-
-```text
-X
-```
-
-States differ from one another.
-
-### Relation
-
-A transition relation:
-
-```text
-s -> t
-```
-
-Some states can transform into other states.
-
-### Asymmetry
-
-A transformation is not equivalent to its reverse, or does not have the same future consequences.
-
-### Horizon
-
-A finite lookahead scale. Horizon transport compares structures at one horizon to structures at another.
-
-### Horizon transport
-
-A directional matrix family:
-
-```text
-T_{H_a -> H_b}
-```
-
-This asks what earlier reachable-future structures become later.
-
-### Transition energy
-
-An edge-selection score:
-
-```text
-E(s,t)
-```
-
-Lower-energy transitions are selected more readily. This is a substrate-generation rule, not a value claim.
-
-### Directional asymmetry
-
-A scalar asymmetry field:
-
-```text
-A(s)
-```
-
-used through:
-
-```text
-A(t) - A(s)
-```
-
-This makes one direction across the field different from the reverse.
-
-### Preservation asymmetry
-
-A macro-invariant or coarse asymmetry coordinate:
-
-```text
-I(s)
-```
-
-used through:
-
-```text
-|I(t) - I(s)|
-```
-
-This makes erasing or changing a coarse distinction less available than preserving it.
-
-### Matched nulls
-
-Control matrices that preserve important low-level structure, such as row/column marginals, while destroying the candidate structure being tested. Passing these nulls is an instrument requirement, not a theory validation claim.
-
-### Perturbation response
-
-A perturbation is not treated as simple survival/failure. It can produce response profiles:
-
-```text
-stable
-amplified-aligned
-weakened
-rerouted
-reopened
-collapsed
-control-equivalent
-measurement-limited
-```
-
-## 4. Historical transition-energy substrate context
-
-The transition-energy ladder is important historical context for how the
-empirical instrument reached its current coupled Future Field Atlas form.
-
-Earlier substrate work used:
-
-```text
-E0 locality only:
-  E(s,t) = d(s,t) + roughness
-
-E1 directional asymmetry:
-  E(s,t) = d(s,t) + alpha * (A(t)-A(s)) + roughness
-
-E2 preservation asymmetry:
-  E(s,t) = d(s,t) + beta * |I(t)-I(s)| + roughness
-
-E3 combined asymmetry:
-  E(s,t) = d(s,t) + alpha * (A(t)-A(s)) + beta * |I(t)-I(s)| + roughness
-```
-
-The historical read was:
-
-```text
-E0:
-  baseline
-
-E1:
-  differentiated response / rerouting
-
-E2:
-  preservation-asymmetry response in the tested substrate family
-
-E3:
-  clean but not yet tuned or synergistic in the sparse tested grid
-```
-
-This is no longer the public front-door claim. The current public-facing center
-is the Lean-checked root calculus plus Future Field Atlas as a finite
-reachable-future instrument.
-
-## 5. Best first reading path
-
-### 15-minute orientation
+### 15-Minute Orientation
 
 Read:
 
-1. `README.md`
-2. `docs/OMEGA_FORMALISM_PRIMER.md`
-3. this guide
-4. `docs/research_notes/omega_theory/omega_primitive_calculus_v0_lean_root_skeleton.md`
+```text
+1. README.md
+2. docs/OMEGA_FORMALISM_PRIMER.md
+3. docs/EXTERNAL_READER_GUIDE.md
+```
 
-Goal: understand the current formal root, empirical microscope, and claim
-boundary before reading older probe results.
+Goal: understand the current one-object framing, claim boundary, and live stack.
 
-### 60-minute technical orientation
+### 60-Minute Technical Orientation
 
 Read:
 
-1. `docs/research_notes/omega_theory/README.md`
-2. `docs/research_notes/omega_theory/probabilistic_channel_presentation_v0.md`
-3. `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_formal_adapter_conformance_package_result.md`
-4. `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_formal_interface_distinction_panel_result.md`
-5. `docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md`
-6. `docs/research_notes/validation_results/stochastic_distinction_channel/stochastic_distinction_channel_fixed_policy_result.md`
-7. `docs/PUBLIC_RESULTS_INDEX.md`
+```text
+1. docs/research_notes/omega_theory/README.md
+2. docs/research_notes/omega_theory/alphaomega_continuation_proto_teleology_v0.md
+3. docs/research_notes/omega_theory/alpha_primitive_core_v0.md
+4. docs/research_notes/omega_theory/probabilistic_channel_presentation_v0.md
+5. docs/research_notes/validation_results/stochastic_distinction_channel/stochastic_registry_first_probe_x3_result.md
+6. docs/PUBLIC_RESULTS_INDEX.md
+```
 
-Goal: understand how the formal stack, Future Field Atlas, and stochastic
-channel bridge currently fit together.
+Goal: understand how the core theory, checked Lean layer, and retained
+empirical bridges currently fit together.
 
-### Implementation orientation
+### Lean Orientation
 
 Read:
 
-1. `docs/specs/current/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md`
-2. `docs/specs/current/FUTURE_FIELD_ATLAS_FORMAL_ADAPTER_CONFORMANCE_PACKAGE_SPEC.md`
-3. `docs/specs/current/STOCHASTIC_DISTINCTION_CHANNEL_EMPIRICAL_SPEC.md`
-4. `docs/specs/current/STOCHASTIC_DISTINCTION_CHANNEL_FIXED_POLICY_SPEC.md`
-5. `formal/lean/README.md`
-6. `docs/OMEGA_PROJECT_MANUAL.md`
-
-Goal: understand what the current instruments emit, what formal artifacts are
-consumable, and where active specs belong.
-
-### Historical orientation
-
-Read only after the current branch is clear:
-
-1. `docs/PUBLIC_RESULTS_INDEX.md`
-2. `docs/OMEGA_RUNNING_LOG.md`
-3. `docs/OMEGA_PROJECT_MANUAL.md`
-4. `docs/research_notes/omega_theory/historical_probe_terms.md`
-
-Goal: understand the failed and demoted branches that led to the current instrument.
-
-## 6. Current empirical state
-
-The current empirical state is:
-
 ```text
-Future Field Atlas:
-  current empirical microscope
-
-formal spec identity:
-  required before result interpretation
-
-artifact completeness and reconstruction audits:
-  mandatory gates
-
-product baseline:
-  true product-equivalence reference for coupled scans
-
-rank_order_boundary:
-  current high-yield coupled morphology operator under symbol_histogram_distance
-
-high-yield representatives:
-  pair005, pair012, pair014, pair026
-
-alternate observables:
-  hamming_weight_or_nonzero_count and total_coordinate_mass did not reproduce
-  the high-yield signature
-
-claim boundary:
-  no Omega, value, valuerhood, identity, support/capture/erasure, or
-  compatibility detection
+1. formal/lean/AlphaCore/Primitive.lean
+2. formal/lean/AlphaCore/Nondegenerate.lean
+3. formal/lean/AlphaCore/Independence.lean
+4. formal/lean/OmegaProper/Trajectory/ConsequenceRelation.lean
+5. formal/lean/OmegaProper/Trajectory/ConsequenceClasses.lean
+6. formal/lean/OmegaProper/Trajectory/AlphaConsequenceSeed.lean
+7. formal/lean/OmegaProper/Trajectory/ProtoTeleologicalSeed.lean
 ```
 
-## 7. Current next step
+Goal: see the current checked lower-stack object without importing older
+semantic language.
 
-The immediate next task is not holdout and not candidate promotion.
+### Historical Orientation
 
-It is:
-
-```text
-bridge discipline
-```
-
-That means:
+Read only after the current front door is clear:
 
 ```text
-formal side:
-  add finite transition-system / adapter sketches only when the root-law
-  obligations are explicit
-
-empirical side:
-  keep Future Field Atlas outputs reconstructible, operator-native, and
-  claim-bounded
-
-theory side:
-  connect admissible observables, identity-decay nulls, maintenance gaps, and
-  compatibility audits without importing valuer semantics too early
+1. docs/OMEGA_RUNNING_LOG.md
+2. docs/OMEGA_PROJECT_MANUAL.md
+3. docs/research_notes/omega_theory/historical_probe_terms.md
+4. docs/research_notes/omega_theory/omega_formal_core_v0_2_future_distinction_dynamics.md
+5. docs/research_notes/validation_results/future_field_atlas/
 ```
 
-The focus should be:
+Goal: understand how older FFA, horizon-transport, and distinction-dynamics
+branches led to the current consequence/continuation framing.
+
+## 6. How To Validate The Local Formal Stack
+
+Use:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\setup\invoke_lake.ps1 build AlphaOmega
+rg -n "\b(sorry|admit|axiom)\b" formal\lean -g "*.lean"
+git diff --check
+```
+
+The repository also has a GitHub Actions workflow intended to run the same Lean
+build on pushes and pull requests targeting `master`.
+
+## 7. How To Read A Result Note
+
+Ask:
 
 ```text
-make the bridge from formal presentation to empirical adapter explicit;
-avoid semantic promotion;
-continue observable design before stronger substrate-general claims.
+What exact substrate or presentation was tested?
+Were the inputs, contexts, thresholds, registries, or decoders declared before
+scoring?
+Are path-level evidence rows retained or losslessly reconstructible?
+Does the result separate existence/capacity from declared provenance?
+Does the result separate optimized diagnostics from theorem-transfer evidence?
+Are nulls, degenerate controls, or collapse cases present?
+Does the note explicitly block value, valuerhood, agency, identity, and Omega
+validation claims?
 ```
 
-## 8. How to evaluate a result note
+A result can be useful while making no Omega claim.
 
-When reading a result note, look for these questions:
-
-```text
-Did all jobs complete?
-Were there errors?
-Did matched marginal detector-null gates pass?
-Did the fixture contract pass?
-Are response rows interpretable, or measurement-limited?
-Are baseline-missing rows separated from real response classes?
-Does the result change the instrument, the substrate family, or the broader theory?
-Does the note explicitly block Omega/agency/value/candidate claims?
-```
-
-A result can be very useful while still making no Omega claim.
-
-## 9. How an outside collaborator can help
+## 8. How A Collaborator Can Help
 
 Useful contributions include:
 
 ```text
-reviewing the transition-energy formalism;
-checking whether the matched null suite is strong enough;
-proposing cleaner maximum-entropy transition ensembles;
-reviewing matrix and spectral methodology;
-stress-testing the response taxonomy;
-helping design non-semantic substrate families;
+reviewing Lean definitions for hidden semantic assumptions;
+checking whether a theorem surface permits self-validating evidence routes;
+proposing cleaner consequence-system adapters;
+auditing comparison relations for collapse, over-separation, and provenance;
+stress-testing registry-first stochastic outputs;
+designing trajectory-level toy substrates with actions, perturbations, and
+recoverable process-bundles;
 improving documentation and reproducibility;
-identifying hidden assumptions in E(s,t), A(s), and I(s).
+identifying where old FFA morphology can become subordinate diagnostics rather
+than central claims.
 ```
 
 The project especially benefits from criticism that distinguishes:
 
 ```text
-instrument artifact;
-substrate artifact;
-real but low-level transport structure;
-stronger theory-relevant structure.
+formal theorem;
+presentation artifact;
+adapter artifact;
+empirical measurement;
+semantic overpromotion;
+real but low-level consequence structure;
+stronger value-relevant structure not yet proven.
 ```
 
-## 10. The mantra
+## 9. Current Open Problems
 
-The working mantra is:
+Near-term formal questions:
 
 ```text
-Principled.
-Parsimonious.
-Predictive.
+How should continuation contexts be instantiated over richer Alpha structures?
+When can consequence-bearing witnesses recur under transformation?
+How should drift and pivot be represented without identity claims?
+When does a consequence-respecting class remain valid under changing contexts?
+What is the smallest bridge from consequence-bearing recurrence to
+process-bundle persistence?
 ```
 
-Principled: define objects from the substrate and controls, not from semantic labels.
+Near-term empirical questions:
 
-Parsimonious: prefer the smallest substrate ingredients that can explain the observed response.
+```text
+How do registry-first recovery gaps behave in larger finite probes?
+Which consequence-system adapters can be generated without post-hoc tuning?
+What controls expose vacuous, universal, or all-refusing comparison apparatuses?
+Which FFA morphology features remain useful as subordinate diagnostics?
+```
 
-Predictive: every theory update should imply a concrete next run or failure mode.
+## 10. Working Standard
+
+The current standard is:
+
+```text
+Principled:
+  define objects from primitives, consequence, and provenance, not from labels
+
+Parsimonious:
+  add only the structure needed to block invalid inference or expose a real
+  distinction
+
+Predictive / revelatory:
+  every theory move should imply a concrete next test, theorem, counterexample,
+  or failure mode
+```
+
+The short version:
+
+```text
+Do not start from names.
+Start from what continuation refuses to erase.
+```

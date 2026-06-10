@@ -1,33 +1,66 @@
 # Omega Formalism Primer
 
 Status: public onboarding / current best formalism
-Scope: compact bridge from README to the dense theory notes
-Claim boundary: formal orientation only; not empirical validation, not valuer detection, not Omega validation
+Scope: compact bridge from the repository README to the dense theory notes
+Claim boundary: formal orientation only; not empirical validation, not value detection, not valuer detection, not agency detection, not identity detection, and not Omega validation
 
 ## One-Sentence Ambition
 
-Omega is an attempt to formalize **value-bearing futures** without taking
-reward, utility, moral rules, fixed agents, fixed selves, or privileged valuers
-as primitives.
+Omega is an attempt to formalize value-bearing futures without taking reward,
+utility, moral rules, fixed agents, fixed selves, fixed boundaries, or
+privileged valuers as primitives.
 
-The project asks whether there is a substrate-neutral structure beneath those
-later concepts:
+The current reorientation is:
 
 ```text
-compatible future trajectories in which robust valuer-like process-bundles can
-arise, persist, interact, self-correct, branch, and continue to generate
-meaningful future capacity.
+Alpha and Omega are two faces of one object.
+
+Alpha names the primitive grammar by which differences can become
+consequence-bearing.
+
+Omega names the possible maximal compatible unfolding of consequence-bearing
+structure across admissible continuations.
 ```
 
-The empirical arm is not trying to detect value directly. It is building finite
-microscopes for precursor structure: recoverability, provenance, action-relevant
-persistence, and eventually trajectory-level viability.
+This does not mean value is already present at the primitive layer. It means
+the lower stack asks a prior question:
 
-## The Current Formal Object
+```text
+When does a difference matter because erasing it changes what can follow?
+```
 
-The current primitive floor is **Alpha Primitive Core v0**.
+That technical sense of "mattering" precedes value. Value enters only later,
+when consequence-bearing structures can support robust valuer-like trajectories.
 
-Alpha names the substrate-neutral minimum:
+## Continuation, Not Time
+
+The project no longer treats "future" as primitive. Future is the temporal
+adapter of a broader concept: continuation.
+
+A continuation may be:
+
+```text
+a transition;
+a path;
+a derivation;
+a completion;
+a composition;
+a deformation;
+a perturbation response;
+an admissible unfolding in a substrate.
+```
+
+In a temporal system, continuation appears as future evolution. In a graph it
+appears as reachability. In a proof system it may appear as derivation. In a
+constraint system it may appear as completion. In a category it may appear as
+composition.
+
+So the lower formal target is not "future-bearing distinction" in a narrow
+clock-time sense. It is continuation-bearing distinction.
+
+## The Current Primitive Floor
+
+The primitive floor is `AlphaCore`:
 
 ```text
 relation;
@@ -35,572 +68,321 @@ distinction;
 asymmetry.
 ```
 
-Omega is now treated as a downstream theory over that primitive floor: a theory
-of which Alpha-instantiated future-bearing structures can recover,
-non-erase, compose, and eventually support compatibility/completion claims.
-
-This is a deliberate separation. `AlphaCore` is the primitive floor.
-`AlphaOmega` is the active umbrella for the broader project stack:
-`AlphaCore`, `AlphaCalculus`, `AlphaAdapters`, and `Omega`. `ProtoOmega`,
-`OmegaAdapters`, and `OmegaProper` remain compatibility implementation
-namespaces during migration. The older `OmegaCore` Lean stack remains valuable
-as checked source material and archived provenance.
-
-The root grammar is:
-
-```text
-relation -> distinction -> asymmetry
-```
-
-Where:
+The roles are:
 
 ```text
 relation:
-  composable consequential connectedness
+  relata stand in structured bearing with one another
 
 distinction:
-  preordered non-equivalence structure; a difference capable of preservation,
-  transformation, collapse, or recovery
+  some relata are not freely interchangeable
 
 asymmetry:
-  normal lax distinction transport through relation
+  the bearing of a distinction is not neutral in all directions
 ```
 
-The compact Lean target is:
-
-```text
-A : C -> DistTrans
-```
-
-where `C` is a category of relational contexts and `DistTrans` is the
-support-level category of preorder-indexed distinction transports. This remains
-the current checked support/recoverability presentation, not the whole Alpha
-floor.
-
-Future-Distinction Dynamics is the current working presentation of this root
-calculus for reachable-futures modeling.
-
-The earlier compact working target was distinction-centered:
-
-```text
-Omega is the admissible subset of future-field dynamics for which
-future-relevant distinctions persist to terminus in a recoverable, non-erasing,
-and compatible manner.
-```
-
-That should now be read as a substrate and audit condition, not the final
-Omega object. The current target is trajectory-centered:
-
-```text
-Omega is the maximal admissible compatibility structure of future trajectories
-in which robust valuer-like process-bundles can arise, persist, interact,
-self-correct, branch, and continue to generate meaningful future capacity.
-```
-
-This is the target formal object. It is not an empirical result.
-
-The current reorientation notes are:
-
-```text
-docs/VALUER_FORMAL_TARGET_V0.md
-docs/OMEGA_COMPATIBLE_VALUER_TRAJECTORY_SPACE_V0.md
-```
-
-## Why This Is Not Utility, Reward, or Ethics
-
-Omega is not defined as:
-
-```text
-maximizing reward;
-maximizing utility;
-maximizing entropy;
-minimizing suffering;
-preserving life;
-preserving agents;
-obeying a moral rule;
-protecting a privileged valuer.
-```
-
-Those may be downstream interpretations in some substrates. They are not
-allowed as primitives.
-
-The project starts lower:
-
-```text
-Can futures carry distinctions?
-Can those distinctions remain recoverable?
-Can they avoid erasing one another under composition?
-Can a process maintain distinction-content through churn better than matched
-identity-decay nulls?
-Can such processes compose into maximal compatibility completions?
-```
-
-## Layered Formal Stack
-
-The current theory arm is organized as a ladder.
-
-### Layer 0: Alpha Primitive Core v0
-
-Primary note:
-
-```text
-docs/research_notes/omega_theory/alpha_primitive_core_v0.md
-```
-
-Lean root files:
-
-```text
-formal/lean/AlphaCore.lean
-formal/lean/AlphaCore/Primitive.lean
-formal/lean/AlphaCore/Reachability.lean
-formal/lean/AlphaCore/Examples.lean
-formal/lean/AlphaCore/Independence.lean
-```
-
-Defines:
-
-```text
-relation;
-distinction;
-asymmetry;
-reachability generated by relation;
-local nonreciprocity;
-reach irreversibility;
-one-way asymmetry.
-```
-
-Checked:
+The current Lean core proves basic non-collapse facts:
 
 ```text
 asymmetry implies relation;
 asymmetry implies distinction;
 asymmetry separates its endpoints;
-asymmetry alone instantiates the three Alpha roles;
-reachability is transitive;
-distinction can exist without asymmetry;
-relation can exist without distinction;
-distinction can exist without relation;
-relation and distinction can exist without asymmetry;
-reach irreversibility can exist without asymmetry;
-local asymmetry need not imply global reach irreversibility;
-local nonreciprocity need not imply global reach irreversibility.
+relation, distinction, asymmetry, and reach irreversibility do not
+automatically supply one another;
+an actual asymmetry witness supplies a primitive nondegeneracy witness;
+primitive nondegeneracy blocks total relation collapse and total
+identification collapse.
 ```
 
-### Layer 0b: AlphaOmega Stack
+The important discipline is that merely having fields named `Rel`, `Sep`, and
+`Asym` is not enough. The project distinguishes decorative primitives from
+jointly instantiated witnesses.
 
-Primary note:
+## Consequence Comes Before Quotient
+
+The current lower Omega layer starts from consequence-induced separation, not
+labels, clusters, quotients, or representations.
+
+The consequence-native scaffold uses:
 
 ```text
-docs/research_notes/omega_theory/alpha_omega_unification_map_v0.md
-docs/research_notes/omega_theory/omega_primitive_calculus_v0_lean_root_skeleton.md
+Fragment:
+  the thing being compared
+
+Context:
+  an admissible continuation context
+
+Outcome:
+  what a fragment does under that context
+
+consequence:
+  Context -> Fragment -> Outcome
+
+Compare:
+  context-indexed comparison of outcomes
+
+Evaluated:
+  which contexts are actually in the panel
 ```
 
-Active Lean umbrellas:
+The core rule is:
+
+```text
+A proposed identification is forbidden when some evaluated continuation
+context separates the consequences.
+```
+
+This is the anti-label move. The theory does not begin by naming buckets. It
+asks which erasures the continuation structure refuses.
+
+The checked consequence layer now separates:
+
+```text
+directional allowance:
+  one direction of comparison succeeds
+
+symmetric identification:
+  both directed allowances succeed
+
+merge separation:
+  either direction is separated, blocking symmetric identification
+
+valid class formation:
+  proposed classes must be pairwise consequence-compatible unless transitivity
+  has been separately earned
+
+collapse:
+  no evaluated contexts or universal comparison makes the apparatus toothless
+
+over-separation:
+  a panel can refuse everything and still fail as a useful comparison apparatus
+```
+
+This blocks a common false move:
+
+```text
+a is close to b, and b is close to c, therefore a, b, c form one object.
+```
+
+Not unless the relevant comparison is transitive or the proposed class is
+pairwise consequence-compatible.
+
+## Proto-Teleological Seed
+
+The newest formal hinge is the narrowly scoped proto-teleological seed.
+
+It means only:
+
+```text
+primitive Alpha contact
++ evaluated consequence merge-separation
+```
+
+In Lean, the bridge is:
+
+```text
+Alpha primitive witness:
+  a joint relation/separation witness, or an asymmetry witness that supplies one
+
+Alpha consequence system:
+  continuation consequences over the Alpha carrier
+
+Consequence-bearing witness:
+  the witness endpoints are merge-separated by evaluated consequence
+
+ProtoTeleologicalSeed:
+  an asymmetry witness whose endpoints are consequence merge-separated
+```
+
+The checked result is:
+
+```text
+if such a seed exists, then the Alpha frame is primitively nondegenerate;
+the consequence system is noncollapsed;
+there is a primitive witness whose endpoints cannot be symmetrically
+identified by consequence.
+```
+
+The checked negative examples are equally important:
+
+```text
+primitive nondegeneracy alone is not sufficient;
+vacuous consequence evaluation gives no seed;
+universal consequence comparison gives no seed.
+```
+
+This is the first formal version of directed consequence. It is not purpose,
+goal-directedness, value, agency, identity, selfhood, deformer theory, valuerhood,
+Omega-seed, or Omega-terminal.
+
+## Where The Lean Stack Lives
+
+Main umbrellas:
 
 ```text
 formal/lean/AlphaOmega.lean
+formal/lean/AlphaCore.lean
 formal/lean/AlphaCalculus.lean
 formal/lean/AlphaAdapters.lean
 formal/lean/Omega.lean
-formal/lean/OmegaArchive.lean
+formal/lean/OmegaCore.lean
 ```
 
-Layer roles:
+Current lower-stack files to read first:
 
 ```text
-AlphaCalculus:
-  presentation-level distinction/order/transport structures, distinction
-  transport, recoverability, recurrence, marginal/joint separation
-
-AlphaAdapters:
-  finite Boolean, finite channel, probabilistic channel, substrate bridge, and
-  adapter audit presentations
-
-Omega:
-  joint-presentation and finite maximal/completion scaffolds
-
-OmegaArchive:
-  older checked scaffolds, not imported by AlphaOmega
+formal/lean/AlphaCore/Primitive.lean
+formal/lean/AlphaCore/Nondegenerate.lean
+formal/lean/AlphaCore/Independence.lean
+formal/lean/OmegaProper/Trajectory/ConsequenceRelation.lean
+formal/lean/OmegaProper/Trajectory/ConsequenceClasses.lean
+formal/lean/OmegaProper/Trajectory/ConsequenceDiscipline.lean
+formal/lean/OmegaProper/Trajectory/ConsequenceComparison.lean
+formal/lean/OmegaProper/Trajectory/ConsequencePanelDiscipline.lean
+formal/lean/OmegaProper/Trajectory/AlphaConsequenceSeed.lean
+formal/lean/OmegaProper/Trajectory/ProtoTeleologicalSeed.lean
 ```
 
-Checked:
+The older `OmegaCore` namespace remains checked provenance from the previous
+support/recoverability calculus. `ProtoOmega`, `OmegaAdapters`, and
+`OmegaProper` remain implementation namespaces during the naming migration.
+They should not be read as separate metaphysical objects.
+
+## Adapter And Empirical Roles
+
+Adapters do not create the core seed. They determine manifestation.
+
+An adapter supplies concrete choices for:
 
 ```text
-DistTrans closure;
-relation-level identity and associativity laws;
-recoverability weakening;
-recoverability strengthening;
-compositional recoverability from laxity;
-non-erasure monotonicity;
-finite-chain recurrent recoverability;
-finite-enumeration maximal completion existence;
-Finset/Fintype maximal completion existence;
-finite completion counterexamples;
-marginal-like non-erasure not implying strictly joint non-erasure;
-adapter-failure examples for missing closure or laxity laws;
-Boolean relation support presentation;
-finite channel / partition presentation;
-finite probabilistic channel enrichment.
+the substrate;
+the available continuations;
+the evaluated contexts;
+the consequence map;
+the comparison relation;
+the provenance and reconstruction discipline.
 ```
 
-The old `OmegaCore` files remain buildable during this migration, but they are
-now classified by role rather than treated as the active conceptual root. The
-old `ProtoOmega`, `OmegaAdapters`, and `OmegaProper` names are implementation
-namespaces behind the new public entrypoints.
-`AlphaCore.Independence` adds primitive non-collapse examples showing that
-relation, distinction, asymmetry, and reach irreversibility do not automatically
-supply one another. `ProtoOmega.Presentation.Native` adds a presentation-native
-layer for distinction presentations, separation presentations,
-presentation-level orders, and presentation-level transports, separating
-presentation machinery from full Alpha substrate contact.
-
-`ProtoOmega.Transport.Native` is the first real native conversion: it imports
-`AlphaCore`, adds presentation-level distinction order over Alpha distinctions,
-and provides a one-way bridge back to legacy `OmegaCore.DistTrans`.
-`ProtoOmega.Recoverability.Native` is the second native conversion: it rebuilds
-recoverability and requirement-relative non-erasure over native transport while
-leaving joint-presentation and compatibility scaffolds downstream.
-`ProtoOmega.Recoverability.RecurrentNative` is the third native conversion: it
-rebuilds finite-chain recoverability over native recoverability models.
-`ProtoOmega.Separations.MarginalJointNative` is the fourth native conversion:
-it rebuilds the finite marginal/joint separation over native transport.
-
-`OmegaAdapters.FiniteBooleanNative` is the first native adapter conversion: it
-rebuilds the finite Boolean relation-support presentation with a
-presentation-native event/separation/order/transport surface plus an
-Alpha-frame-compatible native transport surface.
-
-`OmegaAdapters.FiniteChannelNative` is the second native adapter conversion: it
-rebuilds exact support-channel recovery with a presentation-native
-observable/separation/order/transport surface plus an Alpha-frame-compatible
-native transport surface.
-
-`OmegaAdapters.FiniteChannelDecoderNative` separates existence-style decoder
-recovery from registered and declared registered decoder recovery. This matters
-because channel capacity and instrument provenance are different claims.
-
-`OmegaAdapters.SubstrateBridge` adds explicit bridge objects so presentation
-laws and substrate-contact claims are separate proof obligations.
-
-`OmegaAdapters.ProbabilisticChannelNative` is the first native probabilistic
-adapter slice: it rebuilds natural-weight support/probability separation over
-the native finite-channel adapter. `ProbabilisticChannelCascadeNative` adds the
-native finite cascade error-bound layer over the same path ensemble.
-`ProbabilisticChannelCascadeEvidenceNative` makes the path ensemble an explicit
-evidence object so theorem transfer cannot be driven by independently
-normalized stage summaries.
-
-Current probabilistic enrichment note:
+The cleanest current empirical-formal bridge is the registry-first stochastic
+channel branch. It separates:
 
 ```text
-docs/research_notes/omega_theory/probabilistic_channel_presentation_v0.md
+declared registry recovery:
+  a predeclared decoder registry works
+
+existence / capacity recovery:
+  some decoder exists, whether or not it was declared
+
+optimized diagnostic recovery:
+  a best available target/decoder choice succeeds after search
 ```
 
-The matching Lean skeleton checks the exact/probabilistic boundary: exact
-support recovery implies perfect probabilistic recovery; perfect recovery under
-a full-support prior implies exact support recovery; perfect recovery under a
-non-full-support prior and high probabilistic recovery do not in general imply
-exact support recovery; and composite decoder failure over a finite channel
-cascade is bounded by first-stage plus second-stage decoder failure over the
-same path ensemble. It also checks that fixed-declared and Bayes-best target
-policies can diverge in a tiny finite example, which is why the empirical
-channel instrument reports both provenance-preserving and best-available
-recovery views.
-
-The current empirical theorem-transfer audit for this layer is:
+This blocks the self-validating shortcut:
 
 ```text
-docs/research_notes/validation_results/stochastic_distinction_channel/stochastic_channel_theorem_transfer_audit_result.md
+some decoder exists = the declared instrument recovered the distinction
 ```
 
-It verifies that the retained fixed-policy channel output can instantiate the
-finite cascade error-bound theorem using exact natural weights and a shared
-path ensemble denominator. Thresholded non-erasure remains a measurement layer
-pending a separate theorem.
-
-The current empirical target for that next theorem layer is:
+Future Field Atlas remains useful, but it is no longer the conceptual center.
+It is retained as:
 
 ```text
-docs/research_notes/validation_results/stochastic_distinction_channel/stochastic_thresholded_prob_non_erasure_result.md
+Future Field Atlas v0:
+  preformal reachable-frontier morphology instrument
 ```
 
-It compiles finite requirement-set measurements for
-`ProbNonErasing(K, pi, Req, threshold, target_policy)` and checks monotonicity
-under requirement-set weakening.
+FFA can still provide finite-dynamics stress tests and feature extraction. It
+does not detect value, valuers, agency, identity, compatibility, support,
+capture, or erasure.
 
-### Layer 0c: Future-Distinction Dynamics
-
-Primary note:
-
-```text
-docs/research_notes/omega_theory/omega_formal_core_v0_2_future_distinction_dynamics.md
-```
-
-Defines:
-
-```text
-future fields;
-admissible observables;
-future-distinctions;
-future-distinction capacity;
-recoverability;
-non-erasure;
-compatibility;
-proto-Omega / Omega claim discipline.
-```
-
-Key correction:
-
-```text
-Persistent distinction does not mean "different under every quotient forever."
-It means separable under a declared admissible observable family over a declared
-horizon regime.
-```
-
-### Layer 1: Admissibility and Identity-Decay Nulls
-
-Primary notes:
-
-```text
-docs/research_notes/omega_theory/admissibility_enrichment_and_identity_decay_nulls.md
-docs/research_notes/omega_theory/identity_decay_null_taxonomy_v0.md
-```
-
-Purpose:
-
-```text
-Define candidate process bundles, activity channels, matched nulls, and
-maintenance gaps without making self, identity, or dissolution primitive.
-```
-
-Key correction:
-
-```text
-Identity-decay is not a cosmic law. It is a declared matched null comparison:
-what distinction-content would be expected to decay when the maintaining
-activity is passivized, randomized, ablated, unsupported, or otherwise removed.
-```
-
-### Layer 2: Proto-Valuer Ladder
-
-Primary notes:
-
-```text
-docs/research_notes/omega_theory/omega_proto_valuer_compatibility_completions.md
-docs/research_notes/omega_theory/finite_proto_valuer_separation_theorems_v0.md
-docs/research_notes/omega_theory/tiny_transition_system_witnesses_v0.md
-```
-
-The ladder is:
-
-```text
-future-distinction capacity
--> process-bundle designation
--> maintenance over identity-decay null
--> self-conditioning of transition environment
--> proto-valuer
--> compatibility-audited valuer
-```
-
-Important boundary:
-
-```text
-Current empirical results do not instantiate proto-valuers or valuers.
-```
-
-The ladder exists to prevent overpromotion from local persistence or high
-residuals into value language.
-
-### Layer 3: Compatibility Completions
-
-Primary notes:
-
-```text
-docs/research_notes/omega_theory/finite_omega_completion_theorems_v0.md
-docs/research_notes/omega_theory/compatibility_audit_taxonomy_v0.md
-```
-
-The completion layer asks:
-
-```text
-Which candidate future-bearing units can jointly propagate without systematic
-irreversible destruction of each other's distinction-content?
-```
-
-Finite theorem scaffolds currently establish:
-
-```text
-finite maximal admissible completions exist when the admissible family is
-nonempty, including the Finset/Fintype specialization now checked in Lean;
-
-a greatest completion need not exist, now checked as a finite Lean
-counterexample;
-
-pairwise admissibility does not imply joint admissibility, now checked as a
-finite Lean counterexample;
-
-marginal-like non-erasure does not imply strictly joint non-erasure, now checked
-as a finite Lean distinction-transport counterexample;
-
-finite completions are computable by exhaustive enumeration in principle.
-```
-
-These are small finite facts, not a proof that Omega exists physically.
-
-### Layer 4: Finite Distinction Measures
-
-Primary note:
-
-```text
-docs/research_notes/omega_theory/finite_distinction_measures_v0.md
-```
-
-Purpose:
-
-```text
-Prevent the metric from becoming a back door.
-```
-
-Finite distinction measures must be:
-
-```text
-predeclared;
-finite;
-reconstructible;
-observable-indexed;
-horizon-scoped;
-control-auditable;
-claim-bounded.
-```
-
-They may measure finite distinction structure. They do not detect value,
-valuerhood, agency, identity, support, capture, erasure, compatibility, or
-Omega.
-
-### Layer 5: Empirical Interface
-
-Primary empirical instrument:
-
-```text
-Future Field Atlas
-```
-
-It emits:
-
-```text
-formal spec identity;
-reachable-frontier topology;
-product and coupled future-field baselines;
-artifact completeness status;
-reconstruction audits;
-operator and observable summaries;
-compact retained morphology.
-```
-
-The empirical arm must eventually add:
-
-```text
-process-bundle manifests;
-admissible observable manifests;
-identity-decay null manifests;
-maintenance-gap rows;
-self-conditioning rows;
-compatibility-audit rows.
-```
-
-Those are future targets, not current claims.
-
-## Current Empirical Status
-
-The current empirical result is modest but useful.
-
-Future Field Atlas can measure reconstructible finite future-field topology
-under lawful transition substrates.
-
-Current coupled rank-order-boundary results show a marginal-preserving
-joint-restriction class under `symbol_histogram_distance`:
-
-```text
-pair005
-pair012
-pair014
-pair026
-```
-
-The observed pattern:
-
-```text
-A and B marginal support are preserved;
-joint support is restricted relative to the product baseline;
-the effect is visible in compact topology summaries and targeted H128 depth.
-```
-
-The tested alternate observables:
-
-```text
-hamming_weight_or_nonzero_count
-total_coordinate_mass
-```
-
-did not reproduce the high-yield signature.
-
-The first formal-interface distinction panel is now complete. It maps the
-high-yield representatives and low/medium controls into declared finite
-distinction-measure artifacts across product, zero-penalty joint rank-prefix,
-scalar mismatch 0.020, shared_capacity v1, and rank_order_boundary references.
-The panel has 40 / 40 cells available and 0 missing or blocked cells.
-
-## What Is Not Claimed
+## What This Is Not
 
 The project does not currently claim:
 
 ```text
 Omega validation;
-proto-valuer detection;
+Omega-terminal existence;
 valuer detection;
 agent detection;
 identity detection;
+self detection;
+life detection;
 value detection;
 compatibility detection;
 support / capture / erasure detection;
-life or self-replication detection;
-holdout readiness;
-substrate-general theory validation.
+substrate-general empirical validation.
 ```
 
-The strongest current claim is:
+Positive formal results should be read as checked scaffolds and guardrails.
+Positive empirical results should be read as instrument or substrate
+characterization unless a stricter theorem-transfer route has been explicitly
+shown.
+
+## Why The Guardrails Matter
+
+The project is specifically trying to avoid self-validating constructions.
+
+Important blocked shortcuts include:
 
 ```text
-We have a formal target, finite scaffolds that block several easy collapses,
-and an empirical atlas that can probe precursor future-field topology under
-strict reconstruction and claim boundaries.
+presentation success = substrate contact;
+existence decoder = declared decoder;
+summary error rates = path-ensemble theorem evidence;
+coarse quotient recovery = identity;
+chain-connectedness = valid class;
+primitive nondegeneracy = proto-teleological seed;
+frontier morphology = value-bearing trajectory.
 ```
+
+Each recent repair makes one of those routes harder or impossible at the
+formal surface.
 
 ## Recommended Reading Order
 
-For theory:
+For a new collaborator:
 
 ```text
-1. docs/research_notes/omega_theory/README.md
-2. docs/research_notes/omega_theory/omega_formal_core_v0_2_future_distinction_dynamics.md
-3. docs/research_notes/omega_theory/theory_arm_map_v0.md
-4. docs/research_notes/omega_theory/finite_omega_completion_theorems_v0.md
-5. docs/research_notes/omega_theory/finite_distinction_measures_v0.md
-6. docs/research_notes/omega_theory/compatibility_audit_taxonomy_v0.md
+1. README.md
+2. docs/OMEGA_FORMALISM_PRIMER.md
+3. docs/EXTERNAL_READER_GUIDE.md
+4. docs/research_notes/omega_theory/alphaomega_continuation_proto_teleology_v0.md
+5. docs/research_notes/omega_theory/alpha_primitive_core_v0.md
+6. docs/research_notes/omega_theory/probabilistic_channel_presentation_v0.md
+7. docs/PUBLIC_RESULTS_INDEX.md
 ```
 
-For empirical status:
+For the checked formal path:
 
 ```text
-1. docs/research_notes/validation_results/future_field_atlas/future_field_atlas_formal_interface_distinction_panel_result.md
-2. docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md
-3. docs/research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md
-4. docs/research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md
-5. docs/PUBLIC_RESULTS_INDEX.md
+1. formal/lean/AlphaCore/Primitive.lean
+2. formal/lean/AlphaCore/Nondegenerate.lean
+3. formal/lean/OmegaProper/Trajectory/ConsequenceRelation.lean
+4. formal/lean/OmegaProper/Trajectory/ConsequenceClasses.lean
+5. formal/lean/OmegaProper/Trajectory/ConsequenceDiscipline.lean
+6. formal/lean/OmegaProper/Trajectory/AlphaConsequenceSeed.lean
+7. formal/lean/OmegaProper/Trajectory/ProtoTeleologicalSeed.lean
 ```
 
-For operations:
+For local validation:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\setup\invoke_lake.ps1 build AlphaOmega
+rg -n "\b(sorry|admit|axiom)\b" formal\lean -g "*.lean"
+git diff --check
+```
+
+## Current North Star
+
+The compact current formulation is:
 
 ```text
-docs/OMEGA_PROJECT_MANUAL.md
+Relation makes bearing possible.
+Distinction makes non-interchangeability possible.
+Asymmetry makes bearing non-neutral.
+Continuation exposes consequence.
+A difference matters when erasing it changes what can follow.
+Proto-teleology is consequence-bearing direction without purpose.
+Omega is the possible maximal compatible unfolding of that mattering across
+admissible continuations.
+Value enters only when such structures support valuers.
 ```
