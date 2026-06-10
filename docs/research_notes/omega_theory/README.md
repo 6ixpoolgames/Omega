@@ -97,6 +97,8 @@ OmegaProper/Scaffolds/FiniteMaximal.lean
 OmegaProper/Scaffolds/CompletionCounterexamples.lean
 OmegaProper/Trajectory/AlphaConsequenceSeed.lean
 OmegaProper/Trajectory/AlphaConsequenceSeedExamples.lean
+OmegaProper/Trajectory/DeformationProfile.lean
+OmegaProper/Trajectory/DeformationProfileExamples.lean
 OmegaProper/Trajectory/ProtoTeleologicalSeed.lean
 OmegaProper/Trajectory/ProtoTeleologicalSeedDiscipline.lean
 OmegaProper/Trajectory/ProtoTeleologicalSeedExamples.lean
@@ -172,7 +174,10 @@ proto-teleological seed wrappers showing that primitive Alpha contact plus
 evaluated consequence merge-separation implies primitive nondegeneracy,
 consequence noncollapse, and a witness blocking symmetric consequence
 identification, while primitive nondegeneracy alone and consequence
-noncollapse alone are not sufficient.
+noncollapse alone are not sufficient;
+speculative deformation-profile bridge comparing exact merge-block and
+merge-allow profiles between consequence systems over the same Alpha carrier,
+without defining identity or recoverability.
 ```
 
 This is formal infrastructure only. It does not instantiate an empirical

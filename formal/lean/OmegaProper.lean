@@ -5,6 +5,8 @@ import OmegaProper.Trajectory.AlphaConsequenceSeed
 import OmegaProper.Trajectory.AlphaConsequenceSeedExamples
 import OmegaProper.Trajectory.ConsequenceClasses
 import OmegaProper.Trajectory.ConsequenceComparison
+import OmegaProper.Trajectory.DeformationProfile
+import OmegaProper.Trajectory.DeformationProfileExamples
 import OmegaProper.Trajectory.ConsequenceDiscipline
 import OmegaProper.Trajectory.ConsequencePanelDiscipline
 import OmegaProper.Trajectory.ConsequenceRelation

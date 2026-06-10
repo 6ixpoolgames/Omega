@@ -9,6 +9,55 @@ patch notes at the top.
 
 ## 2026-06-11
 
+### Deformation Profile Bridge
+
+Added a speculative pre-recoverability bridge:
+
+```text
+formal/lean/OmegaProper/Trajectory/DeformationProfile.lean
+formal/lean/OmegaProper/Trajectory/DeformationProfileExamples.lean
+```
+
+Core definitions:
+
+```text
+ProfileBlocks
+ProfileAllows
+HasBlockProfile
+AlphaProfileBlockChanged
+AlphaProfileDeforms
+```
+
+Checked guardrails:
+
+```text
+profile block contradicts profile allow in the same system
+collapsed systems have no block profile
+universal comparison systems have no block profile
+block-vs-allow change implies Alpha profile deformation
+Alpha profile deformation is symmetric
+a system does not deform itself under block-vs-allow profile change
+```
+
+Toy check:
+
+```text
+the chainFrame equality consequence system deforms its universally permissive
+counterpart over the same Alpha carrier
+the chainFrame equality consequence system does not deform itself
+```
+
+Interpretation:
+
+```text
+this compares exact qualitative consequence profiles over a shared Alpha
+carrier
+the shared carrier is a measurement setup, not an identity claim
+this does not define recoverability, identity, persistence, coarse-graining,
+deformer structure, boundary, value, valuerhood, agency, Omega-seed, or
+Omega-terminal
+```
+
 ### Proto-Teleological Seed Discipline
 
 Added a guardrail module:
