@@ -7,6 +7,36 @@ run.
 Entries are organized in rough reverse chronological order, with the most recent
 patch notes at the top.
 
+## 2026-06-10
+
+### AlphaOmega Continuation Reorientation
+
+Added the current theory-spine note:
+
+```text
+docs/research_notes/omega_theory/alphaomega_continuation_proto_teleology_v0.md
+```
+
+Updated the public README and theory-note index around the continuation
+correction:
+
+```text
+continuation, not time, is the core abstraction
+Alpha and Omega are treated as two faces of one theoretical object
+Omega-seed is core-native
+Omega-manifestation and Omega-terminal are adapter-dependent
+mattering is defined technically as consequence-bearing non-neutrality
+value remains downstream of valuer-capable structures
+```
+
+Claim boundary:
+
+```text
+this is a theory reorientation note, not Omega validation
+it does not define value, valuerhood, agency, selfhood, identity, or moral truth
+terminal / maximal compatible structure remains conditional on substrate
+```
+
 ## 2026-06-09
 
 ### Consequence Panel Discipline

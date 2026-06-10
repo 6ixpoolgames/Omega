@@ -11,6 +11,7 @@ Start with:
 
 ```text
 ../../../README.md
+alphaomega_continuation_proto_teleology_v0.md
 ../../VALUER_FORMAL_TARGET_V0.md
 ../../OMEGA_COMPATIBLE_VALUER_TRAJECTORY_SPACE_V0.md
 ../../OMEGA_FORMALISM_PRIMER.md
@@ -39,9 +40,11 @@ Layer 5: empirical interface targets
 Compact target:
 
 ```text
-Omega is the maximal admissible compatibility structure of future trajectories
-in which robust valuer-like process-bundles can arise, persist, interact,
-self-correct, branch, and continue to generate meaningful future capacity.
+Omega is the possible maximal compatible unfolding of consequence-bearing
+structure across admissible continuations.
+
+Value-bearing futures are a downstream manifestation, not the primitive
+starting point.
 ```
 
 This is a formal target, not an empirical result.
@@ -91,6 +94,11 @@ OmegaAdapters/Audit/AdapterFailures.lean
 OmegaProper/Compatibility/JointPresentation.lean
 OmegaProper/Scaffolds/FiniteMaximal.lean
 OmegaProper/Scaffolds/CompletionCounterexamples.lean
+OmegaProper/Trajectory/ConsequenceRelation.lean
+OmegaProper/Trajectory/ConsequenceClasses.lean
+OmegaProper/Trajectory/ConsequenceDiscipline.lean
+OmegaProper/Trajectory/ConsequenceComparison.lean
+OmegaProper/Trajectory/ConsequencePanelDiscipline.lean
 OmegaArchive/Basic.lean
 OmegaArchive/PrimitiveWitness.lean
 OmegaCore/DistTrans.lean
@@ -145,7 +153,9 @@ support projection, and finite cascade error bound;
 finite cascade evidence object separating path-ensemble theorem input from
 independently normalized summary rates;
 finite policy-separation example showing that Bayes-best target recovery can
-strictly exceed fixed-declared target recovery.
+strictly exceed fixed-declared target recovery;
+consequence-native trajectory guardrails for separation, consequence-respecting
+classes, collapse/noncollapse, over-separation, and mixed evaluated panels.
 ```
 
 This is formal infrastructure only. It does not instantiate an empirical
@@ -158,6 +168,7 @@ old OmegaCore namespace is retained for compatibility during migration.
 Read these as current active anchors:
 
 ```text
+alphaomega_continuation_proto_teleology_v0.md
 ../../VALUER_FORMAL_TARGET_V0.md
 ../../OMEGA_COMPATIBLE_VALUER_TRAJECTORY_SPACE_V0.md
 alpha_primitive_core_v0.md

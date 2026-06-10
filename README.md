@@ -1,17 +1,29 @@
 # Omega / Reachable Futures Lab
 
-Omega is a research program about **value-bearing futures**.
+Omega is a research program about **consequence-bearing continuation** and its
+downstream relation to value-bearing futures.
 
 The working north star is:
 
 ```text
-Value is not a property of arbitrary states.
-Value requires valuers.
-Valuers require robust, recoverable, future-bearing trajectories.
-Omega is the attempt to characterize compatible futures in which such
-valuer-like trajectories can arise, persist, interact, self-correct, branch,
-and continue to generate meaningful future capacity.
+Alpha and Omega are two faces of one object.
+
+Alpha names the primitive grammar by which differences can become
+consequence-bearing.
+
+Omega names the possible maximal compatible unfolding of consequence-bearing
+structure across admissible continuations.
 ```
+
+In this framing, "future" is the temporal adapter of a broader notion:
+continuation. A continuation may be a transition, derivation, completion,
+composition, deformation, path, or other admissible unfolding supplied by a
+substrate.
+
+Value enters downstream. Value is not a property of arbitrary states; it
+requires valuers. Valuers require robust, recoverable, continuation-bearing
+trajectories. The formal lower stack asks what must already be true before such
+trajectories can become legible.
 
 Current claim boundary:
 
@@ -33,11 +45,15 @@ The current ladder is:
 
 ```text
 Alpha:
-  primitive substrate grammar: relation, distinction, asymmetry
+  primitive grammar: relation, distinction, asymmetry
 
 AlphaCalculus:
   recoverability, transport, recurrence, non-erasure, separation, and
   composition laws
+
+Consequence / continuation layer:
+  consequence-induced separation, forbidden identification, collapse and
+  over-separation guardrails, and continuation-native trajectory scaffolds
 
 AlphaAdapters:
   finite presentations and empirical bridges that expose what a substrate does
@@ -48,20 +64,23 @@ Trajectory / viability layer:
   compatible continuation
 
 Omega:
-  downstream theory of compatible valuer-bearing futures
+  possible maximal compatible development of consequence-bearing continuation,
+  with valuer-bearing futures as a downstream value-capable manifestation
 ```
 
-The central correction is:
+The central correction is now:
 
 ```text
-No valuers -> no value.
-No compatible future trajectories -> no durable valuers.
-No substrate distinctions -> no recoverable valuers.
+Continuation, not time, is primitive.
+A difference matters when erasing it changes what can follow.
+Mattering precedes value.
+Value enters only when consequence-bearing structures support valuers.
 ```
 
 Distinction persistence is therefore a necessary substrate condition, not value
-itself. The target object is a robust valuer-bearing trajectory under
-compatibility and viability constraints.
+itself. The lower object is consequence-bearing difference; the downstream value
+object is a robust valuer-bearing trajectory under compatibility and viability
+constraints.
 
 ## Current Status
 
