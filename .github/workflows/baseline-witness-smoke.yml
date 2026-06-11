@@ -9,6 +9,7 @@ on:
       - ".github/workflows/baseline-witness-smoke.yml"
       - "omega/baseline_witnesses/**"
       - "omega/future_field_atlas/util.py"
+      - "omega/validation/**"
       - "tests/test_chain_evidence_class_soundness_family.py"
       - "tests/test_coarse_bisimulation_consequence_profile_family.py"
       - "tests/test_baseline_witness_family_smoke.py"
@@ -25,6 +26,7 @@ on:
       - "tests/test_viability_kernel_declared_recovery_family.py"
       - "tests/test_same_*.py"
       - "tests/test_baseline_witness_smoke_mutation.py"
+      - "tests/test_baseline_witness_search.py"
       - "scripts/validation/run_baseline_witness_family_smoke.ps1"
       - "scripts/validation/run_baseline_witness_smoke.ps1"
       - "results/baseline_witnesses/**"
@@ -36,6 +38,7 @@ on:
       - ".github/workflows/baseline-witness-smoke.yml"
       - "omega/baseline_witnesses/**"
       - "omega/future_field_atlas/util.py"
+      - "omega/validation/**"
       - "tests/test_chain_evidence_class_soundness_family.py"
       - "tests/test_coarse_bisimulation_consequence_profile_family.py"
       - "tests/test_baseline_witness_family_smoke.py"
@@ -52,6 +55,7 @@ on:
       - "tests/test_viability_kernel_declared_recovery_family.py"
       - "tests/test_same_*.py"
       - "tests/test_baseline_witness_smoke_mutation.py"
+      - "tests/test_baseline_witness_search.py"
       - "scripts/validation/run_baseline_witness_family_smoke.ps1"
       - "scripts/validation/run_baseline_witness_smoke.ps1"
       - "results/baseline_witnesses/**"
@@ -59,7 +63,16 @@ on:
 
 jobs:
   smoke:
-    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    defaults:
+      run:
+        shell: bash
 
     steps:
       - name: Checkout
@@ -72,74 +85,71 @@ jobs:
           cache: "pip"
 
       - name: Install package and dev tools
-        shell: pwsh
         run: python -m pip install -e ".[dev]"
 
       - name: Run baseline witness smoke
-        shell: pwsh
-        run: powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness_smoke.ps1
+        run: python -m omega.validation.baseline_witness_smoke
 
       - name: Run baseline witness family smoke
-        shell: pwsh
-        run: powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness_family_smoke.ps1
+        run: python -m omega.validation.baseline_witness_family_smoke
 
       - name: Run baseline smoke mutation tests
-        shell: pwsh
         run: |
-          python -m pytest `
-            tests\test_baseline_witness_family_smoke.py `
-            tests\test_baseline_witness_smoke_mutation.py `
-            tests\test_chain_evidence_class_soundness_family.py `
-            tests\test_coarse_bisimulation_consequence_profile_family.py `
-            tests\test_compression_score_merge_soundness_family.py `
-            tests\test_control_reach_declared_recovery_family.py `
-            tests\test_entropy_recovery_profile_family.py `
-            tests\test_frontier_morphology_loss_profile_family.py `
-            tests\test_intervention_effect_declared_recovery_family.py `
-            tests\test_marginal_success_joint_success_family.py `
-            tests\test_mutual_information_declared_recovery_family.py `
-            tests\test_observation_rank_declared_recovery_family.py `
-            tests\test_optimized_success_declared_recovery_family.py `
-            tests\test_reachability_declared_recovery_family.py `
-            tests\test_viability_kernel_declared_recovery_family.py `
-            -q `
-            --basetemp .tmp\baseline_witness_mutation_pytest `
-            -o cache_dir=.tmp\baseline_witness_mutation_pytest_cache
+          python -m pytest \
+            tests/test_baseline_witness_family_smoke.py \
+            tests/test_baseline_witness_smoke_mutation.py \
+            tests/test_baseline_witness_search.py \
+            tests/test_chain_evidence_class_soundness_family.py \
+            tests/test_coarse_bisimulation_consequence_profile_family.py \
+            tests/test_compression_score_merge_soundness_family.py \
+            tests/test_control_reach_declared_recovery_family.py \
+            tests/test_entropy_recovery_profile_family.py \
+            tests/test_frontier_morphology_loss_profile_family.py \
+            tests/test_intervention_effect_declared_recovery_family.py \
+            tests/test_marginal_success_joint_success_family.py \
+            tests/test_mutual_information_declared_recovery_family.py \
+            tests/test_observation_rank_declared_recovery_family.py \
+            tests/test_optimized_success_declared_recovery_family.py \
+            tests/test_reachability_declared_recovery_family.py \
+            tests/test_viability_kernel_declared_recovery_family.py \
+            -q \
+            --basetemp .tmp/baseline_witness_mutation_pytest \
+            -o cache_dir=.tmp/baseline_witness_mutation_pytest_cache
 
       - name: Ruff baseline witness paths
-        shell: pwsh
         run: |
-          python -m ruff check `
-            omega\baseline_witnesses `
-            tests\test_baseline_witness_family_smoke.py `
-            tests\test_baseline_witness_smoke_mutation.py `
-            tests\test_chain_evidence_class_soundness_family.py `
-            tests\test_coarse_bisimulation_consequence_profile_family.py `
-            tests\test_compression_score_merge_soundness_family.py `
-            tests\test_control_reach_declared_recovery_family.py `
-            tests\test_entropy_recovery_profile_family.py `
-            tests\test_frontier_morphology_loss_profile_family.py `
-            tests\test_intervention_effect_declared_recovery_family.py `
-            tests\test_marginal_success_joint_success_family.py `
-            tests\test_mutual_information_declared_recovery_family.py `
-            tests\test_observation_rank_declared_recovery_family.py `
-            tests\test_optimized_success_declared_recovery_family.py `
-            tests\test_reachability_declared_recovery_family.py `
-            tests\test_viability_kernel_declared_recovery_family.py `
-            tests\test_same_reachability_different_recovery.py `
-            tests\test_same_entropy_different_recovery_profile.py `
-            tests\test_same_frontier_morphology_different_loss_profile.py `
-            tests\test_same_intervention_effect_different_declared_recovery.py `
-            tests\test_same_mutual_information_different_declared_recovery.py `
-            tests\test_same_observation_rank_different_declared_recovery.py `
-            tests\test_same_control_reach_different_declared_recovery.py `
-            tests\test_same_optimized_success_different_declared_recovery.py `
-            tests\test_same_viability_kernel_different_declared_recovery.py `
-            tests\test_same_marginal_success_different_joint_success.py `
-            tests\test_same_compression_score_different_merge_soundness.py `
-            tests\test_same_chain_evidence_different_class_soundness.py `
-            tests\test_same_coarse_bisimulation_different_consequence_profile.py
+          python -m ruff check \
+            omega/baseline_witnesses \
+            omega/validation \
+            tests/test_baseline_witness_family_smoke.py \
+            tests/test_baseline_witness_smoke_mutation.py \
+            tests/test_baseline_witness_search.py \
+            tests/test_chain_evidence_class_soundness_family.py \
+            tests/test_coarse_bisimulation_consequence_profile_family.py \
+            tests/test_compression_score_merge_soundness_family.py \
+            tests/test_control_reach_declared_recovery_family.py \
+            tests/test_entropy_recovery_profile_family.py \
+            tests/test_frontier_morphology_loss_profile_family.py \
+            tests/test_intervention_effect_declared_recovery_family.py \
+            tests/test_marginal_success_joint_success_family.py \
+            tests/test_mutual_information_declared_recovery_family.py \
+            tests/test_observation_rank_declared_recovery_family.py \
+            tests/test_optimized_success_declared_recovery_family.py \
+            tests/test_reachability_declared_recovery_family.py \
+            tests/test_viability_kernel_declared_recovery_family.py \
+            tests/test_same_reachability_different_recovery.py \
+            tests/test_same_entropy_different_recovery_profile.py \
+            tests/test_same_frontier_morphology_different_loss_profile.py \
+            tests/test_same_intervention_effect_different_declared_recovery.py \
+            tests/test_same_mutual_information_different_declared_recovery.py \
+            tests/test_same_observation_rank_different_declared_recovery.py \
+            tests/test_same_control_reach_different_declared_recovery.py \
+            tests/test_same_optimized_success_different_declared_recovery.py \
+            tests/test_same_viability_kernel_different_declared_recovery.py \
+            tests/test_same_marginal_success_different_joint_success.py \
+            tests/test_same_compression_score_different_merge_soundness.py \
+            tests/test_same_chain_evidence_different_class_soundness.py \
+            tests/test_same_coarse_bisimulation_different_consequence_profile.py
 
       - name: Check whitespace
-        shell: pwsh
         run: git diff --check

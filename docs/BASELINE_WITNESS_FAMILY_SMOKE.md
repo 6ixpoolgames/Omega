@@ -16,6 +16,14 @@ pip install -e ".[dev]"
 
 ## Run
 
+Cross-platform Python entry point:
+
+```bash
+python -m omega.validation.baseline_witness_family_smoke
+```
+
+Windows PowerShell wrapper:
+
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness_family_smoke.ps1
 ```
@@ -29,11 +37,19 @@ then runs the focused family pytest suite. Outputs are written under:
 
 To skip the focused pytest pass and only run the aggregate family status check:
 
+```bash
+python -m omega.validation.baseline_witness_family_smoke --skip-pytest
+```
+
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness_family_smoke.ps1 -SkipPytest
 ```
 
 To use a different finite depth:
+
+```bash
+python -m omega.validation.baseline_witness_family_smoke --max-nuisance-bits 3
+```
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness_family_smoke.ps1 -MaxNuisanceBits 3

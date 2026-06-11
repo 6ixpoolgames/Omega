@@ -217,6 +217,8 @@ Read:
 3. docs/EXTERNAL_READER_GUIDE.md
 4. docs/CLAIMS_LEDGER.md
 5. docs/KNOWN_REDUCTIONS_AND_BASELINES.md
+6. docs/BASELINE_WITNESS_SUITE_V0.md
+7. docs/ADVERSARIAL_REVIEW_GUIDE.md
 ```
 
 Goal: understand the current one-object framing, claim boundary, live stack,
@@ -353,6 +355,16 @@ How do registry-first recovery gaps behave in larger finite probes?
 Which consequence-system adapters can be generated without post-hoc tuning?
 What controls expose vacuous, universal, or all-refusing comparison apparatuses?
 Which FFA morphology features remain useful as subordinate diagnostics?
+```
+
+Near-term witness-suite questions:
+
+```text
+Which retained baseline witness should be deleted or strengthened?
+Which baseline controls are too weak?
+Which witnesses instantiate the same coordinate-split theorem schema?
+Which finite Python witnesses should be promoted into exact Lean witnesses?
+Can adversarial search rediscover the hand-built counterexamples?
 ```
 
 ## 10. Working Standard

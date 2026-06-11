@@ -27,13 +27,14 @@ sorry / admit / axiom scan
 git diff --check
 ```
 
-The baseline witness workflow checks:
+The baseline witness workflow runs on Windows, Ubuntu, and macOS and checks:
 
 ```text
 Python 3.11 package installation with dev tools
 baseline witness smoke
 baseline witness family smoke
 baseline smoke mutation tests
+baseline witness adversarial search tests
 chain-evidence class-soundness family tests
 coarse-bisimulation consequence-profile family tests
 compression-vs-soundness nuisance-bit family tests
@@ -66,6 +67,7 @@ changes to:
 .github/workflows/baseline-witness-smoke.yml
 omega/baseline_witnesses/**
 omega/future_field_atlas/util.py
+omega/validation/**
 tests/test_chain_evidence_class_soundness_family.py
 tests/test_coarse_bisimulation_consequence_profile_family.py
 tests/test_compression_score_merge_soundness_family.py
@@ -112,6 +114,12 @@ ruff check .
 
 The baseline witness batch has a one-command reproduction path:
 
+```bash
+python -m omega.validation.baseline_witness_smoke
+```
+
+Windows PowerShell wrapper:
+
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness_smoke.ps1
 ```
@@ -122,6 +130,12 @@ tests. See [BASELINE_WITNESS_SMOKE.md](BASELINE_WITNESS_SMOKE.md).
 
 The parameterized baseline witness families have a separate one-command smoke:
 
+```bash
+python -m omega.validation.baseline_witness_family_smoke
+```
+
+Windows PowerShell wrapper:
+
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness_family_smoke.ps1
 ```
@@ -131,6 +145,12 @@ finite family cases, and runs the focused family tests. See
 [BASELINE_WITNESS_FAMILY_SMOKE.md](BASELINE_WITNESS_FAMILY_SMOKE.md).
 
 The registry-first stochastic-channel branch has a separate reproduction path:
+
+```bash
+python -m omega.validation.registry_first_smoke
+```
+
+Windows PowerShell wrapper:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts\validation\run_reproducibility_smoke.ps1

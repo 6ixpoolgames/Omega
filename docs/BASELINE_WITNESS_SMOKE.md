@@ -25,6 +25,14 @@ pip install -e ".[dev]"
 
 ## Run
 
+Cross-platform Python entry point:
+
+```bash
+python -m omega.validation.baseline_witness_smoke
+```
+
+Windows PowerShell wrapper:
+
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness_smoke.ps1
 ```
@@ -40,11 +48,19 @@ directory so it does not depend on user-level temp directory permissions.
 
 To skip the focused pytest pass and only rerun the witness/digest gates:
 
+```bash
+python -m omega.validation.baseline_witness_smoke --skip-pytest
+```
+
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness_smoke.ps1 -SkipPytest
 ```
 
 To compare regenerated witnesses against a copied retained-summary tree:
+
+```bash
+python -m omega.validation.baseline_witness_smoke --retained-root path/to/baseline_witnesses_copy --skip-pytest
+```
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness_smoke.ps1 -RetainedRoot path\to\baseline_witnesses_copy -SkipPytest
