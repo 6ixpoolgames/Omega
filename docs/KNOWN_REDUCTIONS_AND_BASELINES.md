@@ -297,6 +297,16 @@ Score declared recovery of d from the binary output.
 Emit a retained fixture and a testable pass/fail result.
 ```
 
+Parameterized family check:
+
+```text
+For k = 1..5 nuisance bits, compare transmitting declared d against
+transmitting each nuisance coordinate n_i.
+Each case matches I(X;Y) = 1 bit and deterministic binary-output capacity = 1
+bit under the uniform source distribution.
+Declared recovery of d succeeds only for the d-transmitting channel.
+```
+
 The supported claim is narrow:
 
 ```text

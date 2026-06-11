@@ -9,6 +9,7 @@ on:
       - ".github/workflows/baseline-witness-smoke.yml"
       - "omega/baseline_witnesses/**"
       - "omega/future_field_atlas/util.py"
+      - "tests/test_mutual_information_declared_recovery_family.py"
       - "tests/test_same_*.py"
       - "tests/test_baseline_witness_smoke_mutation.py"
       - "scripts/validation/run_baseline_witness_smoke.ps1"
@@ -21,6 +22,7 @@ on:
       - ".github/workflows/baseline-witness-smoke.yml"
       - "omega/baseline_witnesses/**"
       - "omega/future_field_atlas/util.py"
+      - "tests/test_mutual_information_declared_recovery_family.py"
       - "tests/test_same_*.py"
       - "tests/test_baseline_witness_smoke_mutation.py"
       - "scripts/validation/run_baseline_witness_smoke.ps1"
@@ -54,6 +56,7 @@ jobs:
         run: |
           python -m pytest `
             tests\test_baseline_witness_smoke_mutation.py `
+            tests\test_mutual_information_declared_recovery_family.py `
             -q `
             --basetemp .tmp\baseline_witness_mutation_pytest `
             -o cache_dir=.tmp\baseline_witness_mutation_pytest_cache
@@ -64,6 +67,7 @@ jobs:
           python -m ruff check `
             omega\baseline_witnesses `
             tests\test_baseline_witness_smoke_mutation.py `
+            tests\test_mutual_information_declared_recovery_family.py `
             tests\test_same_reachability_different_recovery.py `
             tests\test_same_entropy_different_recovery_profile.py `
             tests\test_same_frontier_morphology_different_loss_profile.py `

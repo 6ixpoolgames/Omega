@@ -79,6 +79,9 @@ different declared horizon-local loss profile.
 The seven-witness batch now has a one-command smoke that reruns each retained
 witness, checks summary digests against committed retained outputs, and runs
 the focused tests.
+The mutual-information witness also has a parameterized nuisance-bit family
+test over `k = 1..5`, checking every nuisance coordinate without adding new
+retained artifacts.
 The supporting formal target is now the probabilistic channel presentation:
 exact support recovery remains the root-calculus bridge, while probabilistic
 decoder success is a measured enrichment with separate theorem obligations.

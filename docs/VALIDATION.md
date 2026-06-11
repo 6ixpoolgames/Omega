@@ -33,6 +33,7 @@ The baseline witness workflow checks:
 Python 3.11 package installation with dev tools
 baseline witness smoke
 baseline smoke mutation tests
+mutual-information nuisance-bit family tests
 Ruff over baseline witness modules and focused tests
 git diff --check
 ```
