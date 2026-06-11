@@ -1,5 +1,6 @@
 param(
     [string] $OutRoot = ".tmp\baseline_witness_smoke",
+    [string] $RetainedRoot = "results\baseline_witnesses",
     [switch] $SkipPytest
 )
 
@@ -11,6 +12,12 @@ if ([System.IO.Path]::IsPathRooted($OutRoot)) {
     $resolvedOutRoot = $OutRoot
 } else {
     $resolvedOutRoot = Join-Path $repoRoot $OutRoot
+}
+
+if ([System.IO.Path]::IsPathRooted($RetainedRoot)) {
+    $resolvedRetainedRoot = $RetainedRoot
+} else {
+    $resolvedRetainedRoot = Join-Path $repoRoot $RetainedRoot
 }
 
 $runId = Get-Date -Format "yyyyMMdd_HHmmss"
@@ -85,42 +92,42 @@ $witnesses = @(
         id = "same_reachability_different_recovery_v0"
         module = "omega.baseline_witnesses.same_reachability_different_recovery"
         expected_status = "same_reachability_different_declared_recovery"
-        retained_summary = "results\baseline_witnesses\20260611_same_reachability_different_recovery_v0\witness_summary.json"
+        retained_summary = "20260611_same_reachability_different_recovery_v0\witness_summary.json"
         test = "tests\test_same_reachability_different_recovery.py"
     },
     [pscustomobject]@{
         id = "same_entropy_different_recovery_profile_v0"
         module = "omega.baseline_witnesses.same_entropy_different_recovery_profile"
         expected_status = "same_entropy_different_recovery_profile"
-        retained_summary = "results\baseline_witnesses\20260611_same_entropy_different_recovery_profile_v0\witness_summary.json"
+        retained_summary = "20260611_same_entropy_different_recovery_profile_v0\witness_summary.json"
         test = "tests\test_same_entropy_different_recovery_profile.py"
     },
     [pscustomobject]@{
         id = "same_frontier_morphology_different_loss_profile_v0"
         module = "omega.baseline_witnesses.same_frontier_morphology_different_loss_profile"
         expected_status = "same_frontier_morphology_different_declared_loss_profile"
-        retained_summary = "results\baseline_witnesses\20260611_same_frontier_morphology_different_loss_profile_v0\witness_summary.json"
+        retained_summary = "20260611_same_frontier_morphology_different_loss_profile_v0\witness_summary.json"
         test = "tests\test_same_frontier_morphology_different_loss_profile.py"
     },
     [pscustomobject]@{
         id = "same_optimized_success_different_declared_recovery_v0"
         module = "omega.baseline_witnesses.same_optimized_success_different_declared_recovery"
         expected_status = "same_optimized_success_different_declared_recovery"
-        retained_summary = "results\baseline_witnesses\20260611_same_optimized_success_different_declared_recovery_v0\witness_summary.json"
+        retained_summary = "20260611_same_optimized_success_different_declared_recovery_v0\witness_summary.json"
         test = "tests\test_same_optimized_success_different_declared_recovery.py"
     },
     [pscustomobject]@{
         id = "same_marginal_success_different_joint_success_v0"
         module = "omega.baseline_witnesses.same_marginal_success_different_joint_success"
         expected_status = "same_marginal_success_different_joint_success"
-        retained_summary = "results\baseline_witnesses\20260611_same_marginal_success_different_joint_success_v0\witness_summary.json"
+        retained_summary = "20260611_same_marginal_success_different_joint_success_v0\witness_summary.json"
         test = "tests\test_same_marginal_success_different_joint_success.py"
     },
     [pscustomobject]@{
         id = "same_compression_score_different_merge_soundness_v0"
         module = "omega.baseline_witnesses.same_compression_score_different_merge_soundness"
         expected_status = "same_compression_score_different_merge_soundness"
-        retained_summary = "results\baseline_witnesses\20260611_same_compression_score_different_merge_soundness_v0\witness_summary.json"
+        retained_summary = "20260611_same_compression_score_different_merge_soundness_v0\witness_summary.json"
         test = "tests\test_same_compression_score_different_merge_soundness.py"
     }
 )
@@ -131,7 +138,7 @@ try {
 
     foreach ($spec in $witnesses) {
         $outDir = Join-Path $witnessOutRoot $spec.id
-        $retainedPath = Join-Path $repoRoot $spec.retained_summary
+        $retainedPath = Join-Path $resolvedRetainedRoot $spec.retained_summary
         if (-not (Test-Path -LiteralPath $retainedPath)) {
             throw "Retained witness summary missing: $retainedPath"
         }
@@ -150,6 +157,8 @@ try {
 
         Assert-Equal -Name "$($spec.id).witness_id" -Actual $result.witness_id -Expected $spec.id
         Assert-Equal -Name "$($spec.id).witness_status" -Actual $result.witness_status -Expected $spec.expected_status
+        Assert-Equal -Name "$($spec.id).retained_witness_id" -Actual $retained.witness_id -Expected $spec.id
+        Assert-Equal -Name "$($spec.id).retained_witness_status" -Actual $retained.witness_status -Expected $spec.expected_status
         Assert-Equal -Name "$($spec.id).generated_summary_digest" -Actual $generated.summary_digest -Expected $result.summary_digest
         Assert-Equal -Name "$($spec.id).retained_summary_digest" -Actual $result.summary_digest -Expected $retained.summary_digest
 

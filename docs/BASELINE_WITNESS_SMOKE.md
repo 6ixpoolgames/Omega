@@ -7,6 +7,10 @@ and runs the focused witness tests.
 
 It is not an Omega validation run.
 
+The script also supports `-RetainedRoot` for audit tests. CI uses that hook to
+copy retained summaries, corrupt digest/status fields, and verify that the smoke
+rejects the mutated retained artifacts.
+
 ## Setup
 
 From the repository root:
@@ -36,6 +40,12 @@ To skip the focused pytest pass and only rerun the witness/digest gates:
 powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness_smoke.ps1 -SkipPytest
 ```
 
+To compare regenerated witnesses against a copied retained-summary tree:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness_smoke.ps1 -RetainedRoot path\to\baseline_witnesses_copy -SkipPytest
+```
+
 ## Expected Gates
 
 The script fails if any of these checks fail:
@@ -49,6 +59,9 @@ same_marginal_success_different_joint_success_v0 status and retained digest matc
 same_compression_score_different_merge_soundness_v0 status and retained digest match
 focused pytest suite for all six witnesses passes
 ```
+
+The CI mutation tests separately fail the smoke against copied retained
+summaries with a corrupted `summary_digest` or `witness_status`.
 
 ## Claim Boundary
 
