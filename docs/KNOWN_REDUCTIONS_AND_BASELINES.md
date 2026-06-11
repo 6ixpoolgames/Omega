@@ -202,6 +202,7 @@ The first retained targets are:
 same reachability, different recoverability
 same optimized recovery success, different declared recovery
 same marginal Bayes-best success, different joint Bayes-best success
+same compression score, different merge soundness
 ```
 
 Retained notes:
@@ -210,6 +211,7 @@ Retained notes:
 docs/research_notes/validation_results/baseline_witnesses/same_reachability_different_recovery_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_optimized_success_different_declared_recovery_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_marginal_success_different_joint_success_v0.md
+docs/research_notes/validation_results/baseline_witnesses/same_compression_score_different_merge_soundness_v0.md
 ```
 
 Implemented reachability construction:
@@ -236,6 +238,35 @@ Omega validation;
 value or valuer detection;
 agency or identity detection;
 substrate-general theory validation.
+```
+
+Implemented compression-vs-soundness construction:
+
+```text
+Use four fragments and an exact merge profile.
+Construct two abstractions with the same class count and class-size signature.
+Audit whether same-class pairs are allowed by the exact profile.
+Make one abstraction merge only allowed pairs and one abstraction merge blocked
+pairs.
+Emit a retained fixture and a testable pass/fail result.
+```
+
+The supported claim is narrow:
+
+```text
+Compression score alone does not determine merge soundness.
+```
+
+It would not support:
+
+```text
+optimal compression;
+identity detection;
+semantic recovery;
+Omega validation;
+value or valuer detection;
+agency detection;
+substrate-general abstraction validity.
 ```
 
 Implemented optimized-vs-declared construction:
