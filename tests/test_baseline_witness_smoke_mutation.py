@@ -3,11 +3,11 @@ from __future__ import annotations
 import json
 import shutil
 import subprocess
+import sys
 from pathlib import Path
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-SMOKE_SCRIPT = REPO_ROOT / "scripts" / "validation" / "run_baseline_witness_smoke.ps1"
 RETAINED_ROOT = REPO_ROOT / "results" / "baseline_witnesses"
 REACHABILITY_SUMMARY = (
     "20260611_same_reachability_different_recovery_v0",
@@ -54,16 +54,14 @@ def run_smoke_with_retained_root(
 ) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
         [
-            "powershell",
-            "-ExecutionPolicy",
-            "Bypass",
-            "-File",
-            str(SMOKE_SCRIPT),
-            "-OutRoot",
+            sys.executable,
+            "-m",
+            "omega.validation.baseline_witness_smoke",
+            "--out-root",
             str(tmp_path / "out"),
-            "-RetainedRoot",
+            "--retained-root",
             str(retained_root),
-            "-SkipPytest",
+            "--skip-pytest",
         ],
         cwd=REPO_ROOT,
         text=True,
