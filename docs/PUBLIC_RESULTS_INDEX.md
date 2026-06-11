@@ -66,23 +66,24 @@ bridge: a tiny finite channel substrate now emits decoder policies, support
 projections, probabilistic recovery measurements, formal-consumption bundle
 metadata, theorem-transfer readiness, and fixed-declared-observation summaries
 beside Bayes-best summaries.
-The baseline-witness branch now contains eleven reduction-pressure fixtures:
+The baseline-witness branch now contains twelve reduction-pressure fixtures:
 same reachability and entropy controls with different declared distinction
 recovery, same entropy summaries with different declared recovery profiles, and
 same mutual information/capacity with different declared registry recovery. It
 also contains same finite observation-rank / partition-shape summaries with
 different declared recovery, same declared intervention-effect summaries with
 different declared post-intervention recovery, same optimized recovery success
-with different declared recovery provenance, a marginal-vs-joint fixture
-showing matched single-bit Bayes-best success with different joint Bayes-best
-success, and a compression-vs-soundness fixture showing matched class-count
-compression with different merge soundness.
+with different declared recovery provenance, same finite viability-kernel
+summaries with different declared recovery, a marginal-vs-joint fixture showing
+matched single-bit Bayes-best success with different joint Bayes-best success,
+and a compression-vs-soundness fixture showing matched class-count compression
+with different merge soundness.
 The frontier-morphology fixture shows matched coarse frontier summaries with a
 different declared horizon-local loss profile. The chain-evidence fixture shows
 matched declared adjacent-chain evidence with different full class soundness.
 The coarse-bisimulation fixture shows a matched coarse one-block behavioral
 partition with different declared expanded consequence profiles.
-The eleven-witness batch now has a one-command smoke that reruns each retained
+The twelve-witness batch now has a one-command smoke that reruns each retained
 witness, checks summary digests against committed retained outputs, and runs
 the focused tests.
 The reachability, entropy-profile, frontier-morphology, intervention-effect,
@@ -94,7 +95,7 @@ target coordinate, nuisance-bit extension, nuisance-keyed abstraction,
 intervention-panel extension, declared-loss extension, class-size ladder, or
 declared-panel coordinate family without adding new retained artifacts.
 The parameterized families now have a one-command family smoke covering 135
-finite cases across eleven retained witness families with family extensions.
+finite cases across eleven family-extended retained witness patterns.
 The supporting formal target is now the probabilistic channel presentation:
 exact support recovery remains the root-calculus bridge, while probabilistic
 decoder success is a measured enrichment with separate theorem obligations.
@@ -126,17 +127,18 @@ Start here:
 15. [`research_notes/validation_results/baseline_witnesses/same_observation_rank_different_declared_recovery_v0.md`](research_notes/validation_results/baseline_witnesses/same_observation_rank_different_declared_recovery_v0.md)
 16. [`research_notes/validation_results/baseline_witnesses/same_intervention_effect_different_declared_recovery_v0.md`](research_notes/validation_results/baseline_witnesses/same_intervention_effect_different_declared_recovery_v0.md)
 17. [`research_notes/validation_results/baseline_witnesses/same_optimized_success_different_declared_recovery_v0.md`](research_notes/validation_results/baseline_witnesses/same_optimized_success_different_declared_recovery_v0.md)
-18. [`research_notes/validation_results/baseline_witnesses/same_marginal_success_different_joint_success_v0.md`](research_notes/validation_results/baseline_witnesses/same_marginal_success_different_joint_success_v0.md)
-19. [`research_notes/validation_results/baseline_witnesses/same_compression_score_different_merge_soundness_v0.md`](research_notes/validation_results/baseline_witnesses/same_compression_score_different_merge_soundness_v0.md)
-20. [`research_notes/validation_results/baseline_witnesses/same_chain_evidence_different_class_soundness_v0.md`](research_notes/validation_results/baseline_witnesses/same_chain_evidence_different_class_soundness_v0.md)
-21. [`research_notes/validation_results/baseline_witnesses/same_coarse_bisimulation_different_consequence_profile_v0.md`](research_notes/validation_results/baseline_witnesses/same_coarse_bisimulation_different_consequence_profile_v0.md)
-22. [`research_notes/omega_theory/probabilistic_channel_presentation_v0.md`](research_notes/omega_theory/probabilistic_channel_presentation_v0.md)
-23. [`research_notes/validation_results/stochastic_distinction_channel/stochastic_distinction_channel_tightening_result.md`](research_notes/validation_results/stochastic_distinction_channel/stochastic_distinction_channel_tightening_result.md)
-24. [`research_notes/validation_results/future_field_atlas/future_field_atlas_formal_interface_distinction_panel_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_formal_interface_distinction_panel_result.md)
-25. [`research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md)
-26. [`research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md)
-27. [`research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md)
-28. [`FUTURE_FIELD_ATLAS_GLOSSARY.md`](FUTURE_FIELD_ATLAS_GLOSSARY.md)
+18. [`research_notes/validation_results/baseline_witnesses/same_viability_kernel_different_declared_recovery_v0.md`](research_notes/validation_results/baseline_witnesses/same_viability_kernel_different_declared_recovery_v0.md)
+19. [`research_notes/validation_results/baseline_witnesses/same_marginal_success_different_joint_success_v0.md`](research_notes/validation_results/baseline_witnesses/same_marginal_success_different_joint_success_v0.md)
+20. [`research_notes/validation_results/baseline_witnesses/same_compression_score_different_merge_soundness_v0.md`](research_notes/validation_results/baseline_witnesses/same_compression_score_different_merge_soundness_v0.md)
+21. [`research_notes/validation_results/baseline_witnesses/same_chain_evidence_different_class_soundness_v0.md`](research_notes/validation_results/baseline_witnesses/same_chain_evidence_different_class_soundness_v0.md)
+22. [`research_notes/validation_results/baseline_witnesses/same_coarse_bisimulation_different_consequence_profile_v0.md`](research_notes/validation_results/baseline_witnesses/same_coarse_bisimulation_different_consequence_profile_v0.md)
+23. [`research_notes/omega_theory/probabilistic_channel_presentation_v0.md`](research_notes/omega_theory/probabilistic_channel_presentation_v0.md)
+24. [`research_notes/validation_results/stochastic_distinction_channel/stochastic_distinction_channel_tightening_result.md`](research_notes/validation_results/stochastic_distinction_channel/stochastic_distinction_channel_tightening_result.md)
+25. [`research_notes/validation_results/future_field_atlas/future_field_atlas_formal_interface_distinction_panel_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_formal_interface_distinction_panel_result.md)
+26. [`research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md)
+27. [`research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md)
+28. [`research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md)
+29. [`FUTURE_FIELD_ATLAS_GLOSSARY.md`](FUTURE_FIELD_ATLAS_GLOSSARY.md)
 
 ## Current live branch
 
@@ -173,6 +175,7 @@ Result note:
 - [`same_observation_rank_different_declared_recovery_v0.md`](research_notes/validation_results/baseline_witnesses/same_observation_rank_different_declared_recovery_v0.md)
 - [`same_intervention_effect_different_declared_recovery_v0.md`](research_notes/validation_results/baseline_witnesses/same_intervention_effect_different_declared_recovery_v0.md)
 - [`same_optimized_success_different_declared_recovery_v0.md`](research_notes/validation_results/baseline_witnesses/same_optimized_success_different_declared_recovery_v0.md)
+- [`same_viability_kernel_different_declared_recovery_v0.md`](research_notes/validation_results/baseline_witnesses/same_viability_kernel_different_declared_recovery_v0.md)
 - [`same_marginal_success_different_joint_success_v0.md`](research_notes/validation_results/baseline_witnesses/same_marginal_success_different_joint_success_v0.md)
 - [`same_compression_score_different_merge_soundness_v0.md`](research_notes/validation_results/baseline_witnesses/same_compression_score_different_merge_soundness_v0.md)
 - [`same_chain_evidence_different_class_soundness_v0.md`](research_notes/validation_results/baseline_witnesses/same_chain_evidence_different_class_soundness_v0.md)
@@ -210,6 +213,8 @@ post-intervention recovery.
 Same optimized recovery success does not determine declared recovery
 provenance: one retained two-bit channel only succeeds after substituting a
 nondeclared observation.
+
+Matched finite viability-kernel summaries do not determine declared recovery.
 
 Matched Bayes-best success for single-bit marginals does not determine
 Bayes-best success for the joint distinction.

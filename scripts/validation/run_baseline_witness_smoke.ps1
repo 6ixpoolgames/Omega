@@ -138,6 +138,13 @@ $witnesses = @(
         test = "tests\test_same_optimized_success_different_declared_recovery.py"
     },
     [pscustomobject]@{
+        id = "same_viability_kernel_different_declared_recovery_v0"
+        module = "omega.baseline_witnesses.same_viability_kernel_different_declared_recovery"
+        expected_status = "same_viability_kernel_different_declared_recovery"
+        retained_summary = "20260611_same_viability_kernel_different_declared_recovery_v0\witness_summary.json"
+        test = "tests\test_same_viability_kernel_different_declared_recovery.py"
+    },
+    [pscustomobject]@{
         id = "same_marginal_success_different_joint_success_v0"
         module = "omega.baseline_witnesses.same_marginal_success_different_joint_success"
         expected_status = "same_marginal_success_different_joint_success"

@@ -205,6 +205,7 @@ same mutual information or capacity, different declared registry recovery
 same finite observation rank, different declared recovery
 same declared intervention effect, different declared post-intervention recovery
 same optimized recovery success, different declared recovery
+same finite viability kernel, different declared recovery
 same marginal Bayes-best success, different joint Bayes-best success
 same compression score, different merge soundness
 same frontier morphology, different declared horizon-local loss profile
@@ -221,6 +222,7 @@ docs/research_notes/validation_results/baseline_witnesses/same_mutual_informatio
 docs/research_notes/validation_results/baseline_witnesses/same_observation_rank_different_declared_recovery_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_intervention_effect_different_declared_recovery_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_optimized_success_different_declared_recovery_v0.md
+docs/research_notes/validation_results/baseline_witnesses/same_viability_kernel_different_declared_recovery_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_marginal_success_different_joint_success_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_compression_score_different_merge_soundness_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_frontier_morphology_different_loss_profile_v0.md
@@ -235,7 +237,7 @@ powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness
 powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness_family_smoke.ps1
 ```
 
-This reruns all eleven witnesses into `.tmp`, checks regenerated summary digests
+This reruns all twelve witnesses into `.tmp`, checks regenerated summary digests
 against the committed retained summaries, and runs the focused witness tests.
 See [BASELINE_WITNESS_SMOKE.md](BASELINE_WITNESS_SMOKE.md).
 
@@ -621,6 +623,42 @@ It would not support:
 ```text
 real-world viability;
 real irreversibility;
+Omega validation;
+value or valuer detection;
+agency or identity detection;
+substrate-general theory validation.
+```
+
+Implemented viability-kernel-vs-declared-recovery construction:
+
+```text
+Use one finite four-state carrier with declared coordinate d and nuisance
+coordinate n.
+Compare two deterministic one-step systems:
+  both have target viability bit equal to source d;
+  one carries source d in the declared recovery bit;
+  one carries nuisance n in the declared recovery bit.
+Match source count, transition-edge count, deterministic-transition status,
+declared viability predicate, viability-kernel size, viability-kernel
+signature, source viability signature, and source-to-target viability
+signature.
+Declared d recovery succeeds only for the d-carrying system.
+Emit a retained fixture and a testable pass/fail result.
+```
+
+The supported claim is narrow:
+
+```text
+Finite viability-kernel summaries do not determine declared recovery.
+```
+
+It would not support:
+
+```text
+real-world viability;
+optimal control;
+control synthesis;
+semantic recovery;
 Omega validation;
 value or valuer detection;
 agency or identity detection;
