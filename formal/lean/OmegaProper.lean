@@ -1,4 +1,5 @@
 import OmegaProper.Compatibility.JointPresentation
+import OmegaProper.BaselineWitnesses
 import OmegaProper.Scaffolds.CompletionCounterexamples
 import OmegaProper.Scaffolds.FiniteMaximal
 import OmegaProper.Trajectory.AlphaConsequenceSeed
