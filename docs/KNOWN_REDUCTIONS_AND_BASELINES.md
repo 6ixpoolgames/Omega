@@ -194,21 +194,23 @@ Claim supported: compression score alone does not imply merge soundness.
 
 Claim not supported: that less compression or more compression is preferred.
 
-## First Retained Witness
+## First Retained Witnesses
 
-The first retained target is:
+The first retained targets are:
 
 ```text
 same reachability, different recoverability
+same optimized recovery success, different declared recovery
 ```
 
-Retained note:
+Retained notes:
 
 ```text
 docs/research_notes/validation_results/baseline_witnesses/same_reachability_different_recovery_v0.md
+docs/research_notes/validation_results/baseline_witnesses/same_optimized_success_different_declared_recovery_v0.md
 ```
 
-Implemented construction:
+Implemented reachability construction:
 
 ```text
 Use a finite carrier and two finite channels or continuations.
@@ -228,6 +230,35 @@ Reachability count is insufficient for declared consequence-bearing recovery.
 It would not support:
 
 ```text
+Omega validation;
+value or valuer detection;
+agency or identity detection;
+substrate-general theory validation.
+```
+
+Implemented optimized-vs-declared construction:
+
+```text
+Use a finite carrier and two finite channels.
+Match reachability and entropy controls.
+Make both channels exactly recoverable by an optimized observation choice.
+Declare one target observation before scoring.
+Construct one channel where the declared observation recovers the distinction
+and one where only a nondeclared optimized observation recovers it.
+Emit a retained fixture and a testable pass/fail result.
+```
+
+The supported claim is narrow:
+
+```text
+Optimized recovery success is insufficient for declared theorem-transfer
+readiness.
+```
+
+It would not support:
+
+```text
+semantic recovery;
 Omega validation;
 value or valuer detection;
 agency or identity detection;
