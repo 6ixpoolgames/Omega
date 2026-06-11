@@ -206,6 +206,7 @@ same optimized recovery success, different declared recovery
 same marginal Bayes-best success, different joint Bayes-best success
 same compression score, different merge soundness
 same frontier morphology, different declared horizon-local loss profile
+same declared chain evidence, different class soundness
 ```
 
 Retained notes:
@@ -218,6 +219,7 @@ docs/research_notes/validation_results/baseline_witnesses/same_optimized_success
 docs/research_notes/validation_results/baseline_witnesses/same_marginal_success_different_joint_success_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_compression_score_different_merge_soundness_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_frontier_morphology_different_loss_profile_v0.md
+docs/research_notes/validation_results/baseline_witnesses/same_chain_evidence_different_class_soundness_v0.md
 ```
 
 One-command reproduction:
@@ -227,7 +229,7 @@ powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness
 powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness_family_smoke.ps1
 ```
 
-This reruns all seven witnesses into `.tmp`, checks regenerated summary digests
+This reruns all eight witnesses into `.tmp`, checks regenerated summary digests
 against the committed retained summaries, and runs the focused witness tests.
 See [BASELINE_WITNESS_SMOKE.md](BASELINE_WITNESS_SMOKE.md).
 
@@ -514,6 +516,37 @@ Omega validation;
 value or valuer detection;
 agency or identity detection;
 substrate-general theory validation.
+```
+
+Implemented chain-evidence-vs-class-soundness construction:
+
+```text
+Use two proposed three-member classes.
+Match member count, declared adjacent-chain-edge count, internal-pair count,
+and declared chain connectedness.
+Make all declared adjacent chain edges pass in both proposed classes.
+Make one class a full compatible triangle.
+Make the other class only chain-connected, with its endpoint pair blocked by
+the exact merge profile.
+Emit a retained fixture and a testable pass/fail result.
+```
+
+The supported claim is narrow:
+
+```text
+Declared chain evidence does not determine full class soundness.
+```
+
+It would not support:
+
+```text
+transitivity;
+identity detection;
+cluster validity;
+Omega validation;
+value or valuer detection;
+agency detection;
+substrate-general class validity.
 ```
 
 ## Relation To Current Repo

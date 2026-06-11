@@ -136,6 +136,13 @@ $witnesses = @(
         expected_status = "same_compression_score_different_merge_soundness"
         retained_summary = "20260611_same_compression_score_different_merge_soundness_v0\witness_summary.json"
         test = "tests\test_same_compression_score_different_merge_soundness.py"
+    },
+    [pscustomobject]@{
+        id = "same_chain_evidence_different_class_soundness_v0"
+        module = "omega.baseline_witnesses.same_chain_evidence_different_class_soundness"
+        expected_status = "same_chain_evidence_different_class_soundness"
+        retained_summary = "20260611_same_chain_evidence_different_class_soundness_v0\witness_summary.json"
+        test = "tests\test_same_chain_evidence_different_class_soundness.py"
     }
 )
 

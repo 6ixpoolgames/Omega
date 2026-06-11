@@ -1,7 +1,7 @@
 # Baseline Witness Family Smoke
 
-This is the one-command reproduction path for the parameterized family
-extensions of the seven retained baseline witnesses. It does not create new
+This is the one-command reproduction path for the retained baseline witnesses
+that currently have parameterized family extensions. It does not create new
 retained artifacts.
 
 It is not an Omega validation run.
@@ -63,8 +63,7 @@ family has the wrong case count, or if the focused family pytest suite fails.
 Passing this smoke means:
 
 ```text
-the seven retained baseline witnesses now have parameterized finite family
-extensions;
+seven retained baseline witnesses have parameterized finite family extensions;
 all checked finite family cases report the expected non-reduction status;
 the focused family tests passed.
 ```
