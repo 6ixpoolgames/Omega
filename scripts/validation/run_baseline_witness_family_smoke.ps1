@@ -59,6 +59,7 @@ $familyTests = @(
     "tests\test_chain_evidence_class_soundness_family.py",
     "tests\test_coarse_bisimulation_consequence_profile_family.py",
     "tests\test_compression_score_merge_soundness_family.py",
+    "tests\test_control_reach_declared_recovery_family.py",
     "tests\test_entropy_recovery_profile_family.py",
     "tests\test_frontier_morphology_loss_profile_family.py",
     "tests\test_intervention_effect_declared_recovery_family.py",

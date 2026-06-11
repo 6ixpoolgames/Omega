@@ -243,8 +243,8 @@ This reruns all thirteen witnesses into `.tmp`, checks regenerated summary diges
 against the committed retained summaries, and runs the focused witness tests.
 See [BASELINE_WITNESS_SMOKE.md](BASELINE_WITNESS_SMOKE.md).
 
-The family smoke checks the twelve parameterized finite witness families at the
-default `k = 1..5`, covering 150 finite family cases without adding retained
+The family smoke checks the thirteen parameterized finite witness families at the
+default `k = 1..5`, covering 165 finite family cases without adding retained
 result directories. See
 [BASELINE_WITNESS_FAMILY_SMOKE.md](BASELINE_WITNESS_FAMILY_SMOKE.md).
 
@@ -572,9 +572,30 @@ The supported claim is narrow:
 Finite control-reach summaries do not determine declared recovery.
 ```
 
+Parameterized family check:
+
+```text
+For k = 1..5 nuisance bits, compare a deterministic controlled one-step system
+carrying declared d in the declared recovery bit against systems carrying each
+nuisance coordinate n_i.
+Each case matches source count, control count, transition-edge count,
+deterministic-transition status, global target support, per-source
+reachable-target-count signature, target-count-by-control signature, and
+target-control-bit-by-control signature.
+Declared recovery of d succeeds only for the d-carrying system.
+```
+
+The supported family claim is narrow:
+
+```text
+The same finite control-reach / different-declared-recovery construction
+generalizes over finite nuisance-bit panels.
+```
+
 It would not support:
 
 ```text
+infinite-family theorem;
 full controllability;
 optimal control;
 control synthesis;

@@ -20,6 +20,9 @@ from omega.baseline_witnesses.compression_score_merge_soundness_family import (
 from omega.baseline_witnesses.coarse_bisimulation_consequence_profile_family import (
     run_family as run_coarse_bisimulation_family,
 )
+from omega.baseline_witnesses.control_reach_declared_recovery_family import (
+    run_family as run_control_reach_family,
+)
 from omega.baseline_witnesses.entropy_recovery_profile_family import (
     run_family as run_entropy_family,
 )
@@ -86,6 +89,12 @@ FAMILY_SPECS: tuple[dict[str, object], ...] = (
         "family_id": "same_observation_rank_different_declared_recovery_family",
         "runner": run_observation_rank_family,
         "expected_status": "same_observation_rank_different_declared_recovery",
+        "expected_case_count_at_max": lambda max_bits: max_bits * (max_bits + 1) // 2,
+    },
+    {
+        "family_id": "same_control_reach_different_declared_recovery_family",
+        "runner": run_control_reach_family,
+        "expected_status": "same_control_reach_different_declared_recovery",
         "expected_case_count_at_max": lambda max_bits: max_bits * (max_bits + 1) // 2,
     },
     {

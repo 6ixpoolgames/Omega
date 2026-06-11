@@ -37,6 +37,7 @@ baseline smoke mutation tests
 chain-evidence class-soundness family tests
 coarse-bisimulation consequence-profile family tests
 compression-vs-soundness nuisance-bit family tests
+control-reach declared-recovery family tests
 entropy-profile nuisance-bit family tests
 frontier-morphology loss-profile family tests
 intervention-effect declared-recovery family tests
@@ -68,6 +69,7 @@ omega/future_field_atlas/util.py
 tests/test_chain_evidence_class_soundness_family.py
 tests/test_coarse_bisimulation_consequence_profile_family.py
 tests/test_compression_score_merge_soundness_family.py
+tests/test_control_reach_declared_recovery_family.py
 tests/test_entropy_recovery_profile_family.py
 tests/test_frontier_morphology_loss_profile_family.py
 tests/test_intervention_effect_declared_recovery_family.py
@@ -124,7 +126,7 @@ The parameterized baseline witness families have a separate one-command smoke:
 powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness_family_smoke.ps1
 ```
 
-It checks all twelve parameterized families at the default `k = 1..5`, covers 150
+It checks all thirteen parameterized families at the default `k = 1..5`, covers 165
 finite family cases, and runs the focused family tests. See
 [BASELINE_WITNESS_FAMILY_SMOKE.md](BASELINE_WITNESS_FAMILY_SMOKE.md).
 

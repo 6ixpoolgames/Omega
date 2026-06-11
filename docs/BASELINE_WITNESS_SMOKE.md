@@ -7,8 +7,8 @@ and runs the focused witness tests.
 
 It is not an Omega validation run.
 
-For the parameterized finite family extensions currently available for twelve
-of these thirteen witness patterns, use
+For the parameterized finite family extensions currently available for all
+thirteen witness patterns, use
 [BASELINE_WITNESS_FAMILY_SMOKE.md](BASELINE_WITNESS_FAMILY_SMOKE.md).
 
 The script also supports `-RetainedRoot` for audit tests. CI uses that hook to
