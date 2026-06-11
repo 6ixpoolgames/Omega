@@ -23,16 +23,6 @@ jobs:
           .\elan-init.ps1 -NoPrompt $true -NoModifyPath $true -DefaultToolchain none
           "$env:USERPROFILE\.elan\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
-      - name: Cache Lake packages and build artifacts
-        uses: actions/cache@v4
-        with:
-          path: |
-            formal/lean/.lake
-            ~/.elan/toolchains
-          key: ${{ runner.os }}-lean-${{ hashFiles('formal/lean/lean-toolchain', 'formal/lean/lakefile.lean', 'formal/lean/lake-manifest.json') }}
-          restore-keys: |
-            ${{ runner.os }}-lean-
-
       - name: Fetch Mathlib cache
         shell: pwsh
         run: powershell -ExecutionPolicy Bypass -File scripts\setup\invoke_lake.ps1 exe cache get
