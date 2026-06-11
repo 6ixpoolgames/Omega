@@ -9,7 +9,8 @@ latest observed passing run:
 https://github.com/6ixpoolgames/Omega/actions/runs/27317368267
 
 workflow: Baseline Witness Smoke
-status: configured; first observed run pending
+latest observed passing run:
+https://github.com/6ixpoolgames/Omega/actions/runs/27324231940
 ```
 
 The workflow badge in the root README links to the public Actions history.
