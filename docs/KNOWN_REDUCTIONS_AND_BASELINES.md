@@ -445,6 +445,18 @@ Construct different Bayes-best recovery success for D_joint.
 Emit a retained fixture and a testable pass/fail result.
 ```
 
+Parameterized family check:
+
+```text
+For k = 1..5 nuisance bits, extend the source carrier from AB to ABN...
+while scoring only the declared A, B, and AB distinctions.
+Each case matches source count, edge count, per-source support count,
+per-source weight total, per-source entropy, and Bayes-best recovery success
+for D_A and D_B.
+The correlated channel keeps D_AB success at 5/8, while the independent-mask
+channel keeps D_AB success at 9/16.
+```
+
 The supported claim is narrow:
 
 ```text
