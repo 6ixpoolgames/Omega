@@ -239,8 +239,8 @@ This reruns all eleven witnesses into `.tmp`, checks regenerated summary digests
 against the committed retained summaries, and runs the focused witness tests.
 See [BASELINE_WITNESS_SMOKE.md](BASELINE_WITNESS_SMOKE.md).
 
-The family smoke checks the ten parameterized finite witness families at the
-default `k = 1..5`, covering 120 finite family cases without adding retained
+The family smoke checks the eleven parameterized finite witness families at the
+default `k = 1..5`, covering 135 finite family cases without adding retained
 result directories. See
 [BASELINE_WITNESS_FAMILY_SMOKE.md](BASELINE_WITNESS_FAMILY_SMOKE.md).
 
@@ -436,6 +436,39 @@ post-intervention recovery.
 It would not support:
 
 ```text
+causal discovery;
+causal abstraction;
+counterfactual semantics;
+full intervention calculus;
+semantic recovery;
+Omega validation;
+value or valuer detection;
+agency or identity detection;
+substrate-general theory validation.
+```
+
+Parameterized family check:
+
+```text
+For k = 1..5 nuisance bits, compare a system carrying declared d after the
+intervention against systems carrying each nuisance coordinate n_i.
+Each case matches source count, intervention count, transition-edge count,
+target support, declared effect by intervention, target support by
+intervention, and target count by intervention.
+Declared recovery of d succeeds only for the d-carrying system.
+```
+
+The supported family claim is narrow:
+
+```text
+The same declared intervention-effect / different-declared-recovery
+construction generalizes over finite nuisance-bit panels.
+```
+
+It would not support:
+
+```text
+infinite-family theorem;
 causal discovery;
 causal abstraction;
 counterfactual semantics;

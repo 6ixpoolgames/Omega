@@ -39,6 +39,7 @@ coarse-bisimulation consequence-profile family tests
 compression-vs-soundness nuisance-bit family tests
 entropy-profile nuisance-bit family tests
 frontier-morphology loss-profile family tests
+intervention-effect declared-recovery family tests
 marginal-vs-joint nuisance-bit family tests
 reachability nuisance-bit family tests
 mutual-information nuisance-bit family tests
@@ -68,6 +69,7 @@ tests/test_coarse_bisimulation_consequence_profile_family.py
 tests/test_compression_score_merge_soundness_family.py
 tests/test_entropy_recovery_profile_family.py
 tests/test_frontier_morphology_loss_profile_family.py
+tests/test_intervention_effect_declared_recovery_family.py
 tests/test_marginal_success_joint_success_family.py
 tests/test_mutual_information_declared_recovery_family.py
 tests/test_observation_rank_declared_recovery_family.py
@@ -120,7 +122,7 @@ The parameterized baseline witness families have a separate one-command smoke:
 powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness_family_smoke.ps1
 ```
 
-It checks all ten parameterized families at the default `k = 1..5`, covers 120
+It checks all eleven parameterized families at the default `k = 1..5`, covers 135
 finite family cases, and runs the focused family tests. See
 [BASELINE_WITNESS_FAMILY_SMOKE.md](BASELINE_WITNESS_FAMILY_SMOKE.md).
 

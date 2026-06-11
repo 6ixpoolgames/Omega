@@ -26,6 +26,9 @@ from omega.baseline_witnesses.entropy_recovery_profile_family import (
 from omega.baseline_witnesses.frontier_morphology_loss_profile_family import (
     run_family as run_frontier_family,
 )
+from omega.baseline_witnesses.intervention_effect_declared_recovery_family import (
+    run_family as run_intervention_family,
+)
 from omega.baseline_witnesses.marginal_success_joint_success_family import (
     run_family as run_marginal_family,
 )
@@ -63,6 +66,12 @@ FAMILY_SPECS: tuple[dict[str, object], ...] = (
         "runner": run_frontier_family,
         "expected_status": "same_frontier_morphology_different_declared_loss_profile",
         "expected_case_count_at_max": lambda max_bits: max_bits,
+    },
+    {
+        "family_id": "same_intervention_effect_different_declared_recovery_family",
+        "runner": run_intervention_family,
+        "expected_status": "same_intervention_effect_different_declared_recovery",
+        "expected_case_count_at_max": lambda max_bits: max_bits * (max_bits + 1) // 2,
     },
     {
         "family_id": "same_mutual_information_different_declared_recovery_family",
