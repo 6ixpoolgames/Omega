@@ -160,7 +160,7 @@ compatibility.
 
 Claim not supported: any particular empirical class is meaningful.
 
-### Same Frontier Morphology, Different Irreversible Loss
+### Same Frontier Morphology, Different Declared Loss Profile
 
 Purpose: keep Future Field Atlas morphology subordinate to consequence and
 loss questions.
@@ -170,8 +170,8 @@ summary statistics.
 
 Baselines controlled: frontier size, rank, or morphology feature set.
 
-Expected artifact: retained run comparing frontier features and irreversible
-loss markers.
+Expected artifact: retained run comparing frontier features and declared
+horizon-local loss markers.
 
 Claim supported: morphology alone is insufficient for the stronger trajectory
 or loss claim.
@@ -204,6 +204,7 @@ same entropy, different declared recovery profile
 same optimized recovery success, different declared recovery
 same marginal Bayes-best success, different joint Bayes-best success
 same compression score, different merge soundness
+same frontier morphology, different declared horizon-local loss profile
 ```
 
 Retained notes:
@@ -214,6 +215,7 @@ docs/research_notes/validation_results/baseline_witnesses/same_entropy_different
 docs/research_notes/validation_results/baseline_witnesses/same_optimized_success_different_declared_recovery_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_marginal_success_different_joint_success_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_compression_score_different_merge_soundness_v0.md
+docs/research_notes/validation_results/baseline_witnesses/same_frontier_morphology_different_loss_profile_v0.md
 ```
 
 Implemented reachability construction:
@@ -297,6 +299,36 @@ Omega validation;
 value or valuer detection;
 agency detection;
 substrate-general abstraction validity.
+```
+
+Implemented frontier-morphology-vs-loss construction:
+
+```text
+Use a finite two-bit carrier and two one-step support channels.
+Match source count, support-edge count, global target support, target weights,
+entropy summaries, per-source support counts, and viable-target-count multiset.
+Declare a viability predicate over the source carrier.
+Measure whether currently viable sources have any viable target in the one-step
+support.
+Emit a retained fixture and a testable pass/fail result.
+```
+
+The supported claim is narrow:
+
+```text
+Frontier morphology summaries alone do not determine the declared
+horizon-local loss profile.
+```
+
+It would not support:
+
+```text
+real-world viability;
+real irreversibility;
+Omega validation;
+value or valuer detection;
+agency or identity detection;
+substrate-general theory validation.
 ```
 
 Implemented optimized-vs-declared construction:
