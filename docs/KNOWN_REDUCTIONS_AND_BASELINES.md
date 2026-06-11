@@ -194,15 +194,21 @@ Claim supported: compression score alone does not imply merge soundness.
 
 Claim not supported: that less compression or more compression is preferred.
 
-## Immediate Next Witness
+## First Retained Witness
 
-The first target should be:
+The first retained target is:
 
 ```text
 same reachability, different recoverability
 ```
 
-Sketch:
+Retained note:
+
+```text
+docs/research_notes/validation_results/baseline_witnesses/same_reachability_different_recovery_v0.md
+```
+
+Implemented construction:
 
 ```text
 Use a finite carrier and two finite channels or continuations.
