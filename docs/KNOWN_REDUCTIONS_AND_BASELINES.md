@@ -203,6 +203,7 @@ same reachability, different recoverability
 same entropy, different declared recovery profile
 same mutual information or capacity, different declared registry recovery
 same finite observation rank, different declared recovery
+same declared intervention effect, different declared post-intervention recovery
 same optimized recovery success, different declared recovery
 same marginal Bayes-best success, different joint Bayes-best success
 same compression score, different merge soundness
@@ -218,6 +219,7 @@ docs/research_notes/validation_results/baseline_witnesses/same_reachability_diff
 docs/research_notes/validation_results/baseline_witnesses/same_entropy_different_recovery_profile_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_mutual_information_different_declared_recovery_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_observation_rank_different_declared_recovery_v0.md
+docs/research_notes/validation_results/baseline_witnesses/same_intervention_effect_different_declared_recovery_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_optimized_success_different_declared_recovery_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_marginal_success_different_joint_success_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_compression_score_different_merge_soundness_v0.md
@@ -233,7 +235,7 @@ powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness
 powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness_family_smoke.ps1
 ```
 
-This reruns all ten witnesses into `.tmp`, checks regenerated summary digests
+This reruns all eleven witnesses into `.tmp`, checks regenerated summary digests
 against the committed retained summaries, and runs the focused witness tests.
 See [BASELINE_WITNESS_SMOKE.md](BASELINE_WITNESS_SMOKE.md).
 
@@ -400,6 +402,44 @@ declared registry recovery.
 It would not support:
 
 ```text
+semantic recovery;
+Omega validation;
+value or valuer detection;
+agency or identity detection;
+substrate-general theory validation.
+```
+
+Implemented intervention-effect-vs-declared-recovery construction:
+
+```text
+Use one finite four-state carrier with declared coordinate d and nuisance
+coordinate n.
+Compare two deterministic intervention systems over interventions
+set_effect_0 and set_effect_1:
+  both set the declared target effect bit according to the intervention;
+  one carries source d in the declared recovery bit;
+  one carries nuisance n in the declared recovery bit.
+Match source count, intervention count, transition-edge count, target support,
+declared effect by intervention, target support by intervention, and target
+count by intervention.
+Declared d recovery succeeds only for the d-carrying system.
+Emit a retained fixture and a testable pass/fail result.
+```
+
+The supported claim is narrow:
+
+```text
+A matched declared intervention-effect summary does not determine declared
+post-intervention recovery.
+```
+
+It would not support:
+
+```text
+causal discovery;
+causal abstraction;
+counterfactual semantics;
+full intervention calculus;
 semantic recovery;
 Omega validation;
 value or valuer detection;
