@@ -340,6 +340,7 @@ For external validation:
 
 ```text
 docs/VALIDATION.md
+docs/REPRODUCIBILITY_SMOKE.md
 ```
 
 ## Repository Map

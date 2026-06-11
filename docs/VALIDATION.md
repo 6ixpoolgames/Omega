@@ -52,6 +52,16 @@ pytest
 ruff check .
 ```
 
+## Reproducibility Smoke
+
+The smallest current empirical reproduction path is:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\validation\run_reproducibility_smoke.ps1
+```
+
+See [REPRODUCIBILITY_SMOKE.md](REPRODUCIBILITY_SMOKE.md).
+
 ## Connector Caveat
 
 Some connector surfaces report no workflow runs or combined statuses for push
