@@ -33,6 +33,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-lean-
 
+      - name: Fetch Mathlib cache
+        shell: pwsh
+        run: powershell -ExecutionPolicy Bypass -File scripts\setup\invoke_lake.ps1 exe cache get
+
       - name: Build AlphaOmega
         shell: pwsh
         run: powershell -ExecutionPolicy Bypass -File scripts\setup\invoke_lake.ps1 build AlphaOmega
