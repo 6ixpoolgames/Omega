@@ -352,6 +352,38 @@ no sorry / admit / axiom matches
 diff check clean except Git line-ending warnings
 ```
 
+### Lean CI Observed Passing
+
+Resolved the GitHub Actions validation issue.
+
+Observed passing run:
+
+```text
+workflow: Lean AlphaOmega
+run: https://github.com/6ixpoolgames/Omega/actions/runs/27317368267
+commit: 5f5afb4
+status: completed / success
+```
+
+The successful workflow run checked:
+
+```text
+Elan installation
+Mathlib cache fetch via lake exe cache get
+AlphaOmega build
+sorry / admit / axiom scan
+git diff --check
+```
+
+Operational note:
+
+```text
+The GitHub connector did not surface this run through commit-status or
+PR-triggered workflow-run helpers. The run was verified through the GitHub
+Actions API, so the earlier "no workflow runs returned" reports were connector
+visibility limits, not evidence that CI was absent.
+```
+
 ### Consequence Directionality and Class Repair
 
 Tightened the consequence-native trajectory guardrails:

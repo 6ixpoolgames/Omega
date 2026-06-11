@@ -277,8 +277,9 @@ rg -n "\b(sorry|admit|axiom)\b" formal\lean -g "*.lean"
 git diff --check
 ```
 
-The repository also has a GitHub Actions workflow intended to run the same Lean
-build on pushes and pull requests targeting `master`.
+The repository also has an observed-passing GitHub Actions workflow that runs
+the same Lean build, proof-placeholder scan, and whitespace check on pushes and
+pull requests targeting `master`.
 
 ## 7. How To Read A Result Note
 
