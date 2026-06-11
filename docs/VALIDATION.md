@@ -67,6 +67,9 @@ See [REPRODUCIBILITY_SMOKE.md](REPRODUCIBILITY_SMOKE.md).
 For the current theorem/result/conjecture split, see
 [CLAIMS_LEDGER.md](CLAIMS_LEDGER.md).
 
+For the current reduction map and baseline-controlled witness obligations, see
+[KNOWN_REDUCTIONS_AND_BASELINES.md](KNOWN_REDUCTIONS_AND_BASELINES.md).
+
 ## Connector Caveat
 
 Some connector surfaces report no workflow runs or combined statuses for push

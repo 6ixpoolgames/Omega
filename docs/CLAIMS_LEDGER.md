@@ -67,6 +67,9 @@ Deprecated / historical:
 ## Immediate Missing Ledger Rows
 
 The next scientific credibility target is non-reduction to familiar baselines.
+See [KNOWN_REDUCTIONS_AND_BASELINES.md](KNOWN_REDUCTIONS_AND_BASELINES.md) for
+the current baseline map and witness obligations.
+
 The ledger should add rows only after we have canonical examples for:
 
 ```text

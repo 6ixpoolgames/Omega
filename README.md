@@ -342,6 +342,7 @@ For external validation:
 docs/VALIDATION.md
 docs/REPRODUCIBILITY_SMOKE.md
 docs/CLAIMS_LEDGER.md
+docs/KNOWN_REDUCTIONS_AND_BASELINES.md
 ```
 
 ## Repository Map
