@@ -65,7 +65,8 @@ family has the wrong case count, or if the focused family pytest suite fails.
 Passing this smoke means:
 
 ```text
-nine retained baseline witnesses have parameterized finite family extensions;
+nine retained baseline witness patterns currently have parameterized finite
+family extensions;
 all checked finite family cases report the expected non-reduction status;
 the focused family tests passed.
 ```

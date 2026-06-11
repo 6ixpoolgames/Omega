@@ -202,6 +202,7 @@ The first retained targets are:
 same reachability, different recoverability
 same entropy, different declared recovery profile
 same mutual information or capacity, different declared registry recovery
+same finite observation rank, different declared recovery
 same optimized recovery success, different declared recovery
 same marginal Bayes-best success, different joint Bayes-best success
 same compression score, different merge soundness
@@ -216,6 +217,7 @@ Retained notes:
 docs/research_notes/validation_results/baseline_witnesses/same_reachability_different_recovery_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_entropy_different_recovery_profile_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_mutual_information_different_declared_recovery_v0.md
+docs/research_notes/validation_results/baseline_witnesses/same_observation_rank_different_declared_recovery_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_optimized_success_different_declared_recovery_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_marginal_success_different_joint_success_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_compression_score_different_merge_soundness_v0.md
@@ -231,7 +233,7 @@ powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness
 powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness_family_smoke.ps1
 ```
 
-This reruns all nine witnesses into `.tmp`, checks regenerated summary digests
+This reruns all ten witnesses into `.tmp`, checks regenerated summary digests
 against the committed retained summaries, and runs the focused witness tests.
 See [BASELINE_WITNESS_SMOKE.md](BASELINE_WITNESS_SMOKE.md).
 
@@ -398,6 +400,39 @@ declared registry recovery.
 It would not support:
 
 ```text
+semantic recovery;
+Omega validation;
+value or valuer detection;
+agency or identity detection;
+substrate-general theory validation.
+```
+
+Implemented observation-rank-vs-declared-recovery construction:
+
+```text
+Use one finite four-state carrier with declared coordinate d and nuisance
+coordinate n.
+Compare two deterministic one-bit observers:
+  one emits d;
+  one emits n.
+Match finite observation rank, output support, observation block count,
+block-size signature, and output-to-state count signature.
+Declared d recovery succeeds only for the d observer.
+Emit a retained fixture and a testable pass/fail result.
+```
+
+The supported claim is narrow:
+
+```text
+Finite observation-rank and partition-shape summaries do not determine
+declared recovery.
+```
+
+It would not support:
+
+```text
+full linear observability;
+control synthesis;
 semantic recovery;
 Omega validation;
 value or valuer detection;
