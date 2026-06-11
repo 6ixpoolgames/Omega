@@ -35,6 +35,7 @@ baseline witness smoke
 baseline smoke mutation tests
 compression-vs-soundness nuisance-bit family tests
 entropy-profile nuisance-bit family tests
+frontier-morphology loss-profile family tests
 marginal-vs-joint nuisance-bit family tests
 reachability nuisance-bit family tests
 mutual-information nuisance-bit family tests
@@ -60,6 +61,7 @@ omega/baseline_witnesses/**
 omega/future_field_atlas/util.py
 tests/test_compression_score_merge_soundness_family.py
 tests/test_entropy_recovery_profile_family.py
+tests/test_frontier_morphology_loss_profile_family.py
 tests/test_marginal_success_joint_success_family.py
 tests/test_mutual_information_declared_recovery_family.py
 tests/test_optimized_success_declared_recovery_family.py

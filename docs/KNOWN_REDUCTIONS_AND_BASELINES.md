@@ -399,6 +399,19 @@ support.
 Emit a retained fixture and a testable pass/fail result.
 ```
 
+Parameterized family check:
+
+```text
+For k = 1..5 nuisance bits, compare a channel preserving declared viability
+bit v against a channel flipping v while leaving nuisance coordinates
+unconstrained.
+Each case matches source count, edge count, global target support, target
+weights, entropy summaries, per-source support counts, and viable-target-count
+multiset.
+The preserve channel gives zero declared loss over viable sources, while the
+flip channel gives loss for every viable source.
+```
+
 The supported claim is narrow:
 
 ```text
