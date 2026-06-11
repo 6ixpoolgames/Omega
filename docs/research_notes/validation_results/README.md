@@ -34,6 +34,7 @@ Start with:
 - `future_field_atlas/future_field_atlas_h128_calibration_pass_result.md`
 - `baseline_witnesses/same_reachability_different_recovery_v0.md`
 - `baseline_witnesses/same_optimized_success_different_declared_recovery_v0.md`
+- `baseline_witnesses/same_marginal_success_different_joint_success_v0.md`
 - `stochastic_distinction_channel/stochastic_registry_first_probe_result.md`
 - `stochastic_distinction_channel/stochastic_thresholded_prob_non_erasure_result.md`
 - `stochastic_distinction_channel/stochastic_channel_theorem_transfer_audit_result.md`

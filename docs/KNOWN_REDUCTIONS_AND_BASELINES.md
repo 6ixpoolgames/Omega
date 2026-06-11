@@ -201,6 +201,7 @@ The first retained targets are:
 ```text
 same reachability, different recoverability
 same optimized recovery success, different declared recovery
+same marginal Bayes-best success, different joint Bayes-best success
 ```
 
 Retained notes:
@@ -208,6 +209,7 @@ Retained notes:
 ```text
 docs/research_notes/validation_results/baseline_witnesses/same_reachability_different_recovery_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_optimized_success_different_declared_recovery_v0.md
+docs/research_notes/validation_results/baseline_witnesses/same_marginal_success_different_joint_success_v0.md
 ```
 
 Implemented reachability construction:
@@ -258,6 +260,33 @@ readiness.
 It would not support:
 
 ```text
+semantic recovery;
+Omega validation;
+value or valuer detection;
+agency or identity detection;
+substrate-general theory validation.
+```
+
+Implemented marginal-vs-joint construction:
+
+```text
+Use a finite two-bit source carrier and two weighted channels.
+Match per-source support count, per-source weight total, per-source entropy,
+and Bayes-best recovery success for D_A and D_B.
+Construct different Bayes-best recovery success for D_joint.
+Emit a retained fixture and a testable pass/fail result.
+```
+
+The supported claim is narrow:
+
+```text
+Matched marginal diagnostic success does not determine joint recovery success.
+```
+
+It would not support:
+
+```text
+exact marginal preservation;
 semantic recovery;
 Omega validation;
 value or valuer detection;
