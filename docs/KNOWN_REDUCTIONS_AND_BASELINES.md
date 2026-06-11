@@ -278,6 +278,18 @@ Make the other channel recover D_B and fail D_A.
 Emit a retained fixture and a testable pass/fail result.
 ```
 
+Parameterized family check:
+
+```text
+For k = 1..5 nuisance bits, compare a channel preserving declared coordinate
+D_0 against channels preserving each nuisance coordinate D_i.
+Each case matches source count, edge count, per-source support count,
+per-source entropy, global target support, global target weights, and global
+target entropy.
+Each channel recovers exactly one coordinate distinction, but the recovered
+distinction differs.
+```
+
 The supported claim is narrow:
 
 ```text

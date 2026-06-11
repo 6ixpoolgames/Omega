@@ -10,6 +10,7 @@ on:
       - "omega/baseline_witnesses/**"
       - "omega/future_field_atlas/util.py"
       - "tests/test_compression_score_merge_soundness_family.py"
+      - "tests/test_entropy_recovery_profile_family.py"
       - "tests/test_marginal_success_joint_success_family.py"
       - "tests/test_mutual_information_declared_recovery_family.py"
       - "tests/test_optimized_success_declared_recovery_family.py"
@@ -27,6 +28,7 @@ on:
       - "omega/baseline_witnesses/**"
       - "omega/future_field_atlas/util.py"
       - "tests/test_compression_score_merge_soundness_family.py"
+      - "tests/test_entropy_recovery_profile_family.py"
       - "tests/test_marginal_success_joint_success_family.py"
       - "tests/test_mutual_information_declared_recovery_family.py"
       - "tests/test_optimized_success_declared_recovery_family.py"
@@ -65,6 +67,7 @@ jobs:
           python -m pytest `
             tests\test_baseline_witness_smoke_mutation.py `
             tests\test_compression_score_merge_soundness_family.py `
+            tests\test_entropy_recovery_profile_family.py `
             tests\test_marginal_success_joint_success_family.py `
             tests\test_mutual_information_declared_recovery_family.py `
             tests\test_optimized_success_declared_recovery_family.py `
@@ -80,6 +83,7 @@ jobs:
             omega\baseline_witnesses `
             tests\test_baseline_witness_smoke_mutation.py `
             tests\test_compression_score_merge_soundness_family.py `
+            tests\test_entropy_recovery_profile_family.py `
             tests\test_marginal_success_joint_success_family.py `
             tests\test_mutual_information_declared_recovery_family.py `
             tests\test_optimized_success_declared_recovery_family.py `
