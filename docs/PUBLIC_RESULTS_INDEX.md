@@ -79,9 +79,10 @@ different declared horizon-local loss profile.
 The seven-witness batch now has a one-command smoke that reruns each retained
 witness, checks summary digests against committed retained outputs, and runs
 the focused tests.
-The reachability and mutual-information witnesses also have parameterized
-nuisance-bit family tests over `k = 1..5`, checking every nuisance coordinate
-without adding new retained artifacts.
+The reachability, mutual-information, and optimized-success witnesses also
+have parameterized family tests over `k = 1..5`, checking every nuisance
+coordinate or nondeclared target coordinate without adding new retained
+artifacts.
 The supporting formal target is now the probabilistic channel presentation:
 exact support recovery remains the root-calculus bridge, while probabilistic
 decoder success is a measured enrichment with separate theorem obligations.
@@ -189,9 +190,9 @@ Bayes-best success for the joint distinction.
 Matched class-count compression does not determine merge soundness against an
 exact consequence profile.
 
-The reachability and mutual-information non-reduction patterns also generalize
-over finite nuisance-bit families in focused tests, without creating new
-retained result directories.
+The reachability, mutual-information, and optimized-success non-reduction
+patterns also generalize over finite nuisance-bit or target-coordinate families
+in focused tests, without creating new retained result directories.
 ```
 
 ### Horizon transport lineage

@@ -35,6 +35,7 @@ baseline witness smoke
 baseline smoke mutation tests
 reachability nuisance-bit family tests
 mutual-information nuisance-bit family tests
+optimized-success coordinate-family tests
 Ruff over baseline witness modules and focused tests
 git diff --check
 ```
@@ -55,6 +56,7 @@ changes to:
 omega/baseline_witnesses/**
 omega/future_field_atlas/util.py
 tests/test_mutual_information_declared_recovery_family.py
+tests/test_optimized_success_declared_recovery_family.py
 tests/test_reachability_declared_recovery_family.py
 tests/test_same_*.py
 scripts/validation/run_baseline_witness_smoke.ps1

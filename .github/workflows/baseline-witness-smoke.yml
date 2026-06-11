@@ -10,6 +10,7 @@ on:
       - "omega/baseline_witnesses/**"
       - "omega/future_field_atlas/util.py"
       - "tests/test_mutual_information_declared_recovery_family.py"
+      - "tests/test_optimized_success_declared_recovery_family.py"
       - "tests/test_reachability_declared_recovery_family.py"
       - "tests/test_same_*.py"
       - "tests/test_baseline_witness_smoke_mutation.py"
@@ -24,6 +25,7 @@ on:
       - "omega/baseline_witnesses/**"
       - "omega/future_field_atlas/util.py"
       - "tests/test_mutual_information_declared_recovery_family.py"
+      - "tests/test_optimized_success_declared_recovery_family.py"
       - "tests/test_reachability_declared_recovery_family.py"
       - "tests/test_same_*.py"
       - "tests/test_baseline_witness_smoke_mutation.py"
@@ -59,6 +61,7 @@ jobs:
           python -m pytest `
             tests\test_baseline_witness_smoke_mutation.py `
             tests\test_mutual_information_declared_recovery_family.py `
+            tests\test_optimized_success_declared_recovery_family.py `
             tests\test_reachability_declared_recovery_family.py `
             -q `
             --basetemp .tmp\baseline_witness_mutation_pytest `
@@ -71,6 +74,7 @@ jobs:
             omega\baseline_witnesses `
             tests\test_baseline_witness_smoke_mutation.py `
             tests\test_mutual_information_declared_recovery_family.py `
+            tests\test_optimized_success_declared_recovery_family.py `
             tests\test_reachability_declared_recovery_family.py `
             tests\test_same_reachability_different_recovery.py `
             tests\test_same_entropy_different_recovery_profile.py `

@@ -406,6 +406,18 @@ and one where only a nondeclared optimized observation recovers it.
 Emit a retained fixture and a testable pass/fail result.
 ```
 
+Parameterized family check:
+
+```text
+For k = 1..5 nuisance bits, compare a channel where source d appears in target
+coordinate 0 against channels where source d appears in each nondeclared target
+coordinate i.
+Each case matches source count, edge count, global target support, target
+incidence weights, per-source support count, and uniform per-source entropy.
+Both channels have exact optimized recovery over the full coordinate panel.
+Only the coordinate-0 channel has exact recovery under the declared observation.
+```
+
 The supported claim is narrow:
 
 ```text
