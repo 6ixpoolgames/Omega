@@ -278,8 +278,10 @@ git diff --check
 ```
 
 The repository also has an observed-passing GitHub Actions workflow that runs
-the same Lean build, proof-placeholder scan, and whitespace check on pushes and
-pull requests targeting `master`.
+the same Lean build, proof-placeholder scan, and whitespace check for
+Lean-relevant pushes and pull requests targeting `master`. Docs-only pushes do
+not run the full Lean job automatically; use the manual `workflow_dispatch`
+entrypoint when a full remote validation run is wanted after non-Lean changes.
 
 ## 7. How To Read A Result Note
 

@@ -1,12 +1,21 @@
 name: Lean AlphaOmega
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
+    paths:
+      - ".github/workflows/lean-alphaomega.yml"
+      - "formal/lean/**"
+      - "scripts/setup/invoke_lake.ps1"
   pull_request:
     branches:
       - master
+    paths:
+      - ".github/workflows/lean-alphaomega.yml"
+      - "formal/lean/**"
+      - "scripts/setup/invoke_lake.ps1"
 
 jobs:
   build:

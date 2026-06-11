@@ -384,6 +384,18 @@ Actions API, so the earlier "no workflow runs returned" reports were connector
 visibility limits, not evidence that CI was absent.
 ```
 
+Follow-up CI scope repair:
+
+```text
+The Lean workflow is now path-scoped to Lean-relevant changes:
+.github/workflows/lean-alphaomega.yml
+formal/lean/**
+scripts/setup/invoke_lake.ps1
+
+Docs-only pushes no longer trigger the full Lean job automatically. The workflow
+keeps workflow_dispatch for manual remote validation when needed.
+```
+
 ### Consequence Directionality and Class Repair
 
 Tightened the consequence-native trajectory guardrails:
