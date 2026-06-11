@@ -85,14 +85,15 @@ The ten-witness batch now has a one-command smoke that reruns each retained
 witness, checks summary digests against committed retained outputs, and runs
 the focused tests.
 The reachability, entropy-profile, frontier-morphology, mutual-information,
-optimized-success, marginal-vs-joint, compression-vs-soundness,
-chain-evidence/class-soundness, and coarse-bisimulation/consequence-profile
-witnesses also have parameterized family tests over `k = 1..5`, checking every nuisance
-coordinate, nondeclared target coordinate, nuisance-bit extension,
-nuisance-keyed abstraction, declared-loss extension, class-size ladder, or
-declared-panel coordinate family without adding new retained artifacts.
-The parameterized families now have a one-command family smoke covering 105
-finite cases across nine retained witness families with family extensions.
+observation-rank, optimized-success, marginal-vs-joint,
+compression-vs-soundness, chain-evidence/class-soundness, and
+coarse-bisimulation/consequence-profile witnesses also have parameterized
+family tests over `k = 1..5`, checking every nuisance coordinate, nondeclared
+target coordinate, nuisance-bit extension, nuisance-keyed abstraction,
+declared-loss extension, class-size ladder, or declared-panel coordinate family
+without adding new retained artifacts.
+The parameterized families now have a one-command family smoke covering 120
+finite cases across ten retained witness families with family extensions.
 The supporting formal target is now the probabilistic channel presentation:
 exact support recovery remains the root-calculus bridge, while probabilistic
 decoder success is a measured enrichment with separate theorem obligations.
@@ -217,12 +218,13 @@ Matched coarse bisimulation-style partition does not determine exact
 consequence profile under a declared expanded panel.
 
 The reachability, entropy-profile, frontier-morphology, mutual-information,
-optimized-success, marginal-vs-joint, compression-vs-soundness,
-chain-evidence/class-soundness, and coarse-bisimulation/consequence-profile
-non-reduction patterns also generalize over finite nuisance-bit,
-target-coordinate, abstraction-family, declared-loss, class-size ladder, or
-declared-panel family tests, without creating new retained result directories.
-The default family smoke checks 105 finite cases at `k = 1..5`.
+observation-rank, optimized-success, marginal-vs-joint,
+compression-vs-soundness, chain-evidence/class-soundness, and
+coarse-bisimulation/consequence-profile non-reduction patterns also generalize
+over finite nuisance-bit, target-coordinate, abstraction-family, declared-loss,
+class-size ladder, or declared-panel family tests, without creating new
+retained result directories.
+The default family smoke checks 120 finite cases at `k = 1..5`.
 ```
 
 ### Horizon transport lineage

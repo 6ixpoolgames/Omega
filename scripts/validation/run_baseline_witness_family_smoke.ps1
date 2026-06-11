@@ -63,6 +63,7 @@ $familyTests = @(
     "tests\test_frontier_morphology_loss_profile_family.py",
     "tests\test_marginal_success_joint_success_family.py",
     "tests\test_mutual_information_declared_recovery_family.py",
+    "tests\test_observation_rank_declared_recovery_family.py",
     "tests\test_optimized_success_declared_recovery_family.py",
     "tests\test_reachability_declared_recovery_family.py"
 )

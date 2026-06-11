@@ -237,8 +237,8 @@ This reruns all ten witnesses into `.tmp`, checks regenerated summary digests
 against the committed retained summaries, and runs the focused witness tests.
 See [BASELINE_WITNESS_SMOKE.md](BASELINE_WITNESS_SMOKE.md).
 
-The family smoke checks the nine parameterized finite witness families at the
-default `k = 1..5`, covering 105 finite family cases without adding retained
+The family smoke checks the ten parameterized finite witness families at the
+default `k = 1..5`, covering 120 finite family cases without adding retained
 result directories. See
 [BASELINE_WITNESS_FAMILY_SMOKE.md](BASELINE_WITNESS_FAMILY_SMOKE.md).
 
@@ -431,6 +431,37 @@ declared recovery.
 It would not support:
 
 ```text
+full linear observability;
+control synthesis;
+semantic recovery;
+Omega validation;
+value or valuer detection;
+agency or identity detection;
+substrate-general theory validation.
+```
+
+Parameterized family check:
+
+```text
+For k = 1..5 nuisance bits, compare an observer emitting declared d against
+observers emitting each nuisance coordinate n_i.
+Each case matches state count, output support, finite observation rank,
+observation block count, block-size signature, output-to-state count
+signature, and deterministic-observer status.
+Declared recovery of d succeeds only for the d observer.
+```
+
+The supported family claim is narrow:
+
+```text
+The same finite observation-rank / partition-shape construction generalizes
+over finite nuisance-bit panels.
+```
+
+It would not support:
+
+```text
+infinite-family theorem;
 full linear observability;
 control synthesis;
 semantic recovery;

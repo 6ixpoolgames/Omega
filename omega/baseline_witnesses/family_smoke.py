@@ -32,6 +32,9 @@ from omega.baseline_witnesses.marginal_success_joint_success_family import (
 from omega.baseline_witnesses.mutual_information_declared_recovery_family import (
     run_family as run_mutual_information_family,
 )
+from omega.baseline_witnesses.observation_rank_declared_recovery_family import (
+    run_family as run_observation_rank_family,
+)
 from omega.baseline_witnesses.optimized_success_declared_recovery_family import (
     run_family as run_optimized_family,
 )
@@ -65,6 +68,12 @@ FAMILY_SPECS: tuple[dict[str, object], ...] = (
         "family_id": "same_mutual_information_different_declared_recovery_family",
         "runner": run_mutual_information_family,
         "expected_status": "same_mutual_information_different_declared_recovery",
+        "expected_case_count_at_max": lambda max_bits: max_bits * (max_bits + 1) // 2,
+    },
+    {
+        "family_id": "same_observation_rank_different_declared_recovery_family",
+        "runner": run_observation_rank_family,
+        "expected_status": "same_observation_rank_different_declared_recovery",
         "expected_case_count_at_max": lambda max_bits: max_bits * (max_bits + 1) // 2,
     },
     {
