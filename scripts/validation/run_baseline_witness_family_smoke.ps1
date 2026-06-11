@@ -56,6 +56,7 @@ function Invoke-CheckedCommand {
 }
 
 $familyTests = @(
+    "tests\test_chain_evidence_class_soundness_family.py",
     "tests\test_compression_score_merge_soundness_family.py",
     "tests\test_entropy_recovery_profile_family.py",
     "tests\test_frontier_morphology_loss_profile_family.py",

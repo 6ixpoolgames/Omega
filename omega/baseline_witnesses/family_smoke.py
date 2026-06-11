@@ -11,6 +11,9 @@ import argparse
 import json
 from collections.abc import Callable
 
+from omega.baseline_witnesses.chain_evidence_class_soundness_family import (
+    run_family as run_chain_class_family,
+)
 from omega.baseline_witnesses.compression_score_merge_soundness_family import (
     run_family as run_compression_family,
 )
@@ -78,6 +81,12 @@ FAMILY_SPECS: tuple[dict[str, object], ...] = (
         "runner": run_compression_family,
         "expected_status": "same_compression_score_different_merge_soundness",
         "expected_case_count_at_max": lambda max_bits: max_bits * (max_bits + 1) // 2,
+    },
+    {
+        "family_id": "same_chain_evidence_different_class_soundness_family",
+        "runner": run_chain_class_family,
+        "expected_status": "same_chain_evidence_different_class_soundness",
+        "expected_case_count_at_max": lambda max_bits: max_bits,
     },
 )
 

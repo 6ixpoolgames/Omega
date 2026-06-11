@@ -9,8 +9,8 @@ def test_baseline_witness_family_smoke_checks_all_families() -> None:
     result = family_smoke.run_family_smoke(max_nuisance_bits=5)
 
     assert result["status"] == "PASS"
-    assert result["family_count"] == 7
-    assert result["case_count"] == 85
+    assert result["family_count"] == 8
+    assert result["case_count"] == 90
     assert result["failures"] == []
     assert "Omega validation" in result["not_claimed"]
 
@@ -23,6 +23,7 @@ def test_baseline_witness_family_smoke_checks_all_families() -> None:
         "same_optimized_success_different_declared_recovery_family",
         "same_marginal_success_different_joint_success_family",
         "same_compression_score_different_merge_soundness_family",
+        "same_chain_evidence_different_class_soundness_family",
     }
 
     assert families["same_reachability_different_declared_recovery_family"]["case_count"] == 15
@@ -32,6 +33,7 @@ def test_baseline_witness_family_smoke_checks_all_families() -> None:
     assert families["same_optimized_success_different_declared_recovery_family"]["case_count"] == 15
     assert families["same_marginal_success_different_joint_success_family"]["case_count"] == 5
     assert families["same_compression_score_different_merge_soundness_family"]["case_count"] == 15
+    assert families["same_chain_evidence_different_class_soundness_family"]["case_count"] == 5
 
     for family in families.values():
         assert family["case_count"] == family["expected_case_count"]

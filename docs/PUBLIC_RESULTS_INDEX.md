@@ -81,13 +81,14 @@ The eight-witness batch now has a one-command smoke that reruns each retained
 witness, checks summary digests against committed retained outputs, and runs
 the focused tests.
 The reachability, entropy-profile, frontier-morphology, mutual-information,
-optimized-success, marginal-vs-joint, and compression-vs-soundness witnesses
+optimized-success, marginal-vs-joint, compression-vs-soundness, and
+chain-evidence/class-soundness witnesses
 also have parameterized family tests over `k = 1..5`, checking every nuisance
 coordinate, nondeclared target coordinate, nuisance-bit extension,
-nuisance-keyed abstraction, or declared-loss extension without adding new
-retained artifacts.
-The parameterized families now have a one-command family smoke covering 85
-finite cases across seven retained witness families with family extensions.
+nuisance-keyed abstraction, declared-loss extension, or class-size ladder
+without adding new retained artifacts.
+The parameterized families now have a one-command family smoke covering 90
+finite cases across eight retained witness families with family extensions.
 The supporting formal target is now the probabilistic channel presentation:
 exact support recovery remains the root-calculus bridge, while probabilistic
 decoder success is a measured enrichment with separate theorem obligations.
@@ -202,11 +203,12 @@ Matched declared adjacent-chain evidence does not determine full class
 soundness against an exact merge profile.
 
 The reachability, entropy-profile, frontier-morphology, mutual-information,
-optimized-success, marginal-vs-joint, and compression-vs-soundness
+optimized-success, marginal-vs-joint, compression-vs-soundness, and
+chain-evidence/class-soundness
 non-reduction patterns also generalize over finite nuisance-bit,
-target-coordinate, abstraction-family, or declared-loss family tests, without
-creating new retained result directories.
-The default family smoke checks 85 finite cases at `k = 1..5`.
+target-coordinate, abstraction-family, declared-loss, or class-size ladder
+family tests, without creating new retained result directories.
+The default family smoke checks 90 finite cases at `k = 1..5`.
 ```
 
 ### Horizon transport lineage

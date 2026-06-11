@@ -233,8 +233,8 @@ This reruns all eight witnesses into `.tmp`, checks regenerated summary digests
 against the committed retained summaries, and runs the focused witness tests.
 See [BASELINE_WITNESS_SMOKE.md](BASELINE_WITNESS_SMOKE.md).
 
-The family smoke checks the seven parameterized finite witness families at the
-default `k = 1..5`, covering 85 finite family cases without adding retained
+The family smoke checks the eight parameterized finite witness families at the
+default `k = 1..5`, covering 90 finite family cases without adding retained
 result directories. See
 [BASELINE_WITNESS_FAMILY_SMOKE.md](BASELINE_WITNESS_FAMILY_SMOKE.md).
 
@@ -529,6 +529,18 @@ Make one class a full compatible triangle.
 Make the other class only chain-connected, with its endpoint pair blocked by
 the exact merge profile.
 Emit a retained fixture and a testable pass/fail result.
+```
+
+Parameterized family check:
+
+```text
+For k = 1..5, compare a compatible clique of k + 2 members against a
+chain-connected class of k + 2 members.
+Each case matches member count, declared adjacent-chain-edge count,
+internal-pair count, and declared chain connectedness.
+All declared adjacent chain edges pass in both classes.
+Only the clique is fully class-sound; the chain class blocks every
+non-adjacent pair.
 ```
 
 The supported claim is narrow:

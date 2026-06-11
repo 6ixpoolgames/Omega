@@ -34,6 +34,7 @@ Python 3.11 package installation with dev tools
 baseline witness smoke
 baseline witness family smoke
 baseline smoke mutation tests
+chain-evidence class-soundness family tests
 compression-vs-soundness nuisance-bit family tests
 entropy-profile nuisance-bit family tests
 frontier-morphology loss-profile family tests
@@ -60,6 +61,7 @@ changes to:
 .github/workflows/baseline-witness-smoke.yml
 omega/baseline_witnesses/**
 omega/future_field_atlas/util.py
+tests/test_chain_evidence_class_soundness_family.py
 tests/test_compression_score_merge_soundness_family.py
 tests/test_entropy_recovery_profile_family.py
 tests/test_frontier_morphology_loss_profile_family.py
@@ -114,7 +116,7 @@ The parameterized baseline witness families have a separate one-command smoke:
 powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness_family_smoke.ps1
 ```
 
-It checks all seven parameterized families at the default `k = 1..5`, covers 85
+It checks all eight parameterized families at the default `k = 1..5`, covers 90
 finite family cases, and runs the focused family tests. See
 [BASELINE_WITNESS_FAMILY_SMOKE.md](BASELINE_WITNESS_FAMILY_SMOKE.md).
 
