@@ -110,6 +110,13 @@ $witnesses = @(
         test = "tests\test_same_frontier_morphology_different_loss_profile.py"
     },
     [pscustomobject]@{
+        id = "same_mutual_information_different_declared_recovery_v0"
+        module = "omega.baseline_witnesses.same_mutual_information_different_declared_recovery"
+        expected_status = "same_mutual_information_different_declared_recovery"
+        retained_summary = "20260611_same_mutual_information_different_declared_recovery_v0\witness_summary.json"
+        test = "tests\test_same_mutual_information_different_declared_recovery.py"
+    },
+    [pscustomobject]@{
         id = "same_optimized_success_different_declared_recovery_v0"
         module = "omega.baseline_witnesses.same_optimized_success_different_declared_recovery"
         expected_status = "same_optimized_success_different_declared_recovery"

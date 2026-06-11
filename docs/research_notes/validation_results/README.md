@@ -35,6 +35,7 @@ Start with:
 - `baseline_witnesses/same_reachability_different_recovery_v0.md`
 - `baseline_witnesses/same_entropy_different_recovery_profile_v0.md`
 - `baseline_witnesses/same_frontier_morphology_different_loss_profile_v0.md`
+- `baseline_witnesses/same_mutual_information_different_declared_recovery_v0.md`
 - `baseline_witnesses/same_optimized_success_different_declared_recovery_v0.md`
 - `baseline_witnesses/same_marginal_success_different_joint_success_v0.md`
 - `baseline_witnesses/same_compression_score_different_merge_soundness_v0.md`

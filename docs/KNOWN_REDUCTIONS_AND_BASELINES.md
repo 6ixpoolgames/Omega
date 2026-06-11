@@ -122,7 +122,7 @@ Baselines controlled: mutual information, capacity, or Bayes-best recovery.
 
 Expected artifact: retained registry run with provenance and adversarial audit.
 
-Claim supported: optimized information recovery does not automatically license
+Claim supported: generic information transfer does not automatically license
 the declared instrument's recovery claim.
 
 Claim not supported: semantic recovery or substrate-general recovery.
@@ -201,6 +201,7 @@ The first retained targets are:
 ```text
 same reachability, different recoverability
 same entropy, different declared recovery profile
+same mutual information or capacity, different declared registry recovery
 same optimized recovery success, different declared recovery
 same marginal Bayes-best success, different joint Bayes-best success
 same compression score, different merge soundness
@@ -212,6 +213,7 @@ Retained notes:
 ```text
 docs/research_notes/validation_results/baseline_witnesses/same_reachability_different_recovery_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_entropy_different_recovery_profile_v0.md
+docs/research_notes/validation_results/baseline_witnesses/same_mutual_information_different_declared_recovery_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_optimized_success_different_declared_recovery_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_marginal_success_different_joint_success_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_compression_score_different_merge_soundness_v0.md
@@ -224,7 +226,7 @@ One-command reproduction:
 powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness_smoke.ps1
 ```
 
-This reruns all six witnesses into `.tmp`, checks regenerated summary digests
+This reruns all seven witnesses into `.tmp`, checks regenerated summary digests
 against the committed retained summaries, and runs the focused witness tests.
 See [BASELINE_WITNESS_SMOKE.md](BASELINE_WITNESS_SMOKE.md).
 
@@ -279,6 +281,36 @@ identity detection;
 Omega validation;
 value or valuer detection;
 agency detection;
+substrate-general theory validation.
+```
+
+Implemented mutual-information-vs-declared construction:
+
+```text
+Use a finite two-bit source and two deterministic binary-output channels.
+Make one channel transmit declared bit d.
+Make the other channel transmit nuisance bit n.
+Match source count, output support, output weights, output entropy,
+conditional output entropy, source-output mutual information, and deterministic
+binary-output capacity.
+Score declared recovery of d from the binary output.
+Emit a retained fixture and a testable pass/fail result.
+```
+
+The supported claim is narrow:
+
+```text
+Generic mutual information and deterministic output capacity do not determine
+declared registry recovery.
+```
+
+It would not support:
+
+```text
+semantic recovery;
+Omega validation;
+value or valuer detection;
+agency or identity detection;
 substrate-general theory validation.
 ```
 
