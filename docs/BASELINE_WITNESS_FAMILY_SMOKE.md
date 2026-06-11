@@ -44,8 +44,8 @@ powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness
 At the default `k = 1..5`, the aggregate check covers:
 
 ```text
-11 parameterized witness families
-135 finite family cases
+12 parameterized witness families
+150 finite family cases
 same-reachability / different-declared-recovery family
 same-entropy / different-recovery-profile family
 same-frontier-morphology / different-declared-loss-profile family
@@ -53,6 +53,7 @@ same-intervention-effect / different-declared-recovery family
 same-mutual-information / different-declared-recovery family
 same-observation-rank / different-declared-recovery family
 same-optimized-success / different-declared-recovery family
+same-viability-kernel / different-declared-recovery family
 same-marginal-success / different-joint-success family
 same-compression-score / different-merge-soundness family
 same-chain-evidence / different-class-soundness family
@@ -67,7 +68,7 @@ family has the wrong case count, or if the focused family pytest suite fails.
 Passing this smoke means:
 
 ```text
-eleven retained baseline witness patterns currently have parameterized finite
+twelve retained baseline witness patterns currently have parameterized finite
 family extensions;
 all checked finite family cases report the expected non-reduction status;
 the focused family tests passed.

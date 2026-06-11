@@ -45,6 +45,7 @@ reachability nuisance-bit family tests
 mutual-information nuisance-bit family tests
 observation-rank nuisance-bit family tests
 optimized-success coordinate-family tests
+viability-kernel declared-recovery family tests
 Ruff over baseline witness modules and focused tests
 git diff --check
 ```
@@ -75,6 +76,7 @@ tests/test_mutual_information_declared_recovery_family.py
 tests/test_observation_rank_declared_recovery_family.py
 tests/test_optimized_success_declared_recovery_family.py
 tests/test_reachability_declared_recovery_family.py
+tests/test_viability_kernel_declared_recovery_family.py
 tests/test_baseline_witness_family_smoke.py
 tests/test_same_*.py
 scripts/validation/run_baseline_witness_family_smoke.ps1
@@ -122,7 +124,7 @@ The parameterized baseline witness families have a separate one-command smoke:
 powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness_family_smoke.ps1
 ```
 
-It checks all eleven parameterized families at the default `k = 1..5`, covers 135
+It checks all twelve parameterized families at the default `k = 1..5`, covers 150
 finite family cases, and runs the focused family tests. See
 [BASELINE_WITNESS_FAMILY_SMOKE.md](BASELINE_WITNESS_FAMILY_SMOKE.md).
 

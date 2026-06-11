@@ -66,7 +66,8 @@ $familyTests = @(
     "tests\test_mutual_information_declared_recovery_family.py",
     "tests\test_observation_rank_declared_recovery_family.py",
     "tests\test_optimized_success_declared_recovery_family.py",
-    "tests\test_reachability_declared_recovery_family.py"
+    "tests\test_reachability_declared_recovery_family.py",
+    "tests\test_viability_kernel_declared_recovery_family.py"
 )
 
 Push-Location $repoRoot

@@ -7,7 +7,7 @@ and runs the focused witness tests.
 
 It is not an Omega validation run.
 
-For the parameterized finite family extensions currently available for eleven
+For the parameterized finite family extensions currently available for twelve
 of these witness patterns, use
 [BASELINE_WITNESS_FAMILY_SMOKE.md](BASELINE_WITNESS_FAMILY_SMOKE.md).
 

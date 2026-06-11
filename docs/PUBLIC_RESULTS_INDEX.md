@@ -87,15 +87,15 @@ The twelve-witness batch now has a one-command smoke that reruns each retained
 witness, checks summary digests against committed retained outputs, and runs
 the focused tests.
 The reachability, entropy-profile, frontier-morphology, intervention-effect,
-mutual-information, observation-rank, optimized-success, marginal-vs-joint,
-compression-vs-soundness, chain-evidence/class-soundness, and
+mutual-information, observation-rank, optimized-success, viability-kernel,
+marginal-vs-joint, compression-vs-soundness, chain-evidence/class-soundness, and
 coarse-bisimulation/consequence-profile witnesses also have parameterized
 family tests over `k = 1..5`, checking every nuisance coordinate, nondeclared
 target coordinate, nuisance-bit extension, nuisance-keyed abstraction,
 intervention-panel extension, declared-loss extension, class-size ladder, or
 declared-panel coordinate family without adding new retained artifacts.
-The parameterized families now have a one-command family smoke covering 135
-finite cases across eleven family-extended retained witness patterns.
+The parameterized families now have a one-command family smoke covering 150
+finite cases across twelve family-extended retained witness patterns.
 The supporting formal target is now the probabilistic channel presentation:
 exact support recovery remains the root-calculus bridge, while probabilistic
 decoder success is a measured enrichment with separate theorem obligations.
@@ -229,13 +229,13 @@ Matched coarse bisimulation-style partition does not determine exact
 consequence profile under a declared expanded panel.
 
 The reachability, entropy-profile, frontier-morphology, intervention-effect,
-mutual-information, observation-rank, optimized-success, marginal-vs-joint,
-compression-vs-soundness, chain-evidence/class-soundness, and
+mutual-information, observation-rank, optimized-success, viability-kernel,
+marginal-vs-joint, compression-vs-soundness, chain-evidence/class-soundness, and
 coarse-bisimulation/consequence-profile non-reduction patterns also generalize
 over finite nuisance-bit, target-coordinate, abstraction-family,
 intervention-panel, declared-loss, class-size ladder, or declared-panel family
 tests, without creating new retained result directories.
-The default family smoke checks 135 finite cases at `k = 1..5`.
+The default family smoke checks 150 finite cases at `k = 1..5`.
 ```
 
 ### Horizon transport lineage

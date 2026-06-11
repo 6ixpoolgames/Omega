@@ -44,6 +44,9 @@ from omega.baseline_witnesses.optimized_success_declared_recovery_family import 
 from omega.baseline_witnesses.reachability_declared_recovery_family import (
     run_family as run_reachability_family,
 )
+from omega.baseline_witnesses.viability_kernel_declared_recovery_family import (
+    run_family as run_viability_kernel_family,
+)
 
 
 FamilyRunner = Callable[..., list[dict[str, object]]]
@@ -89,6 +92,12 @@ FAMILY_SPECS: tuple[dict[str, object], ...] = (
         "family_id": "same_optimized_success_different_declared_recovery_family",
         "runner": run_optimized_family,
         "expected_status": "same_optimized_success_different_declared_recovery",
+        "expected_case_count_at_max": lambda max_bits: max_bits * (max_bits + 1) // 2,
+    },
+    {
+        "family_id": "same_viability_kernel_different_declared_recovery_family",
+        "runner": run_viability_kernel_family,
+        "expected_status": "same_viability_kernel_different_declared_recovery",
         "expected_case_count_at_max": lambda max_bits: max_bits * (max_bits + 1) // 2,
     },
     {

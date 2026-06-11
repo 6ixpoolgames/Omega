@@ -241,8 +241,8 @@ This reruns all twelve witnesses into `.tmp`, checks regenerated summary digests
 against the committed retained summaries, and runs the focused witness tests.
 See [BASELINE_WITNESS_SMOKE.md](BASELINE_WITNESS_SMOKE.md).
 
-The family smoke checks the eleven parameterized finite witness families at the
-default `k = 1..5`, covering 135 finite family cases without adding retained
+The family smoke checks the twelve parameterized finite witness families at the
+default `k = 1..5`, covering 150 finite family cases without adding retained
 result directories. See
 [BASELINE_WITNESS_FAMILY_SMOKE.md](BASELINE_WITNESS_FAMILY_SMOKE.md).
 
@@ -652,9 +652,30 @@ The supported claim is narrow:
 Finite viability-kernel summaries do not determine declared recovery.
 ```
 
+Parameterized family check:
+
+```text
+For k = 1..5 nuisance bits, compare a deterministic one-step system carrying
+declared d in the declared recovery bit against systems carrying each nuisance
+coordinate n_i.
+Each case matches source count, transition-edge count, deterministic-transition
+status, declared viability predicate, viability-kernel size, viability-kernel
+signature, source viability signature, and source-to-target viability
+signature.
+Declared recovery of d succeeds only for the d-carrying system.
+```
+
+The supported family claim is narrow:
+
+```text
+The same finite viability-kernel / different-declared-recovery construction
+generalizes over finite nuisance-bit panels.
+```
+
 It would not support:
 
 ```text
+infinite-family theorem;
 real-world viability;
 optimal control;
 control synthesis;
