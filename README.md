@@ -1,5 +1,7 @@
 # Omega / Reachable Futures Lab
 
+[![Lean AlphaOmega](https://github.com/6ixpoolgames/Omega/actions/workflows/lean-alphaomega.yml/badge.svg?branch=master)](https://github.com/6ixpoolgames/Omega/actions/workflows/lean-alphaomega.yml)
+
 Omega is a research program about **consequence-bearing continuation** and its
 downstream relation to value-bearing futures.
 
@@ -332,6 +334,12 @@ For local workflow:
 
 ```text
 docs/OMEGA_PROJECT_MANUAL.md
+```
+
+For external validation:
+
+```text
+docs/VALIDATION.md
 ```
 
 ## Repository Map
