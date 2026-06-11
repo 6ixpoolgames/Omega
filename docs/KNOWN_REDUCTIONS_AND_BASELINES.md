@@ -203,6 +203,7 @@ same reachability, different recoverability
 same entropy, different declared recovery profile
 same mutual information or capacity, different declared registry recovery
 same finite observation rank, different declared recovery
+same finite control reach, different declared recovery
 same declared intervention effect, different declared post-intervention recovery
 same optimized recovery success, different declared recovery
 same finite viability kernel, different declared recovery
@@ -220,6 +221,7 @@ docs/research_notes/validation_results/baseline_witnesses/same_reachability_diff
 docs/research_notes/validation_results/baseline_witnesses/same_entropy_different_recovery_profile_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_mutual_information_different_declared_recovery_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_observation_rank_different_declared_recovery_v0.md
+docs/research_notes/validation_results/baseline_witnesses/same_control_reach_different_declared_recovery_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_intervention_effect_different_declared_recovery_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_optimized_success_different_declared_recovery_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_viability_kernel_different_declared_recovery_v0.md
@@ -237,7 +239,7 @@ powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness
 powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness_family_smoke.ps1
 ```
 
-This reruns all twelve witnesses into `.tmp`, checks regenerated summary digests
+This reruns all thirteen witnesses into `.tmp`, checks regenerated summary digests
 against the committed retained summaries, and runs the focused witness tests.
 See [BASELINE_WITNESS_SMOKE.md](BASELINE_WITNESS_SMOKE.md).
 
@@ -538,6 +540,43 @@ It would not support:
 ```text
 infinite-family theorem;
 full linear observability;
+control synthesis;
+semantic recovery;
+Omega validation;
+value or valuer detection;
+agency or identity detection;
+substrate-general theory validation.
+```
+
+Implemented control-reach-vs-declared-recovery construction:
+
+```text
+Use one finite four-state carrier with declared coordinate d and nuisance
+coordinate n.
+Compare two deterministic one-step controlled systems over controls drive_0
+and drive_1:
+  both drive the target control bit according to the selected control;
+  one carries source d in the declared recovery bit;
+  one carries nuisance n in the declared recovery bit.
+Match source count, control count, transition-edge count,
+deterministic-transition status, global target support,
+per-source reachable-target-count signature, target-count-by-control
+signature, and target-control-bit-by-control signature.
+Declared d recovery succeeds only for the d-carrying system.
+Emit a retained fixture and a testable pass/fail result.
+```
+
+The supported claim is narrow:
+
+```text
+Finite control-reach summaries do not determine declared recovery.
+```
+
+It would not support:
+
+```text
+full controllability;
+optimal control;
 control synthesis;
 semantic recovery;
 Omega validation;

@@ -124,6 +124,13 @@ $witnesses = @(
         test = "tests\test_same_observation_rank_different_declared_recovery.py"
     },
     [pscustomobject]@{
+        id = "same_control_reach_different_declared_recovery_v0"
+        module = "omega.baseline_witnesses.same_control_reach_different_declared_recovery"
+        expected_status = "same_control_reach_different_declared_recovery"
+        retained_summary = "20260611_same_control_reach_different_declared_recovery_v0\witness_summary.json"
+        test = "tests\test_same_control_reach_different_declared_recovery.py"
+    },
+    [pscustomobject]@{
         id = "same_intervention_effect_different_declared_recovery_v0"
         module = "omega.baseline_witnesses.same_intervention_effect_different_declared_recovery"
         expected_status = "same_intervention_effect_different_declared_recovery"

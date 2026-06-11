@@ -1,14 +1,14 @@
 # Baseline Witness Smoke
 
 This is the smallest current one-command reproduction path for the
-baseline-controlled witness batch. It reruns the twelve retained finite witnesses,
+baseline-controlled witness batch. It reruns the thirteen retained finite witnesses,
 checks each regenerated `summary_digest` against the committed retained summary,
 and runs the focused witness tests.
 
 It is not an Omega validation run.
 
 For the parameterized finite family extensions currently available for twelve
-of these witness patterns, use
+of these thirteen witness patterns, use
 [BASELINE_WITNESS_FAMILY_SMOKE.md](BASELINE_WITNESS_FAMILY_SMOKE.md).
 
 The script also supports `-RetainedRoot` for audit tests. CI uses that hook to
@@ -61,13 +61,14 @@ same_frontier_morphology_different_loss_profile_v0 status and retained digest ma
 same_intervention_effect_different_declared_recovery_v0 status and retained digest match
 same_mutual_information_different_declared_recovery_v0 status and retained digest match
 same_observation_rank_different_declared_recovery_v0 status and retained digest match
+same_control_reach_different_declared_recovery_v0 status and retained digest match
 same_optimized_success_different_declared_recovery_v0 status and retained digest match
 same_viability_kernel_different_declared_recovery_v0 status and retained digest match
 same_marginal_success_different_joint_success_v0 status and retained digest match
 same_compression_score_different_merge_soundness_v0 status and retained digest match
 same_chain_evidence_different_class_soundness_v0 status and retained digest match
 same_coarse_bisimulation_different_consequence_profile_v0 status and retained digest match
-focused pytest suite for all twelve witnesses passes
+focused pytest suite for all thirteen witnesses passes
 ```
 
 The CI mutation tests separately fail the smoke against copied retained
@@ -78,7 +79,7 @@ summaries with a corrupted `summary_digest` or `witness_status`.
 Passing this smoke means:
 
 ```text
-the twelve finite baseline witnesses reproduced;
+the thirteen finite baseline witnesses reproduced;
 their retained summary digests matched;
 the focused witness tests passed.
 ```
