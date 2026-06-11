@@ -85,6 +85,8 @@ also have parameterized family tests over `k = 1..5`, checking every nuisance
 coordinate, nondeclared target coordinate, nuisance-bit extension,
 nuisance-keyed abstraction, or declared-loss extension without adding new
 retained artifacts.
+The parameterized families now have a one-command family smoke covering 85
+finite cases across the seven retained witness families.
 The supporting formal target is now the probabilistic channel presentation:
 exact support recovery remains the root-calculus bridge, while probabilistic
 decoder success is a measured enrichment with separate theorem obligations.
@@ -164,6 +166,7 @@ Reproduction:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness_smoke.ps1
+powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness_family_smoke.ps1
 ```
 
 Read:
@@ -197,6 +200,7 @@ optimized-success, marginal-vs-joint, and compression-vs-soundness
 non-reduction patterns also generalize over finite nuisance-bit,
 target-coordinate, abstraction-family, or declared-loss family tests, without
 creating new retained result directories.
+The default family smoke checks 85 finite cases at `k = 1..5`.
 ```
 
 ### Horizon transport lineage

@@ -9,6 +9,7 @@ on:
       - ".github/workflows/baseline-witness-smoke.yml"
       - "omega/baseline_witnesses/**"
       - "omega/future_field_atlas/util.py"
+      - "tests/test_baseline_witness_family_smoke.py"
       - "tests/test_compression_score_merge_soundness_family.py"
       - "tests/test_entropy_recovery_profile_family.py"
       - "tests/test_frontier_morphology_loss_profile_family.py"
@@ -18,6 +19,7 @@ on:
       - "tests/test_reachability_declared_recovery_family.py"
       - "tests/test_same_*.py"
       - "tests/test_baseline_witness_smoke_mutation.py"
+      - "scripts/validation/run_baseline_witness_family_smoke.ps1"
       - "scripts/validation/run_baseline_witness_smoke.ps1"
       - "results/baseline_witnesses/**"
       - "pyproject.toml"
@@ -28,6 +30,7 @@ on:
       - ".github/workflows/baseline-witness-smoke.yml"
       - "omega/baseline_witnesses/**"
       - "omega/future_field_atlas/util.py"
+      - "tests/test_baseline_witness_family_smoke.py"
       - "tests/test_compression_score_merge_soundness_family.py"
       - "tests/test_entropy_recovery_profile_family.py"
       - "tests/test_frontier_morphology_loss_profile_family.py"
@@ -37,6 +40,7 @@ on:
       - "tests/test_reachability_declared_recovery_family.py"
       - "tests/test_same_*.py"
       - "tests/test_baseline_witness_smoke_mutation.py"
+      - "scripts/validation/run_baseline_witness_family_smoke.ps1"
       - "scripts/validation/run_baseline_witness_smoke.ps1"
       - "results/baseline_witnesses/**"
       - "pyproject.toml"
@@ -63,10 +67,15 @@ jobs:
         shell: pwsh
         run: powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness_smoke.ps1
 
+      - name: Run baseline witness family smoke
+        shell: pwsh
+        run: powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness_family_smoke.ps1
+
       - name: Run baseline smoke mutation tests
         shell: pwsh
         run: |
           python -m pytest `
+            tests\test_baseline_witness_family_smoke.py `
             tests\test_baseline_witness_smoke_mutation.py `
             tests\test_compression_score_merge_soundness_family.py `
             tests\test_entropy_recovery_profile_family.py `
@@ -84,6 +93,7 @@ jobs:
         run: |
           python -m ruff check `
             omega\baseline_witnesses `
+            tests\test_baseline_witness_family_smoke.py `
             tests\test_baseline_witness_smoke_mutation.py `
             tests\test_compression_score_merge_soundness_family.py `
             tests\test_entropy_recovery_profile_family.py `

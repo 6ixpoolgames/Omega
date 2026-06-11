@@ -32,6 +32,7 @@ The baseline witness workflow checks:
 ```text
 Python 3.11 package installation with dev tools
 baseline witness smoke
+baseline witness family smoke
 baseline smoke mutation tests
 compression-vs-soundness nuisance-bit family tests
 entropy-profile nuisance-bit family tests
@@ -66,7 +67,9 @@ tests/test_marginal_success_joint_success_family.py
 tests/test_mutual_information_declared_recovery_family.py
 tests/test_optimized_success_declared_recovery_family.py
 tests/test_reachability_declared_recovery_family.py
+tests/test_baseline_witness_family_smoke.py
 tests/test_same_*.py
+scripts/validation/run_baseline_witness_family_smoke.ps1
 scripts/validation/run_baseline_witness_smoke.ps1
 results/baseline_witnesses/**
 pyproject.toml
@@ -104,6 +107,16 @@ powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness
 It reruns the seven retained baseline witnesses, checks regenerated summary
 digests against committed retained summaries, and runs the focused witness
 tests. See [BASELINE_WITNESS_SMOKE.md](BASELINE_WITNESS_SMOKE.md).
+
+The parameterized baseline witness families have a separate one-command smoke:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness_family_smoke.ps1
+```
+
+It checks all seven parameterized families at the default `k = 1..5`, covers 85
+finite family cases, and runs the focused family tests. See
+[BASELINE_WITNESS_FAMILY_SMOKE.md](BASELINE_WITNESS_FAMILY_SMOKE.md).
 
 The registry-first stochastic-channel branch has a separate reproduction path:
 

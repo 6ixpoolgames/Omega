@@ -7,6 +7,9 @@ and runs the focused witness tests.
 
 It is not an Omega validation run.
 
+For the parameterized finite family extensions of these witnesses, use
+[BASELINE_WITNESS_FAMILY_SMOKE.md](BASELINE_WITNESS_FAMILY_SMOKE.md).
+
 The script also supports `-RetainedRoot` for audit tests. CI uses that hook to
 copy retained summaries, corrupt digest/status fields, and verify that the smoke
 rejects the mutated retained artifacts.

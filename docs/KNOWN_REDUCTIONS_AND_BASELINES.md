@@ -224,11 +224,17 @@ One-command reproduction:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness_smoke.ps1
+powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness_family_smoke.ps1
 ```
 
 This reruns all seven witnesses into `.tmp`, checks regenerated summary digests
 against the committed retained summaries, and runs the focused witness tests.
 See [BASELINE_WITNESS_SMOKE.md](BASELINE_WITNESS_SMOKE.md).
+
+The family smoke checks the seven parameterized finite witness families at the
+default `k = 1..5`, covering 85 finite family cases without adding retained
+result directories. See
+[BASELINE_WITNESS_FAMILY_SMOKE.md](BASELINE_WITNESS_FAMILY_SMOKE.md).
 
 Implemented reachability construction:
 
