@@ -75,6 +75,9 @@ success with different joint Bayes-best success, and a compression-vs-soundness
 fixture showing matched class-count compression with different merge soundness.
 The frontier-morphology fixture shows matched coarse frontier summaries with a
 different declared horizon-local loss profile.
+The six-witness batch now has a one-command smoke that reruns each retained
+witness, checks summary digests against committed retained outputs, and runs
+the focused tests.
 The supporting formal target is now the probabilistic channel presentation:
 exact support recovery remains the root-calculus bridge, while probabilistic
 decoder success is a measured enrichment with separate theorem obligations.
@@ -147,6 +150,12 @@ Result note:
 - [`same_optimized_success_different_declared_recovery_v0.md`](research_notes/validation_results/baseline_witnesses/same_optimized_success_different_declared_recovery_v0.md)
 - [`same_marginal_success_different_joint_success_v0.md`](research_notes/validation_results/baseline_witnesses/same_marginal_success_different_joint_success_v0.md)
 - [`same_compression_score_different_merge_soundness_v0.md`](research_notes/validation_results/baseline_witnesses/same_compression_score_different_merge_soundness_v0.md)
+
+Reproduction:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness_smoke.ps1
+```
 
 Read:
 

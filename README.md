@@ -340,6 +340,7 @@ For external validation:
 
 ```text
 docs/VALIDATION.md
+docs/BASELINE_WITNESS_SMOKE.md
 docs/REPRODUCIBILITY_SMOKE.md
 docs/CLAIMS_LEDGER.md
 docs/KNOWN_REDUCTIONS_AND_BASELINES.md

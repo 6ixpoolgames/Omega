@@ -54,7 +54,17 @@ ruff check .
 
 ## Reproducibility Smoke
 
-The smallest current empirical reproduction path is:
+The baseline witness batch has a one-command reproduction path:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness_smoke.ps1
+```
+
+It reruns the six retained baseline witnesses, checks regenerated summary
+digests against committed retained summaries, and runs the focused witness
+tests. See [BASELINE_WITNESS_SMOKE.md](BASELINE_WITNESS_SMOKE.md).
+
+The registry-first stochastic-channel branch has a separate reproduction path:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts\validation\run_reproducibility_smoke.ps1

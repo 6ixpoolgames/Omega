@@ -218,6 +218,16 @@ docs/research_notes/validation_results/baseline_witnesses/same_compression_score
 docs/research_notes/validation_results/baseline_witnesses/same_frontier_morphology_different_loss_profile_v0.md
 ```
 
+One-command reproduction:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness_smoke.ps1
+```
+
+This reruns all six witnesses into `.tmp`, checks regenerated summary digests
+against the committed retained summaries, and runs the focused witness tests.
+See [BASELINE_WITNESS_SMOKE.md](BASELINE_WITNESS_SMOKE.md).
+
 Implemented reachability construction:
 
 ```text
