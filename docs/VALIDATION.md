@@ -33,6 +33,7 @@ The baseline witness workflow checks:
 Python 3.11 package installation with dev tools
 baseline witness smoke
 baseline smoke mutation tests
+reachability nuisance-bit family tests
 mutual-information nuisance-bit family tests
 Ruff over baseline witness modules and focused tests
 git diff --check
@@ -53,6 +54,8 @@ changes to:
 .github/workflows/baseline-witness-smoke.yml
 omega/baseline_witnesses/**
 omega/future_field_atlas/util.py
+tests/test_mutual_information_declared_recovery_family.py
+tests/test_reachability_declared_recovery_family.py
 tests/test_same_*.py
 scripts/validation/run_baseline_witness_smoke.ps1
 results/baseline_witnesses/**
