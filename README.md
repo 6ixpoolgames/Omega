@@ -35,6 +35,10 @@ instruments for studying recoverability, provenance, and finite future
 structure.
 ```
 
+## License
+
+This repository is licensed under the MIT License. See [LICENSE](LICENSE).
+
 ## Mission and Vision
 
 Most alignment and value theories start with agents, preferences, rewards,
