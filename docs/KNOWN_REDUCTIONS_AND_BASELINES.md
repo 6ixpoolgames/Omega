@@ -346,6 +346,17 @@ pairs.
 Emit a retained fixture and a testable pass/fail result.
 ```
 
+Parameterized family check:
+
+```text
+For k = 1..5 nuisance bits, compare a two-class abstraction keyed by declared
+a against two-class abstractions keyed by each nuisance coordinate n_i.
+Each case matches fragment count, assignment count, class count, class-size
+signature, and simple compression score.
+Only the declared-a abstraction is merge-sound under the exact profile where
+same declared a allows merge and different declared a blocks merge.
+```
+
 The supported claim is narrow:
 
 ```text

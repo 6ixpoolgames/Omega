@@ -9,6 +9,7 @@ on:
       - ".github/workflows/baseline-witness-smoke.yml"
       - "omega/baseline_witnesses/**"
       - "omega/future_field_atlas/util.py"
+      - "tests/test_compression_score_merge_soundness_family.py"
       - "tests/test_marginal_success_joint_success_family.py"
       - "tests/test_mutual_information_declared_recovery_family.py"
       - "tests/test_optimized_success_declared_recovery_family.py"
@@ -25,6 +26,7 @@ on:
       - ".github/workflows/baseline-witness-smoke.yml"
       - "omega/baseline_witnesses/**"
       - "omega/future_field_atlas/util.py"
+      - "tests/test_compression_score_merge_soundness_family.py"
       - "tests/test_marginal_success_joint_success_family.py"
       - "tests/test_mutual_information_declared_recovery_family.py"
       - "tests/test_optimized_success_declared_recovery_family.py"
@@ -62,6 +64,7 @@ jobs:
         run: |
           python -m pytest `
             tests\test_baseline_witness_smoke_mutation.py `
+            tests\test_compression_score_merge_soundness_family.py `
             tests\test_marginal_success_joint_success_family.py `
             tests\test_mutual_information_declared_recovery_family.py `
             tests\test_optimized_success_declared_recovery_family.py `
@@ -76,6 +79,7 @@ jobs:
           python -m ruff check `
             omega\baseline_witnesses `
             tests\test_baseline_witness_smoke_mutation.py `
+            tests\test_compression_score_merge_soundness_family.py `
             tests\test_marginal_success_joint_success_family.py `
             tests\test_mutual_information_declared_recovery_family.py `
             tests\test_optimized_success_declared_recovery_family.py `
