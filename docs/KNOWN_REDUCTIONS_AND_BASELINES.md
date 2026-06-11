@@ -235,8 +235,8 @@ This reruns all nine witnesses into `.tmp`, checks regenerated summary digests
 against the committed retained summaries, and runs the focused witness tests.
 See [BASELINE_WITNESS_SMOKE.md](BASELINE_WITNESS_SMOKE.md).
 
-The family smoke checks the eight parameterized finite witness families at the
-default `k = 1..5`, covering 90 finite family cases without adding retained
+The family smoke checks the nine parameterized finite witness families at the
+default `k = 1..5`, covering 105 finite family cases without adding retained
 result directories. See
 [BASELINE_WITNESS_FAMILY_SMOKE.md](BASELINE_WITNESS_FAMILY_SMOKE.md).
 
@@ -253,6 +253,20 @@ Match state count, transition-edge count, coarse partition signature,
 expanded pair count, allowed-pair count, and blocked-pair count.
 Show that the actual allowed and blocked pair signatures differ.
 Emit a retained fixture and a testable pass/fail result.
+```
+
+Parameterized family check:
+
+```text
+For k = 1..5 nuisance bits, compare the declared d expanded panel against
+expanded panels keyed by each nuisance coordinate n_i.
+Each case uses the same identity-transition carrier and the same coarse unit
+observation partition.
+Each case matches state count, transition-edge count, coarse block count,
+coarse block-size signature, expanded pair count, allowed-pair count, and
+blocked-pair count.
+The actual allowed and blocked pair signatures differ between the declared d
+panel and the selected nuisance panel.
 ```
 
 The supported claim is narrow:
