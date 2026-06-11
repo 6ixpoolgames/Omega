@@ -215,6 +215,7 @@ Read:
 1. README.md
 2. docs/OMEGA_FORMALISM_PRIMER.md
 3. docs/EXTERNAL_READER_GUIDE.md
+4. docs/CLAIMS_LEDGER.md
 ```
 
 Goal: understand the current one-object framing, claim boundary, and live stack.

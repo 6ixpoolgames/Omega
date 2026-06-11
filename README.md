@@ -341,6 +341,7 @@ For external validation:
 ```text
 docs/VALIDATION.md
 docs/REPRODUCIBILITY_SMOKE.md
+docs/CLAIMS_LEDGER.md
 ```
 
 ## Repository Map

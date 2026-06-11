@@ -62,6 +62,11 @@ powershell -ExecutionPolicy Bypass -File scripts\validation\run_reproducibility_
 
 See [REPRODUCIBILITY_SMOKE.md](REPRODUCIBILITY_SMOKE.md).
 
+## Claim Hygiene
+
+For the current theorem/result/conjecture split, see
+[CLAIMS_LEDGER.md](CLAIMS_LEDGER.md).
+
 ## Connector Caveat
 
 Some connector surfaces report no workflow runs or combined statuses for push
