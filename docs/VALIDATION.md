@@ -1,12 +1,15 @@
 # Validation
 
 This repository has an observed-passing GitHub Actions workflow for the Lean
-formal stack:
+formal stack and a path-scoped Python workflow for the baseline witness smoke:
 
 ```text
 workflow: Lean AlphaOmega
 latest observed passing run:
 https://github.com/6ixpoolgames/Omega/actions/runs/27317368267
+
+workflow: Baseline Witness Smoke
+status: configured; first observed run pending
 ```
 
 The workflow badge in the root README links to the public Actions history.
@@ -23,12 +26,34 @@ sorry / admit / axiom scan
 git diff --check
 ```
 
+The baseline witness workflow checks:
+
+```text
+Python 3.11 package installation with dev tools
+baseline witness smoke
+Ruff over baseline witness modules and focused tests
+git diff --check
+```
+
 The workflow is intentionally path-scoped. It runs automatically for changes to:
 
 ```text
 .github/workflows/lean-alphaomega.yml
 formal/lean/**
 scripts/setup/invoke_lake.ps1
+```
+
+The baseline witness workflow is also path-scoped. It runs automatically for
+changes to:
+
+```text
+.github/workflows/baseline-witness-smoke.yml
+omega/baseline_witnesses/**
+omega/future_field_atlas/util.py
+tests/test_same_*.py
+scripts/validation/run_baseline_witness_smoke.ps1
+results/baseline_witnesses/**
+pyproject.toml
 ```
 
 Docs-only pushes do not run the full Lean job automatically. Use the manual

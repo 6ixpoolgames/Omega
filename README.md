@@ -1,6 +1,7 @@
 # Omega / Reachable Futures Lab
 
 [![Lean AlphaOmega](https://github.com/6ixpoolgames/Omega/actions/workflows/lean-alphaomega.yml/badge.svg?branch=master)](https://github.com/6ixpoolgames/Omega/actions/workflows/lean-alphaomega.yml)
+[![Baseline Witness Smoke](https://github.com/6ixpoolgames/Omega/actions/workflows/baseline-witness-smoke.yml/badge.svg?branch=master)](https://github.com/6ixpoolgames/Omega/actions/workflows/baseline-witness-smoke.yml)
 
 Omega is a research program about **consequence-bearing continuation** and its
 downstream relation to value-bearing futures.

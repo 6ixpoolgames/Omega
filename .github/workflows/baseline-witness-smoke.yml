@@ -1,0 +1,64 @@
+name: Baseline Witness Smoke
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths:
+      - ".github/workflows/baseline-witness-smoke.yml"
+      - "omega/baseline_witnesses/**"
+      - "omega/future_field_atlas/util.py"
+      - "tests/test_same_*.py"
+      - "scripts/validation/run_baseline_witness_smoke.ps1"
+      - "results/baseline_witnesses/**"
+      - "pyproject.toml"
+  pull_request:
+    branches:
+      - master
+    paths:
+      - ".github/workflows/baseline-witness-smoke.yml"
+      - "omega/baseline_witnesses/**"
+      - "omega/future_field_atlas/util.py"
+      - "tests/test_same_*.py"
+      - "scripts/validation/run_baseline_witness_smoke.ps1"
+      - "results/baseline_witnesses/**"
+      - "pyproject.toml"
+
+jobs:
+  smoke:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install package and dev tools
+        shell: pwsh
+        run: python -m pip install -e ".[dev]"
+
+      - name: Run baseline witness smoke
+        shell: pwsh
+        run: powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness_smoke.ps1
+
+      - name: Ruff baseline witness paths
+        shell: pwsh
+        run: |
+          python -m ruff check `
+            omega\baseline_witnesses `
+            tests\test_same_reachability_different_recovery.py `
+            tests\test_same_entropy_different_recovery_profile.py `
+            tests\test_same_frontier_morphology_different_loss_profile.py `
+            tests\test_same_optimized_success_different_declared_recovery.py `
+            tests\test_same_marginal_success_different_joint_success.py `
+            tests\test_same_compression_score_different_merge_soundness.py
+
+      - name: Check whitespace
+        shell: pwsh
+        run: git diff --check
