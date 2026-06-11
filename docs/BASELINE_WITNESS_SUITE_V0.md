@@ -16,7 +16,7 @@ This is not an Omega validation run.
 13 retained finite baseline witnesses
 13 parameterized finite witness families
 165 default finite family cases at k = 1..5
-3 finite Lean baseline witness conversions currently landed
+5 finite Lean baseline witness conversions currently landed
 ```
 
 The retained witnesses cover:
@@ -45,6 +45,8 @@ patterns. It does not prove an infinite-family theorem.
 The current Lean transfers are exact finite witness conversions:
 
 ```text
+reachability / declared recovery
+mutual information / declared recovery
 chain evidence / class soundness
 compression score / merge soundness
 coarse bisimulation / consequence profile

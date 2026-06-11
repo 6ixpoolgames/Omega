@@ -107,6 +107,8 @@ Preferred order:
 Current finite Lean transfers:
 
 ```text
+reachability / declared recovery
+mutual information / declared recovery
 chain evidence / class soundness
 compression score / merge soundness
 coarse bisimulation / consequence profile
@@ -115,8 +117,8 @@ coarse bisimulation / consequence profile
 Recommended next finite Lean transfers:
 
 ```text
-reachability / declared recovery
-mutual information / declared recovery
+observation rank / declared recovery
+control reach / declared recovery
 ```
 
 ## Search Before More Witnesses
