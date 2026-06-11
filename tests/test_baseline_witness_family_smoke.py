@@ -2,11 +2,11 @@ from __future__ import annotations
 
 import pytest
 
-from omega.baseline_witnesses.family_smoke import run_family_smoke
+import omega.baseline_witnesses.family_smoke as family_smoke
 
 
 def test_baseline_witness_family_smoke_checks_all_families() -> None:
-    result = run_family_smoke(max_nuisance_bits=5)
+    result = family_smoke.run_family_smoke(max_nuisance_bits=5)
 
     assert result["status"] == "PASS"
     assert result["family_count"] == 7
@@ -40,4 +40,68 @@ def test_baseline_witness_family_smoke_checks_all_families() -> None:
 
 def test_baseline_witness_family_smoke_rejects_degenerate_max() -> None:
     with pytest.raises(ValueError, match="max_nuisance_bits must be >= 1"):
-        run_family_smoke(max_nuisance_bits=0)
+        family_smoke.run_family_smoke(max_nuisance_bits=0)
+
+
+def test_baseline_witness_family_smoke_reports_case_count_mismatch(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(
+        family_smoke,
+        "FAMILY_SPECS",
+        (
+            {
+                "family_id": "mutated_count_family",
+                "runner": lambda *, max_nuisance_bits: [
+                    {"family_case_status": "expected_status"}
+                ],
+                "expected_status": "expected_status",
+                "expected_case_count_at_max": lambda max_bits: 2,
+            },
+        ),
+    )
+
+    result = family_smoke.run_family_smoke(max_nuisance_bits=1)
+
+    assert result["status"] == "FAIL"
+    assert result["case_count"] == 1
+    assert result["failures"] == [
+        {
+            "family_id": "mutated_count_family",
+            "failure": "case_count_mismatch",
+            "expected": 2,
+            "actual": 1,
+        }
+    ]
+
+
+def test_baseline_witness_family_smoke_reports_unexpected_case_status(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(
+        family_smoke,
+        "FAMILY_SPECS",
+        (
+            {
+                "family_id": "mutated_status_family",
+                "runner": lambda *, max_nuisance_bits: [
+                    {"family_case_status": "unexpected_status"}
+                ],
+                "expected_status": "expected_status",
+                "expected_case_count_at_max": lambda max_bits: 1,
+            },
+        ),
+    )
+
+    result = family_smoke.run_family_smoke(max_nuisance_bits=1)
+
+    assert result["status"] == "FAIL"
+    assert result["case_count"] == 1
+    assert result["failures"] == [
+        {
+            "family_id": "mutated_status_family",
+            "failure": "unexpected_family_case_status",
+            "expected": "expected_status",
+            "actual_statuses": ["unexpected_status"],
+        }
+    ]
