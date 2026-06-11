@@ -106,7 +106,7 @@ The baseline witness batch has a one-command reproduction path:
 powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness_smoke.ps1
 ```
 
-It reruns the eight retained baseline witnesses, checks regenerated summary
+It reruns the nine retained baseline witnesses, checks regenerated summary
 digests against committed retained summaries, and runs the focused witness
 tests. See [BASELINE_WITNESS_SMOKE.md](BASELINE_WITNESS_SMOKE.md).
 

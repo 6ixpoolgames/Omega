@@ -66,7 +66,7 @@ bridge: a tiny finite channel substrate now emits decoder policies, support
 projections, probabilistic recovery measurements, formal-consumption bundle
 metadata, theorem-transfer readiness, and fixed-declared-observation summaries
 beside Bayes-best summaries.
-The baseline-witness branch now contains eight reduction-pressure fixtures:
+The baseline-witness branch now contains nine reduction-pressure fixtures:
 same reachability and entropy controls with different declared distinction
 recovery, same entropy summaries with different declared recovery profiles, and
 same mutual information/capacity with different declared registry recovery. It
@@ -77,7 +77,9 @@ fixture showing matched class-count compression with different merge soundness.
 The frontier-morphology fixture shows matched coarse frontier summaries with a
 different declared horizon-local loss profile. The chain-evidence fixture shows
 matched declared adjacent-chain evidence with different full class soundness.
-The eight-witness batch now has a one-command smoke that reruns each retained
+The coarse-bisimulation fixture shows a matched coarse one-block behavioral
+partition with different declared expanded consequence profiles.
+The nine-witness batch now has a one-command smoke that reruns each retained
 witness, checks summary digests against committed retained outputs, and runs
 the focused tests.
 The reachability, entropy-profile, frontier-morphology, mutual-information,
@@ -121,13 +123,14 @@ Start here:
 16. [`research_notes/validation_results/baseline_witnesses/same_marginal_success_different_joint_success_v0.md`](research_notes/validation_results/baseline_witnesses/same_marginal_success_different_joint_success_v0.md)
 17. [`research_notes/validation_results/baseline_witnesses/same_compression_score_different_merge_soundness_v0.md`](research_notes/validation_results/baseline_witnesses/same_compression_score_different_merge_soundness_v0.md)
 18. [`research_notes/validation_results/baseline_witnesses/same_chain_evidence_different_class_soundness_v0.md`](research_notes/validation_results/baseline_witnesses/same_chain_evidence_different_class_soundness_v0.md)
-19. [`research_notes/omega_theory/probabilistic_channel_presentation_v0.md`](research_notes/omega_theory/probabilistic_channel_presentation_v0.md)
-20. [`research_notes/validation_results/stochastic_distinction_channel/stochastic_distinction_channel_tightening_result.md`](research_notes/validation_results/stochastic_distinction_channel/stochastic_distinction_channel_tightening_result.md)
-21. [`research_notes/validation_results/future_field_atlas/future_field_atlas_formal_interface_distinction_panel_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_formal_interface_distinction_panel_result.md)
-22. [`research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md)
-23. [`research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md)
-24. [`research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md)
-25. [`FUTURE_FIELD_ATLAS_GLOSSARY.md`](FUTURE_FIELD_ATLAS_GLOSSARY.md)
+19. [`research_notes/validation_results/baseline_witnesses/same_coarse_bisimulation_different_consequence_profile_v0.md`](research_notes/validation_results/baseline_witnesses/same_coarse_bisimulation_different_consequence_profile_v0.md)
+20. [`research_notes/omega_theory/probabilistic_channel_presentation_v0.md`](research_notes/omega_theory/probabilistic_channel_presentation_v0.md)
+21. [`research_notes/validation_results/stochastic_distinction_channel/stochastic_distinction_channel_tightening_result.md`](research_notes/validation_results/stochastic_distinction_channel/stochastic_distinction_channel_tightening_result.md)
+22. [`research_notes/validation_results/future_field_atlas/future_field_atlas_formal_interface_distinction_panel_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_formal_interface_distinction_panel_result.md)
+23. [`research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md)
+24. [`research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md)
+25. [`research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md)
+26. [`FUTURE_FIELD_ATLAS_GLOSSARY.md`](FUTURE_FIELD_ATLAS_GLOSSARY.md)
 
 ## Current live branch
 
@@ -165,6 +168,7 @@ Result note:
 - [`same_marginal_success_different_joint_success_v0.md`](research_notes/validation_results/baseline_witnesses/same_marginal_success_different_joint_success_v0.md)
 - [`same_compression_score_different_merge_soundness_v0.md`](research_notes/validation_results/baseline_witnesses/same_compression_score_different_merge_soundness_v0.md)
 - [`same_chain_evidence_different_class_soundness_v0.md`](research_notes/validation_results/baseline_witnesses/same_chain_evidence_different_class_soundness_v0.md)
+- [`same_coarse_bisimulation_different_consequence_profile_v0.md`](research_notes/validation_results/baseline_witnesses/same_coarse_bisimulation_different_consequence_profile_v0.md)
 
 Reproduction:
 
@@ -201,6 +205,9 @@ exact consequence profile.
 
 Matched declared adjacent-chain evidence does not determine full class
 soundness against an exact merge profile.
+
+Matched coarse bisimulation-style partition does not determine exact
+consequence profile under a declared expanded panel.
 
 The reachability, entropy-profile, frontier-morphology, mutual-information,
 optimized-success, marginal-vs-joint, compression-vs-soundness, and

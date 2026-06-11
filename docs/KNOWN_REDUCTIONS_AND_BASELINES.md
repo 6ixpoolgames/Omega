@@ -207,6 +207,7 @@ same marginal Bayes-best success, different joint Bayes-best success
 same compression score, different merge soundness
 same frontier morphology, different declared horizon-local loss profile
 same declared chain evidence, different class soundness
+same coarse bisimulation partition, different declared consequence profile
 ```
 
 Retained notes:
@@ -220,6 +221,7 @@ docs/research_notes/validation_results/baseline_witnesses/same_marginal_success_
 docs/research_notes/validation_results/baseline_witnesses/same_compression_score_different_merge_soundness_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_frontier_morphology_different_loss_profile_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_chain_evidence_different_class_soundness_v0.md
+docs/research_notes/validation_results/baseline_witnesses/same_coarse_bisimulation_different_consequence_profile_v0.md
 ```
 
 One-command reproduction:
@@ -229,7 +231,7 @@ powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness
 powershell -ExecutionPolicy Bypass -File scripts\validation\run_baseline_witness_family_smoke.ps1
 ```
 
-This reruns all eight witnesses into `.tmp`, checks regenerated summary digests
+This reruns all nine witnesses into `.tmp`, checks regenerated summary digests
 against the committed retained summaries, and runs the focused witness tests.
 See [BASELINE_WITNESS_SMOKE.md](BASELINE_WITNESS_SMOKE.md).
 
@@ -237,6 +239,40 @@ The family smoke checks the eight parameterized finite witness families at the
 default `k = 1..5`, covering 90 finite family cases without adding retained
 result directories. See
 [BASELINE_WITNESS_FAMILY_SMOKE.md](BASELINE_WITNESS_FAMILY_SMOKE.md).
+
+Implemented coarse-bisimulation-vs-consequence-profile construction:
+
+```text
+Use one finite four-state identity-transition system.
+Declare a coarse panel where all states emit the same unit observation.
+The coarse panel has one bisimulation-style block containing all states.
+Compare two declared expanded panels over the same carrier and transitions:
+  one compares declared d;
+  one compares declared n.
+Match state count, transition-edge count, coarse partition signature,
+expanded pair count, allowed-pair count, and blocked-pair count.
+Show that the actual allowed and blocked pair signatures differ.
+Emit a retained fixture and a testable pass/fail result.
+```
+
+The supported claim is narrow:
+
+```text
+The same coarse bisimulation-style partition does not determine the exact
+consequence profile under a declared expanded panel.
+```
+
+It would not support:
+
+```text
+arbitrary post-hoc panel validity;
+global identity;
+bisimulation novelty;
+Omega validation;
+value or valuer detection;
+agency detection;
+substrate-general panel validity.
+```
 
 Implemented reachability construction:
 

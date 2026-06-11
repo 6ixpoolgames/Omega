@@ -1,7 +1,7 @@
 # Baseline Witness Smoke
 
 This is the smallest current one-command reproduction path for the
-baseline-controlled witness batch. It reruns the eight retained finite witnesses,
+baseline-controlled witness batch. It reruns the nine retained finite witnesses,
 checks each regenerated `summary_digest` against the committed retained summary,
 and runs the focused witness tests.
 
@@ -62,7 +62,8 @@ same_optimized_success_different_declared_recovery_v0 status and retained digest
 same_marginal_success_different_joint_success_v0 status and retained digest match
 same_compression_score_different_merge_soundness_v0 status and retained digest match
 same_chain_evidence_different_class_soundness_v0 status and retained digest match
-focused pytest suite for all eight witnesses passes
+same_coarse_bisimulation_different_consequence_profile_v0 status and retained digest match
+focused pytest suite for all nine witnesses passes
 ```
 
 The CI mutation tests separately fail the smoke against copied retained
@@ -73,7 +74,7 @@ summaries with a corrupted `summary_digest` or `witness_status`.
 Passing this smoke means:
 
 ```text
-the eight finite baseline witnesses reproduced;
+the nine finite baseline witnesses reproduced;
 their retained summary digests matched;
 the focused witness tests passed.
 ```

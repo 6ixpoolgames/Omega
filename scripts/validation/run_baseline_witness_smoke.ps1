@@ -143,6 +143,13 @@ $witnesses = @(
         expected_status = "same_chain_evidence_different_class_soundness"
         retained_summary = "20260611_same_chain_evidence_different_class_soundness_v0\witness_summary.json"
         test = "tests\test_same_chain_evidence_different_class_soundness.py"
+    },
+    [pscustomobject]@{
+        id = "same_coarse_bisimulation_different_consequence_profile_v0"
+        module = "omega.baseline_witnesses.same_coarse_bisimulation_different_consequence_profile"
+        expected_status = "same_coarse_bisimulation_different_consequence_profile"
+        retained_summary = "20260611_same_coarse_bisimulation_different_consequence_profile_v0\witness_summary.json"
+        test = "tests\test_same_coarse_bisimulation_different_consequence_profile.py"
     }
 )
 
