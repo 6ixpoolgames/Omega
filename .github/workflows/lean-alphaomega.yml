@@ -20,7 +20,7 @@ jobs:
         shell: pwsh
         run: |
           Invoke-WebRequest -Uri "https://raw.githubusercontent.com/leanprover/elan/master/elan-init.ps1" -OutFile elan-init.ps1
-          powershell -ExecutionPolicy Bypass -File .\elan-init.ps1 -NoPrompt 1 -NoModifyPath 1 -DefaultToolchain none
+          powershell -ExecutionPolicy Bypass -File .\elan-init.ps1 -NoPrompt:$true -NoModifyPath:$true -DefaultToolchain none
           "$env:USERPROFILE\.elan\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
       - name: Cache Lake packages and build artifacts
