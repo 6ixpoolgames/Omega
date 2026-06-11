@@ -200,6 +200,7 @@ The first retained targets are:
 
 ```text
 same reachability, different recoverability
+same entropy, different declared recovery profile
 same optimized recovery success, different declared recovery
 same marginal Bayes-best success, different joint Bayes-best success
 same compression score, different merge soundness
@@ -209,6 +210,7 @@ Retained notes:
 
 ```text
 docs/research_notes/validation_results/baseline_witnesses/same_reachability_different_recovery_v0.md
+docs/research_notes/validation_results/baseline_witnesses/same_entropy_different_recovery_profile_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_optimized_success_different_declared_recovery_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_marginal_success_different_joint_success_v0.md
 docs/research_notes/validation_results/baseline_witnesses/same_compression_score_different_merge_soundness_v0.md
@@ -237,6 +239,34 @@ It would not support:
 Omega validation;
 value or valuer detection;
 agency or identity detection;
+substrate-general theory validation.
+```
+
+Implemented entropy-profile construction:
+
+```text
+Use a finite two-bit carrier and two exact channels.
+Match per-source support count, per-source entropy, global target support,
+global target weights, and global target entropy.
+Make one channel recover D_A and fail D_B.
+Make the other channel recover D_B and fail D_A.
+Emit a retained fixture and a testable pass/fail result.
+```
+
+The supported claim is narrow:
+
+```text
+Entropy summaries alone do not determine the declared recovery profile.
+```
+
+It would not support:
+
+```text
+semantic recovery;
+identity detection;
+Omega validation;
+value or valuer detection;
+agency detection;
 substrate-general theory validation.
 ```
 

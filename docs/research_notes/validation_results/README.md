@@ -33,6 +33,7 @@ Start with:
 - `future_field_atlas/future_field_atlas_coupled_worker_spool_scale_validation_result.md`
 - `future_field_atlas/future_field_atlas_h128_calibration_pass_result.md`
 - `baseline_witnesses/same_reachability_different_recovery_v0.md`
+- `baseline_witnesses/same_entropy_different_recovery_profile_v0.md`
 - `baseline_witnesses/same_optimized_success_different_declared_recovery_v0.md`
 - `baseline_witnesses/same_marginal_success_different_joint_success_v0.md`
 - `baseline_witnesses/same_compression_score_different_merge_soundness_v0.md`
