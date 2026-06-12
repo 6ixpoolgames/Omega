@@ -27,6 +27,7 @@ import OmegaProper.Trajectory.ReachabilityViability
 import OmegaProper.Trajectory.SoundQuotient
 import OmegaProper.Trajectory.SoundPresentationFamily
 import OmegaProper.Trajectory.TargetPresentationInvariant
+import OmegaProper.Trajectory.ViabilityReflection
 
 /-!
 OmegaProper umbrella.
