@@ -1,4 +1,5 @@
 import OmegaProper.BaselineWitnesses.FiniteBits
+import OmegaProper.BaselineWitnesses.InvarianceNonFactorization
 import OmegaProper.BaselineWitnesses.NonFactorization
 
 /-!
@@ -16,6 +17,7 @@ namespace BaselineWitnesses
 namespace CoordinateSplit
 
 open NonFactorization
+open InvarianceNonFactorization
 open Trajectory.ConsequenceRelation
 
 /-! ## Coordinate exposures -/
@@ -25,6 +27,11 @@ inductive CoordinateExposure where
   | declared
   | nuisance
   deriving DecidableEq
+
+/-- Swap the declared and nuisance coordinate presentations. -/
+def swapCoordinateExposure : CoordinateExposure -> CoordinateExposure
+  | CoordinateExposure.declared => CoordinateExposure.nuisance
+  | CoordinateExposure.nuisance => CoordinateExposure.declared
 
 /-- The consequence system associated with each coordinate exposure. -/
 def exposureSystem : CoordinateExposure -> ConsequenceSystem
@@ -148,6 +155,23 @@ theorem coordinate_split_different_declared_target :
   intro h
   cases h
 
+theorem coordinateCountSummary_invariantUnder_swap :
+    SummaryInvariantUnder
+      coordinateSymmetricCountBaseline
+      swapCoordinateExposure := by
+  intro e
+  cases e
+  case declared =>
+    exact Eq.symm coordinate_split_same_count_baseline
+  case nuisance =>
+    exact coordinate_split_same_count_baseline
+
+theorem coordinateTarget_changesUnder_swap :
+    TargetChangesUnder
+      carriesDeclaredFirst
+      swapCoordinateExposure := by
+  exact Exists.intro CoordinateExposure.declared (by native_decide)
+
 /--
 The coordinate-split pattern is a non-factorization witness: the declared
 target does not factor through the swap-invariant baseline.
@@ -164,9 +188,9 @@ summary instead of the schematic `Unit` baseline.
 -/
 theorem coordinateSplit_countBaseline_nonFactorization :
     NonFactorization coordinateSymmetricCountBaseline carriesDeclaredFirst := by
-  exact nonFactorization_of_same_summary_different_target
-    coordinate_split_same_count_baseline
-    coordinate_split_different_declared_target
+  exact invariant_summary_target_change_nonFactorization
+    coordinateCountSummary_invariantUnder_swap
+    coordinateTarget_changesUnder_swap
 
 /-! ## Exact profile contrast behind the count summary -/
 

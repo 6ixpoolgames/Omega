@@ -1,4 +1,5 @@
 import OmegaProper.BaselineWitnesses.FiniteBits
+import OmegaProper.BaselineWitnesses.InvarianceNonFactorization
 import OmegaProper.BaselineWitnesses.NonFactorization
 
 /-!
@@ -18,6 +19,7 @@ namespace BaselineWitnesses
 namespace ReachabilityDeclaredRecovery
 
 open NonFactorization
+open InvarianceNonFactorization
 
 /-- A finite reachability/support relation. -/
 abbrev SupportRelation := X2 -> X2 -> Prop
@@ -35,6 +37,10 @@ inductive ReachabilityExposure where
   | sameFirst
   | sameSecond
   deriving DecidableEq
+
+def swapReachabilityExposure : ReachabilityExposure -> ReachabilityExposure
+  | ReachabilityExposure.sameFirst => ReachabilityExposure.sameSecond
+  | ReachabilityExposure.sameSecond => ReachabilityExposure.sameFirst
 
 def supportOfExposure : ReachabilityExposure -> SupportRelation
   | ReachabilityExposure.sameFirst => sameFirstReach
@@ -128,13 +134,30 @@ theorem different_declaredRecoveryTarget :
     ) := by
   native_decide
 
+theorem reachabilitySummary_invariantUnder_swap :
+    SummaryInvariantUnder
+      reachabilitySummaryOfExposure
+      swapReachabilityExposure := by
+  intro e
+  cases e
+  case sameFirst =>
+    exact Eq.symm same_reachability_computed_summary
+  case sameSecond =>
+    exact same_reachability_computed_summary
+
+theorem reachabilityTarget_changesUnder_swap :
+    TargetChangesUnder
+      declaredRecoveryTargetOfExposure
+      swapReachabilityExposure := by
+  exact Exists.intro ReachabilityExposure.sameFirst (by native_decide)
+
 theorem reachability_computedSummary_nonFactorization :
     NonFactorization
       reachabilitySummaryOfExposure
       declaredRecoveryTargetOfExposure := by
-  exact nonFactorization_of_same_summary_different_target
-    same_reachability_computed_summary
-    different_declaredRecoveryTarget
+  exact invariant_summary_target_change_nonFactorization
+    reachabilitySummary_invariantUnder_swap
+    reachabilityTarget_changesUnder_swap
 
 def SourceExactlyTwoTargets (R : SupportRelation) (source : X2) : Prop :=
   exists a b : X2,

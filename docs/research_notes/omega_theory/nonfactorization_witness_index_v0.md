@@ -43,6 +43,38 @@ Lean location:
 formal/lean/OmegaProper/BaselineWitnesses/FactorizationCriterion.lean
 ```
 
+## Shared Invariance Theorem
+
+The converted witnesses also instantiate a more specific theorem:
+
+```text
+summary invariant under move
+target changes under move
+--------------------------------
+NonFactorization summary target
+```
+
+In words:
+
+```text
+Any summary that forgets a transformation cannot determine a target that
+changes under that transformation.
+```
+
+Lean location:
+
+```text
+formal/lean/OmegaProper/BaselineWitnesses/InvarianceNonFactorization.lean
+```
+
+Each computed witness below supplies:
+
+```text
+move      a finite swap between two presentations
+summary   a computed baseline invariant under the swap
+target    a declared target that changes under the swap
+```
+
 ## Computed Instances
 
 | Witness | Computed summary | Computed target | Lean theorem |

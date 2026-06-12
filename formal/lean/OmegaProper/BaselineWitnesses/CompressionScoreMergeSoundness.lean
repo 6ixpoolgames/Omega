@@ -1,4 +1,5 @@
 import OmegaProper.BaselineWitnesses.FiniteBits
+import OmegaProper.BaselineWitnesses.InvarianceNonFactorization
 import OmegaProper.BaselineWitnesses.NonFactorization
 import OmegaProper.Trajectory.DeformationProfile
 
@@ -20,6 +21,7 @@ namespace CompressionScoreMergeSoundness
 open Trajectory.ConsequenceRelation
 open Trajectory.DeformationProfile
 open NonFactorization
+open InvarianceNonFactorization
 
 def SameFirstClass (x y : X2) : Prop :=
   firstBit x = firstBit y
@@ -34,6 +36,10 @@ inductive CompressionExposure where
   | sameFirst
   | sameSecond
   deriving DecidableEq
+
+def swapCompressionExposure : CompressionExposure -> CompressionExposure
+  | CompressionExposure.sameFirst => CompressionExposure.sameSecond
+  | CompressionExposure.sameSecond => CompressionExposure.sameFirst
 
 def classRelationBool : CompressionExposure -> X2 -> X2 -> Bool
   | CompressionExposure.sameFirst, x, y => decide (firstBit x = firstBit y)
@@ -104,13 +110,30 @@ theorem different_mergeSoundnessTarget :
     ) := by
   native_decide
 
+theorem compressionSummary_invariantUnder_swap :
+    SummaryInvariantUnder
+      compressionSummaryOfExposure
+      swapCompressionExposure := by
+  intro e
+  cases e
+  case sameFirst =>
+    exact Eq.symm same_compression_computed_summary
+  case sameSecond =>
+    exact same_compression_computed_summary
+
+theorem compressionTarget_changesUnder_swap :
+    TargetChangesUnder
+      mergeSoundnessTargetOfExposure
+      swapCompressionExposure := by
+  exact Exists.intro CompressionExposure.sameFirst (by native_decide)
+
 theorem compressionScore_computedSummary_nonFactorization :
     NonFactorization
       compressionSummaryOfExposure
       mergeSoundnessTargetOfExposure := by
-  exact nonFactorization_of_same_summary_different_target
-    same_compression_computed_summary
-    different_mergeSoundnessTarget
+  exact invariant_summary_target_change_nonFactorization
+    compressionSummary_invariantUnder_swap
+    compressionTarget_changesUnder_swap
 
 /--
 The coarse compression score used by this witness: on the four-point carrier,

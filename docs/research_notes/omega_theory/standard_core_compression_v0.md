@@ -219,6 +219,13 @@ targets:
 docs/research_notes/omega_theory/nonfactorization_witness_index_v0.md
 ```
 
+The shared Lean theorem behind those entries is:
+
+```text
+summary invariant under move + target changes under move
+  -> NonFactorization summary target
+```
+
 The exact-recovery theorem is stated for support-style channels and carries an
 explicit `[Nonempty D]` assumption. That assumption supplies arbitrary decoder
 values for observations that never occur on the support relation.

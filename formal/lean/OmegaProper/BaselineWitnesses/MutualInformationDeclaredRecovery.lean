@@ -1,4 +1,5 @@
 import OmegaProper.BaselineWitnesses.FiniteBits
+import OmegaProper.BaselineWitnesses.InvarianceNonFactorization
 import OmegaProper.BaselineWitnesses.NonFactorization
 
 /-!
@@ -18,6 +19,7 @@ namespace BaselineWitnesses
 namespace MutualInformationDeclaredRecovery
 
 open NonFactorization
+open InvarianceNonFactorization
 
 /-- A deterministic binary-output channel over the four-point carrier. -/
 abbrev BinaryChannel := X2 -> Bit
@@ -33,6 +35,10 @@ inductive ChannelExposure where
   | transmitFirst
   | transmitSecond
   deriving DecidableEq
+
+def swapChannelExposure : ChannelExposure -> ChannelExposure
+  | ChannelExposure.transmitFirst => ChannelExposure.transmitSecond
+  | ChannelExposure.transmitSecond => ChannelExposure.transmitFirst
 
 def channelOfExposure : ChannelExposure -> BinaryChannel
   | ChannelExposure.transmitFirst => transmitFirst
@@ -130,13 +136,30 @@ theorem different_binaryChannel_declaredRecoveryTarget :
     ) := by
   native_decide
 
+theorem binaryChannelSummary_invariantUnder_swap :
+    SummaryInvariantUnder
+      binaryChannelSummaryOfExposure
+      swapChannelExposure := by
+  intro e
+  cases e
+  case transmitFirst =>
+    exact Eq.symm same_binaryChannel_computed_summary
+  case transmitSecond =>
+    exact same_binaryChannel_computed_summary
+
+theorem binaryChannelTarget_changesUnder_swap :
+    TargetChangesUnder
+      declaredRecoveryTargetOfExposure
+      swapChannelExposure := by
+  exact Exists.intro ChannelExposure.transmitFirst (by native_decide)
+
 theorem mutualInformationProxy_computedSummary_nonFactorization :
     NonFactorization
       binaryChannelSummaryOfExposure
       declaredRecoveryTargetOfExposure := by
-  exact nonFactorization_of_same_summary_different_target
-    same_binaryChannel_computed_summary
-    different_binaryChannel_declaredRecoveryTarget
+  exact invariant_summary_target_change_nonFactorization
+    binaryChannelSummary_invariantUnder_swap
+    binaryChannelTarget_changesUnder_swap
 
 /--
 Finite baseline shape for a deterministic balanced one-bit channel.
