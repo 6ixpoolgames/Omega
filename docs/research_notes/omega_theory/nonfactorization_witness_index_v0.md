@@ -83,6 +83,7 @@ target    a declared target that changes under the swap
 | Reachability / declared recovery | Per-source reach counts, per-target support counts, and reachable ordered-pair count. | Whether support preserves the declared first coordinate. | `reachability_computedSummary_nonFactorization` |
 | Mutual-information proxy / declared recovery | Binary output fiber counts and same/different-output ordered-pair counts. | Whether equal outputs preserve the declared first coordinate. | `mutualInformationProxy_computedSummary_nonFactorization` |
 | Compression score / merge soundness | Claimed same-class ordered-pair count and rejected ordered-pair count. | Whether claimed merges respect the declared first-coordinate consequence profile. | `compressionScore_computedSummary_nonFactorization` |
+| Marginal coupling | Row counts, column counts, and total joint-table mass. | Whether the joint table factorizes by integer cross-multiplication. | `marginalSummary_jointFactorization_nonFactorization` |
 
 ## Why This Matters
 
