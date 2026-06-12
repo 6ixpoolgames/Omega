@@ -204,5 +204,6 @@ The next useful formal targets are:
 5. Exact recovery support-disjointness theorem.
 ```
 
-The first two are landed in this branch. The others should be added only if
-they compress existing witnesses without introducing new ontology.
+The first five are now represented in this branch, with the exact-recovery
+theorem stated for support-style channels and an explicit `[Nonempty D]`
+assumption for total decoders on unreachable observations.

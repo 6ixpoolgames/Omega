@@ -4,6 +4,7 @@ import OmegaProper.Scaffolds.CompletionCounterexamples
 import OmegaProper.Scaffolds.FiniteMaximal
 import OmegaProper.Trajectory.AlphaConsequenceSeed
 import OmegaProper.Trajectory.AlphaConsequenceSeedExamples
+import OmegaProper.Trajectory.ClassSoundnessAsClique
 import OmegaProper.Trajectory.ConsequenceClasses
 import OmegaProper.Trajectory.ConsequenceComparison
 import OmegaProper.Trajectory.DeformationProfile
