@@ -3,6 +3,7 @@ import OmegaProper.BaselineWitnesses.CoarseBisimulationConsequenceProfile
 import OmegaProper.BaselineWitnesses.CompressionScoreMergeSoundness
 import OmegaProper.BaselineWitnesses.FiniteBits
 import OmegaProper.BaselineWitnesses.MutualInformationDeclaredRecovery
+import OmegaProper.BaselineWitnesses.NonFactorization
 import OmegaProper.BaselineWitnesses.ReachabilityDeclaredRecovery
 
 /-!

@@ -17,6 +17,7 @@ import OmegaProper.Trajectory.ProtoTeleologicalSeedExamples
 import OmegaProper.Trajectory.ProtoTeleologicalProfile
 import OmegaProper.Trajectory.ProfileAbstraction
 import OmegaProper.Trajectory.Quotient
+import OmegaProper.Trajectory.SoundQuotient
 
 /-!
 OmegaProper umbrella.
