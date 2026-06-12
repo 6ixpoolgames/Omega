@@ -16,6 +16,7 @@ import OmegaProper.Trajectory.PresentationInvariant
 import OmegaProper.Trajectory.PresentationInvariantExamples
 import OmegaProper.Trajectory.PredicateFixpoint
 import OmegaProper.Trajectory.PhantomReachability
+import OmegaProper.Trajectory.PhantomViability
 import OmegaProper.Trajectory.ProtoTeleologicalSeed
 import OmegaProper.Trajectory.ProtoTeleologicalSeedDiscipline
 import OmegaProper.Trajectory.ProtoTeleologicalSeedExamples
