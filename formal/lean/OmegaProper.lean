@@ -13,6 +13,7 @@ import OmegaProper.Trajectory.ConsequenceDiscipline
 import OmegaProper.Trajectory.ConsequencePanelDiscipline
 import OmegaProper.Trajectory.ConsequenceRelation
 import OmegaProper.Trajectory.PresentationInvariant
+import OmegaProper.Trajectory.PresentationInvariantExamples
 import OmegaProper.Trajectory.ProtoTeleologicalSeed
 import OmegaProper.Trajectory.ProtoTeleologicalSeedDiscipline
 import OmegaProper.Trajectory.ProtoTeleologicalSeedExamples

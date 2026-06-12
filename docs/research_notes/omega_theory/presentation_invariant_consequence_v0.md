@@ -52,6 +52,12 @@ That is the first safe version of "not merely a presentation artifact."
 formal/lean/OmegaProper/Trajectory/PresentationInvariant.lean
 ```
 
+Finite audit examples:
+
+```text
+formal/lean/OmegaProper/Trajectory/PresentationInvariantExamples.lean
+```
+
 ## Core Definitions
 
 ```text
@@ -105,6 +111,52 @@ Any presentation that erases a merge-separated pair is unsound:
 
 ```text
 erasesMergeSeparatedPair_not_sound
+```
+
+## Finite Audit Pattern
+
+The example file applies the audit to the existing four-state `X2` consequence
+system.
+
+Sound presentation:
+
+```text
+firstBitPresentation : X2 -> Bit
+```
+
+For `declaredFirstSystem`, this presentation is sound because it identifies
+only pairs with equal first-bit consequences:
+
+```text
+firstBitPresentation_sound_declaredFirst
+```
+
+It also keeps the merge-separated pair `x00 / x10` apart:
+
+```text
+firstBitPresentation_keeps_x00_x10_apart
+```
+
+Unsound presentation:
+
+```text
+constantUnitPresentation : X2 -> Unit
+```
+
+The constant presentation erases every pair, including the merge-separated
+`x00 / x10` pair. Therefore it is not sound:
+
+```text
+constantUnitPresentation_not_sound_declaredFirst
+```
+
+This is the practical boundary/presentation audit:
+
+```text
+1. propose a presentation q
+2. inspect kernel(q)
+3. if q identifies a merge-separated pair, q is unsound
+4. if q is sound, every identified pair is consequence-identifiable
 ```
 
 ## What This Buys
