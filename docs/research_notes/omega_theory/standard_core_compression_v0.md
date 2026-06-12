@@ -204,10 +204,12 @@ The useful formal targets are now:
 5. Exact recovery support-disjointness theorem.       landed with [Nonempty D]
 ```
 
-The coordinate-split theorem currently uses a deliberately coarse `Unit`
-baseline as a minimal invariant. A later strengthening should instantiate a
-less trivial coordinate-symmetric summary, such as equal per-source support
-size or equal global support size.
+The coordinate-split theorem keeps the deliberately coarse `Unit` baseline as
+a minimal invariant, and now also includes a nontrivial finite count summary:
+four sources, two outcome classes, eight compatible ordered pairs, and eight
+blocked ordered pairs. A later strengthening can instantiate domain-specific
+coordinate-symmetric summaries, such as equal per-source support size or equal
+global support size.
 
 The exact-recovery theorem is stated for support-style channels and carries an
 explicit `[Nonempty D]` assumption. That assumption supplies arbitrary decoder

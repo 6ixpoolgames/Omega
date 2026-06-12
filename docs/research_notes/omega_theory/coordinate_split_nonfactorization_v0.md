@@ -68,15 +68,26 @@ declaredSecondSystem:
   exposes the second bit
 ```
 
-The baseline summary is intentionally invariant under the declared/nuisance
-swap. The target records whether the declared first coordinate is carried. The
-Lean theorem proves this is a non-factorization witness.
+The module keeps the schematic `Unit` baseline as the minimal witness, but it
+also adds a nontrivial finite count summary:
+
+```text
+source count = 4
+outcome count = 2
+compatible ordered pairs = 8
+blocked ordered pairs = 8
+```
+
+This summary is still invariant under the declared/nuisance swap, but the
+declared target distinguishes the two exposures. The Lean theorem proves this
+nontrivial count baseline is also a non-factorization witness.
 
 The module also records the profile contrast:
 
 ```text
 declared-coordinate exposure blocks x00 ~ x10
 nuisance-coordinate exposure allows x00 ~ x10
+both exposures have the balanced two-by-two profile shape
 ```
 
 ## Lean Location
