@@ -32,6 +32,10 @@ def exposureSystem : CoordinateExposure -> ConsequenceSystem
 /--
 A deliberately coarse baseline summary invariant under the declared/nuisance
 coordinate swap.
+
+This `Unit` summary is a minimal schematic invariant, not a substantive
+baseline metric. Later coordinate-split theorems should instantiate less
+trivial coordinate-symmetric summaries.
 -/
 def swapInvariantBaseline (_e : CoordinateExposure) : Unit := ()
 

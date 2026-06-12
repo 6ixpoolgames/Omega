@@ -192,18 +192,23 @@ This is not current theory. The project has not yet defined the relevant
 continuation functor or compatibility constraints. Coalgebra should be treated
 as a future alignment target, not a present claim.
 
-## Immediate Theorem Program
+## Immediate Theorem Program Status
 
-The next useful formal targets are:
+The useful formal targets are now:
 
 ```text
-1. Sound quotient kernel theorem.
-2. Non-factorization schema for baseline witnesses.
-3. Clique-vs-connected-component class soundness theorem.
-4. Coordinate-split non-factorization theorem.
-5. Exact recovery support-disjointness theorem.
+1. Sound quotient kernel theorem.                     landed
+2. Non-factorization schema for baseline witnesses.   landed
+3. Clique-vs-connected class soundness theorem.       landed
+4. Coordinate-split non-factorization theorem.        landed schematic version
+5. Exact recovery support-disjointness theorem.       landed with [Nonempty D]
 ```
 
-The first five are now represented in this branch, with the exact-recovery
-theorem stated for support-style channels and an explicit `[Nonempty D]`
-assumption for total decoders on unreachable observations.
+The coordinate-split theorem currently uses a deliberately coarse `Unit`
+baseline as a minimal invariant. A later strengthening should instantiate a
+less trivial coordinate-symmetric summary, such as equal per-source support
+size or equal global support size.
+
+The exact-recovery theorem is stated for support-style channels and carries an
+explicit `[Nonempty D]` assumption. That assumption supplies arbitrary decoder
+values for observations that never occur on the support relation.

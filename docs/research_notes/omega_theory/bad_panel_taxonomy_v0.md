@@ -125,6 +125,10 @@ Existing formal neighbor:
 admissibility/provenance notes and registry-first validation discipline
 ```
 
+Registry-first artifacts are the empirical defense against this failure mode:
+the declared instrument must be fixed before optimized or existence-style
+recovery is interpreted.
+
 Future formal target:
 
 ```text

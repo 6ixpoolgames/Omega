@@ -105,6 +105,11 @@ theorem observedSupportDisjoint_implies_exactRecoveryExists
         hSupport
         hy0.right
 
+/--
+The reverse direction builds a total decoder by assigning arbitrary values to
+observations that never occur on the support relation. This is the only reason
+the theorem requires `[Nonempty D]`.
+-/
 theorem exactRecoveryExists_iff_observedSupportDisjoint
     {X : Type u} {Y : Type v} {D : Type w} {O : Type z}
     [Nonempty D]
@@ -114,8 +119,10 @@ theorem exactRecoveryExists_iff_observedSupportDisjoint
     ExactRecoveryExists support declared observe <->
       ObservedSupportDisjoint support declared observe := by
   constructor
-  · exact exactRecoveryExists_implies_observedSupportDisjoint
-  · exact observedSupportDisjoint_implies_exactRecoveryExists
+  case mp =>
+    exact exactRecoveryExists_implies_observedSupportDisjoint
+  case mpr =>
+    exact observedSupportDisjoint_implies_exactRecoveryExists
 
 end ExactRecoverySupport
 end BaselineWitnesses
