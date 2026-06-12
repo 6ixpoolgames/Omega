@@ -69,7 +69,7 @@ declaredSecondSystem:
 ```
 
 The module keeps the schematic `Unit` baseline as the minimal witness, but it
-also adds a nontrivial finite count summary:
+also computes a nontrivial finite count summary from the exposure profile:
 
 ```text
 source count = 4
@@ -78,9 +78,12 @@ compatible ordered pairs = 8
 blocked ordered pairs = 8
 ```
 
-This summary is still invariant under the declared/nuisance swap, but the
-declared target distinguishes the two exposures. The Lean theorem proves this
-nontrivial count baseline is also a non-factorization witness.
+The summary is calculated from the explicit four-state ordered-pair list:
+each ordered pair is counted as compatible when the exposed coordinate
+outcomes agree, and blocked when they do not. Both coordinate exposures compute
+to the same `8 / 8` profile counts, but the declared target distinguishes the
+two exposures. The Lean theorem proves this computed count baseline is also a
+non-factorization witness.
 
 The module also records the profile contrast:
 

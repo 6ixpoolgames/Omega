@@ -68,13 +68,76 @@ def balancedTwoByTwoCountSummary : ProfileCountSummary where
   compatibleOrderedPairs := 8
   blockedOrderedPairs := 8
 
+/-- The four finite states used by the coordinate-split witness. -/
+def x2States : List X2 :=
+  [X2.x00, X2.x01, X2.x10, X2.x11]
+
+/-- The two possible exposed coordinate outcomes. -/
+def bitOutcomes : List Bit :=
+  [Bit.zero, Bit.one]
+
+/-- Ordered state pairs over the four-point carrier. -/
+def x2OrderedPairs : List (Prod X2 X2) :=
+  [(X2.x00, X2.x00), (X2.x00, X2.x01),
+    (X2.x00, X2.x10), (X2.x00, X2.x11),
+    (X2.x01, X2.x00), (X2.x01, X2.x01),
+    (X2.x01, X2.x10), (X2.x01, X2.x11),
+    (X2.x10, X2.x00), (X2.x10, X2.x01),
+    (X2.x10, X2.x10), (X2.x10, X2.x11),
+    (X2.x11, X2.x00), (X2.x11, X2.x01),
+    (X2.x11, X2.x10), (X2.x11, X2.x11)]
+
+/-- Outcome exposed by a coordinate presentation. -/
+def outcomeOfExposure : CoordinateExposure -> X2 -> Bit
+  | CoordinateExposure.declared => firstBit
+  | CoordinateExposure.nuisance => secondBit
+
+/--
+Whether an ordered pair is compatible under the exposed coordinate equality.
+
+This is the finite computation behind the count summary: it uses the exposed
+consequence outcome, not a stipulated constant.
+-/
+def compatiblePairOfExposure (e : CoordinateExposure) (p : Prod X2 X2) : Bool :=
+  decide (outcomeOfExposure e p.1 = outcomeOfExposure e p.2)
+
+def compatibleOrderedPairCount (e : CoordinateExposure) : Nat :=
+  (x2OrderedPairs.filter (compatiblePairOfExposure e)).length
+
+def blockedOrderedPairCount (e : CoordinateExposure) : Nat :=
+  (x2OrderedPairs.filter (fun p => !(compatiblePairOfExposure e p))).length
+
+/--
+Computed finite count summary for a coordinate exposure.
+
+This deliberately remains finite-adapter specific: it relies on an explicit
+enumeration of the four carrier states and a decidable exposed-coordinate
+comparison.
+-/
+def countSummaryOfExposure (e : CoordinateExposure) : ProfileCountSummary where
+  sourceCount := x2States.length
+  outcomeCount := bitOutcomes.length
+  compatibleOrderedPairs := compatibleOrderedPairCount e
+  blockedOrderedPairs := blockedOrderedPairCount e
+
+theorem countSummaryOfExposure_declared :
+    countSummaryOfExposure CoordinateExposure.declared =
+      balancedTwoByTwoCountSummary := by
+  native_decide
+
+theorem countSummaryOfExposure_nuisance :
+    countSummaryOfExposure CoordinateExposure.nuisance =
+      balancedTwoByTwoCountSummary := by
+  native_decide
+
 /--
 Nontrivial coordinate-symmetric baseline summary: it records the finite
-two-by-two profile counts while forgetting which coordinate supplied the split.
+two-by-two profile counts computed from the exposed coordinate equality while
+forgetting which coordinate supplied the split.
 -/
-def coordinateSymmetricCountBaseline (_e : CoordinateExposure) :
+def coordinateSymmetricCountBaseline (e : CoordinateExposure) :
     ProfileCountSummary :=
-  balancedTwoByTwoCountSummary
+  countSummaryOfExposure e
 
 /-- Whether the exposure carries the declared first coordinate. -/
 def carriesDeclaredFirst : CoordinateExposure -> Bool
@@ -91,7 +154,10 @@ theorem coordinate_split_same_baseline :
 theorem coordinate_split_same_count_baseline :
     coordinateSymmetricCountBaseline CoordinateExposure.declared =
       coordinateSymmetricCountBaseline CoordinateExposure.nuisance := by
-  rfl
+  change
+    countSummaryOfExposure CoordinateExposure.declared =
+      countSummaryOfExposure CoordinateExposure.nuisance
+  rw [countSummaryOfExposure_declared, countSummaryOfExposure_nuisance]
 
 theorem coordinate_split_different_declared_target :
     Not (

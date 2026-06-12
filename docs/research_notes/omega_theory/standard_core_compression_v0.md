@@ -200,16 +200,16 @@ The useful formal targets are now:
 1. Sound quotient kernel theorem.                     landed
 2. Non-factorization schema for baseline witnesses.   landed
 3. Clique-vs-connected class soundness theorem.       landed
-4. Coordinate-split non-factorization theorem.        landed schematic version
+4. Coordinate-split non-factorization theorem.        landed computed count version
 5. Exact recovery support-disjointness theorem.       landed with [Nonempty D]
 ```
 
 The coordinate-split theorem keeps the deliberately coarse `Unit` baseline as
-a minimal invariant, and now also includes a nontrivial finite count summary:
-four sources, two outcome classes, eight compatible ordered pairs, and eight
-blocked ordered pairs. A later strengthening can instantiate domain-specific
-coordinate-symmetric summaries, such as equal per-source support size or equal
-global support size.
+a minimal invariant, and now also computes a nontrivial finite count summary
+from the explicit four-state ordered-pair profile: four sources, two outcome
+classes, eight compatible ordered pairs, and eight blocked ordered pairs. A
+later strengthening can instantiate domain-specific coordinate-symmetric
+summaries, such as equal per-source support size or equal global support size.
 
 The exact-recovery theorem is stated for support-style channels and carries an
 explicit `[Nonempty D]` assumption. That assumption supplies arbitrary decoder
