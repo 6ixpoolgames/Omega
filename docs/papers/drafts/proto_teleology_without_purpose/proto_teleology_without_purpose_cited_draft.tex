@@ -1,0 +1,725 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{xcolor}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  urlcolor=blue,
+  citecolor=blue
+}
+
+\title{Proto-Teleology Without Purpose:\\
+Consequence-Bearing Difference and Sound Identification}
+\author{S. Poole}
+\date{June 12, 2026}
+
+\newcommand{\Rel}{\mathrm{Rel}}
+\newcommand{\Sep}{\mathrm{Sep}}
+\newcommand{\Asym}{\mathrm{Asym}}
+
+\begin{document}
+
+\begin{titlepage}
+\centering
+\vspace*{1.2in}
+{\Huge\bfseries Proto-Teleology Without Purpose\par}
+\vspace{0.35in}
+{\LARGE Consequence-Bearing Difference and Sound Identification\par}
+\vspace{0.85in}
+{\Large Citation-Oriented Internal Review Draft\par}
+\vfill
+{\large S. Poole\par}
+\vspace{0.2in}
+{\large June 12, 2026\par}
+\vspace{0.7in}
+{\small Draft manuscript for internal review.\par}
+\end{titlepage}
+
+\begin{abstract}
+This paper introduces a minimal formal account of proto-teleology: directed
+consequence without purpose, value, agency, selfhood, or moral truth. The
+guiding question is simple: when does a difference matter because erasing it
+changes what can follow? We answer in two stages. First, a primitive relational
+presentation supplies a non-collapse condition: some relata are connected,
+distinguished, and asymmetrically arranged in a way that cannot be flattened
+into total interchangeability. Second, an admissible continuation apparatus
+tests whether that primitive difference changes consequences under declared
+contexts. When an evaluated context refuses the erasure of a primitive
+difference, the difference becomes consequence-bearing. We call this minimal
+structure proto-teleological because it introduces directional non-neutrality
+before any notion of goal, utility, organism, agent, or valuer.
+
+The framework treats labels, quotient classes, clusters, and learned
+representations as downstream presentations. They are acceptable only when
+their proposed identifications respect consequence-induced separation. This
+aligns the proposal with standard concerns in quotienting, contextual
+equivalence, abstraction soundness, and bisimulation-like reasoning, while
+remaining lower than any claim about value or agency. We also describe finite
+baseline witnesses: small worlds where familiar summaries agree while declared
+consequence or recovery facts differ. These witnesses show why exact guardrails
+are needed before scaling to richer substrates.
+\end{abstract}
+
+\section{Introduction}
+
+Many theories of value, agency, and purpose begin with something already
+structured: a subject, a utility function, a reward signal, an organism, a
+self-maintaining system, a boundary, a preference ordering, or a goal. That is
+often appropriate for applied modeling, and it has deep roots in cybernetic and
+biological discussions of purpose and teleology
+\cite{rosenblueth1943behavior,mayr1961cause,monod1971chance}. But it leaves a
+prior question open:
+
+\begin{quote}
+What makes any difference matter before value or valuers are assumed?
+\end{quote}
+
+This paper addresses that prior question. It does not try to derive morality,
+agency, or value. It tries to formalize the first anti-flattening step: a
+difference matters in the minimal technical sense when erasing it changes
+admissible continuation.
+
+The central claim is:
+
+\begin{quote}
+A primitive difference becomes proto-teleological when admissible continuation
+exposes its erasure as consequence-changing.
+\end{quote}
+
+Here ``proto-teleological'' means directed consequence before purpose. It is a
+weak and deliberately constrained term. It says that some continuations,
+identifications, or erasures are not neutral. It does not say that the system
+wants anything.
+
+\subsection{Why this matters}
+
+This lower layer matters for four reasons.
+
+First, it gives a disciplined sense of ``mattering'' before value. A difference
+can be consequence-bearing even in a substrate with no preferences, no agents,
+and no moral facts. That is not enough for ethics, but it blocks a premature
+flattening move where all distinctions are treated as arbitrary unless a valuer
+already exists.
+
+Second, it disciplines abstraction. In science and machine learning, it is
+common to compress states, cluster observations, learn representations, or
+quotient a system by apparent similarity. The formal lesson here is that a
+compression is not trustworthy merely because it is concise or predictive. It
+must be checked against the consequences it merges.
+
+Third, it clarifies a possible route from non-neutrality to richer theories of
+value-bearing systems. If consequence-bearing differences can recur, compose,
+survive abstraction, support compatible continuations, and eventually support
+valuer-like trajectories, then value need not be injected at the primitive
+layer. This paper does not prove that route. It identifies one lower condition
+such a route would have to preserve.
+
+Fourth, it makes small finite worlds useful. In finite settings, profiles can
+be exhaustive, failures can be exact, and negative controls can be checked
+without appeal to intuition. That gives us a way to test reductions before
+making claims about large or physical substrates.
+
+\subsection{Contributions}
+
+\begin{enumerate}[leftmargin=*]
+  \item We isolate a primitive non-collapse condition using relation,
+  distinction, and asymmetry.
+
+  \item We define a continuation/consequence apparatus as an operational test
+  of whether erasure is neutral.
+
+  \item We define proto-teleology as a consequence filter: evaluated contexts
+  may allow or refuse proposed identifications.
+
+  \item We connect the framework to established formal ideas: quotient
+  soundness, contextual equivalence, abstraction contracts, and
+  bisimulation-style guardrails.
+
+  \item We describe finite baseline witnesses showing that familiar summaries
+  can agree while declared consequence or recovery facts differ.
+\end{enumerate}
+
+\section{Terminology in Plain Language}
+
+This section fixes the working vocabulary. The goal is not to introduce a new
+dictionary but to make precise which standard idea each term is trying to
+track.
+
+\subsection{Difference, distinction, and erasure}
+
+A \emph{difference} is an informal contrast between two possible fragments or
+relata. A \emph{distinction} is a formal predicate witnessing that two relata
+are not freely interchangeable in the primitive presentation.
+
+An \emph{erasure} is the act of identifying two relata, treating them as the
+same, or placing them in the same quotient class. In formal implementations
+this often appears as a proposed merge.
+
+The central question is:
+
+\begin{quote}
+Is this erasure allowed by the declared continuation consequences?
+\end{quote}
+
+\subsection{Continuation and consequence}
+
+A \emph{continuation} is any admissible way the substrate can be extended,
+evolved, completed, transformed, derived, composed, perturbed, or probed. Time
+evolution is only one kind of continuation.
+
+A \emph{consequence} is what a fragment yields under a continuation context. In
+a transition system this may be a reachable future. In a graph it may be
+reachability. In a logic it may be derivability. In a stochastic channel it may
+be an output distribution. In a constraint system it may be completion
+behavior.
+
+\subsection{Compatibility, separation, and identification}
+
+Two fragments are \emph{compatible} under a declared panel if every evaluated
+context compares their consequences successfully. A context \emph{separates}
+them when it refuses that comparison.
+
+Symmetric \emph{identification} is stronger than one-way compatibility. If the
+comparison relation is directional, then allowing \(a\) as a substitute for
+\(b\) does not automatically allow \(b\) as a substitute for \(a\).
+
+This is close in spirit to contextual equivalence and observational
+equivalence: two things may be identified only relative to the contexts that
+fail to distinguish them. The difference here is that we keep the comparison
+relation and evaluated panel explicit, because a bad panel can create false
+collapse or false separation.
+
+\subsection{Filter and gradient}
+
+The current formal layer establishes a \emph{filter}, not a full gradient.
+
+A filter says:
+
+\begin{quote}
+this erasure is allowed; that erasure is refused.
+\end{quote}
+
+A gradient would additionally order continuations or profiles:
+
+\begin{quote}
+this continuation preserves more declared consequence-bearing structure; that
+one erases more; this profile dominates that profile.
+\end{quote}
+
+The filter is currently formalized. The gradient remains future work.
+
+\section{Related Work and Positioning}
+
+The proposal sits between several established literatures, but it is not a
+replacement for any of them.
+
+The term proto-teleology is chosen against the background of cybernetic and
+biological accounts of purpose. Rosenblueth, Wiener, and Bigelow analyzed
+purposeful behavior in terms of feedback and observable behavior
+\cite{rosenblueth1943behavior}; Mayr distinguished different kinds of causal
+explanation in biology \cite{mayr1961cause}; and Monod popularized
+``teleonomy'' as a way to discuss apparent purposiveness in living systems
+without appealing to final causes \cite{monod1971chance}. The present paper is
+lower-level than those accounts. It does not require an organism, a feedback
+controller, or an evolved biological function. It asks when a distinction is
+already non-neutral under admissible continuation.
+
+The quotient and identification discipline is closer to formal methods.
+Bisimulation and coinduction study when transition systems can be treated as
+behaviorally equivalent \cite{milner1989communication,sangiorgi2012bisimulation}.
+Probabilistic bisimulation and Markov-chain lumpability similarly constrain
+which stochastic states can be identified
+\cite{larsen1991bisimulation,kemeny1960finite}. Model checking emphasizes
+finite-state structures and specification-relative verification
+\cite{baier2008principles}. The present framework borrows the spirit of these
+methods: identifications are justified by preservation of declared behavior,
+not by labels. Its contribution is to make the context panel and comparison
+relation explicit enough to talk about consequence-bearing difference before
+committing to one particular transition-system formalism.
+
+The abstraction discipline is also related to abstract interpretation, where an
+abstract semantics is useful only when it soundly approximates a concrete one
+\cite{cousot1977abstract}. This paper uses the same broad moral: coarse views
+must be checked against exact facts. It also intersects information-theoretic
+compression, especially Shannon's founding account of information
+\cite{shannon1948mathematical} and the information bottleneck method's
+compression/prediction tradeoff \cite{tishby1999information}. The difference is
+that the present target is not compression alone. A summary can be compact or
+predictive while still merging fragments that a declared consequence apparatus
+separates.
+
+\section{The Primitive Floor: Non-Collapse}
+
+The primitive presentation has three roles:
+
+\begin{description}[leftmargin=*]
+  \item[Relation] Relata stand in structured bearing.
+  \item[Distinction] Two relata are not freely interchangeable under some
+  formal contrast.
+  \item[Asymmetry] The bearing of a distinction is not neutral in all
+  directions.
+\end{description}
+
+Formally, these can be represented by predicates analogous to:
+
+\[
+\Rel(x,y), \qquad \Sep(d,x,y), \qquad \Asym(d,x,y).
+\]
+
+The theory does not treat those field names as magic. Empty predicates,
+decorative predicates, or disconnected predicates do not provide a real
+primitive floor. The stack therefore distinguishes vocabulary from witnesses.
+
+\subsection{Joint witnesses}
+
+A joint primitive witness says relation and separation touch the same relata:
+
+\[
+\exists d,x,y.\ \Rel(x,y) \wedge \Sep(d,x,y).
+\]
+
+This blocks two total collapses:
+
+\begin{description}[leftmargin=*]
+  \item[RelationCollapse] No relation holds anywhere.
+  \item[IdentificationCollapse] No distinction separates any two relata.
+\end{description}
+
+\subsection{Asymmetry witnesses}
+
+An asymmetry witness says:
+
+\[
+\exists d,x,y.\ \Asym(d,x,y).
+\]
+
+In the formal stack used by this paper, asymmetry implies both relation and
+separation. So an asymmetry witness supplies a joint witness. This factoring
+matters: the collapse-blocking work is done by relation/separation contact;
+asymmetry is a strong source of that contact.
+
+The result is narrow but important:
+
+\begin{quote}
+An actual primitive witness prevents total flattening.
+\end{quote}
+
+It does not yet say that the distinction changes what can follow. That requires
+continuation consequence.
+
+\section{Continuation as a Contextual Test}
+
+The continuation layer asks whether a primitive difference is operationally
+exposed. It uses a consequence system with:
+
+\begin{description}[leftmargin=*]
+  \item[Fragment] The item being compared.
+  \item[Context] An admissible continuation or test condition.
+  \item[Outcome] What the fragment yields under that context.
+  \item[consequence] A map \(\mathrm{Context} \to \mathrm{Fragment} \to
+  \mathrm{Outcome}\).
+  \item[Compare] Context-indexed comparison of outcomes.
+  \item[Evaluated] The contexts actually in the declared panel.
+\end{description}
+
+This structure is intentionally close to familiar ideas:
+
+\begin{itemize}[leftmargin=*]
+  \item Contextual equivalence: two terms are equivalent if no context
+  distinguishes them.
+
+  \item Observational equivalence: two states are equivalent if observations
+  cannot tell them apart.
+
+  \item Bisimulation and quotienting: state merges are valid only when the
+  transition or observation structure is respected.
+
+  \item Abstraction soundness: a coarse model is acceptable only if its claims
+  remain true relative to the exact system.
+\end{itemize}
+
+The proposal does not simply import one of these frameworks because it wants a
+lower and more general interface. The consequence system can represent temporal
+dynamics, graph reachability, logical derivability, stochastic output,
+constraint completion, or other continuation forms.
+
+\subsection{Compatibility and separation}
+
+Directional compatibility means:
+
+\[
+\mathrm{Compatible}(a,b) \equiv
+\forall k.\ \mathrm{Evaluated}(k) \to
+\mathrm{Compare}_k(\mathrm{consequence}(k,a),\mathrm{consequence}(k,b)).
+\]
+
+Directional separation means:
+
+\[
+\mathrm{Separated}(a,b) \equiv
+\exists k.\ \mathrm{Evaluated}(k) \wedge
+\neg \mathrm{Compare}_k(\mathrm{consequence}(k,a),\mathrm{consequence}(k,b)).
+\]
+
+If comparison is directional, separation is directional. Therefore the formal
+stack distinguishes:
+
+\begin{description}[leftmargin=*]
+  \item[one-way allowance] \(a\) can stand in for \(b\) under the declared
+  comparisons;
+  \item[symmetric identification] \(a\) can stand in for \(b\) and \(b\) can
+  stand in for \(a\);
+  \item[merge separation] at least one direction is separated, so symmetric
+  identification is blocked.
+\end{description}
+
+The core rule is:
+
+\begin{quote}
+If evaluated consequence merge-separates \(a\) and \(b\), then \(a\) and \(b\)
+cannot be soundly identified.
+\end{quote}
+
+\section{Proto-Teleology as a Consequence Filter}
+
+A proto-teleological condition exists when:
+
+\begin{enumerate}[leftmargin=*]
+  \item there is a primitive witness, and
+  \item evaluated consequence merge-separates that witness's endpoints.
+\end{enumerate}
+
+Equivalently:
+
+\[
+\text{primitive non-collapse}
++
+\text{consequence refusal}
+=
+\text{consequence-bearing difference}.
+\]
+
+This is the first formal sense in which a difference matters. The difference
+does not matter because a subject values it. It matters because erasing it
+changes what the declared continuation apparatus permits.
+
+\subsection{The exact profile}
+
+The consequence profile records which pairs are blocked and which are allowed:
+
+\[
+\mathrm{Blocks}(a,b) \equiv
+\text{evaluated consequence merge-separates } a \text{ and } b,
+\]
+
+\[
+\mathrm{Allows}(a,b) \equiv
+a \text{ and } b \text{ are symmetrically identifiable}.
+\]
+
+The checked bridge is:
+
+\[
+\mathrm{ProtoTeleologicalCondition}(S)
+\to
+\exists a,b.\ \mathrm{Blocks}_S(a,b).
+\]
+
+So the proto-teleological condition induces a nonempty blocked-merge profile.
+That is the filter.
+
+\subsection{Why this is not value}
+
+This result does not rank outcomes. It does not say a continuation is better.
+It does not say the blocked merge is morally wrong. It says only that a
+declared consequence test refuses an erasure.
+
+The philosophical significance is lower:
+
+\begin{quote}
+Non-neutrality precedes valuation.
+\end{quote}
+
+If no differences can be consequence-bearing, value has nowhere to attach. But
+if consequence-bearing differences exist, the later question of value becomes
+well-posed without being answered.
+
+\section{Why Quotients and Labels Are Downstream}
+
+A recurring failure mode in formal and empirical work is to start with a
+classification and then treat the classification as ontological. The present
+stack reverses that order.
+
+Do not start from:
+
+\begin{itemize}[leftmargin=*]
+  \item cluster labels;
+  \item learned representation coordinates;
+  \item quotient classes;
+  \item visual similarity;
+  \item predictive success alone.
+\end{itemize}
+
+Start from:
+
+\begin{quote}
+which proposed identifications are refused by evaluated consequence?
+\end{quote}
+
+This is a quotient-soundness requirement. A quotient is valid only if every
+merge it performs is allowed by the consequence profile. If a quotient class
+contains a separated pair, it is invalid relative to the declared apparatus.
+
+\subsection{Chain-connectedness is not identity}
+
+One common mistake is to infer class membership from chains:
+
+\[
+a \sim b,\quad b \sim c,\quad \therefore a \sim c.
+\]
+
+That inference is valid only under additional structure, such as transitivity.
+If the comparison relation is nontransitive, \(a\) may compare with \(b\), and
+\(b\) may compare with \(c\), while \(a\) is separated from \(c\).
+
+For nontransitive comparisons, a proposed class must be pairwise compatible
+unless stronger structure has been proved. This is a small theorem with a large
+methodological consequence: connectedness is not identity.
+
+\section{Abstraction and Coarse-Graining}
+
+Coarse-graining is necessary in large systems. The point is not to reject it.
+The point is to make it accountable.
+
+The current abstraction layer separates exact profiles from coarse claims.
+Given an exact consequence system, an abstraction may claim:
+
+\[
+\mathrm{allows}(a,b), \qquad \mathrm{blocks}(a,b).
+\]
+
+Those claims are judged by two independent contracts:
+
+\begin{description}[leftmargin=*]
+  \item[soundness] abstraction claims imply exact profile facts;
+  \item[completeness] exact profile facts imply abstraction claims.
+\end{description}
+
+An abstraction can be sound but incomplete. It can also be complete but
+unsound. This distinction matters because a coarse summary can look clean while
+erasing the exact consequence facts that made the structure relevant.
+
+This is the connection to scale. We should not claim that all coarse-grainings
+preserve primitive or consequence structure. We should ask which
+transformations and abstractions preserve the facts required by the theory.
+
+\section{Finite Baseline Witnesses}
+
+Finite worlds let us make exact mistakes on purpose. That is useful.
+
+The baseline witness suite contains finite examples where a familiar summary
+matches across two systems while a declared consequence or recovery fact
+differs. The retained patterns include:
+
+\begin{itemize}[leftmargin=*]
+  \item same reachability, different declared recovery;
+  \item same mutual information, different declared recovery;
+  \item same chain evidence, different class soundness;
+  \item same compression score, different merge soundness;
+  \item same coarse bisimulation, different consequence profile.
+\end{itemize}
+
+The suite supports this narrow claim:
+
+\begin{quote}
+Familiar finite summaries can match while declared consequence/recovery,
+merge-soundness, or class-soundness facts differ.
+\end{quote}
+
+This matters because it attacks a specific reduction strategy. If someone says
+``your structure is just mutual information,'' or ``just reachability,'' or
+``just bisimulation,'' the finite witnesses show that those summaries can agree
+while the declared consequence facts disagree.
+
+The finite witnesses do not prove that all reductions fail. They do not prove
+physical or biological relevance. They provide exact warning signs and a
+reproducible adversarial test surface.
+
+\section{Validation Discipline}
+
+The current validation stack supports three kinds of checks.
+
+\subsection{Formal proofs}
+
+The Lean stack checks primitive nondegeneracy, collapse blockers, consequence
+separation, class guardrails, panel discipline, proto-teleological conditions,
+profile bridges, abstraction contracts, and selected finite baseline
+witnesses.
+
+\subsection{Finite search and smoke tests}
+
+Python runners check retained finite witness examples and parameterized finite
+families. These are not substitutes for theorems, but they make external
+review and adversarial search easier.
+
+\subsection{CI and reproducibility}
+
+Cross-platform smoke checks make the finite witness suite easier to validate
+outside the development machine. The larger formal build checks the active
+proof umbrella.
+
+The validation principle is:
+
+\begin{quote}
+Every positive structure should be paired with failure modes.
+\end{quote}
+
+Vacuous contexts, universal comparisons, all-refusing panels, unsound
+abstractions, and reduction baselines are not side issues. They are the
+discipline that prevents the definitions from becoming self-validating.
+
+\section{Larger Ambition}
+
+The present paper establishes only the lower floor:
+
+\[
+\text{primitive non-collapse}
+\to
+\text{evaluated consequence refusal}
+\to
+\text{consequence-bearing difference}
+\to
+\text{exact allow/block filter}.
+\]
+
+A fuller theory of value-bearing continuation would require much more:
+
+\[
+\text{filter/profile}
+\to
+\text{gradient or preorder over profiles}
+\to
+\text{consequence-preserving transformations}
+\to
+\text{recurrence}
+\to
+\text{recoverability without exact identity}
+\to
+\text{support or extent}
+\to
+\text{compatibility over longer continuations}
+\to
+\text{valuer-capable trajectories}.
+\]
+
+The reason this lower floor matters is that it gives that larger program a
+non-arbitrary starting point. Instead of assuming value, the proposed path asks
+how consequence-bearing differences can recur, compose, survive abstraction,
+and eventually support valuers.
+
+That larger program remains open. The paper earns only the first step.
+
+\section{Limitations}
+
+\begin{enumerate}[leftmargin=*]
+  \item Primitive non-collapse alone does not prove proto-teleology.
+  Proto-teleology requires consequence responsiveness under an admissible
+  continuation apparatus.
+
+  \item Apparatus admissibility remains central. Arbitrary contexts and
+  comparisons can manufacture separations or collapses.
+
+  \item The current structure is a filter, not a gradient. Ordering
+  continuations or profiles remains future work.
+
+  \item Recoverability is not established. Exact identity is too strong; future
+  work needs transformation and abstraction contracts.
+
+  \item Finite baseline witnesses are not infinite-family theorems and do not
+  prove substrate-general validity.
+
+  \item No claim is made about value, morality, agency, selfhood, life,
+  identity, boundary, deformer structure, or any terminal theory of
+  value-bearing futures.
+\end{enumerate}
+
+\section{Conclusion}
+
+The paper's core claim is modest but useful:
+
+\begin{quote}
+A difference matters, in the proto-teleological sense, when erasing it changes
+admissible continuation.
+\end{quote}
+
+This gives a formal foothold for directed consequence without purpose. It does
+not smuggle in a valuer, a goal, a self, or a utility function. It says only
+that some primitive differences become consequence-bearing under declared
+continuation tests.
+
+That is enough to block total flattening. It is not enough to validate a theory
+of value. It is the first layer from which such a theory can be built without
+making value primitive.
+
+\appendix
+
+\section{Repository Pointers}
+
+The repository paths below use project-internal implementation names. They are
+not part of the paper's conceptual vocabulary.
+
+Public onboarding documents:
+
+\begin{itemize}[leftmargin=*]
+  \item \texttt{docs/OMEGA\_FORMALISM\_PRIMER.md}
+  \item \texttt{docs/EXTERNAL\_READER\_GUIDE.md}
+  \item \texttt{docs/CLAIMS\_LEDGER.md}
+  \item \texttt{docs/BASELINE\_WITNESS\_SUITE\_V0.md}
+\end{itemize}
+
+Relevant Lean files:
+
+\begin{itemize}[leftmargin=*]
+  \item \texttt{formal/lean/AlphaCore/Primitive.lean}
+  \item \texttt{formal/lean/AlphaCore/Nondegenerate.lean}
+  \item \texttt{formal/lean/AlphaCore/PrimitiveMap.lean}
+  \item \texttt{formal/lean/OmegaProper/Trajectory/ConsequenceRelation.lean}
+  \item \texttt{formal/lean/OmegaProper/Trajectory/ConsequenceClasses.lean}
+  \item \texttt{formal/lean/OmegaProper/Trajectory/ConsequenceDiscipline.lean}
+  \item \texttt{formal/lean/OmegaProper/Trajectory/ConsequenceComparison.lean}
+  \item \texttt{formal/lean/OmegaProper/Trajectory/AlphaConsequenceSeed.lean}
+  \item \texttt{formal/lean/OmegaProper/Trajectory/ProtoTeleologicalSeed.lean}
+  \item \texttt{formal/lean/OmegaProper/Trajectory/ProtoTeleologicalProfile.lean}
+  \item \texttt{formal/lean/OmegaProper/Trajectory/ProfileAbstraction.lean}
+  \item \texttt{formal/lean/OmegaProper/BaselineWitnesses.lean}
+\end{itemize}
+
+\section{Reproduction Commands}
+
+Lean build:
+
+\begin{verbatim}
+powershell -ExecutionPolicy Bypass -File scripts\setup\invoke_lake.ps1 build AlphaOmega
+\end{verbatim}
+
+Retained finite witness smoke:
+
+\begin{verbatim}
+python -m omega.validation.baseline_witness_smoke
+\end{verbatim}
+
+Parameterized finite witness family smoke:
+
+\begin{verbatim}
+python -m omega.validation.baseline_witness_family_smoke
+\end{verbatim}
+
+\bibliographystyle{plain}
+\bibliography{proto_teleology_without_purpose_cited_draft}
+
+\end{document}
