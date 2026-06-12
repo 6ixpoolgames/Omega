@@ -211,6 +211,14 @@ classes, eight compatible ordered pairs, and eight blocked ordered pairs. A
 later strengthening can instantiate domain-specific coordinate-symmetric
 summaries, such as equal per-source support size or equal global support size.
 
+The non-factorization index records the finite witnesses that have been
+upgraded from shared predicate labels to computed summaries and computed
+targets:
+
+```text
+docs/research_notes/omega_theory/nonfactorization_witness_index_v0.md
+```
+
 The exact-recovery theorem is stated for support-style channels and carries an
 explicit `[Nonempty D]` assumption. That assumption supplies arbitrary decoder
 values for observations that never occur on the support relation.

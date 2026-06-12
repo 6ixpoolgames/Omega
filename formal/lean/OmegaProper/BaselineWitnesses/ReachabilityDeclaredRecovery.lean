@@ -1,4 +1,5 @@
 import OmegaProper.BaselineWitnesses.FiniteBits
+import OmegaProper.BaselineWitnesses.NonFactorization
 
 /-!
 OmegaProper.BaselineWitnesses.ReachabilityDeclaredRecovery
@@ -16,6 +17,8 @@ namespace OmegaProper
 namespace BaselineWitnesses
 namespace ReachabilityDeclaredRecovery
 
+open NonFactorization
+
 /-- A finite reachability/support relation. -/
 abbrev SupportRelation := X2 -> X2 -> Prop
 
@@ -24,6 +27,114 @@ def sameFirstReach : SupportRelation :=
 
 def sameSecondReach : SupportRelation :=
   fun source target => secondBit target = secondBit source
+
+/-! ## Computed summary/target form -/
+
+/-- Which of the two finite support relations is being summarized. -/
+inductive ReachabilityExposure where
+  | sameFirst
+  | sameSecond
+  deriving DecidableEq
+
+def supportOfExposure : ReachabilityExposure -> SupportRelation
+  | ReachabilityExposure.sameFirst => sameFirstReach
+  | ReachabilityExposure.sameSecond => sameSecondReach
+
+def supportBool : ReachabilityExposure -> X2 -> X2 -> Bool
+  | ReachabilityExposure.sameFirst, source, target =>
+      decide (firstBit target = firstBit source)
+  | ReachabilityExposure.sameSecond, source, target =>
+      decide (secondBit target = secondBit source)
+
+def reachableOrderedPairCount (e : ReachabilityExposure) : Nat :=
+  (x2OrderedPairs.filter (fun p => supportBool e p.1 p.2)).length
+
+def sourceReachCount (e : ReachabilityExposure) (source : X2) : Nat :=
+  (x2States.filter (fun target => supportBool e source target)).length
+
+def targetSupportCount (e : ReachabilityExposure) (target : X2) : Nat :=
+  (x2States.filter (fun source => supportBool e source target)).length
+
+def sourceReachCountSignature (e : ReachabilityExposure) : List Nat :=
+  [sourceReachCount e X2.x00, sourceReachCount e X2.x01,
+    sourceReachCount e X2.x10, sourceReachCount e X2.x11]
+
+def targetSupportCountSignature (e : ReachabilityExposure) : List Nat :=
+  [targetSupportCount e X2.x00, targetSupportCount e X2.x01,
+    targetSupportCount e X2.x10, targetSupportCount e X2.x11]
+
+/--
+Computed coarse reachability summary: how many targets each source reaches,
+how many sources reach each target, and the total reachable ordered-pair count.
+-/
+structure ReachabilityCountSummary where
+  sourceCount : Nat
+  targetCount : Nat
+  sourceReachCounts : List Nat
+  targetSupportCounts : List Nat
+  reachableOrderedPairs : Nat
+  deriving DecidableEq
+
+def balancedReachabilityCountSummary : ReachabilityCountSummary where
+  sourceCount := 4
+  targetCount := 4
+  sourceReachCounts := [2, 2, 2, 2]
+  targetSupportCounts := [2, 2, 2, 2]
+  reachableOrderedPairs := 8
+
+def reachabilitySummaryOfExposure
+    (e : ReachabilityExposure) : ReachabilityCountSummary where
+  sourceCount := x2States.length
+  targetCount := x2States.length
+  sourceReachCounts := sourceReachCountSignature e
+  targetSupportCounts := targetSupportCountSignature e
+  reachableOrderedPairs := reachableOrderedPairCount e
+
+def declaredRecoveryViolationCount (e : ReachabilityExposure) : Nat :=
+  (x2OrderedPairs.filter (fun p =>
+    supportBool e p.1 p.2 &&
+      decide (Not (firstBit p.2 = firstBit p.1)))).length
+
+def declaredRecoveryTargetOfExposure (e : ReachabilityExposure) : Bool :=
+  decide (declaredRecoveryViolationCount e = 0)
+
+theorem reachabilitySummary_sameFirst :
+    reachabilitySummaryOfExposure ReachabilityExposure.sameFirst =
+      balancedReachabilityCountSummary := by
+  native_decide
+
+theorem reachabilitySummary_sameSecond :
+    reachabilitySummaryOfExposure ReachabilityExposure.sameSecond =
+      balancedReachabilityCountSummary := by
+  native_decide
+
+theorem same_reachability_computed_summary :
+    reachabilitySummaryOfExposure ReachabilityExposure.sameFirst =
+      reachabilitySummaryOfExposure ReachabilityExposure.sameSecond := by
+  rw [reachabilitySummary_sameFirst, reachabilitySummary_sameSecond]
+
+theorem sameFirst_declaredRecoveryTarget :
+    declaredRecoveryTargetOfExposure ReachabilityExposure.sameFirst = true := by
+  native_decide
+
+theorem sameSecond_declaredRecoveryTarget :
+    declaredRecoveryTargetOfExposure ReachabilityExposure.sameSecond = false := by
+  native_decide
+
+theorem different_declaredRecoveryTarget :
+    Not (
+      declaredRecoveryTargetOfExposure ReachabilityExposure.sameFirst =
+        declaredRecoveryTargetOfExposure ReachabilityExposure.sameSecond
+    ) := by
+  native_decide
+
+theorem reachability_computedSummary_nonFactorization :
+    NonFactorization
+      reachabilitySummaryOfExposure
+      declaredRecoveryTargetOfExposure := by
+  exact nonFactorization_of_same_summary_different_target
+    same_reachability_computed_summary
+    different_declaredRecoveryTarget
 
 def SourceExactlyTwoTargets (R : SupportRelation) (source : X2) : Prop :=
   exists a b : X2,

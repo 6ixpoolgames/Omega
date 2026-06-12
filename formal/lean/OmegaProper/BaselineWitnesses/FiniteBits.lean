@@ -29,10 +29,29 @@ inductive X2 where
   | x11
   deriving DecidableEq
 
+/-- The four finite states used by the X2 baseline witnesses. -/
+def x2States : List X2 :=
+  [X2.x00, X2.x01, X2.x10, X2.x11]
+
+/-- Ordered state pairs over the four-point carrier. -/
+def x2OrderedPairs : List (Prod X2 X2) :=
+  [(X2.x00, X2.x00), (X2.x00, X2.x01),
+    (X2.x00, X2.x10), (X2.x00, X2.x11),
+    (X2.x01, X2.x00), (X2.x01, X2.x01),
+    (X2.x01, X2.x10), (X2.x01, X2.x11),
+    (X2.x10, X2.x00), (X2.x10, X2.x01),
+    (X2.x10, X2.x10), (X2.x10, X2.x11),
+    (X2.x11, X2.x00), (X2.x11, X2.x01),
+    (X2.x11, X2.x10), (X2.x11, X2.x11)]
+
 /-- Single evaluated context used by the finite witnesses. -/
 inductive OneContext where
   | ctx
   deriving DecidableEq
+
+/-- The two possible binary outcomes. -/
+def bitOutcomes : List Bit :=
+  [Bit.zero, Bit.one]
 
 def firstBit : X2 -> Bit
   | X2.x00 => Bit.zero

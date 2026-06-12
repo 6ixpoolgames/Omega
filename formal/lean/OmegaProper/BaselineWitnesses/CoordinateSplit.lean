@@ -68,25 +68,6 @@ def balancedTwoByTwoCountSummary : ProfileCountSummary where
   compatibleOrderedPairs := 8
   blockedOrderedPairs := 8
 
-/-- The four finite states used by the coordinate-split witness. -/
-def x2States : List X2 :=
-  [X2.x00, X2.x01, X2.x10, X2.x11]
-
-/-- The two possible exposed coordinate outcomes. -/
-def bitOutcomes : List Bit :=
-  [Bit.zero, Bit.one]
-
-/-- Ordered state pairs over the four-point carrier. -/
-def x2OrderedPairs : List (Prod X2 X2) :=
-  [(X2.x00, X2.x00), (X2.x00, X2.x01),
-    (X2.x00, X2.x10), (X2.x00, X2.x11),
-    (X2.x01, X2.x00), (X2.x01, X2.x01),
-    (X2.x01, X2.x10), (X2.x01, X2.x11),
-    (X2.x10, X2.x00), (X2.x10, X2.x01),
-    (X2.x10, X2.x10), (X2.x10, X2.x11),
-    (X2.x11, X2.x00), (X2.x11, X2.x01),
-    (X2.x11, X2.x10), (X2.x11, X2.x11)]
-
 /-- Outcome exposed by a coordinate presentation. -/
 def outcomeOfExposure : CoordinateExposure -> X2 -> Bit
   | CoordinateExposure.declared => firstBit

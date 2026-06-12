@@ -1,4 +1,5 @@
 import OmegaProper.BaselineWitnesses.FiniteBits
+import OmegaProper.BaselineWitnesses.NonFactorization
 import OmegaProper.Trajectory.DeformationProfile
 
 /-!
@@ -18,12 +19,98 @@ namespace CompressionScoreMergeSoundness
 
 open Trajectory.ConsequenceRelation
 open Trajectory.DeformationProfile
+open NonFactorization
 
 def SameFirstClass (x y : X2) : Prop :=
   firstBit x = firstBit y
 
 def SameSecondClass (x y : X2) : Prop :=
   secondBit x = secondBit y
+
+/-! ## Computed summary/target form -/
+
+/-- Which binary class relation is being summarized. -/
+inductive CompressionExposure where
+  | sameFirst
+  | sameSecond
+  deriving DecidableEq
+
+def classRelationBool : CompressionExposure -> X2 -> X2 -> Bool
+  | CompressionExposure.sameFirst, x, y => decide (firstBit x = firstBit y)
+  | CompressionExposure.sameSecond, x, y => decide (secondBit x = secondBit y)
+
+def claimedOrderedPairCount (e : CompressionExposure) : Nat :=
+  (x2OrderedPairs.filter (fun p => classRelationBool e p.1 p.2)).length
+
+def rejectedOrderedPairCount (e : CompressionExposure) : Nat :=
+  (x2OrderedPairs.filter (fun p => !(classRelationBool e p.1 p.2))).length
+
+/--
+Computed coarse compression summary: how many ordered pairs the binary relation
+claims as same-class versus rejected.
+-/
+structure CompressionCountSummary where
+  sourceCount : Nat
+  claimedOrderedPairs : Nat
+  rejectedOrderedPairs : Nat
+  deriving DecidableEq
+
+def balancedCompressionCountSummary : CompressionCountSummary where
+  sourceCount := 4
+  claimedOrderedPairs := 8
+  rejectedOrderedPairs := 8
+
+def compressionSummaryOfExposure
+    (e : CompressionExposure) : CompressionCountSummary where
+  sourceCount := x2States.length
+  claimedOrderedPairs := claimedOrderedPairCount e
+  rejectedOrderedPairs := rejectedOrderedPairCount e
+
+def mergeSoundnessViolationCount (e : CompressionExposure) : Nat :=
+  (x2OrderedPairs.filter (fun p =>
+    classRelationBool e p.1 p.2 &&
+      decide (Not (firstBit p.1 = firstBit p.2)))).length
+
+def mergeSoundnessTargetOfExposure (e : CompressionExposure) : Bool :=
+  decide (mergeSoundnessViolationCount e = 0)
+
+theorem compressionSummary_sameFirst :
+    compressionSummaryOfExposure CompressionExposure.sameFirst =
+      balancedCompressionCountSummary := by
+  native_decide
+
+theorem compressionSummary_sameSecond :
+    compressionSummaryOfExposure CompressionExposure.sameSecond =
+      balancedCompressionCountSummary := by
+  native_decide
+
+theorem same_compression_computed_summary :
+    compressionSummaryOfExposure CompressionExposure.sameFirst =
+      compressionSummaryOfExposure CompressionExposure.sameSecond := by
+  rw [compressionSummary_sameFirst, compressionSummary_sameSecond]
+
+theorem sameFirst_mergeSoundnessTarget :
+    mergeSoundnessTargetOfExposure CompressionExposure.sameFirst = true := by
+  native_decide
+
+theorem sameSecond_mergeSoundnessTarget :
+    mergeSoundnessTargetOfExposure CompressionExposure.sameSecond = false := by
+  native_decide
+
+theorem different_mergeSoundnessTarget :
+    Not (
+      mergeSoundnessTargetOfExposure CompressionExposure.sameFirst =
+        mergeSoundnessTargetOfExposure CompressionExposure.sameSecond
+    ) := by
+  native_decide
+
+theorem compressionScore_computedSummary_nonFactorization :
+    NonFactorization
+      compressionSummaryOfExposure
+      mergeSoundnessTargetOfExposure := by
+  exact nonFactorization_of_same_summary_different_target
+    same_compression_computed_summary
+    different_mergeSoundnessTarget
 
 /--
 The coarse compression score used by this witness: on the four-point carrier,
