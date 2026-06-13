@@ -16,6 +16,7 @@ import OmegaProper.Trajectory.HiddenLossUnderBadPresentation
 import OmegaProper.Trajectory.HiddenViabilityLossUnderBadPresentation
 import OmegaProper.Trajectory.IrreversibleReachLoss
 import OmegaProper.Trajectory.IrreversibleViabilityLoss
+import OmegaProper.Trajectory.JointViability
 import OmegaProper.Trajectory.PresentationInvariant
 import OmegaProper.Trajectory.PresentationInvariantExamples
 import OmegaProper.Trajectory.PredicateFixpoint
