@@ -31,6 +31,7 @@ import OmegaProper.Trajectory.ProfileAbstraction
 import OmegaProper.Trajectory.Quotient
 import OmegaProper.Trajectory.ReachabilityReflection
 import OmegaProper.Trajectory.ReachabilityViability
+import OmegaProper.Trajectory.RecurrentViableClass
 import OmegaProper.Trajectory.SafePresentationContract
 import OmegaProper.Trajectory.SoundQuotient
 import OmegaProper.Trajectory.SoundPresentationFamily
