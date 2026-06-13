@@ -12,6 +12,10 @@ import OmegaProper.Trajectory.DeformationProfileExamples
 import OmegaProper.Trajectory.ConsequenceDiscipline
 import OmegaProper.Trajectory.ConsequencePanelDiscipline
 import OmegaProper.Trajectory.ConsequenceRelation
+import OmegaProper.Trajectory.HiddenLossUnderBadPresentation
+import OmegaProper.Trajectory.HiddenViabilityLossUnderBadPresentation
+import OmegaProper.Trajectory.IrreversibleReachLoss
+import OmegaProper.Trajectory.IrreversibleViabilityLoss
 import OmegaProper.Trajectory.PresentationInvariant
 import OmegaProper.Trajectory.PresentationInvariantExamples
 import OmegaProper.Trajectory.PredicateFixpoint
@@ -25,6 +29,7 @@ import OmegaProper.Trajectory.ProfileAbstraction
 import OmegaProper.Trajectory.Quotient
 import OmegaProper.Trajectory.ReachabilityReflection
 import OmegaProper.Trajectory.ReachabilityViability
+import OmegaProper.Trajectory.SafePresentationContract
 import OmegaProper.Trajectory.SoundQuotient
 import OmegaProper.Trajectory.SoundPresentationFamily
 import OmegaProper.Trajectory.TargetPresentationInvariant
