@@ -37,6 +37,8 @@ import OmegaProper.Trajectory.RecurrentViableClass
 import OmegaProper.Trajectory.SafePresentationContract
 import OmegaProper.Trajectory.SoundQuotient
 import OmegaProper.Trajectory.SoundPresentationFamily
+import OmegaProper.Trajectory.SupportMinimality
+import OmegaProper.Trajectory.SupportRestriction
 import OmegaProper.Trajectory.SustainingViableClass
 import OmegaProper.Trajectory.TargetPresentationInvariant
 import OmegaProper.Trajectory.ViabilityReflection
