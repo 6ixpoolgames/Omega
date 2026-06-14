@@ -30,11 +30,14 @@ The Validation Router workflow checks:
 changed-file resolution for the pushed/PR diff
 git diff --check over that diff
 path routing summary for the heavyweight workflows
+classic commit status publication for connector-readable validation
 ```
 
 It is intentionally cheap and always-on. It exists so every pushed head has a
 visible external check even when the full Lean or baseline witness workflows are
-skipped by path filters.
+skipped by path filters. It also publishes a classic commit status named
+`Validation Router` because some connector surfaces read classic statuses but do
+not reliably expose GitHub Actions check runs.
 
 The Lean workflow checks:
 

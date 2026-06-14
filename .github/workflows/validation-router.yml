@@ -11,6 +11,7 @@ on:
 
 permissions:
   contents: read
+  statuses: write
 
 jobs:
   route:
@@ -18,6 +19,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Mark classic commit status pending
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          STATUS_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+          TARGET_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          curl -fsS \
+            -X POST \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/${{ github.repository }}/statuses/$STATUS_SHA" \
+            -d "{\"state\":\"pending\",\"context\":\"Validation Router\",\"description\":\"Validation router is running\",\"target_url\":\"$TARGET_URL\"}" \
+          || echo "Warning: unable to publish pending classic commit status"
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -83,3 +101,41 @@ jobs:
               echo "- none"
             fi
           } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Publish classic commit status
+        if: always()
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          STATUS_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+          TARGET_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+
+          case "${{ job.status }}" in
+            success)
+              state="success"
+              description="Validation router passed"
+              ;;
+            failure)
+              state="failure"
+              description="Validation router failed"
+              ;;
+            cancelled)
+              state="error"
+              description="Validation router was cancelled"
+              ;;
+            *)
+              state="error"
+              description="Validation router ended with unknown status"
+              ;;
+          esac
+
+          curl -fsS \
+            -X POST \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/${{ github.repository }}/statuses/$STATUS_SHA" \
+            -d "{\"state\":\"$state\",\"context\":\"Validation Router\",\"description\":\"$description\",\"target_url\":\"$TARGET_URL\"}" \
+          || echo "Warning: unable to publish final classic commit status"
