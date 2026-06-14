@@ -228,6 +228,7 @@ viable_trajectory_language_v0.md
 safe_presentation_contract_v0.md
 safe_loss_visibility_v0.md
 loss_aware_presentation_contract_v0.md
+loss_aware_presentation_constructors_v0.md
 loss_aware_presentation_strictness_v0.md
 ```
 

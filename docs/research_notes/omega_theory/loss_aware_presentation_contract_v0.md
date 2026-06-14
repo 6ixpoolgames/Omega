@@ -98,3 +98,21 @@ formal/lean/OmegaProper/Trajectory/LossAwarePresentationStrictness.lean
 
 Safe/reflection contracts can hold while loss visibility fails, so loss-aware
 contracts are not merely a renaming of safe presentation contracts.
+
+## Constructors
+
+The companion constructor file records sufficient conditions for building
+loss-aware contracts:
+
+```text
+formal/lean/OmegaProper/Trajectory/LossAwarePresentationConstructors.lean
+docs/research_notes/omega_theory/loss_aware_presentation_constructors_v0.md
+```
+
+The key constructor says:
+
+```text
+safe/reflection contract
++ exact target is constant on presentation fibers
+=> loss-aware contract
+```
