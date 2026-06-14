@@ -97,6 +97,7 @@ by mapping the before-loss and after-loss states together.
 SafePresentationContract.lean
 SafeLossVisibility.lean
 LossAwarePresentationContract.lean
+LossAwarePresentationStrictness.lean
 ```
 
 This packages consequence soundness with the relevant dynamics reflection
@@ -122,6 +123,15 @@ LossAwareViabilityPresentationContract
 Loss-aware presentations cannot fabricate continuation and cannot erase exact
 loss steps.
 
+`LossAwarePresentationStrictness.lean` proves the taxonomy is strict:
+
+```text
+reachSafeContract_without_lossVisibility
+viabilitySafeContract_without_lossVisibility
+```
+
+Safe/reflection contracts can hold while loss visibility fails.
+
 ## Failure And Blocker Matrix
 
 | Failure mode | Lean file | Bad-presentation theorem | Blocking theorem |
@@ -142,6 +152,9 @@ SafeLossVisibility:
 
 LossAwarePresentationContract:
   no fabrication and no hidden loss
+
+LossAwarePresentationStrictness:
+  safe/reflection alone does not imply loss visibility
 ```
 
 ## Current Strong Claim

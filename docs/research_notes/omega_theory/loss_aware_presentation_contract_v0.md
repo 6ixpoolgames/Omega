@@ -87,3 +87,14 @@ Loss visibility prevents loss from being hidden by a presentation.
 
 Loss-aware contracts require both. This is the narrow dynamics-side bridge
 toward irreversible-loss reasoning, not a value or alignment theorem.
+
+## Strictness
+
+The companion strictness file proves this is a real strengthening:
+
+```text
+formal/lean/OmegaProper/Trajectory/LossAwarePresentationStrictness.lean
+```
+
+Safe/reflection contracts can hold while loss visibility fails, so loss-aware
+contracts are not merely a renaming of safe presentation contracts.
