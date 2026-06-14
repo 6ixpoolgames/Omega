@@ -15,6 +15,7 @@ import OmegaProper.Trajectory.ConsequenceDiscipline
 import OmegaProper.Trajectory.ConsequencePanelDiscipline
 import OmegaProper.Trajectory.ConsequenceRelation
 import OmegaProper.Trajectory.HiddenLossUnderBadPresentation
+import OmegaProper.Trajectory.HiddenJointViabilityLossUnderBadPresentation
 import OmegaProper.Trajectory.HiddenViabilityLossUnderBadPresentation
 import OmegaProper.Trajectory.IrreversibleReachLoss
 import OmegaProper.Trajectory.IrreversibleViabilityLoss
@@ -46,6 +47,7 @@ import OmegaProper.Trajectory.SustainingSafePrefixes
 import OmegaProper.Trajectory.SustainingViableClass
 import OmegaProper.Trajectory.TargetPresentationInvariant
 import OmegaProper.Trajectory.TrajectorySemantics
+import OmegaProper.Trajectory.ViableTrajectoryLanguage
 import OmegaProper.Trajectory.ViabilityReflection
 
 /-!

@@ -188,7 +188,10 @@ profile-abstraction contracts separating coarse allow/block claims from exact
 profiles via explicit soundness and completeness predicates;
 proto-teleological profile bridge showing that a proto seed supplies a
 nonempty exact merge-block profile and defeats universal-allow abstraction
-soundness.
+soundness;
+reachability/viability fixed-point semantics, trajectory safe-prefix
+semantics, joint viability guardrails, hidden reach/viability/joint-viability
+loss under bad presentations, and loss-aware abstraction contracts.
 ```
 
 This is formal infrastructure only. It does not instantiate an empirical
@@ -218,6 +221,10 @@ finite_distinction_measures_v0.md
 probabilistic_channel_presentation_v0.md
 compatibility_audit_taxonomy_v0.md
 dynamics_abstraction_status_v0.md
+boundary_invariant_continuation_roadmap_v0.md
+joint_viability_v0.md
+hidden_joint_viability_loss_under_bad_presentation_v0.md
+viable_trajectory_language_v0.md
 safe_presentation_contract_v0.md
 safe_loss_visibility_v0.md
 loss_aware_presentation_contract_v0.md
