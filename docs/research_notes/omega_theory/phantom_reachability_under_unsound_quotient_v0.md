@@ -85,6 +85,7 @@ Lean proves:
 ```text
 unsound_merge_fabricates_phantom_reachability
 unsound_merge_fabricates_phantom_finite_path
+mergePresentation_not_reachabilitySafeContract
 ```
 
 which packages:
@@ -105,6 +106,10 @@ not SoundQuotient identityConsequenceSystem mergePresentation
 
 So the phantom is not merely a fixed-point artifact. It is an apparent finite
 path created by the unsound merge.
+
+The packaged reachability-safe presentation contract also rejects the same
+presentation. The obstruction is its failed consequence soundness: it merges
+the consequence-separated states `b` and `c`.
 
 ## Interpretation
 

@@ -105,3 +105,16 @@ no invented sustaining transitions
 no invented finite-path witnesses
 no invented safe-prefix witnesses
 ```
+
+## Existing Negative Controls
+
+The current phantom examples are rejected by the packaged contracts:
+
+```text
+PhantomReachability.mergePresentation_not_reachabilitySafeContract
+PhantomViability.bad_presentation_not_viabilitySafeContract
+```
+
+The reachability example fails consequence soundness by merging
+consequence-separated exact states. The viability example fails step
+reflection by adding an abstract self-loop with no exact transition witness.

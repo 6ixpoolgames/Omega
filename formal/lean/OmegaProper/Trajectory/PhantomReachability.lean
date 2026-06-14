@@ -1,5 +1,6 @@
 import OmegaProper.Trajectory.PresentationInvariant
 import OmegaProper.Trajectory.ReachabilityViability
+import OmegaProper.Trajectory.SafePresentationContract
 import OmegaProper.Trajectory.TrajectorySemantics
 
 /-!
@@ -24,6 +25,7 @@ open ConsequenceRelation
 open PredicateFixpoint
 open PresentationInvariant
 open ReachabilityViability
+open SafePresentationContract
 open TrajectorySemantics
 
 /-- Exact four-state system: `a -> b` and `c -> d`, with no bridge. -/
@@ -202,6 +204,23 @@ theorem unsound_merge_fabricates_phantom_finite_path :
     (And.intro
       abstract_qa_finitePathToTarget_qd
       mergePresentation_not_sound)
+
+/--
+The packaged safe-presentation contract excludes the phantom reachability
+presentation because the presentation is not consequence-sound.
+-/
+theorem mergePresentation_not_reachabilitySafeContract :
+    Not (
+      ReachabilitySafePresentationContract
+        identityConsequenceSystem
+        abstractDyn
+        mergePresentation
+        exactNext
+        exactTarget
+        abstractTarget
+    ) := by
+  intro hContract
+  exact mergePresentation_not_sound hContract.consequence_sound
 
 end PhantomReachability
 end Trajectory

@@ -93,6 +93,7 @@ Lean proves:
 ```text
 bad_presentation_fabricates_phantom_viability
 bad_presentation_fabricates_arbitrarily_long_safe_prefixes
+bad_presentation_not_viabilitySafeContract
 ```
 
 which packages:
@@ -113,6 +114,10 @@ not ViabilityReflectingPresentation
 
 The exact negative is proved directly: the exact state has no one-step safe
 prefix because it has no outgoing transition.
+
+The packaged viability-safe presentation contract also rejects the same
+presentation. The obstruction is its failed step reflection: the abstract
+self-loop has no exact transition witness.
 
 ## Interpretation
 

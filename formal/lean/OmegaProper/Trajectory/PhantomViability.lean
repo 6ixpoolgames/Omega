@@ -1,3 +1,4 @@
+import OmegaProper.Trajectory.SafePresentationContract
 import OmegaProper.Trajectory.ViabilityReflection
 
 /-!
@@ -18,8 +19,10 @@ namespace Trajectory
 namespace PhantomViability
 
 open PredicateFixpoint
+open ConsequenceRelation
 open ReachabilityReflection
 open ReachabilityViability
+open SafePresentationContract
 open TrajectorySemantics
 open ViabilityReflection
 
@@ -55,6 +58,14 @@ def abstractSafe : AbstractState -> Prop
 
 def present : ExactState -> AbstractState
   | ExactState.x => AbstractState.qx
+
+def identityConsequenceSystem : ConsequenceSystem where
+  Fragment := ExactState
+  Context := Unit
+  Outcome := ExactState
+  consequence := fun _ state => state
+  Compare := fun _ left right => left = right
+  Evaluated := fun _ => True
 
 /-- No predicate can be postfixed for exact viability at `x`. -/
 theorem exact_x_not_viable :
@@ -158,6 +169,23 @@ theorem bad_presentation_fabricates_arbitrarily_long_safe_prefixes :
     (And.intro
       abstract_qx_arbitrarilyLongSafePrefixes
       not_viabilityReflectingPresentation)
+
+/--
+The packaged safe-presentation contract excludes the phantom viability
+presentation because the presentation fails step reflection.
+-/
+theorem bad_presentation_not_viabilitySafeContract :
+    Not (
+      ViabilitySafePresentationContract
+        identityConsequenceSystem
+        abstractDyn
+        present
+        exactNext
+        exactSafe
+        abstractSafe
+    ) := by
+  intro hContract
+  exact not_stepReflects hContract.step_reflects
 
 end PhantomViability
 end Trajectory
