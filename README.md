@@ -1,374 +1,157 @@
-# Omega / Reachable Futures Lab
+# Omega
 
 [![Lean AlphaOmega](https://github.com/6ixpoolgames/Omega/actions/workflows/lean-alphaomega.yml/badge.svg?branch=master)](https://github.com/6ixpoolgames/Omega/actions/workflows/lean-alphaomega.yml)
 [![Baseline Witness Smoke](https://github.com/6ixpoolgames/Omega/actions/workflows/baseline-witness-smoke.yml/badge.svg?branch=master)](https://github.com/6ixpoolgames/Omega/actions/workflows/baseline-witness-smoke.yml)
 [![Validation Router](https://github.com/6ixpoolgames/Omega/actions/workflows/validation-router.yml/badge.svg?branch=master)](https://github.com/6ixpoolgames/Omega/actions/workflows/validation-router.yml)
 
-Omega is a research program about **consequence-bearing continuation** and its
-downstream relation to value-bearing futures.
+Omega is a research program for treating alignment as the problem of preserving the corridor of compatible, value-bearing futures. This repo is the formal toolbench for that program: it proves small, auditable theorems about when abstractions can be trusted, when proxies fail, and when models fabricate continuation or hide irreversible loss.
 
-The working north star is:
+If the long-term goal is to mark the safe path for intelligent agency, the first problem is not drawing the path. It is proving that the map is not lying.
 
-```text
-Alpha and Omega are two faces of one object.
+## The Thesis
 
-Alpha names the primitive grammar by which differences can become
-consequence-bearing.
+Alignment is not only an objective-selection problem. It is also an abstraction-integrity problem.
 
-Omega names the possible maximal compatible unfolding of consequence-bearing
-structure across admissible continuations.
-```
+Any intelligent system acts through models, metrics, summaries, boundaries, policies, and compressed presentations of the world. Those presentations can fail in several dangerous ways:
 
-In this framing, "future" is the temporal adapter of a broader notion:
-continuation. A continuation may be a transition, derivation, completion,
-composition, deformation, path, or other admissible unfolding supplied by a
-substrate.
+- They can merge states whose consequences are different.
+- They can make two futures look equally viable when one has lost a necessary distinction.
+- They can create phantom reachability that is not present in the exact system.
+- They can preserve a proxy while destroying the target the proxy was supposed to protect.
 
-Value enters downstream. Value is not a property of arbitrary states; it
-requires valuers. Valuers require robust, recoverable, continuation-bearing
-trajectories. The formal lower stack asks what must already be true before such
-trajectories can become legible.
+Omega studies the formal conditions under which those failures can be detected or ruled out.
 
-Current claim boundary:
+## Alpha-Omega In Plain English
 
-```text
-This repository does not validate Omega.
-It does not detect valuers, value, agency, identity, or compatibility.
-It contains formal scaffolds, checked finite presentations, and empirical
-instruments for studying recoverability, provenance, and finite future
-structure.
-```
+The project uses "Alpha-Omega" for the two ends of one structure.
 
-## License
+Alpha is the primitive end: relation, distinction, asymmetry, and consequence. It asks how a difference can matter before we assume selves, agents, preferences, rewards, or moral facts.
 
-This repository is licensed under the MIT License. See [LICENSE](LICENSE).
+Omega is the terminal ambition: the maximal compatible development of value-bearing continuation. It asks what it would mean for intelligent agency as a whole to stay inside the narrow corridor where many compatible futures remain open enough for valuers to exist and flourish.
 
-## Mission and Vision
+The point of the lower formal stack is to earn the upper language. We do not start by defining a self, an agent, or a value function. We start with consequence-bearing distinctions and ask what abstractions are allowed to erase.
 
-Most alignment and value theories start with agents, preferences, rewards,
-selves, or moral objects already on the table. Omega tries to start earlier
-without pretending that the lower level is already value.
+## Why Proto-Teleology Matters
 
-The current ladder is:
+The current milestone is proto-teleology.
+
+This does not mean purpose, intention, morality, or agency. It means directed consequence before any of those are assumed:
 
 ```text
-Alpha:
-  primitive grammar: relation, distinction, asymmetry
-
-AlphaCalculus:
-  recoverability, transport, recurrence, non-erasure, separation, and
-  composition laws
-
-Consequence / continuation layer:
-  consequence-induced separation, forbidden identification, collapse and
-  over-separation guardrails, and continuation-native trajectory scaffolds
-
-AlphaAdapters:
-  finite presentations and empirical bridges that expose what a substrate does
-  or does not provide
-
-Trajectory / viability layer:
-  process-bundles, actions, perturbations, persistence, robustness, and
-  compatible continuation
-
-Omega:
-  possible maximal compatible development of consequence-bearing continuation,
-  with valuer-bearing futures as a downstream value-capable manifestation
-```
-
-The central correction is now:
-
-```text
-Continuation, not time, is primitive.
 A difference matters when erasing it changes what can follow.
-Mattering precedes value.
-Value enters only when consequence-bearing structures support valuers.
 ```
 
-Distinction persistence is therefore a necessary substrate condition, not value
-itself. The lower object is consequence-bearing difference; the downstream value
-object is a robust valuer-bearing trajectory under compatibility and viability
-constraints.
+That is already useful for weak, constraint-based alignment. Even before a full theory of value or valuerhood, we can reject presentations, policies, metrics, or abstractions that hide consequence-bearing loss, invent impossible continuation, or merge distinctions that declared continuation tests separate.
+
+That makes proto-teleology the bridge between low-level formal structure and the larger Gradient Ethics idea, also described as value preservation under uncertainty: under uncertainty and irreversibility, preserving the conditions for future value-bearing continuation becomes a structural safety constraint.
+
+## What Is Proved So Far
+
+The strongest current results are deliberately small.
+
+- **Sound quotients:** a quotient is safe only when its kernel is contained in consequence-identifiability. See [SoundQuotient.lean](formal/lean/OmegaProper/Trajectory/SoundQuotient.lean) and [standard core compression](docs/research_notes/omega_theory/standard_core_compression_v0.md).
+- **Class soundness:** a valid class is a clique of pairwise compatibility, not merely a connected component. See [class soundness as clique](docs/research_notes/omega_theory/class_soundness_as_clique_v0.md).
+- **Non-factorization:** if a target changes while a summary stays fixed, the target cannot factor through that summary. This is the repo's basic anti-Goodhart instrument. See [NonFactorization.lean](formal/lean/OmegaProper/BaselineWitnesses/NonFactorization.lean) and the [witness index](docs/research_notes/omega_theory/nonfactorization_witness_index_v0.md).
+- **Exact recovery:** finite declared recovery is equivalent to observed support disjointness. See [exact recovery support disjointness](docs/research_notes/omega_theory/exact_recovery_support_disjointness_v0.md).
+- **Presentation invariance:** sound presentations cannot erase merge-separated consequence structure. See [presentation-invariant consequence](docs/research_notes/omega_theory/presentation_invariant_consequence_v0.md).
+- **Reachability and viability:** reach and viability are formalized as fixed-point objects, with reflection contracts for safe abstraction. See [reachability/viability](docs/research_notes/omega_theory/reachability_viability_v0.md), [reachability reflection](docs/research_notes/omega_theory/reachability_reflection_v0.md), and [viability reflection](docs/research_notes/omega_theory/viability_reflection_v0.md).
+- **Bad abstractions:** finite theorems show unsound presentations can fabricate reachability or viability and can hide loss. See [phantom reachability](docs/research_notes/omega_theory/phantom_reachability_under_unsound_quotient_v0.md), [hidden reach loss](docs/research_notes/omega_theory/hidden_reach_loss_under_bad_presentation_v0.md), and [hidden viability loss](docs/research_notes/omega_theory/hidden_viability_loss_under_bad_presentation_v0.md).
+- **Loss-aware contracts:** stronger contracts separate safe abstraction from tempting but insufficient one-way simulations. See [loss-aware presentation contracts](docs/research_notes/omega_theory/loss_aware_presentation_contract_v0.md), [loss-aware strictness](docs/research_notes/omega_theory/loss_aware_presentation_strictness_v0.md), and [safe loss visibility](docs/research_notes/omega_theory/safe_loss_visibility_v0.md).
+
+These are toy-world theorems by design. Small finite worlds are where false abstraction principles are easiest to expose. If a proposed metric or quotient already fails there, it has not earned trust in a larger substrate.
+
+## Why This Matters For Alignment
+
+This repo is adjacent to familiar ideas in Goodhart's law, abstract interpretation, viability theory, option value, empowerment, impact measures, and attainable-utility or power-seeking analyses. The contribution is not that those literatures are wrong. The contribution is a focused proof discipline for a recurring alignment question:
+
+```text
+Does this summary preserve the consequence-bearing target it is being used to stand in for?
+```
+
+That question matters for benchmarks, interpretability proxies, reward models, safety constraints, agent boundaries, corrigibility metrics, and long-horizon planning abstractions. A model can look aligned under a lossy presentation while the exact system has already lost the thing the presentation was meant to preserve.
+
+The alignment-facing ambition is to turn this into "yellow paint" for the viable corridor: not a total value function, but a machine-checkable family of constraints showing when a proposed abstraction, policy, or continuation has preserved enough of the value-bearing substrate to remain on the path.
 
 ## Current Status
 
-The project currently has three active layers.
+This is active research, not a completed theory of value.
 
-### 1. Formal Arm
-
-The primitive floor is **Alpha Primitive Core v0**: relation, distinction, and
-asymmetry.
-
-`AlphaOmega` is the active Lean umbrella for the project stack.
-`AlphaCore`, `AlphaCalculus`, `AlphaAdapters`, and `Omega` are the public layer
-names. `ProtoOmega`, `OmegaAdapters`, and `OmegaProper` remain compatibility
-implementation namespaces during migration. `OmegaCore` remains checked
-provenance from the earlier root-calculus pass.
-
-The Lean sandbox currently checks:
+The repo currently supports a disciplined proto-teleological floor:
 
 ```text
-Alpha primitive frame over relation, distinction, and asymmetry;
-Alpha reachability and finite separation examples;
-primitive non-collapse examples;
-primitive nondegeneracy witnesses blocking total relation and identification
-collapse;
-primitive-preserving maps between Alpha frames, including identity,
-composition, witness preservation, and no-map-to-collapse guardrails;
-root transport laws;
-recoverability weakening / strengthening;
-compositional recoverability;
-non-erasure monotonicity;
-finite-chain recurrent recoverability;
-finite maximal completion existence;
-finite counterexamples for pairwise-vs-joint and greatest-vs-maximal collapse;
-marginal-like non-erasure not implying strictly joint non-erasure;
-adapter-failure examples for missing closure or laxity laws;
-Boolean relation support presentation;
-finite channel / partition presentation;
-probabilistic channel presentation, including exact/probabilistic separation,
-full-support converse, finite cascade error bound, fixed-declared versus
-Bayes-best policy separation, and thresholded probabilistic non-erasure;
-consequence-native guardrails separating directional allowance from symmetric
-identification and blocking invalid class formation;
-Alpha-to-consequence seed bridge showing that evaluated consequence refusal
-over primitive witness endpoints blocks symmetric consequence identification;
-proto-teleological seed wrappers showing that primitive Alpha contact plus
-evaluated consequence merge-separation implies primitive nondegeneracy,
-consequence noncollapse, and a witness blocking symmetric consequence
-identification, while primitive nondegeneracy alone and consequence
-noncollapse alone are not sufficient;
-speculative deformation-profile bridge comparing exact merge-block and
-merge-allow profiles between consequence systems over the same Alpha carrier,
-without defining identity or recoverability;
-profile-abstraction contracts separating coarse allow/block claims from exact
-profiles via explicit soundness and completeness predicates;
-proto-teleological profile bridge showing that a proto seed supplies a
-nonempty exact merge-block profile and defeats universal-allow abstraction
-soundness.
+consequence-bearing distinction
+-> sound identification / sound presentation
+-> target and profile invariance
+-> fixed-point reachability and viability
+-> hidden-loss and phantom-continuation counterexamples
+-> loss-aware abstraction contracts
 ```
 
-Key files:
-
-```text
-formal/lean/AlphaOmega.lean
-formal/lean/AlphaCore.lean
-formal/lean/AlphaCalculus.lean
-formal/lean/AlphaAdapters.lean
-formal/lean/Omega.lean
-formal/lean/OmegaCore.lean
-docs/research_notes/omega_theory/alpha_primitive_core_v0.md
-docs/research_notes/omega_theory/omega_primitive_calculus_v0_lean_root_skeleton.md
-docs/research_notes/omega_theory/probabilistic_channel_presentation_v0.md
-```
-
-The formal work is not a proof of physical or ethical claims. It is a way to
-make assumptions, theorem transfer, and failure modes explicit.
-
-### 2. Registry-First Stochastic Channel Arm
-
-The cleanest current empirical-formal bridge is the registry-first stochastic
-channel branch.
-
-It uses finite carriers and exact natural-weight channels to separate:
-
-```text
-declared registry recovery:
-  a predeclared decoder registry works
-
-existence / capacity recovery:
-  some exact decoder exists, whether or not it was declared
-
-optimized diagnostic recovery:
-  a best available target/decoder choice succeeds after search
-```
-
-This branch is designed to block a self-validating shortcut:
-
-```text
-some decoder exists = the declared instrument recovered the distinction
-```
-
-The current shared engine is:
-
-```text
-omega/stochastic_distinction_channel/registry_first_engine.py
-```
-
-X2 and X3 are now thin configs over that engine:
-
-```text
-omega/stochastic_distinction_channel/registry_first_probe.py
-omega/stochastic_distinction_channel/registry_first_x3_probe.py
-```
-
-Current retained result:
-
-```text
-results/stochastic_distinction_channel/20260606_registry_first_probe_x3_v0/
-docs/research_notes/validation_results/stochastic_distinction_channel/stochastic_registry_first_probe_x3_result.md
-```
-
-Current read:
-
-```text
-carrier_id: X3
-state_count: 8
-channel_count: 15
-registered_rows: 120
-provenance_gap_rows: 120
-adversarial_audit: PASS
-```
-
-The result is a finite presentation/provenance result. It is not value or
-valuer detection.
-
-### 3. Future Field Atlas
-
-Future Field Atlas is retained, but it is now demoted to:
-
-```text
-Future Field Atlas v0:
-  preformal reachable-frontier morphology instrument
-```
-
-FFA scans finite transition substrates by unfolding reachable frontiers,
-recording topology, comparing product and coupled baselines, checking artifact
-completeness, and emitting morphology summaries.
-
-That remains useful as finite-dynamics stress testing. It should not be treated
-as the central empirical object for Omega.
-
-The next empirical target should be trajectory-level:
-
-```text
-process-bundles
-action channels
-viability constraints
-perturbation regimes
-robust continuation
-correction channels
-compatibility audits
-irreversible process loss
-```
-
-FFA features can become subordinate diagnostics inside such a trajectory atlas,
-but frontier morphology alone is not valuerhood.
-
-## Current Reorientation
-
-Two current roadmap notes define the revised target:
-
-```text
-docs/VALUER_FORMAL_TARGET_V0.md
-docs/OMEGA_COMPATIBLE_VALUER_TRAJECTORY_SPACE_V0.md
-```
-
-The compact target is:
-
-```text
-robust recoverable persistence of future-bearing agency under compatibility
-constraints
-```
-
-The next formal work should define finite scaffolds for:
-
-```text
-trajectory families
-process-bundle persistence predicates
-action-channel counterfactuality
-viability predicates
-compatibility predicates
-maximal admissible trajectory families
-irreversible loss examples
-pairwise-vs-joint compatibility failures
-singleton-control counterexamples
-```
-
-Only after that should the empirical branch build a trajectory-level atlas.
-
-## What This Repository Does Not Claim
-
-This repository does not currently claim:
-
-```text
-Omega validation;
-proto-valuer detection;
-valuer detection;
-agent detection;
-identity detection;
-value detection;
-compatibility detection;
-support / capture / erasure detection;
-life detection;
-self-replication detection;
-holdout readiness;
-substrate-general theory validation.
-```
-
-Positive empirical results should be read as formal, instrumental, or
-substrate-characterization results.
+What remains open is the ascent from these constraints to richer notions of valuerhood, agency, joint viability, recurrence, and ultimately Omega as a compatible value-bearing continuation structure. Those terms are motivations and targets, not already-validated claims.
 
 ## Start Here
 
-For the current public orientation:
+For the high-level orientation:
 
-1. [Valuer Formal Target v0](docs/VALUER_FORMAL_TARGET_V0.md)
-2. [Omega as Compatible Valuer-Trajectory Space v0](docs/OMEGA_COMPATIBLE_VALUER_TRAJECTORY_SPACE_V0.md)
-3. [Omega Formalism Primer](docs/OMEGA_FORMALISM_PRIMER.md)
-4. [External Reader Guide](docs/EXTERNAL_READER_GUIDE.md)
-5. [Omega Theory Notes Map](docs/research_notes/omega_theory/README.md)
+1. [Project Overview](docs/PROJECT_OVERVIEW.md)
+2. [Omega Formalism Primer](docs/OMEGA_FORMALISM_PRIMER.md)
+3. [External Reader Guide](docs/EXTERNAL_READER_GUIDE.md)
+4. [Standard Core Compression](docs/research_notes/omega_theory/standard_core_compression_v0.md)
+5. [Dynamics Abstraction Status](docs/research_notes/omega_theory/dynamics_abstraction_status_v0.md)
 
-For checked formal work:
+For the current theorem spine:
 
-1. [Alpha Primitive Core v0](docs/research_notes/omega_theory/alpha_primitive_core_v0.md)
-2. [Omega Primitive Calculus v0 Lean Root Skeleton](docs/research_notes/omega_theory/omega_primitive_calculus_v0_lean_root_skeleton.md)
-3. [Probabilistic Channel Presentation v0](docs/research_notes/omega_theory/probabilistic_channel_presentation_v0.md)
+1. [Sound Quotient](formal/lean/OmegaProper/Trajectory/SoundQuotient.lean)
+2. [Class Soundness as Clique](formal/lean/OmegaProper/Trajectory/ClassSoundnessAsClique.lean)
+3. [Non-Factorization](formal/lean/OmegaProper/BaselineWitnesses/NonFactorization.lean)
+4. [Exact Recovery Support](formal/lean/OmegaProper/BaselineWitnesses/ExactRecoverySupport.lean)
+5. [Loss-Aware Presentation Contract](formal/lean/OmegaProper/Trajectory/LossAwarePresentationContract.lean)
+6. [AlphaOmega Lean Umbrella](formal/lean/AlphaOmega.lean)
 
-For empirical results:
+For validation and claim hygiene:
 
-1. [Stochastic Registry-First Probe X3 Result](docs/research_notes/validation_results/stochastic_distinction_channel/stochastic_registry_first_probe_x3_result.md)
-2. [Stochastic Registry-First Probe Medium Result](docs/research_notes/validation_results/stochastic_distinction_channel/stochastic_registry_first_probe_medium_result.md)
-3. [Future Field Atlas Instrument Spec](docs/specs/current/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md)
-4. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
+1. [Validation](docs/VALIDATION.md)
+2. [Claims Ledger](docs/CLAIMS_LEDGER.md)
+3. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
+4. [Bad Panel Taxonomy](docs/research_notes/omega_theory/bad_panel_taxonomy_v0.md)
 
-For local workflow:
+For provenance and workflow:
 
-```text
-docs/OMEGA_PROJECT_MANUAL.md
-```
+1. [Human-AI Workflow](docs/HUMAN_AI_WORKFLOW.md)
+2. [No-Self Evidence Archival Note](docs/references/no_self_evidence_archival_note.md)
 
-For external validation:
+## Roadmap
 
-```text
-docs/VALIDATION.md
-docs/BASELINE_WITNESS_SMOKE.md
-docs/REPRODUCIBILITY_SMOKE.md
-docs/CLAIMS_LEDGER.md
-docs/KNOWN_REDUCTIONS_AND_BASELINES.md
-```
+Near-term work is focused on:
+
+1. Constructor theorems for loss-aware presentation contracts.
+2. Irreversible-loss corridor theorems.
+3. Joint viability and pairwise-vs-joint compatibility failures.
+4. Stronger finite adapters and generated witness families.
+5. A cleaner bridge from viability constraints to Gradient Ethics.
+6. A more mature account of value-bearing trajectories without assuming self or identity as primitives.
 
 ## Repository Map
 
 ```text
 formal/lean/
-  Lean proof-assistant sandbox for Alpha, formal presentations, and adapters
+  Lean proof-assistant sandbox for Alpha, consequence, presentation,
+  reachability, viability, and abstraction-contract theorems.
 
-omega/stochastic_distinction_channel/
-  registry-first stochastic-channel probes and theorem-transfer audit machinery
-
-omega/future_field_atlas/
-  finite reachable-frontier morphology instrument
+omega/
+  Python instruments, finite witness tooling, stochastic-channel probes,
+  and validation scripts.
 
 docs/research_notes/omega_theory/
-  dense theory notes and theorem scaffolds
+  Dense theory notes, theorem scaffolds, and status reports.
 
-docs/research_notes/validation_results/
-  retained empirical result notes
-
-docs/specs/current/
-  active run/spec inbox
+docs/papers/drafts/
+  Draft paper artifacts for internal review.
 
 results/
-  local and retained result artifacts
+  Retained local result artifacts.
 ```
+
+## License
+
+This repository is licensed under the MIT License. See [LICENSE](LICENSE).
