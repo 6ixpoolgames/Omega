@@ -41,6 +41,7 @@ import OmegaProper.Trajectory.SupportMinimality
 import OmegaProper.Trajectory.SupportRestriction
 import OmegaProper.Trajectory.SustainingViableClass
 import OmegaProper.Trajectory.TargetPresentationInvariant
+import OmegaProper.Trajectory.TrajectorySemantics
 import OmegaProper.Trajectory.ViabilityReflection
 
 /-!
