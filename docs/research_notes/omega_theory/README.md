@@ -217,6 +217,9 @@ finite_omega_completion_theorems_v0.md
 finite_distinction_measures_v0.md
 probabilistic_channel_presentation_v0.md
 compatibility_audit_taxonomy_v0.md
+dynamics_abstraction_status_v0.md
+safe_presentation_contract_v0.md
+safe_loss_visibility_v0.md
 ```
 
 ## Active Scaffolds
