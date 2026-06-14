@@ -63,6 +63,8 @@ Lean proves:
 
 ```text
 abstractViable_reflects_exactViable
+abstractSafePrefix_lifts_exactSafePrefix
+abstractSafePrefix_reflects_exactSafePrefix
 abstractViable_reflects_exactSafePrefixes
 ```
 
@@ -79,6 +81,16 @@ Using the safe-prefix semantics for `Viable`, Lean also proves:
 Viable DQ safeQ (present x)
   -> ArbitrarilyLongSafePrefixes DX safeX x
 ```
+
+The direct safe-prefix theorem is:
+
+```text
+SafePrefix DQ safeQ n (present x)
+  -> SafePrefix DX safeX n x
+```
+
+So reflection lifts finite safe-prefix witnesses directly; it does not only
+preserve the greatest-fixed-point viability predicate.
 
 There is also an unpackaged version:
 

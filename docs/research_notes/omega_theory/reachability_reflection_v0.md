@@ -70,6 +70,7 @@ Lean proves:
 
 ```text
 abstractReach_reflects_exactReach
+abstractFinitePath_lifts_exactEndpoint
 abstractFinitePath_reflects_exactFinitePath
 ```
 
@@ -87,6 +88,16 @@ FinitePathToTarget DQ targetQ (present x)
   -> FinitePathToTarget DX targetX x
 ```
 
+The stronger direct lifting theorem is:
+
+```text
+FinitePath DQ (present x) q
+  -> exists y, FinitePath DX x y and present y = q
+```
+
+So reflection lifts the finite path witness itself; it does not only preserve
+the fixed-point reachability predicate.
+
 There is also an unpackaged version:
 
 ```text
@@ -103,6 +114,7 @@ It says:
 ```text
 no invented targets + no invented transitions = no invented reachability
 no invented targets + no invented transitions = no invented finite paths
+no invented transitions = abstract path witnesses lift to exact path witnesses
 ```
 
 This is separate from consequence-sound quotienting. A presentation may need

@@ -115,6 +115,43 @@ theorem abstractReach_reflects_exactReach_of_reflects
     hReachQ
 
 /--
+Direct path lifting under step reflection.
+
+An abstract finite path starting at `present x` can be lifted to an exact
+finite path starting at `x`, ending at some exact state whose presentation is
+the abstract endpoint.
+-/
+theorem abstractFinitePath_lifts_exactEndpoint
+    {DX : Dyn.{u}}
+    {DQ : Dyn.{v}}
+    {present : DX.State -> DQ.State}
+    (hStep : StepReflects DX DQ present)
+    {x : DX.State}
+    {q0 : DQ.State}
+    {q : DQ.State}
+    (hStart : present x = q0)
+    (hPathQ : FinitePath DQ q0 q) :
+    exists y : DX.State, FinitePath DX x y /\ present y = q := by
+  match hPathQ with
+  | FinitePath.refl =>
+      exact Exists.intro x (And.intro FinitePath.refl hStart)
+  | @FinitePath.step _ qStart qNext qEnd hStepQ hRest =>
+      have hStepFromPresented :
+          DQ.Next (present x) qNext := by
+        simpa [hStart] using hStepQ
+      match hStep x _ hStepFromPresented with
+      | Exists.intro y hy =>
+          match abstractFinitePath_lifts_exactEndpoint
+              hStep
+              hy.right
+              hRest with
+          | Exists.intro z hz =>
+              exact Exists.intro z
+                (And.intro
+                  (FinitePath.step hy.left hz.left)
+                  hz.right)
+
+/--
 Path-level reflection: an abstract finite path to the abstract target, starting
 from a presented exact state, reflects to an exact finite path to the exact
 target.
@@ -133,10 +170,18 @@ theorem abstractFinitePath_reflects_exactFinitePath
     {x : DX.State}
     (hPathQ : FinitePathToTarget DQ targetQ (present x)) :
     FinitePathToTarget DX targetX x := by
-  exact reach_implies_finitePathToTarget
-    (abstractReach_reflects_exactReach
-      hReflect
-      (finitePathToTarget_implies_reach hPathQ))
+  match hPathQ with
+  | Exists.intro q hq =>
+      match abstractFinitePath_lifts_exactEndpoint
+          hReflect.step_reflects
+          rfl
+          hq.left with
+      | Exists.intro y hy =>
+          exact Exists.intro y
+            (And.intro
+              hy.left
+              (hReflect.target_reflects y (by
+                simpa [hy.right] using hq.right)))
 
 /-- Direct spelling without packaging the two reflection hypotheses. -/
 theorem abstractFinitePath_reflects_exactFinitePath_of_reflects
