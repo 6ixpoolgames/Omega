@@ -118,3 +118,14 @@ PhantomViability.bad_presentation_not_viabilitySafeContract
 The reachability example fails consequence soundness by merging
 consequence-separated exact states. The viability example fails step
 reflection by adding an abstract self-loop with no exact transition witness.
+
+## Relation To Loss Visibility
+
+This contract blocks fabricated continuation claims. It does not by itself name
+the hidden-loss condition. The combined layer is:
+
+```text
+LossAwarePresentationContract.lean
+```
+
+which pairs this safe/reflection contract with loss visibility.

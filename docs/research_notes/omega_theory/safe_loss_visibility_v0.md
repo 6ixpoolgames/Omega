@@ -77,3 +77,14 @@ also preserve visibility of exact continuation loss
 
 The result is deliberately narrow. It only says that target-respecting
 presentations cannot hide exact reachability or viability loss.
+
+## Relation To Safe Presentation Contracts
+
+Loss visibility blocks hidden loss. The safe presentation contract blocks
+fabricated continuation claims. The combined layer is:
+
+```text
+LossAwarePresentationContract.lean
+```
+
+which requires both obligations when both kinds of failure matter.

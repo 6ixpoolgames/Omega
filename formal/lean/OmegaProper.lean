@@ -19,6 +19,7 @@ import OmegaProper.Trajectory.HiddenViabilityLossUnderBadPresentation
 import OmegaProper.Trajectory.IrreversibleReachLoss
 import OmegaProper.Trajectory.IrreversibleViabilityLoss
 import OmegaProper.Trajectory.JointViability
+import OmegaProper.Trajectory.LossAwarePresentationContract
 import OmegaProper.Trajectory.PathCarriedDistinction
 import OmegaProper.Trajectory.PresentationInvariant
 import OmegaProper.Trajectory.PresentationInvariantExamples
