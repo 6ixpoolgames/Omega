@@ -47,9 +47,15 @@ Lean proves:
 
 ```text
 reachabilityContract_reflects_reach
+reachabilityContract_blocks_mergeSeparated_erasure
+reachabilityContract_reflects_finitePath
+reachabilityContract_lifts_finitePath_endpoint
 ```
 
 If the contract holds, abstract reachability implies exact reachability.
+It also blocks erasure of merge-separated consequence pairs, reflects finite
+paths to target, and directly lifts abstract finite-path endpoints to exact
+finite-path endpoints.
 
 ## Viability Contract
 
@@ -69,9 +75,15 @@ Lean proves:
 
 ```text
 viabilityContract_reflects_viability
+viabilityContract_blocks_mergeSeparated_erasure
+viabilityContract_reflects_safePrefixes
+viabilityContract_reflects_safePrefix
 ```
 
 If the contract holds, abstract viability implies exact viability.
+It also blocks erasure of merge-separated consequence pairs, reflects abstract
+viability to arbitrarily long exact safe prefixes, and directly lifts finite
+safe-prefix witnesses.
 
 ## Interpretation
 
@@ -90,4 +102,6 @@ The contract is the formal version of:
 no erased consequence distinctions
 no invented targets or safety
 no invented sustaining transitions
+no invented finite-path witnesses
+no invented safe-prefix witnesses
 ```

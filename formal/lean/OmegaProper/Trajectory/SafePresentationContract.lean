@@ -21,6 +21,7 @@ namespace SafePresentationContract
 open ConsequenceRelation
 open ReachabilityReflection
 open ReachabilityViability
+open TrajectorySemantics
 open ViabilityReflection
 
 universe w k o v
@@ -91,6 +92,81 @@ theorem reachabilityContract_reflects_reach
     }
     hReachQ
 
+theorem reachabilityContract_blocks_mergeSeparated_erasure
+    {S : ConsequenceSystem.{w, k, o}}
+    {DQ : Dyn.{v}}
+    {present : S.Fragment -> DQ.State}
+    {NextX : S.Fragment -> S.Fragment -> Prop}
+    {targetX : S.Fragment -> Prop}
+    {targetQ : DQ.State -> Prop}
+    (hContract :
+      ReachabilitySafePresentationContract
+        S
+        DQ
+        present
+        NextX
+        targetX
+        targetQ)
+    {x y : S.Fragment}
+    (hErases : present x = present y)
+    (hSep : ConsequenceMergeSeparated S x y) :
+    False := by
+  exact SoundQuotient.soundQuotient_blocks_mergeSeparated_kernel
+    hContract.consequence_sound
+    hSep
+    hErases
+
+theorem reachabilityContract_reflects_finitePath
+    {S : ConsequenceSystem.{w, k, o}}
+    {DQ : Dyn.{v}}
+    {present : S.Fragment -> DQ.State}
+    {NextX : S.Fragment -> S.Fragment -> Prop}
+    {targetX : S.Fragment -> Prop}
+    {targetQ : DQ.State -> Prop}
+    (hContract :
+      ReachabilitySafePresentationContract
+        S
+        DQ
+        present
+        NextX
+        targetX
+        targetQ)
+    {x : S.Fragment}
+    (hPathQ : FinitePathToTarget DQ targetQ (present x)) :
+    FinitePathToTarget (exactDynFromNext NextX) targetX x := by
+  exact ReachabilityReflection.abstractFinitePath_reflects_exactFinitePath
+    {
+      target_reflects := hContract.target_reflects,
+      step_reflects := hContract.step_reflects
+    }
+    hPathQ
+
+theorem reachabilityContract_lifts_finitePath_endpoint
+    {S : ConsequenceSystem.{w, k, o}}
+    {DQ : Dyn.{v}}
+    {present : S.Fragment -> DQ.State}
+    {NextX : S.Fragment -> S.Fragment -> Prop}
+    {targetX : S.Fragment -> Prop}
+    {targetQ : DQ.State -> Prop}
+    (hContract :
+      ReachabilitySafePresentationContract
+        S
+        DQ
+        present
+        NextX
+        targetX
+        targetQ)
+    {x : S.Fragment}
+    {q : DQ.State}
+    (hPathQ : FinitePath DQ (present x) q) :
+    exists y : S.Fragment,
+      FinitePath (exactDynFromNext NextX) x y /\
+      present y = q := by
+  exact ReachabilityReflection.abstractFinitePath_lifts_exactEndpoint
+    hContract.step_reflects
+    rfl
+    hPathQ
+
 /--
 Contract for using a presentation in a viability claim.
 
@@ -149,6 +225,81 @@ theorem viabilityContract_reflects_viability
       step_reflects := hContract.step_reflects
     }
     hViableQ
+
+theorem viabilityContract_blocks_mergeSeparated_erasure
+    {S : ConsequenceSystem.{w, k, o}}
+    {DQ : Dyn.{v}}
+    {present : S.Fragment -> DQ.State}
+    {NextX : S.Fragment -> S.Fragment -> Prop}
+    {safeX : S.Fragment -> Prop}
+    {safeQ : DQ.State -> Prop}
+    (hContract :
+      ViabilitySafePresentationContract
+        S
+        DQ
+        present
+        NextX
+        safeX
+        safeQ)
+    {x y : S.Fragment}
+    (hErases : present x = present y)
+    (hSep : ConsequenceMergeSeparated S x y) :
+    False := by
+  exact SoundQuotient.soundQuotient_blocks_mergeSeparated_kernel
+    hContract.consequence_sound
+    hSep
+    hErases
+
+theorem viabilityContract_reflects_safePrefixes
+    {S : ConsequenceSystem.{w, k, o}}
+    {DQ : Dyn.{v}}
+    {present : S.Fragment -> DQ.State}
+    {NextX : S.Fragment -> S.Fragment -> Prop}
+    {safeX : S.Fragment -> Prop}
+    {safeQ : DQ.State -> Prop}
+    (hContract :
+      ViabilitySafePresentationContract
+        S
+        DQ
+        present
+        NextX
+        safeX
+        safeQ)
+    {x : S.Fragment}
+    (hViableQ : Viable DQ safeQ (present x)) :
+    ArbitrarilyLongSafePrefixes (exactDynFromNext NextX) safeX x := by
+  exact ViabilityReflection.abstractViable_reflects_exactSafePrefixes
+    {
+      safe_reflects := hContract.safe_reflects,
+      step_reflects := hContract.step_reflects
+    }
+    hViableQ
+
+theorem viabilityContract_reflects_safePrefix
+    {S : ConsequenceSystem.{w, k, o}}
+    {DQ : Dyn.{v}}
+    {present : S.Fragment -> DQ.State}
+    {NextX : S.Fragment -> S.Fragment -> Prop}
+    {safeX : S.Fragment -> Prop}
+    {safeQ : DQ.State -> Prop}
+    (hContract :
+      ViabilitySafePresentationContract
+        S
+        DQ
+        present
+        NextX
+        safeX
+        safeQ)
+    {n : Nat}
+    {x : S.Fragment}
+    (hPrefixQ : SafePrefix DQ safeQ n (present x)) :
+    SafePrefix (exactDynFromNext NextX) safeX n x := by
+  exact ViabilityReflection.abstractSafePrefix_reflects_exactSafePrefix_of_presentation
+    {
+      safe_reflects := hContract.safe_reflects,
+      step_reflects := hContract.step_reflects
+    }
+    hPrefixQ
 
 end SafePresentationContract
 end Trajectory
