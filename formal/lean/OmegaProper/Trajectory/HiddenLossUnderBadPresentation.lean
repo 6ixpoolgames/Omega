@@ -82,6 +82,20 @@ theorem hiddenReachLoss_blocks_targetRespect
   exact targetObstruction_blocks_respectPresentation
     (hiddenReachLoss_obstructs_presentation hHidden)
 
+theorem targetRespect_blocks_hiddenReachLoss
+    {D : Dyn.{u}}
+    {target : D.State -> Prop}
+    {Q : Type q}
+    {present : D.State -> Q}
+    {x y : D.State}
+    (hRespect :
+      TargetRespectsPresentation
+        (ReachabilityTarget D target)
+        present) :
+    Not (PresentationHidesReachLoss D target present x y) := by
+  intro hHidden
+  exact hiddenReachLoss_blocks_targetRespect hHidden hRespect
+
 /-! ## Tiny finite witness -/
 
 def constantPresentation (_x : LossState) : Unit :=

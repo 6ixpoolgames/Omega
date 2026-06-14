@@ -55,10 +55,12 @@ means the pair is a viability-loss step and the presentation erases the pair.
 viabilityLoss_targetSeparated
 hiddenViabilityLoss_obstructs_presentation
 hiddenViabilityLoss_blocks_targetRespect
+targetRespect_blocks_hiddenViabilityLoss
 ```
 
 These say that a hidden viability-loss pair obstructs target-level presentation
-respect for the exact viability predicate.
+respect for the exact viability predicate. Conversely, a presentation that
+respects the viability target cannot hide a viability-loss pair.
 
 ## Finite Witness
 

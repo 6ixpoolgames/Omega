@@ -69,6 +69,13 @@ hiddenReachLoss_blocks_targetRespect
 
 The reachability target is not constant on the presentation fibers.
 
+```text
+targetRespect_blocks_hiddenReachLoss
+```
+
+Conversely, a presentation that respects the reachability target cannot hide a
+reach-loss pair.
+
 ## Finite Witness
 
 The file reuses the `start -> dead` reach-loss witness and maps all states to

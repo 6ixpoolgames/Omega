@@ -82,6 +82,20 @@ theorem hiddenViabilityLoss_blocks_targetRespect
   exact targetObstruction_blocks_respectPresentation
     (hiddenViabilityLoss_obstructs_presentation hHidden)
 
+theorem targetRespect_blocks_hiddenViabilityLoss
+    {D : Dyn.{u}}
+    {safe : D.State -> Prop}
+    {Q : Type q}
+    {present : D.State -> Q}
+    {x y : D.State}
+    (hRespect :
+      TargetRespectsPresentation
+        (ViabilityTarget D safe)
+        present) :
+    Not (PresentationHidesViabilityLoss D safe present x y) := by
+  intro hHidden
+  exact hiddenViabilityLoss_blocks_targetRespect hHidden hRespect
+
 /-! ## Tiny finite witness -/
 
 def constantPresentation (_x : ViabilityLossState) : Unit :=
