@@ -1,0 +1,85 @@
+name: Validation Router
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  route:
+    name: Route validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Resolve changed files
+        id: changes
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            git fetch origin "${{ github.base_ref }}:refs/remotes/origin/${{ github.base_ref }}" --depth=1
+            base="origin/${{ github.base_ref }}"
+          elif [[ "${{ github.event.before }}" == "0000000000000000000000000000000000000000" ]]; then
+            base="$(git rev-list --max-parents=0 HEAD)"
+          else
+            base="${{ github.event.before }}"
+          fi
+
+          echo "base=$base" >> "$GITHUB_OUTPUT"
+          git diff --name-only "$base" HEAD | sort > changed_files.txt
+
+      - name: Check pushed diff whitespace
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check "${{ steps.changes.outputs.base }}" HEAD
+
+      - name: Report validation routing
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          lean_scope="no"
+          baseline_scope="no"
+
+          if grep -Eq '^(\.github/workflows/lean-alphaomega\.yml|formal/lean/|scripts/setup/invoke_lake\.ps1$)' changed_files.txt; then
+            lean_scope="yes"
+          fi
+
+          if grep -Eq '^(\.github/workflows/baseline-witness-smoke\.yml|omega/baseline_witnesses/|omega/future_field_atlas/util\.py$|omega/validation/|tests/test_.*\.py|scripts/validation/run_baseline_witness_(family_)?smoke\.ps1$|results/baseline_witnesses/|pyproject\.toml$)' changed_files.txt; then
+            baseline_scope="yes"
+          fi
+
+          {
+            echo "### Validation routing"
+            echo ""
+            echo "This workflow is the cheap always-on external check. It does not replace the path-scoped Lean or baseline witness workflows."
+            echo ""
+            echo "| Heavy workflow | Relevant changed paths detected |"
+            echo "| --- | --- |"
+            echo "| Lean AlphaOmega | $lean_scope |"
+            echo "| Baseline Witness Smoke | $baseline_scope |"
+            echo ""
+            echo "Changed files:"
+            echo ""
+            if [[ -s changed_files.txt ]]; then
+              while IFS= read -r file; do
+                echo "- \`$file\`"
+              done < changed_files.txt
+            else
+              echo "- none"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"

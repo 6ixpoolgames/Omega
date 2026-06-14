@@ -1,9 +1,16 @@
 # Validation
 
-This repository has an observed-passing GitHub Actions workflow for the Lean
-formal stack and a path-scoped Python workflow for the baseline witness smoke:
+This repository has an always-on lightweight GitHub Actions router plus
+path-scoped heavyweight workflows for the Lean formal stack and baseline witness
+smoke:
 
 ```text
+workflow: Validation Router
+purpose:
+  runs on every push and pull request to master;
+  checks whitespace over the changed diff;
+  reports whether changed paths fall under the Lean or baseline witness scopes.
+
 workflow: Lean AlphaOmega
 latest observed passing run:
 https://github.com/6ixpoolgames/Omega/actions/runs/27317368267
@@ -16,6 +23,18 @@ https://github.com/6ixpoolgames/Omega/actions/runs/27324231940
 The workflow badge in the root README links to the public Actions history.
 
 ## What CI Checks
+
+The Validation Router workflow checks:
+
+```text
+changed-file resolution for the pushed/PR diff
+git diff --check over that diff
+path routing summary for the heavyweight workflows
+```
+
+It is intentionally cheap and always-on. It exists so every pushed head has a
+visible external check even when the full Lean or baseline witness workflows are
+skipped by path filters.
 
 The Lean workflow checks:
 
@@ -91,7 +110,8 @@ pyproject.toml
 
 Docs-only pushes do not run the full Lean job automatically. Use the manual
 `workflow_dispatch` entrypoint on GitHub when a full remote validation run is
-wanted after non-Lean changes.
+wanted after non-Lean changes. Docs-only pushes still run the Validation Router,
+so they should no longer look externally unvalidated.
 
 ## Local Checks
 
