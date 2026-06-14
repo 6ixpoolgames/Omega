@@ -1,5 +1,6 @@
 import OmegaProper.Trajectory.PresentationInvariant
 import OmegaProper.Trajectory.ReachabilityViability
+import OmegaProper.Trajectory.TrajectorySemantics
 
 /-!
 OmegaProper.Trajectory.PhantomReachability
@@ -23,6 +24,7 @@ open ConsequenceRelation
 open PredicateFixpoint
 open PresentationInvariant
 open ReachabilityViability
+open TrajectorySemantics
 
 /-- Exact four-state system: `a -> b` and `c -> d`, with no bridge. -/
 inductive ExactState where
@@ -175,6 +177,30 @@ theorem unsound_merge_fabricates_phantom_reachability :
     exact_a_not_reaches_d
     (And.intro
       abstract_qa_reaches_qd
+      mergePresentation_not_sound)
+
+theorem exact_a_no_finitePathToTarget_d :
+    Not (FinitePathToTarget exactDyn exactTarget ExactState.a) := by
+  intro hPath
+  exact exact_a_not_reaches_d (finitePathToTarget_implies_reach hPath)
+
+theorem abstract_qa_finitePathToTarget_qd :
+    FinitePathToTarget abstractDyn abstractTarget AbstractState.qa := by
+  exact reach_implies_finitePathToTarget abstract_qa_reaches_qd
+
+/--
+Operational version of the phantom reachability witness: the unsound merge
+fabricates an abstract finite path to target while no exact finite path exists
+from the corresponding exact state.
+-/
+theorem unsound_merge_fabricates_phantom_finite_path :
+    Not (FinitePathToTarget exactDyn exactTarget ExactState.a) /\
+    FinitePathToTarget abstractDyn abstractTarget AbstractState.qa /\
+    Not (SoundQuotient.SoundQuotient identityConsequenceSystem mergePresentation) := by
+  exact And.intro
+    exact_a_no_finitePathToTarget_d
+    (And.intro
+      abstract_qa_finitePathToTarget_qd
       mergePresentation_not_sound)
 
 end PhantomReachability

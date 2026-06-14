@@ -70,6 +70,7 @@ Lean proves:
 
 ```text
 abstractReach_reflects_exactReach
+abstractFinitePath_reflects_exactFinitePath
 ```
 
 If a presentation reflects targets and steps, then:
@@ -79,10 +80,18 @@ Reach DQ targetQ (present x)
   -> Reach DX targetX x
 ```
 
+Using the operational path semantics for `Reach`, Lean also proves:
+
+```text
+FinitePathToTarget DQ targetQ (present x)
+  -> FinitePathToTarget DX targetX x
+```
+
 There is also an unpackaged version:
 
 ```text
 abstractReach_reflects_exactReach_of_reflects
+abstractFinitePath_reflects_exactFinitePath_of_reflects
 ```
 
 ## Interpretation
@@ -93,6 +102,7 @@ It says:
 
 ```text
 no invented targets + no invented transitions = no invented reachability
+no invented targets + no invented transitions = no invented finite paths
 ```
 
 This is separate from consequence-sound quotienting. A presentation may need

@@ -63,6 +63,7 @@ Lean proves:
 
 ```text
 abstractViable_reflects_exactViable
+abstractViable_reflects_exactSafePrefixes
 ```
 
 If a presentation reflects safety and steps, then:
@@ -72,10 +73,18 @@ Viable DQ safeQ (present x)
   -> Viable DX safeX x
 ```
 
+Using the safe-prefix semantics for `Viable`, Lean also proves:
+
+```text
+Viable DQ safeQ (present x)
+  -> ArbitrarilyLongSafePrefixes DX safeX x
+```
+
 There is also an unpackaged version:
 
 ```text
 abstractViable_reflects_exactViable_of_reflects
+abstractViable_reflects_exactSafePrefixes_of_reflects
 ```
 
 ## Interpretation
@@ -86,6 +95,8 @@ It says:
 
 ```text
 no invented safety + no invented sustaining transitions = no invented viability
+no invented safety + no invented sustaining transitions = no invented
+arbitrarily long exact safe prefixes
 ```
 
 The proof uses the greatest-fixed-point definition directly: an abstract

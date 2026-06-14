@@ -38,6 +38,8 @@ Lean proves:
 
 ```text
 exact_x_not_viable
+exact_x_no_safePrefix_one
+exact_x_not_arbitrarilyLongSafePrefixes
 ```
 
 ## Abstract System
@@ -60,6 +62,7 @@ Lean proves:
 
 ```text
 abstract_qx_viable
+abstract_qx_arbitrarilyLongSafePrefixes
 ```
 
 ## Failed Reflection Contract
@@ -89,6 +92,7 @@ Lean proves:
 
 ```text
 bad_presentation_fabricates_phantom_viability
+bad_presentation_fabricates_arbitrarily_long_safe_prefixes
 ```
 
 which packages:
@@ -98,6 +102,17 @@ not Viable exact x
 Viable abstract (present x)
 not ViabilityReflectingPresentation
 ```
+
+The operational safe-prefix version packages:
+
+```text
+not ArbitrarilyLongSafePrefixes exact x
+ArbitrarilyLongSafePrefixes abstract (present x)
+not ViabilityReflectingPresentation
+```
+
+The exact negative is proved directly: the exact state has no one-step safe
+prefix because it has no outgoing transition.
 
 ## Interpretation
 

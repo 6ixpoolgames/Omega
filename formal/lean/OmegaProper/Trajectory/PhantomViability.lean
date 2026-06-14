@@ -20,6 +20,7 @@ namespace PhantomViability
 open PredicateFixpoint
 open ReachabilityReflection
 open ReachabilityViability
+open TrajectorySemantics
 open ViabilityReflection
 
 /-- One exact state with no outgoing step. -/
@@ -118,6 +119,44 @@ theorem bad_presentation_fabricates_phantom_viability :
     exact_x_not_viable
     (And.intro
       abstract_qx_viable
+      not_viabilityReflectingPresentation)
+
+theorem exact_x_no_safePrefix_one :
+    Not (SafePrefix exactDyn exactSafe 1 ExactState.x) := by
+  intro hPrefix
+  match hPrefix with
+  | SafePrefix.step _hSafe hStep _hRest =>
+      exact hStep
+
+theorem exact_x_not_arbitrarilyLongSafePrefixes :
+    Not (ArbitrarilyLongSafePrefixes exactDyn exactSafe ExactState.x) := by
+  intro hPrefixes
+  exact exact_x_no_safePrefix_one (hPrefixes 1)
+
+theorem abstract_qx_arbitrarilyLongSafePrefixes :
+    ArbitrarilyLongSafePrefixes abstractDyn abstractSafe AbstractState.qx := by
+  exact viable_implies_arbitrarilyLongSafePrefixes abstract_qx_viable
+
+/--
+Operational version of the phantom viability witness: the bad presentation
+fabricates arbitrarily long abstract safe prefixes, while the exact state has
+no one-step safe prefix.
+-/
+theorem bad_presentation_fabricates_arbitrarily_long_safe_prefixes :
+    Not (ArbitrarilyLongSafePrefixes exactDyn exactSafe ExactState.x) /\
+    ArbitrarilyLongSafePrefixes abstractDyn abstractSafe (present ExactState.x) /\
+    Not (
+      ViabilityReflectingPresentation
+        exactDyn
+        abstractDyn
+        present
+        exactSafe
+        abstractSafe
+    ) := by
+  exact And.intro
+    exact_x_not_arbitrarilyLongSafePrefixes
+    (And.intro
+      abstract_qx_arbitrarilyLongSafePrefixes
       not_viabilityReflectingPresentation)
 
 end PhantomViability

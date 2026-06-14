@@ -1,4 +1,5 @@
 import OmegaProper.Trajectory.ReachabilityReflection
+import OmegaProper.Trajectory.TrajectorySemantics
 
 /-!
 OmegaProper.Trajectory.ViabilityReflection
@@ -20,6 +21,7 @@ namespace ViabilityReflection
 open PredicateFixpoint
 open ReachabilityReflection
 open ReachabilityViability
+open TrajectorySemantics
 
 universe u v
 
@@ -98,6 +100,43 @@ theorem abstractViable_reflects_exactViable_of_reflects
     (hViableQ : Viable DQ safeQ (present x)) :
     Viable DX safeX x := by
   exact abstractViable_reflects_exactViable
+    { safe_reflects := hSafe, step_reflects := hStep }
+    hViableQ
+
+/--
+Operational viability reflection: abstract viability of a presented state
+reflects to arbitrarily long exact safe prefixes.
+
+This does not claim an infinite exact trajectory. It composes viability
+reflection with the safe-prefix semantics for `Viable`.
+-/
+theorem abstractViable_reflects_exactSafePrefixes
+    {DX : Dyn.{u}}
+    {DQ : Dyn.{v}}
+    {present : DX.State -> DQ.State}
+    {safeX : DX.State -> Prop}
+    {safeQ : DQ.State -> Prop}
+    (hReflect :
+      ViabilityReflectingPresentation DX DQ present safeX safeQ)
+    {x : DX.State}
+    (hViableQ : Viable DQ safeQ (present x)) :
+    ArbitrarilyLongSafePrefixes DX safeX x := by
+  exact viable_implies_arbitrarilyLongSafePrefixes
+    (abstractViable_reflects_exactViable hReflect hViableQ)
+
+/-- Direct spelling without packaging the two reflection hypotheses. -/
+theorem abstractViable_reflects_exactSafePrefixes_of_reflects
+    {DX : Dyn.{u}}
+    {DQ : Dyn.{v}}
+    {present : DX.State -> DQ.State}
+    {safeX : DX.State -> Prop}
+    {safeQ : DQ.State -> Prop}
+    (hSafe : SafeReflects DX DQ present safeX safeQ)
+    (hStep : StepReflects DX DQ present)
+    {x : DX.State}
+    (hViableQ : Viable DQ safeQ (present x)) :
+    ArbitrarilyLongSafePrefixes DX safeX x := by
+  exact abstractViable_reflects_exactSafePrefixes
     { safe_reflects := hSafe, step_reflects := hStep }
     hViableQ
 

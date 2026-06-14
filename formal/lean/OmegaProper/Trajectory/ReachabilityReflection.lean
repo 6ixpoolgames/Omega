@@ -1,4 +1,4 @@
-import OmegaProper.Trajectory.ReachabilityViability
+import OmegaProper.Trajectory.TrajectorySemantics
 
 /-!
 OmegaProper.Trajectory.ReachabilityReflection
@@ -19,6 +19,7 @@ namespace ReachabilityReflection
 
 open PredicateFixpoint
 open ReachabilityViability
+open TrajectorySemantics
 
 universe u v
 
@@ -112,6 +113,46 @@ theorem abstractReach_reflects_exactReach_of_reflects
   exact abstractReach_reflects_exactReach
     { target_reflects := hTarget, step_reflects := hStep }
     hReachQ
+
+/--
+Path-level reflection: an abstract finite path to the abstract target, starting
+from a presented exact state, reflects to an exact finite path to the exact
+target.
+
+This reuses the fixed-point reflection theorem plus the finite-path semantics
+for `Reach`.
+-/
+theorem abstractFinitePath_reflects_exactFinitePath
+    {DX : Dyn.{u}}
+    {DQ : Dyn.{v}}
+    {present : DX.State -> DQ.State}
+    {targetX : DX.State -> Prop}
+    {targetQ : DQ.State -> Prop}
+    (hReflect :
+      ReachabilityReflectingPresentation DX DQ present targetX targetQ)
+    {x : DX.State}
+    (hPathQ : FinitePathToTarget DQ targetQ (present x)) :
+    FinitePathToTarget DX targetX x := by
+  exact reach_implies_finitePathToTarget
+    (abstractReach_reflects_exactReach
+      hReflect
+      (finitePathToTarget_implies_reach hPathQ))
+
+/-- Direct spelling without packaging the two reflection hypotheses. -/
+theorem abstractFinitePath_reflects_exactFinitePath_of_reflects
+    {DX : Dyn.{u}}
+    {DQ : Dyn.{v}}
+    {present : DX.State -> DQ.State}
+    {targetX : DX.State -> Prop}
+    {targetQ : DQ.State -> Prop}
+    (hTarget : TargetReflects DX DQ present targetX targetQ)
+    (hStep : StepReflects DX DQ present)
+    {x : DX.State}
+    (hPathQ : FinitePathToTarget DQ targetQ (present x)) :
+    FinitePathToTarget DX targetX x := by
+  exact abstractFinitePath_reflects_exactFinitePath
+    { target_reflects := hTarget, step_reflects := hStep }
+    hPathQ
 
 end ReachabilityReflection
 end Trajectory

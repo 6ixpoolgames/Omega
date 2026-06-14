@@ -84,6 +84,7 @@ Lean proves:
 
 ```text
 unsound_merge_fabricates_phantom_reachability
+unsound_merge_fabricates_phantom_finite_path
 ```
 
 which packages:
@@ -93,6 +94,17 @@ not Reach exact a d
 Reach abstract qa qd
 not SoundQuotient identityConsequenceSystem mergePresentation
 ```
+
+The operational finite-path version packages:
+
+```text
+not FinitePathToTarget exact a d
+FinitePathToTarget abstract qa qd
+not SoundQuotient identityConsequenceSystem mergePresentation
+```
+
+So the phantom is not merely a fixed-point artifact. It is an apparent finite
+path created by the unsound merge.
 
 ## Interpretation
 
