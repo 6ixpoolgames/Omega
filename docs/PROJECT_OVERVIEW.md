@@ -21,15 +21,29 @@ Which presentations hide loss or fabricate continuation?
 
 The long-term ambition is agent-agnostic ethics and alignment: a way to reason about value-bearing futures without assuming that "the agent", "the self", or "the boundary" is already a primitive object.
 
+## Value Requires Valuers
+
+Value requires valuers, or at least value-capable trajectories. If no possible future contains systems able to encounter, preserve, revise, compare, create, or be affected by what matters, then no possible future contains realized value.
+
+That is why the project starts below value. The first target is not a final utility function. It is the substrate of compatible continuations in which valuers can arise, persist, interact, and mature without destroying the conditions that make future value possible.
+
 ## Alpha-Omega
 
-Alpha and Omega are working names for two ends of one structure.
+Alpha and Omega are working names for studying that value-bearing substrate from two ends.
 
 Alpha is the primitive end. It studies relation, distinction, asymmetry, and consequence before value language is introduced. The question is: how can a difference matter at all?
 
-Omega is the terminal ambition. It asks what it would mean for consequence-bearing structure to unfold into a compatible space of value-bearing futures.
+Omega is the terminal ambition. It asks what it would mean for consequence-bearing structure to unfold into the richest compatible space of value-bearing futures.
 
 The lower stack does not prove the upper ambition by definition. It earns the right to talk about it by proving small, failure-resistant facts about consequence, abstraction, reachability, viability, and loss.
+
+## From Intuition To Formal Machinery
+
+The formal stack asks whether a representation preserves the value-bearing continuation structure it is being used to reason about.
+
+A difference must be consequence-bearing. A proposed abstraction must not erase consequence-separated states. A proxy must not be trusted when the target changes while the proxy stays fixed. A viability or reachability claim must survive exact checking, because bad presentations can fabricate possible futures or hide irreversible loss.
+
+That is why the repo focuses on sound quotients, non-factorization, clique soundness, support-disjoint recovery, fixed-point reachability and viability, reflection contracts, phantom-reachability examples, hidden-loss examples, and loss-aware presentation contracts.
 
 ## Proto-Teleology
 

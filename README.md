@@ -21,15 +21,37 @@ Any intelligent system acts through models, metrics, summaries, boundaries, poli
 
 Omega studies the formal conditions under which those failures can be detected or ruled out.
 
+## Value Requires Valuers
+
+Value does not float freely in the universe. Value requires valuers, or at least value-capable trajectories: systems able to encounter, preserve, revise, compare, create, and be affected by what matters. If no possible future contains valuers, then no possible future contains realized value.
+
+That makes the central alignment problem deeper than choosing the right reward function. Before asking which futures are good, we have to ask what makes value-bearing futures possible at all. The target is the substrate of compatible continuations in which valuers can arise, persist, interact, and mature without destroying the conditions that make future value possible.
+
+This is the object Omega is trying to track: not a single utopia, final state, or utility function, but the viable corridor of value-bearing continuation. The project starts below value because the preservation problem starts below value.
+
 ## Alpha-Omega In Plain English
 
-The project uses "Alpha-Omega" for the two ends of one structure.
+Alpha-Omega is the project's name for studying that object from both ends.
 
-Alpha is the primitive end: relation, distinction, asymmetry, and consequence. It asks how a difference can matter before we assume selves, agents, preferences, rewards, or moral facts.
+Alpha is the primitive end. It asks what must be true before valuers are even on the table: relation, distinction, asymmetry, consequence, and the conditions under which a difference can matter because erasing it changes what can follow.
 
-Omega is the terminal ambition: the maximal compatible development of value-bearing continuation. It asks what it would mean for intelligent agency as a whole to stay inside the narrow corridor where many compatible futures remain open enough for valuers to exist and flourish.
+Omega is the terminal ambition. It asks what it would mean to preserve the richest compatible continuation of the value-bearing substrate: the shared corridor in which many value-capable trajectories can remain possible without collapse, capture, or irreversible loss.
 
-The point of the lower formal stack is to earn the upper language. We do not start by defining a self, an agent, or a value function. We start with consequence-bearing distinctions and ask what abstractions are allowed to erase.
+So Alpha is not a separate toy theory and Omega is not a mystical endpoint. Alpha studies the seed conditions of consequence-bearing mattering. Omega studies the maximal compatible development of that mattering into value-bearing continuation.
+
+## From Intuition To Formal Machinery
+
+The formal stack asks what has to be true for that ambition not to collapse into poetry.
+
+A difference must be consequence-bearing. A proposed abstraction must not erase consequence-separated states. A proxy must not be trusted when the target changes while the proxy stays fixed. A viability or reachability claim must survive exact checking, because bad presentations can fabricate possible futures or hide irreversible loss.
+
+That is why the repo focuses on sound quotients, non-factorization, clique soundness, support-disjoint recovery, fixed-point reachability and viability, reflection contracts, phantom-reachability examples, hidden-loss examples, and loss-aware presentation contracts.
+
+All of these are pieces of one question:
+
+```text
+Does this representation preserve the value-bearing continuation structure it is being used to reason about?
+```
 
 ## Why Proto-Teleology Matters
 
