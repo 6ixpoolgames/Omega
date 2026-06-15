@@ -111,6 +111,7 @@ OmegaProper/Trajectory/ConsequenceDiscipline.lean
 OmegaProper/Trajectory/ConsequenceComparison.lean
 OmegaProper/Trajectory/ConsequencePanelDiscipline.lean
 OmegaProper/Trajectory/RecurrentSupportRobustness.lean
+OmegaProper/Trajectory/RecurrentSupportTransfer.lean
 OmegaProper/Trajectory/IrreversibleRecurrentSupportLoss.lean
 OmegaProper/Trajectory/SupportUnderPerturbation.lean
 OmegaArchive/Basic.lean
@@ -197,8 +198,9 @@ semantics, joint viability guardrails, hidden reach/viability/joint-viability
 loss under bad presentations, loss-aware abstraction contracts,
 support-level perturbation guardrails showing when changed support predicates
 preserve or destroy carried merge-separated pairs, recurrent-support
-robustness guardrails, and a finite one-way dynamics witness where endpoint
-viability and forward reachability remain while recurrent carrying is lost.
+robustness guardrails, positive recurrent-support transfer contracts, and a
+finite one-way dynamics witness where endpoint viability and forward
+reachability remain while recurrent carrying is lost.
 ```
 
 This is formal infrastructure only. It does not instantiate an empirical
@@ -239,6 +241,7 @@ loss_aware_presentation_constructors_v0.md
 loss_aware_presentation_strictness_v0.md
 support_under_perturbation_v0.md
 recurrent_support_robustness_v0.md
+recurrent_support_transfer_v0.md
 irreversible_recurrent_support_loss_v0.md
 ```
 
