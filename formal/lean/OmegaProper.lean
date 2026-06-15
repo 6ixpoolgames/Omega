@@ -17,6 +17,7 @@ import OmegaProper.Trajectory.ConsequenceRelation
 import OmegaProper.Trajectory.HiddenLossUnderBadPresentation
 import OmegaProper.Trajectory.HiddenJointViabilityLossUnderBadPresentation
 import OmegaProper.Trajectory.HiddenViabilityLossUnderBadPresentation
+import OmegaProper.Trajectory.IrreversibleRecurrentSupportLoss
 import OmegaProper.Trajectory.IrreversibleReachLoss
 import OmegaProper.Trajectory.IrreversibleViabilityLoss
 import OmegaProper.Trajectory.JointViability
@@ -37,6 +38,7 @@ import OmegaProper.Trajectory.ProfileAbstraction
 import OmegaProper.Trajectory.Quotient
 import OmegaProper.Trajectory.ReachabilityReflection
 import OmegaProper.Trajectory.ReachabilityViability
+import OmegaProper.Trajectory.RecurrentSupportRobustness
 import OmegaProper.Trajectory.RecurrentViableClass
 import OmegaProper.Trajectory.SafeLossVisibility
 import OmegaProper.Trajectory.SafePresentationContract
