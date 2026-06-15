@@ -44,6 +44,7 @@ import OmegaProper.Trajectory.SoundQuotient
 import OmegaProper.Trajectory.SoundPresentationFamily
 import OmegaProper.Trajectory.SupportMinimality
 import OmegaProper.Trajectory.SupportRestriction
+import OmegaProper.Trajectory.SupportUnderPerturbation
 import OmegaProper.Trajectory.SustainingSafePrefixes
 import OmegaProper.Trajectory.SustainingViableClass
 import OmegaProper.Trajectory.TargetPresentationInvariant
