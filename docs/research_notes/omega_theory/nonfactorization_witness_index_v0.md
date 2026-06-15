@@ -84,6 +84,7 @@ target    a declared target that changes under the swap
 | Mutual-information proxy / declared recovery | Binary output fiber counts and same/different-output ordered-pair counts. | Whether equal outputs preserve the declared first coordinate. | `mutualInformationProxy_computedSummary_nonFactorization` |
 | Compression score / merge soundness | Claimed same-class ordered-pair count and rejected ordered-pair count. | Whether claimed merges respect the declared first-coordinate consequence profile. | `compressionScore_computedSummary_nonFactorization` |
 | Marginal coupling | Row counts, column counts, and total joint-table mass. | Whether the joint table factorizes by integer cross-multiplication. | `marginalSummary_jointFactorization_nonFactorization` |
+| Interface sharpness / declared recovery | Sharp two-output interface profile: input count, output count, and balanced output-fiber counts. | Whether the interface recovers the declared first input coordinate. | `sharpInterfaceSummary_declaredRecovery_nonFactorization` |
 
 ## Why This Matters
 

@@ -246,6 +246,7 @@ transition_energy_substrate_atlas.md
 transition_energy_and_constraint_untethering.md
 horizon_transport_aligned_amplification.md
 probabilistic_channel_presentation_v0.md
+interface_sharpness_nonfactorization_v0.md
 ```
 
 ## Translation And Glossary Notes
