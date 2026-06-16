@@ -38,6 +38,7 @@ import OmegaProper.Trajectory.ProfileAbstraction
 import OmegaProper.Trajectory.Quotient
 import OmegaProper.Trajectory.ReachabilityReflection
 import OmegaProper.Trajectory.ReachabilityViability
+import OmegaProper.Trajectory.RecurrentSupportPathTransfer
 import OmegaProper.Trajectory.RecurrentSupportRobustness
 import OmegaProper.Trajectory.RecurrentSupportRestoration
 import OmegaProper.Trajectory.RecurrentSupportTransfer
