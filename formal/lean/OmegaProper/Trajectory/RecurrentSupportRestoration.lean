@@ -125,6 +125,26 @@ theorem repaired_recurrentSupportCarries_left_right :
     cycle_recurrentSupportCarries_left_right
     repairedCycle_transfer_contract_from_baseline
 
+theorem broken_safeTransfers_from_baseline :
+    SafeTransfersOn cycleClass cycleSafe cycleSafe := by
+  intro x _hx _hSafe
+  trivial
+
+theorem broken_noNewExits_from_baseline :
+    NoNewExitsFrom brokenCycleNext cycleClass := by
+  intro x y _hx _hStep
+  trivial
+
+theorem broken_not_internalEdgesPreserved_from_baseline :
+    Not (InternalEdgesPreservedOn cycleNext brokenCycleNext cycleClass) := by
+  intro hEdges
+  exact hEdges
+    CycleState.right
+    CycleState.left
+    trivial
+    trivial
+    trivial
+
 theorem broken_not_transfer_contract_from_baseline :
     Not (RecurrentSupportTransferContract
       cycleNext
@@ -133,12 +153,7 @@ theorem broken_not_transfer_contract_from_baseline :
       cycleSafe
       cycleClass) := by
   intro hContract
-  exact hContract.right.right
-    CycleState.right
-    CycleState.left
-    trivial
-    trivial
-    trivial
+  exact broken_not_internalEdgesPreserved_from_baseline hContract.right.right
 
 theorem cycle_recurrentSupport_restored_after_broken_loss :
     RecurrentSupportRestoredAfterLoss
@@ -177,6 +192,9 @@ theorem recurrent_support_loss_and_restoration_witness :
       cycleSafe
       cycleSafe
       cycleClass) /\
+    SafeTransfersOn cycleClass cycleSafe cycleSafe /\
+    NoNewExitsFrom brokenCycleNext cycleClass /\
+    Not (InternalEdgesPreservedOn cycleNext brokenCycleNext cycleClass) /\
     RecurrentSupportCarries
       cycleConsequenceSystem
       repairedCycleNext
@@ -202,8 +220,14 @@ theorem recurrent_support_loss_and_restoration_witness :
       (And.intro
         broken_not_transfer_contract_from_baseline
         (And.intro
-          repaired_recurrentSupportCarries_left_right
-          cycle_recurrentSupport_restored_after_broken_loss)))
+          broken_safeTransfers_from_baseline
+          (And.intro
+            broken_noNewExits_from_baseline
+            (And.intro
+              broken_not_internalEdgesPreserved_from_baseline
+              (And.intro
+                repaired_recurrentSupportCarries_left_right
+                cycle_recurrentSupport_restored_after_broken_loss))))))
 
 end RecurrentSupportRestoration
 end Trajectory

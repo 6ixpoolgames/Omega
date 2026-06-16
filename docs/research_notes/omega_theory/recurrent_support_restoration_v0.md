@@ -79,18 +79,35 @@ Then Lean proves:
 repairedCycle_transfer_contract_from_baseline
 repaired_right_path_left
 repaired_recurrentSupportCarries_left_right
+broken_safeTransfers_from_baseline
+broken_noNewExits_from_baseline
+broken_not_internalEdgesPreserved_from_baseline
 broken_not_transfer_contract_from_baseline
 cycle_recurrentSupport_restored_after_broken_loss
 recurrent_support_loss_and_restoration_witness
 ```
 
-The `broken_not_transfer_contract_from_baseline` theorem is important. It
-shows the broken one-way dynamics fails the repair/preservation contract
-because it does not preserve the old internal edge:
+The strictness split is important:
+
+```text
+broken_safeTransfers_from_baseline:
+  safety still transfers on the support
+
+broken_noNewExits_from_baseline:
+  the broken dynamics still has no exits from the support
+
+broken_not_internalEdgesPreserved_from_baseline:
+  the broken dynamics fails to preserve the old internal edge
+```
+
+The failed edge is:
 
 ```text
 right -> left
 ```
+
+So `broken_not_transfer_contract_from_baseline` is not just a generic failure.
+It is specifically an internal-edge preservation failure.
 
 So the local picture is now:
 
@@ -100,6 +117,9 @@ preservation contract holds:
 
 broken one-way dynamics:
   preservation contract fails
+  safety transfer still holds
+  no-exit closure still holds
+  internal-edge preservation fails
   recurrent carrying is lost
 
 repaired two-way dynamics:
