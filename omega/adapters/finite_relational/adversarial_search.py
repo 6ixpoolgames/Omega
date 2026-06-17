@@ -1,0 +1,366 @@
+"""Deterministic generated cases for finite relational adapter hardening."""
+
+from __future__ import annotations
+
+from collections.abc import Iterable
+from dataclasses import dataclass
+from hashlib import sha256
+from itertools import combinations, product
+import json
+from typing import Any
+
+from omega.adapters.finite_relational.audits import AuditResult, run_declared_audits
+from omega.adapters.finite_relational.derived_graph import compile_derived_graph
+from omega.adapters.finite_relational.facts import Pair, reachable_pairs
+from omega.adapters.finite_relational.finite_grid import compile_finite_grid
+from omega.adapters.finite_relational.model import load_model, model_digest
+
+
+@dataclass(frozen=True)
+class GeneratedAdapterCase:
+    """A generated adapter case plus the compiled model and audit results."""
+
+    case_id: str
+    source_format: str
+    source: dict[str, Any]
+    compiled_model: dict[str, Any]
+    audit_results: tuple[AuditResult, ...]
+
+    @property
+    def all_passed(self) -> bool:
+        return all(result.passed for result in self.audit_results)
+
+    def summary(self) -> dict[str, object]:
+        model = load_model(self.compiled_model)
+        return {
+            "case_id": self.case_id,
+            "source_format": self.source_format,
+            "compiled_model_id": model.model_id,
+            "audit_count": len(self.audit_results),
+            "passed_count": sum(1 for result in self.audit_results if result.passed),
+            "all_passed": self.all_passed,
+            "source_digest": digest_json(self.source),
+            "compiled_model_digest": model_digest(model),
+            "findings": [result.finding for result in self.audit_results],
+        }
+
+
+def generate_adversarial_cases() -> tuple[GeneratedAdapterCase, ...]:
+    """Generate a small deterministic suite of adapter hardening cases."""
+
+    return (
+        _generated_phantom_reachability_case(),
+        _generated_hidden_reachability_loss_case(),
+        _generated_proxy_nonfactorization_case(),
+        _generated_derived_graph_asymmetry_case(),
+        _generated_derived_graph_carrier_case(),
+        _generated_finite_grid_asymmetry_case(),
+    )
+
+
+def digest_json(value: object) -> str:
+    canonical = json.dumps(value, sort_keys=True, separators=(",", ":"))
+    return sha256(canonical.encode("utf-8")).hexdigest()
+
+
+def _generated_phantom_reachability_case() -> GeneratedAdapterCase:
+    states = ("a", "b", "c")
+    source = "a"
+    target = "c"
+    for abstract_edges in _edge_subsets(states):
+        if (source, target) in abstract_edges:
+            continue
+        if (source, target) not in reachable_pairs(set(states), set(abstract_edges)):
+            continue
+        for exact_edges in _edge_subsets(states):
+            if (source, target) in reachable_pairs(set(states), set(exact_edges)):
+                continue
+            model = _transition_audit_model(
+                model_id="generated_phantom_reachability",
+                states=states,
+                relations={
+                    "exact_next": exact_edges,
+                    "abstract_next": abstract_edges,
+                },
+                audit={
+                    "id": "generated_abstract_path_without_exact_path",
+                    "kind": "phantom_reachability",
+                    "exact_transition": "exact_next",
+                    "abstract_transition": "abstract_next",
+                    "source": source,
+                    "target": target,
+                    "expect": "phantom",
+                },
+                claim_boundary=(
+                    "Generated finite relational case: abstract reachability reports a path "
+                    "not present in the exact transition relation."
+                ),
+            )
+            return _validated_ir_case("generated_phantom_reachability", model)
+    raise AssertionError("failed to generate phantom reachability case")
+
+
+def _generated_hidden_reachability_loss_case() -> GeneratedAdapterCase:
+    states = ("a", "b", "c")
+    source = "a"
+    target = "c"
+    for before_edges in _edge_subsets(states):
+        if (source, target) in before_edges:
+            continue
+        if (source, target) not in reachable_pairs(set(states), set(before_edges)):
+            continue
+        for after_edges in _edge_subsets(states):
+            if (source, target) in reachable_pairs(set(states), set(after_edges)):
+                continue
+            model = _transition_audit_model(
+                model_id="generated_hidden_reachability_loss",
+                states=states,
+                relations={
+                    "before_next": before_edges,
+                    "after_next": after_edges,
+                    "abstract_next": before_edges,
+                },
+                audit={
+                    "id": "generated_abstract_still_reports_lost_path",
+                    "kind": "hidden_reachability_loss",
+                    "before_transition": "before_next",
+                    "after_transition": "after_next",
+                    "abstract_transition": "abstract_next",
+                    "source": source,
+                    "target": target,
+                    "expect": "hidden_loss",
+                },
+                claim_boundary=(
+                    "Generated finite relational case: changed exact dynamics lose a path "
+                    "that the stale abstract transition still reports."
+                ),
+            )
+            return _validated_ir_case("generated_hidden_reachability_loss", model)
+    raise AssertionError("failed to generate hidden reachability loss case")
+
+
+def _generated_proxy_nonfactorization_case() -> GeneratedAdapterCase:
+    states = ("left", "right")
+    labels = ("same", "left", "right")
+    for left_label, right_label in product(labels, labels):
+        summary = {"left": left_label, "right": right_label}
+        for target_members in (["left"], ["right"]):
+            same_summary = summary["left"] == summary["right"]
+            target_differs = ("left" in target_members) != ("right" in target_members)
+            if not same_summary or not target_differs:
+                continue
+            model = {
+                "model_id": "generated_proxy_nonfactorization",
+                "schema_version": "0.1.0",
+                "carrier": list(states),
+                "predicates": {"target": target_members},
+                "functions": {"summary": summary},
+                "audits": [
+                    {
+                        "id": "generated_same_summary_different_target",
+                        "kind": "nonfactorization",
+                        "summary": "summary",
+                        "target_predicate": "target",
+                        "expect": "witness",
+                    }
+                ],
+                "provenance": _generated_provenance(
+                    "Generated finite relational case: same summary label, different target value."
+                ),
+            }
+            return _validated_ir_case("generated_proxy_nonfactorization", model)
+    raise AssertionError("failed to generate proxy nonfactorization case")
+
+
+def _generated_derived_graph_asymmetry_case() -> GeneratedAdapterCase:
+    nodes = ("source", "sink")
+    observation_values = ("red", "blue")
+    for edges in _edge_subsets(nodes):
+        for source_color, sink_color in product(observation_values, observation_values):
+            if source_color == sink_color:
+                continue
+            graph_source = {
+                "model_id": "generated_derived_graph_asymmetry",
+                "nodes": list(nodes),
+                "edges": [list(edge) for edge in edges],
+                "observations": {
+                    "color": {
+                        "source": source_color,
+                        "sink": sink_color,
+                    }
+                },
+                "presentations": {
+                    "identity": {
+                        "source": "source",
+                        "sink": "sink",
+                    },
+                    "constant": {
+                        "source": "merged",
+                        "sink": "merged",
+                    },
+                },
+                "presentation_expectations": {
+                    "identity": "sound",
+                    "constant": "unsound",
+                },
+                "safety": "all",
+                "provenance": _generated_provenance(
+                    "Generated derived graph case: strict one-way edge plus observation "
+                    "difference earns Alpha-like asymmetry."
+                ),
+            }
+            compiled = compile_derived_graph(graph_source)
+            model = load_model(compiled)
+            if model.relation_tuples("primitive_asym"):
+                return _validated_compiled_case(
+                    "generated_derived_graph_asymmetry",
+                    "derived_graph",
+                    graph_source,
+                    compiled,
+                )
+    raise AssertionError("failed to generate derived graph asymmetry case")
+
+
+def _generated_derived_graph_carrier_case() -> GeneratedAdapterCase:
+    nodes = ("left", "right")
+    observation_values = ("red", "blue")
+    for edges in _edge_subsets(nodes):
+        for left_color, right_color in product(observation_values, observation_values):
+            if left_color == right_color:
+                continue
+            graph_source = {
+                "model_id": "generated_derived_graph_carrier",
+                "nodes": list(nodes),
+                "edges": [list(edge) for edge in edges],
+                "observations": {
+                    "color": {
+                        "left": left_color,
+                        "right": right_color,
+                    }
+                },
+                "presentations": {
+                    "identity": {
+                        "left": "left",
+                        "right": "right",
+                    }
+                },
+                "presentation_expectations": {"identity": "sound"},
+                "safety": "all",
+                "provenance": _generated_provenance(
+                    "Generated derived graph case: mutually reachable separated endpoints "
+                    "earn a carrier certificate."
+                ),
+            }
+            compiled = compile_derived_graph(graph_source)
+            model = load_model(compiled)
+            if any(name.startswith("carrier_") for name in model.predicates):
+                return _validated_compiled_case(
+                    "generated_derived_graph_carrier",
+                    "derived_graph",
+                    graph_source,
+                    compiled,
+                )
+    raise AssertionError("failed to generate derived graph carrier case")
+
+
+def _generated_finite_grid_asymmetry_case() -> GeneratedAdapterCase:
+    for width, height, movement_rule in ((2, 1, "east"), (1, 2, "orthogonal"), (2, 2, "east")):
+        cells = [f"{x},{y}" for y in range(height) for x in range(width)]
+        if len(cells) < 2:
+            continue
+        first, second = cells[:2]
+        grid_source = {
+            "model_id": "generated_finite_grid_asymmetry",
+            "width": width,
+            "height": height,
+            "movement_rule": movement_rule,
+            "observations": {
+                "color": {cell: ("red" if cell == first else "blue") for cell in cells}
+            },
+            "presentations": {
+                "identity": {cell: cell for cell in cells},
+                "constant": {cell: "merged" for cell in cells},
+            },
+            "presentation_expectations": {
+                "identity": "sound",
+                "constant": "unsound",
+            },
+            "safety": "all",
+            "provenance": _generated_provenance(
+                "Generated finite grid case: movement and observation difference compile "
+                "through derived graph into Alpha-like asymmetry."
+            ),
+        }
+        compiled = compile_finite_grid(grid_source)
+        model = load_model(compiled)
+        if model.relation_tuples("primitive_asym"):
+            return _validated_compiled_case(
+                "generated_finite_grid_asymmetry",
+                "finite_grid",
+                grid_source,
+                compiled,
+            )
+    raise AssertionError("failed to generate finite grid asymmetry case")
+
+
+def _validated_ir_case(case_id: str, model: dict[str, Any]) -> GeneratedAdapterCase:
+    return _validated_compiled_case(case_id, "finite_relational_ir", model, model)
+
+
+def _validated_compiled_case(
+    case_id: str,
+    source_format: str,
+    source: dict[str, Any],
+    compiled: dict[str, Any],
+) -> GeneratedAdapterCase:
+    model = load_model(compiled)
+    audit_results = tuple(run_declared_audits(model))
+    if not audit_results:
+        raise AssertionError(f"{case_id} generated no audits")
+    if not all(result.passed for result in audit_results):
+        failures = [result.as_dict() for result in audit_results if not result.passed]
+        raise AssertionError(f"{case_id} generated failing audits: {failures}")
+    return GeneratedAdapterCase(
+        case_id=case_id,
+        source_format=source_format,
+        source=source,
+        compiled_model=compiled,
+        audit_results=audit_results,
+    )
+
+
+def _transition_audit_model(
+    *,
+    model_id: str,
+    states: Iterable[str],
+    relations: dict[str, Iterable[Pair]],
+    audit: dict[str, Any],
+    claim_boundary: str,
+) -> dict[str, Any]:
+    return {
+        "model_id": model_id,
+        "schema_version": "0.1.0",
+        "carrier": list(states),
+        "relations": {
+            name: [list(edge) for edge in sorted(edge_set)]
+            for name, edge_set in relations.items()
+        },
+        "audits": [audit],
+        "provenance": _generated_provenance(claim_boundary),
+    }
+
+
+def _generated_provenance(claim_boundary: str) -> dict[str, object]:
+    return {
+        "declared_before_run": True,
+        "source": "omega.adapters.finite_relational.adversarial_search",
+        "claim_boundary": claim_boundary,
+        "fixture_intent": "generated finite adapter hardening case",
+    }
+
+
+def _edge_subsets(nodes: Iterable[str]) -> Iterable[tuple[Pair, ...]]:
+    possible_edges = sorted((source, target) for source in nodes for target in nodes if source != target)
+    for size in range(len(possible_edges) + 1):
+        for edge_subset in combinations(possible_edges, size):
+            yield tuple(edge_subset)

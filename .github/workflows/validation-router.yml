@@ -72,6 +72,7 @@ jobs:
 
           lean_scope="no"
           baseline_scope="no"
+          adapter_scope="no"
 
           if grep -Eq '^(\.github/workflows/lean-alphaomega\.yml|formal/lean/|scripts/setup/invoke_lake\.ps1$)' changed_files.txt; then
             lean_scope="yes"
@@ -79,6 +80,10 @@ jobs:
 
           if grep -Eq '^(\.github/workflows/baseline-witness-smoke\.yml|omega/baseline_witnesses/|omega/future_field_atlas/util\.py$|omega/validation/|tests/test_.*\.py|scripts/validation/run_baseline_witness_(family_)?smoke\.ps1$|results/baseline_witnesses/|pyproject\.toml$)' changed_files.txt; then
             baseline_scope="yes"
+          fi
+
+          if grep -Eq '^(\.github/workflows/finite-relational-adapter-smoke\.yml|omega/adapters/finite_relational/|omega/validation/finite_relational_adapter_(smoke|adversarial)\.py$|tests/test_(finite_relational_adapter|derived_graph_adapter|finite_grid_adapter|finite_relational_adapter_smoke|finite_relational_adapter_adversarial)\.py$|pyproject\.toml$)' changed_files.txt; then
+            adapter_scope="yes"
           fi
 
           {
@@ -90,6 +95,7 @@ jobs:
             echo "| --- | --- |"
             echo "| Lean AlphaOmega | $lean_scope |"
             echo "| Baseline Witness Smoke | $baseline_scope |"
+            echo "| Finite Relational Adapter Smoke | $adapter_scope |"
             echo ""
             echo "Changed files:"
             echo ""

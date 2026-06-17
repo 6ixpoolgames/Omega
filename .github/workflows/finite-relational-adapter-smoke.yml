@@ -1,0 +1,79 @@
+name: Finite Relational Adapter Smoke
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths:
+      - ".github/workflows/finite-relational-adapter-smoke.yml"
+      - "omega/adapters/finite_relational/**"
+      - "omega/validation/finite_relational_adapter_smoke.py"
+      - "omega/validation/finite_relational_adapter_adversarial.py"
+      - "tests/test_finite_relational_adapter.py"
+      - "tests/test_derived_graph_adapter.py"
+      - "tests/test_finite_grid_adapter.py"
+      - "tests/test_finite_relational_adapter_smoke.py"
+      - "tests/test_finite_relational_adapter_adversarial.py"
+      - "pyproject.toml"
+  pull_request:
+    branches:
+      - master
+    paths:
+      - ".github/workflows/finite-relational-adapter-smoke.yml"
+      - "omega/adapters/finite_relational/**"
+      - "omega/validation/finite_relational_adapter_smoke.py"
+      - "omega/validation/finite_relational_adapter_adversarial.py"
+      - "tests/test_finite_relational_adapter.py"
+      - "tests/test_derived_graph_adapter.py"
+      - "tests/test_finite_grid_adapter.py"
+      - "tests/test_finite_relational_adapter_smoke.py"
+      - "tests/test_finite_relational_adapter_adversarial.py"
+      - "pyproject.toml"
+
+jobs:
+  smoke:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install package and dev tools
+        run: python -m pip install -e ".[dev]"
+
+      - name: Run finite relational adapter smoke
+        run: python -m omega.validation.finite_relational_adapter_smoke
+
+      - name: Run generated adapter adversarial cases
+        run: python -m omega.validation.finite_relational_adapter_adversarial
+
+      - name: Ruff finite relational adapter paths
+        run: |
+          python -m ruff check \
+            omega/adapters/finite_relational \
+            omega/validation/finite_relational_adapter_smoke.py \
+            omega/validation/finite_relational_adapter_adversarial.py \
+            tests/test_finite_relational_adapter.py \
+            tests/test_derived_graph_adapter.py \
+            tests/test_finite_grid_adapter.py \
+            tests/test_finite_relational_adapter_smoke.py \
+            tests/test_finite_relational_adapter_adversarial.py
+
+      - name: Check whitespace
+        run: git diff --check

@@ -414,6 +414,28 @@ grid fixtures. It checks provenance completeness, verifies declared audit
 counts, requires retained digest/provenance/audit/summary artifacts, and
 confirms that source fixtures do not carry reserved finite relational IR fields.
 
+Generated/adversarial adapter validation is separate:
+
+```powershell
+.\.venv\Scripts\python.exe -m omega.validation.finite_relational_adapter_adversarial `
+  --out-root .tmp\finite_relational_adapter_adversarial
+```
+
+It deterministically searches small finite cases for hardening witnesses:
+
+```text
+phantom reachability;
+hidden reachability loss;
+proxy non-factorization;
+derived graph asymmetry;
+derived graph carrier certification;
+finite grid asymmetry.
+```
+
+The generator is intentionally finite and boring. It does not discover empirical
+truth. It checks that the adapter can produce and retain generated failure-mode
+cases without relying only on hand-written fixtures.
+
 ## Future Compatibility
 
 This design keeps the path open for:

@@ -185,6 +185,12 @@ The finite relational adapter has a focused smoke path:
 python -m omega.validation.finite_relational_adapter_smoke
 ```
 
+Generated/adversarial adapter cases have a separate retained-output path:
+
+```bash
+python -m omega.validation.finite_relational_adapter_adversarial
+```
+
 Local PowerShell form:
 
 ```powershell
@@ -197,6 +203,15 @@ finite grid fixtures. It checks provenance completeness, verifies retained
 digest/audit artifacts, exercises phantom reachability and hidden reachability
 loss controls, and runs the focused adapter tests unless `--skip-pytest` is
 provided.
+
+The generated/adversarial path deterministically searches small finite cases
+for adapter hardening witnesses, then retains each generated source, compiled
+model, digests, audit results, and summary. These cases do not validate a real
+substrate; they check that the adapter machinery can find and audit expected
+finite failure modes without relying only on hand-written fixtures.
+
+Finite relational adapter changes are also protected by the
+`Finite Relational Adapter Smoke` GitHub Actions workflow.
 
 See [REPRODUCIBILITY_SMOKE.md](REPRODUCIBILITY_SMOKE.md).
 

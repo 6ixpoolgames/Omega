@@ -640,6 +640,13 @@ External adapter smoke:
   --out-root .tmp\finite_relational_adapter_smoke
 ```
 
+Generated/adversarial adapter validation:
+
+```powershell
+.\.venv\Scripts\python.exe -m omega.validation.finite_relational_adapter_adversarial `
+  --out-root .tmp\finite_relational_adapter_adversarial
+```
+
 Claim boundary:
 
 ```text
@@ -675,6 +682,11 @@ Adapter non-negotiables:
    reachability catches abstract futures that the exact model never had;
    hidden reachability loss catches an abstract surface that still reports a
    path after the exact changed model has lost it.
+
+8. Generated/adversarial adapter cases are hardening checks, not empirical
+   validation. They are useful when they search for finite failure modes and
+   then retain the generated source, compiled model, digests, audit results,
+   and summary.
 ```
 
 Future source adapters should follow this rule:

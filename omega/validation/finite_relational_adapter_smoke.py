@@ -51,6 +51,7 @@ ADAPTER_TESTS = [
     "tests/test_derived_graph_adapter.py",
     "tests/test_finite_grid_adapter.py",
     "tests/test_finite_relational_adapter_smoke.py",
+    "tests/test_finite_relational_adapter_adversarial.py",
 ]
 
 

@@ -5,6 +5,10 @@ audits over role-selected profiles.
 """
 
 from omega.adapters.finite_relational.audits import AuditResult, run_audit, run_declared_audits
+from omega.adapters.finite_relational.adversarial_search import (
+    GeneratedAdapterCase,
+    generate_adversarial_cases,
+)
 from omega.adapters.finite_relational.derived_graph import (
     compile_derived_graph,
     compile_derived_graph_path,
@@ -31,6 +35,7 @@ __all__ = [
     "AuditResult",
     "FiniteFunction",
     "FiniteRelationalModel",
+    "GeneratedAdapterCase",
     "Predicate",
     "Relation",
     "SchemaError",
@@ -38,6 +43,7 @@ __all__ = [
     "compile_derived_graph_path",
     "compile_finite_grid",
     "compile_finite_grid_path",
+    "generate_adversarial_cases",
     "load_model",
     "load_model_path",
     "load_derived_graph_path",
