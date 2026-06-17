@@ -110,6 +110,7 @@ OmegaProper/Trajectory/ConsequenceClasses.lean
 OmegaProper/Trajectory/ConsequenceDiscipline.lean
 OmegaProper/Trajectory/ConsequenceComparison.lean
 OmegaProper/Trajectory/ConsequencePanelDiscipline.lean
+OmegaProper/Trajectory/ParameterizedRecurrentSupport.lean
 OmegaProper/Trajectory/RecurrentSupportPathTransfer.lean
 OmegaProper/Trajectory/RecurrentSupportRobustness.lean
 OmegaProper/Trajectory/RecurrentSupportRestoration.lean
@@ -204,7 +205,17 @@ robustness guardrails, positive recurrent-support transfer contracts,
 path-level transfer contracts that allow internal rerouting, a finite one-way
 dynamics witness where endpoint viability and forward reachability remain
 while recurrent carrying is lost, and a restoration witness where an explicit
-repair contract restores recurrent carrying.
+repair contract restores recurrent carrying; a parameterized bounded finite
+family showing that the one-way recurrent-support loss pattern persists across
+supports of size `n + 2`.
+```
+
+Checkpoint:
+
+```text
+Layer A now has a first finite local perturbation calculus for recurrently
+carried consequence distinctions: support, loss, preservation, restoration,
+and rerouting.
 ```
 
 This is formal infrastructure only. It does not instantiate an empirical
@@ -245,6 +256,8 @@ loss_aware_presentation_constructors_v0.md
 loss_aware_presentation_strictness_v0.md
 support_under_perturbation_v0.md
 recurrent_support_path_transfer_v0.md
+recurrent_support_perturbation_floor_v0.md
+parameterized_recurrent_support_v0.md
 recurrent_support_robustness_v0.md
 recurrent_support_restoration_v0.md
 recurrent_support_transfer_v0.md
