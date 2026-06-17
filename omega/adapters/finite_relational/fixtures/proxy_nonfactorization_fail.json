@@ -1,0 +1,35 @@
+{
+  "model_id": "finite_relational_proxy_nonfactorization_fail",
+  "schema_version": "0.1.0",
+  "carrier": ["safe_run", "loss_run"],
+  "predicates": {
+    "option_preserved": ["safe_run"]
+  },
+  "functions": {
+    "proxy_score": {
+      "domain": "state",
+      "mapping": {
+        "safe_run": "task_success",
+        "loss_run": "task_success"
+      }
+    }
+  },
+  "audits": [
+    {
+      "id": "same_proxy_different_option_status",
+      "kind": "nonfactorization",
+      "summary": "proxy_score",
+      "target_predicate": "option_preserved",
+      "expect": "witness"
+    }
+  ],
+  "provenance": {
+    "declared_before_run": true,
+    "source": "omega/adapters/finite_relational/fixtures/proxy_nonfactorization_fail.json",
+    "claim_boundary": "Toy finite relational fixture: shows a proxy score can be equal while the declared option-preservation target differs.",
+    "controls": [
+      "the proxy is total on the declared carrier",
+      "the target predicate is declared before the audit"
+    ]
+  }
+}

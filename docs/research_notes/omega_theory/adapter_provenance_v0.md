@@ -204,6 +204,7 @@ claim is being used within its declared scope.
 ## Related Notes
 
 - [bad_panel_taxonomy_v0.md](bad_panel_taxonomy_v0.md)
+- [finite_relational_adapter_design_v0.md](finite_relational_adapter_design_v0.md)
 - [loss_aware_presentation_contract_v0.md](loss_aware_presentation_contract_v0.md)
 - [standard_core_compression_v0.md](standard_core_compression_v0.md)
 - [compression_guardrails_v0.md](compression_guardrails_v0.md)

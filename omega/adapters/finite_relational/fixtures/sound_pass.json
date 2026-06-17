@@ -1,0 +1,104 @@
+{
+  "model_id": "finite_relational_sound_pass",
+  "schema_version": "0.1.0",
+  "domains": {
+    "state": ["left", "right"],
+    "distinction": ["d_lr"]
+  },
+  "predicates": {
+    "safe": ["left", "right"],
+    "carrier_lr": ["left", "right"]
+  },
+  "relations": {
+    "primitive_rel": {
+      "domains": ["state", "state"],
+      "tuples": [
+        ["left", "right"],
+        ["right", "left"]
+      ]
+    },
+    "primitive_sep": {
+      "domains": ["distinction", "state", "state"],
+      "tuples": [
+        ["d_lr", "left", "right"],
+        ["d_lr", "right", "left"]
+      ]
+    },
+    "primitive_asym": {
+      "domains": ["distinction", "state", "state"],
+      "tuples": [
+        ["d_lr", "left", "right"]
+      ]
+    },
+    "next": {
+      "domains": ["state", "state"],
+      "tuples": [
+        ["left", "right"],
+        ["right", "left"]
+      ]
+    },
+    "merge_separated": {
+      "domains": ["state", "state"],
+      "tuples": [
+        ["left", "right"],
+        ["right", "left"]
+      ]
+    }
+  },
+  "functions": {
+    "present_identity": {
+      "domain": "state",
+      "mapping": {
+        "left": "left",
+        "right": "right"
+      }
+    }
+  },
+  "profiles": {
+    "alpha_main": {
+      "kind": "alpha",
+      "rel": "primitive_rel",
+      "sep": "primitive_sep",
+      "asym": "primitive_asym"
+    },
+    "carrier_main": {
+      "kind": "carrier",
+      "transition": "next",
+      "safety": "safe",
+      "carrier": "carrier_lr",
+      "separation": "merge_separated"
+    }
+  },
+  "audits": [
+    {
+      "id": "alpha_surface_laws",
+      "kind": "alpha_laws",
+      "profile": "alpha_main",
+      "expect": "alpha_laws_hold"
+    },
+    {
+      "id": "identity_presentation_sound",
+      "kind": "sound_presentation",
+      "presentation": "present_identity",
+      "forbidden": "merge_separated",
+      "expect": "sound"
+    },
+    {
+      "id": "carrier_lr_certified",
+      "kind": "carrier_certificate",
+      "profile": "carrier_main",
+      "left": "left",
+      "right": "right",
+      "expect": "certified"
+    }
+  ],
+  "provenance": {
+    "declared_before_run": true,
+    "source": "omega/adapters/finite_relational/fixtures/sound_pass.json",
+    "claim_boundary": "Toy finite relational fixture: checks schema, Alpha-law exposure, sound presentation, and carrier certificate only.",
+    "controls": [
+      "identity presentation does not merge the separated endpoints",
+      "carrier transition is the two-state return cycle"
+    ]
+  }
+}

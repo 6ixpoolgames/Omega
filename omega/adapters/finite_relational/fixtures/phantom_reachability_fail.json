@@ -1,0 +1,39 @@
+{
+  "model_id": "finite_relational_phantom_reachability_fail",
+  "schema_version": "0.1.0",
+  "carrier": ["a", "b", "c", "d"],
+  "predicates": {
+    "safe": ["a", "b", "c", "d"]
+  },
+  "relations": {
+    "exact_next": [
+      ["a", "b"],
+      ["c", "d"]
+    ],
+    "abstract_next": [
+      ["a", "b"],
+      ["b", "d"],
+      ["c", "d"]
+    ]
+  },
+  "audits": [
+    {
+      "id": "abstract_fabricates_a_to_d",
+      "kind": "phantom_reachability",
+      "exact_transition": "exact_next",
+      "abstract_transition": "abstract_next",
+      "source": "a",
+      "target": "d",
+      "expect": "phantom"
+    }
+  ],
+  "provenance": {
+    "declared_before_run": true,
+    "source": "omega/adapters/finite_relational/fixtures/phantom_reachability_fail.json",
+    "claim_boundary": "Toy finite relational fixture: shows an abstract transition surface can fabricate a path absent from the exact transition relation.",
+    "controls": [
+      "exact transition has no b-to-c or b-to-d bridge from a to d",
+      "abstract transition adds the bridge explicitly"
+    ]
+  }
+}
