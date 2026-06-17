@@ -1,0 +1,35 @@
+{
+  "model_id": "derived_graph_strict_asymmetry",
+  "nodes": ["source", "sink"],
+  "edges": [["source", "sink"]],
+  "observations": {
+    "color": {
+      "source": "red",
+      "sink": "blue"
+    }
+  },
+  "presentations": {
+    "identity": {
+      "source": "source",
+      "sink": "sink"
+    },
+    "constant": {
+      "source": "merged",
+      "sink": "merged"
+    }
+  },
+  "presentation_expectations": {
+    "identity": "sound",
+    "constant": "unsound"
+  },
+  "safety": "all",
+  "provenance": {
+    "declared_before_run": true,
+    "source": "omega/adapters/finite_relational/fixtures/derived_graph_strict_asymmetry.json",
+    "claim_boundary": "Derived graph smoke fixture: earns Alpha-like asymmetry from strict directed edge plus observation difference.",
+    "controls": [
+      "source does not declare primitive_rel, primitive_sep, primitive_asym, carrier predicates, profiles, or audits",
+      "constant presentation is expected to be unsound because it merges observation-separated nodes"
+    ]
+  }
+}

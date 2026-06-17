@@ -1,0 +1,33 @@
+{
+  "model_id": "derived_graph_recurrent_carrier",
+  "nodes": ["left", "right"],
+  "edges": [
+    ["left", "right"],
+    ["right", "left"]
+  ],
+  "observations": {
+    "color": {
+      "left": "red",
+      "right": "blue"
+    }
+  },
+  "presentations": {
+    "identity": {
+      "left": "left",
+      "right": "right"
+    }
+  },
+  "presentation_expectations": {
+    "identity": "sound"
+  },
+  "safety": "all",
+  "provenance": {
+    "declared_before_run": true,
+    "source": "omega/adapters/finite_relational/fixtures/derived_graph_recurrent_carrier.json",
+    "claim_boundary": "Derived graph smoke fixture: earns a carrier certificate from a mutual-reach component carrying an observation separation.",
+    "controls": [
+      "source does not declare carrier predicates, carrier profiles, or carrier audits",
+      "strict-edge asymmetry is not expected because the edge is reciprocated"
+    ]
+  }
+}

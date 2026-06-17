@@ -11,8 +11,9 @@ universal interface:
 
 ```text
 substrate-specific source
--> declared finite relational model
--> selected theory profile
+-> deterministic source compiler
+-> finite relational IR
+-> selected theory profile / generated profile
 -> generic audits
 -> retained provenance
 ```
@@ -35,6 +36,25 @@ provenance.
 ```
 
 Put theory meaning in profiles, not in the model core.
+
+The most principled shape is not "graph adapter." The principled shape is:
+
+```text
+source-specific compiler:
+  may know about graph syntax, gridworld syntax, channel syntax, trace syntax,
+  or benchmark syntax.
+
+finite relational IR:
+  knows only finite domains, predicates, relations, functions, profiles,
+  audits, and provenance.
+
+generic audit engine:
+  consumes only the finite relational IR.
+```
+
+This prevents the source compiler from proving its own conclusions. A source
+compiler may derive surfaces, but it must expose those surfaces in the IR before
+the generic audits consume them.
 
 ## Universal Core
 
@@ -69,6 +89,90 @@ The old "carrier" field remains usable as shorthand for:
 ```text
 domains.state
 ```
+
+## Two Adapter Layers
+
+The pilot has two layers:
+
+```text
+derived graph source
+-> compiled finite relational IR
+-> generic audits
+```
+
+The finite relational IR is intentionally explicit and close to the formal
+interfaces. It may contain names like `primitive_rel`, `primitive_sep`,
+`primitive_asym`, `merge_separated`, and `carrier_0`.
+
+The derived graph source is much less hand-labeled. It declares only:
+
+```text
+nodes;
+edges;
+observations;
+presentations;
+safety;
+provenance.
+```
+
+The compiler derives the formal surfaces mechanically:
+
+```text
+Rel:
+  directed graph edge.
+
+Sep:
+  two states differ under a declared observation.
+
+Asym:
+  one-way directed edge plus Sep.
+
+merge_separated:
+  some declared observation separates the state pair.
+
+carrier candidate:
+  mutual-reach component carrying a separated pair.
+```
+
+This keeps the adapter from trusting hand-labeled asymmetry in the source
+fixture. It still requires declared observations, presentations, and provenance;
+it does not perform unconstrained post-hoc relevance discovery.
+
+Derived graph is the first source compiler. It is not the universal adapter
+format. Future compilers should target the same finite relational IR unless
+they can justify extending the IR itself.
+
+## Hardening Rules
+
+Future adapter work should preserve these constraints:
+
+```text
+No private audits:
+  source compilers must not make claims that bypass the generic audit engine.
+
+Named derivation rules:
+  every generated relation, predicate, carrier, or audit must be traceable to a
+  named derivation rule.
+
+Source/IR retention:
+  retain both the source artifact and the compiled model artifact.
+
+Digest both sides:
+  source digest records the declared input;
+  compiled-model digest records the audit surface.
+
+No validation by discovery:
+  exploratory candidate generation is allowed only when clearly marked;
+  validation claims require predeclared source fields.
+
+No source-trusted asymmetry by default:
+  adapter-facing sources should derive asymmetry from directed consequence,
+  strict reachability, irreversible loss, or another explicit post-adapter
+  rule whenever possible.
+```
+
+These rules are stricter than the low-level IR. The IR can still host
+hand-written theorem fixtures; adapter-facing sources should avoid that style.
 
 ## Profiles
 
@@ -127,8 +231,23 @@ Alpha.Asym
   -> ternary relation over distinction x state x state
 ```
 
-The adapter must not infer Alpha automatically from arbitrary graph structure.
-It should require a declared Alpha profile and provenance.
+The low-level IR can represent a declared Alpha profile directly. The derived
+graph layer does something narrower: it derives an Alpha-like exposure from
+declared graph observations and strict directed graph structure.
+
+This gives two claim modes:
+
+```text
+declared primitive presentation:
+  source supplies Rel, Sep, and Asym through the finite relational IR.
+
+derived primitive exposure:
+  source supplies graph observations and transitions;
+  compiler derives Rel, Sep, and Asym candidates by fixed rules.
+```
+
+The derived mode is safer for adapter-facing pilots because asymmetry is an
+audit result of the post-adapter structure, not a trusted source label.
 
 Safe audit chain:
 
@@ -187,6 +306,17 @@ proxy_nonfactorization_fail.json:
   same proxy score;
   different safety target;
   non-factorization witness is detected.
+
+derived_graph_strict_asymmetry.json:
+  source has no primitive relation/separation/asymmetry labels;
+  compiler derives Sep from observation difference;
+  compiler derives Asym from strict one-way edge plus Sep;
+  constant presentation is caught as unsound.
+
+derived_graph_recurrent_carrier.json:
+  source has no carrier labels or carrier audit;
+  compiler derives an SCC/mutual-reach carrier candidate;
+  carrier certificate succeeds for a separated pair.
 ```
 
 Each fixture should include provenance.
@@ -216,6 +346,15 @@ model_digest.txt
 provenance_check.json
 audit_results.json
 summary.json
+```
+
+The derived graph CLI should additionally retain:
+
+```text
+source.json
+compiled_model.json
+source_digest.txt
+compiled_model_digest.txt
 ```
 
 The digest makes retained fixtures auditable. The audit results distinguish:

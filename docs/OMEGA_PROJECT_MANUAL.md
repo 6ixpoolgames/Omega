@@ -1,6 +1,6 @@
 # Omega Project Manual
 
-Last updated: 2026-06-04
+Last updated: 2026-06-18
 
 Repository: https://github.com/6ixpoolgames/Omega
 
@@ -38,7 +38,60 @@ docs/OMEGA_RUNNING_LOG.md:
 Do not make this manual the canonical public pitch. Keep public-facing summary
 language in `README.md` and formal onboarding in `docs/OMEGA_FORMALISM_PRIMER.md`.
 
-Current checkpoint:
+## Current Workflow Snapshot
+
+Last workflow refresh: 2026-06-18
+
+Active project posture:
+
+```text
+Current contribution:
+  Layer A is a continuation-map integrity discipline.
+
+Active formal stack:
+  AlphaCore primitive floor;
+  consequence/profile/sound-presentation guardrails;
+  non-factorization and exact recovery compression;
+  viability/reachability;
+  recurrent support carrying, loss, restoration, transfer, lineage,
+  successor handoff, perturbation budget, joint carrying failures;
+  finite relational adapter pilot.
+
+Active adapter path:
+  source artifact
+  -> deterministic source compiler
+  -> finite relational IR
+  -> generic audits
+  -> retained provenance and digests.
+
+Current adapter compiler:
+  derived graph source
+  -> finite relational IR.
+
+Current non-claims:
+  no Omega validation;
+  no value, agency, valuerhood, or identity theorem;
+  no substrate-general empirical transfer;
+  no frontier-model alignment claim.
+```
+
+Current front-door notes:
+
+- `README.md`
+- `docs/OMEGA_FORMALISM_PRIMER.md`
+- `docs/EXTERNAL_READER_GUIDE.md`
+- `docs/research_notes/omega_theory/layer_a_theorem_spine_v0.md`
+- `docs/research_notes/omega_theory/layer_a_derivation_audit_v0.md`
+- `docs/research_notes/omega_theory/standard_core_compression_v0.md`
+- `docs/research_notes/omega_theory/finite_relational_adapter_design_v0.md`
+- `docs/research_notes/omega_theory/adapter_provenance_v0.md`
+- `docs/research_notes/omega_theory/README.md`
+
+Legacy Future Field Atlas checkpoint:
+
+The following checkpoint records the historical empirical line. It is retained
+for provenance and rerun instructions only. It is not the current active
+workflow unless the user explicitly resumes Future Field Atlas work.
 
 ```text
 Formal arm:
@@ -56,7 +109,11 @@ Empirical arm:
   front door.
 ```
 
-Current public posture:
+Legacy Future Field Atlas public posture:
+
+This block is historical. Do not use it as the current public pitch. It records
+the last Future Field Atlas stance before the current Layer A / adapter
+consolidation.
 
 ```text
 Lead with reachable futures and neutral future-landscape deformation.
@@ -184,7 +241,7 @@ Treat "budget_conservation", "budget_kind", "budget_weight", and
 "budget_delta" as retained raw implementation/output names only.
 ```
 
-Primary current design note:
+Legacy Future Field Atlas design/provenance notes:
 
 - `docs/specs/current/FUTURE_FIELD_ATLAS_INSTRUMENT_SPEC.md`
 - `docs/specs/current/FUTURE_FIELD_ATLAS_SUBSTRATE_MORPHOLOGY_SWEEP_SPEC.md`
@@ -238,6 +295,10 @@ Primary current design note:
 
 ## Spec Inbox
 
+This section is mostly for Future Field Atlas or other empirical run specs.
+For current Layer A / finite relational adapter work, start from the source
+files, tests, and design notes named in the current workflow snapshot above.
+
 Always check this folder first for new run specs:
 
 ```text
@@ -247,6 +308,10 @@ docs/specs/current/
 This is the active spec inbox. When the user says a new spec is "in the repo",
 "live", "uploaded", or "next up", look in `docs/specs/current/` before
 searching the rest of the repository.
+
+Do not infer that a spec in this inbox is part of the current default workflow.
+It is active only when the user explicitly resumes that run line or asks for the
+spec.
 
 Naming convention:
 
@@ -311,6 +376,32 @@ writing public summaries. Use `docs/research_notes/omega_theory/omega_glossary.m
 as the canonical internal definition anchor.
 
 ## How A New Codex Instance Should Start
+
+Current default startup:
+
+1. Read this file through the current workflow snapshot and adapter workflow.
+2. Read `README.md`.
+3. Read `docs/OMEGA_FORMALISM_PRIMER.md`.
+4. Read `docs/EXTERNAL_READER_GUIDE.md` if external-facing framing matters.
+5. Read the current Layer A / adapter anchors:
+   - `docs/research_notes/omega_theory/layer_a_theorem_spine_v0.md`
+   - `docs/research_notes/omega_theory/layer_a_derivation_audit_v0.md`
+   - `docs/research_notes/omega_theory/standard_core_compression_v0.md`
+   - `docs/research_notes/omega_theory/finite_relational_adapter_design_v0.md`
+   - `docs/research_notes/omega_theory/adapter_provenance_v0.md`
+   - `docs/research_notes/omega_theory/README.md`
+6. Check the working tree:
+   - `git status --short`
+7. For current adapter work, run the focused adapter validation command listed
+   in the finite relational adapter workflow section.
+8. Use `docs/specs/current/` only when the user explicitly resumes a spec-driven
+   empirical run.
+
+Legacy startup checklist:
+
+The older checklist below is retained for provenance and for deliberate Future
+Field Atlas / historical-probe resumption. It is not the default startup path
+for current Layer A or finite relational adapter work.
 
 1. Read this file.
 2. Read `README.md`.
@@ -392,6 +483,162 @@ Use this Python executable locally:
 
 Use 18 worker processes for CPU-heavy runs unless deliberately stress testing.
 
+## Finite Relational Adapter Workflow
+
+Adapter architecture is:
+
+```text
+source artifact
+-> deterministic source compiler
+-> finite relational IR
+-> generic audits
+-> retained provenance and digests
+```
+
+This is the principled boundary. Source compilers may be substrate-specific, but
+generic audits should consume the finite relational IR rather than private
+source-specific assumptions.
+
+The finite relational adapter has two surfaces:
+
+```text
+derived graph source:
+  low-label input for graph-like substrates.
+
+finite relational IR:
+  explicit normalized audit surface used by the generic adapter checks.
+```
+
+Prefer the derived graph source when a graph-like substrate is available. Use
+the finite relational IR directly only for regression fixtures, theorem-facing
+toy examples, or cases where the exact relations are already externally
+declared.
+
+Derived graph sources declare:
+
+```text
+nodes;
+edges;
+observations;
+presentations;
+safety;
+provenance.
+```
+
+They do not declare `primitive_rel`, `primitive_sep`, `primitive_asym`, carrier
+predicates, profiles, or audits. The compiler derives:
+
+```text
+Rel:
+  graph edge.
+
+Sep:
+  declared observation difference.
+
+Asym:
+  strict one-way edge plus Sep.
+
+merge_separated:
+  state pairs separated by some declared observation.
+
+carrier candidates:
+  mutual-reach components carrying separated pairs.
+```
+
+Run a derived graph source with:
+
+```powershell
+.\.venv\Scripts\python.exe -m omega.adapters.finite_relational.graph_cli `
+  --source omega\adapters\finite_relational\fixtures\derived_graph_strict_asymmetry.json `
+  --out .tmp\derived_graph_strict_asymmetry
+```
+
+The derived graph CLI retains:
+
+```text
+source.json
+compiled_model.json
+source_digest.txt
+compiled_model_digest.txt
+provenance_check.json
+audit_results.json
+summary.json
+```
+
+Run a low-level finite relational IR fixture with:
+
+```powershell
+.\.venv\Scripts\python.exe -m omega.adapters.finite_relational.cli `
+  --model omega\adapters\finite_relational\fixtures\sound_pass.json `
+  --out .tmp\finite_relational_adapter_smoke
+```
+
+The low-level IR CLI retains:
+
+```text
+model_digest.txt
+provenance_check.json
+audit_results.json
+summary.json
+```
+
+Focused adapter validation:
+
+```powershell
+$env:PYTHONDONTWRITEBYTECODE='1'
+.\.venv\Scripts\python.exe -m pytest `
+  tests\test_finite_relational_adapter.py `
+  tests\test_derived_graph_adapter.py `
+  -q --basetemp .tmp\pytest-adapters -p no:cacheprovider
+.\.venv\Scripts\python.exe -m ruff check `
+  omega\adapters\finite_relational `
+  tests\test_finite_relational_adapter.py `
+  tests\test_derived_graph_adapter.py
+```
+
+Claim boundary:
+
+```text
+the adapter compiles declared finite sources and runs exact finite audits;
+it does not validate the source model, prove Omega, infer value, or certify a
+real-world substrate.
+```
+
+Adapter non-negotiables:
+
+```text
+1. Do not trust hand-labeled asymmetry in adapter-facing sources when it can be
+   derived from declared post-adapter structure.
+
+2. Do not let source compilers add private audit semantics. They should compile
+   into the finite relational IR and then call the generic audit engine.
+
+3. Do not mix discovery and validation. Exploratory candidate generation may
+   suggest observations, carriers, or presentations, but validation claims must
+   use retained predeclared inputs.
+
+4. Retain both source and compiled model whenever a source compiler is used.
+   The compiled model is the audit surface; the source artifact is the
+   provenance surface.
+
+5. Every derivation rule must be named in the compiled model provenance.
+
+6. A passing audit means only that the declared finite structure satisfies the
+   declared finite check. It does not certify that the source abstraction is
+   empirically correct.
+```
+
+Future source adapters should follow this rule:
+
+```text
+new substrate format:
+  add a compiler to finite relational IR;
+  add fixtures and provenance;
+  reuse existing audits where possible;
+  add a new generic audit only if the existing IR cannot express the needed
+  check.
+```
+
 ## Repository Layout Rules
 
 Keep the repository root uncluttered.
@@ -425,7 +672,24 @@ The Lean sandbox lives under:
 formal/lean/
 ```
 
-Use the portable Lean toolchain from the repository root:
+Default repository-root build command:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\setup\invoke_lake.ps1 build AlphaOmega
+```
+
+Use narrower builds only when the edited layer is narrow:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\setup\invoke_lake.ps1 build AlphaCore
+powershell -ExecutionPolicy Bypass -File scripts\setup\invoke_lake.ps1 build OmegaProper
+```
+
+The wrapper runs from `formal/lean`, prefers the pinned installed toolchain, and
+falls back to Elan/PATH discovery. Direct Lake commands are a fallback for
+interactive local debugging, not the default validation path.
+
+Fallback direct setup:
 
 ```powershell
 $env:PATH = (Resolve-Path '.tools\lean-4.30.0\lean-4.30.0-windows\bin').Path + ';' + $env:PATH
@@ -446,32 +710,44 @@ fails, continue with source builds as long as `lake build OmegaCore` succeeds.
 For Alpha-specific edits, `lake build AlphaCore` must also pass. For layer-map
 or facade edits, `lake build AlphaOmega` must pass.
 
-Before promoting a formalism update, verify:
+Before promoting a broad formalism update, verify:
 
 ```powershell
-lake build AlphaCore
-lake build ProtoOmega
-lake build OmegaAdapters
-lake build OmegaProper
-lake build AlphaOmega
-lake build OmegaArchive
-lake build OmegaCore
-Select-String -Path formal\lean\AlphaCore\*.lean,formal\lean\ProtoOmega\*.lean,formal\lean\ProtoOmega\*\*.lean,formal\lean\OmegaAdapters\*.lean,formal\lean\OmegaAdapters\*\*.lean,formal\lean\OmegaProper\*.lean,formal\lean\OmegaProper\*\*.lean,formal\lean\OmegaArchive\*.lean,formal\lean\OmegaCore\*.lean,formal\lean\OmegaCore\Presentations\*.lean -Pattern 'sorry|admit|axiom'
+powershell -ExecutionPolicy Bypass -File scripts\setup\invoke_lake.ps1 build AlphaOmega
+rg -n "\b(sorry|admit|axiom)\b" formal\lean -g "*.lean"
 ```
 
-Current checked Lean scope includes standalone Alpha primitives, Alpha
-reachability/separation examples, support-level distinction transport,
-normal-lax recoverability/non-erasure consequences, finite-chain recurrent
-recoverability, and finite maximal completion existence including the
-Finset/Fintype specialization. The current counterexample layer also checks
-finite completion separations, marginal-like non-erasure versus strictly joint
-non-erasure, and adapter-failure examples for missing closure or laxity laws.
-The first worked presentation layer is
-`formal/lean/OmegaCore/Presentations/FiniteBoolean.lean`, which validates
-Boolean relation support recovery as a root-calculus presentation. The second
-worked presentation layer is
-`formal/lean/OmegaCore/Presentations/FiniteChannel.lean`, which validates exact
-decoder recovery through finite support channels / observable partitions.
+Use the expanded namespace build only when editing legacy compatibility
+surfaces:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\setup\invoke_lake.ps1 build AlphaCore
+powershell -ExecutionPolicy Bypass -File scripts\setup\invoke_lake.ps1 build ProtoOmega
+powershell -ExecutionPolicy Bypass -File scripts\setup\invoke_lake.ps1 build OmegaAdapters
+powershell -ExecutionPolicy Bypass -File scripts\setup\invoke_lake.ps1 build OmegaProper
+powershell -ExecutionPolicy Bypass -File scripts\setup\invoke_lake.ps1 build AlphaOmega
+powershell -ExecutionPolicy Bypass -File scripts\setup\invoke_lake.ps1 build OmegaArchive
+powershell -ExecutionPolicy Bypass -File scripts\setup\invoke_lake.ps1 build OmegaCore
+```
+
+Current active Lean posture:
+
+```text
+AlphaCore:
+  primitive floor and derived primitive surfaces.
+
+OmegaProper:
+  consequence discipline, sound quotients, non-factorization compression,
+  viability/reachability, recurrent support carrying/loss/transfer, and
+  Layer A guardrails.
+
+AlphaOmega:
+  broad umbrella for active proof-stack validation.
+
+OmegaCore / ProtoOmega / OmegaAdapters / OmegaArchive:
+  compatibility and provenance surfaces. Build when touched, but do not treat
+  them as the conceptual front door.
+```
 
 Historical executable probes live under:
 
@@ -915,7 +1191,11 @@ certified_path_mass_survival_to_final_segment
 
 This index is a summary diagnostic, not a law.
 
-## Probe Line Summary
+## Legacy Probe Line Summary
+
+This section is retained as historical probe provenance. It is not the current
+active workflow. Use it when deliberately resuming or auditing older
+VAL/COM/RFS/Future Field Atlas branches.
 
 ### Environment And Early Single-Omega Probes
 
@@ -1446,6 +1726,45 @@ Interpretation:
 
 ## Current Scientific Position
 
+What we can currently say:
+
+- We have not validated Omega as a scientific theory.
+- We have a Layer A theorem stack for continuation-map integrity: which
+  summaries, quotients, presentations, supports, carriers, and transformations
+  preserve or destroy declared continuation facts.
+- We have standard-core compression results: sound quotient as kernel
+  containment, class soundness as clique soundness, non-factorization as the
+  anti-proxy schema, and exact recovery as support disjointness.
+- We have viability/reachability and recurrent-support machinery showing that
+  endpoint viability and forward reachability are weaker than recurrent
+  distinction-carrying support.
+- We have perturbation/loss/restoration/transfer guardrails for recurrently
+  carried consequence distinctions.
+- We have a finite relational adapter pilot that compiles declared finite
+  sources into a normalized IR, runs generic audits, and retains provenance.
+- The adapter layer is infrastructure only. It does not validate real-world
+  source models, infer value, certify agency, or prove Omega.
+
+Current near-term engineering target:
+
+```text
+make source compilers increasingly adaptive while keeping generic audits,
+retained source/IR digests, and predeclared provenance non-negotiable.
+```
+
+Current near-term theory target:
+
+```text
+connect derived primitive exposure, consequence profiles, and recurrent support
+without reintroducing hidden identity or hand-labeled asymmetry.
+```
+
+## Legacy Scientific Position Before Layer A Consolidation
+
+The following block is retained for historical context. It records the state of
+the empirical and primitive-probe branches before the current Layer A / adapter
+workflow became the default.
+
 What we can say:
 
 - We have not validated Omega as a scientific theory.
@@ -1599,7 +1918,12 @@ What we cannot say:
 - Probe T1 staged local trajectory samples under `_trajectory_samples/`; those
   are intentionally untracked because they are large generated intermediates.
 
-## Recommended Next Probes
+## Legacy Recommended Next Probes
+
+This section is deprecated for default work selection. It is retained as a
+record of the pre-consolidation empirical roadmap. Current next work should be
+chosen from the Layer A / finite relational adapter workflow unless the user
+explicitly resumes a historical probe line.
 
 ### RFS-MB0.1: Substrate/Environment Redesign and Window-Control Repair
 
@@ -1760,11 +2084,19 @@ floor.
 
 ## Maintenance Rule
 
-Every new substantial probe must update:
+Every new substantial workflow, adapter, or probe must update:
 
 - `docs/OMEGA_RUNNING_LOG.md`
 - this manual if concepts or conclusions change
 - `README.md` only when usage/setup changes
+
+When a workflow is superseded:
+
+- do not silently delete its instructions;
+- mark the old section as legacy, deprecated, or resume-only;
+- add the current workflow above the old one;
+- state the current claim boundary and validation command;
+- preserve retained artifacts and result notes as provenance.
 
 When adding results to Git:
 
