@@ -116,10 +116,12 @@ What remains open is the ascent from these constraints to richer notions of valu
 For the high-level orientation:
 
 1. [Project Overview](docs/PROJECT_OVERVIEW.md)
-2. [Omega Formalism Primer](docs/OMEGA_FORMALISM_PRIMER.md)
-3. [External Reader Guide](docs/EXTERNAL_READER_GUIDE.md)
-4. [Standard Core Compression](docs/research_notes/omega_theory/standard_core_compression_v0.md)
-5. [Dynamics Abstraction Status](docs/research_notes/omega_theory/dynamics_abstraction_status_v0.md)
+2. [Omega Lite Worked Examples](docs/OMEGA_LITE_WORKED_EXAMPLES.md)
+3. [Omega Formalism Primer](docs/OMEGA_FORMALISM_PRIMER.md)
+4. [External Reader Guide](docs/EXTERNAL_READER_GUIDE.md)
+5. [Standard Core Compression](docs/research_notes/omega_theory/standard_core_compression_v0.md)
+6. [Adapter Provenance](docs/research_notes/omega_theory/adapter_provenance_v0.md)
+7. [Dynamics Abstraction Status](docs/research_notes/omega_theory/dynamics_abstraction_status_v0.md)
 
 For the current theorem spine:
 
@@ -136,6 +138,8 @@ For validation and claim hygiene:
 2. [Claims Ledger](docs/CLAIMS_LEDGER.md)
 3. [Public Results Index](docs/PUBLIC_RESULTS_INDEX.md)
 4. [Bad Panel Taxonomy](docs/research_notes/omega_theory/bad_panel_taxonomy_v0.md)
+5. [How To Add A Witness](docs/HOW_TO_ADD_A_WITNESS.md)
+6. [Contributing](CONTRIBUTING.md)
 
 For provenance and workflow:
 
@@ -146,12 +150,13 @@ For provenance and workflow:
 
 Near-term work is focused on:
 
-1. Constructor theorems for loss-aware presentation contracts.
-2. Irreversible-loss corridor theorems.
-3. Joint viability and pairwise-vs-joint compatibility failures.
+1. Adapter provenance: explaining why declared exact facts deserve trust.
+2. Worked examples and visualizations for the main finite failure modes.
+3. AI-adjacent proxy failures: same benchmark or reward score, different safety target.
 4. Stronger finite adapters and generated witness families.
-5. A cleaner bridge from viability constraints to Gradient Ethics.
-6. A more mature account of value-bearing trajectories without assuming self or identity as primitives.
+5. Irreversible-loss corridor and joint viability theorems.
+6. A cleaner bridge from viability constraints to Gradient Ethics.
+7. A more mature account of value-bearing trajectories without assuming self or identity as primitives.
 
 ## Repository Map
 

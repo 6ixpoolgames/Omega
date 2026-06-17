@@ -122,6 +122,32 @@ not every quotient, presentation, or coarse view is admissible even at the
 primitive layer.
 ```
 
+## Laws of Form Adjacency
+
+Spencer-Brown's *Laws of Form* is a useful conceptual neighbor because it also
+puts distinction before objecthood: indication requires a distinction.
+
+The project inherits that orientation, but hardens it:
+
+```text
+not merely "draw a distinction";
+show a typed primitive witness;
+prove it blocks collapse;
+prove which presentations may not erase it.
+```
+
+The important divergence is that Alpha is not only a mark calculus. It carries
+relation, distinction, and asymmetry as typed predicates with laws. Layer A then
+adds consequence exposure, sound quotient discipline, non-factorization,
+dynamics, recurrence, and viability.
+
+So the public positioning should be:
+
+```text
+Laws of Form is useful lineage for distinction-before-object.
+Alpha is the checked primitive floor for consequence-bearing continuation.
+```
+
 ## What It Does Not Derive
 
 Alpha still does not derive:
@@ -155,6 +181,7 @@ Alpha magically contains every consequence apparatus.
 ## Related Notes
 
 - [alpha_primitive_core_v0.md](alpha_primitive_core_v0.md)
+- [laws_of_form_adjacency_v0.md](laws_of_form_adjacency_v0.md)
 - [primitive_exposure_realization_bridge_v0.md](primitive_exposure_realization_bridge_v0.md)
 - [layer_a_derivation_audit_v0.md](layer_a_derivation_audit_v0.md)
 - [layer_a_theorem_spine_v0.md](layer_a_theorem_spine_v0.md)

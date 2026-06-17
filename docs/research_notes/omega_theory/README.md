@@ -18,9 +18,13 @@ alphaomega_continuation_proto_teleology_v0.md
 ../../OMEGA_FORMALISM_PRIMER.md
 alpha_primitive_core_v0.md
 alpha_primitive_derived_surfaces_v0.md
+laws_of_form_adjacency_v0.md
+adapter_provenance_v0.md
+audit_response_roadmap_v0.md
 primitive_exposure_realization_bridge_v0.md
 presentation_soundness_pattern_v0.md
 continuation_deformation_nonfactorization_v0.md
+ai_proxy_failure_nonfactorization_v0.md
 approximation_contract_v0.md
 carrier_semantics_compression_v0.md
 compression_guardrails_v0.md
@@ -291,6 +295,17 @@ adapter, prove valuerhood, prove compatibility in the data, or validate Omega.
 AlphaCore is currently standalone; AlphaOmega is the active facade stack; the
 old OmegaCore namespace is retained for compatibility during migration.
 
+External-audit response:
+
+```text
+adapter_provenance_v0.md
+audit_response_roadmap_v0.md
+../../OMEGA_LITE_WORKED_EXAMPLES.md
+../../HOW_TO_ADD_A_WITNESS.md
+```
+
+These notes address scale, provenance, onboarding, and contribution surfaces.
+
 ## Current Anchors
 
 Read these as current active anchors:
@@ -303,9 +318,13 @@ alphaomega_continuation_proto_teleology_v0.md
 ../../OMEGA_COMPATIBLE_VALUER_TRAJECTORY_SPACE_V0.md
 alpha_primitive_core_v0.md
 alpha_primitive_derived_surfaces_v0.md
+laws_of_form_adjacency_v0.md
+adapter_provenance_v0.md
+audit_response_roadmap_v0.md
 primitive_exposure_realization_bridge_v0.md
 presentation_soundness_pattern_v0.md
 continuation_deformation_nonfactorization_v0.md
+ai_proxy_failure_nonfactorization_v0.md
 carrier_semantics_compression_v0.md
 approximation_contract_v0.md
 compression_guardrails_v0.md

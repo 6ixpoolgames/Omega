@@ -314,10 +314,12 @@ Useful contributions include:
 reviewing Lean definitions for hidden semantic assumptions;
 checking whether a theorem surface permits self-validating evidence routes;
 proposing cleaner consequence-system adapters;
+checking adapter provenance for declared exact facts;
 auditing comparison relations for collapse, over-separation, and provenance;
 stress-testing registry-first stochastic outputs;
 designing trajectory-level toy substrates with actions, perturbations, and
 recoverable process-bundles;
+adding finite witnesses with explicit targets and validation commands;
 improving documentation and reproducibility;
 identifying where old FFA morphology can become subordinate diagnostics rather
 than central claims.
@@ -335,11 +337,22 @@ real but low-level consequence structure;
 stronger value-relevant structure not yet proven.
 ```
 
+Start with:
+
+```text
+docs/OMEGA_LITE_WORKED_EXAMPLES.md
+docs/HOW_TO_ADD_A_WITNESS.md
+CONTRIBUTING.md
+docs/research_notes/omega_theory/adapter_provenance_v0.md
+docs/research_notes/omega_theory/audit_response_roadmap_v0.md
+```
+
 ## 9. Current Open Problems
 
 Near-term formal questions:
 
 ```text
+Which declared exact facts have sufficient adapter provenance?
 How should continuation contexts be instantiated over richer Alpha structures?
 When can consequence-bearing witnesses recur under transformation?
 How should drift and pivot be represented without identity claims?

@@ -91,6 +91,15 @@ Alpha derives primitive apartness and path candidates, but adapters are still
 needed to expose consequence, dynamics, safety, value, or agency.
 ```
 
+Adjacent lineage:
+
+```text
+Spencer-Brown's Laws of Form is useful background for distinction-before-
+object and indication-through-distinction. Alpha keeps that intuition but
+hardens it into typed primitive witnesses, collapse blockers, and
+primitive-sound presentation constraints.
+```
+
 ## 0b. Primitive exposure and realization bridge
 
 Main files:
@@ -504,6 +513,7 @@ Only items 1-3 are near-term formal work. Items 4-5 remain long-run targets.
 - [compression_guardrails_v0.md](compression_guardrails_v0.md)
 - [layer_a_derivation_audit_v0.md](layer_a_derivation_audit_v0.md)
 - [approximation_contract_v0.md](approximation_contract_v0.md)
+- [laws_of_form_adjacency_v0.md](laws_of_form_adjacency_v0.md)
 - [bad_panel_taxonomy_v0.md](bad_panel_taxonomy_v0.md)
 - [boundary_invariant_continuation_roadmap_v0.md](boundary_invariant_continuation_roadmap_v0.md)
 - [carrier_certificate_v0.md](carrier_certificate_v0.md)

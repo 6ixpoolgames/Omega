@@ -92,6 +92,22 @@ Does the presentation preserve the consequence-bearing target?
 
 That question is relevant whether the presentation is a benchmark score, a reward model, a compressed world model, a boundary, a quotient, a safety monitor, or a policy abstraction.
 
+## Adapter Provenance
+
+The formal stack proves facts relative to declared exact structures. That is
+not enough by itself. A reviewer also needs to know why those structures are
+the right ones for the substrate.
+
+Adapter provenance is the missing bridge:
+
+```text
+exact formal facts are declared;
+abstraction contracts preserve those facts;
+adapter provenance explains why those facts model the system under review.
+```
+
+See [adapter_provenance_v0.md](research_notes/omega_theory/adapter_provenance_v0.md).
+
 ## Current Claim Boundary
 
 The repo does not currently prove:
@@ -109,11 +125,14 @@ It does prove and test pieces of the lower machinery needed before those claims 
 ## Useful Entry Points
 
 - [README](../README.md): the public front door.
+- [Omega Lite Worked Examples](OMEGA_LITE_WORKED_EXAMPLES.md): small examples for the core failure modes.
 - [Omega Formalism Primer](OMEGA_FORMALISM_PRIMER.md): older but still useful conceptual orientation.
 - [External Reader Guide](EXTERNAL_READER_GUIDE.md): guide for outside reviewers.
+- [Adapter Provenance](research_notes/omega_theory/adapter_provenance_v0.md): how declared exact facts earn trust.
 - [Dynamics Abstraction Status](research_notes/omega_theory/dynamics_abstraction_status_v0.md): current reachability/viability abstraction state.
 - [Loss-Aware Presentation Contract](research_notes/omega_theory/loss_aware_presentation_contract_v0.md): current abstraction-contract layer.
 - [Claims Ledger](CLAIMS_LEDGER.md): current claim hygiene.
 - [Validation](VALIDATION.md): how to validate local and CI-facing checks.
+- [How To Add A Witness](HOW_TO_ADD_A_WITNESS.md): contribution guide for finite failure witnesses.
 - [Human-AI Workflow](HUMAN_AI_WORKFLOW.md): transparent note on how the repo is produced.
 - [No-Self Evidence Archival Note](references/no_self_evidence_archival_note.md): influence note for an external paper that shaped the boundary/non-self posture.

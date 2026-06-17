@@ -57,6 +57,12 @@ a declared continuation fact changes while the proposed summary stays fixed.
 
 That is standard non-factorization.
 
+For an alignment-facing worked pattern, see:
+
+```text
+ai_proxy_failure_nonfactorization_v0.md
+```
+
 ## Existing Bridge
 
 The module proves:
@@ -88,6 +94,7 @@ Those require additional structure beyond finite non-factorization.
 ## Related Notes
 
 - [presentation_soundness_pattern_v0.md](presentation_soundness_pattern_v0.md)
+- [ai_proxy_failure_nonfactorization_v0.md](ai_proxy_failure_nonfactorization_v0.md)
 - [standard_core_compression_v0.md](standard_core_compression_v0.md)
 - [nonfactorization_witness_index_v0.md](nonfactorization_witness_index_v0.md)
 - [layer_a_theorem_spine_v0.md](layer_a_theorem_spine_v0.md)
