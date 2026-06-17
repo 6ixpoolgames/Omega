@@ -1,6 +1,9 @@
 import AlphaCore.Primitive
 import AlphaCore.Nondegenerate
-import AlphaCore.PrimitiveMap
+import AlphaCore.PrimitiveApartness
 import AlphaCore.Reachability
+import AlphaCore.PrimitivePath
+import AlphaCore.PrimitiveMap
+import AlphaCore.PrimitiveSoundPresentation
 import AlphaCore.Examples
 import AlphaCore.Independence

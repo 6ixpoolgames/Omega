@@ -1,4 +1,9 @@
 import OmegaProper.Trajectory.CarriedDistinction
+import OmegaProper.Trajectory.CarrierCertificate
+import OmegaProper.Trajectory.CarrierPresentationValidity
+import OmegaProper.Trajectory.CarrierSemantics
+import OmegaProper.Trajectory.CarrierTrajectoryLanguage
+import OmegaProper.Trajectory.GeneratedCarrier
 import OmegaProper.Trajectory.JointRecurrentSupport
 import OmegaProper.Trajectory.ParameterizedRecurrentSupport
 import OmegaProper.Trajectory.RecurrentSupportExtension
@@ -7,6 +12,7 @@ import OmegaProper.Trajectory.RecurrentSupportPathTransfer
 import OmegaProper.Trajectory.RecurrentSupportPerturbationBudget
 import OmegaProper.Trajectory.RecurrentSupportRestoration
 import OmegaProper.Trajectory.RecurrentSupportSuccessorDistinction
+import OmegaProper.Trajectory.SimulationTransfer
 
 /-!
 OmegaProper.Trajectory.RecurrentSupportIntegrity
@@ -27,6 +33,12 @@ story under one public import surface:
   change cannot destroy carrying, while one return-edge removal can.
 * individual recurrent carrying under separate safety predicates need not
   compose into joint recurrent carrying under shared safety.
+* support is treated as a candidate carrier; certificate, generated carrier,
+  and simulation-transfer layers make validity and principled transfer
+  explicit.
+* carrier trajectory-language wrappers expose internal path facts without
+  object-like support language.
+* sound presentations cannot erase certified carrier endpoints.
 
 This is still finite/local infrastructure. It does not define identity, agency,
 deformer structure, value, alignment, or Omega proper.
@@ -37,7 +49,13 @@ namespace Trajectory
 namespace RecurrentSupportIntegrity
 
 open ConsequenceRelation
+open CarrierCertificate
+open CarrierPresentationValidity
+open CarrierSemantics
+open CarrierTrajectoryLanguage
+open CarriedDistinction
 open DistinctionSupport
+open GeneratedCarrier
 open IrreversibleRecurrentSupportLoss
 open JointRecurrentSupport
 open ParameterizedRecurrentSupport
@@ -51,6 +69,7 @@ open RecurrentSupportRobustness
 open RecurrentSupportPerturbationBudget
 open RecurrentSupportSuccessorDistinction
 open RecurrentSupportTransfer
+open SimulationTransfer
 open RecurrentViableClass
 open SupportRestriction
 open SupportUnderPerturbation
@@ -68,6 +87,15 @@ abbrev Carries
     (C : S.Fragment -> Prop)
     (x y : S.Fragment) : Prop :=
   RecurrentSupportCarries S Next safe C x y
+
+/-- Public alias for certified recurrent carrier validity. -/
+abbrev CertifiedCarrier
+    (S : ConsequenceSystem.{w, k, o})
+    (Next : S.Fragment -> S.Fragment -> Prop)
+    (safe : S.Fragment -> Prop)
+    (C : S.Fragment -> Prop)
+    (x y : S.Fragment) : Prop :=
+  CarrierCertificate S Next safe C x y
 
 /-- Public alias for recurrent support integrity under change. -/
 abbrev IntegrityUnder
@@ -205,6 +233,39 @@ theorem carries_successor_by_contract
 
 def two_state_cycle_carries_left_right :=
   cycle_recurrentSupportCarries_left_right
+
+def two_state_carrier_certificate :=
+  cycle_carrier_certificate
+
+theorem two_state_certificate_sub_generated
+    {z : CycleState}
+    (hz : cycleClass z) :
+    MutualReachCarrier cycleNext cycleClass CycleState.left CycleState.right z := by
+  exact cycle_certificate_sub_generated hz
+
+def two_state_identity_simulation_transfer :=
+  cycle_certificate_transfers_by_identity_simulation
+
+def two_state_identity_relation_simulation_transfer :=
+  cycle_certificate_transfers_by_identity_relation_simulation_exists
+
+def two_state_carrier_round_trip_language :=
+  cycle_roundTripLanguage
+
+def two_state_carrier_semantic_certificate :=
+  cycle_carrier_semanticCertificate
+
+theorem sound_presentation_keeps_two_state_certificate_visible
+    {Q : Type k}
+    {present : cycleConsequenceSystem.Fragment -> Q}
+    (hSound : SoundQuotient.SoundQuotient cycleConsequenceSystem present) :
+    PairVisibleUnderPresentation
+      present
+      CycleState.left
+      CycleState.right := by
+  exact soundPresentation_keeps_certified_pair_visible
+    cycle_carrier_certificate
+    hSound
 
 def two_state_one_way_loss_witness :=
   irreversible_recurrent_support_loss_witness

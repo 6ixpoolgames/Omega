@@ -4,13 +4,20 @@ import OmegaProper.Scaffolds.CompletionCounterexamples
 import OmegaProper.Scaffolds.FiniteMaximal
 import OmegaProper.Trajectory.AlphaConsequenceSeed
 import OmegaProper.Trajectory.AlphaConsequenceSeedExamples
+import OmegaProper.Trajectory.ApproximationContract
 import OmegaProper.Trajectory.CarriedDistinction
+import OmegaProper.Trajectory.CarrierCertificate
+import OmegaProper.Trajectory.CarrierPresentationValidity
+import OmegaProper.Trajectory.CarrierSemantics
+import OmegaProper.Trajectory.CarrierTrajectoryLanguage
 import OmegaProper.Trajectory.ClassSoundnessAsClique
 import OmegaProper.Trajectory.ConsequenceClasses
 import OmegaProper.Trajectory.ConsequenceComparison
+import OmegaProper.Trajectory.ContinuationDeformation
 import OmegaProper.Trajectory.DeformationProfile
 import OmegaProper.Trajectory.DeformationProfileExamples
 import OmegaProper.Trajectory.DistinctionSupport
+import OmegaProper.Trajectory.GeneratedCarrier
 import OmegaProper.Trajectory.ConsequenceDiscipline
 import OmegaProper.Trajectory.ConsequencePanelDiscipline
 import OmegaProper.Trajectory.ConsequenceRelation
@@ -29,6 +36,8 @@ import OmegaProper.Trajectory.PathCarriedDistinction
 import OmegaProper.Trajectory.ParameterizedRecurrentSupport
 import OmegaProper.Trajectory.PresentationInvariant
 import OmegaProper.Trajectory.PresentationInvariantExamples
+import OmegaProper.Trajectory.PresentationSoundness
+import OmegaProper.Trajectory.PresentationSoundnessInstances
 import OmegaProper.Trajectory.PredicateFixpoint
 import OmegaProper.Trajectory.PhantomReachability
 import OmegaProper.Trajectory.PhantomViability
@@ -37,6 +46,9 @@ import OmegaProper.Trajectory.ProtoTeleologicalSeedDiscipline
 import OmegaProper.Trajectory.ProtoTeleologicalSeedExamples
 import OmegaProper.Trajectory.ProtoTeleologicalProfile
 import OmegaProper.Trajectory.ProfileAbstraction
+import OmegaProper.Trajectory.ProfileApproximation
+import OmegaProper.Trajectory.PrimitiveConsequenceExposure
+import OmegaProper.Trajectory.PrimitiveDynamicsRealization
 import OmegaProper.Trajectory.Quotient
 import OmegaProper.Trajectory.ReachabilityReflection
 import OmegaProper.Trajectory.ReachabilityViability
@@ -52,6 +64,7 @@ import OmegaProper.Trajectory.RecurrentSupportTransfer
 import OmegaProper.Trajectory.RecurrentViableClass
 import OmegaProper.Trajectory.SafeLossVisibility
 import OmegaProper.Trajectory.SafePresentationContract
+import OmegaProper.Trajectory.SimulationTransfer
 import OmegaProper.Trajectory.SoundQuotient
 import OmegaProper.Trajectory.SoundPresentationFamily
 import OmegaProper.Trajectory.SupportMinimality

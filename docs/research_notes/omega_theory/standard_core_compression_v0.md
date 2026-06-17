@@ -171,10 +171,23 @@ soundness        abstract claim -> exact fact
 completeness     exact fact -> abstract claim
 ```
 
-A later version should try to express this as a Galois connection or a
-closure/interior pair where the exact and abstract profile spaces have useful
-orders. For now, keeping soundness and completeness separate is the right
-guardrail.
+The current Lean stack now includes the first generic compression:
+
+```text
+formal/lean/OmegaProper/Trajectory/ApproximationContract.lean
+formal/lean/OmegaProper/Trajectory/ProfileApproximation.lean
+```
+
+This expresses profile abstraction as sound/complete approximation over
+ordered fragment-pair claims. A later version can still try to express richer
+profile spaces as a Galois connection or a closure/interior pair where useful
+orders exist.
+
+Keeping soundness and completeness separate remains the right guardrail.
+
+Compression caveat: the generic approximation contract does not prove that the
+declared exact facts are the right substrate facts. It only relates abstract
+claims to those declared exact facts.
 
 ## Coalgebra as Future Alignment
 

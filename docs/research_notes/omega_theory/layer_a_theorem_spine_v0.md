@@ -55,6 +55,130 @@ sound quotient = kernel contained in consequence-identifiability
 These are not Omega. They are the map-integrity floor beneath any later
 Omega-like or Gradient Ethics claim.
 
+## 0. Alpha primitive-derived core
+
+Main files:
+
+- [Primitive.lean](../../../formal/lean/AlphaCore/Primitive.lean)
+- [Nondegenerate.lean](../../../formal/lean/AlphaCore/Nondegenerate.lean)
+- [PrimitiveApartness.lean](../../../formal/lean/AlphaCore/PrimitiveApartness.lean)
+- [PrimitivePath.lean](../../../formal/lean/AlphaCore/PrimitivePath.lean)
+- [PrimitiveMap.lean](../../../formal/lean/AlphaCore/PrimitiveMap.lean)
+- [PrimitiveSoundPresentation.lean](../../../formal/lean/AlphaCore/PrimitiveSoundPresentation.lean)
+
+Current content:
+
+```text
+Primitive separation generates primitive apartness.
+Primitive relation generates primitive path candidates.
+Asymmetry witnesses generate both primitive paths and primitive apartness.
+Primitive-sound presentations cannot merge primitively apart relata.
+Primitive-preserving maps pull primitive-sound presentations back.
+```
+
+What this blocks:
+
+```text
+constant presentation as primitive-sound once primitive nondegeneracy exists;
+primitive quotienting before primitive separation is checked;
+claiming every coarse view is admissible even before consequence contexts.
+```
+
+Public phrase:
+
+```text
+Alpha derives primitive apartness and path candidates, but adapters are still
+needed to expose consequence, dynamics, safety, value, or agency.
+```
+
+## 0b. Primitive exposure and realization bridge
+
+Main files:
+
+- [PrimitiveConsequenceExposure.lean](../../../formal/lean/OmegaProper/Trajectory/PrimitiveConsequenceExposure.lean)
+- [PrimitiveDynamicsRealization.lean](../../../formal/lean/OmegaProper/Trajectory/PrimitiveDynamicsRealization.lean)
+
+Current content:
+
+```text
+ConsequenceExposesPrimitiveApartness turns primitive apartness into
+merge-blocking consequence separation.
+Primitive nondegeneracy plus exposure yields the existing ProtoTeleologicalSeed.
+Consequence-sound presentations are primitive-sound under exposure.
+DynamicsRealizesPrimitiveRel turns primitive paths into adapter internal paths.
+Primitive mutual reach plus exposure, realization, and recurrence/safety can
+certify a recurrent carrier.
+```
+
+What this blocks:
+
+```text
+Alpha-alone proto-teleology;
+Alpha-alone dynamics;
+primitive path language as automatic adapter continuation;
+carrier certification without exposure, realization, and recurrence checks.
+```
+
+Public phrase:
+
+```text
+Alpha supplies primitive candidates; adapters must expose and realize them
+before the later consequence and carrier stack can use them.
+```
+
+## 0c. Standard compression patterns
+
+Main files:
+
+- [PresentationSoundness.lean](../../../formal/lean/OmegaProper/Trajectory/PresentationSoundness.lean)
+- [PresentationSoundnessInstances.lean](../../../formal/lean/OmegaProper/Trajectory/PresentationSoundnessInstances.lean)
+- [ContinuationDeformation.lean](../../../formal/lean/OmegaProper/Trajectory/ContinuationDeformation.lean)
+- [ApproximationContract.lean](../../../formal/lean/OmegaProper/Trajectory/ApproximationContract.lean)
+- [ProfileApproximation.lean](../../../formal/lean/OmegaProper/Trajectory/ProfileApproximation.lean)
+- [CarrierSemantics.lean](../../../formal/lean/OmegaProper/Trajectory/CarrierSemantics.lean)
+
+Current content:
+
+```text
+Presentation soundness is generic forbidden-merge avoidance.
+Primitive soundness is soundness by primitive apartness.
+Consequence sound quotient is soundness by consequence merge-separation.
+Target-respecting presentation is soundness by target distinction.
+Certified carrier endpoint visibility is soundness by certified merge-separation.
+Finite continuation deformation is non-factorization of a declared fact through
+a proposed summary.
+Profile abstraction is sound/complete approximation over ordered fragment-pair
+claims.
+Raw supports, generated mutual-reach carriers, and trajectory-language views
+are presentations of carrier semantics.
+```
+
+What this blocks:
+
+```text
+one-off soundness definitions for every new presentation;
+deformer-object language where non-factorization is enough;
+proxy validity claims without a declared forbidden relation or target fact.
+abstract claims treated as truth merely because they are sound against declared
+exact facts.
+raw support predicates as the privileged carrier object.
+```
+
+Public phrase:
+
+```text
+Most Layer A validity checks reduce to two standard questions: which pairs are
+forbidden to merge, and does the proposed summary determine the declared fact?
+Carrier validity reduces to denotation plus certification, not support naming.
+Approximation validity reduces to soundness and completeness against declared
+exact facts, not to automatic substrate truth.
+```
+
+Compression should remain a theorem-indexing device, not a flattening device.
+Domain names such as `PrimitiveApart`, `ConsequenceMergeSeparated`,
+`CarrierCertificate`, and `RecurrentSupportCarries` should stay visible where
+they carry claim boundaries.
+
 ## 1. Consequence kernel core
 
 Main files:
@@ -229,6 +353,10 @@ Main files:
 - [SupportRestriction.lean](../../../formal/lean/OmegaProper/Trajectory/SupportRestriction.lean)
 - [SupportMinimality.lean](../../../formal/lean/OmegaProper/Trajectory/SupportMinimality.lean)
 - [SupportUnderPerturbation.lean](../../../formal/lean/OmegaProper/Trajectory/SupportUnderPerturbation.lean)
+- [CarrierCertificate.lean](../../../formal/lean/OmegaProper/Trajectory/CarrierCertificate.lean)
+- [CarrierPresentationValidity.lean](../../../formal/lean/OmegaProper/Trajectory/CarrierPresentationValidity.lean)
+- [CarrierTrajectoryLanguage.lean](../../../formal/lean/OmegaProper/Trajectory/CarrierTrajectoryLanguage.lean)
+- [GeneratedCarrier.lean](../../../formal/lean/OmegaProper/Trajectory/GeneratedCarrier.lean)
 - [RecurrentSupportRobustness.lean](../../../formal/lean/OmegaProper/Trajectory/RecurrentSupportRobustness.lean)
 - [IrreversibleRecurrentSupportLoss.lean](../../../formal/lean/OmegaProper/Trajectory/IrreversibleRecurrentSupportLoss.lean)
 - [RecurrentSupportTransfer.lean](../../../formal/lean/OmegaProper/Trajectory/RecurrentSupportTransfer.lean)
@@ -240,11 +368,19 @@ Main files:
 - [RecurrentSupportSuccessorDistinction.lean](../../../formal/lean/OmegaProper/Trajectory/RecurrentSupportSuccessorDistinction.lean)
 - [RecurrentSupportPerturbationBudget.lean](../../../formal/lean/OmegaProper/Trajectory/RecurrentSupportPerturbationBudget.lean)
 - [JointRecurrentSupport.lean](../../../formal/lean/OmegaProper/Trajectory/JointRecurrentSupport.lean)
+- [SimulationTransfer.lean](../../../formal/lean/OmegaProper/Trajectory/SimulationTransfer.lean)
 
 Current content:
 
 ```text
 A support can carry a merge-separated consequence distinction.
+Support is now explicitly treated as a candidate carrier; a carrier
+certificate is the checked validity package.
+Generated carriers provide canonical mutual-reach candidates around declared
+endpoints.
+Carrier trajectory-language wrappers recast carrier facts as internal path
+language membership.
+Sound presentations cannot erase certified carrier endpoints.
 Restricting support can destroy carrying.
 Endpoint support alone is not enough.
 Endpoint viability and forward reachability are not enough.
@@ -266,12 +402,17 @@ destroy recurrent carrying, while one return-edge removal can destroy it even
 when endpoint viability and forward reachability remain.
 Individual recurrent carrying under separate safety predicates need not
 compose into recurrent carrying under shared joint safety.
+Map-based and relation-based simulation transfer derive certificate transfer
+through explicit correspondence and edge-to-path simulation.
+Map-based simulation is now compressed as a graph-relation special case of
+relation-based simulation.
 ```
 
 What this blocks:
 
 ```text
 identity-by-wiring;
+support declaration as support validity;
 endpoint viability as support integrity;
 forward reachability as recurrent carrying;
 exact edge preservation as the only repair route;
@@ -281,6 +422,7 @@ subset inclusion as the only moving-support route.
 same-endpoint preservation as the only lineage route.
 endpoint viability and forward reachability as perturbation robustness.
 isolated recurrent carrying as joint compatibility.
+bespoke transfer clauses as the only principled transfer route.
 ```
 
 Public phrase:
@@ -300,7 +442,13 @@ carried consequence distinctions: support, loss, preservation, restoration,
 rerouting, support extension, and a bounded finite family of one-way-loss
 loss witnesses; it also has first incomparable-support lineage, successor-
 distinction handoff, perturbation-budget, and joint recurrent-support
-witnesses.
+witnesses. The repair layer now treats support as candidate carrier plus
+certificate, introduces generated mutual-reach carrier candidates, and derives
+certificate transfer from map-based and relation-based simulation, while
+exposing carrier certificates through path-language predicates and linking
+certified endpoints back to sound-presentation visibility.
+The transfer stack now treats map-based simulation as a special case of
+relation-based simulation via graph relations.
 ```
 
 This is still local and finite. It is not agency, identity, value, valuerhood,
@@ -332,16 +480,20 @@ The next formal bottlenecks are:
 1. Boundary-invariant support:
    recurrent carrying survives sound re-presentation.
 
-2. General perturbation budgets:
+2. Bisimulation and dynamic quotient transfer:
+   strengthen the one-way simulation layer to two-way or quotient-aware
+   correspondence.
+
+3. General perturbation budgets:
    minimum cuts, repair budgets, and probabilistic adapter-level robustness.
 
-3. Joint recurrent support contracts:
+4. Joint recurrent support contracts:
    positive conditions under which multiple supports remain jointly carrying.
 
-4. Agency and valuer candidates:
+5. Agency and valuer candidates:
    recurrent support becomes controlled, self-maintaining, and value-capable.
 
-5. Omega:
+6. Omega:
    maximal compatible development of value-bearing continuation.
 
 Only items 1-3 are near-term formal work. Items 4-5 remain long-run targets.
@@ -349,9 +501,17 @@ Only items 1-3 are near-term formal work. Items 4-5 remain long-run targets.
 ## Related notes
 
 - [standard_core_compression_v0.md](standard_core_compression_v0.md)
+- [compression_guardrails_v0.md](compression_guardrails_v0.md)
+- [layer_a_derivation_audit_v0.md](layer_a_derivation_audit_v0.md)
+- [approximation_contract_v0.md](approximation_contract_v0.md)
 - [bad_panel_taxonomy_v0.md](bad_panel_taxonomy_v0.md)
 - [boundary_invariant_continuation_roadmap_v0.md](boundary_invariant_continuation_roadmap_v0.md)
+- [carrier_certificate_v0.md](carrier_certificate_v0.md)
+- [carrier_presentation_validity_v0.md](carrier_presentation_validity_v0.md)
+- [carrier_trajectory_language_v0.md](carrier_trajectory_language_v0.md)
+- [generated_carrier_v0.md](generated_carrier_v0.md)
 - [joint_recurrent_support_v0.md](joint_recurrent_support_v0.md)
+- [simulation_transfer_v0.md](simulation_transfer_v0.md)
 - [safe_presentation_contract_v0.md](safe_presentation_contract_v0.md)
 - [loss_aware_presentation_contract_v0.md](loss_aware_presentation_contract_v0.md)
 - [recurrent_support_perturbation_floor_v0.md](recurrent_support_perturbation_floor_v0.md)

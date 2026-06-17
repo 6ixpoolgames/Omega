@@ -1,7 +1,7 @@
 # Recurrent Support Integrity v0
 
 Status: consolidation note
-Scope: public facade for recurrent support carry/loss/transfer/restoration/rerouting/extension/successor handoff/budget/joint failure
+Scope: public facade for carrier certification and recurrent support carry/loss/transfer/restoration/rerouting/extension/successor handoff/budget/joint failure
 Claim boundary: not identity, not agency, not deformer theory, not value, not Omega validation
 
 ## Purpose
@@ -17,8 +17,15 @@ It gathers the current recurrent-support story under one import:
 
 ```text
 support carries a distinction;
+support is treated as a candidate carrier until certified;
+certified carrier endpoints remain visible under sound presentations;
+carrier facts can be read as path-language facts;
+generated carriers provide mutual-reach candidates;
+carrier semantics compress raw support, generated carrier, and path-language
+views;
 support can lose carrying;
 support can transfer carrying under contracts;
+support can transfer through map-based and relation-based simulation;
 support can restore carrying after loss;
 support can reroute carrying through replacement internal paths;
 support can extend carrying into a larger declared support;
@@ -34,6 +41,7 @@ The facade gives short public aliases:
 
 ```text
 Carries
+CertifiedCarrier
 IntegrityUnder
 DestroyedUnder
 EdgeTransferContract
@@ -45,9 +53,14 @@ SuccessorContract
 These are wrappers around the existing definitions in:
 
 ```text
+CarrierCertificate
+CarrierPresentationValidity
+CarrierTrajectoryLanguage
 RecurrentSupportRobustness
 RecurrentSupportTransfer
 RecurrentSupportPathTransfer
+GeneratedCarrier
+SimulationTransfer
 ```
 
 The point is not to hide the detailed files. The point is to let readers see
@@ -65,6 +78,11 @@ edge_contract_implies_path_contract
 destroyed_blocks_integrity
 carries_extends_by_contract
 carries_successor_by_contract
+two_state_carrier_certificate
+sound_presentation_keeps_two_state_certificate_visible
+two_state_certificate_sub_generated
+two_state_identity_simulation_transfer
+two_state_carrier_round_trip_language
 two_state_cycle_carries_left_right
 two_state_one_way_loss_witness
 two_state_loss_and_restoration_witness
@@ -99,6 +117,14 @@ how zero dynamic change cannot destroy carrying, while one return-edge removal
 can destroy it;
 how individual recurrent carrying under separate constraints can fail under a
 shared joint constraint;
+how support validity is represented by a carrier certificate;
+how sound presentations cannot erase certified carrier endpoints;
+how carrier certificates expose round-trip path-language membership;
+how generated carriers are selected by mutual reach instead of arbitrary
+declaration;
+how raw supports and generated carriers denote one carrier-semantics surface;
+how certificate transfer can be derived from map-based and relation-based
+simulation;
 how the basic one-way-loss pattern generalizes across a finite family.
 ```
 
@@ -114,6 +140,10 @@ The lower files were useful while the theory was being discovered:
 
 ```text
 SupportUnderPerturbation
+CarrierCertificate
+CarrierPresentationValidity
+CarrierTrajectoryLanguage
+GeneratedCarrier
 RecurrentSupportRobustness
 IrreversibleRecurrentSupportLoss
 RecurrentSupportTransfer
@@ -123,6 +153,7 @@ RecurrentSupportExtension
 RecurrentSupportSuccessorDistinction
 RecurrentSupportPerturbationBudget
 JointRecurrentSupport
+SimulationTransfer
 ParameterizedRecurrentSupport
 ```
 
@@ -131,19 +162,31 @@ file names. `RecurrentSupportIntegrity` is the compressed import surface.
 
 ## Next extensions
 
-The facade now includes first support-extension, lineage, successor-distinction,
-perturbation-budget, and joint recurrent-support failure results. These are
-still pair-relative and exact. The next formal targets remain:
+The facade now includes carrier-certificate, carrier-presentation-validity,
+carrier-semantics, generated-carrier, carrier-trajectory-language,
+simulation-transfer,
+support-extension, lineage, successor-distinction, perturbation-budget, and
+joint recurrent-support failure results. These are still pair-relative and
+exact. The next formal targets remain:
 
 1. General perturbation budgets:
    minimum cuts, repair budgets, and adapter-level probabilistic robustness.
 
-2. Positive joint recurrent support contracts:
+2. Bisimulation / dynamic quotient transfer:
+   two-way and quotient-aware versions of the current one-way simulation layer.
+
+3. Positive joint recurrent support contracts:
    conditions under which multiple supports remain jointly viable and carrying.
 
 ## Related notes
 
 - [layer_a_theorem_spine_v0.md](layer_a_theorem_spine_v0.md)
+- [layer_a_derivation_audit_v0.md](layer_a_derivation_audit_v0.md)
+- [carrier_certificate_v0.md](carrier_certificate_v0.md)
+- [carrier_presentation_validity_v0.md](carrier_presentation_validity_v0.md)
+- [carrier_trajectory_language_v0.md](carrier_trajectory_language_v0.md)
+- [generated_carrier_v0.md](generated_carrier_v0.md)
+- [simulation_transfer_v0.md](simulation_transfer_v0.md)
 - [recurrent_support_perturbation_floor_v0.md](recurrent_support_perturbation_floor_v0.md)
 - [recurrent_support_perturbation_budget_v0.md](recurrent_support_perturbation_budget_v0.md)
 - [joint_recurrent_support_v0.md](joint_recurrent_support_v0.md)
