@@ -47,6 +47,17 @@ def test_phantom_reachability_fixture_detects_fabricated_path() -> None:
     assert result["observed"]["abstract_path"] is True
 
 
+def test_hidden_reachability_loss_fixture_detects_abstractly_hidden_loss() -> None:
+    model = load_model_path(FIXTURES / "hidden_reachability_loss_fail.json")
+    [result] = [result.as_dict() for result in run_declared_audits(model)]
+
+    assert result["passed"] is True
+    assert result["finding"] == "hidden_loss"
+    assert result["observed"]["before_path"] is True
+    assert result["observed"]["after_path"] is False
+    assert result["observed"]["abstract_path"] is True
+
+
 def test_proxy_fixture_detects_nonfactorization_witness() -> None:
     model = load_model_path(FIXTURES / "proxy_nonfactorization_fail.json")
     [result] = [result.as_dict() for result in run_declared_audits(model)]

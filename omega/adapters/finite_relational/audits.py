@@ -48,6 +48,8 @@ def run_audit(model: FiniteRelationalModel, audit: dict[str, Any]) -> AuditResul
         return _sound_presentation(model, audit)
     if kind == "phantom_reachability":
         return _phantom_reachability(model, audit)
+    if kind == "hidden_reachability_loss":
+        return _hidden_reachability_loss(model, audit)
     if kind == "nonfactorization":
         return _nonfactorization(model, audit)
     if kind == "carrier_certificate":
@@ -114,6 +116,33 @@ def _phantom_reachability(model: FiniteRelationalModel, audit: dict[str, Any]) -
         "target": target,
     }
     return _result(audit, "phantom_reachability", observed, "phantom", "phantom")
+
+
+def _hidden_reachability_loss(model: FiniteRelationalModel, audit: dict[str, Any]) -> AuditResult:
+    before_edges = binary_relation(model, _role(model, audit, "before_transition"))
+    after_edges = binary_relation(model, _role(model, audit, "after_transition"))
+    abstract_edges = binary_relation(model, _role(model, audit, "abstract_transition"))
+    source = str(audit["source"])
+    target = str(audit["target"])
+    states = set(model.domain(str(audit.get("domain", "state"))))
+    before_path = (source, target) in reachable_pairs(states, before_edges)
+    after_path = (source, target) in reachable_pairs(states, after_edges)
+    abstract_path = (source, target) in reachable_pairs(states, abstract_edges)
+    observed = {
+        "hidden_loss": before_path and not after_path and abstract_path,
+        "before_path": before_path,
+        "after_path": after_path,
+        "abstract_path": abstract_path,
+        "source": source,
+        "target": target,
+    }
+    return _result(
+        audit,
+        "hidden_reachability_loss",
+        observed,
+        "hidden_loss",
+        "hidden_loss",
+    )
 
 
 def _nonfactorization(model: FiniteRelationalModel, audit: dict[str, Any]) -> AuditResult:
@@ -188,6 +217,7 @@ def _expected_bool(expectation: str, true_finding: str) -> bool:
         "sound",
         "certified",
         "phantom",
+        "hidden_loss",
         "witness",
         "alpha_laws_hold",
     }
@@ -199,6 +229,7 @@ def _expected_bool(expectation: str, true_finding: str) -> bool:
         "unsound",
         "uncertified",
         "no_phantom",
+        "no_hidden_loss",
         "no_witness",
         "alpha_laws_fail",
     }

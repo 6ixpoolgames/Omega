@@ -90,11 +90,16 @@ The old "carrier" field remains usable as shorthand for:
 domains.state
 ```
 
-## Two Adapter Layers
+## Adapter Layers
 
-The pilot has two layers:
+The pilot has one normalized audit surface and multiple source compilers:
 
 ```text
+finite grid source
+-> derived graph source
+-> compiled finite relational IR
+-> generic audits
+
 derived graph source
 -> compiled finite relational IR
 -> generic audits
@@ -138,9 +143,11 @@ This keeps the adapter from trusting hand-labeled asymmetry in the source
 fixture. It still requires declared observations, presentations, and provenance;
 it does not perform unconstrained post-hoc relevance discovery.
 
-Derived graph is the first source compiler. It is not the universal adapter
-format. Future compilers should target the same finite relational IR unless
-they can justify extending the IR itself.
+Derived graph is the first source compiler. Finite grid is the first additional
+source compiler: it derives cells and movement edges from a rectangular grid
+source, then routes through the derived graph compiler. Neither source format is
+the universal adapter format. Future compilers should target the same finite
+relational IR unless they can justify extending the IR itself.
 
 ## Hardening Rules
 
@@ -276,6 +283,10 @@ sound_presentation:
 phantom_reachability:
   abstract transition has a path that the exact transition lacks.
 
+hidden_reachability_loss:
+  a before-transition had a path, the after-transition loses it, and the
+  abstract transition still reports it.
+
 nonfactorization:
   same summary value, different declared target value.
 
@@ -302,6 +313,11 @@ phantom_reachability_fail.json:
   exact path does not;
   phantom reachability is detected.
 
+hidden_reachability_loss_fail.json:
+  before dynamics reaches the target;
+  after dynamics loses the path;
+  abstract dynamics still reports the old path.
+
 proxy_nonfactorization_fail.json:
   same proxy score;
   different safety target;
@@ -317,6 +333,16 @@ derived_graph_recurrent_carrier.json:
   source has no carrier labels or carrier audit;
   compiler derives an SCC/mutual-reach carrier candidate;
   carrier certificate succeeds for a separated pair.
+
+derived_graph_mixed_asymmetry.json:
+  source mixes bidirectional and strict directed edges;
+  compiler derives asymmetry only where the one-way edge is paired with an
+  observation difference.
+
+finite_grid_east_asymmetry.json:
+  source declares a 2x1 east-moving grid;
+  compiler derives cells and movement edge before reusing the derived graph
+  compiler and generic audits.
 ```
 
 Each fixture should include provenance.
@@ -357,6 +383,10 @@ source_digest.txt
 compiled_model_digest.txt
 ```
 
+The finite grid CLI retains the same source/compiled/digest outputs, with
+compiled provenance marking both `compiled_from = finite_grid` and
+`intermediate_compiler = derived_graph`.
+
 The digest makes retained fixtures auditable. The audit results distinguish:
 
 ```text
@@ -369,6 +399,20 @@ passed:
 
 For failure fixtures, `passed = true` can mean the adapter correctly detected a
 failure, such as phantom reachability.
+
+## Smoke Validation
+
+The adapter smoke runner exercises all current source layers:
+
+```powershell
+.\.venv\Scripts\python.exe -m omega.validation.finite_relational_adapter_smoke `
+  --out-root .tmp\finite_relational_adapter_smoke
+```
+
+It runs all retained low-level IR fixtures, derived graph fixtures, and finite
+grid fixtures. It checks provenance completeness, verifies declared audit
+counts, requires retained digest/provenance/audit/summary artifacts, and
+confirms that source fixtures do not carry reserved finite relational IR fields.
 
 ## Future Compatibility
 

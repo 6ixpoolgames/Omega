@@ -1,0 +1,37 @@
+{
+  "model_id": "finite_grid_east_asymmetry",
+  "width": 2,
+  "height": 1,
+  "movement_rule": "east",
+  "observations": {
+    "color": {
+      "0,0": "red",
+      "1,0": "blue"
+    }
+  },
+  "presentations": {
+    "identity": {
+      "0,0": "0,0",
+      "1,0": "1,0"
+    },
+    "constant": {
+      "0,0": "merged",
+      "1,0": "merged"
+    }
+  },
+  "presentation_expectations": {
+    "identity": "sound",
+    "constant": "unsound"
+  },
+  "safety": "all",
+  "provenance": {
+    "declared_before_run": true,
+    "source": "omega/adapters/finite_relational/fixtures/finite_grid_east_asymmetry.json",
+    "claim_boundary": "Finite grid source fixture: derives one-way grid dynamics and Alpha-like asymmetry through the relational IR.",
+    "controls": [
+      "source does not declare finite relational IR fields",
+      "east movement generates one strict directed edge",
+      "observation difference is required for asymmetry"
+    ]
+  }
+}

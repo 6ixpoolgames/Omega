@@ -502,6 +502,9 @@ source-specific assumptions.
 The finite relational adapter has two surfaces:
 
 ```text
+finite grid source:
+  low-label input for small rectangular grid substrates.
+
 derived graph source:
   low-label input for graph-like substrates.
 
@@ -509,10 +512,10 @@ finite relational IR:
   explicit normalized audit surface used by the generic adapter checks.
 ```
 
-Prefer the derived graph source when a graph-like substrate is available. Use
-the finite relational IR directly only for regression fixtures, theorem-facing
-toy examples, or cases where the exact relations are already externally
-declared.
+Prefer the highest source layer that still honestly represents the substrate:
+finite grid for grid-like examples, derived graph for graph-like examples, and
+low-level finite relational IR only for regression fixtures, theorem-facing toy
+examples, or cases where the exact relations are already externally declared.
 
 Derived graph sources declare:
 
@@ -544,6 +547,35 @@ merge_separated:
 carrier candidates:
   mutual-reach components carrying separated pairs.
 ```
+
+Finite grid sources declare:
+
+```text
+width;
+height;
+blocked cells;
+movement rule;
+observations;
+presentations;
+safety;
+provenance.
+```
+
+The finite grid compiler derives cells and movement edges, then routes through
+the derived graph compiler. It exists to test source-compiler reuse: a new
+source format targets the same finite relational IR and the same generic audit
+engine.
+
+Run a finite grid source with:
+
+```powershell
+.\.venv\Scripts\python.exe -m omega.adapters.finite_relational.grid_cli `
+  --source omega\adapters\finite_relational\fixtures\finite_grid_east_asymmetry.json `
+  --out .tmp\finite_grid_east_asymmetry
+```
+
+The finite grid CLI retains the same source/compiled/digest/provenance/audit
+artifacts as the derived graph CLI.
 
 Run a derived graph source with:
 
@@ -589,11 +621,23 @@ $env:PYTHONDONTWRITEBYTECODE='1'
 .\.venv\Scripts\python.exe -m pytest `
   tests\test_finite_relational_adapter.py `
   tests\test_derived_graph_adapter.py `
+  tests\test_finite_grid_adapter.py `
+  tests\test_finite_relational_adapter_smoke.py `
   -q --basetemp .tmp\pytest-adapters -p no:cacheprovider
 .\.venv\Scripts\python.exe -m ruff check `
   omega\adapters\finite_relational `
+  omega\validation\finite_relational_adapter_smoke.py `
   tests\test_finite_relational_adapter.py `
-  tests\test_derived_graph_adapter.py
+  tests\test_derived_graph_adapter.py `
+  tests\test_finite_grid_adapter.py `
+  tests\test_finite_relational_adapter_smoke.py
+```
+
+External adapter smoke:
+
+```powershell
+.\.venv\Scripts\python.exe -m omega.validation.finite_relational_adapter_smoke `
+  --out-root .tmp\finite_relational_adapter_smoke
 ```
 
 Claim boundary:
@@ -626,6 +670,11 @@ Adapter non-negotiables:
 6. A passing audit means only that the declared finite structure satisfies the
    declared finite check. It does not certify that the source abstraction is
    empirically correct.
+
+7. Hidden-loss checks are distinct from phantom-reachability checks. Phantom
+   reachability catches abstract futures that the exact model never had;
+   hidden reachability loss catches an abstract surface that still reports a
+   path after the exact changed model has lost it.
 ```
 
 Future source adapters should follow this rule:

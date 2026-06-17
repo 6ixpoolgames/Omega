@@ -179,6 +179,25 @@ Windows PowerShell wrapper:
 powershell -ExecutionPolicy Bypass -File scripts\validation\run_reproducibility_smoke.ps1
 ```
 
+The finite relational adapter has a focused smoke path:
+
+```bash
+python -m omega.validation.finite_relational_adapter_smoke
+```
+
+Local PowerShell form:
+
+```powershell
+.\.venv\Scripts\python.exe -m omega.validation.finite_relational_adapter_smoke `
+  --out-root .tmp\finite_relational_adapter_smoke
+```
+
+It runs the low-level finite relational IR fixtures, derived graph fixtures, and
+finite grid fixtures. It checks provenance completeness, verifies retained
+digest/audit artifacts, exercises phantom reachability and hidden reachability
+loss controls, and runs the focused adapter tests unless `--skip-pytest` is
+provided.
+
 See [REPRODUCIBILITY_SMOKE.md](REPRODUCIBILITY_SMOKE.md).
 
 ## Claim Hygiene

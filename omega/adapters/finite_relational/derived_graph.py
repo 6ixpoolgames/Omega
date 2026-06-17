@@ -11,6 +11,9 @@ from typing import Any
 from omega.adapters.finite_relational.model import SchemaError, load_model
 
 
+RESERVED_IR_FIELDS = frozenset({"predicates", "relations", "functions", "profiles", "audits"})
+
+
 def load_derived_graph_path(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
@@ -27,6 +30,7 @@ def compile_derived_graph(raw: dict[str, Any]) -> dict[str, Any]:
     Those surfaces are derived mechanically from the declared graph fields.
     """
 
+    _reject_reserved_ir_fields(raw)
     model_id = str(raw.get("model_id", "derived_graph"))
     nodes = _unique_string_list(raw.get("nodes"), "nodes")
     node_set = set(nodes)
@@ -126,6 +130,15 @@ def _generated_alpha_audits() -> list[dict[str, Any]]:
             "expect": "alpha_laws_hold",
         }
     ]
+
+
+def _reject_reserved_ir_fields(raw: dict[str, Any]) -> None:
+    leaked = sorted(RESERVED_IR_FIELDS & set(raw))
+    if leaked:
+        raise SchemaError(
+            "derived graph sources must not declare finite relational IR fields: "
+            + ", ".join(leaked)
+        )
 
 
 def _generated_presentation_audits(

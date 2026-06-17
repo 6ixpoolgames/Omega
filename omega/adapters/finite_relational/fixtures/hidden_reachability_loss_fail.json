@@ -1,0 +1,40 @@
+{
+  "model_id": "finite_relational_hidden_reachability_loss_fail",
+  "schema_version": "0.1.0",
+  "carrier": ["a", "b", "c"],
+  "relations": {
+    "before_next": [
+      ["a", "b"],
+      ["b", "c"]
+    ],
+    "after_next": [
+      ["a", "b"]
+    ],
+    "abstract_next": [
+      ["a", "b"],
+      ["b", "c"]
+    ]
+  },
+  "audits": [
+    {
+      "id": "abstract_hides_lost_a_to_c_path",
+      "kind": "hidden_reachability_loss",
+      "before_transition": "before_next",
+      "after_transition": "after_next",
+      "abstract_transition": "abstract_next",
+      "source": "a",
+      "target": "c",
+      "expect": "hidden_loss"
+    }
+  ],
+  "provenance": {
+    "declared_before_run": true,
+    "source": "omega/adapters/finite_relational/fixtures/hidden_reachability_loss_fail.json",
+    "claim_boundary": "Toy finite relational fixture: detects when an abstract transition surface hides exact loss of a previously reachable target.",
+    "controls": [
+      "before transition reaches c from a",
+      "after transition loses the b-to-c step",
+      "abstract transition still reports the old a-to-c path"
+    ]
+  }
+}

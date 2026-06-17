@@ -1,0 +1,42 @@
+{
+  "model_id": "derived_graph_mixed_asymmetry",
+  "nodes": ["a", "b", "c", "d", "e"],
+  "edges": [
+    ["a", "b"],
+    ["b", "a"],
+    ["c", "d"],
+    ["d", "e"]
+  ],
+  "observations": {
+    "color": {
+      "a": "red",
+      "b": "blue",
+      "c": "red",
+      "d": "blue",
+      "e": "blue"
+    }
+  },
+  "presentations": {
+    "identity": {
+      "a": "a",
+      "b": "b",
+      "c": "c",
+      "d": "d",
+      "e": "e"
+    }
+  },
+  "presentation_expectations": {
+    "identity": "sound"
+  },
+  "safety": "all",
+  "provenance": {
+    "declared_before_run": true,
+    "source": "omega/adapters/finite_relational/fixtures/derived_graph_mixed_asymmetry.json",
+    "claim_boundary": "Derived graph rigor fixture: only strict one-way edges with observation separation derive asymmetry.",
+    "controls": [
+      "a and b are separated but bidirectional, so no asymmetry is derived",
+      "c to d is strict and separated, so asymmetry is derived",
+      "d to e is strict but not separated, so no asymmetry is derived"
+    ]
+  }
+}

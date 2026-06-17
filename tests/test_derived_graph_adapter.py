@@ -1,7 +1,16 @@
 import json
 from pathlib import Path
 
-from omega.adapters.finite_relational import compile_derived_graph_path, load_model, run_declared_audits
+import pytest
+
+from omega.adapters.finite_relational import (
+    SchemaError,
+    compile_derived_graph,
+    compile_derived_graph_path,
+    load_model,
+    load_model_path,
+    run_declared_audits,
+)
 from omega.adapters.finite_relational.graph_cli import run_graph_file
 
 
@@ -50,6 +59,72 @@ def test_derived_graph_earns_recurrent_carrier_certificate() -> None:
     assert results["carrier_0_certificate"]["passed"] is True
     assert results["carrier_0_certificate"]["observed"]["certified"] is True
     assert results["carrier_0_certificate"]["observed"]["mutually_reachable"] is True
+
+
+def test_derived_graph_matches_hand_specified_carrier_semantics() -> None:
+    compiled = compile_derived_graph_path(FIXTURES / "derived_graph_recurrent_carrier.json")
+    derived = load_model(compiled)
+    hand_specified = load_model_path(FIXTURES / "sound_pass.json")
+
+    derived_results = {result.finding for result in run_declared_audits(derived)}
+    hand_results = {result.finding for result in run_declared_audits(hand_specified)}
+
+    assert derived.relation_tuples("merge_separated") == hand_specified.relation_tuples(
+        "merge_separated"
+    )
+    assert derived.function_mapping("identity") == hand_specified.function_mapping("present_identity")
+    assert "sound" in derived_results
+    assert "sound" in hand_results
+    assert "certified" in derived_results
+    assert "certified" in hand_results
+
+
+def test_mixed_asymmetry_fixture_derives_only_strict_separated_edges() -> None:
+    compiled = compile_derived_graph_path(FIXTURES / "derived_graph_mixed_asymmetry.json")
+    model = load_model(compiled)
+
+    assert model.relation_tuples("primitive_asym") == frozenset({("color", "c", "d")})
+    assert ("color", "a", "b") in model.relation_tuples("primitive_sep")
+    assert ("color", "b", "a") in model.relation_tuples("primitive_sep")
+    assert ("color", "d", "e") not in model.relation_tuples("primitive_sep")
+
+
+def test_derived_graph_rejects_reserved_ir_fields() -> None:
+    with pytest.raises(SchemaError, match="must not declare finite relational IR fields"):
+        compile_derived_graph(
+            {
+                "model_id": "bad_private_audit_source",
+                "nodes": ["x", "y"],
+                "edges": [["x", "y"]],
+                "observations": {"color": {"x": "red", "y": "blue"}},
+                "presentations": {},
+                "audits": [{"id": "private", "kind": "alpha_laws"}],
+                "provenance": {
+                    "declared_before_run": True,
+                    "source": "inline test",
+                    "claim_boundary": "reserved-field rejection test",
+                },
+            }
+        )
+
+
+def test_derived_graph_rejects_raw_functions_field() -> None:
+    with pytest.raises(SchemaError, match="functions"):
+        compile_derived_graph(
+            {
+                "model_id": "bad_private_function_source",
+                "nodes": ["x"],
+                "edges": [],
+                "observations": {"color": {"x": "red"}},
+                "presentations": {},
+                "functions": {"private": {"x": "merged"}},
+                "provenance": {
+                    "declared_before_run": True,
+                    "source": "inline test",
+                    "claim_boundary": "reserved-field rejection test",
+                },
+            }
+        )
 
 
 def test_derived_graph_cli_retains_source_compiled_model_and_audits(tmp_path: Path) -> None:
