@@ -1,7 +1,7 @@
 # Finite Relational Adapter Checkpoint V0
 
-Status: adapter checkpoint note  
-Date: 2026-06-18  
+Status: adapter checkpoint note
+Date: 2026-06-18
 Scope: Layer A adapter infrastructure and synthetic validation
 
 ## Summary

@@ -1,6 +1,6 @@
 # Finite Relational Adapter Validation V0
 
-Date: 2026-06-18  
+Date: 2026-06-18
 Run context: working tree based on `df99e3a`, with the carrier-transfer audit
 batch applied before commit.
 
