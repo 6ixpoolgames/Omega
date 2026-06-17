@@ -478,6 +478,56 @@ The generator is intentionally finite and boring. It does not discover empirical
 truth. It checks that the adapter can produce and retain generated failure-mode
 cases without relying only on hand-written fixtures.
 
+Controlled synthetic empirics are a separate path:
+
+```powershell
+.\.venv\Scripts\python.exe -m omega.validation.finite_relational_adapter_empirical `
+  --out-root .tmp\finite_relational_adapter_empirical
+```
+
+This path enumerates declared small search spaces and reports frequencies, not
+just existence witnesses. The first pilot covers:
+
+```text
+fixed 2/2 observation histogram vs bounded target recovery;
+unordered trace bags vs order-sensitive trace recovery;
+stale abstraction hiding exact reachability loss;
+endpoint forward reachability without recurrent carrier certification.
+```
+
+It is still synthetic finite empirics. A pass means the generated study and its
+representative audits ran as declared; it does not validate a real substrate.
+
+The first source-generator pilot beyond generic enumeration is gridworld
+obstacle insertion:
+
+```powershell
+.\.venv\Scripts\python.exe -m omega.validation.finite_relational_grid_obstacle `
+  --out-root .tmp\finite_relational_grid_obstacle
+```
+
+This generator declares:
+
+```text
+finite grid dimensions;
+movement rule;
+source and target cells;
+before and after obstacle sets.
+```
+
+It derives:
+
+```text
+before transition relation;
+after transition relation;
+stale abstract transition relation;
+hidden-reachability-loss audit.
+```
+
+The current pilot enumerates obstacle insertions on a 3x3 orthogonal grid and
+retains both a hidden-loss representative and a no-hidden-loss control. This is
+still synthetic source-level validation, not external empirical evidence.
+
 The simple-form, entropy, ordered-trace, and bounded-recovery fixtures are
 motivated by the useful-information and constraint-selection note:
 

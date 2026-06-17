@@ -191,6 +191,18 @@ Generated/adversarial adapter cases have a separate retained-output path:
 python -m omega.validation.finite_relational_adapter_adversarial
 ```
 
+The first controlled synthetic empirical pilot has its own retained-output path:
+
+```bash
+python -m omega.validation.finite_relational_adapter_empirical
+```
+
+The gridworld obstacle-insertion pilot has a separate retained-output path:
+
+```bash
+python -m omega.validation.finite_relational_grid_obstacle
+```
+
 Local PowerShell form:
 
 ```powershell
@@ -211,6 +223,24 @@ model, digests, audit results, and summary. These cases do not validate a real
 substrate; they check that the adapter machinery can find and audit expected
 finite failure modes without relying only on hand-written fixtures.
 
+The controlled empirical path enumerates fixed small finite families and reports
+rates/frequencies for selected proxy failures:
+
+```text
+same observation histogram vs bounded recovery;
+same unordered trace bag vs order-sensitive recovery;
+stale abstraction hiding exact reachability loss;
+endpoint forward reachability without recurrent carrier certification.
+```
+
+These are synthetic finite-substrate empirics. They are not external validation
+of a real system.
+
+The gridworld obstacle path declares a finite grid interface, generates obstacle
+insertions, compiles before/after/stale abstract transitions into finite
+relational IR, and audits hidden reachability loss. It is the first
+source-generator pilot beyond low-level handwritten IR fixtures.
+
 Finite relational adapter changes are also protected by the
 `Finite Relational Adapter Smoke` GitHub Actions workflow.
 
@@ -219,6 +249,10 @@ A retained example summary is available at
 The bounded-useful-structure extension also retains a machine-readable summary
 at
 [finite_relational_adapter_useful_information_v0.json](research_notes/validation_results/finite_relational_adapter_useful_information_v0.json).
+The first controlled empirical pilot retains a machine-readable summary at
+[finite_relational_adapter_empirical_pilot_v0.json](research_notes/validation_results/finite_relational_adapter_empirical_pilot_v0.json).
+The gridworld obstacle-insertion pilot retains a machine-readable summary at
+[finite_relational_grid_obstacle_pilot_v0.json](research_notes/validation_results/finite_relational_grid_obstacle_pilot_v0.json).
 
 See [REPRODUCIBILITY_SMOKE.md](REPRODUCIBILITY_SMOKE.md).
 
