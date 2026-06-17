@@ -95,6 +95,102 @@ def nonfactorization_witnesses_for_predicate(
     return witnesses
 
 
+def bounded_recovery_facts(
+    model: FiniteRelationalModel,
+    *,
+    observation: str,
+    target_predicate: str,
+    decoders: tuple[str, ...],
+    true_label: str = "true",
+    false_label: str = "false",
+) -> dict[str, object]:
+    """Check exact recovery by a declared bounded decoder family.
+
+    The audit is intentionally family-relative: failure means no declared
+    decoder recovers the target from the observation, not that no possible
+    decoder exists in a richer class.
+    """
+
+    if not decoders:
+        raise SchemaError("bounded recovery must declare at least one decoder")
+
+    observation_function = model.functions[observation]
+    target = model.predicates[target_predicate]
+    if target.domain != observation_function.domain:
+        raise SchemaError(
+            "bounded recovery target predicate and observation function "
+            f"must share a domain: {target.domain} != {observation_function.domain}"
+        )
+
+    states = model.domain(observation_function.domain)
+    missing_states = sorted(set(states) - set(observation_function.mapping))
+    if missing_states:
+        raise SchemaError(
+            f"observation function {observation} is not total on "
+            f"{observation_function.domain}: {missing_states}"
+        )
+
+    target_members = target.members
+    observed_labels = sorted({observation_function.mapping[state] for state in states})
+    decoder_results: list[dict[str, object]] = []
+    successful_decoders: list[str] = []
+    failed_decoders: list[str] = []
+
+    for decoder_name in decoders:
+        decoder = model.functions[decoder_name]
+        missing_labels = sorted(set(observed_labels) - set(decoder.mapping))
+        if missing_labels:
+            raise SchemaError(
+                f"decoder {decoder_name} is not total on observed labels "
+                f"from {observation}: {missing_labels}"
+            )
+        mismatches = []
+        for state in states:
+            observed = observation_function.mapping[state]
+            predicted = decoder.mapping[observed]
+            expected = true_label if state in target_members else false_label
+            if predicted != expected:
+                mismatches.append(
+                    {
+                        "state": state,
+                        "observation": observed,
+                        "predicted": predicted,
+                        "expected": expected,
+                    }
+                )
+        succeeds = not mismatches
+        if succeeds:
+            successful_decoders.append(decoder_name)
+        else:
+            failed_decoders.append(decoder_name)
+        decoder_results.append(
+            {
+                "decoder": decoder_name,
+                "succeeds": succeeds,
+                "mismatch_count": len(mismatches),
+                "mismatches": mismatches,
+            }
+        )
+
+    ambiguous_labels = []
+    for label in observed_labels:
+        preimage = [state for state in states if observation_function.mapping[state] == label]
+        target_values = {state in target_members for state in preimage}
+        if len(target_values) > 1:
+            ambiguous_labels.append(label)
+
+    return {
+        "recoverable": bool(successful_decoders),
+        "state_count": len(states),
+        "observed_labels": observed_labels,
+        "ambiguous_observation_labels": ambiguous_labels,
+        "decoder_count": len(decoders),
+        "successful_decoders": successful_decoders,
+        "failed_decoders": failed_decoders,
+        "decoder_results": decoder_results,
+    }
+
+
 def carrier_certificate_facts(
     model: FiniteRelationalModel,
     *,

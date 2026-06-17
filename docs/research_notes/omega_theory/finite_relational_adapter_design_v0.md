@@ -298,6 +298,11 @@ carrier_transfer:
   source and target carriers are both certified and a declared correspondence
   relates the source carrier into the target carrier, including the declared
   endpoints.
+
+bounded_recovery:
+  a declared observation function and declared decoder family are checked
+  against a declared target predicate; recovery means some decoder in the
+  bounded family exactly recovers target membership from the observation.
 ```
 
 These are intentionally small. They exercise the current theorem spine without
@@ -327,6 +332,30 @@ proxy_nonfactorization_fail.json:
   same proxy score;
   different safety target;
   non-factorization witness is detected.
+
+simple_form_nonfactorization_fail.json:
+  same simple-form summary;
+  different declared functional target;
+  non-factorization witness is detected.
+
+entropy_controlled_nonfactorization_fail.json:
+  same entropy/histogram summary;
+  different bounded-recoverability target;
+  non-factorization witness is detected.
+
+ordered_trace_nonfactorization_fail.json:
+  same unordered trace bag;
+  different order-sensitive recovery target;
+  non-factorization witness is detected.
+
+bounded_recovery_pass.json:
+  a declared observation and decoder family include a decoder that exactly
+  recovers the target predicate.
+
+bounded_recovery_entropy_fail.json:
+  the observation histogram matches the pass fixture, but every observed label
+  mixes target-true and target-false states, so no declared decoder recovers
+  the target.
 
 carrier_transfer_pass.json:
   source recurrent carrier and target recurrent carrier are both certified;
@@ -442,12 +471,22 @@ hidden reachability loss;
 proxy non-factorization;
 derived graph asymmetry;
 derived graph carrier certification;
-finite grid asymmetry.
+  finite grid asymmetry.
 ```
 
 The generator is intentionally finite and boring. It does not discover empirical
 truth. It checks that the adapter can produce and retain generated failure-mode
 cases without relying only on hand-written fixtures.
+
+The simple-form, entropy, ordered-trace, and bounded-recovery fixtures are
+motivated by the useful-information and constraint-selection note:
+
+```text
+useful_information_and_constraint_selection_v0.md
+```
+
+They keep raw complexity, entropy, and unordered summaries in proxy/audit
+position. They are not implementations of epiplexity or generalization theory.
 
 ## Future Compatibility
 

@@ -18,6 +18,27 @@ IR_FIXTURES: tuple[dict[str, object], ...] = (
     {"id": "phantom_reachability_fail", "path": "phantom_reachability_fail.json", "audit_count": 1},
     {"id": "hidden_reachability_loss_fail", "path": "hidden_reachability_loss_fail.json", "audit_count": 1},
     {"id": "proxy_nonfactorization_fail", "path": "proxy_nonfactorization_fail.json", "audit_count": 1},
+    {
+        "id": "simple_form_nonfactorization_fail",
+        "path": "simple_form_nonfactorization_fail.json",
+        "audit_count": 1,
+    },
+    {
+        "id": "entropy_controlled_nonfactorization_fail",
+        "path": "entropy_controlled_nonfactorization_fail.json",
+        "audit_count": 1,
+    },
+    {
+        "id": "ordered_trace_nonfactorization_fail",
+        "path": "ordered_trace_nonfactorization_fail.json",
+        "audit_count": 1,
+    },
+    {"id": "bounded_recovery_pass", "path": "bounded_recovery_pass.json", "audit_count": 1},
+    {
+        "id": "bounded_recovery_entropy_fail",
+        "path": "bounded_recovery_entropy_fail.json",
+        "audit_count": 1,
+    },
     {"id": "carrier_transfer_pass", "path": "carrier_transfer_pass.json", "audit_count": 1},
     {
         "id": "carrier_transfer_fail_missing_return",

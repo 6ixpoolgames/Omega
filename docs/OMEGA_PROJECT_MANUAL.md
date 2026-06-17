@@ -1231,6 +1231,44 @@ The strongest lesson from the single-object phase:
 
 > Entropy is diagnostic. It is not the object.
 
+The current adapter-facing refinement is:
+
+```text
+raw entropy / raw complexity / unordered summaries
+  are proxy summaries;
+
+boundedly recoverable consequence structure
+  is the thing those summaries must be tested against.
+```
+
+This is why the finite relational adapter now includes a bounded-recovery audit:
+a declared observation and a declared decoder family are checked against a
+declared target predicate. The result is intentionally observer-class relative:
+failure means no decoder in the declared bounded family recovers the target, not
+that no possible unbounded decoder could.
+
+This also tightens the project language around lushness:
+
+```text
+avoid:
+  lushness = entropy
+  lushness = complexity
+  lushness = branch count
+
+use, provisionally:
+  lushness candidate =
+    soundly presented,
+    boundedly recoverable,
+    consequence-bearing continuation structure
+    inside the relevant viability and compatibility constraints.
+```
+
+See:
+
+```text
+docs/research_notes/omega_theory/useful_information_and_constraint_selection_v0.md
+```
+
 ### Multifield / Fiber Omega
 
 The multifield branch asks whether coupled systems produce viable macro-fiber

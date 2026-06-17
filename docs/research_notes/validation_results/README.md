@@ -17,6 +17,10 @@ For the project pitch and current formalism, read:
 - `future_field_atlas/` contains the current active empirical branch.
 - `stochastic_distinction_channel/` contains the finite stochastic-channel
   bridge into the formal probabilistic channel presentation.
+- Root-level `finite_relational_adapter_*` files are small adapter-pilot
+  checkpoint summaries retained next to the validation docs while this branch
+  stabilizes. If they grow, move them into a dedicated
+  `finite_relational_adapter/` subfolder.
 
 Start with:
 
@@ -43,6 +47,8 @@ Start with:
 - `stochastic_distinction_channel/stochastic_thresholded_prob_non_erasure_result.md`
 - `stochastic_distinction_channel/stochastic_channel_theorem_transfer_audit_result.md`
 - `stochastic_distinction_channel/stochastic_distinction_channel_fixed_policy_result.md`
+- `finite_relational_adapter_validation_v0.md`
+- `finite_relational_adapter_useful_information_v0.json`
 
 ## Archived Branches
 
@@ -61,7 +67,9 @@ Start with:
 
 ## Policy
 
-Do not add new result notes directly to this folder root. Put active Future
-Field Atlas results in `future_field_atlas/`. Put historical or branch-specific
-results under the matching archive folder. Keep raw generated data out of the
-repo unless the result note explicitly justifies retaining it.
+Do not add new result notes directly to this folder root unless they are small
+cross-branch validation checkpoints like the current finite relational adapter
+pilot files. Put active Future Field Atlas results in `future_field_atlas/`.
+Put historical or branch-specific results under the matching archive folder.
+Keep raw generated data out of the repo unless the result note explicitly
+justifies retaining it.

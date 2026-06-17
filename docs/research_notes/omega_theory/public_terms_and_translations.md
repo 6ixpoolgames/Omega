@@ -427,6 +427,13 @@ Plain meaning:
 
 Lushness is richness of future possibility that is structured enough to carry forward into further possibilities.
 
+Current adapter-facing refinement:
+
+Lushness should not be treated as raw entropy, raw complexity, or raw branching.
+The safer provisional reading is: soundly presented, boundedly recoverable,
+consequence-bearing continuation structure inside the relevant viability and
+compatibility constraints.
+
 It is not the same as Omega.
 
 ```text
@@ -440,6 +447,9 @@ Omega-compatible lushness:
 Lushness can occur in non-Omega trajectories. A runaway system can generate many structured futures while still degrading broader recoverable possibility.
 
 Avoid defining lushness as a bundle of all good properties. It is closer to future-bearing branching than goodness.
+Also avoid defining it as a summary statistic unless that statistic has passed
+a declared recovery or non-factorization audit against the target it is being
+used to support.
 
 ### Value-bearing trajectory space
 

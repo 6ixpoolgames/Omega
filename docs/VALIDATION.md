@@ -201,8 +201,9 @@ Local PowerShell form:
 It runs the low-level finite relational IR fixtures, derived graph fixtures, and
 finite grid fixtures. It checks provenance completeness, verifies retained
 digest/audit artifacts, exercises phantom reachability and hidden reachability
-loss controls, and runs the focused adapter tests unless `--skip-pytest` is
-provided.
+loss controls, runs non-factorization controls for simple-form, entropy, and
+ordered-trace summaries, exercises bounded-recovery pass/fail controls, and
+runs the focused adapter tests unless `--skip-pytest` is provided.
 
 The generated/adversarial path deterministically searches small finite cases
 for adapter hardening witnesses, then retains each generated source, compiled
@@ -215,6 +216,9 @@ Finite relational adapter changes are also protected by the
 
 A retained example summary is available at
 [finite_relational_adapter_validation_v0.md](research_notes/validation_results/finite_relational_adapter_validation_v0.md).
+The bounded-useful-structure extension also retains a machine-readable summary
+at
+[finite_relational_adapter_useful_information_v0.json](research_notes/validation_results/finite_relational_adapter_useful_information_v0.json).
 
 See [REPRODUCIBILITY_SMOKE.md](REPRODUCIBILITY_SMOKE.md).
 

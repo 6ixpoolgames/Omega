@@ -7,8 +7,8 @@ def test_finite_relational_adapter_smoke_retains_all_fixture_outputs(tmp_path: P
     result = run_finite_relational_adapter_smoke(out_root=tmp_path, skip_pytest=True)
 
     assert result["status"] == "PASS"
-    assert result["fixture_count"] == 10
-    assert result["ir_fixture_count"] == 6
+    assert result["fixture_count"] == 15
+    assert result["ir_fixture_count"] == 11
     assert result["derived_graph_fixture_count"] == 3
     assert result["finite_grid_fixture_count"] == 1
     assert result["focused_pytest"] == "skipped"

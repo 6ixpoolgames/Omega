@@ -7,6 +7,7 @@ from typing import Any
 
 from omega.adapters.finite_relational.facts import (
     binary_relation,
+    bounded_recovery_facts,
     carrier_certificate_facts,
     carrier_transfer_facts,
     nonfactorization_witnesses_for_predicate,
@@ -57,6 +58,8 @@ def run_audit(model: FiniteRelationalModel, audit: dict[str, Any]) -> AuditResul
         return _carrier_certificate(model, audit)
     if kind == "carrier_transfer":
         return _carrier_transfer(model, audit)
+    if kind == "bounded_recovery":
+        return _bounded_recovery(model, audit)
     raise SchemaError(f"unknown audit kind: {kind}")
 
 
@@ -195,6 +198,21 @@ def _carrier_transfer(model: FiniteRelationalModel, audit: dict[str, Any]) -> Au
     return _result(audit, "carrier_transfer", observed, "transferred", "transferred")
 
 
+def _bounded_recovery(model: FiniteRelationalModel, audit: dict[str, Any]) -> AuditResult:
+    decoders_raw = audit.get("decoders", ())
+    if not isinstance(decoders_raw, list):
+        raise SchemaError(f"audit {audit.get('id', '<unnamed>')} decoders must be a list")
+    observed = bounded_recovery_facts(
+        model,
+        observation=_role(model, audit, "observation"),
+        target_predicate=_role(model, audit, "target_predicate"),
+        decoders=tuple(str(decoder) for decoder in decoders_raw),
+        true_label=str(audit.get("true_label", "true")),
+        false_label=str(audit.get("false_label", "false")),
+    )
+    return _result(audit, "bounded_recovery", observed, "recoverable", "recoverable")
+
+
 def _role(model: FiniteRelationalModel, audit: dict[str, Any], name: str) -> str:
     if name in audit:
         return str(audit[name])
@@ -244,6 +262,7 @@ def _expected_bool(expectation: str, true_finding: str) -> bool:
         "witness",
         "alpha_laws_hold",
         "transferred",
+        "recoverable",
     }
     negative = {
         f"not_{true_finding}",
@@ -258,6 +277,8 @@ def _expected_bool(expectation: str, true_finding: str) -> bool:
         "alpha_laws_fail",
         "not_transferred",
         "no_transfer",
+        "not_recoverable",
+        "no_recovery",
     }
     if expectation in positive:
         return True

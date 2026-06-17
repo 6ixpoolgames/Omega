@@ -1,0 +1,39 @@
+{
+  "model_id": "finite_relational_ordered_trace_nonfactorization_fail",
+  "schema_version": "0.1.0",
+  "carrier": ["alternating_trace", "blocked_trace"],
+  "predicates": {
+    "order_recoverable": ["alternating_trace"]
+  },
+  "functions": {
+    "unordered_bag_summary": {
+      "domain": "state",
+      "mapping": {
+        "alternating_trace": "two_a_two_b",
+        "blocked_trace": "two_a_two_b"
+      }
+    }
+  },
+  "audits": [
+    {
+      "id": "same_bag_different_order_sensitive_recovery",
+      "kind": "nonfactorization",
+      "summary": "unordered_bag_summary",
+      "target_predicate": "order_recoverable",
+      "expect": "witness"
+    }
+  ],
+  "provenance": {
+    "declared_before_run": true,
+    "source": "omega/adapters/finite_relational/fixtures/ordered_trace_nonfactorization_fail.json",
+    "claim_boundary": "Toy finite relational fixture: same unordered bag summary does not determine the declared order-sensitive recovery target.",
+    "controls": [
+      "the unordered trace summary is total on the declared carrier",
+      "the target predicate is declared before the audit",
+      "this is a schematic non-factorization witness over trace summaries"
+    ],
+    "literature_motivation": [
+      "Finzi et al. 2026 emphasize that useful information for bounded learners can depend on data order."
+    ]
+  }
+}

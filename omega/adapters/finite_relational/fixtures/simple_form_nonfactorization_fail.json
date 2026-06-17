@@ -1,0 +1,39 @@
+{
+  "model_id": "finite_relational_simple_form_nonfactorization_fail",
+  "schema_version": "0.1.0",
+  "carrier": ["weak_constraint", "strong_constraint"],
+  "predicates": {
+    "generalizes": ["weak_constraint"]
+  },
+  "functions": {
+    "simple_form_summary": {
+      "domain": "state",
+      "mapping": {
+        "weak_constraint": "same_simple_form",
+        "strong_constraint": "same_simple_form"
+      }
+    }
+  },
+  "audits": [
+    {
+      "id": "same_simple_form_different_generalization_target",
+      "kind": "nonfactorization",
+      "summary": "simple_form_summary",
+      "target_predicate": "generalizes",
+      "expect": "witness"
+    }
+  ],
+  "provenance": {
+    "declared_before_run": true,
+    "source": "omega/adapters/finite_relational/fixtures/simple_form_nonfactorization_fail.json",
+    "claim_boundary": "Toy finite relational fixture: same simple-form summary does not determine the declared functional generalization target.",
+    "controls": [
+      "the simple-form summary is total on the declared carrier",
+      "the target predicate is declared before the audit",
+      "this is a schematic non-factorization witness, not an empirical complexity result"
+    ],
+    "literature_motivation": [
+      "Bennett 2024 argues that simple form is not the causal source of generalization; function and weak constraints do the work."
+    ]
+  }
+}

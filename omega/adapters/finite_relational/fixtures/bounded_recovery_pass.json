@@ -1,0 +1,60 @@
+{
+  "model_id": "finite_relational_bounded_recovery_pass",
+  "schema_version": "0.1.0",
+  "domains": {
+    "state": ["false_0", "false_1", "true_0", "true_1"],
+    "observation": ["red", "blue"],
+    "truth": ["false", "true"]
+  },
+  "predicates": {
+    "target_true": ["true_0", "true_1"]
+  },
+  "functions": {
+    "color_observation": {
+      "domain": "state",
+      "codomain": "observation",
+      "mapping": {
+        "false_0": "red",
+        "false_1": "red",
+        "true_0": "blue",
+        "true_1": "blue"
+      }
+    },
+    "all_false_decoder": {
+      "domain": "observation",
+      "codomain": "truth",
+      "mapping": {
+        "red": "false",
+        "blue": "false"
+      }
+    },
+    "color_decoder": {
+      "domain": "observation",
+      "codomain": "truth",
+      "mapping": {
+        "red": "false",
+        "blue": "true"
+      }
+    }
+  },
+  "audits": [
+    {
+      "id": "bounded_decoder_recovers_target",
+      "kind": "bounded_recovery",
+      "observation": "color_observation",
+      "target_predicate": "target_true",
+      "decoders": ["all_false_decoder", "color_decoder"],
+      "expect": "recoverable"
+    }
+  ],
+  "provenance": {
+    "declared_before_run": true,
+    "source": "omega/adapters/finite_relational/fixtures/bounded_recovery_pass.json",
+    "claim_boundary": "Toy finite relational fixture: a declared bounded decoder family contains a decoder that exactly recovers the target from the observation.",
+    "controls": [
+      "the observation function is total on the declared state domain",
+      "decoder functions are total on observed labels",
+      "the decoder family is declared before the audit"
+    ]
+  }
+}

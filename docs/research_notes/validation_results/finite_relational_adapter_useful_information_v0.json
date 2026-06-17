@@ -1,0 +1,83 @@
+{
+  "title": "Finite Relational Adapter Useful-Information Validation V0",
+  "date": "2026-06-18",
+  "run_context": "working tree with bounded-recovery audit and useful-information fixtures applied before commit",
+  "claim_boundary": "Finite adapter validation over declared toy structures. This validates adapter mechanics, retained provenance, and expected finite audit findings only. It does not validate a real substrate, implement epiplexity, prove value, establish agency, or validate Omega.",
+  "references": [
+    {
+      "id": "arxiv:2404.07227",
+      "title": "Is Complexity an Illusion?",
+      "url": "https://arxiv.org/abs/2404.07227"
+    },
+    {
+      "id": "arxiv:2601.03220",
+      "title": "From Entropy to Epiplexity: Rethinking Information for Computationally Bounded Intelligence",
+      "url": "https://arxiv.org/abs/2601.03220"
+    }
+  ],
+  "commands": [
+    ".\\.venv\\Scripts\\python.exe -m omega.validation.finite_relational_adapter_smoke --out-root .tmp\\finite_relational_adapter_smoke_useful_information",
+    ".\\.venv\\Scripts\\python.exe -m pytest tests\\test_finite_relational_adapter.py tests\\test_finite_relational_adapter_smoke.py -q --basetemp .tmp\\pytest-bounded-recovery-final -p no:cacheprovider"
+  ],
+  "results": {
+    "adapter_smoke": {
+      "status": "PASS",
+      "run_root": ".tmp\\finite_relational_adapter_smoke_useful_information\\20260618_040909",
+      "fixture_count": 15,
+      "ir_fixture_count": 11,
+      "derived_graph_fixture_count": 3,
+      "finite_grid_fixture_count": 1,
+      "focused_pytest": "passed"
+    },
+    "focused_pytest": {
+      "status": "PASS",
+      "tests": 15
+    }
+  },
+  "useful_information_fixtures": [
+    {
+      "id": "simple_form_nonfactorization_fail",
+      "model_digest": "8fab91005591ba138ada662ebe52880d17bea3afbca49575189234435b4618dd",
+      "audit_kind": "nonfactorization",
+      "finding": "witness",
+      "all_passed": true,
+      "interpretation": "Same simple-form summary, different declared functional generalization target."
+    },
+    {
+      "id": "entropy_controlled_nonfactorization_fail",
+      "model_digest": "017008be69997421d8eb330d23537f03419fab826c48f3e65a150b1714788534",
+      "audit_kind": "nonfactorization",
+      "finding": "witness",
+      "all_passed": true,
+      "interpretation": "Same entropy/histogram summary, different bounded-recoverability target."
+    },
+    {
+      "id": "ordered_trace_nonfactorization_fail",
+      "model_digest": "ee8de787256fd4574aca3ee4f8c814f4b2a67a911a7950126c59d9249f525520",
+      "audit_kind": "nonfactorization",
+      "finding": "witness",
+      "all_passed": true,
+      "interpretation": "Same unordered trace bag, different order-sensitive recovery target."
+    },
+    {
+      "id": "bounded_recovery_pass",
+      "model_digest": "38d67cc7f84c37afd948d63e56caabb1aaa0089d7ece1357fd421816cc389f1b",
+      "audit_kind": "bounded_recovery",
+      "finding": "recoverable",
+      "all_passed": true,
+      "successful_decoders": ["color_decoder"],
+      "ambiguous_observation_labels": [],
+      "interpretation": "A declared bounded decoder exactly recovers the target from the observation."
+    },
+    {
+      "id": "bounded_recovery_entropy_fail",
+      "model_digest": "d58043dedf827c7d14156afbb206e4379f299725abdedc4ad074f360677e6afd",
+      "audit_kind": "bounded_recovery",
+      "finding": "not_recoverable",
+      "all_passed": true,
+      "successful_decoders": [],
+      "ambiguous_observation_labels": ["blue", "red"],
+      "interpretation": "The observation histogram matches the pass fixture, but no declared bounded decoder recovers the target."
+    }
+  ]
+}

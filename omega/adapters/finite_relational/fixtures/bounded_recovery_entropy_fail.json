@@ -1,0 +1,84 @@
+{
+  "model_id": "finite_relational_bounded_recovery_entropy_fail",
+  "schema_version": "0.1.0",
+  "domains": {
+    "state": ["red_true", "red_false", "blue_true", "blue_false"],
+    "observation": ["red", "blue"],
+    "truth": ["false", "true"]
+  },
+  "predicates": {
+    "target_true": ["red_true", "blue_true"]
+  },
+  "functions": {
+    "color_observation": {
+      "domain": "state",
+      "codomain": "observation",
+      "mapping": {
+        "red_true": "red",
+        "red_false": "red",
+        "blue_true": "blue",
+        "blue_false": "blue"
+      }
+    },
+    "decoder_false_false": {
+      "domain": "observation",
+      "codomain": "truth",
+      "mapping": {
+        "red": "false",
+        "blue": "false"
+      }
+    },
+    "decoder_false_true": {
+      "domain": "observation",
+      "codomain": "truth",
+      "mapping": {
+        "red": "false",
+        "blue": "true"
+      }
+    },
+    "decoder_true_false": {
+      "domain": "observation",
+      "codomain": "truth",
+      "mapping": {
+        "red": "true",
+        "blue": "false"
+      }
+    },
+    "decoder_true_true": {
+      "domain": "observation",
+      "codomain": "truth",
+      "mapping": {
+        "red": "true",
+        "blue": "true"
+      }
+    }
+  },
+  "audits": [
+    {
+      "id": "same_observation_histogram_no_bounded_decoder_recovers_target",
+      "kind": "bounded_recovery",
+      "observation": "color_observation",
+      "target_predicate": "target_true",
+      "decoders": [
+        "decoder_false_false",
+        "decoder_false_true",
+        "decoder_true_false",
+        "decoder_true_true"
+      ],
+      "expect": "no_recovery"
+    }
+  ],
+  "provenance": {
+    "declared_before_run": true,
+    "source": "omega/adapters/finite_relational/fixtures/bounded_recovery_entropy_fail.json",
+    "claim_boundary": "Toy finite relational fixture: an entropy-matched observation histogram can be unusable for the declared bounded recovery target.",
+    "controls": [
+      "the observation function is total on the declared state domain",
+      "all Boolean decoders over the two observed labels are declared before the audit",
+      "the observation histogram matches bounded_recovery_pass but target recovery fails because each observed label mixes target truth values"
+    ],
+    "literature_motivation": [
+      "Finzi et al. 2026 motivate replacing raw entropy with observer-bounded useful structure."
+    ]
+  }
+}

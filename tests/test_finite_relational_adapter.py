@@ -69,6 +69,60 @@ def test_proxy_fixture_detects_nonfactorization_witness() -> None:
     }
 
 
+def test_simple_form_fixture_detects_function_target_nonfactorization() -> None:
+    model = load_model_path(FIXTURES / "simple_form_nonfactorization_fail.json")
+    [result] = [result.as_dict() for result in run_declared_audits(model)]
+
+    assert result["passed"] is True
+    assert result["finding"] == "witness"
+    assert {frozenset(pair) for pair in result["observed"]["witnesses"]} == {
+        frozenset({"weak_constraint", "strong_constraint"})
+    }
+
+
+def test_entropy_control_fixture_detects_bounded_recoverability_nonfactorization() -> None:
+    model = load_model_path(FIXTURES / "entropy_controlled_nonfactorization_fail.json")
+    [result] = [result.as_dict() for result in run_declared_audits(model)]
+
+    assert result["passed"] is True
+    assert result["finding"] == "witness"
+    assert {frozenset(pair) for pair in result["observed"]["witnesses"]} == {
+        frozenset({"bounded_recoverable_layout", "entropy_matched_scramble"})
+    }
+
+
+def test_ordered_trace_fixture_detects_bag_summary_nonfactorization() -> None:
+    model = load_model_path(FIXTURES / "ordered_trace_nonfactorization_fail.json")
+    [result] = [result.as_dict() for result in run_declared_audits(model)]
+
+    assert result["passed"] is True
+    assert result["finding"] == "witness"
+    assert {frozenset(pair) for pair in result["observed"]["witnesses"]} == {
+        frozenset({"alternating_trace", "blocked_trace"})
+    }
+
+
+def test_bounded_recovery_fixture_accepts_successful_declared_decoder() -> None:
+    model = load_model_path(FIXTURES / "bounded_recovery_pass.json")
+    [result] = [result.as_dict() for result in run_declared_audits(model)]
+
+    assert result["passed"] is True
+    assert result["finding"] == "recoverable"
+    assert result["observed"]["successful_decoders"] == ["color_decoder"]
+    assert result["observed"]["ambiguous_observation_labels"] == []
+
+
+def test_bounded_recovery_fixture_rejects_entropy_matched_ambiguous_observation() -> None:
+    model = load_model_path(FIXTURES / "bounded_recovery_entropy_fail.json")
+    [result] = [result.as_dict() for result in run_declared_audits(model)]
+
+    assert result["passed"] is True
+    assert result["finding"] == "not_recoverable"
+    assert result["observed"]["successful_decoders"] == []
+    assert result["observed"]["ambiguous_observation_labels"] == ["blue", "red"]
+    assert result["observed"]["decoder_count"] == 4
+
+
 def test_carrier_transfer_fixture_accepts_declared_transfer_contract() -> None:
     model = load_model_path(FIXTURES / "carrier_transfer_pass.json")
     [result] = [result.as_dict() for result in run_declared_audits(model)]

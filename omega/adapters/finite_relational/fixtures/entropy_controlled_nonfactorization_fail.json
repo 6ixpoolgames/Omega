@@ -1,0 +1,39 @@
+{
+  "model_id": "finite_relational_entropy_controlled_nonfactorization_fail",
+  "schema_version": "0.1.0",
+  "carrier": ["bounded_recoverable_layout", "entropy_matched_scramble"],
+  "predicates": {
+    "bounded_recoverable": ["bounded_recoverable_layout"]
+  },
+  "functions": {
+    "entropy_histogram_summary": {
+      "domain": "state",
+      "mapping": {
+        "bounded_recoverable_layout": "histogram_2_2_entropy_1",
+        "entropy_matched_scramble": "histogram_2_2_entropy_1"
+      }
+    }
+  },
+  "audits": [
+    {
+      "id": "same_entropy_histogram_different_bounded_recoverability",
+      "kind": "nonfactorization",
+      "summary": "entropy_histogram_summary",
+      "target_predicate": "bounded_recoverable",
+      "expect": "witness"
+    }
+  ],
+  "provenance": {
+    "declared_before_run": true,
+    "source": "omega/adapters/finite_relational/fixtures/entropy_controlled_nonfactorization_fail.json",
+    "claim_boundary": "Toy finite relational fixture: same entropy/histogram summary does not determine the declared bounded-recoverability target.",
+    "controls": [
+      "the entropy/histogram summary is total on the declared carrier",
+      "the target predicate is declared before the audit",
+      "this is a schematic non-factorization witness, not an implementation of epiplexity"
+    ],
+    "literature_motivation": [
+      "Finzi et al. 2026 argue that entropy and Kolmogorov complexity can miss useful learnable structure for bounded observers."
+    ]
+  }
+}

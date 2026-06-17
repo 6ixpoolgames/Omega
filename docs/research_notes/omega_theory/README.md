@@ -22,6 +22,7 @@ laws_of_form_adjacency_v0.md
 adapter_provenance_v0.md
 audit_response_roadmap_v0.md
 finite_relational_adapter_design_v0.md
+useful_information_and_constraint_selection_v0.md
 primitive_exposure_realization_bridge_v0.md
 presentation_soundness_pattern_v0.md
 continuation_deformation_nonfactorization_v0.md
