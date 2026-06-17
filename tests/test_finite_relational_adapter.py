@@ -69,6 +69,30 @@ def test_proxy_fixture_detects_nonfactorization_witness() -> None:
     }
 
 
+def test_carrier_transfer_fixture_accepts_declared_transfer_contract() -> None:
+    model = load_model_path(FIXTURES / "carrier_transfer_pass.json")
+    [result] = [result.as_dict() for result in run_declared_audits(model)]
+
+    assert result["passed"] is True
+    assert result["finding"] == "transferred"
+    assert result["observed"]["source_certified"] is True
+    assert result["observed"]["target_certified"] is True
+    assert result["observed"]["endpoint_correspondence"] is True
+    assert result["observed"]["correspondence_total_on_source_carrier"] is True
+
+
+def test_carrier_transfer_negative_fixture_rejects_missing_target_return() -> None:
+    model = load_model_path(FIXTURES / "carrier_transfer_fail_missing_return.json")
+    [result] = [result.as_dict() for result in run_declared_audits(model)]
+
+    assert result["passed"] is True
+    assert result["finding"] == "not_transferred"
+    assert result["observed"]["source_certified"] is True
+    assert result["observed"]["target_certified"] is False
+    assert result["observed"]["endpoint_correspondence"] is True
+    assert result["observed"]["target"]["mutually_reachable"] is False
+
+
 def test_cli_retains_digest_provenance_audits_and_summary(tmp_path: Path) -> None:
     out_dir = tmp_path / "adapter_smoke"
     summary = run_model_file(FIXTURES / "sound_pass.json", out_dir)

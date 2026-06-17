@@ -213,6 +213,9 @@ finite failure modes without relying only on hand-written fixtures.
 Finite relational adapter changes are also protected by the
 `Finite Relational Adapter Smoke` GitHub Actions workflow.
 
+A retained example summary is available at
+[finite_relational_adapter_validation_v0.md](research_notes/validation_results/finite_relational_adapter_validation_v0.md).
+
 See [REPRODUCIBILITY_SMOKE.md](REPRODUCIBILITY_SMOKE.md).
 
 ## Claim Hygiene

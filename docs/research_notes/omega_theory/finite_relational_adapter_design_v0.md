@@ -293,6 +293,11 @@ nonfactorization:
 carrier_certificate:
   declared carrier contains endpoints, is safe, is closed under transition,
   is internally mutually reachable, and carries a declared separation.
+
+carrier_transfer:
+  source and target carriers are both certified and a declared correspondence
+  relates the source carrier into the target carrier, including the declared
+  endpoints.
 ```
 
 These are intentionally small. They exercise the current theorem spine without
@@ -322,6 +327,14 @@ proxy_nonfactorization_fail.json:
   same proxy score;
   different safety target;
   non-factorization witness is detected.
+
+carrier_transfer_pass.json:
+  source recurrent carrier and target recurrent carrier are both certified;
+  declared correspondence covers source carrier and endpoints.
+
+carrier_transfer_fail_missing_return.json:
+  source recurrent carrier is certified and correspondence is present;
+  target carrier loses return structure, so transfer is rejected.
 
 derived_graph_strict_asymmetry.json:
   source has no primitive relation/separation/asymmetry labels;

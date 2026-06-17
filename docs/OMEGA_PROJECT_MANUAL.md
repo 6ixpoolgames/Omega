@@ -84,6 +84,7 @@ Current front-door notes:
 - `docs/research_notes/omega_theory/layer_a_derivation_audit_v0.md`
 - `docs/research_notes/omega_theory/standard_core_compression_v0.md`
 - `docs/research_notes/omega_theory/finite_relational_adapter_design_v0.md`
+- `docs/research_notes/omega_theory/finite_relational_adapter_checkpoint_v0.md`
 - `docs/research_notes/omega_theory/adapter_provenance_v0.md`
 - `docs/research_notes/omega_theory/README.md`
 
@@ -687,6 +688,10 @@ Adapter non-negotiables:
    validation. They are useful when they search for finite failure modes and
    then retain the generated source, compiled model, digests, audit results,
    and summary.
+
+9. Carrier-transfer audits are same-model, two-snapshot contracts. They check
+   declared source and target carriers plus a declared correspondence; they do
+   not assert object identity, recoverability, lineage, agency, or Omega.
 ```
 
 Future source adapters should follow this rule:

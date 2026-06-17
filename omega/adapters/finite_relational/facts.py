@@ -143,3 +143,75 @@ def carrier_certificate_facts(
         "internally_connected": internally_connected,
         "mutually_reachable": mutually_reachable,
     }
+
+
+def carrier_transfer_facts(
+    model: FiniteRelationalModel,
+    *,
+    source_transition: str,
+    source_safety: str,
+    source_carrier: str,
+    source_left: str,
+    source_right: str,
+    source_separation: str,
+    target_transition: str,
+    target_safety: str,
+    target_carrier: str,
+    target_left: str,
+    target_right: str,
+    target_separation: str,
+    correspondence: str,
+) -> dict[str, object]:
+    source_facts = carrier_certificate_facts(
+        model,
+        transition=source_transition,
+        safety=source_safety,
+        carrier=source_carrier,
+        left=source_left,
+        right=source_right,
+        separation=source_separation,
+    )
+    target_facts = carrier_certificate_facts(
+        model,
+        transition=target_transition,
+        safety=target_safety,
+        carrier=target_carrier,
+        left=target_left,
+        right=target_right,
+        separation=target_separation,
+    )
+    correspondence_pairs = binary_relation(model, correspondence)
+    source_members = set(model.predicate_members(source_carrier))
+    target_members = set(model.predicate_members(target_carrier))
+
+    endpoint_correspondence = (
+        (source_left, target_left) in correspondence_pairs
+        and (source_right, target_right) in correspondence_pairs
+    )
+    correspondence_total_on_source_carrier = all(
+        any((source, target) in correspondence_pairs for target in target_members)
+        for source in source_members
+    )
+    correspondence_stays_in_target_carrier = all(
+        target in target_members
+        for source, target in correspondence_pairs
+        if source in source_members
+    )
+    transferred = (
+        bool(source_facts["certified"])
+        and bool(target_facts["certified"])
+        and endpoint_correspondence
+        and correspondence_total_on_source_carrier
+        and correspondence_stays_in_target_carrier
+    )
+
+    return {
+        "transferred": transferred,
+        "source_certified": source_facts["certified"],
+        "target_certified": target_facts["certified"],
+        "endpoint_correspondence": endpoint_correspondence,
+        "correspondence_total_on_source_carrier": correspondence_total_on_source_carrier,
+        "correspondence_stays_in_target_carrier": correspondence_stays_in_target_carrier,
+        "source": source_facts,
+        "target": target_facts,
+    }

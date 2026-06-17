@@ -18,6 +18,12 @@ IR_FIXTURES: tuple[dict[str, object], ...] = (
     {"id": "phantom_reachability_fail", "path": "phantom_reachability_fail.json", "audit_count": 1},
     {"id": "hidden_reachability_loss_fail", "path": "hidden_reachability_loss_fail.json", "audit_count": 1},
     {"id": "proxy_nonfactorization_fail", "path": "proxy_nonfactorization_fail.json", "audit_count": 1},
+    {"id": "carrier_transfer_pass", "path": "carrier_transfer_pass.json", "audit_count": 1},
+    {
+        "id": "carrier_transfer_fail_missing_return",
+        "path": "carrier_transfer_fail_missing_return.json",
+        "audit_count": 1,
+    },
 )
 
 DERIVED_GRAPH_FIXTURES: tuple[dict[str, object], ...] = (

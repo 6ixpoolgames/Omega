@@ -8,6 +8,7 @@ from typing import Any
 from omega.adapters.finite_relational.facts import (
     binary_relation,
     carrier_certificate_facts,
+    carrier_transfer_facts,
     nonfactorization_witnesses_for_predicate,
     presentation_violations,
     reachable_pairs,
@@ -54,6 +55,8 @@ def run_audit(model: FiniteRelationalModel, audit: dict[str, Any]) -> AuditResul
         return _nonfactorization(model, audit)
     if kind == "carrier_certificate":
         return _carrier_certificate(model, audit)
+    if kind == "carrier_transfer":
+        return _carrier_transfer(model, audit)
     raise SchemaError(f"unknown audit kind: {kind}")
 
 
@@ -172,6 +175,26 @@ def _carrier_certificate(model: FiniteRelationalModel, audit: dict[str, Any]) ->
     return _result(audit, "carrier_certificate", observed, "certified", "certified")
 
 
+def _carrier_transfer(model: FiniteRelationalModel, audit: dict[str, Any]) -> AuditResult:
+    observed = carrier_transfer_facts(
+        model,
+        source_transition=_role(model, audit, "source_transition"),
+        source_safety=_role(model, audit, "source_safety"),
+        source_carrier=_role(model, audit, "source_carrier"),
+        source_left=str(audit["source_left"]),
+        source_right=str(audit["source_right"]),
+        source_separation=_role(model, audit, "source_separation"),
+        target_transition=_role(model, audit, "target_transition"),
+        target_safety=_role(model, audit, "target_safety"),
+        target_carrier=_role(model, audit, "target_carrier"),
+        target_left=str(audit["target_left"]),
+        target_right=str(audit["target_right"]),
+        target_separation=_role(model, audit, "target_separation"),
+        correspondence=_role(model, audit, "correspondence"),
+    )
+    return _result(audit, "carrier_transfer", observed, "transferred", "transferred")
+
+
 def _role(model: FiniteRelationalModel, audit: dict[str, Any], name: str) -> str:
     if name in audit:
         return str(audit[name])
@@ -220,6 +243,7 @@ def _expected_bool(expectation: str, true_finding: str) -> bool:
         "hidden_loss",
         "witness",
         "alpha_laws_hold",
+        "transferred",
     }
     negative = {
         f"not_{true_finding}",
@@ -232,6 +256,8 @@ def _expected_bool(expectation: str, true_finding: str) -> bool:
         "no_hidden_loss",
         "no_witness",
         "alpha_laws_fail",
+        "not_transferred",
+        "no_transfer",
     }
     if expectation in positive:
         return True
