@@ -11,6 +11,7 @@ Start with:
 
 ```text
 ../../../README.md
+layer_a_theorem_spine_v0.md
 alphaomega_continuation_proto_teleology_v0.md
 ../../VALUER_FORMAL_TARGET_V0.md
 ../../OMEGA_COMPATIBLE_VALUER_TRAJECTORY_SPACE_V0.md
@@ -111,11 +112,17 @@ OmegaProper/Trajectory/ConsequenceDiscipline.lean
 OmegaProper/Trajectory/ConsequenceComparison.lean
 OmegaProper/Trajectory/ConsequencePanelDiscipline.lean
 OmegaProper/Trajectory/ParameterizedRecurrentSupport.lean
+OmegaProper/Trajectory/RecurrentSupportExtension.lean
+OmegaProper/Trajectory/RecurrentSupportLineage.lean
 OmegaProper/Trajectory/RecurrentSupportPathTransfer.lean
+OmegaProper/Trajectory/RecurrentSupportPerturbationBudget.lean
+OmegaProper/Trajectory/RecurrentSupportIntegrity.lean
 OmegaProper/Trajectory/RecurrentSupportRobustness.lean
 OmegaProper/Trajectory/RecurrentSupportRestoration.lean
+OmegaProper/Trajectory/RecurrentSupportSuccessorDistinction.lean
 OmegaProper/Trajectory/RecurrentSupportTransfer.lean
 OmegaProper/Trajectory/IrreversibleRecurrentSupportLoss.lean
+OmegaProper/Trajectory/JointRecurrentSupport.lean
 OmegaProper/Trajectory/SupportUnderPerturbation.lean
 OmegaArchive/Basic.lean
 OmegaArchive/PrimitiveWitness.lean
@@ -207,7 +214,18 @@ dynamics witness where endpoint viability and forward reachability remain
 while recurrent carrying is lost, and a restoration witness where an explicit
 repair contract restores recurrent carrying; a parameterized bounded finite
 family showing that the one-way recurrent-support loss pattern persists across
-supports of size `n + 2`.
+supports of size `n + 2`; and a support-extension transfer contract showing
+that carrying can move from support `C` into larger support `D` when old
+internal paths are replaceable inside `D`; and a support-lineage handoff
+contract showing that carrying can move between incomparable supports when the
+target support explicitly carries the same declared endpoints; and a successor
+distinction handoff showing that carrying can move to a translated pair under
+an explicit merge-separation-preserving relation; and a first exact
+perturbation-budget floor showing that same dynamics cannot destroy recurrent
+carrying, while one return-edge removal can destroy recurrent carrying even
+when endpoint viability and forward reachability remain; and individual
+recurrent carrying under separate safety predicates need not compose into
+recurrent carrying under shared joint safety.
 ```
 
 Checkpoint:
@@ -215,7 +233,8 @@ Checkpoint:
 ```text
 Layer A now has a first finite local perturbation calculus for recurrently
 carried consequence distinctions: support, loss, preservation, restoration,
-and rerouting.
+rerouting, extension, lineage, successor handoff, perturbation budget, and
+joint recurrent-support failure.
 ```
 
 This is formal infrastructure only. It does not instantiate an empirical
@@ -228,6 +247,7 @@ old OmegaCore namespace is retained for compatibility during migration.
 Read these as current active anchors:
 
 ```text
+layer_a_theorem_spine_v0.md
 alphaomega_continuation_proto_teleology_v0.md
 ../../VALUER_FORMAL_TARGET_V0.md
 ../../OMEGA_COMPATIBLE_VALUER_TRAJECTORY_SPACE_V0.md
@@ -247,6 +267,7 @@ compatibility_audit_taxonomy_v0.md
 dynamics_abstraction_status_v0.md
 boundary_invariant_continuation_roadmap_v0.md
 joint_viability_v0.md
+joint_recurrent_support_v0.md
 hidden_joint_viability_loss_under_bad_presentation_v0.md
 viable_trajectory_language_v0.md
 safe_presentation_contract_v0.md
@@ -257,7 +278,12 @@ loss_aware_presentation_strictness_v0.md
 support_under_perturbation_v0.md
 recurrent_support_path_transfer_v0.md
 recurrent_support_perturbation_floor_v0.md
+recurrent_support_perturbation_budget_v0.md
 parameterized_recurrent_support_v0.md
+recurrent_support_integrity_v0.md
+recurrent_support_extension_v0.md
+recurrent_support_lineage_v0.md
+recurrent_support_successor_distinction_v0.md
 recurrent_support_robustness_v0.md
 recurrent_support_restoration_v0.md
 recurrent_support_transfer_v0.md

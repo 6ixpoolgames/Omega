@@ -20,6 +20,7 @@ import OmegaProper.Trajectory.HiddenViabilityLossUnderBadPresentation
 import OmegaProper.Trajectory.IrreversibleRecurrentSupportLoss
 import OmegaProper.Trajectory.IrreversibleReachLoss
 import OmegaProper.Trajectory.IrreversibleViabilityLoss
+import OmegaProper.Trajectory.JointRecurrentSupport
 import OmegaProper.Trajectory.JointViability
 import OmegaProper.Trajectory.LossAwarePresentationContract
 import OmegaProper.Trajectory.LossAwarePresentationConstructors
@@ -39,9 +40,14 @@ import OmegaProper.Trajectory.ProfileAbstraction
 import OmegaProper.Trajectory.Quotient
 import OmegaProper.Trajectory.ReachabilityReflection
 import OmegaProper.Trajectory.ReachabilityViability
+import OmegaProper.Trajectory.RecurrentSupportExtension
+import OmegaProper.Trajectory.RecurrentSupportLineage
 import OmegaProper.Trajectory.RecurrentSupportPathTransfer
+import OmegaProper.Trajectory.RecurrentSupportPerturbationBudget
+import OmegaProper.Trajectory.RecurrentSupportIntegrity
 import OmegaProper.Trajectory.RecurrentSupportRobustness
 import OmegaProper.Trajectory.RecurrentSupportRestoration
+import OmegaProper.Trajectory.RecurrentSupportSuccessorDistinction
 import OmegaProper.Trajectory.RecurrentSupportTransfer
 import OmegaProper.Trajectory.RecurrentViableClass
 import OmegaProper.Trajectory.SafeLossVisibility
