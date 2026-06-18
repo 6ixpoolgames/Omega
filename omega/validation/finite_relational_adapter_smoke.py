@@ -82,6 +82,7 @@ ADAPTER_TESTS = [
     "tests/test_finite_relational_adapter_empirical.py",
     "tests/test_finite_relational_deterministic_layer.py",
     "tests/test_finite_relational_grid_obstacle.py",
+    "tests/test_finite_relational_stochastic_recovery.py",
 ]
 
 

@@ -1,0 +1,145 @@
+from fractions import Fraction
+from pathlib import Path
+
+from omega.adapters.finite_relational import (
+    all_deterministic_decoders,
+    compose_coarse_decoder_through_fine,
+    generate_stochastic_recovery_study,
+    optimized_worst_case_decoder,
+    success_by_source,
+    support_ambiguities,
+    support_exact_recoverable,
+    validate_channel,
+)
+from omega.validation.finite_relational_stochastic_recovery import (
+    run_finite_relational_stochastic_recovery,
+)
+
+
+REQUIRED_FAMILY_IDS = {
+    "support_exact_vs_high_confidence",
+    "same_support_different_probabilities",
+    "declared_vs_optimized_decoder_gap",
+    "coarsening_non_improvement",
+    "coarse_decoder_simulable_by_fine",
+    "same_worst_case_different_failure_localization",
+}
+
+
+def test_stochastic_recovery_covers_expected_characterization_families() -> None:
+    families = generate_stochastic_recovery_study()
+    by_id = {family.family_id: family for family in families}
+
+    assert set(by_id) == REQUIRED_FAMILY_IDS
+
+    support = by_id["support_exact_vs_high_confidence"].metrics
+    assert support["exact_support_recoverable"] is True
+    assert support["noisy_support_recoverable"] is False
+    assert support["exact_best_worst_case_success"] == "1"
+    assert support["noisy_best_worst_case_success"] == "99/100"
+    assert support["noisy_support_ambiguity_count"] == 2
+
+    same_support = by_id["same_support_different_probabilities"].metrics
+    assert same_support["same_positive_support"] is True
+    assert same_support["high_support_recoverable"] is False
+    assert same_support["low_support_recoverable"] is False
+    assert same_support["high_best_worst_case_success"] == "9/10"
+    assert same_support["low_best_worst_case_success"] == "3/5"
+    assert same_support["support_ambiguity_count"] == 2
+
+    decoder_gap = by_id["declared_vs_optimized_decoder_gap"].metrics
+    assert decoder_gap["declared_worst_case_success"] == "1/10"
+    assert decoder_gap["optimized_worst_case_success"] == "9/10"
+    assert decoder_gap["declared_per_source_success"] == {"x0": "1/10", "x1": "1/10"}
+    assert decoder_gap["optimized_per_source_success"] == {"x0": "9/10", "x1": "9/10"}
+
+    coarsening = by_id["coarsening_non_improvement"].metrics
+    assert coarsening["fine_refines_coarse"] is True
+    assert coarsening["fine_support_recoverable"] is True
+    assert coarsening["coarse_support_recoverable"] is False
+    assert coarsening["fine_best_worst_case_success"] == "1"
+    assert coarsening["coarse_best_worst_case_success"] == "0"
+    assert coarsening["coarse_best_no_greater_than_fine_best"] is True
+
+    simulable = by_id["coarse_decoder_simulable_by_fine"].metrics
+    assert simulable["fine_refines_coarse"] is True
+    assert simulable["same_success_after_composition"] is True
+    assert simulable["coarse_per_source_success"] == {"x0": "1", "x1": "1"}
+    assert simulable["fine_composed_per_source_success"] == {"x0": "1", "x1": "1"}
+
+    localization = by_id["same_worst_case_different_failure_localization"].metrics
+    assert localization["same_worst_case_success"] is True
+    assert localization["same_per_source_success_vector"] is False
+    assert localization["balanced_worst_case_success"] == "4/5"
+    assert localization["localized_worst_case_success"] == "4/5"
+    assert localization["balanced_per_source_success"] == {"x0": "4/5", "x1": "4/5"}
+    assert localization["localized_per_source_success"] == {"x0": "1", "x1": "4/5"}
+
+
+def test_stochastic_helpers_use_exact_rational_probabilities() -> None:
+    states = ("x0", "x1")
+    outputs = ("y0", "y1")
+    channel = {
+        "x0": {"y0": Fraction(9, 10), "y1": Fraction(1, 10)},
+        "x1": {"y0": Fraction(1, 10), "y1": Fraction(9, 10)},
+    }
+    observation = {"y0": "left", "y1": "right"}
+    target = {"x0": "false", "x1": "true"}
+
+    validate_channel(states, outputs, channel)
+    ambiguities = support_ambiguities(states, outputs, channel, observation, target)
+    result = optimized_worst_case_decoder(states, outputs, channel, observation, target)
+
+    assert support_exact_recoverable(states, outputs, channel, observation, target) is False
+    assert len(ambiguities) == 2
+    assert result.decoder == {"left": "false", "right": "true"}
+    assert result.worst_case_success == Fraction(9, 10)
+    assert result.per_source_success == {"x0": Fraction(9, 10), "x1": Fraction(9, 10)}
+    assert len(all_deterministic_decoders(("left", "right"), ("false", "true"))) == 4
+
+
+def test_coarse_decoder_composition_preserves_success_from_fine_observation() -> None:
+    states = ("x0", "x1")
+    outputs = ("a0", "a1", "b0", "b1")
+    channel = {
+        "x0": {
+            "a0": Fraction(1, 2),
+            "a1": Fraction(1, 2),
+            "b0": Fraction(0),
+            "b1": Fraction(0),
+        },
+        "x1": {
+            "a0": Fraction(0),
+            "a1": Fraction(0),
+            "b0": Fraction(1, 2),
+            "b1": Fraction(1, 2),
+        },
+    }
+    target = {"x0": "false", "x1": "true"}
+    fine = {"a0": "a0", "a1": "a1", "b0": "b0", "b1": "b1"}
+    coarse = {"a0": "a", "a1": "a", "b0": "b", "b1": "b"}
+    coarse_decoder = {"a": "false", "b": "true"}
+    fine_decoder = compose_coarse_decoder_through_fine(
+        outputs,
+        fine,
+        coarse,
+        coarse_decoder,
+    )
+
+    assert fine_decoder == {"a0": "false", "a1": "false", "b0": "true", "b1": "true"}
+    assert success_by_source(states, outputs, channel, coarse, target, coarse_decoder) == (
+        success_by_source(states, outputs, channel, fine, target, fine_decoder)
+    )
+
+
+def test_stochastic_recovery_validation_retains_outputs(tmp_path: Path) -> None:
+    result = run_finite_relational_stochastic_recovery(out_root=tmp_path)
+
+    assert result["status"] == "PASS"
+    assert result["family_count"] == len(REQUIRED_FAMILY_IDS)
+    assert result["all_passed"] is True
+    assert (Path(str(result["run_root"])) / "summary.json").exists()
+    for family in result["families"]:
+        family_dir = Path(str(family["output"]))
+        assert family_dir.exists()
+        assert (family_dir / "family_summary.json").exists()

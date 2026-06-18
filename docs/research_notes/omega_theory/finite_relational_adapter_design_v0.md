@@ -560,6 +560,31 @@ reflected versus stale hidden loss.
 This runner is not a new source compiler. It is a finite deterministic
 calibration surface for later stochastic adapter work.
 
+The first stochastic characterization layer also has a separate runner:
+
+```powershell
+.\.venv\Scripts\python.exe -m omega.validation.finite_relational_stochastic_recovery `
+  --out-root .tmp\finite_relational_stochastic_recovery
+```
+
+It uses exact rational finite channels and records a recovery surface rather
+than imposing a threshold:
+
+```text
+support ambiguity;
+support-exact recovery;
+optimized worst-case deterministic decoder success;
+declared-versus-optimized decoder gap;
+coarsening/refinement behavior;
+per-source failure localization.
+```
+
+The coarsening check has a narrow information claim: if a coarse observation is
+deterministic post-processing of an already available fine observation, an
+unrestricted fine decoder can simulate the coarse decoder. This does not deny
+that coarse variables can be semantically useful, target-aligned, more stable,
+or more legible.
+
 ## Future Compatibility
 
 This design keeps the path open for:

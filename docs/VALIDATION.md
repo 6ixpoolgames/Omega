@@ -210,6 +210,13 @@ retained-output path:
 python -m omega.validation.finite_relational_deterministic_layer
 ```
 
+The exact rational stochastic recovery characterization layer has its own
+retained-output path:
+
+```bash
+python -m omega.validation.finite_relational_stochastic_recovery
+```
+
 Local PowerShell form:
 
 ```powershell
@@ -254,6 +261,12 @@ failure, decoder-class strictness, observation-refinement monotonicity,
 deterministic garbling non-improvement, minimal sufficient observations, and
 reflected-versus-stale hidden loss.
 
+The stochastic recovery characterization path uses exact rational finite
+channels. It reports support ambiguity, support-exact recovery, optimized
+worst-case deterministic decoder success, declared-versus-optimized decoder
+gaps, deterministic coarsening behavior, and failure localization. It does not
+declare a prior or threshold in this first layer.
+
 Finite relational adapter changes are also protected by the
 `Finite Relational Adapter Smoke` GitHub Actions workflow.
 
@@ -268,6 +281,9 @@ The gridworld obstacle-insertion pilot retains a machine-readable summary at
 [finite_relational_grid_obstacle_pilot_v0.json](research_notes/validation_results/finite_relational_grid_obstacle_pilot_v0.json).
 The deterministic pre-stochastic layer retains a machine-readable summary at
 [finite_relational_deterministic_layer_v0.json](research_notes/validation_results/finite_relational_deterministic_layer_v0.json).
+The stochastic recovery characterization layer retains a machine-readable
+summary at
+[finite_relational_stochastic_recovery_v0.json](research_notes/validation_results/finite_relational_stochastic_recovery_v0.json).
 
 See [REPRODUCIBILITY_SMOKE.md](REPRODUCIBILITY_SMOKE.md).
 

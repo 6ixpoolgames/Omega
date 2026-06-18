@@ -1,0 +1,112 @@
+{
+  "claim_boundary": "Synthetic finite stochastic characterization only. This result does not validate stochastic dynamics, MDP policies, approximate soundness, empirical substrate correctness, value, agency, alignment, or Omega.",
+  "command": ".\\.venv\\Scripts\\python.exe -m omega.validation.finite_relational_stochastic_recovery --out-root .tmp\\finite_relational_stochastic_recovery",
+  "date": "2026-06-18",
+  "families": [
+    {
+      "description": "A high-confidence noisy channel can have excellent worst-case recovery while failing exact support recovery.",
+      "family_id": "support_exact_vs_high_confidence",
+      "metrics": {
+        "exact_best_worst_case_success": "1",
+        "exact_support_recoverable": true,
+        "noisy_best_worst_case_success": "99/100",
+        "noisy_support_ambiguity_count": 2,
+        "noisy_support_recoverable": false
+      }
+    },
+    {
+      "description": "Two channels have the same positive-probability support and the same support ambiguity, but different optimized worst-case recovery.",
+      "family_id": "same_support_different_probabilities",
+      "metrics": {
+        "high_best_worst_case_success": "9/10",
+        "high_support_recoverable": false,
+        "low_best_worst_case_success": "3/5",
+        "low_support_recoverable": false,
+        "same_positive_support": true,
+        "support_ambiguity_count": 2
+      }
+    },
+    {
+      "description": "A declared decoder can perform badly even when an optimized deterministic decoder has high worst-case recovery.",
+      "family_id": "declared_vs_optimized_decoder_gap",
+      "metrics": {
+        "declared_decoder": {
+          "left": "true",
+          "right": "false"
+        },
+        "declared_per_source_success": {
+          "x0": "1/10",
+          "x1": "1/10"
+        },
+        "declared_worst_case_success": "1/10",
+        "optimized_decoder": {
+          "left": "false",
+          "right": "true"
+        },
+        "optimized_per_source_success": {
+          "x0": "9/10",
+          "x1": "9/10"
+        },
+        "optimized_worst_case_success": "9/10"
+      }
+    },
+    {
+      "description": "A deterministic coarsening of an available observation cannot improve optimized worst-case recovery over unrestricted deterministic decoders.",
+      "family_id": "coarsening_non_improvement",
+      "metrics": {
+        "coarse_best_no_greater_than_fine_best": true,
+        "coarse_best_worst_case_success": "0",
+        "coarse_support_recoverable": false,
+        "fine_best_worst_case_success": "1",
+        "fine_refines_coarse": true,
+        "fine_support_recoverable": true
+      }
+    },
+    {
+      "description": "A target-aligned coarse decoder can be useful and legible, but the available fine observation can simulate it when the coarse view factors through the fine view.",
+      "family_id": "coarse_decoder_simulable_by_fine",
+      "metrics": {
+        "coarse_decoder": {
+          "a": "false",
+          "b": "true"
+        },
+        "coarse_per_source_success": {
+          "x0": "1",
+          "x1": "1"
+        },
+        "composed_fine_decoder": {
+          "a0": "false",
+          "a1": "false",
+          "b0": "true",
+          "b1": "true"
+        },
+        "fine_composed_per_source_success": {
+          "x0": "1",
+          "x1": "1"
+        },
+        "fine_refines_coarse": true,
+        "same_success_after_composition": true
+      }
+    },
+    {
+      "description": "The same optimized worst-case score can hide different per-source failure localization, so the characterization surface records the vector.",
+      "family_id": "same_worst_case_different_failure_localization",
+      "metrics": {
+        "balanced_per_source_success": {
+          "x0": "4/5",
+          "x1": "4/5"
+        },
+        "balanced_worst_case_success": "4/5",
+        "localized_per_source_success": {
+          "x0": "1",
+          "x1": "4/5"
+        },
+        "localized_worst_case_success": "4/5",
+        "same_per_source_success_vector": false,
+        "same_worst_case_success": true
+      }
+    }
+  ],
+  "family_count": 6,
+  "status": "PASS"
+}
