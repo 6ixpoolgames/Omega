@@ -203,6 +203,13 @@ The gridworld obstacle-insertion pilot has a separate retained-output path:
 python -m omega.validation.finite_relational_grid_obstacle
 ```
 
+The deterministic pre-stochastic finite relational layer has its own
+retained-output path:
+
+```bash
+python -m omega.validation.finite_relational_deterministic_layer
+```
+
 Local PowerShell form:
 
 ```powershell
@@ -241,6 +248,12 @@ insertions, compiles before/after/stale abstract transitions into finite
 relational IR, and audits hidden reachability loss. It is the first
 source-generator pilot beyond low-level handwritten IR fixtures.
 
+The deterministic pre-stochastic path calibrates exact finite recovery before
+probabilistic or approximate audits are added. It checks joint bounded recovery
+failure, decoder-class strictness, observation-refinement monotonicity,
+deterministic garbling non-improvement, minimal sufficient observations, and
+reflected-versus-stale hidden loss.
+
 Finite relational adapter changes are also protected by the
 `Finite Relational Adapter Smoke` GitHub Actions workflow.
 
@@ -253,6 +266,8 @@ The first controlled empirical pilot retains a machine-readable summary at
 [finite_relational_adapter_empirical_pilot_v0.json](research_notes/validation_results/finite_relational_adapter_empirical_pilot_v0.json).
 The gridworld obstacle-insertion pilot retains a machine-readable summary at
 [finite_relational_grid_obstacle_pilot_v0.json](research_notes/validation_results/finite_relational_grid_obstacle_pilot_v0.json).
+The deterministic pre-stochastic layer retains a machine-readable summary at
+[finite_relational_deterministic_layer_v0.json](research_notes/validation_results/finite_relational_deterministic_layer_v0.json).
 
 See [REPRODUCIBILITY_SMOKE.md](REPRODUCIBILITY_SMOKE.md).
 

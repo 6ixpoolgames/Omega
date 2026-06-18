@@ -538,6 +538,28 @@ useful_information_and_constraint_selection_v0.md
 They keep raw complexity, entropy, and unordered summaries in proxy/audit
 position. They are not implementations of epiplexity or generalization theory.
 
+The deterministic pre-stochastic recovery layer has a separate runner:
+
+```powershell
+.\.venv\Scripts\python.exe -m omega.validation.finite_relational_deterministic_layer `
+  --out-root .tmp\finite_relational_deterministic_layer
+```
+
+It covers exact recovery and observation discipline before stochastic or
+approximate audits are introduced:
+
+```text
+joint bounded recovery failure;
+decoder class strictness;
+observation refinement monotonicity;
+deterministic garbling non-improvement;
+minimal sufficient observation;
+reflected versus stale hidden loss.
+```
+
+This runner is not a new source compiler. It is a finite deterministic
+calibration surface for later stochastic adapter work.
+
 ## Future Compatibility
 
 This design keeps the path open for:

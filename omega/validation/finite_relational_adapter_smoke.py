@@ -80,6 +80,7 @@ ADAPTER_TESTS = [
     "tests/test_finite_relational_adapter_smoke.py",
     "tests/test_finite_relational_adapter_adversarial.py",
     "tests/test_finite_relational_adapter_empirical.py",
+    "tests/test_finite_relational_deterministic_layer.py",
     "tests/test_finite_relational_grid_obstacle.py",
 ]
 

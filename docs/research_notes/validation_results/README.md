@@ -51,6 +51,7 @@ Start with:
 - `finite_relational_adapter_useful_information_v0.json`
 - `finite_relational_adapter_empirical_pilot_v0.json`
 - `finite_relational_grid_obstacle_pilot_v0.json`
+- `finite_relational_deterministic_layer_v0.json`
 
 ## Archived Branches
 

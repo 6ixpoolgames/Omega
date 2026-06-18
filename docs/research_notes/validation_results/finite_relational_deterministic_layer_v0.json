@@ -1,0 +1,71 @@
+{
+  "claim_boundary": "Synthetic finite deterministic validation only. This result does not validate stochastic recovery, approximate soundness, empirical substrate correctness, value, agency, alignment, or Omega.",
+  "command": ".\\.venv\\Scripts\\python.exe -m omega.validation.finite_relational_deterministic_layer --out-root .tmp\\finite_relational_deterministic_layer",
+  "date": "2026-06-18",
+  "families": [
+    {
+      "description": "Two binary targets are each recoverable from a declared observation, but neither observation alone recovers the joint target.",
+      "family_id": "joint_bounded_recovery_panel_failure",
+      "metrics": {
+        "individual_recovery_implies_joint_recovery": false,
+        "joint_recoverable_from_first_observation": false,
+        "joint_recoverable_from_second_observation": false,
+        "target_first_recoverable_from_first_observation": true,
+        "target_second_recoverable_from_second_observation": true
+      }
+    },
+    {
+      "description": "The same observation/target pair can be unrecoverable for a weak constant-decoder class and recoverable for a richer Boolean class.",
+      "family_id": "decoder_class_strictness",
+      "metrics": {
+        "recoverable_by_rich_class": true,
+        "recoverable_by_weak_class": false,
+        "rich_decoder_count": 4,
+        "weak_decoder_count": 2
+      }
+    },
+    {
+      "description": "Identity observation refines first-bit observation; every target recoverable from the coarser observation remains recoverable from the finer observation.",
+      "family_id": "observation_refinement_monotonicity",
+      "metrics": {
+        "coarse_recoverable_target_count": 4,
+        "coarse_targets_subset_of_finer_targets": true,
+        "finer_recoverable_target_count": 16,
+        "finer_refines_coarse": true
+      }
+    },
+    {
+      "description": "First-bit observation is a garbling of identity observation; it recovers a subset of the exact binary targets recoverable from the source observation.",
+      "family_id": "deterministic_garbling_non_improvement",
+      "metrics": {
+        "garbled_recoverable_target_count": 4,
+        "garbled_targets_subset_of_source_targets": true,
+        "source_recoverable_target_count": 16,
+        "source_refines_garbled": true
+      }
+    },
+    {
+      "description": "The target-fiber observation recovers the target, and every enumerated observation that recovers the target refines it.",
+      "family_id": "minimal_sufficient_observation",
+      "metrics": {
+        "all_recovering_observations_refine_minimal": true,
+        "enumerated_observation_count": 256,
+        "minimal_recovers_target": true,
+        "recovering_observation_count": 84
+      }
+    },
+    {
+      "description": "A stale abstraction hides exact reachability loss, while a reflected abstraction that tracks the after-transition does not report the lost path.",
+      "family_id": "reflected_vs_stale_hidden_loss",
+      "metrics": {
+        "after_path": false,
+        "before_path": true,
+        "reflected_abstraction_hidden_loss": false,
+        "reflected_abstraction_reports_lost_path": false,
+        "stale_abstraction_hidden_loss": true
+      }
+    }
+  ],
+  "family_count": 6,
+  "status": "PASS"
+}
