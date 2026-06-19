@@ -585,6 +585,22 @@ unrestricted fine decoder can simulate the coarse decoder. This does not deny
 that coarse variables can be semantically useful, target-aligned, more stable,
 or more legible.
 
+The first stochastic continuation-loss layer has its own runner:
+
+```powershell
+.\.venv\Scripts\python.exe -m omega.validation.finite_relational_stochastic_continuation `
+  --out-root .tmp\finite_relational_stochastic_continuation
+```
+
+It uses exact rational transition kernels and finite-horizon hit probabilities.
+The current checks cover:
+
+```text
+stale abstraction hiding stochastic hit-probability loss;
+reflected abstraction reporting the loss;
+one selected hit-probability scalar matching while the horizon profile differs.
+```
+
 ## Future Compatibility
 
 This design keeps the path open for:

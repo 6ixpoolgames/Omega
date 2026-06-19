@@ -27,7 +27,9 @@ support-exact recoverability;
 per-source success vector;
 optimized worst-case deterministic decoder;
 declared decoder versus optimized decoder gap;
-deterministic coarsening/refinement behavior.
+deterministic coarsening/refinement behavior;
+joint versus marginal recovery;
+declared randomized decoder behavior.
 ```
 
 Worst-case recovery is the default aggregate because it does not require a
@@ -36,7 +38,7 @@ explicitly part of the adapter provenance.
 
 ## Implemented Families
 
-The validation runner covers six exact rational finite families.
+The validation runner covers eight exact rational finite families.
 
 ### Support Exactness Versus High Confidence
 
@@ -128,6 +130,31 @@ localized success vector = {x0: 1,   x1: 4/5}
 ```
 
 So the characterization surface records vectors, not just a scalar.
+
+### Same Marginal Success, Different Joint Failure
+
+Two channels can have the same optimized worst-case marginal recovery for each
+bit while differing in joint recovery:
+
+```text
+independent marginal worst-case success = 5/6
+correlated marginal worst-case success  = 5/6
+
+independent joint worst-case success = 3/4
+correlated joint worst-case success  = 5/6
+```
+
+This is the first stochastic recovery bridge to compatibility: marginal
+recovery facts do not determine joint recovery facts.
+
+### Randomized Decoder Axis
+
+With one ambiguous observation label, optimized deterministic maximin recovery
+can have worst-case success `0`, while a declared `50/50` randomized decoder has
+worst-case success `1/2`.
+
+This records randomized decoders as a separate axis. The implementation does
+not yet claim a general randomized optimizer.
 
 ## Reproduction
 

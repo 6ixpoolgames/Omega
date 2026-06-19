@@ -217,6 +217,13 @@ retained-output path:
 python -m omega.validation.finite_relational_stochastic_recovery
 ```
 
+The finite-horizon stochastic continuation-loss layer has its own
+retained-output path:
+
+```bash
+python -m omega.validation.finite_relational_stochastic_continuation
+```
+
 Local PowerShell form:
 
 ```powershell
@@ -267,6 +274,11 @@ worst-case deterministic decoder success, declared-versus-optimized decoder
 gaps, deterministic coarsening behavior, and failure localization. It does not
 declare a prior or threshold in this first layer.
 
+The stochastic continuation path uses exact rational finite transition kernels
+and finite-horizon hit probabilities. It checks stale-versus-reflected hidden
+hit-probability loss and retains horizon profiles so one selected probability
+does not stand in for the whole continuation surface.
+
 Finite relational adapter changes are also protected by the
 `Finite Relational Adapter Smoke` GitHub Actions workflow.
 
@@ -284,6 +296,8 @@ The deterministic pre-stochastic layer retains a machine-readable summary at
 The stochastic recovery characterization layer retains a machine-readable
 summary at
 [finite_relational_stochastic_recovery_v0.json](research_notes/validation_results/finite_relational_stochastic_recovery_v0.json).
+The stochastic continuation-loss layer retains a machine-readable summary at
+[finite_relational_stochastic_continuation_v0.json](research_notes/validation_results/finite_relational_stochastic_continuation_v0.json).
 
 See [REPRODUCIBILITY_SMOKE.md](REPRODUCIBILITY_SMOKE.md).
 

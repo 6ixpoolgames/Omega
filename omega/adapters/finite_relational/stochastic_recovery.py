@@ -16,6 +16,7 @@ Channel = dict[str, dict[str, Fraction]]
 Observation = dict[str, str]
 TargetFunction = dict[str, str]
 Decoder = dict[str, str]
+RandomizedDecoder = dict[str, dict[str, Fraction]]
 
 
 @dataclass(frozen=True)
@@ -55,6 +56,8 @@ def generate_stochastic_recovery_study() -> tuple[StochasticRecoveryFamily, ...]
         _coarsening_non_improvement_family(),
         _coarse_decoder_simulable_by_fine_family(),
         _same_worst_case_different_failure_localization_family(),
+        _same_marginal_success_different_joint_failure_family(),
+        _randomized_decoder_axis_family(),
     )
 
 
@@ -168,6 +171,33 @@ def success_by_source(
                 channel[state][output]
                 for output in outputs
                 if decoder[observation[output]] == target[state]
+            ),
+            start=Fraction(0),
+        )
+        for state in states
+    }
+
+
+def randomized_success_by_source(
+    states: tuple[str, ...],
+    outputs: tuple[str, ...],
+    channel: Channel,
+    observation: Observation,
+    target: TargetFunction,
+    decoder: RandomizedDecoder,
+) -> dict[str, Fraction]:
+    """Per-source success probabilities for a declared randomized decoder."""
+
+    _assert_total(outputs, observation, "observation")
+    _assert_total(states, target, "target")
+    _assert_randomized_decoder_total(observation, target, decoder)
+    validate_channel(states, outputs, channel)
+    return {
+        state: sum(
+            (
+                channel[state][output]
+                * decoder[observation[output]].get(target[state], Fraction(0))
+                for output in outputs
             ),
             start=Fraction(0),
         )
@@ -522,6 +552,185 @@ def _same_worst_case_different_failure_localization_family() -> StochasticRecove
     )
 
 
+def _same_marginal_success_different_joint_failure_family() -> StochasticRecoveryFamily:
+    states = ("00", "01", "10", "11")
+    outputs = ("00", "01", "10", "11")
+    observation = {output: output for output in outputs}
+    target_first = {state: state[0] for state in states}
+    target_second = {state: state[1] for state in states}
+    target_joint = {state: state for state in states}
+    independent_error = _bit_pair_channel(states, correct_both=Fraction(3, 4), wrong_both=Fraction(1, 12))
+    correlated_error = _bit_pair_channel(states, correct_both=Fraction(5, 6), wrong_both=Fraction(1, 6))
+
+    independent_first = optimized_worst_case_decoder(
+        states,
+        outputs,
+        independent_error,
+        observation,
+        target_first,
+    )
+    independent_second = optimized_worst_case_decoder(
+        states,
+        outputs,
+        independent_error,
+        observation,
+        target_second,
+    )
+    independent_joint = optimized_worst_case_decoder(
+        states,
+        outputs,
+        independent_error,
+        observation,
+        target_joint,
+    )
+    correlated_first = optimized_worst_case_decoder(
+        states,
+        outputs,
+        correlated_error,
+        observation,
+        target_first,
+    )
+    correlated_second = optimized_worst_case_decoder(
+        states,
+        outputs,
+        correlated_error,
+        observation,
+        target_second,
+    )
+    correlated_joint = optimized_worst_case_decoder(
+        states,
+        outputs,
+        correlated_error,
+        observation,
+        target_joint,
+    )
+
+    return StochasticRecoveryFamily(
+        family_id="same_marginal_success_different_joint_failure",
+        description=(
+            "Two channels have the same optimized worst-case marginal recovery "
+            "for each bit, but different joint recovery because their failures "
+            "are coupled differently."
+        ),
+        metrics={
+            "independent_first_worst_case_success": fraction_to_text(
+                independent_first.worst_case_success
+            ),
+            "independent_second_worst_case_success": fraction_to_text(
+                independent_second.worst_case_success
+            ),
+            "correlated_first_worst_case_success": fraction_to_text(
+                correlated_first.worst_case_success
+            ),
+            "correlated_second_worst_case_success": fraction_to_text(
+                correlated_second.worst_case_success
+            ),
+            "same_marginal_worst_case_success": (
+                independent_first.worst_case_success
+                == independent_second.worst_case_success
+                == correlated_first.worst_case_success
+                == correlated_second.worst_case_success
+            ),
+            "independent_joint_worst_case_success": fraction_to_text(
+                independent_joint.worst_case_success
+            ),
+            "correlated_joint_worst_case_success": fraction_to_text(
+                correlated_joint.worst_case_success
+            ),
+            "same_joint_worst_case_success": (
+                independent_joint.worst_case_success == correlated_joint.worst_case_success
+            ),
+        },
+    )
+
+
+def _randomized_decoder_axis_family() -> StochasticRecoveryFamily:
+    states = ("x0", "x1")
+    outputs = ("same",)
+    channel = {
+        "x0": {"same": Fraction(1)},
+        "x1": {"same": Fraction(1)},
+    }
+    observation = {"same": "observed"}
+    target = {"x0": "false", "x1": "true"}
+    optimized_deterministic = optimized_worst_case_decoder(states, outputs, channel, observation, target)
+    randomized_decoder = {
+        "observed": {"false": Fraction(1, 2), "true": Fraction(1, 2)},
+    }
+    randomized_success = randomized_success_by_source(
+        states,
+        outputs,
+        channel,
+        observation,
+        target,
+        randomized_decoder,
+    )
+
+    return StochasticRecoveryFamily(
+        family_id="randomized_decoder_axis",
+        description=(
+            "With one ambiguous observation label, deterministic maximin recovery "
+            "has worst-case zero, while a declared 50/50 randomized decoder has "
+            "worst-case one half. This records the randomized-decoder axis without "
+            "claiming a general randomized optimizer."
+        ),
+        metrics={
+            "deterministic_optimized_worst_case_success": fraction_to_text(
+                optimized_deterministic.worst_case_success
+            ),
+            "declared_randomized_decoder": _randomized_decoder_to_text(randomized_decoder),
+            "declared_randomized_per_source_success": _fraction_map_to_text(randomized_success),
+            "declared_randomized_worst_case_success": fraction_to_text(
+                worst_case_success(randomized_success)
+            ),
+            "randomized_beats_deterministic_maximin": (
+                worst_case_success(randomized_success)
+                > optimized_deterministic.worst_case_success
+            ),
+        },
+    )
+
+
+def _bit_pair_channel(
+    states: tuple[str, ...],
+    *,
+    correct_both: Fraction,
+    wrong_both: Fraction,
+) -> Channel:
+    wrong_one = (Fraction(1) - correct_both - wrong_both) / 2
+    if wrong_one < 0:
+        raise ValueError("bit-pair channel probabilities must be nonnegative")
+    return {
+        state: {
+            output: _bit_pair_output_probability(
+                state,
+                output,
+                correct_both=correct_both,
+                wrong_one=wrong_one,
+                wrong_both=wrong_both,
+            )
+            for output in states
+        }
+        for state in states
+    }
+
+
+def _bit_pair_output_probability(
+    state: str,
+    output: str,
+    *,
+    correct_both: Fraction,
+    wrong_one: Fraction,
+    wrong_both: Fraction,
+) -> Fraction:
+    distance = sum(1 for left, right in zip(state, output, strict=True) if left != right)
+    if distance == 0:
+        return correct_both
+    if distance == 1:
+        return wrong_one
+    return wrong_both
+
+
 def _positive_support_signature(
     states: tuple[str, ...],
     outputs: tuple[str, ...],
@@ -549,12 +758,42 @@ def _assert_decoder_total(observation: Observation, decoder: Decoder) -> None:
         raise ValueError(f"decoder is missing observation labels: {missing}")
 
 
+def _assert_randomized_decoder_total(
+    observation: Observation,
+    target: TargetFunction,
+    decoder: RandomizedDecoder,
+) -> None:
+    labels = set(observation.values())
+    target_values = set(target.values())
+    missing = sorted(labels - set(decoder))
+    if missing:
+        raise ValueError(f"randomized decoder is missing observation labels: {missing}")
+    for label in labels:
+        row = decoder[label]
+        negative = {value: weight for value, weight in row.items() if weight < 0}
+        if negative:
+            raise ValueError(f"randomized decoder row {label!r} has negative weights: {negative}")
+        extra = sorted(set(row) - target_values)
+        if extra:
+            raise ValueError(f"randomized decoder row {label!r} has extra target values: {extra}")
+        total = sum((row.get(value, Fraction(0)) for value in target_values), start=Fraction(0))
+        if total != 1:
+            raise ValueError(f"randomized decoder row {label!r} sums to {total}, not 1")
+
+
 def _decoder_sort_key(decoder: Decoder) -> tuple[tuple[str, str], ...]:
     return tuple(sorted(decoder.items()))
 
 
 def _fraction_map_to_text(values: dict[str, Fraction]) -> dict[str, str]:
     return {key: fraction_to_text(value) for key, value in sorted(values.items())}
+
+
+def _randomized_decoder_to_text(decoder: RandomizedDecoder) -> dict[str, dict[str, str]]:
+    return {
+        label: _fraction_map_to_text(row)
+        for label, row in sorted(decoder.items())
+    }
 
 
 def _family_as_dict(family: StochasticRecoveryFamily) -> dict[str, object]:

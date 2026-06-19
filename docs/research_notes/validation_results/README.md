@@ -53,6 +53,7 @@ Start with:
 - `finite_relational_grid_obstacle_pilot_v0.json`
 - `finite_relational_deterministic_layer_v0.json`
 - `finite_relational_stochastic_recovery_v0.json`
+- `finite_relational_stochastic_continuation_v0.json`
 
 ## Archived Branches
 

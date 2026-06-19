@@ -1,0 +1,43 @@
+{
+  "claim_boundary": "Synthetic finite stochastic continuation validation only. This result does not validate MDP policies, empirical transition estimates, value, agency, alignment, or Omega.",
+  "command": ".\\.venv\\Scripts\\python.exe -m omega.validation.finite_relational_stochastic_continuation --out-root .tmp\\finite_relational_stochastic_continuation",
+  "date": "2026-06-19",
+  "families": [
+    {
+      "description": "A finite-horizon noisy line-grid perturbation drops hit probability; a stale abstraction reports the old probability, while a reflected abstraction reports the drop.",
+      "family_id": "noisy_line_grid_stale_hidden_hit_loss",
+      "metrics": {
+        "after_hit_probability": "1/10",
+        "before_hit_probability": "9/10",
+        "horizon": 2,
+        "loss_amount": "4/5",
+        "reflected_abstraction_hit_probability": "1/10",
+        "reflected_reports_loss": true,
+        "stale_abstraction_hit_probability": "9/10",
+        "stale_hides_loss": true
+      }
+    },
+    {
+      "description": "A single hit-probability scalar can match while the finite-horizon profile differs, so stochastic continuation audits should retain profiles rather than only one scalar.",
+      "family_id": "same_hit_probability_different_horizon_profile",
+      "metrics": {
+        "fast_horizon_1_hit_probability": "3/4",
+        "fast_profile": {
+          "1": "3/4",
+          "2": "3/4",
+          "3": "3/4"
+        },
+        "same_profile": false,
+        "same_selected_hit_probability": true,
+        "slow_horizon_2_hit_probability": "3/4",
+        "slow_profile": {
+          "1": "1/2",
+          "2": "3/4",
+          "3": "7/8"
+        }
+      }
+    }
+  ],
+  "family_count": 2,
+  "status": "PASS"
+}

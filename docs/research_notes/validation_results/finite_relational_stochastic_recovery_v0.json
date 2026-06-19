@@ -1,7 +1,7 @@
 {
   "claim_boundary": "Synthetic finite stochastic characterization only. This result does not validate stochastic dynamics, MDP policies, approximate soundness, empirical substrate correctness, value, agency, alignment, or Omega.",
   "command": ".\\.venv\\Scripts\\python.exe -m omega.validation.finite_relational_stochastic_recovery --out-root .tmp\\finite_relational_stochastic_recovery",
-  "date": "2026-06-18",
+  "date": "2026-06-19",
   "families": [
     {
       "description": "A high-confidence noisy channel can have excellent worst-case recovery while failing exact support recovery.",
@@ -105,8 +105,41 @@
         "same_per_source_success_vector": false,
         "same_worst_case_success": true
       }
+    },
+    {
+      "description": "Two channels have the same optimized worst-case marginal recovery for each bit, but different joint recovery because their failures are coupled differently.",
+      "family_id": "same_marginal_success_different_joint_failure",
+      "metrics": {
+        "correlated_first_worst_case_success": "5/6",
+        "correlated_joint_worst_case_success": "5/6",
+        "correlated_second_worst_case_success": "5/6",
+        "independent_first_worst_case_success": "5/6",
+        "independent_joint_worst_case_success": "3/4",
+        "independent_second_worst_case_success": "5/6",
+        "same_joint_worst_case_success": false,
+        "same_marginal_worst_case_success": true
+      }
+    },
+    {
+      "description": "With one ambiguous observation label, deterministic maximin recovery has worst-case zero, while a declared 50/50 randomized decoder has worst-case one half. This records the randomized-decoder axis without claiming a general randomized optimizer.",
+      "family_id": "randomized_decoder_axis",
+      "metrics": {
+        "declared_randomized_decoder": {
+          "observed": {
+            "false": "1/2",
+            "true": "1/2"
+          }
+        },
+        "declared_randomized_per_source_success": {
+          "x0": "1/2",
+          "x1": "1/2"
+        },
+        "declared_randomized_worst_case_success": "1/2",
+        "deterministic_optimized_worst_case_success": "0",
+        "randomized_beats_deterministic_maximin": true
+      }
     }
   ],
-  "family_count": 6,
+  "family_count": 8,
   "status": "PASS"
 }

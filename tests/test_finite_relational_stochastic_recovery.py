@@ -6,10 +6,12 @@ from omega.adapters.finite_relational import (
     compose_coarse_decoder_through_fine,
     generate_stochastic_recovery_study,
     optimized_worst_case_decoder,
+    randomized_success_by_source,
     success_by_source,
     support_ambiguities,
     support_exact_recoverable,
     validate_channel,
+    worst_case_success,
 )
 from omega.validation.finite_relational_stochastic_recovery import (
     run_finite_relational_stochastic_recovery,
@@ -23,6 +25,8 @@ REQUIRED_FAMILY_IDS = {
     "coarsening_non_improvement",
     "coarse_decoder_simulable_by_fine",
     "same_worst_case_different_failure_localization",
+    "same_marginal_success_different_joint_failure",
+    "randomized_decoder_axis",
 }
 
 
@@ -74,6 +78,22 @@ def test_stochastic_recovery_covers_expected_characterization_families() -> None
     assert localization["localized_worst_case_success"] == "4/5"
     assert localization["balanced_per_source_success"] == {"x0": "4/5", "x1": "4/5"}
     assert localization["localized_per_source_success"] == {"x0": "1", "x1": "4/5"}
+
+    joint = by_id["same_marginal_success_different_joint_failure"].metrics
+    assert joint["same_marginal_worst_case_success"] is True
+    assert joint["same_joint_worst_case_success"] is False
+    assert joint["independent_first_worst_case_success"] == "5/6"
+    assert joint["independent_second_worst_case_success"] == "5/6"
+    assert joint["correlated_first_worst_case_success"] == "5/6"
+    assert joint["correlated_second_worst_case_success"] == "5/6"
+    assert joint["independent_joint_worst_case_success"] == "3/4"
+    assert joint["correlated_joint_worst_case_success"] == "5/6"
+
+    randomized = by_id["randomized_decoder_axis"].metrics
+    assert randomized["deterministic_optimized_worst_case_success"] == "0"
+    assert randomized["declared_randomized_worst_case_success"] == "1/2"
+    assert randomized["declared_randomized_per_source_success"] == {"x0": "1/2", "x1": "1/2"}
+    assert randomized["randomized_beats_deterministic_maximin"] is True
 
 
 def test_stochastic_helpers_use_exact_rational_probabilities() -> None:
@@ -130,6 +150,32 @@ def test_coarse_decoder_composition_preserves_success_from_fine_observation() ->
     assert success_by_source(states, outputs, channel, coarse, target, coarse_decoder) == (
         success_by_source(states, outputs, channel, fine, target, fine_decoder)
     )
+
+
+def test_declared_randomized_decoder_axis_is_exact_but_not_general_optimization() -> None:
+    states = ("x0", "x1")
+    outputs = ("same",)
+    channel = {
+        "x0": {"same": Fraction(1)},
+        "x1": {"same": Fraction(1)},
+    }
+    observation = {"same": "observed"}
+    target = {"x0": "false", "x1": "true"}
+    randomized_decoder = {"observed": {"false": Fraction(1, 2), "true": Fraction(1, 2)}}
+
+    deterministic = optimized_worst_case_decoder(states, outputs, channel, observation, target)
+    randomized = randomized_success_by_source(
+        states,
+        outputs,
+        channel,
+        observation,
+        target,
+        randomized_decoder,
+    )
+
+    assert deterministic.worst_case_success == Fraction(0)
+    assert randomized == {"x0": Fraction(1, 2), "x1": Fraction(1, 2)}
+    assert worst_case_success(randomized) == Fraction(1, 2)
 
 
 def test_stochastic_recovery_validation_retains_outputs(tmp_path: Path) -> None:
