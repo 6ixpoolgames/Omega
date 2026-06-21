@@ -52,11 +52,17 @@ def validate_transition_kernel(
     missing_states = sorted(set(states) - set(kernel))
     if missing_states:
         raise ValueError(f"kernel is missing states: {missing_states}")
+    extra_states = sorted(set(kernel) - set(states))
+    if extra_states:
+        raise ValueError(f"kernel has undeclared states: {extra_states}")
     for state in states:
         row = kernel[state]
         missing_targets = sorted(set(states) - set(row))
         if missing_targets:
             raise ValueError(f"kernel row {state!r} is missing targets: {missing_targets}")
+        extra_targets = sorted(set(row) - set(states))
+        if extra_targets:
+            raise ValueError(f"kernel row {state!r} has undeclared targets: {extra_targets}")
         negative = {target: weight for target, weight in row.items() if weight < 0}
         if negative:
             raise ValueError(f"kernel row {state!r} has negative weights: {negative}")

@@ -1,0 +1,103 @@
+{
+  "claim_boundary": "Synthetic finite policy-conditioned stochastic dynamics only. This result does not validate MDP policy safety, stochastic control, empirical transition estimates, value, agency, alignment, or Omega.",
+  "command": ".\\.venv\\Scripts\\python.exe -m omega.validation.finite_relational_policy_dynamics --out-root .tmp\\finite_relational_policy_dynamics",
+  "date": "2026-06-21",
+  "families": [
+    {
+      "description": "A deterministic policy in a tiny finite MDP loses target hit probability under perturbation; stale abstraction hides the loss, while reflected abstraction reports it.",
+      "facts": {
+        "actions": [
+          "move",
+          "wait"
+        ],
+        "after_hit_probability": "1/10",
+        "before_hit_probability": "9/10",
+        "horizon": 2,
+        "loss_amount": "4/5",
+        "policy": {
+          "goal": "wait",
+          "x0": "move",
+          "x1": "move"
+        },
+        "reflected_abstraction_hit_probability": "1/10",
+        "stale_abstraction_hit_probability": "9/10",
+        "start": "x0",
+        "states": [
+          "x0",
+          "x1",
+          "goal"
+        ],
+        "targets": [
+          "goal"
+        ]
+      },
+      "family_id": "policy_stale_reflected_hit_loss",
+      "hypotheses": [
+        {
+          "expected": true,
+          "hypothesis_id": "stale_hides_policy_loss",
+          "observed": true,
+          "passed": true,
+          "statement": "The stale policy model reports the old hit probability after loss."
+        },
+        {
+          "expected": true,
+          "hypothesis_id": "reflected_reports_policy_loss",
+          "observed": true,
+          "passed": true,
+          "statement": "The reflected policy model reports the lower after-perturbation hit probability."
+        }
+      ]
+    },
+    {
+      "description": "Two policy-conditioned stochastic dynamics have the same coarse support summary but different finite-horizon target hit probability.",
+      "facts": {
+        "actions": [
+          "try",
+          "wait"
+        ],
+        "different_policy_hit_probability": true,
+        "high_hit_probability": "9/10",
+        "high_support_summary": {
+          "positive_edge_count": 4,
+          "reachable_state_count": 3,
+          "target_reachable": true
+        },
+        "horizon": 1,
+        "low_hit_probability": "3/5",
+        "low_support_summary": {
+          "positive_edge_count": 4,
+          "reachable_state_count": 3,
+          "target_reachable": true
+        },
+        "policy": {
+          "goal": "wait",
+          "start": "try",
+          "trap": "wait"
+        },
+        "same_support_summary": true,
+        "start": "start",
+        "states": [
+          "start",
+          "goal",
+          "trap"
+        ],
+        "targets": [
+          "goal"
+        ]
+      },
+      "family_id": "policy_nonfactorization_same_support_summary",
+      "hypotheses": [
+        {
+          "expected": true,
+          "hypothesis_id": "same_support_summary_not_policy_hit_probability",
+          "observed": true,
+          "passed": true,
+          "statement": "A coarse policy support summary does not determine finite-horizon policy hit probability."
+        }
+      ]
+    }
+  ],
+  "family_count": 2,
+  "status": "PASS"
+}

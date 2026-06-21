@@ -601,6 +601,28 @@ reflected abstraction reporting the loss;
 one selected hit-probability scalar matching while the horizon profile differs.
 ```
 
+The first policy-conditioned stochastic dynamics layer has its own runner:
+
+```powershell
+.\.venv\Scripts\python.exe -m omega.validation.finite_relational_policy_dynamics `
+  --out-root .tmp\finite_relational_policy_dynamics
+```
+
+It adds finite actions and deterministic policies while keeping exact rational
+arithmetic and finite horizons. Its retained artifacts intentionally separate:
+
+```text
+facts.json:
+  generated finite facts
+
+hypotheses.json:
+  expected/observed/pass-fail interpretation
+```
+
+The current checks cover stale/reflected policy hit-probability loss and a
+policy-conditioned non-factorization witness where the same coarse support
+summary yields different hit probability.
+
 ## Future Compatibility
 
 This design keeps the path open for:

@@ -54,6 +54,7 @@ Start with:
 - `finite_relational_deterministic_layer_v0.json`
 - `finite_relational_stochastic_recovery_v0.json`
 - `finite_relational_stochastic_continuation_v0.json`
+- `finite_relational_policy_dynamics_v0.json`
 
 ## Archived Branches
 

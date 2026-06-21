@@ -28,6 +28,7 @@ deterministic_pre_stochastic_layer_v0.md
 stochastic_recovery_characterization_v0.md
 stochastic_recovery_theorem_spine_v0.md
 stochastic_continuation_loss_v0.md
+policy_conditioned_stochastic_dynamics_v0.md
 invariant_profile_compression_v0.md
 primitive_exposure_realization_bridge_v0.md
 presentation_soundness_pattern_v0.md

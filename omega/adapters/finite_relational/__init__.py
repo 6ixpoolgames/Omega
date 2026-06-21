@@ -66,6 +66,18 @@ from omega.adapters.finite_relational.stochastic_continuation_loss import (
     stochastic_continuation_loss_summary,
     validate_transition_kernel,
 )
+from omega.adapters.finite_relational.stochastic_policy_dynamics import (
+    ActionKernel,
+    HypothesisCheck,
+    Policy,
+    PolicyDynamicsFamily,
+    generate_policy_dynamics_study,
+    induced_transition_kernel,
+    policy_dynamics_summary,
+    policy_hit_probability_within_horizon,
+    support_summary_for_policy_kernel,
+    validate_action_kernel,
+)
 from omega.adapters.finite_relational.finite_grid import (
     compile_finite_grid,
     compile_finite_grid_path,
@@ -91,6 +103,7 @@ from omega.adapters.finite_relational.model import (
 
 __all__ = [
     "AuditResult",
+    "ActionKernel",
     "Channel",
     "Decoder",
     "FiniteFunction",
@@ -100,7 +113,10 @@ __all__ = [
     "ControlledExperimentFamily",
     "DeterministicLayerFamily",
     "GridObstacleCase",
+    "HypothesisCheck",
     "OptimizedDecoderResult",
+    "Policy",
+    "PolicyDynamicsFamily",
     "RandomizedDecoder",
     "GridObstacleStudy",
     "Predicate",
@@ -130,6 +146,7 @@ __all__ = [
     "generate_controlled_experiment",
     "generate_deterministic_layer_study",
     "generate_grid_obstacle_study",
+    "generate_policy_dynamics_study",
     "generate_stochastic_continuation_loss_study",
     "generate_stochastic_recovery_study",
     "controlled_experiment_summary",
@@ -158,4 +175,9 @@ __all__ = [
     "worst_case_success",
     "hit_probability_within_horizon",
     "hit_profile",
+    "induced_transition_kernel",
+    "policy_dynamics_summary",
+    "policy_hit_probability_within_horizon",
+    "support_summary_for_policy_kernel",
+    "validate_action_kernel",
 ]

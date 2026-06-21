@@ -42,6 +42,7 @@ failure mode.
 | `phantom_reachability` | continuation | abstraction / presentation | exact path existence | fabricated future |
 | `hidden_reachability_loss` | continuation | stale abstraction | exact path existence | loss hidden by old model |
 | stochastic continuation loss | continuation | stochastic transition perturbation | exact rational finite horizon | hit-probability loss hidden by stale abstraction |
+| policy-conditioned dynamics | continuation | deterministic policy over stochastic action kernel | exact rational finite horizon | stale policy loss and support-summary non-factorization |
 | `carrier_certificate` | distinction + continuation | carrier candidate | exact recurrence/closure | candidate support not certified |
 | `carrier_transfer` | distinction + continuation | map/relation transfer | exact contract | transferred carrier not certified |
 | joint recurrent support | compatibility | shared safety/carrier condition | exact | individual carrying without joint carrying |

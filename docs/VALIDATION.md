@@ -224,6 +224,13 @@ retained-output path:
 python -m omega.validation.finite_relational_stochastic_continuation
 ```
 
+The policy-conditioned finite stochastic dynamics layer has its own
+retained-output path:
+
+```bash
+python -m omega.validation.finite_relational_policy_dynamics
+```
+
 Local PowerShell form:
 
 ```powershell
@@ -279,6 +286,11 @@ and finite-horizon hit probabilities. It checks stale-versus-reflected hidden
 hit-probability loss and retains horizon profiles so one selected probability
 does not stand in for the whole continuation surface.
 
+The policy-conditioned path adds finite actions and deterministic policies over
+exact rational transition kernels. It retains generated `facts.json` separately
+from `hypotheses.json`, then checks stale/reflected policy loss and a
+policy-conditioned non-factorization witness through a coarse support summary.
+
 Finite relational adapter changes are also protected by the
 `Finite Relational Adapter Smoke` GitHub Actions workflow.
 
@@ -298,6 +310,9 @@ summary at
 [finite_relational_stochastic_recovery_v0.json](research_notes/validation_results/finite_relational_stochastic_recovery_v0.json).
 The stochastic continuation-loss layer retains a machine-readable summary at
 [finite_relational_stochastic_continuation_v0.json](research_notes/validation_results/finite_relational_stochastic_continuation_v0.json).
+The policy-conditioned stochastic dynamics layer retains a machine-readable
+summary at
+[finite_relational_policy_dynamics_v0.json](research_notes/validation_results/finite_relational_policy_dynamics_v0.json).
 
 See [REPRODUCIBILITY_SMOKE.md](REPRODUCIBILITY_SMOKE.md).
 
