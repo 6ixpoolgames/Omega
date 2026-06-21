@@ -1,6 +1,6 @@
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
-import OmegaProper.Recovery.Deterministic
+import OmegaProper.Recovery.Randomized
 
 /-!
 OmegaProper.Recovery.Examples
@@ -33,6 +33,10 @@ def bitObserve : Bit -> Bit :=
 /-- Identity decoder for two-point observations. -/
 def bitDecoder : Bit -> Bit :=
   id
+
+/-- Constant observation erases the two output labels. -/
+def constantObserve : Bit -> Unit :=
+  fun _ => ()
 
 /-- Binary symmetric channel with `99/100` correct mass and full support. -/
 def highConfidenceChannel : RatChannel Bit Bit where
@@ -69,6 +73,28 @@ def lowFullSupportChannel : RatChannel Bit Bit where
   row_sum_one := by
     intro x
     fin_cases x <;> norm_num [Finset.univ_fin2]
+
+/-- Identity channel on the two-point space. -/
+def identityBitChannel : RatChannel Bit Bit where
+  prob x y := if y = x then (1 : ℚ) else 0
+  nonneg := by
+    intro x y
+    by_cases h : y = x
+    · norm_num [h]
+    · norm_num [h]
+  row_sum_one := by
+    intro x
+    fin_cases x <;> norm_num [Finset.univ_fin2]
+
+/-- Uniform randomized decoder from one observation label to two target values. -/
+def uniformBitRandomizedDecoder : RandomizedDecoder Unit Bit where
+  prob _ _ := (1 / 2 : ℚ)
+  nonneg := by
+    intro _ _
+    norm_num
+  row_sum_one := by
+    intro _
+    norm_num [Finset.univ_fin2]
 
 /--
 The `99/100` channel has deterministic recovery at threshold `99/100`.
@@ -140,6 +166,33 @@ theorem lowFullSupport_not_recoveryAt_4_5 :
         · have hSrc := hDecoder 0
           norm_num [DeclaredRecoveryAt, Success, lowFullSupportChannel,
             bitTarget, bitObserve, hFalse, hTrue, Finset.univ_fin2] at hSrc
+
+/--
+A single deterministic observation label cannot recover two source classes at
+threshold `1/2`.
+-/
+theorem constantObservation_not_recoveryAt_half :
+    Not (RecoveryExistsAt identityBitChannel bitTarget constantObserve (1 / 2 : ℚ)) := by
+  intro hRecovery
+  match hRecovery with
+  | Exists.intro decoder hDecoder =>
+      rcases bit_eq_zero_or_one (decoder ()) with hDecoderValue | hDecoderValue
+      · have hSrc := hDecoder 1
+        norm_num [DeclaredRecoveryAt, Success, identityBitChannel,
+          bitTarget, constantObserve, hDecoderValue, Finset.univ_fin2] at hSrc
+      · have hSrc := hDecoder 0
+        norm_num [DeclaredRecoveryAt, Success, identityBitChannel,
+          bitTarget, constantObserve, hDecoderValue, Finset.univ_fin2] at hSrc
+
+/--
+The uniform randomized decoder reaches threshold `1/2` for the same one-label
+observation.
+-/
+theorem constantObservation_randomizedRecoveryAt_half :
+    RandomizedRecoveryAt identityBitChannel bitTarget constantObserve (1 / 2 : ℚ) := by
+  exact Exists.intro uniformBitRandomizedDecoder fun x => by
+    fin_cases x <;> norm_num [RandomizedSuccess, identityBitChannel, bitTarget,
+      constantObserve, uniformBitRandomizedDecoder, Finset.univ_fin2]
 
 end Examples
 end Recovery
