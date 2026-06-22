@@ -28,6 +28,7 @@ deterministic_pre_stochastic_layer_v0.md
 stochastic_recovery_characterization_v0.md
 stochastic_recovery_theorem_spine_v0.md
 stochastic_recovery_formalization_v0.md
+robust_recovery_ambiguity_sets_v0.md
 stochastic_continuation_loss_v0.md
 policy_conditioned_stochastic_dynamics_v0.md
 invariant_profile_compression_v0.md
@@ -165,6 +166,7 @@ OmegaProper/Recovery/FiniteChannel.lean
 OmegaProper/Recovery/Deterministic.lean
 OmegaProper/Recovery/ObservationRefinement.lean
 OmegaProper/Recovery/Randomized.lean
+OmegaProper/Recovery/Robust.lean
 OmegaProper/Recovery/Joint.lean
 OmegaProper/Recovery/PolicyContinuation.lean
 OmegaProper/Recovery/Examples.lean
@@ -237,7 +239,10 @@ preserves deterministic and randomized recovery, randomized decoding is a
 separate decoder axis, explicit deterministic/randomized decoder-class
 predicates specialize to the unrestricted recovery predicates, joint recovery
 safely projects to marginal recovery, and fixed-policy finite-horizon hit
-profiles are bounded and horizon-monotone;
+profiles are bounded and horizon-monotone; robust recovery over declared
+ambiguity sets reduces to ordinary recovery on singleton sets, is monotone in
+threshold and ambiguity-set inclusion, and is preserved by observation
+refinement under explicit decoder-class lifting;
 consequence-native trajectory guardrails for separation, consequence-respecting
 classes, directional allowance versus symmetric identification,
 collapse/noncollapse, over-separation, and mixed evaluated panels;
@@ -350,6 +355,7 @@ deterministic_pre_stochastic_layer_v0.md
 stochastic_recovery_characterization_v0.md
 stochastic_recovery_theorem_spine_v0.md
 stochastic_recovery_formalization_v0.md
+robust_recovery_ambiguity_sets_v0.md
 stochastic_continuation_loss_v0.md
 policy_conditioned_stochastic_dynamics_v0.md
 primitive_exposure_realization_bridge_v0.md

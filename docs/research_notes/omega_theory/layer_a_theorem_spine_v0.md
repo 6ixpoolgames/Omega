@@ -275,6 +275,7 @@ Main files:
 - [Deterministic.lean](../../../formal/lean/OmegaProper/Recovery/Deterministic.lean)
 - [ObservationRefinement.lean](../../../formal/lean/OmegaProper/Recovery/ObservationRefinement.lean)
 - [Randomized.lean](../../../formal/lean/OmegaProper/Recovery/Randomized.lean)
+- [Robust.lean](../../../formal/lean/OmegaProper/Recovery/Robust.lean)
 - [Joint.lean](../../../formal/lean/OmegaProper/Recovery/Joint.lean)
 - [PolicyContinuation.lean](../../../formal/lean/OmegaProper/Recovery/PolicyContinuation.lean)
 - [Examples.lean](../../../formal/lean/OmegaProper/Recovery/Examples.lean)
@@ -292,6 +293,12 @@ Deterministic decoders embed into randomized decoders.
 Randomized success is nonnegative and bounded by 1.
 RandomizedRecoveryInAt names the randomized decoder-class form, with
 RandomizedRecoveryAt as the unrestricted case.
+RobustRecoveryAt names a uniform decoder guarantee over a declared ambiguity
+set of channels.
+RobustRecoveryInAt adds an explicit allowed decoder class.
+Singleton ambiguity reduces to ordinary RecoveryExistsAt / RecoveryExistsInAt.
+Robust recovery is monotone downward in threshold and monotone under
+ambiguity-set restriction.
 Randomized recovery is a separate decoder axis.
 Joint recovery implies marginal recovery, but separate marginal panels need
 not recover the joint target.
@@ -309,6 +316,7 @@ positive support as sufficient for approximate recovery;
 coarse observation treated as adding information under unrestricted decoders;
 randomized decoding hidden inside deterministic decoding;
 separate marginal panels treated as joint recovery;
+per-channel recovery treated as a uniform robust decoder guarantee;
 one selected policy-hit scalar treated as the whole continuation profile.
 ```
 

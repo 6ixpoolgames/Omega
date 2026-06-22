@@ -43,6 +43,7 @@ formal/lean/OmegaProper/Recovery/FiniteChannel.lean
 formal/lean/OmegaProper/Recovery/Deterministic.lean
 formal/lean/OmegaProper/Recovery/ObservationRefinement.lean
 formal/lean/OmegaProper/Recovery/Randomized.lean
+formal/lean/OmegaProper/Recovery/Robust.lean
 formal/lean/OmegaProper/Recovery/Joint.lean
 formal/lean/OmegaProper/Recovery/PolicyContinuation.lean
 formal/lean/OmegaProper/Recovery/Examples.lean
@@ -90,6 +91,14 @@ RandomizedRecoveryInAt is monotone downward in threshold.
 RandomizedRecoveryAt is the unrestricted `RandomizedRecoveryInAt`
   specialization.
 Randomized recovery is monotone under observation refinement.
+RobustRecoveryAt is a uniform deterministic decoder guarantee over a declared
+  ambiguity set.
+RobustRecoveryInAt adds an explicit deterministic decoder class.
+Singleton ambiguity reduces to ordinary RecoveryExistsAt / RecoveryExistsInAt.
+Robust recovery is monotone downward in threshold and monotone under
+  ambiguity-set restriction.
+Observation refinement preserves robust recovery under explicit decoder-class
+  lifting.
 Joint recovery implies each projected marginal recovery.
 Same-panel exact marginal decoders pair into exact joint recovery.
 Policy-conditioned action kernels induce ordinary rational kernels.
@@ -132,6 +141,8 @@ RecoveryExistsInAt             <-> deterministic capacity within a declared
 RandomizedSuccess              <-> randomized_success_by_source
 RandomizedRecoveryInAt         <-> randomized threshold recovery within a
                                   declared randomized-decoder class
+RobustRecoveryInAt             <-> deterministic threshold recovery across a
+                                  declared ambiguity set and decoder class
 FactorsThrough fine coarse     <-> observation refinement / coarsening
 HitWithin                      <-> hit_probability_within_horizon
 HitProfile                     <-> hit_profile / policy horizon profile
@@ -197,7 +208,7 @@ Next likely extensions:
 
 ```text
 prior-relative expected recovery;
-robust recovery over ambiguity sets;
+randomized robust recovery over ambiguity sets;
 finite randomized optimization only after a clear finite rational LP surface;
 joint approximate recovery bounds when paired decoders are used.
 ```

@@ -16,6 +16,7 @@ declared-versus-optimized decoder comparison;
 coarsening/refinement simulation;
 joint versus marginal recovery;
 randomized-decoder axis.
+robust ambiguity-set recovery.
 ```
 
 The Lean formalization now lives in:
@@ -56,6 +57,13 @@ Randomized success is nonnegative and bounded by 1.
 RandomizedRecoveryInAt is the explicit randomized decoder-class form, with
   RandomizedRecoveryAt as its unrestricted specialization.
 Randomized recovery is monotone downward in threshold.
+RobustRecoveryAt is a uniform decoder guarantee over a declared ambiguity set.
+RobustRecoveryInAt is the explicit deterministic decoder-class form for robust
+  recovery.
+Singleton ambiguity reduces to ordinary RecoveryExistsAt / RecoveryExistsInAt.
+Robust recovery is monotone downward in threshold and monotone under
+  ambiguity-set restriction.
+Observation refinement preserves robust recovery under decoder-class lifting.
 Joint recovery implies each marginal recovery.
 Same-panel exact marginal recovery pairs into exact joint recovery.
 Fixed-policy action kernels induce Markov kernels.
@@ -136,7 +144,8 @@ Lean theorem for support-exact recovery iff support disjointness;
 Lean theorem for deterministic coarsening monotonicity;
 exact randomized maximin via a small linear-programming surface or finite
   declared randomized decoder family;
-prior-relative average success as a separate provenance-bearing axis.
+prior-relative average success as a separate provenance-bearing axis;
+randomized robust recovery over ambiguity sets.
 ```
 
 ## Non-Claims
