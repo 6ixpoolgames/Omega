@@ -17,6 +17,7 @@ coarsening/refinement simulation;
 joint versus marginal recovery;
 randomized-decoder axis.
 robust ambiguity-set recovery.
+prior-relative expected recovery.
 ```
 
 The Lean formalization now lives in:
@@ -64,6 +65,11 @@ Singleton ambiguity reduces to ordinary RecoveryExistsAt / RecoveryExistsInAt.
 Robust recovery is monotone downward in threshold and monotone under
   ambiguity-set restriction.
 Observation refinement preserves robust recovery under decoder-class lifting.
+Prior-relative expected recovery is a declared-prior average-case axis.
+Worst-case threshold recovery implies prior-relative expected threshold
+  recovery under any declared prior.
+Point-mass priors reduce expected success to source success at the selected
+  source.
 Joint recovery implies each marginal recovery.
 Same-panel exact marginal recovery pairs into exact joint recovery.
 Fixed-policy action kernels induce Markov kernels.
@@ -82,6 +88,7 @@ Randomized recovery is a separate decoder axis.
 Separate marginal panels need not recover the joint target.
 Per-channel exact recovery does not imply robust exact recovery by one common
   decoder over the ambiguity set.
+High expected recovery under a skewed prior does not imply worst-case recovery.
 ```
 
 See [stochastic_recovery_formalization_v0.md](stochastic_recovery_formalization_v0.md).
@@ -146,7 +153,6 @@ Lean theorem for support-exact recovery iff support disjointness;
 Lean theorem for deterministic coarsening monotonicity;
 exact randomized maximin via a small linear-programming surface or finite
   declared randomized decoder family;
-prior-relative average success as a separate provenance-bearing axis;
 randomized robust recovery over ambiguity sets.
 ```
 

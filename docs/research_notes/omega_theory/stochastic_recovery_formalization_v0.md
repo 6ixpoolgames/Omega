@@ -46,6 +46,7 @@ formal/lean/OmegaProper/Recovery/Randomized.lean
 formal/lean/OmegaProper/Recovery/Robust.lean
 formal/lean/OmegaProper/Recovery/Joint.lean
 formal/lean/OmegaProper/Recovery/PolicyContinuation.lean
+formal/lean/OmegaProper/Recovery/Prior.lean
 formal/lean/OmegaProper/Recovery/Examples.lean
 formal/lean/OmegaProper/Recovery.lean
 ```
@@ -99,6 +100,14 @@ Robust recovery is monotone downward in threshold and monotone under
   ambiguity-set restriction.
 Observation refinement preserves robust recovery under explicit decoder-class
   lifting.
+Prior-relative expected recovery is nonnegative for nonnegative profiles and
+  bounded by 1 for pointwise-bounded profiles.
+Worst-case threshold recovery implies prior-relative expected threshold
+  recovery under any declared prior.
+ExpectedRecoveryExistsAt is monotone downward in threshold.
+ExpectedRecoveryExistsAt is the unrestricted `ExpectedRecoveryExistsInAt`
+  specialization.
+Point-mass priors reduce expected success to source success.
 Joint recovery implies each projected marginal recovery.
 Same-panel exact marginal decoders pair into exact joint recovery.
 Policy-conditioned action kernels induce ordinary rational kernels.
@@ -124,6 +133,7 @@ Separate marginal observations can each recover their own marginal target
   while neither marginal observation recovers the joint target.
 Two channels can each be exactly recoverable on their own while no single
   deterministic decoder robustly recovers the two-channel ambiguity set.
+High expected recovery under a skewed prior does not imply worst-case recovery.
 ```
 
 These are toy finite witnesses, not empirical results.
@@ -145,6 +155,8 @@ RandomizedRecoveryInAt         <-> randomized threshold recovery within a
                                   declared randomized-decoder class
 RobustRecoveryInAt             <-> deterministic threshold recovery across a
                                   declared ambiguity set and decoder class
+ExpectedRecoveryExistsInAt     <-> expected deterministic threshold recovery
+                                  under a declared prior and decoder class
 FactorsThrough fine coarse     <-> observation refinement / coarsening
 HitWithin                      <-> hit_probability_within_horizon
 HitProfile                     <-> hit_profile / policy horizon profile
@@ -163,7 +175,7 @@ declared target;
 declared observation;
 declared decoder class;
 declared threshold;
-and, later, declared prior or ambiguity set when those are introduced.
+declared prior or ambiguity set when those axes are used.
 ```
 
 The current layer does not claim:
@@ -209,7 +221,6 @@ Relevant Python parity checks:
 Next likely extensions:
 
 ```text
-prior-relative expected recovery;
 randomized robust recovery over ambiguity sets;
 finite randomized optimization only after a clear finite rational LP surface;
 joint approximate recovery bounds when paired decoders are used.

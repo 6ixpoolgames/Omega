@@ -278,6 +278,7 @@ Main files:
 - [Robust.lean](../../../formal/lean/OmegaProper/Recovery/Robust.lean)
 - [Joint.lean](../../../formal/lean/OmegaProper/Recovery/Joint.lean)
 - [PolicyContinuation.lean](../../../formal/lean/OmegaProper/Recovery/PolicyContinuation.lean)
+- [Prior.lean](../../../formal/lean/OmegaProper/Recovery/Prior.lean)
 - [Examples.lean](../../../formal/lean/OmegaProper/Recovery/Examples.lean)
 
 Current content:
@@ -299,6 +300,10 @@ RobustRecoveryInAt adds an explicit allowed decoder class.
 Singleton ambiguity reduces to ordinary RecoveryExistsAt / RecoveryExistsInAt.
 Robust recovery is monotone downward in threshold and monotone under
 ambiguity-set restriction.
+Prior-relative expected recovery is a separate declared-prior axis.
+Worst-case threshold recovery implies prior-relative expected threshold
+recovery under any declared prior.
+Point-mass priors reduce expected success to source success.
 Randomized recovery is a separate decoder axis.
 Joint recovery implies marginal recovery, but separate marginal panels need
 not recover the joint target.
@@ -317,6 +322,7 @@ coarse observation treated as adding information under unrestricted decoders;
 randomized decoding hidden inside deterministic decoding;
 separate marginal panels treated as joint recovery;
 per-channel recovery treated as a uniform robust decoder guarantee;
+high expected recovery treated as worst-case recovery;
 one selected policy-hit scalar treated as the whole continuation profile.
 ```
 

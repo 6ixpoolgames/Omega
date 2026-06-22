@@ -4,6 +4,7 @@ import OmegaProper.Recovery.FiniteChannel
 import OmegaProper.Recovery.Joint
 import OmegaProper.Recovery.ObservationRefinement
 import OmegaProper.Recovery.PolicyContinuation
+import OmegaProper.Recovery.Prior
 import OmegaProper.Recovery.Randomized
 import OmegaProper.Recovery.Robust
 

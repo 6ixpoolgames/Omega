@@ -32,9 +32,10 @@ joint versus marginal recovery;
 declared randomized decoder behavior.
 ```
 
-Worst-case recovery is the default aggregate because it does not require a
-declared prior. Average-case recovery can be added later when a prior is
-explicitly part of the adapter provenance.
+Worst-case recovery remains the default adapter aggregate because it does not
+require a declared prior. The Lean theorem spine now includes prior-relative
+expected recovery; adapter average-case claims should use it only when a prior
+is explicitly part of the adapter provenance.
 
 ## Implemented Families
 

@@ -2,6 +2,7 @@ import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
 import OmegaProper.Recovery.Joint
 import OmegaProper.Recovery.PolicyContinuation
+import OmegaProper.Recovery.Prior
 import OmegaProper.Recovery.Randomized
 import OmegaProper.Recovery.Robust
 
@@ -15,7 +16,9 @@ These examples show:
 * high-confidence recovery need not be support-exact;
 * positive support does not determine graded recovery thresholds;
 * per-channel exact recovery does not imply robust recovery with one common
-  decoder over an ambiguity set.
+  decoder over an ambiguity set;
+* high expected recovery under a skewed prior does not imply worst-case
+  threshold recovery.
 -/
 
 namespace OmegaProper
@@ -38,6 +41,10 @@ def bitObserve : Bit -> Bit :=
 /-- Identity decoder for two-point observations. -/
 def bitDecoder : Bit -> Bit :=
   id
+
+/-- Constant zero decoder for erased one-label observations. -/
+def constZeroUnitDecoder : Unit -> Bit :=
+  fun _ => 0
 
 /-- Flip the two-point value. -/
 def bitFlip (b : Bit) : Bit :=
@@ -115,6 +122,17 @@ def uniformBitRandomizedDecoder : RandomizedDecoder Unit Bit where
     norm_num
   row_sum_one := by
     intro _
+    norm_num [Finset.univ_fin2]
+
+/-- Prior putting `99/100` mass on source `0` and `1/100` on source `1`. -/
+def skewedZeroPrior : RatPrior Bit where
+  mass x := if x = 0 then (99 / 100 : ℚ) else (1 / 100 : ℚ)
+  nonneg := by
+    intro x
+    by_cases h : x = 0
+    · norm_num [h]
+    · norm_num [h]
+  sum_one := by
     norm_num [Finset.univ_fin2]
 
 /-- Identity support relation for the two-bit panel witness. -/
@@ -282,6 +300,31 @@ theorem identity_flip_each_recoverable_not_robust :
           hDecoderZero, Finset.univ_fin2] at hFlipOne
       · norm_num [Success, identityBitChannel, bitTarget, bitObserve,
           hDecoderZero, Finset.univ_fin2] at hIdZero
+
+/--
+Under a skewed source prior, the erased observation with a constant decoder has
+high expected success.
+-/
+theorem skewedPrior_constantObservation_expectedRecoveryAt_99_100 :
+    ExpectedRecoveryExistsAt skewedZeroPrior identityBitChannel bitTarget
+      constantObserve (99 / 100 : ℚ) := by
+  refine Exists.intro constZeroUnitDecoder ?_
+  norm_num [ExpectedDeclaredRecoveryAt, ExpectedDecoderSuccess,
+    ExpectedSuccess, RecoveryProfile, Success, skewedZeroPrior,
+    identityBitChannel, bitTarget, constantObserve, constZeroUnitDecoder,
+    Finset.univ_fin2]
+
+/--
+High expected recovery under a declared prior does not imply worst-case
+threshold recovery.
+-/
+theorem high_expected_not_worstCase_recovery :
+    ExpectedRecoveryExistsAt skewedZeroPrior identityBitChannel bitTarget
+        constantObserve (99 / 100 : ℚ) ∧
+      Not (RecoveryExistsAt identityBitChannel bitTarget constantObserve
+        (1 / 2 : ℚ)) := by
+  exact ⟨skewedPrior_constantObservation_expectedRecoveryAt_99_100,
+    constantObservation_not_recoveryAt_half⟩
 
 /--
 The first marginal observation exactly recovers the first declared component.
