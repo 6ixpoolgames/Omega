@@ -1,5 +1,7 @@
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
+import OmegaProper.Recovery.Joint
+import OmegaProper.Recovery.PolicyContinuation
 import OmegaProper.Recovery.Randomized
 
 /-!
@@ -95,6 +97,30 @@ def uniformBitRandomizedDecoder : RandomizedDecoder Unit Bit where
   row_sum_one := by
     intro _
     norm_num [Finset.univ_fin2]
+
+/-- Identity support relation for the two-bit panel witness. -/
+def pairSupport (x y : Bit × Bit) : Prop :=
+  y = x
+
+/-- First marginal observation for a two-bit output. -/
+def firstPairObserve (y : Bit × Bit) : Bit :=
+  y.1
+
+/-- Second marginal observation for a two-bit output. -/
+def secondPairObserve (y : Bit × Bit) : Bit :=
+  y.2
+
+/-- First declared component of a two-bit source. -/
+def firstPairTarget (x : Bit × Bit) : Bit :=
+  x.1
+
+/-- Second declared component of a two-bit source. -/
+def secondPairTarget (x : Bit × Bit) : Bit :=
+  x.2
+
+/-- Joint declared target for a two-bit source. -/
+def wholePairTarget (x : Bit × Bit) : Bit × Bit :=
+  x
 
 /--
 The `99/100` channel has deterministic recovery at threshold `99/100`.
@@ -193,6 +219,62 @@ theorem constantObservation_randomizedRecoveryAt_half :
   exact Exists.intro uniformBitRandomizedDecoder fun x => by
     fin_cases x <;> norm_num [RandomizedSuccess, identityBitChannel, bitTarget,
       constantObserve, uniformBitRandomizedDecoder, Finset.univ_fin2]
+
+/--
+The first marginal observation exactly recovers the first declared component.
+-/
+theorem firstPairObservation_recovers_first :
+    BaselineWitnesses.ExactRecoverySupport.ExactRecoveryExists
+      pairSupport firstPairTarget firstPairObserve := by
+  exact Exists.intro id fun x y hSupport => by
+    cases hSupport
+    rfl
+
+/--
+The second marginal observation exactly recovers the second declared component.
+-/
+theorem secondPairObservation_recovers_second :
+    BaselineWitnesses.ExactRecoverySupport.ExactRecoveryExists
+      pairSupport secondPairTarget secondPairObserve := by
+  exact Exists.intro id fun x y hSupport => by
+    cases hSupport
+    rfl
+
+/--
+The first marginal observation does not recover the full joint target.
+-/
+theorem firstPairObservation_not_jointExact :
+    Not (
+      BaselineWitnesses.ExactRecoverySupport.ExactRecoveryExists
+        pairSupport wholePairTarget firstPairObserve
+    ) := by
+  intro hExact
+  match hExact with
+  | Exists.intro decoder hDecoder =>
+      have h00 : decoder 0 = ((0, 0) : Bit × Bit) :=
+        hDecoder (0, 0) (0, 0) rfl
+      have h01 : decoder 0 = ((0, 1) : Bit × Bit) :=
+        hDecoder (0, 1) (0, 1) rfl
+      rw [h00] at h01
+      norm_num at h01
+
+/--
+The second marginal observation does not recover the full joint target.
+-/
+theorem secondPairObservation_not_jointExact :
+    Not (
+      BaselineWitnesses.ExactRecoverySupport.ExactRecoveryExists
+        pairSupport wholePairTarget secondPairObserve
+    ) := by
+  intro hExact
+  match hExact with
+  | Exists.intro decoder hDecoder =>
+      have h00 : decoder 0 = ((0, 0) : Bit × Bit) :=
+        hDecoder (0, 0) (0, 0) rfl
+      have h10 : decoder 0 = ((1, 0) : Bit × Bit) :=
+        hDecoder (1, 0) (1, 0) rfl
+      rw [h00] at h10
+      norm_num at h10
 
 end Examples
 end Recovery

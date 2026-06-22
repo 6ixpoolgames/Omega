@@ -1,7 +1,9 @@
 import OmegaProper.Recovery.Deterministic
 import OmegaProper.Recovery.Examples
 import OmegaProper.Recovery.FiniteChannel
+import OmegaProper.Recovery.Joint
 import OmegaProper.Recovery.ObservationRefinement
+import OmegaProper.Recovery.PolicyContinuation
 import OmegaProper.Recovery.Randomized
 
 /-!
