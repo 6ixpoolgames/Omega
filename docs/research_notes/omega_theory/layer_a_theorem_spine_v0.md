@@ -267,6 +267,57 @@ If two systems have the same score but different safety-relevant targets, the
 score does not determine the target.
 ```
 
+## 2b. Finite recovery profile core
+
+Main files:
+
+- [FiniteChannel.lean](../../../formal/lean/OmegaProper/Recovery/FiniteChannel.lean)
+- [Deterministic.lean](../../../formal/lean/OmegaProper/Recovery/Deterministic.lean)
+- [ObservationRefinement.lean](../../../formal/lean/OmegaProper/Recovery/ObservationRefinement.lean)
+- [Randomized.lean](../../../formal/lean/OmegaProper/Recovery/Randomized.lean)
+- [Joint.lean](../../../formal/lean/OmegaProper/Recovery/Joint.lean)
+- [PolicyContinuation.lean](../../../formal/lean/OmegaProper/Recovery/PolicyContinuation.lean)
+- [Examples.lean](../../../formal/lean/OmegaProper/Recovery/Examples.lean)
+
+Current content:
+
+```text
+Exact rational channels define source-indexed recovery profiles.
+Support-exact recovery is equivalent to RecoveryExistsAt 1.
+RecoveryExistsAt is monotone downward in threshold.
+Observation refinement preserves deterministic and randomized recovery.
+Deterministic decoders embed into randomized decoders.
+Randomized recovery is a separate decoder axis.
+Joint recovery implies marginal recovery, but separate marginal panels need
+not recover the joint target.
+Fixed-policy action kernels induce ordinary rational kernels.
+Finite-horizon hit probabilities are nonnegative, bounded by 1, and monotone
+in the horizon.
+Equal selected policy rows imply equal induced hit profiles.
+```
+
+What this blocks:
+
+```text
+support exactness as the whole recovery notion;
+positive support as sufficient for approximate recovery;
+coarse observation treated as adding information under unrestricted decoders;
+randomized decoding hidden inside deterministic decoding;
+separate marginal panels treated as joint recovery;
+one selected policy-hit scalar treated as the whole continuation profile.
+```
+
+Public phrase:
+
+```text
+Support-exact recovery is the zero-error endpoint of a source-indexed recovery
+profile.
+```
+
+Related note:
+
+- [stochastic_recovery_formalization_v0.md](stochastic_recovery_formalization_v0.md)
+
 ## 3. Fixed-point dynamics core
 
 Main files:

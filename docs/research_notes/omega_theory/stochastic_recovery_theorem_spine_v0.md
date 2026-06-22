@@ -1,8 +1,8 @@
 # Stochastic Recovery Theorem Spine v0
 
 Status: finite theorem-spine note
-Scope: exact rational stochastic recovery helper laws and finite property checks
-Claim boundary: Python property checks and finite exact helper laws; not Lean theorem closure, not stochastic dynamics, not empirical validation
+Scope: exact rational stochastic recovery helper laws, Lean recovery theorems, and finite property checks
+Claim boundary: theorem spine and adapter parity; not empirical validation, not value, not agency, not Omega validation
 
 ## Purpose
 
@@ -18,6 +18,19 @@ joint versus marginal recovery;
 randomized-decoder axis.
 ```
 
+The Lean formalization now lives in:
+
+```text
+formal/lean/OmegaProper/Recovery/
+```
+
+The public compression is:
+
+```text
+Support-exact recovery is the zero-error endpoint of a source-indexed recovery
+profile, not the whole recovery notion.
+```
+
 The focused test file:
 
 ```text
@@ -26,7 +39,37 @@ tests/test_stochastic_recovery_theorem_spine.py
 
 checks these laws over small exact rational finite cases.
 
-## Current Laws
+## Current Lean Laws
+
+The Lean recovery layer proves:
+
+```text
+Support-exact recovery iff RecoveryExistsAt 1.
+RecoveryExistsAt is monotone downward in threshold.
+Success + FailureMass = 1.
+Success <= 1.
+Observation refinement preserves deterministic and randomized recovery.
+Deterministic recovery embeds into randomized recovery.
+Joint recovery implies each marginal recovery.
+Same-panel exact marginal recovery pairs into exact joint recovery.
+Fixed-policy action kernels induce Markov kernels.
+Finite-horizon hit probabilities are nonnegative, bounded by 1, and monotone
+  in horizon.
+Equal selected policy rows imply equal hit profiles.
+```
+
+The finite Lean examples prove:
+
+```text
+99/100 recovery need not be support-exact.
+Positive support does not determine graded recovery.
+Randomized recovery is a separate decoder axis.
+Separate marginal panels need not recover the joint target.
+```
+
+See [stochastic_recovery_formalization_v0.md](stochastic_recovery_formalization_v0.md).
+
+## Current Python-Checked Laws
 
 ### Support Exactness Implies Worst-Case One
 

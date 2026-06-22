@@ -126,6 +126,12 @@ rg -n "\b(sorry|admit|axiom)\b" formal\lean -g "*.lean"
 git diff --check
 ```
 
+For the finite recovery theorem spine, the focused Lean target is:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\setup\invoke_lake.ps1 build OmegaProper.Recovery
+```
+
 For Python-side checks:
 
 ```powershell

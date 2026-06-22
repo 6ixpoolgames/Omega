@@ -27,6 +27,7 @@ declaration_budget_and_transport_profiles_v0.md
 deterministic_pre_stochastic_layer_v0.md
 stochastic_recovery_characterization_v0.md
 stochastic_recovery_theorem_spine_v0.md
+stochastic_recovery_formalization_v0.md
 stochastic_continuation_loss_v0.md
 policy_conditioned_stochastic_dynamics_v0.md
 invariant_profile_compression_v0.md
@@ -160,6 +161,13 @@ OmegaProper/Trajectory/IrreversibleRecurrentSupportLoss.lean
 OmegaProper/Trajectory/JointRecurrentSupport.lean
 OmegaProper/Trajectory/SimulationTransfer.lean
 OmegaProper/Trajectory/SupportUnderPerturbation.lean
+OmegaProper/Recovery/FiniteChannel.lean
+OmegaProper/Recovery/Deterministic.lean
+OmegaProper/Recovery/ObservationRefinement.lean
+OmegaProper/Recovery/Randomized.lean
+OmegaProper/Recovery/Joint.lean
+OmegaProper/Recovery/PolicyContinuation.lean
+OmegaProper/Recovery/Examples.lean
 OmegaArchive/Basic.lean
 OmegaArchive/PrimitiveWitness.lean
 OmegaCore/DistTrans.lean
@@ -223,6 +231,11 @@ finite cascade evidence object separating path-ensemble theorem input from
 independently normalized summary rates;
 finite policy-separation example showing that Bayes-best target recovery can
 strictly exceed fixed-declared target recovery;
+OmegaProper recovery profile layer showing that support-exact recovery is the
+threshold-one endpoint of source-indexed recovery, observation refinement
+preserves deterministic and randomized recovery, randomized decoding is a
+separate decoder axis, joint recovery safely projects to marginal recovery,
+and fixed-policy finite-horizon hit profiles are bounded and horizon-monotone;
 consequence-native trajectory guardrails for separation, consequence-respecting
 classes, directional allowance versus symmetric identification,
 collapse/noncollapse, over-separation, and mixed evaluated panels;
@@ -331,6 +344,12 @@ laws_of_form_adjacency_v0.md
 adapter_provenance_v0.md
 audit_response_roadmap_v0.md
 finite_relational_adapter_design_v0.md
+deterministic_pre_stochastic_layer_v0.md
+stochastic_recovery_characterization_v0.md
+stochastic_recovery_theorem_spine_v0.md
+stochastic_recovery_formalization_v0.md
+stochastic_continuation_loss_v0.md
+policy_conditioned_stochastic_dynamics_v0.md
 primitive_exposure_realization_bridge_v0.md
 presentation_soundness_pattern_v0.md
 continuation_deformation_nonfactorization_v0.md
