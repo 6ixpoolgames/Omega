@@ -234,8 +234,10 @@ strictly exceed fixed-declared target recovery;
 OmegaProper recovery profile layer showing that support-exact recovery is the
 threshold-one endpoint of source-indexed recovery, observation refinement
 preserves deterministic and randomized recovery, randomized decoding is a
-separate decoder axis, joint recovery safely projects to marginal recovery,
-and fixed-policy finite-horizon hit profiles are bounded and horizon-monotone;
+separate decoder axis, explicit deterministic/randomized decoder-class
+predicates specialize to the unrestricted recovery predicates, joint recovery
+safely projects to marginal recovery, and fixed-policy finite-horizon hit
+profiles are bounded and horizon-monotone;
 consequence-native trajectory guardrails for separation, consequence-respecting
 classes, directional allowance versus symmetric identification,
 collapse/noncollapse, over-separation, and mixed evaluated panels;

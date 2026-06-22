@@ -47,6 +47,23 @@ def RecoveryExistsAt {X : Type u} {Y : Type v} {D : Type w} {O : Type z}
     (tau : ℚ) : Prop :=
   exists decoder : O -> D, DeclaredRecoveryAt C target observe tau decoder
 
+/--
+Some decoder from an explicitly allowed deterministic decoder class reaches
+threshold `tau` for every source state.
+
+`RecoveryExistsAt` is the unrestricted specialization where every decoder is
+allowed.
+-/
+def RecoveryExistsInAt {X : Type u} {Y : Type v} {D : Type w} {O : Type z}
+    [Fintype Y] [DecidableEq D]
+    (C : RatChannel X Y)
+    (target : X -> D)
+    (observe : Y -> O)
+    (Allowed : (O -> D) -> Prop)
+    (tau : ℚ) : Prop :=
+  exists decoder : O -> D,
+    Allowed decoder ∧ DeclaredRecoveryAt C target observe tau decoder
+
 theorem recoveryAt_mono_threshold
     {X : Type u} {Y : Type v} {D : Type w} {O : Type z}
     [Fintype Y] [DecidableEq D]
@@ -61,6 +78,22 @@ theorem recoveryAt_mono_threshold
   | Exists.intro decoder hDecoder =>
       exact Exists.intro decoder fun x => le_trans hTau (hDecoder x)
 
+theorem recoveryInAt_mono_threshold
+    {X : Type u} {Y : Type v} {D : Type w} {O : Type z}
+    [Fintype Y] [DecidableEq D]
+    {C : RatChannel X Y}
+    {target : X -> D}
+    {observe : Y -> O}
+    {Allowed : (O -> D) -> Prop}
+    {tau₁ tau₂ : ℚ}
+    (hTau : tau₁ <= tau₂)
+    (hRecovery : RecoveryExistsInAt C target observe Allowed tau₂) :
+    RecoveryExistsInAt C target observe Allowed tau₁ := by
+  match hRecovery with
+  | Exists.intro decoder hDecoder =>
+      exact Exists.intro decoder ⟨hDecoder.1, fun x =>
+        le_trans hTau (hDecoder.2 x)⟩
+
 theorem declaredRecoveryAt_implies_exists
     {X : Type u} {Y : Type v} {D : Type w} {O : Type z}
     [Fintype Y] [DecidableEq D]
@@ -72,6 +105,39 @@ theorem declaredRecoveryAt_implies_exists
     (hDecoder : DeclaredRecoveryAt C target observe tau decoder) :
     RecoveryExistsAt C target observe tau := by
   exact Exists.intro decoder hDecoder
+
+theorem declaredRecoveryAt_implies_existsInAt
+    {X : Type u} {Y : Type v} {D : Type w} {O : Type z}
+    [Fintype Y] [DecidableEq D]
+    {C : RatChannel X Y}
+    {target : X -> D}
+    {observe : Y -> O}
+    {Allowed : (O -> D) -> Prop}
+    {tau : ℚ}
+    {decoder : O -> D}
+    (hAllowed : Allowed decoder)
+    (hDecoder : DeclaredRecoveryAt C target observe tau decoder) :
+    RecoveryExistsInAt C target observe Allowed tau := by
+  exact Exists.intro decoder ⟨hAllowed, hDecoder⟩
+
+theorem recoveryExistsAt_iff_recoveryExistsInAt_unrestricted
+    {X : Type u} {Y : Type v} {D : Type w} {O : Type z}
+    [Fintype Y] [DecidableEq D]
+    {C : RatChannel X Y}
+    {target : X -> D}
+    {observe : Y -> O}
+    {tau : ℚ} :
+    RecoveryExistsAt C target observe tau <->
+      RecoveryExistsInAt C target observe (fun _ => True) tau := by
+  constructor
+  · intro hRecovery
+    match hRecovery with
+    | Exists.intro decoder hDecoder =>
+        exact Exists.intro decoder ⟨True.intro, hDecoder⟩
+  · intro hRecovery
+    match hRecovery with
+    | Exists.intro decoder hDecoder =>
+        exact Exists.intro decoder hDecoder.2
 
 theorem recoveryAt_one_iff_perfect
     {X : Type u} {Y : Type v} {D : Type w} {O : Type z}

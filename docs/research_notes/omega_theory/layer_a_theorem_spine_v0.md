@@ -285,8 +285,13 @@ Current content:
 Exact rational channels define source-indexed recovery profiles.
 Support-exact recovery is equivalent to RecoveryExistsAt 1.
 RecoveryExistsAt is monotone downward in threshold.
+RecoveryExistsInAt names the same threshold question relative to an explicit
+deterministic decoder class, with RecoveryExistsAt as the unrestricted case.
 Observation refinement preserves deterministic and randomized recovery.
 Deterministic decoders embed into randomized decoders.
+Randomized success is nonnegative and bounded by 1.
+RandomizedRecoveryInAt names the randomized decoder-class form, with
+RandomizedRecoveryAt as the unrestricted case.
 Randomized recovery is a separate decoder axis.
 Joint recovery implies marginal recovery, but separate marginal panels need
 not recover the joint target.

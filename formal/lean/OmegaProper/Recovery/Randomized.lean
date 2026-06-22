@@ -22,6 +22,20 @@ structure RandomizedDecoder (O : Type z) (D : Type w) [Fintype D] where
 
 namespace RandomizedDecoder
 
+theorem prob_le_one {O : Type z} {D : Type w} [Fintype D]
+    (decoder : RandomizedDecoder O D)
+    (o : O)
+    (d : D) :
+    decoder.prob o d <= 1 := by
+  have hle :
+      decoder.prob o d <=
+        Finset.univ.sum fun d' => decoder.prob o d' := by
+    exact Finset.single_le_sum
+      (fun d' _hd' => decoder.nonneg o d')
+      (Finset.mem_univ d)
+  rw [decoder.row_sum_one o] at hle
+  exact hle
+
 /-- Embed a deterministic decoder as a point-mass randomized decoder. -/
 def ofDeterministic {O : Type z} {D : Type w} [Fintype D] [DecidableEq D]
     (decoder : O -> D) : RandomizedDecoder O D where
@@ -54,6 +68,17 @@ def RandomizedSuccess {X : Type u} {Y : Type v} {D : Type w} {O : Type z}
   Finset.univ.sum fun y =>
     C.prob x y * decoder.prob (observe y) (target x)
 
+/-- A declared randomized decoder reaches threshold `tau` for every source. -/
+def RandomizedDeclaredRecoveryAt
+    {X : Type u} {Y : Type v} {D : Type w} {O : Type z}
+    [Fintype Y] [Fintype D]
+    (C : RatChannel X Y)
+    (target : X -> D)
+    (observe : Y -> O)
+    (tau : ℚ)
+    (decoder : RandomizedDecoder O D) : Prop :=
+  forall x, tau <= RandomizedSuccess C target observe decoder x
+
 /-- Some randomized decoder reaches threshold `tau` for every source state. -/
 def RandomizedRecoveryAt {X : Type u} {Y : Type v} {D : Type w} {O : Type z}
     [Fintype Y] [Fintype D]
@@ -62,7 +87,25 @@ def RandomizedRecoveryAt {X : Type u} {Y : Type v} {D : Type w} {O : Type z}
     (observe : Y -> O)
     (tau : ℚ) : Prop :=
   exists decoder : RandomizedDecoder O D,
-    forall x, tau <= RandomizedSuccess C target observe decoder x
+    RandomizedDeclaredRecoveryAt C target observe tau decoder
+
+/--
+Some decoder from an explicitly allowed randomized decoder class reaches
+threshold `tau` for every source state.
+
+`RandomizedRecoveryAt` is the unrestricted specialization where every
+randomized decoder is allowed.
+-/
+def RandomizedRecoveryInAt
+    {X : Type u} {Y : Type v} {D : Type w} {O : Type z}
+    [Fintype Y] [Fintype D]
+    (C : RatChannel X Y)
+    (target : X -> D)
+    (observe : Y -> O)
+    (Allowed : RandomizedDecoder O D -> Prop)
+    (tau : ℚ) : Prop :=
+  exists decoder : RandomizedDecoder O D,
+    Allowed decoder ∧ RandomizedDeclaredRecoveryAt C target observe tau decoder
 
 /-- Lift a randomized decoder along a deterministic observation post-map. -/
 def liftRandomizedDecoder {Fine : Type z} {Coarse : Type z'} {D : Type w}
@@ -76,6 +119,42 @@ def liftRandomizedDecoder {Fine : Type z} {Coarse : Type z'} {D : Type w}
   row_sum_one := by
     intro fine
     exact decoder.row_sum_one (g fine)
+
+theorem randomizedSuccess_nonneg
+    {X : Type u} {Y : Type v} {D : Type w} {O : Type z}
+    [Fintype Y] [Fintype D]
+    (C : RatChannel X Y)
+    (target : X -> D)
+    (observe : Y -> O)
+    (decoder : RandomizedDecoder O D)
+    (x : X) :
+    0 <= RandomizedSuccess C target observe decoder x := by
+  unfold RandomizedSuccess
+  exact Finset.sum_nonneg fun y _hy =>
+    mul_nonneg (C.nonneg x y) (decoder.nonneg (observe y) (target x))
+
+theorem randomizedSuccess_le_one
+    {X : Type u} {Y : Type v} {D : Type w} {O : Type z}
+    [Fintype Y] [Fintype D]
+    (C : RatChannel X Y)
+    (target : X -> D)
+    (observe : Y -> O)
+    (decoder : RandomizedDecoder O D)
+    (x : X) :
+    RandomizedSuccess C target observe decoder x <= 1 := by
+  unfold RandomizedSuccess
+  calc
+    (Finset.univ.sum fun y =>
+        C.prob x y * decoder.prob (observe y) (target x))
+        <= Finset.univ.sum fun y => C.prob x y * 1 := by
+          apply Finset.sum_le_sum
+          intro y _hy
+          exact mul_le_mul_of_nonneg_left
+            (RandomizedDecoder.prob_le_one decoder (observe y) (target x))
+            (C.nonneg x y)
+    _ = Finset.univ.sum fun y => C.prob x y := by
+          simp
+    _ = 1 := C.row_sum_one x
 
 theorem randomizedSuccess_ofDeterministic
     {X : Type u} {Y : Type v} {D : Type w} {O : Type z}
@@ -139,6 +218,77 @@ theorem recoveryAt_implies_randomizedRecoveryAt
       exact Exists.intro (RandomizedDecoder.ofDeterministic decoder) fun x => by
         rw [randomizedSuccess_ofDeterministic C target observe decoder x]
         exact hDecoder x
+
+theorem recoveryInAt_implies_randomizedRecoveryInAt
+    {X : Type u} {Y : Type v} {D : Type w} {O : Type z}
+    [Fintype Y] [Fintype D] [DecidableEq D]
+    {C : RatChannel X Y}
+    {target : X -> D}
+    {observe : Y -> O}
+    {tau : ℚ}
+    {AllowedDet : (O -> D) -> Prop}
+    {AllowedRand : RandomizedDecoder O D -> Prop}
+    (hAllowed :
+      forall decoder,
+        AllowedDet decoder ->
+          AllowedRand (RandomizedDecoder.ofDeterministic decoder))
+    (hRecovery : RecoveryExistsInAt C target observe AllowedDet tau) :
+    RandomizedRecoveryInAt C target observe AllowedRand tau := by
+  match hRecovery with
+  | Exists.intro decoder hDecoder =>
+      exact Exists.intro (RandomizedDecoder.ofDeterministic decoder)
+        ⟨hAllowed decoder hDecoder.1, fun x => by
+          rw [randomizedSuccess_ofDeterministic C target observe decoder x]
+          exact hDecoder.2 x⟩
+
+theorem randomizedRecoveryAt_mono_threshold
+    {X : Type u} {Y : Type v} {D : Type w} {O : Type z}
+    [Fintype Y] [Fintype D]
+    {C : RatChannel X Y}
+    {target : X -> D}
+    {observe : Y -> O}
+    {tau₁ tau₂ : ℚ}
+    (hTau : tau₁ <= tau₂)
+    (hRecovery : RandomizedRecoveryAt C target observe tau₂) :
+    RandomizedRecoveryAt C target observe tau₁ := by
+  match hRecovery with
+  | Exists.intro decoder hDecoder =>
+      exact Exists.intro decoder fun x => le_trans hTau (hDecoder x)
+
+theorem randomizedRecoveryInAt_mono_threshold
+    {X : Type u} {Y : Type v} {D : Type w} {O : Type z}
+    [Fintype Y] [Fintype D]
+    {C : RatChannel X Y}
+    {target : X -> D}
+    {observe : Y -> O}
+    {Allowed : RandomizedDecoder O D -> Prop}
+    {tau₁ tau₂ : ℚ}
+    (hTau : tau₁ <= tau₂)
+    (hRecovery : RandomizedRecoveryInAt C target observe Allowed tau₂) :
+    RandomizedRecoveryInAt C target observe Allowed tau₁ := by
+  match hRecovery with
+  | Exists.intro decoder hDecoder =>
+      exact Exists.intro decoder ⟨hDecoder.1, fun x =>
+        le_trans hTau (hDecoder.2 x)⟩
+
+theorem randomizedRecoveryAt_iff_randomizedRecoveryInAt_unrestricted
+    {X : Type u} {Y : Type v} {D : Type w} {O : Type z}
+    [Fintype Y] [Fintype D]
+    {C : RatChannel X Y}
+    {target : X -> D}
+    {observe : Y -> O}
+    {tau : ℚ} :
+    RandomizedRecoveryAt C target observe tau <->
+      RandomizedRecoveryInAt C target observe (fun _ => True) tau := by
+  constructor
+  · intro hRecovery
+    match hRecovery with
+    | Exists.intro decoder hDecoder =>
+        exact Exists.intro decoder ⟨True.intro, hDecoder⟩
+  · intro hRecovery
+    match hRecovery with
+    | Exists.intro decoder hDecoder =>
+        exact Exists.intro decoder hDecoder.2
 
 theorem randomizedRecoveryAt_mono_observation_refinement
     {X : Type u} {Y : Type v} {D : Type w}

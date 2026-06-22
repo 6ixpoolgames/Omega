@@ -22,6 +22,7 @@ RatChannel X Y
 Success C target observe decoder x
 DeclaredRecoveryAt C target observe tau decoder
 RecoveryExistsAt C target observe tau
+RecoveryExistsInAt C target observe Allowed tau
 ```
 
 The main bridge theorem is:
@@ -65,6 +66,8 @@ Success + FailureMass = 1.
 Success <= 1.
 Success = 1 iff FailureMass = 0.
 RecoveryExistsAt is monotone downward in threshold.
+RecoveryExistsInAt is monotone downward in threshold.
+RecoveryExistsAt is the unrestricted `RecoveryExistsInAt` specialization.
 RecoveryExistsAt 1 iff some decoder has Success = 1 for every source.
 No nonempty source type has RecoveryExistsAt tau when 1 < tau.
 Support-exact decoder iff Success = 1 for every source.
@@ -79,10 +82,18 @@ Recovery monotonicity under observation refinement.
 Support-exact recovery monotonicity under observation refinement.
 Deterministic decoders embed into randomized decoders.
 Deterministic recovery implies randomized recovery.
+Restricted deterministic recovery transfers into restricted randomized
+  recovery when the deterministic embedding respects the allowed classes.
+Randomized success is nonnegative and bounded by 1.
+RandomizedRecoveryAt is monotone downward in threshold.
+RandomizedRecoveryInAt is monotone downward in threshold.
+RandomizedRecoveryAt is the unrestricted `RandomizedRecoveryInAt`
+  specialization.
 Randomized recovery is monotone under observation refinement.
 Joint recovery implies each projected marginal recovery.
 Same-panel exact marginal decoders pair into exact joint recovery.
 Policy-conditioned action kernels induce ordinary rational kernels.
+The induced policy kernel exposes a named validity theorem.
 Finite-horizon hit probabilities are nonnegative, bounded by 1, and monotone
   in the horizon.
 Equal selected policy rows imply equal induced hit profiles.
@@ -116,7 +127,11 @@ PositiveSupport                <-> positive-probability support
 Success                        <-> success_by_source
 DeclaredRecoveryAt             <-> per-source threshold check
 RecoveryExistsAt               <-> deterministic capacity-at-threshold
+RecoveryExistsInAt             <-> deterministic capacity within a declared
+                                  decoder class
 RandomizedSuccess              <-> randomized_success_by_source
+RandomizedRecoveryInAt         <-> randomized threshold recovery within a
+                                  declared randomized-decoder class
 FactorsThrough fine coarse     <-> observation refinement / coarsening
 HitWithin                      <-> hit_probability_within_horizon
 HitProfile                     <-> hit_profile / policy horizon profile

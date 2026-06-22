@@ -46,13 +46,20 @@ The Lean recovery layer proves:
 ```text
 Support-exact recovery iff RecoveryExistsAt 1.
 RecoveryExistsAt is monotone downward in threshold.
+RecoveryExistsInAt is the explicit deterministic decoder-class form, with
+  RecoveryExistsAt as its unrestricted specialization.
 Success + FailureMass = 1.
 Success <= 1.
 Observation refinement preserves deterministic and randomized recovery.
 Deterministic recovery embeds into randomized recovery.
+Randomized success is nonnegative and bounded by 1.
+RandomizedRecoveryInAt is the explicit randomized decoder-class form, with
+  RandomizedRecoveryAt as its unrestricted specialization.
+Randomized recovery is monotone downward in threshold.
 Joint recovery implies each marginal recovery.
 Same-panel exact marginal recovery pairs into exact joint recovery.
 Fixed-policy action kernels induce Markov kernels.
+The induced policy kernel has a named validity theorem.
 Finite-horizon hit probabilities are nonnegative, bounded by 1, and monotone
   in horizon.
 Equal selected policy rows imply equal hit profiles.

@@ -43,6 +43,24 @@ theorem inducedKernel_prob
     (x x' : X) :
     (inducedKernel K policy).prob x x' = K.prob x (policy x) x' := rfl
 
+/--
+The induced policy kernel is a valid rational Markov kernel. This theorem names
+the validity obligations that are already supplied by the `RatKernel`
+constructor.
+-/
+theorem inducedKernel_valid
+    {X : Type u} {A : Type v} [Fintype X]
+    (K : RatActionKernel X A)
+    (policy : X -> A) :
+    (forall x x', 0 <= (inducedKernel K policy).prob x x') ∧
+      (forall x,
+        (Finset.univ.sum fun x' => (inducedKernel K policy).prob x x') = 1) := by
+  constructor
+  · intro x x'
+    exact (inducedKernel K policy).nonneg x x'
+  · intro x
+    exact (inducedKernel K policy).row_sum_one x
+
 /-- Finite-horizon probability of hitting a target set within `n` steps. -/
 def HitWithin {X : Type u} [Fintype X]
     (K : RatKernel X)
