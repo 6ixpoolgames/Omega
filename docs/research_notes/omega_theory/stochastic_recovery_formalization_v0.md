@@ -122,6 +122,8 @@ A uniform randomized decoder can reach threshold 1/2 on that same one-label
   observation.
 Separate marginal observations can each recover their own marginal target
   while neither marginal observation recovers the joint target.
+Two channels can each be exactly recoverable on their own while no single
+  deterministic decoder robustly recovers the two-channel ambiguity set.
 ```
 
 These are toy finite witnesses, not empirical results.

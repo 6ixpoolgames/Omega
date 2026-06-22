@@ -61,6 +61,13 @@ Observation refinement preserves restricted robust recovery when lifted decoders
   remain in the allowed fine decoder class.
 ```
 
+The examples layer also proves the finite strictness witness:
+
+```text
+two channels can each be exactly recoverable on their own,
+while no single deterministic decoder recovers the two-channel ambiguity set.
+```
+
 ## Interpretation
 
 Robust recovery is a uniform-decoder guarantee:

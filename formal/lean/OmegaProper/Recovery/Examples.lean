@@ -3,6 +3,7 @@ import Mathlib.Tactic.NormNum
 import OmegaProper.Recovery.Joint
 import OmegaProper.Recovery.PolicyContinuation
 import OmegaProper.Recovery.Randomized
+import OmegaProper.Recovery.Robust
 
 /-!
 OmegaProper.Recovery.Examples
@@ -12,7 +13,9 @@ Small finite witnesses for the graded recovery layer.
 These examples show:
 
 * high-confidence recovery need not be support-exact;
-* positive support does not determine graded recovery thresholds.
+* positive support does not determine graded recovery thresholds;
+* per-channel exact recovery does not imply robust recovery with one common
+  decoder over an ambiguity set.
 -/
 
 namespace OmegaProper
@@ -35,6 +38,10 @@ def bitObserve : Bit -> Bit :=
 /-- Identity decoder for two-point observations. -/
 def bitDecoder : Bit -> Bit :=
   id
+
+/-- Flip the two-point value. -/
+def bitFlip (b : Bit) : Bit :=
+  if b = 0 then 1 else 0
 
 /-- Constant observation erases the two output labels. -/
 def constantObserve : Bit -> Unit :=
@@ -87,6 +94,18 @@ def identityBitChannel : RatChannel Bit Bit where
   row_sum_one := by
     intro x
     fin_cases x <;> norm_num [Finset.univ_fin2]
+
+/-- Exact channel whose output is the flipped source bit. -/
+def flipBitChannel : RatChannel Bit Bit where
+  prob x y := if y = bitFlip x then (1 : ℚ) else 0
+  nonneg := by
+    intro x y
+    by_cases h : y = bitFlip x
+    · norm_num [h]
+    · norm_num [h]
+  row_sum_one := by
+    intro x
+    fin_cases x <;> norm_num [bitFlip, Finset.univ_fin2]
 
 /-- Uniform randomized decoder from one observation label to two target values. -/
 def uniformBitRandomizedDecoder : RandomizedDecoder Unit Bit where
@@ -219,6 +238,50 @@ theorem constantObservation_randomizedRecoveryAt_half :
   exact Exists.intro uniformBitRandomizedDecoder fun x => by
     fin_cases x <;> norm_num [RandomizedSuccess, identityBitChannel, bitTarget,
       constantObserve, uniformBitRandomizedDecoder, Finset.univ_fin2]
+
+/-- The identity bit channel has exact deterministic recovery. -/
+theorem identityBitChannel_recoveryAt_one :
+    RecoveryExistsAt identityBitChannel bitTarget bitObserve 1 := by
+  exact Exists.intro bitDecoder fun x => by
+    fin_cases x <;> norm_num [DeclaredRecoveryAt, Success, identityBitChannel,
+      bitTarget, bitObserve, bitDecoder, Finset.univ_fin2]
+
+/-- The flipped bit channel has exact deterministic recovery using the flipped decoder. -/
+theorem flipBitChannel_recoveryAt_one :
+    RecoveryExistsAt flipBitChannel bitTarget bitObserve 1 := by
+  exact Exists.intro bitFlip fun x => by
+    fin_cases x <;> norm_num [DeclaredRecoveryAt, Success, flipBitChannel,
+      bitTarget, bitObserve, bitFlip, Finset.univ_fin2]
+
+/--
+Each channel in the ambiguity set is exactly recoverable on its own, but no
+single deterministic decoder recovers both channels at threshold one.
+-/
+theorem identity_flip_each_recoverable_not_robust :
+    RecoveryExistsAt identityBitChannel bitTarget bitObserve 1 ∧
+      RecoveryExistsAt flipBitChannel bitTarget bitObserve 1 ∧
+      Not (
+        RobustRecoveryAt
+          ({identityBitChannel, flipBitChannel} : Set (RatChannel Bit Bit))
+          bitTarget bitObserve 1
+      ) := by
+  refine ⟨identityBitChannel_recoveryAt_one, flipBitChannel_recoveryAt_one, ?_⟩
+  intro hRobust
+  match hRobust with
+  | Exists.intro decoder hDecoder =>
+      have hIdZero :
+          (1 : ℚ) <=
+            Success identityBitChannel bitTarget bitObserve decoder 0 :=
+        hDecoder identityBitChannel (by simp) 0
+      have hFlipOne :
+          (1 : ℚ) <=
+            Success flipBitChannel bitTarget bitObserve decoder 1 :=
+        hDecoder flipBitChannel (by simp) 1
+      rcases bit_eq_zero_or_one (decoder 0) with hDecoderZero | hDecoderZero
+      · norm_num [Success, flipBitChannel, bitTarget, bitObserve, bitFlip,
+          hDecoderZero, Finset.univ_fin2] at hFlipOne
+      · norm_num [Success, identityBitChannel, bitTarget, bitObserve,
+          hDecoderZero, Finset.univ_fin2] at hIdZero
 
 /--
 The first marginal observation exactly recovers the first declared component.

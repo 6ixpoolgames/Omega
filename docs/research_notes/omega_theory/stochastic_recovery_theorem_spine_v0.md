@@ -80,6 +80,8 @@ The finite Lean examples prove:
 Positive support does not determine graded recovery.
 Randomized recovery is a separate decoder axis.
 Separate marginal panels need not recover the joint target.
+Per-channel exact recovery does not imply robust exact recovery by one common
+  decoder over the ambiguity set.
 ```
 
 See [stochastic_recovery_formalization_v0.md](stochastic_recovery_formalization_v0.md).
