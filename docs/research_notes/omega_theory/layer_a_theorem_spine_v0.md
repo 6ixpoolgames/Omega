@@ -146,6 +146,7 @@ Main files:
 - [ProfileApproximation.lean](../../../formal/lean/OmegaProper/Trajectory/ProfileApproximation.lean)
 - [PresentationFactClosure.lean](../../../formal/lean/OmegaProper/Trajectory/PresentationFactClosure.lean)
 - [PresentationFactClosureExamples.lean](../../../formal/lean/OmegaProper/Trajectory/PresentationFactClosureExamples.lean)
+- [PresentationFactCarrierExamples.lean](../../../formal/lean/OmegaProper/Trajectory/PresentationFactCarrierExamples.lean)
 - [PresentationFactRecoveryExamples.lean](../../../formal/lean/OmegaProper/Trajectory/PresentationFactRecoveryExamples.lean)
 - [PresentationFactViabilityExamples.lean](../../../formal/lean/OmegaProper/Trajectory/PresentationFactViabilityExamples.lean)
 - [CarrierSemantics.lean](../../../formal/lean/OmegaProper/Trajectory/CarrierSemantics.lean)
@@ -170,6 +171,9 @@ The recovery closure pilot shows exact bit recovery facts strictly shrink when
 a constant observation is admitted.
 The viability closure pilot shows exact viability-status facts strictly shrink
 when a constant status presentation is admitted.
+The carrier closure pilot shows a certified recurrent carrier pair remains
+visible under exact endpoint status but disappears from common visible-pair
+facts when a constant endpoint-erasing presentation is admitted.
 Raw supports, generated mutual-reach carriers, and trajectory-language views
 are presentations of carrier semantics.
 ```

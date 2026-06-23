@@ -156,6 +156,7 @@ OmegaProper/Trajectory/ConsequencePanelDiscipline.lean
 OmegaProper/Trajectory/ParameterizedRecurrentSupport.lean
 OmegaProper/Trajectory/PresentationFactClosure.lean
 OmegaProper/Trajectory/PresentationFactClosureExamples.lean
+OmegaProper/Trajectory/PresentationFactCarrierExamples.lean
 OmegaProper/Trajectory/PresentationFactRecoveryExamples.lean
 OmegaProper/Trajectory/PresentationFactViabilityExamples.lean
 OmegaProper/Trajectory/RecurrentSupportExtension.lean
@@ -268,7 +269,9 @@ with an X2 pilot showing first-coordinate facts disappear when a second
 coordinate presentation is admitted and a recovery pilot showing exact bit
 recovery disappears when a constant observation is admitted, plus a viability
 pilot showing exact viability status disappears when a constant status
-presentation is admitted;
+presentation is admitted, plus a carrier pilot showing certified endpoint
+visibility disappears when a constant endpoint-erasing presentation is
+admitted;
 consequence-native trajectory guardrails for separation, consequence-respecting
 classes, directional allowance versus symmetric identification,
 collapse/noncollapse, over-separation, and mixed evaluated panels;

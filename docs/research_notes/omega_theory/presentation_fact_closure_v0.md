@@ -50,6 +50,7 @@ Main file:
 ```text
 formal/lean/OmegaProper/Trajectory/PresentationFactClosure.lean
 formal/lean/OmegaProper/Trajectory/PresentationFactClosureExamples.lean
+formal/lean/OmegaProper/Trajectory/PresentationFactCarrierExamples.lean
 formal/lean/OmegaProper/Trajectory/PresentationFactRecoveryExamples.lean
 formal/lean/OmegaProper/Trajectory/PresentationFactViabilityExamples.lean
 ```
@@ -213,6 +214,47 @@ This is the viability analogue of the recovery pilot. Exact viability-status
 presentation preserves the viability fact; admitting a constant status
 presentation removes it from common facts. Constant targets still survive.
 
+## Relation To Carrier Certificates
+
+The carrier instantiation uses the existing two-state recurrent carrier
+certificate:
+
+```text
+cycleClass recurrently carries the merge-separated left/right pair.
+```
+
+It then asks a presentation/fact question rather than an identity question:
+
+```text
+does the certified endpoint pair remain visible under every admitted
+presentation?
+```
+
+Lean file:
+
+```text
+formal/lean/OmegaProper/Trajectory/PresentationFactCarrierExamples.lean
+```
+
+It proves:
+
+```text
+cycleCarrierPair_certified
+cycleCarrierPair_visible_exactOnly
+cycleCarrierPair_not_visible_exactConstant
+no_commonCarrierVisiblePairs_exactConstant
+commonCarrierVisiblePairs_strictly_shrink_when_constant_admitted
+constantStatus_not_in_carrierVisibilityClosure_exactOnly
+certified_cycleCarrierPair_visibility_boundary
+```
+
+The result is intentionally narrow. A certified recurrent carrier pair is
+visible under the exact endpoint-status presentation. When a constant
+presentation is admitted, every visible-pair fact is removed from the common
+visible-pair set. The certificate itself is not treated as object identity; the
+closure layer only records which pair-visibility facts survive the declared
+presentation family.
+
 ## Non-Claims
 
 This note does not claim:
@@ -229,14 +271,15 @@ that this proves Omega.
 
 ## Next Work
 
-The next pilot should move from viability facts to carrier facts:
+The next pilot should move from hand-written finite closure examples to
+adapter-generated or adversarial closure examples:
 
 ```text
 presentations:
-  exact / coarse / stale / reflected views
+  exact / coarse / stale / reflected views produced by retained fixtures
 
 facts:
-  reachability and carrier-certification facts
+  reachability, recovery, viability, and carrier-certification facts
 
 tests:
   compute common facts;

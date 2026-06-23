@@ -37,6 +37,7 @@ import OmegaProper.Trajectory.PathCarriedDistinction
 import OmegaProper.Trajectory.ParameterizedRecurrentSupport
 import OmegaProper.Trajectory.PresentationFactClosure
 import OmegaProper.Trajectory.PresentationFactClosureExamples
+import OmegaProper.Trajectory.PresentationFactCarrierExamples
 import OmegaProper.Trajectory.PresentationFactRecoveryExamples
 import OmegaProper.Trajectory.PresentationFactViabilityExamples
 import OmegaProper.Trajectory.PresentationInvariant
