@@ -6,7 +6,10 @@ import pytest
 from omega.adapters.finite_relational import (
     generate_policy_dynamics_study,
     induced_transition_kernel,
+    optimized_declared_policy_family_robust_hit,
     policy_hit_probability_within_horizon,
+    robust_policy_hit_by_kernel,
+    robust_policy_worst_case,
     support_summary_for_policy_kernel,
     validate_action_kernel,
 )
@@ -18,6 +21,7 @@ from omega.validation.finite_relational_policy_dynamics import (
 REQUIRED_FAMILY_IDS = {
     "policy_stale_reflected_hit_loss",
     "policy_nonfactorization_same_support_summary",
+    "policy_correlated_shock_joint_robustness",
 }
 
 
@@ -70,6 +74,25 @@ def test_policy_dynamics_covers_expected_families_and_separates_hypotheses() -> 
     )
     assert [hypothesis.hypothesis_id for hypothesis in nonfactorization.hypotheses] == [
         "same_support_summary_not_policy_hit_probability"
+    ]
+
+    joint = by_id["policy_correlated_shock_joint_robustness"]
+    assert joint.facts["individual_targets_have_robust_policy"] is True
+    assert joint.facts["joint_target_has_robust_policy"] is False
+    assert joint.facts["optimized_target_a"]["policy_name"] == "protect_a"
+    assert joint.facts["optimized_target_a"]["robust_worst_case_hit_probability"] == "1"
+    assert joint.facts["optimized_target_b"]["policy_name"] == "protect_b"
+    assert joint.facts["optimized_target_b"]["robust_worst_case_hit_probability"] == "1"
+    assert joint.facts["optimized_target_joint"]["robust_worst_case_hit_probability"] == "0"
+    assert joint.facts["optimized_target_joint"]["per_kernel_hit_probability"] == {
+        "correlated_shock": "0",
+        "nominal": "1",
+    }
+    assert [hypothesis.hypothesis_id for hypothesis in joint.hypotheses] == [
+        "target_a_has_robust_policy_under_correlated_shock",
+        "target_b_has_robust_policy_under_correlated_shock",
+        "joint_target_has_no_robust_policy_under_correlated_shock",
+        "individual_robust_policy_success_not_joint_robust_policy_success",
     ]
 
     for family in families:
@@ -233,6 +256,82 @@ def test_policy_support_summary_can_match_while_hit_probability_differs() -> Non
         targets,
         1,
     ) == Fraction(3, 5)
+
+
+def test_robust_policy_family_optimizes_worst_case_hit_probability() -> None:
+    states = ("start", "goal", "partial", "fail")
+    actions = ("safe", "risky", "wait")
+    policies = {
+        "safe": {
+            "start": "safe",
+            "goal": "wait",
+            "partial": "wait",
+            "fail": "wait",
+        },
+        "risky": {
+            "start": "risky",
+            "goal": "wait",
+            "partial": "wait",
+            "fail": "wait",
+        },
+    }
+    nominal = {
+        "start": {
+            "safe": {"start": Fraction(0), "goal": Fraction(1, 2), "partial": Fraction(1, 2), "fail": Fraction(0)},
+            "risky": {"start": Fraction(0), "goal": Fraction(1), "partial": Fraction(0), "fail": Fraction(0)},
+            "wait": {"start": Fraction(1), "goal": Fraction(0), "partial": Fraction(0), "fail": Fraction(0)},
+        },
+        "goal": {
+            action: {"start": Fraction(0), "goal": Fraction(1), "partial": Fraction(0), "fail": Fraction(0)}
+            for action in actions
+        },
+        "partial": {
+            action: {"start": Fraction(0), "goal": Fraction(0), "partial": Fraction(1), "fail": Fraction(0)}
+            for action in actions
+        },
+        "fail": {
+            action: {"start": Fraction(0), "goal": Fraction(0), "partial": Fraction(0), "fail": Fraction(1)}
+            for action in actions
+        },
+    }
+    shock = {
+        "start": {
+            "safe": {"start": Fraction(0), "goal": Fraction(1, 2), "partial": Fraction(1, 2), "fail": Fraction(0)},
+            "risky": {"start": Fraction(0), "goal": Fraction(0), "partial": Fraction(0), "fail": Fraction(1)},
+            "wait": {"start": Fraction(1), "goal": Fraction(0), "partial": Fraction(0), "fail": Fraction(0)},
+        },
+        "goal": nominal["goal"],
+        "partial": nominal["partial"],
+        "fail": nominal["fail"],
+    }
+    kernels = {"nominal": nominal, "shock": shock}
+    targets = frozenset({"goal", "partial"})
+
+    risky_hits = robust_policy_hit_by_kernel(
+        states,
+        actions,
+        kernels,
+        policies["risky"],
+        "start",
+        targets,
+        1,
+    )
+
+    assert risky_hits == {"nominal": Fraction(1), "shock": Fraction(0)}
+    assert robust_policy_worst_case(risky_hits) == Fraction(0)
+
+    result = optimized_declared_policy_family_robust_hit(
+        states,
+        actions,
+        kernels,
+        policies,
+        "start",
+        targets,
+        1,
+    )
+    assert result.policy_name == "safe"
+    assert result.robust_worst_case_hit_probability == Fraction(1)
+    assert result.as_dict()["robust_worst_case_hit_probability"] == "1"
 
 
 def test_policy_dynamics_validation_retains_fact_and_hypothesis_outputs(tmp_path: Path) -> None:

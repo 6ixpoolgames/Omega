@@ -344,8 +344,11 @@ probability does not stand in for the whole continuation surface.
 The policy-conditioned path adds finite actions and deterministic policies over
 exact rational transition kernels. It retains generated `facts.json` separately
 from `hypotheses.json`, then checks stale/reflected policy loss and a
-policy-conditioned presentation/fact closure case, plus a non-factorization
-witness through a coarse support summary.
+policy-conditioned presentation/fact closure case, a non-factorization witness
+through a coarse support summary, and a declared policy-family robust hit
+calculation. The current joint robustness stress case uses nominal and
+correlated-shock kernels: target A and target B each have a robust declared
+policy, but no declared policy robustly attains the joint target.
 
 The source-parity path compiles equivalent derived-graph and finite-grid
 sources into the same finite relational IR surface, then checks matching

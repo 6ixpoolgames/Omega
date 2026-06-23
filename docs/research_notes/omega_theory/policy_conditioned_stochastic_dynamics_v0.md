@@ -93,6 +93,49 @@ same coarse support summary
 different policy-conditioned continuation fact
 ```
 
+### Correlated-Shock Joint Robustness
+
+A shared finite policy family is evaluated against two exact kernels:
+
+```text
+nominal;
+correlated_shock.
+```
+
+The declared target facts are:
+
+```text
+target A:      a_only or both_goal
+target B:      b_only or both_goal
+joint target:  both_goal
+```
+
+Within the same declared policy family, one policy robustly attains target A
+and another robustly attains target B:
+
+```text
+optimized robust hit(target A): 1
+optimized robust hit(target B): 1
+```
+
+But no declared policy robustly attains the joint target under the correlated
+shock:
+
+```text
+optimized robust hit(joint target): 0
+```
+
+This is an adapter-level witness for the narrow claim:
+
+```text
+individual robust attainability does not imply joint robust attainability
+under a shared correlated shock / resource constraint.
+```
+
+It is not a theorem about distributed agency, moral aggregation, or real-world
+policy safety. It is a retained exact-rational stress case for the joint
+viability direction.
+
 ## Reproduction
 
 Run:
@@ -126,6 +169,8 @@ The near-term point is narrower:
 policy-conditioned continuation facts can be hidden by stale abstraction;
 stale/reflected policy presentations can drop nonconstant hit-status facts;
 coarse support summaries do not determine policy-conditioned hit probability;
+individual robust policy attainability need not compose into joint robust
+attainability under correlated shocks;
 generated facts should be separated from hypothesis interpretation.
 ```
 

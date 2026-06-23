@@ -1,38 +1,51 @@
 {
   "claim_boundary": "Synthetic finite policy-conditioned stochastic dynamics only. This result does not validate MDP policy safety, stochastic control, empirical transition estimates, value, agency, alignment, or Omega.",
-  "command": ".\\.venv\\Scripts\\python.exe -m omega.validation.finite_relational_policy_dynamics --out-root .tmp\\finite_relational_policy_dynamics_closure",
+  "command": ".\\.venv\\Scripts\\python.exe -m omega.validation.finite_relational_policy_dynamics --out-root .tmp\\finite_relational_policy_dynamics_joint_robust",
   "date": "2026-06-23",
+  "status": "PASS",
+  "family_count": 3,
+  "all_hypotheses_passed": true,
   "families": [
     {
+      "family_id": "policy_stale_reflected_hit_loss",
       "description": "A deterministic policy in a tiny finite MDP loses target hit probability under perturbation; stale abstraction hides the loss, while reflected abstraction reports it.",
       "facts": {
+        "states": [
+          "x0",
+          "x1",
+          "goal"
+        ],
         "actions": [
           "move",
           "wait"
         ],
-        "after_hit_probability": "1/10",
-        "before_hit_probability": "9/10",
-        "horizon": 2,
-        "loss_amount": "4/5",
         "policy": {
-          "goal": "wait",
           "x0": "move",
-          "x1": "move"
+          "x1": "move",
+          "goal": "wait"
         },
-        "reflected_abstraction_hit_probability": "1/10",
+        "start": "x0",
+        "targets": [
+          "goal"
+        ],
+        "horizon": 2,
+        "before_hit_probability": "9/10",
+        "after_hit_probability": "1/10",
+        "loss_amount": "4/5",
         "stale_abstraction_hit_probability": "9/10",
+        "reflected_abstraction_hit_probability": "1/10",
         "hit_status_closure": {
           "threshold": "1/2",
           "horizon": 2,
           "before_hit_status_by_start": {
-            "goal": "high_hit",
             "x0": "high_hit",
-            "x1": "high_hit"
+            "x1": "high_hit",
+            "goal": "high_hit"
           },
           "after_hit_status_by_start": {
-            "goal": "high_hit",
             "x0": "low_hit",
-            "x1": "low_hit"
+            "x1": "low_hit",
+            "goal": "high_hit"
           },
           "closure_model_digest": "b6d03247fb97700115180727ecef0d2167e18e920a37b1263f7b53f1f02cebcd",
           "closure_audit_findings": [
@@ -46,98 +59,208 @@
           "stale_reflected_common_target_predicates": [
             "all_states"
           ]
-        },
-        "start": "x0",
-        "states": [
-          "x0",
-          "x1",
-          "goal"
-        ],
-        "targets": [
-          "goal"
-        ]
+        }
       },
-      "family_id": "policy_stale_reflected_hit_loss",
       "hypotheses": [
         {
-          "expected": true,
           "hypothesis_id": "stale_hides_policy_loss",
+          "statement": "The stale policy model reports the old hit probability after loss.",
+          "expected": true,
           "observed": true,
-          "passed": true,
-          "statement": "The stale policy model reports the old hit probability after loss."
+          "passed": true
         },
         {
-          "expected": true,
           "hypothesis_id": "reflected_reports_policy_loss",
+          "statement": "The reflected policy model reports the lower after-perturbation hit probability.",
+          "expected": true,
           "observed": true,
-          "passed": true,
-          "statement": "The reflected policy model reports the lower after-perturbation hit probability."
+          "passed": true
         },
         {
-          "expected": true,
           "hypothesis_id": "reflected_policy_hit_status_preserves_after_high_hit",
+          "statement": "The reflected policy hit-status presentation preserves the after-threshold hit target.",
+          "expected": true,
           "observed": true,
-          "passed": true,
-          "statement": "The reflected policy hit-status presentation preserves the after-threshold hit target."
+          "passed": true
         },
         {
-          "expected": true,
           "hypothesis_id": "stale_reflected_policy_hit_status_drops_after_high_hit",
+          "statement": "The stale/reflected policy hit-status family drops the after-threshold hit target from common facts.",
+          "expected": true,
           "observed": true,
-          "passed": true,
-          "statement": "The stale/reflected policy hit-status family drops the after-threshold hit target from common facts."
+          "passed": true
         }
-      ]
+      ],
+      "all_hypotheses_passed": true
     },
     {
+      "family_id": "policy_nonfactorization_same_support_summary",
       "description": "Two policy-conditioned stochastic dynamics have the same coarse support summary but different finite-horizon target hit probability.",
       "facts": {
-        "actions": [
-          "try",
-          "wait"
-        ],
-        "different_policy_hit_probability": true,
-        "high_hit_probability": "9/10",
-        "high_support_summary": {
-          "positive_edge_count": 4,
-          "reachable_state_count": 3,
-          "target_reachable": true
-        },
-        "horizon": 1,
-        "low_hit_probability": "3/5",
-        "low_support_summary": {
-          "positive_edge_count": 4,
-          "reachable_state_count": 3,
-          "target_reachable": true
-        },
-        "policy": {
-          "goal": "wait",
-          "start": "try",
-          "trap": "wait"
-        },
-        "same_support_summary": true,
-        "start": "start",
         "states": [
           "start",
           "goal",
           "trap"
         ],
+        "actions": [
+          "try",
+          "wait"
+        ],
+        "policy": {
+          "start": "try",
+          "goal": "wait",
+          "trap": "wait"
+        },
+        "start": "start",
         "targets": [
           "goal"
-        ]
+        ],
+        "horizon": 1,
+        "high_support_summary": {
+          "positive_edge_count": 4,
+          "reachable_state_count": 3,
+          "target_reachable": true
+        },
+        "low_support_summary": {
+          "positive_edge_count": 4,
+          "reachable_state_count": 3,
+          "target_reachable": true
+        },
+        "same_support_summary": true,
+        "high_hit_probability": "9/10",
+        "low_hit_probability": "3/5",
+        "different_policy_hit_probability": true
       },
-      "family_id": "policy_nonfactorization_same_support_summary",
       "hypotheses": [
         {
-          "expected": true,
           "hypothesis_id": "same_support_summary_not_policy_hit_probability",
+          "statement": "A coarse policy support summary does not determine finite-horizon policy hit probability.",
+          "expected": true,
           "observed": true,
-          "passed": true,
-          "statement": "A coarse policy support summary does not determine finite-horizon policy hit probability."
+          "passed": true
         }
-      ]
+      ],
+      "all_hypotheses_passed": true
+    },
+    {
+      "family_id": "policy_correlated_shock_joint_robustness",
+      "description": "A shared finite policy family has robust policies for each individual target, but correlated shock prevents any declared policy from robustly attaining the joint target.",
+      "facts": {
+        "states": [
+          "start",
+          "a_only",
+          "b_only",
+          "both_goal",
+          "fail"
+        ],
+        "actions": [
+          "protect_a",
+          "protect_b",
+          "split",
+          "wait"
+        ],
+        "start": "start",
+        "horizon": 1,
+        "kernel_names": [
+          "correlated_shock",
+          "nominal"
+        ],
+        "policy_names": [
+          "protect_a",
+          "protect_b",
+          "split",
+          "wait"
+        ],
+        "target_a": [
+          "a_only",
+          "both_goal"
+        ],
+        "target_b": [
+          "b_only",
+          "both_goal"
+        ],
+        "target_joint": [
+          "both_goal"
+        ],
+        "optimized_target_a": {
+          "policy_name": "protect_a",
+          "policy": {
+            "start": "protect_a",
+            "a_only": "wait",
+            "b_only": "wait",
+            "both_goal": "wait",
+            "fail": "wait"
+          },
+          "per_kernel_hit_probability": {
+            "correlated_shock": "1",
+            "nominal": "1"
+          },
+          "robust_worst_case_hit_probability": "1"
+        },
+        "optimized_target_b": {
+          "policy_name": "protect_b",
+          "policy": {
+            "start": "protect_b",
+            "a_only": "wait",
+            "b_only": "wait",
+            "both_goal": "wait",
+            "fail": "wait"
+          },
+          "per_kernel_hit_probability": {
+            "correlated_shock": "1",
+            "nominal": "1"
+          },
+          "robust_worst_case_hit_probability": "1"
+        },
+        "optimized_target_joint": {
+          "policy_name": "protect_a",
+          "policy": {
+            "start": "protect_a",
+            "a_only": "wait",
+            "b_only": "wait",
+            "both_goal": "wait",
+            "fail": "wait"
+          },
+          "per_kernel_hit_probability": {
+            "correlated_shock": "0",
+            "nominal": "1"
+          },
+          "robust_worst_case_hit_probability": "0"
+        },
+        "individual_targets_have_robust_policy": true,
+        "joint_target_has_robust_policy": false
+      },
+      "hypotheses": [
+        {
+          "hypothesis_id": "target_a_has_robust_policy_under_correlated_shock",
+          "statement": "Within the declared shared policy family, some policy robustly hits target A across the nominal and correlated-shock kernels.",
+          "expected": true,
+          "observed": true,
+          "passed": true
+        },
+        {
+          "hypothesis_id": "target_b_has_robust_policy_under_correlated_shock",
+          "statement": "Within the declared shared policy family, some policy robustly hits target B across the nominal and correlated-shock kernels.",
+          "expected": true,
+          "observed": true,
+          "passed": true
+        },
+        {
+          "hypothesis_id": "joint_target_has_no_robust_policy_under_correlated_shock",
+          "statement": "No declared policy robustly hits the joint target across the nominal and correlated-shock kernels.",
+          "expected": true,
+          "observed": true,
+          "passed": true
+        },
+        {
+          "hypothesis_id": "individual_robust_policy_success_not_joint_robust_policy_success",
+          "statement": "Robust attainability of each individual target does not imply robust attainability of the joint target under this shared shock.",
+          "expected": true,
+          "observed": true,
+          "passed": true
+        }
+      ],
+      "all_hypotheses_passed": true
     }
-  ],
-  "family_count": 2,
-  "status": "PASS"
+  ]
 }

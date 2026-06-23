@@ -24,6 +24,29 @@ Policy = dict[str, str]
 
 
 @dataclass(frozen=True)
+class RobustPolicyFamilyResult:
+    """Best deterministic policy in a declared family under kernel ambiguity."""
+
+    policy_name: str
+    policy: Policy
+    per_kernel_hit_probability: dict[str, Fraction]
+    robust_worst_case_hit_probability: Fraction
+
+    def as_dict(self) -> dict[str, object]:
+        return {
+            "policy_name": self.policy_name,
+            "policy": self.policy,
+            "per_kernel_hit_probability": {
+                name: fraction_to_text(probability)
+                for name, probability in self.per_kernel_hit_probability.items()
+            },
+            "robust_worst_case_hit_probability": fraction_to_text(
+                self.robust_worst_case_hit_probability
+            ),
+        }
+
+
+@dataclass(frozen=True)
 class HypothesisCheck:
     """A hypothesis evaluated after generated finite facts are computed."""
 
@@ -75,6 +98,7 @@ def generate_policy_dynamics_study() -> tuple[PolicyDynamicsFamily, ...]:
     return (
         _policy_stale_reflected_hit_loss_family(),
         _policy_nonfactorization_same_support_summary_family(),
+        _policy_correlated_shock_joint_robustness_family(),
     )
 
 
@@ -151,6 +175,81 @@ def policy_hit_probability_within_horizon(
 
     transition = induced_transition_kernel(states, actions, action_kernel, policy)
     return hit_probability_within_horizon(states, transition, start, targets, horizon)
+
+
+def robust_policy_hit_by_kernel(
+    states: tuple[str, ...],
+    actions: tuple[str, ...],
+    kernels: dict[str, ActionKernel],
+    policy: Policy,
+    start: str,
+    targets: frozenset[str],
+    horizon: int,
+) -> dict[str, Fraction]:
+    """Policy hit probabilities for each declared kernel in an ambiguity set."""
+
+    if not kernels:
+        raise ValueError("kernel ambiguity set must be nonempty")
+    return {
+        name: policy_hit_probability_within_horizon(
+            states,
+            actions,
+            kernel,
+            policy,
+            start,
+            targets,
+            horizon,
+        )
+        for name, kernel in sorted(kernels.items())
+    }
+
+
+def robust_policy_worst_case(hits: dict[str, Fraction]) -> Fraction:
+    """Worst-case hit probability over a nonempty kernel ambiguity set."""
+
+    if not hits:
+        raise ValueError("robust policy hit map must be nonempty")
+    return min(hits.values())
+
+
+def optimized_declared_policy_family_robust_hit(
+    states: tuple[str, ...],
+    actions: tuple[str, ...],
+    kernels: dict[str, ActionKernel],
+    policies: dict[str, Policy],
+    start: str,
+    targets: frozenset[str],
+    horizon: int,
+) -> RobustPolicyFamilyResult:
+    """Best worst-case hit probability over a declared deterministic policy family."""
+
+    if not policies:
+        raise ValueError("declared policy family must be nonempty")
+    best: RobustPolicyFamilyResult | None = None
+    for policy_name, policy in sorted(policies.items()):
+        hits = robust_policy_hit_by_kernel(
+            states,
+            actions,
+            kernels,
+            policy,
+            start,
+            targets,
+            horizon,
+        )
+        result = RobustPolicyFamilyResult(
+            policy_name=policy_name,
+            policy=policy,
+            per_kernel_hit_probability=hits,
+            robust_worst_case_hit_probability=robust_policy_worst_case(hits),
+        )
+        if (
+            best is None
+            or result.robust_worst_case_hit_probability
+            > best.robust_worst_case_hit_probability
+        ):
+            best = result
+    assert best is not None
+    return best
 
 
 def support_summary_for_policy_kernel(
@@ -484,6 +583,141 @@ def _policy_nonfactorization_same_support_summary_family() -> PolicyDynamicsFami
     )
 
 
+def _policy_correlated_shock_joint_robustness_family() -> PolicyDynamicsFamily:
+    states = ("start", "a_only", "b_only", "both_goal", "fail")
+    actions = ("protect_a", "protect_b", "split", "wait")
+    policies = {
+        "protect_a": _constant_start_policy(states, "protect_a"),
+        "protect_b": _constant_start_policy(states, "protect_b"),
+        "split": _constant_start_policy(states, "split"),
+        "wait": _constant_start_policy(states, "wait"),
+    }
+    kernels = {
+        "nominal": _shared_resource_joint_kernel(
+            states,
+            actions,
+            protect_a_target="both_goal",
+            protect_b_target="both_goal",
+            split_target="both_goal",
+            wait_target="fail",
+        ),
+        "correlated_shock": _shared_resource_joint_kernel(
+            states,
+            actions,
+            protect_a_target="a_only",
+            protect_b_target="b_only",
+            split_target="fail",
+            wait_target="fail",
+        ),
+    }
+    start = "start"
+    horizon = 1
+    target_a = frozenset({"a_only", "both_goal"})
+    target_b = frozenset({"b_only", "both_goal"})
+    target_joint = frozenset({"both_goal"})
+
+    robust_a = optimized_declared_policy_family_robust_hit(
+        states,
+        actions,
+        kernels,
+        policies,
+        start,
+        target_a,
+        horizon,
+    )
+    robust_b = optimized_declared_policy_family_robust_hit(
+        states,
+        actions,
+        kernels,
+        policies,
+        start,
+        target_b,
+        horizon,
+    )
+    robust_joint = optimized_declared_policy_family_robust_hit(
+        states,
+        actions,
+        kernels,
+        policies,
+        start,
+        target_joint,
+        horizon,
+    )
+    facts = {
+        "states": list(states),
+        "actions": list(actions),
+        "start": start,
+        "horizon": horizon,
+        "kernel_names": sorted(kernels),
+        "policy_names": sorted(policies),
+        "target_a": sorted(target_a),
+        "target_b": sorted(target_b),
+        "target_joint": sorted(target_joint),
+        "optimized_target_a": robust_a.as_dict(),
+        "optimized_target_b": robust_b.as_dict(),
+        "optimized_target_joint": robust_joint.as_dict(),
+        "individual_targets_have_robust_policy": (
+            robust_a.robust_worst_case_hit_probability == 1
+            and robust_b.robust_worst_case_hit_probability == 1
+        ),
+        "joint_target_has_robust_policy": (
+            robust_joint.robust_worst_case_hit_probability == 1
+        ),
+    }
+    hypotheses = (
+        HypothesisCheck(
+            hypothesis_id="target_a_has_robust_policy_under_correlated_shock",
+            statement=(
+                "Within the declared shared policy family, some policy robustly "
+                "hits target A across the nominal and correlated-shock kernels."
+            ),
+            expected=True,
+            observed=robust_a.robust_worst_case_hit_probability == 1,
+        ),
+        HypothesisCheck(
+            hypothesis_id="target_b_has_robust_policy_under_correlated_shock",
+            statement=(
+                "Within the declared shared policy family, some policy robustly "
+                "hits target B across the nominal and correlated-shock kernels."
+            ),
+            expected=True,
+            observed=robust_b.robust_worst_case_hit_probability == 1,
+        ),
+        HypothesisCheck(
+            hypothesis_id="joint_target_has_no_robust_policy_under_correlated_shock",
+            statement=(
+                "No declared policy robustly hits the joint target across the "
+                "nominal and correlated-shock kernels."
+            ),
+            expected=True,
+            observed=robust_joint.robust_worst_case_hit_probability == 0,
+        ),
+        HypothesisCheck(
+            hypothesis_id="individual_robust_policy_success_not_joint_robust_policy_success",
+            statement=(
+                "Robust attainability of each individual target does not imply "
+                "robust attainability of the joint target under this shared shock."
+            ),
+            expected=True,
+            observed=(
+                robust_a.robust_worst_case_hit_probability == 1
+                and robust_b.robust_worst_case_hit_probability == 1
+                and robust_joint.robust_worst_case_hit_probability == 0
+            ),
+        ),
+    )
+    return PolicyDynamicsFamily(
+        family_id="policy_correlated_shock_joint_robustness",
+        description=(
+            "A shared finite policy family has robust policies for each "
+            "individual target, but correlated shock prevents any declared "
+            "policy from robustly attaining the joint target."
+        ),
+        facts=facts,
+        hypotheses=hypotheses,
+    )
+
+
 def _line_policy_kernel(*, goal_probability: Fraction) -> ActionKernel:
     if goal_probability < 0 or goal_probability > 1:
         raise ValueError("goal_probability must be in [0, 1]")
@@ -525,6 +759,49 @@ def _one_step_policy_kernel(*, goal_probability: Fraction) -> ActionKernel:
             "try": {"start": Fraction(0), "goal": Fraction(0), "trap": Fraction(1)},
             "wait": {"start": Fraction(0), "goal": Fraction(0), "trap": Fraction(1)},
         },
+    }
+
+
+def _constant_start_policy(states: tuple[str, ...], start_action: str) -> Policy:
+    return {
+        state: (start_action if state == "start" else "wait")
+        for state in states
+    }
+
+
+def _shared_resource_joint_kernel(
+    states: tuple[str, ...],
+    actions: tuple[str, ...],
+    *,
+    protect_a_target: str,
+    protect_b_target: str,
+    split_target: str,
+    wait_target: str,
+) -> ActionKernel:
+    action_targets = {
+        "protect_a": protect_a_target,
+        "protect_b": protect_b_target,
+        "split": split_target,
+        "wait": wait_target,
+    }
+    return {
+        state: {
+            action: _point_mass(
+                states,
+                action_targets[action] if state == "start" else state,
+            )
+            for action in actions
+        }
+        for state in states
+    }
+
+
+def _point_mass(states: tuple[str, ...], target: str) -> dict[str, Fraction]:
+    if target not in states:
+        raise ValueError(f"target {target!r} is not a declared state")
+    return {
+        state: Fraction(1) if state == target else Fraction(0)
+        for state in states
     }
 
 

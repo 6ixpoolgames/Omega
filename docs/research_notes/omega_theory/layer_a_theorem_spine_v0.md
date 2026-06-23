@@ -351,6 +351,10 @@ Fixed-policy action kernels induce ordinary rational kernels.
 Finite-horizon hit probabilities are nonnegative, bounded by 1, and monotone
 in the horizon.
 Equal selected policy rows imply equal induced hit profiles.
+The finite adapter also exercises declared policy-family robust hit
+calculation over nominal/correlated-shock kernels: individual targets can each
+be robustly attainable while the joint target is not robustly attainable by any
+declared policy in the shared family.
 ```
 
 What this blocks:
@@ -364,6 +368,8 @@ separate marginal panels treated as joint recovery;
 per-channel recovery treated as a uniform robust decoder guarantee;
 high expected recovery treated as worst-case recovery;
 one selected policy-hit scalar treated as the whole continuation profile.
+individual robust policy attainability treated as automatic joint robust
+attainability under correlated shocks.
 ```
 
 Public phrase:
