@@ -564,3 +564,52 @@ New generated cases:
 | --- | --- | --- |
 | generated_observed_word_count_collapses_branching | `count_ok` | Fully branching two-state dynamics has state-path and extendable profiles `[2, 4, 8]`, but a constant observation collapses the observed-word profile to `[1, 1, 1]`. |
 | generated_observed_word_count_labeled_cycle | `count_ok` | A labeled two-state recurrent cycle keeps visible alternating words with observed-word profile `[2, 2, 2]`. |
+
+## Addendum: Closure Discovery
+
+Run root:
+
+```text
+.tmp/finite_relational_closure_discovery_final/20260624_013131
+```
+
+Command:
+
+```powershell
+./.venv/Scripts/python.exe -m omega.validation.finite_relational_closure_discovery `
+  --out-root .tmp/finite_relational_closure_discovery
+```
+
+Result:
+
+```text
+closure discovery: PASS
+families: 3
+cases: 136
+nonconstant-surplus cases: 50
+collapse cases: 86
+```
+
+Family summary:
+
+| Family | Cases | Nonconstant surplus | Collapse |
+| --- | ---: | ---: | ---: |
+| predicate_seed_partition_sweep | 8 | 6 | 2 |
+| reachability_seed_graph_sweep | 64 | 32 | 32 |
+| viability_seed_graph_sweep | 64 | 12 | 52 |
+
+Semantic repair:
+
+```text
+closure discovery does not predeclare expected surplus facts. It computes
+generated-universe closure over small finite seed families and then records
+whether nonconstant surplus facts appear or collapse.
+```
+
+Claim boundary:
+
+```text
+This is finite adapter-relative discovery. It does not validate a real
+substrate, establish generic positive content at scale, or prove value,
+agency, identity, valuerhood, or Omega.
+```

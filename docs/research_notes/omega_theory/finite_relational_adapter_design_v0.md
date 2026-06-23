@@ -765,6 +765,28 @@ The generator is intentionally finite and boring. It does not discover empirical
 truth. It checks that the adapter can produce and retain generated failure-mode
 cases without relying only on hand-written fixtures.
 
+Closure discovery is a separate generated-universe path:
+
+```powershell
+.\.venv\Scripts\python.exe -m omega.validation.finite_relational_closure_discovery `
+  --out-root .tmp\finite_relational_closure_discovery
+```
+
+Unlike the expectation-pinned closure hardening fixtures, this path does not
+predeclare expected surplus facts. It generates small seed families, computes
+derive closure, then classifies whether nonconstant surplus target facts appear
+or collapse:
+
+```text
+predicate_seed_partition_sweep;
+reachability_seed_graph_sweep;
+viability_seed_graph_sweep.
+```
+
+This is still finite adapter-relative discovery, not empirical validation. Its
+job is to answer the generate-versus-certify question on retained small
+substrates.
+
 Controlled synthetic empirics are a separate path:
 
 ```powershell

@@ -286,6 +286,21 @@ positive transfer and a missing-return negative control, plus transported
 endpoint-role facts under a carrier-transfer contract and a failed-transfer
 label-closure control.
 
+The closure-discovery path is distinct from the expectation-pinned
+generated/adversarial closure fixtures:
+
+```powershell
+.\.venv\Scripts\python.exe -m omega.validation.finite_relational_closure_discovery `
+  --out-root .tmp\finite_relational_closure_discovery
+```
+
+It generates all small seed cases in three finite families, computes
+presentation/fact derive closure, and classifies whether nonconstant surplus
+facts appear without predeclaring expected surplus. The current retained sweep
+covers predicate seeds, reachability-derived seeds, and viability-derived
+seeds. It reports 136 total cases, with both nonconstant-surplus and collapse
+controls.
+
 The controlled empirical path enumerates fixed small finite families and reports
 rates/frequencies for selected proxy failures:
 

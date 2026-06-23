@@ -129,6 +129,10 @@ derive the same observation target and matching presentation/fact closure
 observed payloads after state renaming.
 graph-pair transfer characterization now enumerates target graph dynamics
 while holding source carrier and endpoint correspondence fixed.
+closure discovery now runs generated-universe derive closure without
+predeclared expected surplus facts. The retained Batch F sweep covers predicate
+seeds, reachability-derived seeds, and viability-derived seeds, with both
+nonconstant-surplus and collapse controls.
 ```
 
 The retained validation summary is:
@@ -142,6 +146,7 @@ That retained summary records:
 ```text
 15 fixture smoke cases;
 33 generated/adversarial cases;
+136 closure-discovery cases;
 source digests where a source compiler is used;
 compiled/model digests;
 audit counts;

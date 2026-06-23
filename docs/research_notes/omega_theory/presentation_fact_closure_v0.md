@@ -231,6 +231,47 @@ seed = all_states:
   only constant predicate facts survive and no visible pair is forced.
 ```
 
+## Closure Discovery Path
+
+The finite relational adapter now includes a discovery runner over this same
+derive-mode surface:
+
+```powershell
+.\.venv\Scripts\python.exe -m omega.validation.finite_relational_closure_discovery `
+  --out-root .tmp\finite_relational_closure_discovery
+```
+
+This runner does not predeclare expected surplus facts. It generates small
+families, computes closure, and classifies the result after the fact:
+
+```text
+nonconstant_surplus:
+  closure forced at least one nonconstant target fact beyond the seed.
+
+collapse:
+  no nonconstant target fact survived beyond the seed.
+```
+
+The first retained sweep covers:
+
+```text
+all Boolean predicate seeds over three states;
+all loop-free three-state graph reachability seeds;
+all loop-free three-state graph finite-viability seeds.
+```
+
+Current retained totals:
+
+```text
+136 cases;
+50 nonconstant-surplus cases;
+86 collapse cases.
+```
+
+This is the first adapter-side answer to the generate-versus-certify question.
+It is still finite and adapter-relative; it does not establish generic
+substrate-independent generation.
+
 ## Finite X2 Pilot
 
 The example module instantiates the closure surface on the existing four-state
