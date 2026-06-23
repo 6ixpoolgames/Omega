@@ -10,6 +10,7 @@ from omega.adapters.finite_relational.facts import (
     bounded_recovery_facts,
     carrier_certificate_facts,
     carrier_transfer_facts,
+    dynamic_presentation_equivariance_facts,
     nonfactorization_witnesses_for_predicate,
     presentation_violations,
     presentation_fact_closure_facts,
@@ -66,6 +67,8 @@ def run_audit(model: FiniteRelationalModel, audit: dict[str, Any]) -> AuditResul
         return _presentation_fact_closure(model, audit)
     if kind == "target_scramble_sensitivity":
         return _target_scramble_sensitivity(model, audit)
+    if kind == "dynamic_presentation_equivariance":
+        return _dynamic_presentation_equivariance(model, audit)
     raise SchemaError(f"unknown audit kind: {kind}")
 
 
@@ -293,6 +296,25 @@ def _target_scramble_sensitivity(
         observed,
         "sensitive",
         "sensitive",
+    )
+
+
+def _dynamic_presentation_equivariance(
+    model: FiniteRelationalModel,
+    audit: dict[str, Any],
+) -> AuditResult:
+    observed = dynamic_presentation_equivariance_facts(
+        model,
+        transition=_role(model, audit, "transition"),
+        presentation=_role(model, audit, "presentation"),
+        abstract_transition=_role(model, audit, "abstract_transition"),
+    )
+    return _result(
+        audit,
+        "dynamic_presentation_equivariance",
+        observed,
+        "equivariant",
+        "equivariant",
     )
 
 

@@ -230,6 +230,111 @@ def test_target_scramble_sensitivity_can_fail_when_observation_is_decorative() -
     assert result["observed"]["scrambled_recoverable"] is False
 
 
+def test_dynamic_presentation_equivariance_accepts_projected_transition() -> None:
+    model = load_model(
+        {
+            "model_id": "inline_dynamic_equivariance_pass",
+            "domains": {
+                "state": ["left", "right"],
+                "role": ["L", "R"],
+            },
+            "relations": {
+                "next": {
+                    "domains": ["state", "state"],
+                    "tuples": [["left", "right"], ["right", "left"]],
+                },
+                "role_next": {
+                    "domains": ["role", "role"],
+                    "tuples": [["L", "R"], ["R", "L"]],
+                },
+            },
+            "functions": {
+                "role_presentation": {
+                    "domain": "state",
+                    "codomain": "role",
+                    "mapping": {"left": "L", "right": "R"},
+                },
+            },
+            "audits": [
+                {
+                    "id": "projected_role_dynamics_commutes",
+                    "kind": "dynamic_presentation_equivariance",
+                    "transition": "next",
+                    "presentation": "role_presentation",
+                    "abstract_transition": "role_next",
+                    "expect": "equivariant",
+                }
+            ],
+            "provenance": {
+                "declared_before_run": True,
+                "source": "inline test",
+                "claim_boundary": "dynamic equivariance unit test",
+            },
+        }
+    )
+    [result] = [result.as_dict() for result in run_declared_audits(model)]
+
+    assert result["passed"] is True
+    assert result["finding"] == "equivariant"
+    assert result["observed"]["preserves_steps"] is True
+    assert result["observed"]["reflects_steps"] is True
+    assert result["observed"]["projected_exact_edges"] == [("L", "R"), ("R", "L")]
+    assert result["observed"]["missing_projected_edges"] == []
+    assert result["observed"]["phantom_abstract_edges"] == []
+
+
+def test_dynamic_presentation_equivariance_rejects_missing_and_phantom_edges() -> None:
+    model = load_model(
+        {
+            "model_id": "inline_dynamic_equivariance_fail",
+            "domains": {
+                "state": ["left", "right"],
+                "role": ["L", "R"],
+            },
+            "relations": {
+                "next": {
+                    "domains": ["state", "state"],
+                    "tuples": [["left", "right"], ["right", "left"]],
+                },
+                "bad_role_next": {
+                    "domains": ["role", "role"],
+                    "tuples": [["L", "R"], ["L", "L"]],
+                },
+            },
+            "functions": {
+                "role_presentation": {
+                    "domain": "state",
+                    "codomain": "role",
+                    "mapping": {"left": "L", "right": "R"},
+                },
+            },
+            "audits": [
+                {
+                    "id": "bad_role_dynamics_does_not_commute",
+                    "kind": "dynamic_presentation_equivariance",
+                    "transition": "next",
+                    "presentation": "role_presentation",
+                    "abstract_transition": "bad_role_next",
+                    "expect": "not_equivariant",
+                }
+            ],
+            "provenance": {
+                "declared_before_run": True,
+                "source": "inline test",
+                "claim_boundary": "dynamic non-equivariance unit test",
+            },
+        }
+    )
+    [result] = [result.as_dict() for result in run_declared_audits(model)]
+
+    assert result["passed"] is True
+    assert result["finding"] == "not_equivariant"
+    assert result["observed"]["preserves_steps"] is False
+    assert result["observed"]["reflects_steps"] is False
+    assert result["observed"]["missing_projected_edges"] == [("R", "L")]
+    assert result["observed"]["phantom_abstract_edges"] == [("L", "L")]
+
+
 def test_presentation_fact_closure_audit_checks_visible_pairs_and_targets() -> None:
     model = load_model(
         {

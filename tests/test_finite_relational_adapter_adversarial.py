@@ -22,6 +22,8 @@ REQUIRED_CASE_IDS = {
     "generated_recovery_fact_closure",
     "generated_target_scramble_sensitivity",
     "generated_decorative_target_scramble_control",
+    "generated_dynamic_equivariance",
+    "generated_dynamic_non_equivariance",
     "generated_stale_reflected_fact_closure",
     "generated_multi_presentation_fact_closure",
     "generated_crosscutting_presentation_closure",
@@ -65,6 +67,10 @@ def test_generated_adversarial_cases_cover_adapter_failure_modes() -> None:
     ]
     assert by_id["generated_decorative_target_scramble_control"].summary()["findings"] == [
         "not_sensitive"
+    ]
+    assert by_id["generated_dynamic_equivariance"].summary()["findings"] == ["equivariant"]
+    assert by_id["generated_dynamic_non_equivariance"].summary()["findings"] == [
+        "not_equivariant"
     ]
     assert by_id["generated_stale_reflected_fact_closure"].summary()["findings"] == [
         "closure_ok",
@@ -228,6 +234,25 @@ def test_generated_target_scramble_sensitivity_cases_gate_decorative_targets() -
     assert decorative["observed"]["successful_decoders_changed"] is False
     assert decorative["observed"]["target_recoverable"] is False
     assert decorative["observed"]["scrambled_recoverable"] is False
+
+
+def test_generated_dynamic_equivariance_cases_check_projected_edges() -> None:
+    cases = {case.case_id: case for case in generate_adversarial_cases()}
+    equivariant = cases["generated_dynamic_equivariance"].audit_results[0].as_dict()
+    broken = cases["generated_dynamic_non_equivariance"].audit_results[0].as_dict()
+
+    assert equivariant["passed"] is True
+    assert equivariant["finding"] == "equivariant"
+    assert equivariant["observed"]["preserves_steps"] is True
+    assert equivariant["observed"]["reflects_steps"] is True
+    assert equivariant["observed"]["projected_exact_edges"] == [("L", "R"), ("R", "L")]
+
+    assert broken["passed"] is True
+    assert broken["finding"] == "not_equivariant"
+    assert broken["observed"]["preserves_steps"] is False
+    assert broken["observed"]["reflects_steps"] is False
+    assert broken["observed"]["missing_projected_edges"] == [("R", "L")]
+    assert broken["observed"]["phantom_abstract_edges"] == [("L", "L")]
 
 
 def test_generated_stale_reflected_fact_closure_case_has_time_indexed_intersection() -> None:

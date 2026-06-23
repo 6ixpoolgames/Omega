@@ -182,6 +182,11 @@ Run root:
   declared target against a supplied scrambled/erased target under the same
   observation and decoder family. The generated suite includes both a
   `sensitive` case and a decorative-target `not_sensitive` control.
+- Dynamic presentation equivariance now checks whether a declared abstract
+  transition is exactly the projection of exact dynamics under a presentation.
+  The generated suite includes both an `equivariant` case and a
+  `not_equivariant` control with one missing projected edge and one phantom
+  abstract edge.
 - `carrier_transfer_pass` and `carrier_transfer_fail_missing_return` exercise
   the adapter-level transfer contract. The negative case preserves endpoint
   correspondence but rejects transfer because the target carrier loses return
@@ -225,3 +230,42 @@ New generated cases:
 | --- | --- | --- |
 | generated_target_scramble_sensitivity | `sensitive` | Scrambling the declared target changes recoverability and the successful decoder surface. |
 | generated_decorative_target_scramble_control | `not_sensitive` | Declared target and scrambled target are both unrecoverable under a constant observation. |
+
+## Addendum: Dynamic Presentation Equivariance
+
+Run roots:
+
+```text
+.tmp/finite_relational_adapter_smoke_dynamic_equivariance/20260623_211711
+.tmp/finite_relational_adapter_adversarial_dynamic_equivariance/20260623_211711
+```
+
+Commands:
+
+```powershell
+./.venv/Scripts/python.exe -m pytest `
+  tests/test_finite_relational_adapter.py `
+  tests/test_finite_relational_adapter_adversarial.py `
+  -q --basetemp .tmp/pytest-dynamic-equivariance -p no:cacheprovider
+
+./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_smoke `
+  --out-root .tmp/finite_relational_adapter_smoke_dynamic_equivariance
+
+./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_adversarial `
+  --out-root .tmp/finite_relational_adapter_adversarial_dynamic_equivariance
+```
+
+Result:
+
+```text
+focused adapter/adversarial pytest: 34 passed
+adapter smoke: PASS, 15 fixtures, focused pytest 90 passed
+generated/adversarial validation: PASS, 21 cases
+```
+
+New generated cases:
+
+| Case | Finding | Meaning |
+| --- | --- | --- |
+| generated_dynamic_equivariance | `equivariant` | Abstract label dynamics exactly matches the projection of exact state dynamics. |
+| generated_dynamic_non_equivariance | `not_equivariant` | Abstract label dynamics misses one projected edge and adds one phantom edge. |

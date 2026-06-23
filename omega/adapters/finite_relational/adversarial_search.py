@@ -63,6 +63,8 @@ def generate_adversarial_cases() -> tuple[GeneratedAdapterCase, ...]:
         _generated_recovery_fact_closure_case(),
         _generated_target_scramble_sensitivity_case(),
         _generated_decorative_target_scramble_control_case(),
+        _generated_dynamic_equivariance_case(),
+        _generated_dynamic_non_equivariance_case(),
         _generated_stale_reflected_fact_closure_case(),
         _generated_multi_presentation_fact_closure_case(),
         _generated_crosscutting_presentation_closure_case(),
@@ -630,6 +632,101 @@ def _generated_decorative_target_scramble_control_case() -> GeneratedAdapterCase
         ),
     }
     return _validated_ir_case("generated_decorative_target_scramble_control", model)
+
+
+def _generated_dynamic_equivariance_case() -> GeneratedAdapterCase:
+    model = {
+        "model_id": "generated_dynamic_equivariance",
+        "schema_version": "0.1.0",
+        "carrier": ["left", "right"],
+        "domains": {
+            "state": ["left", "right"],
+            "role": ["L", "R"],
+        },
+        "relations": {
+            "next": {
+                "domains": ["state", "state"],
+                "tuples": [["left", "right"], ["right", "left"]],
+            },
+            "role_next": {
+                "domains": ["role", "role"],
+                "tuples": [["L", "R"], ["R", "L"]],
+            },
+        },
+        "functions": {
+            "role_presentation": {
+                "domain": "state",
+                "codomain": "role",
+                "mapping": {
+                    "left": "L",
+                    "right": "R",
+                },
+            },
+        },
+        "audits": [
+            {
+                "id": "generated_projected_role_dynamics_commutes",
+                "kind": "dynamic_presentation_equivariance",
+                "transition": "next",
+                "presentation": "role_presentation",
+                "abstract_transition": "role_next",
+                "expect": "equivariant",
+            }
+        ],
+        "provenance": _generated_provenance(
+            "Generated finite relational case: projected role dynamics includes "
+            "exactly the transition edges induced by the state-level dynamics "
+            "and presentation."
+        ),
+    }
+    return _validated_ir_case("generated_dynamic_equivariance", model)
+
+
+def _generated_dynamic_non_equivariance_case() -> GeneratedAdapterCase:
+    model = {
+        "model_id": "generated_dynamic_non_equivariance",
+        "schema_version": "0.1.0",
+        "carrier": ["left", "right"],
+        "domains": {
+            "state": ["left", "right"],
+            "role": ["L", "R"],
+        },
+        "relations": {
+            "next": {
+                "domains": ["state", "state"],
+                "tuples": [["left", "right"], ["right", "left"]],
+            },
+            "bad_role_next": {
+                "domains": ["role", "role"],
+                "tuples": [["L", "R"], ["L", "L"]],
+            },
+        },
+        "functions": {
+            "role_presentation": {
+                "domain": "state",
+                "codomain": "role",
+                "mapping": {
+                    "left": "L",
+                    "right": "R",
+                },
+            },
+        },
+        "audits": [
+            {
+                "id": "generated_bad_role_dynamics_does_not_commute",
+                "kind": "dynamic_presentation_equivariance",
+                "transition": "next",
+                "presentation": "role_presentation",
+                "abstract_transition": "bad_role_next",
+                "expect": "not_equivariant",
+            }
+        ],
+        "provenance": _generated_provenance(
+            "Generated finite relational control: abstract role dynamics both "
+            "misses a projected state transition and adds a phantom role edge."
+        ),
+    }
+    return _validated_ir_case("generated_dynamic_non_equivariance", model)
 
 
 def _generated_stale_reflected_fact_closure_case() -> GeneratedAdapterCase:

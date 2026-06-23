@@ -328,6 +328,12 @@ target_scramble_sensitivity:
   This is a provenance gate against decorative targets; it does not prove that
   the target is empirically correct or value-bearing.
 
+dynamic_presentation_equivariance:
+  a declared state transition, presentation, and abstract transition are
+  checked for dynamics commutation. Every exact transition edge must project to
+  an abstract edge, and every abstract edge must be induced by some exact edge.
+  The payload separates missing projected edges from phantom abstract edges.
+
 presentation_fact_closure:
   a declared presentation family is checked for common visible pairs and
   common target predicates. The audit can require selected pairs or targets to

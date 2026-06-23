@@ -102,6 +102,7 @@ from omega.adapters.finite_relational.finite_grid import (
 from omega.adapters.finite_relational.facts import (
     common_target_predicates,
     common_visible_pairs,
+    dynamic_presentation_equivariance_facts,
     predicate_is_constant,
     predicate_respects_presentation,
     presentation_fact_closure_facts,
@@ -193,6 +194,7 @@ __all__ = [
     "compiled_derivation_contract",
     "common_target_predicates",
     "common_visible_pairs",
+    "dynamic_presentation_equivariance_facts",
     "compose_coarse_decoder_through_fine",
     "deterministic_layer_summary",
     "distribution_after_horizon",

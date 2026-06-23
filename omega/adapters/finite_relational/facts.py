@@ -72,6 +72,69 @@ def presentation_violations(
     return sorted(merges & forbidden_pairs)
 
 
+def dynamic_presentation_equivariance_facts(
+    model: FiniteRelationalModel,
+    *,
+    transition: str,
+    presentation: str,
+    abstract_transition: str,
+) -> dict[str, object]:
+    """Check whether a presentation commutes with transition structure.
+
+    The audit is exact and finite. Preservation says every exact transition
+    edge projects to an abstract transition edge. Reflection says every
+    declared abstract edge is realized by at least one exact transition edge
+    between states in the corresponding presentation fibers.
+    """
+
+    exact_edges = binary_relation(model, transition)
+    abstract_edges = binary_relation(model, abstract_transition)
+    transition_relation = model.relations[transition]
+    abstract_relation = model.relations[abstract_transition]
+    if transition_relation.domains[0] != transition_relation.domains[1]:
+        raise SchemaError(
+            "dynamic presentation equivariance requires a transition over one domain: "
+            f"{transition_relation.domains}"
+        )
+    if abstract_relation.domains[0] != abstract_relation.domains[1]:
+        raise SchemaError(
+            "dynamic presentation equivariance requires an abstract transition over one domain: "
+            f"{abstract_relation.domains}"
+        )
+    function = model.functions[presentation]
+    if function.codomain is not None and abstract_relation.domains[0] != function.codomain:
+        raise SchemaError(
+            "dynamic presentation equivariance abstract transition domain must "
+            f"match presentation codomain: {abstract_relation.domains[0]} != {function.codomain}"
+        )
+    presentation_map = _total_function_mapping(
+        model,
+        presentation,
+        domain=transition_relation.domains[0],
+    )
+    projected_exact_edges = {
+        (presentation_map[source], presentation_map[target])
+        for source, target in exact_edges
+    }
+    missing_projected_edges = sorted(projected_exact_edges - abstract_edges)
+    phantom_abstract_edges = sorted(abstract_edges - projected_exact_edges)
+    return {
+        "equivariant": not missing_projected_edges and not phantom_abstract_edges,
+        "preserves_steps": not missing_projected_edges,
+        "reflects_steps": not phantom_abstract_edges,
+        "transition": transition,
+        "presentation": presentation,
+        "abstract_transition": abstract_transition,
+        "exact_edge_count": len(exact_edges),
+        "projected_exact_edge_count": len(projected_exact_edges),
+        "abstract_edge_count": len(abstract_edges),
+        "projected_exact_edges": sorted(projected_exact_edges),
+        "abstract_edges": sorted(abstract_edges),
+        "missing_projected_edges": missing_projected_edges,
+        "phantom_abstract_edges": phantom_abstract_edges,
+    }
+
+
 def nonfactorization_witnesses_for_predicate(
     model: FiniteRelationalModel,
     *,

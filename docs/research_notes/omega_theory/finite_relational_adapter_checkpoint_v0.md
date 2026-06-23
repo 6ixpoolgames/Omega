@@ -39,6 +39,7 @@ carrier_certificate;
 carrier_transfer;
 bounded_recovery;
 target_scramble_sensitivity;
+dynamic_presentation_equivariance;
 presentation_fact_closure.
 ```
 
@@ -76,6 +77,10 @@ even when the transfer contract rejects carrier transfer.
 target-scramble sensitivity compares a declared target against a scrambled
 target under the same observation and decoder family, with a decorative-target
 control where both targets remain unrecoverable.
+dynamic presentation equivariance checks whether an abstract transition is
+exactly the projection of exact dynamics under a declared presentation,
+including a negative case with both a missing projected edge and a phantom
+abstract edge.
 the gridworld obstacle source-generator characterization now checks reflected versus
 stale source-reach presentations over the after-reachability fact.
 the stochastic continuation layer now checks reflected versus stale hit-status
