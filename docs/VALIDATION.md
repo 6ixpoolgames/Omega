@@ -285,6 +285,11 @@ source cases that compile source and target graphs separately before auditing
 positive transfer and a missing-return negative control, plus transported
 endpoint-role facts under a carrier-transfer contract and a failed-transfer
 label-closure control.
+The observed-word lifting controls check the finite process-coherence contract
+needed before abstract observed-word counts can be trusted: a positive case
+satisfies lifting and observation compatibility, while a negative case has
+global edge projection exactness but fails path lifting and inflates abstract
+observed words.
 
 The closure-discovery path is distinct from the expectation-pinned
 generated/adversarial closure fixtures:

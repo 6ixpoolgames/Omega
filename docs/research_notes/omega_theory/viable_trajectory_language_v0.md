@@ -78,6 +78,16 @@ lushness, value, or Omega. It is the first finite language audit that avoids
 equating unobserved exact state branching with distinguishable continuation
 richness.
 
+The adapter also now has a finite monotonicity probe:
+
+```text
+observed_word_lifting_monotonicity
+```
+
+It checks whether a path-lifting, observation-compatible abstraction avoids
+inflating abstract observed viable words. This is the finite adapter rehearsal
+for a future formal monotonicity theorem.
+
 ## Claim Boundary
 
 This file does not define:

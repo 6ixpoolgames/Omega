@@ -17,6 +17,7 @@ from omega.adapters.finite_relational.facts import (
     extendable_safe_prefix_count_facts,
     nonfactorization_witnesses_for_predicate,
     observed_extendable_safe_word_count_facts,
+    observed_word_lifting_monotonicity_facts,
     presentation_violations,
     presentation_fact_derive_closure_facts,
     presentation_fact_closure_facts,
@@ -95,6 +96,8 @@ def run_audit(model: FiniteRelationalModel, audit: dict[str, Any]) -> AuditResul
         return _extendable_safe_prefix_count(model, audit)
     if kind == "observed_extendable_safe_word_count":
         return _observed_extendable_safe_word_count(model, audit)
+    if kind == "observed_word_lifting_monotonicity":
+        return _observed_word_lifting_monotonicity(model, audit)
     if kind == "viable_trajectory_count":
         return _viable_trajectory_count(model, audit)
     if kind == "viable_trajectory_count_comparison":
@@ -600,6 +603,37 @@ def _count_profile_result(
         observed,
         "count_ok",
         "count_ok",
+    )
+
+
+def _observed_word_lifting_monotonicity(
+    model: FiniteRelationalModel,
+    audit: dict[str, Any],
+) -> AuditResult:
+    horizon = _audit_nonnegative_int(audit, "horizon")
+    exact_start = audit.get("exact_start_predicate")
+    abstract_start = audit.get("abstract_start_predicate")
+    observed = observed_word_lifting_monotonicity_facts(
+        model,
+        exact_transition=_role(model, audit, "exact_transition"),
+        exact_safety=_role(model, audit, "exact_safety"),
+        exact_observation=_role(model, audit, "exact_observation"),
+        presentation=_role(model, audit, "presentation"),
+        abstract_transition=_role(model, audit, "abstract_transition"),
+        abstract_safety=_role(model, audit, "abstract_safety"),
+        abstract_observation=_role(model, audit, "abstract_observation"),
+        horizon=horizon,
+        exact_start_predicate=str(exact_start) if exact_start is not None else None,
+        abstract_start_predicate=(
+            str(abstract_start) if abstract_start is not None else None
+        ),
+    )
+    return _result(
+        audit,
+        "observed_word_lifting_monotonicity",
+        observed,
+        "monotone_under_contract",
+        "monotone",
     )
 
 

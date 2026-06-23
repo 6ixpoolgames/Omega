@@ -48,6 +48,7 @@ viable_trajectory_count;
 safe_prefix_count;
 extendable_safe_prefix_count;
 observed_extendable_safe_word_count;
+observed_word_lifting_monotonicity;
 viable_trajectory_count_comparison;
 presentation_fact_closure;
 presentation_fact_derive_closure.
@@ -113,6 +114,12 @@ through a declared observation function before counting. The generated suite
 includes a constant-observation branching case where exact path counts grow
 while observed words stay collapsed, and a labeled-cycle control where
 observable alternation remains visible.
+observed-word lifting monotonicity now checks the finite contract needed before
+any viable-language richness measure can be trusted: edge projection, path
+lifting, observation compatibility, start compatibility, safety reflection, and
+viability-kernel reflection. The generated suite includes a positive monotone
+case and a negative edge-exact splice case where abstract observed words
+inflate exact observed words.
 viable trajectory count comparison shows bad abstract dynamics can inflate or
 hide finite safe-prefix counts under an identity presentation.
 the gridworld obstacle source-generator characterization now checks reflected versus
@@ -145,7 +152,7 @@ That retained summary records:
 
 ```text
 15 fixture smoke cases;
-33 generated/adversarial cases;
+35 generated/adversarial cases;
 136 closure-discovery cases;
 source digests where a source compiler is used;
 compiled/model digests;

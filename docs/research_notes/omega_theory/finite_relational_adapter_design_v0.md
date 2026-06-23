@@ -377,6 +377,13 @@ observed_extendable_safe_word_count:
   observation words, not exact state paths, so unobserved internal branching
   does not automatically inflate the reported language surface.
 
+observed_word_lifting_monotonicity:
+  exact and abstract observed extendable safe-word profiles are compared under
+  a declared presentation. The audit checks edge-projection exactness,
+  finite-horizon path lifting, observation compatibility, start compatibility,
+  safety reflection, and viability-kernel reflection before reporting whether
+  abstract observed words are monotone under that contract.
+
 viable_trajectory_count_comparison:
   exact and abstract finite safe-prefix count profiles are compared under a
   declared presentation. The audit also reports the legacy edge-projection
@@ -596,6 +603,16 @@ generated_observed_word_count_collapses_branching:
 generated_observed_word_count_labeled_cycle:
   generated labeled two-state recurrent cycle keeps a visible alternating word
   language with observed-word profile [2, 2, 2].
+
+generated_observed_word_lifting_monotonicity:
+  generated quotient over duplicate exact representatives satisfies the lifting
+  and observation-compatibility contract, with exact and abstract observed-word
+  profiles both [2, 2, 2].
+
+generated_observed_word_lifting_inflation:
+  generated global edge-projection exactness control where path lifting fails
+  and the abstract observed-word profile [1, 1, 2] inflates the exact profile
+  [1, 1, 1].
 ```
 
 Each fixture should include provenance.
@@ -759,6 +776,8 @@ presentation/fact closure shrinkage for transported endpoint-role facts under
 a carrier-transfer contract;
 failed-transport control showing role-label closure is weaker than earned
 carrier transfer.
+observed-word lifting monotonicity controls separating path-coherent
+abstraction from edge-exact-but-spliced abstract histories.
 ```
 
 The generator is intentionally finite and boring. It does not discover empirical
@@ -1012,5 +1031,6 @@ finite structures with retained provenance.
 - [adapter_provenance_v0.md](adapter_provenance_v0.md)
 - [audit_response_roadmap_v0.md](audit_response_roadmap_v0.md)
 - [ai_proxy_failure_nonfactorization_v0.md](ai_proxy_failure_nonfactorization_v0.md)
+- [observed_word_lifting_monotonicity_v0.md](observed_word_lifting_monotonicity_v0.md)
 - [layer_a_theorem_spine_v0.md](layer_a_theorem_spine_v0.md)
 - [primitive_exposure_realization_bridge_v0.md](primitive_exposure_realization_bridge_v0.md)

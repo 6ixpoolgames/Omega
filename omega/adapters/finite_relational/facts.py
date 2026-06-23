@@ -603,6 +603,180 @@ def observed_extendable_safe_word_count_facts(
     }
 
 
+def observed_word_lifting_monotonicity_facts(
+    model: FiniteRelationalModel,
+    *,
+    exact_transition: str,
+    exact_safety: str,
+    exact_observation: str,
+    presentation: str,
+    abstract_transition: str,
+    abstract_safety: str,
+    abstract_observation: str,
+    horizon: int,
+    exact_start_predicate: str | None = None,
+    abstract_start_predicate: str | None = None,
+) -> dict[str, object]:
+    """Check finite observed-word monotonicity under a lifting contract."""
+
+    if horizon < 0:
+        raise SchemaError(
+            f"observed word lifting monotonicity horizon must be nonnegative: {horizon}"
+        )
+    context = _dynamic_projection_context(
+        model,
+        transition=exact_transition,
+        presentation=presentation,
+        abstract_transition=abstract_transition,
+    )
+    exact_domain = str(context["state_domain"])
+    abstract_domain = str(context["abstract_domain"])
+    presentation_map = dict(context["presentation_map"])
+    exact_states = set(model.domain(exact_domain))
+    abstract_states = set(model.domain(abstract_domain))
+
+    edge_projection = dynamic_edge_projection_exactness_facts(
+        model,
+        transition=exact_transition,
+        presentation=presentation,
+        abstract_transition=abstract_transition,
+    )
+    path_lifting = dynamic_path_lifting_facts(
+        model,
+        transition=exact_transition,
+        presentation=presentation,
+        abstract_transition=abstract_transition,
+        horizon=horizon,
+    )
+    exact_words = observed_extendable_safe_word_count_facts(
+        model,
+        transition=exact_transition,
+        safety=exact_safety,
+        observation=exact_observation,
+        horizon=horizon,
+        start_predicate=exact_start_predicate,
+    )
+    abstract_words = observed_extendable_safe_word_count_facts(
+        model,
+        transition=abstract_transition,
+        safety=abstract_safety,
+        observation=abstract_observation,
+        horizon=horizon,
+        start_predicate=abstract_start_predicate,
+    )
+
+    exact_observation_map = _total_function_mapping(
+        model,
+        exact_observation,
+        domain=exact_domain,
+    )
+    abstract_observation_map = _total_function_mapping(
+        model,
+        abstract_observation,
+        domain=abstract_domain,
+    )
+    observation_mismatches = [
+        {
+            "state": state,
+            "abstract_state": presentation_map[state],
+            "exact_observation": exact_observation_map[state],
+            "abstract_observation": abstract_observation_map[presentation_map[state]],
+        }
+        for state in sorted(exact_states)
+        if exact_observation_map[state]
+        != abstract_observation_map[presentation_map[state]]
+    ]
+
+    exact_safe = set(model.predicate_members(exact_safety))
+    abstract_safe = set(model.predicate_members(abstract_safety))
+    exact_start = (
+        exact_states
+        if exact_start_predicate is None
+        else set(model.predicate_members(exact_start_predicate))
+    )
+    abstract_start = (
+        abstract_states
+        if abstract_start_predicate is None
+        else set(model.predicate_members(abstract_start_predicate))
+    )
+    exact_effective_start = exact_start & exact_safe
+    abstract_effective_start = abstract_start & abstract_safe
+    projected_exact_starts = {presentation_map[state] for state in exact_effective_start}
+    missing_abstract_starts = sorted(abstract_effective_start - projected_exact_starts)
+
+    safety_reflection_failures = [
+        {
+            "state": state,
+            "abstract_state": presentation_map[state],
+        }
+        for state in sorted(exact_states)
+        if presentation_map[state] in abstract_safe and state not in exact_safe
+    ]
+    exact_kernel = set(exact_words["viability_kernel"])
+    abstract_kernel = set(abstract_words["viability_kernel"])
+    viability_reflection_failures = [
+        {
+            "state": state,
+            "abstract_state": presentation_map[state],
+        }
+        for state in sorted(exact_states)
+        if presentation_map[state] in abstract_kernel and state not in exact_kernel
+    ]
+
+    exact_profile = list(exact_words["count_profile"])
+    abstract_profile = list(abstract_words["count_profile"])
+    delta = [
+        abstract_count - exact_count
+        for exact_count, abstract_count in zip(
+            exact_profile,
+            abstract_profile,
+            strict=True,
+        )
+    ]
+    inflates = any(item > 0 for item in delta)
+    hides = any(item < 0 for item in delta)
+    contract_holds = (
+        bool(edge_projection["edge_projection_exact"])
+        and bool(path_lifting["path_lifts"])
+        and not observation_mismatches
+        and not missing_abstract_starts
+        and not safety_reflection_failures
+        and not viability_reflection_failures
+    )
+    return {
+        "monotone_under_contract": contract_holds and not inflates,
+        "contract_holds": contract_holds,
+        "not_inflated": not inflates,
+        "inflates": inflates,
+        "hides": hides,
+        "mixed_distortion": inflates and hides,
+        "horizon": horizon,
+        "exact_transition": exact_transition,
+        "abstract_transition": abstract_transition,
+        "presentation": presentation,
+        "exact_observation": exact_observation,
+        "abstract_observation": abstract_observation,
+        "observation_compatible": not observation_mismatches,
+        "observation_mismatches": observation_mismatches,
+        "start_compatible": not missing_abstract_starts,
+        "missing_abstract_starts": missing_abstract_starts,
+        "safety_reflects": not safety_reflection_failures,
+        "safety_reflection_failures": safety_reflection_failures,
+        "viability_reflects": not viability_reflection_failures,
+        "viability_reflection_failures": viability_reflection_failures,
+        "exact_count_profile": exact_profile,
+        "abstract_count_profile": abstract_profile,
+        "count_profile_delta": delta,
+        "exact_final_count": exact_words["final_count"],
+        "abstract_final_count": abstract_words["final_count"],
+        "final_count_delta": abstract_words["final_count"] - exact_words["final_count"],
+        "exact": exact_words,
+        "abstract": abstract_words,
+        "edge_projection": edge_projection,
+        "path_lifting": path_lifting,
+    }
+
+
 def viable_trajectory_count_comparison_facts(
     model: FiniteRelationalModel,
     *,

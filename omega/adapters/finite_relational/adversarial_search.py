@@ -75,6 +75,8 @@ def generate_adversarial_cases() -> tuple[GeneratedAdapterCase, ...]:
         _generated_dead_end_safe_prefix_case(),
         _generated_observed_word_count_collapses_branching_case(),
         _generated_observed_word_count_labeled_cycle_case(),
+        _generated_observed_word_lifting_monotonicity_case(),
+        _generated_observed_word_lifting_inflation_case(),
         _generated_viable_count_inflation_case(),
         _generated_viable_count_hiding_case(),
         _generated_stale_reflected_fact_closure_case(),
@@ -1198,6 +1200,169 @@ def _generated_observed_word_count_labeled_cycle_case() -> GeneratedAdapterCase:
         ),
     }
     return _validated_ir_case("generated_observed_word_count_labeled_cycle", model)
+
+
+def _generated_observed_word_lifting_monotonicity_case() -> GeneratedAdapterCase:
+    model = {
+        "model_id": "generated_observed_word_lifting_monotonicity",
+        "schema_version": "0.1.0",
+        "domains": {
+            "state": ["l0", "l1", "r0", "r1"],
+            "abstract": ["L", "R"],
+            "observation": ["left", "right"],
+        },
+        "predicates": {
+            "exact_safe": {
+                "domain": "state",
+                "members": ["l0", "l1", "r0", "r1"],
+            },
+            "abstract_safe": {"domain": "abstract", "members": ["L", "R"]},
+        },
+        "relations": {
+            "exact_next": {
+                "domains": ["state", "state"],
+                "tuples": [
+                    ["l0", "r0"],
+                    ["l0", "r1"],
+                    ["l1", "r0"],
+                    ["l1", "r1"],
+                    ["r0", "l0"],
+                    ["r0", "l1"],
+                    ["r1", "l0"],
+                    ["r1", "l1"],
+                ],
+            },
+            "abstract_next": {
+                "domains": ["abstract", "abstract"],
+                "tuples": [["L", "R"], ["R", "L"]],
+            },
+        },
+        "functions": {
+            "present": {
+                "domain": "state",
+                "codomain": "abstract",
+                "mapping": {
+                    "l0": "L",
+                    "l1": "L",
+                    "r0": "R",
+                    "r1": "R",
+                },
+            },
+            "exact_observation": {
+                "domain": "state",
+                "codomain": "observation",
+                "mapping": {
+                    "l0": "left",
+                    "l1": "left",
+                    "r0": "right",
+                    "r1": "right",
+                },
+            },
+            "abstract_observation": {
+                "domain": "abstract",
+                "codomain": "observation",
+                "mapping": {"L": "left", "R": "right"},
+            },
+        },
+        "audits": [
+            {
+                "id": "generated_observed_word_monotone_under_lifting",
+                "kind": "observed_word_lifting_monotonicity",
+                "exact_transition": "exact_next",
+                "exact_safety": "exact_safe",
+                "exact_observation": "exact_observation",
+                "presentation": "present",
+                "abstract_transition": "abstract_next",
+                "abstract_safety": "abstract_safe",
+                "abstract_observation": "abstract_observation",
+                "horizon": 2,
+                "expect": "monotone",
+            }
+        ],
+        "provenance": _generated_provenance(
+            "Generated finite relational case: representative-wise path lifting "
+            "and observation compatibility hold, so abstract observed words do "
+            "not inflate exact observed words."
+        ),
+    }
+    return _validated_ir_case("generated_observed_word_lifting_monotonicity", model)
+
+
+def _generated_observed_word_lifting_inflation_case() -> GeneratedAdapterCase:
+    model = {
+        "model_id": "generated_observed_word_lifting_inflation",
+        "schema_version": "0.1.0",
+        "domains": {
+            "state": ["a", "b", "c", "d"],
+            "abstract": ["A", "M", "D"],
+            "observation": ["A", "M", "D"],
+        },
+        "predicates": {
+            "exact_safe": {
+                "domain": "state",
+                "members": ["a", "b", "c", "d"],
+            },
+            "abstract_safe": {"domain": "abstract", "members": ["A", "M", "D"]},
+            "exact_start": {"domain": "state", "members": ["a"]},
+            "abstract_start": {"domain": "abstract", "members": ["A"]},
+        },
+        "relations": {
+            "exact_next": {
+                "domains": ["state", "state"],
+                "tuples": [
+                    ["a", "b"],
+                    ["b", "b"],
+                    ["c", "c"],
+                    ["c", "d"],
+                    ["d", "d"],
+                ],
+            },
+            "abstract_next": {
+                "domains": ["abstract", "abstract"],
+                "tuples": [["A", "M"], ["M", "M"], ["M", "D"], ["D", "D"]],
+            },
+        },
+        "functions": {
+            "present": {
+                "domain": "state",
+                "codomain": "abstract",
+                "mapping": {"a": "A", "b": "M", "c": "M", "d": "D"},
+            },
+            "exact_observation": {
+                "domain": "state",
+                "codomain": "observation",
+                "mapping": {"a": "A", "b": "M", "c": "M", "d": "D"},
+            },
+            "abstract_observation": {
+                "domain": "abstract",
+                "codomain": "observation",
+                "mapping": {"A": "A", "M": "M", "D": "D"},
+            },
+        },
+        "audits": [
+            {
+                "id": "generated_edge_exact_but_path_lifting_inflates_words",
+                "kind": "observed_word_lifting_monotonicity",
+                "exact_transition": "exact_next",
+                "exact_safety": "exact_safe",
+                "exact_observation": "exact_observation",
+                "presentation": "present",
+                "abstract_transition": "abstract_next",
+                "abstract_safety": "abstract_safe",
+                "abstract_observation": "abstract_observation",
+                "exact_start_predicate": "exact_start",
+                "abstract_start_predicate": "abstract_start",
+                "horizon": 2,
+                "expect": "not_monotone",
+            }
+        ],
+        "provenance": _generated_provenance(
+            "Generated finite relational case: global edge projection is exact, "
+            "but an abstract path splices incompatible exact representatives and "
+            "inflates the observed word profile."
+        ),
+    }
+    return _validated_ir_case("generated_observed_word_lifting_inflation", model)
 
 
 def _generated_viable_count_inflation_case() -> GeneratedAdapterCase:

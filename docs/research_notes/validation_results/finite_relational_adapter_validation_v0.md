@@ -613,3 +613,50 @@ This is finite adapter-relative discovery. It does not validate a real
 substrate, establish generic positive content at scale, or prove value,
 agency, identity, valuerhood, or Omega.
 ```
+
+## Addendum: Observed Word Lifting Monotonicity
+
+Run roots:
+
+```text
+.tmp/finite_relational_adapter_smoke_observed_word_lifting/20260624_014141
+.tmp/finite_relational_adapter_adversarial_observed_word_lifting/20260624_014141
+```
+
+Commands:
+
+```powershell
+./.venv/Scripts/python.exe -m pytest `
+  tests/test_finite_relational_adapter_adversarial.py `
+  -q --basetemp .tmp/pytest-observed-word-lifting-adversarial -p no:cacheprovider
+
+./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_smoke `
+  --out-root .tmp/finite_relational_adapter_smoke_observed_word_lifting
+
+./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_adversarial `
+  --out-root .tmp/finite_relational_adapter_adversarial_observed_word_lifting
+```
+
+Result:
+
+```text
+focused adversarial pytest: 23 passed
+adapter smoke: PASS, 15 fixtures, focused pytest 109 passed
+generated/adversarial validation: PASS, 35 cases
+```
+
+Semantic repair:
+
+```text
+observed_word_lifting_monotonicity checks the finite contract needed before an
+abstract observed-word count can be treated as process-coherent: edge
+projection, path lifting, observation compatibility, start compatibility,
+safety reflection, and viability-kernel reflection.
+```
+
+New generated cases:
+
+| Case | Finding | Meaning |
+| --- | --- | --- |
+| generated_observed_word_lifting_monotonicity | `monotone` | Path lifting and observation compatibility hold; exact and abstract observed-word profiles are both `[2, 2, 2]`. |
+| generated_observed_word_lifting_inflation | `not_monotone` | Global edge projection is exact, but path lifting fails and the abstract observed-word profile `[1, 1, 2]` inflates exact profile `[1, 1, 1]`. |

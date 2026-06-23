@@ -34,6 +34,8 @@ REQUIRED_CASE_IDS = {
     "generated_dead_end_safe_prefix",
     "generated_observed_word_count_collapses_branching",
     "generated_observed_word_count_labeled_cycle",
+    "generated_observed_word_lifting_monotonicity",
+    "generated_observed_word_lifting_inflation",
     "generated_viable_count_inflation",
     "generated_viable_count_hiding",
     "generated_stale_reflected_fact_closure",
@@ -116,6 +118,12 @@ def test_generated_adversarial_cases_cover_adapter_failure_modes() -> None:
     ].summary()["findings"] == ["count_ok"]
     assert by_id["generated_observed_word_count_labeled_cycle"].summary()["findings"] == [
         "count_ok"
+    ]
+    assert by_id[
+        "generated_observed_word_lifting_monotonicity"
+    ].summary()["findings"] == ["monotone"]
+    assert by_id["generated_observed_word_lifting_inflation"].summary()["findings"] == [
+        "not_monotone"
     ]
     assert by_id["generated_viable_count_inflation"].summary()["findings"] == [
         "distorted"
@@ -470,6 +478,36 @@ def test_generated_observed_word_count_cases_use_observation_language() -> None:
         [["L", "R"], ["R", "L"]],
         [["L", "R", "L"], ["R", "L", "R"]],
     ]
+
+
+def test_generated_observed_word_lifting_cases_check_monotonicity_contract() -> None:
+    cases = {case.case_id: case for case in generate_adversarial_cases()}
+    monotone = cases[
+        "generated_observed_word_lifting_monotonicity"
+    ].audit_results[0].as_dict()
+    inflated = cases[
+        "generated_observed_word_lifting_inflation"
+    ].audit_results[0].as_dict()
+
+    assert monotone["passed"] is True
+    assert monotone["finding"] == "monotone"
+    assert monotone["observed"]["contract_holds"] is True
+    assert monotone["observed"]["not_inflated"] is True
+    assert monotone["observed"]["inflates"] is False
+    assert monotone["observed"]["exact_count_profile"] == [2, 2, 2]
+    assert monotone["observed"]["abstract_count_profile"] == [2, 2, 2]
+    assert monotone["observed"]["count_profile_delta"] == [0, 0, 0]
+
+    assert inflated["passed"] is True
+    assert inflated["finding"] == "not_monotone"
+    assert inflated["observed"]["edge_projection"]["edge_projection_exact"] is True
+    assert inflated["observed"]["path_lifting"]["path_lifts"] is False
+    assert inflated["observed"]["observation_compatible"] is True
+    assert inflated["observed"]["contract_holds"] is False
+    assert inflated["observed"]["inflates"] is True
+    assert inflated["observed"]["exact_count_profile"] == [1, 1, 1]
+    assert inflated["observed"]["abstract_count_profile"] == [1, 1, 2]
+    assert inflated["observed"]["count_profile_delta"] == [0, 0, 1]
 
 
 def test_generated_viable_count_comparison_cases_detect_inflation_and_hiding() -> None:
