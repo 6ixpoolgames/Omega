@@ -351,10 +351,11 @@ Fixed-policy action kernels induce ordinary rational kernels.
 Finite-horizon hit probabilities are nonnegative, bounded by 1, and monotone
 in the horizon.
 Equal selected policy rows imply equal induced hit profiles.
-The finite adapter also exercises declared policy-family robust hit
-calculation over nominal/correlated-shock kernels: individual targets can each
-be robustly attainable while the joint target is not robustly attainable by any
-declared policy in the shared family.
+RobustPolicyHitAt and PolicyFamilyRobustHitAt name fixed-policy and
+allowed-policy-family hit thresholds over an action-kernel ambiguity set.
+The finite shared-resource theorem and matching adapter witness show that
+individual targets can each be robustly attainable while the joint target is not
+robustly attainable by any declared policy in the shared family.
 ```
 
 What this blocks:

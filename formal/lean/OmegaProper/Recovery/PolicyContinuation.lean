@@ -79,6 +79,100 @@ def HitProfile {X : Type u} [Fintype X]
     (start : X) : Nat -> ℚ :=
   fun n => HitWithin K target n start
 
+/--
+A fixed deterministic policy reaches threshold `tau` from `start` within the
+declared horizon for every action kernel in the ambiguity set.
+-/
+def RobustPolicyHitAt {X : Type u} {A : Type v} [Fintype X]
+    (Gamma : Set (RatActionKernel X A))
+    (target : X -> Prop)
+    [DecidablePred target]
+    (start : X)
+    (horizon : Nat)
+    (tau : ℚ)
+    (policy : X -> A) : Prop :=
+  forall K, K ∈ Gamma ->
+    tau <= HitWithin (inducedKernel K policy) target horizon start
+
+/--
+Some policy in an explicitly declared deterministic policy family reaches
+threshold `tau` uniformly over the action-kernel ambiguity set.
+-/
+def PolicyFamilyRobustHitAt {X : Type u} {A : Type v} [Fintype X]
+    (Gamma : Set (RatActionKernel X A))
+    (target : X -> Prop)
+    [DecidablePred target]
+    (Allowed : (X -> A) -> Prop)
+    (start : X)
+    (horizon : Nat)
+    (tau : ℚ) : Prop :=
+  exists policy : X -> A,
+    Allowed policy ∧ RobustPolicyHitAt Gamma target start horizon tau policy
+
+theorem robustPolicyHitAt_mono_threshold
+    {X : Type u} {A : Type v} [Fintype X]
+    {Gamma : Set (RatActionKernel X A)}
+    {target : X -> Prop}
+    [DecidablePred target]
+    {start : X}
+    {horizon : Nat}
+    {tau₁ tau₂ : ℚ}
+    {policy : X -> A}
+    (hTau : tau₁ <= tau₂)
+    (hHit : RobustPolicyHitAt Gamma target start horizon tau₂ policy) :
+    RobustPolicyHitAt Gamma target start horizon tau₁ policy := by
+  intro K hK
+  exact le_trans hTau (hHit K hK)
+
+theorem policyFamilyRobustHitAt_mono_threshold
+    {X : Type u} {A : Type v} [Fintype X]
+    {Gamma : Set (RatActionKernel X A)}
+    {target : X -> Prop}
+    [DecidablePred target]
+    {Allowed : (X -> A) -> Prop}
+    {start : X}
+    {horizon : Nat}
+    {tau₁ tau₂ : ℚ}
+    (hTau : tau₁ <= tau₂)
+    (hHit : PolicyFamilyRobustHitAt Gamma target Allowed start horizon tau₂) :
+    PolicyFamilyRobustHitAt Gamma target Allowed start horizon tau₁ := by
+  match hHit with
+  | Exists.intro policy hPolicy =>
+      exact Exists.intro policy
+        ⟨hPolicy.1, robustPolicyHitAt_mono_threshold hTau hPolicy.2⟩
+
+theorem robustPolicyHitAt_mono_ambiguity
+    {X : Type u} {A : Type v} [Fintype X]
+    {Gamma₁ Gamma₂ : Set (RatActionKernel X A)}
+    {target : X -> Prop}
+    [DecidablePred target]
+    {start : X}
+    {horizon : Nat}
+    {tau : ℚ}
+    {policy : X -> A}
+    (hSubset : Gamma₁ ⊆ Gamma₂)
+    (hHit : RobustPolicyHitAt Gamma₂ target start horizon tau policy) :
+    RobustPolicyHitAt Gamma₁ target start horizon tau policy := by
+  intro K hK
+  exact hHit K (hSubset hK)
+
+theorem policyFamilyRobustHitAt_mono_ambiguity
+    {X : Type u} {A : Type v} [Fintype X]
+    {Gamma₁ Gamma₂ : Set (RatActionKernel X A)}
+    {target : X -> Prop}
+    [DecidablePred target]
+    {Allowed : (X -> A) -> Prop}
+    {start : X}
+    {horizon : Nat}
+    {tau : ℚ}
+    (hSubset : Gamma₁ ⊆ Gamma₂)
+    (hHit : PolicyFamilyRobustHitAt Gamma₂ target Allowed start horizon tau) :
+    PolicyFamilyRobustHitAt Gamma₁ target Allowed start horizon tau := by
+  match hHit with
+  | Exists.intro policy hPolicy =>
+      exact Exists.intro policy
+        ⟨hPolicy.1, robustPolicyHitAt_mono_ambiguity hSubset hPolicy.2⟩
+
 theorem hitWithin_nonneg {X : Type u} [Fintype X]
     (K : RatKernel X)
     (target : X -> Prop)

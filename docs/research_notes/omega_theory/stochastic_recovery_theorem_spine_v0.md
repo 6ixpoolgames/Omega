@@ -205,11 +205,13 @@ optimized declared robust randomized-family decoder = uniform
 optimized declared robust randomized-family worst-case success = 1/2
 ```
 
-### Policy-Family Robustness Is A Joint-Compatibility Stress Surface
+### Policy-Family Robustness Is A Joint-Compatibility Strictness Surface
 
-The policy-conditioned adapter now evaluates deterministic policies over a
-declared finite kernel ambiguity set. In the correlated-shock stress case,
-target A and target B each have a robust declared policy:
+The policy-continuation Lean layer now names robust fixed-policy and
+policy-family hit thresholds over action-kernel ambiguity sets. The finite
+shared-resource theorem `jointShock_individual_robust_not_joint_robust`, with
+a matching adapter witness, shows that target A and target B can each have a
+robust declared policy:
 
 ```text
 optimized robust hit(target A): 1
@@ -222,7 +224,7 @@ but no declared policy robustly attains the joint target:
 optimized robust hit(joint target): 0
 ```
 
-This is adapter evidence for the narrow non-implication:
+This is a finite strictness result for the narrow non-implication:
 
 ```text
 individual robust attainability does not imply joint robust attainability

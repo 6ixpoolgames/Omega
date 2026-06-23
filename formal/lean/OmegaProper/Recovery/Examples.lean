@@ -159,6 +159,212 @@ def secondPairTarget (x : Bit × Bit) : Bit :=
 def wholePairTarget (x : Bit × Bit) : Bit × Bit :=
   x
 
+/-- Tiny shared-resource state space for policy-family robustness. -/
+inductive JointShockState
+  | start
+  | aOnly
+  | bOnly
+  | bothGoal
+  | fail
+  deriving DecidableEq
+
+instance : Fintype JointShockState where
+  elems := {JointShockState.start, JointShockState.aOnly,
+    JointShockState.bOnly, JointShockState.bothGoal, JointShockState.fail}
+  complete := by
+    intro x
+    cases x <;> simp
+
+lemma univ_jointShockState :
+    (Finset.univ : Finset JointShockState) =
+      {JointShockState.start, JointShockState.aOnly, JointShockState.bOnly,
+        JointShockState.bothGoal, JointShockState.fail} := rfl
+
+/-- Tiny action space for the shared-resource policy witness. -/
+inductive JointShockAction
+  | protectA
+  | protectB
+  | split
+  | wait
+  deriving DecidableEq
+
+instance : Fintype JointShockAction where
+  elems := {JointShockAction.protectA, JointShockAction.protectB,
+    JointShockAction.split, JointShockAction.wait}
+  complete := by
+    intro x
+    cases x <;> simp
+
+lemma univ_jointShockAction :
+    (Finset.univ : Finset JointShockAction) =
+      {JointShockAction.protectA, JointShockAction.protectB,
+        JointShockAction.split, JointShockAction.wait} := rfl
+
+open JointShockState
+open JointShockAction
+
+/-- Point-mass transition helper for the shared-resource witness. -/
+def jointShockPointMass (target : JointShockState) :
+    JointShockState -> ℚ :=
+  fun state => if state = target then 1 else 0
+
+lemma jointShockPointMass_nonneg (target state : JointShockState) :
+    0 <= jointShockPointMass target state := by
+  unfold jointShockPointMass
+  by_cases h : state = target <;> simp [h]
+
+lemma jointShockPointMass_sum_one (target : JointShockState) :
+    (Finset.univ.sum fun state => jointShockPointMass target state) = 1 := by
+  cases target <;> simp [jointShockPointMass]
+
+/-- In the nominal kernel, any active start action reaches the joint target. -/
+def jointShockNominalTarget : JointShockAction -> JointShockState
+  | protectA => bothGoal
+  | protectB => bothGoal
+  | split => bothGoal
+  | wait => fail
+
+/--
+In the correlated-shock kernel, protecting one side reaches only that side;
+splitting the shared resource reaches neither side.
+-/
+def jointShockCorrelatedTarget : JointShockAction -> JointShockState
+  | protectA => aOnly
+  | protectB => bOnly
+  | split => fail
+  | wait => fail
+
+/-- Nominal shared-resource action kernel. -/
+def jointShockNominalKernel : RatActionKernel JointShockState JointShockAction where
+  prob state action next :=
+    match state with
+    | start => jointShockPointMass (jointShockNominalTarget action) next
+    | _ => jointShockPointMass state next
+  nonneg := by
+    intro state action next
+    cases state <;> cases action <;>
+      exact jointShockPointMass_nonneg _ next
+  row_sum_one := by
+    intro state action
+    cases state <;> cases action <;>
+      simp [jointShockNominalTarget, jointShockPointMass_sum_one]
+
+/-- Correlated-shock shared-resource action kernel. -/
+def jointShockCorrelatedKernel : RatActionKernel JointShockState JointShockAction where
+  prob state action next :=
+    match state with
+    | start => jointShockPointMass (jointShockCorrelatedTarget action) next
+    | _ => jointShockPointMass state next
+  nonneg := by
+    intro state action next
+    cases state <;> cases action <;>
+      exact jointShockPointMass_nonneg _ next
+  row_sum_one := by
+    intro state action
+    cases state <;> cases action <;>
+      simp [jointShockCorrelatedTarget, jointShockPointMass_sum_one]
+
+/-- Ambiguity set containing the nominal and correlated-shock kernels. -/
+def jointShockAmbiguity : Set (RatActionKernel JointShockState JointShockAction) :=
+  {jointShockNominalKernel, jointShockCorrelatedKernel}
+
+/-- Policy that protects target A at the start state. -/
+def protectAPolicy : JointShockState -> JointShockAction
+  | start => protectA
+  | _ => wait
+
+/-- Policy that protects target B at the start state. -/
+def protectBPolicy : JointShockState -> JointShockAction
+  | start => protectB
+  | _ => wait
+
+/-- Target A is satisfied by the A-only state or by the joint target. -/
+def targetA : JointShockState -> Prop
+  | aOnly => True
+  | bothGoal => True
+  | _ => False
+
+instance : DecidablePred targetA := by
+  intro state
+  cases state
+  · exact isFalse (by intro h; cases h)
+  · exact isTrue trivial
+  · exact isFalse (by intro h; cases h)
+  · exact isTrue trivial
+  · exact isFalse (by intro h; cases h)
+
+/-- Target B is satisfied by the B-only state or by the joint target. -/
+def targetB : JointShockState -> Prop
+  | bOnly => True
+  | bothGoal => True
+  | _ => False
+
+instance : DecidablePred targetB := by
+  intro state
+  cases state
+  · exact isFalse (by intro h; cases h)
+  · exact isFalse (by intro h; cases h)
+  · exact isTrue trivial
+  · exact isTrue trivial
+  · exact isFalse (by intro h; cases h)
+
+/-- The joint target requires both sides to be achieved. -/
+def targetJoint : JointShockState -> Prop
+  | bothGoal => True
+  | _ => False
+
+instance : DecidablePred targetJoint := by
+  intro state
+  cases state
+  · exact isFalse (by intro h; cases h)
+  · exact isFalse (by intro h; cases h)
+  · exact isFalse (by intro h; cases h)
+  · exact isTrue trivial
+  · exact isFalse (by intro h; cases h)
+
+/-- Hit mass of a point-mass next state against a target predicate. -/
+def targetHitMass
+    (target : JointShockState -> Prop)
+    [DecidablePred target]
+    (next : JointShockState) : ℚ :=
+  Finset.univ.sum fun state =>
+    jointShockPointMass next state * if target state then 1 else 0
+
+lemma targetA_bothGoal_hitMass :
+    targetHitMass targetA bothGoal = 1 := by
+  rw [targetHitMass, univ_jointShockState]
+  simp [targetA, jointShockPointMass]
+
+lemma targetA_aOnly_hitMass :
+    targetHitMass targetA aOnly = 1 := by
+  rw [targetHitMass, univ_jointShockState]
+  simp [targetA, jointShockPointMass]
+
+lemma targetB_bothGoal_hitMass :
+    targetHitMass targetB bothGoal = 1 := by
+  rw [targetHitMass, univ_jointShockState]
+  simp [targetB, jointShockPointMass]
+
+lemma targetB_bOnly_hitMass :
+    targetHitMass targetB bOnly = 1 := by
+  rw [targetHitMass, univ_jointShockState]
+  simp [targetB, jointShockPointMass]
+
+lemma targetJoint_aOnly_hitMass :
+    targetHitMass targetJoint aOnly = 0 := by
+  rw [targetHitMass, univ_jointShockState]
+  simp [targetJoint, jointShockPointMass]
+
+lemma targetJoint_bOnly_hitMass :
+    targetHitMass targetJoint bOnly = 0 := by
+  rw [targetHitMass, univ_jointShockState]
+  simp [targetJoint, jointShockPointMass]
+
+lemma targetJoint_fail_hitMass :
+    targetHitMass targetJoint fail = 0 := by
+  rw [targetHitMass, univ_jointShockState]
+  simp [targetJoint, jointShockPointMass]
+
 /--
 The `99/100` channel has deterministic recovery at threshold `99/100`.
 -/
@@ -381,6 +587,106 @@ theorem secondPairObservation_not_jointExact :
         hDecoder (1, 0) (1, 0) rfl
       rw [h00] at h10
       norm_num at h10
+
+/--
+Target A is robustly attainable across the nominal/correlated-shock ambiguity
+set by protecting A.
+-/
+theorem jointShock_targetA_policyFamilyRobustHitAt_one :
+    PolicyFamilyRobustHitAt jointShockAmbiguity targetA
+      (fun _ => True) start 1 1 := by
+  refine Exists.intro protectAPolicy ⟨True.intro, ?_⟩
+  intro K hK
+  rcases hK with hK | hK
+  · subst K
+    simp only [HitWithin, inducedKernel, jointShockNominalKernel,
+      protectAPolicy, jointShockNominalTarget, targetA]
+    change (1 : ℚ) <= targetHitMass targetA bothGoal
+    rw [targetA_bothGoal_hitMass]
+  · subst K
+    simp only [HitWithin, inducedKernel, jointShockCorrelatedKernel,
+      protectAPolicy, jointShockCorrelatedTarget, targetA]
+    change (1 : ℚ) <= targetHitMass targetA aOnly
+    rw [targetA_aOnly_hitMass]
+
+/--
+Target B is robustly attainable across the nominal/correlated-shock ambiguity
+set by protecting B.
+-/
+theorem jointShock_targetB_policyFamilyRobustHitAt_one :
+    PolicyFamilyRobustHitAt jointShockAmbiguity targetB
+      (fun _ => True) start 1 1 := by
+  refine Exists.intro protectBPolicy ⟨True.intro, ?_⟩
+  intro K hK
+  rcases hK with hK | hK
+  · subst K
+    simp only [HitWithin, inducedKernel, jointShockNominalKernel,
+      protectBPolicy, jointShockNominalTarget, targetB]
+    change (1 : ℚ) <= targetHitMass targetB bothGoal
+    rw [targetB_bothGoal_hitMass]
+  · subst K
+    simp only [HitWithin, inducedKernel, jointShockCorrelatedKernel,
+      protectBPolicy, jointShockCorrelatedTarget, targetB]
+    change (1 : ℚ) <= targetHitMass targetB bOnly
+    rw [targetB_bOnly_hitMass]
+
+/--
+No deterministic policy robustly attains the joint target at threshold one
+under the correlated shock. This is the Lean version of the adapter witness:
+individual robust policy attainability does not imply joint robust policy
+attainability under shared correlated constraints.
+-/
+theorem jointShock_not_joint_policyFamilyRobustHitAt_one :
+    Not (
+      PolicyFamilyRobustHitAt jointShockAmbiguity targetJoint
+        (fun _ => True) start 1 1
+    ) := by
+  intro hHit
+  match hHit with
+  | Exists.intro policy hPolicy =>
+      have hCorr :
+          (1 : ℚ) <=
+            HitWithin (inducedKernel jointShockCorrelatedKernel policy)
+              targetJoint 1 start :=
+        hPolicy.2 jointShockCorrelatedKernel (by simp [jointShockAmbiguity])
+      cases hAction : policy start
+      · simp only [HitWithin, inducedKernel, jointShockCorrelatedKernel,
+          jointShockCorrelatedTarget, hAction, targetJoint] at hCorr
+        change (1 : ℚ) <= targetHitMass targetJoint aOnly at hCorr
+        rw [targetJoint_aOnly_hitMass] at hCorr
+        norm_num at hCorr
+      · simp only [HitWithin, inducedKernel, jointShockCorrelatedKernel,
+          jointShockCorrelatedTarget, hAction, targetJoint] at hCorr
+        change (1 : ℚ) <= targetHitMass targetJoint bOnly at hCorr
+        rw [targetJoint_bOnly_hitMass] at hCorr
+        norm_num at hCorr
+      · simp only [HitWithin, inducedKernel, jointShockCorrelatedKernel,
+          jointShockCorrelatedTarget, hAction, targetJoint] at hCorr
+        change (1 : ℚ) <= targetHitMass targetJoint fail at hCorr
+        rw [targetJoint_fail_hitMass] at hCorr
+        norm_num at hCorr
+      · simp only [HitWithin, inducedKernel, jointShockCorrelatedKernel,
+          jointShockCorrelatedTarget, hAction, targetJoint] at hCorr
+        change (1 : ℚ) <= targetHitMass targetJoint fail at hCorr
+        rw [targetJoint_fail_hitMass] at hCorr
+        norm_num at hCorr
+
+/--
+The shared-resource witness packages the strictness result: each individual
+target is robustly attainable by some policy, but the joint target is not.
+-/
+theorem jointShock_individual_robust_not_joint_robust :
+    PolicyFamilyRobustHitAt jointShockAmbiguity targetA
+        (fun _ => True) start 1 1 ∧
+      PolicyFamilyRobustHitAt jointShockAmbiguity targetB
+        (fun _ => True) start 1 1 ∧
+      Not (
+        PolicyFamilyRobustHitAt jointShockAmbiguity targetJoint
+          (fun _ => True) start 1 1
+      ) := by
+  exact ⟨jointShock_targetA_policyFamilyRobustHitAt_one,
+    jointShock_targetB_policyFamilyRobustHitAt_one,
+    jointShock_not_joint_policyFamilyRobustHitAt_one⟩
 
 end Examples
 end Recovery
