@@ -28,8 +28,10 @@ deterministic_pre_stochastic_layer_v0.md
 stochastic_recovery_characterization_v0.md
 stochastic_recovery_theorem_spine_v0.md
 stochastic_recovery_formalization_v0.md
+recovery_layer_checkpoint_v0.md
 robust_recovery_ambiguity_sets_v0.md
 prior_relative_recovery_v0.md
+bridge_claims_ledger_v0.md
 stochastic_continuation_loss_v0.md
 policy_conditioned_stochastic_dynamics_v0.md
 invariant_profile_compression_v0.md
@@ -164,6 +166,7 @@ OmegaProper/Trajectory/JointRecurrentSupport.lean
 OmegaProper/Trajectory/SimulationTransfer.lean
 OmegaProper/Trajectory/SupportUnderPerturbation.lean
 OmegaProper/Recovery/FiniteChannel.lean
+OmegaProper/Recovery/ConfusionBound.lean
 OmegaProper/Recovery/Deterministic.lean
 OmegaProper/Recovery/ObservationRefinement.lean
 OmegaProper/Recovery/Randomized.lean
@@ -248,7 +251,8 @@ refinement under explicit decoder-class lifting;
 prior-relative expected recovery is kept separate from worst-case and robust
 recovery, with worst-case thresholds implying expected thresholds under any
 declared prior and a skewed-prior witness showing expected success can hide
-worst-case failure;
+worst-case failure; shared observation mass between target-distinct sources
+quantitatively blocks deterministic threshold recovery above `1 - epsilon`;
 consequence-native trajectory guardrails for separation, consequence-respecting
 classes, directional allowance versus symmetric identification,
 collapse/noncollapse, over-separation, and mixed evaluated panels;
@@ -348,6 +352,7 @@ Read these as current active anchors:
 ```text
 layer_a_theorem_spine_v0.md
 layer_a_derivation_audit_v0.md
+bridge_claims_ledger_v0.md
 alphaomega_continuation_proto_teleology_v0.md
 ../../VALUER_FORMAL_TARGET_V0.md
 ../../OMEGA_COMPATIBLE_VALUER_TRAJECTORY_SPACE_V0.md
@@ -361,6 +366,7 @@ deterministic_pre_stochastic_layer_v0.md
 stochastic_recovery_characterization_v0.md
 stochastic_recovery_theorem_spine_v0.md
 stochastic_recovery_formalization_v0.md
+recovery_layer_checkpoint_v0.md
 robust_recovery_ambiguity_sets_v0.md
 prior_relative_recovery_v0.md
 stochastic_continuation_loss_v0.md

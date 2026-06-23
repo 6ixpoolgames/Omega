@@ -272,6 +272,7 @@ score does not determine the target.
 Main files:
 
 - [FiniteChannel.lean](../../../formal/lean/OmegaProper/Recovery/FiniteChannel.lean)
+- [ConfusionBound.lean](../../../formal/lean/OmegaProper/Recovery/ConfusionBound.lean)
 - [Deterministic.lean](../../../formal/lean/OmegaProper/Recovery/Deterministic.lean)
 - [ObservationRefinement.lean](../../../formal/lean/OmegaProper/Recovery/ObservationRefinement.lean)
 - [Randomized.lean](../../../formal/lean/OmegaProper/Recovery/Randomized.lean)
@@ -286,6 +287,8 @@ Current content:
 ```text
 Exact rational channels define source-indexed recovery profiles.
 Support-exact recovery is equivalent to RecoveryExistsAt 1.
+Shared observation mass between target-distinct sources quantitatively blocks
+deterministic threshold recovery above 1 - epsilon.
 RecoveryExistsAt is monotone downward in threshold.
 RecoveryExistsInAt names the same threshold question relative to an explicit
 deterministic decoder class, with RecoveryExistsAt as the unrestricted case.

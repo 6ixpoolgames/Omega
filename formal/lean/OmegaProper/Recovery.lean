@@ -1,3 +1,4 @@
+import OmegaProper.Recovery.ConfusionBound
 import OmegaProper.Recovery.Deterministic
 import OmegaProper.Recovery.Examples
 import OmegaProper.Recovery.FiniteChannel

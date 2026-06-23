@@ -40,6 +40,7 @@ Current files:
 
 ```text
 formal/lean/OmegaProper/Recovery/FiniteChannel.lean
+formal/lean/OmegaProper/Recovery/ConfusionBound.lean
 formal/lean/OmegaProper/Recovery/Deterministic.lean
 formal/lean/OmegaProper/Recovery/ObservationRefinement.lean
 formal/lean/OmegaProper/Recovery/Randomized.lean
@@ -108,6 +109,8 @@ ExpectedRecoveryExistsAt is monotone downward in threshold.
 ExpectedRecoveryExistsAt is the unrestricted `ExpectedRecoveryExistsInAt`
   specialization.
 Point-mass priors reduce expected success to source success.
+Shared observation mass between target-distinct sources blocks deterministic
+  threshold recovery above 1 - epsilon.
 Joint recovery implies each projected marginal recovery.
 Same-panel exact marginal decoders pair into exact joint recovery.
 Policy-conditioned action kernels induce ordinary rational kernels.
