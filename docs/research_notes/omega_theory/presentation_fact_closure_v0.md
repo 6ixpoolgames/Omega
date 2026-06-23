@@ -336,6 +336,12 @@ stochastic continuation loss:
   horizon and threshold;
   adding stale hit-status to the reflected presentation family drops
   after_high_hit from the common target facts and leaves only all_states.
+
+policy-conditioned stochastic dynamics:
+  a deterministic policy induces before/after transition kernels;
+  reflected policy hit-status preserves the after_high_hit target;
+  adding stale policy hit-status to the reflected presentation family drops
+  after_high_hit from the common target facts and leaves only all_states.
 ```
 
 The next closure work should broaden these finite generated and

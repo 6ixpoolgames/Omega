@@ -67,6 +67,8 @@ the gridworld obstacle source-generator pilot now also checks reflected versus
 stale source-reach presentations over the after-reachability fact.
 the stochastic continuation layer now checks reflected versus stale hit-status
 presentations over an after-hit target fact.
+the policy-conditioned stochastic dynamics layer now checks the same
+stale/reflected hit-status closure pattern under a deterministic policy.
 ```
 
 The retained validation summary is:
@@ -183,7 +185,6 @@ without jumping to large models:
 
 ```text
 additional generated grid or automaton closure cases;
-policy-conditioned finite source-generator closure cases;
 second-source parity checks against the same finite relational IR;
 retained summaries that report both hidden-loss and invariant-closure facts.
 ```

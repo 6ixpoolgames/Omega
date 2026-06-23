@@ -708,9 +708,10 @@ hypotheses.json:
   expected/observed/pass-fail interpretation
 ```
 
-The current checks cover stale/reflected policy hit-probability loss and a
-policy-conditioned non-factorization witness where the same coarse support
-summary yields different hit probability.
+The current checks cover stale/reflected policy hit-probability loss,
+policy-conditioned stale/reflected hit-status closure over the after-hit target
+fact, and a policy-conditioned non-factorization witness where the same coarse
+support summary yields different hit probability.
 
 ## Future Compatibility
 

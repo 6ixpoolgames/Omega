@@ -76,6 +76,7 @@ from omega.adapters.finite_relational.stochastic_policy_dynamics import (
     induced_transition_kernel,
     policy_dynamics_summary,
     policy_hit_probability_within_horizon,
+    policy_hit_status_closure_surface,
     support_summary_for_policy_kernel,
     validate_action_kernel,
 )
@@ -190,6 +191,7 @@ __all__ = [
     "induced_transition_kernel",
     "policy_dynamics_summary",
     "policy_hit_probability_within_horizon",
+    "policy_hit_status_closure_surface",
     "support_summary_for_policy_kernel",
     "validate_action_kernel",
 ]

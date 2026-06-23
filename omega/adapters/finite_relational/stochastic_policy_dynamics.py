@@ -9,6 +9,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from fractions import Fraction
 
+from omega.adapters.finite_relational.audits import run_declared_audits
+from omega.adapters.finite_relational.model import load_model, model_digest
 from omega.adapters.finite_relational.stochastic_continuation_loss import (
     TransitionKernel,
     hit_probability_within_horizon,
@@ -176,6 +178,138 @@ def support_summary_for_policy_kernel(
     }
 
 
+def policy_hit_status_closure_surface(
+    states: tuple[str, ...],
+    actions: tuple[str, ...],
+    before: ActionKernel,
+    after: ActionKernel,
+    policy: Policy,
+    targets: frozenset[str],
+    *,
+    horizon: int,
+    threshold: Fraction,
+) -> tuple[dict[str, object], tuple[HypothesisCheck, ...]]:
+    """Compute policy-conditioned hit-status closure facts and hypotheses."""
+
+    before_transition = induced_transition_kernel(states, actions, before, policy)
+    after_transition = induced_transition_kernel(states, actions, after, policy)
+    before_status = _hit_status_by_start(
+        states,
+        before_transition,
+        targets,
+        horizon=horizon,
+        threshold=threshold,
+    )
+    after_status = _hit_status_by_start(
+        states,
+        after_transition,
+        targets,
+        horizon=horizon,
+        threshold=threshold,
+    )
+    after_high_hit = [
+        state for state, status in after_status.items() if status == "high_hit"
+    ]
+    model_raw = {
+        "model_id": "policy_hit_status_closure",
+        "schema_version": "0.1.0",
+        "carrier": list(states),
+        "predicates": {
+            "after_high_hit": after_high_hit,
+            "all_states": list(states),
+        },
+        "functions": {
+            "stale_policy_hit_status": before_status,
+            "reflected_policy_hit_status": after_status,
+        },
+        "audits": [
+            {
+                "id": "reflected_policy_hit_status_preserves_after_high_hit",
+                "kind": "presentation_fact_closure",
+                "presentations": ["reflected_policy_hit_status"],
+                "target_predicates": ["after_high_hit", "all_states"],
+                "expected_common_target_predicates": [
+                    "after_high_hit",
+                    "all_states",
+                ],
+                "expect": "closure_ok",
+            },
+            {
+                "id": "stale_reflected_policy_hit_status_drops_after_high_hit",
+                "kind": "presentation_fact_closure",
+                "presentations": [
+                    "stale_policy_hit_status",
+                    "reflected_policy_hit_status",
+                ],
+                "target_predicates": ["after_high_hit", "all_states"],
+                "expected_common_target_predicates": ["all_states"],
+                "expected_absent_target_predicates": ["after_high_hit"],
+                "expect": "closure_ok",
+            },
+        ],
+        "provenance": {
+            "declared_before_run": True,
+            "source": "omega.adapters.finite_relational.stochastic_policy_dynamics",
+            "claim_boundary": (
+                "Synthetic exact-rational policy-conditioned closure check; "
+                "not policy safety validation, value, agency, or Omega."
+            ),
+            "derivation_rules": [
+                "policy_kernel=action_kernel_induced_by_deterministic_policy",
+                "hit_status=finite_horizon_hit_probability_threshold",
+                "closure_audits=presentation_fact_closure(stale,reflected)",
+            ],
+        },
+    }
+    model = load_model(model_raw)
+    results = tuple(run_declared_audits(model))
+    by_id = {result.audit_id: result for result in results}
+    reflected = by_id["reflected_policy_hit_status_preserves_after_high_hit"]
+    stale_reflected = by_id[
+        "stale_reflected_policy_hit_status_drops_after_high_hit"
+    ]
+    reflected_common = reflected.observed["common_target_predicates"]
+    stale_reflected_common = stale_reflected.observed["common_target_predicates"]
+
+    facts: dict[str, object] = {
+        "threshold": fraction_to_text(threshold),
+        "horizon": horizon,
+        "before_hit_status_by_start": before_status,
+        "after_hit_status_by_start": after_status,
+        "closure_model_digest": model_digest(model),
+        "closure_audit_findings": [result.finding for result in results],
+        "reflected_common_target_predicates": reflected_common,
+        "stale_reflected_common_target_predicates": stale_reflected_common,
+    }
+    hypotheses = (
+        HypothesisCheck(
+            hypothesis_id="reflected_policy_hit_status_preserves_after_high_hit",
+            statement=(
+                "The reflected policy hit-status presentation preserves the "
+                "after-threshold hit target."
+            ),
+            expected=True,
+            observed=reflected_common == ["after_high_hit", "all_states"],
+        ),
+        HypothesisCheck(
+            hypothesis_id="stale_reflected_policy_hit_status_drops_after_high_hit",
+            statement=(
+                "The stale/reflected policy hit-status family drops the "
+                "after-threshold hit target from common facts."
+            ),
+            expected=True,
+            observed=(
+                stale_reflected_common == ["all_states"]
+                and stale_reflected.observed[
+                    "present_expected_absent_target_predicates"
+                ]
+                == []
+            ),
+        ),
+    )
+    return facts, hypotheses
+
+
 def _policy_stale_reflected_hit_loss_family() -> PolicyDynamicsFamily:
     states = ("x0", "x1", "goal")
     actions = ("move", "wait")
@@ -221,6 +355,16 @@ def _policy_stale_reflected_hit_loss_family() -> PolicyDynamicsFamily:
         targets,
         horizon,
     )
+    closure_facts, closure_hypotheses = policy_hit_status_closure_surface(
+        states,
+        actions,
+        before,
+        after,
+        policy,
+        targets,
+        horizon=horizon,
+        threshold=Fraction(1, 2),
+    )
     facts = {
         "states": list(states),
         "actions": list(actions),
@@ -233,6 +377,7 @@ def _policy_stale_reflected_hit_loss_family() -> PolicyDynamicsFamily:
         "loss_amount": fraction_to_text(before_hit - after_hit),
         "stale_abstraction_hit_probability": fraction_to_text(stale_hit),
         "reflected_abstraction_hit_probability": fraction_to_text(reflected_hit),
+        "hit_status_closure": closure_facts,
     }
     hypotheses = (
         HypothesisCheck(
@@ -247,7 +392,7 @@ def _policy_stale_reflected_hit_loss_family() -> PolicyDynamicsFamily:
             expected=True,
             observed=reflected_hit == after_hit and reflected_hit < before_hit,
         ),
-    )
+    ) + closure_hypotheses
     return PolicyDynamicsFamily(
         family_id="policy_stale_reflected_hit_loss",
         description=(
@@ -397,6 +542,31 @@ def _reachable_from(
                 seen.add(right)
                 changed = True
     return tuple(state for state in states if state in seen)
+
+
+def _hit_status_by_start(
+    states: tuple[str, ...],
+    kernel: TransitionKernel,
+    targets: frozenset[str],
+    *,
+    horizon: int,
+    threshold: Fraction,
+) -> dict[str, str]:
+    return {
+        state: (
+            "high_hit"
+            if hit_probability_within_horizon(
+                states,
+                kernel,
+                state,
+                targets,
+                horizon,
+            )
+            >= threshold
+            else "low_hit"
+        )
+        for state in states
+    }
 
 
 def _family_as_dict(family: PolicyDynamicsFamily) -> dict[str, object]:

@@ -1,7 +1,7 @@
 {
   "claim_boundary": "Synthetic finite policy-conditioned stochastic dynamics only. This result does not validate MDP policy safety, stochastic control, empirical transition estimates, value, agency, alignment, or Omega.",
-  "command": ".\\.venv\\Scripts\\python.exe -m omega.validation.finite_relational_policy_dynamics --out-root .tmp\\finite_relational_policy_dynamics",
-  "date": "2026-06-21",
+  "command": ".\\.venv\\Scripts\\python.exe -m omega.validation.finite_relational_policy_dynamics --out-root .tmp\\finite_relational_policy_dynamics_closure",
+  "date": "2026-06-23",
   "families": [
     {
       "description": "A deterministic policy in a tiny finite MDP loses target hit probability under perturbation; stale abstraction hides the loss, while reflected abstraction reports it.",
@@ -21,6 +21,32 @@
         },
         "reflected_abstraction_hit_probability": "1/10",
         "stale_abstraction_hit_probability": "9/10",
+        "hit_status_closure": {
+          "threshold": "1/2",
+          "horizon": 2,
+          "before_hit_status_by_start": {
+            "goal": "high_hit",
+            "x0": "high_hit",
+            "x1": "high_hit"
+          },
+          "after_hit_status_by_start": {
+            "goal": "high_hit",
+            "x0": "low_hit",
+            "x1": "low_hit"
+          },
+          "closure_model_digest": "b6d03247fb97700115180727ecef0d2167e18e920a37b1263f7b53f1f02cebcd",
+          "closure_audit_findings": [
+            "closure_ok",
+            "closure_ok"
+          ],
+          "reflected_common_target_predicates": [
+            "after_high_hit",
+            "all_states"
+          ],
+          "stale_reflected_common_target_predicates": [
+            "all_states"
+          ]
+        },
         "start": "x0",
         "states": [
           "x0",
@@ -46,6 +72,20 @@
           "observed": true,
           "passed": true,
           "statement": "The reflected policy model reports the lower after-perturbation hit probability."
+        },
+        {
+          "expected": true,
+          "hypothesis_id": "reflected_policy_hit_status_preserves_after_high_hit",
+          "observed": true,
+          "passed": true,
+          "statement": "The reflected policy hit-status presentation preserves the after-threshold hit target."
+        },
+        {
+          "expected": true,
+          "hypothesis_id": "stale_reflected_policy_hit_status_drops_after_high_hit",
+          "observed": true,
+          "passed": true,
+          "statement": "The stale/reflected policy hit-status family drops the after-threshold hit target from common facts."
         }
       ]
     },

@@ -56,8 +56,18 @@ The hypotheses are evaluated after the facts are generated:
 
 ```text
 stale_hides_policy_loss;
-reflected_reports_policy_loss.
+reflected_reports_policy_loss;
+reflected_policy_hit_status_preserves_after_high_hit;
+stale_reflected_policy_hit_status_drops_after_high_hit.
 ```
+
+The last two hypotheses use the same finite relational
+`presentation_fact_closure` audit surface as the deterministic grid obstacle
+and stochastic continuation pilots. At threshold `1/2` and horizon `2`, the
+reflected policy hit-status presentation preserves the after-kernel
+`after_high_hit` target fact. Adding stale policy hit-status to the
+presentation family removes that nonconstant fact from the common target facts,
+leaving only `all_states`.
 
 ### Policy Non-Factorization Through Support Summary
 
@@ -114,6 +124,7 @@ The near-term point is narrower:
 
 ```text
 policy-conditioned continuation facts can be hidden by stale abstraction;
+stale/reflected policy presentations can drop nonconstant hit-status facts;
 coarse support summaries do not determine policy-conditioned hit probability;
 generated facts should be separated from hypothesis interpretation.
 ```

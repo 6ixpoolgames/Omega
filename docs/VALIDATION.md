@@ -308,7 +308,8 @@ probability does not stand in for the whole continuation surface.
 The policy-conditioned path adds finite actions and deterministic policies over
 exact rational transition kernels. It retains generated `facts.json` separately
 from `hypotheses.json`, then checks stale/reflected policy loss and a
-policy-conditioned non-factorization witness through a coarse support summary.
+policy-conditioned presentation/fact closure case, plus a non-factorization
+witness through a coarse support summary.
 
 Finite relational adapter changes are also protected by the
 `Finite Relational Adapter Smoke` GitHub Actions workflow.

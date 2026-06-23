@@ -34,9 +34,30 @@ def test_policy_dynamics_covers_expected_families_and_separates_hypotheses() -> 
     assert stale.facts["loss_amount"] == "4/5"
     assert stale.facts["stale_abstraction_hit_probability"] == "9/10"
     assert stale.facts["reflected_abstraction_hit_probability"] == "1/10"
+    closure = stale.facts["hit_status_closure"]
+    assert closure["threshold"] == "1/2"
+    assert closure["horizon"] == 2
+    assert closure["before_hit_status_by_start"] == {
+        "x0": "high_hit",
+        "x1": "high_hit",
+        "goal": "high_hit",
+    }
+    assert closure["after_hit_status_by_start"] == {
+        "x0": "low_hit",
+        "x1": "low_hit",
+        "goal": "high_hit",
+    }
+    assert closure["closure_audit_findings"] == ["closure_ok", "closure_ok"]
+    assert closure["reflected_common_target_predicates"] == [
+        "after_high_hit",
+        "all_states",
+    ]
+    assert closure["stale_reflected_common_target_predicates"] == ["all_states"]
     assert [hypothesis.hypothesis_id for hypothesis in stale.hypotheses] == [
         "stale_hides_policy_loss",
         "reflected_reports_policy_loss",
+        "reflected_policy_hit_status_preserves_after_high_hit",
+        "stale_reflected_policy_hit_status_drops_after_high_hit",
     ]
 
     nonfactorization = by_id["policy_nonfactorization_same_support_summary"]
