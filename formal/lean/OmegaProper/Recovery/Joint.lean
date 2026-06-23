@@ -1,4 +1,4 @@
-import OmegaProper.Recovery.Deterministic
+import OmegaProper.Recovery.TargetPostprocessing
 
 /-!
 OmegaProper.Recovery.Joint
@@ -23,12 +23,12 @@ def jointTarget {X : Type u} {D₁ : Type w₁} {D₂ : Type w₂}
 /-- Project the first component of a joint decoder. -/
 def firstDecoder {O : Type z} {D₁ : Type w₁} {D₂ : Type w₂}
     (decoder : O -> D₁ × D₂) : O -> D₁ :=
-  fun o => (decoder o).1
+  decoderPostprocess Prod.fst decoder
 
 /-- Project the second component of a joint decoder. -/
 def secondDecoder {O : Type z} {D₁ : Type w₁} {D₂ : Type w₂}
     (decoder : O -> D₁ × D₂) : O -> D₂ :=
-  fun o => (decoder o).2
+  decoderPostprocess Prod.snd decoder
 
 /-- Pair two marginal decoders over the same observation type. -/
 def pairDecoder {O : Type z} {D₁ : Type w₁} {D₂ : Type w₂}
@@ -47,15 +47,10 @@ theorem joint_success_le_first
     (x : X) :
     Success C (jointTarget target₁ target₂) observe decoder x <=
       Success C target₁ observe (firstDecoder decoder) x := by
-  classical
-  unfold Success jointTarget firstDecoder
-  apply Finset.sum_le_sum
-  intro y _hy
-  by_cases hPair : decoder (observe y) = (target₁ x, target₂ x)
-  · simp [hPair]
-  · by_cases hFirst : (decoder (observe y)).1 = target₁ x
-    · simp [hPair, hFirst, C.nonneg x y]
-    · simp [hPair, hFirst]
+  simpa [jointTarget, firstDecoder, targetPostprocess, decoderPostprocess]
+    using
+      success_le_targetPostprocess
+        C (jointTarget target₁ target₂) observe decoder Prod.fst x
 
 theorem joint_success_le_second
     {X : Type u} {Y : Type v} {D₁ : Type w₁} {D₂ : Type w₂} {O : Type z}
@@ -68,15 +63,10 @@ theorem joint_success_le_second
     (x : X) :
     Success C (jointTarget target₁ target₂) observe decoder x <=
       Success C target₂ observe (secondDecoder decoder) x := by
-  classical
-  unfold Success jointTarget secondDecoder
-  apply Finset.sum_le_sum
-  intro y _hy
-  by_cases hPair : decoder (observe y) = (target₁ x, target₂ x)
-  · simp [hPair]
-  · by_cases hSecond : (decoder (observe y)).2 = target₂ x
-    · simp [hPair, hSecond, C.nonneg x y]
-    · simp [hPair, hSecond]
+  simpa [jointTarget, secondDecoder, targetPostprocess, decoderPostprocess]
+    using
+      success_le_targetPostprocess
+        C (jointTarget target₁ target₂) observe decoder Prod.snd x
 
 theorem jointRecoveryAt_implies_firstRecoveryAt
     {X : Type u} {Y : Type v} {D₁ : Type w₁} {D₂ : Type w₂} {O : Type z}
@@ -88,11 +78,12 @@ theorem jointRecoveryAt_implies_firstRecoveryAt
     {tau : ℚ}
     (hRecovery : RecoveryExistsAt C (jointTarget target₁ target₂) observe tau) :
     RecoveryExistsAt C target₁ observe tau := by
-  match hRecovery with
-  | Exists.intro decoder hDecoder =>
-      exact Exists.intro (firstDecoder decoder) fun x =>
-        le_trans (hDecoder x)
-          (joint_success_le_first C target₁ target₂ observe decoder x)
+  simpa [jointTarget, targetPostprocess]
+    using
+      recoveryAt_targetPostprocess
+        (map := Prod.fst)
+        (target := jointTarget target₁ target₂)
+        hRecovery
 
 theorem jointRecoveryAt_implies_secondRecoveryAt
     {X : Type u} {Y : Type v} {D₁ : Type w₁} {D₂ : Type w₂} {O : Type z}
@@ -104,11 +95,12 @@ theorem jointRecoveryAt_implies_secondRecoveryAt
     {tau : ℚ}
     (hRecovery : RecoveryExistsAt C (jointTarget target₁ target₂) observe tau) :
     RecoveryExistsAt C target₂ observe tau := by
-  match hRecovery with
-  | Exists.intro decoder hDecoder =>
-      exact Exists.intro (secondDecoder decoder) fun x =>
-        le_trans (hDecoder x)
-          (joint_success_le_second C target₁ target₂ observe decoder x)
+  simpa [jointTarget, targetPostprocess]
+    using
+      recoveryAt_targetPostprocess
+        (map := Prod.snd)
+        (target := jointTarget target₁ target₂)
+        hRecovery
 
 /--
 For paired decoders over the same observation panel, joint success is bounded
@@ -277,9 +269,12 @@ theorem jointExactDecoder_implies_firstExactDecoder
         support (jointTarget target₁ target₂) observe decoder) :
     BaselineWitnesses.ExactRecoverySupport.ExactDecoder
       support target₁ observe (firstDecoder decoder) := by
-  intro x y hSupport
-  have hJoint := hExact x y hSupport
-  exact congrArg Prod.fst hJoint
+  simpa [jointTarget, firstDecoder, targetPostprocess, decoderPostprocess]
+    using
+      exactDecoder_targetPostprocess
+        (map := Prod.fst)
+        (target := jointTarget target₁ target₂)
+        hExact
 
 theorem jointExactDecoder_implies_secondExactDecoder
     {X : Type u} {Y : Type v} {D₁ : Type w₁} {D₂ : Type w₂} {O : Type z}
@@ -293,9 +288,12 @@ theorem jointExactDecoder_implies_secondExactDecoder
         support (jointTarget target₁ target₂) observe decoder) :
     BaselineWitnesses.ExactRecoverySupport.ExactDecoder
       support target₂ observe (secondDecoder decoder) := by
-  intro x y hSupport
-  have hJoint := hExact x y hSupport
-  exact congrArg Prod.snd hJoint
+  simpa [jointTarget, secondDecoder, targetPostprocess, decoderPostprocess]
+    using
+      exactDecoder_targetPostprocess
+        (map := Prod.snd)
+        (target := jointTarget target₁ target₂)
+        hExact
 
 theorem marginalExactDecoders_pair_jointExactDecoder
     {X : Type u} {Y : Type v} {D₁ : Type w₁} {D₂ : Type w₂} {O : Type z}

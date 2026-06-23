@@ -1,0 +1,19 @@
+import OmegaProper.Trajectory.ApproximationContract
+import OmegaProper.Trajectory.Closure
+import OmegaProper.Trajectory.PresentationInvariant
+import OmegaProper.Trajectory.PresentationInvariantExamples
+import OmegaProper.Trajectory.PresentationSoundness
+import OmegaProper.Trajectory.PresentationSoundnessInstances
+import OmegaProper.Trajectory.ProfileAbstraction
+import OmegaProper.Trajectory.ProfileApproximation
+import OmegaProper.Trajectory.Quotient
+import OmegaProper.Trajectory.SoundPresentationFamily
+import OmegaProper.Trajectory.SoundQuotient
+import OmegaProper.Trajectory.TargetPresentationInvariant
+
+/-!
+OmegaProper.Trajectory.Presentation
+
+Umbrella for sound quotient, presentation, approximation, and target-invariance
+contracts.
+-/

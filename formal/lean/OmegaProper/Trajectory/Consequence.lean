@@ -1,0 +1,22 @@
+import OmegaProper.Trajectory.AlphaConsequenceSeed
+import OmegaProper.Trajectory.AlphaConsequenceSeedExamples
+import OmegaProper.Trajectory.ClassSoundnessAsClique
+import OmegaProper.Trajectory.ConsequenceClasses
+import OmegaProper.Trajectory.ConsequenceComparison
+import OmegaProper.Trajectory.ConsequenceDiscipline
+import OmegaProper.Trajectory.ConsequencePanelDiscipline
+import OmegaProper.Trajectory.ConsequenceRelation
+import OmegaProper.Trajectory.ProtoTeleologicalProfile
+import OmegaProper.Trajectory.ProtoTeleologicalSeed
+import OmegaProper.Trajectory.ProtoTeleologicalSeedDiscipline
+import OmegaProper.Trajectory.ProtoTeleologicalSeedExamples
+import OmegaProper.Trajectory.PrimitiveConsequenceExposure
+import OmegaProper.Trajectory.PrimitiveDynamicsRealization
+
+/-!
+OmegaProper.Trajectory.Consequence
+
+Umbrella for the primitive/consequence-facing layer of `OmegaProper.Trajectory`.
+It introduces no new claims; it only exposes the existing consequence spine
+through a smaller public import surface.
+-/

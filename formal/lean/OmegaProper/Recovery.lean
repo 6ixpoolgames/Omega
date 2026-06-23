@@ -11,6 +11,7 @@ import OmegaProper.Recovery.Randomized
 import OmegaProper.Recovery.RandomizedFamily
 import OmegaProper.Recovery.Robust
 import OmegaProper.Recovery.RobustRandomized
+import OmegaProper.Recovery.TargetPostprocessing
 
 /-!
 OmegaProper.Recovery

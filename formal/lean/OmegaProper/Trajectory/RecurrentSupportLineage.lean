@@ -1,3 +1,4 @@
+import OmegaProper.Trajectory.CarrierTransport
 import OmegaProper.Trajectory.RecurrentSupportExtension
 
 /-!
@@ -21,6 +22,7 @@ namespace Trajectory
 namespace RecurrentSupportLineage
 
 open ConsequenceRelation
+open CarrierTransport
 open DistinctionSupport
 open PathCarriedDistinction
 open ReachabilityViability
@@ -58,6 +60,24 @@ def RecurrentSupportLineageContract
     InternalPath (dynFromNext Next1) D x y /\
     InternalPath (dynFromNext Next1) D y x
 
+theorem lineageContract_to_carrierTransport
+    {S : ConsequenceSystem.{w, k, o}}
+    {Next1 : S.Fragment -> S.Fragment -> Prop}
+    {safe1 D : S.Fragment -> Prop}
+    {x y : S.Fragment}
+    (hContract : RecurrentSupportLineageContract Next1 safe1 D x y) :
+    CarrierTransport S Next1 safe1 D x y x y := by
+  exact {
+    recurrent := hContract.left
+    left_mem := hContract.right.left
+    right_mem := hContract.right.right.left
+    forward := hContract.right.right.right.left
+    backward := hContract.right.right.right.right
+    separation := by
+      intro hSep
+      exact hSep
+  }
+
 theorem supportsMergeSeparatedPair_lineage_of_contract
     {S : ConsequenceSystem.{w, k, o}}
     {Next0 Next1 : S.Fragment -> S.Fragment -> Prop}
@@ -66,15 +86,9 @@ theorem supportsMergeSeparatedPair_lineage_of_contract
     (hSupport : SupportsMergeSeparatedPair S Next0 C x y)
     (hContract : RecurrentSupportLineageContract Next1 safe1 D x y) :
     SupportsMergeSeparatedPair S Next1 D x y := by
-  exact And.intro
-    hContract.right.left
-    (And.intro
-      hContract.right.right.left
-      (And.intro
-        hContract.right.right.right.left
-        (And.intro
-          hContract.right.right.right.right
-          hSupport.right.right.right.right)))
+  exact supportsMergeSeparatedPair_transport
+    hSupport
+    (lineageContract_to_carrierTransport hContract)
 
 theorem recurrentSupportCarries_lineage_of_contract
     {S : ConsequenceSystem.{w, k, o}}
@@ -84,9 +98,9 @@ theorem recurrentSupportCarries_lineage_of_contract
     (hCarry : RecurrentSupportCarries S Next0 safe0 C x y)
     (hContract : RecurrentSupportLineageContract Next1 safe1 D x y) :
     RecurrentSupportCarries S Next1 safe1 D x y := by
-  exact And.intro
-    hContract.left
-    (supportsMergeSeparatedPair_lineage_of_contract hCarry.right hContract)
+  exact recurrentSupportCarries_transport
+    hCarry
+    (lineageContract_to_carrierTransport hContract)
 
 /-! ## Finite incomparable-support handoff witness -/
 

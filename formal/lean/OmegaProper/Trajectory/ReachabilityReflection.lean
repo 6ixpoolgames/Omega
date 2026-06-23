@@ -1,3 +1,4 @@
+import OmegaProper.Trajectory.FixedPointTransport
 import OmegaProper.Trajectory.TrajectorySemantics
 
 /-!
@@ -18,6 +19,7 @@ namespace Trajectory
 namespace ReachabilityReflection
 
 open PredicateFixpoint
+open FixedPointTransport
 open ReachabilityViability
 open TrajectorySemantics
 
@@ -76,9 +78,10 @@ theorem abstractReach_reflects_exactReach
     {x : DX.State}
     (hReachQ : Reach DQ targetQ (present x)) :
     Reach DX targetX x := by
-  let pullbackReach : DQ.State -> Prop :=
-    fun q => forall x0, present x0 = q -> Reach DX targetX x0
-  have hPref : Prefixed (reachOp DQ targetQ) pullbackReach := by
+  have hPref :
+      Prefixed
+        (reachOp DQ targetQ)
+        (FiberForall present (Reach DX targetX)) := by
     intro q hq x0 hx0q
     cases hq with
     | inl hTargetQ =>
@@ -96,7 +99,13 @@ theorem abstractReach_reflects_exactReach
                 exact reach_step DX targetX
                   hy.left
                   (hz.right y hy.right)
-  exact hReachQ pullbackReach hPref x rfl
+  exact
+    lfp_reflects_of_fiberForall_prefixed
+      (FX := reachOp DX targetX)
+      (FQ := reachOp DQ targetQ)
+      (present := present)
+      hPref
+      hReachQ
 
 /-- Direct spelling without packaging the two reflection hypotheses. -/
 theorem abstractReach_reflects_exactReach_of_reflects

@@ -19,6 +19,7 @@ namespace Trajectory
 namespace ViabilityReflection
 
 open PredicateFixpoint
+open FixedPointTransport
 open ReachabilityReflection
 open ReachabilityViability
 open TrajectorySemantics
@@ -66,26 +67,30 @@ theorem abstractViable_reflects_exactViable
     {x : DX.State}
     (hViableQ : Viable DQ safeQ (present x)) :
     Viable DX safeX x := by
-  match hViableQ with
-  | Exists.intro pQ hpQ =>
-      let pullbackViable : DX.State -> Prop :=
-        fun x0 => pQ (present x0)
-      have hPost : Postfixed (viabilityOp DX safeX) pullbackViable := by
-        intro x0 hx0
-        have hQStep :
-            viabilityOp DQ safeQ pQ (present x0) :=
-          hpQ.left (present x0) hx0
-        exact And.intro
-          (hReflect.safe_reflects x0 hQStep.left)
-          (match hQStep.right with
-            | Exists.intro z hz =>
-                match hReflect.step_reflects x0 z hz.left with
-                | Exists.intro y hy =>
-                    Exists.intro y
-                      (And.intro hy.left (by
-                        simpa [pullbackViable, hy.right] using hz.right)))
-      exact Exists.intro pullbackViable
-        (And.intro hPost hpQ.right)
+  have hPost :
+      forall p,
+        Postfixed (viabilityOp DQ safeQ) p ->
+          Postfixed (viabilityOp DX safeX) (Pullback present p) := by
+    intro p hpQ x0 hx0
+    have hQStep :
+        viabilityOp DQ safeQ p (present x0) :=
+      hpQ (present x0) hx0
+    exact And.intro
+      (hReflect.safe_reflects x0 hQStep.left)
+      (match hQStep.right with
+        | Exists.intro z hz =>
+            match hReflect.step_reflects x0 z hz.left with
+            | Exists.intro y hy =>
+                Exists.intro y
+                  (And.intro hy.left (by
+                    simpa [Pullback, hy.right] using hz.right)))
+  exact
+    gfp_reflects_of_pullback_postfixed
+      (FX := viabilityOp DX safeX)
+      (FQ := viabilityOp DQ safeQ)
+      (present := present)
+      hPost
+      hViableQ
 
 /-- Direct spelling without packaging the two reflection hypotheses. -/
 theorem abstractViable_reflects_exactViable_of_reflects

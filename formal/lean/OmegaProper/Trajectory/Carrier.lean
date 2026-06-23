@@ -1,0 +1,31 @@
+import OmegaProper.Trajectory.CarriedDistinction
+import OmegaProper.Trajectory.CarrierCertificate
+import OmegaProper.Trajectory.CarrierPresentationValidity
+import OmegaProper.Trajectory.CarrierSemantics
+import OmegaProper.Trajectory.CarrierTrajectoryLanguage
+import OmegaProper.Trajectory.CarrierTransport
+import OmegaProper.Trajectory.DistinctionSupport
+import OmegaProper.Trajectory.GeneratedCarrier
+import OmegaProper.Trajectory.JointRecurrentSupport
+import OmegaProper.Trajectory.ParameterizedRecurrentSupport
+import OmegaProper.Trajectory.PathCarriedDistinction
+import OmegaProper.Trajectory.RecurrentSupportExtension
+import OmegaProper.Trajectory.RecurrentSupportIntegrity
+import OmegaProper.Trajectory.RecurrentSupportLineage
+import OmegaProper.Trajectory.RecurrentSupportPathTransfer
+import OmegaProper.Trajectory.RecurrentSupportPerturbationBudget
+import OmegaProper.Trajectory.RecurrentSupportRestoration
+import OmegaProper.Trajectory.RecurrentSupportRobustness
+import OmegaProper.Trajectory.RecurrentSupportSuccessorDistinction
+import OmegaProper.Trajectory.RecurrentSupportTransfer
+import OmegaProper.Trajectory.RecurrentViableClass
+import OmegaProper.Trajectory.SimulationTransfer
+import OmegaProper.Trajectory.SupportMinimality
+import OmegaProper.Trajectory.SupportRestriction
+import OmegaProper.Trajectory.SupportUnderPerturbation
+
+/-!
+OmegaProper.Trajectory.Carrier
+
+Umbrella for carrier, recurrent support, and support-transfer material.
+-/

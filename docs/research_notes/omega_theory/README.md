@@ -24,6 +24,7 @@ laws_of_form_adjacency_v0.md
 adapter_provenance_v0.md
 audit_response_roadmap_v0.md
 finite_relational_adapter_design_v0.md
+lean_compression_checkpoint_v0.md
 dynamic_presentation_equivariance_v0.md
 viable_trajectory_count_v0.md
 useful_information_and_constraint_selection_v0.md
@@ -138,9 +139,13 @@ OmegaProper/Trajectory/CarrierCertificate.lean
 OmegaProper/Trajectory/CarrierPresentationValidity.lean
 OmegaProper/Trajectory/CarrierSemantics.lean
 OmegaProper/Trajectory/CarrierTrajectoryLanguage.lean
+OmegaProper/Trajectory/CarrierTransport.lean
+OmegaProper/Trajectory/Consequence.lean
 OmegaProper/Trajectory/ContinuationDeformation.lean
 OmegaProper/Trajectory/DeformationProfile.lean
 OmegaProper/Trajectory/DeformationProfileExamples.lean
+OmegaProper/Trajectory/Dynamics.lean
+OmegaProper/Trajectory/FixedPointTransport.lean
 OmegaProper/Trajectory/GeneratedCarrier.lean
 OmegaProper/Trajectory/ProtoTeleologicalSeed.lean
 OmegaProper/Trajectory/ProtoTeleologicalSeedDiscipline.lean
@@ -176,6 +181,9 @@ OmegaProper/Trajectory/IrreversibleRecurrentSupportLoss.lean
 OmegaProper/Trajectory/JointRecurrentSupport.lean
 OmegaProper/Trajectory/SimulationTransfer.lean
 OmegaProper/Trajectory/SupportUnderPerturbation.lean
+OmegaProper/Trajectory/Presentation.lean
+OmegaProper/Trajectory/Closure.lean
+OmegaProper/Trajectory.lean
 OmegaProper/Recovery/FiniteChannel.lean
 OmegaProper/Recovery/ConfusionBound.lean
 OmegaProper/Recovery/CoarseningPermanence.lean
@@ -185,6 +193,7 @@ OmegaProper/Recovery/Randomized.lean
 OmegaProper/Recovery/RandomizedFamily.lean
 OmegaProper/Recovery/Robust.lean
 OmegaProper/Recovery/RobustRandomized.lean
+OmegaProper/Recovery/TargetPostprocessing.lean
 OmegaProper/Recovery/Joint.lean
 OmegaProper/Recovery/PolicyContinuation.lean
 OmegaProper/Recovery/Prior.lean
