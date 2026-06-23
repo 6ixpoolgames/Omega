@@ -1,7 +1,7 @@
 {
   "claim_boundary": "Synthetic finite stochastic characterization only. This result does not validate stochastic dynamics, MDP policies, approximate soundness, empirical substrate correctness, value, agency, alignment, or Omega.",
-  "command": ".\\.venv\\Scripts\\python.exe -m omega.validation.finite_relational_stochastic_recovery --out-root .tmp\\finite_relational_stochastic_recovery",
-  "date": "2026-06-19",
+  "command": ".\\.venv\\Scripts\\python.exe -m omega.validation.finite_relational_stochastic_recovery --out-root .tmp\\finite_relational_stochastic_recovery_robust_randomized",
+  "date": "2026-06-23",
   "families": [
     {
       "description": "A high-confidence noisy channel can have excellent worst-case recovery while failing exact support recovery.",
@@ -138,8 +138,56 @@
         "deterministic_optimized_worst_case_success": "0",
         "randomized_beats_deterministic_maximin": true
       }
+    },
+    {
+      "description": "Identity and flipped exact channels are each exactly recoverable by a different deterministic decoder, but no one deterministic decoder robustly recovers the ambiguity set. A declared uniform randomized decoder reaches one-half uniformly, recording robust randomized recovery without claiming randomized optimization.",
+      "family_id": "robust_randomized_ambiguity_axis",
+      "metrics": {
+        "declared_randomized_decoder": {
+          "left": {
+            "false": "1/2",
+            "true": "1/2"
+          },
+          "right": {
+            "false": "1/2",
+            "true": "1/2"
+          }
+        },
+        "declared_randomized_robust_per_channel_success": {
+          "flipped": {
+            "x0": "1/2",
+            "x1": "1/2"
+          },
+          "identity": {
+            "x0": "1/2",
+            "x1": "1/2"
+          }
+        },
+        "declared_randomized_robust_worst_case_success": "1/2",
+        "optimized_deterministic_robust_decoder": {
+          "left": "true",
+          "right": "true"
+        },
+        "optimized_deterministic_robust_per_channel_success": {
+          "flipped": {
+            "x0": "0",
+            "x1": "1"
+          },
+          "identity": {
+            "x0": "0",
+            "x1": "1"
+          }
+        },
+        "optimized_deterministic_robust_worst_case_success": "0",
+        "per_channel_deterministic_worst_case_success": {
+          "flipped": "1",
+          "identity": "1"
+        },
+        "per_channel_exact_but_not_deterministically_robust": true,
+        "randomized_beats_deterministic_robust_maximin": true
+      }
     }
   ],
-  "family_count": 8,
+  "family_count": 9,
   "status": "PASS"
 }

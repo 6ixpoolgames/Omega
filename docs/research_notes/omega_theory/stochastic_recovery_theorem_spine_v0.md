@@ -159,6 +159,16 @@ A declared randomized decoder can outperform deterministic maximin in a
 strictly ambiguous case. The current implementation records declared randomized
 decoder success but does not yet implement a general randomized optimizer.
 
+### Robust Randomized Decoders Are A Separate Ambiguity-Set Axis
+
+Identity and flipped exact channels are each deterministically recoverable on
+their own, but no single deterministic decoder robustly recovers the declared
+two-channel ambiguity set. A declared uniform randomized decoder reaches
+worst-case success `1/2` across both channels and both source states.
+
+This records robust randomized recovery as an adapter-visible axis without
+claiming randomized maximin optimization.
+
 ## Next Theorem Work
 
 Possible next formalization steps:
@@ -167,8 +177,7 @@ Possible next formalization steps:
 Lean theorem for support-exact recovery iff support disjointness;
 exact randomized maximin via a small linear-programming surface or finite
   declared randomized decoder family;
-adapter parity for robust randomized ambiguity-set checks if needed by a
-  concrete source compiler.
+joint approximate recovery bounds when paired decoders are used.
 ```
 
 ## Non-Claims

@@ -1,7 +1,7 @@
 # Stochastic Recovery Characterization v0
 
 Status: finite adapter validation note
-Scope: exact rational finite channels, support ambiguity, decoder optimization, and coarsening checks
+Scope: exact rational finite channels, support ambiguity, decoder optimization, coarsening checks, and declared robust randomized decoding
 Claim boundary: synthetic finite characterization only; not stochastic dynamics, not MDP policy validation, not empirical substrate validation, not value, agency, alignment, or Omega validation
 
 ## Purpose
@@ -29,7 +29,8 @@ optimized worst-case deterministic decoder;
 declared decoder versus optimized decoder gap;
 deterministic coarsening/refinement behavior;
 joint versus marginal recovery;
-declared randomized decoder behavior.
+declared randomized decoder behavior;
+declared robust randomized decoder behavior over an ambiguity set.
 ```
 
 Worst-case recovery remains the default adapter aggregate because it does not
@@ -39,7 +40,7 @@ is explicitly part of the adapter provenance.
 
 ## Implemented Families
 
-The validation runner covers eight exact rational finite families.
+The validation runner covers nine exact rational finite families.
 
 ### Support Exactness Versus High Confidence
 
@@ -157,13 +158,34 @@ worst-case success `1/2`.
 This records randomized decoders as a separate axis. The implementation does
 not yet claim a general randomized optimizer.
 
+### Robust Randomized Ambiguity Axis
+
+Identity and flipped exact channels are each exactly recoverable by a different
+deterministic decoder, but no one deterministic decoder robustly recovers the
+two-channel ambiguity set:
+
+```text
+per-channel deterministic worst-case success = 1
+optimized deterministic robust worst-case success = 0
+```
+
+A declared uniform randomized decoder reaches threshold `1/2` for every source
+under every channel:
+
+```text
+declared randomized robust worst-case success = 1/2
+```
+
+This records robust randomized recovery as a separate axis without claiming
+general randomized optimization.
+
 ## Reproduction
 
 Run:
 
 ```powershell
 .\.venv\Scripts\python.exe -m omega.validation.finite_relational_stochastic_recovery `
-  --out-root .tmp\finite_relational_stochastic_recovery
+  --out-root .tmp\finite_relational_stochastic_recovery_robust_randomized
 ```
 
 The retained result summary is:
@@ -185,7 +207,8 @@ prior:
   none in this first layer
 
 decoder class:
-  all deterministic decoders unless a declared decoder is being contrasted
+  all deterministic decoders unless a declared deterministic or randomized
+  decoder is being contrasted
 
 garbling/coarsening:
   deterministic post-processing of an available observation

@@ -1,8 +1,8 @@
 # Finite Relational Adapter Validation V0
 
 Date: 2026-06-23
-Run context: working tree based on `81bb325`, with the graph-pair public
-compiler reuse cleanup applied before commit.
+Run context: working tree based on `8694d23`, with robust randomized stochastic
+recovery adapter parity applied before commit.
 
 Claim boundary:
 
@@ -21,20 +21,30 @@ source abstraction is empirically correct.
   tests/test_finite_relational_graph_pair_transfer.py `
   -q --basetemp .tmp/pytest-graph-pair-refactor -p no:cacheprovider
 
+./.venv/Scripts/python.exe -m pytest `
+  tests/test_finite_relational_stochastic_recovery.py `
+  tests/test_stochastic_recovery_theorem_spine.py `
+  -q --basetemp .tmp/pytest-stochastic-robust-randomized-final -p no:cacheprovider
+
 ./.venv/Scripts/python.exe -m omega.validation.finite_relational_graph_pair_transfer `
   --out-root .tmp/finite_relational_graph_pair_transfer_characterization_final
+
+./.venv/Scripts/python.exe -m omega.validation.finite_relational_stochastic_recovery `
+  --out-root .tmp/finite_relational_stochastic_recovery_robust_randomized_final
 
 ./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_adversarial `
   --out-root .tmp/finite_relational_adapter_adversarial_graph_pair_refactor
 
 ./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_smoke `
-  --out-root .tmp/finite_relational_adapter_smoke_graph_pair_refactor
+  --out-root .tmp/finite_relational_adapter_smoke_robust_randomized
 
 ./.venv/Scripts/ruff.exe check omega/adapters/finite_relational/__init__.py `
   omega/adapters/finite_relational/adversarial_search.py `
   omega/adapters/finite_relational/graph_pair_transfer.py `
+  omega/adapters/finite_relational/stochastic_recovery.py `
   tests/test_finite_relational_adapter_adversarial.py `
   tests/test_finite_relational_graph_pair_transfer.py `
+  tests/test_finite_relational_stochastic_recovery.py `
   omega/validation/finite_relational_graph_pair_transfer.py
 ```
 
@@ -42,8 +52,10 @@ Result:
 
 ```text
 graph-pair/adversarial pytest: 18 passed
+stochastic recovery pytest: 9 passed
 graph-pair transfer characterization: PASS, 2 studies, 4 representative cases
-adapter smoke: PASS, 15 fixtures, focused pytest 79 passed
+stochastic recovery characterization: PASS, 9 families
+adapter smoke: PASS, 15 fixtures, focused pytest 80 passed
 generated/adversarial validation: PASS, 17 cases
 focused ruff: passed
 ```
@@ -53,7 +65,7 @@ focused ruff: passed
 Run root:
 
 ```text
-.tmp/finite_relational_adapter_smoke_graph_pair_refactor_final/20260623_172015
+.tmp/finite_relational_adapter_smoke_robust_randomized/20260623_173519
 ```
 
 | Fixture | Audits | Findings | All passed | Source digest | Compiled/model digest |

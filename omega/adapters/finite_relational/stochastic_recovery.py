@@ -29,6 +29,15 @@ class OptimizedDecoderResult:
 
 
 @dataclass(frozen=True)
+class RobustOptimizedDecoderResult:
+    """Best deterministic decoder for a finite robust worst-case objective."""
+
+    decoder: Decoder
+    per_channel_success: dict[str, dict[str, Fraction]]
+    robust_worst_case_success: Fraction
+
+
+@dataclass(frozen=True)
 class SupportAmbiguity:
     """One observation label reachable from multiple declared target classes."""
 
@@ -58,6 +67,7 @@ def generate_stochastic_recovery_study() -> tuple[StochasticRecoveryFamily, ...]
         _same_worst_case_different_failure_localization_family(),
         _same_marginal_success_different_joint_failure_family(),
         _randomized_decoder_axis_family(),
+        _robust_randomized_ambiguity_axis_family(),
     )
 
 
@@ -236,6 +246,111 @@ def optimized_worst_case_decoder(
             _decoder_sort_key(candidate.decoder),
         ) > (
             best.worst_case_success,
+            _decoder_sort_key(best.decoder),
+        ):
+            best = candidate
+    if best is None:
+        raise ValueError("no deterministic decoders were generated")
+    return best
+
+
+def robust_success_by_channel(
+    states: tuple[str, ...],
+    outputs: tuple[str, ...],
+    channels: dict[str, Channel],
+    observation: Observation,
+    target: TargetFunction,
+    decoder: Decoder,
+) -> dict[str, dict[str, Fraction]]:
+    """Per-channel, per-source deterministic success for one shared decoder."""
+
+    if not channels:
+        raise ValueError("channels must be nonempty")
+    return {
+        channel_id: success_by_source(
+            states,
+            outputs,
+            channel,
+            observation,
+            target,
+            decoder,
+        )
+        for channel_id, channel in sorted(channels.items())
+    }
+
+
+def robust_randomized_success_by_channel(
+    states: tuple[str, ...],
+    outputs: tuple[str, ...],
+    channels: dict[str, Channel],
+    observation: Observation,
+    target: TargetFunction,
+    decoder: RandomizedDecoder,
+) -> dict[str, dict[str, Fraction]]:
+    """Per-channel, per-source randomized success for one shared decoder."""
+
+    if not channels:
+        raise ValueError("channels must be nonempty")
+    return {
+        channel_id: randomized_success_by_source(
+            states,
+            outputs,
+            channel,
+            observation,
+            target,
+            decoder,
+        )
+        for channel_id, channel in sorted(channels.items())
+    }
+
+
+def robust_worst_case_success(
+    per_channel_success: dict[str, dict[str, Fraction]],
+) -> Fraction:
+    """Worst success over every declared channel and source state."""
+
+    values = [
+        success
+        for source_success in per_channel_success.values()
+        for success in source_success.values()
+    ]
+    if not values:
+        raise ValueError("per_channel_success must contain at least one value")
+    return min(values)
+
+
+def optimized_robust_worst_case_decoder(
+    states: tuple[str, ...],
+    outputs: tuple[str, ...],
+    channels: dict[str, Channel],
+    observation: Observation,
+    target: TargetFunction,
+) -> RobustOptimizedDecoderResult:
+    """Best worst-case recovery over one deterministic decoder for all channels."""
+
+    observation_labels = tuple(sorted(set(observation.values())))
+    target_values = tuple(sorted(set(target.values())))
+    best: RobustOptimizedDecoderResult | None = None
+    for decoder in all_deterministic_decoders(observation_labels, target_values):
+        per_channel = robust_success_by_channel(
+            states,
+            outputs,
+            channels,
+            observation,
+            target,
+            decoder,
+        )
+        robust_worst = robust_worst_case_success(per_channel)
+        candidate = RobustOptimizedDecoderResult(
+            decoder=decoder,
+            per_channel_success=per_channel,
+            robust_worst_case_success=robust_worst,
+        )
+        if best is None or (
+            candidate.robust_worst_case_success,
+            _decoder_sort_key(candidate.decoder),
+        ) > (
+            best.robust_worst_case_success,
             _decoder_sort_key(best.decoder),
         ):
             best = candidate
@@ -691,6 +806,100 @@ def _randomized_decoder_axis_family() -> StochasticRecoveryFamily:
     )
 
 
+def _robust_randomized_ambiguity_axis_family() -> StochasticRecoveryFamily:
+    states = ("x0", "x1")
+    outputs = ("y0", "y1")
+    identity_channel = {
+        "x0": {"y0": Fraction(1), "y1": Fraction(0)},
+        "x1": {"y0": Fraction(0), "y1": Fraction(1)},
+    }
+    flipped_channel = {
+        "x0": {"y0": Fraction(0), "y1": Fraction(1)},
+        "x1": {"y0": Fraction(1), "y1": Fraction(0)},
+    }
+    channels = {
+        "flipped": flipped_channel,
+        "identity": identity_channel,
+    }
+    observation = {"y0": "left", "y1": "right"}
+    target = {"x0": "false", "x1": "true"}
+    per_channel_optimized = {
+        channel_id: optimized_worst_case_decoder(
+            states,
+            outputs,
+            channel,
+            observation,
+            target,
+        )
+        for channel_id, channel in sorted(channels.items())
+    }
+    robust_deterministic = optimized_robust_worst_case_decoder(
+        states,
+        outputs,
+        channels,
+        observation,
+        target,
+    )
+    randomized_decoder = {
+        "left": {"false": Fraction(1, 2), "true": Fraction(1, 2)},
+        "right": {"false": Fraction(1, 2), "true": Fraction(1, 2)},
+    }
+    randomized_success = robust_randomized_success_by_channel(
+        states,
+        outputs,
+        channels,
+        observation,
+        target,
+        randomized_decoder,
+    )
+
+    return StochasticRecoveryFamily(
+        family_id="robust_randomized_ambiguity_axis",
+        description=(
+            "Identity and flipped exact channels are each exactly recoverable "
+            "by a different deterministic decoder, but no one deterministic "
+            "decoder robustly recovers the ambiguity set. A declared uniform "
+            "randomized decoder reaches one-half uniformly, recording robust "
+            "randomized recovery without claiming randomized optimization."
+        ),
+        metrics={
+            "per_channel_deterministic_worst_case_success": {
+                channel_id: fraction_to_text(result.worst_case_success)
+                for channel_id, result in sorted(per_channel_optimized.items())
+            },
+            "optimized_deterministic_robust_decoder": robust_deterministic.decoder,
+            "optimized_deterministic_robust_worst_case_success": fraction_to_text(
+                robust_deterministic.robust_worst_case_success
+            ),
+            "optimized_deterministic_robust_per_channel_success": (
+                _nested_fraction_map_to_text(
+                    robust_deterministic.per_channel_success
+                )
+            ),
+            "declared_randomized_decoder": _randomized_decoder_to_text(
+                randomized_decoder
+            ),
+            "declared_randomized_robust_per_channel_success": (
+                _nested_fraction_map_to_text(randomized_success)
+            ),
+            "declared_randomized_robust_worst_case_success": fraction_to_text(
+                robust_worst_case_success(randomized_success)
+            ),
+            "per_channel_exact_but_not_deterministically_robust": (
+                all(
+                    result.worst_case_success == 1
+                    for result in per_channel_optimized.values()
+                )
+                and robust_deterministic.robust_worst_case_success == 0
+            ),
+            "randomized_beats_deterministic_robust_maximin": (
+                robust_worst_case_success(randomized_success)
+                > robust_deterministic.robust_worst_case_success
+            ),
+        },
+    )
+
+
 def _bit_pair_channel(
     states: tuple[str, ...],
     *,
@@ -787,6 +996,15 @@ def _decoder_sort_key(decoder: Decoder) -> tuple[tuple[str, str], ...]:
 
 def _fraction_map_to_text(values: dict[str, Fraction]) -> dict[str, str]:
     return {key: fraction_to_text(value) for key, value in sorted(values.items())}
+
+
+def _nested_fraction_map_to_text(
+    values: dict[str, dict[str, Fraction]],
+) -> dict[str, dict[str, str]]:
+    return {
+        key: _fraction_map_to_text(value)
+        for key, value in sorted(values.items())
+    }
 
 
 def _randomized_decoder_to_text(decoder: RandomizedDecoder) -> dict[str, dict[str, str]]:

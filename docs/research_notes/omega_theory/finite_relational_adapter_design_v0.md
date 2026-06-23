@@ -757,7 +757,7 @@ The first stochastic characterization layer also has a separate runner:
 
 ```powershell
 .\.venv\Scripts\python.exe -m omega.validation.finite_relational_stochastic_recovery `
-  --out-root .tmp\finite_relational_stochastic_recovery
+  --out-root .tmp\finite_relational_stochastic_recovery_robust_randomized
 ```
 
 It uses exact rational finite channels and records a recovery surface rather
@@ -769,7 +769,10 @@ support-exact recovery;
 optimized worst-case deterministic decoder success;
 declared-versus-optimized decoder gap;
 coarsening/refinement behavior;
-per-source failure localization.
+per-source failure localization;
+joint versus marginal recovery;
+declared randomized decoder behavior;
+declared robust randomized recovery over an ambiguity set.
 ```
 
 The coarsening check has a narrow information claim: if a coarse observation is

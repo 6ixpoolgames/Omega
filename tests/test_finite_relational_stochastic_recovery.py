@@ -6,7 +6,10 @@ from omega.adapters.finite_relational import (
     compose_coarse_decoder_through_fine,
     generate_stochastic_recovery_study,
     optimized_worst_case_decoder,
+    optimized_robust_worst_case_decoder,
     randomized_success_by_source,
+    robust_randomized_success_by_channel,
+    robust_worst_case_success,
     success_by_source,
     support_ambiguities,
     support_exact_recoverable,
@@ -27,6 +30,7 @@ REQUIRED_FAMILY_IDS = {
     "same_worst_case_different_failure_localization",
     "same_marginal_success_different_joint_failure",
     "randomized_decoder_axis",
+    "robust_randomized_ambiguity_axis",
 }
 
 
@@ -94,6 +98,20 @@ def test_stochastic_recovery_covers_expected_characterization_families() -> None
     assert randomized["declared_randomized_worst_case_success"] == "1/2"
     assert randomized["declared_randomized_per_source_success"] == {"x0": "1/2", "x1": "1/2"}
     assert randomized["randomized_beats_deterministic_maximin"] is True
+
+    robust_randomized = by_id["robust_randomized_ambiguity_axis"].metrics
+    assert robust_randomized["per_channel_deterministic_worst_case_success"] == {
+        "flipped": "1",
+        "identity": "1",
+    }
+    assert robust_randomized["optimized_deterministic_robust_worst_case_success"] == "0"
+    assert robust_randomized["declared_randomized_robust_worst_case_success"] == "1/2"
+    assert robust_randomized["declared_randomized_robust_per_channel_success"] == {
+        "flipped": {"x0": "1/2", "x1": "1/2"},
+        "identity": {"x0": "1/2", "x1": "1/2"},
+    }
+    assert robust_randomized["per_channel_exact_but_not_deterministically_robust"] is True
+    assert robust_randomized["randomized_beats_deterministic_robust_maximin"] is True
 
 
 def test_stochastic_helpers_use_exact_rational_probabilities() -> None:
@@ -176,6 +194,50 @@ def test_declared_randomized_decoder_axis_is_exact_but_not_general_optimization(
     assert deterministic.worst_case_success == Fraction(0)
     assert randomized == {"x0": Fraction(1, 2), "x1": Fraction(1, 2)}
     assert worst_case_success(randomized) == Fraction(1, 2)
+
+
+def test_robust_randomized_axis_uses_one_decoder_over_ambiguity_set() -> None:
+    states = ("x0", "x1")
+    outputs = ("y0", "y1")
+    channels = {
+        "flipped": {
+            "x0": {"y0": Fraction(0), "y1": Fraction(1)},
+            "x1": {"y0": Fraction(1), "y1": Fraction(0)},
+        },
+        "identity": {
+            "x0": {"y0": Fraction(1), "y1": Fraction(0)},
+            "x1": {"y0": Fraction(0), "y1": Fraction(1)},
+        },
+    }
+    observation = {"y0": "left", "y1": "right"}
+    target = {"x0": "false", "x1": "true"}
+    randomized_decoder = {
+        "left": {"false": Fraction(1, 2), "true": Fraction(1, 2)},
+        "right": {"false": Fraction(1, 2), "true": Fraction(1, 2)},
+    }
+
+    deterministic = optimized_robust_worst_case_decoder(
+        states,
+        outputs,
+        channels,
+        observation,
+        target,
+    )
+    randomized = robust_randomized_success_by_channel(
+        states,
+        outputs,
+        channels,
+        observation,
+        target,
+        randomized_decoder,
+    )
+
+    assert deterministic.robust_worst_case_success == Fraction(0)
+    assert randomized == {
+        "flipped": {"x0": Fraction(1, 2), "x1": Fraction(1, 2)},
+        "identity": {"x0": Fraction(1, 2), "x1": Fraction(1, 2)},
+    }
+    assert robust_worst_case_success(randomized) == Fraction(1, 2)
 
 
 def test_stochastic_recovery_validation_retains_outputs(tmp_path: Path) -> None:
