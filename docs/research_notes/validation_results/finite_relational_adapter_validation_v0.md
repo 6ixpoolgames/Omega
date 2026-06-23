@@ -174,6 +174,10 @@ Run root:
   intersections, a crosscutting row/column/parity closure stress case,
   transported endpoint-role facts under a carrier-transfer contract, and a
   failed-transfer label-closure control.
+- Presentation/fact-closure audit payloads now report seeded facts, common
+  facts, surplus common facts, and nonconstant surplus target predicates. This
+  exposes whether a closure case is merely certifying supplied seed facts or
+  forcing additional nonconstant structure under the declared presentations.
 - `carrier_transfer_pass` and `carrier_transfer_fail_missing_return` exercise
   the adapter-level transfer contract. The negative case preserves endpoint
   correspondence but rejects transfer because the target carrier loses return

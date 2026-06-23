@@ -109,6 +109,47 @@ does the admissible family leave any nonconstant facts common,
 or does it collapse everything useful?
 ```
 
+## Closure Surplus
+
+The finite relational adapter now reports a direct closure-surplus payload for
+`presentation_fact_closure` audits:
+
+```text
+seed facts:
+  facts supplied as already seeded or baseline facts
+
+common facts:
+  facts preserved by every declared presentation in the family
+
+surplus facts:
+  common facts minus seed facts
+
+nonconstant surplus target predicates:
+  surplus target facts that are neither empty nor full on their declared domain
+```
+
+This is the adapter-level form of the question:
+
+```text
+does the closure generate anything beyond what was seeded?
+```
+
+Interpretation:
+
+```text
+empty surplus:
+  the closure is certifying only the supplied seed facts.
+
+nonempty nonconstant surplus:
+  the declared presentation family forces additional target structure beyond
+  the seed.
+```
+
+This is still conditional on the supplied presentation family and satisfaction
+relation. It does not prove that the family is empirically correct or morally
+privileged. It does give a direct test for whether a closure pilot is merely
+relabeling declarations or deriving additional structure.
+
 ## Finite X2 Pilot
 
 The example module instantiates the closure surface on the existing four-state
@@ -295,6 +336,11 @@ generated_recovery_fact_closure:
   exact observation passes bounded recovery, constant observation fails it, and
   the recovery target is removed from common target facts by the constant
   observation.
+
+For the generated reachability, viability, and recovery closure cases, the
+adapter now treats the constant target as the seeded fact and reports the
+domain-specific target as nonconstant surplus under the exact presentation.
+Admitting the erasing presentation removes that nonconstant surplus.
 
 generated_stale_reflected_fact_closure:
   stale reach-status presentation preserves the before-loss reachability fact;

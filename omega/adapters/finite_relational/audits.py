@@ -224,6 +224,8 @@ def _presentation_fact_closure(
         model,
         presentations=_audit_strings(audit, "presentations"),
         target_predicates=_audit_strings(audit, "target_predicates"),
+        seed_visible_pairs=_audit_pairs(audit, "seed_visible_pairs"),
+        seed_target_predicates=_audit_strings(audit, "seed_target_predicates"),
         expected_common_visible_pairs=_audit_pairs(audit, "expected_common_visible_pairs"),
         expected_absent_visible_pairs=_audit_pairs(audit, "expected_absent_visible_pairs"),
         expected_common_target_predicates=_audit_strings(
@@ -233,6 +235,27 @@ def _presentation_fact_closure(
         expected_absent_target_predicates=_audit_strings(
             audit,
             "expected_absent_target_predicates",
+        ),
+        expected_surplus_visible_pairs=_audit_pairs(audit, "expected_surplus_visible_pairs"),
+        expected_absent_surplus_visible_pairs=_audit_pairs(
+            audit,
+            "expected_absent_surplus_visible_pairs",
+        ),
+        expected_surplus_target_predicates=_audit_strings(
+            audit,
+            "expected_surplus_target_predicates",
+        ),
+        expected_absent_surplus_target_predicates=_audit_strings(
+            audit,
+            "expected_absent_surplus_target_predicates",
+        ),
+        expected_nonconstant_surplus_target_predicates=_audit_strings(
+            audit,
+            "expected_nonconstant_surplus_target_predicates",
+        ),
+        expected_absent_nonconstant_surplus_target_predicates=_audit_strings(
+            audit,
+            "expected_absent_nonconstant_surplus_target_predicates",
         ),
         domain=str(audit.get("domain", "state")),
     )

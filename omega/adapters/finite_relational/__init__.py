@@ -102,6 +102,7 @@ from omega.adapters.finite_relational.finite_grid import (
 from omega.adapters.finite_relational.facts import (
     common_target_predicates,
     common_visible_pairs,
+    predicate_is_constant,
     predicate_respects_presentation,
     presentation_fact_closure_facts,
 )
@@ -221,6 +222,7 @@ __all__ = [
     "optimized_robust_worst_case_decoder",
     "optimized_worst_case_decoder",
     "paired_joint_union_bound_by_source",
+    "predicate_is_constant",
     "predicate_respects_presentation",
     "presentation_fact_closure_facts",
     "randomized_success_by_source",

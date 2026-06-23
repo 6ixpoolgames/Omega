@@ -538,9 +538,13 @@ def _rename_closure_observed(
 ) -> dict[str, Any]:
     renamed = dict(observed)
     for key in (
+        "seed_visible_pairs",
         "common_visible_pairs",
+        "surplus_common_visible_pairs",
         "missing_expected_common_visible_pairs",
         "present_expected_absent_visible_pairs",
+        "missing_expected_surplus_visible_pairs",
+        "present_expected_absent_surplus_visible_pairs",
     ):
         if key in renamed:
             renamed[key] = sorted(

@@ -171,9 +171,14 @@ def test_generated_target_fact_closure_cases_have_strict_target_drop() -> None:
             spec["constant"],
             spec["target"],
         ]
+        assert exact["observed"]["seed_target_predicates"] == [spec["constant"]]
+        assert exact["observed"]["surplus_common_target_predicates"] == [spec["target"]]
+        assert exact["observed"]["nonconstant_surplus_target_predicates"] == [spec["target"]]
         assert erasing["passed"] is True
         assert erasing["finding"] == "closure_ok"
         assert erasing["observed"]["common_target_predicates"] == [spec["constant"]]
+        assert erasing["observed"]["surplus_common_target_predicates"] == []
+        assert erasing["observed"]["nonconstant_surplus_target_predicates"] == []
         assert erasing["observed"]["present_expected_absent_target_predicates"] == []
 
 

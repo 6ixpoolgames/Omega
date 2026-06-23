@@ -159,15 +159,31 @@ def common_target_predicates(
     return sorted(common)
 
 
+def predicate_is_constant(model: FiniteRelationalModel, name: str) -> bool:
+    """Whether a predicate is empty or full on its declared domain."""
+
+    predicate = model.predicates[name]
+    states = set(model.domain(predicate.domain))
+    return not predicate.members or predicate.members == states
+
+
 def presentation_fact_closure_facts(
     model: FiniteRelationalModel,
     *,
     presentations: tuple[str, ...],
     target_predicates: tuple[str, ...] = (),
+    seed_visible_pairs: tuple[Pair, ...] = (),
+    seed_target_predicates: tuple[str, ...] = (),
     expected_common_visible_pairs: tuple[Pair, ...] = (),
     expected_absent_visible_pairs: tuple[Pair, ...] = (),
     expected_common_target_predicates: tuple[str, ...] = (),
     expected_absent_target_predicates: tuple[str, ...] = (),
+    expected_surplus_visible_pairs: tuple[Pair, ...] = (),
+    expected_absent_surplus_visible_pairs: tuple[Pair, ...] = (),
+    expected_surplus_target_predicates: tuple[str, ...] = (),
+    expected_absent_surplus_target_predicates: tuple[str, ...] = (),
+    expected_nonconstant_surplus_target_predicates: tuple[str, ...] = (),
+    expected_absent_nonconstant_surplus_target_predicates: tuple[str, ...] = (),
     domain: str = DEFAULT_DOMAIN,
 ) -> dict[str, object]:
     """Compute a small finite presentation/fact closure check.
@@ -188,33 +204,85 @@ def presentation_fact_closure_facts(
             target_predicates=target_predicates,
         )
     )
+    seeded_visible = set(seed_visible_pairs)
+    seeded_targets = set(seed_target_predicates)
+    surplus_visible = visible - seeded_visible
+    surplus_targets = common_targets - seeded_targets
+    constant_common_targets = {
+        predicate for predicate in common_targets if predicate_is_constant(model, predicate)
+    }
+    nonconstant_common_targets = common_targets - constant_common_targets
+    nonconstant_surplus_targets = surplus_targets & nonconstant_common_targets
+
     expected_common_visible = set(expected_common_visible_pairs)
     expected_absent_visible = set(expected_absent_visible_pairs)
     expected_common_targets = set(expected_common_target_predicates)
     expected_absent_targets = set(expected_absent_target_predicates)
+    expected_surplus_visible = set(expected_surplus_visible_pairs)
+    expected_absent_surplus_visible = set(expected_absent_surplus_visible_pairs)
+    expected_surplus_targets = set(expected_surplus_target_predicates)
+    expected_absent_surplus_targets = set(expected_absent_surplus_target_predicates)
+    expected_nonconstant_surplus_targets = set(expected_nonconstant_surplus_target_predicates)
+    expected_absent_nonconstant_surplus_targets = set(
+        expected_absent_nonconstant_surplus_target_predicates
+    )
 
     missing_common_visible = sorted(expected_common_visible - visible)
     present_absent_visible = sorted(expected_absent_visible & visible)
     missing_common_targets = sorted(expected_common_targets - common_targets)
     present_absent_targets = sorted(expected_absent_targets & common_targets)
+    missing_surplus_visible = sorted(expected_surplus_visible - surplus_visible)
+    present_absent_surplus_visible = sorted(expected_absent_surplus_visible & surplus_visible)
+    missing_surplus_targets = sorted(expected_surplus_targets - surplus_targets)
+    present_absent_surplus_targets = sorted(expected_absent_surplus_targets & surplus_targets)
+    missing_nonconstant_surplus_targets = sorted(
+        expected_nonconstant_surplus_targets - nonconstant_surplus_targets
+    )
+    present_absent_nonconstant_surplus_targets = sorted(
+        expected_absent_nonconstant_surplus_targets & nonconstant_surplus_targets
+    )
     closure_ok = not (
         missing_common_visible
         or present_absent_visible
         or missing_common_targets
         or present_absent_targets
+        or missing_surplus_visible
+        or present_absent_surplus_visible
+        or missing_surplus_targets
+        or present_absent_surplus_targets
+        or missing_nonconstant_surplus_targets
+        or present_absent_nonconstant_surplus_targets
     )
 
     return {
         "closure_ok": closure_ok,
         "presentations": list(presentations),
         "target_predicates": list(target_predicates),
+        "seed_visible_pairs": sorted(seeded_visible),
+        "seed_target_predicates": sorted(seeded_targets),
         "common_visible_pair_count": len(visible),
         "common_visible_pairs": sorted(visible),
         "common_target_predicates": sorted(common_targets),
+        "constant_common_target_predicates": sorted(constant_common_targets),
+        "nonconstant_common_target_predicates": sorted(nonconstant_common_targets),
+        "surplus_common_visible_pair_count": len(surplus_visible),
+        "surplus_common_visible_pairs": sorted(surplus_visible),
+        "surplus_common_target_predicates": sorted(surplus_targets),
+        "nonconstant_surplus_target_predicates": sorted(nonconstant_surplus_targets),
         "missing_expected_common_visible_pairs": missing_common_visible,
         "present_expected_absent_visible_pairs": present_absent_visible,
         "missing_expected_common_target_predicates": missing_common_targets,
         "present_expected_absent_target_predicates": present_absent_targets,
+        "missing_expected_surplus_visible_pairs": missing_surplus_visible,
+        "present_expected_absent_surplus_visible_pairs": present_absent_surplus_visible,
+        "missing_expected_surplus_target_predicates": missing_surplus_targets,
+        "present_expected_absent_surplus_target_predicates": present_absent_surplus_targets,
+        "missing_expected_nonconstant_surplus_target_predicates": (
+            missing_nonconstant_surplus_targets
+        ),
+        "present_expected_absent_nonconstant_surplus_target_predicates": (
+            present_absent_nonconstant_surplus_targets
+        ),
     }
 
 

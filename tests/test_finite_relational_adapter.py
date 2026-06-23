@@ -148,8 +148,11 @@ def test_presentation_fact_closure_audit_checks_visible_pairs_and_targets() -> N
                     "kind": "presentation_fact_closure",
                     "presentations": ["identity"],
                     "target_predicates": ["left_target", "constant_target"],
+                    "seed_target_predicates": ["constant_target"],
                     "expected_common_visible_pairs": [["left", "right"], ["right", "left"]],
                     "expected_common_target_predicates": ["left_target", "constant_target"],
+                    "expected_surplus_target_predicates": ["left_target"],
+                    "expected_nonconstant_surplus_target_predicates": ["left_target"],
                     "expect": "closure_ok",
                 },
                 {
@@ -157,9 +160,12 @@ def test_presentation_fact_closure_audit_checks_visible_pairs_and_targets() -> N
                     "kind": "presentation_fact_closure",
                     "presentations": ["identity", "constant"],
                     "target_predicates": ["left_target", "constant_target"],
+                    "seed_target_predicates": ["constant_target"],
                     "expected_absent_visible_pairs": [["left", "right"], ["right", "left"]],
                     "expected_absent_target_predicates": ["left_target"],
                     "expected_common_target_predicates": ["constant_target"],
+                    "expected_absent_surplus_target_predicates": ["left_target"],
+                    "expected_absent_nonconstant_surplus_target_predicates": ["left_target"],
                     "expect": "closure_ok",
                 },
             ],
@@ -179,10 +185,15 @@ def test_presentation_fact_closure_audit_checks_visible_pairs_and_targets() -> N
         "constant_target",
         "left_target",
     ]
+    assert exact["observed"]["seed_target_predicates"] == ["constant_target"]
+    assert exact["observed"]["surplus_common_target_predicates"] == ["left_target"]
+    assert exact["observed"]["nonconstant_surplus_target_predicates"] == ["left_target"]
     assert erasing["passed"] is True
     assert erasing["finding"] == "closure_ok"
     assert erasing["observed"]["common_visible_pair_count"] == 0
     assert erasing["observed"]["common_target_predicates"] == ["constant_target"]
+    assert erasing["observed"]["surplus_common_target_predicates"] == []
+    assert erasing["observed"]["nonconstant_surplus_target_predicates"] == []
 
 
 def test_carrier_transfer_fixture_accepts_declared_transfer_contract() -> None:

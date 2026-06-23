@@ -1119,7 +1119,10 @@ def _target_closure_audits(
             "kind": "presentation_fact_closure",
             "presentations": [exact_presentation],
             "target_predicates": [target_predicate, constant_predicate],
+            "seed_target_predicates": [constant_predicate],
             "expected_common_target_predicates": [target_predicate, constant_predicate],
+            "expected_surplus_target_predicates": [target_predicate],
+            "expected_nonconstant_surplus_target_predicates": [target_predicate],
             "expect": "closure_ok",
         },
         {
@@ -1127,8 +1130,11 @@ def _target_closure_audits(
             "kind": "presentation_fact_closure",
             "presentations": [exact_presentation, erasing_presentation],
             "target_predicates": [target_predicate, constant_predicate],
+            "seed_target_predicates": [constant_predicate],
             "expected_absent_target_predicates": [target_predicate],
             "expected_common_target_predicates": [constant_predicate],
+            "expected_absent_surplus_target_predicates": [target_predicate],
+            "expected_absent_nonconstant_surplus_target_predicates": [target_predicate],
             "expect": "closure_ok",
         },
     ]
