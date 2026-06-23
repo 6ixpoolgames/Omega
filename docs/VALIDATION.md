@@ -237,6 +237,12 @@ retained-output path:
 python -m omega.validation.finite_relational_policy_dynamics
 ```
 
+The finite relational source-parity layer has its own retained-output path:
+
+```bash
+python -m omega.validation.finite_relational_source_parity
+```
+
 Local PowerShell form:
 
 ```powershell
@@ -311,6 +317,12 @@ from `hypotheses.json`, then checks stale/reflected policy loss and a
 policy-conditioned presentation/fact closure case, plus a non-factorization
 witness through a coarse support summary.
 
+The source-parity path compiles equivalent derived-graph and finite-grid
+sources into the same finite relational IR surface, then checks matching
+relations, predicates, functions, and audit findings after declared state
+renaming. Current cases cover strict asymmetry and recurrent carrier
+certification.
+
 Finite relational adapter changes are also protected by the
 `Finite Relational Adapter Smoke` GitHub Actions workflow.
 
@@ -333,6 +345,8 @@ The stochastic continuation-loss layer retains a machine-readable summary at
 The policy-conditioned stochastic dynamics layer retains a machine-readable
 summary at
 [finite_relational_policy_dynamics_v0.json](research_notes/validation_results/finite_relational_policy_dynamics_v0.json).
+The finite relational source-parity layer retains a machine-readable summary at
+[finite_relational_source_parity_v0.json](research_notes/validation_results/finite_relational_source_parity_v0.json).
 
 See [REPRODUCIBILITY_SMOKE.md](REPRODUCIBILITY_SMOKE.md).
 

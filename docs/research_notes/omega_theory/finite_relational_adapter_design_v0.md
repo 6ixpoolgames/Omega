@@ -485,6 +485,29 @@ The finite grid CLI retains the same source/compiled/digest outputs, with
 compiled provenance marking both `compiled_from = finite_grid` and
 `intermediate_compiler = derived_graph`.
 
+Second-source parity has a separate retained-output path:
+
+```powershell
+.\.venv\Scripts\python.exe -m omega.validation.finite_relational_source_parity `
+  --out-root .tmp\finite_relational_source_parity
+```
+
+It compares equivalent derived-graph and finite-grid source artifacts after
+compilation into finite relational IR. The retained parity cases check:
+
+```text
+graph_grid_strict_asymmetry_parity:
+  relation, separation, asymmetry, presentation, and audit findings match
+  after declared state renaming.
+
+graph_grid_recurrent_carrier_parity:
+  recurrent carrier certification, merge separation, presentation, and audit
+  findings match after declared state renaming.
+```
+
+This is still synthetic compiler parity, not empirical validation. It helps
+ensure that the normalized IR is not merely an artifact of one source compiler.
+
 The digest makes retained fixtures auditable. The audit results distinguish:
 
 ```text

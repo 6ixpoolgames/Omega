@@ -83,6 +83,7 @@ ADAPTER_TESTS = [
     "tests/test_finite_relational_deterministic_layer.py",
     "tests/test_finite_relational_grid_obstacle.py",
     "tests/test_finite_relational_policy_dynamics.py",
+    "tests/test_finite_relational_source_parity.py",
     "tests/test_finite_relational_stochastic_continuation.py",
     "tests/test_finite_relational_stochastic_recovery.py",
     "tests/test_stochastic_recovery_theorem_spine.py",

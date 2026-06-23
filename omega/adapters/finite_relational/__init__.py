@@ -108,6 +108,12 @@ from omega.adapters.finite_relational.model import (
     model_digest,
     validate_provenance,
 )
+from omega.adapters.finite_relational.source_parity import (
+    SourceParityCase,
+    digest_json as source_parity_digest_json,
+    generate_source_parity_study,
+    source_parity_summary,
+)
 
 __all__ = [
     "AuditResult",
@@ -130,6 +136,7 @@ __all__ = [
     "Predicate",
     "Relation",
     "SchemaError",
+    "SourceParityCase",
     "StochasticObservation",
     "StochasticContinuationFamily",
     "StochasticRecoveryFamily",
@@ -157,6 +164,7 @@ __all__ = [
     "generate_deterministic_layer_study",
     "generate_grid_obstacle_study",
     "generate_policy_dynamics_study",
+    "generate_source_parity_study",
     "generate_stochastic_continuation_loss_study",
     "generate_stochastic_recovery_study",
     "controlled_experiment_summary",
@@ -175,6 +183,8 @@ __all__ = [
     "recoverable_targets",
     "run_audit",
     "run_declared_audits",
+    "source_parity_digest_json",
+    "source_parity_summary",
     "stochastic_recovery_summary",
     "stochastic_continuation_loss_summary",
     "success_by_source",

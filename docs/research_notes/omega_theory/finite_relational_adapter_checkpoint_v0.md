@@ -69,6 +69,9 @@ the stochastic continuation layer now checks reflected versus stale hit-status
 presentations over an after-hit target fact.
 the policy-conditioned stochastic dynamics layer now checks the same
 stale/reflected hit-status closure pattern under a deterministic policy.
+second-source graph/grid parity now checks that strict asymmetry and recurrent
+carrier certification compile to matching finite relational facts and audit
+findings after state renaming.
 ```
 
 The retained validation summary is:
@@ -185,7 +188,7 @@ without jumping to large models:
 
 ```text
 additional generated grid or automaton closure cases;
-second-source parity checks against the same finite relational IR;
+closure-specific source parity checks against the same finite relational IR;
 retained summaries that report both hidden-loss and invariant-closure facts.
 ```
 
