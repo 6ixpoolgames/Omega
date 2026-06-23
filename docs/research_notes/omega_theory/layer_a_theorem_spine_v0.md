@@ -146,6 +146,7 @@ Main files:
 - [ProfileApproximation.lean](../../../formal/lean/OmegaProper/Trajectory/ProfileApproximation.lean)
 - [PresentationFactClosure.lean](../../../formal/lean/OmegaProper/Trajectory/PresentationFactClosure.lean)
 - [PresentationFactClosureExamples.lean](../../../formal/lean/OmegaProper/Trajectory/PresentationFactClosureExamples.lean)
+- [PresentationFactRecoveryExamples.lean](../../../formal/lean/OmegaProper/Trajectory/PresentationFactRecoveryExamples.lean)
 - [CarrierSemantics.lean](../../../formal/lean/OmegaProper/Trajectory/CarrierSemantics.lean)
 
 Current content:
@@ -164,6 +165,8 @@ Presentation/fact closure gives the generic Galois surface for common facts,
 models of facts, and closure under a supplied satisfaction relation.
 The X2 closure pilot shows common target and visible-pair facts strictly shrink
 when a second coordinate presentation is admitted.
+The recovery closure pilot shows exact bit recovery facts strictly shrink when
+a constant observation is admitted.
 Raw supports, generated mutual-reach carriers, and trajectory-language views
 are presentations of carrier semantics.
 ```

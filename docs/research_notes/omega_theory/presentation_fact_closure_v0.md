@@ -50,6 +50,7 @@ Main file:
 ```text
 formal/lean/OmegaProper/Trajectory/PresentationFactClosure.lean
 formal/lean/OmegaProper/Trajectory/PresentationFactClosureExamples.lean
+formal/lean/OmegaProper/Trajectory/PresentationFactRecoveryExamples.lean
 ```
 
 Core theorem family:
@@ -155,6 +156,29 @@ The closure layer does not yet turn these into one uniform fact type. It gives
 the abstract surface where recovery, viability, carrier, and presentation facts
 can be compared once a concrete satisfaction relation is supplied.
 
+The first recovery instantiation is now checked in Lean. It defines:
+
+```text
+BitRecoverySatisfies observe target :=
+  RecoveryExistsAt identityBitChannel target observe 1
+```
+
+over the existing two-state identity channel. It proves:
+
+```text
+bitTarget_common_exactOnly
+bitTarget_not_common_exactConstant
+constantZeroBitTarget_common_exactConstant
+commonRecoveryTargets_strictly_shrink_when_constant_admitted
+constantObserve_not_in_recoveryClosure_exactOnly
+```
+
+This is the recovery analogue of the coordinate-collapse pilot: exact
+observation preserves the declared bit recovery fact, but admitting a constant
+observation removes that fact from the common recovery facts. Constant targets
+still survive, so the example distinguishes strict shrinkage from total
+collapse.
+
 ## Non-Claims
 
 This note does not claim:
@@ -171,14 +195,14 @@ that this proves Omega.
 
 ## Next Work
 
-The next pilot should move from coordinate targets to recovery/viability facts:
+The next pilot should move from recovery facts to viability/carrier facts:
 
 ```text
 presentations:
   exact / coarse / stale / reflected views
 
 facts:
-  recovery, reachability, viability, and carrier-certification facts
+  reachability, viability, and carrier-certification facts
 
 tests:
   compute common facts;

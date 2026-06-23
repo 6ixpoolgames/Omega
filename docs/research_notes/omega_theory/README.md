@@ -156,6 +156,7 @@ OmegaProper/Trajectory/ConsequencePanelDiscipline.lean
 OmegaProper/Trajectory/ParameterizedRecurrentSupport.lean
 OmegaProper/Trajectory/PresentationFactClosure.lean
 OmegaProper/Trajectory/PresentationFactClosureExamples.lean
+OmegaProper/Trajectory/PresentationFactRecoveryExamples.lean
 OmegaProper/Trajectory/RecurrentSupportExtension.lean
 OmegaProper/Trajectory/RecurrentSupportLineage.lean
 OmegaProper/Trajectory/RecurrentSupportPathTransfer.lean
@@ -263,7 +264,8 @@ persists under deterministic coarsening when the appropriate decoder-class
 lifting law is present; presentation/fact closure now exposes the Galois
 surface for common facts under declared admissible presentation families,
 with an X2 pilot showing first-coordinate facts disappear when a second
-coordinate presentation is admitted;
+coordinate presentation is admitted and a recovery pilot showing exact bit
+recovery disappears when a constant observation is admitted;
 consequence-native trajectory guardrails for separation, consequence-respecting
 classes, directional allowance versus symmetric identification,
 collapse/noncollapse, over-separation, and mixed evaluated panels;
