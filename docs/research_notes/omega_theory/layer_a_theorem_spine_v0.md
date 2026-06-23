@@ -294,6 +294,7 @@ Main files:
 - [ObservationRefinement.lean](../../../formal/lean/OmegaProper/Recovery/ObservationRefinement.lean)
 - [Randomized.lean](../../../formal/lean/OmegaProper/Recovery/Randomized.lean)
 - [Robust.lean](../../../formal/lean/OmegaProper/Recovery/Robust.lean)
+- [RobustRandomized.lean](../../../formal/lean/OmegaProper/Recovery/RobustRandomized.lean)
 - [Joint.lean](../../../formal/lean/OmegaProper/Recovery/Joint.lean)
 - [PolicyContinuation.lean](../../../formal/lean/OmegaProper/Recovery/PolicyContinuation.lean)
 - [Prior.lean](../../../formal/lean/OmegaProper/Recovery/Prior.lean)
@@ -307,8 +308,9 @@ Support-exact recovery is equivalent to RecoveryExistsAt 1.
 Shared observation mass between target-distinct sources quantitatively blocks
 deterministic threshold recovery above 1 - epsilon.
 Recovery failure persists under deterministic coarsening for deterministic,
-support-exact, robust, and randomized recovery surfaces, with explicit
-decoder-class lifting assumptions for restricted variants.
+support-exact, robust deterministic, randomized, and robust randomized recovery
+surfaces, with explicit decoder-class lifting assumptions for restricted
+variants.
 RecoveryExistsAt is monotone downward in threshold.
 RecoveryExistsInAt names the same threshold question relative to an explicit
 deterministic decoder class, with RecoveryExistsAt as the unrestricted case.
@@ -323,6 +325,14 @@ RobustRecoveryInAt adds an explicit allowed decoder class.
 Singleton ambiguity reduces to ordinary RecoveryExistsAt / RecoveryExistsInAt.
 Robust recovery is monotone downward in threshold and monotone under
 ambiguity-set restriction.
+RobustRandomizedRecoveryAt names the analogous uniform guarantee for one
+randomized decoder over a declared ambiguity set.
+RobustRandomizedRecoveryInAt adds an explicit allowed randomized-decoder class.
+Singleton ambiguity reduces robust randomized recovery to ordinary
+RandomizedRecoveryAt / RandomizedRecoveryInAt.
+Robust randomized recovery is monotone downward in threshold and monotone under
+ambiguity-set restriction.
+Deterministic robust recovery embeds into robust randomized recovery.
 Prior-relative expected recovery is a separate declared-prior axis.
 Worst-case threshold recovery implies prior-relative expected threshold
 recovery under any declared prior.

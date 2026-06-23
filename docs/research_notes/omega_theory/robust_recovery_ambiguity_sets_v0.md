@@ -1,7 +1,7 @@
 # Robust Recovery Ambiguity Sets v0
 
 Status: Lean theorem-spine checkpoint
-Scope: deterministic worst-case finite recovery over declared ambiguity sets
+Scope: deterministic and randomized worst-case finite recovery over declared ambiguity sets
 Claim boundary: not empirical channel validity, not a prior, not value, not agency, not identity, not Omega validation
 
 ## Purpose
@@ -31,12 +31,28 @@ RobustRecoveryInAt Gamma target observe Allowed tau
 This is the provenance-aligned form: the allowed decoder class is supplied
 explicitly instead of being hidden inside unrestricted existence.
 
+The randomized-decoder analogue is:
+
+```text
+RobustRandomizedRecoveryAt Gamma target observe tau
+```
+
+and its restricted form is:
+
+```text
+RobustRandomizedRecoveryInAt Gamma target observe Allowed tau
+```
+
+Those names mean that one randomized decoder, or one allowed randomized decoder,
+must meet the same source-wise threshold for every channel in `Gamma`.
+
 ## Lean Location
 
 Main file:
 
 ```text
 formal/lean/OmegaProper/Recovery/Robust.lean
+formal/lean/OmegaProper/Recovery/RobustRandomized.lean
 ```
 
 Imported by:
@@ -59,6 +75,20 @@ Singleton ambiguity with an allowed decoder class reduces to RecoveryExistsInAt.
 Observation refinement preserves robust recovery.
 Observation refinement preserves restricted robust recovery when lifted decoders
   remain in the allowed fine decoder class.
+RobustRandomizedRecoveryAt is monotone downward in threshold.
+RobustRandomizedRecoveryInAt is monotone downward in threshold.
+Larger ambiguity sets are harder for robust randomized recovery.
+RobustRandomizedRecoveryAt is the unrestricted
+  RobustRandomizedRecoveryInAt specialization.
+Singleton ambiguity reduces to RandomizedRecoveryAt.
+Singleton ambiguity with an allowed randomized decoder class reduces to
+  RandomizedRecoveryInAt.
+Deterministic robust recovery embeds into robust randomized recovery.
+Observation refinement preserves robust randomized recovery.
+Observation refinement preserves restricted robust randomized recovery when
+  lifted randomized decoders remain in the allowed fine randomized-decoder
+  class.
+Robust randomized failure persists under deterministic coarsening.
 ```
 
 The examples layer also proves the finite strictness witness:
@@ -83,6 +113,10 @@ This is stricter than saying each channel separately has some successful
 decoder. It is the finite worst-case version needed before prior-relative or
 empirical recovery claims.
 
+Robust randomized recovery has the same shape, but the shared decoder is a
+declared randomized decoder. It is not a claim that the repo has solved
+randomized maximin optimization.
+
 ## Claim Boundary
 
 This layer does not claim:
@@ -93,6 +127,7 @@ that channels outside Gamma are impossible;
 that tau is morally significant;
 that robustness is a complete alignment criterion;
 that decoder classes are natural unless supplied by an adapter/provenance layer;
+that randomized maximin optimization has been solved;
 Omega validation.
 ```
 

@@ -1,7 +1,7 @@
 # Coarsening Permanence v0
 
 Status: finite Lean theorem note
-Scope: deterministic observation coarsening, restricted decoder classes, robust recovery, and randomized recovery
+Scope: deterministic observation coarsening, restricted decoder classes, robust recovery, randomized recovery, and robust randomized recovery
 Claim boundary: not empirical observation validity, not value, not agency, not identity, not Omega validation
 
 ## Purpose
@@ -40,6 +40,8 @@ robustRecoveryAt_failure_persists_under_coarsening
 robustRecoveryInAt_failure_persists_under_coarsening
 randomizedRecoveryAt_failure_persists_under_coarsening
 randomizedRecoveryInAt_failure_persists_under_coarsening
+robustRandomizedRecoveryAt_failure_persists_under_coarsening
+robustRandomizedRecoveryInAt_failure_persists_under_coarsening
 ```
 
 The unrestricted theorems need only a deterministic factorization:

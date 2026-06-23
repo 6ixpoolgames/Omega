@@ -1,7 +1,7 @@
 # Recovery Layer Checkpoint v0
 
 Status: formal checkpoint note
-Scope: exact rational finite recovery, decoder classes, robustness, priors, joint recovery, and finite-horizon policy hit profiles
+Scope: exact rational finite recovery, decoder classes, robustness, randomized robustness, priors, joint recovery, and finite-horizon policy hit profiles
 Claim boundary: not empirical channel validity, not value, not agency, not valuerhood, not identity, not Omega validation
 
 ## Purpose
@@ -23,6 +23,7 @@ support-exact recovery;
 graded per-source recovery;
 restricted decoder-class recovery;
 randomized decoder recovery;
+robust randomized recovery over ambiguity sets;
 joint versus marginal recovery;
 policy-conditioned finite-horizon hit profiles;
 robust recovery over ambiguity sets;
@@ -41,6 +42,7 @@ formal/lean/OmegaProper/Recovery/Deterministic.lean
 formal/lean/OmegaProper/Recovery/ObservationRefinement.lean
 formal/lean/OmegaProper/Recovery/Randomized.lean
 formal/lean/OmegaProper/Recovery/Robust.lean
+formal/lean/OmegaProper/Recovery/RobustRandomized.lean
 formal/lean/OmegaProper/Recovery/Prior.lean
 formal/lean/OmegaProper/Recovery/Joint.lean
 formal/lean/OmegaProper/Recovery/PolicyContinuation.lean
@@ -86,6 +88,8 @@ ExpectedRecoveryExistsAt
 ExpectedRecoveryExistsInAt
 RobustRecoveryAt
 RobustRecoveryInAt
+RobustRandomizedRecoveryAt
+RobustRandomizedRecoveryInAt
 ```
 
 This prevents hidden decoder power from being confused with declared recovery
@@ -102,6 +106,10 @@ Each channel in an ambiguity set may be exactly recoverable with its own
 decoder while no single decoder recovers the whole ambiguity set. Robust
 recovery is a uniform-decoder claim.
 
+Robust randomized recovery has the same uniform-over-ambiguity-set shape using
+one randomized decoder, optionally restricted by an allowed randomized-decoder
+class. This is still not randomized maximin optimization.
+
 ### Marginal Versus Joint
 
 Joint recovery safely projects to marginal recovery. Separate marginal panels
@@ -115,8 +123,9 @@ an unrestricted decoder class over an already available fine observation.
 
 The formal layer now records the contrapositive as coarsening permanence:
 failed deterministic, support-exact, robust, or randomized recovery claims
-persist under deterministic coarsening. Restricted decoder-class variants
-require explicit decoder lifting.
+persist under deterministic coarsening. Robust randomized failures also persist
+under this deterministic coarsening discipline. Restricted decoder-class
+variants require explicit decoder lifting.
 
 ## Guardrail Witnesses
 

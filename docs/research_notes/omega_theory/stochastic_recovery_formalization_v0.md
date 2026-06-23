@@ -1,7 +1,7 @@
 # Stochastic Recovery Formalization v0
 
 Status: Lean theorem-spine checkpoint
-Scope: exact rational finite recovery, observation refinement, randomized decoder embedding, joint recovery, and finite-horizon policy continuation
+Scope: exact rational finite recovery, observation refinement, randomized decoder embedding, robust randomized recovery, joint recovery, and finite-horizon policy continuation
 Claim boundary: not identity, not agency, not value, not valuerhood, not empirical channel validity, not a moral threshold, not Omega validation
 
 ## Compression
@@ -46,6 +46,7 @@ formal/lean/OmegaProper/Recovery/Deterministic.lean
 formal/lean/OmegaProper/Recovery/ObservationRefinement.lean
 formal/lean/OmegaProper/Recovery/Randomized.lean
 formal/lean/OmegaProper/Recovery/Robust.lean
+formal/lean/OmegaProper/Recovery/RobustRandomized.lean
 formal/lean/OmegaProper/Recovery/Joint.lean
 formal/lean/OmegaProper/Recovery/PolicyContinuation.lean
 formal/lean/OmegaProper/Recovery/Prior.lean
@@ -102,6 +103,16 @@ Robust recovery is monotone downward in threshold and monotone under
   ambiguity-set restriction.
 Observation refinement preserves robust recovery under explicit decoder-class
   lifting.
+RobustRandomizedRecoveryAt is a uniform randomized-decoder guarantee over a
+  declared ambiguity set.
+RobustRandomizedRecoveryInAt adds an explicit randomized decoder class.
+Singleton ambiguity reduces to ordinary RandomizedRecoveryAt /
+  RandomizedRecoveryInAt.
+Robust randomized recovery is monotone downward in threshold and monotone under
+  ambiguity-set restriction.
+Deterministic robust recovery embeds into robust randomized recovery.
+Observation refinement preserves robust randomized recovery under explicit
+  randomized-decoder-class lifting.
 Prior-relative expected recovery is nonnegative for nonnegative profiles and
   bounded by 1 for pointwise-bounded profiles.
 Worst-case threshold recovery implies prior-relative expected threshold
@@ -114,7 +125,8 @@ Shared observation mass between target-distinct sources blocks deterministic
   threshold recovery above 1 - epsilon.
 Failure of deterministic, support-exact, robust, or randomized recovery
   persists under deterministic coarsening, with explicit decoder-class lifting
-  assumptions for restricted variants.
+  assumptions for restricted variants. Robust randomized recovery failure also
+  persists under deterministic coarsening.
 Joint recovery implies each projected marginal recovery.
 Same-panel exact marginal decoders pair into exact joint recovery.
 Policy-conditioned action kernels induce ordinary rational kernels.
@@ -162,6 +174,9 @@ RandomizedRecoveryInAt         <-> randomized threshold recovery within a
                                   declared randomized-decoder class
 RobustRecoveryInAt             <-> deterministic threshold recovery across a
                                   declared ambiguity set and decoder class
+RobustRandomizedRecoveryInAt   <-> randomized threshold recovery across a
+                                  declared ambiguity set and randomized-decoder
+                                  class
 ExpectedRecoveryExistsInAt     <-> expected deterministic threshold recovery
                                   under a declared prior and decoder class
 FactorsThrough fine coarse     <-> observation refinement / coarsening
@@ -192,7 +207,7 @@ empirical channel validity;
 Bayes-optimal policy validation;
 general randomized optimization;
 prior-relative value;
-robust ambiguity-set recovery;
+empirical correctness or completeness of a declared ambiguity set;
 identity;
 agency;
 value;
@@ -228,7 +243,6 @@ Relevant Python parity checks:
 Next likely extensions:
 
 ```text
-randomized robust recovery over ambiguity sets;
 finite randomized optimization only after a clear finite rational LP surface;
 joint approximate recovery bounds when paired decoders are used.
 ```

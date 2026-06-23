@@ -17,6 +17,7 @@ coarsening/refinement simulation;
 joint versus marginal recovery;
 randomized-decoder axis.
 robust ambiguity-set recovery.
+robust randomized ambiguity-set recovery.
 prior-relative expected recovery.
 ```
 
@@ -54,7 +55,8 @@ Success + FailureMass = 1.
 Success <= 1.
 Observation refinement preserves deterministic and randomized recovery.
 Recovery failure persists under deterministic coarsening for deterministic,
-support-exact, robust, and randomized recovery surfaces.
+support-exact, robust deterministic, randomized, and robust randomized recovery
+surfaces.
 Deterministic recovery embeds into randomized recovery.
 Randomized success is nonnegative and bounded by 1.
 RandomizedRecoveryInAt is the explicit randomized decoder-class form, with
@@ -67,6 +69,17 @@ Singleton ambiguity reduces to ordinary RecoveryExistsAt / RecoveryExistsInAt.
 Robust recovery is monotone downward in threshold and monotone under
   ambiguity-set restriction.
 Observation refinement preserves robust recovery under decoder-class lifting.
+RobustRandomizedRecoveryAt is a uniform randomized-decoder guarantee over a
+  declared ambiguity set.
+RobustRandomizedRecoveryInAt is the explicit randomized-decoder-class form for
+  robust randomized recovery.
+Singleton ambiguity reduces to ordinary RandomizedRecoveryAt /
+  RandomizedRecoveryInAt.
+Robust randomized recovery is monotone downward in threshold and monotone under
+  ambiguity-set restriction.
+Deterministic robust recovery embeds into robust randomized recovery.
+Observation refinement preserves robust randomized recovery under
+  randomized-decoder-class lifting.
 Prior-relative expected recovery is a declared-prior average-case axis.
 Worst-case threshold recovery implies prior-relative expected threshold
   recovery under any declared prior.
@@ -154,7 +167,8 @@ Possible next formalization steps:
 Lean theorem for support-exact recovery iff support disjointness;
 exact randomized maximin via a small linear-programming surface or finite
   declared randomized decoder family;
-randomized robust recovery over ambiguity sets.
+adapter parity for robust randomized ambiguity-set checks if needed by a
+  concrete source compiler.
 ```
 
 ## Non-Claims
