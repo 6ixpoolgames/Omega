@@ -672,6 +672,131 @@ def test_safe_prefix_count_can_overstate_extendable_continuation() -> None:
     assert extendable["observed"]["viability_kernel"] == []
 
 
+def test_observed_extendable_word_count_collapses_unobserved_branching() -> None:
+    model = load_model(
+        {
+            "model_id": "inline_observed_word_count_collapses_branching",
+            "domains": {
+                "state": ["left", "right"],
+                "observation": ["same"],
+            },
+            "predicates": {
+                "safe": {"domain": "state", "members": ["left", "right"]},
+            },
+            "relations": {
+                "next": {
+                    "domains": ["state", "state"],
+                    "tuples": [
+                        ["left", "left"],
+                        ["left", "right"],
+                        ["right", "left"],
+                        ["right", "right"],
+                    ],
+                },
+            },
+            "functions": {
+                "constant_observation": {
+                    "domain": "state",
+                    "codomain": "observation",
+                    "mapping": {
+                        "left": "same",
+                        "right": "same",
+                    },
+                },
+            },
+            "audits": [
+                {
+                    "id": "branching_collapses_to_one_observed_word",
+                    "kind": "observed_extendable_safe_word_count",
+                    "transition": "next",
+                    "safety": "safe",
+                    "observation": "constant_observation",
+                    "horizon": 2,
+                    "expected_count_profile": [1, 1, 1],
+                    "expect": "count_ok",
+                }
+            ],
+            "provenance": {
+                "declared_before_run": True,
+                "source": "inline test",
+                "claim_boundary": "observed word count branch-collapse unit test",
+            },
+        }
+    )
+    [result] = [result.as_dict() for result in run_declared_audits(model)]
+
+    assert result["passed"] is True
+    assert result["finding"] == "count_ok"
+    assert result["observed"]["count_kind"] == "observed_extendable_safe_word"
+    assert result["observed"]["safe_prefix_count_profile"] == [2, 4, 8]
+    assert result["observed"]["extendable_safe_prefix_count_profile"] == [2, 4, 8]
+    assert result["observed"]["count_profile"] == [1, 1, 1]
+    assert result["observed"]["observed_words_by_horizon"] == [
+        [["same"]],
+        [["same", "same"]],
+        [["same", "same", "same"]],
+    ]
+
+
+def test_observed_extendable_word_count_keeps_labeled_cycle_words() -> None:
+    model = load_model(
+        {
+            "model_id": "inline_observed_word_count_labeled_cycle",
+            "domains": {
+                "state": ["left", "right"],
+                "observation": ["L", "R"],
+            },
+            "predicates": {
+                "safe": {"domain": "state", "members": ["left", "right"]},
+            },
+            "relations": {
+                "next": {
+                    "domains": ["state", "state"],
+                    "tuples": [["left", "right"], ["right", "left"]],
+                },
+            },
+            "functions": {
+                "role_observation": {
+                    "domain": "state",
+                    "codomain": "observation",
+                    "mapping": {
+                        "left": "L",
+                        "right": "R",
+                    },
+                },
+            },
+            "audits": [
+                {
+                    "id": "labeled_cycle_keeps_two_observed_words",
+                    "kind": "observed_extendable_safe_word_count",
+                    "transition": "next",
+                    "safety": "safe",
+                    "observation": "role_observation",
+                    "horizon": 2,
+                    "expected_count_profile": [2, 2, 2],
+                    "expect": "count_ok",
+                }
+            ],
+            "provenance": {
+                "declared_before_run": True,
+                "source": "inline test",
+                "claim_boundary": "observed word count labeled-cycle unit test",
+            },
+        }
+    )
+    [result] = [result.as_dict() for result in run_declared_audits(model)]
+
+    assert result["passed"] is True
+    assert result["observed"]["safe_prefix_count_profile"] == [2, 2, 2]
+    assert result["observed"]["extendable_safe_prefix_count_profile"] == [2, 2, 2]
+    assert result["observed"]["count_profile"] == [2, 2, 2]
+    assert result["observed"]["observed_words_by_horizon"] == [
+        [["L"], ["R"]],
+        [["L", "R"], ["R", "L"]],
+        [["L", "R", "L"], ["R", "L", "R"]],
+    ]
+
+
 def test_viable_trajectory_count_comparison_detects_phantom_count_inflation() -> None:
     model = load_model(
         {

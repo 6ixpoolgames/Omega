@@ -16,6 +16,7 @@ from omega.adapters.finite_relational.facts import (
     dynamic_step_lifting_facts,
     extendable_safe_prefix_count_facts,
     nonfactorization_witnesses_for_predicate,
+    observed_extendable_safe_word_count_facts,
     presentation_violations,
     presentation_fact_derive_closure_facts,
     presentation_fact_closure_facts,
@@ -92,6 +93,8 @@ def run_audit(model: FiniteRelationalModel, audit: dict[str, Any]) -> AuditResul
         return _safe_prefix_count(model, audit)
     if kind == "extendable_safe_prefix_count":
         return _extendable_safe_prefix_count(model, audit)
+    if kind == "observed_extendable_safe_word_count":
+        return _observed_extendable_safe_word_count(model, audit)
     if kind == "viable_trajectory_count":
         return _viable_trajectory_count(model, audit)
     if kind == "viable_trajectory_count_comparison":
@@ -531,6 +534,27 @@ def _extendable_safe_prefix_count(
         audit,
         kind="extendable_safe_prefix_count",
         fact_fn=extendable_safe_prefix_count_facts,
+    )
+
+
+def _observed_extendable_safe_word_count(
+    model: FiniteRelationalModel,
+    audit: dict[str, Any],
+) -> AuditResult:
+    return _count_profile_result(
+        model,
+        audit,
+        kind="observed_extendable_safe_word_count",
+        fact_fn=lambda model, transition, safety, horizon, start_predicate: (
+            observed_extendable_safe_word_count_facts(
+                model,
+                transition=transition,
+                safety=safety,
+                observation=_role(model, audit, "observation"),
+                horizon=horizon,
+                start_predicate=start_predicate,
+            )
+        ),
     )
 
 

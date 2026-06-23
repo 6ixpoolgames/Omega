@@ -516,6 +516,93 @@ def extendable_safe_prefix_count_facts(
     }
 
 
+def observed_extendable_safe_word_count_facts(
+    model: FiniteRelationalModel,
+    *,
+    transition: str,
+    safety: str,
+    observation: str,
+    horizon: int,
+    start_predicate: str | None = None,
+) -> dict[str, object]:
+    """Count distinct observation words from extendable safe prefixes."""
+
+    if horizon < 0:
+        raise SchemaError(
+            f"observed extendable safe word horizon must be nonnegative: {horizon}"
+        )
+    extendable = extendable_safe_prefix_count_facts(
+        model,
+        transition=transition,
+        safety=safety,
+        horizon=horizon,
+        start_predicate=start_predicate,
+    )
+    edges = binary_relation(model, transition)
+    transition_relation = model.relations[transition]
+    domain = transition_relation.domains[0]
+    observation_function = model.functions[observation]
+    if observation_function.domain != domain:
+        raise SchemaError(
+            "observed viable word observation domain must match transition domain: "
+            f"{observation_function.domain} != {domain}"
+        )
+    states = set(model.domain(domain))
+    missing_states = sorted(states - set(observation_function.mapping))
+    if missing_states:
+        raise SchemaError(
+            f"observation function {observation} is not total on domain "
+            f"{domain}: {missing_states}"
+        )
+    safe = set(model.predicate_members(safety))
+    starts = (
+        states
+        if start_predicate is None
+        else set(model.predicate_members(start_predicate))
+    )
+    kernel = set(extendable["viability_kernel"])
+    adjacency: dict[str, list[str]] = defaultdict(list)
+    for source, target in sorted(edges):
+        adjacency[source].append(target)
+
+    current = {
+        (state, (observation_function.mapping[state],))
+        for state in sorted(starts & safe)
+    }
+    words_by_horizon: list[list[list[str]]] = []
+    count_profile: list[int] = []
+    for step in range(horizon + 1):
+        observed_words = sorted({word for state, word in current if state in kernel})
+        words_by_horizon.append([list(word) for word in observed_words])
+        count_profile.append(len(observed_words))
+        if step == horizon:
+            break
+        next_current = {
+            (target, (*word, observation_function.mapping[target]))
+            for state, word in current
+            for target in adjacency[state]
+            if target in safe
+        }
+        current = next_current
+
+    return {
+        "transition": transition,
+        "safety": safety,
+        "observation": observation,
+        "start_predicate": start_predicate,
+        "horizon": horizon,
+        "count_kind": "observed_extendable_safe_word",
+        "viability_kernel": sorted(kernel),
+        "viability_kernel_size": len(kernel),
+        "safe_prefix_count_profile": extendable["safe_prefix_count_profile"],
+        "extendable_safe_prefix_count_profile": extendable["count_profile"],
+        "count_profile": count_profile,
+        "observed_words_by_horizon": words_by_horizon,
+        "final_count": count_profile[-1],
+        "nonempty_at_horizon": count_profile[-1] > 0,
+    }
+
+
 def viable_trajectory_count_comparison_facts(
     model: FiniteRelationalModel,
     *,

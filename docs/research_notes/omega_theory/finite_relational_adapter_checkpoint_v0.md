@@ -47,6 +47,7 @@ dynamic_path_lifting;
 viable_trajectory_count;
 safe_prefix_count;
 extendable_safe_prefix_count;
+observed_extendable_safe_word_count;
 viable_trajectory_count_comparison;
 presentation_fact_closure;
 presentation_fact_derive_closure.
@@ -107,6 +108,11 @@ two-state graph with larger horizon counts.
 safe-prefix counting is now separated from extendable safe-prefix counting. The
 generated suite includes a dead-end branching case where finite safe prefixes
 exist but the finite viability kernel is empty.
+observed extendable safe-word counting now projects extendable safe prefixes
+through a declared observation function before counting. The generated suite
+includes a constant-observation branching case where exact path counts grow
+while observed words stay collapsed, and a labeled-cycle control where
+observable alternation remains visible.
 viable trajectory count comparison shows bad abstract dynamics can inflate or
 hide finite safe-prefix counts under an identity presentation.
 the gridworld obstacle source-generator characterization now checks reflected versus
@@ -135,7 +141,7 @@ That retained summary records:
 
 ```text
 15 fixture smoke cases;
-31 generated/adversarial cases;
+33 generated/adversarial cases;
 source digests where a source compiler is used;
 compiled/model digests;
 audit counts;

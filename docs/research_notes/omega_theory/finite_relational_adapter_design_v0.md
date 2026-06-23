@@ -371,6 +371,12 @@ extendable_safe_prefix_count:
   finite viability kernel. This distinguishes transient safe branching into
   dead ends from prefixes that remain indefinitely extendable.
 
+observed_extendable_safe_word_count:
+  safe prefixes are filtered to endpoints in the finite viability kernel, then
+  projected through a declared observation function. The audit counts distinct
+  observation words, not exact state paths, so unobserved internal branching
+  does not automatically inflate the reported language surface.
+
 viable_trajectory_count_comparison:
   exact and abstract finite safe-prefix count profiles are compared under a
   declared presentation. The audit also reports the legacy edge-projection
@@ -581,6 +587,15 @@ generated_dead_end_safe_prefix:
   generated safe start branches into safe dead ends. Safe-prefix counts are
   nonzero at horizon one, but extendable safe-prefix counts are zero because
   the finite viability kernel is empty.
+
+generated_observed_word_count_collapses_branching:
+  generated fully branching two-state dynamics has state-path and extendable
+  profiles [2, 4, 8], but a constant observation collapses the observed-word
+  profile to [1, 1, 1].
+
+generated_observed_word_count_labeled_cycle:
+  generated labeled two-state recurrent cycle keeps a visible alternating word
+  language with observed-word profile [2, 2, 2].
 ```
 
 Each fixture should include provenance.

@@ -32,6 +32,8 @@ REQUIRED_CASE_IDS = {
     "generated_viable_trajectory_count_cycle",
     "generated_viable_trajectory_count_branching",
     "generated_dead_end_safe_prefix",
+    "generated_observed_word_count_collapses_branching",
+    "generated_observed_word_count_labeled_cycle",
     "generated_viable_count_inflation",
     "generated_viable_count_hiding",
     "generated_stale_reflected_fact_closure",
@@ -108,6 +110,12 @@ def test_generated_adversarial_cases_cover_adapter_failure_modes() -> None:
     assert by_id["generated_dead_end_safe_prefix"].summary()["findings"] == [
         "count_ok",
         "count_ok",
+    ]
+    assert by_id[
+        "generated_observed_word_count_collapses_branching"
+    ].summary()["findings"] == ["count_ok"]
+    assert by_id["generated_observed_word_count_labeled_cycle"].summary()["findings"] == [
+        "count_ok"
     ]
     assert by_id["generated_viable_count_inflation"].summary()["findings"] == [
         "distorted"
@@ -431,6 +439,37 @@ def test_generated_dead_end_safe_prefix_case_separates_extendable_counts() -> No
     assert extendable["observed"]["safe_prefix_count_profile"] == [1, 2, 0]
     assert extendable["observed"]["count_profile"] == [0, 0, 0]
     assert extendable["observed"]["viability_kernel"] == []
+
+
+def test_generated_observed_word_count_cases_use_observation_language() -> None:
+    cases = {case.case_id: case for case in generate_adversarial_cases()}
+    collapsed = cases[
+        "generated_observed_word_count_collapses_branching"
+    ].audit_results[0].as_dict()
+    labeled = cases["generated_observed_word_count_labeled_cycle"].audit_results[0].as_dict()
+
+    assert collapsed["passed"] is True
+    assert collapsed["finding"] == "count_ok"
+    assert collapsed["observed"]["count_kind"] == "observed_extendable_safe_word"
+    assert collapsed["observed"]["safe_prefix_count_profile"] == [2, 4, 8]
+    assert collapsed["observed"]["extendable_safe_prefix_count_profile"] == [2, 4, 8]
+    assert collapsed["observed"]["count_profile"] == [1, 1, 1]
+    assert collapsed["observed"]["observed_words_by_horizon"] == [
+        [["same"]],
+        [["same", "same"]],
+        [["same", "same", "same"]],
+    ]
+
+    assert labeled["passed"] is True
+    assert labeled["finding"] == "count_ok"
+    assert labeled["observed"]["safe_prefix_count_profile"] == [2, 2, 2]
+    assert labeled["observed"]["extendable_safe_prefix_count_profile"] == [2, 2, 2]
+    assert labeled["observed"]["count_profile"] == [2, 2, 2]
+    assert labeled["observed"]["observed_words_by_horizon"] == [
+        [["L"], ["R"]],
+        [["L", "R"], ["R", "L"]],
+        [["L", "R", "L"], ["R", "L", "R"]],
+    ]
 
 
 def test_generated_viable_count_comparison_cases_detect_inflation_and_hiding() -> None:

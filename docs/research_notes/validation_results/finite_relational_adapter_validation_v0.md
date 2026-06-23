@@ -516,3 +516,51 @@ New generated cases:
 | --- | --- | --- |
 | generated_target_scramble_capacity_sensitivity | `capacity_sensitive` | A four-state same-prevalence crosscut scramble changes unrestricted exact recovery from the fixed observation. |
 | generated_target_scramble_capacity_label_swap_control | `not_capacity_sensitive` | A two-state Boolean complement scramble is only a target-label swap when both targets are exactly recoverable from the same observation. |
+
+## Addendum: Observed Extendable Safe Word Counts
+
+Run roots:
+
+```text
+.tmp/finite_relational_adapter_smoke_observed_words/20260624_005914
+.tmp/finite_relational_adapter_adversarial_observed_words/20260624_005914
+```
+
+Commands:
+
+```powershell
+./.venv/Scripts/python.exe -m pytest `
+  tests/test_finite_relational_adapter.py `
+  tests/test_finite_relational_adapter_adversarial.py `
+  -q --basetemp .tmp/pytest-observed-word-count -p no:cacheprovider
+
+./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_smoke `
+  --out-root .tmp/finite_relational_adapter_smoke_observed_words
+
+./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_adversarial `
+  --out-root .tmp/finite_relational_adapter_adversarial_observed_words
+```
+
+Result:
+
+```text
+focused adapter/adversarial pytest: 52 passed
+adapter smoke: PASS, 15 fixtures, focused pytest 108 passed
+generated/adversarial validation: PASS, 33 cases
+```
+
+Semantic repair:
+
+```text
+observed_extendable_safe_word_count counts distinct observation words generated
+by safe prefixes whose endpoints lie in the finite viability kernel. This keeps
+raw exact-state branching separate from distinguishable finite continuation
+language.
+```
+
+New generated cases:
+
+| Case | Finding | Meaning |
+| --- | --- | --- |
+| generated_observed_word_count_collapses_branching | `count_ok` | Fully branching two-state dynamics has state-path and extendable profiles `[2, 4, 8]`, but a constant observation collapses the observed-word profile to `[1, 1, 1]`. |
+| generated_observed_word_count_labeled_cycle | `count_ok` | A labeled two-state recurrent cycle keeps visible alternating words with observed-word profile `[2, 2, 2]`. |

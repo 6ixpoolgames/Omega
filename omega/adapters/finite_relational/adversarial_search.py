@@ -73,6 +73,8 @@ def generate_adversarial_cases() -> tuple[GeneratedAdapterCase, ...]:
         _generated_viable_trajectory_count_cycle_case(),
         _generated_viable_trajectory_count_branching_case(),
         _generated_dead_end_safe_prefix_case(),
+        _generated_observed_word_count_collapses_branching_case(),
+        _generated_observed_word_count_labeled_cycle_case(),
         _generated_viable_count_inflation_case(),
         _generated_viable_count_hiding_case(),
         _generated_stale_reflected_fact_closure_case(),
@@ -1094,6 +1096,108 @@ def _generated_dead_end_safe_prefix_case() -> GeneratedAdapterCase:
         ),
     }
     return _validated_ir_case("generated_dead_end_safe_prefix", model)
+
+
+def _generated_observed_word_count_collapses_branching_case() -> GeneratedAdapterCase:
+    model = {
+        "model_id": "generated_observed_word_count_collapses_branching",
+        "schema_version": "0.1.0",
+        "domains": {
+            "state": ["left", "right"],
+            "observation": ["same"],
+        },
+        "predicates": {
+            "safe": {"domain": "state", "members": ["left", "right"]},
+        },
+        "relations": {
+            "next": {
+                "domains": ["state", "state"],
+                "tuples": [
+                    ["left", "left"],
+                    ["left", "right"],
+                    ["right", "left"],
+                    ["right", "right"],
+                ],
+            },
+        },
+        "functions": {
+            "constant_observation": {
+                "domain": "state",
+                "codomain": "observation",
+                "mapping": {
+                    "left": "same",
+                    "right": "same",
+                },
+            },
+        },
+        "audits": [
+            {
+                "id": "generated_branching_collapses_to_one_observed_word",
+                "kind": "observed_extendable_safe_word_count",
+                "transition": "next",
+                "safety": "safe",
+                "observation": "constant_observation",
+                "horizon": 2,
+                "expected_count_profile": [1, 1, 1],
+                "expected_final_count": 1,
+                "expect": "count_ok",
+            }
+        ],
+        "provenance": _generated_provenance(
+            "Generated finite relational case: raw state-path branching remains "
+            "extendable, but a constant observation collapses all extendable "
+            "safe prefixes to one observed word at each horizon."
+        ),
+    }
+    return _validated_ir_case("generated_observed_word_count_collapses_branching", model)
+
+
+def _generated_observed_word_count_labeled_cycle_case() -> GeneratedAdapterCase:
+    model = {
+        "model_id": "generated_observed_word_count_labeled_cycle",
+        "schema_version": "0.1.0",
+        "domains": {
+            "state": ["left", "right"],
+            "observation": ["L", "R"],
+        },
+        "predicates": {
+            "safe": {"domain": "state", "members": ["left", "right"]},
+        },
+        "relations": {
+            "next": {
+                "domains": ["state", "state"],
+                "tuples": [["left", "right"], ["right", "left"]],
+            },
+        },
+        "functions": {
+            "role_observation": {
+                "domain": "state",
+                "codomain": "observation",
+                "mapping": {
+                    "left": "L",
+                    "right": "R",
+                },
+            },
+        },
+        "audits": [
+            {
+                "id": "generated_labeled_cycle_keeps_two_observed_words",
+                "kind": "observed_extendable_safe_word_count",
+                "transition": "next",
+                "safety": "safe",
+                "observation": "role_observation",
+                "horizon": 2,
+                "expected_count_profile": [2, 2, 2],
+                "expected_final_count": 2,
+                "expect": "count_ok",
+            }
+        ],
+        "provenance": _generated_provenance(
+            "Generated finite relational case: a labeled recurrent cycle keeps "
+            "two distinct observed extendable words at each finite horizon."
+        ),
+    }
+    return _validated_ir_case("generated_observed_word_count_labeled_cycle", model)
 
 
 def _generated_viable_count_inflation_case() -> GeneratedAdapterCase:
