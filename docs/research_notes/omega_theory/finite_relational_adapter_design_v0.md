@@ -340,6 +340,12 @@ viable_trajectory_count:
   over horizons `0..n` and can check expected profiles. This is a finite count
   pilot, not an entropy or value measure.
 
+viable_trajectory_count_comparison:
+  exact and abstract finite safe trajectory-count profiles are compared under a
+  declared presentation. The audit also reports dynamic equivariance for the
+  same presentation, and separates abstract count inflation from hidden exact
+  counts.
+
 presentation_fact_closure:
   a declared presentation family is checked for common visible pairs and
   common target predicates. The audit can require selected pairs or targets to

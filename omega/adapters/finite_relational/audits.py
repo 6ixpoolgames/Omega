@@ -17,6 +17,7 @@ from omega.adapters.finite_relational.facts import (
     reachable_pairs,
     target_scramble_sensitivity_facts,
     ternary_relation,
+    viable_trajectory_count_comparison_facts,
     viable_trajectory_count_facts,
 )
 from omega.adapters.finite_relational.model import FiniteRelationalModel, SchemaError
@@ -72,6 +73,8 @@ def run_audit(model: FiniteRelationalModel, audit: dict[str, Any]) -> AuditResul
         return _dynamic_presentation_equivariance(model, audit)
     if kind == "viable_trajectory_count":
         return _viable_trajectory_count(model, audit)
+    if kind == "viable_trajectory_count_comparison":
+        return _viable_trajectory_count_comparison(model, audit)
     raise SchemaError(f"unknown audit kind: {kind}")
 
 
@@ -360,6 +363,33 @@ def _viable_trajectory_count(
         observed,
         "count_ok",
         "count_ok",
+    )
+
+
+def _viable_trajectory_count_comparison(
+    model: FiniteRelationalModel,
+    audit: dict[str, Any],
+) -> AuditResult:
+    horizon = _audit_nonnegative_int(audit, "horizon")
+    exact_start = audit.get("exact_start_predicate")
+    abstract_start = audit.get("abstract_start_predicate")
+    observed = viable_trajectory_count_comparison_facts(
+        model,
+        exact_transition=_role(model, audit, "exact_transition"),
+        exact_safety=_role(model, audit, "exact_safety"),
+        presentation=_role(model, audit, "presentation"),
+        abstract_transition=_role(model, audit, "abstract_transition"),
+        abstract_safety=_role(model, audit, "abstract_safety"),
+        horizon=horizon,
+        exact_start_predicate=str(exact_start) if exact_start is not None else None,
+        abstract_start_predicate=str(abstract_start) if abstract_start is not None else None,
+    )
+    return _result(
+        audit,
+        "viable_trajectory_count_comparison",
+        observed,
+        "distorted",
+        "distorted",
     )
 
 

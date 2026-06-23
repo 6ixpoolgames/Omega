@@ -421,6 +421,146 @@ def test_viable_trajectory_count_rejects_wrong_branching_profile() -> None:
     assert result["observed"]["final_count_matches"] is False
 
 
+def test_viable_trajectory_count_comparison_detects_phantom_count_inflation() -> None:
+    model = load_model(
+        {
+            "model_id": "inline_viable_count_inflation",
+            "domains": {
+                "state": ["left", "right"],
+                "label": ["left", "right"],
+            },
+            "predicates": {
+                "exact_safe": {"domain": "state", "members": ["left", "right"]},
+                "abstract_safe": {"domain": "label", "members": ["left", "right"]},
+            },
+            "relations": {
+                "exact_next": {
+                    "domains": ["state", "state"],
+                    "tuples": [["left", "right"], ["right", "left"]],
+                },
+                "abstract_next": {
+                    "domains": ["label", "label"],
+                    "tuples": [
+                        ["left", "left"],
+                        ["left", "right"],
+                        ["right", "left"],
+                        ["right", "right"],
+                    ],
+                },
+            },
+            "functions": {
+                "identity_presentation": {
+                    "domain": "state",
+                    "codomain": "label",
+                    "mapping": {"left": "left", "right": "right"},
+                }
+            },
+            "audits": [
+                {
+                    "id": "phantom_abstract_edges_inflate_viable_counts",
+                    "kind": "viable_trajectory_count_comparison",
+                    "exact_transition": "exact_next",
+                    "exact_safety": "exact_safe",
+                    "presentation": "identity_presentation",
+                    "abstract_transition": "abstract_next",
+                    "abstract_safety": "abstract_safe",
+                    "horizon": 2,
+                    "expect": "distorted",
+                }
+            ],
+            "provenance": {
+                "declared_before_run": True,
+                "source": "inline test",
+                "claim_boundary": "viable trajectory count inflation unit test",
+            },
+        }
+    )
+    [result] = [result.as_dict() for result in run_declared_audits(model)]
+
+    assert result["passed"] is True
+    assert result["finding"] == "distorted"
+    assert result["observed"]["equivariant"] is False
+    assert result["observed"]["inflates"] is True
+    assert result["observed"]["hides"] is False
+    assert result["observed"]["exact_count_profile"] == [2, 2, 2]
+    assert result["observed"]["abstract_count_profile"] == [2, 4, 8]
+    assert result["observed"]["count_profile_delta"] == [0, 2, 6]
+    assert result["observed"]["dynamics"]["phantom_abstract_edges"] == [
+        ("left", "left"),
+        ("right", "right"),
+    ]
+
+
+def test_viable_trajectory_count_comparison_detects_missing_edge_hiding() -> None:
+    model = load_model(
+        {
+            "model_id": "inline_viable_count_hiding",
+            "domains": {
+                "state": ["left", "right"],
+                "label": ["left", "right"],
+            },
+            "predicates": {
+                "exact_safe": {"domain": "state", "members": ["left", "right"]},
+                "abstract_safe": {"domain": "label", "members": ["left", "right"]},
+            },
+            "relations": {
+                "exact_next": {
+                    "domains": ["state", "state"],
+                    "tuples": [
+                        ["left", "left"],
+                        ["left", "right"],
+                        ["right", "left"],
+                        ["right", "right"],
+                    ],
+                },
+                "abstract_next": {
+                    "domains": ["label", "label"],
+                    "tuples": [["left", "right"], ["right", "left"]],
+                },
+            },
+            "functions": {
+                "identity_presentation": {
+                    "domain": "state",
+                    "codomain": "label",
+                    "mapping": {"left": "left", "right": "right"},
+                }
+            },
+            "audits": [
+                {
+                    "id": "missing_abstract_edges_hide_viable_counts",
+                    "kind": "viable_trajectory_count_comparison",
+                    "exact_transition": "exact_next",
+                    "exact_safety": "exact_safe",
+                    "presentation": "identity_presentation",
+                    "abstract_transition": "abstract_next",
+                    "abstract_safety": "abstract_safe",
+                    "horizon": 2,
+                    "expect": "distorted",
+                }
+            ],
+            "provenance": {
+                "declared_before_run": True,
+                "source": "inline test",
+                "claim_boundary": "viable trajectory count hiding unit test",
+            },
+        }
+    )
+    [result] = [result.as_dict() for result in run_declared_audits(model)]
+
+    assert result["passed"] is True
+    assert result["finding"] == "distorted"
+    assert result["observed"]["equivariant"] is False
+    assert result["observed"]["inflates"] is False
+    assert result["observed"]["hides"] is True
+    assert result["observed"]["exact_count_profile"] == [2, 4, 8]
+    assert result["observed"]["abstract_count_profile"] == [2, 2, 2]
+    assert result["observed"]["count_profile_delta"] == [0, -2, -6]
+    assert result["observed"]["dynamics"]["missing_projected_edges"] == [
+        ("left", "left"),
+        ("right", "right"),
+    ]
+
+
 def test_presentation_fact_closure_audit_checks_visible_pairs_and_targets() -> None:
     model = load_model(
         {

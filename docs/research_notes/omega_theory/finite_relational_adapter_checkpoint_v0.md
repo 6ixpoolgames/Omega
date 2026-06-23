@@ -41,6 +41,7 @@ bounded_recovery;
 target_scramble_sensitivity;
 dynamic_presentation_equivariance;
 viable_trajectory_count;
+viable_trajectory_count_comparison;
 presentation_fact_closure.
 ```
 
@@ -85,6 +86,8 @@ abstract edge.
 viable trajectory count exposes finite safe trajectory-count profiles, including
 a flat two-state recurrent cycle and a branching two-state graph with larger
 horizon counts.
+viable trajectory count comparison shows non-equivariant abstract dynamics can
+inflate or hide finite safe trajectory counts under an identity presentation.
 the gridworld obstacle source-generator characterization now checks reflected versus
 stale source-reach presentations over the after-reachability fact.
 the stochastic continuation layer now checks reflected versus stale hit-status

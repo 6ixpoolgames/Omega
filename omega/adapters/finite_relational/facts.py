@@ -208,6 +208,80 @@ def viable_trajectory_count_facts(
     }
 
 
+def viable_trajectory_count_comparison_facts(
+    model: FiniteRelationalModel,
+    *,
+    exact_transition: str,
+    exact_safety: str,
+    presentation: str,
+    abstract_transition: str,
+    abstract_safety: str,
+    horizon: int,
+    exact_start_predicate: str | None = None,
+    abstract_start_predicate: str | None = None,
+) -> dict[str, object]:
+    """Compare exact and abstract finite viable-trajectory count profiles.
+
+    This is a finite diagnostic, not a theorem that sound presentations preserve
+    state-word counts. It reports whether an abstract dynamics inflates or hides
+    counts relative to the declared exact dynamics, and includes the dynamic
+    equivariance payload for the same presentation.
+    """
+
+    dynamics = dynamic_presentation_equivariance_facts(
+        model,
+        transition=exact_transition,
+        presentation=presentation,
+        abstract_transition=abstract_transition,
+    )
+    exact = viable_trajectory_count_facts(
+        model,
+        transition=exact_transition,
+        safety=exact_safety,
+        horizon=horizon,
+        start_predicate=exact_start_predicate,
+    )
+    abstract = viable_trajectory_count_facts(
+        model,
+        transition=abstract_transition,
+        safety=abstract_safety,
+        horizon=horizon,
+        start_predicate=abstract_start_predicate,
+    )
+    exact_profile = list(exact["count_profile"])
+    abstract_profile = list(abstract["count_profile"])
+    delta = [
+        abstract_count - exact_count
+        for exact_count, abstract_count in zip(
+            exact_profile,
+            abstract_profile,
+            strict=True,
+        )
+    ]
+    inflates = any(item > 0 for item in delta)
+    hides = any(item < 0 for item in delta)
+    return {
+        "distorted": exact_profile != abstract_profile,
+        "inflates": inflates,
+        "hides": hides,
+        "mixed_distortion": inflates and hides,
+        "equivariant": dynamics["equivariant"],
+        "horizon": horizon,
+        "exact_transition": exact_transition,
+        "abstract_transition": abstract_transition,
+        "presentation": presentation,
+        "exact_count_profile": exact_profile,
+        "abstract_count_profile": abstract_profile,
+        "count_profile_delta": delta,
+        "exact_final_count": exact["final_count"],
+        "abstract_final_count": abstract["final_count"],
+        "final_count_delta": abstract["final_count"] - exact["final_count"],
+        "exact": exact,
+        "abstract": abstract,
+        "dynamics": dynamics,
+    }
+
+
 def nonfactorization_witnesses_for_predicate(
     model: FiniteRelationalModel,
     *,

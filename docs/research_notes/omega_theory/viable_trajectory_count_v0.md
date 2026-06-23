@@ -25,6 +25,7 @@ The finite relational adapter now includes:
 
 ```text
 viable_trajectory_count
+viable_trajectory_count_comparison
 ```
 
 Given:
@@ -63,6 +64,34 @@ expected_count_profile
 expected_final_count
 ```
 
+The comparison audit adds:
+
+```text
+exact_transition
+exact_safety
+presentation
+abstract_transition
+abstract_safety
+horizon
+```
+
+and reports:
+
+```text
+exact_count_profile
+abstract_count_profile
+count_profile_delta
+inflates
+hides
+equivariant
+```
+
+The `equivariant` flag is imported from the dynamic-presentation audit. Count
+equality is not claimed to follow from equivariance alone, because a
+many-to-one presentation can legitimately compress state-word counts. The
+current strictness cases therefore use identity presentations: any count
+distortion there comes from bad abstract dynamics, not from quotienting states.
+
 ## Current Generated Cases
 
 ```text
@@ -73,10 +102,19 @@ generated_viable_trajectory_count_cycle:
 generated_viable_trajectory_count_branching:
   a fully branching two-state safe graph has profile [2, 4, 8, 16]
   through horizon 3.
+
+generated_viable_count_inflation:
+  identity presentation, exact cycle, abstract graph with phantom self-edges;
+  abstract profile [2, 4, 8] inflates exact profile [2, 2, 2].
+
+generated_viable_count_hiding:
+  identity presentation, exact fully branching graph, abstract cycle missing
+  self-edges; abstract profile [2, 2, 2] hides exact profile [2, 4, 8].
 ```
 
 These two cases establish only that the adapter can distinguish finite safe
-trajectory-count profiles. They are not yet a pressure or entropy theorem.
+trajectory-count profiles and detect simple non-equivariant distortions. They
+are not yet a pressure or entropy theorem.
 
 ## Next Uses
 

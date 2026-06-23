@@ -67,6 +67,8 @@ def generate_adversarial_cases() -> tuple[GeneratedAdapterCase, ...]:
         _generated_dynamic_non_equivariance_case(),
         _generated_viable_trajectory_count_cycle_case(),
         _generated_viable_trajectory_count_branching_case(),
+        _generated_viable_count_inflation_case(),
+        _generated_viable_count_hiding_case(),
         _generated_stale_reflected_fact_closure_case(),
         _generated_multi_presentation_fact_closure_case(),
         _generated_crosscutting_presentation_closure_case(),
@@ -798,6 +800,118 @@ def _generated_viable_trajectory_count_branching_case() -> GeneratedAdapterCase:
         ),
     }
     return _validated_ir_case("generated_viable_trajectory_count_branching", model)
+
+
+def _generated_viable_count_inflation_case() -> GeneratedAdapterCase:
+    model = {
+        "model_id": "generated_viable_count_inflation",
+        "schema_version": "0.1.0",
+        "carrier": ["left", "right"],
+        "domains": {
+            "state": ["left", "right"],
+            "label": ["left", "right"],
+        },
+        "predicates": {
+            "exact_safe": {"domain": "state", "members": ["left", "right"]},
+            "abstract_safe": {"domain": "label", "members": ["left", "right"]},
+        },
+        "relations": {
+            "exact_next": {
+                "domains": ["state", "state"],
+                "tuples": [["left", "right"], ["right", "left"]],
+            },
+            "abstract_next": {
+                "domains": ["label", "label"],
+                "tuples": [
+                    ["left", "left"],
+                    ["left", "right"],
+                    ["right", "left"],
+                    ["right", "right"],
+                ],
+            },
+        },
+        "functions": {
+            "identity_presentation": {
+                "domain": "state",
+                "codomain": "label",
+                "mapping": {"left": "left", "right": "right"},
+            },
+        },
+        "audits": [
+            {
+                "id": "generated_phantom_edges_inflate_viable_counts",
+                "kind": "viable_trajectory_count_comparison",
+                "exact_transition": "exact_next",
+                "exact_safety": "exact_safe",
+                "presentation": "identity_presentation",
+                "abstract_transition": "abstract_next",
+                "abstract_safety": "abstract_safe",
+                "horizon": 2,
+                "expect": "distorted",
+            }
+        ],
+        "provenance": _generated_provenance(
+            "Generated finite relational case: non-equivariant abstract dynamics "
+            "adds phantom self-edges and inflates finite viable trajectory counts."
+        ),
+    }
+    return _validated_ir_case("generated_viable_count_inflation", model)
+
+
+def _generated_viable_count_hiding_case() -> GeneratedAdapterCase:
+    model = {
+        "model_id": "generated_viable_count_hiding",
+        "schema_version": "0.1.0",
+        "carrier": ["left", "right"],
+        "domains": {
+            "state": ["left", "right"],
+            "label": ["left", "right"],
+        },
+        "predicates": {
+            "exact_safe": {"domain": "state", "members": ["left", "right"]},
+            "abstract_safe": {"domain": "label", "members": ["left", "right"]},
+        },
+        "relations": {
+            "exact_next": {
+                "domains": ["state", "state"],
+                "tuples": [
+                    ["left", "left"],
+                    ["left", "right"],
+                    ["right", "left"],
+                    ["right", "right"],
+                ],
+            },
+            "abstract_next": {
+                "domains": ["label", "label"],
+                "tuples": [["left", "right"], ["right", "left"]],
+            },
+        },
+        "functions": {
+            "identity_presentation": {
+                "domain": "state",
+                "codomain": "label",
+                "mapping": {"left": "left", "right": "right"},
+            },
+        },
+        "audits": [
+            {
+                "id": "generated_missing_edges_hide_viable_counts",
+                "kind": "viable_trajectory_count_comparison",
+                "exact_transition": "exact_next",
+                "exact_safety": "exact_safe",
+                "presentation": "identity_presentation",
+                "abstract_transition": "abstract_next",
+                "abstract_safety": "abstract_safe",
+                "horizon": 2,
+                "expect": "distorted",
+            }
+        ],
+        "provenance": _generated_provenance(
+            "Generated finite relational case: non-equivariant abstract dynamics "
+            "omits projected self-edges and hides finite viable trajectory counts."
+        ),
+    }
+    return _validated_ir_case("generated_viable_count_hiding", model)
 
 
 def _generated_stale_reflected_fact_closure_case() -> GeneratedAdapterCase:

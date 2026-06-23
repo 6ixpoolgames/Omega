@@ -190,6 +190,10 @@ Run root:
 - Viable trajectory count now records finite safe trajectory-count profiles for
   a declared transition and safety predicate. The generated suite includes a
   flat recurrent-cycle profile and a branching profile.
+- Viable trajectory count comparison now compares exact and abstract count
+  profiles under a declared presentation. The generated suite includes
+  non-equivariant count inflation and count hiding controls under identity
+  presentation.
 - `carrier_transfer_pass` and `carrier_transfer_fail_missing_return` exercise
   the adapter-level transfer contract. The negative case preserves endpoint
   correspondence but rejects transfer because the target carrier loses return
@@ -311,3 +315,42 @@ New generated cases:
 | --- | --- | --- |
 | generated_viable_trajectory_count_cycle | `count_ok` | `[2, 2, 2, 2]` |
 | generated_viable_trajectory_count_branching | `count_ok` | `[2, 4, 8, 16]` |
+
+## Addendum: Viable Count Distortion
+
+Run roots:
+
+```text
+.tmp/finite_relational_adapter_smoke_viable_count_distortion/20260623_213312
+.tmp/finite_relational_adapter_adversarial_viable_count_distortion/20260623_213312
+```
+
+Commands:
+
+```powershell
+./.venv/Scripts/python.exe -m pytest `
+  tests/test_finite_relational_adapter.py `
+  tests/test_finite_relational_adapter_adversarial.py `
+  -q --basetemp .tmp/pytest-viable-count-distortion -p no:cacheprovider
+
+./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_smoke `
+  --out-root .tmp/finite_relational_adapter_smoke_viable_count_distortion
+
+./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_adversarial `
+  --out-root .tmp/finite_relational_adapter_adversarial_viable_count_distortion
+```
+
+Result:
+
+```text
+focused adapter/adversarial pytest: 40 passed
+adapter smoke: PASS, 15 fixtures, focused pytest 96 passed
+generated/adversarial validation: PASS, 25 cases
+```
+
+New generated cases:
+
+| Case | Finding | Exact profile | Abstract profile | Direction |
+| --- | --- | --- | --- | --- |
+| generated_viable_count_inflation | `distorted` | `[2, 2, 2]` | `[2, 4, 8]` | inflated by phantom abstract edges |
+| generated_viable_count_hiding | `distorted` | `[2, 4, 8]` | `[2, 2, 2]` | hidden by missing abstract edges |
