@@ -38,6 +38,26 @@ class RobustOptimizedDecoderResult:
 
 
 @dataclass(frozen=True)
+class OptimizedRandomizedFamilyDecoderResult:
+    """Best randomized decoder inside a declared finite decoder family."""
+
+    decoder_name: str
+    decoder: RandomizedDecoder
+    per_source_success: dict[str, Fraction]
+    worst_case_success: Fraction
+
+
+@dataclass(frozen=True)
+class RobustOptimizedRandomizedFamilyDecoderResult:
+    """Best robust randomized decoder inside a declared finite decoder family."""
+
+    decoder_name: str
+    decoder: RandomizedDecoder
+    per_channel_success: dict[str, dict[str, Fraction]]
+    robust_worst_case_success: Fraction
+
+
+@dataclass(frozen=True)
 class SupportAmbiguity:
     """One observation label reachable from multiple declared target classes."""
 
@@ -382,6 +402,94 @@ def optimized_robust_worst_case_decoder(
             best = candidate
     if best is None:
         raise ValueError("no deterministic decoders were generated")
+    return best
+
+
+def optimized_declared_randomized_worst_case_decoder(
+    states: tuple[str, ...],
+    outputs: tuple[str, ...],
+    channel: Channel,
+    observation: Observation,
+    target: TargetFunction,
+    decoders: dict[str, RandomizedDecoder],
+) -> OptimizedRandomizedFamilyDecoderResult:
+    """Best worst-case recovery over a declared finite randomized family.
+
+    This is not global randomized maximin optimization. The search surface is
+    exactly the supplied `decoders` dictionary.
+    """
+
+    if not decoders:
+        raise ValueError("decoders must be nonempty")
+    best: OptimizedRandomizedFamilyDecoderResult | None = None
+    for decoder_name, decoder in sorted(decoders.items()):
+        per_source = randomized_success_by_source(
+            states,
+            outputs,
+            channel,
+            observation,
+            target,
+            decoder,
+        )
+        worst_case = worst_case_success(per_source)
+        candidate = OptimizedRandomizedFamilyDecoderResult(
+            decoder_name=decoder_name,
+            decoder=decoder,
+            per_source_success=per_source,
+            worst_case_success=worst_case,
+        )
+        if best is None or (
+            candidate.worst_case_success,
+            candidate.decoder_name,
+        ) > (
+            best.worst_case_success,
+            best.decoder_name,
+        ):
+            best = candidate
+    if best is None:
+        raise ValueError("no randomized decoders were evaluated")
+    return best
+
+
+def optimized_declared_robust_randomized_worst_case_decoder(
+    states: tuple[str, ...],
+    outputs: tuple[str, ...],
+    channels: dict[str, Channel],
+    observation: Observation,
+    target: TargetFunction,
+    decoders: dict[str, RandomizedDecoder],
+) -> RobustOptimizedRandomizedFamilyDecoderResult:
+    """Best robust worst-case recovery over a declared finite randomized family."""
+
+    if not decoders:
+        raise ValueError("decoders must be nonempty")
+    best: RobustOptimizedRandomizedFamilyDecoderResult | None = None
+    for decoder_name, decoder in sorted(decoders.items()):
+        per_channel = robust_randomized_success_by_channel(
+            states,
+            outputs,
+            channels,
+            observation,
+            target,
+            decoder,
+        )
+        robust_worst = robust_worst_case_success(per_channel)
+        candidate = RobustOptimizedRandomizedFamilyDecoderResult(
+            decoder_name=decoder_name,
+            decoder=decoder,
+            per_channel_success=per_channel,
+            robust_worst_case_success=robust_worst,
+        )
+        if best is None or (
+            candidate.robust_worst_case_success,
+            candidate.decoder_name,
+        ) > (
+            best.robust_worst_case_success,
+            best.decoder_name,
+        ):
+            best = candidate
+    if best is None:
+        raise ValueError("no randomized decoders were evaluated")
     return best
 
 
@@ -826,6 +934,11 @@ def _randomized_decoder_axis_family() -> StochasticRecoveryFamily:
     randomized_decoder = {
         "observed": {"false": Fraction(1, 2), "true": Fraction(1, 2)},
     }
+    randomized_family = {
+        "always_false": {"observed": {"false": Fraction(1), "true": Fraction(0)}},
+        "always_true": {"observed": {"false": Fraction(0), "true": Fraction(1)}},
+        "uniform": randomized_decoder,
+    }
     randomized_success = randomized_success_by_source(
         states,
         outputs,
@@ -833,6 +946,14 @@ def _randomized_decoder_axis_family() -> StochasticRecoveryFamily:
         observation,
         target,
         randomized_decoder,
+    )
+    optimized_randomized_family = optimized_declared_randomized_worst_case_decoder(
+        states,
+        outputs,
+        channel,
+        observation,
+        target,
+        randomized_family,
     )
 
     return StochasticRecoveryFamily(
@@ -851,6 +972,18 @@ def _randomized_decoder_axis_family() -> StochasticRecoveryFamily:
             "declared_randomized_per_source_success": _fraction_map_to_text(randomized_success),
             "declared_randomized_worst_case_success": fraction_to_text(
                 worst_case_success(randomized_success)
+            ),
+            "declared_randomized_family": _randomized_decoder_family_to_text(
+                randomized_family
+            ),
+            "optimized_declared_randomized_family_decoder": (
+                optimized_randomized_family.decoder_name
+            ),
+            "optimized_declared_randomized_family_per_source_success": (
+                _fraction_map_to_text(optimized_randomized_family.per_source_success)
+            ),
+            "optimized_declared_randomized_family_worst_case_success": (
+                fraction_to_text(optimized_randomized_family.worst_case_success)
             ),
             "randomized_beats_deterministic_maximin": (
                 worst_case_success(randomized_success)
@@ -898,6 +1031,17 @@ def _robust_randomized_ambiguity_axis_family() -> StochasticRecoveryFamily:
         "left": {"false": Fraction(1, 2), "true": Fraction(1, 2)},
         "right": {"false": Fraction(1, 2), "true": Fraction(1, 2)},
     }
+    randomized_family = {
+        "flipped_point_mass": {
+            "left": {"false": Fraction(0), "true": Fraction(1)},
+            "right": {"false": Fraction(1), "true": Fraction(0)},
+        },
+        "identity_point_mass": {
+            "left": {"false": Fraction(1), "true": Fraction(0)},
+            "right": {"false": Fraction(0), "true": Fraction(1)},
+        },
+        "uniform": randomized_decoder,
+    }
     randomized_success = robust_randomized_success_by_channel(
         states,
         outputs,
@@ -905,6 +1049,14 @@ def _robust_randomized_ambiguity_axis_family() -> StochasticRecoveryFamily:
         observation,
         target,
         randomized_decoder,
+    )
+    optimized_randomized_family = optimized_declared_robust_randomized_worst_case_decoder(
+        states,
+        outputs,
+        channels,
+        observation,
+        target,
+        randomized_family,
     )
 
     return StochasticRecoveryFamily(
@@ -938,6 +1090,22 @@ def _robust_randomized_ambiguity_axis_family() -> StochasticRecoveryFamily:
             ),
             "declared_randomized_robust_worst_case_success": fraction_to_text(
                 robust_worst_case_success(randomized_success)
+            ),
+            "declared_robust_randomized_family": _randomized_decoder_family_to_text(
+                randomized_family
+            ),
+            "optimized_declared_robust_randomized_family_decoder": (
+                optimized_randomized_family.decoder_name
+            ),
+            "optimized_declared_robust_randomized_family_per_channel_success": (
+                _nested_fraction_map_to_text(
+                    optimized_randomized_family.per_channel_success
+                )
+            ),
+            "optimized_declared_robust_randomized_family_worst_case_success": (
+                fraction_to_text(
+                    optimized_randomized_family.robust_worst_case_success
+                )
             ),
             "per_channel_exact_but_not_deterministically_robust": (
                 all(
@@ -1065,6 +1233,15 @@ def _randomized_decoder_to_text(decoder: RandomizedDecoder) -> dict[str, dict[st
     return {
         label: _fraction_map_to_text(row)
         for label, row in sorted(decoder.items())
+    }
+
+
+def _randomized_decoder_family_to_text(
+    decoders: dict[str, RandomizedDecoder],
+) -> dict[str, dict[str, dict[str, str]]]:
+    return {
+        decoder_name: _randomized_decoder_to_text(decoder)
+        for decoder_name, decoder in sorted(decoders.items())
     }
 
 

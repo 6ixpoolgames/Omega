@@ -319,6 +319,8 @@ Deterministic decoders embed into randomized decoders.
 Randomized success is nonnegative and bounded by 1.
 RandomizedRecoveryInAt names the randomized decoder-class form, with
 RandomizedRecoveryAt as the unrestricted case.
+RandomizedFamilyRecoveryAt names the declared randomized-decoder family form
+and is equivalent to restricted recovery over the family image.
 RobustRecoveryAt names a uniform decoder guarantee over a declared ambiguity
 set of channels.
 RobustRecoveryInAt adds an explicit allowed decoder class.
@@ -333,6 +335,8 @@ RandomizedRecoveryAt / RandomizedRecoveryInAt.
 Robust randomized recovery is monotone downward in threshold and monotone under
 ambiguity-set restriction.
 Deterministic robust recovery embeds into robust randomized recovery.
+RobustRandomizedFamilyRecoveryAt names the declared-family form for robust
+randomized recovery.
 Prior-relative expected recovery is a separate declared-prior axis.
 Worst-case threshold recovery implies prior-relative expected threshold
 recovery under any declared prior.

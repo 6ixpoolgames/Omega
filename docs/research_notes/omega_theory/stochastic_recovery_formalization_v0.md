@@ -45,6 +45,7 @@ formal/lean/OmegaProper/Recovery/CoarseningPermanence.lean
 formal/lean/OmegaProper/Recovery/Deterministic.lean
 formal/lean/OmegaProper/Recovery/ObservationRefinement.lean
 formal/lean/OmegaProper/Recovery/Randomized.lean
+formal/lean/OmegaProper/Recovery/RandomizedFamily.lean
 formal/lean/OmegaProper/Recovery/Robust.lean
 formal/lean/OmegaProper/Recovery/RobustRandomized.lean
 formal/lean/OmegaProper/Recovery/Joint.lean
@@ -94,6 +95,8 @@ RandomizedRecoveryAt is monotone downward in threshold.
 RandomizedRecoveryInAt is monotone downward in threshold.
 RandomizedRecoveryAt is the unrestricted `RandomizedRecoveryInAt`
   specialization.
+RandomizedFamilyRecoveryAt is equivalent to RandomizedRecoveryInAt over the
+  image of a declared indexed randomized-decoder family.
 Randomized recovery is monotone under observation refinement.
 RobustRecoveryAt is a uniform deterministic decoder guarantee over a declared
   ambiguity set.
@@ -113,6 +116,8 @@ Robust randomized recovery is monotone downward in threshold and monotone under
 Deterministic robust recovery embeds into robust randomized recovery.
 Observation refinement preserves robust randomized recovery under explicit
   randomized-decoder-class lifting.
+RobustRandomizedFamilyRecoveryAt is equivalent to RobustRandomizedRecoveryInAt
+  over the image of a declared indexed randomized-decoder family.
 Prior-relative expected recovery is nonnegative for nonnegative profiles and
   bounded by 1 for pointwise-bounded profiles.
 Worst-case threshold recovery implies prior-relative expected threshold
@@ -174,11 +179,16 @@ RecoveryExistsInAt             <-> deterministic capacity within a declared
 RandomizedSuccess              <-> randomized_success_by_source
 RandomizedRecoveryInAt         <-> randomized threshold recovery within a
                                   declared randomized-decoder class
+RandomizedFamilyRecoveryAt     <-> randomized threshold recovery within an
+                                  indexed declared randomized-decoder family
 RobustRecoveryInAt             <-> deterministic threshold recovery across a
                                   declared ambiguity set and decoder class
 RobustRandomizedRecoveryInAt   <-> randomized threshold recovery across a
                                   declared ambiguity set and randomized-decoder
                                   class
+RobustRandomizedFamilyRecoveryAt
+                               <-> robust randomized threshold recovery within
+                                  an indexed declared randomized-decoder family
 ExpectedRecoveryExistsInAt     <-> expected deterministic threshold recovery
                                   under a declared prior and decoder class
 FactorsThrough fine coarse     <-> observation refinement / coarsening
@@ -210,7 +220,7 @@ The current layer does not claim:
 ```text
 empirical channel validity;
 Bayes-optimal policy validation;
-general randomized optimization;
+global randomized optimization;
 prior-relative value;
 empirical correctness or completeness of a declared ambiguity set;
 identity;
@@ -248,7 +258,7 @@ Relevant Python parity checks:
 Next likely extensions:
 
 ```text
-finite randomized optimization only after a clear finite rational LP surface;
+global randomized optimization only after a clear finite rational LP surface;
 adapter parity for richer joint-profile families if needed.
 ```
 

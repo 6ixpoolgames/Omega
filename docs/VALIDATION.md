@@ -331,8 +331,9 @@ channels. It reports support ambiguity, support-exact recovery, optimized
 worst-case deterministic decoder success, declared-versus-optimized decoder
 gaps, deterministic coarsening behavior, failure localization,
 marginal-versus-joint recovery, paired-decoder union-bound floors, declared
-randomized decoder behavior, and robust randomized ambiguity-set behavior. It
-does not validate empirical channel correctness or randomized optimization.
+randomized decoder behavior, declared finite randomized-family optimization,
+and robust randomized ambiguity-set behavior. It does not validate empirical
+channel correctness or global randomized optimization.
 
 The stochastic continuation path uses exact rational finite transition kernels
 and finite-horizon hit probabilities. It checks stale-versus-reflected hidden

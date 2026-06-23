@@ -80,6 +80,9 @@ RobustRandomizedRecoveryInAt is monotone downward in threshold.
 Larger ambiguity sets are harder for robust randomized recovery.
 RobustRandomizedRecoveryAt is the unrestricted
   RobustRandomizedRecoveryInAt specialization.
+RobustRandomizedFamilyRecoveryAt names the declared randomized-decoder family
+  surface and is equivalent to restricted robust randomized recovery over the
+  family image.
 Singleton ambiguity reduces to RandomizedRecoveryAt.
 Singleton ambiguity with an allowed randomized decoder class reduces to
   RandomizedRecoveryInAt.
@@ -114,8 +117,10 @@ decoder. It is the finite worst-case version needed before prior-relative or
 empirical recovery claims.
 
 Robust randomized recovery has the same shape, but the shared decoder is a
-declared randomized decoder. It is not a claim that the repo has solved
-randomized maximin optimization.
+declared randomized decoder. Declared randomized-decoder family recovery gives
+an exact finite enumeration surface when an adapter supplies a finite family.
+It is not a claim that the repo has solved global randomized maximin
+optimization.
 
 ## Claim Boundary
 
@@ -127,7 +132,7 @@ that channels outside Gamma are impossible;
 that tau is morally significant;
 that robustness is a complete alignment criterion;
 that decoder classes are natural unless supplied by an adapter/provenance layer;
-that randomized maximin optimization has been solved;
+that global randomized maximin optimization has been solved;
 Omega validation.
 ```
 

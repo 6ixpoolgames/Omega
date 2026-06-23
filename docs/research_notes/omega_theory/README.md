@@ -178,6 +178,7 @@ OmegaProper/Recovery/CoarseningPermanence.lean
 OmegaProper/Recovery/Deterministic.lean
 OmegaProper/Recovery/ObservationRefinement.lean
 OmegaProper/Recovery/Randomized.lean
+OmegaProper/Recovery/RandomizedFamily.lean
 OmegaProper/Recovery/Robust.lean
 OmegaProper/Recovery/RobustRandomized.lean
 OmegaProper/Recovery/Joint.lean
@@ -258,7 +259,9 @@ ambiguity sets reduces to ordinary recovery on singleton sets, is monotone in
 threshold and ambiguity-set inclusion, and is preserved by observation
 refinement under explicit decoder-class lifting; robust randomized recovery
 adds the same ambiguity-set discipline for one shared randomized decoder and
-explicit randomized-decoder classes;
+explicit randomized-decoder classes; declared randomized-decoder family
+surfaces are finite enumeration objects and do not claim global randomized
+optimization;
 prior-relative expected recovery is kept separate from worst-case and robust
 recovery, with worst-case thresholds implying expected thresholds under any
 declared prior and a skewed-prior witness showing expected success can hide

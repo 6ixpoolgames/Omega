@@ -30,6 +30,7 @@ declared decoder versus optimized decoder gap;
 deterministic coarsening/refinement behavior;
 joint versus marginal recovery;
 declared randomized decoder behavior;
+declared finite randomized-family optimization;
 declared robust randomized decoder behavior over an ambiguity set.
 ```
 
@@ -171,8 +172,21 @@ With one ambiguous observation label, optimized deterministic maximin recovery
 can have worst-case success `0`, while a declared `50/50` randomized decoder has
 worst-case success `1/2`.
 
-This records randomized decoders as a separate axis. The implementation does
-not yet claim a general randomized optimizer.
+This records randomized decoders as a separate axis. The implementation also
+optimizes over a declared finite randomized-decoder family:
+
+```text
+declared family:
+  always_false
+  always_true
+  uniform
+
+optimized declared-family decoder = uniform
+optimized declared-family worst-case success = 1/2
+```
+
+This is exact finite enumeration over the declared family, not a claim of
+global randomized maximin optimization.
 
 ### Robust Randomized Ambiguity Axis
 
@@ -193,7 +207,18 @@ declared randomized robust worst-case success = 1/2
 ```
 
 This records robust randomized recovery as a separate axis without claiming
-general randomized optimization.
+general randomized optimization. The implementation also checks the declared
+finite robust randomized family:
+
+```text
+declared family:
+  identity_point_mass
+  flipped_point_mass
+  uniform
+
+optimized declared robust randomized-family decoder = uniform
+optimized declared robust randomized-family worst-case success = 1/2
+```
 
 ## Reproduction
 
@@ -201,7 +226,7 @@ Run:
 
 ```powershell
 .\.venv\Scripts\python.exe -m omega.validation.finite_relational_stochastic_recovery `
-  --out-root .tmp\finite_relational_stochastic_recovery_joint_bound
+  --out-root .tmp\finite_relational_stochastic_recovery_randomized_family
 ```
 
 The retained result summary is:
@@ -224,7 +249,8 @@ prior:
 
 decoder class:
   all deterministic decoders unless a declared deterministic or randomized
-  decoder is being contrasted
+  decoder is being contrasted; finite randomized-family optimization is over
+  explicitly supplied decoder dictionaries only
 
 garbling/coarsening:
   deterministic post-processing of an available observation

@@ -62,6 +62,9 @@ Randomized success is nonnegative and bounded by 1.
 RandomizedRecoveryInAt is the explicit randomized decoder-class form, with
   RandomizedRecoveryAt as its unrestricted specialization.
 Randomized recovery is monotone downward in threshold.
+RandomizedFamilyRecoveryAt names threshold recovery by one member of a declared
+  indexed randomized-decoder family and is equivalent to restricted recovery
+  over the image of that family.
 RobustRecoveryAt is a uniform decoder guarantee over a declared ambiguity set.
 RobustRecoveryInAt is the explicit deterministic decoder-class form for robust
   recovery.
@@ -80,6 +83,9 @@ Robust randomized recovery is monotone downward in threshold and monotone under
 Deterministic robust recovery embeds into robust randomized recovery.
 Observation refinement preserves robust randomized recovery under
   randomized-decoder-class lifting.
+RobustRandomizedFamilyRecoveryAt is the analogous declared-family surface for
+  robust randomized recovery and is equivalent to restricted robust recovery
+  over the image of that family.
 Prior-relative expected recovery is a declared-prior average-case axis.
 Worst-case threshold recovery implies prior-relative expected threshold
   recovery under any declared prior.
@@ -171,8 +177,16 @@ replacement for joint characterization.
 ### Randomized Decoders Are A Separate Axis
 
 A declared randomized decoder can outperform deterministic maximin in a
-strictly ambiguous case. The current implementation records declared randomized
-decoder success but does not yet implement a general randomized optimizer.
+strictly ambiguous case. The current implementation now also optimizes exactly
+over a declared finite randomized-decoder family:
+
+```text
+declared family = {always false, always true, uniform}
+optimized declared-family decoder = uniform
+optimized declared-family worst-case success = 1/2
+```
+
+This is finite declared-family enumeration, not global randomized maximin.
 
 ### Robust Randomized Decoders Are A Separate Ambiguity-Set Axis
 
@@ -182,7 +196,14 @@ two-channel ambiguity set. A declared uniform randomized decoder reaches
 worst-case success `1/2` across both channels and both source states.
 
 This records robust randomized recovery as an adapter-visible axis without
-claiming randomized maximin optimization.
+claiming global randomized maximin optimization. The adapter also optimizes
+over a declared finite robust randomized family:
+
+```text
+declared family = {identity point mass, flipped point mass, uniform}
+optimized declared robust randomized-family decoder = uniform
+optimized declared robust randomized-family worst-case success = 1/2
+```
 
 ## Next Theorem Work
 
@@ -190,8 +211,8 @@ Possible next formalization steps:
 
 ```text
 Lean theorem for support-exact recovery iff support disjointness;
-exact randomized maximin via a small linear-programming surface or finite
-  declared randomized decoder family.
+global randomized maximin only after a small linear-programming surface is
+  specified.
 ```
 
 ## Non-Claims
@@ -199,7 +220,7 @@ exact randomized maximin via a small linear-programming surface or finite
 This note does not claim:
 
 ```text
-general randomized optimization;
+global randomized optimization;
 Bayes-optimal policy validation;
 MDP safety;
 empirical correctness of stochastic adapters.

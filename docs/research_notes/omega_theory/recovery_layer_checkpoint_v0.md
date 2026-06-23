@@ -84,12 +84,14 @@ RecoveryExistsAt
 RecoveryExistsInAt
 RandomizedRecoveryAt
 RandomizedRecoveryInAt
+RandomizedFamilyRecoveryAt
 ExpectedRecoveryExistsAt
 ExpectedRecoveryExistsInAt
 RobustRecoveryAt
 RobustRecoveryInAt
 RobustRandomizedRecoveryAt
 RobustRandomizedRecoveryInAt
+RobustRandomizedFamilyRecoveryAt
 ```
 
 This prevents hidden decoder power from being confused with declared recovery
@@ -108,7 +110,12 @@ recovery is a uniform-decoder claim.
 
 Robust randomized recovery has the same uniform-over-ambiguity-set shape using
 one randomized decoder, optionally restricted by an allowed randomized-decoder
-class. This is still not randomized maximin optimization.
+class.
+
+The current layer also names declared randomized-decoder family recovery and
+robust declared randomized-decoder family recovery. The adapter can optimize
+exactly over such a supplied finite family. This is still not global randomized
+maximin optimization.
 
 ### Marginal Versus Joint
 
@@ -135,8 +142,12 @@ The finite examples now include:
 99/100 recovery need not be support-exact;
 same positive support can have different recovery thresholds;
 randomized decoding can beat deterministic decoding in a one-label case;
+finite declared randomized-family enumeration selects the uniform decoder in
+  that one-label case;
 separate marginal observations do not recover the joint target;
 per-channel exact recovery does not imply robust common-decoder recovery;
+finite declared robust randomized-family enumeration selects the uniform
+  decoder in the identity/flipped ambiguity case;
 high expected recovery under a skewed prior does not imply worst-case recovery.
 ```
 

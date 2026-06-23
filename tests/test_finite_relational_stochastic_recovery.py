@@ -6,6 +6,8 @@ from omega.adapters.finite_relational import (
     compose_coarse_decoder_through_fine,
     generate_stochastic_recovery_study,
     optimized_worst_case_decoder,
+    optimized_declared_randomized_worst_case_decoder,
+    optimized_declared_robust_randomized_worst_case_decoder,
     optimized_robust_worst_case_decoder,
     paired_joint_union_bound_by_source,
     randomized_success_by_source,
@@ -114,6 +116,12 @@ def test_stochastic_recovery_covers_expected_characterization_families() -> None
     assert randomized["deterministic_optimized_worst_case_success"] == "0"
     assert randomized["declared_randomized_worst_case_success"] == "1/2"
     assert randomized["declared_randomized_per_source_success"] == {"x0": "1/2", "x1": "1/2"}
+    assert randomized["optimized_declared_randomized_family_decoder"] == "uniform"
+    assert randomized["optimized_declared_randomized_family_worst_case_success"] == "1/2"
+    assert randomized["optimized_declared_randomized_family_per_source_success"] == {
+        "x0": "1/2",
+        "x1": "1/2",
+    }
     assert randomized["randomized_beats_deterministic_maximin"] is True
 
     robust_randomized = by_id["robust_randomized_ambiguity_axis"].metrics
@@ -124,6 +132,22 @@ def test_stochastic_recovery_covers_expected_characterization_families() -> None
     assert robust_randomized["optimized_deterministic_robust_worst_case_success"] == "0"
     assert robust_randomized["declared_randomized_robust_worst_case_success"] == "1/2"
     assert robust_randomized["declared_randomized_robust_per_channel_success"] == {
+        "flipped": {"x0": "1/2", "x1": "1/2"},
+        "identity": {"x0": "1/2", "x1": "1/2"},
+    }
+    assert (
+        robust_randomized["optimized_declared_robust_randomized_family_decoder"]
+        == "uniform"
+    )
+    assert (
+        robust_randomized[
+            "optimized_declared_robust_randomized_family_worst_case_success"
+        ]
+        == "1/2"
+    )
+    assert robust_randomized[
+        "optimized_declared_robust_randomized_family_per_channel_success"
+    ] == {
         "flipped": {"x0": "1/2", "x1": "1/2"},
         "identity": {"x0": "1/2", "x1": "1/2"},
     }
@@ -223,6 +247,35 @@ def test_paired_joint_union_bound_profile_is_source_indexed() -> None:
     }
 
 
+def test_declared_randomized_family_optimizer_is_exact_enumeration() -> None:
+    states = ("x0", "x1")
+    outputs = ("same",)
+    channel = {
+        "x0": {"same": Fraction(1)},
+        "x1": {"same": Fraction(1)},
+    }
+    observation = {"same": "observed"}
+    target = {"x0": "false", "x1": "true"}
+    decoders = {
+        "always_false": {"observed": {"false": Fraction(1), "true": Fraction(0)}},
+        "always_true": {"observed": {"false": Fraction(0), "true": Fraction(1)}},
+        "uniform": {"observed": {"false": Fraction(1, 2), "true": Fraction(1, 2)}},
+    }
+
+    optimized = optimized_declared_randomized_worst_case_decoder(
+        states,
+        outputs,
+        channel,
+        observation,
+        target,
+        decoders,
+    )
+
+    assert optimized.decoder_name == "uniform"
+    assert optimized.worst_case_success == Fraction(1, 2)
+    assert optimized.per_source_success == {"x0": Fraction(1, 2), "x1": Fraction(1, 2)}
+
+
 def test_robust_randomized_axis_uses_one_decoder_over_ambiguity_set() -> None:
     states = ("x0", "x1")
     outputs = ("y0", "y1")
@@ -265,6 +318,53 @@ def test_robust_randomized_axis_uses_one_decoder_over_ambiguity_set() -> None:
         "identity": {"x0": Fraction(1, 2), "x1": Fraction(1, 2)},
     }
     assert robust_worst_case_success(randomized) == Fraction(1, 2)
+
+
+def test_declared_robust_randomized_family_optimizer_is_exact_enumeration() -> None:
+    states = ("x0", "x1")
+    outputs = ("y0", "y1")
+    channels = {
+        "flipped": {
+            "x0": {"y0": Fraction(0), "y1": Fraction(1)},
+            "x1": {"y0": Fraction(1), "y1": Fraction(0)},
+        },
+        "identity": {
+            "x0": {"y0": Fraction(1), "y1": Fraction(0)},
+            "x1": {"y0": Fraction(0), "y1": Fraction(1)},
+        },
+    }
+    observation = {"y0": "left", "y1": "right"}
+    target = {"x0": "false", "x1": "true"}
+    decoders = {
+        "flipped_point_mass": {
+            "left": {"false": Fraction(0), "true": Fraction(1)},
+            "right": {"false": Fraction(1), "true": Fraction(0)},
+        },
+        "identity_point_mass": {
+            "left": {"false": Fraction(1), "true": Fraction(0)},
+            "right": {"false": Fraction(0), "true": Fraction(1)},
+        },
+        "uniform": {
+            "left": {"false": Fraction(1, 2), "true": Fraction(1, 2)},
+            "right": {"false": Fraction(1, 2), "true": Fraction(1, 2)},
+        },
+    }
+
+    optimized = optimized_declared_robust_randomized_worst_case_decoder(
+        states,
+        outputs,
+        channels,
+        observation,
+        target,
+        decoders,
+    )
+
+    assert optimized.decoder_name == "uniform"
+    assert optimized.robust_worst_case_success == Fraction(1, 2)
+    assert optimized.per_channel_success == {
+        "flipped": {"x0": Fraction(1, 2), "x1": Fraction(1, 2)},
+        "identity": {"x0": Fraction(1, 2), "x1": Fraction(1, 2)},
+    }
 
 
 def test_stochastic_recovery_validation_retains_outputs(tmp_path: Path) -> None:

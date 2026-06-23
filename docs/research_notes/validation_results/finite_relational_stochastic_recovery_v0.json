@@ -1,6 +1,6 @@
 {
   "claim_boundary": "Synthetic finite stochastic characterization only. This result does not validate stochastic dynamics, MDP policies, approximate soundness, empirical substrate correctness, value, agency, alignment, or Omega.",
-  "command": ".\\.venv\\Scripts\\python.exe -m omega.validation.finite_relational_stochastic_recovery --out-root .tmp\\finite_relational_stochastic_recovery_joint_bound",
+  "command": ".\\.venv\\Scripts\\python.exe -m omega.validation.finite_relational_stochastic_recovery --out-root .tmp\\finite_relational_stochastic_recovery_randomized_family",
   "date": "2026-06-23",
   "families": [
     {
@@ -146,12 +146,38 @@
             "true": "1/2"
           }
         },
+        "declared_randomized_family": {
+          "always_false": {
+            "observed": {
+              "false": "1",
+              "true": "0"
+            }
+          },
+          "always_true": {
+            "observed": {
+              "false": "0",
+              "true": "1"
+            }
+          },
+          "uniform": {
+            "observed": {
+              "false": "1/2",
+              "true": "1/2"
+            }
+          }
+        },
         "declared_randomized_per_source_success": {
           "x0": "1/2",
           "x1": "1/2"
         },
         "declared_randomized_worst_case_success": "1/2",
         "deterministic_optimized_worst_case_success": "0",
+        "optimized_declared_randomized_family_decoder": "uniform",
+        "optimized_declared_randomized_family_per_source_success": {
+          "x0": "1/2",
+          "x1": "1/2"
+        },
+        "optimized_declared_randomized_family_worst_case_success": "1/2",
         "randomized_beats_deterministic_maximin": true
       }
     },
@@ -180,6 +206,50 @@
           }
         },
         "declared_randomized_robust_worst_case_success": "1/2",
+        "declared_robust_randomized_family": {
+          "flipped_point_mass": {
+            "left": {
+              "false": "0",
+              "true": "1"
+            },
+            "right": {
+              "false": "1",
+              "true": "0"
+            }
+          },
+          "identity_point_mass": {
+            "left": {
+              "false": "1",
+              "true": "0"
+            },
+            "right": {
+              "false": "0",
+              "true": "1"
+            }
+          },
+          "uniform": {
+            "left": {
+              "false": "1/2",
+              "true": "1/2"
+            },
+            "right": {
+              "false": "1/2",
+              "true": "1/2"
+            }
+          }
+        },
+        "optimized_declared_robust_randomized_family_decoder": "uniform",
+        "optimized_declared_robust_randomized_family_per_channel_success": {
+          "flipped": {
+            "x0": "1/2",
+            "x1": "1/2"
+          },
+          "identity": {
+            "x0": "1/2",
+            "x1": "1/2"
+          }
+        },
+        "optimized_declared_robust_randomized_family_worst_case_success": "1/2",
         "optimized_deterministic_robust_decoder": {
           "left": "true",
           "right": "true"
