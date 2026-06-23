@@ -1,6 +1,6 @@
 # Observed Word Lifting Monotonicity V0
 
-Status: adapter theorem-probe note
+Status: adapter theorem-probe note with Lean extraction
 Scope: finite observed-word counts under process-coherent abstraction
 Claim boundary: finite adapter-relative diagnostic; not entropy, lushness, value, agency, identity, or Omega
 
@@ -24,8 +24,51 @@ and exact/abstract observations commute through the presentation,
 then abstract observed viable words should not inflate exact observed words.
 ```
 
-This is the adapter-side rehearsal for a later Lean theorem. It is deliberately
-finite-horizon and contract-scoped.
+This adapter probe has now been extracted into Lean as a finite language
+inclusion theorem. The adapter remains the executable finite-substrate surface;
+the Lean file records the contract in substrate-independent form.
+
+## Lean Extraction
+
+Lean location:
+
+```text
+formal/lean/OmegaProper/Trajectory/ObservedWordMonotonicity.lean
+```
+
+Main formal objects:
+
+```text
+ObservedSafePath
+ObservedExtendableSafeWord
+ObservedViablePathLift
+StrongObservedWordTransport
+EdgeImageExact
+```
+
+Main checked statements:
+
+```text
+strongObservedWordTransport_observedViablePathLift
+observedLanguage_subset_of_observedViablePathLift
+finiteObservedWordCount_mono_of_subset
+edgeImageExact_does_not_imply_stepReflects
+edgeImageExact_does_not_imply_pathLifting
+```
+
+The theorem structure is intentionally layered:
+
+```text
+minimal semantic condition:
+  every abstract observed extendable safe word has an exact realization.
+
+audit-friendly sufficient contract:
+  safety reflects, representative-wise steps lift, and observations commute.
+
+finite count corollary:
+  once retained word sets are finite, language inclusion implies count
+  monotonicity.
+```
 
 ## Audit
 
@@ -125,5 +168,5 @@ Omega;
 empirical model validity.
 ```
 
-It only establishes the finite adapter probe needed before a future formal
-monotonicity theorem.
+It only establishes the finite adapter probe and its matching Lean finite-word
+transport theorem.

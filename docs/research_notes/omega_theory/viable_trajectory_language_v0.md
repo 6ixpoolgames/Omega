@@ -85,8 +85,17 @@ observed_word_lifting_monotonicity
 ```
 
 It checks whether a path-lifting, observation-compatible abstraction avoids
-inflating abstract observed viable words. This is the finite adapter rehearsal
-for a future formal monotonicity theorem.
+inflating abstract observed viable words. The corresponding Lean extraction now
+lives at:
+
+```text
+formal/lean/OmegaProper/Trajectory/ObservedWordMonotonicity.lean
+```
+
+The Lean theorem proves language inclusion first, then a finite count
+monotonicity corollary for retained word sets. It also includes the splice
+counterexample showing that global edge-image exactness is weaker than
+representative-wise process lifting.
 
 ## Claim Boundary
 

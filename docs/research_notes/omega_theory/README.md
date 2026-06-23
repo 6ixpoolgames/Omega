@@ -432,6 +432,7 @@ joint_viability_v0.md
 joint_recurrent_support_v0.md
 hidden_joint_viability_loss_under_bad_presentation_v0.md
 viable_trajectory_language_v0.md
+observed_word_lifting_monotonicity_v0.md
 safe_presentation_contract_v0.md
 safe_loss_visibility_v0.md
 loss_aware_presentation_contract_v0.md
