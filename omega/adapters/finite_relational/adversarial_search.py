@@ -65,8 +65,10 @@ def generate_adversarial_cases() -> tuple[GeneratedAdapterCase, ...]:
         _generated_decorative_target_scramble_control_case(),
         _generated_dynamic_equivariance_case(),
         _generated_dynamic_non_equivariance_case(),
+        _generated_edge_exact_path_lifting_failure_case(),
         _generated_viable_trajectory_count_cycle_case(),
         _generated_viable_trajectory_count_branching_case(),
+        _generated_dead_end_safe_prefix_case(),
         _generated_viable_count_inflation_case(),
         _generated_viable_count_hiding_case(),
         _generated_stale_reflected_fact_closure_case(),
@@ -733,6 +735,68 @@ def _generated_dynamic_non_equivariance_case() -> GeneratedAdapterCase:
     return _validated_ir_case("generated_dynamic_non_equivariance", model)
 
 
+def _generated_edge_exact_path_lifting_failure_case() -> GeneratedAdapterCase:
+    model = {
+        "model_id": "generated_edge_exact_path_lifting_failure",
+        "schema_version": "0.1.0",
+        "carrier": ["a", "b", "c", "d"],
+        "domains": {
+            "state": ["a", "b", "c", "d"],
+            "label": ["A", "M", "D"],
+        },
+        "relations": {
+            "next": {
+                "domains": ["state", "state"],
+                "tuples": [["a", "b"], ["c", "d"]],
+            },
+            "abstract_next": {
+                "domains": ["label", "label"],
+                "tuples": [["A", "M"], ["M", "D"]],
+            },
+        },
+        "functions": {
+            "presentation": {
+                "domain": "state",
+                "codomain": "label",
+                "mapping": {"a": "A", "b": "M", "c": "M", "d": "D"},
+            },
+        },
+        "audits": [
+            {
+                "id": "generated_global_edge_image_is_exact",
+                "kind": "dynamic_edge_projection_exactness",
+                "transition": "next",
+                "presentation": "presentation",
+                "abstract_transition": "abstract_next",
+                "expect": "edge_exact",
+            },
+            {
+                "id": "generated_step_lifting_fails_inside_merged_fiber",
+                "kind": "dynamic_step_lifting",
+                "transition": "next",
+                "presentation": "presentation",
+                "abstract_transition": "abstract_next",
+                "expect": "not_step_lifts",
+            },
+            {
+                "id": "generated_path_lifting_detects_spliced_abstract_history",
+                "kind": "dynamic_path_lifting",
+                "transition": "next",
+                "presentation": "presentation",
+                "abstract_transition": "abstract_next",
+                "horizon": 2,
+                "expect": "not_path_lifts",
+            },
+        ],
+        "provenance": _generated_provenance(
+            "Generated finite relational case: global edge projection is exact, "
+            "but a merged intermediate label lets abstract paths splice "
+            "incompatible exact representatives."
+        ),
+    }
+    return _validated_ir_case("generated_edge_exact_path_lifting_failure", model)
+
+
 def _generated_viable_trajectory_count_cycle_case() -> GeneratedAdapterCase:
     model = {
         "model_id": "generated_viable_trajectory_count_cycle",
@@ -800,6 +864,51 @@ def _generated_viable_trajectory_count_branching_case() -> GeneratedAdapterCase:
         ),
     }
     return _validated_ir_case("generated_viable_trajectory_count_branching", model)
+
+
+def _generated_dead_end_safe_prefix_case() -> GeneratedAdapterCase:
+    model = {
+        "model_id": "generated_dead_end_safe_prefix",
+        "schema_version": "0.1.0",
+        "carrier": ["start", "dead_a", "dead_b"],
+        "predicates": {
+            "safe": ["start", "dead_a", "dead_b"],
+            "start_only": ["start"],
+        },
+        "relations": {
+            "next": [["start", "dead_a"], ["start", "dead_b"]],
+        },
+        "audits": [
+            {
+                "id": "generated_dead_end_branching_safe_prefixes",
+                "kind": "safe_prefix_count",
+                "transition": "next",
+                "safety": "safe",
+                "start_predicate": "start_only",
+                "horizon": 2,
+                "expected_count_profile": [1, 2, 0],
+                "expected_final_count": 0,
+                "expect": "count_ok",
+            },
+            {
+                "id": "generated_dead_end_branching_not_extendable",
+                "kind": "extendable_safe_prefix_count",
+                "transition": "next",
+                "safety": "safe",
+                "start_predicate": "start_only",
+                "horizon": 2,
+                "expected_count_profile": [0, 0, 0],
+                "expected_final_count": 0,
+                "expect": "count_ok",
+            },
+        ],
+        "provenance": _generated_provenance(
+            "Generated finite relational case: branching creates safe prefixes, "
+            "but every branch ends in a safe dead end outside the viability "
+            "kernel."
+        ),
+    }
+    return _validated_ir_case("generated_dead_end_safe_prefix", model)
 
 
 def _generated_viable_count_inflation_case() -> GeneratedAdapterCase:

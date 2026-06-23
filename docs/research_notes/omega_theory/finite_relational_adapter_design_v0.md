@@ -329,22 +329,45 @@ target_scramble_sensitivity:
   the target is empirically correct or value-bearing.
 
 dynamic_presentation_equivariance:
+  compatibility alias for dynamic_edge_projection_exactness. The old name is
+  retained for existing fixtures, but it should not be read as full process
+  equivariance.
+
+dynamic_edge_projection_exactness:
   a declared state transition, presentation, and abstract transition are
-  checked for dynamics commutation. Every exact transition edge must project to
-  an abstract edge, and every abstract edge must be induced by some exact edge.
-  The payload separates missing projected edges from phantom abstract edges.
+  checked for global edge-image exactness. Every exact transition edge must
+  project to an abstract edge, and every abstract edge must be induced by some
+  exact edge somewhere. The payload separates missing projected edges from
+  phantom abstract edges.
+
+dynamic_step_lifting:
+  every abstract edge out of a presented exact state must lift from that exact
+  representative, not merely from some state in the same presentation fiber.
+
+dynamic_path_lifting:
+  finite abstract paths through a declared horizon must have coherent exact
+  lifts from the declared exact start representative. This catches abstract
+  histories stitched together from incompatible representatives.
 
 viable_trajectory_count:
+  compatibility alias for safe_prefix_count.
+
+safe_prefix_count:
   a declared transition and safety predicate are used to count finite safe
-  trajectories through a declared horizon. The audit reports a count profile
-  over horizons `0..n` and can check expected profiles. This is a finite count
+  prefixes through a declared horizon. The audit reports a count profile over
+  horizons `0..n` and can check expected profiles. This is a finite count
   pilot, not an entropy or value measure.
 
+extendable_safe_prefix_count:
+  the same safe prefixes are filtered by whether their endpoint lies in the
+  finite viability kernel. This distinguishes transient safe branching into
+  dead ends from prefixes that remain indefinitely extendable.
+
 viable_trajectory_count_comparison:
-  exact and abstract finite safe trajectory-count profiles are compared under a
-  declared presentation. The audit also reports dynamic equivariance for the
-  same presentation, and separates abstract count inflation from hidden exact
-  counts.
+  exact and abstract finite safe-prefix count profiles are compared under a
+  declared presentation. The audit also reports the legacy edge-projection
+  exactness flag for the same presentation, and separates abstract count
+  inflation from hidden exact counts.
 
 presentation_fact_closure:
   a declared presentation family is checked for common visible pairs and
@@ -497,6 +520,30 @@ generated_failed_transport_fact_closure:
   lifted role presentations preserve the transported role label; the
   carrier-transfer audit rejects transfer because the target loses return
   structure.
+
+generated_dynamic_equivariance:
+  generated role dynamics exactly matches the global edge projection of exact
+  state dynamics.
+
+generated_dynamic_non_equivariance:
+  generated abstract role dynamics misses one projected edge and adds one
+  phantom edge.
+
+generated_edge_exact_path_lifting_failure:
+  generated abstract dynamics exactly matches the global edge projection, but
+  representative-wise step lifting and finite path lifting fail because an
+  abstract path switches exact representatives inside a merged fiber.
+
+generated_viable_trajectory_count_cycle:
+  generated recurrent cycle has a flat finite safe-prefix profile.
+
+generated_viable_trajectory_count_branching:
+  generated fully branching graph has a larger finite safe-prefix profile.
+
+generated_dead_end_safe_prefix:
+  generated safe start branches into safe dead ends. Safe-prefix counts are
+  nonzero at horizon one, but extendable safe-prefix counts are zero because
+  the finite viability kernel is empty.
 ```
 
 Each fixture should include provenance.

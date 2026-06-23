@@ -187,8 +187,8 @@ Run root:
   The generated suite includes both an `equivariant` case and a
   `not_equivariant` control with one missing projected edge and one phantom
   abstract edge.
-- Viable trajectory count now records finite safe trajectory-count profiles for
-  a declared transition and safety predicate. The generated suite includes a
+- Viable trajectory count now records finite safe-prefix count profiles for a
+  declared transition and safety predicate. The generated suite includes a
   flat recurrent-cycle profile and a branching profile.
 - Viable trajectory count comparison now compares exact and abstract count
   profiles under a declared presentation. The generated suite includes
@@ -354,3 +354,55 @@ New generated cases:
 | --- | --- | --- | --- | --- |
 | generated_viable_count_inflation | `distorted` | `[2, 2, 2]` | `[2, 4, 8]` | inflated by phantom abstract edges |
 | generated_viable_count_hiding | `distorted` | `[2, 4, 8]` | `[2, 2, 2]` | hidden by missing abstract edges |
+
+## Addendum: Dynamic Path Lifting And Extendable Prefix Counts
+
+Run roots:
+
+```text
+.tmp/finite_relational_adapter_smoke_semantic_repairs/20260623_225619
+.tmp/finite_relational_adapter_adversarial_semantic_repairs/20260623_225619
+```
+
+Commands:
+
+```powershell
+./.venv/Scripts/python.exe -m pytest `
+  tests/test_finite_relational_adapter.py `
+  tests/test_finite_relational_adapter_adversarial.py `
+  -q --basetemp .tmp/pytest-semantic-repairs -p no:cacheprovider
+
+./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_smoke `
+  --out-root .tmp/finite_relational_adapter_smoke_semantic_repairs
+
+./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_adversarial `
+  --out-root .tmp/finite_relational_adapter_adversarial_semantic_repairs
+```
+
+Result:
+
+```text
+focused adapter/adversarial pytest: 44 passed
+adapter smoke: PASS, 15 fixtures, focused pytest 100 passed
+generated/adversarial validation: PASS, 27 cases
+```
+
+New generated cases:
+
+| Case | Findings | Meaning |
+| --- | --- | --- |
+| generated_edge_exact_path_lifting_failure | `edge_exact`, `not_step_lifts`, `not_path_lifts` | Global edge projection is exact, but an abstract path switches representatives inside a merged fiber and has no coherent exact lift. |
+| generated_dead_end_safe_prefix | `count_ok`, `count_ok` | Safe-prefix counts report transient safe branching, while extendable safe-prefix counts are zero because the finite viability kernel is empty. |
+
+Semantic repair:
+
+```text
+dynamic_presentation_equivariance is now documented as the legacy
+edge-projection exactness audit. New adapter-facing process checks should use
+dynamic_edge_projection_exactness together with dynamic_step_lifting or
+dynamic_path_lifting.
+
+viable_trajectory_count is now documented as the legacy safe-prefix count.
+New count work should distinguish safe_prefix_count from
+extendable_safe_prefix_count.
+```

@@ -10,13 +10,18 @@ from omega.adapters.finite_relational.facts import (
     bounded_recovery_facts,
     carrier_certificate_facts,
     carrier_transfer_facts,
+    dynamic_edge_projection_exactness_facts,
+    dynamic_path_lifting_facts,
     dynamic_presentation_equivariance_facts,
+    dynamic_step_lifting_facts,
+    extendable_safe_prefix_count_facts,
     nonfactorization_witnesses_for_predicate,
     presentation_violations,
     presentation_fact_closure_facts,
     reachable_pairs,
     target_scramble_sensitivity_facts,
     ternary_relation,
+    safe_prefix_count_facts,
     viable_trajectory_count_comparison_facts,
     viable_trajectory_count_facts,
 )
@@ -69,8 +74,18 @@ def run_audit(model: FiniteRelationalModel, audit: dict[str, Any]) -> AuditResul
         return _presentation_fact_closure(model, audit)
     if kind == "target_scramble_sensitivity":
         return _target_scramble_sensitivity(model, audit)
+    if kind == "dynamic_edge_projection_exactness":
+        return _dynamic_edge_projection_exactness(model, audit)
     if kind == "dynamic_presentation_equivariance":
         return _dynamic_presentation_equivariance(model, audit)
+    if kind == "dynamic_step_lifting":
+        return _dynamic_step_lifting(model, audit)
+    if kind == "dynamic_path_lifting":
+        return _dynamic_path_lifting(model, audit)
+    if kind == "safe_prefix_count":
+        return _safe_prefix_count(model, audit)
+    if kind == "extendable_safe_prefix_count":
+        return _extendable_safe_prefix_count(model, audit)
     if kind == "viable_trajectory_count":
         return _viable_trajectory_count(model, audit)
     if kind == "viable_trajectory_count_comparison":
@@ -324,13 +339,110 @@ def _dynamic_presentation_equivariance(
     )
 
 
+def _dynamic_edge_projection_exactness(
+    model: FiniteRelationalModel,
+    audit: dict[str, Any],
+) -> AuditResult:
+    observed = dynamic_edge_projection_exactness_facts(
+        model,
+        transition=_role(model, audit, "transition"),
+        presentation=_role(model, audit, "presentation"),
+        abstract_transition=_role(model, audit, "abstract_transition"),
+    )
+    return _result(
+        audit,
+        "dynamic_edge_projection_exactness",
+        observed,
+        "edge_projection_exact",
+        "edge_exact",
+    )
+
+
+def _dynamic_step_lifting(
+    model: FiniteRelationalModel,
+    audit: dict[str, Any],
+) -> AuditResult:
+    observed = dynamic_step_lifting_facts(
+        model,
+        transition=_role(model, audit, "transition"),
+        presentation=_role(model, audit, "presentation"),
+        abstract_transition=_role(model, audit, "abstract_transition"),
+    )
+    return _result(
+        audit,
+        "dynamic_step_lifting",
+        observed,
+        "step_lifts",
+        "step_lifts",
+    )
+
+
+def _dynamic_path_lifting(
+    model: FiniteRelationalModel,
+    audit: dict[str, Any],
+) -> AuditResult:
+    observed = dynamic_path_lifting_facts(
+        model,
+        transition=_role(model, audit, "transition"),
+        presentation=_role(model, audit, "presentation"),
+        abstract_transition=_role(model, audit, "abstract_transition"),
+        horizon=_audit_nonnegative_int(audit, "horizon"),
+    )
+    return _result(
+        audit,
+        "dynamic_path_lifting",
+        observed,
+        "path_lifts",
+        "path_lifts",
+    )
+
+
 def _viable_trajectory_count(
     model: FiniteRelationalModel,
     audit: dict[str, Any],
 ) -> AuditResult:
+    return _count_profile_result(
+        model,
+        audit,
+        kind="viable_trajectory_count",
+        fact_fn=viable_trajectory_count_facts,
+    )
+
+
+def _safe_prefix_count(
+    model: FiniteRelationalModel,
+    audit: dict[str, Any],
+) -> AuditResult:
+    return _count_profile_result(
+        model,
+        audit,
+        kind="safe_prefix_count",
+        fact_fn=safe_prefix_count_facts,
+    )
+
+
+def _extendable_safe_prefix_count(
+    model: FiniteRelationalModel,
+    audit: dict[str, Any],
+) -> AuditResult:
+    return _count_profile_result(
+        model,
+        audit,
+        kind="extendable_safe_prefix_count",
+        fact_fn=extendable_safe_prefix_count_facts,
+    )
+
+
+def _count_profile_result(
+    model: FiniteRelationalModel,
+    audit: dict[str, Any],
+    *,
+    kind: str,
+    fact_fn: Any,
+) -> AuditResult:
     horizon = _audit_nonnegative_int(audit, "horizon")
     start_predicate = audit.get("start_predicate")
-    observed = viable_trajectory_count_facts(
+    observed = fact_fn(
         model,
         transition=_role(model, audit, "transition"),
         safety=_role(model, audit, "safety"),
@@ -359,7 +471,7 @@ def _viable_trajectory_count(
     )
     return _result(
         audit,
-        "viable_trajectory_count",
+        kind,
         observed,
         "count_ok",
         "count_ok",

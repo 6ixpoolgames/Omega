@@ -40,7 +40,12 @@ carrier_transfer;
 bounded_recovery;
 target_scramble_sensitivity;
 dynamic_presentation_equivariance;
+dynamic_edge_projection_exactness;
+dynamic_step_lifting;
+dynamic_path_lifting;
 viable_trajectory_count;
+safe_prefix_count;
+extendable_safe_prefix_count;
 viable_trajectory_count_comparison;
 presentation_fact_closure.
 ```
@@ -79,15 +84,21 @@ even when the transfer contract rejects carrier transfer.
 target-scramble sensitivity compares a declared target against a scrambled
 target under the same observation and decoder family, with a decorative-target
 control where both targets remain unrecoverable.
-dynamic presentation equivariance checks whether an abstract transition is
-exactly the projection of exact dynamics under a declared presentation,
-including a negative case with both a missing projected edge and a phantom
-abstract edge.
-viable trajectory count exposes finite safe trajectory-count profiles, including
-a flat two-state recurrent cycle and a branching two-state graph with larger
-horizon counts.
-viable trajectory count comparison shows non-equivariant abstract dynamics can
-inflate or hide finite safe trajectory counts under an identity presentation.
+dynamic presentation equivariance is retained as the legacy name for checking
+whether an abstract transition is exactly the projection of exact dynamics
+under a declared presentation, including a negative case with both a missing
+projected edge and a phantom abstract edge.
+dynamic edge-projection exactness is now separated from representative-wise
+step lifting and finite path lifting. The generated suite includes a splice
+case where global edge projection is exact but step/path lifting fail.
+viable trajectory count is retained as the legacy name for finite safe-prefix
+count profiles, including a flat two-state recurrent cycle and a branching
+two-state graph with larger horizon counts.
+safe-prefix counting is now separated from extendable safe-prefix counting. The
+generated suite includes a dead-end branching case where finite safe prefixes
+exist but the finite viability kernel is empty.
+viable trajectory count comparison shows bad abstract dynamics can inflate or
+hide finite safe-prefix counts under an identity presentation.
 the gridworld obstacle source-generator characterization now checks reflected versus
 stale source-reach presentations over the after-reachability fact.
 the stochastic continuation layer now checks reflected versus stale hit-status
@@ -114,7 +125,7 @@ That retained summary records:
 
 ```text
 15 fixture smoke cases;
-17 generated/adversarial cases;
+27 generated/adversarial cases;
 source digests where a source compiler is used;
 compiled/model digests;
 audit counts;

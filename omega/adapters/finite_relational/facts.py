@@ -72,19 +72,19 @@ def presentation_violations(
     return sorted(merges & forbidden_pairs)
 
 
-def dynamic_presentation_equivariance_facts(
+def dynamic_edge_projection_exactness_facts(
     model: FiniteRelationalModel,
     *,
     transition: str,
     presentation: str,
     abstract_transition: str,
 ) -> dict[str, object]:
-    """Check whether a presentation commutes with transition structure.
+    """Check whether abstract edges equal the global projected edge image.
 
-    The audit is exact and finite. Preservation says every exact transition
-    edge projects to an abstract transition edge. Reflection says every
-    declared abstract edge is realized by at least one exact transition edge
-    between states in the corresponding presentation fibers.
+    This is weaker than path/process equivariance. It says every exact edge
+    projects to an abstract edge, and every abstract edge is induced by some
+    exact edge somewhere. It does not require coherent representative-wise
+    lifting along paths.
     """
 
     exact_edges = binary_relation(model, transition)
@@ -119,6 +119,7 @@ def dynamic_presentation_equivariance_facts(
     missing_projected_edges = sorted(projected_exact_edges - abstract_edges)
     phantom_abstract_edges = sorted(abstract_edges - projected_exact_edges)
     return {
+        "edge_projection_exact": not missing_projected_edges and not phantom_abstract_edges,
         "equivariant": not missing_projected_edges and not phantom_abstract_edges,
         "preserves_steps": not missing_projected_edges,
         "reflects_steps": not phantom_abstract_edges,
@@ -135,7 +136,233 @@ def dynamic_presentation_equivariance_facts(
     }
 
 
-def viable_trajectory_count_facts(
+def dynamic_presentation_equivariance_facts(
+    model: FiniteRelationalModel,
+    *,
+    transition: str,
+    presentation: str,
+    abstract_transition: str,
+) -> dict[str, object]:
+    """Compatibility alias for edge-projection exactness.
+
+    The historical audit name overstated the semantics. Use
+    `dynamic_edge_projection_exactness_facts` for new code and pair it with
+    step/path lifting when process coherence matters.
+    """
+
+    return dynamic_edge_projection_exactness_facts(
+        model,
+        transition=transition,
+        presentation=presentation,
+        abstract_transition=abstract_transition,
+    )
+
+
+def dynamic_step_lifting_facts(
+    model: FiniteRelationalModel,
+    *,
+    transition: str,
+    presentation: str,
+    abstract_transition: str,
+) -> dict[str, object]:
+    """Check representative-wise one-step lifting for abstract dynamics."""
+
+    context = _dynamic_projection_context(
+        model,
+        transition=transition,
+        presentation=presentation,
+        abstract_transition=abstract_transition,
+    )
+    states = model.domain(context["state_domain"])
+    exact_edges = context["exact_edges"]
+    abstract_edges = context["abstract_edges"]
+    presentation_map = context["presentation_map"]
+    adjacency: dict[str, list[str]] = defaultdict(list)
+    for source, target in sorted(exact_edges):
+        adjacency[source].append(target)
+
+    failures = []
+    for state in states:
+        source_label = presentation_map[state]
+        for abstract_source, abstract_target in sorted(abstract_edges):
+            if abstract_source != source_label:
+                continue
+            if not any(presentation_map[target] == abstract_target for target in adjacency[state]):
+                failures.append(
+                    {
+                        "state": state,
+                        "source_label": source_label,
+                        "abstract_target": abstract_target,
+                    }
+                )
+
+    return {
+        "step_lifts": not failures,
+        "transition": transition,
+        "presentation": presentation,
+        "abstract_transition": abstract_transition,
+        "failure_count": len(failures),
+        "failures": failures,
+    }
+
+
+def dynamic_path_lifting_facts(
+    model: FiniteRelationalModel,
+    *,
+    transition: str,
+    presentation: str,
+    abstract_transition: str,
+    horizon: int,
+) -> dict[str, object]:
+    """Check coherent finite path lifting through a declared horizon."""
+
+    if horizon < 0:
+        raise SchemaError(f"dynamic path lifting horizon must be nonnegative: {horizon}")
+    context = _dynamic_projection_context(
+        model,
+        transition=transition,
+        presentation=presentation,
+        abstract_transition=abstract_transition,
+    )
+    states = model.domain(context["state_domain"])
+    exact_edges = context["exact_edges"]
+    abstract_edges = context["abstract_edges"]
+    presentation_map = context["presentation_map"]
+    labels = sorted(model.domain(context["abstract_domain"]))
+
+    exact_adjacency: dict[str, list[str]] = defaultdict(list)
+    for source, target in sorted(exact_edges):
+        exact_adjacency[source].append(target)
+    abstract_adjacency: dict[str, list[str]] = defaultdict(list)
+    for source, target in sorted(abstract_edges):
+        abstract_adjacency[source].append(target)
+
+    failures = []
+    checked_path_count = 0
+    for exact_start in states:
+        start_label = presentation_map[exact_start]
+        for abstract_path in _abstract_paths_from(start_label, abstract_adjacency, horizon):
+            checked_path_count += 1
+            if not _abstract_path_lifts_from(
+                exact_start,
+                abstract_path,
+                exact_adjacency,
+                presentation_map,
+            ):
+                failures.append(
+                    {
+                        "exact_start": exact_start,
+                        "abstract_path": list(abstract_path),
+                        "path_length": len(abstract_path) - 1,
+                    }
+                )
+
+    return {
+        "path_lifts": not failures,
+        "transition": transition,
+        "presentation": presentation,
+        "abstract_transition": abstract_transition,
+        "horizon": horizon,
+        "abstract_label_count": len(labels),
+        "checked_path_count": checked_path_count,
+        "failure_count": len(failures),
+        "failures": failures,
+    }
+
+
+def _dynamic_projection_context(
+    model: FiniteRelationalModel,
+    *,
+    transition: str,
+    presentation: str,
+    abstract_transition: str,
+) -> dict[str, object]:
+    exact_edges = binary_relation(model, transition)
+    abstract_edges = binary_relation(model, abstract_transition)
+    transition_relation = model.relations[transition]
+    abstract_relation = model.relations[abstract_transition]
+    if transition_relation.domains[0] != transition_relation.domains[1]:
+        raise SchemaError(
+            "dynamic projection requires a transition over one domain: "
+            f"{transition_relation.domains}"
+        )
+    if abstract_relation.domains[0] != abstract_relation.domains[1]:
+        raise SchemaError(
+            "dynamic projection requires an abstract transition over one domain: "
+            f"{abstract_relation.domains}"
+        )
+    function = model.functions[presentation]
+    if function.codomain is not None and abstract_relation.domains[0] != function.codomain:
+        raise SchemaError(
+            "dynamic projection abstract transition domain must match "
+            f"presentation codomain: {abstract_relation.domains[0]} != {function.codomain}"
+        )
+    return {
+        "exact_edges": exact_edges,
+        "abstract_edges": abstract_edges,
+        "presentation_map": _total_function_mapping(
+            model,
+            presentation,
+            domain=transition_relation.domains[0],
+        ),
+        "state_domain": transition_relation.domains[0],
+        "abstract_domain": abstract_relation.domains[0],
+    }
+
+
+def _abstract_paths_from(
+    start: str,
+    adjacency: dict[str, list[str]],
+    horizon: int,
+) -> list[tuple[str, ...]]:
+    paths = [(start,)]
+    frontier = [(start,)]
+    for _step in range(horizon):
+        next_frontier = []
+        for path in frontier:
+            for target in adjacency[path[-1]]:
+                extended = (*path, target)
+                paths.append(extended)
+                next_frontier.append(extended)
+        frontier = next_frontier
+    return paths
+
+
+def _abstract_path_lifts_from(
+    exact_start: str,
+    abstract_path: tuple[str, ...],
+    exact_adjacency: dict[str, list[str]],
+    presentation_map: dict[str, str],
+) -> bool:
+    current = {exact_start}
+    for abstract_label in abstract_path[1:]:
+        next_states = {
+            target
+            for state in current
+            for target in exact_adjacency[state]
+            if presentation_map[target] == abstract_label
+        }
+        if not next_states:
+            return False
+        current = next_states
+    return True
+
+
+def _viability_kernel(edges: set[Pair], safe: set[str]) -> set[str]:
+    current = set(safe)
+    changed = True
+    while changed:
+        next_current = {
+            state
+            for state in current
+            if any(source == state and target in current for source, target in edges)
+        }
+        changed = next_current != current
+        current = next_current
+    return current
+
+
+def safe_prefix_count_facts(
     model: FiniteRelationalModel,
     *,
     transition: str,
@@ -145,10 +372,10 @@ def viable_trajectory_count_facts(
 ) -> dict[str, object]:
     """Count finite safe transition words up to a declared horizon.
 
-    A word of horizon n is a state sequence with n transition edges. Every
-    state in the sequence must satisfy the declared safety predicate. If a
-    start predicate is supplied, horizon-zero words are restricted to that
-    predicate; otherwise all safe states may start a word.
+    A prefix of horizon n is a state sequence with n transition edges. Every
+    state in the sequence must satisfy the declared safety predicate. If a start
+    predicate is supplied, horizon-zero prefixes are restricted to that
+    predicate; otherwise all safe states may start a prefix.
     """
 
     if horizon < 0:
@@ -198,6 +425,7 @@ def viable_trajectory_count_facts(
         "safety": safety,
         "start_predicate": start_predicate,
         "horizon": horizon,
+        "count_kind": "safe_prefix",
         "safe_state_count": len(safe),
         "start_state_count": len(starts),
         "safe_start_state_count": len(starts & safe),
@@ -205,6 +433,86 @@ def viable_trajectory_count_facts(
         "count_profile": count_profile,
         "final_count": count_profile[-1],
         "nonempty_at_horizon": count_profile[-1] > 0,
+    }
+
+
+def viable_trajectory_count_facts(
+    model: FiniteRelationalModel,
+    *,
+    transition: str,
+    safety: str,
+    horizon: int,
+    start_predicate: str | None = None,
+) -> dict[str, object]:
+    """Compatibility alias for safe-prefix counts.
+
+    The historical name is retained for fixtures. New code should use
+    `safe_prefix_count_facts` unless it also requires extendability.
+    """
+
+    return safe_prefix_count_facts(
+        model,
+        transition=transition,
+        safety=safety,
+        horizon=horizon,
+        start_predicate=start_predicate,
+    )
+
+
+def extendable_safe_prefix_count_facts(
+    model: FiniteRelationalModel,
+    *,
+    transition: str,
+    safety: str,
+    horizon: int,
+    start_predicate: str | None = None,
+) -> dict[str, object]:
+    """Count safe prefixes whose endpoint remains indefinitely viable."""
+
+    prefix = safe_prefix_count_facts(
+        model,
+        transition=transition,
+        safety=safety,
+        horizon=horizon,
+        start_predicate=start_predicate,
+    )
+    edges = binary_relation(model, transition)
+    transition_relation = model.relations[transition]
+    domain = transition_relation.domains[0]
+    states = set(model.domain(domain))
+    safe = set(model.predicate_members(safety))
+    starts = (
+        states
+        if start_predicate is None
+        else set(model.predicate_members(start_predicate))
+    )
+    kernel = _viability_kernel(edges, safe)
+    adjacency: dict[str, list[str]] = defaultdict(list)
+    for source, target in sorted(edges):
+        adjacency[source].append(target)
+
+    current = {state: 1 for state in sorted(starts & safe)}
+    extendable_profile = [sum(count for state, count in current.items() if state in kernel)]
+    for _step in range(horizon):
+        next_counts: dict[str, int] = defaultdict(int)
+        for source, count in current.items():
+            for target in adjacency[source]:
+                if target in safe:
+                    next_counts[target] += count
+        current = dict(next_counts)
+        extendable_profile.append(
+            sum(count for state, count in current.items() if state in kernel)
+        )
+
+    return {
+        **prefix,
+        "count_kind": "extendable_safe_prefix",
+        "viability_kernel": sorted(kernel),
+        "viability_kernel_size": len(kernel),
+        "safe_prefix_count_profile": prefix["count_profile"],
+        "count_profile": extendable_profile,
+        "final_count": extendable_profile[-1],
+        "nonempty_at_horizon": extendable_profile[-1] > 0,
     }
 
 

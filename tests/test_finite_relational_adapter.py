@@ -335,6 +335,91 @@ def test_dynamic_presentation_equivariance_rejects_missing_and_phantom_edges() -
     assert result["observed"]["phantom_abstract_edges"] == [("L", "L")]
 
 
+def test_edge_projection_exactness_does_not_imply_path_lifting() -> None:
+    model = load_model(
+        {
+            "model_id": "inline_edge_exact_but_path_splices_representatives",
+            "domains": {
+                "state": ["a", "b", "c", "d"],
+                "label": ["A", "M", "D"],
+            },
+            "relations": {
+                "next": {
+                    "domains": ["state", "state"],
+                    "tuples": [["a", "b"], ["c", "d"]],
+                },
+                "abstract_next": {
+                    "domains": ["label", "label"],
+                    "tuples": [["A", "M"], ["M", "D"]],
+                },
+            },
+            "functions": {
+                "presentation": {
+                    "domain": "state",
+                    "codomain": "label",
+                    "mapping": {"a": "A", "b": "M", "c": "M", "d": "D"},
+                },
+            },
+            "audits": [
+                {
+                    "id": "global_edge_image_is_exact",
+                    "kind": "dynamic_edge_projection_exactness",
+                    "transition": "next",
+                    "presentation": "presentation",
+                    "abstract_transition": "abstract_next",
+                    "expect": "edge_exact",
+                },
+                {
+                    "id": "merged_representative_step_does_not_lift",
+                    "kind": "dynamic_step_lifting",
+                    "transition": "next",
+                    "presentation": "presentation",
+                    "abstract_transition": "abstract_next",
+                    "expect": "not_step_lifts",
+                },
+                {
+                    "id": "abstract_path_splices_incompatible_representatives",
+                    "kind": "dynamic_path_lifting",
+                    "transition": "next",
+                    "presentation": "presentation",
+                    "abstract_transition": "abstract_next",
+                    "horizon": 2,
+                    "expect": "not_path_lifts",
+                },
+            ],
+            "provenance": {
+                "declared_before_run": True,
+                "source": "inline test",
+                "claim_boundary": "edge exactness versus path lifting unit test",
+            },
+        }
+    )
+    results = {result.audit_id: result.as_dict() for result in run_declared_audits(model)}
+
+    edge = results["global_edge_image_is_exact"]
+    step = results["merged_representative_step_does_not_lift"]
+    path = results["abstract_path_splices_incompatible_representatives"]
+
+    assert edge["passed"] is True
+    assert edge["finding"] == "edge_exact"
+    assert edge["observed"]["projected_exact_edges"] == [("A", "M"), ("M", "D")]
+    assert edge["observed"]["phantom_abstract_edges"] == []
+
+    assert step["passed"] is True
+    assert step["finding"] == "not_step_lifts"
+    assert step["observed"]["failures"] == [
+        {"state": "b", "source_label": "M", "abstract_target": "D"}
+    ]
+
+    assert path["passed"] is True
+    assert path["finding"] == "not_path_lifts"
+    assert {
+        "exact_start": "a",
+        "abstract_path": ["A", "M", "D"],
+        "path_length": 2,
+    } in path["observed"]["failures"]
+
+
 def test_viable_trajectory_count_counts_safe_cycle_words() -> None:
     model = load_model(
         {
@@ -419,6 +504,68 @@ def test_viable_trajectory_count_rejects_wrong_branching_profile() -> None:
     assert result["observed"]["final_count"] == 8
     assert result["observed"]["profile_matches"] is False
     assert result["observed"]["final_count_matches"] is False
+
+
+def test_safe_prefix_count_can_overstate_extendable_continuation() -> None:
+    model = load_model(
+        {
+            "model_id": "inline_dead_end_branching_prefix_count",
+            "domains": {"state": ["start", "dead_a", "dead_b"]},
+            "predicates": {
+                "safe": ["start", "dead_a", "dead_b"],
+                "start_only": ["start"],
+            },
+            "relations": {
+                "next": {
+                    "domains": ["state", "state"],
+                    "tuples": [["start", "dead_a"], ["start", "dead_b"]],
+                }
+            },
+            "audits": [
+                {
+                    "id": "dead_end_branching_has_safe_prefixes",
+                    "kind": "safe_prefix_count",
+                    "transition": "next",
+                    "safety": "safe",
+                    "start_predicate": "start_only",
+                    "horizon": 2,
+                    "expected_count_profile": [1, 2, 0],
+                    "expected_final_count": 0,
+                    "expect": "count_ok",
+                },
+                {
+                    "id": "dead_end_branching_has_no_extendable_prefixes",
+                    "kind": "extendable_safe_prefix_count",
+                    "transition": "next",
+                    "safety": "safe",
+                    "start_predicate": "start_only",
+                    "horizon": 2,
+                    "expected_count_profile": [0, 0, 0],
+                    "expected_final_count": 0,
+                    "expect": "count_ok",
+                },
+            ],
+            "provenance": {
+                "declared_before_run": True,
+                "source": "inline test",
+                "claim_boundary": "safe prefix versus extendable prefix unit test",
+            },
+        }
+    )
+    results = {result.audit_id: result.as_dict() for result in run_declared_audits(model)}
+
+    safe_prefix = results["dead_end_branching_has_safe_prefixes"]
+    extendable = results["dead_end_branching_has_no_extendable_prefixes"]
+
+    assert safe_prefix["passed"] is True
+    assert safe_prefix["observed"]["count_kind"] == "safe_prefix"
+    assert safe_prefix["observed"]["count_profile"] == [1, 2, 0]
+
+    assert extendable["passed"] is True
+    assert extendable["observed"]["count_kind"] == "extendable_safe_prefix"
+    assert extendable["observed"]["safe_prefix_count_profile"] == [1, 2, 0]
+    assert extendable["observed"]["count_profile"] == [0, 0, 0]
+    assert extendable["observed"]["viability_kernel"] == []
 
 
 def test_viable_trajectory_count_comparison_detects_phantom_count_inflation() -> None:

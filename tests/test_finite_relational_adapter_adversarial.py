@@ -24,8 +24,10 @@ REQUIRED_CASE_IDS = {
     "generated_decorative_target_scramble_control",
     "generated_dynamic_equivariance",
     "generated_dynamic_non_equivariance",
+    "generated_edge_exact_path_lifting_failure",
     "generated_viable_trajectory_count_cycle",
     "generated_viable_trajectory_count_branching",
+    "generated_dead_end_safe_prefix",
     "generated_viable_count_inflation",
     "generated_viable_count_hiding",
     "generated_stale_reflected_fact_closure",
@@ -76,11 +78,20 @@ def test_generated_adversarial_cases_cover_adapter_failure_modes() -> None:
     assert by_id["generated_dynamic_non_equivariance"].summary()["findings"] == [
         "not_equivariant"
     ]
+    assert by_id["generated_edge_exact_path_lifting_failure"].summary()["findings"] == [
+        "edge_exact",
+        "not_step_lifts",
+        "not_path_lifts",
+    ]
     assert by_id["generated_viable_trajectory_count_cycle"].summary()["findings"] == [
         "count_ok"
     ]
     assert by_id["generated_viable_trajectory_count_branching"].summary()["findings"] == [
         "count_ok"
+    ]
+    assert by_id["generated_dead_end_safe_prefix"].summary()["findings"] == [
+        "count_ok",
+        "count_ok",
     ]
     assert by_id["generated_viable_count_inflation"].summary()["findings"] == [
         "distorted"
@@ -271,6 +282,36 @@ def test_generated_dynamic_equivariance_cases_check_projected_edges() -> None:
     assert broken["observed"]["phantom_abstract_edges"] == [("L", "L")]
 
 
+def test_generated_edge_exact_case_can_fail_step_and_path_lifting() -> None:
+    case = {
+        case.case_id: case for case in generate_adversarial_cases()
+    }["generated_edge_exact_path_lifting_failure"]
+    results = {result.audit_id: result.as_dict() for result in case.audit_results}
+
+    edge = results["generated_global_edge_image_is_exact"]
+    step = results["generated_step_lifting_fails_inside_merged_fiber"]
+    path = results["generated_path_lifting_detects_spliced_abstract_history"]
+
+    assert edge["passed"] is True
+    assert edge["finding"] == "edge_exact"
+    assert edge["observed"]["edge_projection_exact"] is True
+    assert edge["observed"]["projected_exact_edges"] == [("A", "M"), ("M", "D")]
+
+    assert step["passed"] is True
+    assert step["finding"] == "not_step_lifts"
+    assert step["observed"]["failures"] == [
+        {"state": "b", "source_label": "M", "abstract_target": "D"}
+    ]
+
+    assert path["passed"] is True
+    assert path["finding"] == "not_path_lifts"
+    assert {
+        "exact_start": "a",
+        "abstract_path": ["A", "M", "D"],
+        "path_length": 2,
+    } in path["observed"]["failures"]
+
+
 def test_generated_viable_trajectory_count_cases_expose_growth_profiles() -> None:
     cases = {case.case_id: case for case in generate_adversarial_cases()}
     cycle = cases["generated_viable_trajectory_count_cycle"].audit_results[0].as_dict()
@@ -287,6 +328,26 @@ def test_generated_viable_trajectory_count_cases_expose_growth_profiles() -> Non
     assert branching["finding"] == "count_ok"
     assert branching["observed"]["count_profile"] == [2, 4, 8, 16]
     assert branching["observed"]["final_count"] == 16
+
+
+def test_generated_dead_end_safe_prefix_case_separates_extendable_counts() -> None:
+    case = {
+        case.case_id: case for case in generate_adversarial_cases()
+    }["generated_dead_end_safe_prefix"]
+    results = {result.audit_id: result.as_dict() for result in case.audit_results}
+
+    safe_prefix = results["generated_dead_end_branching_safe_prefixes"]
+    extendable = results["generated_dead_end_branching_not_extendable"]
+
+    assert safe_prefix["passed"] is True
+    assert safe_prefix["observed"]["count_kind"] == "safe_prefix"
+    assert safe_prefix["observed"]["count_profile"] == [1, 2, 0]
+
+    assert extendable["passed"] is True
+    assert extendable["observed"]["count_kind"] == "extendable_safe_prefix"
+    assert extendable["observed"]["safe_prefix_count_profile"] == [1, 2, 0]
+    assert extendable["observed"]["count_profile"] == [0, 0, 0]
+    assert extendable["observed"]["viability_kernel"] == []
 
 
 def test_generated_viable_count_comparison_cases_detect_inflation_and_hiding() -> None:
