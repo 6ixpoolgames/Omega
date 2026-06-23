@@ -14,6 +14,7 @@ from omega.adapters.finite_relational.facts import (
     presentation_violations,
     presentation_fact_closure_facts,
     reachable_pairs,
+    target_scramble_sensitivity_facts,
     ternary_relation,
 )
 from omega.adapters.finite_relational.model import FiniteRelationalModel, SchemaError
@@ -63,6 +64,8 @@ def run_audit(model: FiniteRelationalModel, audit: dict[str, Any]) -> AuditResul
         return _bounded_recovery(model, audit)
     if kind == "presentation_fact_closure":
         return _presentation_fact_closure(model, audit)
+    if kind == "target_scramble_sensitivity":
+        return _target_scramble_sensitivity(model, audit)
     raise SchemaError(f"unknown audit kind: {kind}")
 
 
@@ -265,6 +268,31 @@ def _presentation_fact_closure(
         observed,
         "closure_ok",
         "closure_ok",
+    )
+
+
+def _target_scramble_sensitivity(
+    model: FiniteRelationalModel,
+    audit: dict[str, Any],
+) -> AuditResult:
+    decoders_raw = audit.get("decoders", ())
+    if not isinstance(decoders_raw, list):
+        raise SchemaError(f"audit {audit.get('id', '<unnamed>')} decoders must be a list")
+    observed = target_scramble_sensitivity_facts(
+        model,
+        observation=_role(model, audit, "observation"),
+        target_predicate=_role(model, audit, "target_predicate"),
+        scrambled_predicate=_role(model, audit, "scrambled_predicate"),
+        decoders=tuple(str(decoder) for decoder in decoders_raw),
+        true_label=str(audit.get("true_label", "true")),
+        false_label=str(audit.get("false_label", "false")),
+    )
+    return _result(
+        audit,
+        "target_scramble_sensitivity",
+        observed,
+        "sensitive",
+        "sensitive",
     )
 
 

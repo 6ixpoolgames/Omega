@@ -105,6 +105,7 @@ from omega.adapters.finite_relational.facts import (
     predicate_is_constant,
     predicate_respects_presentation,
     presentation_fact_closure_facts,
+    target_scramble_sensitivity_facts,
 )
 from omega.adapters.finite_relational.grid_obstacle_experiment import (
     GridObstacleCase,
@@ -255,5 +256,6 @@ __all__ = [
     "policy_hit_probability_within_horizon",
     "policy_hit_status_closure_surface",
     "support_summary_for_policy_kernel",
+    "target_scramble_sensitivity_facts",
     "validate_action_kernel",
 ]

@@ -123,6 +123,113 @@ def test_bounded_recovery_fixture_rejects_entropy_matched_ambiguous_observation(
     assert result["observed"]["decoder_count"] == 4
 
 
+def test_target_scramble_sensitivity_compares_declared_recovery_surface() -> None:
+    model = load_model(
+        {
+            "model_id": "inline_target_scramble_sensitivity",
+            "domains": {
+                "state": ["left", "right"],
+                "observation": ["red", "blue"],
+                "truth": ["false", "true"],
+            },
+            "predicates": {
+                "left_target": ["left"],
+                "right_scramble": ["right"],
+            },
+            "functions": {
+                "color_observation": {
+                    "domain": "state",
+                    "codomain": "observation",
+                    "mapping": {"left": "red", "right": "blue"},
+                },
+                "left_decoder": {
+                    "domain": "observation",
+                    "codomain": "truth",
+                    "mapping": {"red": "true", "blue": "false"},
+                },
+            },
+            "audits": [
+                {
+                    "id": "declared_target_changes_under_scramble",
+                    "kind": "target_scramble_sensitivity",
+                    "observation": "color_observation",
+                    "target_predicate": "left_target",
+                    "scrambled_predicate": "right_scramble",
+                    "decoders": ["left_decoder"],
+                    "expect": "sensitive",
+                }
+            ],
+            "provenance": {
+                "declared_before_run": True,
+                "source": "inline test",
+                "claim_boundary": "target scramble sensitivity unit test",
+            },
+        }
+    )
+    [result] = [result.as_dict() for result in run_declared_audits(model)]
+
+    assert result["passed"] is True
+    assert result["finding"] == "sensitive"
+    assert result["observed"]["recoverability_changed"] is True
+    assert result["observed"]["target_recoverable"] is True
+    assert result["observed"]["scrambled_recoverable"] is False
+    assert result["observed"]["target_successful_decoders"] == ["left_decoder"]
+    assert result["observed"]["scrambled_successful_decoders"] == []
+
+
+def test_target_scramble_sensitivity_can_fail_when_observation_is_decorative() -> None:
+    model = load_model(
+        {
+            "model_id": "inline_target_scramble_decorative_control",
+            "domains": {
+                "state": ["left", "right"],
+                "observation": ["merged"],
+                "truth": ["false", "true"],
+            },
+            "predicates": {
+                "left_target": ["left"],
+                "right_scramble": ["right"],
+            },
+            "functions": {
+                "constant_observation": {
+                    "domain": "state",
+                    "codomain": "observation",
+                    "mapping": {"left": "merged", "right": "merged"},
+                },
+                "always_false_decoder": {
+                    "domain": "observation",
+                    "codomain": "truth",
+                    "mapping": {"merged": "false"},
+                },
+            },
+            "audits": [
+                {
+                    "id": "declared_target_unchanged_under_scramble",
+                    "kind": "target_scramble_sensitivity",
+                    "observation": "constant_observation",
+                    "target_predicate": "left_target",
+                    "scrambled_predicate": "right_scramble",
+                    "decoders": ["always_false_decoder"],
+                    "expect": "not_sensitive",
+                }
+            ],
+            "provenance": {
+                "declared_before_run": True,
+                "source": "inline test",
+                "claim_boundary": "target scramble decorative-control unit test",
+            },
+        }
+    )
+    [result] = [result.as_dict() for result in run_declared_audits(model)]
+
+    assert result["passed"] is True
+    assert result["finding"] == "not_sensitive"
+    assert result["observed"]["recoverability_changed"] is False
+    assert result["observed"]["successful_decoders_changed"] is False
+    assert result["observed"]["target_recoverable"] is False
+    assert result["observed"]["scrambled_recoverable"] is False
+
+
 def test_presentation_fact_closure_audit_checks_visible_pairs_and_targets() -> None:
     model = load_model(
         {

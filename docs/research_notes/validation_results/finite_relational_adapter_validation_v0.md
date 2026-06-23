@@ -178,7 +178,50 @@ Run root:
   facts, surplus common facts, and nonconstant surplus target predicates. This
   exposes whether a closure case is merely certifying supplied seed facts or
   forcing additional nonconstant structure under the declared presentations.
+- Target-scramble sensitivity now compares bounded-recovery behavior for a
+  declared target against a supplied scrambled/erased target under the same
+  observation and decoder family. The generated suite includes both a
+  `sensitive` case and a decorative-target `not_sensitive` control.
 - `carrier_transfer_pass` and `carrier_transfer_fail_missing_return` exercise
   the adapter-level transfer contract. The negative case preserves endpoint
   correspondence but rejects transfer because the target carrier loses return
   structure.
+
+## Addendum: Target Scramble Sensitivity
+
+Run roots:
+
+```text
+.tmp/finite_relational_adapter_smoke_scramble_sensitivity/20260623_210643
+.tmp/finite_relational_adapter_adversarial_scramble_sensitivity/20260623_210650
+```
+
+Commands:
+
+```powershell
+./.venv/Scripts/python.exe -m pytest `
+  tests/test_finite_relational_adapter.py `
+  tests/test_finite_relational_adapter_adversarial.py `
+  -q --basetemp .tmp/pytest-scramble-sensitivity -p no:cacheprovider
+
+./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_smoke `
+  --out-root .tmp/finite_relational_adapter_smoke_scramble_sensitivity
+
+./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_adversarial `
+  --out-root .tmp/finite_relational_adapter_adversarial_scramble_sensitivity
+```
+
+Result:
+
+```text
+focused adapter/adversarial pytest: 31 passed
+adapter smoke: PASS, 15 fixtures, focused pytest 87 passed
+generated/adversarial validation: PASS, 19 cases
+```
+
+New generated cases:
+
+| Case | Finding | Meaning |
+| --- | --- | --- |
+| generated_target_scramble_sensitivity | `sensitive` | Scrambling the declared target changes recoverability and the successful decoder surface. |
+| generated_decorative_target_scramble_control | `not_sensitive` | Declared target and scrambled target are both unrecoverable under a constant observation. |

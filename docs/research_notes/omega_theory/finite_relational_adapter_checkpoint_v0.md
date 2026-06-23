@@ -37,6 +37,8 @@ hidden_reachability_loss;
 nonfactorization;
 carrier_certificate;
 carrier_transfer;
+bounded_recovery;
+target_scramble_sensitivity;
 presentation_fact_closure.
 ```
 
@@ -71,6 +73,9 @@ generated transport closure checks a transferred endpoint-role fact without
 treating transfer as identity;
 generated failed-transport closure shows role-label preservation can survive
 even when the transfer contract rejects carrier transfer.
+target-scramble sensitivity compares a declared target against a scrambled
+target under the same observation and decoder family, with a decorative-target
+control where both targets remain unrecoverable.
 the gridworld obstacle source-generator characterization now checks reflected versus
 stale source-reach presentations over the after-reachability fact.
 the stochastic continuation layer now checks reflected versus stale hit-status

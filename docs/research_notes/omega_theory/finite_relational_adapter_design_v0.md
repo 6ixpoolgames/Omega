@@ -321,6 +321,13 @@ bounded_recovery:
   against a declared target predicate; recovery means some decoder in the
   bounded family exactly recovers target membership from the observation.
 
+target_scramble_sensitivity:
+  a declared target predicate and a supplied scrambled/erased target predicate
+  are compared under the same observation and decoder family. The audit is
+  sensitive when exact recoverability or the successful decoder surface changes.
+  This is a provenance gate against decorative targets; it does not prove that
+  the target is empirically correct or value-bearing.
+
 presentation_fact_closure:
   a declared presentation family is checked for common visible pairs and
   common target predicates. The audit can require selected pairs or targets to

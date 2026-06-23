@@ -382,6 +382,61 @@ def bounded_recovery_facts(
     }
 
 
+def target_scramble_sensitivity_facts(
+    model: FiniteRelationalModel,
+    *,
+    observation: str,
+    target_predicate: str,
+    scrambled_predicate: str,
+    decoders: tuple[str, ...],
+    true_label: str = "true",
+    false_label: str = "false",
+) -> dict[str, object]:
+    """Check whether scrambling a target changes declared recovery facts.
+
+    This is an adapter provenance gate, not a semantic target validator. It
+    asks whether the supplied target has operational bite relative to a
+    declared observation and decoder family. A target is sensitive here when
+    replacing it with the scrambled predicate changes exact recoverability or
+    the successful decoder surface.
+    """
+
+    target = bounded_recovery_facts(
+        model,
+        observation=observation,
+        target_predicate=target_predicate,
+        decoders=decoders,
+        true_label=true_label,
+        false_label=false_label,
+    )
+    scrambled = bounded_recovery_facts(
+        model,
+        observation=observation,
+        target_predicate=scrambled_predicate,
+        decoders=decoders,
+        true_label=true_label,
+        false_label=false_label,
+    )
+    recoverability_changed = bool(target["recoverable"]) != bool(scrambled["recoverable"])
+    successful_decoders_changed = target["successful_decoders"] != scrambled["successful_decoders"]
+    sensitive = recoverability_changed or successful_decoders_changed
+    return {
+        "sensitive": sensitive,
+        "recoverability_changed": recoverability_changed,
+        "successful_decoders_changed": successful_decoders_changed,
+        "observation": observation,
+        "target_predicate": target_predicate,
+        "scrambled_predicate": scrambled_predicate,
+        "decoders": list(decoders),
+        "target_recoverable": target["recoverable"],
+        "scrambled_recoverable": scrambled["recoverable"],
+        "target_successful_decoders": target["successful_decoders"],
+        "scrambled_successful_decoders": scrambled["successful_decoders"],
+        "target": target,
+        "scrambled": scrambled,
+    }
+
+
 def _total_function_mapping(
     model: FiniteRelationalModel,
     name: str,

@@ -20,6 +20,8 @@ REQUIRED_CASE_IDS = {
     "generated_reachability_fact_closure",
     "generated_viability_fact_closure",
     "generated_recovery_fact_closure",
+    "generated_target_scramble_sensitivity",
+    "generated_decorative_target_scramble_control",
     "generated_stale_reflected_fact_closure",
     "generated_multi_presentation_fact_closure",
     "generated_crosscutting_presentation_closure",
@@ -57,6 +59,12 @@ def test_generated_adversarial_cases_cover_adapter_failure_modes() -> None:
         "not_recoverable",
         "closure_ok",
         "closure_ok",
+    ]
+    assert by_id["generated_target_scramble_sensitivity"].summary()["findings"] == [
+        "sensitive"
+    ]
+    assert by_id["generated_decorative_target_scramble_control"].summary()["findings"] == [
+        "not_sensitive"
     ]
     assert by_id["generated_stale_reflected_fact_closure"].summary()["findings"] == [
         "closure_ok",
@@ -198,6 +206,28 @@ def test_generated_recovery_fact_closure_case_checks_bounded_recovery_gap() -> N
     assert constant["finding"] == "not_recoverable"
     assert constant["observed"]["successful_decoders"] == []
     assert constant["observed"]["ambiguous_observation_labels"] == ["merged"]
+
+
+def test_generated_target_scramble_sensitivity_cases_gate_decorative_targets() -> None:
+    cases = {case.case_id: case for case in generate_adversarial_cases()}
+    sensitive = cases["generated_target_scramble_sensitivity"].audit_results[0].as_dict()
+    decorative = cases["generated_decorative_target_scramble_control"].audit_results[
+        0
+    ].as_dict()
+
+    assert sensitive["passed"] is True
+    assert sensitive["finding"] == "sensitive"
+    assert sensitive["observed"]["recoverability_changed"] is True
+    assert sensitive["observed"]["successful_decoders_changed"] is True
+    assert sensitive["observed"]["target_recoverable"] is True
+    assert sensitive["observed"]["scrambled_recoverable"] is False
+
+    assert decorative["passed"] is True
+    assert decorative["finding"] == "not_sensitive"
+    assert decorative["observed"]["recoverability_changed"] is False
+    assert decorative["observed"]["successful_decoders_changed"] is False
+    assert decorative["observed"]["target_recoverable"] is False
+    assert decorative["observed"]["scrambled_recoverable"] is False
 
 
 def test_generated_stale_reflected_fact_closure_case_has_time_indexed_intersection() -> None:

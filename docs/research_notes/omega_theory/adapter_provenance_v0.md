@@ -186,6 +186,14 @@ The formal layer can test whether the presentation preserves a declared exact
 target. Adapter provenance explains why that declared exact target should be
 treated as the target of interest rather than an artifact of our setup.
 
+The finite relational adapter now includes a small target-scramble sensitivity
+gate for this purpose. It compares bounded recovery for a declared target
+against bounded recovery for a supplied scrambled or erased target under the
+same observation and decoder family. A positive result means the target has
+operational bite in that declared adapter surface; a negative result is a
+decorative-target warning. It still does not prove that the target is the right
+empirical or ethical target.
+
 ## Non-Claims
 
 Adapter provenance does not prove:

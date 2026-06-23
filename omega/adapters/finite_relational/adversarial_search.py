@@ -61,6 +61,8 @@ def generate_adversarial_cases() -> tuple[GeneratedAdapterCase, ...]:
         _generated_reachability_fact_closure_case(),
         _generated_viability_fact_closure_case(),
         _generated_recovery_fact_closure_case(),
+        _generated_target_scramble_sensitivity_case(),
+        _generated_decorative_target_scramble_control_case(),
         _generated_stale_reflected_fact_closure_case(),
         _generated_multi_presentation_fact_closure_case(),
         _generated_crosscutting_presentation_closure_case(),
@@ -523,6 +525,111 @@ def _generated_recovery_fact_closure_case() -> GeneratedAdapterCase:
         ),
     }
     return _validated_ir_case("generated_recovery_fact_closure", model)
+
+
+def _generated_target_scramble_sensitivity_case() -> GeneratedAdapterCase:
+    model = {
+        "model_id": "generated_target_scramble_sensitivity",
+        "schema_version": "0.1.0",
+        "carrier": ["left", "right"],
+        "domains": {
+            "state": ["left", "right"],
+            "observation": ["red", "blue"],
+            "truth": ["false", "true"],
+        },
+        "predicates": {
+            "left_target": {"domain": "state", "members": ["left"]},
+            "right_scramble": {"domain": "state", "members": ["right"]},
+        },
+        "functions": {
+            "color_observation": {
+                "domain": "state",
+                "codomain": "observation",
+                "mapping": {
+                    "left": "red",
+                    "right": "blue",
+                },
+            },
+            "left_decoder": {
+                "domain": "observation",
+                "codomain": "truth",
+                "mapping": {
+                    "red": "true",
+                    "blue": "false",
+                },
+            },
+        },
+        "audits": [
+            {
+                "id": "generated_declared_target_changes_under_scramble",
+                "kind": "target_scramble_sensitivity",
+                "observation": "color_observation",
+                "target_predicate": "left_target",
+                "scrambled_predicate": "right_scramble",
+                "decoders": ["left_decoder"],
+                "expect": "sensitive",
+            }
+        ],
+        "provenance": _generated_provenance(
+            "Generated finite relational case: the declared target has "
+            "operational recovery bite because replacing it with a scrambled "
+            "target changes exact recoverability under the declared observation "
+            "and decoder family."
+        ),
+    }
+    return _validated_ir_case("generated_target_scramble_sensitivity", model)
+
+
+def _generated_decorative_target_scramble_control_case() -> GeneratedAdapterCase:
+    model = {
+        "model_id": "generated_decorative_target_scramble_control",
+        "schema_version": "0.1.0",
+        "carrier": ["left", "right"],
+        "domains": {
+            "state": ["left", "right"],
+            "observation": ["merged"],
+            "truth": ["false", "true"],
+        },
+        "predicates": {
+            "left_target": {"domain": "state", "members": ["left"]},
+            "right_scramble": {"domain": "state", "members": ["right"]},
+        },
+        "functions": {
+            "constant_observation": {
+                "domain": "state",
+                "codomain": "observation",
+                "mapping": {
+                    "left": "merged",
+                    "right": "merged",
+                },
+            },
+            "always_false_decoder": {
+                "domain": "observation",
+                "codomain": "truth",
+                "mapping": {
+                    "merged": "false",
+                },
+            },
+        },
+        "audits": [
+            {
+                "id": "generated_decorative_target_unchanged_under_scramble",
+                "kind": "target_scramble_sensitivity",
+                "observation": "constant_observation",
+                "target_predicate": "left_target",
+                "scrambled_predicate": "right_scramble",
+                "decoders": ["always_false_decoder"],
+                "expect": "not_sensitive",
+            }
+        ],
+        "provenance": _generated_provenance(
+            "Generated finite relational control: the declared target and its "
+            "scrambled counterpart are both unrecoverable under a constant "
+            "observation, so the adapter should not treat the target as "
+            "operationally sensitive."
+        ),
+    }
+    return _validated_ir_case("generated_decorative_target_scramble_control", model)
 
 
 def _generated_stale_reflected_fact_closure_case() -> GeneratedAdapterCase:
