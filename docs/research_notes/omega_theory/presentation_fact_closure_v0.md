@@ -330,6 +330,12 @@ gridworld obstacle insertion:
   adding stale source-reach status to the reflected presentation family drops
   after_reachable_from_source from the common target facts and leaves only the
   constant all_states target.
+
+stochastic continuation loss:
+  reflected hit-status preserves the after_high_hit target at a declared
+  horizon and threshold;
+  adding stale hit-status to the reflected presentation family drops
+  after_high_hit from the common target facts and leaves only all_states.
 ```
 
 The next closure work should broaden these finite generated and

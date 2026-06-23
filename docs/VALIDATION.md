@@ -301,8 +301,9 @@ declare a prior or threshold in this first layer.
 
 The stochastic continuation path uses exact rational finite transition kernels
 and finite-horizon hit probabilities. It checks stale-versus-reflected hidden
-hit-probability loss and retains horizon profiles so one selected probability
-does not stand in for the whole continuation surface.
+hit-probability loss, runs a presentation/fact closure audit over reflected
+versus stale hit-status facts, and retains horizon profiles so one selected
+probability does not stand in for the whole continuation surface.
 
 The policy-conditioned path adds finite actions and deterministic policies over
 exact rational transition kernels. It retains generated `facts.json` separately

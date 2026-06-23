@@ -10,6 +10,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from fractions import Fraction
 
+from omega.adapters.finite_relational.audits import run_declared_audits
+from omega.adapters.finite_relational.model import load_model, model_digest
 from omega.adapters.finite_relational.stochastic_recovery import fraction_to_text
 
 
@@ -153,6 +155,98 @@ def hit_profile(
     }
 
 
+def hit_status_closure_summary(
+    states: tuple[str, ...],
+    before: TransitionKernel,
+    after: TransitionKernel,
+    targets: frozenset[str],
+    *,
+    horizon: int,
+    threshold: Fraction,
+) -> dict[str, object]:
+    """Audit stale/reflected hit-status presentations against after-hit status."""
+
+    before_status = _hit_status_by_start(
+        states,
+        before,
+        targets,
+        horizon=horizon,
+        threshold=threshold,
+    )
+    after_status = _hit_status_by_start(
+        states,
+        after,
+        targets,
+        horizon=horizon,
+        threshold=threshold,
+    )
+    after_high_hit = [
+        state for state, status in after_status.items() if status == "high_hit"
+    ]
+    model_raw = {
+        "model_id": "stochastic_continuation_hit_status_closure",
+        "schema_version": "0.1.0",
+        "carrier": list(states),
+        "predicates": {
+            "after_high_hit": after_high_hit,
+            "all_states": list(states),
+        },
+        "functions": {
+            "stale_hit_status": before_status,
+            "reflected_hit_status": after_status,
+        },
+        "audits": [
+            {
+                "id": "reflected_hit_status_preserves_after_high_hit",
+                "kind": "presentation_fact_closure",
+                "presentations": ["reflected_hit_status"],
+                "target_predicates": ["after_high_hit", "all_states"],
+                "expected_common_target_predicates": [
+                    "after_high_hit",
+                    "all_states",
+                ],
+                "expect": "closure_ok",
+            },
+            {
+                "id": "stale_reflected_hit_status_drops_after_high_hit",
+                "kind": "presentation_fact_closure",
+                "presentations": ["stale_hit_status", "reflected_hit_status"],
+                "target_predicates": ["after_high_hit", "all_states"],
+                "expected_common_target_predicates": ["all_states"],
+                "expected_absent_target_predicates": ["after_high_hit"],
+                "expect": "closure_ok",
+            },
+        ],
+        "provenance": {
+            "declared_before_run": True,
+            "source": "omega.adapters.finite_relational.stochastic_continuation_loss",
+            "claim_boundary": (
+                "Synthetic exact-rational stochastic continuation closure check; "
+                "not empirical transition validation, value, agency, or Omega."
+            ),
+            "derivation_rules": [
+                "hit_status=finite_horizon_hit_probability_threshold",
+                "closure_audits=presentation_fact_closure(stale,reflected)",
+            ],
+        },
+    }
+    model = load_model(model_raw)
+    results = tuple(run_declared_audits(model))
+    if not all(result.passed for result in results):
+        failures = [result.as_dict() for result in results if not result.passed]
+        raise AssertionError(f"stochastic hit-status closure audit failed: {failures}")
+
+    return {
+        "threshold": fraction_to_text(threshold),
+        "horizon": horizon,
+        "before_hit_status_by_start": before_status,
+        "after_hit_status_by_start": after_status,
+        "closure_model_digest": model_digest(model),
+        "closure_audit_findings": [result.finding for result in results],
+        "closure_audits": [result.as_dict() for result in results],
+    }
+
+
 def _noisy_line_grid_stale_hidden_hit_loss_family() -> StochasticContinuationFamily:
     states = ("x0", "x1", "x2")
     start = "x0"
@@ -172,6 +266,14 @@ def _noisy_line_grid_stale_hidden_hit_loss_family() -> StochasticContinuationFam
     after_hit = hit_probability_within_horizon(states, after, start, targets, horizon)
     stale_hit = hit_probability_within_horizon(states, before, start, targets, horizon)
     reflected_hit = hit_probability_within_horizon(states, after, start, targets, horizon)
+    closure = hit_status_closure_summary(
+        states,
+        before,
+        after,
+        targets,
+        horizon=horizon,
+        threshold=Fraction(1, 2),
+    )
 
     return StochasticContinuationFamily(
         family_id="noisy_line_grid_stale_hidden_hit_loss",
@@ -189,6 +291,7 @@ def _noisy_line_grid_stale_hidden_hit_loss_family() -> StochasticContinuationFam
             "loss_amount": fraction_to_text(before_hit - after_hit),
             "stale_hides_loss": stale_hit == before_hit and stale_hit > after_hit,
             "reflected_reports_loss": reflected_hit == after_hit and reflected_hit < before_hit,
+            "hit_status_closure": closure,
         },
     )
 
@@ -237,4 +340,29 @@ def _family_as_dict(family: StochasticContinuationFamily) -> dict[str, object]:
         "family_id": family.family_id,
         "description": family.description,
         "metrics": family.metrics,
+    }
+
+
+def _hit_status_by_start(
+    states: tuple[str, ...],
+    kernel: TransitionKernel,
+    targets: frozenset[str],
+    *,
+    horizon: int,
+    threshold: Fraction,
+) -> dict[str, str]:
+    return {
+        state: (
+            "high_hit"
+            if hit_probability_within_horizon(
+                states,
+                kernel,
+                state,
+                targets,
+                horizon,
+            )
+            >= threshold
+            else "low_hit"
+        )
+        for state in states
     }

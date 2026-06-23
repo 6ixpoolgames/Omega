@@ -685,6 +685,8 @@ The current checks cover:
 ```text
 stale abstraction hiding stochastic hit-probability loss;
 reflected abstraction reporting the loss;
+reflected hit-status preserving the after-hit target fact;
+stale/reflected hit-status closure dropping that nonconstant fact;
 one selected hit-probability scalar matching while the horizon profile differs.
 ```
 

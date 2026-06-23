@@ -1,7 +1,7 @@
 {
   "claim_boundary": "Synthetic finite stochastic continuation validation only. This result does not validate MDP policies, empirical transition estimates, value, agency, alignment, or Omega.",
-  "command": ".\\.venv\\Scripts\\python.exe -m omega.validation.finite_relational_stochastic_continuation --out-root .tmp\\finite_relational_stochastic_continuation",
-  "date": "2026-06-19",
+  "command": ".\\.venv\\Scripts\\python.exe -m omega.validation.finite_relational_stochastic_continuation --out-root .tmp\\finite_relational_stochastic_continuation_closure",
+  "date": "2026-06-23",
   "families": [
     {
       "description": "A finite-horizon noisy line-grid perturbation drops hit probability; a stale abstraction reports the old probability, while a reflected abstraction reports the drop.",
@@ -14,7 +14,33 @@
         "reflected_abstraction_hit_probability": "1/10",
         "reflected_reports_loss": true,
         "stale_abstraction_hit_probability": "9/10",
-        "stale_hides_loss": true
+        "stale_hides_loss": true,
+        "hit_status_closure": {
+          "threshold": "1/2",
+          "horizon": 2,
+          "before_hit_status_by_start": {
+            "x0": "high_hit",
+            "x1": "high_hit",
+            "x2": "high_hit"
+          },
+          "after_hit_status_by_start": {
+            "x0": "low_hit",
+            "x1": "low_hit",
+            "x2": "high_hit"
+          },
+          "closure_model_digest": "f4f30014726b443079c55c4ddd5575000c7692f87f81f1e5974b90f1daba8415",
+          "closure_audit_findings": [
+            "closure_ok",
+            "closure_ok"
+          ],
+          "reflected_common_target_predicates": [
+            "after_high_hit",
+            "all_states"
+          ],
+          "stale_reflected_common_target_predicates": [
+            "all_states"
+          ]
+        }
       }
     },
     {

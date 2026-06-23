@@ -65,6 +65,8 @@ generated failed-transport closure shows role-label preservation can survive
 even when the transfer contract rejects carrier transfer.
 the gridworld obstacle source-generator pilot now also checks reflected versus
 stale source-reach presentations over the after-reachability fact.
+the stochastic continuation layer now checks reflected versus stale hit-status
+presentations over an after-hit target fact.
 ```
 
 The retained validation summary is:
@@ -181,7 +183,7 @@ without jumping to large models:
 
 ```text
 additional generated grid or automaton closure cases;
-stochastic or policy-conditioned finite source generators;
+policy-conditioned finite source-generator closure cases;
 second-source parity checks against the same finite relational IR;
 retained summaries that report both hidden-loss and invariant-closure facts.
 ```

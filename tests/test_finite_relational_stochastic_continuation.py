@@ -33,6 +33,27 @@ def test_stochastic_continuation_loss_covers_expected_families() -> None:
     assert hidden["reflected_abstraction_hit_probability"] == "1/10"
     assert hidden["stale_hides_loss"] is True
     assert hidden["reflected_reports_loss"] is True
+    closure = hidden["hit_status_closure"]
+    assert closure["threshold"] == "1/2"
+    assert closure["horizon"] == 2
+    assert closure["before_hit_status_by_start"] == {
+        "x0": "high_hit",
+        "x1": "high_hit",
+        "x2": "high_hit",
+    }
+    assert closure["after_hit_status_by_start"] == {
+        "x0": "low_hit",
+        "x1": "low_hit",
+        "x2": "high_hit",
+    }
+    assert closure["closure_audit_findings"] == ["closure_ok", "closure_ok"]
+    reflected, stale_reflected = closure["closure_audits"]
+    assert reflected["observed"]["common_target_predicates"] == [
+        "after_high_hit",
+        "all_states",
+    ]
+    assert stale_reflected["observed"]["common_target_predicates"] == ["all_states"]
+    assert stale_reflected["observed"]["present_expected_absent_target_predicates"] == []
 
     profile = by_id["same_hit_probability_different_horizon_profile"].metrics
     assert profile["fast_horizon_1_hit_probability"] == "3/4"

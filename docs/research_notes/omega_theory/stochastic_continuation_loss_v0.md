@@ -44,6 +44,26 @@ This is the stochastic analogue of deterministic hidden reachability loss:
 a stale abstraction keeps reporting the old continuation fact after the exact
 transition kernel has changed.
 
+The family also exposes a presentation/fact closure check over finite-horizon
+hit-status facts. Using threshold `1/2` at horizon `2`, the reflected
+hit-status presentation preserves the after-kernel high-hit target:
+
+```text
+after_high_hit;
+all_states.
+```
+
+Adding the stale hit-status presentation to the family removes the after-kernel
+high-hit fact from the common target facts:
+
+```text
+common target facts under stale + reflected: all_states
+```
+
+The closure audit is run through the same finite relational
+`presentation_fact_closure` engine used by the deterministic grid obstacle
+pilot.
+
 ### Same Selected Hit Probability, Different Horizon Profile
 
 Two kernels can share one selected hit-probability scalar while their
