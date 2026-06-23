@@ -1,6 +1,6 @@
 {
   "claim_boundary": "Synthetic finite stochastic characterization only. This result does not validate stochastic dynamics, MDP policies, approximate soundness, empirical substrate correctness, value, agency, alignment, or Omega.",
-  "command": ".\\.venv\\Scripts\\python.exe -m omega.validation.finite_relational_stochastic_recovery --out-root .tmp\\finite_relational_stochastic_recovery_robust_randomized",
+  "command": ".\\.venv\\Scripts\\python.exe -m omega.validation.finite_relational_stochastic_recovery --out-root .tmp\\finite_relational_stochastic_recovery_joint_bound",
   "date": "2026-06-23",
   "families": [
     {
@@ -111,11 +111,27 @@
       "family_id": "same_marginal_success_different_joint_failure",
       "metrics": {
         "correlated_first_worst_case_success": "5/6",
+        "correlated_joint_meets_union_bound": true,
         "correlated_joint_worst_case_success": "5/6",
         "correlated_second_worst_case_success": "5/6",
+        "correlated_union_bound_by_source": {
+          "00": "2/3",
+          "01": "2/3",
+          "10": "2/3",
+          "11": "2/3"
+        },
+        "correlated_union_bound_worst_case": "2/3",
         "independent_first_worst_case_success": "5/6",
+        "independent_joint_meets_union_bound": true,
         "independent_joint_worst_case_success": "3/4",
         "independent_second_worst_case_success": "5/6",
+        "independent_union_bound_by_source": {
+          "00": "2/3",
+          "01": "2/3",
+          "10": "2/3",
+          "11": "2/3"
+        },
+        "independent_union_bound_worst_case": "2/3",
         "same_joint_worst_case_success": false,
         "same_marginal_worst_case_success": true
       }

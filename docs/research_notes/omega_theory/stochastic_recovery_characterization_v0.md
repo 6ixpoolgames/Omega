@@ -149,6 +149,22 @@ correlated joint worst-case success  = 5/6
 This is the first stochastic recovery bridge to compatibility: marginal
 recovery facts do not determine joint recovery facts.
 
+The adapter also records the same-panel paired-decoder lower bound used by the
+Lean theorem:
+
+```text
+first marginal worst-case success = 5/6
+second marginal worst-case success = 5/6
+Frechet / union-bound joint floor = 2/3
+
+independent joint worst-case success >= 2/3
+correlated joint worst-case success  >= 2/3
+```
+
+That lower bound is useful, but it is intentionally not a full joint profile:
+the two channels still differ in actual joint recovery despite matching
+marginal recovery and matching the guaranteed floor.
+
 ### Randomized Decoder Axis
 
 With one ambiguous observation label, optimized deterministic maximin recovery
@@ -185,7 +201,7 @@ Run:
 
 ```powershell
 .\.venv\Scripts\python.exe -m omega.validation.finite_relational_stochastic_recovery `
-  --out-root .tmp\finite_relational_stochastic_recovery_robust_randomized
+  --out-root .tmp\finite_relational_stochastic_recovery_joint_bound
 ```
 
 The retained result summary is:

@@ -221,6 +221,32 @@ def worst_case_success(per_source_success: dict[str, Fraction]) -> Fraction:
     return min(per_source_success.values())
 
 
+def paired_joint_union_bound_by_source(
+    first_success: dict[str, Fraction],
+    second_success: dict[str, Fraction],
+) -> dict[str, Fraction]:
+    """Frechet/union-bound lower profile for paired marginal recovery.
+
+    If one same-panel decoder recovers target 1 with source-wise success p1(x)
+    and another recovers target 2 with p2(x), the paired joint decoder has
+    source-wise success at least p1(x) + p2(x) - 1. The actual joint profile may
+    be higher or lower than marginal summaries suggest, depending on failure
+    coupling, so this is only a guaranteed lower bound.
+    """
+
+    if set(first_success) != set(second_success):
+        missing_first = sorted(set(second_success) - set(first_success))
+        missing_second = sorted(set(first_success) - set(second_success))
+        raise ValueError(
+            "success profiles must have the same source keys; "
+            f"missing from first={missing_first}, missing from second={missing_second}"
+        )
+    return {
+        state: first_success[state] + second_success[state] - 1
+        for state in sorted(first_success)
+    }
+
+
 def optimized_worst_case_decoder(
     states: tuple[str, ...],
     outputs: tuple[str, ...],
@@ -719,6 +745,14 @@ def _same_marginal_success_different_joint_failure_family() -> StochasticRecover
         observation,
         target_joint,
     )
+    independent_union_bound = paired_joint_union_bound_by_source(
+        independent_first.per_source_success,
+        independent_second.per_source_success,
+    )
+    correlated_union_bound = paired_joint_union_bound_by_source(
+        correlated_first.per_source_success,
+        correlated_second.per_source_success,
+    )
 
     return StochasticRecoveryFamily(
         family_id="same_marginal_success_different_joint_failure",
@@ -751,6 +785,26 @@ def _same_marginal_success_different_joint_failure_family() -> StochasticRecover
             ),
             "correlated_joint_worst_case_success": fraction_to_text(
                 correlated_joint.worst_case_success
+            ),
+            "independent_union_bound_by_source": _fraction_map_to_text(
+                independent_union_bound
+            ),
+            "correlated_union_bound_by_source": _fraction_map_to_text(
+                correlated_union_bound
+            ),
+            "independent_union_bound_worst_case": fraction_to_text(
+                worst_case_success(independent_union_bound)
+            ),
+            "correlated_union_bound_worst_case": fraction_to_text(
+                worst_case_success(correlated_union_bound)
+            ),
+            "independent_joint_meets_union_bound": (
+                independent_joint.worst_case_success
+                >= worst_case_success(independent_union_bound)
+            ),
+            "correlated_joint_meets_union_bound": (
+                correlated_joint.worst_case_success
+                >= worst_case_success(correlated_union_bound)
             ),
             "same_joint_worst_case_success": (
                 independent_joint.worst_case_success == correlated_joint.worst_case_success

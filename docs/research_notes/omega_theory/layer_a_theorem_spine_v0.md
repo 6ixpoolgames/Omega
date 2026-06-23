@@ -340,6 +340,9 @@ Point-mass priors reduce expected success to source success.
 Randomized recovery is a separate decoder axis.
 Joint recovery implies marginal recovery, but separate marginal panels need
 not recover the joint target.
+Same-panel approximate marginal decoders compose into a joint lower bound at
+tau1 + tau2 - 1, but that lower bound does not determine the actual joint
+profile.
 Fixed-policy action kernels induce ordinary rational kernels.
 Finite-horizon hit probabilities are nonnegative, bounded by 1, and monotone
 in the horizon.

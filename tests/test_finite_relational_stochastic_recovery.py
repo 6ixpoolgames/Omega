@@ -7,6 +7,7 @@ from omega.adapters.finite_relational import (
     generate_stochastic_recovery_study,
     optimized_worst_case_decoder,
     optimized_robust_worst_case_decoder,
+    paired_joint_union_bound_by_source,
     randomized_success_by_source,
     robust_randomized_success_by_channel,
     robust_worst_case_success,
@@ -92,6 +93,22 @@ def test_stochastic_recovery_covers_expected_characterization_families() -> None
     assert joint["correlated_second_worst_case_success"] == "5/6"
     assert joint["independent_joint_worst_case_success"] == "3/4"
     assert joint["correlated_joint_worst_case_success"] == "5/6"
+    assert joint["independent_union_bound_worst_case"] == "2/3"
+    assert joint["correlated_union_bound_worst_case"] == "2/3"
+    assert joint["independent_union_bound_by_source"] == {
+        "00": "2/3",
+        "01": "2/3",
+        "10": "2/3",
+        "11": "2/3",
+    }
+    assert joint["correlated_union_bound_by_source"] == {
+        "00": "2/3",
+        "01": "2/3",
+        "10": "2/3",
+        "11": "2/3",
+    }
+    assert joint["independent_joint_meets_union_bound"] is True
+    assert joint["correlated_joint_meets_union_bound"] is True
 
     randomized = by_id["randomized_decoder_axis"].metrics
     assert randomized["deterministic_optimized_worst_case_success"] == "0"
@@ -194,6 +211,16 @@ def test_declared_randomized_decoder_axis_is_exact_but_not_general_optimization(
     assert deterministic.worst_case_success == Fraction(0)
     assert randomized == {"x0": Fraction(1, 2), "x1": Fraction(1, 2)}
     assert worst_case_success(randomized) == Fraction(1, 2)
+
+
+def test_paired_joint_union_bound_profile_is_source_indexed() -> None:
+    first = {"x0": Fraction(5, 6), "x1": Fraction(3, 4)}
+    second = {"x0": Fraction(2, 3), "x1": Fraction(4, 5)}
+
+    assert paired_joint_union_bound_by_source(first, second) == {
+        "x0": Fraction(1, 2),
+        "x1": Fraction(11, 20),
+    }
 
 
 def test_robust_randomized_axis_uses_one_decoder_over_ambiguity_set() -> None:

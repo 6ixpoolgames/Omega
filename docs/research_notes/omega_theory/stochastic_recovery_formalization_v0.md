@@ -129,6 +129,8 @@ Failure of deterministic, support-exact, robust, or randomized recovery
   persists under deterministic coarsening.
 Joint recovery implies each projected marginal recovery.
 Same-panel exact marginal decoders pair into exact joint recovery.
+Same-panel approximate marginal decoders pair into joint recovery at the
+  Frechet/union-bound threshold `tau1 + tau2 - 1`.
 Policy-conditioned action kernels induce ordinary rational kernels.
 The induced policy kernel exposes a named validity theorem.
 Finite-horizon hit probabilities are nonnegative, bounded by 1, and monotone
@@ -180,6 +182,9 @@ RobustRandomizedRecoveryInAt   <-> randomized threshold recovery across a
 ExpectedRecoveryExistsInAt     <-> expected deterministic threshold recovery
                                   under a declared prior and decoder class
 FactorsThrough fine coarse     <-> observation refinement / coarsening
+paired_joint_union_bound_by_source
+                               <-> source-indexed Frechet lower profile for
+                                  same-panel paired marginal decoders
 HitWithin                      <-> hit_probability_within_horizon
 HitProfile                     <-> hit_profile / policy horizon profile
 ```
@@ -244,7 +249,7 @@ Next likely extensions:
 
 ```text
 finite randomized optimization only after a clear finite rational LP surface;
-joint approximate recovery bounds when paired decoders are used.
+adapter parity for richer joint-profile families if needed.
 ```
 
 These should remain separate axes rather than being collapsed into one scalar.

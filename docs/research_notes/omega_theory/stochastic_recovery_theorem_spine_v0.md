@@ -87,6 +87,8 @@ Point-mass priors reduce expected success to source success at the selected
   source.
 Joint recovery implies each marginal recovery.
 Same-panel exact marginal recovery pairs into exact joint recovery.
+Same-panel approximate marginal recovery pairs into joint recovery at the
+  Frechet/union-bound threshold `tau1 + tau2 - 1`.
 Fixed-policy action kernels induce Markov kernels.
 The induced policy kernel has a named validity theorem.
 Finite-horizon hit probabilities are nonnegative, bounded by 1, and monotone
@@ -153,6 +155,19 @@ Two channels can share the same marginal worst-case success for each component
 target while differing in joint target recovery. This is the stochastic bridge
 to compatibility.
 
+The same family now records the guaranteed same-panel paired-decoder lower
+bound:
+
+```text
+first marginal threshold = 5/6
+second marginal threshold = 5/6
+union-bound joint threshold = 2/3
+```
+
+The exact joint success can be strictly above that bound and can differ across
+channels with the same marginal success. The bound is therefore a floor, not a
+replacement for joint characterization.
+
 ### Randomized Decoders Are A Separate Axis
 
 A declared randomized decoder can outperform deterministic maximin in a
@@ -176,8 +191,7 @@ Possible next formalization steps:
 ```text
 Lean theorem for support-exact recovery iff support disjointness;
 exact randomized maximin via a small linear-programming surface or finite
-  declared randomized decoder family;
-joint approximate recovery bounds when paired decoders are used.
+  declared randomized decoder family.
 ```
 
 ## Non-Claims
