@@ -109,6 +109,44 @@ The finite relational IR is intentionally explicit and close to the formal
 interfaces. It may contain names like `primitive_rel`, `primitive_sep`,
 `primitive_asym`, `merge_separated`, and `carrier_0`.
 
+## Fact Surface Layout
+
+The generic audit surface should stay unified, but the generated fact
+implementation is now split by theory surface. The legacy import path remains:
+
+```text
+omega.adapters.finite_relational.facts
+```
+
+That module is a compatibility facade. New implementation work should live in
+the narrower modules:
+
+```text
+facts_common.py:
+  relation/function helpers, reachability, internal-edge helpers.
+
+facts_dynamics.py:
+  edge projection, representative-wise step lifting, finite path lifting.
+
+facts_language.py:
+  safe-prefix counts, extendable safe-prefix counts, observed viable words,
+  and observed-word lifting checks.
+
+facts_presentation.py:
+  presentation/fact closure, derive-mode closure, common target predicates,
+  common visible pairs, and non-factorization witnesses.
+
+facts_recovery.py:
+  bounded recovery, unrestricted exact recovery, and target-scramble gates.
+
+facts_carrier.py:
+  carrier certification and carrier-transfer checks.
+```
+
+Downstream code may continue to import public functions from `facts`. New fact
+surfaces should be placed in the module matching their theory role, then
+re-exported from the facade only if they are part of the public adapter surface.
+
 The derived graph source is much less hand-labeled. It declares only:
 
 ```text

@@ -120,6 +120,10 @@ lifting, observation compatibility, start compatibility, safety reflection, and
 viability-kernel reflection. The generated suite includes a positive monotone
 case and a negative edge-exact splice case where abstract observed words
 inflate exact observed words.
+the finite relational fact implementation is now split by theory surface:
+common helpers, dynamics, language, presentation/closure, recovery, and
+carrier checks. The legacy `omega.adapters.finite_relational.facts` import path
+remains a compatibility facade.
 viable trajectory count comparison shows bad abstract dynamics can inflate or
 hide finite safe-prefix counts under an identity presentation.
 the gridworld obstacle source-generator characterization now checks reflected versus

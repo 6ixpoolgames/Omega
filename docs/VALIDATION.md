@@ -291,6 +291,12 @@ satisfies lifting and observation compatibility, while a negative case has
 global edge projection exactness but fails path lifting and inflates abstract
 observed words.
 
+The fact generators behind these audits are split by theory surface
+(`facts_dynamics.py`, `facts_language.py`, `facts_presentation.py`,
+`facts_recovery.py`, and `facts_carrier.py`) while the public
+`omega.adapters.finite_relational.facts` path remains a compatibility facade.
+Adapter smoke should exercise the facade and the split modules together.
+
 The closure-discovery path is distinct from the expectation-pinned
 generated/adversarial closure fixtures:
 
