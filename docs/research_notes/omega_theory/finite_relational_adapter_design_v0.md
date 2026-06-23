@@ -476,6 +476,45 @@ generated_failed_transport_fact_closure:
 
 Each fixture should include provenance.
 
+Graph-pair transfer characterization is a source-generator path rather than a
+single adversarial case:
+
+```powershell
+.\.venv\Scripts\python.exe -m omega.validation.finite_relational_graph_pair_transfer `
+  --out-root .tmp\finite_relational_graph_pair_transfer
+```
+
+It declares:
+
+```text
+source graph;
+target graph;
+endpoint correspondence;
+source and target endpoint roles.
+```
+
+It derives:
+
+```text
+compiled source graph IR;
+compiled target graph IR;
+carrier-transfer audit surface;
+source/target compiled-model digests.
+```
+
+The current characterization enumerates:
+
+```text
+two-node target graph edge subsets;
+three-node target graph edge subsets with an intermediate target state.
+```
+
+The three-node sweep is the important extension control: transfer can be
+accepted when target support expands beyond the two source endpoints, but only
+if the whole target carrier still earns recurrent certification. Endpoint
+correspondence alone is not enough, and target forward endpoint reachability is
+not enough either.
+
 ## Provenance Requirements
 
 Every adapter model should include at least:

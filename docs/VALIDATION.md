@@ -209,6 +209,12 @@ The gridworld obstacle-insertion characterization has a separate retained-output
 python -m omega.validation.finite_relational_grid_obstacle
 ```
 
+The graph-pair transfer characterization has a separate retained-output path:
+
+```bash
+python -m omega.validation.finite_relational_graph_pair_transfer
+```
+
 The deterministic pre-stochastic finite relational layer has its own
 retained-output path:
 
@@ -305,6 +311,15 @@ stale/reflected presentation family whose common target facts drop that
 after-reachability predicate. It is the first source-generator characterization beyond
 low-level handwritten IR fixtures.
 
+The graph-pair transfer path declares source and target graph interfaces plus
+an endpoint correspondence, compiles both graphs separately into finite
+relational IR, and audits carrier transfer over the compiled pair. The current
+characterization covers a two-node target sweep and a three-node target
+extension sweep. It reports how often the target graph preserves enough
+recurrent carrier structure for transfer under the fixed correspondence, and it
+retains controls where target forward endpoint reachability survives but
+carrier transfer still fails.
+
 The deterministic pre-stochastic path calibrates exact finite recovery before
 probabilistic or approximate audits are added. It checks joint bounded recovery
 failure, decoder-class strictness, observation-refinement monotonicity,
@@ -348,6 +363,8 @@ The first controlled empirical pilot retains a machine-readable summary at
 The gridworld obstacle-insertion characterization retains a machine-readable
 summary at
 [finite_relational_grid_obstacle_pilot_v0.json](research_notes/validation_results/finite_relational_grid_obstacle_pilot_v0.json).
+The graph-pair transfer characterization retains a machine-readable summary at
+[finite_relational_graph_pair_transfer_v0.json](research_notes/validation_results/finite_relational_graph_pair_transfer_v0.json).
 The deterministic pre-stochastic layer retains a machine-readable summary at
 [finite_relational_deterministic_layer_v0.json](research_notes/validation_results/finite_relational_deterministic_layer_v0.json).
 The stochastic recovery characterization layer retains a machine-readable

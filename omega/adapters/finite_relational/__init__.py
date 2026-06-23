@@ -98,6 +98,12 @@ from omega.adapters.finite_relational.grid_obstacle_experiment import (
     generate_grid_obstacle_characterization,
     generate_grid_obstacle_study,
 )
+from omega.adapters.finite_relational.graph_pair_transfer import (
+    GraphPairTransferCase,
+    GraphPairTransferStudy,
+    compile_graph_pair_transfer_source,
+    generate_graph_pair_transfer_characterization,
+)
 from omega.adapters.finite_relational.model import (
     FiniteFunction,
     FiniteRelationalModel,
@@ -130,6 +136,8 @@ __all__ = [
     "FiniteFunction",
     "FiniteRelationalModel",
     "GeneratedAdapterCase",
+    "GraphPairTransferCase",
+    "GraphPairTransferStudy",
     "ControlledExperimentCase",
     "ControlledExperimentFamily",
     "DeterministicLayerFamily",
@@ -160,6 +168,7 @@ __all__ = [
     "compile_derived_graph_path",
     "compile_finite_grid",
     "compile_finite_grid_path",
+    "compile_graph_pair_transfer_source",
     "compile_grid_obstacle_source",
     "compiled_derivation_contract",
     "common_target_predicates",
@@ -174,6 +183,7 @@ __all__ = [
     "generate_deterministic_layer_study",
     "generate_grid_obstacle_characterization",
     "generate_grid_obstacle_study",
+    "generate_graph_pair_transfer_characterization",
     "generate_policy_dynamics_study",
     "generate_source_parity_study",
     "generate_stochastic_continuation_loss_study",

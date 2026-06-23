@@ -1,7 +1,7 @@
 # Finite Relational Adapter Validation V0
 
 Date: 2026-06-23
-Run context: working tree based on `d7bf91a`, with the grid obstacle
+Run context: working tree based on `5a7042b`, with the graph-pair transfer
 characterization batch applied before commit.
 
 Claim boundary:
@@ -17,31 +17,31 @@ source abstraction is empirically correct.
 
 ```powershell
 ./.venv/Scripts/python.exe -m pytest `
-  tests/test_finite_relational_grid_obstacle.py `
+  tests/test_finite_relational_graph_pair_transfer.py `
   tests/test_finite_relational_adapter_smoke.py `
-  -q --basetemp .tmp/pytest-grid-characterization-final -p no:cacheprovider
+  -q --basetemp .tmp/pytest-graph-pair-transfer-characterization -p no:cacheprovider
 
-./.venv/Scripts/python.exe -m omega.validation.finite_relational_grid_obstacle `
-  --out-root .tmp/finite_relational_grid_obstacle_characterization_final
+./.venv/Scripts/python.exe -m omega.validation.finite_relational_graph_pair_transfer `
+  --out-root .tmp/finite_relational_graph_pair_transfer_characterization_final
 
 ./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_adversarial `
-  --out-root .tmp/finite_relational_adapter_adversarial_grid_characterization_final
+  --out-root .tmp/finite_relational_adapter_adversarial_graph_pair_characterization_final
 
 ./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_smoke `
-  --out-root .tmp/finite_relational_adapter_smoke_grid_characterization_final
+  --out-root .tmp/finite_relational_adapter_smoke_graph_pair_characterization_final
 
 ./.venv/Scripts/ruff.exe check omega/adapters/finite_relational/__init__.py `
-  omega/adapters/finite_relational/grid_obstacle_experiment.py `
-  tests/test_finite_relational_grid_obstacle.py `
-  omega/validation/finite_relational_grid_obstacle.py
+  omega/adapters/finite_relational/graph_pair_transfer.py `
+  tests/test_finite_relational_graph_pair_transfer.py `
+  omega/validation/finite_relational_graph_pair_transfer.py
 ```
 
 Result:
 
 ```text
-grid characterization pytest: 8 passed
-grid obstacle characterization: PASS, 3 studies, 6 representative cases
-adapter smoke: PASS, 15 fixtures, focused pytest 74 passed
+graph-pair characterization pytest: 6 passed
+graph-pair transfer characterization: PASS, 2 studies, 4 representative cases
+adapter smoke: PASS, 15 fixtures, focused pytest 79 passed
 generated/adversarial validation: PASS, 17 cases
 focused ruff: passed
 ```
@@ -51,7 +51,7 @@ focused ruff: passed
 Run root:
 
 ```text
-.tmp/finite_relational_adapter_smoke_grid_characterization_final/20260623_170426
+.tmp/finite_relational_adapter_smoke_graph_pair_characterization_final/20260623_171412
 ```
 
 | Fixture | Audits | Findings | All passed | Source digest | Compiled/model digest |
@@ -77,7 +77,7 @@ Run root:
 Run root:
 
 ```text
-.tmp/finite_relational_adapter_adversarial_grid_characterization_final/20260623_170426
+.tmp/finite_relational_adapter_adversarial_graph_pair_characterization_final/20260623_171413
 ```
 
 | Case | Source format | Audits | Findings | All passed | Source digest | Compiled digest |
@@ -114,6 +114,19 @@ Run root:
 | grid_obstacle_east_south_diagonal_hidden_loss | east_south | 3x3, max obstacles 2 | 2 | 27 | 2 | true |
 | grid_obstacle_orthogonal_rectangle_hidden_loss | orthogonal | 4x2, max obstacles 2 | 6 | 16 | 2 | true |
 
+## Graph-Pair Transfer Characterization
+
+Run root:
+
+```text
+.tmp/finite_relational_graph_pair_transfer_characterization_final/20260623_171412
+```
+
+| Study | Target graph | Target edge subsets | Transferred | Forward but not transferred | Not transferred | Representatives | All passed |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| graph_pair_two_node_transfer_sweep | 2 nodes | 4 | 1 | 1 | 3 | 2 | true |
+| graph_pair_three_node_extension_transfer_sweep | 3 nodes | 64 | 18 | 22 | 46 | 2 | true |
+
 ## Notes
 
 - The low-level finite relational IR fixtures do not have separate source
@@ -137,6 +150,10 @@ Run root:
   classes. Each study retains a hidden-loss representative and a no-hidden-loss
   control, with all representatives checked by the same generic
   hidden-reachability-loss and presentation/fact-closure audits.
+- The graph-pair transfer characterization now covers target graph dynamics
+  while holding the source carrier and endpoint correspondence fixed. The
+  three-node target sweep tests support extension without treating endpoint
+  correspondence as identity.
 - The closure-generated cases now include carrier-pair visibility,
   reachability target facts, viability target facts, bounded-recovery target
   facts, stale/reflected reach-status facts, multi-presentation row/column fact
