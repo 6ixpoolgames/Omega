@@ -58,7 +58,9 @@ generated/adversarial cases can rediscover expected finite failure modes.
 generated presentation/fact closure cases can test common-fact shrinkage
 without hand-written Lean-only examples;
 generated closure cases now include stale/reflected and multi-presentation
-family intersections.
+family intersections;
+generated transport closure checks a transferred endpoint-role fact without
+treating transfer as identity.
 ```
 
 The retained validation summary is:
@@ -71,7 +73,7 @@ That retained summary records:
 
 ```text
 15 fixture smoke cases;
-12 generated/adversarial cases;
+13 generated/adversarial cases;
 source digests where a source compiler is used;
 compiled/model digests;
 audit counts;

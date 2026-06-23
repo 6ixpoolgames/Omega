@@ -306,15 +306,22 @@ generated_multi_presentation_fact_closure:
   row and column presentations preserve different target facts;
   the declared family intersection keeps only facts invariant across every
   presentation and removes row-only / column-only targets.
+
+generated_transport_fact_closure:
+  a generated carrier-transfer contract succeeds;
+  lifted source/target role presentations preserve the transported endpoint
+  role fact;
+  admitting an erasing transport view removes that transported role from
+  common facts.
 ```
 
-The next closure work should move from these finite generated checks to
-transport-aware and broader empirical-adjacent closure examples:
+The next closure work should move from these finite generated checks to broader
+empirical-adjacent and transport-failure closure examples:
 
 ```text
 presentations:
-  exact / coarse / stale / reflected / transported views produced by retained
-  fixtures
+  exact / coarse / stale / reflected / transported / failed-transport views
+  produced by retained fixtures
 
 facts:
   reachability, recovery, viability, and carrier-certification facts

@@ -429,6 +429,12 @@ generated_stale_reflected_fact_closure:
 generated_multi_presentation_fact_closure:
   generated row and column presentations preserve different exact facts; the
   declared family closure keeps only facts visible through every presentation.
+
+generated_transport_fact_closure:
+  generated source and target recurrent carriers satisfy the carrier-transfer
+  audit; lifted source/target endpoint-role presentations preserve a
+  transported role fact, while an erasing transport view removes that role from
+  common target facts.
 ```
 
 Each fixture should include provenance.
@@ -521,7 +527,9 @@ presentation/fact closure shrinkage for generated reachability, viability, and
 recovery-style target facts;
 presentation/fact closure shrinkage for stale/reflected reach-status facts;
 presentation/fact closure shrinkage for multi-presentation row/column fact
-intersections.
+intersections;
+presentation/fact closure shrinkage for transported endpoint-role facts under
+a carrier-transfer contract.
 ```
 
 The generator is intentionally finite and boring. It does not discover empirical

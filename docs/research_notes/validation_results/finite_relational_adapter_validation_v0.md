@@ -1,8 +1,8 @@
 # Finite Relational Adapter Validation V0
 
 Date: 2026-06-23
-Run context: working tree based on `5a34da9`, with the stale/reflected and
-multi-presentation closure batch applied before commit.
+Run context: working tree based on `28fc959`, with the transport-aware closure
+batch applied before commit.
 
 Claim boundary:
 
@@ -17,13 +17,13 @@ source abstraction is empirically correct.
 
 ```powershell
 ./.venv/Scripts/python.exe -m pytest tests/test_finite_relational_adapter_adversarial.py `
-  -q --basetemp .tmp/pytest-adapter-closure-next -p no:cacheprovider
+  -q --basetemp .tmp/pytest-adapter-transport-closure -p no:cacheprovider
 
 ./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_adversarial `
-  --out-root .tmp/finite_relational_adapter_adversarial_next_closure
+  --out-root .tmp/finite_relational_adapter_adversarial_transport_closure
 
 ./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_smoke `
-  --out-root .tmp/finite_relational_adapter_smoke_next_closure
+  --out-root .tmp/finite_relational_adapter_smoke_transport_closure
 
 ./.venv/Scripts/ruff.exe check omega/adapters/finite_relational `
   tests/test_finite_relational_adapter_adversarial.py
@@ -32,9 +32,9 @@ source abstraction is empirically correct.
 Result:
 
 ```text
-adapter adversarial pytest: 9 passed
-adapter smoke: PASS, 15 fixtures, focused pytest 63 passed
-generated/adversarial validation: PASS, 12 cases
+adapter adversarial pytest: 10 passed
+adapter smoke: PASS, 15 fixtures, focused pytest 64 passed
+generated/adversarial validation: PASS, 13 cases
 focused ruff: passed
 ```
 
@@ -43,7 +43,7 @@ focused ruff: passed
 Run root:
 
 ```text
-.tmp/finite_relational_adapter_smoke_next_closure/20260623_154849
+.tmp/finite_relational_adapter_smoke_transport_closure/20260623_155639
 ```
 
 | Fixture | Audits | Findings | All passed | Source digest | Compiled/model digest |
@@ -69,7 +69,7 @@ Run root:
 Run root:
 
 ```text
-.tmp/finite_relational_adapter_adversarial_next_closure/20260623_154845
+.tmp/finite_relational_adapter_adversarial_transport_closure/20260623_155633
 ```
 
 | Case | Source format | Audits | Findings | All passed | Source digest | Compiled digest |
@@ -85,6 +85,7 @@ Run root:
 | generated_reachability_fact_closure | finite_relational_ir | 2 | `closure_ok`, `closure_ok` | true | c5023c24255914dbcbc47a51784daeb4c8db44992108c5c163c8ef98899262dc | c5023c24255914dbcbc47a51784daeb4c8db44992108c5c163c8ef98899262dc |
 | generated_recovery_fact_closure | finite_relational_ir | 4 | `recoverable`, `not_recoverable`, `closure_ok`, `closure_ok` | true | 8e493ae551b89ef7d484983b63e45d156dbc8a14c52ec77ffab4dcf0f851dff4 | 8e493ae551b89ef7d484983b63e45d156dbc8a14c52ec77ffab4dcf0f851dff4 |
 | generated_stale_reflected_fact_closure | finite_relational_ir | 3 | `closure_ok`, `closure_ok`, `closure_ok` | true | b37b63c504e4923e770149ed8ad313f8316b4f439dbd01cf0a36be6227e3e144 | b37b63c504e4923e770149ed8ad313f8316b4f439dbd01cf0a36be6227e3e144 |
+| generated_transport_fact_closure | finite_relational_ir | 3 | `transferred`, `closure_ok`, `closure_ok` | true | ea2b1b0d4d45a52c05bd4503a52619fef541ec43616530ef573a784ebac8a811 | ea2b1b0d4d45a52c05bd4503a52619fef541ec43616530ef573a784ebac8a811 |
 | generated_viability_fact_closure | finite_relational_ir | 2 | `closure_ok`, `closure_ok` | true | b78ede8c782d159e8ca33bccfeead1219d5a1c44a16780ae4e28d19d7cc8e86c | b78ede8c782d159e8ca33bccfeead1219d5a1c44a16780ae4e28d19d7cc8e86c |
 
 ## Notes
@@ -97,8 +98,9 @@ Run root:
   `omega.adapters.finite_relational.adversarial_search`.
 - The closure-generated cases now include carrier-pair visibility,
   reachability target facts, viability target facts, bounded-recovery target
-  facts, stale/reflected reach-status facts, and multi-presentation row/column
-  fact intersections.
+  facts, stale/reflected reach-status facts, multi-presentation row/column fact
+  intersections, and transported endpoint-role facts under a carrier-transfer
+  contract.
 - `carrier_transfer_pass` and `carrier_transfer_fail_missing_return` exercise
   the adapter-level transfer contract. The negative case preserves endpoint
   correspondence but rejects transfer because the target carrier loses return
