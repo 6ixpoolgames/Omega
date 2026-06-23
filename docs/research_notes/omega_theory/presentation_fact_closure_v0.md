@@ -49,6 +49,7 @@ Main file:
 
 ```text
 formal/lean/OmegaProper/Trajectory/PresentationFactClosure.lean
+formal/lean/OmegaProper/Trajectory/PresentationFactClosureExamples.lean
 ```
 
 Core theorem family:
@@ -105,6 +106,39 @@ does the admissible family leave any nonconstant facts common,
 or does it collapse everything useful?
 ```
 
+## Finite X2 Pilot
+
+The example module instantiates the closure surface on the existing four-state
+`X2` carrier:
+
+```text
+firstOnlyPresentations:
+  the family containing only the first-bit presentation
+
+firstSecondPresentations:
+  the family containing first-bit and second-bit presentations
+```
+
+It proves:
+
+```text
+firstTarget_common_firstOnly
+firstTarget_not_common_firstSecond
+x00_x10_visible_firstOnly
+x00_x10_not_visible_firstSecond
+constantZeroTarget_common_firstSecond
+commonTargets_strictly_shrink_when_second_admitted
+commonVisiblePairs_strictly_shrink_when_second_admitted
+secondBit_not_in_targetClosure_firstOnly
+```
+
+This is the first adversarial collapse witness for the closure layer. Adding a
+second coordinate presentation strictly removes first-coordinate target facts
+and first-coordinate visible-pair facts from the common-fact set. A constant
+target still survives, so the result is not "nothing survives"; it is a
+controlled demonstration that the declared presentation family determines
+which facts remain invariant.
+
 ## Relation To Recovery
 
 The recovery layer now supplies many candidate facts:
@@ -137,7 +171,7 @@ that this proves Omega.
 
 ## Next Work
 
-The immediate next pilot should instantiate this layer on a small finite family:
+The next pilot should move from coordinate targets to recovery/viability facts:
 
 ```text
 presentations:

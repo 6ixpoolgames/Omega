@@ -145,6 +145,7 @@ Main files:
 - [ApproximationContract.lean](../../../formal/lean/OmegaProper/Trajectory/ApproximationContract.lean)
 - [ProfileApproximation.lean](../../../formal/lean/OmegaProper/Trajectory/ProfileApproximation.lean)
 - [PresentationFactClosure.lean](../../../formal/lean/OmegaProper/Trajectory/PresentationFactClosure.lean)
+- [PresentationFactClosureExamples.lean](../../../formal/lean/OmegaProper/Trajectory/PresentationFactClosureExamples.lean)
 - [CarrierSemantics.lean](../../../formal/lean/OmegaProper/Trajectory/CarrierSemantics.lean)
 
 Current content:
@@ -161,6 +162,8 @@ Profile abstraction is sound/complete approximation over ordered fragment-pair
 claims.
 Presentation/fact closure gives the generic Galois surface for common facts,
 models of facts, and closure under a supplied satisfaction relation.
+The X2 closure pilot shows common target and visible-pair facts strictly shrink
+when a second coordinate presentation is admitted.
 Raw supports, generated mutual-reach carriers, and trajectory-language views
 are presentations of carrier semantics.
 ```
