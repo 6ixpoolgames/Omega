@@ -170,6 +170,7 @@ def test_target_scramble_sensitivity_compares_declared_recovery_surface() -> Non
 
     assert result["passed"] is True
     assert result["finding"] == "sensitive"
+    assert result["observed"]["sensitivity_mode"] == "decoder_relative"
     assert result["observed"]["recoverability_changed"] is True
     assert result["observed"]["target_recoverable"] is True
     assert result["observed"]["scrambled_recoverable"] is False
@@ -224,10 +225,113 @@ def test_target_scramble_sensitivity_can_fail_when_observation_is_decorative() -
 
     assert result["passed"] is True
     assert result["finding"] == "not_sensitive"
+    assert result["observed"]["sensitivity_mode"] == "decoder_relative"
     assert result["observed"]["recoverability_changed"] is False
     assert result["observed"]["successful_decoders_changed"] is False
     assert result["observed"]["target_recoverable"] is False
     assert result["observed"]["scrambled_recoverable"] is False
+
+
+def test_target_scramble_capacity_ignores_boolean_label_swap() -> None:
+    model = load_model(
+        {
+            "model_id": "inline_target_scramble_capacity_label_swap_control",
+            "domains": {
+                "state": ["left", "right"],
+                "observation": ["red", "blue"],
+            },
+            "predicates": {
+                "left_target": ["left"],
+                "right_scramble": ["right"],
+            },
+            "functions": {
+                "color_observation": {
+                    "domain": "state",
+                    "codomain": "observation",
+                    "mapping": {"left": "red", "right": "blue"},
+                },
+            },
+            "audits": [
+                {
+                    "id": "boolean_label_swap_does_not_change_capacity",
+                    "kind": "target_scramble_capacity_sensitivity",
+                    "observation": "color_observation",
+                    "target_predicate": "left_target",
+                    "scrambled_predicate": "right_scramble",
+                    "expect": "not_capacity_sensitive",
+                }
+            ],
+            "provenance": {
+                "declared_before_run": True,
+                "source": "inline test",
+                "claim_boundary": "target scramble capacity label-swap control",
+            },
+        }
+    )
+    [result] = [result.as_dict() for result in run_declared_audits(model)]
+
+    assert result["passed"] is True
+    assert result["finding"] == "not_capacity_sensitive"
+    assert result["observed"]["sensitivity_mode"] == "unrestricted_exact_recovery_capacity"
+    assert result["observed"]["complement_scramble"] is True
+    assert result["observed"]["target_recoverable"] is True
+    assert result["observed"]["scrambled_recoverable"] is True
+    assert result["observed"]["recoverability_changed"] is False
+
+
+def test_target_scramble_capacity_detects_same_prevalence_non_relabel_scramble() -> None:
+    model = load_model(
+        {
+            "model_id": "inline_target_scramble_capacity_same_prevalence",
+            "domains": {
+                "state": ["a", "b", "c", "d"],
+                "observation": ["left_block", "right_block"],
+            },
+            "predicates": {
+                "block_target": ["a", "b"],
+                "crosscut_scramble": ["a", "c"],
+            },
+            "functions": {
+                "block_observation": {
+                    "domain": "state",
+                    "codomain": "observation",
+                    "mapping": {
+                        "a": "left_block",
+                        "b": "left_block",
+                        "c": "right_block",
+                        "d": "right_block",
+                    },
+                },
+            },
+            "audits": [
+                {
+                    "id": "same_prevalence_scramble_changes_capacity",
+                    "kind": "target_scramble_capacity_sensitivity",
+                    "observation": "block_observation",
+                    "target_predicate": "block_target",
+                    "scrambled_predicate": "crosscut_scramble",
+                    "expect": "capacity_sensitive",
+                }
+            ],
+            "provenance": {
+                "declared_before_run": True,
+                "source": "inline test",
+                "claim_boundary": "target scramble capacity same-prevalence test",
+            },
+        }
+    )
+    [result] = [result.as_dict() for result in run_declared_audits(model)]
+
+    assert result["passed"] is True
+    assert result["finding"] == "capacity_sensitive"
+    assert result["observed"]["same_prevalence"] is True
+    assert result["observed"]["complement_scramble"] is False
+    assert result["observed"]["target_recoverable"] is True
+    assert result["observed"]["scrambled_recoverable"] is False
+    assert result["observed"]["scrambled_ambiguous_observation_labels"] == [
+        "left_block",
+        "right_block",
+    ]
 
 
 def test_dynamic_presentation_equivariance_accepts_projected_transition() -> None:

@@ -1224,6 +1224,7 @@ def bounded_recovery_facts(
 
     return {
         "recoverable": bool(successful_decoders),
+        "recovery_mode": "declared_decoder_family",
         "state_count": len(states),
         "observed_labels": observed_labels,
         "ambiguous_observation_labels": ambiguous_labels,
@@ -1244,10 +1245,10 @@ def target_scramble_sensitivity_facts(
     true_label: str = "true",
     false_label: str = "false",
 ) -> dict[str, object]:
-    """Check whether scrambling a target changes declared recovery facts.
+    """Check whether scrambling a target changes declared-decoder recovery facts.
 
     This is an adapter provenance gate, not a semantic target validator. It
-    asks whether the supplied target has operational bite relative to a
+    asks whether the supplied target has decoder-relative bite relative to a
     declared observation and decoder family. A target is sensitive here when
     replacing it with the scrambled predicate changes exact recoverability or
     the successful decoder surface.
@@ -1274,6 +1275,7 @@ def target_scramble_sensitivity_facts(
     sensitive = recoverability_changed or successful_decoders_changed
     return {
         "sensitive": sensitive,
+        "sensitivity_mode": "decoder_relative",
         "recoverability_changed": recoverability_changed,
         "successful_decoders_changed": successful_decoders_changed,
         "observation": observation,
@@ -1284,6 +1286,122 @@ def target_scramble_sensitivity_facts(
         "scrambled_recoverable": scrambled["recoverable"],
         "target_successful_decoders": target["successful_decoders"],
         "scrambled_successful_decoders": scrambled["successful_decoders"],
+        "target": target,
+        "scrambled": scrambled,
+    }
+
+
+def unrestricted_exact_recovery_facts(
+    model: FiniteRelationalModel,
+    *,
+    observation: str,
+    target_predicate: str,
+) -> dict[str, object]:
+    """Check exact deterministic recoverability by any observation decoder."""
+
+    observation_function = model.functions[observation]
+    target = model.predicates[target_predicate]
+    if target.domain != observation_function.domain:
+        raise SchemaError(
+            "unrestricted recovery target predicate and observation function "
+            f"must share a domain: {target.domain} != {observation_function.domain}"
+        )
+
+    states = model.domain(observation_function.domain)
+    missing_states = sorted(set(states) - set(observation_function.mapping))
+    if missing_states:
+        raise SchemaError(
+            f"observation function {observation} is not total on "
+            f"{observation_function.domain}: {missing_states}"
+        )
+
+    target_members = target.members
+    observed_labels = sorted({observation_function.mapping[state] for state in states})
+    ambiguous_labels = []
+    label_profiles = []
+    for label in observed_labels:
+        preimage = [state for state in states if observation_function.mapping[state] == label]
+        true_states = sorted(state for state in preimage if state in target_members)
+        false_states = sorted(state for state in preimage if state not in target_members)
+        target_values = []
+        if false_states:
+            target_values.append("false")
+        if true_states:
+            target_values.append("true")
+        ambiguous = bool(true_states and false_states)
+        if ambiguous:
+            ambiguous_labels.append(label)
+        label_profiles.append(
+            {
+                "label": label,
+                "states": sorted(preimage),
+                "target_values": target_values,
+                "true_states": true_states,
+                "false_states": false_states,
+                "ambiguous": ambiguous,
+            }
+        )
+
+    return {
+        "recoverable": not ambiguous_labels,
+        "recovery_mode": "unrestricted_deterministic_decoder",
+        "observation": observation,
+        "target_predicate": target_predicate,
+        "state_count": len(states),
+        "target_member_count": len(target_members),
+        "observed_labels": observed_labels,
+        "ambiguous_observation_labels": ambiguous_labels,
+        "label_profiles": label_profiles,
+    }
+
+
+def target_scramble_capacity_sensitivity_facts(
+    model: FiniteRelationalModel,
+    *,
+    observation: str,
+    target_predicate: str,
+    scrambled_predicate: str,
+) -> dict[str, object]:
+    """Check whether scrambling changes unrestricted exact recovery capacity."""
+
+    target_domain = model.predicates[target_predicate].domain
+    scrambled_domain = model.predicates[scrambled_predicate].domain
+    if target_domain != scrambled_domain:
+        raise SchemaError(
+            "target scramble capacity sensitivity requires predicates over the same domain: "
+            f"{target_domain} != {scrambled_domain}"
+        )
+    target = unrestricted_exact_recovery_facts(
+        model,
+        observation=observation,
+        target_predicate=target_predicate,
+    )
+    scrambled = unrestricted_exact_recovery_facts(
+        model,
+        observation=observation,
+        target_predicate=scrambled_predicate,
+    )
+    states = set(model.domain(target_domain))
+    target_members = set(model.predicate_members(target_predicate))
+    scrambled_members = set(model.predicate_members(scrambled_predicate))
+    recoverability_changed = bool(target["recoverable"]) != bool(scrambled["recoverable"])
+    return {
+        "capacity_sensitive": recoverability_changed,
+        "sensitivity_mode": "unrestricted_exact_recovery_capacity",
+        "recoverability_changed": recoverability_changed,
+        "same_prevalence": len(target_members) == len(scrambled_members),
+        "complement_scramble": scrambled_members == states - target_members,
+        "observation": observation,
+        "target_predicate": target_predicate,
+        "scrambled_predicate": scrambled_predicate,
+        "target_recoverable": target["recoverable"],
+        "scrambled_recoverable": scrambled["recoverable"],
+        "target_member_count": len(target_members),
+        "scrambled_member_count": len(scrambled_members),
+        "target_ambiguous_observation_labels": target["ambiguous_observation_labels"],
+        "scrambled_ambiguous_observation_labels": scrambled[
+            "ambiguous_observation_labels"
+        ],
         "target": target,
         "scrambled": scrambled,
     }

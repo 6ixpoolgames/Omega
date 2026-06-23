@@ -323,10 +323,18 @@ bounded_recovery:
 
 target_scramble_sensitivity:
   a declared target predicate and a supplied scrambled/erased target predicate
-  are compared under the same observation and decoder family. The audit is
-  sensitive when exact recoverability or the successful decoder surface changes.
-  This is a provenance gate against decorative targets; it does not prove that
-  the target is empirically correct or value-bearing.
+  are compared under the same observation and declared decoder family. The
+  audit is decoder-relative: it is sensitive when exact recoverability or the
+  successful declared-decoder surface changes. This is a provenance gate
+  against decorative targets; it does not prove that the target is empirically
+  correct or value-bearing.
+
+target_scramble_capacity_sensitivity:
+  a declared target predicate and a supplied scrambled predicate are compared
+  under the same observation using unrestricted deterministic exact recovery.
+  This catches whether the fixed observation has different exact recovery
+  capacity for the two targets, and it avoids treating a mere Boolean
+  true/false relabeling as substantive when both targets are recoverable.
 
 dynamic_presentation_equivariance:
   compatibility alias for dynamic_edge_projection_exactness. The old name is
@@ -503,6 +511,16 @@ generated_recovery_fact_closure:
   observation and failure for a constant observation; exact observation
   preserves the target fact, while constant observation removes it from common
   target facts.
+
+generated_target_scramble_capacity_sensitivity:
+  generated four-state same-prevalence scramble. The original target is exactly
+  recoverable from a fixed block observation, while the crosscut scrambled
+  target is not recoverable by any deterministic decoder.
+
+generated_target_scramble_capacity_label_swap_control:
+  generated two-state complement control. The scramble is only a Boolean label
+  swap and both targets are exactly recoverable from the same observation, so
+  unrestricted capacity is unchanged.
 
 generated_stale_reflected_fact_closure:
   generated before/after transition relations derive stale and reflected

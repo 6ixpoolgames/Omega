@@ -39,6 +39,7 @@ carrier_certificate;
 carrier_transfer;
 bounded_recovery;
 target_scramble_sensitivity;
+target_scramble_capacity_sensitivity;
 dynamic_presentation_equivariance;
 dynamic_edge_projection_exactness;
 dynamic_step_lifting;
@@ -85,9 +86,14 @@ generated transport closure checks a transferred endpoint-role fact without
 treating transfer as identity;
 generated failed-transport closure shows role-label preservation can survive
 even when the transfer contract rejects carrier transfer.
-target-scramble sensitivity compares a declared target against a scrambled
-target under the same observation and decoder family, with a decorative-target
-control where both targets remain unrecoverable.
+target-scramble sensitivity is now explicitly decoder-relative: it compares a
+declared target against a scrambled target under the same observation and
+declared decoder family, with a decorative-target control where both targets
+remain unrecoverable.
+target-scramble capacity sensitivity compares the same target/scramble idea
+under unrestricted deterministic exact recovery from the fixed observation. The
+generated suite includes a same-prevalence crosscut scramble that changes
+capacity and a Boolean label-swap control that does not.
 dynamic presentation equivariance is retained as the legacy name for checking
 whether an abstract transition is exactly the projection of exact dynamics
 under a declared presentation, including a negative case with both a missing
@@ -129,7 +135,7 @@ That retained summary records:
 
 ```text
 15 fixture smoke cases;
-29 generated/adversarial cases;
+31 generated/adversarial cases;
 source digests where a source compiler is used;
 compiled/model digests;
 audit counts;

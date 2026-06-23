@@ -21,6 +21,7 @@ from omega.adapters.finite_relational.facts import (
     presentation_fact_closure_facts,
     reachable_pairs,
     target_scramble_sensitivity_facts,
+    target_scramble_capacity_sensitivity_facts,
     ternary_relation,
     safe_prefix_count_facts,
     viable_trajectory_count_comparison_facts,
@@ -77,6 +78,8 @@ def run_audit(model: FiniteRelationalModel, audit: dict[str, Any]) -> AuditResul
         return _presentation_fact_derive_closure(model, audit)
     if kind == "target_scramble_sensitivity":
         return _target_scramble_sensitivity(model, audit)
+    if kind == "target_scramble_capacity_sensitivity":
+        return _target_scramble_capacity_sensitivity(model, audit)
     if kind == "dynamic_edge_projection_exactness":
         return _dynamic_edge_projection_exactness(model, audit)
     if kind == "dynamic_presentation_equivariance":
@@ -396,6 +399,25 @@ def _target_scramble_sensitivity(
         observed,
         "sensitive",
         "sensitive",
+    )
+
+
+def _target_scramble_capacity_sensitivity(
+    model: FiniteRelationalModel,
+    audit: dict[str, Any],
+) -> AuditResult:
+    observed = target_scramble_capacity_sensitivity_facts(
+        model,
+        observation=_role(model, audit, "observation"),
+        target_predicate=_role(model, audit, "target_predicate"),
+        scrambled_predicate=_role(model, audit, "scrambled_predicate"),
+    )
+    return _result(
+        audit,
+        "target_scramble_capacity_sensitivity",
+        observed,
+        "capacity_sensitive",
+        "capacity_sensitive",
     )
 
 

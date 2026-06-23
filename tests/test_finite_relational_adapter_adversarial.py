@@ -24,6 +24,8 @@ REQUIRED_CASE_IDS = {
     "generated_recovery_fact_closure",
     "generated_target_scramble_sensitivity",
     "generated_decorative_target_scramble_control",
+    "generated_target_scramble_capacity_sensitivity",
+    "generated_target_scramble_capacity_label_swap_control",
     "generated_dynamic_equivariance",
     "generated_dynamic_non_equivariance",
     "generated_edge_exact_path_lifting_failure",
@@ -82,6 +84,12 @@ def test_generated_adversarial_cases_cover_adapter_failure_modes() -> None:
     assert by_id["generated_decorative_target_scramble_control"].summary()["findings"] == [
         "not_sensitive"
     ]
+    assert by_id[
+        "generated_target_scramble_capacity_sensitivity"
+    ].summary()["findings"] == ["capacity_sensitive"]
+    assert by_id[
+        "generated_target_scramble_capacity_label_swap_control"
+    ].summary()["findings"] == ["not_capacity_sensitive"]
     assert by_id["generated_dynamic_equivariance"].summary()["findings"] == ["equivariant"]
     assert by_id["generated_dynamic_non_equivariance"].summary()["findings"] == [
         "not_equivariant"
@@ -304,6 +312,38 @@ def test_generated_target_scramble_sensitivity_cases_gate_decorative_targets() -
     assert decorative["observed"]["successful_decoders_changed"] is False
     assert decorative["observed"]["target_recoverable"] is False
     assert decorative["observed"]["scrambled_recoverable"] is False
+
+
+def test_generated_target_scramble_capacity_cases_ignore_label_swap() -> None:
+    cases = {case.case_id: case for case in generate_adversarial_cases()}
+    sensitive = cases[
+        "generated_target_scramble_capacity_sensitivity"
+    ].audit_results[0].as_dict()
+    label_swap = cases[
+        "generated_target_scramble_capacity_label_swap_control"
+    ].audit_results[0].as_dict()
+
+    assert sensitive["passed"] is True
+    assert sensitive["finding"] == "capacity_sensitive"
+    assert sensitive["observed"]["sensitivity_mode"] == (
+        "unrestricted_exact_recovery_capacity"
+    )
+    assert sensitive["observed"]["same_prevalence"] is True
+    assert sensitive["observed"]["complement_scramble"] is False
+    assert sensitive["observed"]["target_recoverable"] is True
+    assert sensitive["observed"]["scrambled_recoverable"] is False
+    assert sensitive["observed"]["scrambled_ambiguous_observation_labels"] == [
+        "left_block",
+        "right_block",
+    ]
+
+    assert label_swap["passed"] is True
+    assert label_swap["finding"] == "not_capacity_sensitive"
+    assert label_swap["observed"]["same_prevalence"] is True
+    assert label_swap["observed"]["complement_scramble"] is True
+    assert label_swap["observed"]["target_recoverable"] is True
+    assert label_swap["observed"]["scrambled_recoverable"] is True
+    assert label_swap["observed"]["recoverability_changed"] is False
 
 
 def test_generated_dynamic_equivariance_cases_check_projected_edges() -> None:

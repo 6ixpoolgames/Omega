@@ -186,13 +186,26 @@ The formal layer can test whether the presentation preserves a declared exact
 target. Adapter provenance explains why that declared exact target should be
 treated as the target of interest rather than an artifact of our setup.
 
-The finite relational adapter now includes a small target-scramble sensitivity
-gate for this purpose. It compares bounded recovery for a declared target
-against bounded recovery for a supplied scrambled or erased target under the
-same observation and decoder family. A positive result means the target has
-operational bite in that declared adapter surface; a negative result is a
-decorative-target warning. It still does not prove that the target is the right
-empirical or ethical target.
+The finite relational adapter now includes two small target-scramble gates for
+this purpose.
+
+```text
+target_scramble_sensitivity:
+  compares bounded recovery for a declared target against bounded recovery for
+  a supplied scrambled or erased target under the same observation and declared
+  decoder family. This is decoder-relative.
+
+target_scramble_capacity_sensitivity:
+  compares unrestricted deterministic exact recovery for the declared target
+  and supplied scramble under the same observation. This asks whether the
+  observation has different exact recovery capacity for the two targets.
+```
+
+The capacity version is stronger than the decoder-relative gate because it does
+not confuse a hand-picked decoder registry with the fixed observation's exact
+recovery capacity. It also treats a pure Boolean label swap as unchanged when
+both targets are recoverable. Neither version proves that the target is the
+right empirical or ethical target.
 
 ## Non-Claims
 

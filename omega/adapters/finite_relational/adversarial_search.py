@@ -65,6 +65,8 @@ def generate_adversarial_cases() -> tuple[GeneratedAdapterCase, ...]:
         _generated_recovery_fact_closure_case(),
         _generated_target_scramble_sensitivity_case(),
         _generated_decorative_target_scramble_control_case(),
+        _generated_target_scramble_capacity_sensitivity_case(),
+        _generated_target_scramble_capacity_label_swap_control_case(),
         _generated_dynamic_equivariance_case(),
         _generated_dynamic_non_equivariance_case(),
         _generated_edge_exact_path_lifting_failure_case(),
@@ -721,6 +723,106 @@ def _generated_decorative_target_scramble_control_case() -> GeneratedAdapterCase
         ),
     }
     return _validated_ir_case("generated_decorative_target_scramble_control", model)
+
+
+def _generated_target_scramble_capacity_sensitivity_case() -> GeneratedAdapterCase:
+    model = {
+        "model_id": "generated_target_scramble_capacity_sensitivity",
+        "schema_version": "0.1.0",
+        "domains": {
+            "state": ["a", "b", "c", "d"],
+            "observation": ["left_block", "right_block"],
+        },
+        "predicates": {
+            "block_target": {
+                "domain": "state",
+                "members": ["a", "b"],
+            },
+            "crosscut_scramble": {
+                "domain": "state",
+                "members": ["a", "c"],
+            },
+        },
+        "functions": {
+            "block_observation": {
+                "domain": "state",
+                "codomain": "observation",
+                "mapping": {
+                    "a": "left_block",
+                    "b": "left_block",
+                    "c": "right_block",
+                    "d": "right_block",
+                },
+            },
+        },
+        "audits": [
+            {
+                "id": "generated_same_prevalence_scramble_changes_capacity",
+                "kind": "target_scramble_capacity_sensitivity",
+                "observation": "block_observation",
+                "target_predicate": "block_target",
+                "scrambled_predicate": "crosscut_scramble",
+                "expect": "capacity_sensitive",
+            }
+        ],
+        "provenance": _generated_provenance(
+            "Generated finite relational case: the original target is exactly "
+            "recoverable from a fixed block observation, while a same-prevalence "
+            "crosscut scramble is not recoverable by any deterministic decoder."
+        ),
+    }
+    return _validated_ir_case("generated_target_scramble_capacity_sensitivity", model)
+
+
+def _generated_target_scramble_capacity_label_swap_control_case() -> GeneratedAdapterCase:
+    model = {
+        "model_id": "generated_target_scramble_capacity_label_swap_control",
+        "schema_version": "0.1.0",
+        "domains": {
+            "state": ["left", "right"],
+            "observation": ["red", "blue"],
+        },
+        "predicates": {
+            "left_target": {
+                "domain": "state",
+                "members": ["left"],
+            },
+            "right_scramble": {
+                "domain": "state",
+                "members": ["right"],
+            },
+        },
+        "functions": {
+            "color_observation": {
+                "domain": "state",
+                "codomain": "observation",
+                "mapping": {
+                    "left": "red",
+                    "right": "blue",
+                },
+            },
+        },
+        "audits": [
+            {
+                "id": "generated_boolean_label_swap_does_not_change_capacity",
+                "kind": "target_scramble_capacity_sensitivity",
+                "observation": "color_observation",
+                "target_predicate": "left_target",
+                "scrambled_predicate": "right_scramble",
+                "expect": "not_capacity_sensitive",
+            }
+        ],
+        "provenance": _generated_provenance(
+            "Generated finite relational control: the scrambled target is the "
+            "Boolean complement of the original target, and an unrestricted "
+            "deterministic decoder class recovers both from the same exact "
+            "observation."
+        ),
+    }
+    return _validated_ir_case(
+        "generated_target_scramble_capacity_label_swap_control",
+        model,
+    )
 
 
 def _generated_dynamic_equivariance_case() -> GeneratedAdapterCase:

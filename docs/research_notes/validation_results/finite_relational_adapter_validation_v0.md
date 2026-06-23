@@ -465,3 +465,54 @@ New generated cases:
 | --- | --- | --- |
 | generated_presentation_fact_derive_closure | `derive_ok` | A nonconstant seed target filters the generated presentation universe and forces complement and visible-pair facts without a supplied candidate fact list. |
 | generated_presentation_fact_derive_closure_constant_control | `derive_ok` | A constant seed admits every generated presentation, so only constant predicate facts survive and no visible pair is forced. |
+
+## Addendum: Target Scramble Capacity Sensitivity
+
+Run roots:
+
+```text
+.tmp/finite_relational_adapter_smoke_target_capacity/20260624_004406
+.tmp/finite_relational_adapter_adversarial_target_capacity/20260624_004406
+```
+
+Commands:
+
+```powershell
+./.venv/Scripts/python.exe -m pytest `
+  tests/test_finite_relational_adapter.py `
+  tests/test_finite_relational_adapter_adversarial.py `
+  -q --basetemp .tmp/pytest-target-scramble-capacity -p no:cacheprovider
+
+./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_smoke `
+  --out-root .tmp/finite_relational_adapter_smoke_target_capacity
+
+./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_adversarial `
+  --out-root .tmp/finite_relational_adapter_adversarial_target_capacity
+```
+
+Result:
+
+```text
+focused adapter/adversarial pytest: 49 passed
+adapter smoke: PASS, 15 fixtures, focused pytest 105 passed
+generated/adversarial validation: PASS, 31 cases
+```
+
+Semantic repair:
+
+```text
+target_scramble_sensitivity is now explicitly decoder-relative:
+  it compares exact recoverability and successful decoders within a declared
+  decoder family.
+
+target_scramble_capacity_sensitivity is a separate exact-capacity audit:
+  it compares unrestricted deterministic exact recovery from the fixed
+  observation for the target and supplied scramble.
+```
+
+New generated cases:
+
+| Case | Finding | Meaning |
+| --- | --- | --- |
+| generated_target_scramble_capacity_sensitivity | `capacity_sensitive` | A four-state same-prevalence crosscut scramble changes unrestricted exact recovery from the fixed observation. |
+| generated_target_scramble_capacity_label_swap_control | `not_capacity_sensitive` | A two-state Boolean complement scramble is only a target-label swap when both targets are exactly recoverable from the same observation. |
