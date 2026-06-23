@@ -419,6 +419,16 @@ generated_recovery_fact_closure:
   observation and failure for a constant observation; exact observation
   preserves the target fact, while constant observation removes it from common
   target facts.
+
+generated_stale_reflected_fact_closure:
+  generated before/after transition relations derive stale and reflected
+  reach-status presentations; stale preserves the before-loss reachability
+  fact, reflected preserves the after-loss reachability fact, and their common
+  closure keeps only the constant target.
+
+generated_multi_presentation_fact_closure:
+  generated row and column presentations preserve different exact facts; the
+  declared family closure keeps only facts visible through every presentation.
 ```
 
 Each fixture should include provenance.
@@ -508,7 +518,10 @@ derived graph carrier certification;
 finite grid asymmetry;
 presentation/fact closure shrinkage for a derived carrier pair;
 presentation/fact closure shrinkage for generated reachability, viability, and
-recovery-style target facts.
+recovery-style target facts;
+presentation/fact closure shrinkage for stale/reflected reach-status facts;
+presentation/fact closure shrinkage for multi-presentation row/column fact
+intersections.
 ```
 
 The generator is intentionally finite and boring. It does not discover empirical

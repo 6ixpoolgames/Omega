@@ -16,6 +16,8 @@ REQUIRED_CASE_IDS = {
     "generated_reachability_fact_closure",
     "generated_viability_fact_closure",
     "generated_recovery_fact_closure",
+    "generated_stale_reflected_fact_closure",
+    "generated_multi_presentation_fact_closure",
     "generated_finite_grid_asymmetry",
 }
 
@@ -44,6 +46,16 @@ def test_generated_adversarial_cases_cover_adapter_failure_modes() -> None:
     assert by_id["generated_recovery_fact_closure"].summary()["findings"] == [
         "recoverable",
         "not_recoverable",
+        "closure_ok",
+        "closure_ok",
+    ]
+    assert by_id["generated_stale_reflected_fact_closure"].summary()["findings"] == [
+        "closure_ok",
+        "closure_ok",
+        "closure_ok",
+    ]
+    assert by_id["generated_multi_presentation_fact_closure"].summary()["findings"] == [
+        "closure_ok",
         "closure_ok",
         "closure_ok",
     ]
@@ -148,6 +160,55 @@ def test_generated_recovery_fact_closure_case_checks_bounded_recovery_gap() -> N
     assert constant["finding"] == "not_recoverable"
     assert constant["observed"]["successful_decoders"] == []
     assert constant["observed"]["ambiguous_observation_labels"] == ["merged"]
+
+
+def test_generated_stale_reflected_fact_closure_case_has_time_indexed_intersection() -> None:
+    case = {
+        case.case_id: case for case in generate_adversarial_cases()
+    }["generated_stale_reflected_fact_closure"]
+    results = {result.audit_id: result.as_dict() for result in case.audit_results}
+
+    stale = results["generated_stale_status_preserves_before_reach_fact"]
+    reflected = results["generated_reflected_status_preserves_after_reach_fact"]
+    intersection = results["generated_stale_reflected_intersection_drops_time_specific_facts"]
+
+    assert stale["passed"] is True
+    assert stale["observed"]["common_target_predicates"] == [
+        "all_states",
+        "before_can_reach_goal",
+    ]
+    assert stale["observed"]["present_expected_absent_target_predicates"] == []
+    assert reflected["passed"] is True
+    assert reflected["observed"]["common_target_predicates"] == [
+        "after_can_reach_goal",
+        "all_states",
+    ]
+    assert reflected["observed"]["present_expected_absent_target_predicates"] == []
+    assert intersection["passed"] is True
+    assert intersection["observed"]["common_target_predicates"] == ["all_states"]
+    assert intersection["observed"]["present_expected_absent_target_predicates"] == []
+
+
+def test_generated_multi_presentation_fact_closure_case_intersects_family_facts() -> None:
+    case = {
+        case.case_id: case for case in generate_adversarial_cases()
+    }["generated_multi_presentation_fact_closure"]
+    results = {result.audit_id: result.as_dict() for result in case.audit_results}
+
+    row = results["generated_identity_row_family_keeps_row_fact"]
+    col = results["generated_identity_col_family_keeps_col_fact"]
+    family = results["generated_row_col_family_keeps_only_shared_constants"]
+
+    assert row["passed"] is True
+    assert row["observed"]["common_target_predicates"] == ["all_states", "row_top"]
+    assert row["observed"]["common_visible_pair_count"] == 8
+    assert col["passed"] is True
+    assert col["observed"]["common_target_predicates"] == ["all_states", "col_left"]
+    assert family["passed"] is True
+    assert family["observed"]["common_target_predicates"] == ["all_states"]
+    assert family["observed"]["common_visible_pair_count"] == 4
+    assert family["observed"]["present_expected_absent_target_predicates"] == []
+    assert family["observed"]["missing_expected_common_visible_pairs"] == []
 
 
 def test_generated_adversarial_validation_retains_outputs(tmp_path: Path) -> None:

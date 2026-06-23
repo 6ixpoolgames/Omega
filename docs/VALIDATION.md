@@ -260,7 +260,8 @@ generated suite includes phantom reachability, hidden reachability loss, proxy
 non-factorization, derived graph asymmetry, derived graph carrier
 certification, finite grid asymmetry, and presentation/fact closure shrinkage
 for a derived carrier pair plus generated reachability, viability, and
-recovery-style target facts.
+recovery-style target facts, stale/reflected reach-status facts, and
+multi-presentation row/column fact intersections.
 
 The controlled empirical path enumerates fixed small finite families and reports
 rates/frequencies for selected proxy failures:

@@ -295,14 +295,26 @@ generated_recovery_fact_closure:
   exact observation passes bounded recovery, constant observation fails it, and
   the recovery target is removed from common target facts by the constant
   observation.
+
+generated_stale_reflected_fact_closure:
+  stale reach-status presentation preserves the before-loss reachability fact;
+  reflected reach-status presentation preserves the after-loss reachability
+  fact;
+  the common closure of both presentations keeps only the constant target.
+
+generated_multi_presentation_fact_closure:
+  row and column presentations preserve different target facts;
+  the declared family intersection keeps only facts invariant across every
+  presentation and removes row-only / column-only targets.
 ```
 
-The next closure work should move from these tiny generated cases to
-stale/reflected and multi-presentation generated closure examples:
+The next closure work should move from these finite generated checks to
+transport-aware and broader empirical-adjacent closure examples:
 
 ```text
 presentations:
-  exact / coarse / stale / reflected views produced by retained fixtures
+  exact / coarse / stale / reflected / transported views produced by retained
+  fixtures
 
 facts:
   reachability, recovery, viability, and carrier-certification facts

@@ -58,6 +58,8 @@ def generate_adversarial_cases() -> tuple[GeneratedAdapterCase, ...]:
         _generated_reachability_fact_closure_case(),
         _generated_viability_fact_closure_case(),
         _generated_recovery_fact_closure_case(),
+        _generated_stale_reflected_fact_closure_case(),
+        _generated_multi_presentation_fact_closure_case(),
         _generated_finite_grid_asymmetry_case(),
     )
 
@@ -513,6 +515,179 @@ def _generated_recovery_fact_closure_case() -> GeneratedAdapterCase:
         ),
     }
     return _validated_ir_case("generated_recovery_fact_closure", model)
+
+
+def _generated_stale_reflected_fact_closure_case() -> GeneratedAdapterCase:
+    states = ("start", "mid", "goal", "dead")
+    before_edges = (("start", "mid"), ("mid", "goal"))
+    after_edges = (("start", "mid"),)
+    target = "goal"
+    before_reachable = {
+        source
+        for source in states
+        if (source, target) in reachable_pairs(set(states), set(before_edges))
+    }
+    after_reachable = {
+        source
+        for source in states
+        if (source, target) in reachable_pairs(set(states), set(after_edges))
+    }
+    model = {
+        "model_id": "generated_stale_reflected_fact_closure",
+        "schema_version": "0.1.0",
+        "carrier": list(states),
+        "relations": {
+            "before_next": [list(edge) for edge in before_edges],
+            "after_next": [list(edge) for edge in after_edges],
+        },
+        "predicates": {
+            "before_can_reach_goal": sorted(before_reachable),
+            "after_can_reach_goal": sorted(after_reachable),
+            "all_states": list(states),
+        },
+        "functions": {
+            "stale_reach_status": {
+                state: ("can_reach_goal" if state in before_reachable else "cannot_reach_goal")
+                for state in states
+            },
+            "reflected_reach_status": {
+                state: ("can_reach_goal" if state in after_reachable else "cannot_reach_goal")
+                for state in states
+            },
+        },
+        "audits": [
+            {
+                "id": "generated_stale_status_preserves_before_reach_fact",
+                "kind": "presentation_fact_closure",
+                "presentations": ["stale_reach_status"],
+                "target_predicates": [
+                    "before_can_reach_goal",
+                    "after_can_reach_goal",
+                    "all_states",
+                ],
+                "expected_common_target_predicates": [
+                    "before_can_reach_goal",
+                    "all_states",
+                ],
+                "expected_absent_target_predicates": ["after_can_reach_goal"],
+                "expect": "closure_ok",
+            },
+            {
+                "id": "generated_reflected_status_preserves_after_reach_fact",
+                "kind": "presentation_fact_closure",
+                "presentations": ["reflected_reach_status"],
+                "target_predicates": [
+                    "before_can_reach_goal",
+                    "after_can_reach_goal",
+                    "all_states",
+                ],
+                "expected_common_target_predicates": [
+                    "after_can_reach_goal",
+                    "all_states",
+                ],
+                "expected_absent_target_predicates": ["before_can_reach_goal"],
+                "expect": "closure_ok",
+            },
+            {
+                "id": "generated_stale_reflected_intersection_drops_time_specific_facts",
+                "kind": "presentation_fact_closure",
+                "presentations": ["stale_reach_status", "reflected_reach_status"],
+                "target_predicates": [
+                    "before_can_reach_goal",
+                    "after_can_reach_goal",
+                    "all_states",
+                ],
+                "expected_common_target_predicates": ["all_states"],
+                "expected_absent_target_predicates": [
+                    "before_can_reach_goal",
+                    "after_can_reach_goal",
+                ],
+                "expect": "closure_ok",
+            },
+        ],
+        "provenance": _generated_provenance(
+            "Generated finite relational case: stale and reflected reachability "
+            "presentations each preserve their matching time-indexed fact, but "
+            "their common closure drops both time-specific reachability facts."
+        ),
+    }
+    return _validated_ir_case("generated_stale_reflected_fact_closure", model)
+
+
+def _generated_multi_presentation_fact_closure_case() -> GeneratedAdapterCase:
+    states = ("top_left", "top_right", "bottom_left", "bottom_right")
+    row_top = {"top_left", "top_right"}
+    col_left = {"top_left", "bottom_left"}
+    model = {
+        "model_id": "generated_multi_presentation_fact_closure",
+        "schema_version": "0.1.0",
+        "carrier": list(states),
+        "predicates": {
+            "row_top": sorted(row_top),
+            "col_left": sorted(col_left),
+            "all_states": list(states),
+        },
+        "functions": {
+            "identity": {state: state for state in states},
+            "row_projection": {
+                state: ("top" if state in row_top else "bottom") for state in states
+            },
+            "col_projection": {
+                state: ("left" if state in col_left else "right") for state in states
+            },
+        },
+        "audits": [
+            {
+                "id": "generated_identity_row_family_keeps_row_fact",
+                "kind": "presentation_fact_closure",
+                "presentations": ["identity", "row_projection"],
+                "target_predicates": ["row_top", "col_left", "all_states"],
+                "expected_common_target_predicates": ["row_top", "all_states"],
+                "expected_absent_target_predicates": ["col_left"],
+                "expected_common_visible_pairs": [
+                    ["top_left", "bottom_left"],
+                    ["top_left", "bottom_right"],
+                    ["top_right", "bottom_left"],
+                    ["top_right", "bottom_right"],
+                    ["bottom_left", "top_left"],
+                    ["bottom_left", "top_right"],
+                    ["bottom_right", "top_left"],
+                    ["bottom_right", "top_right"],
+                ],
+                "expect": "closure_ok",
+            },
+            {
+                "id": "generated_identity_col_family_keeps_col_fact",
+                "kind": "presentation_fact_closure",
+                "presentations": ["identity", "col_projection"],
+                "target_predicates": ["row_top", "col_left", "all_states"],
+                "expected_common_target_predicates": ["col_left", "all_states"],
+                "expected_absent_target_predicates": ["row_top"],
+                "expect": "closure_ok",
+            },
+            {
+                "id": "generated_row_col_family_keeps_only_shared_constants",
+                "kind": "presentation_fact_closure",
+                "presentations": ["identity", "row_projection", "col_projection"],
+                "target_predicates": ["row_top", "col_left", "all_states"],
+                "expected_common_target_predicates": ["all_states"],
+                "expected_absent_target_predicates": ["row_top", "col_left"],
+                "expected_common_visible_pairs": [
+                    ["top_left", "bottom_right"],
+                    ["top_right", "bottom_left"],
+                    ["bottom_left", "top_right"],
+                    ["bottom_right", "top_left"],
+                ],
+                "expect": "closure_ok",
+            },
+        ],
+        "provenance": _generated_provenance(
+            "Generated finite relational case: row and column presentations "
+            "preserve different exact target facts, while the declared family "
+            "closure keeps only facts invariant across every presentation."
+        ),
+    }
+    return _validated_ir_case("generated_multi_presentation_fact_closure", model)
 
 
 def _target_closure_audits(
