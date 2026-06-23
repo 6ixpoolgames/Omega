@@ -24,6 +24,8 @@ REQUIRED_CASE_IDS = {
     "generated_decorative_target_scramble_control",
     "generated_dynamic_equivariance",
     "generated_dynamic_non_equivariance",
+    "generated_viable_trajectory_count_cycle",
+    "generated_viable_trajectory_count_branching",
     "generated_stale_reflected_fact_closure",
     "generated_multi_presentation_fact_closure",
     "generated_crosscutting_presentation_closure",
@@ -71,6 +73,12 @@ def test_generated_adversarial_cases_cover_adapter_failure_modes() -> None:
     assert by_id["generated_dynamic_equivariance"].summary()["findings"] == ["equivariant"]
     assert by_id["generated_dynamic_non_equivariance"].summary()["findings"] == [
         "not_equivariant"
+    ]
+    assert by_id["generated_viable_trajectory_count_cycle"].summary()["findings"] == [
+        "count_ok"
+    ]
+    assert by_id["generated_viable_trajectory_count_branching"].summary()["findings"] == [
+        "count_ok"
     ]
     assert by_id["generated_stale_reflected_fact_closure"].summary()["findings"] == [
         "closure_ok",
@@ -253,6 +261,24 @@ def test_generated_dynamic_equivariance_cases_check_projected_edges() -> None:
     assert broken["observed"]["reflects_steps"] is False
     assert broken["observed"]["missing_projected_edges"] == [("R", "L")]
     assert broken["observed"]["phantom_abstract_edges"] == [("L", "L")]
+
+
+def test_generated_viable_trajectory_count_cases_expose_growth_profiles() -> None:
+    cases = {case.case_id: case for case in generate_adversarial_cases()}
+    cycle = cases["generated_viable_trajectory_count_cycle"].audit_results[0].as_dict()
+    branching = cases["generated_viable_trajectory_count_branching"].audit_results[
+        0
+    ].as_dict()
+
+    assert cycle["passed"] is True
+    assert cycle["finding"] == "count_ok"
+    assert cycle["observed"]["count_profile"] == [2, 2, 2, 2]
+    assert cycle["observed"]["final_count"] == 2
+
+    assert branching["passed"] is True
+    assert branching["finding"] == "count_ok"
+    assert branching["observed"]["count_profile"] == [2, 4, 8, 16]
+    assert branching["observed"]["final_count"] == 16
 
 
 def test_generated_stale_reflected_fact_closure_case_has_time_indexed_intersection() -> None:

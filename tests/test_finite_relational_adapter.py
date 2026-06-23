@@ -335,6 +335,92 @@ def test_dynamic_presentation_equivariance_rejects_missing_and_phantom_edges() -
     assert result["observed"]["phantom_abstract_edges"] == [("L", "L")]
 
 
+def test_viable_trajectory_count_counts_safe_cycle_words() -> None:
+    model = load_model(
+        {
+            "model_id": "inline_viable_trajectory_count_cycle",
+            "domains": {"state": ["left", "right"]},
+            "predicates": {"safe": ["left", "right"]},
+            "relations": {
+                "next": {
+                    "domains": ["state", "state"],
+                    "tuples": [["left", "right"], ["right", "left"]],
+                }
+            },
+            "audits": [
+                {
+                    "id": "two_state_cycle_has_flat_safe_word_profile",
+                    "kind": "viable_trajectory_count",
+                    "transition": "next",
+                    "safety": "safe",
+                    "horizon": 3,
+                    "expected_count_profile": [2, 2, 2, 2],
+                    "expected_final_count": 2,
+                    "expect": "count_ok",
+                }
+            ],
+            "provenance": {
+                "declared_before_run": True,
+                "source": "inline test",
+                "claim_boundary": "viable trajectory count unit test",
+            },
+        }
+    )
+    [result] = [result.as_dict() for result in run_declared_audits(model)]
+
+    assert result["passed"] is True
+    assert result["finding"] == "count_ok"
+    assert result["observed"]["count_profile"] == [2, 2, 2, 2]
+    assert result["observed"]["final_count"] == 2
+    assert result["observed"]["nonempty_at_horizon"] is True
+
+
+def test_viable_trajectory_count_rejects_wrong_branching_profile() -> None:
+    model = load_model(
+        {
+            "model_id": "inline_viable_trajectory_count_branching_control",
+            "domains": {"state": ["left", "right"]},
+            "predicates": {"safe": ["left", "right"]},
+            "relations": {
+                "next": {
+                    "domains": ["state", "state"],
+                    "tuples": [
+                        ["left", "left"],
+                        ["left", "right"],
+                        ["right", "left"],
+                        ["right", "right"],
+                    ],
+                }
+            },
+            "audits": [
+                {
+                    "id": "complete_two_state_graph_is_not_flat",
+                    "kind": "viable_trajectory_count",
+                    "transition": "next",
+                    "safety": "safe",
+                    "horizon": 2,
+                    "expected_count_profile": [2, 2, 2],
+                    "expected_final_count": 2,
+                    "expect": "not_count_ok",
+                }
+            ],
+            "provenance": {
+                "declared_before_run": True,
+                "source": "inline test",
+                "claim_boundary": "viable trajectory count negative unit test",
+            },
+        }
+    )
+    [result] = [result.as_dict() for result in run_declared_audits(model)]
+
+    assert result["passed"] is True
+    assert result["finding"] == "not_count_ok"
+    assert result["observed"]["count_profile"] == [2, 4, 8]
+    assert result["observed"]["final_count"] == 8
+    assert result["observed"]["profile_matches"] is False
+    assert result["observed"]["final_count_matches"] is False
+
+
 def test_presentation_fact_closure_audit_checks_visible_pairs_and_targets() -> None:
     model = load_model(
         {

@@ -187,6 +187,9 @@ Run root:
   The generated suite includes both an `equivariant` case and a
   `not_equivariant` control with one missing projected edge and one phantom
   abstract edge.
+- Viable trajectory count now records finite safe trajectory-count profiles for
+  a declared transition and safety predicate. The generated suite includes a
+  flat recurrent-cycle profile and a branching profile.
 - `carrier_transfer_pass` and `carrier_transfer_fail_missing_return` exercise
   the adapter-level transfer contract. The negative case preserves endpoint
   correspondence but rejects transfer because the target carrier loses return
@@ -269,3 +272,42 @@ New generated cases:
 | --- | --- | --- |
 | generated_dynamic_equivariance | `equivariant` | Abstract label dynamics exactly matches the projection of exact state dynamics. |
 | generated_dynamic_non_equivariance | `not_equivariant` | Abstract label dynamics misses one projected edge and adds one phantom edge. |
+
+## Addendum: Viable Trajectory Count
+
+Run roots:
+
+```text
+.tmp/finite_relational_adapter_smoke_viable_trajectory_count/20260623_212321
+.tmp/finite_relational_adapter_adversarial_viable_trajectory_count/20260623_212324
+```
+
+Commands:
+
+```powershell
+./.venv/Scripts/python.exe -m pytest `
+  tests/test_finite_relational_adapter.py `
+  tests/test_finite_relational_adapter_adversarial.py `
+  -q --basetemp .tmp/pytest-viable-trajectory-count -p no:cacheprovider
+
+./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_smoke `
+  --out-root .tmp/finite_relational_adapter_smoke_viable_trajectory_count
+
+./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_adversarial `
+  --out-root .tmp/finite_relational_adapter_adversarial_viable_trajectory_count
+```
+
+Result:
+
+```text
+focused adapter/adversarial pytest: 37 passed
+adapter smoke: PASS, 15 fixtures, focused pytest 93 passed
+generated/adversarial validation: PASS, 23 cases
+```
+
+New generated cases:
+
+| Case | Finding | Count profile |
+| --- | --- | --- |
+| generated_viable_trajectory_count_cycle | `count_ok` | `[2, 2, 2, 2]` |
+| generated_viable_trajectory_count_branching | `count_ok` | `[2, 4, 8, 16]` |

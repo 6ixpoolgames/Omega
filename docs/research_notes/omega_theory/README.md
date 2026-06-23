@@ -25,6 +25,7 @@ adapter_provenance_v0.md
 audit_response_roadmap_v0.md
 finite_relational_adapter_design_v0.md
 dynamic_presentation_equivariance_v0.md
+viable_trajectory_count_v0.md
 useful_information_and_constraint_selection_v0.md
 declaration_budget_and_transport_profiles_v0.md
 deterministic_pre_stochastic_layer_v0.md
@@ -393,6 +394,7 @@ adapter_provenance_v0.md
 audit_response_roadmap_v0.md
 finite_relational_adapter_design_v0.md
 dynamic_presentation_equivariance_v0.md
+viable_trajectory_count_v0.md
 deterministic_pre_stochastic_layer_v0.md
 stochastic_recovery_characterization_v0.md
 stochastic_recovery_theorem_spine_v0.md

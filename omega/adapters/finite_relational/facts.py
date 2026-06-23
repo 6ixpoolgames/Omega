@@ -135,6 +135,79 @@ def dynamic_presentation_equivariance_facts(
     }
 
 
+def viable_trajectory_count_facts(
+    model: FiniteRelationalModel,
+    *,
+    transition: str,
+    safety: str,
+    horizon: int,
+    start_predicate: str | None = None,
+) -> dict[str, object]:
+    """Count finite safe transition words up to a declared horizon.
+
+    A word of horizon n is a state sequence with n transition edges. Every
+    state in the sequence must satisfy the declared safety predicate. If a
+    start predicate is supplied, horizon-zero words are restricted to that
+    predicate; otherwise all safe states may start a word.
+    """
+
+    if horizon < 0:
+        raise SchemaError(f"viable trajectory horizon must be nonnegative: {horizon}")
+    edges = binary_relation(model, transition)
+    transition_relation = model.relations[transition]
+    if transition_relation.domains[0] != transition_relation.domains[1]:
+        raise SchemaError(
+            "viable trajectory count requires a transition over one domain: "
+            f"{transition_relation.domains}"
+        )
+    domain = transition_relation.domains[0]
+    states = set(model.domain(domain))
+    safe = set(model.predicate_members(safety))
+    if model.predicates[safety].domain != domain:
+        raise SchemaError(
+            f"safety predicate domain must match transition domain: "
+            f"{model.predicates[safety].domain} != {domain}"
+        )
+    if start_predicate is None:
+        starts = states
+    else:
+        if model.predicates[start_predicate].domain != domain:
+            raise SchemaError(
+                f"start predicate domain must match transition domain: "
+                f"{model.predicates[start_predicate].domain} != {domain}"
+            )
+        starts = set(model.predicate_members(start_predicate))
+
+    adjacency: dict[str, list[str]] = defaultdict(list)
+    for source, target in sorted(edges):
+        adjacency[source].append(target)
+
+    current = {state: 1 for state in sorted(starts & safe)}
+    count_profile = [sum(current.values())]
+    for _step in range(horizon):
+        next_counts: dict[str, int] = defaultdict(int)
+        for source, count in current.items():
+            for target in adjacency[source]:
+                if target in safe:
+                    next_counts[target] += count
+        current = dict(next_counts)
+        count_profile.append(sum(current.values()))
+
+    return {
+        "transition": transition,
+        "safety": safety,
+        "start_predicate": start_predicate,
+        "horizon": horizon,
+        "safe_state_count": len(safe),
+        "start_state_count": len(starts),
+        "safe_start_state_count": len(starts & safe),
+        "transition_edge_count": len(edges),
+        "count_profile": count_profile,
+        "final_count": count_profile[-1],
+        "nonempty_at_horizon": count_profile[-1] > 0,
+    }
+
+
 def nonfactorization_witnesses_for_predicate(
     model: FiniteRelationalModel,
     *,

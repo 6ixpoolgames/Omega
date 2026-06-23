@@ -17,6 +17,7 @@ from omega.adapters.finite_relational.facts import (
     reachable_pairs,
     target_scramble_sensitivity_facts,
     ternary_relation,
+    viable_trajectory_count_facts,
 )
 from omega.adapters.finite_relational.model import FiniteRelationalModel, SchemaError
 
@@ -69,6 +70,8 @@ def run_audit(model: FiniteRelationalModel, audit: dict[str, Any]) -> AuditResul
         return _target_scramble_sensitivity(model, audit)
     if kind == "dynamic_presentation_equivariance":
         return _dynamic_presentation_equivariance(model, audit)
+    if kind == "viable_trajectory_count":
+        return _viable_trajectory_count(model, audit)
     raise SchemaError(f"unknown audit kind: {kind}")
 
 
@@ -318,6 +321,48 @@ def _dynamic_presentation_equivariance(
     )
 
 
+def _viable_trajectory_count(
+    model: FiniteRelationalModel,
+    audit: dict[str, Any],
+) -> AuditResult:
+    horizon = _audit_nonnegative_int(audit, "horizon")
+    start_predicate = audit.get("start_predicate")
+    observed = viable_trajectory_count_facts(
+        model,
+        transition=_role(model, audit, "transition"),
+        safety=_role(model, audit, "safety"),
+        horizon=horizon,
+        start_predicate=str(start_predicate) if start_predicate is not None else None,
+    )
+    expected_profile = _audit_ints(audit, "expected_count_profile")
+    expected_final_raw = audit.get("expected_final_count")
+    expected_final_count = (
+        None
+        if expected_final_raw is None
+        else _audit_nonnegative_int(audit, "expected_final_count")
+    )
+    profile_matches = not expected_profile or list(expected_profile) == observed["count_profile"]
+    final_matches = (
+        expected_final_count is None or expected_final_count == observed["final_count"]
+    )
+    observed.update(
+        {
+            "expected_count_profile": list(expected_profile),
+            "expected_final_count": expected_final_count,
+            "profile_matches": profile_matches,
+            "final_count_matches": final_matches,
+            "count_ok": profile_matches and final_matches,
+        }
+    )
+    return _result(
+        audit,
+        "viable_trajectory_count",
+        observed,
+        "count_ok",
+        "count_ok",
+    )
+
+
 def _role(model: FiniteRelationalModel, audit: dict[str, Any], name: str) -> str:
     if name in audit:
         return str(audit[name])
@@ -348,6 +393,26 @@ def _audit_pairs(audit: dict[str, Any], key: str) -> tuple[tuple[str, str], ...]
             )
         pairs.append((str(raw_pair[0]), str(raw_pair[1])))
     return tuple(pairs)
+
+
+def _audit_ints(audit: dict[str, Any], key: str) -> tuple[int, ...]:
+    raw_items = audit.get(key, [])
+    if not isinstance(raw_items, list):
+        raise SchemaError(f"audit {audit.get('id', '<unnamed>')} {key} must be a list")
+    return tuple(_int_value(audit, key, item) for item in raw_items)
+
+
+def _audit_nonnegative_int(audit: dict[str, Any], key: str) -> int:
+    value = _int_value(audit, key, audit.get(key))
+    if value < 0:
+        raise SchemaError(f"audit {audit.get('id', '<unnamed>')} {key} must be nonnegative")
+    return value
+
+
+def _int_value(audit: dict[str, Any], key: str, value: Any) -> int:
+    if isinstance(value, bool) or not isinstance(value, int):
+        raise SchemaError(f"audit {audit.get('id', '<unnamed>')} {key} must contain integers")
+    return value
 
 
 def _result(

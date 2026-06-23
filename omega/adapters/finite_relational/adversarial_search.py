@@ -65,6 +65,8 @@ def generate_adversarial_cases() -> tuple[GeneratedAdapterCase, ...]:
         _generated_decorative_target_scramble_control_case(),
         _generated_dynamic_equivariance_case(),
         _generated_dynamic_non_equivariance_case(),
+        _generated_viable_trajectory_count_cycle_case(),
+        _generated_viable_trajectory_count_branching_case(),
         _generated_stale_reflected_fact_closure_case(),
         _generated_multi_presentation_fact_closure_case(),
         _generated_crosscutting_presentation_closure_case(),
@@ -727,6 +729,75 @@ def _generated_dynamic_non_equivariance_case() -> GeneratedAdapterCase:
         ),
     }
     return _validated_ir_case("generated_dynamic_non_equivariance", model)
+
+
+def _generated_viable_trajectory_count_cycle_case() -> GeneratedAdapterCase:
+    model = {
+        "model_id": "generated_viable_trajectory_count_cycle",
+        "schema_version": "0.1.0",
+        "carrier": ["left", "right"],
+        "predicates": {
+            "safe": ["left", "right"],
+        },
+        "relations": {
+            "next": [["left", "right"], ["right", "left"]],
+        },
+        "audits": [
+            {
+                "id": "generated_cycle_safe_word_profile",
+                "kind": "viable_trajectory_count",
+                "transition": "next",
+                "safety": "safe",
+                "horizon": 3,
+                "expected_count_profile": [2, 2, 2, 2],
+                "expected_final_count": 2,
+                "expect": "count_ok",
+            }
+        ],
+        "provenance": _generated_provenance(
+            "Generated finite relational case: a two-state recurrent cycle has "
+            "a flat finite viable-trajectory count profile over the declared "
+            "safe support."
+        ),
+    }
+    return _validated_ir_case("generated_viable_trajectory_count_cycle", model)
+
+
+def _generated_viable_trajectory_count_branching_case() -> GeneratedAdapterCase:
+    model = {
+        "model_id": "generated_viable_trajectory_count_branching",
+        "schema_version": "0.1.0",
+        "carrier": ["left", "right"],
+        "predicates": {
+            "safe": ["left", "right"],
+        },
+        "relations": {
+            "next": [
+                ["left", "left"],
+                ["left", "right"],
+                ["right", "left"],
+                ["right", "right"],
+            ],
+        },
+        "audits": [
+            {
+                "id": "generated_branching_safe_word_profile",
+                "kind": "viable_trajectory_count",
+                "transition": "next",
+                "safety": "safe",
+                "horizon": 3,
+                "expected_count_profile": [2, 4, 8, 16],
+                "expected_final_count": 16,
+                "expect": "count_ok",
+            }
+        ],
+        "provenance": _generated_provenance(
+            "Generated finite relational case: a fully branching two-state "
+            "safe dynamics has a larger finite viable-trajectory count profile "
+            "than the recurrent two-state cycle."
+        ),
+    }
+    return _validated_ir_case("generated_viable_trajectory_count_branching", model)
 
 
 def _generated_stale_reflected_fact_closure_case() -> GeneratedAdapterCase:

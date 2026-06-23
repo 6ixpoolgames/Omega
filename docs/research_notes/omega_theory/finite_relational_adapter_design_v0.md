@@ -334,6 +334,12 @@ dynamic_presentation_equivariance:
   an abstract edge, and every abstract edge must be induced by some exact edge.
   The payload separates missing projected edges from phantom abstract edges.
 
+viable_trajectory_count:
+  a declared transition and safety predicate are used to count finite safe
+  trajectories through a declared horizon. The audit reports a count profile
+  over horizons `0..n` and can check expected profiles. This is a finite count
+  pilot, not an entropy or value measure.
+
 presentation_fact_closure:
   a declared presentation family is checked for common visible pairs and
   common target predicates. The audit can require selected pairs or targets to

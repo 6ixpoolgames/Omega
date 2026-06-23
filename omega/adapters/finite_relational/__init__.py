@@ -107,6 +107,7 @@ from omega.adapters.finite_relational.facts import (
     predicate_respects_presentation,
     presentation_fact_closure_facts,
     target_scramble_sensitivity_facts,
+    viable_trajectory_count_facts,
 )
 from omega.adapters.finite_relational.grid_obstacle_experiment import (
     GridObstacleCase,
@@ -260,4 +261,5 @@ __all__ = [
     "support_summary_for_policy_kernel",
     "target_scramble_sensitivity_facts",
     "validate_action_kernel",
+    "viable_trajectory_count_facts",
 ]

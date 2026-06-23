@@ -40,6 +40,7 @@ carrier_transfer;
 bounded_recovery;
 target_scramble_sensitivity;
 dynamic_presentation_equivariance;
+viable_trajectory_count;
 presentation_fact_closure.
 ```
 
@@ -81,6 +82,9 @@ dynamic presentation equivariance checks whether an abstract transition is
 exactly the projection of exact dynamics under a declared presentation,
 including a negative case with both a missing projected edge and a phantom
 abstract edge.
+viable trajectory count exposes finite safe trajectory-count profiles, including
+a flat two-state recurrent cycle and a branching two-state graph with larger
+horizon counts.
 the gridworld obstacle source-generator characterization now checks reflected versus
 stale source-reach presentations over the after-reachability fact.
 the stochastic continuation layer now checks reflected versus stale hit-status
