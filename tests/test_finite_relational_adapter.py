@@ -715,7 +715,9 @@ def test_presentation_fact_closure_audit_checks_visible_pairs_and_targets() -> N
             "carrier": ["left", "right"],
             "predicates": {
                 "left_target": ["left"],
+                "right_target": ["right"],
                 "constant_target": ["left", "right"],
+                "empty_target": [],
             },
             "functions": {
                 "identity": {
@@ -773,12 +775,104 @@ def test_presentation_fact_closure_audit_checks_visible_pairs_and_targets() -> N
     assert exact["observed"]["seed_target_predicates"] == ["constant_target"]
     assert exact["observed"]["surplus_common_target_predicates"] == ["left_target"]
     assert exact["observed"]["nonconstant_surplus_target_predicates"] == ["left_target"]
+    assert exact["observed"]["surplus_scope"] == "family_relative"
+    assert exact["observed"]["family_relative_surplus_target_predicates"] == [
+        "left_target"
+    ]
     assert erasing["passed"] is True
     assert erasing["finding"] == "closure_ok"
     assert erasing["observed"]["common_visible_pair_count"] == 0
     assert erasing["observed"]["common_target_predicates"] == ["constant_target"]
     assert erasing["observed"]["surplus_common_target_predicates"] == []
     assert erasing["observed"]["nonconstant_surplus_target_predicates"] == []
+
+
+def test_presentation_fact_derive_closure_generates_from_seed_constraints() -> None:
+    model = load_model(
+        {
+            "model_id": "inline_presentation_fact_derive_closure",
+            "carrier": ["left", "right"],
+            "predicates": {
+                "left_target": ["left"],
+                "right_target": ["right"],
+                "constant_target": ["left", "right"],
+                "empty_target": [],
+            },
+            "audits": [
+                {
+                    "id": "derive_from_left_seed",
+                    "kind": "presentation_fact_derive_closure",
+                    "seed_target_predicates": ["left_target"],
+                    "expected_closure_visible_pairs": [["left", "right"], ["right", "left"]],
+                    "expected_surplus_visible_pairs": [["left", "right"], ["right", "left"]],
+                    "expected_closure_target_facts": [
+                        "pred:{}",
+                        "pred:{left}",
+                        "pred:{right}",
+                        "pred:{left,right}",
+                    ],
+                    "expected_nonconstant_surplus_target_facts": ["pred:{right}"],
+                    "expected_known_closure_target_predicates": [
+                        "constant_target",
+                        "empty_target",
+                        "left_target",
+                        "right_target",
+                    ],
+                    "expected_known_surplus_target_predicates": [
+                        "constant_target",
+                        "empty_target",
+                        "right_target",
+                    ],
+                    "expect": "derive_ok",
+                },
+                {
+                    "id": "constant_seed_derives_no_nonconstant_fact",
+                    "kind": "presentation_fact_derive_closure",
+                    "seed_target_predicates": ["constant_target"],
+                    "expected_absent_closure_visible_pairs": [
+                        ["left", "right"],
+                        ["right", "left"],
+                    ],
+                    "expected_absent_closure_target_facts": [
+                        "pred:{left}",
+                        "pred:{right}",
+                    ],
+                    "expected_absent_nonconstant_surplus_target_facts": [
+                        "pred:{left}",
+                        "pred:{right}",
+                    ],
+                    "expect": "derive_ok",
+                },
+            ],
+            "provenance": {
+                "declared_before_run": True,
+                "source": "inline test",
+                "claim_boundary": "presentation derive closure unit test",
+            },
+        }
+    )
+    left_seed, constant_seed = [result.as_dict() for result in run_declared_audits(model)]
+
+    assert left_seed["passed"] is True
+    assert left_seed["finding"] == "derive_ok"
+    assert left_seed["observed"]["closure_mode"] == (
+        "generated_universe_admissible_presentations"
+    )
+    assert left_seed["observed"]["presentation_universe_count"] == 2
+    assert left_seed["observed"]["admissible_presentation_count"] == 1
+    assert left_seed["observed"]["seed_target_facts"] == ["pred:{left}"]
+    assert left_seed["observed"]["closure_visible_pairs"] == [
+        ("left", "right"),
+        ("right", "left"),
+    ]
+    assert left_seed["observed"]["nonconstant_surplus_target_facts"] == ["pred:{right}"]
+
+    assert constant_seed["passed"] is True
+    assert constant_seed["finding"] == "derive_ok"
+    assert constant_seed["observed"]["presentation_universe_count"] == 2
+    assert constant_seed["observed"]["admissible_presentation_count"] == 2
+    assert constant_seed["observed"]["closure_visible_pairs"] == []
+    assert constant_seed["observed"]["nonconstant_surplus_target_facts"] == []
 
 
 def test_carrier_transfer_fixture_accepts_declared_transfer_contract() -> None:

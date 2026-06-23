@@ -17,6 +17,7 @@ from omega.adapters.finite_relational.facts import (
     extendable_safe_prefix_count_facts,
     nonfactorization_witnesses_for_predicate,
     presentation_violations,
+    presentation_fact_derive_closure_facts,
     presentation_fact_closure_facts,
     reachable_pairs,
     target_scramble_sensitivity_facts,
@@ -72,6 +73,8 @@ def run_audit(model: FiniteRelationalModel, audit: dict[str, Any]) -> AuditResul
         return _bounded_recovery(model, audit)
     if kind == "presentation_fact_closure":
         return _presentation_fact_closure(model, audit)
+    if kind == "presentation_fact_derive_closure":
+        return _presentation_fact_derive_closure(model, audit)
     if kind == "target_scramble_sensitivity":
         return _target_scramble_sensitivity(model, audit)
     if kind == "dynamic_edge_projection_exactness":
@@ -292,6 +295,82 @@ def _presentation_fact_closure(
         observed,
         "closure_ok",
         "closure_ok",
+    )
+
+
+def _presentation_fact_derive_closure(
+    model: FiniteRelationalModel,
+    audit: dict[str, Any],
+) -> AuditResult:
+    observed = presentation_fact_derive_closure_facts(
+        model,
+        seed_visible_pairs=_audit_pairs(audit, "seed_visible_pairs"),
+        seed_target_predicates=_audit_strings(audit, "seed_target_predicates"),
+        expected_closure_visible_pairs=_audit_pairs(
+            audit,
+            "expected_closure_visible_pairs",
+        ),
+        expected_absent_closure_visible_pairs=_audit_pairs(
+            audit,
+            "expected_absent_closure_visible_pairs",
+        ),
+        expected_surplus_visible_pairs=_audit_pairs(
+            audit,
+            "expected_surplus_visible_pairs",
+        ),
+        expected_absent_surplus_visible_pairs=_audit_pairs(
+            audit,
+            "expected_absent_surplus_visible_pairs",
+        ),
+        expected_closure_target_facts=_audit_strings(
+            audit,
+            "expected_closure_target_facts",
+        ),
+        expected_absent_closure_target_facts=_audit_strings(
+            audit,
+            "expected_absent_closure_target_facts",
+        ),
+        expected_surplus_target_facts=_audit_strings(
+            audit,
+            "expected_surplus_target_facts",
+        ),
+        expected_absent_surplus_target_facts=_audit_strings(
+            audit,
+            "expected_absent_surplus_target_facts",
+        ),
+        expected_nonconstant_surplus_target_facts=_audit_strings(
+            audit,
+            "expected_nonconstant_surplus_target_facts",
+        ),
+        expected_absent_nonconstant_surplus_target_facts=_audit_strings(
+            audit,
+            "expected_absent_nonconstant_surplus_target_facts",
+        ),
+        expected_known_closure_target_predicates=_audit_strings(
+            audit,
+            "expected_known_closure_target_predicates",
+        ),
+        expected_absent_known_closure_target_predicates=_audit_strings(
+            audit,
+            "expected_absent_known_closure_target_predicates",
+        ),
+        expected_known_surplus_target_predicates=_audit_strings(
+            audit,
+            "expected_known_surplus_target_predicates",
+        ),
+        expected_absent_known_surplus_target_predicates=_audit_strings(
+            audit,
+            "expected_absent_known_surplus_target_predicates",
+        ),
+        domain=str(audit.get("domain", "state")),
+        max_states=_audit_optional_nonnegative_int(audit, "max_states", default=4),
+    )
+    return _result(
+        audit,
+        "presentation_fact_derive_closure",
+        observed,
+        "derive_ok",
+        "derive_ok",
     )
 
 
@@ -549,6 +628,17 @@ def _audit_nonnegative_int(audit: dict[str, Any], key: str) -> int:
     if value < 0:
         raise SchemaError(f"audit {audit.get('id', '<unnamed>')} {key} must be nonnegative")
     return value
+
+
+def _audit_optional_nonnegative_int(
+    audit: dict[str, Any],
+    key: str,
+    *,
+    default: int,
+) -> int:
+    if key not in audit:
+        return default
+    return _audit_nonnegative_int(audit, key)
 
 
 def _int_value(audit: dict[str, Any], key: str, value: Any) -> int:

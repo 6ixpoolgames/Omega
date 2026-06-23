@@ -406,3 +406,62 @@ viable_trajectory_count is now documented as the legacy safe-prefix count.
 New count work should distinguish safe_prefix_count from
 extendable_safe_prefix_count.
 ```
+
+## Addendum: Family-Relative Closure And Generated Derive Mode
+
+Run roots:
+
+```text
+.tmp/finite_relational_adapter_smoke_closure_derive/20260624_003632
+.tmp/finite_relational_adapter_adversarial_closure_derive/20260624_003603
+```
+
+Commands:
+
+```powershell
+./.venv/Scripts/python.exe -m pytest `
+  tests/test_finite_relational_adapter.py `
+  tests/test_finite_relational_adapter_adversarial.py `
+  -q --basetemp .tmp/pytest-closure-derive -p no:cacheprovider
+
+./.venv/Scripts/python.exe -m pytest `
+  tests/test_finite_relational_source_parity.py `
+  -q --basetemp .tmp/pytest-closure-source-parity -p no:cacheprovider
+
+./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_smoke `
+  --out-root .tmp/finite_relational_adapter_smoke_closure_derive
+
+./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_adversarial `
+  --out-root .tmp/finite_relational_adapter_adversarial_closure_derive
+```
+
+Result:
+
+```text
+focused adapter/adversarial pytest: 46 passed
+source-parity pytest: 2 passed
+adapter smoke: PASS, 15 fixtures, focused pytest 102 passed
+generated/adversarial validation: PASS, 29 cases
+```
+
+Semantic repair:
+
+```text
+presentation_fact_closure now marks its surplus as family-relative:
+  closure_mode = declared_family_candidate_fact_surface
+  surplus_scope = family_relative
+
+presentation_fact_derive_closure is a separate generated-universe audit:
+  all finite partitions/presentations of the selected carrier;
+  all Boolean predicate facts;
+  all ordered visible-pair facts;
+  seed facts filter admissible presentations;
+  closure is the intersection of generated facts over admissible presentations.
+```
+
+New generated cases:
+
+| Case | Findings | Meaning |
+| --- | --- | --- |
+| generated_presentation_fact_derive_closure | `derive_ok` | A nonconstant seed target filters the generated presentation universe and forces complement and visible-pair facts without a supplied candidate fact list. |
+| generated_presentation_fact_derive_closure_constant_control | `derive_ok` | A constant seed admits every generated presentation, so only constant predicate facts survive and no visible pair is forced. |

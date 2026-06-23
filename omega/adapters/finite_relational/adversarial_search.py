@@ -58,6 +58,8 @@ def generate_adversarial_cases() -> tuple[GeneratedAdapterCase, ...]:
         _generated_derived_graph_asymmetry_case(),
         _generated_derived_graph_carrier_case(),
         _generated_presentation_fact_closure_case(),
+        _generated_presentation_fact_derive_closure_case(),
+        _generated_presentation_fact_derive_closure_constant_control_case(),
         _generated_reachability_fact_closure_case(),
         _generated_viability_fact_closure_case(),
         _generated_recovery_fact_closure_case(),
@@ -350,6 +352,87 @@ def _generated_presentation_fact_closure_case() -> GeneratedAdapterCase:
         "derived_graph",
         graph_source,
         compiled,
+    )
+
+
+def _generated_presentation_fact_derive_closure_case() -> GeneratedAdapterCase:
+    model = {
+        "model_id": "generated_presentation_fact_derive_closure",
+        "schema_version": "0.1.0",
+        "carrier": ["left", "right"],
+        "predicates": {
+            "left_target": ["left"],
+            "right_target": ["right"],
+            "all_states": ["left", "right"],
+            "empty_target": [],
+        },
+        "audits": [
+            {
+                "id": "generated_left_seed_forces_complement_and_visibility",
+                "kind": "presentation_fact_derive_closure",
+                "seed_target_predicates": ["left_target"],
+                "expected_closure_visible_pairs": [["left", "right"], ["right", "left"]],
+                "expected_surplus_visible_pairs": [["left", "right"], ["right", "left"]],
+                "expected_nonconstant_surplus_target_facts": ["pred:{right}"],
+                "expected_known_surplus_target_predicates": [
+                    "all_states",
+                    "empty_target",
+                    "right_target",
+                ],
+                "expect": "derive_ok",
+            }
+        ],
+        "provenance": _generated_provenance(
+            "Generated finite derive-mode closure case: a nonconstant seed "
+            "predicate filters the generated presentation universe and forces "
+            "additional visible-pair and complement facts."
+        ),
+    }
+    return _validated_ir_case("generated_presentation_fact_derive_closure", model)
+
+
+def _generated_presentation_fact_derive_closure_constant_control_case() -> (
+    GeneratedAdapterCase
+):
+    model = {
+        "model_id": "generated_presentation_fact_derive_closure_constant_control",
+        "schema_version": "0.1.0",
+        "carrier": ["left", "right"],
+        "predicates": {
+            "left_target": ["left"],
+            "right_target": ["right"],
+            "all_states": ["left", "right"],
+            "empty_target": [],
+        },
+        "audits": [
+            {
+                "id": "generated_constant_seed_forces_no_nonconstant_fact",
+                "kind": "presentation_fact_derive_closure",
+                "seed_target_predicates": ["all_states"],
+                "expected_absent_closure_visible_pairs": [
+                    ["left", "right"],
+                    ["right", "left"],
+                ],
+                "expected_absent_closure_target_facts": [
+                    "pred:{left}",
+                    "pred:{right}",
+                ],
+                "expected_absent_nonconstant_surplus_target_facts": [
+                    "pred:{left}",
+                    "pred:{right}",
+                ],
+                "expect": "derive_ok",
+            }
+        ],
+        "provenance": _generated_provenance(
+            "Generated finite derive-mode closure control: a constant seed "
+            "admits every generated presentation, so only constant predicate "
+            "facts survive."
+        ),
+    }
+    return _validated_ir_case(
+        "generated_presentation_fact_derive_closure_constant_control",
+        model,
     )
 
 

@@ -373,7 +373,16 @@ presentation_fact_closure:
   a declared presentation family is checked for common visible pairs and
   common target predicates. The audit can require selected pairs or targets to
   be common, and selected pairs or targets to be absent from the common facts.
-  This is the adapter analogue of the Lean presentation/fact closure pilots.
+  This is the adapter analogue of the Lean presentation/fact closure pilots,
+  but its surplus payload is family-relative: it is computed over the supplied
+  presentation family and supplied candidate target-predicate surface.
+
+presentation_fact_derive_closure:
+  a small finite derive-mode audit. It generates all partitions of a selected
+  finite carrier and all Boolean predicate / ordered visible-pair facts, then
+  filters presentations by seed facts and computes the facts true of every
+  admissible generated presentation. This distinguishes generated closure from
+  declared-family candidate-surface surplus.
 ```
 
 These are intentionally small. They exercise the current theorem spine without
@@ -468,6 +477,16 @@ generated_presentation_fact_closure:
   generated closure audits show the certified endpoint pair is common-visible
   under identity presentation and absent after admitting a constant
   presentation.
+
+generated_presentation_fact_derive_closure:
+  generated finite derive-mode closure over a two-state carrier. A nonconstant
+  seed target filters the generated presentation universe and forces
+  complement and visible-pair facts without a supplied candidate fact list.
+
+generated_presentation_fact_derive_closure_constant_control:
+  generated finite derive-mode control. A constant seed admits every generated
+  presentation, so only constant predicate facts survive and no visible pair is
+  forced.
 
 generated_reachability_fact_closure:
   generated finite transition relation derives a can-reach-goal target

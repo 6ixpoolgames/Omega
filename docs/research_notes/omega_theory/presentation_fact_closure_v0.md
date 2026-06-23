@@ -109,7 +109,7 @@ does the admissible family leave any nonconstant facts common,
 or does it collapse everything useful?
 ```
 
-## Closure Surplus
+## Family-Relative Closure Surplus
 
 The finite relational adapter now reports a direct closure-surplus payload for
 `presentation_fact_closure` audits:
@@ -128,10 +128,10 @@ nonconstant surplus target predicates:
   surplus target facts that are neither empty nor full on their declared domain
 ```
 
-This is the adapter-level form of the question:
+This is the adapter-level form of the family-relative question:
 
 ```text
-does the closure generate anything beyond what was seeded?
+does the declared-family closure preserve anything beyond what was seeded?
 ```
 
 Interpretation:
@@ -141,14 +141,95 @@ empty surplus:
   the closure is certifying only the supplied seed facts.
 
 nonempty nonconstant surplus:
-  the declared presentation family forces additional target structure beyond
-  the seed.
+  the supplied presentation family preserves additional target structure from
+  the supplied candidate fact surface beyond the seed.
 ```
 
-This is still conditional on the supplied presentation family and satisfaction
-relation. It does not prove that the family is empirically correct or morally
-privileged. It does give a direct test for whether a closure pilot is merely
-relabeling declarations or deriving additional structure.
+This is still conditional on three supplied surfaces:
+
+```text
+declared presentation family;
+declared candidate target predicates;
+declared satisfaction relation.
+```
+
+The adapter now marks this explicitly as:
+
+```text
+closure_mode = declared_family_candidate_fact_surface
+surplus_scope = family_relative
+```
+
+The older `surplus_common_*` field names are retained for compatibility, but
+the more precise reading is:
+
+```text
+family-relative surplus:
+  common facts from the supplied candidate surface minus supplied seed facts.
+```
+
+This does not prove that the family is empirically correct or morally
+privileged. It does give a direct test for whether a declared-family closure
+pilot is merely relabeling declarations or preserving additional structure
+within the declared candidate fact surface.
+
+## Generated Finite Derive Mode
+
+The adapter also now includes:
+
+```text
+presentation_fact_derive_closure
+```
+
+This is the first small derive-mode repair. Instead of taking a supplied
+presentation family and supplied candidate fact list, it generates both finite
+universes for a small carrier:
+
+```text
+PresentationUniverse:
+  all finite partitions/presentations of the selected domain.
+
+FactUniverse:
+  all Boolean predicates over the selected domain;
+  all ordered visible-pair facts.
+```
+
+Seed facts filter the presentation universe:
+
+```text
+seed target predicates:
+  admissible presentations must be constant on each seed predicate's fibers.
+
+seed visible pairs:
+  admissible presentations must not merge those ordered pairs.
+```
+
+Then:
+
+```text
+Closure(seed):
+  facts true of every generated admissible presentation.
+
+Surplus(seed):
+  Closure(seed) minus the seed facts.
+```
+
+This is still finite and adapter-relative. It is not a theorem that a real
+substrate has the right presentation universe. Its value is narrower and useful:
+it distinguishes facts forced by seed constraints over a generated finite
+universe from facts merely listed in a declared candidate surface.
+
+Minimal two-state behavior:
+
+```text
+seed = left_target:
+  only the identity partition is admissible;
+  the closure forces left/right visibility and the complement target fact.
+
+seed = all_states:
+  every partition is admissible;
+  only constant predicate facts survive and no visible pair is forced.
+```
 
 ## Finite X2 Pilot
 

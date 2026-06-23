@@ -17,6 +17,8 @@ REQUIRED_CASE_IDS = {
     "generated_derived_graph_asymmetry",
     "generated_derived_graph_carrier",
     "generated_presentation_fact_closure",
+    "generated_presentation_fact_derive_closure",
+    "generated_presentation_fact_derive_closure_constant_control",
     "generated_reachability_fact_closure",
     "generated_viability_fact_closure",
     "generated_recovery_fact_closure",
@@ -54,6 +56,12 @@ def test_generated_adversarial_cases_cover_adapter_failure_modes() -> None:
     assert by_id["generated_presentation_fact_closure"].summary()["findings"].count(
         "closure_ok"
     ) == 2
+    assert by_id["generated_presentation_fact_derive_closure"].summary()["findings"] == [
+        "derive_ok"
+    ]
+    assert by_id[
+        "generated_presentation_fact_derive_closure_constant_control"
+    ].summary()["findings"] == ["derive_ok"]
     assert by_id["generated_reachability_fact_closure"].summary()["findings"] == [
         "closure_ok",
         "closure_ok",
@@ -176,6 +184,41 @@ def test_generated_presentation_fact_closure_case_has_strict_visibility_drop() -
     assert erasing["finding"] == "closure_ok"
     assert erasing["observed"]["common_visible_pair_count"] == 0
     assert erasing["observed"]["present_expected_absent_visible_pairs"] == []
+
+
+def test_generated_presentation_fact_derive_closure_cases_do_not_need_candidate_facts() -> None:
+    cases = {case.case_id: case for case in generate_adversarial_cases()}
+    derive = cases["generated_presentation_fact_derive_closure"].audit_results[0].as_dict()
+    constant = cases[
+        "generated_presentation_fact_derive_closure_constant_control"
+    ].audit_results[0].as_dict()
+
+    assert derive["passed"] is True
+    assert derive["finding"] == "derive_ok"
+    assert derive["observed"]["closure_mode"] == (
+        "generated_universe_admissible_presentations"
+    )
+    assert derive["observed"]["presentation_universe_count"] == 2
+    assert derive["observed"]["admissible_presentation_count"] == 1
+    assert derive["observed"]["target_fact_universe_count"] == 4
+    assert derive["observed"]["seed_target_facts"] == ["pred:{left}"]
+    assert derive["observed"]["surplus_visible_pairs"] == [
+        ("left", "right"),
+        ("right", "left"),
+    ]
+    assert derive["observed"]["nonconstant_surplus_target_facts"] == ["pred:{right}"]
+    assert derive["observed"]["known_surplus_target_predicates"] == [
+        "all_states",
+        "empty_target",
+        "right_target",
+    ]
+
+    assert constant["passed"] is True
+    assert constant["finding"] == "derive_ok"
+    assert constant["observed"]["presentation_universe_count"] == 2
+    assert constant["observed"]["admissible_presentation_count"] == 2
+    assert constant["observed"]["closure_visible_pairs"] == []
+    assert constant["observed"]["nonconstant_surplus_target_facts"] == []
 
 
 def test_generated_target_fact_closure_cases_have_strict_target_drop() -> None:

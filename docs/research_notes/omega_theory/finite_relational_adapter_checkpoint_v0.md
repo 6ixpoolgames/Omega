@@ -47,7 +47,8 @@ viable_trajectory_count;
 safe_prefix_count;
 extendable_safe_prefix_count;
 viable_trajectory_count_comparison;
-presentation_fact_closure.
+presentation_fact_closure;
+presentation_fact_derive_closure.
 ```
 
 This is still synthetic validation. The adapter currently audits declared finite
@@ -69,6 +70,9 @@ fixtures cover both positive and negative checks;
 generated/adversarial cases can rediscover expected finite failure modes.
 generated presentation/fact closure cases can test common-fact shrinkage
 without hand-written Lean-only examples;
+generated finite derive-mode closure can enumerate small presentation and fact
+universes from seed constraints rather than relying on a supplied candidate
+fact list;
 generated closure cases now include stale/reflected and multi-presentation
 family intersections;
 generated crosscutting closure stress now checks row, column, and parity
@@ -125,7 +129,7 @@ That retained summary records:
 
 ```text
 15 fixture smoke cases;
-27 generated/adversarial cases;
+29 generated/adversarial cases;
 source digests where a source compiler is used;
 compiled/model digests;
 audit counts;

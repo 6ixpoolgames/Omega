@@ -541,6 +541,7 @@ def _rename_closure_observed(
         "seed_visible_pairs",
         "common_visible_pairs",
         "surplus_common_visible_pairs",
+        "family_relative_surplus_visible_pairs",
         "missing_expected_common_visible_pairs",
         "present_expected_absent_visible_pairs",
         "missing_expected_surplus_visible_pairs",
