@@ -95,6 +95,7 @@ from omega.adapters.finite_relational.grid_obstacle_experiment import (
     GridObstacleCase,
     GridObstacleStudy,
     compile_grid_obstacle_source,
+    generate_grid_obstacle_characterization,
     generate_grid_obstacle_study,
 )
 from omega.adapters.finite_relational.model import (
@@ -171,6 +172,7 @@ __all__ = [
     "generate_adversarial_cases",
     "generate_controlled_experiment",
     "generate_deterministic_layer_study",
+    "generate_grid_obstacle_characterization",
     "generate_grid_obstacle_study",
     "generate_policy_dynamics_study",
     "generate_source_parity_study",

@@ -10,7 +10,7 @@ from typing import Any
 from omega.adapters.finite_relational.grid_obstacle_experiment import (
     GridObstacleCase,
     digest_json,
-    generate_grid_obstacle_study,
+    generate_grid_obstacle_characterization,
 )
 from omega.adapters.finite_relational.model import load_model, model_digest
 from omega.validation._common import timestamped_run_root
@@ -35,26 +35,31 @@ def run_finite_relational_grid_obstacle(
     out_root: Path = Path(".tmp/finite_relational_grid_obstacle"),
 ) -> dict[str, Any]:
     run_root = timestamped_run_root(out_root)
-    study = generate_grid_obstacle_study()
-    study_dir = run_root / study.study_id
-    study_dir.mkdir(parents=True, exist_ok=True)
-    representative_summaries = [
-        _retain_case(case, study_dir / case.case_id)
-        for case in study.representative_cases
-    ]
-    study_summary = study.summary() | {
-        "output": str(study_dir),
-        "representative_cases": representative_summaries,
-    }
-    _write_json(study_dir / "study_summary.json", study_summary)
+    studies = generate_grid_obstacle_characterization()
+    study_summaries = []
+    for study in studies:
+        study_dir = run_root / study.study_id
+        study_dir.mkdir(parents=True, exist_ok=True)
+        representative_summaries = [
+            _retain_case(case, study_dir / case.case_id)
+            for case in study.representative_cases
+        ]
+        study_summary = study.summary() | {
+            "output": str(study_dir),
+            "representative_cases": representative_summaries,
+        }
+        _write_json(study_dir / "study_summary.json", study_summary)
+        study_summaries.append(study_summary)
 
     result = {
         "status": "PASS",
         "run_root": str(run_root),
-        "study_count": 1,
-        "representative_case_count": len(study.representative_cases),
-        "all_passed": study.all_passed,
-        "studies": [study_summary],
+        "study_count": len(studies),
+        "representative_case_count": sum(
+            len(study.representative_cases) for study in studies
+        ),
+        "all_passed": all(study.all_passed for study in studies),
+        "studies": study_summaries,
     }
     _write_json(run_root / "summary.json", result)
     return result

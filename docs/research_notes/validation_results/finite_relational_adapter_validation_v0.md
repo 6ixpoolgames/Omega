@@ -1,8 +1,8 @@
 # Finite Relational Adapter Validation V0
 
 Date: 2026-06-23
-Run context: working tree based on `d327dd1`, with the source-contract
-hardening batch applied before commit.
+Run context: working tree based on `d7bf91a`, with the grid obstacle
+characterization batch applied before commit.
 
 Claim boundary:
 
@@ -17,35 +17,31 @@ source abstraction is empirically correct.
 
 ```powershell
 ./.venv/Scripts/python.exe -m pytest `
-  tests/test_derived_graph_adapter.py `
-  tests/test_finite_grid_adapter.py `
   tests/test_finite_relational_grid_obstacle.py `
-  tests/test_finite_relational_adapter_adversarial.py `
-  -q --basetemp .tmp/pytest-source-contract-final -p no:cacheprovider
+  tests/test_finite_relational_adapter_smoke.py `
+  -q --basetemp .tmp/pytest-grid-characterization-final -p no:cacheprovider
+
+./.venv/Scripts/python.exe -m omega.validation.finite_relational_grid_obstacle `
+  --out-root .tmp/finite_relational_grid_obstacle_characterization_final
 
 ./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_adversarial `
-  --out-root .tmp/finite_relational_adapter_adversarial_source_contract_final
+  --out-root .tmp/finite_relational_adapter_adversarial_grid_characterization_final
 
 ./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_smoke `
-  --out-root .tmp/finite_relational_adapter_smoke_source_contract_final
+  --out-root .tmp/finite_relational_adapter_smoke_grid_characterization_final
 
 ./.venv/Scripts/ruff.exe check omega/adapters/finite_relational/__init__.py `
-  omega/adapters/finite_relational/source_contract.py `
-  omega/adapters/finite_relational/derived_graph.py `
-  omega/adapters/finite_relational/finite_grid.py `
   omega/adapters/finite_relational/grid_obstacle_experiment.py `
-  omega/validation/finite_relational_adapter_smoke.py `
-  tests/test_derived_graph_adapter.py `
-  tests/test_finite_grid_adapter.py `
   tests/test_finite_relational_grid_obstacle.py `
-  tests/test_finite_relational_adapter_adversarial.py
+  omega/validation/finite_relational_grid_obstacle.py
 ```
 
 Result:
 
 ```text
-adapter source-contract pytest: 32 passed
-adapter smoke: PASS, 15 fixtures, focused pytest 73 passed
+grid characterization pytest: 8 passed
+grid obstacle characterization: PASS, 3 studies, 6 representative cases
+adapter smoke: PASS, 15 fixtures, focused pytest 74 passed
 generated/adversarial validation: PASS, 17 cases
 focused ruff: passed
 ```
@@ -55,7 +51,7 @@ focused ruff: passed
 Run root:
 
 ```text
-.tmp/finite_relational_adapter_smoke_source_contract_final/20260623_165417
+.tmp/finite_relational_adapter_smoke_grid_characterization_final/20260623_170426
 ```
 
 | Fixture | Audits | Findings | All passed | Source digest | Compiled/model digest |
@@ -81,7 +77,7 @@ Run root:
 Run root:
 
 ```text
-.tmp/finite_relational_adapter_adversarial_source_contract_final/20260623_165417
+.tmp/finite_relational_adapter_adversarial_grid_characterization_final/20260623_170426
 ```
 
 | Case | Source format | Audits | Findings | All passed | Source digest | Compiled digest |
@@ -104,6 +100,20 @@ Run root:
 | generated_transport_fact_closure | finite_relational_ir | 3 | `transferred`, `closure_ok`, `closure_ok` | true | ea2b1b0d4d45a52c05bd4503a52619fef541ec43616530ef573a784ebac8a811 | ea2b1b0d4d45a52c05bd4503a52619fef541ec43616530ef573a784ebac8a811 |
 | generated_viability_fact_closure | finite_relational_ir | 2 | `closure_ok`, `closure_ok` | true | b78ede8c782d159e8ca33bccfeead1219d5a1c44a16780ae4e28d19d7cc8e86c | b78ede8c782d159e8ca33bccfeead1219d5a1c44a16780ae4e28d19d7cc8e86c |
 
+## Grid Obstacle Characterization
+
+Run root:
+
+```text
+.tmp/finite_relational_grid_obstacle_characterization_final/20260623_170426
+```
+
+| Study | Movement | Search space | Hidden-loss sets | No-loss sets | Representatives | All passed |
+| --- | --- | --- | --- | --- | --- | --- |
+| grid_obstacle_insertion_hidden_loss | orthogonal | 3x3, max obstacles 3 | 9 | 55 | 2 | true |
+| grid_obstacle_east_south_diagonal_hidden_loss | east_south | 3x3, max obstacles 2 | 2 | 27 | 2 | true |
+| grid_obstacle_orthogonal_rectangle_hidden_loss | orthogonal | 4x2, max obstacles 2 | 6 | 16 | 2 | true |
+
 ## Notes
 
 - The low-level finite relational IR fixtures do not have separate source
@@ -123,6 +133,10 @@ Run root:
 - The graph and grid compiler tests now require named compiled derivation
   rules, so source compilers are checked for explicit provenance rather than
   trusted by inspection alone.
+- The grid obstacle characterization now covers three source-level grid
+  classes. Each study retains a hidden-loss representative and a no-hidden-loss
+  control, with all representatives checked by the same generic
+  hidden-reachability-loss and presentation/fact-closure audits.
 - The closure-generated cases now include carrier-pair visibility,
   reachability target facts, viability target facts, bounded-recovery target
   facts, stale/reflected reach-status facts, multi-presentation row/column fact

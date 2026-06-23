@@ -203,7 +203,7 @@ The first controlled synthetic empirical pilot has its own retained-output path:
 python -m omega.validation.finite_relational_adapter_empirical
 ```
 
-The gridworld obstacle-insertion pilot has a separate retained-output path:
+The gridworld obstacle-insertion characterization has a separate retained-output path:
 
 ```bash
 python -m omega.validation.finite_relational_grid_obstacle
@@ -293,13 +293,16 @@ endpoint forward reachability without recurrent carrier certification.
 These are synthetic finite-substrate empirics. They are not external validation
 of a real system.
 
-The gridworld obstacle path declares a finite grid interface, generates obstacle
+The gridworld obstacle path declares finite grid interfaces, generates obstacle
 insertions, compiles before/after/stale abstract transitions into finite
 relational IR, audits hidden reachability loss, and checks presentation/fact
-closure over source-reachability status. The retained representatives include a
-reflected after-reachability status that preserves `after_reachable_from_source`
-and a stale/reflected presentation family whose common target facts drop that
-after-reachability predicate. It is the first source-generator pilot beyond
+closure over source-reachability status. The current characterization covers a
+3x3 orthogonal midline case, a 3x3 directed east/south diagonal case, and a 4x2
+orthogonal rectangle case. Each study retains a hidden-loss representative and a
+no-hidden-loss control. The retained representatives include reflected
+after-reachability status that preserves `after_reachable_from_source` and a
+stale/reflected presentation family whose common target facts drop that
+after-reachability predicate. It is the first source-generator characterization beyond
 low-level handwritten IR fixtures.
 
 The deterministic pre-stochastic path calibrates exact finite recovery before
@@ -342,7 +345,8 @@ at
 [finite_relational_adapter_useful_information_v0.json](research_notes/validation_results/finite_relational_adapter_useful_information_v0.json).
 The first controlled empirical pilot retains a machine-readable summary at
 [finite_relational_adapter_empirical_pilot_v0.json](research_notes/validation_results/finite_relational_adapter_empirical_pilot_v0.json).
-The gridworld obstacle-insertion pilot retains a machine-readable summary at
+The gridworld obstacle-insertion characterization retains a machine-readable
+summary at
 [finite_relational_grid_obstacle_pilot_v0.json](research_notes/validation_results/finite_relational_grid_obstacle_pilot_v0.json).
 The deterministic pre-stochastic layer retains a machine-readable summary at
 [finite_relational_deterministic_layer_v0.json](research_notes/validation_results/finite_relational_deterministic_layer_v0.json).

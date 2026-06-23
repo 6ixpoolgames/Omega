@@ -648,9 +648,18 @@ stale abstract transition relation;
 hidden-reachability-loss audit.
 ```
 
-The current pilot enumerates obstacle insertions on a 3x3 orthogonal grid and
-retains both a hidden-loss representative and a no-hidden-loss control. This is
-still synthetic source-level validation, not external empirical evidence.
+The current characterization enumerates obstacle insertions over three small
+source-level grid classes:
+
+```text
+3x3 orthogonal midline source-target path;
+3x3 directed east/south diagonal source-target path;
+4x2 orthogonal rectangular source-target path.
+```
+
+Each study retains both a hidden-loss representative and a no-hidden-loss
+control. This is still synthetic source-level validation, not external
+empirical evidence.
 
 The retained representatives also derive source-reach status presentations:
 
@@ -670,8 +679,8 @@ adding stale status to the family removes after_reachable_from_source from
 the common target facts while retaining all_states.
 ```
 
-This makes the grid obstacle pilot an empirical-adjacent source-generator
-example for both hidden loss and presentation/fact closure.
+This makes the grid obstacle characterization an empirical-adjacent
+source-generator example for both hidden loss and presentation/fact closure.
 
 The simple-form, entropy, ordered-trace, and bounded-recovery fixtures are
 motivated by the useful-information and constraint-selection note:

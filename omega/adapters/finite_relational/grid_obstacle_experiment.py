@@ -163,6 +163,152 @@ def generate_grid_obstacle_study() -> GridObstacleStudy:
     )
 
 
+def generate_grid_obstacle_characterization() -> tuple[GridObstacleStudy, ...]:
+    """Generate a small multi-grid obstacle characterization sweep.
+
+    This keeps the adapter surface fixed: every representative is a grid
+    obstacle source, compiled into finite relational IR, and checked by generic
+    audits. The sweep only broadens the source-level search spaces being
+    characterized.
+    """
+
+    return (
+        generate_grid_obstacle_study(),
+        _generated_grid_obstacle_study(
+            study_id="grid_obstacle_east_south_diagonal_hidden_loss",
+            width=3,
+            height=3,
+            movement_rule="east_south",
+            source="0,0",
+            target="2,2",
+            max_obstacle_count=2,
+        ),
+        _generated_grid_obstacle_study(
+            study_id="grid_obstacle_orthogonal_rectangle_hidden_loss",
+            width=4,
+            height=2,
+            movement_rule="orthogonal",
+            source="0,0",
+            target="3,1",
+            max_obstacle_count=2,
+        ),
+    )
+
+
+def _generated_grid_obstacle_study(
+    *,
+    study_id: str,
+    width: int,
+    height: int,
+    movement_rule: str,
+    source: str,
+    target: str,
+    max_obstacle_count: int,
+) -> GridObstacleStudy:
+    cells = tuple(_grid_cells(width, height))
+    candidates = tuple(cell for cell in cells if cell not in {source, target})
+    obstacle_sets = tuple(
+        subset
+        for size in range(max_obstacle_count + 1)
+        for subset in combinations(candidates, size)
+    )
+    before_blocked: tuple[str, ...] = ()
+    before_edges = _movement_edges(width, height, movement_rule, before_blocked)
+    before_path = (source, target) in reachable_pairs(set(cells), before_edges)
+    if not before_path:
+        raise AssertionError(f"{study_id} before-grid must have a source-target path")
+
+    hidden_loss_sets = []
+    no_loss_sets = []
+    no_loss_changed_reach_sets = []
+    before_reachable = _reachable_from_source(cells, before_edges, source)
+    for after_blocked in obstacle_sets:
+        after_edges = _movement_edges(width, height, movement_rule, after_blocked)
+        after_path = (source, target) in reachable_pairs(set(cells), after_edges)
+        if after_path:
+            no_loss_sets.append(after_blocked)
+            after_reachable = _reachable_from_source(cells, after_edges, source)
+            if after_reachable != before_reachable:
+                no_loss_changed_reach_sets.append(after_blocked)
+        else:
+            hidden_loss_sets.append(after_blocked)
+    if not hidden_loss_sets:
+        raise AssertionError(f"{study_id} generated no hidden-loss obstacle sets")
+    if not no_loss_sets:
+        raise AssertionError(f"{study_id} generated no no-loss control obstacle sets")
+    no_loss_control = (
+        no_loss_changed_reach_sets[0]
+        if no_loss_changed_reach_sets
+        else no_loss_sets[0]
+    )
+
+    hidden_case_source = _grid_obstacle_source(
+        model_id=f"{study_id}_hidden_loss_representative",
+        width=width,
+        height=height,
+        movement_rule=movement_rule,
+        before_blocked=before_blocked,
+        after_blocked=hidden_loss_sets[0],
+        source=source,
+        target=target,
+        expectation="hidden_loss",
+        include_reachability_closure_audits=True,
+        claim_boundary=(
+            "Generated gridworld characterization representative: an obstacle set "
+            "removes the exact source-target path while the stale abstraction still "
+            "reports it."
+        ),
+    )
+    no_loss_case_source = _grid_obstacle_source(
+        model_id=f"{study_id}_no_hidden_loss_control",
+        width=width,
+        height=height,
+        movement_rule=movement_rule,
+        before_blocked=before_blocked,
+        after_blocked=no_loss_control,
+        source=source,
+        target=target,
+        expectation="no_hidden_loss",
+        include_reachability_closure_audits=True,
+        claim_boundary=(
+            "Generated gridworld characterization control: this obstacle set leaves "
+            "an exact source-target path, so hidden loss is not observed."
+        ),
+    )
+
+    return GridObstacleStudy(
+        study_id=study_id,
+        description=(
+            "Enumerates obstacle insertions on a finite grid source. Before dynamics "
+            "uses the unobstructed grid; after dynamics removes cells; abstract "
+            "dynamics is stale and still uses the before grid."
+        ),
+        search_space={
+            "width": width,
+            "height": height,
+            "movement_rule": movement_rule,
+            "source": source,
+            "target": target,
+            "candidate_obstacle_count": len(candidates),
+            "obstacle_set_count": len(obstacle_sets),
+            "max_obstacle_count": max_obstacle_count,
+        },
+        metrics={
+            "before_path": before_path,
+            "hidden_loss_set_count": len(hidden_loss_sets),
+            "no_loss_set_count": len(no_loss_sets),
+            "hidden_loss_fraction": f"{len(hidden_loss_sets)}/{len(obstacle_sets)}",
+            "representative_hidden_obstacles": list(hidden_loss_sets[0]),
+            "no_loss_changed_reach_set_count": len(no_loss_changed_reach_sets),
+            "representative_no_loss_obstacles": list(no_loss_control),
+        },
+        representative_cases=(
+            _validated_case(f"{study_id}_hidden_loss", hidden_case_source),
+            _validated_case(f"{study_id}_no_hidden_loss_control", no_loss_case_source),
+        ),
+    )
+
+
 def compile_grid_obstacle_source(raw: dict[str, Any]) -> dict[str, Any]:
     """Compile a grid obstacle-insertion source into finite relational IR."""
 

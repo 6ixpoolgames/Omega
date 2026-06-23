@@ -5,6 +5,7 @@ import pytest
 from omega.adapters.finite_relational import (
     SchemaError,
     compile_grid_obstacle_source,
+    generate_grid_obstacle_characterization,
     generate_grid_obstacle_study,
     load_model,
     reserved_ir_fields,
@@ -43,6 +44,32 @@ def test_grid_obstacle_representatives_use_hidden_loss_audit() -> None:
             "closure_ok",
         ],
     }
+
+
+def test_grid_obstacle_characterization_sweeps_multiple_source_grids() -> None:
+    studies = generate_grid_obstacle_characterization()
+    by_id = {study.study_id: study for study in studies}
+
+    assert set(by_id) == {
+        "grid_obstacle_insertion_hidden_loss",
+        "grid_obstacle_east_south_diagonal_hidden_loss",
+        "grid_obstacle_orthogonal_rectangle_hidden_loss",
+    }
+    assert all(study.all_passed for study in studies)
+    assert by_id["grid_obstacle_east_south_diagonal_hidden_loss"].metrics[
+        "hidden_loss_fraction"
+    ] == "2/29"
+    assert by_id["grid_obstacle_orthogonal_rectangle_hidden_loss"].metrics[
+        "hidden_loss_fraction"
+    ] == "6/22"
+    for study in studies:
+        assert len(study.representative_cases) == 2
+        findings = [
+            tuple(result.finding for result in case.audit_results)
+            for case in study.representative_cases
+        ]
+        assert ("hidden_loss", "closure_ok", "closure_ok") in findings
+        assert ("not_hidden_loss", "closure_ok", "closure_ok") in findings
 
 
 def test_grid_obstacle_representatives_expose_empirical_adjacent_closure() -> None:
@@ -117,8 +144,8 @@ def test_grid_obstacle_validation_retains_outputs(tmp_path: Path) -> None:
     result = run_finite_relational_grid_obstacle(out_root=tmp_path)
 
     assert result["status"] == "PASS"
-    assert result["study_count"] == 1
-    assert result["representative_case_count"] == 2
+    assert result["study_count"] == 3
+    assert result["representative_case_count"] == 6
     assert result["all_passed"] is True
     assert (Path(str(result["run_root"])) / "summary.json").exists()
     for study in result["studies"]:
