@@ -38,6 +38,7 @@ import OmegaProper.Trajectory.ParameterizedRecurrentSupport
 import OmegaProper.Trajectory.PresentationFactClosure
 import OmegaProper.Trajectory.PresentationFactClosureExamples
 import OmegaProper.Trajectory.PresentationFactRecoveryExamples
+import OmegaProper.Trajectory.PresentationFactViabilityExamples
 import OmegaProper.Trajectory.PresentationInvariant
 import OmegaProper.Trajectory.PresentationInvariantExamples
 import OmegaProper.Trajectory.PresentationSoundness

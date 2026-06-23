@@ -51,6 +51,7 @@ Main file:
 formal/lean/OmegaProper/Trajectory/PresentationFactClosure.lean
 formal/lean/OmegaProper/Trajectory/PresentationFactClosureExamples.lean
 formal/lean/OmegaProper/Trajectory/PresentationFactRecoveryExamples.lean
+formal/lean/OmegaProper/Trajectory/PresentationFactViabilityExamples.lean
 ```
 
 Core theorem family:
@@ -179,6 +180,39 @@ observation removes that fact from the common recovery facts. Constant targets
 still survive, so the example distinguishes strict shrinkage from total
 collapse.
 
+## Relation To Viability
+
+The first viability instantiation uses the existing irreversible viability-loss
+witness:
+
+```text
+loop is viable;
+dead is not viable;
+loop -> dead is a viability-loss step.
+```
+
+It exposes the contrast as a finite Boolean status target:
+
+```text
+viabilityStatus loop = true
+viabilityStatus dead = false
+```
+
+and proves:
+
+```text
+viabilityStatus_records_exact_witness
+viabilityStatus_common_exactOnly
+viabilityStatus_not_common_exactConstant
+constantFalseTarget_common_exactConstant
+commonViabilityFacts_strictly_shrink_when_constant_admitted
+constantStatus_not_in_viabilityClosure_exactOnly
+```
+
+This is the viability analogue of the recovery pilot. Exact viability-status
+presentation preserves the viability fact; admitting a constant status
+presentation removes it from common facts. Constant targets still survive.
+
 ## Non-Claims
 
 This note does not claim:
@@ -195,14 +229,14 @@ that this proves Omega.
 
 ## Next Work
 
-The next pilot should move from recovery facts to viability/carrier facts:
+The next pilot should move from viability facts to carrier facts:
 
 ```text
 presentations:
   exact / coarse / stale / reflected views
 
 facts:
-  reachability, viability, and carrier-certification facts
+  reachability and carrier-certification facts
 
 tests:
   compute common facts;

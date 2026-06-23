@@ -147,6 +147,7 @@ Main files:
 - [PresentationFactClosure.lean](../../../formal/lean/OmegaProper/Trajectory/PresentationFactClosure.lean)
 - [PresentationFactClosureExamples.lean](../../../formal/lean/OmegaProper/Trajectory/PresentationFactClosureExamples.lean)
 - [PresentationFactRecoveryExamples.lean](../../../formal/lean/OmegaProper/Trajectory/PresentationFactRecoveryExamples.lean)
+- [PresentationFactViabilityExamples.lean](../../../formal/lean/OmegaProper/Trajectory/PresentationFactViabilityExamples.lean)
 - [CarrierSemantics.lean](../../../formal/lean/OmegaProper/Trajectory/CarrierSemantics.lean)
 
 Current content:
@@ -167,6 +168,8 @@ The X2 closure pilot shows common target and visible-pair facts strictly shrink
 when a second coordinate presentation is admitted.
 The recovery closure pilot shows exact bit recovery facts strictly shrink when
 a constant observation is admitted.
+The viability closure pilot shows exact viability-status facts strictly shrink
+when a constant status presentation is admitted.
 Raw supports, generated mutual-reach carriers, and trajectory-language views
 are presentations of carrier semantics.
 ```
