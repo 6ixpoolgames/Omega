@@ -53,6 +53,7 @@ def generate_source_parity_study() -> tuple[SourceParityCase, ...]:
     return (
         _strict_asymmetry_graph_grid_case(),
         _recurrent_carrier_graph_grid_case(),
+        _observation_closure_graph_grid_case(),
     )
 
 
@@ -231,6 +232,128 @@ def _recurrent_carrier_graph_grid_case() -> SourceParityCase:
     )
 
 
+def _observation_closure_graph_grid_case() -> SourceParityCase:
+    graph_source = {
+        "model_id": "parity_graph_observation_closure",
+        "nodes": ["source", "sink"],
+        "edges": [["source", "sink"]],
+        "observations": {
+            "color": {
+                "source": "red",
+                "sink": "blue",
+            }
+        },
+        "presentations": {
+            "identity": {
+                "source": "source",
+                "sink": "sink",
+            },
+            "constant": {
+                "source": "merged",
+                "sink": "merged",
+            },
+        },
+        "presentation_expectations": {
+            "identity": "sound",
+            "constant": "unsound",
+        },
+        "safety": "all",
+        "provenance": {
+            "declared_before_run": True,
+            "source": "omega.adapters.finite_relational.source_parity",
+            "claim_boundary": (
+                "Second-source parity source: graph observation-closure side. "
+                "This is a compiler and closure parity check, not empirical validation."
+            ),
+        },
+    }
+    grid_source = {
+        "model_id": "parity_grid_observation_closure",
+        "width": 2,
+        "height": 1,
+        "movement_rule": "east",
+        "observations": {
+            "color": {
+                "0,0": "red",
+                "1,0": "blue",
+            }
+        },
+        "presentations": {
+            "identity": {
+                "0,0": "0,0",
+                "1,0": "1,0",
+            },
+            "constant": {
+                "0,0": "merged",
+                "1,0": "merged",
+            },
+        },
+        "presentation_expectations": {
+            "identity": "sound",
+            "constant": "unsound",
+        },
+        "safety": "all",
+        "provenance": {
+            "declared_before_run": True,
+            "source": "omega.adapters.finite_relational.source_parity",
+            "claim_boundary": (
+                "Second-source parity source: grid observation-closure side. "
+                "This is a compiler and closure parity check, not empirical validation."
+            ),
+        },
+    }
+    state_map = {"source": "0,0", "sink": "1,0"}
+    graph_compiled = _with_observation_closure_surface(
+        compile_derived_graph(graph_source),
+        target_members=_observed_members(graph_source, observation="color", label="blue"),
+    )
+    grid_compiled = _with_observation_closure_surface(
+        compile_finite_grid(grid_source),
+        target_members=_observed_members(grid_source, observation="color", label="blue"),
+    )
+    graph_model = load_model(graph_compiled)
+    grid_model = load_model(grid_compiled)
+    comparison = _compare_models(
+        left=graph_model,
+        right=grid_model,
+        state_map=state_map,
+        relation_names=(
+            "next",
+            "primitive_rel",
+            "primitive_sep",
+            "primitive_asym",
+            "merge_separated",
+        ),
+        predicate_names=("safe", "blue_observed"),
+        function_names=("identity", "constant"),
+        closure_audit_ids=(
+            "identity_observation_target_closure",
+            "identity_constant_observation_target_closure",
+        ),
+    )
+    if not comparison["all_passed"]:
+        raise AssertionError(
+            "source parity case failed: graph_grid_observation_closure_parity: "
+            f"{comparison}"
+        )
+    return SourceParityCase(
+        case_id="graph_grid_observation_closure_parity",
+        description=(
+            "A declared graph source and a finite grid source derive the same "
+            "observation target and the same presentation/fact closure results "
+            "after state renaming."
+        ),
+        left_source_kind="derived_graph",
+        right_source_kind="finite_grid",
+        left_source=graph_source,
+        right_source=grid_source,
+        left_compiled_model=graph_compiled,
+        right_compiled_model=grid_compiled,
+        state_map=state_map,
+        comparison=comparison,
+    )
+
+
 def _build_graph_grid_case(
     *,
     case_id: str,
@@ -283,6 +406,7 @@ def _compare_models(
     relation_names: tuple[str, ...],
     predicate_names: tuple[str, ...],
     function_names: tuple[str, ...],
+    closure_audit_ids: tuple[str, ...] = (),
 ) -> dict[str, object]:
     left_states = tuple(_rename_items(left.domain("state"), state_map))
     right_states = right.domain("state")
@@ -303,8 +427,16 @@ def _compare_models(
     }
     left_audit_findings = _audit_findings(left)
     right_audit_findings = _audit_findings(right)
-    left_audits_passed = all(result.passed for result in run_declared_audits(left))
-    right_audits_passed = all(result.passed for result in run_declared_audits(right))
+    left_audit_results = tuple(run_declared_audits(left))
+    right_audit_results = tuple(run_declared_audits(right))
+    left_audits_passed = all(result.passed for result in left_audit_results)
+    right_audits_passed = all(result.passed for result in right_audit_results)
+    closure_observed_matches = _closure_observed_matches(
+        left_results=left_audit_results,
+        right_results=right_audit_results,
+        state_map=state_map,
+        audit_ids=closure_audit_ids,
+    )
     all_passed = (
         left_states == right_states
         and all(relation_matches.values())
@@ -313,6 +445,7 @@ def _compare_models(
         and left_audit_findings == right_audit_findings
         and left_audits_passed
         and right_audits_passed
+        and all(closure_observed_matches.values())
     )
     return {
         "all_passed": all_passed,
@@ -328,7 +461,95 @@ def _compare_models(
         "audit_findings_match": left_audit_findings == right_audit_findings,
         "left_audits_passed": left_audits_passed,
         "right_audits_passed": right_audits_passed,
+        "closure_observed_matches": closure_observed_matches,
     }
+
+
+def _with_observation_closure_surface(
+    compiled: dict[str, Any],
+    *,
+    target_members: tuple[str, ...],
+) -> dict[str, Any]:
+    enriched = dict(compiled)
+    enriched["predicates"] = dict(compiled.get("predicates", {})) | {
+        "blue_observed": list(target_members),
+    }
+    enriched["audits"] = list(compiled.get("audits", [])) + [
+        {
+            "id": "identity_observation_target_closure",
+            "kind": "presentation_fact_closure",
+            "presentations": ["identity"],
+            "target_predicates": ["blue_observed", "safe"],
+            "expected_common_target_predicates": ["blue_observed", "safe"],
+            "expect": "closure_ok",
+        },
+        {
+            "id": "identity_constant_observation_target_closure",
+            "kind": "presentation_fact_closure",
+            "presentations": ["identity", "constant"],
+            "target_predicates": ["blue_observed", "safe"],
+            "expected_common_target_predicates": ["safe"],
+            "expected_absent_target_predicates": ["blue_observed"],
+            "expect": "closure_ok",
+        },
+    ]
+    provenance = dict(compiled.get("provenance", {}))
+    derivation_rules = list(provenance.get("derivation_rules", []))
+    derivation_rules.extend(
+        [
+            "blue_observed=observation_label(color,blue)",
+            "closure_audits=presentation_fact_closure(identity,constant)",
+        ]
+    )
+    enriched["provenance"] = provenance | {"derivation_rules": derivation_rules}
+    load_model(enriched)
+    return enriched
+
+
+def _observed_members(
+    source: dict[str, Any],
+    *,
+    observation: str,
+    label: str,
+) -> tuple[str, ...]:
+    mapping = source["observations"][observation]
+    return tuple(sorted(state for state, value in mapping.items() if value == label))
+
+
+def _closure_observed_matches(
+    *,
+    left_results: tuple[Any, ...],
+    right_results: tuple[Any, ...],
+    state_map: dict[str, str],
+    audit_ids: tuple[str, ...],
+) -> dict[str, bool]:
+    left_by_id = {result.audit_id: result for result in left_results}
+    right_by_id = {result.audit_id: result for result in right_results}
+    return {
+        audit_id: _rename_closure_observed(left_by_id[audit_id].observed, state_map)
+        == _rename_closure_observed(right_by_id[audit_id].observed, {})
+        for audit_id in audit_ids
+    }
+
+
+def _rename_closure_observed(
+    observed: dict[str, Any],
+    state_map: dict[str, str],
+) -> dict[str, Any]:
+    renamed = dict(observed)
+    for key in (
+        "common_visible_pairs",
+        "missing_expected_common_visible_pairs",
+        "present_expected_absent_visible_pairs",
+    ):
+        if key in renamed:
+            renamed[key] = sorted(
+                [
+                    [state_map.get(left, left), state_map.get(right, right)]
+                    for left, right in renamed[key]
+                ]
+            )
+    return renamed
 
 
 def _rename_relation(

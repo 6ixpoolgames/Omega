@@ -320,8 +320,8 @@ witness through a coarse support summary.
 The source-parity path compiles equivalent derived-graph and finite-grid
 sources into the same finite relational IR surface, then checks matching
 relations, predicates, functions, and audit findings after declared state
-renaming. Current cases cover strict asymmetry and recurrent carrier
-certification.
+renaming. Current cases cover strict asymmetry, recurrent carrier
+certification, and source-derived observation-target closure.
 
 Finite relational adapter changes are also protected by the
 `Finite Relational Adapter Smoke` GitHub Actions workflow.

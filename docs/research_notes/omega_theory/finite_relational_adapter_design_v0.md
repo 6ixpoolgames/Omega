@@ -503,6 +503,10 @@ graph_grid_strict_asymmetry_parity:
 graph_grid_recurrent_carrier_parity:
   recurrent carrier certification, merge separation, presentation, and audit
   findings match after declared state renaming.
+
+graph_grid_observation_closure_parity:
+  a source-derived observation target, presentation/fact closure findings, and
+  observed closure payloads match after declared state renaming.
 ```
 
 This is still synthetic compiler parity, not empirical validation. It helps

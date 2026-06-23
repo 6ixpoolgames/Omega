@@ -9,6 +9,7 @@ from omega.validation.finite_relational_source_parity import (
 REQUIRED_CASE_IDS = {
     "graph_grid_strict_asymmetry_parity",
     "graph_grid_recurrent_carrier_parity",
+    "graph_grid_observation_closure_parity",
 }
 
 
@@ -41,6 +42,33 @@ def test_source_parity_cases_compare_same_ir_surface() -> None:
     assert carrier["function_matches"] == {"identity": True}
     assert carrier["left_audit_findings"]["carrier_0_certificate"] == "certified"
     assert carrier["right_audit_findings"]["carrier_0_certificate"] == "certified"
+
+    closure = by_id["graph_grid_observation_closure_parity"].comparison
+    assert closure["state_domain_match"] is True
+    assert closure["relation_matches"] == {
+        "next": True,
+        "primitive_rel": True,
+        "primitive_sep": True,
+        "primitive_asym": True,
+        "merge_separated": True,
+    }
+    assert closure["predicate_matches"] == {
+        "safe": True,
+        "blue_observed": True,
+    }
+    assert closure["function_matches"] == {"identity": True, "constant": True}
+    assert closure["closure_observed_matches"] == {
+        "identity_observation_target_closure": True,
+        "identity_constant_observation_target_closure": True,
+    }
+    assert (
+        closure["left_audit_findings"]["identity_observation_target_closure"]
+        == "closure_ok"
+    )
+    assert (
+        closure["right_audit_findings"]["identity_constant_observation_target_closure"]
+        == "closure_ok"
+    )
 
 
 def test_source_parity_validation_retains_outputs(tmp_path: Path) -> None:

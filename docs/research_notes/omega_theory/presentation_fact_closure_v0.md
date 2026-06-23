@@ -342,6 +342,11 @@ policy-conditioned stochastic dynamics:
   reflected policy hit-status preserves the after_high_hit target;
   adding stale policy hit-status to the reflected presentation family drops
   after_high_hit from the common target facts and leaves only all_states.
+
+source-parity observation closure:
+  derived graph and finite grid sources derive the same blue-observed target;
+  identity / constant presentation closure findings and observed payloads match
+  after declared state renaming.
 ```
 
 The next closure work should broaden these finite generated and
