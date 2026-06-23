@@ -13,6 +13,9 @@ from omega.adapters.finite_relational.audits import AuditResult, run_declared_au
 from omega.adapters.finite_relational.derived_graph import compile_derived_graph
 from omega.adapters.finite_relational.facts import Pair, reachable_pairs
 from omega.adapters.finite_relational.finite_grid import compile_finite_grid
+from omega.adapters.finite_relational.graph_pair_transfer import (
+    compile_graph_pair_transfer_source,
+)
 from omega.adapters.finite_relational.model import load_model, model_digest
 
 
@@ -813,17 +816,14 @@ def _generated_graph_pair_transfer_case() -> GeneratedAdapterCase:
     source = _graph_pair_transfer_source(
         source_id="generated_graph_pair_transfer",
         target_edges=(("t_left", "t_right"), ("t_right", "t_left")),
+        expect="transferred",
         claim_boundary=(
             "Generated graph-pair transfer source: source and target graph "
             "cycles are compiled separately, then audited through a declared "
             "endpoint correspondence."
         ),
     )
-    compiled = _compile_graph_pair_transfer_source(
-        source,
-        model_id="generated_graph_pair_transfer",
-        expect="transferred",
-    )
+    compiled = compile_graph_pair_transfer_source(source)
     return _validated_compiled_case(
         "generated_graph_pair_transfer",
         "derived_graph_pair",
@@ -836,17 +836,14 @@ def _generated_graph_pair_transfer_missing_return_case() -> GeneratedAdapterCase
     source = _graph_pair_transfer_source(
         source_id="generated_graph_pair_transfer_missing_return",
         target_edges=(("t_left", "t_right"),),
+        expect="not_transferred",
         claim_boundary=(
             "Generated graph-pair transfer source: endpoint correspondence is "
             "present, but the target graph loses the return edge required for "
             "carrier transfer."
         ),
     )
-    compiled = _compile_graph_pair_transfer_source(
-        source,
-        model_id="generated_graph_pair_transfer_missing_return",
-        expect="not_transferred",
-    )
+    compiled = compile_graph_pair_transfer_source(source)
     return _validated_compiled_case(
         "generated_graph_pair_transfer_missing_return",
         "derived_graph_pair",
@@ -859,9 +856,16 @@ def _graph_pair_transfer_source(
     *,
     source_id: str,
     target_edges: tuple[Pair, ...],
+    expect: str,
     claim_boundary: str,
 ) -> dict[str, Any]:
     return {
+        "model_id": source_id,
+        "expect": expect,
+        "source_left": "s_left",
+        "source_right": "s_right",
+        "target_left": "t_left",
+        "target_right": "t_right",
         "source_graph": {
             "model_id": f"{source_id}_source",
             "nodes": ["s_left", "s_right"],
@@ -895,112 +899,6 @@ def _graph_pair_transfer_source(
         "correspondence": [["s_left", "t_left"], ["s_right", "t_right"]],
         "provenance": _generated_provenance(claim_boundary),
     }
-
-
-def _compile_graph_pair_transfer_source(
-    source: dict[str, Any],
-    *,
-    model_id: str,
-    expect: str,
-) -> dict[str, Any]:
-    source_compiled = compile_derived_graph(source["source_graph"])
-    target_compiled = compile_derived_graph(source["target_graph"])
-    source_model = load_model(source_compiled)
-    target_model = load_model(target_compiled)
-    source_states = list(source_model.domain("state"))
-    target_states = list(target_model.domain("state"))
-    correspondence = _graph_pair_correspondence(
-        source.get("correspondence", ()),
-        source_states=source_states,
-        target_states=target_states,
-    )
-    provenance = _generated_provenance(
-        "Compiled graph-pair transfer case. The source and target graphs are "
-        "compiled before carrier-transfer facts are assembled; the audit still "
-        "decides whether the declared correspondence transfers carrying."
-    )
-    provenance.update(
-        {
-            "compiled_from": "derived_graph_pair",
-            "source_graph_compiled_digest": model_digest(source_model),
-            "target_graph_compiled_digest": model_digest(target_model),
-            "derivation_rules": [
-                "source_next=source_graph.next",
-                "target_next=target_graph.next",
-                "source_separated=source_graph.merge_separated",
-                "target_separated=target_graph.merge_separated",
-                "source_carrier=all_source_graph_nodes",
-                "target_carrier=all_target_graph_nodes",
-                "correspondence=declared_graph_pair_correspondence",
-            ],
-        }
-    )
-    return {
-        "model_id": model_id,
-        "schema_version": "0.1.0",
-        "carrier": source_states + target_states,
-        "predicates": {
-            "source_safe": sorted(source_model.predicate_members("safe")),
-            "source_carrier": source_states,
-            "target_safe": sorted(target_model.predicate_members("safe")),
-            "target_carrier": target_states,
-        },
-        "relations": {
-            "source_next": _relation_rows(source_model.relation_tuples("next")),
-            "target_next": _relation_rows(target_model.relation_tuples("next")),
-            "source_separated": _relation_rows(
-                source_model.relation_tuples("merge_separated")
-            ),
-            "target_separated": _relation_rows(
-                target_model.relation_tuples("merge_separated")
-            ),
-            "corresponds": _relation_rows(correspondence),
-        },
-        "audits": [
-            {
-                "id": f"{model_id}_carrier_transfer_contract",
-                "kind": "carrier_transfer",
-                "source_transition": "source_next",
-                "source_safety": "source_safe",
-                "source_carrier": "source_carrier",
-                "source_left": "s_left",
-                "source_right": "s_right",
-                "source_separation": "source_separated",
-                "target_transition": "target_next",
-                "target_safety": "target_safe",
-                "target_carrier": "target_carrier",
-                "target_left": "t_left",
-                "target_right": "t_right",
-                "target_separation": "target_separated",
-                "correspondence": "corresponds",
-                "expect": expect,
-            }
-        ],
-        "provenance": provenance,
-    }
-
-
-def _graph_pair_correspondence(
-    pairs: object,
-    *,
-    source_states: list[str],
-    target_states: list[str],
-) -> tuple[Pair, ...]:
-    source_set = set(source_states)
-    target_set = set(target_states)
-    rows = []
-    if not isinstance(pairs, list):
-        raise TypeError("graph pair correspondence must be a list")
-    for raw_pair in pairs:
-        if not isinstance(raw_pair, list) or len(raw_pair) != 2:
-            raise TypeError("graph pair correspondence rows must be length-2 lists")
-        source, target = str(raw_pair[0]), str(raw_pair[1])
-        if source not in source_set:
-            raise ValueError(f"unknown source correspondence state: {source}")
-        if target not in target_set:
-            raise ValueError(f"unknown target correspondence state: {target}")
-        rows.append((source, target))
-    return tuple(sorted(rows))
 
 
 def _generated_transport_fact_closure_case() -> GeneratedAdapterCase:
@@ -1321,10 +1219,6 @@ def _transition_audit_model(
         "audits": [audit],
         "provenance": _generated_provenance(claim_boundary),
     }
-
-
-def _relation_rows(rows: Iterable[tuple[str, ...]]) -> list[list[str]]:
-    return [list(row) for row in sorted(rows)]
 
 
 def _generated_provenance(claim_boundary: str) -> dict[str, object]:

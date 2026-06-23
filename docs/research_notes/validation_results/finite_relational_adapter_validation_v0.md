@@ -1,8 +1,8 @@
 # Finite Relational Adapter Validation V0
 
 Date: 2026-06-23
-Run context: working tree based on `5a7042b`, with the graph-pair transfer
-characterization batch applied before commit.
+Run context: working tree based on `81bb325`, with the graph-pair public
+compiler reuse cleanup applied before commit.
 
 Claim boundary:
 
@@ -17,21 +17,23 @@ source abstraction is empirically correct.
 
 ```powershell
 ./.venv/Scripts/python.exe -m pytest `
+  tests/test_finite_relational_adapter_adversarial.py `
   tests/test_finite_relational_graph_pair_transfer.py `
-  tests/test_finite_relational_adapter_smoke.py `
-  -q --basetemp .tmp/pytest-graph-pair-transfer-characterization -p no:cacheprovider
+  -q --basetemp .tmp/pytest-graph-pair-refactor -p no:cacheprovider
 
 ./.venv/Scripts/python.exe -m omega.validation.finite_relational_graph_pair_transfer `
   --out-root .tmp/finite_relational_graph_pair_transfer_characterization_final
 
 ./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_adversarial `
-  --out-root .tmp/finite_relational_adapter_adversarial_graph_pair_characterization_final
+  --out-root .tmp/finite_relational_adapter_adversarial_graph_pair_refactor
 
 ./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_smoke `
-  --out-root .tmp/finite_relational_adapter_smoke_graph_pair_characterization_final
+  --out-root .tmp/finite_relational_adapter_smoke_graph_pair_refactor
 
 ./.venv/Scripts/ruff.exe check omega/adapters/finite_relational/__init__.py `
+  omega/adapters/finite_relational/adversarial_search.py `
   omega/adapters/finite_relational/graph_pair_transfer.py `
+  tests/test_finite_relational_adapter_adversarial.py `
   tests/test_finite_relational_graph_pair_transfer.py `
   omega/validation/finite_relational_graph_pair_transfer.py
 ```
@@ -39,7 +41,7 @@ source abstraction is empirically correct.
 Result:
 
 ```text
-graph-pair characterization pytest: 6 passed
+graph-pair/adversarial pytest: 18 passed
 graph-pair transfer characterization: PASS, 2 studies, 4 representative cases
 adapter smoke: PASS, 15 fixtures, focused pytest 79 passed
 generated/adversarial validation: PASS, 17 cases
@@ -51,7 +53,7 @@ focused ruff: passed
 Run root:
 
 ```text
-.tmp/finite_relational_adapter_smoke_graph_pair_characterization_final/20260623_171412
+.tmp/finite_relational_adapter_smoke_graph_pair_refactor_final/20260623_172015
 ```
 
 | Fixture | Audits | Findings | All passed | Source digest | Compiled/model digest |
@@ -77,7 +79,7 @@ Run root:
 Run root:
 
 ```text
-.tmp/finite_relational_adapter_adversarial_graph_pair_characterization_final/20260623_171413
+.tmp/finite_relational_adapter_adversarial_graph_pair_refactor/20260623_171903
 ```
 
 | Case | Source format | Audits | Findings | All passed | Source digest | Compiled digest |
@@ -87,8 +89,8 @@ Run root:
 | generated_crosscutting_presentation_closure | finite_relational_ir | 4 | `closure_ok`, `closure_ok`, `closure_ok`, `closure_ok` | true | ef8d5210832711ae0bad4250475dadd82408b02e28e0780f839d495b34f0332a | ef8d5210832711ae0bad4250475dadd82408b02e28e0780f839d495b34f0332a |
 | generated_failed_transport_fact_closure | finite_relational_ir | 3 | `not_transferred`, `closure_ok`, `closure_ok` | true | ea4d533fc65c033ddc47d968369b62e2f5f87f13091af4fd3d0207641668ed10 | ea4d533fc65c033ddc47d968369b62e2f5f87f13091af4fd3d0207641668ed10 |
 | generated_finite_grid_asymmetry | finite_grid | 3 | `alpha_laws_hold`, `not_sound`, `sound` | true | 5fa177534f17c38e8f26cd92e986d8f06475c18455502f82b5d4310af2d69d81 | 70347caab151bc727a6498dd993225b11871fdedd1de74391a5df4a3bedf4961 |
-| generated_graph_pair_transfer | derived_graph_pair | 1 | `transferred` | true | dc9ffd6779c7ea068cde510434c0ff082db2f5557b284ef271b46e0482403ec7 | 2e5927f9b21aed2ea4ccedb8f45a078fb910adc6e74a4a97e43c18ab6f06701c |
-| generated_graph_pair_transfer_missing_return | derived_graph_pair | 1 | `not_transferred` | true | 22895b6e1af557d2d13b4d6da00725544afe96a49953c1cf7c89a6d37b3661b3 | c11ff95bd10f8d8e2bb8a7971796553f9fa5a6df6497e8ff7c23e8278aa9a22a |
+| generated_graph_pair_transfer | derived_graph_pair | 1 | `transferred` | true | ae10f9028d5ebff08d38eb314f70c799c305780e6b05d7ab6ae1e518e44a718b | f62728b2b33d2512397808fd41fdd45d893690b8129ce4815111be4135ec0402 |
+| generated_graph_pair_transfer_missing_return | derived_graph_pair | 1 | `not_transferred` | true | 994976cdf0cbdee385d04b1a4780d28de618b0c05209c59c08c1e3072be38f32 | 6ded5dccb4d76aa87451bfe686bbb0cb887769de3527fb9ea20bc53646200b6f |
 | generated_hidden_reachability_loss | finite_relational_ir | 1 | `hidden_loss` | true | dc5d5c4f94bb47db57e48775d8842388424fa01d2a5f9a2af302ad7c1fa55df3 | dc5d5c4f94bb47db57e48775d8842388424fa01d2a5f9a2af302ad7c1fa55df3 |
 | generated_multi_presentation_fact_closure | finite_relational_ir | 3 | `closure_ok`, `closure_ok`, `closure_ok` | true | 9dbf98b6cd49109dc899f221d6297320d5d9978e5d92756fb94258d268febd99 | 9dbf98b6cd49109dc899f221d6297320d5d9978e5d92756fb94258d268febd99 |
 | generated_phantom_reachability | finite_relational_ir | 1 | `phantom` | true | 8a1849acdaf2c564b959317fa977c53cb3bd93b3b148a537cb309dbb8485d5e5 | 8a1849acdaf2c564b959317fa977c53cb3bd93b3b148a537cb309dbb8485d5e5 |

@@ -290,6 +290,9 @@ def test_generated_graph_pair_transfer_cases_use_compiled_graph_surfaces() -> No
         assert case.compiled_model["provenance"]["compiled_from"] == "derived_graph_pair"
         assert "source_graph_compiled_digest" in case.compiled_model["provenance"]
         assert "target_graph_compiled_digest" in case.compiled_model["provenance"]
+        assert "audit=carrier_transfer" in case.compiled_model["provenance"][
+            "derivation_rules"
+        ]
 
     positive = transferred.audit_results[0].as_dict()
     negative = missing_return.audit_results[0].as_dict()
