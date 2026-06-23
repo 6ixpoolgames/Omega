@@ -35,6 +35,7 @@ import OmegaProper.Trajectory.LossAwarePresentationConstructors
 import OmegaProper.Trajectory.LossAwarePresentationStrictness
 import OmegaProper.Trajectory.PathCarriedDistinction
 import OmegaProper.Trajectory.ParameterizedRecurrentSupport
+import OmegaProper.Trajectory.PresentationFactClosure
 import OmegaProper.Trajectory.PresentationInvariant
 import OmegaProper.Trajectory.PresentationInvariantExamples
 import OmegaProper.Trajectory.PresentationSoundness

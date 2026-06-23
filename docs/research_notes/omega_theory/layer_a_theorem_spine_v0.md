@@ -144,6 +144,7 @@ Main files:
 - [ContinuationDeformation.lean](../../../formal/lean/OmegaProper/Trajectory/ContinuationDeformation.lean)
 - [ApproximationContract.lean](../../../formal/lean/OmegaProper/Trajectory/ApproximationContract.lean)
 - [ProfileApproximation.lean](../../../formal/lean/OmegaProper/Trajectory/ProfileApproximation.lean)
+- [PresentationFactClosure.lean](../../../formal/lean/OmegaProper/Trajectory/PresentationFactClosure.lean)
 - [CarrierSemantics.lean](../../../formal/lean/OmegaProper/Trajectory/CarrierSemantics.lean)
 
 Current content:
@@ -158,6 +159,8 @@ Finite continuation deformation is non-factorization of a declared fact through
 a proposed summary.
 Profile abstraction is sound/complete approximation over ordered fragment-pair
 claims.
+Presentation/fact closure gives the generic Galois surface for common facts,
+models of facts, and closure under a supplied satisfaction relation.
 Raw supports, generated mutual-reach carriers, and trajectory-language views
 are presentations of carrier semantics.
 ```
