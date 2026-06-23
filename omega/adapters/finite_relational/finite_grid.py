@@ -9,9 +9,7 @@ from typing import Any
 
 from omega.adapters.finite_relational.derived_graph import compile_derived_graph
 from omega.adapters.finite_relational.model import SchemaError, load_model
-
-
-RESERVED_GRID_IR_FIELDS = frozenset({"predicates", "relations", "functions", "profiles", "audits"})
+from omega.adapters.finite_relational.source_contract import assert_no_reserved_ir_fields
 
 
 def load_finite_grid_path(path: Path) -> dict[str, Any]:
@@ -25,7 +23,7 @@ def compile_finite_grid_path(path: Path) -> dict[str, Any]:
 def compile_finite_grid(raw: dict[str, Any]) -> dict[str, Any]:
     """Compile a finite rectangular grid source through the relational IR."""
 
-    _reject_reserved_grid_ir_fields(raw)
+    assert_no_reserved_ir_fields(raw, source_kind="finite grid")
     model_id = str(raw.get("model_id", "finite_grid"))
     width = _positive_int(raw.get("width"), "width")
     height = _positive_int(raw.get("height"), "height")
@@ -146,15 +144,6 @@ def _total_mappings(value: Any, cells: set[str], label: str) -> dict[str, dict[s
             raise SchemaError(f"{label} {name} has cells outside active grid: {extra}")
         mappings[str(name)] = mapping
     return mappings
-
-
-def _reject_reserved_grid_ir_fields(raw: dict[str, Any]) -> None:
-    leaked = sorted(RESERVED_GRID_IR_FIELDS & set(raw))
-    if leaked:
-        raise SchemaError(
-            "finite grid sources must not declare finite relational IR fields: "
-            + ", ".join(leaked)
-        )
 
 
 def _positive_int(value: Any, label: str) -> int:

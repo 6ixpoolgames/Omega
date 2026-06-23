@@ -10,6 +10,7 @@ from typing import Any
 from omega.adapters.finite_relational.cli import run_model_file
 from omega.adapters.finite_relational.graph_cli import run_graph_file
 from omega.adapters.finite_relational.grid_cli import run_grid_file
+from omega.adapters.finite_relational.source_contract import reserved_ir_fields
 from omega.validation._common import assert_equal, read_json, resolve_repo_path, run_pytest, timestamped_run_root
 
 
@@ -196,8 +197,7 @@ def _run_derived_fixture(
     assert_equal(f"{fixture_id}.provenance_complete", provenance["complete"], True)
     if "derivation_rules" not in compiled.get("provenance", {}):
         raise AssertionError(f"{fixture_id} compiled model is missing derivation_rules")
-    reserved = {"predicates", "relations", "functions", "profiles", "audits"}
-    leaked = sorted(reserved & set(source))
+    leaked = reserved_ir_fields(source)
     if leaked:
         raise AssertionError(f"{fixture_id} source contains reserved IR fields: {leaked}")
     return {
@@ -236,8 +236,7 @@ def _run_grid_fixture(
     assert_equal(f"{fixture_id}.provenance_complete", provenance["complete"], True)
     if compiled.get("provenance", {}).get("compiled_from") != "finite_grid":
         raise AssertionError(f"{fixture_id} compiled model was not marked finite_grid")
-    reserved = {"predicates", "relations", "functions", "profiles", "audits"}
-    leaked = sorted(reserved & set(source))
+    leaked = reserved_ir_fields(source)
     if leaked:
         raise AssertionError(f"{fixture_id} source contains reserved IR fields: {leaked}")
     return {

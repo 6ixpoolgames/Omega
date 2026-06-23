@@ -255,7 +255,11 @@ finite grid fixtures. It checks provenance completeness, verifies retained
 digest/audit artifacts, exercises phantom reachability and hidden reachability
 loss controls, runs non-factorization controls for simple-form, entropy, and
 ordered-trace summaries, exercises bounded-recovery pass/fail controls, and
-runs the focused adapter tests unless `--skip-pytest` is provided.
+runs the focused adapter tests unless `--skip-pytest` is provided. The focused
+tests now cover the shared source-contract helper: graph, grid, grid-obstacle,
+and generated graph-pair sources may declare substrate-level syntax, but they
+must not smuggle reserved finite relational IR fields such as predicates,
+relations, functions, profiles, or audits.
 
 The generated/adversarial path deterministically searches small finite cases
 for adapter hardening witnesses, then retains each generated source, compiled

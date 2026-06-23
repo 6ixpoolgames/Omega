@@ -181,6 +181,23 @@ No source-trusted asymmetry by default:
 These rules are stricter than the low-level IR. The IR can still host
 hand-written theorem fixtures; adapter-facing sources should avoid that style.
 
+The executable source-contract rule is:
+
+```text
+source-level compilers may declare substrate syntax:
+  nodes, edges, observations, presentations, grids, obstacles,
+  source/target graph pairs, or correspondences.
+
+source-level compilers may not declare finite relational IR surfaces:
+  predicates, relations, functions, profiles, audits.
+```
+
+The helper `omega.adapters.finite_relational.source_contract` now provides the
+shared reserved-field gate used by derived graph, finite grid, and grid
+obstacle source compilers. It also exposes a small compiled-provenance check so
+tests can require named derivation rules rather than trusting the compiler by
+inspection.
+
 ## Profiles
 
 Profiles interpret named structures without changing the model.

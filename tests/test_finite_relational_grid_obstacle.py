@@ -1,9 +1,13 @@
 from pathlib import Path
 
+import pytest
+
 from omega.adapters.finite_relational import (
+    SchemaError,
     compile_grid_obstacle_source,
     generate_grid_obstacle_study,
     load_model,
+    reserved_ir_fields,
 )
 from omega.validation.finite_relational_grid_obstacle import (
     run_finite_relational_grid_obstacle,
@@ -84,6 +88,29 @@ def test_grid_obstacle_compiler_retains_source_and_compiled_provenance() -> None
         "optional_audits=presentation_fact_closure(stale,reflected)"
         in compiled["provenance"]["derivation_rules"]
     )
+
+
+def test_grid_obstacle_source_rejects_reserved_ir_fields() -> None:
+    source = {
+        "model_id": "bad_grid_obstacle_private_audit",
+        "width": 2,
+        "height": 1,
+        "movement_rule": "orthogonal",
+        "source": "0,0",
+        "target": "1,0",
+        "before_blocked": [],
+        "after_blocked": [],
+        "audits": [{"id": "private", "kind": "hidden_reachability_loss"}],
+        "provenance": {
+            "declared_before_run": True,
+            "source": "inline test",
+            "claim_boundary": "reserved-field rejection test",
+        },
+    }
+
+    assert reserved_ir_fields(source) == ("audits",)
+    with pytest.raises(SchemaError, match="must not declare finite relational IR fields"):
+        compile_grid_obstacle_source(source)
 
 
 def test_grid_obstacle_validation_retains_outputs(tmp_path: Path) -> None:

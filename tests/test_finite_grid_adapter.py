@@ -3,8 +3,10 @@ from pathlib import Path
 import pytest
 
 from omega.adapters.finite_relational import (
+    compiled_derivation_contract,
     compile_derived_graph_path,
     load_model,
+    reserved_ir_fields,
     run_declared_audits,
 )
 from omega.adapters.finite_relational.finite_grid import compile_finite_grid, compile_finite_grid_path
@@ -72,23 +74,46 @@ def test_finite_grid_cli_retains_source_compiled_model_and_audits(tmp_path: Path
 
 
 def test_finite_grid_rejects_reserved_ir_fields() -> None:
+    source = {
+        "model_id": "bad_grid_private_relations",
+        "width": 1,
+        "height": 1,
+        "movement_rule": "orthogonal",
+        "observations": {"color": {"0,0": "red"}},
+        "presentations": {},
+        "relations": {"private": []},
+        "provenance": {
+            "declared_before_run": True,
+            "source": "inline test",
+            "claim_boundary": "reserved-field rejection test",
+        },
+    }
+
+    assert reserved_ir_fields(source) == ("relations",)
     with pytest.raises(SchemaError, match="must not declare finite relational IR fields"):
-        compile_finite_grid(
-            {
-                "model_id": "bad_grid_private_relations",
-                "width": 1,
-                "height": 1,
-                "movement_rule": "orthogonal",
-                "observations": {"color": {"0,0": "red"}},
-                "presentations": {},
-                "relations": {"private": []},
-                "provenance": {
-                    "declared_before_run": True,
-                    "source": "inline test",
-                    "claim_boundary": "reserved-field rejection test",
-                },
-            }
-        )
+        compile_finite_grid(source)
+
+
+def test_finite_grid_compiled_provenance_records_derivation_contract() -> None:
+    compiled = compile_finite_grid_path(FIXTURES / "finite_grid_east_asymmetry.json")
+
+    graph_contract = compiled_derivation_contract(
+        compiled,
+        compiled_from="finite_grid",
+        required_derivation_rules=(
+            "Rel=edge",
+            "Sep=observation_differs",
+            "Asym=strict_directed_edge_and_observation_differs",
+        ),
+    )
+
+    assert graph_contract["complete"] is True
+    assert graph_contract["missing_derivation_rules"] == []
+    assert compiled["provenance"]["grid_derivation_rules"] == [
+        "cells=rectangular_grid_minus_blocked",
+        "edges=movement_rule:east",
+        "then=derived_graph_rules",
+    ]
 
 
 def _rename_relation(

@@ -1,8 +1,8 @@
 # Finite Relational Adapter Validation V0
 
 Date: 2026-06-23
-Run context: working tree based on `d851281`, with the graph-pair transfer
-batch applied before commit.
+Run context: working tree based on `d327dd1`, with the source-contract
+hardening batch applied before commit.
 
 Claim boundary:
 
@@ -16,24 +16,36 @@ source abstraction is empirically correct.
 ## Commands
 
 ```powershell
-./.venv/Scripts/python.exe -m pytest tests/test_finite_relational_adapter_adversarial.py `
-  -q --basetemp .tmp/pytest-graph-pair-transfer-final -p no:cacheprovider
+./.venv/Scripts/python.exe -m pytest `
+  tests/test_derived_graph_adapter.py `
+  tests/test_finite_grid_adapter.py `
+  tests/test_finite_relational_grid_obstacle.py `
+  tests/test_finite_relational_adapter_adversarial.py `
+  -q --basetemp .tmp/pytest-source-contract-final -p no:cacheprovider
 
 ./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_adversarial `
-  --out-root .tmp/finite_relational_adapter_adversarial_graph_pair_transfer_final
+  --out-root .tmp/finite_relational_adapter_adversarial_source_contract_final
 
 ./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_smoke `
-  --out-root .tmp/finite_relational_adapter_smoke_graph_pair_transfer_final
+  --out-root .tmp/finite_relational_adapter_smoke_source_contract_final
 
-./.venv/Scripts/ruff.exe check omega/adapters/finite_relational `
+./.venv/Scripts/ruff.exe check omega/adapters/finite_relational/__init__.py `
+  omega/adapters/finite_relational/source_contract.py `
+  omega/adapters/finite_relational/derived_graph.py `
+  omega/adapters/finite_relational/finite_grid.py `
+  omega/adapters/finite_relational/grid_obstacle_experiment.py `
+  omega/validation/finite_relational_adapter_smoke.py `
+  tests/test_derived_graph_adapter.py `
+  tests/test_finite_grid_adapter.py `
+  tests/test_finite_relational_grid_obstacle.py `
   tests/test_finite_relational_adapter_adversarial.py
 ```
 
 Result:
 
 ```text
-adapter adversarial pytest: 13 passed
-adapter smoke: PASS, 15 fixtures, focused pytest 70 passed
+adapter source-contract pytest: 32 passed
+adapter smoke: PASS, 15 fixtures, focused pytest 73 passed
 generated/adversarial validation: PASS, 17 cases
 focused ruff: passed
 ```
@@ -43,7 +55,7 @@ focused ruff: passed
 Run root:
 
 ```text
-.tmp/finite_relational_adapter_smoke_graph_pair_transfer_final/20260623_164528
+.tmp/finite_relational_adapter_smoke_source_contract_final/20260623_165417
 ```
 
 | Fixture | Audits | Findings | All passed | Source digest | Compiled/model digest |
@@ -69,7 +81,7 @@ Run root:
 Run root:
 
 ```text
-.tmp/finite_relational_adapter_adversarial_graph_pair_transfer_final/20260623_164508
+.tmp/finite_relational_adapter_adversarial_source_contract_final/20260623_165417
 ```
 
 | Case | Source format | Audits | Findings | All passed | Source digest | Compiled digest |
@@ -104,6 +116,13 @@ Run root:
   and a declared correspondence, then compile both graphs before running the
   carrier-transfer audit. The negative case keeps endpoint correspondence but
   rejects transfer because the target graph loses return structure.
+- The source-contract helper centralizes the reserved finite relational IR
+  fields (`predicates`, `relations`, `functions`, `profiles`, `audits`) and is
+  exercised by derived graph, finite grid, grid-obstacle, and generated
+  graph-pair source tests.
+- The graph and grid compiler tests now require named compiled derivation
+  rules, so source compilers are checked for explicit provenance rather than
+  trusted by inspection alone.
 - The closure-generated cases now include carrier-pair visibility,
   reachability target facts, viability target facts, bounded-recovery target
   facts, stale/reflected reach-status facts, multi-presentation row/column fact

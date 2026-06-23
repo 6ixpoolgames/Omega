@@ -7,8 +7,10 @@ from omega.adapters.finite_relational import (
     SchemaError,
     compile_derived_graph,
     compile_derived_graph_path,
+    compiled_derivation_contract,
     load_model,
     load_model_path,
+    reserved_ir_fields,
     run_declared_audits,
 )
 from omega.adapters.finite_relational.graph_cli import run_graph_file
@@ -90,22 +92,40 @@ def test_mixed_asymmetry_fixture_derives_only_strict_separated_edges() -> None:
 
 
 def test_derived_graph_rejects_reserved_ir_fields() -> None:
+    source = {
+        "model_id": "bad_private_audit_source",
+        "nodes": ["x", "y"],
+        "edges": [["x", "y"]],
+        "observations": {"color": {"x": "red", "y": "blue"}},
+        "presentations": {},
+        "audits": [{"id": "private", "kind": "alpha_laws"}],
+        "provenance": {
+            "declared_before_run": True,
+            "source": "inline test",
+            "claim_boundary": "reserved-field rejection test",
+        },
+    }
+
+    assert reserved_ir_fields(source) == ("audits",)
     with pytest.raises(SchemaError, match="must not declare finite relational IR fields"):
-        compile_derived_graph(
-            {
-                "model_id": "bad_private_audit_source",
-                "nodes": ["x", "y"],
-                "edges": [["x", "y"]],
-                "observations": {"color": {"x": "red", "y": "blue"}},
-                "presentations": {},
-                "audits": [{"id": "private", "kind": "alpha_laws"}],
-                "provenance": {
-                    "declared_before_run": True,
-                    "source": "inline test",
-                    "claim_boundary": "reserved-field rejection test",
-                },
-            }
-        )
+        compile_derived_graph(source)
+
+
+def test_derived_graph_compiled_provenance_records_derivation_contract() -> None:
+    compiled = compile_derived_graph_path(FIXTURES / "derived_graph_strict_asymmetry.json")
+
+    contract = compiled_derivation_contract(
+        compiled,
+        compiled_from="derived_graph",
+        required_derivation_rules=(
+            "Rel=edge",
+            "Sep=observation_differs",
+            "Asym=strict_directed_edge_and_observation_differs",
+        ),
+    )
+
+    assert contract["complete"] is True
+    assert contract["missing_derivation_rules"] == []
 
 
 def test_derived_graph_rejects_raw_functions_field() -> None:

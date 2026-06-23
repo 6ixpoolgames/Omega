@@ -1,6 +1,10 @@
 from pathlib import Path
 
-from omega.adapters.finite_relational import generate_adversarial_cases, load_model
+from omega.adapters.finite_relational import (
+    RESERVED_IR_FIELDS,
+    generate_adversarial_cases,
+    load_model,
+)
 from omega.validation.finite_relational_adapter_adversarial import (
     run_finite_relational_adapter_adversarial,
 )
@@ -89,7 +93,6 @@ def test_generated_adversarial_cases_cover_adapter_failure_modes() -> None:
 
 
 def test_generated_source_compilers_do_not_smuggle_reserved_ir_fields() -> None:
-    reserved = {"predicates", "relations", "functions", "profiles", "audits"}
     generated = {
         case.case_id: case
         for case in generate_adversarial_cases()
@@ -98,10 +101,10 @@ def test_generated_source_compilers_do_not_smuggle_reserved_ir_fields() -> None:
 
     assert generated
     for case in generated.values():
-        assert not (reserved & set(case.source))
+        assert not (RESERVED_IR_FIELDS & set(case.source))
         if case.source_format == "derived_graph_pair":
-            assert not (reserved & set(case.source["source_graph"]))
-            assert not (reserved & set(case.source["target_graph"]))
+            assert not (RESERVED_IR_FIELDS & set(case.source["source_graph"]))
+            assert not (RESERVED_IR_FIELDS & set(case.source["target_graph"]))
 
 
 def test_generated_finite_grid_case_compiles_to_alpha_like_asymmetry() -> None:

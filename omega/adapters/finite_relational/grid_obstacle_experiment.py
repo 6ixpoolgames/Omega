@@ -11,6 +11,7 @@ from typing import Any
 from omega.adapters.finite_relational.audits import AuditResult, run_declared_audits
 from omega.adapters.finite_relational.facts import Pair, reachable_pairs
 from omega.adapters.finite_relational.model import SchemaError, load_model, model_digest
+from omega.adapters.finite_relational.source_contract import assert_no_reserved_ir_fields
 
 
 @dataclass(frozen=True)
@@ -165,6 +166,7 @@ def generate_grid_obstacle_study() -> GridObstacleStudy:
 def compile_grid_obstacle_source(raw: dict[str, Any]) -> dict[str, Any]:
     """Compile a grid obstacle-insertion source into finite relational IR."""
 
+    assert_no_reserved_ir_fields(raw, source_kind="grid obstacle insertion")
     width = _positive_int(raw.get("width"), "width")
     height = _positive_int(raw.get("height"), "height")
     movement_rule = str(raw.get("movement_rule", "orthogonal"))

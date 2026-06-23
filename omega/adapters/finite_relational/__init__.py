@@ -114,6 +114,12 @@ from omega.adapters.finite_relational.source_parity import (
     generate_source_parity_study,
     source_parity_summary,
 )
+from omega.adapters.finite_relational.source_contract import (
+    RESERVED_IR_FIELDS,
+    assert_no_reserved_ir_fields,
+    compiled_derivation_contract,
+    reserved_ir_fields,
+)
 
 __all__ = [
     "AuditResult",
@@ -132,6 +138,7 @@ __all__ = [
     "Policy",
     "PolicyDynamicsFamily",
     "RandomizedDecoder",
+    "RESERVED_IR_FIELDS",
     "GridObstacleStudy",
     "Predicate",
     "Relation",
@@ -146,12 +153,14 @@ __all__ = [
     "all_binary_targets",
     "all_deterministic_decoders",
     "all_observations",
+    "assert_no_reserved_ir_fields",
     "coarsen_observation",
     "compile_derived_graph",
     "compile_derived_graph_path",
     "compile_finite_grid",
     "compile_finite_grid_path",
     "compile_grid_obstacle_source",
+    "compiled_derivation_contract",
     "common_target_predicates",
     "common_visible_pairs",
     "compose_coarse_decoder_through_fine",
@@ -185,6 +194,7 @@ __all__ = [
     "run_declared_audits",
     "source_parity_digest_json",
     "source_parity_summary",
+    "reserved_ir_fields",
     "stochastic_recovery_summary",
     "stochastic_continuation_loss_summary",
     "success_by_source",

@@ -53,6 +53,8 @@ source compilers can target one finite relational IR;
 generic audits can run over that IR;
 retained artifacts expose source and compiled-model digests;
 reserved low-level IR fields are rejected by high-level source compilers;
+the reserved-field rejection rule is shared by derived graph, finite grid, and
+grid obstacle source compilers;
 fixtures cover both positive and negative checks;
 generated/adversarial cases can rediscover expected finite failure modes.
 generated presentation/fact closure cases can test common-fact shrinkage
