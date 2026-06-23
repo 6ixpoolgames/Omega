@@ -29,6 +29,7 @@ stochastic_recovery_characterization_v0.md
 stochastic_recovery_theorem_spine_v0.md
 stochastic_recovery_formalization_v0.md
 recovery_layer_checkpoint_v0.md
+coarsening_permanence_v0.md
 robust_recovery_ambiguity_sets_v0.md
 prior_relative_recovery_v0.md
 bridge_claims_ledger_v0.md
@@ -167,6 +168,7 @@ OmegaProper/Trajectory/SimulationTransfer.lean
 OmegaProper/Trajectory/SupportUnderPerturbation.lean
 OmegaProper/Recovery/FiniteChannel.lean
 OmegaProper/Recovery/ConfusionBound.lean
+OmegaProper/Recovery/CoarseningPermanence.lean
 OmegaProper/Recovery/Deterministic.lean
 OmegaProper/Recovery/ObservationRefinement.lean
 OmegaProper/Recovery/Randomized.lean
@@ -253,6 +255,9 @@ recovery, with worst-case thresholds implying expected thresholds under any
 declared prior and a skewed-prior witness showing expected success can hide
 worst-case failure; shared observation mass between target-distinct sources
 quantitatively blocks deterministic threshold recovery above `1 - epsilon`;
+failure of deterministic, robust, support-exact, or randomized recovery
+persists under deterministic coarsening when the appropriate decoder-class
+lifting law is present;
 consequence-native trajectory guardrails for separation, consequence-respecting
 classes, directional allowance versus symmetric identification,
 collapse/noncollapse, over-separation, and mixed evaluated panels;
@@ -367,6 +372,7 @@ stochastic_recovery_characterization_v0.md
 stochastic_recovery_theorem_spine_v0.md
 stochastic_recovery_formalization_v0.md
 recovery_layer_checkpoint_v0.md
+coarsening_permanence_v0.md
 robust_recovery_ambiguity_sets_v0.md
 prior_relative_recovery_v0.md
 stochastic_continuation_loss_v0.md

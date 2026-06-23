@@ -53,6 +53,8 @@ RecoveryExistsInAt is the explicit deterministic decoder-class form, with
 Success + FailureMass = 1.
 Success <= 1.
 Observation refinement preserves deterministic and randomized recovery.
+Recovery failure persists under deterministic coarsening for deterministic,
+support-exact, robust, and randomized recovery surfaces.
 Deterministic recovery embeds into randomized recovery.
 Randomized success is nonnegative and bounded by 1.
 RandomizedRecoveryInAt is the explicit randomized decoder-class form, with
@@ -150,7 +152,6 @@ Possible next formalization steps:
 
 ```text
 Lean theorem for support-exact recovery iff support disjointness;
-Lean theorem for deterministic coarsening monotonicity;
 exact randomized maximin via a small linear-programming surface or finite
   declared randomized decoder family;
 randomized robust recovery over ambiguity sets.

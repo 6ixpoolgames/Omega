@@ -36,6 +36,7 @@ Main Lean files:
 ```text
 formal/lean/OmegaProper/Recovery/FiniteChannel.lean
 formal/lean/OmegaProper/Recovery/ConfusionBound.lean
+formal/lean/OmegaProper/Recovery/CoarseningPermanence.lean
 formal/lean/OmegaProper/Recovery/Deterministic.lean
 formal/lean/OmegaProper/Recovery/ObservationRefinement.lean
 formal/lean/OmegaProper/Recovery/Randomized.lean
@@ -112,6 +113,11 @@ If a coarse observation factors through a fine observation, the fine observation
 can simulate any coarse decoder. Coarsening cannot create recovery capacity for
 an unrestricted decoder class over an already available fine observation.
 
+The formal layer now records the contrapositive as coarsening permanence:
+failed deterministic, support-exact, robust, or randomized recovery claims
+persist under deterministic coarsening. Restricted decoder-class variants
+require explicit decoder lifting.
+
 ## Guardrail Witnesses
 
 The finite examples now include:
@@ -162,7 +168,6 @@ that recovery validates Omega.
 Near-term theorem targets:
 
 ```text
-recovery failure persists under deterministic coarsening;
 recovery facts become entries in a presentation/fact admissibility ledger.
 ```
 
