@@ -62,6 +62,9 @@ family intersections;
 generated crosscutting closure stress now checks row, column, and parity
 presentations whose full family keeps only constant facts and no ordered
 visible state pairs;
+generated graph-pair transfer cases now compile source and target graphs
+separately before checking a positive carrier transfer and a missing-return
+negative transfer;
 generated transport closure checks a transferred endpoint-role fact without
 treating transfer as identity;
 generated failed-transport closure shows role-label preservation can survive
@@ -90,7 +93,7 @@ That retained summary records:
 
 ```text
 15 fixture smoke cases;
-15 generated/adversarial cases;
+17 generated/adversarial cases;
 source digests where a source compiler is used;
 compiled/model digests;
 audit counts;
@@ -142,6 +145,21 @@ The negative fixture is:
 
 ```text
 carrier_transfer_fail_missing_return.json
+```
+
+Generated graph-pair transfer cases now exercise the same audit through a
+higher-level source shape:
+
+```text
+generated_graph_pair_transfer:
+  source and target cycles are compiled separately from graph sources;
+  endpoint correspondence is present;
+  transfer is accepted.
+
+generated_graph_pair_transfer_missing_return:
+  endpoint correspondence is still present;
+  the target graph has only the forward edge;
+  transfer is rejected because target recurrence is not certified.
 ```
 
 The negative fixture matters because a declared endpoint correspondence is not

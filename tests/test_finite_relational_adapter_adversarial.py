@@ -19,6 +19,8 @@ REQUIRED_CASE_IDS = {
     "generated_stale_reflected_fact_closure",
     "generated_multi_presentation_fact_closure",
     "generated_crosscutting_presentation_closure",
+    "generated_graph_pair_transfer",
+    "generated_graph_pair_transfer_missing_return",
     "generated_transport_fact_closure",
     "generated_failed_transport_fact_closure",
     "generated_finite_grid_asymmetry",
@@ -68,6 +70,12 @@ def test_generated_adversarial_cases_cover_adapter_failure_modes() -> None:
         "closure_ok",
         "closure_ok",
     ]
+    assert by_id["generated_graph_pair_transfer"].summary()["findings"] == [
+        "transferred"
+    ]
+    assert by_id["generated_graph_pair_transfer_missing_return"].summary()["findings"] == [
+        "not_transferred"
+    ]
     assert by_id["generated_transport_fact_closure"].summary()["findings"] == [
         "transferred",
         "closure_ok",
@@ -85,12 +93,15 @@ def test_generated_source_compilers_do_not_smuggle_reserved_ir_fields() -> None:
     generated = {
         case.case_id: case
         for case in generate_adversarial_cases()
-        if case.source_format in {"derived_graph", "finite_grid"}
+        if case.source_format in {"derived_graph", "finite_grid", "derived_graph_pair"}
     }
 
     assert generated
     for case in generated.values():
         assert not (reserved & set(case.source))
+        if case.source_format == "derived_graph_pair":
+            assert not (reserved & set(case.source["source_graph"]))
+            assert not (reserved & set(case.source["target_graph"]))
 
 
 def test_generated_finite_grid_case_compiles_to_alpha_like_asymmetry() -> None:
@@ -258,6 +269,39 @@ def test_generated_crosscutting_presentation_closure_case_collapses_specific_fac
     assert family["observed"]["common_visible_pair_count"] == 0
     assert family["observed"]["present_expected_absent_target_predicates"] == []
     assert family["observed"]["present_expected_absent_visible_pairs"] == []
+
+
+def test_generated_graph_pair_transfer_cases_use_compiled_graph_surfaces() -> None:
+    cases = {case.case_id: case for case in generate_adversarial_cases()}
+    transferred = cases["generated_graph_pair_transfer"]
+    missing_return = cases["generated_graph_pair_transfer_missing_return"]
+
+    assert transferred.source_format == "derived_graph_pair"
+    assert missing_return.source_format == "derived_graph_pair"
+    for case in (transferred, missing_return):
+        assert "source_graph" in case.source
+        assert "target_graph" in case.source
+        assert "correspondence" in case.source
+        assert "relations" not in case.source
+        assert "predicates" not in case.source
+        assert case.compiled_model["provenance"]["compiled_from"] == "derived_graph_pair"
+        assert "source_graph_compiled_digest" in case.compiled_model["provenance"]
+        assert "target_graph_compiled_digest" in case.compiled_model["provenance"]
+
+    positive = transferred.audit_results[0].as_dict()
+    negative = missing_return.audit_results[0].as_dict()
+
+    assert positive["passed"] is True
+    assert positive["finding"] == "transferred"
+    assert positive["observed"]["source_certified"] is True
+    assert positive["observed"]["target_certified"] is True
+    assert positive["observed"]["endpoint_correspondence"] is True
+    assert negative["passed"] is True
+    assert negative["finding"] == "not_transferred"
+    assert negative["observed"]["source_certified"] is True
+    assert negative["observed"]["target_certified"] is False
+    assert negative["observed"]["endpoint_correspondence"] is True
+    assert negative["observed"]["target"]["mutually_reachable"] is False
 
 
 def test_generated_transport_fact_closure_case_tracks_transferred_role() -> None:

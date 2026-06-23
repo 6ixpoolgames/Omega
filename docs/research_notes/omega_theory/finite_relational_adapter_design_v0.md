@@ -435,6 +435,15 @@ generated_crosscutting_presentation_closure:
   exact target fact; the full declared family keeps only the constant target
   and no ordered visible state pairs.
 
+generated_graph_pair_transfer:
+  generated source and target graph cycles are compiled separately, then a
+  declared endpoint correspondence is audited as a carrier-transfer contract.
+
+generated_graph_pair_transfer_missing_return:
+  generated source and target graphs keep the same declared endpoint
+  correspondence, but the target graph loses its return edge, so carrier
+  transfer is rejected.
+
 generated_transport_fact_closure:
   generated source and target recurrent carriers satisfy the carrier-transfer
   audit; lifted source/target endpoint-role presentations preserve a

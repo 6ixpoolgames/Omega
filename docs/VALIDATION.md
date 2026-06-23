@@ -270,8 +270,11 @@ recovery-style target facts, stale/reflected reach-status facts, and
 multi-presentation row/column fact intersections. The closure stress suite also
 includes a crosscutting row/column/parity family where each presentation
 preserves a different fact but the full family keeps only the constant target
-and no ordered visible state pairs, plus transported endpoint-role facts under
-a carrier-transfer contract and a failed-transfer label-closure control.
+and no ordered visible state pairs. The transport checks include graph-pair
+source cases that compile source and target graphs separately before auditing
+positive transfer and a missing-return negative control, plus transported
+endpoint-role facts under a carrier-transfer contract and a failed-transfer
+label-closure control.
 
 The controlled empirical path enumerates fixed small finite families and reports
 rates/frequencies for selected proxy failures:

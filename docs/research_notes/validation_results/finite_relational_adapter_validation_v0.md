@@ -1,8 +1,8 @@
 # Finite Relational Adapter Validation V0
 
 Date: 2026-06-23
-Run context: working tree based on `a703e7b`, with the crosscutting closure
-stress batch applied before commit.
+Run context: working tree based on `d851281`, with the graph-pair transfer
+batch applied before commit.
 
 Claim boundary:
 
@@ -17,13 +17,13 @@ source abstraction is empirically correct.
 
 ```powershell
 ./.venv/Scripts/python.exe -m pytest tests/test_finite_relational_adapter_adversarial.py `
-  -q --basetemp .tmp/pytest-crosscutting-closure -p no:cacheprovider
+  -q --basetemp .tmp/pytest-graph-pair-transfer-final -p no:cacheprovider
 
 ./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_adversarial `
-  --out-root .tmp/finite_relational_adapter_adversarial_crosscutting_closure
+  --out-root .tmp/finite_relational_adapter_adversarial_graph_pair_transfer_final
 
 ./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_smoke `
-  --out-root .tmp/finite_relational_adapter_smoke_crosscutting_closure
+  --out-root .tmp/finite_relational_adapter_smoke_graph_pair_transfer_final
 
 ./.venv/Scripts/ruff.exe check omega/adapters/finite_relational `
   tests/test_finite_relational_adapter_adversarial.py
@@ -32,9 +32,9 @@ source abstraction is empirically correct.
 Result:
 
 ```text
-adapter adversarial pytest: 12 passed
-adapter smoke: PASS, 15 fixtures, focused pytest 69 passed
-generated/adversarial validation: PASS, 15 cases
+adapter adversarial pytest: 13 passed
+adapter smoke: PASS, 15 fixtures, focused pytest 70 passed
+generated/adversarial validation: PASS, 17 cases
 focused ruff: passed
 ```
 
@@ -43,7 +43,7 @@ focused ruff: passed
 Run root:
 
 ```text
-.tmp/finite_relational_adapter_smoke_crosscutting_closure_final/20260623_163857
+.tmp/finite_relational_adapter_smoke_graph_pair_transfer_final/20260623_164528
 ```
 
 | Fixture | Audits | Findings | All passed | Source digest | Compiled/model digest |
@@ -69,7 +69,7 @@ Run root:
 Run root:
 
 ```text
-.tmp/finite_relational_adapter_adversarial_crosscutting_closure_final/20260623_163848
+.tmp/finite_relational_adapter_adversarial_graph_pair_transfer_final/20260623_164508
 ```
 
 | Case | Source format | Audits | Findings | All passed | Source digest | Compiled digest |
@@ -79,6 +79,8 @@ Run root:
 | generated_crosscutting_presentation_closure | finite_relational_ir | 4 | `closure_ok`, `closure_ok`, `closure_ok`, `closure_ok` | true | ef8d5210832711ae0bad4250475dadd82408b02e28e0780f839d495b34f0332a | ef8d5210832711ae0bad4250475dadd82408b02e28e0780f839d495b34f0332a |
 | generated_failed_transport_fact_closure | finite_relational_ir | 3 | `not_transferred`, `closure_ok`, `closure_ok` | true | ea4d533fc65c033ddc47d968369b62e2f5f87f13091af4fd3d0207641668ed10 | ea4d533fc65c033ddc47d968369b62e2f5f87f13091af4fd3d0207641668ed10 |
 | generated_finite_grid_asymmetry | finite_grid | 3 | `alpha_laws_hold`, `not_sound`, `sound` | true | 5fa177534f17c38e8f26cd92e986d8f06475c18455502f82b5d4310af2d69d81 | 70347caab151bc727a6498dd993225b11871fdedd1de74391a5df4a3bedf4961 |
+| generated_graph_pair_transfer | derived_graph_pair | 1 | `transferred` | true | dc9ffd6779c7ea068cde510434c0ff082db2f5557b284ef271b46e0482403ec7 | 2e5927f9b21aed2ea4ccedb8f45a078fb910adc6e74a4a97e43c18ab6f06701c |
+| generated_graph_pair_transfer_missing_return | derived_graph_pair | 1 | `not_transferred` | true | 22895b6e1af557d2d13b4d6da00725544afe96a49953c1cf7c89a6d37b3661b3 | c11ff95bd10f8d8e2bb8a7971796553f9fa5a6df6497e8ff7c23e8278aa9a22a |
 | generated_hidden_reachability_loss | finite_relational_ir | 1 | `hidden_loss` | true | dc5d5c4f94bb47db57e48775d8842388424fa01d2a5f9a2af302ad7c1fa55df3 | dc5d5c4f94bb47db57e48775d8842388424fa01d2a5f9a2af302ad7c1fa55df3 |
 | generated_multi_presentation_fact_closure | finite_relational_ir | 3 | `closure_ok`, `closure_ok`, `closure_ok` | true | 9dbf98b6cd49109dc899f221d6297320d5d9978e5d92756fb94258d268febd99 | 9dbf98b6cd49109dc899f221d6297320d5d9978e5d92756fb94258d268febd99 |
 | generated_phantom_reachability | finite_relational_ir | 1 | `phantom` | true | 8a1849acdaf2c564b959317fa977c53cb3bd93b3b148a537cb309dbb8485d5e5 | 8a1849acdaf2c564b959317fa977c53cb3bd93b3b148a537cb309dbb8485d5e5 |
@@ -98,6 +100,10 @@ Run root:
   model digests.
 - The generated/adversarial cases are regenerated deterministically by
   `omega.adapters.finite_relational.adversarial_search`.
+- The graph-pair transfer cases retain high-level source/target graph sources
+  and a declared correspondence, then compile both graphs before running the
+  carrier-transfer audit. The negative case keeps endpoint correspondence but
+  rejects transfer because the target graph loses return structure.
 - The closure-generated cases now include carrier-pair visibility,
   reachability target facts, viability target facts, bounded-recovery target
   facts, stale/reflected reach-status facts, multi-presentation row/column fact
