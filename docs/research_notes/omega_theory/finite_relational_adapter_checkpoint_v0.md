@@ -60,7 +60,9 @@ without hand-written Lean-only examples;
 generated closure cases now include stale/reflected and multi-presentation
 family intersections;
 generated transport closure checks a transferred endpoint-role fact without
-treating transfer as identity.
+treating transfer as identity;
+generated failed-transport closure shows role-label preservation can survive
+even when the transfer contract rejects carrier transfer.
 ```
 
 The retained validation summary is:
@@ -73,7 +75,7 @@ That retained summary records:
 
 ```text
 15 fixture smoke cases;
-13 generated/adversarial cases;
+14 generated/adversarial cases;
 source digests where a source compiler is used;
 compiled/model digests;
 audit counts;

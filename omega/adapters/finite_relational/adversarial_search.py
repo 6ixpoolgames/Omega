@@ -61,6 +61,7 @@ def generate_adversarial_cases() -> tuple[GeneratedAdapterCase, ...]:
         _generated_stale_reflected_fact_closure_case(),
         _generated_multi_presentation_fact_closure_case(),
         _generated_transport_fact_closure_case(),
+        _generated_failed_transport_fact_closure_case(),
         _generated_finite_grid_asymmetry_case(),
     )
 
@@ -793,6 +794,105 @@ def _generated_transport_fact_closure_case() -> GeneratedAdapterCase:
         ),
     }
     return _validated_ir_case("generated_transport_fact_closure", model)
+
+
+def _generated_failed_transport_fact_closure_case() -> GeneratedAdapterCase:
+    states = ("s_left", "s_right", "t_left", "t_right")
+    model = {
+        "model_id": "generated_failed_transport_fact_closure",
+        "schema_version": "0.1.0",
+        "carrier": list(states),
+        "predicates": {
+            "source_safe": ["s_left", "s_right"],
+            "source_carrier": ["s_left", "s_right"],
+            "target_safe": ["t_left", "t_right"],
+            "target_carrier": ["t_left", "t_right"],
+            "transported_left_endpoint": ["s_left", "t_left"],
+            "all_states": list(states),
+        },
+        "relations": {
+            "source_next": [["s_left", "s_right"], ["s_right", "s_left"]],
+            "target_next": [["t_left", "t_right"]],
+            "source_separated": [["s_left", "s_right"], ["s_right", "s_left"]],
+            "target_separated": [["t_left", "t_right"], ["t_right", "t_left"]],
+            "corresponds": [["s_left", "t_left"], ["s_right", "t_right"]],
+        },
+        "functions": {
+            "source_lifted_role": {
+                "s_left": "left",
+                "s_right": "right",
+                "t_left": "left",
+                "t_right": "right",
+            },
+            "target_lifted_role": {
+                "s_left": "left",
+                "s_right": "right",
+                "t_left": "left",
+                "t_right": "right",
+            },
+            "constant_transport_view": {state: "merged" for state in states},
+        },
+        "audits": [
+            {
+                "id": "generated_broken_carrier_transfer_contract",
+                "kind": "carrier_transfer",
+                "source_transition": "source_next",
+                "source_safety": "source_safe",
+                "source_carrier": "source_carrier",
+                "source_left": "s_left",
+                "source_right": "s_right",
+                "source_separation": "source_separated",
+                "target_transition": "target_next",
+                "target_safety": "target_safe",
+                "target_carrier": "target_carrier",
+                "target_left": "t_left",
+                "target_right": "t_right",
+                "target_separation": "target_separated",
+                "correspondence": "corresponds",
+                "expect": "not_transferred",
+            },
+            {
+                "id": "generated_role_views_preserve_label_fact_despite_failed_transfer",
+                "kind": "presentation_fact_closure",
+                "presentations": ["source_lifted_role", "target_lifted_role"],
+                "target_predicates": ["transported_left_endpoint", "all_states"],
+                "expected_common_target_predicates": [
+                    "transported_left_endpoint",
+                    "all_states",
+                ],
+                "expected_common_visible_pairs": [
+                    ["s_left", "s_right"],
+                    ["s_left", "t_right"],
+                    ["s_right", "s_left"],
+                    ["s_right", "t_left"],
+                    ["t_left", "s_right"],
+                    ["t_left", "t_right"],
+                    ["t_right", "s_left"],
+                    ["t_right", "t_left"],
+                ],
+                "expect": "closure_ok",
+            },
+            {
+                "id": "generated_erasing_view_drops_label_fact_after_failed_transfer",
+                "kind": "presentation_fact_closure",
+                "presentations": [
+                    "source_lifted_role",
+                    "target_lifted_role",
+                    "constant_transport_view",
+                ],
+                "target_predicates": ["transported_left_endpoint", "all_states"],
+                "expected_common_target_predicates": ["all_states"],
+                "expected_absent_target_predicates": ["transported_left_endpoint"],
+                "expect": "closure_ok",
+            },
+        ],
+        "provenance": _generated_provenance(
+            "Generated finite relational case: lifted endpoint-role presentations "
+            "can preserve a transport-looking label fact even when the carrier "
+            "transfer contract fails because target return structure is missing."
+        ),
+    }
+    return _validated_ir_case("generated_failed_transport_fact_closure", model)
 
 
 def _target_closure_audits(

@@ -313,15 +313,21 @@ generated_transport_fact_closure:
   role fact;
   admitting an erasing transport view removes that transported role from
   common facts.
+
+generated_failed_transport_fact_closure:
+  lifted source/target role presentations preserve a transport-looking label
+  fact even though the carrier-transfer audit fails;
+  the failure is caused by missing target return structure;
+  this blocks treating role-label closure as transfer identity.
 ```
 
 The next closure work should move from these finite generated checks to broader
-empirical-adjacent and transport-failure closure examples:
+empirical-adjacent closure examples:
 
 ```text
 presentations:
-  exact / coarse / stale / reflected / transported / failed-transport views
-  produced by retained fixtures
+  exact / coarse / stale / reflected / transported views produced by retained
+  fixtures
 
 facts:
   reachability, recovery, viability, and carrier-certification facts

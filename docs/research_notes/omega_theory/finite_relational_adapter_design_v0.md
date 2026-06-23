@@ -435,6 +435,12 @@ generated_transport_fact_closure:
   audit; lifted source/target endpoint-role presentations preserve a
   transported role fact, while an erasing transport view removes that role from
   common target facts.
+
+generated_failed_transport_fact_closure:
+  generated source carrier and endpoint correspondence look transfer-like, and
+  lifted role presentations preserve the transported role label; the
+  carrier-transfer audit rejects transfer because the target loses return
+  structure.
 ```
 
 Each fixture should include provenance.
@@ -529,7 +535,9 @@ presentation/fact closure shrinkage for stale/reflected reach-status facts;
 presentation/fact closure shrinkage for multi-presentation row/column fact
 intersections;
 presentation/fact closure shrinkage for transported endpoint-role facts under
-a carrier-transfer contract.
+a carrier-transfer contract;
+failed-transport control showing role-label closure is weaker than earned
+carrier transfer.
 ```
 
 The generator is intentionally finite and boring. It does not discover empirical

@@ -19,6 +19,7 @@ REQUIRED_CASE_IDS = {
     "generated_stale_reflected_fact_closure",
     "generated_multi_presentation_fact_closure",
     "generated_transport_fact_closure",
+    "generated_failed_transport_fact_closure",
     "generated_finite_grid_asymmetry",
 }
 
@@ -62,6 +63,11 @@ def test_generated_adversarial_cases_cover_adapter_failure_modes() -> None:
     ]
     assert by_id["generated_transport_fact_closure"].summary()["findings"] == [
         "transferred",
+        "closure_ok",
+        "closure_ok",
+    ]
+    assert by_id["generated_failed_transport_fact_closure"].summary()["findings"] == [
+        "not_transferred",
         "closure_ok",
         "closure_ok",
     ]
@@ -244,6 +250,33 @@ def test_generated_transport_fact_closure_case_tracks_transferred_role() -> None
     assert erasing["observed"]["common_visible_pair_count"] == 0
     assert erasing["observed"]["present_expected_absent_target_predicates"] == []
     assert erasing["observed"]["present_expected_absent_visible_pairs"] == []
+
+
+def test_generated_failed_transport_fact_closure_case_blocks_identity_smuggling() -> None:
+    case = {
+        case.case_id: case for case in generate_adversarial_cases()
+    }["generated_failed_transport_fact_closure"]
+    results = {result.audit_id: result.as_dict() for result in case.audit_results}
+
+    transfer = results["generated_broken_carrier_transfer_contract"]
+    lifted = results["generated_role_views_preserve_label_fact_despite_failed_transfer"]
+    erasing = results["generated_erasing_view_drops_label_fact_after_failed_transfer"]
+
+    assert transfer["passed"] is True
+    assert transfer["finding"] == "not_transferred"
+    assert transfer["observed"]["source_certified"] is True
+    assert transfer["observed"]["target_certified"] is False
+    assert transfer["observed"]["endpoint_correspondence"] is True
+    assert transfer["observed"]["target"]["mutually_reachable"] is False
+    assert lifted["passed"] is True
+    assert lifted["observed"]["common_target_predicates"] == [
+        "all_states",
+        "transported_left_endpoint",
+    ]
+    assert lifted["observed"]["common_visible_pair_count"] == 8
+    assert erasing["passed"] is True
+    assert erasing["observed"]["common_target_predicates"] == ["all_states"]
+    assert erasing["observed"]["present_expected_absent_target_predicates"] == []
 
 
 def test_generated_adversarial_validation_retains_outputs(tmp_path: Path) -> None:
