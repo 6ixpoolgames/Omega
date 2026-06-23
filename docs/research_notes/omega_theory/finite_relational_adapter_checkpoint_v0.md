@@ -59,6 +59,9 @@ generated presentation/fact closure cases can test common-fact shrinkage
 without hand-written Lean-only examples;
 generated closure cases now include stale/reflected and multi-presentation
 family intersections;
+generated crosscutting closure stress now checks row, column, and parity
+presentations whose full family keeps only constant facts and no ordered
+visible state pairs;
 generated transport closure checks a transferred endpoint-role fact without
 treating transfer as identity;
 generated failed-transport closure shows role-label preservation can survive
@@ -87,7 +90,7 @@ That retained summary records:
 
 ```text
 15 fixture smoke cases;
-14 generated/adversarial cases;
+15 generated/adversarial cases;
 source digests where a source compiler is used;
 compiled/model digests;
 audit counts;

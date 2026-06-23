@@ -1,8 +1,8 @@
 # Finite Relational Adapter Validation V0
 
 Date: 2026-06-23
-Run context: working tree based on `e6fde6a`, with the failed-transport closure
-batch applied before commit.
+Run context: working tree based on `a703e7b`, with the crosscutting closure
+stress batch applied before commit.
 
 Claim boundary:
 
@@ -17,13 +17,13 @@ source abstraction is empirically correct.
 
 ```powershell
 ./.venv/Scripts/python.exe -m pytest tests/test_finite_relational_adapter_adversarial.py `
-  -q --basetemp .tmp/pytest-adapter-failed-transport-closure -p no:cacheprovider
+  -q --basetemp .tmp/pytest-crosscutting-closure -p no:cacheprovider
 
 ./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_adversarial `
-  --out-root .tmp/finite_relational_adapter_adversarial_failed_transport_closure
+  --out-root .tmp/finite_relational_adapter_adversarial_crosscutting_closure
 
 ./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_smoke `
-  --out-root .tmp/finite_relational_adapter_smoke_failed_transport_closure
+  --out-root .tmp/finite_relational_adapter_smoke_crosscutting_closure
 
 ./.venv/Scripts/ruff.exe check omega/adapters/finite_relational `
   tests/test_finite_relational_adapter_adversarial.py
@@ -32,9 +32,9 @@ source abstraction is empirically correct.
 Result:
 
 ```text
-adapter adversarial pytest: 11 passed
-adapter smoke: PASS, 15 fixtures, focused pytest 65 passed
-generated/adversarial validation: PASS, 14 cases
+adapter adversarial pytest: 12 passed
+adapter smoke: PASS, 15 fixtures, focused pytest 69 passed
+generated/adversarial validation: PASS, 15 cases
 focused ruff: passed
 ```
 
@@ -43,7 +43,7 @@ focused ruff: passed
 Run root:
 
 ```text
-.tmp/finite_relational_adapter_smoke_failed_transport_closure/20260623_160044
+.tmp/finite_relational_adapter_smoke_crosscutting_closure_final/20260623_163857
 ```
 
 | Fixture | Audits | Findings | All passed | Source digest | Compiled/model digest |
@@ -69,13 +69,14 @@ Run root:
 Run root:
 
 ```text
-.tmp/finite_relational_adapter_adversarial_failed_transport_closure/20260623_160039
+.tmp/finite_relational_adapter_adversarial_crosscutting_closure_final/20260623_163848
 ```
 
 | Case | Source format | Audits | Findings | All passed | Source digest | Compiled digest |
 | --- | --- | --- | --- | --- | --- | --- |
 | generated_derived_graph_asymmetry | derived_graph | 3 | `alpha_laws_hold`, `not_sound`, `sound` | true | 0e9c20910a5e6626089cb973b57e0dfea9a9af69af9eada70f7206cea1c38ee1 | 72218b57d8c011e542bdb79c6c3707775dd2290099cb7c37d40c9717eb8cb374 |
 | generated_derived_graph_carrier | derived_graph | 3 | `alpha_laws_hold`, `sound`, `certified` | true | 4f79a1c99411a488f33c9e28ba99a0d890e89253de44039c82a48eead1a592ab | edbc750fc7398a364e242eb9875b87b23f378aef477876e82d7ddf6f06d24b9c |
+| generated_crosscutting_presentation_closure | finite_relational_ir | 4 | `closure_ok`, `closure_ok`, `closure_ok`, `closure_ok` | true | ef8d5210832711ae0bad4250475dadd82408b02e28e0780f839d495b34f0332a | ef8d5210832711ae0bad4250475dadd82408b02e28e0780f839d495b34f0332a |
 | generated_failed_transport_fact_closure | finite_relational_ir | 3 | `not_transferred`, `closure_ok`, `closure_ok` | true | ea4d533fc65c033ddc47d968369b62e2f5f87f13091af4fd3d0207641668ed10 | ea4d533fc65c033ddc47d968369b62e2f5f87f13091af4fd3d0207641668ed10 |
 | generated_finite_grid_asymmetry | finite_grid | 3 | `alpha_laws_hold`, `not_sound`, `sound` | true | 5fa177534f17c38e8f26cd92e986d8f06475c18455502f82b5d4310af2d69d81 | 70347caab151bc727a6498dd993225b11871fdedd1de74391a5df4a3bedf4961 |
 | generated_hidden_reachability_loss | finite_relational_ir | 1 | `hidden_loss` | true | dc5d5c4f94bb47db57e48775d8842388424fa01d2a5f9a2af302ad7c1fa55df3 | dc5d5c4f94bb47db57e48775d8842388424fa01d2a5f9a2af302ad7c1fa55df3 |
@@ -100,8 +101,9 @@ Run root:
 - The closure-generated cases now include carrier-pair visibility,
   reachability target facts, viability target facts, bounded-recovery target
   facts, stale/reflected reach-status facts, multi-presentation row/column fact
-  intersections, transported endpoint-role facts under a carrier-transfer
-  contract, and a failed-transfer label-closure control.
+  intersections, a crosscutting row/column/parity closure stress case,
+  transported endpoint-role facts under a carrier-transfer contract, and a
+  failed-transfer label-closure control.
 - `carrier_transfer_pass` and `carrier_transfer_fail_missing_return` exercise
   the adapter-level transfer contract. The negative case preserves endpoint
   correspondence but rejects transfer because the target carrier loses return

@@ -430,6 +430,11 @@ generated_multi_presentation_fact_closure:
   generated row and column presentations preserve different exact facts; the
   declared family closure keeps only facts visible through every presentation.
 
+generated_crosscutting_presentation_closure:
+  generated row, column, and parity presentations each preserve a different
+  exact target fact; the full declared family keeps only the constant target
+  and no ordered visible state pairs.
+
 generated_transport_fact_closure:
   generated source and target recurrent carriers satisfy the carrier-transfer
   audit; lifted source/target endpoint-role presentations preserve a

@@ -60,6 +60,7 @@ def generate_adversarial_cases() -> tuple[GeneratedAdapterCase, ...]:
         _generated_recovery_fact_closure_case(),
         _generated_stale_reflected_fact_closure_case(),
         _generated_multi_presentation_fact_closure_case(),
+        _generated_crosscutting_presentation_closure_case(),
         _generated_transport_fact_closure_case(),
         _generated_failed_transport_fact_closure_case(),
         _generated_finite_grid_asymmetry_case(),
@@ -690,6 +691,120 @@ def _generated_multi_presentation_fact_closure_case() -> GeneratedAdapterCase:
         ),
     }
     return _validated_ir_case("generated_multi_presentation_fact_closure", model)
+
+
+def _generated_crosscutting_presentation_closure_case() -> GeneratedAdapterCase:
+    states = ("00", "01", "10", "11")
+    row_zero = {"00", "01"}
+    col_zero = {"00", "10"}
+    even_parity = {"00", "11"}
+    all_ordered_pairs = [
+        [left, right]
+        for left in states
+        for right in states
+        if left != right
+    ]
+    model = {
+        "model_id": "generated_crosscutting_presentation_closure",
+        "schema_version": "0.1.0",
+        "carrier": list(states),
+        "predicates": {
+            "row_zero": sorted(row_zero),
+            "col_zero": sorted(col_zero),
+            "even_parity": sorted(even_parity),
+            "all_states": list(states),
+        },
+        "functions": {
+            "identity": {state: state for state in states},
+            "row_projection": {
+                state: ("row0" if state in row_zero else "row1")
+                for state in states
+            },
+            "col_projection": {
+                state: ("col0" if state in col_zero else "col1")
+                for state in states
+            },
+            "parity_projection": {
+                state: ("even" if state in even_parity else "odd")
+                for state in states
+            },
+        },
+        "audits": [
+            {
+                "id": "generated_row_projection_keeps_row_fact",
+                "kind": "presentation_fact_closure",
+                "presentations": ["identity", "row_projection"],
+                "target_predicates": [
+                    "row_zero",
+                    "col_zero",
+                    "even_parity",
+                    "all_states",
+                ],
+                "expected_common_target_predicates": ["row_zero", "all_states"],
+                "expected_absent_target_predicates": ["col_zero", "even_parity"],
+                "expect": "closure_ok",
+            },
+            {
+                "id": "generated_col_projection_keeps_col_fact",
+                "kind": "presentation_fact_closure",
+                "presentations": ["identity", "col_projection"],
+                "target_predicates": [
+                    "row_zero",
+                    "col_zero",
+                    "even_parity",
+                    "all_states",
+                ],
+                "expected_common_target_predicates": ["col_zero", "all_states"],
+                "expected_absent_target_predicates": ["row_zero", "even_parity"],
+                "expect": "closure_ok",
+            },
+            {
+                "id": "generated_parity_projection_keeps_parity_fact",
+                "kind": "presentation_fact_closure",
+                "presentations": ["identity", "parity_projection"],
+                "target_predicates": [
+                    "row_zero",
+                    "col_zero",
+                    "even_parity",
+                    "all_states",
+                ],
+                "expected_common_target_predicates": ["even_parity", "all_states"],
+                "expected_absent_target_predicates": ["row_zero", "col_zero"],
+                "expect": "closure_ok",
+            },
+            {
+                "id": "generated_row_col_parity_family_erases_all_specific_facts",
+                "kind": "presentation_fact_closure",
+                "presentations": [
+                    "identity",
+                    "row_projection",
+                    "col_projection",
+                    "parity_projection",
+                ],
+                "target_predicates": [
+                    "row_zero",
+                    "col_zero",
+                    "even_parity",
+                    "all_states",
+                ],
+                "expected_common_target_predicates": ["all_states"],
+                "expected_absent_target_predicates": [
+                    "row_zero",
+                    "col_zero",
+                    "even_parity",
+                ],
+                "expected_absent_visible_pairs": all_ordered_pairs,
+                "expect": "closure_ok",
+            },
+        ],
+        "provenance": _generated_provenance(
+            "Generated finite relational case: row, column, and parity "
+            "presentations each preserve a different target fact, while their "
+            "declared family closure preserves only the constant target and no "
+            "ordered visible state pairs."
+        ),
+    }
+    return _validated_ir_case("generated_crosscutting_presentation_closure", model)
 
 
 def _generated_transport_fact_closure_case() -> GeneratedAdapterCase:

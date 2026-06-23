@@ -18,6 +18,7 @@ REQUIRED_CASE_IDS = {
     "generated_recovery_fact_closure",
     "generated_stale_reflected_fact_closure",
     "generated_multi_presentation_fact_closure",
+    "generated_crosscutting_presentation_closure",
     "generated_transport_fact_closure",
     "generated_failed_transport_fact_closure",
     "generated_finite_grid_asymmetry",
@@ -57,6 +58,12 @@ def test_generated_adversarial_cases_cover_adapter_failure_modes() -> None:
         "closure_ok",
     ]
     assert by_id["generated_multi_presentation_fact_closure"].summary()["findings"] == [
+        "closure_ok",
+        "closure_ok",
+        "closure_ok",
+    ]
+    assert by_id["generated_crosscutting_presentation_closure"].summary()["findings"] == [
+        "closure_ok",
         "closure_ok",
         "closure_ok",
         "closure_ok",
@@ -221,6 +228,36 @@ def test_generated_multi_presentation_fact_closure_case_intersects_family_facts(
     assert family["observed"]["common_visible_pair_count"] == 4
     assert family["observed"]["present_expected_absent_target_predicates"] == []
     assert family["observed"]["missing_expected_common_visible_pairs"] == []
+
+
+def test_generated_crosscutting_presentation_closure_case_collapses_specific_facts() -> None:
+    case = {
+        case.case_id: case for case in generate_adversarial_cases()
+    }["generated_crosscutting_presentation_closure"]
+    results = {result.audit_id: result.as_dict() for result in case.audit_results}
+
+    row = results["generated_row_projection_keeps_row_fact"]
+    col = results["generated_col_projection_keeps_col_fact"]
+    parity = results["generated_parity_projection_keeps_parity_fact"]
+    family = results["generated_row_col_parity_family_erases_all_specific_facts"]
+
+    assert row["passed"] is True
+    assert row["observed"]["common_target_predicates"] == ["all_states", "row_zero"]
+    assert row["observed"]["common_visible_pair_count"] == 8
+    assert col["passed"] is True
+    assert col["observed"]["common_target_predicates"] == ["all_states", "col_zero"]
+    assert col["observed"]["common_visible_pair_count"] == 8
+    assert parity["passed"] is True
+    assert parity["observed"]["common_target_predicates"] == [
+        "all_states",
+        "even_parity",
+    ]
+    assert parity["observed"]["common_visible_pair_count"] == 8
+    assert family["passed"] is True
+    assert family["observed"]["common_target_predicates"] == ["all_states"]
+    assert family["observed"]["common_visible_pair_count"] == 0
+    assert family["observed"]["present_expected_absent_target_predicates"] == []
+    assert family["observed"]["present_expected_absent_visible_pairs"] == []
 
 
 def test_generated_transport_fact_closure_case_tracks_transferred_role() -> None:

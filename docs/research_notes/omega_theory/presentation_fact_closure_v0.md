@@ -307,6 +307,11 @@ generated_multi_presentation_fact_closure:
   the declared family intersection keeps only facts invariant across every
   presentation and removes row-only / column-only targets.
 
+generated_crosscutting_presentation_closure:
+  row, column, and parity presentations preserve three different target facts;
+  the full declared family keeps only the constant target and no ordered
+  visible state pairs.
+
 generated_transport_fact_closure:
   a generated carrier-transfer contract succeeds;
   lifted source/target role presentations preserve the transported endpoint
@@ -349,8 +354,8 @@ source-parity observation closure:
   after declared state renaming.
 ```
 
-The next closure work should broaden these finite generated and
-empirical-adjacent checks:
+The next closure work should continue broadening empirical-adjacent checks and
+larger generated controls:
 
 ```text
 presentations:

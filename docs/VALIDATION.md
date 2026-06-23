@@ -267,9 +267,11 @@ non-factorization, derived graph asymmetry, derived graph carrier
 certification, finite grid asymmetry, and presentation/fact closure shrinkage
 for a derived carrier pair plus generated reachability, viability, and
 recovery-style target facts, stale/reflected reach-status facts, and
-multi-presentation row/column fact intersections, plus transported
-endpoint-role facts under a carrier-transfer contract and a failed-transfer
-label-closure control.
+multi-presentation row/column fact intersections. The closure stress suite also
+includes a crosscutting row/column/parity family where each presentation
+preserves a different fact but the full family keeps only the constant target
+and no ordered visible state pairs, plus transported endpoint-role facts under
+a carrier-transfer contract and a failed-transfer label-closure control.
 
 The controlled empirical path enumerates fixed small finite families and reports
 rates/frequencies for selected proxy failures:
