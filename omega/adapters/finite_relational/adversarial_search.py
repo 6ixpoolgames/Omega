@@ -55,6 +55,9 @@ def generate_adversarial_cases() -> tuple[GeneratedAdapterCase, ...]:
         _generated_derived_graph_asymmetry_case(),
         _generated_derived_graph_carrier_case(),
         _generated_presentation_fact_closure_case(),
+        _generated_reachability_fact_closure_case(),
+        _generated_viability_fact_closure_case(),
+        _generated_recovery_fact_closure_case(),
         _generated_finite_grid_asymmetry_case(),
     )
 
@@ -328,6 +331,218 @@ def _generated_presentation_fact_closure_case() -> GeneratedAdapterCase:
         graph_source,
         compiled,
     )
+
+
+def _generated_reachability_fact_closure_case() -> GeneratedAdapterCase:
+    states = ("start", "goal", "dead")
+    edges = (("start", "goal"),)
+    target = "goal"
+    reachable = {
+        source
+        for source in states
+        if (source, target) in reachable_pairs(set(states), set(edges))
+    }
+    model = {
+        "model_id": "generated_reachability_fact_closure",
+        "schema_version": "0.1.0",
+        "carrier": list(states),
+        "relations": {"next": [list(edge) for edge in edges]},
+        "predicates": {
+            "can_reach_goal": sorted(reachable),
+            "all_states": list(states),
+        },
+        "functions": {
+            "reach_status": {
+                state: ("can_reach_goal" if state in reachable else "cannot_reach_goal")
+                for state in states
+            },
+            "constant_status": {state: "merged" for state in states},
+        },
+        "audits": _target_closure_audits(
+            exact_presentation="reach_status",
+            erasing_presentation="constant_status",
+            target_predicate="can_reach_goal",
+            constant_predicate="all_states",
+            exact_audit_id="generated_exact_reach_status_preserves_reachability_fact",
+            erasing_audit_id="generated_constant_status_erases_reachability_fact",
+        ),
+        "provenance": _generated_provenance(
+            "Generated finite relational case: reachability-to-goal status is "
+            "derived from the transition relation, then erased by a constant "
+            "presentation."
+        ),
+    }
+    return _validated_ir_case("generated_reachability_fact_closure", model)
+
+
+def _generated_viability_fact_closure_case() -> GeneratedAdapterCase:
+    states = ("loop", "dead")
+    edges = (("loop", "loop"),)
+    safe = set(states)
+    viable = {state for state in states if state in safe and (state, state) in set(edges)}
+    model = {
+        "model_id": "generated_viability_fact_closure",
+        "schema_version": "0.1.0",
+        "carrier": list(states),
+        "relations": {"next": [list(edge) for edge in edges]},
+        "predicates": {
+            "safe": sorted(safe),
+            "self_sustaining_safe": sorted(viable),
+            "all_states": list(states),
+        },
+        "functions": {
+            "viability_status": {
+                state: ("self_sustaining_safe" if state in viable else "not_self_sustaining")
+                for state in states
+            },
+            "constant_status": {state: "merged" for state in states},
+        },
+        "audits": _target_closure_audits(
+            exact_presentation="viability_status",
+            erasing_presentation="constant_status",
+            target_predicate="self_sustaining_safe",
+            constant_predicate="all_states",
+            exact_audit_id="generated_exact_viability_status_preserves_viability_fact",
+            erasing_audit_id="generated_constant_status_erases_viability_fact",
+        ),
+        "provenance": _generated_provenance(
+            "Generated finite relational case: a tiny self-sustaining safe "
+            "status is derived from transition and safety structure, then "
+            "erased by a constant presentation."
+        ),
+    }
+    return _validated_ir_case("generated_viability_fact_closure", model)
+
+
+def _generated_recovery_fact_closure_case() -> GeneratedAdapterCase:
+    states = ("left", "right")
+    model = {
+        "model_id": "generated_recovery_fact_closure",
+        "schema_version": "0.1.0",
+        "domains": {
+            "state": list(states),
+            "observation": ["left_obs", "right_obs", "merged"],
+            "truth": ["true", "false"],
+        },
+        "predicates": {
+            "bit_target": {
+                "domain": "state",
+                "members": ["left"],
+            },
+            "all_states": {
+                "domain": "state",
+                "members": list(states),
+            },
+        },
+        "functions": {
+            "exact_observation": {
+                "domain": "state",
+                "codomain": "observation",
+                "mapping": {
+                    "left": "left_obs",
+                    "right": "right_obs",
+                },
+            },
+            "constant_observation": {
+                "domain": "state",
+                "codomain": "observation",
+                "mapping": {
+                    "left": "merged",
+                    "right": "merged",
+                },
+            },
+            "exact_decoder": {
+                "domain": "observation",
+                "codomain": "truth",
+                "mapping": {
+                    "left_obs": "true",
+                    "right_obs": "false",
+                    "merged": "true",
+                },
+            },
+            "always_true": {
+                "domain": "observation",
+                "codomain": "truth",
+                "mapping": {
+                    "left_obs": "true",
+                    "right_obs": "true",
+                    "merged": "true",
+                },
+            },
+            "always_false": {
+                "domain": "observation",
+                "codomain": "truth",
+                "mapping": {
+                    "left_obs": "false",
+                    "right_obs": "false",
+                    "merged": "false",
+                },
+            },
+        },
+        "audits": [
+            {
+                "id": "generated_exact_observation_recovers_bit_target",
+                "kind": "bounded_recovery",
+                "observation": "exact_observation",
+                "target_predicate": "bit_target",
+                "decoders": ["exact_decoder", "always_true", "always_false"],
+                "expect": "recoverable",
+            },
+            {
+                "id": "generated_constant_observation_does_not_recover_bit_target",
+                "kind": "bounded_recovery",
+                "observation": "constant_observation",
+                "target_predicate": "bit_target",
+                "decoders": ["exact_decoder", "always_true", "always_false"],
+                "expect": "not_recoverable",
+            },
+            *_target_closure_audits(
+                exact_presentation="exact_observation",
+                erasing_presentation="constant_observation",
+                target_predicate="bit_target",
+                constant_predicate="all_states",
+                exact_audit_id="generated_exact_observation_preserves_recovery_fact",
+                erasing_audit_id="generated_constant_observation_erases_recovery_fact",
+            ),
+        ],
+        "provenance": _generated_provenance(
+            "Generated finite relational case: exact observation supports a "
+            "declared bounded decoder for the bit target, while a constant "
+            "observation cannot recover it and removes it from common target "
+            "facts."
+        ),
+    }
+    return _validated_ir_case("generated_recovery_fact_closure", model)
+
+
+def _target_closure_audits(
+    *,
+    exact_presentation: str,
+    erasing_presentation: str,
+    target_predicate: str,
+    constant_predicate: str,
+    exact_audit_id: str,
+    erasing_audit_id: str,
+) -> list[dict[str, Any]]:
+    return [
+        {
+            "id": exact_audit_id,
+            "kind": "presentation_fact_closure",
+            "presentations": [exact_presentation],
+            "target_predicates": [target_predicate, constant_predicate],
+            "expected_common_target_predicates": [target_predicate, constant_predicate],
+            "expect": "closure_ok",
+        },
+        {
+            "id": erasing_audit_id,
+            "kind": "presentation_fact_closure",
+            "presentations": [exact_presentation, erasing_presentation],
+            "target_predicates": [target_predicate, constant_predicate],
+            "expected_absent_target_predicates": [target_predicate],
+            "expected_common_target_predicates": [constant_predicate],
+            "expect": "closure_ok",
+        },
+    ]
 
 
 def _generated_finite_grid_asymmetry_case() -> GeneratedAdapterCase:

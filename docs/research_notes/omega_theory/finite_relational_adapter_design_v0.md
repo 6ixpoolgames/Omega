@@ -403,6 +403,22 @@ generated_presentation_fact_closure:
   generated closure audits show the certified endpoint pair is common-visible
   under identity presentation and absent after admitting a constant
   presentation.
+
+generated_reachability_fact_closure:
+  generated finite transition relation derives a can-reach-goal target
+  predicate; exact reach-status presentation preserves it, while constant
+  status removes it from common target facts.
+
+generated_viability_fact_closure:
+  generated finite transition/safety structure derives a self-sustaining-safe
+  target predicate; exact viability-status presentation preserves it, while
+  constant status removes it from common target facts.
+
+generated_recovery_fact_closure:
+  generated observation/decoder structure checks bounded recovery for an exact
+  observation and failure for a constant observation; exact observation
+  preserves the target fact, while constant observation removes it from common
+  target facts.
 ```
 
 Each fixture should include provenance.
@@ -490,7 +506,9 @@ proxy non-factorization;
 derived graph asymmetry;
 derived graph carrier certification;
 finite grid asymmetry;
-presentation/fact closure shrinkage for a derived carrier pair.
+presentation/fact closure shrinkage for a derived carrier pair;
+presentation/fact closure shrinkage for generated reachability, viability, and
+recovery-style target facts.
 ```
 
 The generator is intentionally finite and boring. It does not discover empirical

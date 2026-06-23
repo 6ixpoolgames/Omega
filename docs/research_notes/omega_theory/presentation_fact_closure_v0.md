@@ -282,10 +282,23 @@ generated_presentation_fact_closure:
   compiler-derived carrier certificate;
   exact presentation keeps the certified pair visible;
   admitting a constant presentation removes the pair from common visible facts.
+
+generated_reachability_fact_closure:
+  transition-derived can-reach-goal target survives exact reach status and is
+  removed by constant status.
+
+generated_viability_fact_closure:
+  transition/safety-derived self-sustaining-safe target survives exact status
+  and is removed by constant status.
+
+generated_recovery_fact_closure:
+  exact observation passes bounded recovery, constant observation fails it, and
+  the recovery target is removed from common target facts by the constant
+  observation.
 ```
 
-The next closure work should move from this generated carrier-pair case to
-broader generated/adversarial closure examples:
+The next closure work should move from these tiny generated cases to
+stale/reflected and multi-presentation generated closure examples:
 
 ```text
 presentations:

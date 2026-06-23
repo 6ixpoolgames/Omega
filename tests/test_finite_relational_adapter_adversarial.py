@@ -13,6 +13,9 @@ REQUIRED_CASE_IDS = {
     "generated_derived_graph_asymmetry",
     "generated_derived_graph_carrier",
     "generated_presentation_fact_closure",
+    "generated_reachability_fact_closure",
+    "generated_viability_fact_closure",
+    "generated_recovery_fact_closure",
     "generated_finite_grid_asymmetry",
 }
 
@@ -30,6 +33,20 @@ def test_generated_adversarial_cases_cover_adapter_failure_modes() -> None:
     assert by_id["generated_presentation_fact_closure"].summary()["findings"].count(
         "closure_ok"
     ) == 2
+    assert by_id["generated_reachability_fact_closure"].summary()["findings"] == [
+        "closure_ok",
+        "closure_ok",
+    ]
+    assert by_id["generated_viability_fact_closure"].summary()["findings"] == [
+        "closure_ok",
+        "closure_ok",
+    ]
+    assert by_id["generated_recovery_fact_closure"].summary()["findings"] == [
+        "recoverable",
+        "not_recoverable",
+        "closure_ok",
+        "closure_ok",
+    ]
 
 
 def test_generated_source_compilers_do_not_smuggle_reserved_ir_fields() -> None:
@@ -73,6 +90,64 @@ def test_generated_presentation_fact_closure_case_has_strict_visibility_drop() -
     assert erasing["finding"] == "closure_ok"
     assert erasing["observed"]["common_visible_pair_count"] == 0
     assert erasing["observed"]["present_expected_absent_visible_pairs"] == []
+
+
+def test_generated_target_fact_closure_cases_have_strict_target_drop() -> None:
+    cases = {case.case_id: case for case in generate_adversarial_cases()}
+    specs = {
+        "generated_reachability_fact_closure": {
+            "target": "can_reach_goal",
+            "constant": "all_states",
+            "exact_audit": "generated_exact_reach_status_preserves_reachability_fact",
+            "erasing_audit": "generated_constant_status_erases_reachability_fact",
+        },
+        "generated_viability_fact_closure": {
+            "target": "self_sustaining_safe",
+            "constant": "all_states",
+            "exact_audit": "generated_exact_viability_status_preserves_viability_fact",
+            "erasing_audit": "generated_constant_status_erases_viability_fact",
+        },
+        "generated_recovery_fact_closure": {
+            "target": "bit_target",
+            "constant": "all_states",
+            "exact_audit": "generated_exact_observation_preserves_recovery_fact",
+            "erasing_audit": "generated_constant_observation_erases_recovery_fact",
+        },
+    }
+
+    for case_id, spec in specs.items():
+        results = {result.audit_id: result.as_dict() for result in cases[case_id].audit_results}
+        exact = results[str(spec["exact_audit"])]
+        erasing = results[str(spec["erasing_audit"])]
+
+        assert exact["passed"] is True
+        assert exact["finding"] == "closure_ok"
+        assert exact["observed"]["common_target_predicates"] == [
+            spec["constant"],
+            spec["target"],
+        ]
+        assert erasing["passed"] is True
+        assert erasing["finding"] == "closure_ok"
+        assert erasing["observed"]["common_target_predicates"] == [spec["constant"]]
+        assert erasing["observed"]["present_expected_absent_target_predicates"] == []
+
+
+def test_generated_recovery_fact_closure_case_checks_bounded_recovery_gap() -> None:
+    case = {
+        case.case_id: case for case in generate_adversarial_cases()
+    }["generated_recovery_fact_closure"]
+    results = {result.audit_id: result.as_dict() for result in case.audit_results}
+
+    exact = results["generated_exact_observation_recovers_bit_target"]
+    constant = results["generated_constant_observation_does_not_recover_bit_target"]
+
+    assert exact["passed"] is True
+    assert exact["finding"] == "recoverable"
+    assert exact["observed"]["successful_decoders"] == ["exact_decoder"]
+    assert constant["passed"] is True
+    assert constant["finding"] == "not_recoverable"
+    assert constant["observed"]["successful_decoders"] == []
+    assert constant["observed"]["ambiguous_observation_labels"] == ["merged"]
 
 
 def test_generated_adversarial_validation_retains_outputs(tmp_path: Path) -> None:

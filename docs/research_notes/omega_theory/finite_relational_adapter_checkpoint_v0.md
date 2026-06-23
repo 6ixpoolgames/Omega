@@ -68,8 +68,8 @@ docs/research_notes/validation_results/finite_relational_adapter_validation_v0.m
 That retained summary records:
 
 ```text
-10 fixture smoke cases;
-7 generated/adversarial cases;
+15 fixture smoke cases;
+10 generated/adversarial cases;
 source digests where a source compiler is used;
 compiled/model digests;
 audit counts;
