@@ -77,6 +77,7 @@ def generate_adversarial_cases() -> tuple[GeneratedAdapterCase, ...]:
         _generated_observed_word_count_labeled_cycle_case(),
         _generated_observed_word_lifting_monotonicity_case(),
         _generated_observed_word_lifting_inflation_case(),
+        _generated_observed_word_lifting_equal_count_language_mismatch_case(),
         _generated_viable_count_inflation_case(),
         _generated_viable_count_hiding_case(),
         _generated_stale_reflected_fact_closure_case(),
@@ -1282,7 +1283,7 @@ def _generated_observed_word_lifting_monotonicity_case() -> GeneratedAdapterCase
         "provenance": _generated_provenance(
             "Generated finite relational case: representative-wise path lifting "
             "and observation compatibility hold, so abstract observed words do "
-            "not inflate exact observed words."
+            "have exact observed-word realizations."
         ),
     }
     return _validated_ir_case("generated_observed_word_lifting_monotonicity", model)
@@ -1363,6 +1364,83 @@ def _generated_observed_word_lifting_inflation_case() -> GeneratedAdapterCase:
         ),
     }
     return _validated_ir_case("generated_observed_word_lifting_inflation", model)
+
+
+def _generated_observed_word_lifting_equal_count_language_mismatch_case() -> GeneratedAdapterCase:
+    model = {
+        "model_id": "generated_observed_word_lifting_equal_count_language_mismatch",
+        "schema_version": "0.1.0",
+        "domains": {
+            "state": ["start", "tail"],
+            "abstract": ["start", "tail"],
+            "observation": ["A", "B", "C"],
+        },
+        "predicates": {
+            "exact_safe": {
+                "domain": "state",
+                "members": ["start", "tail"],
+            },
+            "abstract_safe": {
+                "domain": "abstract",
+                "members": ["start", "tail"],
+            },
+            "exact_start": {"domain": "state", "members": ["start"]},
+            "abstract_start": {"domain": "abstract", "members": ["start"]},
+        },
+        "relations": {
+            "exact_next": {
+                "domains": ["state", "state"],
+                "tuples": [["start", "tail"], ["tail", "tail"]],
+            },
+            "abstract_next": {
+                "domains": ["abstract", "abstract"],
+                "tuples": [["start", "tail"], ["tail", "tail"]],
+            },
+        },
+        "functions": {
+            "present": {
+                "domain": "state",
+                "codomain": "abstract",
+                "mapping": {"start": "start", "tail": "tail"},
+            },
+            "exact_observation": {
+                "domain": "state",
+                "codomain": "observation",
+                "mapping": {"start": "A", "tail": "B"},
+            },
+            "abstract_observation": {
+                "domain": "abstract",
+                "codomain": "observation",
+                "mapping": {"start": "A", "tail": "C"},
+            },
+        },
+        "audits": [
+            {
+                "id": "generated_equal_count_but_language_mismatch",
+                "kind": "observed_word_lifting_monotonicity",
+                "exact_transition": "exact_next",
+                "exact_safety": "exact_safe",
+                "exact_observation": "exact_observation",
+                "presentation": "present",
+                "abstract_transition": "abstract_next",
+                "abstract_safety": "abstract_safe",
+                "abstract_observation": "abstract_observation",
+                "exact_start_predicate": "exact_start",
+                "abstract_start_predicate": "abstract_start",
+                "horizon": 2,
+                "expect": "not_monotone",
+            }
+        ],
+        "provenance": _generated_provenance(
+            "Generated finite relational case: exact and abstract observed-word "
+            "counts match at every horizon, but abstract observation labels "
+            "replace exact words, so word-level inclusion fails."
+        ),
+    }
+    return _validated_ir_case(
+        "generated_observed_word_lifting_equal_count_language_mismatch",
+        model,
+    )
 
 
 def _generated_viable_count_inflation_case() -> GeneratedAdapterCase:

@@ -21,7 +21,7 @@ Batch G combines those surfaces into the first monotonicity probe:
 ```text
 If an abstraction has coherent finite path lifting,
 and exact/abstract observations commute through the presentation,
-then abstract observed viable words should not inflate exact observed words.
+then every abstract observed viable word should have an exact realization.
 ```
 
 This adapter probe has now been extracted into Lean as a finite language
@@ -98,6 +98,7 @@ The audit computes:
 ```text
 exact observed extendable safe-word profile;
 abstract observed extendable safe-word profile;
+word-level abstract-minus-exact differences by horizon;
 edge-projection exactness;
 finite path lifting;
 observation compatibility;
@@ -112,16 +113,26 @@ It reports:
 contract_holds:
   all required lifting/compatibility/reflection checks hold.
 
+language_subset:
+  every abstract observed word is realized by the exact system.
+
+phantom_abstract_words_by_horizon:
+  abstract observed words with no exact realization.
+
+missing_exact_realizations:
+  flattened horizon/word list of those unrealized abstract words.
+
 not_inflated:
-  abstract observed-word profile never exceeds exact observed-word profile.
+  abstract observed-word counts never exceed exact observed-word counts.
+  This is a scalar diagnostic only.
 
 monotone_under_contract:
-  contract_holds and not_inflated.
+  contract_holds and language_subset.
 ```
 
 ## Generated Controls
 
-Two generated cases are retained.
+Three generated cases are retained.
 
 ```text
 generated_observed_word_lifting_monotonicity:
@@ -140,9 +151,18 @@ generated_observed_word_lifting_inflation:
   abstract observed-word profile [1, 1, 2] inflates exact profile [1, 1, 1].
 ```
 
-The second case is the important negative control. It shows why edge projection
-alone is not enough for process truth: abstract histories can be stitched
-together from exact pieces that no single exact trajectory realizes.
+```text
+generated_observed_word_lifting_equal_count_language_mismatch:
+  exact and abstract observed-word count profiles are both [1, 1, 1];
+  observation compatibility fails;
+  abstract words such as [A, C] replace exact words such as [A, B].
+```
+
+The negative controls show two distinct failures. Edge projection alone is not
+enough for process truth: abstract histories can be stitched together from
+exact pieces that no single exact trajectory realizes. Scalar counts are also
+not enough: equal counts can conceal replacement of exact words by phantom
+abstract words.
 
 ## Current Validation
 
@@ -150,7 +170,7 @@ The retained Batch G run reports:
 
 ```text
 adapter smoke: PASS, 15 fixtures, focused pytest 109 passed
-generated/adversarial validation: PASS, 35 cases
+generated/adversarial validation: PASS, 36 cases
 ```
 
 ## Non-Claims

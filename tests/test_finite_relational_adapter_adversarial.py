@@ -36,6 +36,7 @@ REQUIRED_CASE_IDS = {
     "generated_observed_word_count_labeled_cycle",
     "generated_observed_word_lifting_monotonicity",
     "generated_observed_word_lifting_inflation",
+    "generated_observed_word_lifting_equal_count_language_mismatch",
     "generated_viable_count_inflation",
     "generated_viable_count_hiding",
     "generated_stale_reflected_fact_closure",
@@ -488,10 +489,17 @@ def test_generated_observed_word_lifting_cases_check_monotonicity_contract() -> 
     inflated = cases[
         "generated_observed_word_lifting_inflation"
     ].audit_results[0].as_dict()
+    mismatch = cases[
+        "generated_observed_word_lifting_equal_count_language_mismatch"
+    ].audit_results[0].as_dict()
 
     assert monotone["passed"] is True
     assert monotone["finding"] == "monotone"
     assert monotone["observed"]["contract_holds"] is True
+    assert monotone["observed"]["language_subset"] is True
+    assert monotone["observed"]["language_subset_by_horizon"] == [True, True, True]
+    assert monotone["observed"]["phantom_abstract_words_by_horizon"] == [[], [], []]
+    assert monotone["observed"]["missing_exact_realizations"] == []
     assert monotone["observed"]["not_inflated"] is True
     assert monotone["observed"]["inflates"] is False
     assert monotone["observed"]["exact_count_profile"] == [2, 2, 2]
@@ -504,10 +512,41 @@ def test_generated_observed_word_lifting_cases_check_monotonicity_contract() -> 
     assert inflated["observed"]["path_lifting"]["path_lifts"] is False
     assert inflated["observed"]["observation_compatible"] is True
     assert inflated["observed"]["contract_holds"] is False
+    assert inflated["observed"]["language_subset"] is False
+    assert inflated["observed"]["language_subset_by_horizon"] == [True, True, False]
+    assert inflated["observed"]["phantom_abstract_words_by_horizon"] == [
+        [],
+        [],
+        [["A", "M", "D"]],
+    ]
+    assert inflated["observed"]["missing_exact_realizations"] == [
+        {"horizon": 2, "word": ["A", "M", "D"]}
+    ]
     assert inflated["observed"]["inflates"] is True
     assert inflated["observed"]["exact_count_profile"] == [1, 1, 1]
     assert inflated["observed"]["abstract_count_profile"] == [1, 1, 2]
     assert inflated["observed"]["count_profile_delta"] == [0, 0, 1]
+
+    assert mismatch["passed"] is True
+    assert mismatch["finding"] == "not_monotone"
+    assert mismatch["observed"]["contract_holds"] is False
+    assert mismatch["observed"]["observation_compatible"] is False
+    assert mismatch["observed"]["language_subset"] is False
+    assert mismatch["observed"]["not_inflated"] is True
+    assert mismatch["observed"]["equal_count_but_language_differs"] is True
+    assert mismatch["observed"]["exact_count_profile"] == [1, 1, 1]
+    assert mismatch["observed"]["abstract_count_profile"] == [1, 1, 1]
+    assert mismatch["observed"]["count_profile_delta"] == [0, 0, 0]
+    assert mismatch["observed"]["phantom_abstract_words_by_horizon"] == [
+        [],
+        [["A", "C"]],
+        [["A", "C", "C"]],
+    ]
+    assert mismatch["observed"]["exact_only_words_by_horizon"] == [
+        [],
+        [["A", "B"]],
+        [["A", "B", "B"]],
+    ]
 
 
 def test_generated_viable_count_comparison_cases_detect_inflation_and_hiding() -> None:

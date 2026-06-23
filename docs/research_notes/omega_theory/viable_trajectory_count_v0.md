@@ -201,6 +201,8 @@ observed viable words:
 lifting-gated monotonicity:
   compare exact and abstract observed viable words only when path lifting,
   observation compatibility, and safety/viability reflection checks are present.
+  The primary check is word-language inclusion; count monotonicity is only the
+  finite scalar corollary.
 ```
 
 ## Related Notes

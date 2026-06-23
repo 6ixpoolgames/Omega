@@ -660,3 +660,53 @@ New generated cases:
 | --- | --- | --- |
 | generated_observed_word_lifting_monotonicity | `monotone` | Path lifting and observation compatibility hold; exact and abstract observed-word profiles are both `[2, 2, 2]`. |
 | generated_observed_word_lifting_inflation | `not_monotone` | Global edge projection is exact, but path lifting fails and the abstract observed-word profile `[1, 1, 2]` inflates exact profile `[1, 1, 1]`. |
+
+## Addendum: Observed Word Language Inclusion
+
+Run roots:
+
+```text
+.tmp/finite_relational_adapter_smoke_word_language/20260624_041912
+.tmp/finite_relational_adapter_adversarial_word_language_final/20260624_042029
+```
+
+Commands:
+
+```powershell
+./.venv/Scripts/python.exe -m pytest `
+  tests/test_finite_relational_adapter.py `
+  tests/test_finite_relational_adapter_adversarial.py `
+  tests/test_finite_relational_adapter_smoke.py `
+  -q --basetemp .tmp/pytest-word-language-broad -p no:cacheprovider
+
+./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_smoke `
+  --out-root .tmp/finite_relational_adapter_smoke_word_language
+
+./.venv/Scripts/python.exe -m omega.validation.finite_relational_adapter_adversarial `
+  --out-root .tmp/finite_relational_adapter_adversarial_word_language_final
+```
+
+Result:
+
+```text
+focused finite relational pytest: 54 passed
+adapter smoke: PASS, 15 fixtures, focused pytest 109 passed
+generated/adversarial validation: PASS, 36 cases
+ruff: PASS
+```
+
+Semantic repair:
+
+```text
+observed_word_lifting_monotonicity now checks word-language inclusion before
+using count profiles. It reports abstract words with no exact realization as
+phantom_abstract_words_by_horizon and missing_exact_realizations. Count
+monotonicity remains a scalar corollary/diagnostic, not the primary semantic
+object.
+```
+
+Additional generated case:
+
+| Case | Finding | Meaning |
+| --- | --- | --- |
+| generated_observed_word_lifting_equal_count_language_mismatch | `not_monotone` | Exact and abstract count profiles are both `[1, 1, 1]`, but abstract words such as `[A, C]` replace exact words such as `[A, B]`. |

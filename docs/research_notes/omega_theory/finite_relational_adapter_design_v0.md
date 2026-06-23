@@ -378,11 +378,12 @@ observed_extendable_safe_word_count:
   does not automatically inflate the reported language surface.
 
 observed_word_lifting_monotonicity:
-  exact and abstract observed extendable safe-word profiles are compared under
+  exact and abstract observed extendable safe-word languages are compared under
   a declared presentation. The audit checks edge-projection exactness,
   finite-horizon path lifting, observation compatibility, start compatibility,
   safety reflection, and viability-kernel reflection before reporting whether
-  abstract observed words are monotone under that contract.
+  every abstract observed word has an exact realization. Count profiles remain
+  derived diagnostics, not the primary semantic object.
 
 viable_trajectory_count_comparison:
   exact and abstract finite safe-prefix count profiles are compared under a
@@ -613,6 +614,11 @@ generated_observed_word_lifting_inflation:
   generated global edge-projection exactness control where path lifting fails
   and the abstract observed-word profile [1, 1, 2] inflates the exact profile
   [1, 1, 1].
+
+generated_observed_word_lifting_equal_count_language_mismatch:
+  generated control where exact and abstract observed-word count profiles both
+  equal [1, 1, 1], but the abstract language contains words not realized by
+  the exact language. This blocks scalar-only richness regressions.
 ```
 
 Each fixture should include provenance.

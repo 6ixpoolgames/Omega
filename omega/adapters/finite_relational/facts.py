@@ -725,6 +725,59 @@ def observed_word_lifting_monotonicity_facts(
 
     exact_profile = list(exact_words["count_profile"])
     abstract_profile = list(abstract_words["count_profile"])
+    exact_word_sets = [
+        {tuple(word) for word in words}
+        for words in exact_words["observed_words_by_horizon"]
+    ]
+    abstract_word_sets = [
+        {tuple(word) for word in words}
+        for words in abstract_words["observed_words_by_horizon"]
+    ]
+    phantom_words_by_horizon = [
+        sorted(abstract_set - exact_set)
+        for exact_set, abstract_set in zip(
+            exact_word_sets,
+            abstract_word_sets,
+            strict=True,
+        )
+    ]
+    exact_only_words_by_horizon = [
+        sorted(exact_set - abstract_set)
+        for exact_set, abstract_set in zip(
+            exact_word_sets,
+            abstract_word_sets,
+            strict=True,
+        )
+    ]
+    language_subset_by_horizon = [
+        not phantom_words for phantom_words in phantom_words_by_horizon
+    ]
+    language_equal_by_horizon = [
+        not phantom_words and not exact_only_words
+        for phantom_words, exact_only_words in zip(
+            phantom_words_by_horizon,
+            exact_only_words_by_horizon,
+            strict=True,
+        )
+    ]
+    missing_exact_realizations = [
+        {"horizon": horizon_index, "word": list(word)}
+        for horizon_index, phantom_words in enumerate(phantom_words_by_horizon)
+        for word in phantom_words
+    ]
+    exact_only_words = [
+        {"horizon": horizon_index, "word": list(word)}
+        for horizon_index, words in enumerate(exact_only_words_by_horizon)
+        for word in words
+    ]
+    missing_exact_realization_count_profile = [
+        len(words) for words in phantom_words_by_horizon
+    ]
+    exact_only_word_count_profile = [
+        len(words) for words in exact_only_words_by_horizon
+    ]
+    language_subset = all(language_subset_by_horizon)
+    language_equal = all(language_equal_by_horizon)
     delta = [
         abstract_count - exact_count
         for exact_count, abstract_count in zip(
@@ -744,8 +797,34 @@ def observed_word_lifting_monotonicity_facts(
         and not viability_reflection_failures
     )
     return {
-        "monotone_under_contract": contract_holds and not inflates,
+        "monotone_under_contract": contract_holds and language_subset,
+        "language_monotone_under_contract": contract_holds and language_subset,
+        "count_monotone_under_contract": contract_holds and not inflates,
         "contract_holds": contract_holds,
+        "language_subset": language_subset,
+        "language_equal": language_equal,
+        "language_subset_by_horizon": language_subset_by_horizon,
+        "language_equal_by_horizon": language_equal_by_horizon,
+        "phantom_abstract_words_by_horizon": [
+            [list(word) for word in words]
+            for words in phantom_words_by_horizon
+        ],
+        "exact_only_words_by_horizon": [
+            [list(word) for word in words]
+            for words in exact_only_words_by_horizon
+        ],
+        "missing_exact_realizations": missing_exact_realizations,
+        "missing_exact_realizations_by_horizon": [
+            [list(word) for word in words]
+            for words in phantom_words_by_horizon
+        ],
+        "missing_exact_realization_count_profile": (
+            missing_exact_realization_count_profile
+        ),
+        "exact_only_words": exact_only_words,
+        "exact_only_word_count_profile": exact_only_word_count_profile,
+        "equal_count_but_language_differs": exact_profile == abstract_profile
+        and not language_equal,
         "not_inflated": not inflates,
         "inflates": inflates,
         "hides": hides,
