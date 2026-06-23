@@ -12,6 +12,8 @@ Start with:
 ```text
 ../../../README.md
 layer_a_theorem_spine_v0.md
+current_theory_posture_v0.md
+constraint_based_alignment_floor_v0.md
 alphaomega_continuation_proto_teleology_v0.md
 ../../VALUER_FORMAL_TARGET_V0.md
 ../../OMEGA_COMPATIBLE_VALUER_TRAJECTORY_SPACE_V0.md
@@ -377,6 +379,8 @@ Read these as current active anchors:
 ```text
 layer_a_theorem_spine_v0.md
 layer_a_derivation_audit_v0.md
+current_theory_posture_v0.md
+constraint_based_alignment_floor_v0.md
 bridge_claims_ledger_v0.md
 alphaomega_continuation_proto_teleology_v0.md
 ../../VALUER_FORMAL_TARGET_V0.md
@@ -392,6 +396,7 @@ stochastic_recovery_characterization_v0.md
 stochastic_recovery_theorem_spine_v0.md
 stochastic_recovery_formalization_v0.md
 recovery_layer_checkpoint_v0.md
+recovery_policy_consolidation_audit_v0.md
 coarsening_permanence_v0.md
 presentation_fact_closure_v0.md
 robust_recovery_ambiguity_sets_v0.md

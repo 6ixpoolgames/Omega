@@ -59,6 +59,21 @@ This matters because it gives us a weak alignment constraint before we have a fu
 
 That is the practical bridge to Gradient Ethics, also described as value preservation under uncertainty. Under uncertainty and irreversibility, preserving the conditions for future value-bearing continuation is not a complete moral theory, but it is a structural safety constraint.
 
+## Constraint-Based Alignment Floor
+
+The current stack already supports a weak but useful alignment result:
+
+```text
+representations that erase, fake, or hide consequence-bearing continuation
+facts can be formally rejected before a full theory of value is available.
+```
+
+This is not a complete alignment solution. It is a floor for constraint-based
+alignment: sound maps must preserve the continuation facts they are used to
+reason about.
+
+See [constraint_based_alignment_floor_v0.md](research_notes/omega_theory/constraint_based_alignment_floor_v0.md).
+
 ## The Standard Mathematical Compression
 
 Recent work has translated much of the project into standard mathematical language:
@@ -128,6 +143,8 @@ It does prove and test pieces of the lower machinery needed before those claims 
 - [Omega Lite Worked Examples](OMEGA_LITE_WORKED_EXAMPLES.md): small examples for the core failure modes.
 - [Omega Formalism Primer](OMEGA_FORMALISM_PRIMER.md): older but still useful conceptual orientation.
 - [External Reader Guide](EXTERNAL_READER_GUIDE.md): guide for outside reviewers.
+- [Current Theory Posture](research_notes/omega_theory/current_theory_posture_v0.md): current branch and claim boundary.
+- [Constraint-Based Alignment Floor](research_notes/omega_theory/constraint_based_alignment_floor_v0.md): current public milestone.
 - [Adapter Provenance](research_notes/omega_theory/adapter_provenance_v0.md): how declared exact facts earn trust.
 - [Dynamics Abstraction Status](research_notes/omega_theory/dynamics_abstraction_status_v0.md): current reachability/viability abstraction state.
 - [Loss-Aware Presentation Contract](research_notes/omega_theory/loss_aware_presentation_contract_v0.md): current abstraction-contract layer.

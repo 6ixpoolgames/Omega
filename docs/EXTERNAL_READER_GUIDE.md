@@ -34,6 +34,18 @@ Value remains downstream. Value requires valuers. Valuers require robust,
 recoverable, continuation-bearing trajectories. This repository has not
 detected valuers or value.
 
+For the current branch posture, see
+[`current_theory_posture_v0.md`](research_notes/omega_theory/current_theory_posture_v0.md).
+That note summarizes the active consolidation line: Layer A as a
+continuation-map integrity discipline, with value, agency, identity, and Omega
+kept downstream.
+
+For the current alignment-facing milestone, see
+[`constraint_based_alignment_floor_v0.md`](research_notes/omega_theory/constraint_based_alignment_floor_v0.md).
+It explains the weak but useful result: representations that erase, fake, or
+hide consequence-bearing continuation facts can already be rejected before a
+complete value theory exists.
+
 ## 1. What Changed Recently
 
 Earlier public summaries over-centered future fields, distinction transport,
@@ -138,35 +150,52 @@ The older `OmegaCore`, `ProtoOmega`, `OmegaAdapters`, and `OmegaProper`
 namespaces remain important checked implementation/provenance surfaces. They
 should not be read as separate metaphysical objects.
 
-## 3. Empirical Arms
+## 3. Empirical And Adapter Arms
 
-The cleanest current empirical-formal bridge is the registry-first stochastic
-channel branch.
-
-It separates:
+The cleanest current empirical-formal bridge is now the finite adapter and
+recovery surface:
 
 ```text
-declared registry recovery:
-  a predeclared decoder registry works
-
-existence / capacity recovery:
-  some decoder exists
-
-optimized diagnostic recovery:
-  a best available target/decoder succeeds after search
+high-level finite source;
+compiled finite relational IR;
+generic audits;
+retained provenance and digests;
+exact rational recovery / policy studies.
 ```
 
-This branch is designed to prevent a self-validating inference:
+The older registry-first stochastic channel branch remains an important
+provenance lesson, but it is no longer the whole empirical front door. The
+current adapter direction is broader:
 
 ```text
-some decoder exists = the declared instrument recovered the distinction
+finite relational adapter:
+  graph/grid-like sources compile into one audit IR
+
+stochastic recovery:
+  source-indexed recovery profiles distinguish support-exact,
+  approximate, randomized, robust, prior-relative, and joint claims
+
+policy-conditioned dynamics:
+  action kernels and declared policy families produce finite-horizon hit
+  profiles and robust individual-vs-joint strictness examples
 ```
 
-Current retained result:
+The common lesson is still anti-self-validation:
 
 ```text
-results/stochastic_distinction_channel/20260606_registry_first_probe_x3_v0/
-docs/research_notes/validation_results/stochastic_distinction_channel/stochastic_registry_first_probe_x3_result.md
+some witness exists = the declared instrument, decoder, policy, or presentation
+earned the stronger claim
+```
+
+Relevant retained and checked surfaces include:
+
+```text
+docs/research_notes/omega_theory/finite_relational_adapter_design_v0.md
+docs/research_notes/omega_theory/stochastic_recovery_theorem_spine_v0.md
+docs/research_notes/omega_theory/recovery_layer_checkpoint_v0.md
+docs/research_notes/omega_theory/policy_conditioned_stochastic_dynamics_v0.md
+docs/research_notes/validation_results/finite_relational_adapter_validation_v0.md
+docs/research_notes/validation_results/finite_relational_policy_dynamics_v0.json
 ```
 
 Future Field Atlas is retained but demoted:
@@ -215,10 +244,12 @@ Read:
 1. README.md
 2. docs/OMEGA_FORMALISM_PRIMER.md
 3. docs/EXTERNAL_READER_GUIDE.md
-4. docs/CLAIMS_LEDGER.md
-5. docs/KNOWN_REDUCTIONS_AND_BASELINES.md
-6. docs/BASELINE_WITNESS_SUITE_V0.md
-7. docs/ADVERSARIAL_REVIEW_GUIDE.md
+4. docs/research_notes/omega_theory/current_theory_posture_v0.md
+5. docs/research_notes/omega_theory/constraint_based_alignment_floor_v0.md
+6. docs/CLAIMS_LEDGER.md
+7. docs/KNOWN_REDUCTIONS_AND_BASELINES.md
+8. docs/BASELINE_WITNESS_SUITE_V0.md
+9. docs/ADVERSARIAL_REVIEW_GUIDE.md
 ```
 
 Goal: understand the current one-object framing, claim boundary, live stack,
@@ -230,11 +261,14 @@ Read:
 
 ```text
 1. docs/research_notes/omega_theory/README.md
-2. docs/research_notes/omega_theory/alphaomega_continuation_proto_teleology_v0.md
-3. docs/research_notes/omega_theory/alpha_primitive_core_v0.md
-4. docs/research_notes/omega_theory/probabilistic_channel_presentation_v0.md
-5. docs/research_notes/validation_results/stochastic_distinction_channel/stochastic_registry_first_probe_x3_result.md
-6. docs/PUBLIC_RESULTS_INDEX.md
+2. docs/research_notes/omega_theory/current_theory_posture_v0.md
+3. docs/research_notes/omega_theory/constraint_based_alignment_floor_v0.md
+4. docs/research_notes/omega_theory/layer_a_theorem_spine_v0.md
+5. docs/research_notes/omega_theory/alphaomega_continuation_proto_teleology_v0.md
+6. docs/research_notes/omega_theory/alpha_primitive_core_v0.md
+7. docs/research_notes/omega_theory/stochastic_recovery_theorem_spine_v0.md
+8. docs/research_notes/omega_theory/recovery_layer_checkpoint_v0.md
+9. docs/PUBLIC_RESULTS_INDEX.md
 ```
 
 Goal: understand how the core theory, checked Lean layer, and retained
@@ -316,7 +350,7 @@ checking whether a theorem surface permits self-validating evidence routes;
 proposing cleaner consequence-system adapters;
 checking adapter provenance for declared exact facts;
 auditing comparison relations for collapse, over-separation, and provenance;
-stress-testing registry-first stochastic outputs;
+stress-testing finite relational adapter and stochastic recovery outputs;
 designing trajectory-level toy substrates with actions, perturbations, and
 recoverable process-bundles;
 adding finite witnesses with explicit targets and validation commands;
@@ -341,6 +375,8 @@ Start with:
 
 ```text
 docs/OMEGA_LITE_WORKED_EXAMPLES.md
+docs/research_notes/omega_theory/current_theory_posture_v0.md
+docs/research_notes/omega_theory/constraint_based_alignment_floor_v0.md
 docs/HOW_TO_ADD_A_WITNESS.md
 CONTRIBUTING.md
 docs/research_notes/omega_theory/adapter_provenance_v0.md
@@ -364,7 +400,8 @@ process-bundle persistence?
 Near-term empirical questions:
 
 ```text
-How do registry-first recovery gaps behave in larger finite probes?
+How do recovery, hidden-loss, and policy-family robustness gaps behave in
+larger finite probes?
 Which consequence-system adapters can be generated without post-hoc tuning?
 What controls expose vacuous, universal, or all-refusing comparison apparatuses?
 Which FFA morphology features remain useful as subordinate diagnostics?

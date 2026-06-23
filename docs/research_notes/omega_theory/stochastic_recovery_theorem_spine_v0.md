@@ -19,6 +19,7 @@ randomized-decoder axis.
 robust ambiguity-set recovery.
 robust randomized ambiguity-set recovery.
 prior-relative expected recovery.
+policy-conditioned robust hit profiles.
 ```
 
 The Lean formalization now lives in:
@@ -108,10 +109,16 @@ The finite Lean examples prove:
 99/100 recovery need not be support-exact.
 Positive support does not determine graded recovery.
 Randomized recovery is a separate decoder axis.
+Declared randomized-family recovery can select a supplied uniform randomized
+  decoder without claiming global randomized maximin.
 Separate marginal panels need not recover the joint target.
 Per-channel exact recovery does not imply robust exact recovery by one common
   decoder over the ambiguity set.
+Declared robust randomized-family recovery can select a supplied uniform
+  randomized decoder over the identity/flipped ambiguity case.
 High expected recovery under a skewed prior does not imply worst-case recovery.
+Individual robust policy attainability need not imply joint robust policy
+  attainability under a shared correlated-shock ambiguity set.
 ```
 
 See [stochastic_recovery_formalization_v0.md](stochastic_recovery_formalization_v0.md).
@@ -238,7 +245,9 @@ It is not a theorem about moral aggregation or distributed agency.
 Possible next formalization steps:
 
 ```text
-Lean theorem for support-exact recovery iff support disjointness;
+package the already-proved support-disjoint exact recovery theorem and the
+  threshold-one recovery theorem as a single public bridge statement, if that
+  helps external readers;
 global randomized maximin only after a small linear-programming surface is
   specified.
 ```
@@ -251,6 +260,7 @@ This note does not claim:
 global randomized optimization;
 Bayes-optimal policy validation;
 MDP safety;
+real policy safety;
 empirical correctness of stochastic adapters.
 ```
 

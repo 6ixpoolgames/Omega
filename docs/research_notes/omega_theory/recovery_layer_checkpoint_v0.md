@@ -23,11 +23,13 @@ support-exact recovery;
 graded per-source recovery;
 restricted decoder-class recovery;
 randomized decoder recovery;
+declared randomized-decoder family recovery;
 robust randomized recovery over ambiguity sets;
 joint versus marginal recovery;
-policy-conditioned finite-horizon hit profiles;
 robust recovery over ambiguity sets;
 prior-relative expected recovery.
+policy-conditioned finite-horizon hit profiles;
+robust policy-family hit thresholds over ambiguity sets.
 ```
 
 ## Formal Surface
@@ -41,6 +43,7 @@ formal/lean/OmegaProper/Recovery/CoarseningPermanence.lean
 formal/lean/OmegaProper/Recovery/Deterministic.lean
 formal/lean/OmegaProper/Recovery/ObservationRefinement.lean
 formal/lean/OmegaProper/Recovery/Randomized.lean
+formal/lean/OmegaProper/Recovery/RandomizedFamily.lean
 formal/lean/OmegaProper/Recovery/Robust.lean
 formal/lean/OmegaProper/Recovery/RobustRandomized.lean
 formal/lean/OmegaProper/Recovery/Prior.lean
@@ -54,6 +57,40 @@ Umbrella:
 ```text
 formal/lean/OmegaProper/Recovery.lean
 ```
+
+## Vocabulary
+
+The recovery layer uses a few suffixes consistently:
+
+```text
+At:
+  unrestricted existential threshold claim over the relevant witness type.
+
+InAt:
+  threshold claim restricted to an explicitly supplied allowed witness class.
+
+Family:
+  finite declared family surface; equivalent to an InAt claim over the image
+  of the indexed family.
+
+Robust:
+  one witness must satisfy the threshold uniformly over a declared ambiguity
+  set.
+
+Prior:
+  expected-success threshold under a declared source prior.
+
+Policy:
+  finite-horizon hit profile after a deterministic policy selects rows of an
+  action kernel.
+
+Support-exact:
+  zero-error recovery over positive support; the threshold-one endpoint of the
+  source-indexed recovery profile.
+```
+
+These terms are intentionally not compressed into one generic "recovery"
+predicate. Each marks a different supplied assumption.
 
 ## Main Distinctions
 
@@ -117,6 +154,24 @@ robust declared randomized-decoder family recovery. The adapter can optimize
 exactly over such a supplied finite family. This is still not global randomized
 maximin optimization.
 
+### Fixed Kernel Versus Policy-Conditioned Kernel
+
+Finite-horizon hit profiles can be computed on a fixed stochastic kernel or on
+the kernel induced by a deterministic policy from an action kernel.
+
+The policy-conditioned layer adds supplied structure:
+
+```text
+actions;
+action-indexed transition kernel;
+policy class;
+target predicate;
+ambiguity set.
+```
+
+The robust policy-family surface then asks whether one declared policy in a
+finite family reaches a threshold uniformly over a declared ambiguity set.
+
 ### Marginal Versus Joint
 
 Joint recovery safely projects to marginal recovery. Separate marginal panels
@@ -148,7 +203,9 @@ separate marginal observations do not recover the joint target;
 per-channel exact recovery does not imply robust common-decoder recovery;
 finite declared robust randomized-family enumeration selects the uniform
   decoder in the identity/flipped ambiguity case;
-high expected recovery under a skewed prior does not imply worst-case recovery.
+high expected recovery under a skewed prior does not imply worst-case recovery;
+individual robust policy attainability does not imply joint robust policy
+  attainability under a shared correlated-shock ambiguity set.
 ```
 
 ## Why This Matters
@@ -189,6 +246,8 @@ Near-term theorem targets:
 
 ```text
 recovery facts become entries in a presentation/fact admissibility ledger.
+package support-disjoint exact recovery and threshold-one recovery as one
+  public bridge theorem if the extra wrapper helps external readers.
 ```
 
 Near-term pilot target:

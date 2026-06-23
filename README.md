@@ -67,6 +67,22 @@ That is already useful for weak, constraint-based alignment. Even before a full 
 
 That makes proto-teleology the bridge between low-level formal structure and the larger Gradient Ethics idea, also described as value preservation under uncertainty: under uncertainty and irreversibility, preserving the conditions for future value-bearing continuation becomes a structural safety constraint.
 
+## Constraint-Based Alignment Floor
+
+This is already a useful interim result.
+
+Before solving value, agency, or Omega, the repo can formally reject unsafe maps of continuation. A representation is not admissible merely because it is useful or predictive; it has to preserve the consequence-bearing facts it is being used to reason about.
+
+The current stack shows several ways a map can fail:
+
+- a quotient merges consequence-separated states;
+- a proxy remains fixed while the target changes;
+- an abstraction fabricates reachability or viability;
+- a presentation hides irreversible loss;
+- individual robust policy success fails to compose into joint robust success.
+
+That is the project's constraint-based alignment floor: not a complete value function, but a machine-checkable family of reasons to reject abstractions, policies, metrics, or models that cannot certify preservation of value-bearing continuation. See [constraint_based_alignment_floor_v0.md](docs/research_notes/omega_theory/constraint_based_alignment_floor_v0.md).
+
 ## What Is Proved So Far
 
 The strongest current results are deliberately small.
@@ -119,9 +135,11 @@ For the high-level orientation:
 2. [Omega Lite Worked Examples](docs/OMEGA_LITE_WORKED_EXAMPLES.md)
 3. [Omega Formalism Primer](docs/OMEGA_FORMALISM_PRIMER.md)
 4. [External Reader Guide](docs/EXTERNAL_READER_GUIDE.md)
-5. [Standard Core Compression](docs/research_notes/omega_theory/standard_core_compression_v0.md)
-6. [Adapter Provenance](docs/research_notes/omega_theory/adapter_provenance_v0.md)
-7. [Dynamics Abstraction Status](docs/research_notes/omega_theory/dynamics_abstraction_status_v0.md)
+5. [Current Theory Posture](docs/research_notes/omega_theory/current_theory_posture_v0.md)
+6. [Constraint-Based Alignment Floor](docs/research_notes/omega_theory/constraint_based_alignment_floor_v0.md)
+7. [Standard Core Compression](docs/research_notes/omega_theory/standard_core_compression_v0.md)
+8. [Adapter Provenance](docs/research_notes/omega_theory/adapter_provenance_v0.md)
+9. [Dynamics Abstraction Status](docs/research_notes/omega_theory/dynamics_abstraction_status_v0.md)
 
 For the current theorem spine:
 
