@@ -36,7 +36,8 @@ phantom_reachability;
 hidden_reachability_loss;
 nonfactorization;
 carrier_certificate;
-carrier_transfer.
+carrier_transfer;
+presentation_fact_closure.
 ```
 
 This is still synthetic validation. The adapter currently audits declared finite
@@ -54,6 +55,8 @@ retained artifacts expose source and compiled-model digests;
 reserved low-level IR fields are rejected by high-level source compilers;
 fixtures cover both positive and negative checks;
 generated/adversarial cases can rediscover expected finite failure modes.
+generated presentation/fact closure cases can test common-fact shrinkage
+without hand-written Lean-only examples.
 ```
 
 The retained validation summary is:
@@ -66,7 +69,7 @@ That retained summary records:
 
 ```text
 10 fixture smoke cases;
-6 generated/adversarial cases;
+7 generated/adversarial cases;
 source digests where a source compiler is used;
 compiled/model digests;
 audit counts;

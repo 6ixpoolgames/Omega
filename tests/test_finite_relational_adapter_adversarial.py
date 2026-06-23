@@ -12,6 +12,7 @@ REQUIRED_CASE_IDS = {
     "generated_proxy_nonfactorization",
     "generated_derived_graph_asymmetry",
     "generated_derived_graph_carrier",
+    "generated_presentation_fact_closure",
     "generated_finite_grid_asymmetry",
 }
 
@@ -26,6 +27,9 @@ def test_generated_adversarial_cases_cover_adapter_failure_modes() -> None:
     assert by_id["generated_hidden_reachability_loss"].summary()["findings"] == ["hidden_loss"]
     assert by_id["generated_proxy_nonfactorization"].summary()["findings"] == ["witness"]
     assert "certified" in by_id["generated_derived_graph_carrier"].summary()["findings"]
+    assert by_id["generated_presentation_fact_closure"].summary()["findings"].count(
+        "closure_ok"
+    ) == 2
 
 
 def test_generated_source_compilers_do_not_smuggle_reserved_ir_fields() -> None:
@@ -50,6 +54,25 @@ def test_generated_finite_grid_case_compiles_to_alpha_like_asymmetry() -> None:
     assert model.relation_tuples("primitive_asym")
     assert case.compiled_model["provenance"]["compiled_from"] == "finite_grid"
     assert case.compiled_model["provenance"]["intermediate_compiler"] == "derived_graph"
+
+
+def test_generated_presentation_fact_closure_case_has_strict_visibility_drop() -> None:
+    case = {
+        case.case_id: case for case in generate_adversarial_cases()
+    }["generated_presentation_fact_closure"]
+    results = {result.audit_id: result.as_dict() for result in case.audit_results}
+
+    exact = results["generated_exact_presentation_keeps_carrier_pair_visible"]
+    erasing = results["generated_constant_presentation_erases_carrier_pair_visibility"]
+
+    assert exact["passed"] is True
+    assert exact["finding"] == "closure_ok"
+    assert exact["observed"]["common_visible_pair_count"] == 2
+    assert exact["observed"]["common_visible_pairs"] == [("left", "right"), ("right", "left")]
+    assert erasing["passed"] is True
+    assert erasing["finding"] == "closure_ok"
+    assert erasing["observed"]["common_visible_pair_count"] == 0
+    assert erasing["observed"]["present_expected_absent_visible_pairs"] == []
 
 
 def test_generated_adversarial_validation_retains_outputs(tmp_path: Path) -> None:

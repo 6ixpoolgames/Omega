@@ -83,6 +83,12 @@ from omega.adapters.finite_relational.finite_grid import (
     compile_finite_grid_path,
     load_finite_grid_path,
 )
+from omega.adapters.finite_relational.facts import (
+    common_target_predicates,
+    common_visible_pairs,
+    predicate_respects_presentation,
+    presentation_fact_closure_facts,
+)
 from omega.adapters.finite_relational.grid_obstacle_experiment import (
     GridObstacleCase,
     GridObstacleStudy,
@@ -137,6 +143,8 @@ __all__ = [
     "compile_finite_grid",
     "compile_finite_grid_path",
     "compile_grid_obstacle_source",
+    "common_target_predicates",
+    "common_visible_pairs",
     "compose_coarse_decoder_through_fine",
     "deterministic_layer_summary",
     "distribution_after_horizon",
@@ -159,6 +167,8 @@ __all__ = [
     "observation_refines",
     "observation_refines_outputs",
     "optimized_worst_case_decoder",
+    "predicate_respects_presentation",
+    "presentation_fact_closure_facts",
     "randomized_success_by_source",
     "recoverable_targets",
     "run_audit",

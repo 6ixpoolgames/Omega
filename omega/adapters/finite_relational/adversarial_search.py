@@ -54,6 +54,7 @@ def generate_adversarial_cases() -> tuple[GeneratedAdapterCase, ...]:
         _generated_proxy_nonfactorization_case(),
         _generated_derived_graph_asymmetry_case(),
         _generated_derived_graph_carrier_case(),
+        _generated_presentation_fact_closure_case(),
         _generated_finite_grid_asymmetry_case(),
     )
 
@@ -261,6 +262,72 @@ def _generated_derived_graph_carrier_case() -> GeneratedAdapterCase:
                     compiled,
                 )
     raise AssertionError("failed to generate derived graph carrier case")
+
+
+def _generated_presentation_fact_closure_case() -> GeneratedAdapterCase:
+    graph_source = {
+        "model_id": "generated_presentation_fact_closure",
+        "nodes": ["left", "right"],
+        "edges": [["left", "right"], ["right", "left"]],
+        "observations": {
+            "color": {
+                "left": "red",
+                "right": "blue",
+            }
+        },
+        "presentations": {
+            "identity": {
+                "left": "left",
+                "right": "right",
+            },
+            "constant": {
+                "left": "merged",
+                "right": "merged",
+            },
+        },
+        "presentation_expectations": {
+            "identity": "sound",
+            "constant": "unsound",
+        },
+        "safety": "all",
+        "provenance": _generated_provenance(
+            "Generated derived graph case: carrier endpoint visibility survives "
+            "the exact presentation and disappears when the constant presentation "
+            "is admitted."
+        ),
+    }
+    compiled = compile_derived_graph(graph_source)
+    carrier_audits = [
+        audit for audit in compiled["audits"] if audit.get("kind") == "carrier_certificate"
+    ]
+    if not carrier_audits:
+        raise AssertionError("presentation fact closure case generated no carrier audit")
+    left = str(carrier_audits[0]["left"])
+    right = str(carrier_audits[0]["right"])
+    compiled["audits"].extend(
+        [
+            {
+                "id": "generated_exact_presentation_keeps_carrier_pair_visible",
+                "kind": "presentation_fact_closure",
+                "presentations": ["identity"],
+                "expected_common_visible_pairs": [[left, right], [right, left]],
+                "expect": "closure_ok",
+            },
+            {
+                "id": "generated_constant_presentation_erases_carrier_pair_visibility",
+                "kind": "presentation_fact_closure",
+                "presentations": ["identity", "constant"],
+                "expected_absent_visible_pairs": [[left, right], [right, left]],
+                "expect": "closure_ok",
+            },
+        ]
+    )
+    return _validated_compiled_case(
+        "generated_presentation_fact_closure",
+        "derived_graph",
+        graph_source,
+        compiled,
+    )
 
 
 def _generated_finite_grid_asymmetry_case() -> GeneratedAdapterCase:

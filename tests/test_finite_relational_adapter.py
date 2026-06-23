@@ -123,6 +123,68 @@ def test_bounded_recovery_fixture_rejects_entropy_matched_ambiguous_observation(
     assert result["observed"]["decoder_count"] == 4
 
 
+def test_presentation_fact_closure_audit_checks_visible_pairs_and_targets() -> None:
+    model = load_model(
+        {
+            "model_id": "inline_presentation_fact_closure",
+            "carrier": ["left", "right"],
+            "predicates": {
+                "left_target": ["left"],
+                "constant_target": ["left", "right"],
+            },
+            "functions": {
+                "identity": {
+                    "left": "left",
+                    "right": "right",
+                },
+                "constant": {
+                    "left": "merged",
+                    "right": "merged",
+                },
+            },
+            "audits": [
+                {
+                    "id": "exact_only_common_facts",
+                    "kind": "presentation_fact_closure",
+                    "presentations": ["identity"],
+                    "target_predicates": ["left_target", "constant_target"],
+                    "expected_common_visible_pairs": [["left", "right"], ["right", "left"]],
+                    "expected_common_target_predicates": ["left_target", "constant_target"],
+                    "expect": "closure_ok",
+                },
+                {
+                    "id": "constant_erases_left_target",
+                    "kind": "presentation_fact_closure",
+                    "presentations": ["identity", "constant"],
+                    "target_predicates": ["left_target", "constant_target"],
+                    "expected_absent_visible_pairs": [["left", "right"], ["right", "left"]],
+                    "expected_absent_target_predicates": ["left_target"],
+                    "expected_common_target_predicates": ["constant_target"],
+                    "expect": "closure_ok",
+                },
+            ],
+            "provenance": {
+                "declared_before_run": True,
+                "source": "inline test",
+                "claim_boundary": "presentation fact closure unit test",
+            },
+        }
+    )
+    exact, erasing = [result.as_dict() for result in run_declared_audits(model)]
+
+    assert exact["passed"] is True
+    assert exact["finding"] == "closure_ok"
+    assert exact["observed"]["common_visible_pair_count"] == 2
+    assert exact["observed"]["common_target_predicates"] == [
+        "constant_target",
+        "left_target",
+    ]
+    assert erasing["passed"] is True
+    assert erasing["finding"] == "closure_ok"
+    assert erasing["observed"]["common_visible_pair_count"] == 0
+    assert erasing["observed"]["common_target_predicates"] == ["constant_target"]
+
+
 def test_carrier_transfer_fixture_accepts_declared_transfer_contract() -> None:
     model = load_model_path(FIXTURES / "carrier_transfer_pass.json")
     [result] = [result.as_dict() for result in run_declared_audits(model)]

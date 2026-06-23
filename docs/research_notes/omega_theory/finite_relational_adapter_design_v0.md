@@ -303,6 +303,12 @@ bounded_recovery:
   a declared observation function and declared decoder family are checked
   against a declared target predicate; recovery means some decoder in the
   bounded family exactly recovers target membership from the observation.
+
+presentation_fact_closure:
+  a declared presentation family is checked for common visible pairs and
+  common target predicates. The audit can require selected pairs or targets to
+  be common, and selected pairs or targets to be absent from the common facts.
+  This is the adapter analogue of the Lean presentation/fact closure pilots.
 ```
 
 These are intentionally small. They exercise the current theorem spine without
@@ -385,6 +391,18 @@ finite_grid_east_asymmetry.json:
   source declares a 2x1 east-moving grid;
   compiler derives cells and movement edge before reusing the derived graph
   compiler and generic audits.
+```
+
+Generated/adversarial validation also includes:
+
+```text
+generated_presentation_fact_closure:
+  derived graph source declares only nodes, edges, observations, presentations,
+  safety, and provenance;
+  compiler derives the carrier certificate;
+  generated closure audits show the certified endpoint pair is common-visible
+  under identity presentation and absent after admitting a constant
+  presentation.
 ```
 
 Each fixture should include provenance.
@@ -471,7 +489,8 @@ hidden reachability loss;
 proxy non-factorization;
 derived graph asymmetry;
 derived graph carrier certification;
-  finite grid asymmetry.
+finite grid asymmetry;
+presentation/fact closure shrinkage for a derived carrier pair.
 ```
 
 The generator is intentionally finite and boring. It does not discover empirical

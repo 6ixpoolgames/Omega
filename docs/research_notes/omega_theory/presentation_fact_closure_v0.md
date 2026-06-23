@@ -271,8 +271,21 @@ that this proves Omega.
 
 ## Next Work
 
-The next pilot should move from hand-written finite closure examples to
-adapter-generated or adversarial closure examples:
+The first adapter-generated closure pilot is now in place. The finite
+relational adapter has a generic `presentation_fact_closure` audit that
+computes common visible pairs and common target predicates for a declared
+presentation family. The adversarial generator includes:
+
+```text
+generated_presentation_fact_closure:
+  derived graph source;
+  compiler-derived carrier certificate;
+  exact presentation keeps the certified pair visible;
+  admitting a constant presentation removes the pair from common visible facts.
+```
+
+The next closure work should move from this generated carrier-pair case to
+broader generated/adversarial closure examples:
 
 ```text
 presentations:

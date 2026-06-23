@@ -5,7 +5,7 @@ from __future__ import annotations
 from collections import defaultdict, deque
 from itertools import product
 
-from omega.adapters.finite_relational.model import FiniteRelationalModel, SchemaError
+from omega.adapters.finite_relational.model import DEFAULT_DOMAIN, FiniteRelationalModel, SchemaError
 
 
 Pair = tuple[str, str]
@@ -93,6 +93,129 @@ def nonfactorization_witnesses_for_predicate(
         if same_summary and target_differs:
             witnesses.append((left, right))
     return witnesses
+
+
+def common_visible_pairs(
+    model: FiniteRelationalModel,
+    *,
+    presentations: tuple[str, ...],
+    domain: str = DEFAULT_DOMAIN,
+) -> list[Pair]:
+    """Pairs kept visible by every declared presentation.
+
+    This is the adapter analogue of the Lean `CommonVisiblePairs` pilot:
+    a pair is common-visible when no presentation in the declared family
+    merges it.
+    """
+
+    mappings = [_total_function_mapping(model, name, domain=domain) for name in presentations]
+    states = model.domain(domain)
+    visible = []
+    for left, right in product(states, states):
+        if left == right:
+            continue
+        if all(mapping[left] != mapping[right] for mapping in mappings):
+            visible.append((left, right))
+    return sorted(visible)
+
+
+def predicate_respects_presentation(
+    model: FiniteRelationalModel,
+    *,
+    predicate: str,
+    presentation: str,
+) -> bool:
+    """Whether a predicate is constant on a presentation's fibers."""
+
+    target = model.predicates[predicate]
+    mapping = _total_function_mapping(model, presentation, domain=target.domain)
+    states = model.domain(target.domain)
+    members = target.members
+    return all(
+        mapping[left] != mapping[right] or ((left in members) == (right in members))
+        for left, right in product(states, states)
+    )
+
+
+def common_target_predicates(
+    model: FiniteRelationalModel,
+    *,
+    presentations: tuple[str, ...],
+    target_predicates: tuple[str, ...],
+) -> list[str]:
+    """Predicates preserved by every declared presentation."""
+
+    common = []
+    for predicate in target_predicates:
+        if all(
+            predicate_respects_presentation(
+                model,
+                predicate=predicate,
+                presentation=presentation,
+            )
+            for presentation in presentations
+        ):
+            common.append(predicate)
+    return sorted(common)
+
+
+def presentation_fact_closure_facts(
+    model: FiniteRelationalModel,
+    *,
+    presentations: tuple[str, ...],
+    target_predicates: tuple[str, ...] = (),
+    expected_common_visible_pairs: tuple[Pair, ...] = (),
+    expected_absent_visible_pairs: tuple[Pair, ...] = (),
+    expected_common_target_predicates: tuple[str, ...] = (),
+    expected_absent_target_predicates: tuple[str, ...] = (),
+    domain: str = DEFAULT_DOMAIN,
+) -> dict[str, object]:
+    """Compute a small finite presentation/fact closure check.
+
+    The audit is intentionally expectation-relative. It reports the common
+    visible pairs and common target predicates induced by the declared
+    presentation family, then checks any expected inclusions/exclusions.
+    """
+
+    if not presentations:
+        raise SchemaError("presentation fact closure must declare at least one presentation")
+
+    visible = set(common_visible_pairs(model, presentations=presentations, domain=domain))
+    common_targets = set(
+        common_target_predicates(
+            model,
+            presentations=presentations,
+            target_predicates=target_predicates,
+        )
+    )
+    expected_common_visible = set(expected_common_visible_pairs)
+    expected_absent_visible = set(expected_absent_visible_pairs)
+    expected_common_targets = set(expected_common_target_predicates)
+    expected_absent_targets = set(expected_absent_target_predicates)
+
+    missing_common_visible = sorted(expected_common_visible - visible)
+    present_absent_visible = sorted(expected_absent_visible & visible)
+    missing_common_targets = sorted(expected_common_targets - common_targets)
+    present_absent_targets = sorted(expected_absent_targets & common_targets)
+    closure_ok = not (
+        missing_common_visible
+        or present_absent_visible
+        or missing_common_targets
+        or present_absent_targets
+    )
+
+    return {
+        "closure_ok": closure_ok,
+        "presentations": list(presentations),
+        "target_predicates": list(target_predicates),
+        "common_visible_pair_count": len(visible),
+        "common_visible_pairs": sorted(visible),
+        "common_target_predicates": sorted(common_targets),
+        "missing_expected_common_visible_pairs": missing_common_visible,
+        "present_expected_absent_visible_pairs": present_absent_visible,
+        "missing_expected_common_target_predicates": missing_common_targets,
+        "present_expected_absent_target_predicates": present_absent_targets,
+    }
 
 
 def bounded_recovery_facts(
@@ -189,6 +312,24 @@ def bounded_recovery_facts(
         "failed_decoders": failed_decoders,
         "decoder_results": decoder_results,
     }
+
+
+def _total_function_mapping(
+    model: FiniteRelationalModel,
+    name: str,
+    *,
+    domain: str,
+) -> dict[str, str]:
+    function = model.functions[name]
+    if function.domain != domain:
+        raise SchemaError(
+            f"function {name} is over domain {function.domain}, expected {domain}"
+        )
+    states = model.domain(domain)
+    missing = sorted(set(states) - set(function.mapping))
+    if missing:
+        raise SchemaError(f"function {name} is not total on domain {domain}: {missing}")
+    return function.mapping
 
 
 def carrier_certificate_facts(

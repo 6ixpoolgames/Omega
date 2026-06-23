@@ -12,6 +12,7 @@ from omega.adapters.finite_relational.facts import (
     carrier_transfer_facts,
     nonfactorization_witnesses_for_predicate,
     presentation_violations,
+    presentation_fact_closure_facts,
     reachable_pairs,
     ternary_relation,
 )
@@ -60,6 +61,8 @@ def run_audit(model: FiniteRelationalModel, audit: dict[str, Any]) -> AuditResul
         return _carrier_transfer(model, audit)
     if kind == "bounded_recovery":
         return _bounded_recovery(model, audit)
+    if kind == "presentation_fact_closure":
+        return _presentation_fact_closure(model, audit)
     raise SchemaError(f"unknown audit kind: {kind}")
 
 
@@ -213,6 +216,35 @@ def _bounded_recovery(model: FiniteRelationalModel, audit: dict[str, Any]) -> Au
     return _result(audit, "bounded_recovery", observed, "recoverable", "recoverable")
 
 
+def _presentation_fact_closure(
+    model: FiniteRelationalModel,
+    audit: dict[str, Any],
+) -> AuditResult:
+    observed = presentation_fact_closure_facts(
+        model,
+        presentations=_audit_strings(audit, "presentations"),
+        target_predicates=_audit_strings(audit, "target_predicates"),
+        expected_common_visible_pairs=_audit_pairs(audit, "expected_common_visible_pairs"),
+        expected_absent_visible_pairs=_audit_pairs(audit, "expected_absent_visible_pairs"),
+        expected_common_target_predicates=_audit_strings(
+            audit,
+            "expected_common_target_predicates",
+        ),
+        expected_absent_target_predicates=_audit_strings(
+            audit,
+            "expected_absent_target_predicates",
+        ),
+        domain=str(audit.get("domain", "state")),
+    )
+    return _result(
+        audit,
+        "presentation_fact_closure",
+        observed,
+        "closure_ok",
+        "closure_ok",
+    )
+
+
 def _role(model: FiniteRelationalModel, audit: dict[str, Any], name: str) -> str:
     if name in audit:
         return str(audit[name])
@@ -222,6 +254,27 @@ def _role(model: FiniteRelationalModel, audit: dict[str, Any], name: str) -> str
         if name in profile:
             return str(profile[name])
     raise SchemaError(f"audit {audit.get('id', '<unnamed>')} is missing role: {name}")
+
+
+def _audit_strings(audit: dict[str, Any], key: str) -> tuple[str, ...]:
+    raw_items = audit.get(key, [])
+    if not isinstance(raw_items, list):
+        raise SchemaError(f"audit {audit.get('id', '<unnamed>')} {key} must be a list")
+    return tuple(str(item) for item in raw_items)
+
+
+def _audit_pairs(audit: dict[str, Any], key: str) -> tuple[tuple[str, str], ...]:
+    raw_pairs = audit.get(key, [])
+    if not isinstance(raw_pairs, list):
+        raise SchemaError(f"audit {audit.get('id', '<unnamed>')} {key} must be a list")
+    pairs = []
+    for raw_pair in raw_pairs:
+        if not isinstance(raw_pair, list) or len(raw_pair) != 2:
+            raise SchemaError(
+                f"audit {audit.get('id', '<unnamed>')} {key} entries must be two-item lists"
+            )
+        pairs.append((str(raw_pair[0]), str(raw_pair[1])))
+    return tuple(pairs)
 
 
 def _result(
@@ -279,6 +332,8 @@ def _expected_bool(expectation: str, true_finding: str) -> bool:
         "no_transfer",
         "not_recoverable",
         "no_recovery",
+        "closure_mismatch",
+        "not_closure_ok",
     }
     if expectation in positive:
         return True

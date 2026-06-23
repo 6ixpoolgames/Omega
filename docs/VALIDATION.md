@@ -255,7 +255,11 @@ The generated/adversarial path deterministically searches small finite cases
 for adapter hardening witnesses, then retains each generated source, compiled
 model, digests, audit results, and summary. These cases do not validate a real
 substrate; they check that the adapter machinery can find and audit expected
-finite failure modes without relying only on hand-written fixtures.
+finite failure modes without relying only on hand-written fixtures. The current
+generated suite includes phantom reachability, hidden reachability loss, proxy
+non-factorization, derived graph asymmetry, derived graph carrier
+certification, finite grid asymmetry, and presentation/fact closure shrinkage
+for a derived carrier pair.
 
 The controlled empirical path enumerates fixed small finite families and reports
 rates/frequencies for selected proxy failures:
