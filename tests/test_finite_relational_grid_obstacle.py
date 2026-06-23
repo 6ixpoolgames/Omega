@@ -32,9 +32,36 @@ def test_grid_obstacle_representatives_use_hidden_loss_audit() -> None:
     }
 
     assert findings == {
-        "grid_obstacle_hidden_loss": ["hidden_loss"],
-        "grid_obstacle_no_hidden_loss_control": ["not_hidden_loss"],
+        "grid_obstacle_hidden_loss": ["hidden_loss", "closure_ok", "closure_ok"],
+        "grid_obstacle_no_hidden_loss_control": [
+            "not_hidden_loss",
+            "closure_ok",
+            "closure_ok",
+        ],
     }
+
+
+def test_grid_obstacle_representatives_expose_empirical_adjacent_closure() -> None:
+    cases = {
+        case.case_id: case
+        for case in generate_grid_obstacle_study().representative_cases
+    }
+    hidden = cases["grid_obstacle_hidden_loss"]
+    results = {result.audit_id: result.as_dict() for result in hidden.audit_results}
+
+    reflected = results["reflected_grid_status_preserves_after_source_reachability"]
+    stale_reflected = results[
+        "stale_reflected_grid_status_drops_after_source_reachability"
+    ]
+
+    assert reflected["passed"] is True
+    assert reflected["observed"]["common_target_predicates"] == [
+        "after_reachable_from_source",
+        "all_states",
+    ]
+    assert stale_reflected["passed"] is True
+    assert stale_reflected["observed"]["common_target_predicates"] == ["all_states"]
+    assert stale_reflected["observed"]["present_expected_absent_target_predicates"] == []
 
 
 def test_grid_obstacle_compiler_retains_source_and_compiled_provenance() -> None:
@@ -51,6 +78,12 @@ def test_grid_obstacle_compiler_retains_source_and_compiled_provenance() -> None
     assert model.relation_tuples("before_next")
     assert model.relation_tuples("after_next")
     assert model.relation_tuples("abstract_next") == model.relation_tuples("before_next")
+    assert "after_reachable_from_source" in compiled["predicates"]
+    assert "reflected_source_reach_status" in compiled["functions"]
+    assert (
+        "optional_audits=presentation_fact_closure(stale,reflected)"
+        in compiled["provenance"]["derivation_rules"]
+    )
 
 
 def test_grid_obstacle_validation_retains_outputs(tmp_path: Path) -> None:

@@ -109,6 +109,7 @@ def generate_grid_obstacle_study() -> GridObstacleStudy:
         source=source,
         target=target,
         expectation="hidden_loss",
+        include_reachability_closure_audits=True,
         claim_boundary=(
             "Generated gridworld obstacle insertion case: a vertical barrier removes "
             "the exact source-target path while the stale abstraction still reports it."
@@ -124,6 +125,7 @@ def generate_grid_obstacle_study() -> GridObstacleStudy:
         source=source,
         target=target,
         expectation="no_hidden_loss",
+        include_reachability_closure_audits=True,
         claim_boundary=(
             "Generated gridworld obstacle insertion control: a single obstacle leaves "
             "an alternate exact source-target path, so hidden loss is not observed."
@@ -184,7 +186,49 @@ def compile_grid_obstacle_source(raw: dict[str, Any]) -> dict[str, Any]:
 
     before_edges = _movement_edges(width, height, movement_rule, before_blocked)
     after_edges = _movement_edges(width, height, movement_rule, after_blocked)
+    before_reachable = _reachable_from_source(cells, before_edges, source)
+    after_reachable = _reachable_from_source(cells, after_edges, source)
     provenance = _dict(raw.get("provenance", {}), "provenance")
+    audits: list[dict[str, Any]] = [
+        {
+            "id": "stale_grid_abstraction_hidden_loss",
+            "kind": "hidden_reachability_loss",
+            "before_transition": "before_next",
+            "after_transition": "after_next",
+            "abstract_transition": "abstract_next",
+            "source": source,
+            "target": target,
+            "expect": str(raw.get("expect", "hidden_loss")),
+        }
+    ]
+    if raw.get("include_reachability_closure_audits") is True:
+        audits.extend(
+            [
+                {
+                    "id": "reflected_grid_status_preserves_after_source_reachability",
+                    "kind": "presentation_fact_closure",
+                    "presentations": ["reflected_source_reach_status"],
+                    "target_predicates": ["after_reachable_from_source", "all_states"],
+                    "expected_common_target_predicates": [
+                        "after_reachable_from_source",
+                        "all_states",
+                    ],
+                    "expect": "closure_ok",
+                },
+                {
+                    "id": "stale_reflected_grid_status_drops_after_source_reachability",
+                    "kind": "presentation_fact_closure",
+                    "presentations": [
+                        "stale_source_reach_status",
+                        "reflected_source_reach_status",
+                    ],
+                    "target_predicates": ["after_reachable_from_source", "all_states"],
+                    "expected_common_target_predicates": ["all_states"],
+                    "expected_absent_target_predicates": ["after_reachable_from_source"],
+                    "expect": "closure_ok",
+                },
+            ]
+        )
     model = {
         "model_id": f"compiled_{raw.get('model_id', 'grid_obstacle')}",
         "schema_version": "0.1.0",
@@ -192,24 +236,26 @@ def compile_grid_obstacle_source(raw: dict[str, Any]) -> dict[str, Any]:
         "predicates": {
             "before_active": [cell for cell in cells if cell not in before_blocked],
             "after_active": [cell for cell in cells if cell not in after_blocked],
+            "before_reachable_from_source": sorted(before_reachable),
+            "after_reachable_from_source": sorted(after_reachable),
+            "all_states": list(cells),
         },
         "relations": {
             "before_next": [list(edge) for edge in sorted(before_edges)],
             "after_next": [list(edge) for edge in sorted(after_edges)],
             "abstract_next": [list(edge) for edge in sorted(before_edges)],
         },
-        "audits": [
-            {
-                "id": "stale_grid_abstraction_hidden_loss",
-                "kind": "hidden_reachability_loss",
-                "before_transition": "before_next",
-                "after_transition": "after_next",
-                "abstract_transition": "abstract_next",
-                "source": source,
-                "target": target,
-                "expect": str(raw.get("expect", "hidden_loss")),
-            }
-        ],
+        "functions": {
+            "stale_source_reach_status": {
+                cell: ("reachable_from_source" if cell in before_reachable else "unreachable_from_source")
+                for cell in cells
+            },
+            "reflected_source_reach_status": {
+                cell: ("reachable_from_source" if cell in after_reachable else "unreachable_from_source")
+                for cell in cells
+            },
+        },
+        "audits": audits,
         "provenance": provenance
         | {
             "compiled_from": "grid_obstacle_insertion",
@@ -225,6 +271,8 @@ def compile_grid_obstacle_source(raw: dict[str, Any]) -> dict[str, Any]:
                 "after_next=grid_movement_minus_after_blocked",
                 "abstract_next=before_next_stale_abstraction",
                 "audit=hidden_reachability_loss(source,target)",
+                "source_reach_status=transitive_reachability_from_declared_source",
+                "optional_audits=presentation_fact_closure(stale,reflected)",
             ],
         },
     }
@@ -265,6 +313,7 @@ def _grid_obstacle_source(
     source: str,
     target: str,
     expectation: str,
+    include_reachability_closure_audits: bool,
     claim_boundary: str,
 ) -> dict[str, Any]:
     return {
@@ -277,6 +326,7 @@ def _grid_obstacle_source(
         "source": source,
         "target": target,
         "expect": expectation,
+        "include_reachability_closure_audits": include_reachability_closure_audits,
         "provenance": {
             "declared_before_run": True,
             "source": "omega.adapters.finite_relational.grid_obstacle_experiment",
@@ -309,6 +359,18 @@ def _movement_edges(
             if target in active:
                 edges.add((cell, target))
     return edges
+
+
+def _reachable_from_source(
+    cells: tuple[str, ...],
+    edges: set[Pair],
+    source: str,
+) -> set[str]:
+    return {
+        target
+        for start, target in reachable_pairs(set(cells), edges)
+        if start == source
+    }
 
 
 def _grid_cells(width: int, height: int) -> list[str]:

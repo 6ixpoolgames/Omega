@@ -280,8 +280,12 @@ of a real system.
 
 The gridworld obstacle path declares a finite grid interface, generates obstacle
 insertions, compiles before/after/stale abstract transitions into finite
-relational IR, and audits hidden reachability loss. It is the first
-source-generator pilot beyond low-level handwritten IR fixtures.
+relational IR, audits hidden reachability loss, and checks presentation/fact
+closure over source-reachability status. The retained representatives include a
+reflected after-reachability status that preserves `after_reachable_from_source`
+and a stale/reflected presentation family whose common target facts drop that
+after-reachability predicate. It is the first source-generator pilot beyond
+low-level handwritten IR fixtures.
 
 The deterministic pre-stochastic path calibrates exact finite recovery before
 probabilistic or approximate audits are added. It checks joint bounded recovery

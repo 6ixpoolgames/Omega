@@ -594,6 +594,27 @@ The current pilot enumerates obstacle insertions on a 3x3 orthogonal grid and
 retains both a hidden-loss representative and a no-hidden-loss control. This is
 still synthetic source-level validation, not external empirical evidence.
 
+The retained representatives also derive source-reach status presentations:
+
+```text
+stale_source_reach_status:
+  reachability from the declared source under before dynamics.
+
+reflected_source_reach_status:
+  reachability from the declared source under after dynamics.
+```
+
+The optional grid closure audits check:
+
+```text
+reflected status preserves after_reachable_from_source;
+adding stale status to the family removes after_reachable_from_source from
+the common target facts while retaining all_states.
+```
+
+This makes the grid obstacle pilot an empirical-adjacent source-generator
+example for both hidden loss and presentation/fact closure.
+
 The simple-form, entropy, ordered-trace, and bounded-recovery fixtures are
 motivated by the useful-information and constraint-selection note:
 

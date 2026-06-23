@@ -321,8 +321,19 @@ generated_failed_transport_fact_closure:
   this blocks treating role-label closure as transfer identity.
 ```
 
-The next closure work should move from these finite generated checks to broader
-empirical-adjacent closure examples:
+The first empirical-adjacent source-generator closure check is also now landed
+in the grid obstacle pilot:
+
+```text
+gridworld obstacle insertion:
+  reflected source-reach status preserves after_reachable_from_source;
+  adding stale source-reach status to the reflected presentation family drops
+  after_reachable_from_source from the common target facts and leaves only the
+  constant all_states target.
+```
+
+The next closure work should broaden these finite generated and
+empirical-adjacent checks:
 
 ```text
 presentations:
