@@ -16,6 +16,30 @@ The short version:
 Layer A is currently a continuation-map integrity discipline.
 ```
 
+June 25, 2026 reorientation:
+
+```text
+Alpha-Omega should be read as a staged effective-theory program, not as a
+direct Alpha-to-value derivation.
+```
+
+The current layer map is:
+
+```text
+Valuer
+  forgets to Agent
+
+Agent
+  forgets to Continuation
+
+Continuation
+  forgets to Alpha
+```
+
+Higher-layer structures should leave lower-layer traces, but lower-layer traces
+do not canonically determine higher-layer semantics. The detailed map is in
+`effective_layers_realization_forgetting_emergence_v0.md`.
+
 It studies when summaries, quotients, presentations, observations, decoders,
 policies, supports, and adapters preserve the continuation facts they are used
 to reason about.
@@ -93,9 +117,29 @@ weaker claim that some abstractions, policies, and summaries can be formally
 rejected because they hide loss, fabricate continuation, or fail to preserve a
 declared consequence-bearing target.
 
+The effective-layer reorientation adds one caveat:
+
+```text
+the current stack can constrain value-bearing continuation claims, but it does
+not choose the valuer, the agency realization, or the value-relevant Phi by
+itself.
+```
+
 ## What Is Supplied
 
 The current lower stack does not derive every ingredient from Alpha.
+
+The old supplied/derived split is useful but too coarse. Use the refined
+statuses from the effective-layer map:
+
+```text
+primitive;
+freely generated;
+realization-supplied;
+certified;
+empirically inferred;
+normatively supplied.
+```
 
 These are typically supplied by a substrate, adapter, or modeling choice:
 
@@ -197,6 +241,19 @@ if a map, metric, policy, boundary, or abstraction cannot preserve declared
 consequence-bearing continuation facts, it cannot certify the corridor.
 ```
 
+The strongest current success condition is therefore staged:
+
+```text
+Alpha constrains Continuation;
+Continuation constrains Agency;
+Agency constrains Valuer-realization;
+Valuer-realization constrains Gradient Ethics.
+```
+
+If the tower has stable realization and forgetting maps, then value-from-Alpha
+is a legitimate long-run target. It is not a direct proof from bare primitive
+distinction.
+
 In that sense, proto-teleology is the current milestone. It gives a weak,
 constraint-based alignment floor:
 
@@ -255,4 +312,3 @@ future-facing maps are allowed to be trusted.
 ```
 
 That is the current branch.
-

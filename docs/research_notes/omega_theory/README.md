@@ -11,6 +11,7 @@ Start with:
 
 ```text
 ../../../README.md
+effective_layers_realization_forgetting_emergence_v0.md
 layer_a_theorem_spine_v0.md
 current_theory_posture_v0.md
 constraint_based_alignment_floor_v0.md
@@ -57,7 +58,25 @@ omega_formal_core_v0_2_future_distinction_dynamics.md
 
 ## Current Stack
 
-The current best formal stack is:
+The current best organizing map is now the effective-layer tower:
+
+```text
+Valuer
+  forgets to Agent
+
+Agent
+  forgets to Continuation
+
+Continuation
+  forgets to Alpha
+```
+
+The lower-to-higher direction is not canonical. Alpha constrains higher-layer
+realizations, but bare Alpha does not by itself determine continuation,
+agency, valuerhood, or ethics.
+
+The older implementation stack remains useful as a repository navigation
+surface:
 
 ```text
 Layer 0: Alpha Primitive Core v0
