@@ -286,6 +286,20 @@ searches for minimal counterexample witnesses, and checks relabel, identity
 presentation, and quotient-control invariance. It remains synthetic finite
 challenge generation, not empirical agency validation.
 
+Agency Diamond Cross-Substrate v1 asks whether the same profile hierarchy and
+counterexample structure survive across several small generated source
+grammars rather than only within one challenge grammar:
+
+```bash
+python -m omega.validation.agency_diamond_cross_substrate
+```
+
+It currently covers Boolean-bit, grid-route, and resource-corridor substrates
+with held-out seeds. It checks required hierarchy classes, baseline collisions,
+adversarial probes, collapse alerts, relabel invariance, identity presentations,
+and quotient controls. It remains exploratory finite cross-substrate
+instrumentation, not agency, identity, value, valuerhood, or Omega validation.
+
 Local PowerShell form:
 
 ```powershell
@@ -461,6 +475,11 @@ summary at
 [agency_diamond_challenge_v1.md](research_notes/validation_results/agency_diamond_challenge_v1.md)
 and
 [agency_diamond_challenge_v1.json](research_notes/validation_results/agency_diamond_challenge_v1.json).
+Agency Diamond Cross-Substrate v1 retains a human-readable note and
+machine-readable summary at
+[agency_diamond_cross_substrate_v1.md](research_notes/validation_results/agency_diamond_cross_substrate_v1.md)
+and
+[agency_diamond_cross_substrate_v1.json](research_notes/validation_results/agency_diamond_cross_substrate_v1.json).
 
 See [REPRODUCIBILITY_SMOKE.md](REPRODUCIBILITY_SMOKE.md).
 

@@ -346,9 +346,11 @@ omega/agency_diamond/
 omega/validation/agency_diamond_midscale.py
 omega/validation/agency_diamond_hardening.py
 omega/validation/agency_diamond_challenge.py
+omega/validation/agency_diamond_cross_substrate.py
 tests/test_agency_diamond_midscale.py
 tests/test_agency_diamond_hardening.py
 tests/test_agency_diamond_challenge.py
+tests/test_agency_diamond_cross_substrate.py
 ```
 
 It evaluates eight synthetic finite controlled systems across five horizons
@@ -372,6 +374,8 @@ docs/research_notes/validation_results/agency_diamond_hardening_v1.md
 docs/research_notes/validation_results/agency_diamond_hardening_v1.json
 docs/research_notes/validation_results/agency_diamond_challenge_v1.md
 docs/research_notes/validation_results/agency_diamond_challenge_v1.json
+docs/research_notes/validation_results/agency_diamond_cross_substrate_v1.md
+docs/research_notes/validation_results/agency_diamond_cross_substrate_v1.json
 ```
 
 This is still an agency-layer harness, not an agency detector.
@@ -427,6 +431,31 @@ holdout gates:
 This is still synthetic challenge generation. It is stronger than the
 handwritten null battery because the individual holdout cases are not labelled
 by hand, but it remains generated from a known finite grammar.
+
+Cross-Substrate v1 adds one more pressure layer:
+
+```text
+source grammars:
+  Boolean-bit substrates;
+  grid-route substrates;
+  resource-corridor substrates.
+
+held-out seeds:
+  601, 607, 613.
+
+derived checks:
+  required hierarchy classes appear across held-out systems;
+  baseline collisions and counterexample-search witnesses still appear;
+  adversarial probes separate recurrence, control, feedback, reflexive
+  maintenance, and joint-effect axes;
+  collapse alerts are absent;
+  relabel, identity-presentation, and quotient controls still pass.
+```
+
+This improves the pilot from same-grammar challenge generation to a small
+cross-substrate check. It still does not establish agency. The result is a
+load-bearing instrumentation check: the profile is less likely to be an artifact
+of one handwritten battery or one generated grammar family.
 
 ## Formal Targets After Pilot
 

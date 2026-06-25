@@ -1,0 +1,605 @@
+{
+  "adversarial": {
+    "classification_by_substrate": {
+      "boolean": {
+        "feedback_advantage": 15,
+        "passive_or_driven_recurrence": 6,
+        "passive_persistence": 9,
+        "reflexive_maintenance": 15
+      },
+      "grid": {
+        "control_without_feedback_advantage": 15,
+        "feedback_advantage": 15,
+        "reflexive_maintenance": 15
+      },
+      "resource": {
+        "dominant_joint_contraction": 15,
+        "feedback_advantage": 15
+      }
+    },
+    "probe_status": {
+      "cross_substrate_control_without_feedback_found": true,
+      "cross_substrate_feedback_without_reflexive_found": true,
+      "cross_substrate_joint_sign_not_live_success": true,
+      "cross_substrate_recurrence_not_feedback": true,
+      "cross_substrate_same_substrate_separates_feedback": true,
+      "each_substrate_has_multiple_classifications": true
+    },
+    "witnesses": [
+      {
+        "details": {
+          "left_feedback_advantage": "0",
+          "right_feedback_advantage": "1/2",
+          "substrate": "boolean"
+        },
+        "left_case": "holdout__boolean__cycle__seed601_h1",
+        "name": "cross_substrate_same_substrate_separates_feedback",
+        "passed": true,
+        "right_case": "holdout__boolean__feedback__seed601_h1"
+      },
+      {
+        "details": {
+          "left_control_reach_count": 2,
+          "left_feedback_advantage": "0",
+          "right_control_reach_count": 2,
+          "right_feedback_advantage": "1/2"
+        },
+        "left_case": "holdout__grid__open_loop__seed601_h1",
+        "name": "cross_substrate_control_without_feedback_found",
+        "passed": true,
+        "right_case": "holdout__boolean__feedback__seed601_h1"
+      },
+      {
+        "details": {
+          "left_feedback_advantage": "1/2",
+          "left_reflexive_advantage": null,
+          "right_feedback_advantage": "2/3",
+          "right_reflexive_advantage": "1/2"
+        },
+        "left_case": "holdout__boolean__feedback__seed601_h1",
+        "name": "cross_substrate_feedback_without_reflexive_found",
+        "passed": true,
+        "right_case": "holdout__boolean__reflexive__seed601_h1"
+      },
+      {
+        "details": {
+          "left_joint_effect": "1",
+          "right_joint_effect": "-1",
+          "shared_live_maintenance": "1",
+          "substrate": "resource"
+        },
+        "left_case": "holdout__resource__joint_positive__seed601_h1",
+        "name": "cross_substrate_joint_sign_not_live_success",
+        "passed": true,
+        "right_case": "holdout__resource__joint_negative__seed601_h1"
+      },
+      {
+        "details": {
+          "left_feedback_advantage": "0",
+          "left_recurrence": true,
+          "right_feedback_advantage": "1/2",
+          "right_recurrence": true
+        },
+        "left_case": "holdout__boolean__cycle__seed601_h4",
+        "name": "cross_substrate_recurrence_not_feedback",
+        "passed": true,
+        "right_case": "holdout__boolean__feedback__seed601_h2"
+      }
+    ]
+  },
+  "baseline_collision_count": 21,
+  "baseline_collision_witnesses": [
+    {
+      "baseline": "recurrence_only",
+      "baseline_value": "False",
+      "left_case": "holdout__boolean__cycle__seed601_h1",
+      "left_value": "zero",
+      "right_case": "holdout__boolean__feedback__seed601_h1",
+      "right_value": "positive",
+      "target_axis": "feedback_axis"
+    },
+    {
+      "baseline": "recurrence_only",
+      "baseline_value": "True",
+      "left_case": "holdout__boolean__cycle__seed601_h4",
+      "left_value": "not_applicable",
+      "right_case": "holdout__boolean__reflexive__seed601_h1",
+      "right_value": "positive",
+      "target_axis": "reflexive_axis"
+    },
+    {
+      "baseline": "recurrence_only",
+      "baseline_value": "True",
+      "left_case": "holdout__boolean__cycle__seed601_h4",
+      "left_value": "undeclared",
+      "right_case": "holdout__resource__joint_positive__seed601_h1",
+      "right_value": "positive",
+      "target_axis": "joint_axis"
+    },
+    {
+      "baseline": "recurrence_only",
+      "baseline_value": "False",
+      "left_case": "holdout__boolean__cycle__seed601_h1",
+      "left_value": "passive_persistence",
+      "right_case": "holdout__boolean__feedback__seed601_h1",
+      "right_value": "feedback_advantage",
+      "target_axis": "full_classification"
+    },
+    {
+      "baseline": "control_only",
+      "baseline_value": "True",
+      "left_case": "holdout__boolean__feedback__seed601_h1",
+      "left_value": "positive",
+      "right_case": "holdout__grid__open_loop__seed601_h1",
+      "right_value": "zero",
+      "target_axis": "feedback_axis"
+    },
+    {
+      "baseline": "control_only",
+      "baseline_value": "True",
+      "left_case": "holdout__boolean__feedback__seed601_h1",
+      "left_value": "not_applicable",
+      "right_case": "holdout__boolean__reflexive__seed601_h1",
+      "right_value": "positive",
+      "target_axis": "reflexive_axis"
+    },
+    {
+      "baseline": "control_only",
+      "baseline_value": "False",
+      "left_case": "holdout__boolean__cycle__seed601_h1",
+      "left_value": "undeclared",
+      "right_case": "holdout__resource__joint_negative__seed601_h1",
+      "right_value": "negative",
+      "target_axis": "joint_axis"
+    },
+    {
+      "baseline": "control_only",
+      "baseline_value": "False",
+      "left_case": "holdout__boolean__cycle__seed601_h1",
+      "left_value": "passive_persistence",
+      "right_case": "holdout__boolean__cycle__seed601_h4",
+      "right_value": "passive_or_driven_recurrence",
+      "target_axis": "full_classification"
+    },
+    {
+      "baseline": "observable_control_only",
+      "baseline_value": "True",
+      "left_case": "holdout__boolean__feedback__seed601_h1",
+      "left_value": "not_applicable",
+      "right_case": "holdout__boolean__reflexive__seed601_h1",
+      "right_value": "positive",
+      "target_axis": "reflexive_axis"
+    },
+    {
+      "baseline": "observable_control_only",
+      "baseline_value": "False",
+      "left_case": "holdout__boolean__cycle__seed601_h1",
+      "left_value": "undeclared",
+      "right_case": "holdout__resource__joint_negative__seed601_h1",
+      "right_value": "negative",
+      "target_axis": "joint_axis"
+    },
+    {
+      "baseline": "observable_control_only",
+      "baseline_value": "False",
+      "left_case": "holdout__boolean__cycle__seed601_h1",
+      "left_value": "passive_persistence",
+      "right_case": "holdout__boolean__cycle__seed601_h4",
+      "right_value": "passive_or_driven_recurrence",
+      "target_axis": "full_classification"
+    },
+    {
+      "baseline": "live_success_only",
+      "baseline_value": "1",
+      "left_case": "holdout__boolean__cycle__seed601_h1",
+      "left_value": "zero",
+      "right_case": "holdout__boolean__feedback__seed601_h1",
+      "right_value": "positive",
+      "target_axis": "feedback_axis"
+    },
+    {
+      "baseline": "live_success_only",
+      "baseline_value": "1",
+      "left_case": "holdout__boolean__cycle__seed601_h1",
+      "left_value": "not_applicable",
+      "right_case": "holdout__boolean__reflexive__seed601_h2",
+      "right_value": "positive",
+      "target_axis": "reflexive_axis"
+    },
+    {
+      "baseline": "live_success_only",
+      "baseline_value": "1",
+      "left_case": "holdout__boolean__cycle__seed601_h1",
+      "left_value": "undeclared",
+      "right_case": "holdout__resource__joint_positive__seed601_h1",
+      "right_value": "positive",
+      "target_axis": "joint_axis"
+    },
+    {
+      "baseline": "live_success_only",
+      "baseline_value": "1",
+      "left_case": "holdout__boolean__cycle__seed601_h1",
+      "left_value": "passive_persistence",
+      "right_case": "holdout__boolean__cycle__seed601_h4",
+      "right_value": "passive_or_driven_recurrence",
+      "target_axis": "full_classification"
+    },
+    {
+      "baseline": "feedback_only",
+      "baseline_value": "positive",
+      "left_case": "holdout__boolean__feedback__seed601_h1",
+      "left_value": "not_applicable",
+      "right_case": "holdout__boolean__reflexive__seed601_h1",
+      "right_value": "positive",
+      "target_axis": "reflexive_axis"
+    },
+    {
+      "baseline": "feedback_only",
+      "baseline_value": "zero",
+      "left_case": "holdout__boolean__cycle__seed601_h1",
+      "left_value": "undeclared",
+      "right_case": "holdout__resource__joint_negative__seed601_h1",
+      "right_value": "negative",
+      "target_axis": "joint_axis"
+    },
+    {
+      "baseline": "feedback_only",
+      "baseline_value": "zero",
+      "left_case": "holdout__boolean__cycle__seed601_h1",
+      "left_value": "passive_persistence",
+      "right_case": "holdout__boolean__cycle__seed601_h4",
+      "right_value": "passive_or_driven_recurrence",
+      "target_axis": "full_classification"
+    },
+    {
+      "baseline": "joint_effect_only",
+      "baseline_value": "undeclared",
+      "left_case": "holdout__boolean__cycle__seed601_h1",
+      "left_value": "zero",
+      "right_case": "holdout__boolean__feedback__seed601_h1",
+      "right_value": "positive",
+      "target_axis": "feedback_axis"
+    },
+    {
+      "baseline": "joint_effect_only",
+      "baseline_value": "undeclared",
+      "left_case": "holdout__boolean__cycle__seed601_h1",
+      "left_value": "not_applicable",
+      "right_case": "holdout__boolean__reflexive__seed601_h1",
+      "right_value": "positive",
+      "target_axis": "reflexive_axis"
+    },
+    {
+      "baseline": "joint_effect_only",
+      "baseline_value": "undeclared",
+      "left_case": "holdout__boolean__cycle__seed601_h1",
+      "left_value": "passive_persistence",
+      "right_case": "holdout__boolean__cycle__seed601_h4",
+      "right_value": "passive_or_driven_recurrence",
+      "target_axis": "full_classification"
+    }
+  ],
+  "case_counts": {
+    "holdout_metric_cases": 120,
+    "metric_cases": 200,
+    "systems": 40,
+    "train_metric_cases": 80
+  },
+  "claim_boundary": "Exploratory finite cross-substrate challenge only. This does not detect agency, identity, value, valuerhood, or Omega; it checks whether the operational-causal-diamond profile preserves its hierarchy, adversarial counterexamples, and basic transport controls across several small generated source grammars with held-out seeds.",
+  "collapse_alerts": [],
+  "counterexample_search": [
+    {
+      "details": {
+        "left_feedback_advantage": "0",
+        "right_feedback_advantage": "1/2",
+        "shared_recurrence": true
+      },
+      "left_case": "holdout__boolean__cycle__seed601_h4",
+      "name": "generated_recurrence_does_not_imply_feedback_advantage",
+      "passed": true,
+      "right_case": "holdout__boolean__feedback__seed601_h2"
+    },
+    {
+      "details": {
+        "left_control_reach_count": 2,
+        "left_feedback_advantage": "0",
+        "right_control_reach_count": 2,
+        "right_feedback_advantage": "1/2"
+      },
+      "left_case": "holdout__grid__open_loop__seed601_h1",
+      "name": "generated_control_does_not_imply_feedback_advantage",
+      "passed": true,
+      "right_case": "holdout__boolean__feedback__seed601_h1"
+    },
+    {
+      "details": {
+        "left_feedback_advantage": "1/2",
+        "left_reflexive_advantage": null,
+        "right_feedback_advantage": "2/3",
+        "right_reflexive_advantage": "1/2"
+      },
+      "left_case": "holdout__boolean__feedback__seed601_h1",
+      "name": "generated_feedback_does_not_imply_reflexive_maintenance",
+      "passed": true,
+      "right_case": "holdout__boolean__reflexive__seed601_h1"
+    },
+    {
+      "details": {
+        "left_joint_effect": "1",
+        "right_joint_effect": "-1",
+        "shared_live_maintenance": "1"
+      },
+      "left_case": "holdout__resource__joint_positive__seed601_h1",
+      "name": "generated_live_success_does_not_determine_joint_effect",
+      "passed": true,
+      "right_case": "holdout__resource__joint_negative__seed601_h1"
+    }
+  ],
+  "decision_gate": {
+    "adversarial_probes_found": true,
+    "counterexample_search_witnesses_found": true,
+    "holdout_classes_cover_required": true,
+    "multiple_substrates_tested": true,
+    "no_collapse_alerts": true,
+    "required_baseline_collisions_found": true,
+    "transport_invariance_passed": true
+  },
+  "generator": {
+    "holdout_seeds": [
+      601,
+      607,
+      613
+    ],
+    "horizons": [
+      1,
+      2,
+      3,
+      4,
+      6
+    ],
+    "modes_by_substrate": {
+      "boolean": [
+        "cycle",
+        "feedback",
+        "reflexive"
+      ],
+      "grid": [
+        "open_loop",
+        "feedback",
+        "reflexive"
+      ],
+      "resource": [
+        "joint_positive",
+        "joint_negative"
+      ]
+    },
+    "substrates": [
+      "boolean",
+      "grid",
+      "resource"
+    ],
+    "train_seeds": [
+      211,
+      223
+    ]
+  },
+  "holdout_classification_by_substrate": {
+    "boolean": {
+      "feedback_advantage": 15,
+      "passive_or_driven_recurrence": 6,
+      "passive_persistence": 9,
+      "reflexive_maintenance": 15
+    },
+    "grid": {
+      "control_without_feedback_advantage": 15,
+      "feedback_advantage": 15,
+      "reflexive_maintenance": 15
+    },
+    "resource": {
+      "dominant_joint_contraction": 15,
+      "feedback_advantage": 15
+    }
+  },
+  "holdout_classification_counts": {
+    "control_without_feedback_advantage": 15,
+    "dominant_joint_contraction": 15,
+    "feedback_advantage": 45,
+    "passive_or_driven_recurrence": 6,
+    "passive_persistence": 9,
+    "reflexive_maintenance": 30
+  },
+  "holdout_required_classes": [
+    "control_without_feedback_advantage",
+    "dominant_joint_contraction",
+    "feedback_advantage",
+    "passive_or_driven_recurrence",
+    "reflexive_maintenance"
+  ],
+  "required_baseline_collision_status": {
+    "control_only_does_not_determine_feedback_axis": true,
+    "feedback_only_does_not_determine_reflexive_axis": true,
+    "joint_effect_only_does_not_determine_full_classification": true,
+    "live_success_only_does_not_determine_joint_axis": true,
+    "recurrence_only_does_not_determine_feedback_axis": true
+  },
+  "status": "PASS",
+  "train_classification_counts": {
+    "control_without_feedback_advantage": 10,
+    "dominant_joint_contraction": 10,
+    "feedback_advantage": 30,
+    "passive_or_driven_recurrence": 4,
+    "passive_persistence": 6,
+    "reflexive_maintenance": 20
+  },
+  "transport": {
+    "all_transport_checks_passed": true,
+    "checks": {
+      "identity_presentations_preserve_profiles": true,
+      "quotient_controls_passed": true,
+      "relabel_profiles_preserved": true
+    },
+    "identity_report_count": 18,
+    "quotient_controls": {
+      "all_transport_checks_passed": true,
+      "checks": {
+        "cold_hot_merge_rejected": true,
+        "incompatible_need_merge_rejected": true,
+        "positive_profile_preserved": true,
+        "positive_quotient_constructible": true
+      },
+      "reports": [
+        {
+          "case_id": "open_loop_sound_merge_start_needs_left",
+          "channel_saturated": true,
+          "joint_saturated": true,
+          "observation_compatible": true,
+          "profile_preservation_details": {
+            "abstract_profile": [
+              "control_without_feedback_advantage",
+              "control_without_feedback_advantage",
+              "control_without_feedback_advantage",
+              "control_without_feedback_advantage",
+              "control_without_feedback_advantage"
+            ],
+            "abstract_state_count": 4,
+            "exact_profile": [
+              "control_without_feedback_advantage",
+              "control_without_feedback_advantage",
+              "control_without_feedback_advantage",
+              "control_without_feedback_advantage",
+              "control_without_feedback_advantage"
+            ],
+            "exact_state_count": 5
+          },
+          "profile_preserved": true,
+          "quotient_constructible": true,
+          "system_id": "open_loop_controller",
+          "target_saturated": true,
+          "total": true,
+          "transition_congruent": true,
+          "viable_saturated": true
+        },
+        {
+          "case_id": "open_loop_unsound_merge_incompatible_needs",
+          "channel_saturated": true,
+          "joint_saturated": true,
+          "observation_compatible": true,
+          "profile_preservation_details": {},
+          "profile_preserved": null,
+          "quotient_constructible": false,
+          "system_id": "open_loop_controller",
+          "target_saturated": true,
+          "total": true,
+          "transition_congruent": false,
+          "viable_saturated": true
+        },
+        {
+          "case_id": "thermostat_unsound_merge_cold_hot",
+          "channel_saturated": true,
+          "joint_saturated": true,
+          "observation_compatible": false,
+          "profile_preservation_details": {},
+          "profile_preserved": null,
+          "quotient_constructible": false,
+          "system_id": "thermostat",
+          "target_saturated": true,
+          "total": true,
+          "transition_congruent": false,
+          "viable_saturated": true
+        }
+      ]
+    },
+    "relabel_reports": [
+      {
+        "profile_preserved": true,
+        "relabeled_system_id": "generated__cross_boolean_cycle_seed601__seed11000_d1",
+        "system_id": "cross_boolean_cycle_seed601"
+      },
+      {
+        "profile_preserved": true,
+        "relabeled_system_id": "generated__cross_boolean_cycle_seed607__seed11001_d2",
+        "system_id": "cross_boolean_cycle_seed607"
+      },
+      {
+        "profile_preserved": true,
+        "relabeled_system_id": "generated__cross_boolean_cycle_seed613__seed11002_d1",
+        "system_id": "cross_boolean_cycle_seed613"
+      },
+      {
+        "profile_preserved": true,
+        "relabeled_system_id": "generated__cross_boolean_feedback_seed601__seed11003_d2",
+        "system_id": "cross_boolean_feedback_seed601"
+      },
+      {
+        "profile_preserved": true,
+        "relabeled_system_id": "generated__cross_boolean_feedback_seed607__seed11004_d1",
+        "system_id": "cross_boolean_feedback_seed607"
+      },
+      {
+        "profile_preserved": true,
+        "relabeled_system_id": "generated__cross_boolean_feedback_seed613__seed11005_d2",
+        "system_id": "cross_boolean_feedback_seed613"
+      },
+      {
+        "profile_preserved": true,
+        "relabeled_system_id": "generated__cross_boolean_reflexive_seed601__seed11006_d1",
+        "system_id": "cross_boolean_reflexive_seed601"
+      },
+      {
+        "profile_preserved": true,
+        "relabeled_system_id": "generated__cross_boolean_reflexive_seed607__seed11007_d2",
+        "system_id": "cross_boolean_reflexive_seed607"
+      },
+      {
+        "profile_preserved": true,
+        "relabeled_system_id": "generated__cross_boolean_reflexive_seed613__seed11008_d1",
+        "system_id": "cross_boolean_reflexive_seed613"
+      },
+      {
+        "profile_preserved": true,
+        "relabeled_system_id": "generated__cross_grid_open_seed601__seed11009_d2",
+        "system_id": "cross_grid_open_seed601"
+      },
+      {
+        "profile_preserved": true,
+        "relabeled_system_id": "generated__cross_grid_open_seed607__seed11010_d1",
+        "system_id": "cross_grid_open_seed607"
+      },
+      {
+        "profile_preserved": true,
+        "relabeled_system_id": "generated__cross_grid_open_seed613__seed11011_d2",
+        "system_id": "cross_grid_open_seed613"
+      },
+      {
+        "profile_preserved": true,
+        "relabeled_system_id": "generated__cross_grid_feedback_seed601__seed11012_d1",
+        "system_id": "cross_grid_feedback_seed601"
+      },
+      {
+        "profile_preserved": true,
+        "relabeled_system_id": "generated__cross_grid_feedback_seed607__seed11013_d2",
+        "system_id": "cross_grid_feedback_seed607"
+      },
+      {
+        "profile_preserved": true,
+        "relabeled_system_id": "generated__cross_grid_feedback_seed613__seed11014_d1",
+        "system_id": "cross_grid_feedback_seed613"
+      },
+      {
+        "profile_preserved": true,
+        "relabeled_system_id": "generated__cross_grid_reflexive_seed601__seed11015_d2",
+        "system_id": "cross_grid_reflexive_seed601"
+      },
+      {
+        "profile_preserved": true,
+        "relabeled_system_id": "generated__cross_grid_reflexive_seed607__seed11016_d1",
+        "system_id": "cross_grid_reflexive_seed607"
+      },
+      {
+        "profile_preserved": true,
+        "relabeled_system_id": "generated__cross_grid_reflexive_seed613__seed11017_d2",
+        "system_id": "cross_grid_reflexive_seed613"
+      }
+    ]
+  }
+}
