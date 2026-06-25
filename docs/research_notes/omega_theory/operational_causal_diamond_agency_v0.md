@@ -21,6 +21,9 @@ object, not as coequal foundations.
 This keeps the speculative geometry useful without promoting metaphor into
 ontology.
 
+For the current consolidated finite instrumentation claim, see
+[finite_deformer_profile_checkpoint_v0.md](finite_deformer_profile_checkpoint_v0.md).
+
 ## Layer Placement
 
 This belongs in the agency-realization layer:

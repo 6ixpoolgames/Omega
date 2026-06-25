@@ -356,7 +356,8 @@ run surface, checks whether the stochastic profile hierarchy survives Boolean,
 grid, and resource source grammars, and sweeps exact-rational feedback,
 repair, and joint-risk knobs to characterize simple phase behavior. This is
 still finite synthetic deformer instrumentation, not agency detection or
-empirical stochastic-model validation.
+empirical stochastic-model validation. The consolidated interpretation is in
+[finite_deformer_profile_checkpoint_v0.md](research_notes/omega_theory/finite_deformer_profile_checkpoint_v0.md).
 
 Local PowerShell form:
 

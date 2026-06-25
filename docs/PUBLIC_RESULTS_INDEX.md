@@ -112,6 +112,14 @@ composite errors over a shared path ensemble.
 The next stochastic-channel package compiles thresholded probabilistic recovery
 into finite requirement-set non-erasure measurements, with monotonicity checks
 and fixed/Bayes target-policy separation.
+The operational-causal-diamond branch now has a consolidated finite deformer
+profile checkpoint: deterministic and stochastic synthetic probes test whether
+a declared mode changes future-facing continuation profiles while retaining
+controls showing recurrence, control reach, high success probability,
+stochasticity, feedback alone, one scalar success score, average-case feedback,
+and one source grammar do not determine the richer profile. This remains
+instrumentation only, not agency, identity, value, valuerhood, or Omega
+validation.
 
 ## Best onboarding path
 

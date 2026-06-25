@@ -9,6 +9,35 @@ patch notes at the top.
 
 ## 2026-06-25
 
+### Finite Deformer Profile Checkpoint
+
+Added the consolidation checkpoint for the deterministic and stochastic
+agency-diamond pilot stack:
+
+```text
+docs/research_notes/omega_theory/finite_deformer_profile_checkpoint_v0.md
+```
+
+The note compresses the current result into a bounded instrument claim:
+
+```text
+the repository now has a finite deformer-profile instrument that tests whether
+a declared mode changes future-facing continuation profiles, while retaining
+controls showing recurrence, control, high success probability, stochasticity,
+feedback, and source grammar alone do not determine that deformation.
+```
+
+Claim boundary remains:
+
+```text
+not agency;
+not identity;
+not value;
+not valuerhood;
+not Omega validation;
+not empirical transition-model validation.
+```
+
 ### Agency Diamond Stochastic Exploration v1
 
 Added the next stochastic deformer-instrumentation batch:
