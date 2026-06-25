@@ -329,6 +329,33 @@ declared mode has measurable continuation-shaping effects and that simple
 proxies do not determine those effects. It still does not identify a valuer,
 agent, self, or morally relevant object.
 
+The next stochastic exploration pass adds three discovery-style checks:
+
+```text
+held-out non-predeclared search:
+  a new seeded pool is evaluated without expected class labels on the run
+  surface; profile classes, clusters, null controls, and hierarchy witnesses
+  are computed after evaluation.
+
+cross-substrate stochastic profiles:
+  Boolean, grid, and resource source grammars feed the same stochastic profile
+  machinery, checking whether the hierarchy survives more than one toy grammar.
+
+calibration / phase behavior:
+  exact-rational feedback reliability, repair reliability, and joint-risk knobs
+  are swept to see where profile axes turn on, collapse, or contract.
+```
+
+This strengthens the deformer reading only in the instrumental sense:
+
+```text
+the profile is less tied to one pinned fixture, one source grammar, or one
+selected probability setting.
+```
+
+It still does not assert that the deformed continuation profile is agency,
+identity, value, or Omega-relevant.
+
 Important counterexamples to include in future pilots:
 
 ```text
@@ -418,11 +445,17 @@ omega/validation/agency_diamond_hardening.py
 omega/validation/agency_diamond_challenge.py
 omega/validation/agency_diamond_cross_substrate.py
 omega/validation/agency_diamond_blind_discovery.py
+omega/validation/agency_diamond_stochastic.py
+omega/validation/agency_diamond_stochastic_hardening.py
+omega/validation/agency_diamond_stochastic_exploration.py
 tests/test_agency_diamond_midscale.py
 tests/test_agency_diamond_hardening.py
 tests/test_agency_diamond_challenge.py
 tests/test_agency_diamond_cross_substrate.py
 tests/test_agency_diamond_blind_discovery.py
+tests/test_agency_diamond_stochastic.py
+tests/test_agency_diamond_stochastic_hardening.py
+tests/test_agency_diamond_stochastic_exploration.py
 ```
 
 It evaluates eight synthetic finite controlled systems across five horizons
@@ -450,6 +483,12 @@ docs/research_notes/validation_results/agency_diamond_cross_substrate_v1.md
 docs/research_notes/validation_results/agency_diamond_cross_substrate_v1.json
 docs/research_notes/validation_results/agency_diamond_blind_discovery_v1.md
 docs/research_notes/validation_results/agency_diamond_blind_discovery_v1.json
+docs/research_notes/validation_results/agency_diamond_stochastic_v1/report.md
+docs/research_notes/validation_results/agency_diamond_stochastic_v1/summary.json
+docs/research_notes/validation_results/agency_diamond_stochastic_hardening_v1/report.md
+docs/research_notes/validation_results/agency_diamond_stochastic_hardening_v1/summary.json
+docs/research_notes/validation_results/agency_diamond_stochastic_exploration_v1/report.md
+docs/research_notes/validation_results/agency_diamond_stochastic_exploration_v1/summary.json
 ```
 
 This is still an agency-layer harness, not an agency detector.

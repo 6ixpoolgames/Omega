@@ -1,0 +1,511 @@
+{
+  "calibration_phase": {
+    "curves": {
+      "feedback_reliability": [
+        {
+          "case_id": "calibration__feedback_0",
+          "classification": "passive_or_driven_recurrence",
+          "feedback_advantage": "0",
+          "joint_effect_delta": null,
+          "knob": "feedback_reliability",
+          "live_maintenance_probability": "0",
+          "reflexive_advantage": null,
+          "replay_maintenance_probability": "0",
+          "value": "0"
+        },
+        {
+          "case_id": "calibration__feedback_1",
+          "classification": "feedback_advantage",
+          "feedback_advantage": "1/10",
+          "joint_effect_delta": null,
+          "knob": "feedback_reliability",
+          "live_maintenance_probability": "1/5",
+          "reflexive_advantage": null,
+          "replay_maintenance_probability": "1/10",
+          "value": "1/5"
+        },
+        {
+          "case_id": "calibration__feedback_2",
+          "classification": "feedback_advantage",
+          "feedback_advantage": "1/4",
+          "joint_effect_delta": null,
+          "knob": "feedback_reliability",
+          "live_maintenance_probability": "1/2",
+          "reflexive_advantage": null,
+          "replay_maintenance_probability": "1/4",
+          "value": "1/2"
+        },
+        {
+          "case_id": "calibration__feedback_3",
+          "classification": "feedback_advantage",
+          "feedback_advantage": "2/5",
+          "joint_effect_delta": null,
+          "knob": "feedback_reliability",
+          "live_maintenance_probability": "4/5",
+          "reflexive_advantage": null,
+          "replay_maintenance_probability": "2/5",
+          "value": "4/5"
+        },
+        {
+          "case_id": "calibration__feedback_4",
+          "classification": "feedback_advantage",
+          "feedback_advantage": "9/20",
+          "joint_effect_delta": null,
+          "knob": "feedback_reliability",
+          "live_maintenance_probability": "9/10",
+          "reflexive_advantage": null,
+          "replay_maintenance_probability": "9/20",
+          "value": "9/10"
+        }
+      ],
+      "joint_risk": [
+        {
+          "case_id": "calibration__joint_risk_0",
+          "classification": "dominant_joint_contraction",
+          "feedback_advantage": "4/15",
+          "joint_effect_delta": "-1/15",
+          "knob": "joint_risk",
+          "live_maintenance_probability": "8/15",
+          "reflexive_advantage": null,
+          "replay_maintenance_probability": "4/15",
+          "value": "0"
+        },
+        {
+          "case_id": "calibration__joint_risk_1",
+          "classification": "dominant_joint_contraction",
+          "feedback_advantage": "4/15",
+          "joint_effect_delta": "-2/15",
+          "knob": "joint_risk",
+          "live_maintenance_probability": "3/5",
+          "reflexive_advantage": null,
+          "replay_maintenance_probability": "1/3",
+          "value": "1/5"
+        },
+        {
+          "case_id": "calibration__joint_risk_2",
+          "classification": "dominant_joint_contraction",
+          "feedback_advantage": "4/15",
+          "joint_effect_delta": "-1/5",
+          "knob": "joint_risk",
+          "live_maintenance_probability": "2/3",
+          "reflexive_advantage": null,
+          "replay_maintenance_probability": "2/5",
+          "value": "2/5"
+        },
+        {
+          "case_id": "calibration__joint_risk_3",
+          "classification": "dominant_joint_contraction",
+          "feedback_advantage": "4/15",
+          "joint_effect_delta": "-1/3",
+          "knob": "joint_risk",
+          "live_maintenance_probability": "4/5",
+          "reflexive_advantage": null,
+          "replay_maintenance_probability": "8/15",
+          "value": "4/5"
+        },
+        {
+          "case_id": "calibration__joint_risk_4",
+          "classification": "dominant_joint_contraction",
+          "feedback_advantage": "4/15",
+          "joint_effect_delta": "-2/5",
+          "knob": "joint_risk",
+          "live_maintenance_probability": "13/15",
+          "reflexive_advantage": null,
+          "replay_maintenance_probability": "3/5",
+          "value": "1"
+        }
+      ],
+      "repair_reliability": [
+        {
+          "case_id": "calibration__reflexive_0",
+          "classification": "passive_or_driven_recurrence",
+          "feedback_advantage": "0",
+          "joint_effect_delta": null,
+          "knob": "repair_reliability",
+          "live_maintenance_probability": "0",
+          "reflexive_advantage": "0",
+          "replay_maintenance_probability": "0",
+          "value": "0"
+        },
+        {
+          "case_id": "calibration__reflexive_1",
+          "classification": "reflexive_maintenance",
+          "feedback_advantage": "1/10",
+          "joint_effect_delta": null,
+          "knob": "repair_reliability",
+          "live_maintenance_probability": "1/5",
+          "reflexive_advantage": "1/10",
+          "replay_maintenance_probability": "1/10",
+          "value": "1/5"
+        },
+        {
+          "case_id": "calibration__reflexive_2",
+          "classification": "reflexive_maintenance",
+          "feedback_advantage": "1/4",
+          "joint_effect_delta": null,
+          "knob": "repair_reliability",
+          "live_maintenance_probability": "1/2",
+          "reflexive_advantage": "1/4",
+          "replay_maintenance_probability": "1/4",
+          "value": "1/2"
+        },
+        {
+          "case_id": "calibration__reflexive_3",
+          "classification": "reflexive_maintenance",
+          "feedback_advantage": "2/5",
+          "joint_effect_delta": null,
+          "knob": "repair_reliability",
+          "live_maintenance_probability": "4/5",
+          "reflexive_advantage": "2/5",
+          "replay_maintenance_probability": "2/5",
+          "value": "4/5"
+        },
+        {
+          "case_id": "calibration__reflexive_4",
+          "classification": "reflexive_maintenance",
+          "feedback_advantage": "9/20",
+          "joint_effect_delta": null,
+          "knob": "repair_reliability",
+          "live_maintenance_probability": "9/10",
+          "reflexive_advantage": "9/20",
+          "replay_maintenance_probability": "9/20",
+          "value": "9/10"
+        }
+      ]
+    },
+    "decision_gate": {
+      "feedback_has_zero_and_positive_regions": true,
+      "feedback_monotone_with_reliability": true,
+      "joint_effect_nonincreasing_with_risk": true,
+      "joint_high_risk_is_negative": true,
+      "joint_risk_changes_joint_effect": true,
+      "repair_has_zero_and_positive_regions": true,
+      "repair_monotone_with_reliability": true
+    },
+    "status": "PASS",
+    "thresholds": {
+      "first_negative_joint_risk": "0",
+      "first_positive_feedback_reliability": "1/5",
+      "first_positive_repair_reliability": "1/5"
+    }
+  },
+  "claim_boundary": "Exploratory finite stochastic deformer discovery only. These checks test held-out non-predeclared search, cross-substrate profile transport, and exact-rational phase/calibration behavior. They do not detect agency, identity, value, valuerhood, or Omega, and do not validate empirical transition models.",
+  "cross_substrate": {
+    "case_counts": {
+      "metric_cases": 72,
+      "systems": 18
+    },
+    "classification_by_substrate": {
+      "boolean": {
+        "feedback_advantage": 12,
+        "reflexive_maintenance": 12
+      },
+      "grid": {
+        "control_without_feedback_advantage": 12,
+        "feedback_advantage": 12
+      },
+      "resource": {
+        "control_without_feedback_advantage": 12,
+        "dominant_joint_contraction": 12
+      }
+    },
+    "classification_counts": {
+      "control_without_feedback_advantage": 24,
+      "dominant_joint_contraction": 12,
+      "feedback_advantage": 24,
+      "reflexive_maintenance": 12
+    },
+    "decision_gate": {
+      "cross_substrate_witnesses_found": true,
+      "each_substrate_has_multiple_profiles": true,
+      "multiple_substrates_tested": true,
+      "required_classes_discovered": true
+    },
+    "generator": {
+      "horizons": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "seeds": [
+        7101,
+        7103,
+        7109
+      ],
+      "substrates": [
+        "boolean",
+        "grid",
+        "resource"
+      ]
+    },
+    "status": "PASS",
+    "witnesses": [
+      {
+        "details": {
+          "left_feedback_advantage": "0",
+          "right_feedback_advantage": "9/20",
+          "substrate": "grid"
+        },
+        "left_case": "cross__grid__seed7101_h1",
+        "name": "stochastic_cross_same_substrate_separates_feedback",
+        "passed": true,
+        "right_case": "cross__grid__seed7101_h2"
+      },
+      {
+        "details": {
+          "left_feedback_advantage": "3/10",
+          "left_reflexive_advantage": null,
+          "right_feedback_advantage": "2/5",
+          "right_reflexive_advantage": "2/5"
+        },
+        "left_case": "cross__boolean__seed7101_h1",
+        "name": "stochastic_cross_feedback_without_reflexive_and_with_reflexive",
+        "passed": true,
+        "right_case": "cross__boolean__seed7101_h2"
+      },
+      {
+        "details": {
+          "left_joint": "0",
+          "left_live": "14/15",
+          "right_joint": "-2/5",
+          "right_live": "2/3",
+          "substrate": "resource"
+        },
+        "left_case": "cross__resource__seed7101_h1",
+        "name": "stochastic_cross_joint_sign_not_live_success",
+        "passed": true,
+        "right_case": "cross__resource__seed7101_h2"
+      }
+    ]
+  },
+  "decision_gate": {
+    "calibration_phase_passed": true,
+    "cross_substrate_passed": true,
+    "heldout_search_passed": true
+  },
+  "heldout_search": {
+    "axis_distribution": {
+      "control": {
+        "positive": 200,
+        "zero": 40
+      },
+      "feedback": {
+        "negative": 40,
+        "positive": 120,
+        "zero": 80
+      },
+      "joint": {
+        "negative": 40,
+        "none": 160,
+        "zero": 40
+      },
+      "observable_control": {
+        "positive": 160,
+        "zero": 80
+      },
+      "reflexive": {
+        "none": 200,
+        "positive": 40
+      }
+    },
+    "case_counts": {
+      "metric_cases": 240,
+      "systems": 60
+    },
+    "classification_counts": {
+      "control_without_feedback_advantage": 80,
+      "dominant_joint_contraction": 40,
+      "feedback_advantage": 40,
+      "passive_or_driven_recurrence": 40,
+      "reflexive_maintenance": 40
+    },
+    "counterexample_search": [
+      {
+        "details": {
+          "left_feedback_advantage": "0",
+          "right_feedback_advantage": "2/5",
+          "shared_recurrence": true
+        },
+        "left_case": "heldout__seed3301_h1",
+        "name": "stochastic_recurrence_does_not_imply_feedback_advantage",
+        "passed": true,
+        "right_case": "heldout__seed3302_h1"
+      },
+      {
+        "details": {
+          "left_control_reach_count": 2,
+          "left_feedback_advantage": "0",
+          "right_control_reach_count": 2,
+          "right_feedback_advantage": "2/5"
+        },
+        "left_case": "heldout__seed3301_h1",
+        "name": "stochastic_control_does_not_imply_feedback_advantage",
+        "passed": true,
+        "right_case": "heldout__seed3302_h1"
+      },
+      {
+        "details": {
+          "left_feedback_advantage": "2/5",
+          "left_reflexive_advantage": null,
+          "right_feedback_advantage": "3/10",
+          "right_reflexive_advantage": "3/10"
+        },
+        "left_case": "heldout__seed3302_h1",
+        "name": "stochastic_feedback_does_not_imply_reflexive_maintenance",
+        "passed": true,
+        "right_case": "heldout__seed3303_h1"
+      },
+      {
+        "details": {
+          "left_joint_effect": "-3/10",
+          "right_joint_effect": "0",
+          "shared_live_maintenance": "13/15"
+        },
+        "left_case": "heldout__seed3304_h1",
+        "name": "stochastic_live_success_scalar_does_not_determine_joint_effect",
+        "passed": true,
+        "right_case": "heldout__seed3305_h1"
+      }
+    ],
+    "decision_gate": {
+      "counterexample_witnesses_found": true,
+      "multiple_metric_clusters": true,
+      "no_expected_class_labels": true,
+      "null_controls_retained": true,
+      "required_classes_discovered": true
+    },
+    "derived_clusters": {
+      "cluster_count": 6,
+      "clusters": [
+        {
+          "classifications": {
+            "passive_or_driven_recurrence": 40
+          },
+          "count": 40,
+          "representative": "heldout__seed3306_h1",
+          "signature": "control:False|observable:False|feedback:zero|reflexive:none|joint:none|recurrence:True"
+        },
+        {
+          "classifications": {
+            "control_without_feedback_advantage": 40
+          },
+          "count": 40,
+          "representative": "heldout__seed3301_h1",
+          "signature": "control:True|observable:False|feedback:zero|reflexive:none|joint:none|recurrence:True"
+        },
+        {
+          "classifications": {
+            "control_without_feedback_advantage": 40
+          },
+          "count": 40,
+          "representative": "heldout__seed3305_h1",
+          "signature": "control:True|observable:True|feedback:negative|reflexive:none|joint:zero|recurrence:True"
+        },
+        {
+          "classifications": {
+            "dominant_joint_contraction": 40
+          },
+          "count": 40,
+          "representative": "heldout__seed3304_h1",
+          "signature": "control:True|observable:True|feedback:positive|reflexive:none|joint:negative|recurrence:True"
+        },
+        {
+          "classifications": {
+            "feedback_advantage": 40
+          },
+          "count": 40,
+          "representative": "heldout__seed3302_h1",
+          "signature": "control:True|observable:True|feedback:positive|reflexive:none|joint:none|recurrence:True"
+        },
+        {
+          "classifications": {
+            "reflexive_maintenance": 40
+          },
+          "count": 40,
+          "representative": "heldout__seed3303_h1",
+          "signature": "control:True|observable:True|feedback:positive|reflexive:positive|joint:none|recurrence:True"
+        }
+      ]
+    },
+    "generator": {
+      "horizons": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "seed_count": 60,
+      "seeds": [
+        3301,
+        3302,
+        3303,
+        3304,
+        3305,
+        3306,
+        3307,
+        3308,
+        3309,
+        3310,
+        3311,
+        3312,
+        3313,
+        3314,
+        3315,
+        3316,
+        3317,
+        3318,
+        3319,
+        3320,
+        3321,
+        3322,
+        3323,
+        3324,
+        3325,
+        3326,
+        3327,
+        3328,
+        3329,
+        3330,
+        3331,
+        3332,
+        3333,
+        3334,
+        3335,
+        3336,
+        3337,
+        3338,
+        3339,
+        3340,
+        3341,
+        3342,
+        3343,
+        3344,
+        3345,
+        3346,
+        3347,
+        3348,
+        3349,
+        3350,
+        3351,
+        3352,
+        3353,
+        3354,
+        3355,
+        3356,
+        3357,
+        3358,
+        3359,
+        3360
+      ],
+      "surface": "Held-out seeded stochastic systems. Generator knobs are retained, but expected outcome labels are not declared."
+    },
+    "null_controls": {
+      "control_without_feedback_retained": true,
+      "feedback_without_reflexive_retained": true,
+      "negative_joint_retained": true
+    },
+    "status": "PASS"
+  },
+  "status": "PASS"
+}

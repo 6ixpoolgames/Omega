@@ -7,6 +7,57 @@ run.
 Entries are organized in rough reverse chronological order, with the most recent
 patch notes at the top.
 
+## 2026-06-25
+
+### Agency Diamond Stochastic Exploration v1
+
+Added the next stochastic deformer-instrumentation batch:
+
+```text
+omega/agency_diamond/stochastic_exploration.py
+omega/agency_diamond/run_stochastic_exploration.py
+omega/validation/agency_diamond_stochastic_exploration.py
+tests/test_agency_diamond_stochastic_exploration.py
+docs/research_notes/validation_results/agency_diamond_stochastic_exploration_v1/
+```
+
+The pass covers:
+
+```text
+held-out non-predeclared stochastic search:
+  60 held-out seeded systems;
+  240 metric cases;
+  no expected class labels on the run surface;
+  required profile classes, clusters, hierarchy witnesses, and null controls.
+
+cross-substrate stochastic profiles:
+  Boolean, grid, and resource source grammars;
+  shared stochastic diamond metrics;
+  profile-separation witnesses across source grammars.
+
+calibration / phase behavior:
+  exact-rational feedback reliability, repair reliability, and joint-risk
+  sweeps;
+  monotone feedback/repair curves;
+  nonincreasing joint-effect curve under increasing joint risk.
+```
+
+Retained output:
+
+```text
+docs/research_notes/validation_results/agency_diamond_stochastic_exploration_v1/report.md
+docs/research_notes/validation_results/agency_diamond_stochastic_exploration_v1/summary.json
+```
+
+Claim boundary:
+
+```text
+finite stochastic deformer exploration only;
+not agency detection;
+not identity, value, valuerhood, or Omega validation;
+not empirical transition-model validation.
+```
+
 ## 2026-06-11
 
 ### Alpha Primitive-Preserving Maps

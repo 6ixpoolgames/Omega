@@ -344,6 +344,20 @@ and separates average-case feedback from robust worst-case feedback over a
 small ambiguity set. Its claim boundary remains exploratory finite
 instrumentation only.
 
+Agency Diamond Stochastic Exploration v1 extends that hardening layer with
+three discovery-style probes:
+
+```bash
+python -m omega.validation.agency_diamond_stochastic_exploration
+```
+
+It runs held-out seeded stochastic search with no expected class labels on the
+run surface, checks whether the stochastic profile hierarchy survives Boolean,
+grid, and resource source grammars, and sweeps exact-rational feedback,
+repair, and joint-risk knobs to characterize simple phase behavior. This is
+still finite synthetic deformer instrumentation, not agency detection or
+empirical stochastic-model validation.
+
 Local PowerShell form:
 
 ```powershell
@@ -529,6 +543,16 @@ machine-readable summary at
 [agency_diamond_blind_discovery_v1.md](research_notes/validation_results/agency_diamond_blind_discovery_v1.md)
 and
 [agency_diamond_blind_discovery_v1.json](research_notes/validation_results/agency_diamond_blind_discovery_v1.json).
+Agency Diamond Stochastic Hardening v1 retains a human-readable report and
+machine-readable summary at
+[agency_diamond_stochastic_hardening_v1/report.md](research_notes/validation_results/agency_diamond_stochastic_hardening_v1/report.md)
+and
+[agency_diamond_stochastic_hardening_v1/summary.json](research_notes/validation_results/agency_diamond_stochastic_hardening_v1/summary.json).
+Agency Diamond Stochastic Exploration v1 retains a human-readable report and
+machine-readable summary at
+[agency_diamond_stochastic_exploration_v1/report.md](research_notes/validation_results/agency_diamond_stochastic_exploration_v1/report.md)
+and
+[agency_diamond_stochastic_exploration_v1/summary.json](research_notes/validation_results/agency_diamond_stochastic_exploration_v1/summary.json).
 
 See [REPRODUCIBILITY_SMOKE.md](REPRODUCIBILITY_SMOKE.md).
 
