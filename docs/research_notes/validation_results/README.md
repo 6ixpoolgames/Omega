@@ -57,6 +57,8 @@ Start with:
 - `finite_relational_policy_dynamics_v0.json`
 - `agency_diamond_midscale_v0.md`
 - `agency_diamond_midscale_v0.json`
+- `agency_diamond_hardening_v1.md`
+- `agency_diamond_hardening_v1.json`
 
 ## Archived Branches
 

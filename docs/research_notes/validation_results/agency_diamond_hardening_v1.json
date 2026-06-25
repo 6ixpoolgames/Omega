@@ -1,0 +1,58 @@
+{
+  "artifact": "agency_diamond_hardening_v1",
+  "source_head_before_batch": "93cff3b41a6bd4a5fac75aebcc7a4dc16dfa063d",
+  "command": ".\\.venv\\Scripts\\python.exe -m omega.validation.agency_diamond_hardening --out-root .tmp\\agency_diamond_hardening_validation",
+  "run_timestamp_local": "20260625_103318",
+  "status": "PASS",
+  "claim_boundary": "Exploratory synthetic finite agency-layer hardening only. This does not detect agency, identity, value, valuerhood, or Omega; it tests whether the operational-causal-diamond pilot rejects simple baselines, survives generated relabel/decoy variants, and obeys basic state-presentation transport controls.",
+  "base_case_count": 40,
+  "base_classification_counts": {
+    "control_without_feedback_advantage": 5,
+    "dominant_joint_contraction": 5,
+    "feedback_advantage": 15,
+    "passive_or_driven_recurrence": 8,
+    "passive_persistence": 2,
+    "reflexive_maintenance": 5
+  },
+  "baseline_collision_count": 21,
+  "required_baseline_collision_status": {
+    "control_only_does_not_determine_feedback_axis": true,
+    "feedback_only_does_not_determine_reflexive_axis": true,
+    "joint_effect_only_does_not_determine_full_classification": true,
+    "live_success_only_does_not_determine_joint_axis": true,
+    "recurrence_only_does_not_determine_feedback_axis": true
+  },
+  "strictness_status": {
+    "control_does_not_imply_feedback_advantage": true,
+    "feedback_advantage_does_not_imply_reflexive_maintenance": true,
+    "joint_effect_does_not_imply_reflexive_maintenance": true,
+    "live_success_does_not_determine_joint_effect": true,
+    "recurrence_does_not_imply_feedback_advantage": true
+  },
+  "generated": {
+    "variant_count": 24,
+    "case_count": 120,
+    "all_profiles_preserved": true,
+    "seeds": [
+      11,
+      17,
+      23
+    ]
+  },
+  "transport": {
+    "all_transport_checks_passed": true,
+    "checks": {
+      "positive_quotient_constructible": true,
+      "positive_profile_preserved": true,
+      "incompatible_need_merge_rejected": true,
+      "cold_hot_merge_rejected": true
+    }
+  },
+  "decision_gate": {
+    "required_baseline_collisions_found": true,
+    "strictness_witnesses_passed": true,
+    "generated_profiles_preserved": true,
+    "transport_controls_passed": true
+  },
+  "interpretation": "The profile is load-bearing as an exploratory finite diagnostic: simple baselines collide with richer axes, strictness witnesses separate hierarchy levels, relabel/decoy variants preserve classifications, and basic presentation transport accepts a sound quotient while rejecting incompatible merges. This is not an agency detector."
+}

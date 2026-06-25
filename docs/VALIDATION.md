@@ -262,6 +262,18 @@ control without feedback advantage, feedback advantage over matched open-loop
 replay, reflexive maintenance, and joint-continuation effect. It is not agency,
 identity, value, valuerhood, or Omega validation.
 
+The agency-diamond hardening pilot adds baseline-collision checks, strictness
+witnesses, generated relabel/decoy variants, and state-presentation transport
+controls:
+
+```bash
+python -m omega.validation.agency_diamond_hardening
+```
+
+This remains exploratory finite hardening. It does not detect agency. It checks
+whether the operational-causal-diamond profile rejects simple baselines and
+survives basic nonsemantic relabeling and quotient controls.
+
 Local PowerShell form:
 
 ```powershell
@@ -427,6 +439,11 @@ and machine-readable summary at
 [agency_diamond_midscale_v0.md](research_notes/validation_results/agency_diamond_midscale_v0.md)
 and
 [agency_diamond_midscale_v0.json](research_notes/validation_results/agency_diamond_midscale_v0.json).
+The agency-diamond hardening pilot retains a human-readable note and
+machine-readable summary at
+[agency_diamond_hardening_v1.md](research_notes/validation_results/agency_diamond_hardening_v1.md)
+and
+[agency_diamond_hardening_v1.json](research_notes/validation_results/agency_diamond_hardening_v1.json).
 
 See [REPRODUCIBILITY_SMOKE.md](REPRODUCIBILITY_SMOKE.md).
 

@@ -344,7 +344,9 @@ The first executable version of this battery lives in:
 ```text
 omega/agency_diamond/
 omega/validation/agency_diamond_midscale.py
+omega/validation/agency_diamond_hardening.py
 tests/test_agency_diamond_midscale.py
+tests/test_agency_diamond_hardening.py
 ```
 
 It evaluates eight synthetic finite controlled systems across five horizons
@@ -364,9 +366,37 @@ Retained checkpoint:
 ```text
 docs/research_notes/validation_results/agency_diamond_midscale_v0.md
 docs/research_notes/validation_results/agency_diamond_midscale_v0.json
+docs/research_notes/validation_results/agency_diamond_hardening_v1.md
+docs/research_notes/validation_results/agency_diamond_hardening_v1.json
 ```
 
 This is still an agency-layer harness, not an agency detector.
+
+The hardening pass asks whether the profile is doing load-bearing work beyond
+simple baselines. It currently checks:
+
+```text
+baseline collisions:
+  recurrence, control, live success, feedback-only, or joint-effect-only
+  projections fail to determine the richer profile axes.
+
+strictness witnesses:
+  recurrence does not imply feedback advantage;
+  control does not imply feedback advantage;
+  feedback advantage does not imply reflexive maintenance;
+  live success does not determine joint effect;
+  joint effect does not imply reflexive maintenance.
+
+generated robustness:
+  relabel/decoy variants preserve the classification profile.
+
+transport controls:
+  a sound quotient preserves the profile, while incompatible merges are
+  rejected.
+```
+
+This makes the harness more load-bearing as instrumentation. It still does not
+establish that the measured profile is sufficient for agency.
 
 ## Formal Targets After Pilot
 

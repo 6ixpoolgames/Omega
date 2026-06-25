@@ -9,7 +9,9 @@ on:
       - ".github/workflows/agency-diamond-midscale.yml"
       - "omega/agency_diamond/**"
       - "omega/validation/agency_diamond_midscale.py"
+      - "omega/validation/agency_diamond_hardening.py"
       - "tests/test_agency_diamond_midscale.py"
+      - "tests/test_agency_diamond_hardening.py"
       - "pyproject.toml"
   pull_request:
     branches:
@@ -18,7 +20,9 @@ on:
       - ".github/workflows/agency-diamond-midscale.yml"
       - "omega/agency_diamond/**"
       - "omega/validation/agency_diamond_midscale.py"
+      - "omega/validation/agency_diamond_hardening.py"
       - "tests/test_agency_diamond_midscale.py"
+      - "tests/test_agency_diamond_hardening.py"
       - "pyproject.toml"
 
 jobs:
@@ -50,15 +54,24 @@ jobs:
       - name: Run agency diamond midscale validation
         run: python -m omega.validation.agency_diamond_midscale
 
+      - name: Run agency diamond hardening validation
+        run: python -m omega.validation.agency_diamond_hardening
+
       - name: Run focused agency diamond tests
-        run: python -m pytest tests/test_agency_diamond_midscale.py -q
+        run: |
+          python -m pytest \
+            tests/test_agency_diamond_midscale.py \
+            tests/test_agency_diamond_hardening.py \
+            -q
 
       - name: Ruff agency diamond paths
         run: |
           python -m ruff check \
             omega/agency_diamond \
             omega/validation/agency_diamond_midscale.py \
-            tests/test_agency_diamond_midscale.py
+            omega/validation/agency_diamond_hardening.py \
+            tests/test_agency_diamond_midscale.py \
+            tests/test_agency_diamond_hardening.py
 
       - name: Check whitespace
         run: git diff --check
