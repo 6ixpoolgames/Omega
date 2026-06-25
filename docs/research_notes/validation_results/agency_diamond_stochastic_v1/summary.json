@@ -1,0 +1,518 @@
+{
+  "axis_distribution": {
+    "control": {
+      "positive": 132,
+      "zero": 28
+    },
+    "feedback": {
+      "negative": 28,
+      "positive": 76,
+      "zero": 56
+    },
+    "joint": {
+      "negative": 24,
+      "none": 108,
+      "zero": 28
+    },
+    "observable_control": {
+      "positive": 104,
+      "zero": 56
+    },
+    "reflexive": {
+      "none": 136,
+      "positive": 24
+    },
+    "stochasticity": {
+      "present": 160
+    }
+  },
+  "blind_classification_counts": {
+    "control_without_feedback_advantage": 56,
+    "dominant_joint_contraction": 24,
+    "feedback_advantage": 28,
+    "passive_or_driven_recurrence": 28,
+    "reflexive_maintenance": 24
+  },
+  "case_counts": {
+    "blind_metric_cases": 160,
+    "blind_systems": 40,
+    "null_metric_cases": 24,
+    "null_systems": 6
+  },
+  "claim_boundary": "Exploratory finite stochastic agency-diamond pilot only. This uses exact-rational synthetic controlled systems to test probabilistic live-vs-open-loop feedback, reflexive maintenance, joint effect, blind generated profiles, and strong-lumpability coherence controls. It does not detect agency, identity, value, valuerhood, or Omega, and it does not validate any empirical transition model.",
+  "coherence": {
+    "has_lumpable_and_non_lumpable": true,
+    "non_lumpable_count": 33,
+    "report_count": 80,
+    "representative_lumpable": {
+      "presentation_id": "identity",
+      "strongly_lumpable": true,
+      "witness_count": 0,
+      "witnesses": []
+    },
+    "representative_non_lumpable": {
+      "presentation_id": "coarse_need_merge",
+      "strongly_lumpable": false,
+      "witness_count": 8,
+      "witnesses": [
+        {
+          "action": "a0",
+          "block": "need",
+          "left_distribution": {
+            "failure": "1/5",
+            "joint": "0",
+            "need": "0",
+            "success": "4/5"
+          },
+          "left_state": "need0",
+          "right_distribution": {
+            "failure": "0",
+            "joint": "0",
+            "need": "0",
+            "success": "1"
+          },
+          "right_state": "need1",
+          "scenario": "nominal"
+        },
+        {
+          "action": "a1",
+          "block": "need",
+          "left_distribution": {
+            "failure": "1",
+            "joint": "0",
+            "need": "0",
+            "success": "0"
+          },
+          "left_state": "need0",
+          "right_distribution": {
+            "failure": "1/5",
+            "joint": "0",
+            "need": "0",
+            "success": "4/5"
+          },
+          "right_state": "need1",
+          "scenario": "nominal"
+        },
+        {
+          "action": "a0",
+          "block": "need",
+          "left_distribution": {
+            "failure": "1/5",
+            "joint": "0",
+            "need": "0",
+            "success": "4/5"
+          },
+          "left_state": "need0",
+          "right_distribution": {
+            "failure": "0",
+            "joint": "0",
+            "need": "0",
+            "success": "1"
+          },
+          "right_state": "need1",
+          "scenario": "p0"
+        },
+        {
+          "action": "a1",
+          "block": "need",
+          "left_distribution": {
+            "failure": "1",
+            "joint": "0",
+            "need": "0",
+            "success": "0"
+          },
+          "left_state": "need0",
+          "right_distribution": {
+            "failure": "1/5",
+            "joint": "0",
+            "need": "0",
+            "success": "4/5"
+          },
+          "right_state": "need1",
+          "scenario": "p0"
+        },
+        {
+          "action": "a0",
+          "block": "need",
+          "left_distribution": {
+            "failure": "1/5",
+            "joint": "0",
+            "need": "0",
+            "success": "4/5"
+          },
+          "left_state": "need0",
+          "right_distribution": {
+            "failure": "0",
+            "joint": "0",
+            "need": "0",
+            "success": "1"
+          },
+          "right_state": "need1",
+          "scenario": "p1"
+        },
+        {
+          "action": "a1",
+          "block": "need",
+          "left_distribution": {
+            "failure": "1",
+            "joint": "0",
+            "need": "0",
+            "success": "0"
+          },
+          "left_state": "need0",
+          "right_distribution": {
+            "failure": "1/5",
+            "joint": "0",
+            "need": "0",
+            "success": "4/5"
+          },
+          "right_state": "need1",
+          "scenario": "p1"
+        },
+        {
+          "action": "a0",
+          "block": "need",
+          "left_distribution": {
+            "failure": "1/5",
+            "joint": "0",
+            "need": "0",
+            "success": "4/5"
+          },
+          "left_state": "need0",
+          "right_distribution": {
+            "failure": "0",
+            "joint": "0",
+            "need": "0",
+            "success": "1"
+          },
+          "right_state": "need1",
+          "scenario": "joint"
+        },
+        {
+          "action": "a1",
+          "block": "need",
+          "left_distribution": {
+            "failure": "1",
+            "joint": "0",
+            "need": "0",
+            "success": "0"
+          },
+          "left_state": "need0",
+          "right_distribution": {
+            "failure": "1/5",
+            "joint": "0",
+            "need": "0",
+            "success": "4/5"
+          },
+          "right_state": "need1",
+          "scenario": "joint"
+        }
+      ]
+    },
+    "strongly_lumpable_count": 47
+  },
+  "counterexample_search": [
+    {
+      "details": {
+        "left_feedback_advantage": "0",
+        "right_feedback_advantage": "3/20",
+        "shared_recurrence": true
+      },
+      "left_case": "blind__seed2202_h1",
+      "name": "stochastic_recurrence_does_not_imply_feedback_advantage",
+      "passed": true,
+      "right_case": "blind__seed2204_h1"
+    },
+    {
+      "details": {
+        "left_control_reach_count": 2,
+        "left_feedback_advantage": "0",
+        "right_control_reach_count": 2,
+        "right_feedback_advantage": "3/20"
+      },
+      "left_case": "blind__seed2203_h1",
+      "name": "stochastic_control_does_not_imply_feedback_advantage",
+      "passed": true,
+      "right_case": "blind__seed2204_h1"
+    },
+    {
+      "details": {
+        "left_feedback_advantage": "3/20",
+        "left_reflexive_advantage": null,
+        "right_feedback_advantage": "3/20",
+        "right_reflexive_advantage": "3/20"
+      },
+      "left_case": "blind__seed2204_h1",
+      "name": "stochastic_feedback_does_not_imply_reflexive_maintenance",
+      "passed": true,
+      "right_case": "blind__seed2205_h1"
+    },
+    {
+      "details": {
+        "left_joint_effect": "0",
+        "right_joint_effect": "-2/5",
+        "shared_live_maintenance": "13/15"
+      },
+      "left_case": "blind__seed2201_h1",
+      "name": "stochastic_live_success_scalar_does_not_determine_joint_effect",
+      "passed": true,
+      "right_case": "blind__seed2206_h1"
+    }
+  ],
+  "decision_gate": {
+    "blind_pool_has_no_expected_class_labels": true,
+    "coherence_has_positive_and_negative_controls": true,
+    "counterexample_search_witnesses_found": true,
+    "multiple_classes_discovered": true,
+    "negative_results_retained": true,
+    "required_classes_discovered": true,
+    "stochasticity_present": true
+  },
+  "derived_clusters": {
+    "cluster_count": 6,
+    "clusters": [
+      {
+        "classifications": {
+          "control_without_feedback_advantage": 28
+        },
+        "count": 28,
+        "representative": "blind__seed2201_h1",
+        "signature": "control:+|observable:+|feedback:negative|reflexive:none|joint:zero|recurrence:True"
+      },
+      {
+        "classifications": {
+          "feedback_advantage": 28
+        },
+        "count": 28,
+        "representative": "blind__seed2204_h1",
+        "signature": "control:+|observable:+|feedback:positive|reflexive:none|joint:none|recurrence:True"
+      },
+      {
+        "classifications": {
+          "control_without_feedback_advantage": 28
+        },
+        "count": 28,
+        "representative": "blind__seed2203_h1",
+        "signature": "control:+|observable:0|feedback:zero|reflexive:none|joint:none|recurrence:True"
+      },
+      {
+        "classifications": {
+          "passive_or_driven_recurrence": 28
+        },
+        "count": 28,
+        "representative": "blind__seed2202_h1",
+        "signature": "control:0|observable:0|feedback:zero|reflexive:none|joint:none|recurrence:True"
+      },
+      {
+        "classifications": {
+          "dominant_joint_contraction": 24
+        },
+        "count": 24,
+        "representative": "blind__seed2206_h1",
+        "signature": "control:+|observable:+|feedback:positive|reflexive:none|joint:negative|recurrence:True"
+      },
+      {
+        "classifications": {
+          "reflexive_maintenance": 24
+        },
+        "count": 24,
+        "representative": "blind__seed2205_h1",
+        "signature": "control:+|observable:+|feedback:positive|reflexive:positive|joint:none|recurrence:True"
+      }
+    ]
+  },
+  "generator": {
+    "blind_seed_count": 40,
+    "blind_seeds": [
+      2201,
+      2202,
+      2203,
+      2204,
+      2205,
+      2206,
+      2207,
+      2208,
+      2209,
+      2210,
+      2211,
+      2212,
+      2213,
+      2214,
+      2215,
+      2216,
+      2217,
+      2218,
+      2219,
+      2220,
+      2221,
+      2222,
+      2223,
+      2224,
+      2225,
+      2226,
+      2227,
+      2228,
+      2229,
+      2230,
+      2231,
+      2232,
+      2233,
+      2234,
+      2235,
+      2236,
+      2237,
+      2238,
+      2239,
+      2240
+    ],
+    "horizons": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "surface": "Exact-rational stochastic controlled systems generated from structural knobs; no expected class labels are declared."
+  },
+  "negative_result_retention": {
+    "retained": {
+      "control_without_feedback": {
+        "ablated_maintenance_probability": "3/16",
+        "best_replay_sequence": [
+          "a0"
+        ],
+        "case_id": "blind__seed2203_h1",
+        "channel_challenge_count": 0,
+        "classification": "control_without_feedback_advantage",
+        "control_reach_count": 2,
+        "control_reach_ratio": "1/2",
+        "family": "stochastic_control_no_feedback",
+        "feedback_advantage": "0",
+        "horizon": 1,
+        "joint_effect_delta": null,
+        "joint_live_probability": null,
+        "joint_replay_probability": null,
+        "leverage_advantage": "0",
+        "live_maintenance_probability": "3/16",
+        "observability_ratio": "0",
+        "observable_control_count": 0,
+        "operational_diamond_count": 0,
+        "perturbation_count": 2,
+        "recurrence_detected": true,
+        "reflexive_advantage": null,
+        "reflexive_live_probability": null,
+        "reflexive_replay_probability": null,
+        "replay_maintenance_probability": "3/16",
+        "scenario_count": 3,
+        "stochasticity_detected": true,
+        "system_id": "blind_control_2203"
+      },
+      "feedback_without_reflexive": {
+        "ablated_maintenance_probability": "3/20",
+        "best_replay_sequence": [
+          "a0"
+        ],
+        "case_id": "blind__seed2204_h1",
+        "channel_challenge_count": 0,
+        "classification": "feedback_advantage",
+        "control_reach_count": 2,
+        "control_reach_ratio": "1/2",
+        "family": "stochastic_feedback",
+        "feedback_advantage": "3/20",
+        "horizon": 1,
+        "joint_effect_delta": null,
+        "joint_live_probability": null,
+        "joint_replay_probability": null,
+        "leverage_advantage": "3/20",
+        "live_maintenance_probability": "3/10",
+        "observability_ratio": "1",
+        "observable_control_count": 2,
+        "operational_diamond_count": 2,
+        "perturbation_count": 2,
+        "recurrence_detected": true,
+        "reflexive_advantage": null,
+        "reflexive_live_probability": null,
+        "reflexive_replay_probability": null,
+        "replay_maintenance_probability": "3/20",
+        "scenario_count": 3,
+        "stochasticity_detected": true,
+        "system_id": "blind_feedback_2204"
+      },
+      "negative_joint_effect": {
+        "ablated_maintenance_probability": "4/15",
+        "best_replay_sequence": [
+          "a1"
+        ],
+        "case_id": "blind__seed2206_h1",
+        "channel_challenge_count": 0,
+        "classification": "dominant_joint_contraction",
+        "control_reach_count": 3,
+        "control_reach_ratio": "3/7",
+        "family": "stochastic_joint_negative",
+        "feedback_advantage": "4/15",
+        "horizon": 1,
+        "joint_effect_delta": "-2/5",
+        "joint_live_probability": "8/15",
+        "joint_replay_probability": "14/15",
+        "leverage_advantage": "3/5",
+        "live_maintenance_probability": "13/15",
+        "observability_ratio": "2/3",
+        "observable_control_count": 2,
+        "operational_diamond_count": 2,
+        "perturbation_count": 3,
+        "recurrence_detected": true,
+        "reflexive_advantage": null,
+        "reflexive_live_probability": null,
+        "reflexive_replay_probability": null,
+        "replay_maintenance_probability": "3/5",
+        "scenario_count": 4,
+        "stochasticity_detected": true,
+        "system_id": "blind_joint_negative_2206"
+      },
+      "passive_or_driven_recurrence": {
+        "ablated_maintenance_probability": "1",
+        "best_replay_sequence": [
+          "a0"
+        ],
+        "case_id": "blind__seed2202_h1",
+        "channel_challenge_count": 0,
+        "classification": "passive_or_driven_recurrence",
+        "control_reach_count": 0,
+        "control_reach_ratio": "0",
+        "family": "stochastic_recurrence",
+        "feedback_advantage": "0",
+        "horizon": 1,
+        "joint_effect_delta": null,
+        "joint_live_probability": null,
+        "joint_replay_probability": null,
+        "leverage_advantage": "0",
+        "live_maintenance_probability": "1",
+        "observability_ratio": "0",
+        "observable_control_count": 0,
+        "operational_diamond_count": 0,
+        "perturbation_count": 1,
+        "recurrence_detected": true,
+        "reflexive_advantage": null,
+        "reflexive_live_probability": null,
+        "reflexive_replay_probability": null,
+        "replay_maintenance_probability": "1",
+        "scenario_count": 2,
+        "stochasticity_detected": true,
+        "system_id": "blind_passive_recurrence_2202"
+      }
+    },
+    "retention_status": {
+      "control_without_feedback": true,
+      "feedback_without_reflexive": true,
+      "negative_joint_effect": true,
+      "passive_or_driven_recurrence": true
+    }
+  },
+  "null_classification_counts": {
+    "control_without_feedback_advantage": 4,
+    "dominant_joint_contraction": 4,
+    "feedback_advantage": 4,
+    "passive_or_driven_recurrence": 8,
+    "reflexive_maintenance": 4
+  },
+  "status": "PASS"
+}

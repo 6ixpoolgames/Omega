@@ -314,6 +314,22 @@ This is still synthetic finite discovery, not empirical agency validation. Its
 purpose is to test whether the operational-causal-diamond profile has discovery
 power beyond named fixtures and generated modes.
 
+Agency Diamond Stochastic Pilot v1 is the first exact-rational stochastic arm of
+the operational-causal-diamond harness:
+
+```bash
+python -m omega.validation.agency_diamond_stochastic
+```
+
+It replaces deterministic success/failure facts with finite-horizon probability
+profiles over synthetic controlled Markov systems. It compares live
+observation-based feedback against the best fixed open-loop replay sequence at
+the same horizon, checks reflexive-maintenance probability, retains
+joint-continuation effects, evaluates a blind seeded pool with no expected class
+labels, and audits strong lumpability as the stochastic presentation-coherence
+control. It is not stochastic agency detection, not empirical transition-model
+validation, and not value, valuerhood, or Omega validation.
+
 Local PowerShell form:
 
 ```powershell

@@ -13,11 +13,13 @@ on:
       - "omega/validation/agency_diamond_challenge.py"
       - "omega/validation/agency_diamond_cross_substrate.py"
       - "omega/validation/agency_diamond_blind_discovery.py"
+      - "omega/validation/agency_diamond_stochastic.py"
       - "tests/test_agency_diamond_midscale.py"
       - "tests/test_agency_diamond_hardening.py"
       - "tests/test_agency_diamond_challenge.py"
       - "tests/test_agency_diamond_cross_substrate.py"
       - "tests/test_agency_diamond_blind_discovery.py"
+      - "tests/test_agency_diamond_stochastic.py"
       - "pyproject.toml"
   pull_request:
     branches:
@@ -30,11 +32,13 @@ on:
       - "omega/validation/agency_diamond_challenge.py"
       - "omega/validation/agency_diamond_cross_substrate.py"
       - "omega/validation/agency_diamond_blind_discovery.py"
+      - "omega/validation/agency_diamond_stochastic.py"
       - "tests/test_agency_diamond_midscale.py"
       - "tests/test_agency_diamond_hardening.py"
       - "tests/test_agency_diamond_challenge.py"
       - "tests/test_agency_diamond_cross_substrate.py"
       - "tests/test_agency_diamond_blind_discovery.py"
+      - "tests/test_agency_diamond_stochastic.py"
       - "pyproject.toml"
 
 jobs:
@@ -78,6 +82,9 @@ jobs:
       - name: Run agency diamond blind-discovery validation
         run: python -m omega.validation.agency_diamond_blind_discovery
 
+      - name: Run agency diamond stochastic validation
+        run: python -m omega.validation.agency_diamond_stochastic
+
       - name: Run focused agency diamond tests
         run: |
           python -m pytest \
@@ -86,6 +93,7 @@ jobs:
             tests/test_agency_diamond_challenge.py \
             tests/test_agency_diamond_cross_substrate.py \
             tests/test_agency_diamond_blind_discovery.py \
+            tests/test_agency_diamond_stochastic.py \
             -q
 
       - name: Ruff agency diamond paths
@@ -97,11 +105,13 @@ jobs:
             omega/validation/agency_diamond_challenge.py \
             omega/validation/agency_diamond_cross_substrate.py \
             omega/validation/agency_diamond_blind_discovery.py \
+            omega/validation/agency_diamond_stochastic.py \
             tests/test_agency_diamond_midscale.py \
             tests/test_agency_diamond_hardening.py \
             tests/test_agency_diamond_challenge.py \
             tests/test_agency_diamond_cross_substrate.py \
-            tests/test_agency_diamond_blind_discovery.py
+            tests/test_agency_diamond_blind_discovery.py \
+            tests/test_agency_diamond_stochastic.py
 
       - name: Check whitespace
         run: git diff --check

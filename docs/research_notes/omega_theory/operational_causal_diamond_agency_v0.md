@@ -259,6 +259,46 @@ spectral/SVD = candidate discovery
 not agency detection.
 ```
 
+## Stochastic Pilot Placement
+
+The first stochastic agency-diamond pilot keeps the same agency-layer claim
+boundary while replacing deterministic trace success with exact-rational
+finite-horizon probability profiles.
+
+The stochastic arm currently measures:
+
+```text
+live maintenance probability:
+  probability that the observation-based policy keeps the path viable and
+  reaches the declared target.
+
+best open-loop replay probability:
+  best fixed action sequence at the same horizon, averaged over the declared
+  perturbation scenarios.
+
+feedback advantage:
+  live maintenance probability minus best open-loop replay probability.
+
+reflexive maintenance probability:
+  probability that live feedback preserves the declared continuation target
+  and the future availability of the observation-selection-action channel.
+
+joint-continuation effect:
+  live safe-joint probability minus best open-loop safe-joint probability.
+```
+
+The key stochastic presentation guardrail is strong lumpability: merged exact
+states must induce the same probability distribution over abstract successor
+blocks for every action and scenario. This is the stochastic analogue of
+representative-wise process coherence. Without it, an abstract stochastic
+process can splice incompatible hidden representatives even when one-step
+support facts look plausible.
+
+This arm remains exploratory. A positive stochastic profile is not agency,
+identity, value, valuerhood, or Omega. It only says that a declared exact finite
+stochastic realization exhibits the measured causal-diamond profile under the
+declared scenarios, policies, targets, and presentations.
+
 Important counterexamples to include in future pilots:
 
 ```text
