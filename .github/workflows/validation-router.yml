@@ -73,6 +73,7 @@ jobs:
           lean_scope="no"
           baseline_scope="no"
           adapter_scope="no"
+          agency_scope="no"
 
           if grep -Eq '^(\.github/workflows/lean-alphaomega\.yml|formal/lean/|scripts/setup/invoke_lake\.ps1$)' changed_files.txt; then
             lean_scope="yes"
@@ -86,6 +87,10 @@ jobs:
             adapter_scope="yes"
           fi
 
+          if grep -Eq '^(\.github/workflows/agency-diamond-midscale\.yml|omega/agency_diamond/|omega/validation/agency_diamond_midscale\.py$|tests/test_agency_diamond_midscale\.py$|pyproject\.toml$)' changed_files.txt; then
+            agency_scope="yes"
+          fi
+
           {
             echo "### Validation routing"
             echo ""
@@ -96,6 +101,7 @@ jobs:
             echo "| Lean AlphaOmega | $lean_scope |"
             echo "| Baseline Witness Smoke | $baseline_scope |"
             echo "| Finite Relational Adapter Smoke | $adapter_scope |"
+            echo "| Agency Diamond Midscale | $agency_scope |"
             echo ""
             echo "Changed files:"
             echo ""

@@ -302,8 +302,8 @@ ethical claim.
 
 ## Suggested Null Battery
 
-Future pilots should use prespecified examples rather than tune the definition
-after seeing outputs.
+Pilots should use prespecified examples rather than tune the definition after
+seeing outputs.
 
 Candidate null battery:
 
@@ -336,6 +336,37 @@ dominant controller:
 cooperative controller:
   maintained closure with neutral or positive joint-continuation effect.
 ```
+
+## Current Pilot
+
+The first executable version of this battery lives in:
+
+```text
+omega/agency_diamond/
+omega/validation/agency_diamond_midscale.py
+tests/test_agency_diamond_midscale.py
+```
+
+It evaluates eight synthetic finite controlled systems across five horizons
+(`1, 2, 3, 4, 6`) and checks that the surfaces separate:
+
+```text
+passive persistence;
+driven recurrence;
+control without feedback advantage;
+feedback advantage over matched open-loop replay;
+reflexive maintenance of the control-observation channel;
+positive and negative joint-continuation effect.
+```
+
+Retained checkpoint:
+
+```text
+docs/research_notes/validation_results/agency_diamond_midscale_v0.md
+docs/research_notes/validation_results/agency_diamond_midscale_v0.json
+```
+
+This is still an agency-layer harness, not an agency detector.
 
 ## Formal Targets After Pilot
 
@@ -380,4 +411,3 @@ the operational causal diamond is a promising agency-layer candidate object
 because it separates leverage, closure depth, and joint-continuation effect
 while keeping spectral methods in a detector role.
 ```
-

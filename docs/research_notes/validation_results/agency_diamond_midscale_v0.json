@@ -1,0 +1,90 @@
+{
+  "artifact": "agency_diamond_midscale_v0",
+  "base_commit": "e2d9eb6edcc324c9dc21fd5312ecde2ade2bc1a3",
+  "command": ".\\.venv\\Scripts\\python.exe -m omega.validation.agency_diamond_midscale --out-root .tmp\\agency_diamond_midscale_validation",
+  "run_timestamp_local": "20260625_082008",
+  "status": "PASS",
+  "system_count": 8,
+  "case_count": 40,
+  "horizons": [
+    1,
+    2,
+    3,
+    4,
+    6
+  ],
+  "classification_counts": {
+    "control_without_feedback_advantage": 5,
+    "dominant_joint_contraction": 5,
+    "feedback_advantage": 15,
+    "passive_or_driven_recurrence": 8,
+    "passive_persistence": 2,
+    "reflexive_maintenance": 5
+  },
+  "prespecified_checks": {
+    "passive_has_no_control": true,
+    "driven_cycle_has_recurrence_without_control": true,
+    "open_loop_has_control_without_feedback_advantage": true,
+    "feedback_cases_gain_over_replay": true,
+    "thermostat_has_no_reflexive_challenge": true,
+    "self_restoring_has_reflexive_advantage": true,
+    "dominant_controller_has_negative_joint_effect": true,
+    "cooperative_controller_has_positive_joint_effect": true
+  },
+  "system_summaries": {
+    "passive_attractor": {
+      "classifications": [
+        "passive_or_driven_recurrence"
+      ],
+      "max_feedback_advantage": "0"
+    },
+    "driven_cycle": {
+      "classifications": [
+        "passive_or_driven_recurrence",
+        "passive_persistence"
+      ],
+      "max_feedback_advantage": "0"
+    },
+    "open_loop_controller": {
+      "classifications": [
+        "control_without_feedback_advantage"
+      ],
+      "max_feedback_advantage": "0"
+    },
+    "thermostat": {
+      "classifications": [
+        "feedback_advantage"
+      ],
+      "max_feedback_advantage": "1",
+      "max_reflexive_advantage": null
+    },
+    "adaptive_controller": {
+      "classifications": [
+        "feedback_advantage"
+      ],
+      "max_feedback_advantage": "1"
+    },
+    "self_restoring_controller": {
+      "classifications": [
+        "reflexive_maintenance"
+      ],
+      "max_feedback_advantage": "1",
+      "max_reflexive_advantage": "1"
+    },
+    "cooperative_controller": {
+      "classifications": [
+        "feedback_advantage"
+      ],
+      "max_feedback_advantage": "1",
+      "max_joint_effect_delta": "1"
+    },
+    "dominant_horizon_controller": {
+      "classifications": [
+        "dominant_joint_contraction"
+      ],
+      "max_feedback_advantage": "0",
+      "min_joint_effect_delta": "-1"
+    }
+  },
+  "claim_boundary": "Synthetic finite agency-layer pilot only. This does not detect agency, identity, value, valuerhood, or Omega; it only checks whether declared finite null-battery systems separate persistence, control, feedback advantage, reflexive maintenance, and joint-continuation effect."
+}

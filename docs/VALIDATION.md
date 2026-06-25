@@ -249,6 +249,19 @@ The finite relational source-parity layer has its own retained-output path:
 python -m omega.validation.finite_relational_source_parity
 ```
 
+The operational-causal-diamond agency-layer pilot has its own retained-output
+path:
+
+```bash
+python -m omega.validation.agency_diamond_midscale
+```
+
+This is a synthetic finite null battery for the agency-layer harness. It checks
+whether the declared examples separate passive persistence, driven recurrence,
+control without feedback advantage, feedback advantage over matched open-loop
+replay, reflexive maintenance, and joint-continuation effect. It is not agency,
+identity, value, valuerhood, or Omega validation.
+
 Local PowerShell form:
 
 ```powershell
@@ -409,6 +422,11 @@ summary at
 [finite_relational_policy_dynamics_v0.json](research_notes/validation_results/finite_relational_policy_dynamics_v0.json).
 The finite relational source-parity layer retains a machine-readable summary at
 [finite_relational_source_parity_v0.json](research_notes/validation_results/finite_relational_source_parity_v0.json).
+The operational-causal-diamond agency-layer pilot retains a human-readable note
+and machine-readable summary at
+[agency_diamond_midscale_v0.md](research_notes/validation_results/agency_diamond_midscale_v0.md)
+and
+[agency_diamond_midscale_v0.json](research_notes/validation_results/agency_diamond_midscale_v0.json).
 
 See [REPRODUCIBILITY_SMOKE.md](REPRODUCIBILITY_SMOKE.md).
 

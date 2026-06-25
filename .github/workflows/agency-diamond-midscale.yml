@@ -1,0 +1,64 @@
+name: Agency Diamond Midscale
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths:
+      - ".github/workflows/agency-diamond-midscale.yml"
+      - "omega/agency_diamond/**"
+      - "omega/validation/agency_diamond_midscale.py"
+      - "tests/test_agency_diamond_midscale.py"
+      - "pyproject.toml"
+  pull_request:
+    branches:
+      - master
+    paths:
+      - ".github/workflows/agency-diamond-midscale.yml"
+      - "omega/agency_diamond/**"
+      - "omega/validation/agency_diamond_midscale.py"
+      - "tests/test_agency_diamond_midscale.py"
+      - "pyproject.toml"
+
+jobs:
+  midscale:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install package and dev tools
+        run: python -m pip install -e ".[dev]"
+
+      - name: Run agency diamond midscale validation
+        run: python -m omega.validation.agency_diamond_midscale
+
+      - name: Run focused agency diamond tests
+        run: python -m pytest tests/test_agency_diamond_midscale.py -q
+
+      - name: Ruff agency diamond paths
+        run: |
+          python -m ruff check \
+            omega/agency_diamond \
+            omega/validation/agency_diamond_midscale.py \
+            tests/test_agency_diamond_midscale.py
+
+      - name: Check whitespace
+        run: git diff --check
