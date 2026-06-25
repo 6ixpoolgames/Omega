@@ -1,0 +1,559 @@
+{
+  "ablation_probes": {
+    "probe_status": {
+      "stochastic_action_choice_ablation_removes_control": true,
+      "stochastic_channel_ablation_reduces_reflexive_maintenance": true,
+      "stochastic_fixed_policy_ablation_reduces_feedback": true,
+      "stochastic_joint_ablation_changes_joint_effect": true,
+      "stochastic_observation_ablation_reduces_feedback": true
+    },
+    "witnesses": [
+      {
+        "ablated_case": "blind_feedback_2204__constant_observation_h1",
+        "details": {
+          "ablated_feedback": "0",
+          "original_feedback": "3/20"
+        },
+        "name": "stochastic_observation_ablation_reduces_feedback",
+        "passed": true,
+        "source_case": "blind_feedback_2204_h1"
+      },
+      {
+        "ablated_case": "blind_feedback_2204__fixed_policy_h1",
+        "details": {
+          "ablated_feedback": "0",
+          "original_feedback": "3/20"
+        },
+        "name": "stochastic_fixed_policy_ablation_reduces_feedback",
+        "passed": true,
+        "source_case": "blind_feedback_2204_h1"
+      },
+      {
+        "ablated_case": "blind_joint_positive_2201__single_action_dynamics_h1",
+        "details": {
+          "ablated_control_reach_count": 0,
+          "original_control_reach_count": 2
+        },
+        "name": "stochastic_action_choice_ablation_removes_control",
+        "passed": true,
+        "source_case": "blind_joint_positive_2201_h1"
+      },
+      {
+        "ablated_case": "blind_reflexive_2205__break_channel_repair_h1",
+        "details": {
+          "ablated_reflexive": "0",
+          "original_reflexive": "3/20"
+        },
+        "name": "stochastic_channel_ablation_reduces_reflexive_maintenance",
+        "passed": true,
+        "source_case": "blind_reflexive_2205_h1"
+      },
+      {
+        "ablated_case": "blind_joint_negative_2206__neutral_joint_surface_h1",
+        "details": {
+          "ablated_joint": "0",
+          "original_joint": "-2/5"
+        },
+        "name": "stochastic_joint_ablation_changes_joint_effect",
+        "passed": true,
+        "source_case": "blind_joint_negative_2206_h1"
+      }
+    ]
+  },
+  "claim_boundary": "Exploratory finite stochastic deformer hardening only. These checks test false-positive controls, ablation sensitivity, and robust ambiguity-set profiles for the stochastic diamond. They do not detect agency, identity, value, valuerhood, or Omega, and do not validate empirical transition models.",
+  "decision_gate": {
+    "ablation_probes_passed": true,
+    "false_positive_search_passed": true,
+    "negative_controls_retained": true,
+    "robust_ambiguity_checks_passed": true
+  },
+  "false_positive_search": {
+    "retained_false_positive_controls": {
+      "feedback_without_reflexive": {
+        "ablated_maintenance_probability": "3/20",
+        "best_replay_sequence": [
+          "a0"
+        ],
+        "case_id": "blind__seed2204_h1",
+        "channel_challenge_count": 0,
+        "classification": "feedback_advantage",
+        "control_reach_count": 2,
+        "control_reach_ratio": "1/2",
+        "family": "stochastic_feedback",
+        "feedback_advantage": "3/20",
+        "horizon": 1,
+        "joint_effect_delta": null,
+        "joint_live_probability": null,
+        "joint_replay_probability": null,
+        "leverage_advantage": "3/20",
+        "live_maintenance_probability": "3/10",
+        "observability_ratio": "1",
+        "observable_control_count": 2,
+        "operational_diamond_count": 2,
+        "perturbation_count": 2,
+        "recurrence_detected": true,
+        "reflexive_advantage": null,
+        "reflexive_live_probability": null,
+        "reflexive_replay_probability": null,
+        "replay_maintenance_probability": "3/20",
+        "scenario_count": 3,
+        "stochasticity_detected": true,
+        "system_id": "blind_feedback_2204"
+      },
+      "high_live_without_feedback": {
+        "ablated_maintenance_probability": "1",
+        "best_replay_sequence": [
+          "a0"
+        ],
+        "case_id": "blind__seed2202_h1",
+        "channel_challenge_count": 0,
+        "classification": "passive_or_driven_recurrence",
+        "control_reach_count": 0,
+        "control_reach_ratio": "0",
+        "family": "stochastic_recurrence",
+        "feedback_advantage": "0",
+        "horizon": 1,
+        "joint_effect_delta": null,
+        "joint_live_probability": null,
+        "joint_replay_probability": null,
+        "leverage_advantage": "0",
+        "live_maintenance_probability": "1",
+        "observability_ratio": "0",
+        "observable_control_count": 0,
+        "operational_diamond_count": 0,
+        "perturbation_count": 1,
+        "recurrence_detected": true,
+        "reflexive_advantage": null,
+        "reflexive_live_probability": null,
+        "reflexive_replay_probability": null,
+        "replay_maintenance_probability": "1",
+        "scenario_count": 2,
+        "stochasticity_detected": true,
+        "system_id": "blind_passive_recurrence_2202"
+      },
+      "negative_joint_with_feedback": {
+        "ablated_maintenance_probability": "4/15",
+        "best_replay_sequence": [
+          "a1"
+        ],
+        "case_id": "blind__seed2206_h1",
+        "channel_challenge_count": 0,
+        "classification": "dominant_joint_contraction",
+        "control_reach_count": 3,
+        "control_reach_ratio": "3/7",
+        "family": "stochastic_joint_negative",
+        "feedback_advantage": "4/15",
+        "horizon": 1,
+        "joint_effect_delta": "-2/5",
+        "joint_live_probability": "8/15",
+        "joint_replay_probability": "14/15",
+        "leverage_advantage": "3/5",
+        "live_maintenance_probability": "13/15",
+        "observability_ratio": "2/3",
+        "observable_control_count": 2,
+        "operational_diamond_count": 2,
+        "perturbation_count": 3,
+        "recurrence_detected": true,
+        "reflexive_advantage": null,
+        "reflexive_live_probability": null,
+        "reflexive_replay_probability": null,
+        "replay_maintenance_probability": "3/5",
+        "scenario_count": 4,
+        "stochasticity_detected": true,
+        "system_id": "blind_joint_negative_2206"
+      },
+      "stochasticity_without_control": {
+        "ablated_maintenance_probability": "1",
+        "best_replay_sequence": [
+          "a0"
+        ],
+        "case_id": "blind__seed2202_h1",
+        "channel_challenge_count": 0,
+        "classification": "passive_or_driven_recurrence",
+        "control_reach_count": 0,
+        "control_reach_ratio": "0",
+        "family": "stochastic_recurrence",
+        "feedback_advantage": "0",
+        "horizon": 1,
+        "joint_effect_delta": null,
+        "joint_live_probability": null,
+        "joint_replay_probability": null,
+        "leverage_advantage": "0",
+        "live_maintenance_probability": "1",
+        "observability_ratio": "0",
+        "observable_control_count": 0,
+        "operational_diamond_count": 0,
+        "perturbation_count": 1,
+        "recurrence_detected": true,
+        "reflexive_advantage": null,
+        "reflexive_live_probability": null,
+        "reflexive_replay_probability": null,
+        "replay_maintenance_probability": "1",
+        "scenario_count": 2,
+        "stochasticity_detected": true,
+        "system_id": "blind_passive_recurrence_2202"
+      }
+    },
+    "witnesses": [
+      {
+        "details": {
+          "classification": "passive_or_driven_recurrence",
+          "feedback_advantage": "0",
+          "live_maintenance_probability": "1"
+        },
+        "left_case": "blind__seed2202_h1",
+        "name": "high_live_probability_does_not_imply_feedback_deformation",
+        "passed": true,
+        "right_case": null
+      },
+      {
+        "details": {
+          "classification": "passive_or_driven_recurrence",
+          "control_reach_count": 0,
+          "stochasticity_detected": true
+        },
+        "left_case": "blind__seed2202_h1",
+        "name": "stochasticity_does_not_imply_controllable_deformation",
+        "passed": true,
+        "right_case": null
+      },
+      {
+        "details": {
+          "classification": "feedback_advantage",
+          "feedback_advantage": "3/20",
+          "reflexive_advantage": null
+        },
+        "left_case": "blind__seed2204_h1",
+        "name": "positive_feedback_does_not_imply_reflexive_deformation",
+        "passed": true,
+        "right_case": null
+      },
+      {
+        "details": {
+          "presentation_id": "coarse_need_merge",
+          "strongly_lumpable": false,
+          "witness_count": 8,
+          "witnesses": [
+            {
+              "action": "a0",
+              "block": "need",
+              "left_distribution": {
+                "failure": "1/5",
+                "joint": "0",
+                "need": "0",
+                "success": "4/5"
+              },
+              "left_state": "need0",
+              "right_distribution": {
+                "failure": "0",
+                "joint": "0",
+                "need": "0",
+                "success": "1"
+              },
+              "right_state": "need1",
+              "scenario": "nominal"
+            },
+            {
+              "action": "a1",
+              "block": "need",
+              "left_distribution": {
+                "failure": "1",
+                "joint": "0",
+                "need": "0",
+                "success": "0"
+              },
+              "left_state": "need0",
+              "right_distribution": {
+                "failure": "1/5",
+                "joint": "0",
+                "need": "0",
+                "success": "4/5"
+              },
+              "right_state": "need1",
+              "scenario": "nominal"
+            },
+            {
+              "action": "a0",
+              "block": "need",
+              "left_distribution": {
+                "failure": "1/5",
+                "joint": "0",
+                "need": "0",
+                "success": "4/5"
+              },
+              "left_state": "need0",
+              "right_distribution": {
+                "failure": "0",
+                "joint": "0",
+                "need": "0",
+                "success": "1"
+              },
+              "right_state": "need1",
+              "scenario": "p0"
+            },
+            {
+              "action": "a1",
+              "block": "need",
+              "left_distribution": {
+                "failure": "1",
+                "joint": "0",
+                "need": "0",
+                "success": "0"
+              },
+              "left_state": "need0",
+              "right_distribution": {
+                "failure": "1/5",
+                "joint": "0",
+                "need": "0",
+                "success": "4/5"
+              },
+              "right_state": "need1",
+              "scenario": "p0"
+            },
+            {
+              "action": "a0",
+              "block": "need",
+              "left_distribution": {
+                "failure": "1/5",
+                "joint": "0",
+                "need": "0",
+                "success": "4/5"
+              },
+              "left_state": "need0",
+              "right_distribution": {
+                "failure": "0",
+                "joint": "0",
+                "need": "0",
+                "success": "1"
+              },
+              "right_state": "need1",
+              "scenario": "p1"
+            },
+            {
+              "action": "a1",
+              "block": "need",
+              "left_distribution": {
+                "failure": "1",
+                "joint": "0",
+                "need": "0",
+                "success": "0"
+              },
+              "left_state": "need0",
+              "right_distribution": {
+                "failure": "1/5",
+                "joint": "0",
+                "need": "0",
+                "success": "4/5"
+              },
+              "right_state": "need1",
+              "scenario": "p1"
+            },
+            {
+              "action": "a0",
+              "block": "need",
+              "left_distribution": {
+                "failure": "1/5",
+                "joint": "0",
+                "need": "0",
+                "success": "4/5"
+              },
+              "left_state": "need0",
+              "right_distribution": {
+                "failure": "0",
+                "joint": "0",
+                "need": "0",
+                "success": "1"
+              },
+              "right_state": "need1",
+              "scenario": "joint"
+            },
+            {
+              "action": "a1",
+              "block": "need",
+              "left_distribution": {
+                "failure": "1",
+                "joint": "0",
+                "need": "0",
+                "success": "0"
+              },
+              "left_state": "need0",
+              "right_distribution": {
+                "failure": "1/5",
+                "joint": "0",
+                "need": "0",
+                "success": "4/5"
+              },
+              "right_state": "need1",
+              "scenario": "joint"
+            }
+          ]
+        },
+        "left_case": null,
+        "name": "non_lumpable_presentation_blocks_stochastic_process_transport",
+        "passed": true,
+        "right_case": null
+      },
+      {
+        "details": {
+          "classification": "dominant_joint_contraction",
+          "feedback_advantage": "4/15",
+          "joint_effect_delta": "-2/5"
+        },
+        "left_case": "blind__seed2206_h1",
+        "name": "positive_feedback_can_have_negative_joint_deformation",
+        "passed": true,
+        "right_case": null
+      }
+    ]
+  },
+  "robust_ambiguity": {
+    "fragile_average_metric": {
+      "ablated_maintenance_probability": "4/15",
+      "best_replay_sequence": [
+        "a0"
+      ],
+      "case_id": "fragile_average_feedback_h1",
+      "channel_challenge_count": 0,
+      "classification": "feedback_advantage",
+      "control_reach_count": 2,
+      "control_reach_ratio": "2/5",
+      "family": "stochastic_robust_negative_control",
+      "feedback_advantage": "4/15",
+      "horizon": 1,
+      "joint_effect_delta": null,
+      "joint_live_probability": null,
+      "joint_replay_probability": null,
+      "leverage_advantage": "4/15",
+      "live_maintenance_probability": "8/15",
+      "observability_ratio": "1",
+      "observable_control_count": 2,
+      "operational_diamond_count": 2,
+      "perturbation_count": 3,
+      "recurrence_detected": true,
+      "reflexive_advantage": null,
+      "reflexive_live_probability": null,
+      "reflexive_replay_probability": null,
+      "replay_maintenance_probability": "4/15",
+      "scenario_count": 4,
+      "stochasticity_detected": true,
+      "system_id": "fragile_average_feedback"
+    },
+    "hypothesis_status": {
+      "average_feedback_can_fail_robust_gate": true,
+      "robust_feedback_positive": true,
+      "robust_joint_contraction_retained": true,
+      "robust_reflexive_positive": true
+    },
+    "profiles": {
+      "fragile_average_feedback_not_robust": {
+        "best_replay_sequence": [
+          "a0"
+        ],
+        "case_id": "fragile_average_feedback_robust_h1",
+        "horizon": 1,
+        "joint_live_worst_case": null,
+        "joint_replay_worst_case": null,
+        "live_by_scenario": {
+          "p0": "4/5",
+          "p1": "4/5",
+          "sabotage": "0"
+        },
+        "live_worst_case": "0",
+        "reflexive_live_worst_case": null,
+        "reflexive_replay_worst_case": null,
+        "replay_by_scenario": {
+          "p0": "4/5",
+          "p1": "0",
+          "sabotage": "0"
+        },
+        "replay_worst_case": "0",
+        "robust_feedback_advantage": "0",
+        "robust_joint_effect_delta": null,
+        "robust_reflexive_advantage": null,
+        "system_id": "fragile_average_feedback"
+      },
+      "robust_feedback_positive": {
+        "best_replay_sequence": [
+          "a0"
+        ],
+        "case_id": "feedback_advantage_robust_h1",
+        "horizon": 1,
+        "joint_live_worst_case": null,
+        "joint_replay_worst_case": null,
+        "live_by_scenario": {
+          "p0": "4/5",
+          "p1": "4/5"
+        },
+        "live_worst_case": "4/5",
+        "reflexive_live_worst_case": null,
+        "reflexive_replay_worst_case": null,
+        "replay_by_scenario": {
+          "p0": "4/5",
+          "p1": "0"
+        },
+        "replay_worst_case": "0",
+        "robust_feedback_advantage": "4/5",
+        "robust_joint_effect_delta": null,
+        "robust_reflexive_advantage": null,
+        "system_id": "feedback_advantage"
+      },
+      "robust_joint_contraction_retained": {
+        "best_replay_sequence": [
+          "a0"
+        ],
+        "case_id": "joint_contraction_robust_h1",
+        "horizon": 1,
+        "joint_live_worst_case": "1/5",
+        "joint_replay_worst_case": "4/5",
+        "live_by_scenario": {
+          "joint": "4/5",
+          "p0": "4/5",
+          "p1": "4/5"
+        },
+        "live_worst_case": "4/5",
+        "reflexive_live_worst_case": null,
+        "reflexive_replay_worst_case": null,
+        "replay_by_scenario": {
+          "joint": "0",
+          "p0": "4/5",
+          "p1": "0"
+        },
+        "replay_worst_case": "0",
+        "robust_feedback_advantage": "4/5",
+        "robust_joint_effect_delta": "-3/5",
+        "robust_reflexive_advantage": null,
+        "system_id": "joint_contraction"
+      },
+      "robust_reflexive_positive": {
+        "best_replay_sequence": [
+          "a0"
+        ],
+        "case_id": "reflexive_maintenance_robust_h1",
+        "horizon": 1,
+        "joint_live_worst_case": null,
+        "joint_replay_worst_case": null,
+        "live_by_scenario": {
+          "ch0": "4/5",
+          "ch1": "4/5",
+          "p0": "4/5",
+          "p1": "4/5"
+        },
+        "live_worst_case": "4/5",
+        "reflexive_live_worst_case": "4/5",
+        "reflexive_replay_worst_case": "0",
+        "replay_by_scenario": {
+          "ch0": "4/5",
+          "ch1": "0",
+          "p0": "4/5",
+          "p1": "0"
+        },
+        "replay_worst_case": "0",
+        "robust_feedback_advantage": "4/5",
+        "robust_joint_effect_delta": null,
+        "robust_reflexive_advantage": "4/5",
+        "system_id": "reflexive_maintenance"
+      }
+    }
+  },
+  "status": "PASS"
+}

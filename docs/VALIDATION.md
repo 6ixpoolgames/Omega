@@ -330,6 +330,20 @@ labels, and audits strong lumpability as the stochastic presentation-coherence
 control. It is not stochastic agency detection, not empirical transition-model
 validation, and not value, valuerhood, or Omega validation.
 
+Agency Diamond Stochastic Hardening v1 stress-tests the stochastic arm as a
+deformer-oriented instrument rather than an agency detector:
+
+```bash
+python -m omega.validation.agency_diamond_stochastic_hardening
+```
+
+It retains false-positive controls where high live probability, stochasticity,
+or feedback alone do not certify deformation; runs stochastic ablations over
+observation, fixed policy, action choice, channel repair, and joint surface;
+and separates average-case feedback from robust worst-case feedback over a
+small ambiguity set. Its claim boundary remains exploratory finite
+instrumentation only.
+
 Local PowerShell form:
 
 ```powershell

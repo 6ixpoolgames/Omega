@@ -299,6 +299,36 @@ identity, value, valuerhood, or Omega. It only says that a declared exact finite
 stochastic realization exhibits the measured causal-diamond profile under the
 declared scenarios, policies, targets, and presentations.
 
+## Deformer Hardening
+
+The deformer-oriented reading is narrower than agency:
+
+```text
+a mode deforms continuation when changing or ablating it changes a declared
+future-facing profile under the stated realization.
+```
+
+The current stochastic hardening pass tests this reading with three controls:
+
+```text
+false-positive controls:
+  high live success, stochasticity, and feedback are each shown insufficient on
+  their own.
+
+ablation sensitivity:
+  observation, fixed-policy, action-choice, channel-repair, and joint-surface
+  ablations change the corresponding stochastic diamond axes.
+
+robust ambiguity:
+  average feedback advantage is separated from worst-case robust feedback
+  advantage over a small exact-rational ambiguity set.
+```
+
+This is closer to a deformer profile than to an agency profile. It says the
+declared mode has measurable continuation-shaping effects and that simple
+proxies do not determine those effects. It still does not identify a valuer,
+agent, self, or morally relevant object.
+
 Important counterexamples to include in future pilots:
 
 ```text
