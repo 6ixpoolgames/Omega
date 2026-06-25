@@ -87,7 +87,7 @@ jobs:
             adapter_scope="yes"
           fi
 
-          if grep -Eq '^(\.github/workflows/agency-diamond-midscale\.yml|omega/agency_diamond/|omega/validation/agency_diamond_(midscale|hardening|challenge|cross_substrate)\.py$|tests/test_agency_diamond_(midscale|hardening|challenge|cross_substrate)\.py$|pyproject\.toml$)' changed_files.txt; then
+          if grep -Eq '^(\.github/workflows/agency-diamond-midscale\.yml|omega/agency_diamond/|omega/validation/agency_diamond_(midscale|hardening|challenge|cross_substrate|blind_discovery)\.py$|tests/test_agency_diamond_(midscale|hardening|challenge|cross_substrate|blind_discovery)\.py$|pyproject\.toml$)' changed_files.txt; then
             agency_scope="yes"
           fi
 

@@ -300,6 +300,20 @@ adversarial probes, collapse alerts, relabel invariance, identity presentations,
 and quotient controls. It remains exploratory finite cross-substrate
 instrumentation, not agency, identity, value, valuerhood, or Omega validation.
 
+Agency Diamond Blind Discovery v1 removes expected class labels from the run
+surface. It evaluates a frozen pool of seeded finite systems, derives metric
+clusters and representatives after evaluation, runs hierarchy counterexample
+search, applies observation/policy/action/channel/joint ablations, and retains
+null/collapse examples:
+
+```bash
+python -m omega.validation.agency_diamond_blind_discovery
+```
+
+This is still synthetic finite discovery, not empirical agency validation. Its
+purpose is to test whether the operational-causal-diamond profile has discovery
+power beyond named fixtures and generated modes.
+
 Local PowerShell form:
 
 ```powershell
@@ -480,6 +494,11 @@ machine-readable summary at
 [agency_diamond_cross_substrate_v1.md](research_notes/validation_results/agency_diamond_cross_substrate_v1.md)
 and
 [agency_diamond_cross_substrate_v1.json](research_notes/validation_results/agency_diamond_cross_substrate_v1.json).
+Agency Diamond Blind Discovery v1 retains a human-readable note and
+machine-readable summary at
+[agency_diamond_blind_discovery_v1.md](research_notes/validation_results/agency_diamond_blind_discovery_v1.md)
+and
+[agency_diamond_blind_discovery_v1.json](research_notes/validation_results/agency_diamond_blind_discovery_v1.json).
 
 See [REPRODUCIBILITY_SMOKE.md](REPRODUCIBILITY_SMOKE.md).
 

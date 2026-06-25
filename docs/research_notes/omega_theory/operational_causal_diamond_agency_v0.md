@@ -347,10 +347,12 @@ omega/validation/agency_diamond_midscale.py
 omega/validation/agency_diamond_hardening.py
 omega/validation/agency_diamond_challenge.py
 omega/validation/agency_diamond_cross_substrate.py
+omega/validation/agency_diamond_blind_discovery.py
 tests/test_agency_diamond_midscale.py
 tests/test_agency_diamond_hardening.py
 tests/test_agency_diamond_challenge.py
 tests/test_agency_diamond_cross_substrate.py
+tests/test_agency_diamond_blind_discovery.py
 ```
 
 It evaluates eight synthetic finite controlled systems across five horizons
@@ -376,6 +378,8 @@ docs/research_notes/validation_results/agency_diamond_challenge_v1.md
 docs/research_notes/validation_results/agency_diamond_challenge_v1.json
 docs/research_notes/validation_results/agency_diamond_cross_substrate_v1.md
 docs/research_notes/validation_results/agency_diamond_cross_substrate_v1.json
+docs/research_notes/validation_results/agency_diamond_blind_discovery_v1.md
+docs/research_notes/validation_results/agency_diamond_blind_discovery_v1.json
 ```
 
 This is still an agency-layer harness, not an agency detector.
@@ -456,6 +460,40 @@ This improves the pilot from same-grammar challenge generation to a small
 cross-substrate check. It still does not establish agency. The result is a
 load-bearing instrumentation check: the profile is less likely to be an artifact
 of one handwritten battery or one generated grammar family.
+
+Blind Discovery v1 removes expected class labels from the run surface:
+
+```text
+pool:
+  60 seeded finite controlled systems;
+  no declared expected class labels;
+  five horizons: 1, 2, 3, 4, 6.
+
+derived characterization:
+  metric-signature clusters;
+  axis distributions;
+  class and signature representatives;
+  baseline collisions and hierarchy counterexamples.
+
+ablations:
+  constant observation;
+  fixed policy;
+  single-action dynamics;
+  broken channel repair;
+  neutralized joint surface.
+
+negative retention:
+  passive/no-control representatives;
+  control-without-feedback representatives;
+  feedback-without-reflexive representatives;
+  negative joint-effect representatives;
+  collapse alerts retained even when empty.
+```
+
+This is the first check aimed at discovery rather than fixture recovery. It
+still uses a synthetic finite generator, so the result should be read as:
+the current profile can find stable distinctions and null cases in a blind
+seeded pool. It should not be read as external empirical validation.
 
 ## Formal Targets After Pilot
 
