@@ -36,7 +36,7 @@ def generated_variants(*, seeds: tuple[int, ...] = (11, 17, 23)) -> tuple[Contro
     variants = []
     for base in canonical_battery():
         for seed in seeds:
-            variants.append(_relabel_with_decoys(base, seed=seed))
+            variants.append(relabel_with_decoys(base, seed=seed))
     return tuple(variants)
 
 
@@ -87,7 +87,7 @@ def evaluate_generated_variants(
     }
 
 
-def _relabel_with_decoys(system: ControlledSystem, *, seed: int) -> ControlledSystem:
+def relabel_with_decoys(system: ControlledSystem, *, seed: int) -> ControlledSystem:
     rng = random.Random(seed + sum(ord(ch) for ch in system.system_id))
     states = list(system.states)
     shuffled = states[:]

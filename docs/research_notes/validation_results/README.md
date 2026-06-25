@@ -59,6 +59,8 @@ Start with:
 - `agency_diamond_midscale_v0.json`
 - `agency_diamond_hardening_v1.md`
 - `agency_diamond_hardening_v1.json`
+- `agency_diamond_challenge_v1.md`
+- `agency_diamond_challenge_v1.json`
 
 ## Archived Branches
 

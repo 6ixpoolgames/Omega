@@ -1,0 +1,78 @@
+{
+  "artifact": "agency_diamond_challenge_v1",
+  "source_head_before_batch": "6d589b32f2f1bb9f59a3cbaf50f1589262cc35d8",
+  "command": ".\\.venv\\Scripts\\python.exe -m omega.validation.agency_diamond_challenge --out-root .tmp\\agency_diamond_challenge_validation",
+  "run_timestamp_local": "20260625_104617",
+  "status": "PASS",
+  "claim_boundary": "Exploratory non-handcrafted finite challenge only. This does not detect agency, identity, value, valuerhood, or Omega; it checks whether predeclared generated systems with held-out seeds recover hierarchy distinctions, baseline collisions, counterexample-search witnesses, and basic transport/invariance controls.",
+  "generator": {
+    "grammars": [
+      "cycle",
+      "open_loop",
+      "feedback",
+      "reflexive",
+      "joint_positive",
+      "joint_negative"
+    ],
+    "train_seeds": [
+      101,
+      103,
+      107
+    ],
+    "holdout_seeds": [
+      401,
+      409,
+      419,
+      431
+    ],
+    "horizons": [
+      1,
+      2,
+      3,
+      4,
+      6
+    ]
+  },
+  "case_counts": {
+    "systems": 42,
+    "metric_cases": 210,
+    "train_metric_cases": 90,
+    "holdout_metric_cases": 120
+  },
+  "holdout_classification_counts": {
+    "control_without_feedback_advantage": 20,
+    "dominant_joint_contraction": 20,
+    "feedback_advantage": 40,
+    "passive_or_driven_recurrence": 5,
+    "passive_persistence": 15,
+    "reflexive_maintenance": 20
+  },
+  "baseline_collision_count": 21,
+  "required_baseline_collision_status": {
+    "control_only_does_not_determine_feedback_axis": true,
+    "feedback_only_does_not_determine_reflexive_axis": true,
+    "joint_effect_only_does_not_determine_full_classification": true,
+    "live_success_only_does_not_determine_joint_axis": true,
+    "recurrence_only_does_not_determine_feedback_axis": true
+  },
+  "counterexample_search": {
+    "generated_recurrence_does_not_imply_feedback_advantage": true,
+    "generated_control_does_not_imply_feedback_advantage": true,
+    "generated_feedback_does_not_imply_reflexive_maintenance": true,
+    "generated_live_success_does_not_determine_joint_effect": true
+  },
+  "collapse_alert_count": 0,
+  "transport": {
+    "relabel_profiles_preserved": true,
+    "identity_presentations_preserve_profiles": true,
+    "quotient_controls_passed": true
+  },
+  "decision_gate": {
+    "holdout_classes_cover_required": true,
+    "required_baseline_collisions_found": true,
+    "counterexample_search_witnesses_found": true,
+    "no_collapse_alerts": true,
+    "transport_invariance_passed": true
+  },
+  "interpretation": "The operational-causal-diamond profile survives predeclared generated holdout pressure at v1: hierarchy classes appear without hand-labelled cases, simple baselines collide with richer axes, counterexample-search witnesses are found, collapse alerts are absent, and relabel/identity/quotient transport checks pass."
+}

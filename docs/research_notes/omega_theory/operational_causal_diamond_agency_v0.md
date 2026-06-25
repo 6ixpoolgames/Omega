@@ -345,8 +345,10 @@ The first executable version of this battery lives in:
 omega/agency_diamond/
 omega/validation/agency_diamond_midscale.py
 omega/validation/agency_diamond_hardening.py
+omega/validation/agency_diamond_challenge.py
 tests/test_agency_diamond_midscale.py
 tests/test_agency_diamond_hardening.py
+tests/test_agency_diamond_challenge.py
 ```
 
 It evaluates eight synthetic finite controlled systems across five horizons
@@ -368,6 +370,8 @@ docs/research_notes/validation_results/agency_diamond_midscale_v0.md
 docs/research_notes/validation_results/agency_diamond_midscale_v0.json
 docs/research_notes/validation_results/agency_diamond_hardening_v1.md
 docs/research_notes/validation_results/agency_diamond_hardening_v1.json
+docs/research_notes/validation_results/agency_diamond_challenge_v1.md
+docs/research_notes/validation_results/agency_diamond_challenge_v1.json
 ```
 
 This is still an agency-layer harness, not an agency detector.
@@ -397,6 +401,32 @@ transport controls:
 
 This makes the harness more load-bearing as instrumentation. It still does not
 establish that the measured profile is sufficient for agency.
+
+Challenge v1 adds a non-handcrafted pressure layer:
+
+```text
+predeclared generator grammars:
+  cycle, open-loop, feedback, reflexive, joint-positive, joint-negative.
+
+frozen seeds:
+  train seeds: 101, 103, 107.
+  holdout seeds: 401, 409, 419, 431.
+
+derived labels:
+  classifications, feedback advantage, reflexive advantage, and joint effect
+  are computed from traces rather than assigned as case labels.
+
+holdout gates:
+  hierarchy classes must appear;
+  required baseline collisions must appear;
+  counterexample-search witnesses must appear;
+  collapse alerts must be absent;
+  relabel, identity-presentation, and quotient controls must pass.
+```
+
+This is still synthetic challenge generation. It is stronger than the
+handwritten null battery because the individual holdout cases are not labelled
+by hand, but it remains generated from a known finite grammar.
 
 ## Formal Targets After Pilot
 

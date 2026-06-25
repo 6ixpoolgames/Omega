@@ -274,6 +274,18 @@ This remains exploratory finite hardening. It does not detect agency. It checks
 whether the operational-causal-diamond profile rejects simple baselines and
 survives basic nonsemantic relabeling and quotient controls.
 
+Agency Diamond Challenge v1 moves from relabel/decoy variants of the handcrafted
+battery to predeclared generated systems with train and held-out seeds:
+
+```bash
+python -m omega.validation.agency_diamond_challenge
+```
+
+It derives labels from metric outcomes, runs a holdout baseline tournament,
+searches for minimal counterexample witnesses, and checks relabel, identity
+presentation, and quotient-control invariance. It remains synthetic finite
+challenge generation, not empirical agency validation.
+
 Local PowerShell form:
 
 ```powershell
@@ -444,6 +456,11 @@ machine-readable summary at
 [agency_diamond_hardening_v1.md](research_notes/validation_results/agency_diamond_hardening_v1.md)
 and
 [agency_diamond_hardening_v1.json](research_notes/validation_results/agency_diamond_hardening_v1.json).
+Agency Diamond Challenge v1 retains a human-readable note and machine-readable
+summary at
+[agency_diamond_challenge_v1.md](research_notes/validation_results/agency_diamond_challenge_v1.md)
+and
+[agency_diamond_challenge_v1.json](research_notes/validation_results/agency_diamond_challenge_v1.json).
 
 See [REPRODUCIBILITY_SMOKE.md](REPRODUCIBILITY_SMOKE.md).
 
