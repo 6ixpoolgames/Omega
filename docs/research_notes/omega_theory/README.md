@@ -13,6 +13,7 @@ Start with:
 ../../../README.md
 effective_layers_realization_forgetting_emergence_v0.md
 alpha_agency_underdetermination_v0.md
+operational_causal_diamond_agency_v0.md
 coarse_fine_nonreflection_v0.md
 layer_a_theorem_spine_v0.md
 current_theory_posture_v0.md
