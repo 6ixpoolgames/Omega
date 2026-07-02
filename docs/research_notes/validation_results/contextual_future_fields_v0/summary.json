@@ -1,0 +1,1024 @@
+{
+  "artifacts": {
+    "compatibility_thickness_kernel": {
+      "certified_overlap": {
+        "atom_weights": {
+          "a": "1",
+          "b": "1",
+          "c": "1",
+          "shared_ab": "1",
+          "shared_bc": "1"
+        },
+        "construction": "certified_overlap_gram_kernel",
+        "interpretation": "Diagonal entries are profile thickness and off-diagonal entries are certified shared continuation atoms.",
+        "labels": [
+          "alpha",
+          "beta",
+          "gamma"
+        ],
+        "matrix": [
+          [
+            "2",
+            "1",
+            "0"
+          ],
+          [
+            "1",
+            "3",
+            "1"
+          ],
+          [
+            "0",
+            "1",
+            "2"
+          ]
+        ],
+        "name": "certified_overlap_kernel",
+        "nonnegative_diagonal": true,
+        "principal_minors": [
+          {
+            "determinant": "2",
+            "indices": [
+              0
+            ]
+          },
+          {
+            "determinant": "3",
+            "indices": [
+              1
+            ]
+          },
+          {
+            "determinant": "2",
+            "indices": [
+              2
+            ]
+          },
+          {
+            "determinant": "5",
+            "indices": [
+              0,
+              1
+            ]
+          },
+          {
+            "determinant": "4",
+            "indices": [
+              0,
+              2
+            ]
+          },
+          {
+            "determinant": "5",
+            "indices": [
+              1,
+              2
+            ]
+          },
+          {
+            "determinant": "8",
+            "indices": [
+              0,
+              1,
+              2
+            ]
+          }
+        ],
+        "profiles": [
+          {
+            "atoms": [
+              "a",
+              "shared_ab"
+            ],
+            "name": "alpha",
+            "thickness": "2"
+          },
+          {
+            "atoms": [
+              "b",
+              "shared_ab",
+              "shared_bc"
+            ],
+            "name": "beta",
+            "thickness": "3"
+          },
+          {
+            "atoms": [
+              "c",
+              "shared_bc"
+            ],
+            "name": "gamma",
+            "thickness": "2"
+          }
+        ],
+        "psd": true,
+        "rank": 3,
+        "symmetric": true
+      },
+      "claim_boundary": "Finite contextual future-field pilots only. These witnesses do not claim quantum mechanics, Hilbert-space structure, value, agency, identity, valuerhood, moral standing, or Omega validation.",
+      "decision_gate": {
+        "declared_kernel_nonnegative_diagonal": true,
+        "declared_kernel_psd_fails": true,
+        "declared_kernel_symmetric": true,
+        "overlap_kernel_psd": true,
+        "overlap_kernel_rank_positive": true
+      },
+      "description": "Certified overlap data gives a PSD compatibility-thickness kernel; an arbitrary symmetric compatibility table need not.",
+      "name": "compatibility_thickness_kernel",
+      "non_claims": [
+        "not Hilbert space",
+        "not density operator validation",
+        "not Born rule",
+        "not value measure"
+      ],
+      "non_psd_control": {
+        "interpretation": "A symmetric nonnegative table can still fail to be a PSD/Gram compatibility kernel. Here alpha fully overlaps beta and gamma, while beta and gamma have zero overlap.",
+        "labels": [
+          "alpha",
+          "beta",
+          "gamma"
+        ],
+        "matrix": [
+          [
+            "1",
+            "1",
+            "1"
+          ],
+          [
+            "1",
+            "1",
+            "0"
+          ],
+          [
+            "1",
+            "0",
+            "1"
+          ]
+        ],
+        "name": "inconsistent_declared_compatibility_kernel",
+        "nonnegative_diagonal": true,
+        "principal_minors": [
+          {
+            "determinant": "1",
+            "indices": [
+              0
+            ]
+          },
+          {
+            "determinant": "1",
+            "indices": [
+              1
+            ]
+          },
+          {
+            "determinant": "1",
+            "indices": [
+              2
+            ]
+          },
+          {
+            "determinant": "0",
+            "indices": [
+              0,
+              1
+            ]
+          },
+          {
+            "determinant": "0",
+            "indices": [
+              0,
+              2
+            ]
+          },
+          {
+            "determinant": "1",
+            "indices": [
+              1,
+              2
+            ]
+          },
+          {
+            "determinant": "-1",
+            "indices": [
+              0,
+              1,
+              2
+            ]
+          }
+        ],
+        "psd": false,
+        "rank": 3,
+        "symmetric": true
+      },
+      "status": "PASS"
+    },
+    "density_deformation": {
+      "claim_boundary": "Finite contextual future-field pilots only. These witnesses do not claim quantum mechanics, Hilbert-space structure, value, agency, identity, valuerhood, moral standing, or Omega validation.",
+      "decision_gate": {
+        "compatibility_damage_diagonal_preserved": true,
+        "compatibility_damage_off_diagonal_changed": true,
+        "compatibility_damage_psd_preserved": true,
+        "diagonal_thinning_diagonal_changed": true,
+        "diagonal_thinning_off_diagonal_preserved": true,
+        "diagonal_thinning_psd_preserved": true
+      },
+      "description": "Finite before/after kernel comparisons separate diagonal thickness change from off-diagonal compatibility change.",
+      "name": "density_kernel_deformation",
+      "non_claims": [
+        "not agency",
+        "not value loss",
+        "not a physical operator",
+        "not a complete deformer theory"
+      ],
+      "status": "PASS",
+      "witnesses": [
+        {
+          "after": {
+            "atom_weights": {
+              "left_private": "1",
+              "left_replacement": "1",
+              "right_private": "1",
+              "right_replacement": "1"
+            },
+            "construction": "certified_overlap_gram_kernel",
+            "interpretation": "after deformation",
+            "labels": [
+              "left",
+              "right"
+            ],
+            "matrix": [
+              [
+                "2",
+                "0"
+              ],
+              [
+                "0",
+                "2"
+              ]
+            ],
+            "name": "diagonal_preserved_compatibility_damage_after",
+            "nonnegative_diagonal": true,
+            "principal_minors": [
+              {
+                "determinant": "2",
+                "indices": [
+                  0
+                ]
+              },
+              {
+                "determinant": "2",
+                "indices": [
+                  1
+                ]
+              },
+              {
+                "determinant": "4",
+                "indices": [
+                  0,
+                  1
+                ]
+              }
+            ],
+            "profiles": [
+              {
+                "atoms": [
+                  "left_private",
+                  "left_replacement"
+                ],
+                "name": "left",
+                "thickness": "2"
+              },
+              {
+                "atoms": [
+                  "right_private",
+                  "right_replacement"
+                ],
+                "name": "right",
+                "thickness": "2"
+              }
+            ],
+            "psd": true,
+            "rank": 2,
+            "symmetric": true
+          },
+          "before": {
+            "atom_weights": {
+              "left_private": "1",
+              "right_private": "1",
+              "shared": "1"
+            },
+            "construction": "certified_overlap_gram_kernel",
+            "interpretation": "before deformation",
+            "labels": [
+              "left",
+              "right"
+            ],
+            "matrix": [
+              [
+                "2",
+                "1"
+              ],
+              [
+                "1",
+                "2"
+              ]
+            ],
+            "name": "diagonal_preserved_compatibility_damage_before",
+            "nonnegative_diagonal": true,
+            "principal_minors": [
+              {
+                "determinant": "2",
+                "indices": [
+                  0
+                ]
+              },
+              {
+                "determinant": "2",
+                "indices": [
+                  1
+                ]
+              },
+              {
+                "determinant": "3",
+                "indices": [
+                  0,
+                  1
+                ]
+              }
+            ],
+            "profiles": [
+              {
+                "atoms": [
+                  "left_private",
+                  "shared"
+                ],
+                "name": "left",
+                "thickness": "2"
+              },
+              {
+                "atoms": [
+                  "right_private",
+                  "shared"
+                ],
+                "name": "right",
+                "thickness": "2"
+              }
+            ],
+            "psd": true,
+            "rank": 2,
+            "symmetric": true
+          },
+          "diagonal_changes": [],
+          "diagonal_preserved": true,
+          "interpretation": "Own thickness stays fixed while shared compatibility thickness between profiles is removed.",
+          "labels": [
+            "left",
+            "right"
+          ],
+          "name": "diagonal_preserved_compatibility_damage",
+          "off_diagonal_changes": [
+            {
+              "after": "0",
+              "before": "1",
+              "delta": "-1",
+              "left": "left",
+              "right": "right"
+            }
+          ],
+          "off_diagonal_preserved": false,
+          "psd_preserved": true
+        },
+        {
+          "after": {
+            "atom_weights": {
+              "left_private": "1",
+              "right_private": "1"
+            },
+            "construction": "certified_overlap_gram_kernel",
+            "interpretation": "after deformation",
+            "labels": [
+              "left",
+              "right"
+            ],
+            "matrix": [
+              [
+                "1",
+                "0"
+              ],
+              [
+                "0",
+                "1"
+              ]
+            ],
+            "name": "diagonal_thickness_thinning_without_offdiag_change_after",
+            "nonnegative_diagonal": true,
+            "principal_minors": [
+              {
+                "determinant": "1",
+                "indices": [
+                  0
+                ]
+              },
+              {
+                "determinant": "1",
+                "indices": [
+                  1
+                ]
+              },
+              {
+                "determinant": "1",
+                "indices": [
+                  0,
+                  1
+                ]
+              }
+            ],
+            "profiles": [
+              {
+                "atoms": [
+                  "left_private"
+                ],
+                "name": "left",
+                "thickness": "1"
+              },
+              {
+                "atoms": [
+                  "right_private"
+                ],
+                "name": "right",
+                "thickness": "1"
+              }
+            ],
+            "psd": true,
+            "rank": 2,
+            "symmetric": true
+          },
+          "before": {
+            "atom_weights": {
+              "left_private": "1",
+              "right_private": "1",
+              "shared": "1"
+            },
+            "construction": "certified_overlap_gram_kernel",
+            "interpretation": "before deformation",
+            "labels": [
+              "left",
+              "right"
+            ],
+            "matrix": [
+              [
+                "2",
+                "0"
+              ],
+              [
+                "0",
+                "1"
+              ]
+            ],
+            "name": "diagonal_thickness_thinning_without_offdiag_change_before",
+            "nonnegative_diagonal": true,
+            "principal_minors": [
+              {
+                "determinant": "2",
+                "indices": [
+                  0
+                ]
+              },
+              {
+                "determinant": "1",
+                "indices": [
+                  1
+                ]
+              },
+              {
+                "determinant": "2",
+                "indices": [
+                  0,
+                  1
+                ]
+              }
+            ],
+            "profiles": [
+              {
+                "atoms": [
+                  "left_private",
+                  "shared"
+                ],
+                "name": "left",
+                "thickness": "2"
+              },
+              {
+                "atoms": [
+                  "right_private"
+                ],
+                "name": "right",
+                "thickness": "1"
+              }
+            ],
+            "psd": true,
+            "rank": 2,
+            "symmetric": true
+          },
+          "diagonal_changes": [
+            {
+              "after": "1",
+              "before": "2",
+              "delta": "-1",
+              "profile": "left"
+            }
+          ],
+          "diagonal_preserved": false,
+          "interpretation": "One profile loses thickness while off-diagonal compatibility is unchanged at zero.",
+          "labels": [
+            "left",
+            "right"
+          ],
+          "name": "diagonal_thickness_thinning_without_offdiag_change",
+          "off_diagonal_changes": [],
+          "off_diagonal_preserved": true,
+          "psd_preserved": true
+        }
+      ]
+    },
+    "holonomy": {
+      "claim_boundary": "Finite contextual future-field pilots only. These witnesses do not claim quantum mechanics, Hilbert-space structure, value, agency, identity, valuerhood, moral standing, or Omega validation.",
+      "decision_gate": {
+        "lossy_continuation_changed": true,
+        "lossy_holonomy_nontrivial": true,
+        "lossy_proxy_returns": true,
+        "twist_holonomy_nontrivial": true,
+        "twist_proxy_returns": true,
+        "twist_total_continuation_thickness_preserved": true
+      },
+      "description": "Finite transport loops where the visible proxy returns but the transported continuation profile is not the identity.",
+      "name": "finite_transport_loop_holonomy",
+      "non_claims": [
+        "not complex phase",
+        "not quantum holonomy",
+        "not identity failure",
+        "not value loss"
+      ],
+      "status": "PASS",
+      "witnesses": [
+        {
+          "changed_continuation_coordinates": [
+            "oversight",
+            "interpretability"
+          ],
+          "continuation_coordinates": [
+            "oversight",
+            "corrigibility",
+            "interpretability"
+          ],
+          "continuation_final": {
+            "corrigibility": "1",
+            "interpretability": "0",
+            "oversight": "0"
+          },
+          "continuation_initial": {
+            "corrigibility": "1",
+            "interpretability": "1",
+            "oversight": "1"
+          },
+          "final_continuation_thickness": "1",
+          "final_profile": {
+            "corrigibility": "1",
+            "score": "1"
+          },
+          "holonomy_nontrivial": true,
+          "initial_continuation_thickness": "3",
+          "initial_profile": {
+            "corrigibility": "1",
+            "interpretability": "1",
+            "oversight": "1",
+            "score": "1"
+          },
+          "interpretation": "The visible score coordinate returns, but the composed loop drops oversight and interpretability continuation coordinates.",
+          "name": "same_proxy_lossy_holonomy",
+          "proxy_coordinates": [
+            "score"
+          ],
+          "proxy_final": {
+            "score": "1"
+          },
+          "proxy_initial": {
+            "score": "1"
+          },
+          "proxy_returned": true,
+          "transport_identity_on_profile": false,
+          "transport_maps": [
+            {
+              "coordinate_map": {
+                "corrigibility": "corrigibility_B",
+                "interpretability": "interpretability_B",
+                "oversight": "oversight_B",
+                "score": "score_B"
+              },
+              "name": "A_to_B",
+              "source": "A",
+              "target": "B"
+            },
+            {
+              "coordinate_map": {
+                "corrigibility_B": "corrigibility_C",
+                "interpretability_B": "interpretability_C",
+                "oversight_B": "oversight_C",
+                "score_B": "score_C"
+              },
+              "name": "B_to_C",
+              "source": "B",
+              "target": "C"
+            },
+            {
+              "coordinate_map": {
+                "corrigibility_C": "corrigibility",
+                "interpretability_C": null,
+                "oversight_C": null,
+                "score_C": "score"
+              },
+              "name": "C_to_A_visible",
+              "source": "C",
+              "target": "A"
+            }
+          ],
+          "transport_names": [
+            "A_to_B",
+            "B_to_C",
+            "C_to_A_visible"
+          ]
+        },
+        {
+          "changed_continuation_coordinates": [
+            "route_left",
+            "route_right"
+          ],
+          "continuation_coordinates": [
+            "route_left",
+            "route_right"
+          ],
+          "continuation_final": {
+            "route_left": "0",
+            "route_right": "1"
+          },
+          "continuation_initial": {
+            "route_left": "1",
+            "route_right": "0"
+          },
+          "final_continuation_thickness": "1",
+          "final_profile": {
+            "route_left": "0",
+            "route_right": "1",
+            "score": "1"
+          },
+          "holonomy_nontrivial": true,
+          "initial_continuation_thickness": "1",
+          "initial_profile": {
+            "route_left": "1",
+            "route_right": "0",
+            "score": "1"
+          },
+          "interpretation": "The visible score coordinate returns and total continuation thickness is preserved, but route orientation is swapped.",
+          "name": "same_proxy_orientation_twist",
+          "proxy_coordinates": [
+            "score"
+          ],
+          "proxy_final": {
+            "score": "1"
+          },
+          "proxy_initial": {
+            "score": "1"
+          },
+          "proxy_returned": true,
+          "transport_identity_on_profile": false,
+          "transport_maps": [
+            {
+              "coordinate_map": {
+                "route_left": "route_left_B",
+                "route_right": "route_right_B",
+                "score": "score_B"
+              },
+              "name": "A_to_B",
+              "source": "A",
+              "target": "B"
+            },
+            {
+              "coordinate_map": {
+                "route_left_B": "route_left_C",
+                "route_right_B": "route_right_C",
+                "score_B": "score_C"
+              },
+              "name": "B_to_C",
+              "source": "B",
+              "target": "C"
+            },
+            {
+              "coordinate_map": {
+                "route_left_C": "route_right",
+                "route_right_C": "route_left",
+                "score_C": "score"
+              },
+              "name": "C_to_A_twist",
+              "source": "C",
+              "target": "A"
+            }
+          ],
+          "transport_names": [
+            "A_to_B",
+            "B_to_C",
+            "C_to_A_twist"
+          ]
+        }
+      ]
+    },
+    "no_global_extension": {
+      "claim_boundary": "Finite contextual future-field pilots only. These witnesses do not claim quantum mechanics, Hilbert-space structure, value, agency, identity, valuerhood, moral standing, or Omega validation.",
+      "contexts": [
+        {
+          "allowed": [
+            {
+              "A": 0,
+              "B": 0
+            },
+            {
+              "A": 1,
+              "B": 1
+            }
+          ],
+          "name": "AB_equal",
+          "variables": [
+            "A",
+            "B"
+          ],
+          "weights": [
+            {
+              "assignment": {
+                "A": 0,
+                "B": 0
+              },
+              "mass": "1/2"
+            },
+            {
+              "assignment": {
+                "A": 1,
+                "B": 1
+              },
+              "mass": "1/2"
+            }
+          ]
+        },
+        {
+          "allowed": [
+            {
+              "B": 0,
+              "C": 0
+            },
+            {
+              "B": 1,
+              "C": 1
+            }
+          ],
+          "name": "BC_equal",
+          "variables": [
+            "B",
+            "C"
+          ],
+          "weights": [
+            {
+              "assignment": {
+                "B": 0,
+                "C": 0
+              },
+              "mass": "1/2"
+            },
+            {
+              "assignment": {
+                "B": 1,
+                "C": 1
+              },
+              "mass": "1/2"
+            }
+          ]
+        },
+        {
+          "allowed": [
+            {
+              "A": 0,
+              "C": 1
+            },
+            {
+              "A": 1,
+              "C": 0
+            }
+          ],
+          "name": "AC_unequal",
+          "variables": [
+            "A",
+            "C"
+          ],
+          "weights": [
+            {
+              "assignment": {
+                "A": 0,
+                "C": 1
+              },
+              "mass": "1/2"
+            },
+            {
+              "assignment": {
+                "A": 1,
+                "C": 0
+              },
+              "mass": "1/2"
+            }
+          ]
+        }
+      ],
+      "decision_gate": {
+        "local_contexts_nonempty": true,
+        "no_global_extension": true,
+        "overlap_distributions_agree": true,
+        "overlap_supports_agree": true
+      },
+      "description": "Pairwise local contexts have nonempty sections and matching overlap support/distribution, but no global assignment satisfies all local constraints.",
+      "global_assignments": [],
+      "name": "parity_no_global_extension",
+      "non_claims": [
+        "not sheaf cohomology",
+        "not quantum contextuality",
+        "not value arbitration",
+        "not a moral incompatibility claim"
+      ],
+      "overlaps": [
+        {
+          "distribution_agrees": true,
+          "left": "AB_equal",
+          "left_distribution": [
+            {
+              "assignment": {
+                "B": 0
+              },
+              "mass": "1/2"
+            },
+            {
+              "assignment": {
+                "B": 1
+              },
+              "mass": "1/2"
+            }
+          ],
+          "left_support": [
+            {
+              "B": 0
+            },
+            {
+              "B": 1
+            }
+          ],
+          "overlap": [
+            "B"
+          ],
+          "right": "BC_equal",
+          "right_distribution": [
+            {
+              "assignment": {
+                "B": 0
+              },
+              "mass": "1/2"
+            },
+            {
+              "assignment": {
+                "B": 1
+              },
+              "mass": "1/2"
+            }
+          ],
+          "right_support": [
+            {
+              "B": 0
+            },
+            {
+              "B": 1
+            }
+          ],
+          "support_agrees": true
+        },
+        {
+          "distribution_agrees": true,
+          "left": "AB_equal",
+          "left_distribution": [
+            {
+              "assignment": {
+                "A": 0
+              },
+              "mass": "1/2"
+            },
+            {
+              "assignment": {
+                "A": 1
+              },
+              "mass": "1/2"
+            }
+          ],
+          "left_support": [
+            {
+              "A": 0
+            },
+            {
+              "A": 1
+            }
+          ],
+          "overlap": [
+            "A"
+          ],
+          "right": "AC_unequal",
+          "right_distribution": [
+            {
+              "assignment": {
+                "A": 0
+              },
+              "mass": "1/2"
+            },
+            {
+              "assignment": {
+                "A": 1
+              },
+              "mass": "1/2"
+            }
+          ],
+          "right_support": [
+            {
+              "A": 0
+            },
+            {
+              "A": 1
+            }
+          ],
+          "support_agrees": true
+        },
+        {
+          "distribution_agrees": true,
+          "left": "BC_equal",
+          "left_distribution": [
+            {
+              "assignment": {
+                "C": 0
+              },
+              "mass": "1/2"
+            },
+            {
+              "assignment": {
+                "C": 1
+              },
+              "mass": "1/2"
+            }
+          ],
+          "left_support": [
+            {
+              "C": 0
+            },
+            {
+              "C": 1
+            }
+          ],
+          "overlap": [
+            "C"
+          ],
+          "right": "AC_unequal",
+          "right_distribution": [
+            {
+              "assignment": {
+                "C": 0
+              },
+              "mass": "1/2"
+            },
+            {
+              "assignment": {
+                "C": 1
+              },
+              "mass": "1/2"
+            }
+          ],
+          "right_support": [
+            {
+              "C": 0
+            },
+            {
+              "C": 1
+            }
+          ],
+          "support_agrees": true
+        }
+      ],
+      "status": "PASS"
+    }
+  },
+  "claim_boundary": "Finite contextual future-field pilots only. These witnesses do not claim quantum mechanics, Hilbert-space structure, value, agency, identity, valuerhood, moral standing, or Omega validation.",
+  "decision_gate": {
+    "compatibility_thickness_kernel_passes": true,
+    "density_deformation_witnesses_pass": true,
+    "holonomy_witnesses_pass": true,
+    "no_global_extension_witness_passes": true
+  },
+  "public_read": "Finite contextual future-field pilots show four pre-Hilbert facts: local compatibility data can fail to admit a global extension, and a loop can return a visible proxy while transporting a continuation profile nontrivially; certified overlap data gives a PSD compatibility-thickness kernel while arbitrary compatibility tables need not; and before/after kernel comparisons separate thickness change from compatibility change.",
+  "status": "PASS"
+}

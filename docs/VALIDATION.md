@@ -359,6 +359,23 @@ still finite synthetic deformer instrumentation, not agency detection or
 empirical stochastic-model validation. The consolidated interpretation is in
 [finite_deformer_profile_checkpoint_v0.md](research_notes/omega_theory/finite_deformer_profile_checkpoint_v0.md).
 
+Contextual Future Fields v0 has a focused retained-output path:
+
+```bash
+python -m omega.validation.contextual_future_fields
+```
+
+It checks a finite parity-style no-global-extension witness where local
+contexts are nonempty and overlap-compatible but no global assignment exists,
+plus finite transport-loop holonomy witnesses where a visible proxy returns
+while the transported continuation profile is nonidentity. It also checks a
+compatibility-thickness kernel built from certified overlap atoms, a non-PSD
+declared-compatibility control, and before/after kernel deformations separating
+diagonal thickness change from off-diagonal compatibility change. It is not
+quantum mechanics, Hilbert-space structure, value, agency, identity,
+valuerhood, moral standing, or Omega validation. The theory note is
+[contextual_future_fields_and_holonomy_v0.md](research_notes/omega_theory/contextual_future_fields_and_holonomy_v0.md).
+
 Local PowerShell form:
 
 ```powershell

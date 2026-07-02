@@ -15,6 +15,8 @@ effective_layers_realization_forgetting_emergence_v0.md
 alpha_agency_underdetermination_v0.md
 operational_causal_diamond_agency_v0.md
 finite_deformer_profile_checkpoint_v0.md
+deformer_profile_theorem_extraction_v0.md
+contextual_future_fields_and_holonomy_v0.md
 coarse_fine_nonreflection_v0.md
 layer_a_theorem_spine_v0.md
 current_theory_posture_v0.md
@@ -419,6 +421,8 @@ bridge_claims_ledger_v0.md
 alphaomega_continuation_proto_teleology_v0.md
 operational_causal_diamond_agency_v0.md
 finite_deformer_profile_checkpoint_v0.md
+deformer_profile_theorem_extraction_v0.md
+contextual_future_fields_and_holonomy_v0.md
 ../../VALUER_FORMAL_TARGET_V0.md
 ../../OMEGA_COMPATIBLE_VALUER_TRAJECTORY_SPACE_V0.md
 alpha_primitive_core_v0.md

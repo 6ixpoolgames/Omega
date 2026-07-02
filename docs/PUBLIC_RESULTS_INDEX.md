@@ -120,6 +120,16 @@ stochasticity, feedback alone, one scalar success score, average-case feedback,
 and one source grammar do not determine the richer profile. This remains
 instrumentation only, not agency, identity, value, valuerhood, or Omega
 validation.
+The contextual future-field branch now has a first finite local/global and
+holonomy pilot: a parity-style context family has nonempty local sections and
+matching overlap support/distributions but no global assignment, and finite
+transport loops return a visible proxy while changing the transported
+continuation profile. It now also has a compatibility-thickness kernel pilot:
+certified overlap data gives a PSD kernel while an arbitrary symmetric
+compatibility table can fail PSD, and before/after kernel comparisons separate
+diagonal thickness deformation from off-diagonal compatibility deformation.
+This is pre-Hilbert and pre-value instrumentation only, not quantum mechanics,
+agency, identity, value, valuerhood, or Omega validation.
 
 ## Best onboarding path
 

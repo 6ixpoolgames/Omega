@@ -247,6 +247,12 @@ complete ontology.
 
 ## Theorem Candidates
 
+The extraction map for this section now lives in:
+
+```text
+deformer_profile_theorem_extraction_v0.md
+```
+
 The next theorem-sized targets should be narrow:
 
 ```text
