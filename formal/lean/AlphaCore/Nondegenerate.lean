@@ -5,8 +5,8 @@ AlphaCore.Nondegenerate
 
 Primitive nondegeneracy witnesses.
 
-This file does not define Omega, value, agency, future, continuation, or
-deformers. It records two Alpha-native witness layers:
+This file stays inside the primitive layer. It records two Alpha-native
+witness layers:
 
 * a joint relation/separation witness, which blocks relation and identification
   collapse;
@@ -71,8 +71,8 @@ abbrev PrimitiveWitness (A : Frame.{u, v}) : Prop :=
 Primitive nondegeneracy is currently the existence of an asymmetry primitive
 witness.
 
-This should not be read as Omega. It is only the seed condition that the
-primitive grammar is not decorative.
+This should not be read as a downstream theory. It is only the seed condition
+that the primitive grammar is not decorative.
 -/
 abbrev PrimitiveNondegenerate (A : Frame.{u, v}) : Prop :=
   HasAsymmetryPrimitiveWitness A

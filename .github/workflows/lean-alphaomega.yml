@@ -49,6 +49,51 @@ jobs:
             exit 1
           }
 
+      - name: Scan AlphaCore claim boundary
+        shell: pwsh
+        run: |
+          $terms = @(
+            "omega",
+            "value",
+            "valuer",
+            "agent",
+            "agency",
+            "life",
+            "living",
+            "ethic",
+            "moral",
+            "preference",
+            "utility",
+            "reward",
+            "alignment",
+            "uncertainty",
+            "viability",
+            "completion",
+            "lush",
+            "self",
+            "identity",
+            "death"
+          )
+
+          $paths = @("formal\lean\AlphaCore.lean")
+          $paths += Get-ChildItem -Path "formal\lean\AlphaCore" -Filter "*.lean" -File | ForEach-Object { $_.FullName }
+
+          $offenders = @()
+          foreach ($path in $paths) {
+            $text = (Get-Content -LiteralPath $path -Raw).ToLowerInvariant()
+            foreach ($term in $terms) {
+              $pattern = "\b$([System.Text.RegularExpressions.Regex]::Escape($term))\b"
+              if ($text -match $pattern) {
+                $offenders += "${path}:$term"
+              }
+            }
+          }
+
+          if ($offenders.Count -gt 0) {
+            $offenders
+            exit 1
+          }
+
       - name: Check whitespace
         shell: pwsh
         run: git diff --check

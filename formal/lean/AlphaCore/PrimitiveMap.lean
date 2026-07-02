@@ -10,7 +10,7 @@ It defines transformations that preserve primitive work and proves that
 collapsed targets cannot receive nondegenerate primitive work through such maps.
 
 This is a pre-recoverability bridge: recoverability should later be expressed
-through admissible transformations, not exact identity of objects.
+through admissible transformations, not exact object sameness.
 -/
 
 namespace AlphaCore
@@ -22,8 +22,8 @@ universe u v u' v' u'' v''
 A primitive-preserving map carries relata and distinctions from one frame to
 another while preserving relation, separation, and asymmetry.
 
-This is not an identity map between objects. It is a structure-preserving
-transformation between primitive presentations.
+This is not an object-sameness map. It is a structure-preserving transformation
+between primitive presentations.
 -/
 structure PrimitiveMap
     (A : Frame.{u, v})
@@ -76,7 +76,7 @@ def mapAsymmetryWitness
   y := f.mapX w.y
   asym := f.asym_preserving w.asym
 
-/-- Identity primitive-preserving map. -/
+/-- Reflexive primitive-preserving map. -/
 def id (A : Frame.{u, v}) : PrimitiveMap A A where
   mapX := fun x => x
   mapD := fun d => d
