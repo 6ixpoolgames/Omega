@@ -119,7 +119,11 @@ controls showing recurrence, control reach, high success probability,
 stochasticity, feedback alone, one scalar success score, average-case feedback,
 and one source grammar do not determine the richer profile. This remains
 instrumentation only, not agency, identity, value, valuerhood, or Omega
-validation.
+validation. The bounded spectral pilot adds a deliberately conservative
+detector-coordinate result: complex phase appears in a driven cycle without
+control, while reflexive maintenance appears in the self-restoring controller
+without complex phase. Spectrum is therefore demoted to a useful coordinate,
+not promoted to a deformer definition.
 The contextual future-field branch now has a first finite local/global and
 holonomy pilot: a parity-style context family has nonempty local sections and
 matching overlap support/distributions but no global assignment, and finite
@@ -130,6 +134,12 @@ compatibility table can fail PSD, and before/after kernel comparisons separate
 diagonal thickness deformation from off-diagonal compatibility deformation.
 This is pre-Hilbert and pre-value instrumentation only, not quantum mechanics,
 agency, identity, value, valuerhood, or Omega validation.
+
+The generated closure-discovery sweep now has a standalone retained report:
+136 finite cases across predicate, reachability-derived, and viability-derived
+seed families; 50 cases produce nonconstant surplus facts and 86 collapse.
+Every family contains both positive and collapse controls, so the result is a
+gate rather than a success-only fixture.
 
 ## Best onboarding path
 

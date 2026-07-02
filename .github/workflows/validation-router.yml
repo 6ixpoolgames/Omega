@@ -83,11 +83,11 @@ jobs:
             baseline_scope="yes"
           fi
 
-          if grep -Eq '^(\.github/workflows/finite-relational-adapter-smoke\.yml|omega/adapters/finite_relational/|omega/validation/finite_relational_adapter_(smoke|adversarial)\.py$|tests/test_(finite_relational_adapter|derived_graph_adapter|finite_grid_adapter|finite_relational_adapter_smoke|finite_relational_adapter_adversarial)\.py$|pyproject\.toml$)' changed_files.txt; then
+          if grep -Eq '^(\.github/workflows/finite-relational-adapter-smoke\.yml|omega/adapters/finite_relational/|omega/validation/finite_relational_(adapter_(smoke|adversarial)|closure_discovery)\.py$|tests/test_(finite_relational_adapter|derived_graph_adapter|finite_grid_adapter|finite_relational_adapter_smoke|finite_relational_adapter_adversarial|finite_relational_closure_discovery)\.py$|pyproject\.toml$)' changed_files.txt; then
             adapter_scope="yes"
           fi
 
-          if grep -Eq '^(\.github/workflows/agency-diamond-midscale\.yml|omega/agency_diamond/|omega/validation/agency_diamond_(midscale|hardening|challenge|cross_substrate|blind_discovery|stochastic|stochastic_hardening|stochastic_exploration)\.py$|tests/test_agency_diamond_(midscale|hardening|challenge|cross_substrate|blind_discovery|stochastic|stochastic_hardening|stochastic_exploration)\.py$|pyproject\.toml$)' changed_files.txt; then
+          if grep -Eq '^(\.github/workflows/agency-diamond-midscale\.yml|omega/agency_diamond/|omega/validation/agency_diamond_(midscale|hardening|challenge|cross_substrate|blind_discovery|stochastic|stochastic_hardening|stochastic_exploration|spectral)\.py$|tests/test_agency_diamond_(midscale|hardening|challenge|cross_substrate|blind_discovery|stochastic|stochastic_hardening|stochastic_exploration|strictness_and_spectral)\.py$|pyproject\.toml$)' changed_files.txt; then
             agency_scope="yes"
           fi
 

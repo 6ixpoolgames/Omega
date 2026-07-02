@@ -114,6 +114,7 @@ The current retained checkpoints are:
 | Stochastic pilot | Exact-rational finite-horizon probability profiles and strong-lumpability controls. | `agency_diamond_stochastic_v1/report.md`, `summary.json` |
 | Stochastic hardening | False-positive controls, ablations, robust ambiguity separation. | `agency_diamond_stochastic_hardening_v1/report.md`, `summary.json` |
 | Stochastic exploration | Held-out non-predeclared search, cross-substrate stochastic profiles, calibration/phase sweeps. | `agency_diamond_stochastic_exploration_v1/report.md`, `summary.json` |
+| Spectral detector coordinate | Live-policy sub-Markov spectra, same-own-maintenance/joint-effect strictness, and complex-phase negative controls. | `agency_diamond_spectral_v0/report.md`, `summary.json` |
 
 The retained stochastic exploration checkpoint reports:
 
@@ -151,6 +152,7 @@ The current controls rule out several cheap readings.
 | Average-case feedback | Average feedback advantage can disappear under worst-case ambiguity. |
 | One-step support / coarse presentation | Non-lumpable presentations can splice incompatible hidden stochastic representatives. |
 | Source grammar | The profile is not confined to one small deterministic grammar; it appears in Boolean, grid, resource, deterministic, and stochastic surfaces. |
+| Complex spectral phase | A driven cycle can have complex nominal live-policy spectrum without control, while reflexive maintenance can occur without complex phase. |
 
 This is the main positive content of the checkpoint. The profile is not merely
 a name for “successful system.” It has nulls, strictness controls, ablation
@@ -261,6 +263,9 @@ persistence does not imply feedback advantage;
 feedback advantage does not imply reflexive maintenance;
 
 live maintenance scalar does not determine joint-continuation effect;
+
+complex spectral phase does not imply feedback closure or reflexive
+maintenance;
 
 dominant deformation or spectral leverage does not imply feedback closure;
 

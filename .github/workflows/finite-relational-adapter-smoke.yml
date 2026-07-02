@@ -10,11 +10,13 @@ on:
       - "omega/adapters/finite_relational/**"
       - "omega/validation/finite_relational_adapter_smoke.py"
       - "omega/validation/finite_relational_adapter_adversarial.py"
+      - "omega/validation/finite_relational_closure_discovery.py"
       - "tests/test_finite_relational_adapter.py"
       - "tests/test_derived_graph_adapter.py"
       - "tests/test_finite_grid_adapter.py"
       - "tests/test_finite_relational_adapter_smoke.py"
       - "tests/test_finite_relational_adapter_adversarial.py"
+      - "tests/test_finite_relational_closure_discovery.py"
       - "pyproject.toml"
   pull_request:
     branches:
@@ -24,11 +26,13 @@ on:
       - "omega/adapters/finite_relational/**"
       - "omega/validation/finite_relational_adapter_smoke.py"
       - "omega/validation/finite_relational_adapter_adversarial.py"
+      - "omega/validation/finite_relational_closure_discovery.py"
       - "tests/test_finite_relational_adapter.py"
       - "tests/test_derived_graph_adapter.py"
       - "tests/test_finite_grid_adapter.py"
       - "tests/test_finite_relational_adapter_smoke.py"
       - "tests/test_finite_relational_adapter_adversarial.py"
+      - "tests/test_finite_relational_closure_discovery.py"
       - "pyproject.toml"
 
 jobs:
@@ -63,17 +67,22 @@ jobs:
       - name: Run generated adapter adversarial cases
         run: python -m omega.validation.finite_relational_adapter_adversarial
 
+      - name: Run finite relational closure discovery
+        run: python -m omega.validation.finite_relational_closure_discovery
+
       - name: Ruff finite relational adapter paths
         run: |
           python -m ruff check \
             omega/adapters/finite_relational \
             omega/validation/finite_relational_adapter_smoke.py \
             omega/validation/finite_relational_adapter_adversarial.py \
+            omega/validation/finite_relational_closure_discovery.py \
             tests/test_finite_relational_adapter.py \
             tests/test_derived_graph_adapter.py \
             tests/test_finite_grid_adapter.py \
             tests/test_finite_relational_adapter_smoke.py \
-            tests/test_finite_relational_adapter_adversarial.py
+            tests/test_finite_relational_adapter_adversarial.py \
+            tests/test_finite_relational_closure_discovery.py
 
       - name: Check whitespace
         run: git diff --check

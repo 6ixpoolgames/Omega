@@ -38,10 +38,15 @@ def run_finite_relational_closure_discovery(
     out_root: Path = Path(".tmp/finite_relational_closure_discovery"),
 ) -> dict[str, Any]:
     run_root = timestamped_run_root(out_root)
+    return retain_finite_relational_closure_discovery(run_root)
+
+
+def retain_finite_relational_closure_discovery(out_dir: Path) -> dict[str, Any]:
+    out_dir.mkdir(parents=True, exist_ok=True)
     families = generate_closure_discovery()
     family_summaries = []
     for family in families:
-        family_dir = run_root / family.family_id
+        family_dir = out_dir / family.family_id
         family_dir.mkdir(parents=True, exist_ok=True)
         case_summaries = [case.summary() for case in family.cases]
         representative_summaries = [
@@ -59,7 +64,7 @@ def run_finite_relational_closure_discovery(
 
     result = {
         "status": "PASS",
-        "run_root": str(run_root),
+        "run_root": str(out_dir),
         "family_count": len(families),
         "case_count": sum(len(family.cases) for family in families),
         "nonconstant_surplus_case_count": sum(
@@ -72,8 +77,76 @@ def run_finite_relational_closure_discovery(
         ),
         "families": family_summaries,
     }
-    _write_json(run_root / "summary.json", result)
+    _write_json(out_dir / "summary.json", result)
+    (out_dir / "report.md").write_text(render_report(result), encoding="utf-8")
     return result
+
+
+def render_report(result: dict[str, Any]) -> str:
+    lines = [
+        "# Finite Relational Closure Discovery v0",
+        "",
+        f"Status: {result['status']}",
+        "",
+        "## Headline",
+        "",
+        (
+            f"- Cases: {result['case_count']}"
+        ),
+        (
+            "- Nonconstant-surplus cases: "
+            f"{result['nonconstant_surplus_case_count']}"
+        ),
+        f"- Collapse cases: {result['collapse_case_count']}",
+        (
+            "- Every family has positive and collapse controls: "
+            f"{result['all_families_have_positive_and_collapse_controls']}"
+        ),
+        "",
+        "## Family Breakdown",
+        "",
+        "| family | cases | nonconstant surplus | collapse | inconsistent seed |",
+        "| --- | ---: | ---: | ---: | ---: |",
+    ]
+    for family in result["families"]:
+        lines.append(
+            "| {family_id} | {case_count} | {nonconstant_surplus_case_count} | "
+            "{collapse_case_count} | {inconsistent_seed_case_count} |".format(
+                **family
+            )
+        )
+    lines.extend(
+        [
+            "",
+            "## Claim Boundary",
+            "",
+            (
+                "This is generated finite closure discovery over small adapter "
+                "substrates. It does not predeclare expected surplus facts. It "
+                "does not prove global invariance, agency, value, Omega, or "
+                "empirical model validity."
+            ),
+            "",
+            "## Representatives",
+            "",
+        ]
+    )
+    for family in result["families"]:
+        lines.append(f"### {family['family_id']}")
+        lines.append("")
+        lines.append(family["description"])
+        lines.append("")
+        for case in family["representative_cases"]:
+            facts = ", ".join(case["nonconstant_surplus_target_facts"]) or "none"
+            lines.append(
+                "- `{case_id}`: {classification}; admissible presentations "
+                "{admissible_presentation_count}; surplus target facts {facts}".format(
+                    facts=facts,
+                    **case,
+                )
+            )
+        lines.append("")
+    return "\n".join(lines)
 
 
 def _retain_case(case: ClosureDiscoveryCase, out_dir: Path) -> dict[str, Any]:

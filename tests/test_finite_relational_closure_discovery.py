@@ -2,6 +2,7 @@ from pathlib import Path
 
 from omega.adapters.finite_relational import generate_closure_discovery
 from omega.validation.finite_relational_closure_discovery import (
+    render_report,
     run_finite_relational_closure_discovery,
 )
 
@@ -68,12 +69,19 @@ def test_closure_discovery_validation_retains_summaries_and_representatives(
     assert result["status"] == "PASS"
     assert result["family_count"] == len(REQUIRED_FAMILY_IDS)
     assert result["case_count"] == 136
+    assert result["nonconstant_surplus_case_count"] == 50
+    assert result["collapse_case_count"] == 86
     assert result["all_families_have_positive_and_collapse_controls"] is True
     assert result["nonconstant_surplus_case_count"] > 0
     assert result["collapse_case_count"] > 0
 
     run_root = Path(str(result["run_root"]))
     assert (run_root / "summary.json").exists()
+    assert (run_root / "report.md").exists()
+    report = render_report(result)
+    assert "Cases: 136" in report
+    assert "Nonconstant-surplus cases: 50" in report
+    assert "Collapse cases: 86" in report
     for family in result["families"]:
         family_dir = Path(str(family["output"]))
         assert (family_dir / "family_summary.json").exists()

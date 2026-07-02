@@ -16,6 +16,7 @@ on:
       - "omega/validation/agency_diamond_stochastic.py"
       - "omega/validation/agency_diamond_stochastic_hardening.py"
       - "omega/validation/agency_diamond_stochastic_exploration.py"
+      - "omega/validation/agency_diamond_spectral.py"
       - "tests/test_agency_diamond_midscale.py"
       - "tests/test_agency_diamond_hardening.py"
       - "tests/test_agency_diamond_challenge.py"
@@ -24,6 +25,7 @@ on:
       - "tests/test_agency_diamond_stochastic.py"
       - "tests/test_agency_diamond_stochastic_hardening.py"
       - "tests/test_agency_diamond_stochastic_exploration.py"
+      - "tests/test_agency_diamond_strictness_and_spectral.py"
       - "pyproject.toml"
   pull_request:
     branches:
@@ -39,6 +41,7 @@ on:
       - "omega/validation/agency_diamond_stochastic.py"
       - "omega/validation/agency_diamond_stochastic_hardening.py"
       - "omega/validation/agency_diamond_stochastic_exploration.py"
+      - "omega/validation/agency_diamond_spectral.py"
       - "tests/test_agency_diamond_midscale.py"
       - "tests/test_agency_diamond_hardening.py"
       - "tests/test_agency_diamond_challenge.py"
@@ -47,6 +50,7 @@ on:
       - "tests/test_agency_diamond_stochastic.py"
       - "tests/test_agency_diamond_stochastic_hardening.py"
       - "tests/test_agency_diamond_stochastic_exploration.py"
+      - "tests/test_agency_diamond_strictness_and_spectral.py"
       - "pyproject.toml"
 
 jobs:
@@ -99,6 +103,9 @@ jobs:
       - name: Run agency diamond stochastic exploration validation
         run: python -m omega.validation.agency_diamond_stochastic_exploration
 
+      - name: Run agency diamond spectral validation
+        run: python -m omega.validation.agency_diamond_spectral
+
       - name: Run focused agency diamond tests
         run: |
           python -m pytest \
@@ -110,6 +117,7 @@ jobs:
             tests/test_agency_diamond_stochastic.py \
             tests/test_agency_diamond_stochastic_hardening.py \
             tests/test_agency_diamond_stochastic_exploration.py \
+            tests/test_agency_diamond_strictness_and_spectral.py \
             -q
 
       - name: Ruff agency diamond paths
@@ -124,6 +132,7 @@ jobs:
             omega/validation/agency_diamond_stochastic.py \
             omega/validation/agency_diamond_stochastic_hardening.py \
             omega/validation/agency_diamond_stochastic_exploration.py \
+            omega/validation/agency_diamond_spectral.py \
             tests/test_agency_diamond_midscale.py \
             tests/test_agency_diamond_hardening.py \
             tests/test_agency_diamond_challenge.py \
@@ -131,7 +140,8 @@ jobs:
             tests/test_agency_diamond_blind_discovery.py \
             tests/test_agency_diamond_stochastic.py \
             tests/test_agency_diamond_stochastic_hardening.py \
-            tests/test_agency_diamond_stochastic_exploration.py
+            tests/test_agency_diamond_stochastic_exploration.py \
+            tests/test_agency_diamond_strictness_and_spectral.py
 
       - name: Check whitespace
         run: git diff --check

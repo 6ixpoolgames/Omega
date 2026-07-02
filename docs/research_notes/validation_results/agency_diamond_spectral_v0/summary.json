@@ -1,0 +1,721 @@
+{
+  "claim_boundary": "Finite deterministic spectral pilot only. The transfer operator is the nominal live-policy sub-Markov matrix restricted to declared viable states. These spectra are detector coordinates, not agency, identity, value, valuerhood, phase ontology, lushness, or Omega validation.",
+  "decision_gate": {
+    "complex_phase_not_sufficient_for_deformer_profile": true,
+    "driven_cycle_has_complex_phase": true,
+    "driven_cycle_has_no_control": true,
+    "own_maintenance_joint_effect_strictness_passes": true,
+    "reflexive_profile_not_dependent_on_complex_phase": true,
+    "self_restoring_has_no_complex_phase": true,
+    "self_restoring_has_reflexive_advantage": true,
+    "spectra_computed_for_all_systems": true
+  },
+  "horizon": 3,
+  "metric_rows": {
+    "adaptive_controller": {
+      "ablated_maintenance_score": "0",
+      "case_id": "adaptive_controller_h3",
+      "channel_challenge_count": 0,
+      "classification": "feedback_advantage",
+      "control_reach_count": 2,
+      "control_reach_ratio": "1/2",
+      "family": "feedback",
+      "feedback_advantage": "1",
+      "horizon": 3,
+      "joint_effect_delta": null,
+      "joint_live_score": null,
+      "joint_replay_score": null,
+      "leverage_advantage": "1",
+      "live_maintenance_score": "1",
+      "observability_ratio": "1",
+      "observable_control_count": 2,
+      "operational_diamond_count": 2,
+      "perturbation_count": 2,
+      "recurrence_detected": true,
+      "reflexive_advantage": null,
+      "reflexive_live_score": null,
+      "reflexive_replay_score": null,
+      "replay_maintenance_score": "0",
+      "scenario_count": 3,
+      "system_id": "adaptive_controller"
+    },
+    "cooperative_controller": {
+      "ablated_maintenance_score": "0",
+      "case_id": "cooperative_controller_h3",
+      "channel_challenge_count": 0,
+      "classification": "feedback_advantage",
+      "control_reach_count": 3,
+      "control_reach_ratio": "3/4",
+      "family": "joint_positive",
+      "feedback_advantage": "1",
+      "horizon": 3,
+      "joint_effect_delta": "1",
+      "joint_live_score": "1",
+      "joint_replay_score": "0",
+      "leverage_advantage": "1",
+      "live_maintenance_score": "1",
+      "observability_ratio": "1",
+      "observable_control_count": 3,
+      "operational_diamond_count": 3,
+      "perturbation_count": 1,
+      "recurrence_detected": true,
+      "reflexive_advantage": null,
+      "reflexive_live_score": null,
+      "reflexive_replay_score": null,
+      "replay_maintenance_score": "0",
+      "scenario_count": 2,
+      "system_id": "cooperative_controller"
+    },
+    "dominant_horizon_controller": {
+      "ablated_maintenance_score": "1",
+      "case_id": "dominant_horizon_controller_h3",
+      "channel_challenge_count": 0,
+      "classification": "dominant_joint_contraction",
+      "control_reach_count": 0,
+      "control_reach_ratio": "0",
+      "family": "joint_negative",
+      "feedback_advantage": "0",
+      "horizon": 3,
+      "joint_effect_delta": "-1",
+      "joint_live_score": "0",
+      "joint_replay_score": "1",
+      "leverage_advantage": "0",
+      "live_maintenance_score": "1",
+      "observability_ratio": "0",
+      "observable_control_count": 0,
+      "operational_diamond_count": 0,
+      "perturbation_count": 1,
+      "recurrence_detected": true,
+      "reflexive_advantage": null,
+      "reflexive_live_score": null,
+      "reflexive_replay_score": null,
+      "replay_maintenance_score": "1",
+      "scenario_count": 2,
+      "system_id": "dominant_horizon_controller"
+    },
+    "driven_cycle": {
+      "ablated_maintenance_score": "1",
+      "case_id": "driven_cycle_h3",
+      "channel_challenge_count": 0,
+      "classification": "passive_or_driven_recurrence",
+      "control_reach_count": 0,
+      "control_reach_ratio": "0",
+      "family": "driven",
+      "feedback_advantage": "0",
+      "horizon": 3,
+      "joint_effect_delta": null,
+      "joint_live_score": null,
+      "joint_replay_score": null,
+      "leverage_advantage": "0",
+      "live_maintenance_score": "1",
+      "observability_ratio": "0",
+      "observable_control_count": 0,
+      "operational_diamond_count": 0,
+      "perturbation_count": 1,
+      "recurrence_detected": true,
+      "reflexive_advantage": null,
+      "reflexive_live_score": null,
+      "reflexive_replay_score": null,
+      "replay_maintenance_score": "1",
+      "scenario_count": 2,
+      "system_id": "driven_cycle"
+    },
+    "open_loop_controller": {
+      "ablated_maintenance_score": "0",
+      "case_id": "open_loop_controller_h3",
+      "channel_challenge_count": 0,
+      "classification": "control_without_feedback_advantage",
+      "control_reach_count": 2,
+      "control_reach_ratio": "1/2",
+      "family": "open_loop",
+      "feedback_advantage": "0",
+      "horizon": 3,
+      "joint_effect_delta": null,
+      "joint_live_score": null,
+      "joint_replay_score": null,
+      "leverage_advantage": "0",
+      "live_maintenance_score": "0",
+      "observability_ratio": "0",
+      "observable_control_count": 0,
+      "operational_diamond_count": 0,
+      "perturbation_count": 1,
+      "recurrence_detected": true,
+      "reflexive_advantage": null,
+      "reflexive_live_score": null,
+      "reflexive_replay_score": null,
+      "replay_maintenance_score": "0",
+      "scenario_count": 2,
+      "system_id": "open_loop_controller"
+    },
+    "passive_attractor": {
+      "ablated_maintenance_score": "1",
+      "case_id": "passive_attractor_h3",
+      "channel_challenge_count": 0,
+      "classification": "passive_or_driven_recurrence",
+      "control_reach_count": 0,
+      "control_reach_ratio": "0",
+      "family": "passive",
+      "feedback_advantage": "0",
+      "horizon": 3,
+      "joint_effect_delta": null,
+      "joint_live_score": null,
+      "joint_replay_score": null,
+      "leverage_advantage": "0",
+      "live_maintenance_score": "1",
+      "observability_ratio": "0",
+      "observable_control_count": 0,
+      "operational_diamond_count": 0,
+      "perturbation_count": 1,
+      "recurrence_detected": true,
+      "reflexive_advantage": null,
+      "reflexive_live_score": null,
+      "reflexive_replay_score": null,
+      "replay_maintenance_score": "1",
+      "scenario_count": 2,
+      "system_id": "passive_attractor"
+    },
+    "self_restoring_controller": {
+      "ablated_maintenance_score": "0",
+      "case_id": "self_restoring_controller_h3",
+      "channel_challenge_count": 2,
+      "classification": "reflexive_maintenance",
+      "control_reach_count": 3,
+      "control_reach_ratio": "3/5",
+      "family": "reflexive",
+      "feedback_advantage": "1",
+      "horizon": 3,
+      "joint_effect_delta": null,
+      "joint_live_score": null,
+      "joint_replay_score": null,
+      "leverage_advantage": "1",
+      "live_maintenance_score": "1",
+      "observability_ratio": "1",
+      "observable_control_count": 3,
+      "operational_diamond_count": 3,
+      "perturbation_count": 3,
+      "recurrence_detected": true,
+      "reflexive_advantage": "1",
+      "reflexive_live_score": "1",
+      "reflexive_replay_score": "0",
+      "replay_maintenance_score": "0",
+      "scenario_count": 4,
+      "system_id": "self_restoring_controller"
+    },
+    "thermostat": {
+      "ablated_maintenance_score": "0",
+      "case_id": "thermostat_h3",
+      "channel_challenge_count": 0,
+      "classification": "feedback_advantage",
+      "control_reach_count": 3,
+      "control_reach_ratio": "3/4",
+      "family": "feedback",
+      "feedback_advantage": "1",
+      "horizon": 3,
+      "joint_effect_delta": null,
+      "joint_live_score": null,
+      "joint_replay_score": null,
+      "leverage_advantage": "1",
+      "live_maintenance_score": "1",
+      "observability_ratio": "1",
+      "observable_control_count": 3,
+      "operational_diamond_count": 3,
+      "perturbation_count": 2,
+      "recurrence_detected": true,
+      "reflexive_advantage": null,
+      "reflexive_live_score": null,
+      "reflexive_replay_score": null,
+      "replay_maintenance_score": "0",
+      "scenario_count": 3,
+      "system_id": "thermostat"
+    }
+  },
+  "name": "agency_diamond_spectral_pilot",
+  "profiles": [
+    {
+      "complex_mode_count": 0,
+      "eigenvalues": [
+        {
+          "abs": 1.0,
+          "angle": 0.0,
+          "imag": 0.0,
+          "real": 1.0
+        }
+      ],
+      "family": "passive",
+      "matrix": [
+        [
+          "1"
+        ]
+      ],
+      "max_abs_imaginary": 0.0,
+      "nonzero_phase_angles": [],
+      "scenario": "nominal",
+      "spectral_gap_from_radius": null,
+      "spectral_radius": 1.0,
+      "states": [
+        "stable"
+      ],
+      "system_id": "passive_attractor"
+    },
+    {
+      "complex_mode_count": 2,
+      "eigenvalues": [
+        {
+          "abs": 1.0,
+          "angle": 2.094395102393,
+          "imag": 0.866025403784,
+          "real": -0.5
+        },
+        {
+          "abs": 1.0,
+          "angle": -2.094395102393,
+          "imag": -0.866025403784,
+          "real": -0.5
+        },
+        {
+          "abs": 1.0,
+          "angle": 0.0,
+          "imag": 0.0,
+          "real": 1.0
+        }
+      ],
+      "family": "driven",
+      "matrix": [
+        [
+          "0",
+          "1",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "1"
+        ],
+        [
+          "1",
+          "0",
+          "0"
+        ]
+      ],
+      "max_abs_imaginary": 0.866025403784,
+      "nonzero_phase_angles": [
+        2.094395102393,
+        -2.094395102393
+      ],
+      "scenario": "nominal",
+      "spectral_gap_from_radius": 0.0,
+      "spectral_radius": 1.0,
+      "states": [
+        "a",
+        "b",
+        "c"
+      ],
+      "system_id": "driven_cycle"
+    },
+    {
+      "complex_mode_count": 0,
+      "eigenvalues": [
+        {
+          "abs": 0.0,
+          "angle": 0.0,
+          "imag": 0.0,
+          "real": 0.0
+        },
+        {
+          "abs": 0.0,
+          "angle": 0.0,
+          "imag": 0.0,
+          "real": 0.0
+        },
+        {
+          "abs": 1.0,
+          "angle": 0.0,
+          "imag": 0.0,
+          "real": 1.0
+        },
+        {
+          "abs": 0.0,
+          "angle": 0.0,
+          "imag": 0.0,
+          "real": 0.0
+        }
+      ],
+      "family": "open_loop",
+      "matrix": [
+        [
+          "1",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "1",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "1",
+          "0",
+          "0",
+          "0"
+        ]
+      ],
+      "max_abs_imaginary": 0.0,
+      "nonzero_phase_angles": [],
+      "scenario": "nominal",
+      "spectral_gap_from_radius": 1.0,
+      "spectral_radius": 1.0,
+      "states": [
+        "good",
+        "needs_left",
+        "needs_right",
+        "start"
+      ],
+      "system_id": "open_loop_controller"
+    },
+    {
+      "complex_mode_count": 0,
+      "eigenvalues": [
+        {
+          "abs": 0.0,
+          "angle": 0.0,
+          "imag": 0.0,
+          "real": 0.0
+        },
+        {
+          "abs": 0.0,
+          "angle": 0.0,
+          "imag": 0.0,
+          "real": 0.0
+        },
+        {
+          "abs": 1.0,
+          "angle": 0.0,
+          "imag": 0.0,
+          "real": 1.0
+        }
+      ],
+      "family": "feedback",
+      "matrix": [
+        [
+          "0",
+          "0",
+          "1"
+        ],
+        [
+          "0",
+          "0",
+          "1"
+        ],
+        [
+          "0",
+          "0",
+          "1"
+        ]
+      ],
+      "max_abs_imaginary": 0.0,
+      "nonzero_phase_angles": [],
+      "scenario": "nominal",
+      "spectral_gap_from_radius": 1.0,
+      "spectral_radius": 1.0,
+      "states": [
+        "cold",
+        "hot",
+        "ok"
+      ],
+      "system_id": "thermostat"
+    },
+    {
+      "complex_mode_count": 0,
+      "eigenvalues": [
+        {
+          "abs": 0.0,
+          "angle": 0.0,
+          "imag": 0.0,
+          "real": 0.0
+        },
+        {
+          "abs": 0.0,
+          "angle": 0.0,
+          "imag": 0.0,
+          "real": 0.0
+        },
+        {
+          "abs": 1.0,
+          "angle": 0.0,
+          "imag": 0.0,
+          "real": 1.0
+        }
+      ],
+      "family": "feedback",
+      "matrix": [
+        [
+          "0",
+          "0",
+          "1"
+        ],
+        [
+          "0",
+          "0",
+          "1"
+        ],
+        [
+          "0",
+          "0",
+          "1"
+        ]
+      ],
+      "max_abs_imaginary": 0.0,
+      "nonzero_phase_angles": [],
+      "scenario": "nominal",
+      "spectral_gap_from_radius": 1.0,
+      "spectral_radius": 1.0,
+      "states": [
+        "drift_left",
+        "drift_right",
+        "ok"
+      ],
+      "system_id": "adaptive_controller"
+    },
+    {
+      "complex_mode_count": 0,
+      "eigenvalues": [
+        {
+          "abs": 0.0,
+          "angle": 0.0,
+          "imag": 0.0,
+          "real": 0.0
+        },
+        {
+          "abs": 0.0,
+          "angle": 0.0,
+          "imag": 0.0,
+          "real": 0.0
+        },
+        {
+          "abs": 0.0,
+          "angle": 0.0,
+          "imag": 0.0,
+          "real": 0.0
+        },
+        {
+          "abs": 1.0,
+          "angle": 0.0,
+          "imag": 0.0,
+          "real": 1.0
+        }
+      ],
+      "family": "reflexive",
+      "matrix": [
+        [
+          "0",
+          "1",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "1",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "1",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "1",
+          "0"
+        ]
+      ],
+      "max_abs_imaginary": 0.0,
+      "nonzero_phase_angles": [],
+      "scenario": "nominal",
+      "spectral_gap_from_radius": 1.0,
+      "spectral_radius": 1.0,
+      "states": [
+        "both_bad",
+        "env_bad",
+        "ok",
+        "sensor_damaged"
+      ],
+      "system_id": "self_restoring_controller"
+    },
+    {
+      "complex_mode_count": 0,
+      "eigenvalues": [
+        {
+          "abs": 0.0,
+          "angle": 0.0,
+          "imag": 0.0,
+          "real": 0.0
+        },
+        {
+          "abs": 1.0,
+          "angle": 0.0,
+          "imag": 0.0,
+          "real": 1.0
+        },
+        {
+          "abs": 1.0,
+          "angle": 0.0,
+          "imag": 0.0,
+          "real": 1.0
+        }
+      ],
+      "family": "joint_positive",
+      "matrix": [
+        [
+          "1",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "1",
+          "0"
+        ],
+        [
+          "0",
+          "1",
+          "0"
+        ]
+      ],
+      "max_abs_imaginary": 0.0,
+      "nonzero_phase_angles": [],
+      "scenario": "nominal",
+      "spectral_gap_from_radius": 0.0,
+      "spectral_radius": 1.0,
+      "states": [
+        "neutral",
+        "repaired",
+        "threat"
+      ],
+      "system_id": "cooperative_controller"
+    },
+    {
+      "complex_mode_count": 0,
+      "eigenvalues": [
+        {
+          "abs": 0.0,
+          "angle": 0.0,
+          "imag": 0.0,
+          "real": 0.0
+        },
+        {
+          "abs": 1.0,
+          "angle": 0.0,
+          "imag": 0.0,
+          "real": 1.0
+        },
+        {
+          "abs": 1.0,
+          "angle": 0.0,
+          "imag": 0.0,
+          "real": 1.0
+        },
+        {
+          "abs": 1.0,
+          "angle": 0.0,
+          "imag": 0.0,
+          "real": 1.0
+        }
+      ],
+      "family": "joint_negative",
+      "matrix": [
+        [
+          "1",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "1",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "0",
+          "1",
+          "0"
+        ],
+        [
+          "1",
+          "0",
+          "0",
+          "0"
+        ]
+      ],
+      "max_abs_imaginary": 0.0,
+      "nonzero_phase_angles": [],
+      "scenario": "nominal",
+      "spectral_gap_from_radius": 0.0,
+      "spectral_radius": 1.0,
+      "states": [
+        "captured",
+        "neutral",
+        "protected",
+        "threat"
+      ],
+      "system_id": "dominant_horizon_controller"
+    }
+  ],
+  "public_read": "Nominal live-policy spectra are useful detector coordinates, but the first finite pilot demotes complex spectral phase: a driven cycle has complex phase without control, while the self-restoring controller has reflexive maintenance without complex phase.",
+  "status": "PASS",
+  "strictness": {
+    "claim_boundary": "Finite agency-diamond strictness witness only. This does not detect agency, identity, value, valuerhood, moral standing, or Omega validation. It only shows that one own-maintenance scalar does not determine joint-continuation effect in the declared finite battery.",
+    "decision_gate": {
+      "joint_effects_differ": true,
+      "negative_joint_effect_negative": true,
+      "positive_joint_effect_positive": true,
+      "same_live_maintenance_score": true
+    },
+    "description": "Two declared finite systems both maintain their own live target with score 1, while one expands the declared joint-safe surface and the other contracts it.",
+    "horizon": 1,
+    "name": "same_own_live_maintenance_different_joint_effect",
+    "negative_case": {
+      "case_id": "dominant_joint_negative_h1",
+      "classification": "dominant_joint_contraction",
+      "family": "joint_negative",
+      "feedback_advantage": "0",
+      "joint_effect_delta": "-1",
+      "joint_live_score": "0",
+      "joint_replay_score": "1",
+      "live_maintenance_score": "1",
+      "replay_maintenance_score": "1",
+      "system_id": "dominant_horizon_controller"
+    },
+    "non_claims": [
+      "not a complete own-maintenance profile",
+      "not a moral valence theorem",
+      "not agency detection",
+      "not empirical validation"
+    ],
+    "positive_case": {
+      "case_id": "cooperative_joint_positive_h1",
+      "classification": "feedback_advantage",
+      "family": "joint_positive",
+      "feedback_advantage": "1",
+      "joint_effect_delta": "1",
+      "joint_live_score": "1",
+      "joint_replay_score": "0",
+      "live_maintenance_score": "1",
+      "replay_maintenance_score": "0",
+      "system_id": "cooperative_controller"
+    },
+    "status": "PASS"
+  }
+}

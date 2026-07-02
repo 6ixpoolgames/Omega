@@ -270,7 +270,11 @@ Current retained totals:
 
 This is the first adapter-side answer to the generate-versus-certify question.
 It is still finite and adapter-relative; it does not establish generic
-substrate-independent generation.
+substrate-independent generation. The retained report is:
+
+```text
+docs/research_notes/validation_results/finite_relational_closure_discovery_v0/report.md
+```
 
 ## Finite X2 Pilot
 

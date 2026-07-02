@@ -359,6 +359,21 @@ still finite synthetic deformer instrumentation, not agency detection or
 empirical stochastic-model validation. The consolidated interpretation is in
 [finite_deformer_profile_checkpoint_v0.md](research_notes/omega_theory/finite_deformer_profile_checkpoint_v0.md).
 
+Agency Diamond Spectral Pilot v0 is a bounded detector-coordinate check:
+
+```bash
+python -m omega.validation.agency_diamond_spectral
+```
+
+It builds the nominal live-policy sub-Markov transfer matrix restricted to
+declared viable states for each canonical deterministic battery system. The
+retained result deliberately demotes spectral phase: the driven cycle has
+complex phase without control, while the self-restoring controller has
+reflexive maintenance without complex phase. The same retained report also
+includes the strictness witness that the same own live-maintenance score can
+coincide with positive or negative joint-continuation effect. This is not
+agency, value, phase ontology, lushness, or Omega validation.
+
 Contextual Future Fields v0 has a focused retained-output path:
 
 ```bash
@@ -436,8 +451,10 @@ It generates all small seed cases in three finite families, computes
 presentation/fact derive closure, and classifies whether nonconstant surplus
 facts appear without predeclaring expected surplus. The current retained sweep
 covers predicate seeds, reachability-derived seeds, and viability-derived
-seeds. It reports 136 total cases, with both nonconstant-surplus and collapse
-controls.
+seeds. It reports 136 total cases, 50 nonconstant-surplus cases, and 86
+collapse cases, with both nonconstant-surplus and collapse controls in every
+family. The retained report is
+[finite_relational_closure_discovery_v0/report.md](research_notes/validation_results/finite_relational_closure_discovery_v0/report.md).
 
 The controlled empirical path enumerates fixed small finite families and reports
 rates/frequencies for selected proxy failures:
@@ -536,6 +553,11 @@ summary at
 [finite_relational_policy_dynamics_v0.json](research_notes/validation_results/finite_relational_policy_dynamics_v0.json).
 The finite relational source-parity layer retains a machine-readable summary at
 [finite_relational_source_parity_v0.json](research_notes/validation_results/finite_relational_source_parity_v0.json).
+Finite relational closure discovery v0 retains a human-readable report and
+machine-readable summary at
+[finite_relational_closure_discovery_v0/report.md](research_notes/validation_results/finite_relational_closure_discovery_v0/report.md)
+and
+[finite_relational_closure_discovery_v0/summary.json](research_notes/validation_results/finite_relational_closure_discovery_v0/summary.json).
 The operational-causal-diamond agency-layer pilot retains a human-readable note
 and machine-readable summary at
 [agency_diamond_midscale_v0.md](research_notes/validation_results/agency_diamond_midscale_v0.md)
@@ -571,6 +593,11 @@ machine-readable summary at
 [agency_diamond_stochastic_exploration_v1/report.md](research_notes/validation_results/agency_diamond_stochastic_exploration_v1/report.md)
 and
 [agency_diamond_stochastic_exploration_v1/summary.json](research_notes/validation_results/agency_diamond_stochastic_exploration_v1/summary.json).
+Agency Diamond Spectral Pilot v0 retains a human-readable report and
+machine-readable summary at
+[agency_diamond_spectral_v0/report.md](research_notes/validation_results/agency_diamond_spectral_v0/report.md)
+and
+[agency_diamond_spectral_v0/summary.json](research_notes/validation_results/agency_diamond_spectral_v0/summary.json).
 
 See [REPRODUCIBILITY_SMOKE.md](REPRODUCIBILITY_SMOKE.md).
 
