@@ -139,7 +139,10 @@ The generated closure-discovery sweep now has a standalone retained report:
 136 finite cases across predicate, reachability-derived, and viability-derived
 seed families; 50 cases produce nonconstant surplus facts and 86 collapse.
 Every family contains both positive and collapse controls, so the result is a
-gate rather than a success-only fixture.
+gate rather than a success-only fixture. The first redundancy pass is
+conservative: all 50 nonconstant target-surplus facts are seed complements, all
+200 visible-pair surplus facts are seed-separation consequences, and the current
+unclassified dynamic-surplus bucket is empty.
 
 ## Best onboarding path
 

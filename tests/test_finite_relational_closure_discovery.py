@@ -72,6 +72,10 @@ def test_closure_discovery_validation_retains_summaries_and_representatives(
     assert result["nonconstant_surplus_case_count"] == 50
     assert result["collapse_case_count"] == 86
     assert result["all_families_have_positive_and_collapse_controls"] is True
+    assert result["surplus_redundancy"]["seed_complement_target_count"] == 50
+    assert result["surplus_redundancy"]["unclassified_nonconstant_target_count"] == 0
+    assert result["surplus_redundancy"]["seed_separation_visible_pair_count"] == 200
+    assert result["surplus_redundancy"]["unclassified_visible_pair_count"] == 0
     assert result["nonconstant_surplus_case_count"] > 0
     assert result["collapse_case_count"] > 0
 
@@ -82,6 +86,8 @@ def test_closure_discovery_validation_retains_summaries_and_representatives(
     assert "Cases: 136" in report
     assert "Nonconstant-surplus cases: 50" in report
     assert "Collapse cases: 86" in report
+    assert "Unclassified nonconstant target surplus facts: 0" in report
+    assert "unclassified dynamic-surplus bucket is empty" in report
     for family in result["families"]:
         family_dir = Path(str(family["output"]))
         assert (family_dir / "family_summary.json").exists()

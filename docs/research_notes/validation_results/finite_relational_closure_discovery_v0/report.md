@@ -8,14 +8,22 @@ Status: PASS
 - Nonconstant-surplus cases: 50
 - Collapse cases: 86
 - Every family has positive and collapse controls: True
+- Unclassified nonconstant target surplus facts: 0
+- Unclassified visible-pair surplus facts: 0
 
 ## Family Breakdown
 
-| family | cases | nonconstant surplus | collapse | inconsistent seed |
-| --- | ---: | ---: | ---: | ---: |
-| predicate_seed_partition_sweep | 8 | 6 | 2 | 0 |
-| reachability_seed_graph_sweep | 64 | 32 | 32 | 0 |
-| viability_seed_graph_sweep | 64 | 12 | 52 | 0 |
+| family | cases | nonconstant surplus | collapse | seed-complement facts | unclassified target facts | unclassified visible pairs |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| predicate_seed_partition_sweep | 8 | 6 | 2 | 6 | 0 | 0 |
+| reachability_seed_graph_sweep | 64 | 32 | 32 | 32 | 0 | 0 |
+| viability_seed_graph_sweep | 64 | 12 | 52 | 12 | 0 | 0 |
+
+## Redundancy Read
+
+The first-pass classifier is deliberately conservative. Seed-complement target facts and seed-separated visible pairs are counted as easy closure consequences. Any remaining nonconstant target surplus would be the current candidate for richer dynamic surplus.
+
+Current retained result: all nonconstant target surplus facts are seed complements, and all visible-pair surplus facts are seed-separation consequences. The unclassified dynamic-surplus bucket is empty in this v0 sweep.
 
 ## Claim Boundary
 

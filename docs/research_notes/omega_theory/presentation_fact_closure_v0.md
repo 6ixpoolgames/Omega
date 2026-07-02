@@ -268,6 +268,23 @@ Current retained totals:
 86 collapse cases.
 ```
 
+The first redundancy pass narrows the interpretation:
+
+```text
+seed-complement target facts: 50
+unclassified nonconstant target facts: 0
+seed-separation visible-pair facts: 200
+unclassified visible-pair facts: 0
+```
+
+So the v0 discovery result should be read as:
+
+```text
+generated closure can force facts beyond the seed;
+the current positive facts are complement/separation consequences;
+no richer dynamic surplus appears in the current generated sweep.
+```
+
 This is the first adapter-side answer to the generate-versus-certify question.
 It is still finite and adapter-relative; it does not establish generic
 substrate-independent generation. The retained report is:

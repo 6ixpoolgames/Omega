@@ -453,7 +453,10 @@ facts appear without predeclaring expected surplus. The current retained sweep
 covers predicate seeds, reachability-derived seeds, and viability-derived
 seeds. It reports 136 total cases, 50 nonconstant-surplus cases, and 86
 collapse cases, with both nonconstant-surplus and collapse controls in every
-family. The retained report is
+family. The first redundancy pass classifies all 50 nonconstant target surplus
+facts as seed complements, all 200 visible-pair surplus facts as seed-separation
+consequences, and leaves 0 unclassified dynamic-surplus facts in this v0 sweep.
+The retained report is
 [finite_relational_closure_discovery_v0/report.md](research_notes/validation_results/finite_relational_closure_discovery_v0/report.md).
 
 The controlled empirical path enumerates fixed small finite families and reports

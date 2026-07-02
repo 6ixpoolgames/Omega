@@ -44,6 +44,7 @@ class ClosureDiscoveryCase:
 
     def summary(self) -> dict[str, object]:
         loaded = load_model(self.model)
+        surplus_redundancy = _case_surplus_redundancy(self)
         return {
             "case_id": self.case_id,
             "model_id": loaded.model_id,
@@ -67,6 +68,7 @@ class ClosureDiscoveryCase:
             "nonconstant_surplus_target_facts": self.observed[
                 "nonconstant_surplus_target_facts"
             ],
+            "surplus_redundancy": surplus_redundancy,
         }
 
 
@@ -97,6 +99,7 @@ class ClosureDiscoveryFamily:
         return tuple(representatives)
 
     def summary(self) -> dict[str, object]:
+        redundancy = _family_surplus_redundancy(self.cases)
         return {
             "family_id": self.family_id,
             "description": self.description,
@@ -111,6 +114,7 @@ class ClosureDiscoveryFamily:
             "representative_cases": [
                 case.summary() for case in self.representative_cases
             ],
+            "surplus_redundancy": redundancy,
         }
 
 
@@ -126,6 +130,7 @@ def generate_closure_discovery() -> tuple[ClosureDiscoveryFamily, ...]:
 
 def closure_discovery_summary() -> dict[str, object]:
     families = generate_closure_discovery()
+    all_cases = tuple(case for family in families for case in family.cases)
     return {
         "family_count": len(families),
         "case_count": sum(len(family.cases) for family in families),
@@ -133,6 +138,7 @@ def closure_discovery_summary() -> dict[str, object]:
             len(family.nonconstant_surplus_cases) for family in families
         ),
         "collapse_case_count": sum(len(family.collapse_cases) for family in families),
+        "surplus_redundancy": _family_surplus_redundancy(all_cases),
         "families": [family.summary() for family in families],
     }
 
@@ -383,3 +389,131 @@ def _provenance(claim_boundary: str) -> dict[str, object]:
         "source": "generated finite relational closure discovery",
         "claim_boundary": claim_boundary,
     }
+
+
+def _case_surplus_redundancy(case: ClosureDiscoveryCase) -> dict[str, object]:
+    """Classify first-pass redundancy in generated closure surplus.
+
+    This is not a canonical implication basis. It only separates the current
+    easy cases: complement facts forced by a seed predicate and visible-pair
+    facts forced by seed-fiber separation. Anything else remains explicitly
+    unclassified.
+    """
+
+    states = tuple(load_model(case.model).domain())
+    seed_facts = set(case.observed["seed_target_facts"])
+    seed_members = {
+        fact: _predicate_fact_members(fact)
+        for fact in seed_facts
+    }
+    seed_complements = {
+        _predicate_fact_key_for_states(states, frozenset(set(states) - set(members)))
+        for members in seed_members.values()
+    }
+    nonconstant_surplus = set(case.observed["nonconstant_surplus_target_facts"])
+    complement_surplus = sorted(nonconstant_surplus & seed_complements)
+    unclassified_target_surplus = sorted(nonconstant_surplus - seed_complements)
+
+    surplus_visible = [
+        (str(left), str(right))
+        for left, right in case.observed["surplus_visible_pairs"]
+    ]
+    seed_separated_visible = [
+        pair
+        for pair in surplus_visible
+        if _pair_crosses_any_seed_members(pair, seed_members.values())
+    ]
+    unclassified_visible = [
+        pair for pair in surplus_visible if pair not in seed_separated_visible
+    ]
+
+    if nonconstant_surplus and not unclassified_target_surplus:
+        target_classification = "seed_complement_only"
+    elif nonconstant_surplus:
+        target_classification = "has_unclassified_target_surplus"
+    else:
+        target_classification = "no_nonconstant_target_surplus"
+
+    return {
+        "target_classification": target_classification,
+        "nonconstant_surplus_target_count": len(nonconstant_surplus),
+        "seed_complement_target_count": len(complement_surplus),
+        "seed_complement_target_facts": complement_surplus,
+        "unclassified_nonconstant_target_count": len(unclassified_target_surplus),
+        "unclassified_nonconstant_target_facts": unclassified_target_surplus,
+        "surplus_visible_pair_count": len(surplus_visible),
+        "seed_separation_visible_pair_count": len(seed_separated_visible),
+        "unclassified_visible_pair_count": len(unclassified_visible),
+        "unclassified_visible_pairs": unclassified_visible,
+    }
+
+
+def _family_surplus_redundancy(
+    cases: tuple[ClosureDiscoveryCase, ...],
+) -> dict[str, object]:
+    rows = [_case_surplus_redundancy(case) for case in cases]
+    target_classification_counts: dict[str, int] = {}
+    for row in rows:
+        key = str(row["target_classification"])
+        target_classification_counts[key] = target_classification_counts.get(key, 0) + 1
+    return {
+        "case_count": len(cases),
+        "target_classification_counts": target_classification_counts,
+        "nonconstant_surplus_target_count": sum(
+            int(row["nonconstant_surplus_target_count"]) for row in rows
+        ),
+        "seed_complement_target_count": sum(
+            int(row["seed_complement_target_count"]) for row in rows
+        ),
+        "unclassified_nonconstant_target_count": sum(
+            int(row["unclassified_nonconstant_target_count"]) for row in rows
+        ),
+        "surplus_visible_pair_count": sum(
+            int(row["surplus_visible_pair_count"]) for row in rows
+        ),
+        "seed_separation_visible_pair_count": sum(
+            int(row["seed_separation_visible_pair_count"]) for row in rows
+        ),
+        "unclassified_visible_pair_count": sum(
+            int(row["unclassified_visible_pair_count"]) for row in rows
+        ),
+        "claim_boundary": (
+            "First-pass redundancy classification only. Seed complements and "
+            "seed-separated visible pairs are easy closure consequences, not "
+            "canonical implication-basis structure. Unclassified buckets are "
+            "the only current candidates for richer dynamic surplus."
+        ),
+    }
+
+
+def _predicate_fact_members(fact: str) -> frozenset[str]:
+    if fact == "pred:{}":
+        return frozenset()
+    prefix = "pred:{"
+    if not fact.startswith(prefix) or not fact.endswith("}"):
+        raise ValueError(f"unsupported predicate fact key: {fact}")
+    inner = fact[len(prefix):-1]
+    if not inner:
+        return frozenset()
+    return frozenset(inner.split(","))
+
+
+def _predicate_fact_key_for_states(
+    states: tuple[str, ...],
+    members: frozenset[str],
+) -> str:
+    if not members:
+        return "pred:{}"
+    ordered = [state for state in states if state in members]
+    return "pred:{" + ",".join(ordered) + "}"
+
+
+def _pair_crosses_any_seed_members(
+    pair: Pair,
+    seed_member_sets: object,
+) -> bool:
+    left, right = pair
+    return any(
+        (left in members) != (right in members)
+        for members in seed_member_sets
+    )

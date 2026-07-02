@@ -75,6 +75,7 @@ def retain_finite_relational_closure_discovery(out_dir: Path) -> dict[str, Any]:
             family.nonconstant_surplus_cases and family.collapse_cases
             for family in families
         ),
+        "surplus_redundancy": _aggregate_redundancy(family_summaries),
         "families": family_summaries,
     }
     _write_json(out_dir / "summary.json", result)
@@ -102,21 +103,58 @@ def render_report(result: dict[str, Any]) -> str:
             "- Every family has positive and collapse controls: "
             f"{result['all_families_have_positive_and_collapse_controls']}"
         ),
+        (
+            "- Unclassified nonconstant target surplus facts: "
+            f"{result['surplus_redundancy']['unclassified_nonconstant_target_count']}"
+        ),
+        (
+            "- Unclassified visible-pair surplus facts: "
+            f"{result['surplus_redundancy']['unclassified_visible_pair_count']}"
+        ),
         "",
         "## Family Breakdown",
         "",
-        "| family | cases | nonconstant surplus | collapse | inconsistent seed |",
-        "| --- | ---: | ---: | ---: | ---: |",
+        "| family | cases | nonconstant surplus | collapse | seed-complement facts | unclassified target facts | unclassified visible pairs |",
+        "| --- | ---: | ---: | ---: | ---: | ---: | ---: |",
     ]
     for family in result["families"]:
+        redundancy = family["surplus_redundancy"]
         lines.append(
             "| {family_id} | {case_count} | {nonconstant_surplus_case_count} | "
-            "{collapse_case_count} | {inconsistent_seed_case_count} |".format(
-                **family
+            "{collapse_case_count} | {seed_complement_target_count} | "
+            "{unclassified_nonconstant_target_count} | "
+            "{unclassified_visible_pair_count} |".format(
+                seed_complement_target_count=redundancy[
+                    "seed_complement_target_count"
+                ],
+                unclassified_nonconstant_target_count=redundancy[
+                    "unclassified_nonconstant_target_count"
+                ],
+                unclassified_visible_pair_count=redundancy[
+                    "unclassified_visible_pair_count"
+                ],
+                **family,
             )
         )
     lines.extend(
         [
+            "",
+            "## Redundancy Read",
+            "",
+            (
+                "The first-pass classifier is deliberately conservative. "
+                "Seed-complement target facts and seed-separated visible pairs "
+                "are counted as easy closure consequences. Any remaining "
+                "nonconstant target surplus would be the current candidate for "
+                "richer dynamic surplus."
+            ),
+            "",
+            (
+                "Current retained result: all nonconstant target surplus facts "
+                "are seed complements, and all visible-pair surplus facts are "
+                "seed-separation consequences. The unclassified dynamic-surplus "
+                "bucket is empty in this v0 sweep."
+            ),
             "",
             "## Claim Boundary",
             "",
@@ -147,6 +185,34 @@ def render_report(result: dict[str, Any]) -> str:
             )
         lines.append("")
     return "\n".join(lines)
+
+
+def _aggregate_redundancy(
+    family_summaries: list[dict[str, object]],
+) -> dict[str, object]:
+    totals = {
+        "case_count": 0,
+        "nonconstant_surplus_target_count": 0,
+        "seed_complement_target_count": 0,
+        "unclassified_nonconstant_target_count": 0,
+        "surplus_visible_pair_count": 0,
+        "seed_separation_visible_pair_count": 0,
+        "unclassified_visible_pair_count": 0,
+    }
+    classification_counts: dict[str, int] = {}
+    for family in family_summaries:
+        redundancy = family["surplus_redundancy"]
+        for key in totals:
+            totals[key] += int(redundancy[key])
+        for key, count in redundancy["target_classification_counts"].items():
+            classification_counts[key] = classification_counts.get(key, 0) + int(count)
+    return totals | {
+        "target_classification_counts": classification_counts,
+        "claim_boundary": (
+            "First-pass redundancy classification only. This is not a canonical "
+            "implication basis and does not establish global dynamic invariance."
+        ),
+    }
 
 
 def _retain_case(case: ClosureDiscoveryCase, out_dir: Path) -> dict[str, Any]:

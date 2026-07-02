@@ -117,6 +117,43 @@ presentation class. It says that, over these small generated universes, closure
 sometimes forces nonconstant structure and sometimes collapses. Both outcomes
 are retained.
 
+## Redundancy Classification
+
+The first cleanup pass classifies the current surplus into easy closure
+consequences versus unclassified surplus:
+
+```text
+seed-complement target facts: 50
+unclassified nonconstant target facts: 0
+seed-separation visible-pair facts: 200
+unclassified visible-pair facts: 0
+```
+
+This is deliberately not a canonical implication basis. It only separates the
+obvious v0 redundancies:
+
+```text
+seed complement:
+  if a seed predicate is forced, its complement is also constant on exactly the
+  same admissible presentation fibers.
+
+seed separation:
+  if a seed predicate has different truth values on two states, admissible
+  presentations cannot merge those states, so ordered cross-fiber visible-pair
+  facts are forced.
+```
+
+The current sober read is therefore:
+
+```text
+the generated closure engine produces facts beyond the seed;
+the current v0 positives are explained by complement and separation effects;
+the richer dynamic-surplus bucket is empty in this sweep.
+```
+
+The next useful closure work should broaden the fact language before claiming
+positive dynamic content from closure discovery.
+
 ## Reading The Result
 
 The positive cases are modest but meaningful:
