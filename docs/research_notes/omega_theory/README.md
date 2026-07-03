@@ -15,6 +15,7 @@ effective_layers_realization_forgetting_emergence_v0.md
 active_surface_area_v0.md
 omega_decision_floor_v0.md
 omega_decision_dominance_v0.md
+omega_decision_stack_checkpoint_v0.md
 omega_decision_blackwell_conservativity_v0.md
 robust_continuation_corridor_v0.md
 alpha_agency_underdetermination_v0.md

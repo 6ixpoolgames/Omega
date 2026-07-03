@@ -445,7 +445,9 @@ lifted future admissibility:
   formalize the register-status corridor.
 
 ODT1 dominance:
-  partial-order dominance over admissible future valuations.
+  value-parametric Hoare/Smyth/Plotkin dominance over already-licensed
+  outcome surfaces, with monotone-valuation acceptance bridges and a
+  deterministic Blackwell-shaped policy-simulation wrapper.
 
 ODT2 arbitration:
   value-bearing tie-breaks, explicitly labeled as value input.
