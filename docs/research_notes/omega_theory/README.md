@@ -13,6 +13,7 @@ Start with:
 ../../../README.md
 effective_layers_realization_forgetting_emergence_v0.md
 active_surface_area_v0.md
+omega_decision_floor_v0.md
 alpha_agency_underdetermination_v0.md
 operational_causal_diamond_agency_v0.md
 finite_deformer_profile_checkpoint_v0.md
