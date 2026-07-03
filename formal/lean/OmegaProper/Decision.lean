@@ -6,6 +6,8 @@ import OmegaProper.Decision.Dominance
 import OmegaProper.Decision.DominanceExamples
 import OmegaProper.Decision.DominanceAcceptance
 import OmegaProper.Decision.DominanceAcceptanceExamples
+import OmegaProper.Decision.DominanceFinite
+import OmegaProper.Decision.DominanceFiniteExamples
 
 /-!
 OmegaProper.Decision umbrella.

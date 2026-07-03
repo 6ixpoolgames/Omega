@@ -211,6 +211,8 @@ Lean files:
 ```text
 formal/lean/OmegaProper/Decision/DominanceAcceptance.lean
 formal/lean/OmegaProper/Decision/DominanceAcceptanceExamples.lean
+formal/lean/OmegaProper/Decision/DominanceFinite.lean
+formal/lean/OmegaProper/Decision/DominanceFiniteExamples.lean
 ```
 
 The structural dominance relations now have a pointwise monotone-valuation
@@ -274,6 +276,73 @@ aboveComplementIndicator_eq_zero_iff
 aboveComplementIndicator_eq_one_iff
 ```
 
+## Finite Best/Worst Acceptance Theorems
+
+The pointwise acceptance bridge has now been lifted to finite best/worst
+valuation comparison over nonempty finite outcome surfaces.
+
+Finite outcome surface:
+
+```text
+FiniteOutcomeSurface W
+  carrier  : Finset W
+  nonempty : carrier.Nonempty
+```
+
+Predicate view:
+
+```text
+FiniteOutcomeSurface.Holds S w := w in S.carrier
+```
+
+Best/worst witness API:
+
+```text
+IsBestValue
+IsWorstValue
+exists_best_value
+exists_worst_value
+bestValue
+worstValue
+bestValue_isBestValue
+worstValue_isWorstValue
+```
+
+Hoare finite acceptance:
+
+```text
+HoareDominates A.Holds B.Holds
+<->
+forall monotone v,
+  bestValue B v <= bestValue A v
+```
+
+Lean name:
+
+```text
+hoare_iff_all_monotone_bestValue_ge
+```
+
+Smyth finite acceptance:
+
+```text
+SmythDominates A.Holds B.Holds
+<->
+forall monotone v,
+  worstValue B v <= worstValue A v
+```
+
+Lean name:
+
+```text
+smyth_iff_all_monotone_worstValue_ge
+```
+
+This is not final value. It says only that, relative to a declared finite
+outcome preorder and monotone valuation discipline, structural dominance and
+finite best/worst valuation comparison coincide. The preorder and valuation
+discipline remain ledger content.
+
 Public compression:
 
 ```text
@@ -289,6 +358,7 @@ Example file:
 ```text
 formal/lean/OmegaProper/Decision/DominanceExamples.lean
 formal/lean/OmegaProper/Decision/DominanceAcceptanceExamples.lean
+formal/lean/OmegaProper/Decision/DominanceFiniteExamples.lean
 ```
 
 ### W1: Incomparability
@@ -338,6 +408,8 @@ Checked result:
 ```text
 W2_angelic_demonic_diverge
 W2_smyth_failure_has_separating_valuation
+W2_best_accepts_A_over_B
+W2_worst_rejects_A_over_B
 ```
 
 Truth table:
@@ -387,6 +459,7 @@ Checked result:
 prefersLow_prefers_low
 prefersLow_not_monotone
 W5_acceptance_and_nonmonotone_reversal
+W5_finite_best_and_worst_acceptance
 ```
 
 Interpretation:
@@ -396,22 +469,6 @@ Under monotone valuations, high dominates low.
 Under arbitrary valuations, a declared valuer can prefer low to high.
 Therefore the admissible valuation class is real ledger content.
 ```
-
-## Finite Max/Min Roadmap
-
-The pointwise acceptance bridge is checked. The intended later finite theorem
-shape is:
-
-```text
-Hoare dominance
-  iff every monotone valuation weakly prefers A by best-case value.
-
-Smyth dominance
-  iff every monotone valuation weakly prefers A by worst-case value.
-```
-
-This requires finite optimization machinery over nonempty finite outcome
-surfaces. It is not part of the current pass.
 
 ## Blackwell Positioning
 
