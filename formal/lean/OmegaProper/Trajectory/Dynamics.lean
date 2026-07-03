@@ -1,6 +1,7 @@
 import OmegaProper.Trajectory.ContinuationDeformation
 import OmegaProper.Trajectory.DeformationProfile
 import OmegaProper.Trajectory.DeformationProfileExamples
+import OmegaProper.Trajectory.FiniteDeformerProfileStrictness
 import OmegaProper.Trajectory.HiddenJointViabilityLossUnderBadPresentation
 import OmegaProper.Trajectory.HiddenLossUnderBadPresentation
 import OmegaProper.Trajectory.HiddenViabilityLossUnderBadPresentation

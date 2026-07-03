@@ -13,7 +13,7 @@ This note separates four things that were easy to conflate:
 
 ```text
 1. already extracted Lean theorem;
-2. Lean-ready deterministic strictness targets;
+2. extracted finite profile-coordinate strictness;
 3. stochastic coherence targets;
 4. adapter-only discovery evidence.
 ```
@@ -134,10 +134,48 @@ This is the main formal lesson from the path-lifting repair: one-step edge
 projection can splice incompatible representatives, so whole histories need a
 coherent lift.
 
+### Finite Profile-Coordinate Strictness
+
+Lean file:
+
+```text
+formal/lean/OmegaProper/Trajectory/FiniteDeformerProfileStrictness.lean
+```
+
+Extracted principle:
+
+```text
+The first finite deformer-profile coordinates are not logically
+interchangeable. Persistence, control reach, feedback advantage, reflexive
+maintenance, own-maintenance score, and joint-continuation effect must remain
+separate until a stronger controlled-system semantics is supplied.
+```
+
+Checked theorem cluster:
+
+```text
+persistence_not_imply_positiveFeedbackAdvantage
+controlReach_not_imply_positiveFeedbackAdvantage
+positiveFeedbackAdvantage_not_imply_positiveReflexiveMaintenance
+ownMaintenanceScore_does_not_determine_jointEffect
+sameOwnMaintenance_allows_positive_and_negative_jointEffect
+```
+
+Status:
+
+```text
+minimal profile-row strictness theorem.
+```
+
+This is not a full controlled-system theorem. The numeric profile scores are
+still adapter- or realization-supplied. The theorem only blocks collapsing the
+current profile axes into simpler proxies.
+
 ## Lean-Ready Deterministic Strictness Targets
 
-These are the cleanest next theorem candidates. Each should be treated as a
-finite witness theorem, not as a universal classification theorem.
+The first minimal profile-row strictness layer is now extracted in Lean. The
+remaining stronger targets below should be treated as controlled-system witness
+theorems, not universal classification theorems.
 
 ### 1. Persistence Does Not Imply Feedback Advantage
 
@@ -393,25 +431,29 @@ They remain downstream research targets, not current theorem extraction.
 
 ## Recommended Next Formal Batch
 
-The next formal batch should be deliberately small:
+The first deliberately small strictness batch has landed as:
 
 ```text
-1. define a minimal finite controlled-profile interface;
-2. prove the deterministic strictness witnesses:
-   persistence !-> feedback advantage;
-   control reach !-> feedback advantage;
-   feedback advantage !-> reflexive maintenance;
-   own-maintenance scalar !-> joint effect;
+formal/lean/OmegaProper/Trajectory/FiniteDeformerProfileStrictness.lean
+```
+
+The next formal batch should only proceed if we want to connect those profile
+rows to an explicit finite controlled-system interface:
+
+```text
+1. define a minimal finite controlled-system/profile interface;
+2. reprove the strictness witnesses as generated controlled-system examples,
+   rather than raw profile rows;
 3. keep examples tiny and explicit;
 4. avoid agency/value/Omega language in names and theorem statements;
 5. defer stochastic lumpability to the next batch unless the deterministic
    interface becomes too awkward.
 ```
 
-Suggested file if Lean is used:
+Suggested file if that stronger Lean layer is used:
 
 ```text
-formal/lean/OmegaProper/Trajectory/FiniteDeformerProfileStrictness.lean
+formal/lean/OmegaProper/Trajectory/FiniteControlledProfileStrictness.lean
 ```
 
 Suggested public phrase:

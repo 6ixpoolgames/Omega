@@ -115,6 +115,7 @@ The current retained checkpoints are:
 | Stochastic hardening | False-positive controls, ablations, robust ambiguity separation. | `agency_diamond_stochastic_hardening_v1/report.md`, `summary.json` |
 | Stochastic exploration | Held-out non-predeclared search, cross-substrate stochastic profiles, calibration/phase sweeps. | `agency_diamond_stochastic_exploration_v1/report.md`, `summary.json` |
 | Spectral detector coordinate | Live-policy sub-Markov spectra, same-own-maintenance/joint-effect strictness, and complex-phase negative controls. | `agency_diamond_spectral_v0/report.md`, `summary.json` |
+| Lean profile strictness | Minimal profile-row theorems showing persistence, control reach, feedback advantage, reflexive maintenance, own-maintenance score, and joint effect are not interchangeable. | `formal/lean/OmegaProper/Trajectory/FiniteDeformerProfileStrictness.lean` |
 
 The retained stochastic exploration checkpoint reports:
 
@@ -255,14 +256,19 @@ The extraction map for this section now lives in:
 deformer_profile_theorem_extraction_v0.md
 ```
 
+The first minimal strictness extraction has landed in:
+
+```text
+formal/lean/OmegaProper/Trajectory/FiniteDeformerProfileStrictness.lean
+```
+
+It proves profile-coordinate non-implications at the finite profile-row level.
+It does not yet connect those rows to a full controlled-system semantics.
+
 The next theorem-sized targets should be narrow:
 
 ```text
-persistence does not imply feedback advantage;
-
-feedback advantage does not imply reflexive maintenance;
-
-live maintenance scalar does not determine joint-continuation effect;
+controlled-system versions of the finite profile strictness witnesses;
 
 complex spectral phase does not imply feedback closure or reflexive
 maintenance;

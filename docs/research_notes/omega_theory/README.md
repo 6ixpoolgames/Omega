@@ -12,6 +12,7 @@ Start with:
 ```text
 ../../../README.md
 effective_layers_realization_forgetting_emergence_v0.md
+active_surface_area_v0.md
 alpha_agency_underdetermination_v0.md
 operational_causal_diamond_agency_v0.md
 finite_deformer_profile_checkpoint_v0.md
@@ -416,6 +417,7 @@ Read these as current active anchors:
 ```text
 layer_a_theorem_spine_v0.md
 layer_a_derivation_audit_v0.md
+active_surface_area_v0.md
 current_theory_posture_v0.md
 constraint_based_alignment_floor_v0.md
 bridge_claims_ledger_v0.md
