@@ -1,5 +1,7 @@
 import OmegaProper.Decision.License
 import OmegaProper.Decision.Examples
+import OmegaProper.Decision.RobustCorridor
+import OmegaProper.Decision.RobustCorridorExamples
 
 /-!
 OmegaProper.Decision umbrella.

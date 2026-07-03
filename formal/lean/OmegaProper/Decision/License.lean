@@ -100,6 +100,23 @@ abbrev License
     (x : D.State) (a : D.Action) : Type _ :=
   LicenseVia D Corridor (fun _ => True) quotientsCertified x a
 
+/-- Proposition-valued form: there exists a license certificate. -/
+def LicensedVia
+    (D : DecisionStructure)
+    (Corridor : D.State -> Prop)
+    (Available : CertifiedJustification -> Prop)
+    (quotientsCertified : Prop)
+    (x : D.State) (a : D.Action) : Prop :=
+  Nonempty (LicenseVia D Corridor Available quotientsCertified x a)
+
+/-- Proposition-valued unrestricted license. -/
+abbrev Licensed
+    (D : DecisionStructure)
+    (Corridor : D.State -> Prop)
+    (quotientsCertified : Prop)
+    (x : D.State) (a : D.Action) : Prop :=
+  LicensedVia D Corridor (fun _ => True) quotientsCertified x a
+
 theorem LicenseVia.concrete_justification
     {D : DecisionStructure}
     {Corridor : D.State -> Prop}
@@ -109,6 +126,17 @@ theorem LicenseVia.concrete_justification
     (L : LicenseVia D Corridor Available quotientsCertified x a) :
     L.justification.concreteFact :=
   L.justification.concrete_holds
+
+theorem LicensedVia.concrete_justification
+    {D : DecisionStructure}
+    {Corridor : D.State -> Prop}
+    {Available : CertifiedJustification -> Prop}
+    {quotientsCertified : Prop}
+    {x : D.State} {a : D.Action}
+    (L : LicensedVia D Corridor Available quotientsCertified x a) :
+    exists J : CertifiedJustification, J.concreteFact := by
+  rcases L with ⟨cert⟩
+  exact ⟨cert.justification, cert.concrete_justification⟩
 
 theorem LicenseVia.successor_in_corridor
     {D : DecisionStructure}
@@ -139,6 +167,18 @@ def licenseVia_mono_routes
   enabled := L.enabled
   corridor_safe := L.corridor_safe
   quotients_certified := L.quotients_certified
+
+theorem licensedVia_mono_routes
+    {D : DecisionStructure}
+    {Corridor : D.State -> Prop}
+    {Available Available' : CertifiedJustification -> Prop}
+    {quotientsCertified : Prop}
+    {x : D.State} {a : D.Action}
+    (hSub : forall J, Available J -> Available' J)
+    (L : LicensedVia D Corridor Available quotientsCertified x a) :
+    LicensedVia D Corridor Available' quotientsCertified x a := by
+  rcases L with ⟨cert⟩
+  exact ⟨licenseVia_mono_routes hSub cert⟩
 
 /--
 A plan license is checked against transported successor surfaces: after the

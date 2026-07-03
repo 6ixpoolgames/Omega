@@ -73,10 +73,23 @@ G2 only when:
 forall y, T(x,a,y) -> Corr(y).
 ```
 
-The Lean file deliberately treats `Corr` as an already-certified predicate.
-That avoids duplicating the fixed-point layer inside the decision scaffold.
-Instantiating `Corr` with an actual controlled viability kernel is the next
-robust-continuation bridge, not part of the thin ODT0 wrapper.
+The base Lean file treats `Corr` as an already-certified predicate. The first
+bridge instantiation now lives in:
+
+```text
+formal/lean/OmegaProper/Decision/RobustCorridor.lean
+docs/research_notes/omega_theory/robust_continuation_corridor_v0.md
+```
+
+There, `Corr` can be instantiated as:
+
+```text
+RobustCorridor D Allowed Requirement
+```
+
+where the fixed point enforces constraint membership, explicit local
+requirement membership, and an allowed enabled action whose every concrete
+successor remains in the candidate set.
 
 Corridor permanence requires the usual finite/demonic assumption: outside the
 greatest controlled invariant set, no memoryless worst-case policy can guarantee
@@ -123,6 +136,7 @@ Lean file:
 
 ```text
 formal/lean/OmegaProper/Decision/License.lean
+formal/lean/OmegaProper/Decision/RobustCorridor.lean
 ```
 
 Main names:
@@ -194,6 +208,9 @@ PlanLicense.head_license
 PlanLicense.successor_tail
 PlanLicense.head_successor_in_corridor
 planLicense_cons
+RobustCorridor
+robustCorridor_supplies_license
+action_with_exit_not_licensed
 ```
 
 Contextual branch obstruction and no-global-section behavior remain richer
@@ -285,6 +302,15 @@ lifted system.
 
 This remains document-level in v0. It should be formalized when the robust
 continuation kernel bridge is opened.
+
+The first deterministic corridor bridge is now open and checked. It proves the
+local fixed-point facts for:
+
+```text
+RobustCorridor D Allowed Requirement
+```
+
+The lifted register-status corridor remains future work.
 
 ### T5. Safety Asymmetry
 
