@@ -470,26 +470,35 @@ Under arbitrary valuations, a declared valuer can prefer low to high.
 Therefore the admissible valuation class is real ledger content.
 ```
 
-## Blackwell Positioning
+## Deterministic Blackwell Conservativity
 
-ODT1 is Blackwell-shaped but does not prove Blackwell.
+ODT1 is now connected to deterministic finite Blackwell comparison through a
+factorization wrapper.
 
-The deterministic finite Blackwell comparison is a conservativity target:
-deterministic experiments correspond to presentations, and dominance should
-recover the existing factorization criterion in a later wrapper theorem.
+If experiment `F` factors through experiment `E`, then every `F`-policy
+compiles into an `E`-policy with the same statewise actions and the same
+outcome surface. The compiled and original surfaces are therefore
+Hoare-equivalent, Smyth-equivalent, and Plotkin-equivalent.
 
-Do not read this note as:
-
-```text
-ODT1 proves Blackwell.
-```
-
-Read it as:
+Read this narrowly:
 
 ```text
-ODT1 supplies a finite order-theory surface designed to receive a later
-deterministic Blackwell conservativity wrapper.
+deterministic factorization
+  -> policy compilation
+  -> exact outcome-surface preservation
+  -> ODT1-equivalent comparison
 ```
+
+Do not read this as:
+
+```text
+ODT1 proves stochastic Blackwell theory.
+```
+
+The stochastic Blackwell theorem, Le Cam deficiency, probabilistic garbling,
+Bayes risk, and expected-utility formulations remain deferred.
+
+See `omega_decision_blackwell_conservativity_v0.md`.
 
 ## Deferred Items
 
@@ -506,7 +515,7 @@ least-violation fallback
 stochastic dominance
 Le Cam deficiency
 Farkas separation
-Blackwell theorem wrapper
+stochastic Blackwell theorem wrapper
 dimension groups
 approachability
 quantum licensing

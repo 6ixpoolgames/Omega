@@ -8,6 +8,8 @@ import OmegaProper.Decision.DominanceAcceptance
 import OmegaProper.Decision.DominanceAcceptanceExamples
 import OmegaProper.Decision.DominanceFinite
 import OmegaProper.Decision.DominanceFiniteExamples
+import OmegaProper.Decision.BlackwellDeterministic
+import OmegaProper.Decision.BlackwellDeterministicExamples
 
 /-!
 OmegaProper.Decision umbrella.
