@@ -64,6 +64,11 @@ theorem identity_factors_to_constant :
     DetBlackwellDominates identityExperiment constantExperiment :=
   ⟨identity_to_constant_factorization⟩
 
+theorem identity_simulates_constant_policies :
+    SimulatesPolicies identityExperiment constantExperiment :=
+  (detBlackwellDominates_iff_policy_simulation).mp
+    identity_factors_to_constant
+
 theorem constant_does_not_factor_to_identity :
     Not (DetBlackwellDominates constantExperiment identityExperiment) := by
   intro hDom
@@ -77,6 +82,26 @@ theorem constant_does_not_factor_to_identity :
       _ = identityExperiment.observe TwoState.s1 :=
         (fac.commutes TwoState.s1).symm
       _ = TwoState.s1 := rfl
+  cases hs
+
+theorem constant_does_not_simulate_identity_policies :
+    Not (SimulatesPolicies constantExperiment identityExperiment) :=
+  not_factorization_implies_policy_gap constant_does_not_factor_to_identity
+
+theorem constant_identity_policy_gap_explicit :
+    Not (exists policyConst : Unit -> TwoState,
+      forall s : TwoState,
+        policyConst (constantExperiment.observe s) =
+          (fun obs : TwoState => obs) (identityExperiment.observe s)) := by
+  rintro ⟨policyConst, hStatewise⟩
+  have h0 := hStatewise TwoState.s0
+  have h1 := hStatewise TwoState.s1
+  have hs : TwoState.s0 = TwoState.s1 := by
+    calc
+      TwoState.s0 = policyConst (constantExperiment.observe TwoState.s0) :=
+        h0.symm
+      _ = policyConst (constantExperiment.observe TwoState.s1) := rfl
+      _ = TwoState.s1 := h1
   cases hs
 
 /-! ## Matching task outcome surfaces -/

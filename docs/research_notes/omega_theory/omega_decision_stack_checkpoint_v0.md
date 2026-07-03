@@ -2,11 +2,12 @@
 
 Status: documentation checkpoint / stack map
 Scope: ODT0 licensing, robust corridor instantiation, ODT1 dominance, finite
-acceptance bridges, and deterministic Blackwell-shaped conservativity
+acceptance bridges, deterministic and stochastic Blackwell-shaped
+conservativity, and ODT2 registered arbitration
 Claim boundary: not complete decision theory, not final value, not aggregation,
 not arbitration, not agency, not identity, not valuerhood, not moral standing,
-not probability-aware risk handling, not stochastic Blackwell theory, not Omega
-validation
+not probability-aware risk handling, not full stochastic Blackwell theorem, not
+Le Cam deficiency, not Omega validation
 
 ## Compression
 
@@ -16,7 +17,8 @@ The current decision stack is:
 ODT0 licenses.
 ODT1 compares.
 Deterministic Blackwell factorization simulates policies.
-ODT2 arbitration remains unopened.
+Stochastic garbling simulates randomized policies.
+ODT2 arbitration is registered least-violation only.
 ```
 
 ODT0 is a conservative decision floor. It licenses an action or plan only when
@@ -31,7 +33,17 @@ The deterministic Blackwell wrapper shows that deterministic experiment
 factorization is compatible with ODT1: if a coarser observation factors through
 a finer observation, every coarser-observation policy compiles into a
 finer-observation policy with the same statewise actions and the same outcome
-surface.
+surface. The closure theorem also proves the converse: universal deterministic
+policy simulation recovers the factorization map.
+
+The stochastic Blackwell v0 wrapper proves only the forward finite-rational
+garbling direction: a randomized policy over the garbled observation compiles
+into a randomized policy over the finer observation with the same induced
+state/action mass.
+
+ODT2 now exists only as registered arbitration: a nonempty finite frontier with
+a declared Nat-valued violation score has a least-violation candidate. The
+score is registered input, not moral authority.
 
 ## Landed Surface
 
@@ -150,11 +162,64 @@ Landed content:
 ```text
 deterministic experiments as observation maps;
 factorization as deterministic informativeness;
+factorization iff universal deterministic policy simulation;
 policy compilation along a factorization;
 statewise action preservation;
 exact outcome-surface preservation;
 Hoare/Smyth/Plotkin equivalence of compiled and original policy surfaces;
 identity-to-constant factorization and constant-not-to-identity strictness.
+```
+
+### Stochastic Blackwell Forward Bridge
+
+Lean files:
+
+```text
+formal/lean/OmegaProper/Decision/BlackwellStochastic.lean
+formal/lean/OmegaProper/Decision/BlackwellStochasticExamples.lean
+```
+
+Documentation:
+
+```text
+omega_decision_stochastic_blackwell_v0.md
+```
+
+Landed content:
+
+```text
+finite exact-rational stochastic experiments;
+finite exact-rational randomized policies;
+finite rational garbling;
+randomized policy compilation along a garbling;
+compiled randomized policy validity;
+preservation of induced state/action mass;
+tiny point-to-half garbling example.
+```
+
+### ODT2 Registered Arbitration
+
+Lean files:
+
+```text
+formal/lean/OmegaProper/Decision/Arbitration.lean
+formal/lean/OmegaProper/Decision/ArbitrationExamples.lean
+```
+
+Documentation:
+
+```text
+omega_decision_arbitration_v0.md
+```
+
+Landed content:
+
+```text
+NatViolationFrame over a nonempty finite frontier;
+LeastViolation predicate;
+existence of a least-violation candidate;
+leastViolationChoice with correctness theorem;
+toy three-option least-violation example.
 ```
 
 ## Current Open Edges
@@ -173,18 +238,16 @@ Phi / Requirement adequacy:
   the formal corridor consumes declared requirements; it does not prove their
   value relevance or moral standing.
 
-full deterministic all-decision-problems theorem:
-  optional. The current deterministic Blackwell bridge proves policy simulation
-  under factorization, not the converse comparison theorem over all decision
-  problems.
+full stochastic Blackwell / Le Cam:
+  deferred. The current stochastic bridge proves garbling -> randomized policy
+  simulation, not the converse theorem over all decision problems.
 
-stochastic Blackwell / Le Cam:
-  deferred. No probabilistic garbling, deficiency, Bayes risk, or expected
-  utility theorem is implemented.
+Bayes risk / expected utility:
+  deferred. The stochastic bridge preserves action mass only.
 
-ODT2 arbitration:
-  unopened. Registered tie-breaks, standing, aggregation, and least-violation
-  fallbacks are later value-laden layers.
+ODT2 authority:
+  open. The least-violation procedure consumes a declared violation score; it
+  does not decide standing, commensurability, or legitimacy.
 ```
 
 ## Dependency Shape
@@ -214,6 +277,13 @@ deterministic experiment factorization
   -> policy compilation
   -> exact outcome-surface preservation
   -> ODT1-equivalent comparison
+
+finite rational stochastic garbling
+  -> randomized policy compilation
+  -> induced action-mass preservation
+
+registered finite frontier + declared violation score
+  -> least-violation candidate
 ```
 
 The non-derived pieces remain explicit:
@@ -225,6 +295,7 @@ declared corridor / requirement;
 declared outcome preorder;
 declared valuation discipline;
 declared finite outcome surface compiler.
+declared violation score / arbitration authority.
 ```
 
 ## Immediate Roadmap
@@ -233,7 +304,8 @@ Highest-priority options, in order of current leverage:
 
 ```text
 1. ODT documentation freeze:
-   keep the stack readable while ODT2 remains unopened.
+   keep the stack readable while stochastic and arbitration surfaces remain
+   deliberately narrow.
 
 2. ODT0 -> ODT1 integration hook:
    define a small certified outcome-surface compiler interface from licensed
@@ -243,11 +315,10 @@ Highest-priority options, in order of current leverage:
    prove when abstract robust-corridor membership reflects to exact
    robust-corridor membership.
 
-4. Full deterministic all-decision-problems theorem:
-   only if the deterministic Blackwell wrapper needs a converse theorem for
-   paper clarity.
+4. Stochastic Blackwell converse:
+   defer unless a paper specifically needs the full iff theorem.
 
-5. ODT2 stub:
+5. ODT2 authority records:
    only after deciding what value input is allowed to enter arbitration.
 ```
 
@@ -267,9 +338,8 @@ identity or selfhood;
 aggregation;
 arbitration;
 probability-aware risk;
-stochastic Blackwell theory;
+full stochastic Blackwell theory;
 Le Cam deficiency;
 quantum structure;
 Omega validation.
 ```
-

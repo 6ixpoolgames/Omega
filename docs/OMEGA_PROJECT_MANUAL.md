@@ -1,6 +1,6 @@
 # Omega Project Manual
 
-Last updated: 2026-06-18
+Last updated: 2026-07-04
 
 Repository: https://github.com/6ixpoolgames/Omega
 
@@ -30,6 +30,9 @@ docs/OMEGA_PROJECT_MANUAL.md:
 
 docs/PUBLIC_RESULTS_INDEX.md:
   empirical result index
+
+docs/research_notes/omega_theory/active_surface_area_v0.md:
+  active branch / documentation todo pile and "what is live" control surface
 
 docs/OMEGA_RUNNING_LOG.md:
   chronological project log
@@ -80,6 +83,7 @@ Current front-door notes:
 - `README.md`
 - `docs/OMEGA_FORMALISM_PRIMER.md`
 - `docs/EXTERNAL_READER_GUIDE.md`
+- `docs/research_notes/omega_theory/active_surface_area_v0.md`
 - `docs/research_notes/omega_theory/layer_a_theorem_spine_v0.md`
 - `docs/research_notes/omega_theory/layer_a_derivation_audit_v0.md`
 - `docs/research_notes/omega_theory/standard_core_compression_v0.md`

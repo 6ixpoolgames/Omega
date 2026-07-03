@@ -52,7 +52,8 @@ quarantined:
 | Closure discovery | active/running | Generated presentation/fact closure over finite universes. | Add richer fact languages and later implication bases. | Global invariance or natural admissibility. |
 | Operational causal diamond / deformer profile | active/running | Finite instrumentation for continuation-deforming profiles and strictness controls. | Prefer theorem extraction over new pilot axes. | Agency, identity, selfhood, value, moral standing. |
 | Omega Decision Floor v0 | active/formalized | Conservative licensing layer for certified justifications, corridor-safe actions, transported plan surfaces, quotient inseparability, and robust-corridor instantiation. | Next bridge is abstract robust-kernel reflection; keep Phi/Requirement adequacy explicit. | Complete decision theory, value, agency, identity, moral standing, probability-aware risk, or Omega validation. |
-| Omega Decision Dominance v0 | active/formalized | Value-parametric Hoare/Smyth/Plotkin dominance layer over already-licensed outcome surfaces, with failure certificates, pointwise monotone-valuation acceptance bridge, finite best/worst acceptance theorems, deterministic Blackwell-shaped factorization/policy-simulation wrapper, and finite strictness examples. | Later decide whether a full deterministic all-decision-problems iff theorem is worth formalizing; stochastic Blackwell remains deferred. | Final value, aggregation, arbitration, agency, identity, valuerhood, moral standing, stochastic risk, Le Cam deficiency, or Omega validation. |
+| Omega Decision Dominance / Blackwell v0 | active/formalized | Value-parametric Hoare/Smyth/Plotkin dominance layer over already-licensed outcome surfaces, with failure certificates, pointwise monotone-valuation acceptance, finite best/worst acceptance, deterministic factorization iff policy simulation, and finite rational stochastic garbling -> randomized policy simulation. | Keep stochastic side to the forward bridge unless a paper needs the full iff theorem; keep action mass distinct from final outcome/value. | Final value, aggregation, arbitration, agency, identity, valuerhood, moral standing, full stochastic Blackwell, Le Cam deficiency, Bayes risk theorem, or Omega validation. |
+| Omega Decision Arbitration v0 | active/formalized | Registered least-violation scaffold over a finite unresolved frontier; proves existence and correctness of a least-violation choice under a declared Nat-valued violation score. | Add authority records and frame-stability only after standing/value inputs are explicitly typed. | Correct standing, moral authority, final value, aggregation, Nash/Arrow/Sen, agency, identity, quantum structure, or Omega validation. |
 | Robust continuation corridor | active/formalized | Controlled greatest fixed point for declared constraints and local requirements; supplies ODT0 corridor-safe actions and excludes corridor-exiting actions. | Prove abstraction reflection for robust kernels. | Requirement adequacy, value relevance, agency, identity, or stochastic risk. |
 | Observed-word/process coherence | active/formalized | Lean theorem surface for path lifting, language inclusion, and edge-image insufficiency. | Reuse for abstraction/process-truth claims. | Entropy, lushness, or value. |
 | Contextual future fields / compatibility thickness | open/running | Local/global obstruction, holonomy, PSD compatibility kernel pilots. | Keep pre-Hilbert until definitions stabilize. | Quantum mechanics, value density, Hilbert ontology. |
@@ -105,7 +106,7 @@ adapter-supplied profile rows, not moral or agency facts.
 | Phi / typed continuation specification | open | How much is state-local versus lineage/temporal/joint? | Keep as design spec, not Alpha-derived primitive. |
 | Lineage and coarse/fine nonreflection | open | What certifies fine protected continuity under coarse summaries? | Theoremize coarse preservation not implying fine protected preservation. |
 | Protected plurality / coupling | open | Which joint continuation facts compose under which coupling assumptions? | Move from marginal failure witnesses to admissible coupling sets. |
-| Stochastic lumpability | open/proposed | What is the stochastic analogue of path lifting for Markov abstractions? | Formalize strong lumpability for rational kernels. |
+| Stochastic lumpability | open/proposed | What is the stochastic analogue of path lifting for Markov abstractions? | Formalize strong lumpability for rational kernels; keep separate from the ODT stochastic Blackwell forward bridge. |
 | Richer closure discovery | open | Does generated closure produce surplus beyond complements/separation? | Add path, recovery-threshold, observed-language, and robust-kernel facts. |
 | Closure implication basis | proposed | Which seed facts canonically imply which generated facts? | Defer until richer fact languages produce nontrivial surplus. |
 | Causal diamond / controllable-observable mode discovery | proposed | Can candidate modes be discovered non-predeclared? | Keep exploratory; use spectra only as detector coordinates. |
@@ -161,9 +162,10 @@ Near-term work should prefer:
 ```text
 1. theorem extraction from stabilized pilots;
 2. richer closure fact languages;
-3. stochastic lumpability as path-coherence analogue;
-4. robust continuation kernel bridge with explicit Phi adequacy;
-5. only then new speculative branch expansion.
+3. ODT surface stabilization and docs after the stochastic/ODT2 sprint;
+4. stochastic lumpability as path-coherence analogue;
+5. robust continuation kernel bridge with explicit Phi adequacy;
+6. only then new speculative branch expansion.
 ```
 
 This ordering keeps the project from widening faster than it can defend its

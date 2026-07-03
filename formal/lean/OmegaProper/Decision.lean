@@ -10,6 +10,10 @@ import OmegaProper.Decision.DominanceFinite
 import OmegaProper.Decision.DominanceFiniteExamples
 import OmegaProper.Decision.BlackwellDeterministic
 import OmegaProper.Decision.BlackwellDeterministicExamples
+import OmegaProper.Decision.BlackwellStochastic
+import OmegaProper.Decision.BlackwellStochasticExamples
+import OmegaProper.Decision.Arbitration
+import OmegaProper.Decision.ArbitrationExamples
 
 /-!
 OmegaProper.Decision umbrella.

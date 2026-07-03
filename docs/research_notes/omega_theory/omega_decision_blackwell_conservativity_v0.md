@@ -1,7 +1,8 @@
 # Omega Decision Blackwell Conservativity v0
 
 Status: deterministic finite conservativity wrapper / ODT1 theorem bridge
-Scope: deterministic experiment factorization and policy-simulation preservation
+Scope: deterministic experiment factorization iff policy simulation, plus
+outcome-surface preservation under compiled policies
 Claim boundary: not stochastic Blackwell theory, not Le Cam deficiency,
 not probabilistic garbling, not final value, not correct valuation class,
 not aggregation, not arbitration, not agency, not identity, not valuerhood,
@@ -23,8 +24,9 @@ then every F-policy compiles into an E-policy
 with the same statewise action and the same outcome surface.
 ```
 
-This recovers deterministic finite Blackwell comparison as factorization. It
-does not open stochastic Blackwell theory.
+This recovers deterministic finite Blackwell comparison as factorization and
+universal deterministic policy simulation. The stochastic forward bridge lives
+in `omega_decision_stochastic_blackwell_v0.md`.
 
 ## Deterministic Experiments
 
@@ -68,6 +70,36 @@ The Lean bridge proves statewise preservation:
 ```text
 compile(policy_F)(E(s)) = policy_F(F(s)).
 ```
+
+## Closure: Factorization Iff Policy Simulation
+
+The deterministic bridge is now closed:
+
+```text
+E dominates F
+iff
+every policy over F-observations can be simulated by a policy over
+E-observations with the same statewise actions.
+```
+
+Forward direction:
+
+```text
+factorization map k
+  -> compile policy_F by policy_F(k(e_obs))
+  -> same statewise action.
+```
+
+Reverse direction:
+
+```text
+instantiate the action type as ObsF
+instantiate policy_F as the identity policy
+recover the factorization map from the simulating E-policy.
+```
+
+This remains deterministic. The stochastic theorem currently landed only in
+the forward garbling direction.
 
 ## Outcome Surface Preservation
 
@@ -131,6 +163,7 @@ Blackwell order:
 ```text
 more informative observation
   -> can simulate less informative observation
+  -> is exactly universal deterministic policy simulation
   -> preserves every policy outcome surface
   -> ODT1 dominance sees no loss for the compiled policy
 ```
@@ -157,7 +190,7 @@ Omega validation
 
 ## Public Compression
 
-Deterministic Blackwell comparison is recovered as factorization: if the
-coarser experiment factors through the finer one, every coarser policy can be
-run through the finer experiment with the same outcome surface.
-
+Deterministic Blackwell comparison is recovered as factorization iff policy
+simulation: the coarser experiment factors through the finer one exactly when
+every coarser policy can be run through the finer experiment with the same
+statewise actions and outcome surface.

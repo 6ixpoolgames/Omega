@@ -2,7 +2,10 @@
 
 Status: research note / formal specification / thin Lean scaffold
 Scope: finite preorder dominance over ODT0-licensed option outcome surfaces
-Claim boundary: not final value, not aggregation, not arbitration, not agency, not identity, not valuerhood, not moral standing, not probability-aware risk handling, not stochastic Blackwell theory, not quantum mechanics, not Omega validation
+Claim boundary: not final value, not aggregation, not arbitration, not agency,
+not identity, not valuerhood, not moral standing, not probability-aware risk
+handling, not full stochastic Blackwell theorem, not Le Cam deficiency, not
+quantum mechanics, not Omega validation
 
 ## Purpose
 
@@ -470,35 +473,61 @@ Under arbitrary valuations, a declared valuer can prefer low to high.
 Therefore the admissible valuation class is real ledger content.
 ```
 
-## Deterministic Blackwell Conservativity
+## Blackwell-Shaped Conservativity
 
-ODT1 is now connected to deterministic finite Blackwell comparison through a
-factorization wrapper.
+ODT1 is now connected to Blackwell-shaped comparison in two bounded ways.
+
+### Deterministic Closure
+
+The deterministic finite wrapper is closed.
 
 If experiment `F` factors through experiment `E`, then every `F`-policy
 compiles into an `E`-policy with the same statewise actions and the same
-outcome surface. The compiled and original surfaces are therefore
-Hoare-equivalent, Smyth-equivalent, and Plotkin-equivalent.
+outcome surface. Conversely, if every `F`-policy can be simulated by an
+`E`-policy with the same statewise actions, then `F` factors through `E`.
+
+The compiled and original deterministic surfaces are Hoare-equivalent,
+Smyth-equivalent, and Plotkin-equivalent.
 
 Read this narrowly:
 
 ```text
 deterministic factorization
-  -> policy compilation
+  <-> universal deterministic policy simulation
   -> exact outcome-surface preservation
   -> ODT1-equivalent comparison
 ```
 
-Do not read this as:
+### Stochastic Forward Bridge
+
+The stochastic finite-rational wrapper lands only the forward garbling
+direction:
+
+```text
+finite rational garbling
+  -> randomized policy compilation
+  -> same induced state/action mass
+```
+
+This is not yet a full stochastic Blackwell theorem. It does not prove a
+converse over all decision problems, Bayes risk, expected utility, or Le Cam
+deficiency.
+
+Do not read the Blackwell-shaped surface as:
 
 ```text
 ODT1 proves stochastic Blackwell theory.
 ```
 
-The stochastic Blackwell theorem, Le Cam deficiency, probabilistic garbling,
-Bayes risk, and expected-utility formulations remain deferred.
+The full stochastic Blackwell theorem, Le Cam deficiency, Bayes risk, and
+expected-utility formulations remain deferred.
 
-See `omega_decision_blackwell_conservativity_v0.md`.
+See:
+
+```text
+omega_decision_blackwell_conservativity_v0.md
+omega_decision_stochastic_blackwell_v0.md
+```
 
 ## Deferred Items
 
@@ -515,7 +544,7 @@ least-violation fallback
 stochastic dominance
 Le Cam deficiency
 Farkas separation
-stochastic Blackwell theorem wrapper
+full stochastic Blackwell theorem wrapper
 dimension groups
 approachability
 quantum licensing
@@ -549,7 +578,8 @@ selfhood
 valuerhood
 moral standing
 probability-aware risk
-stochastic Blackwell theory
+full stochastic Blackwell theory
+Le Cam deficiency
 quantum mechanics
 Omega validation
 ```
