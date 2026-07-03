@@ -36,6 +36,11 @@ instance : Preorder ThreeDiscrete where
     intro x y z hxy hyz
     exact Eq.trans hxy hyz
 
+instance : DecidableRel ((· <= ·) : ThreeDiscrete -> ThreeDiscrete -> Prop) := by
+  intro x y
+  change Decidable (x = y)
+  infer_instance
+
 def W1A : ThreeDiscrete -> Prop
   | ThreeDiscrete.a => True
   | ThreeDiscrete.b => True
@@ -118,6 +123,11 @@ instance : Preorder Chain3 where
   le_trans := by
     intro x y z hxy hyz
     exact Nat.le_trans hxy hyz
+
+instance : DecidableRel ((· <= ·) : Chain3 -> Chain3 -> Prop) := by
+  intro x y
+  change Decidable (x.rank <= y.rank)
+  infer_instance
 
 def W2A : Chain3 -> Prop
   | Chain3.low => True
@@ -204,6 +214,11 @@ instance : Preorder TwoOutcome where
   le_trans := by
     intro x y z hxy hyz
     exact Nat.le_trans hxy hyz
+
+instance : DecidableRel ((· <= ·) : TwoOutcome -> TwoOutcome -> Prop) := by
+  intro x y
+  change Decidable (x.rank <= y.rank)
+  infer_instance
 
 def W5A : TwoOutcome -> Prop
   | TwoOutcome.low => False

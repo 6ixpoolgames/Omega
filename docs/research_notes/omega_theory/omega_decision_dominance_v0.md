@@ -201,8 +201,86 @@ Checked lemma:
 upIndicator_monotone
 ```
 
-This is not a full acceptance theorem. It is a small bridge showing how
-monotone valuation discipline relates to the declared order.
+The acceptance bridge below turns this into a theorem-level interpretation of
+the structural dominance relations.
+
+## Acceptance Bridge
+
+Lean files:
+
+```text
+formal/lean/OmegaProper/Decision/DominanceAcceptance.lean
+formal/lean/OmegaProper/Decision/DominanceAcceptanceExamples.lean
+```
+
+The structural dominance relations now have a pointwise monotone-valuation
+bridge.
+
+Hoare dominance is equivalent to unanimous pointwise angelic cover across all
+monotone valuations:
+
+```text
+HoareDominates A B
+<->
+forall monotone v,
+  every B-outcome can be matched by some A-outcome
+  with at least as much v-value.
+```
+
+Lean name:
+
+```text
+hoare_iff_all_monotone_angelic_covers
+```
+
+Smyth dominance is equivalent to unanimous pointwise demonic floor across all
+monotone valuations:
+
+```text
+SmythDominates A B
+<->
+forall monotone v,
+  every A-outcome has some B-floor beneath it
+  with no greater v-value.
+```
+
+Lean name:
+
+```text
+smyth_iff_all_monotone_demonic_floors
+```
+
+This is not final value. It says only that, relative to a declared outcome
+preorder, structural dominance and monotone-valuation comparison coincide in
+the pointwise cover/floor sense. The declared preorder and admissible valuation
+discipline remain ledger content.
+
+Separating indicators:
+
+```text
+UpIndicator b
+AboveComplementIndicator a
+```
+
+Checked support lemmas:
+
+```text
+upIndicator_self
+upIndicator_eq_one_iff
+upIndicator_eq_zero_iff
+aboveComplementIndicator_monotone
+aboveComplementIndicator_self
+aboveComplementIndicator_eq_zero_iff
+aboveComplementIndicator_eq_one_iff
+```
+
+Public compression:
+
+```text
+ODT1 dominance now has a proof-carrying monotone-valuation interpretation:
+when dominance fails, the layer can exhibit a separating outcome and a monotone
+valuation witnessing the disagreement.
+```
 
 ## Finite Examples
 
@@ -210,6 +288,7 @@ Example file:
 
 ```text
 formal/lean/OmegaProper/Decision/DominanceExamples.lean
+formal/lean/OmegaProper/Decision/DominanceAcceptanceExamples.lean
 ```
 
 ### W1: Incomparability
@@ -233,6 +312,7 @@ Checked result:
 
 ```text
 W1_incomparable
+W1_hoare_failure_has_separating_valuation
 ```
 
 This uses three outcomes. The note intentionally avoids the false claim that
@@ -257,6 +337,7 @@ Checked result:
 
 ```text
 W2_angelic_demonic_diverge
+W2_smyth_failure_has_separating_valuation
 ```
 
 Truth table:
@@ -305,6 +386,7 @@ Checked result:
 ```text
 prefersLow_prefers_low
 prefersLow_not_monotone
+W5_acceptance_and_nonmonotone_reversal
 ```
 
 Interpretation:
@@ -315,9 +397,10 @@ Under arbitrary valuations, a declared valuer can prefer low to high.
 Therefore the admissible valuation class is real ledger content.
 ```
 
-## Acceptance Theorem Roadmap
+## Finite Max/Min Roadmap
 
-The intended later theorem shape is:
+The pointwise acceptance bridge is checked. The intended later finite theorem
+shape is:
 
 ```text
 Hoare dominance
@@ -328,7 +411,7 @@ Smyth dominance
 ```
 
 This requires finite optimization machinery over nonempty finite outcome
-surfaces. It is not part of v0.
+surfaces. It is not part of the current pass.
 
 ## Blackwell Positioning
 

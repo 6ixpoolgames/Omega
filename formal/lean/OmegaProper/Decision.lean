@@ -4,6 +4,8 @@ import OmegaProper.Decision.RobustCorridor
 import OmegaProper.Decision.RobustCorridorExamples
 import OmegaProper.Decision.Dominance
 import OmegaProper.Decision.DominanceExamples
+import OmegaProper.Decision.DominanceAcceptance
+import OmegaProper.Decision.DominanceAcceptanceExamples
 
 /-!
 OmegaProper.Decision umbrella.
