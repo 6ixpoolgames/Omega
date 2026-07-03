@@ -14,6 +14,7 @@ Start with:
 effective_layers_realization_forgetting_emergence_v0.md
 active_surface_area_v0.md
 omega_decision_floor_v0.md
+omega_decision_dominance_v0.md
 robust_continuation_corridor_v0.md
 alpha_agency_underdetermination_v0.md
 operational_causal_diamond_agency_v0.md
