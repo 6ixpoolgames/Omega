@@ -1,9 +1,11 @@
 # Omega Decision Stack Checkpoint v0
 
 Status: documentation checkpoint / stack map
-Scope: ODT0 licensing, robust corridor instantiation, ODT1 dominance, finite
-acceptance bridges, deterministic and stochastic Blackwell-shaped
-conservativity, and ODT2 registered arbitration
+Scope: ODT0 licensing, robust corridor instantiation, ambiguity-family robust
+viability reduction, stationary fixed-point containment, history-policy
+memorylessness, positive stationary trajectory bridge, switching finite-prefix
+trajectory converse, ODT1 dominance, finite acceptance bridges, deterministic
+and stochastic Blackwell-shaped conservativity, and ODT2 registered arbitration
 Claim boundary: not complete decision theory, not final value, not aggregation,
 not arbitration, not agency, not identity, not valuerhood, not moral standing,
 not probability-aware risk handling, not full stochastic Blackwell theorem, not
@@ -15,6 +17,12 @@ The current decision stack is:
 
 ```text
 ODT0 licenses.
+Ambiguity-family robust viability reduces to the existing robust corridor.
+Stationary closed-loop guarantee kernels are confined by that corridor.
+History-dependent fixed-point guarantees collapse to the same corridor.
+Stationary guarantees extract per-model infinite policy traces.
+Switching finite-prefix trajectory guarantees are equivalent to stationary
+fixed-point guarantees.
 ODT1 compares.
 Deterministic Blackwell factorization simulates policies.
 Stochastic garbling simulates randomized policies.
@@ -79,12 +87,27 @@ Lean files:
 ```text
 formal/lean/OmegaProper/Decision/RobustCorridor.lean
 formal/lean/OmegaProper/Decision/RobustCorridorExamples.lean
+formal/lean/OmegaProper/Decision/AmbiguityFamily.lean
+formal/lean/OmegaProper/Decision/AmbiguityFamilyExamples.lean
+formal/lean/OmegaProper/Decision/Containment.lean
+formal/lean/OmegaProper/Decision/ContainmentExamples.lean
+formal/lean/OmegaProper/Decision/HistoryContainment.lean
+formal/lean/OmegaProper/Decision/HistoryContainmentExamples.lean
+formal/lean/OmegaProper/Decision/TrajectoryBridge.lean
+formal/lean/OmegaProper/Decision/TrajectoryBridgeExamples.lean
+formal/lean/OmegaProper/Decision/TrajectoryConverse.lean
+formal/lean/OmegaProper/Decision/TrajectoryConverseExamples.lean
 ```
 
 Documentation:
 
 ```text
 robust_continuation_corridor_v0.md
+ambiguity_family_rvk_reduction_v0.md
+stationary_containment_v0.md
+history_policy_memorylessness_v0.md
+stationary_trajectory_bridge_v0.md
+switching_trajectory_converse_v0.md
 ```
 
 Landed content:
@@ -93,6 +116,20 @@ Landed content:
 controlled greatest fixed point for declared constraints and requirements;
 corridor states have an allowed enabled action preserving the corridor;
 actions with a concrete successor outside the corridor fail the corridor gate.
+finite ambiguity-family RVK reduces to the merged robust corridor with
+family-enabled allowedness;
+shared-action RVK is contained in each per-model corridor;
+intersection of per-model corridors can strictly overstate shared-action RVK.
+stationary policy guarantee kernels are contained in ambiguity-family RVK;
+finite policy-reachable states from a guaranteed start remain inside RVK;
+RVK supplies one stationary policy guaranteeing from every RVK state.
+finite-history-dependent policy guarantees exist exactly on RVK;
+history-policy guarantee existence is equivalent to stationary guarantee
+existence.
+stationary fixed-point guarantees extract per-model infinite policy traces
+staying inside PolicyKernel, Constraint, Requirement, and RVK.
+absence of finite bad prefixes under switching-adversary model choices is
+equivalent to stationary fixed-point guarantee.
 ```
 
 ### ODT1 Structural Dominance
@@ -234,6 +271,11 @@ abstract/exact robust-kernel reflection:
   needed before abstract robust continuation certificates should certify exact
   robust continuation.
 
+trajectory-level containment:
+  positive infinite traces and switching finite-bad-prefix converse are landed.
+  Fixed-world trajectory equivalence remains unclaimed because it is weaker
+  than RVK's robust after-every-step ambiguity semantics.
+
 Phi / Requirement adequacy:
   the formal corridor consumes declared requirements; it does not prove their
   value relevance or moral standing.
@@ -263,6 +305,16 @@ declared corridor predicate
 
 controlled robust corridor
   -> one concrete instantiation of ODT0 G2
+
+finite ambiguity family
+  -> merged transition system + family-enabled allowedness
+  -> existing robust corridor
+  -> stationary closed-loop guarantee kernels confined by RVK
+  -> history-policy guarantee existence equivalent to stationary guarantee
+     existence
+  -> per-model infinite traces from stationary fixed-point guarantees
+  -> switching finite-prefix trajectory guarantee equivalent to stationary
+     fixed-point guarantee
 
 certified quotient inseparability
   -> ODT0 G3
