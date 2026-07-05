@@ -534,6 +534,203 @@ theorem infiniteLiftedTrace_has_fixedModelRealizer
       ((mem_possibleFinset_iff F (trace.info (n + 1)) i).mp
         (hPersistent (n + 1)))⟩
 
+/-! ### Policy-level adaptive guarantee surface -/
+
+/-- A stationary adaptive policy chooses from the current information state. -/
+abbrev AdaptivePolicy
+    (F : AmbFamily State Action) :=
+  InfoState F -> Action
+
+/-- Closed-loop operator for one fixed adaptive policy on the lifted system. -/
+def adaptivePolicyKernelOp
+    (F : AmbFamily State Action)
+    (Allowed : State -> Action -> Prop)
+    (Requirement : State -> Prop)
+    (policy : AdaptivePolicy F)
+    (S : InfoState F -> Prop) :
+    InfoState F -> Prop :=
+  fun info =>
+    (liftedDecision F).Constraint info /\
+    liftedRequirement F Requirement info /\
+    ActionRobustKeeps (liftedDecision F) (liftedAllowed F Allowed)
+      S info (policy info)
+
+/-- Closed-loop adaptive policy kernel. -/
+def AdaptivePolicyKernel
+    (F : AmbFamily State Action)
+    (Allowed : State -> Action -> Prop)
+    (Requirement : State -> Prop)
+    (policy : AdaptivePolicy F) :
+    InfoState F -> Prop :=
+  gfp (adaptivePolicyKernelOp F Allowed Requirement policy)
+
+/-- Fixed-point reading of an adaptive policy guaranteeing from an information state. -/
+def AdaptivePolicyGuarantees
+    (F : AmbFamily State Action)
+    (Allowed : State -> Action -> Prop)
+    (Requirement : State -> Prop)
+    (policy : AdaptivePolicy F)
+    (info : InfoState F) : Prop :=
+  AdaptivePolicyKernel F Allowed Requirement policy info
+
+theorem adaptivePolicyKernelOp_mono
+    (F : AmbFamily State Action)
+    (Allowed : State -> Action -> Prop)
+    (Requirement : State -> Prop)
+    (policy : AdaptivePolicy F) :
+    Mono (adaptivePolicyKernelOp F Allowed Requirement policy) := by
+  intro p q hpq info hInfo
+  rcases hInfo with ⟨hConstraint, hReq, hKeep⟩
+  rcases hKeep with ⟨hAllowed, hEnabled, hSafe⟩
+  exact ⟨hConstraint, hReq, hAllowed, hEnabled, by
+    intro next hStep
+    exact hpq next (hSafe next hStep)⟩
+
+theorem adaptivePolicyKernel_fixed
+    (F : AmbFamily State Action)
+    (Allowed : State -> Action -> Prop)
+    (Requirement : State -> Prop)
+    (policy : AdaptivePolicy F) :
+    PSub (AdaptivePolicyKernel F Allowed Requirement policy)
+        (adaptivePolicyKernelOp F Allowed Requirement policy
+          (AdaptivePolicyKernel F Allowed Requirement policy)) /\
+      PSub
+        (adaptivePolicyKernelOp F Allowed Requirement policy
+          (AdaptivePolicyKernel F Allowed Requirement policy))
+        (AdaptivePolicyKernel F Allowed Requirement policy) := by
+  exact gfp_fixed
+    (adaptivePolicyKernelOp_mono F Allowed Requirement policy)
+
+theorem adaptivePolicyKernel_action_safe
+    (F : AmbFamily State Action)
+    (Allowed : State -> Action -> Prop)
+    (Requirement : State -> Prop)
+    (policy : AdaptivePolicy F)
+    {info : InfoState F}
+    (hInfo : AdaptivePolicyKernel F Allowed Requirement policy info) :
+    ActionRobustKeeps (liftedDecision F) (liftedAllowed F Allowed)
+      (AdaptivePolicyKernel F Allowed Requirement policy)
+      info (policy info) := by
+  exact ((adaptivePolicyKernel_fixed F Allowed Requirement policy).left
+    info hInfo).right.right
+
+theorem adaptivePolicyKernel_sub_adaptiveKernel
+    (F : AmbFamily State Action)
+    (Allowed : State -> Action -> Prop)
+    (Requirement : State -> Prop)
+    (policy : AdaptivePolicy F) :
+    PSub (AdaptivePolicyKernel F Allowed Requirement policy)
+      (AdaptiveKernel F Allowed Requirement) := by
+  apply postfixed_le_gfp
+  intro info hInfo
+  have hClosed :=
+    (adaptivePolicyKernel_fixed F Allowed Requirement policy).left
+      info hInfo
+  rcases hClosed with ⟨hConstraint, hReq, hKeep⟩
+  exact ⟨hConstraint, hReq, policy info, hKeep⟩
+
+theorem adaptivePolicyGuarantee_implies_adaptiveKernel
+    (F : AmbFamily State Action)
+    (Allowed : State -> Action -> Prop)
+    (Requirement : State -> Prop)
+    (policy : AdaptivePolicy F)
+    {info : InfoState F}
+    (hInfo : AdaptivePolicyGuarantees F Allowed Requirement policy info) :
+    AdaptiveKernel F Allowed Requirement info :=
+  adaptivePolicyKernel_sub_adaptiveKernel F Allowed Requirement policy
+    info hInfo
+
+noncomputable section
+
+/--
+Canonical adaptive-kernel policy: choose a robust lifted action on adaptive
+kernel states and use an arbitrary default elsewhere.
+-/
+def adaptiveKernelPolicy
+    (F : AmbFamily State Action)
+    (Allowed : State -> Action -> Prop)
+    (Requirement : State -> Prop)
+    [Inhabited Action] :
+    AdaptivePolicy F := by
+  classical
+  exact fun info =>
+    if hInfo : AdaptiveKernel F Allowed Requirement info then
+      Classical.choose
+        (adaptiveKernel_has_action F Allowed Requirement hInfo)
+    else
+      default
+
+theorem adaptiveKernelPolicy_spec
+    (F : AmbFamily State Action)
+    (Allowed : State -> Action -> Prop)
+    (Requirement : State -> Prop)
+    [Inhabited Action]
+    {info : InfoState F}
+    (hInfo : AdaptiveKernel F Allowed Requirement info) :
+    ActionRobustKeeps (liftedDecision F) (liftedAllowed F Allowed)
+      (AdaptiveKernel F Allowed Requirement) info
+      (adaptiveKernelPolicy F Allowed Requirement info) := by
+  classical
+  have hSpec :=
+    Classical.choose_spec
+      (adaptiveKernel_has_action F Allowed Requirement hInfo)
+  simpa [adaptiveKernelPolicy, hInfo] using hSpec
+
+theorem adaptiveKernelPolicy_postfixed
+    (F : AmbFamily State Action)
+    (Allowed : State -> Action -> Prop)
+    (Requirement : State -> Prop)
+    [Inhabited Action] :
+    Postfixed
+      (adaptivePolicyKernelOp F Allowed Requirement
+        (adaptiveKernelPolicy F Allowed Requirement))
+      (AdaptiveKernel F Allowed Requirement) := by
+  intro info hInfo
+  exact ⟨
+    (robustCorridor_sub_constraint (liftedDecision F)
+      (liftedAllowed F Allowed) (liftedRequirement F Requirement)
+      info hInfo),
+    (robustCorridor_sub_requirement (liftedDecision F)
+      (liftedAllowed F Allowed) (liftedRequirement F Requirement)
+      info hInfo),
+    adaptiveKernelPolicy_spec F Allowed Requirement hInfo⟩
+
+theorem adaptiveKernel_sub_adaptivePolicyKernel
+    (F : AmbFamily State Action)
+    (Allowed : State -> Action -> Prop)
+    (Requirement : State -> Prop)
+    [Inhabited Action] :
+    PSub (AdaptiveKernel F Allowed Requirement)
+      (AdaptivePolicyKernel F Allowed Requirement
+        (adaptiveKernelPolicy F Allowed Requirement)) := by
+  exact postfixed_le_gfp
+    (adaptiveKernelPolicy_postfixed F Allowed Requirement)
+
+/--
+Policy-level fixed-point correspondence for the adaptive lift: a stationary
+information-state policy guarantees exactly from adaptive-kernel states.
+-/
+theorem exists_adaptivePolicyGuarantees_iff_adaptiveKernel
+    (F : AmbFamily State Action)
+    (Allowed : State -> Action -> Prop)
+    (Requirement : State -> Prop)
+    [Inhabited Action]
+    (info : InfoState F) :
+    (exists policy : AdaptivePolicy F,
+      AdaptivePolicyGuarantees F Allowed Requirement policy info) <->
+        AdaptiveKernel F Allowed Requirement info := by
+  constructor
+  · intro h
+    rcases h with ⟨policy, hPolicy⟩
+    exact adaptivePolicyGuarantee_implies_adaptiveKernel
+      F Allowed Requirement policy hPolicy
+  · intro hInfo
+    exact ⟨adaptiveKernelPolicy F Allowed Requirement,
+      adaptiveKernel_sub_adaptivePolicyKernel F Allowed Requirement
+        info hInfo⟩
+
+end
+
 end AdaptiveFixedWorld
 end Decision
 end OmegaProper

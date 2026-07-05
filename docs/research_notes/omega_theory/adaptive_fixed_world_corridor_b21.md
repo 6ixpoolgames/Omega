@@ -1,6 +1,6 @@
 # Adaptive Fixed-World Corridor B2.1
 
-Status: Lean lift and strictness checkpoint / retained Python witness checkpoint / next theorem seam
+Status: Lean policy-correspondence and strictness checkpoint / retained Python witness checkpoint / next theorem seam
 Scope: finite unknown-but-fixed possibilistic ambiguity with observation-driven
 model identification
 Claim boundary: not a full fixed-world correspondence theorem, not stochastic,
@@ -226,9 +226,28 @@ infiniteLiftedTrace_has_fixedModelRealizer:
   fixed model that realizes every observed concrete transition.
 ```
 
-This is still below the full fixed-world correspondence theorem: it extracts a
-fixed-model realizer for a lifted trace, but does not yet prove the full
-policy-level iff for fixed-world persistence.
+The policy-level fixed-point correspondence has also landed:
+
+```text
+AdaptivePolicy:
+  stationary policy over information states.
+
+AdaptivePolicyKernel:
+  closed-loop guarantee kernel for one adaptive policy on the lifted system.
+
+AdaptivePolicyGuarantees:
+  fixed-point reading of that policy guaranteeing from an information state.
+
+exists_adaptivePolicyGuarantees_iff_adaptiveKernel:
+  some stationary information-state policy guarantees exactly from
+  AdaptiveKernel states.
+```
+
+This is still below the full trajectory/maximal fixed-world correspondence
+theorem: it proves the policy-level fixed-point iff over the lifted
+information-state system, and the fixed-model realizer extracts one concrete
+model for nonempty infinite lifted traces. It does not yet package a standalone
+fixed-world trajectory semantics and prove it equivalent to the fixed point.
 
 ## Expected Theorem Shape
 
@@ -249,8 +268,9 @@ The expected proof route is now:
 ```text
 1. use the landed lifted-system reduction;
 2. use the landed finite-set stabilization and fixed-model realizer theorem;
-3. add the policy-level fixed-world persistence statement;
-4. transport the existing switching containment/memorylessness results.
+3. use the landed policy-level fixed-point correspondence;
+4. if needed, package a trajectory-level fixed-world persistence semantics and
+   prove the remaining equivalence.
 ```
 
 ## Relation To Existing Corridors
@@ -359,6 +379,7 @@ This note does not claim:
 
 ```text
 the full fixed-world iff theorem is proved;
+the trajectory/maximal fixed-world semantics is fully packaged;
 fake-update is part of the sound lifted update relation;
 the observation interface is empirically valid;
 all uncertainty is learnable;
