@@ -21,6 +21,13 @@ from omega.adapters.finite_relational.closure_discovery import (
     closure_discovery_summary,
     generate_closure_discovery,
 )
+from omega.adapters.finite_relational.closure_discovery_v2 import (
+    ClosureV2Case,
+    ClosureV2Fact,
+    ClosureV2Family,
+    closure_discovery_v2_summary,
+    generate_closure_discovery_v2,
+)
 from omega.adapters.finite_relational.derived_graph import (
     compile_derived_graph,
     compile_derived_graph_path,
@@ -168,6 +175,9 @@ __all__ = [
     "Channel",
     "ClosureDiscoveryCase",
     "ClosureDiscoveryFamily",
+    "ClosureV2Case",
+    "ClosureV2Fact",
+    "ClosureV2Family",
     "Decoder",
     "FiniteFunction",
     "FiniteRelationalModel",
@@ -227,6 +237,7 @@ __all__ = [
     "function_recoverable_from_observation",
     "generate_adversarial_cases",
     "generate_closure_discovery",
+    "generate_closure_discovery_v2",
     "generate_controlled_experiment",
     "generate_deterministic_layer_study",
     "generate_grid_obstacle_characterization",
@@ -237,6 +248,7 @@ __all__ = [
     "generate_stochastic_continuation_loss_study",
     "generate_stochastic_recovery_study",
     "closure_discovery_summary",
+    "closure_discovery_v2_summary",
     "controlled_experiment_summary",
     "load_model",
     "load_model_path",

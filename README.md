@@ -137,10 +137,13 @@ For the high-level orientation:
 4. [External Reader Guide](docs/EXTERNAL_READER_GUIDE.md)
 5. [Current Theory Posture](docs/research_notes/omega_theory/current_theory_posture_v0.md)
 6. [Active Surface Area](docs/research_notes/omega_theory/active_surface_area_v0.md)
-7. [Constraint-Based Alignment Floor](docs/research_notes/omega_theory/constraint_based_alignment_floor_v0.md)
-8. [Standard Core Compression](docs/research_notes/omega_theory/standard_core_compression_v0.md)
-9. [Adapter Provenance](docs/research_notes/omega_theory/adapter_provenance_v0.md)
-10. [Dynamics Abstraction Status](docs/research_notes/omega_theory/dynamics_abstraction_status_v0.md)
+7. [Omega Decision Stack Checkpoint](docs/research_notes/omega_theory/omega_decision_stack_checkpoint_v0.md)
+8. [ODT Adjacency and Delta](docs/research_notes/omega_theory/odt_adjacency_and_delta_v0.md)
+9. [Constraint-Based Alignment Floor](docs/research_notes/omega_theory/constraint_based_alignment_floor_v0.md)
+10. [Closure Discovery v2](docs/research_notes/omega_theory/closure_discovery_v2.md)
+11. [Standard Core Compression](docs/research_notes/omega_theory/standard_core_compression_v0.md)
+12. [Adapter Provenance](docs/research_notes/omega_theory/adapter_provenance_v0.md)
+13. [Dynamics Abstraction Status](docs/research_notes/omega_theory/dynamics_abstraction_status_v0.md)
 
 For the current theorem spine:
 

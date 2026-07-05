@@ -16,6 +16,9 @@ active_surface_area_v0.md
 omega_decision_floor_v0.md
 omega_decision_dominance_v0.md
 omega_decision_stack_checkpoint_v0.md
+odt_adjacency_and_delta_v0.md
+odt_supervisory_control_docking_v0.md
+odt_markov_categorical_blackwell_positioning_v0.md
 omega_decision_blackwell_conservativity_v0.md
 omega_decision_stochastic_blackwell_v0.md
 omega_decision_arbitration_v0.md
@@ -57,6 +60,8 @@ stochastic_recovery_formalization_v0.md
 recovery_layer_checkpoint_v0.md
 coarsening_permanence_v0.md
 presentation_fact_closure_v0.md
+closure_discovery_v0.md
+closure_discovery_v2.md
 robust_recovery_ambiguity_sets_v0.md
 prior_relative_recovery_v0.md
 bridge_claims_ledger_v0.md

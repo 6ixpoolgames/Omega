@@ -561,6 +561,11 @@ machine-readable summary at
 [finite_relational_closure_discovery_v0/report.md](research_notes/validation_results/finite_relational_closure_discovery_v0/report.md)
 and
 [finite_relational_closure_discovery_v0/summary.json](research_notes/validation_results/finite_relational_closure_discovery_v0/summary.json).
+Finite relational closure discovery v2 retains a richer dynamic fact-language
+pilot at
+[finite_relational_closure_discovery_v2/report.md](research_notes/validation_results/finite_relational_closure_discovery_v2/report.md)
+and
+[finite_relational_closure_discovery_v2/summary.json](research_notes/validation_results/finite_relational_closure_discovery_v2/summary.json).
 The operational-causal-diamond agency-layer pilot retains a human-readable note
 and machine-readable summary at
 [agency_diamond_midscale_v0.md](research_notes/validation_results/agency_diamond_midscale_v0.md)

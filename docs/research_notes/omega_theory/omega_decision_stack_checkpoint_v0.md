@@ -53,6 +53,14 @@ ODT2 now exists only as registered arbitration: a nonempty finite frontier with
 a declared Nat-valued violation score has a least-violation candidate. The
 score is registered input, not moral authority.
 
+Positioning notes:
+
+```text
+odt_adjacency_and_delta_v0.md
+odt_supervisory_control_docking_v0.md
+odt_markov_categorical_blackwell_positioning_v0.md
+```
+
 ## Landed Surface
 
 ### ODT0 Floor

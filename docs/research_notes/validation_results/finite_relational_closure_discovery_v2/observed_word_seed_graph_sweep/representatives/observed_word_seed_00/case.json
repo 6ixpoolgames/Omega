@@ -1,0 +1,442 @@
+{
+  "case_id": "observed_word_seed_00",
+  "edges": [],
+  "facts": [
+    {
+      "dynamic": false,
+      "key": "profile:constant_all",
+      "kind": "predicate",
+      "profile": {
+        "a": "1",
+        "b": "1",
+        "c": "1"
+      }
+    },
+    {
+      "dynamic": true,
+      "key": "profile:reach:goal",
+      "kind": "reachability_profile",
+      "profile": {
+        "a": "0",
+        "b": "0",
+        "c": "1"
+      }
+    },
+    {
+      "dynamic": true,
+      "key": "profile:viability:safe_all",
+      "kind": "viability_profile",
+      "profile": {
+        "a": "0",
+        "b": "0",
+        "c": "0"
+      }
+    },
+    {
+      "dynamic": true,
+      "key": "profile:safe_prefix_count:h=1",
+      "kind": "safe_prefix_count_profile",
+      "profile": {
+        "a": "0",
+        "b": "0",
+        "c": "0"
+      }
+    },
+    {
+      "dynamic": true,
+      "key": "profile:safe_prefix_count:h=2",
+      "kind": "safe_prefix_count_profile",
+      "profile": {
+        "a": "0",
+        "b": "0",
+        "c": "0"
+      }
+    },
+    {
+      "dynamic": true,
+      "key": "profile:extendable_safe_prefix_count:h=1",
+      "kind": "extendable_safe_prefix_count_profile",
+      "profile": {
+        "a": "0",
+        "b": "0",
+        "c": "0"
+      }
+    },
+    {
+      "dynamic": true,
+      "key": "profile:observed_words:goal_status:h=1",
+      "kind": "observed_word_profile",
+      "profile": {
+        "a": "",
+        "b": "",
+        "c": ""
+      }
+    },
+    {
+      "dynamic": true,
+      "key": "profile:observed_words:goal_status:h=2",
+      "kind": "observed_word_profile",
+      "profile": {
+        "a": "",
+        "b": "",
+        "c": ""
+      }
+    },
+    {
+      "dynamic": true,
+      "key": "struct:step_lifting",
+      "kind": "structural",
+      "profile": {}
+    },
+    {
+      "dynamic": true,
+      "key": "struct:path_lifting:h=1",
+      "kind": "structural",
+      "profile": {}
+    },
+    {
+      "dynamic": true,
+      "key": "struct:path_lifting:h=2",
+      "kind": "structural",
+      "profile": {}
+    },
+    {
+      "dynamic": true,
+      "key": "struct:path_lifting:h=3",
+      "kind": "structural",
+      "profile": {}
+    },
+    {
+      "dynamic": false,
+      "key": "visible:a->b",
+      "kind": "visible_pair",
+      "profile": {}
+    },
+    {
+      "dynamic": false,
+      "key": "visible:a->c",
+      "kind": "visible_pair",
+      "profile": {}
+    },
+    {
+      "dynamic": false,
+      "key": "visible:b->a",
+      "kind": "visible_pair",
+      "profile": {}
+    },
+    {
+      "dynamic": false,
+      "key": "visible:b->c",
+      "kind": "visible_pair",
+      "profile": {}
+    },
+    {
+      "dynamic": false,
+      "key": "visible:c->a",
+      "kind": "visible_pair",
+      "profile": {}
+    },
+    {
+      "dynamic": false,
+      "key": "visible:c->b",
+      "kind": "visible_pair",
+      "profile": {}
+    }
+  ],
+  "observed": {
+    "admissible_nonempty": true,
+    "admissible_presentation_count": 5,
+    "admissible_presentations": [
+      [
+        [
+          "a",
+          "block_0"
+        ],
+        [
+          "b",
+          "block_0"
+        ],
+        [
+          "c",
+          "block_0"
+        ]
+      ],
+      [
+        [
+          "a",
+          "block_0"
+        ],
+        [
+          "b",
+          "block_0"
+        ],
+        [
+          "c",
+          "block_1"
+        ]
+      ],
+      [
+        [
+          "a",
+          "block_0"
+        ],
+        [
+          "b",
+          "block_1"
+        ],
+        [
+          "c",
+          "block_0"
+        ]
+      ],
+      [
+        [
+          "a",
+          "block_0"
+        ],
+        [
+          "b",
+          "block_1"
+        ],
+        [
+          "c",
+          "block_1"
+        ]
+      ],
+      [
+        [
+          "a",
+          "block_0"
+        ],
+        [
+          "b",
+          "block_1"
+        ],
+        [
+          "c",
+          "block_2"
+        ]
+      ]
+    ],
+    "claim_boundary": "Closure v2 is a generated finite pilot over richer fact objects. It is not a canonical implication basis and does not establish natural admissibility, global invariance, agency, value, or Omega.",
+    "closure_fact_count": 11,
+    "closure_facts": [
+      "profile:constant_all",
+      "profile:extendable_safe_prefix_count:h=1",
+      "profile:observed_words:goal_status:h=1",
+      "profile:observed_words:goal_status:h=2",
+      "profile:safe_prefix_count:h=1",
+      "profile:safe_prefix_count:h=2",
+      "profile:viability:safe_all",
+      "struct:path_lifting:h=1",
+      "struct:path_lifting:h=2",
+      "struct:path_lifting:h=3",
+      "struct:step_lifting"
+    ],
+    "closure_mode": "generated_richer_fact_language_v2",
+    "dynamic_surplus_facts": [],
+    "edge_count": 0,
+    "fact_universe": [
+      {
+        "dynamic": false,
+        "key": "profile:constant_all",
+        "kind": "predicate",
+        "nonconstant_profile": false,
+        "profile": {
+          "a": "1",
+          "b": "1",
+          "c": "1"
+        }
+      },
+      {
+        "dynamic": true,
+        "key": "profile:reach:goal",
+        "kind": "reachability_profile",
+        "nonconstant_profile": true,
+        "profile": {
+          "a": "0",
+          "b": "0",
+          "c": "1"
+        }
+      },
+      {
+        "dynamic": true,
+        "key": "profile:viability:safe_all",
+        "kind": "viability_profile",
+        "nonconstant_profile": false,
+        "profile": {
+          "a": "0",
+          "b": "0",
+          "c": "0"
+        }
+      },
+      {
+        "dynamic": true,
+        "key": "profile:safe_prefix_count:h=1",
+        "kind": "safe_prefix_count_profile",
+        "nonconstant_profile": false,
+        "profile": {
+          "a": "0",
+          "b": "0",
+          "c": "0"
+        }
+      },
+      {
+        "dynamic": true,
+        "key": "profile:safe_prefix_count:h=2",
+        "kind": "safe_prefix_count_profile",
+        "nonconstant_profile": false,
+        "profile": {
+          "a": "0",
+          "b": "0",
+          "c": "0"
+        }
+      },
+      {
+        "dynamic": true,
+        "key": "profile:extendable_safe_prefix_count:h=1",
+        "kind": "extendable_safe_prefix_count_profile",
+        "nonconstant_profile": false,
+        "profile": {
+          "a": "0",
+          "b": "0",
+          "c": "0"
+        }
+      },
+      {
+        "dynamic": true,
+        "key": "profile:observed_words:goal_status:h=1",
+        "kind": "observed_word_profile",
+        "nonconstant_profile": false,
+        "profile": {
+          "a": "",
+          "b": "",
+          "c": ""
+        }
+      },
+      {
+        "dynamic": true,
+        "key": "profile:observed_words:goal_status:h=2",
+        "kind": "observed_word_profile",
+        "nonconstant_profile": false,
+        "profile": {
+          "a": "",
+          "b": "",
+          "c": ""
+        }
+      },
+      {
+        "dynamic": true,
+        "key": "struct:step_lifting",
+        "kind": "structural",
+        "nonconstant_profile": false,
+        "profile": {}
+      },
+      {
+        "dynamic": true,
+        "key": "struct:path_lifting:h=1",
+        "kind": "structural",
+        "nonconstant_profile": false,
+        "profile": {}
+      },
+      {
+        "dynamic": true,
+        "key": "struct:path_lifting:h=2",
+        "kind": "structural",
+        "nonconstant_profile": false,
+        "profile": {}
+      },
+      {
+        "dynamic": true,
+        "key": "struct:path_lifting:h=3",
+        "kind": "structural",
+        "nonconstant_profile": false,
+        "profile": {}
+      },
+      {
+        "dynamic": false,
+        "key": "visible:a->b",
+        "kind": "visible_pair",
+        "nonconstant_profile": false,
+        "profile": {}
+      },
+      {
+        "dynamic": false,
+        "key": "visible:a->c",
+        "kind": "visible_pair",
+        "nonconstant_profile": false,
+        "profile": {}
+      },
+      {
+        "dynamic": false,
+        "key": "visible:b->a",
+        "kind": "visible_pair",
+        "nonconstant_profile": false,
+        "profile": {}
+      },
+      {
+        "dynamic": false,
+        "key": "visible:b->c",
+        "kind": "visible_pair",
+        "nonconstant_profile": false,
+        "profile": {}
+      },
+      {
+        "dynamic": false,
+        "key": "visible:c->a",
+        "kind": "visible_pair",
+        "nonconstant_profile": false,
+        "profile": {}
+      },
+      {
+        "dynamic": false,
+        "key": "visible:c->b",
+        "kind": "visible_pair",
+        "nonconstant_profile": false,
+        "profile": {}
+      }
+    ],
+    "fact_universe_count": 18,
+    "globally_valid_surplus_facts": [
+      "profile:constant_all",
+      "profile:extendable_safe_prefix_count:h=1",
+      "profile:observed_words:goal_status:h=2",
+      "profile:safe_prefix_count:h=1",
+      "profile:safe_prefix_count:h=2",
+      "profile:viability:safe_all",
+      "struct:path_lifting:h=1",
+      "struct:path_lifting:h=2",
+      "struct:path_lifting:h=3",
+      "struct:step_lifting"
+    ],
+    "presentation_universe_count": 5,
+    "seed_determined_dynamic_profile_surplus_facts": [],
+    "seed_fact_keys": [
+      "profile:observed_words:goal_status:h=1"
+    ],
+    "seed_forced_structural_surplus_facts": [],
+    "state_count": 3,
+    "surplus_fact_count": 10,
+    "surplus_facts": [
+      "profile:constant_all",
+      "profile:extendable_safe_prefix_count:h=1",
+      "profile:observed_words:goal_status:h=2",
+      "profile:safe_prefix_count:h=1",
+      "profile:safe_prefix_count:h=2",
+      "profile:viability:safe_all",
+      "struct:path_lifting:h=1",
+      "struct:path_lifting:h=2",
+      "struct:path_lifting:h=3",
+      "struct:step_lifting"
+    ],
+    "unclassified_dynamic_profile_surplus_facts": []
+  },
+  "seed_fact_keys": [
+    "profile:observed_words:goal_status:h=1"
+  ],
+  "states": [
+    "a",
+    "b",
+    "c"
+  ]
+}

@@ -154,6 +154,11 @@ the richer dynamic-surplus bucket is empty in this sweep.
 The next useful closure work should broaden the fact language before claiming
 positive dynamic content from closure discovery.
 
+Update: the bounded follow-up is recorded in
+[`closure_discovery_v2.md`](closure_discovery_v2.md). V2 adds dynamic profiles
+and structural process-coherence facts while retaining the same claim boundary:
+it is a generated finite pilot, not global invariance or natural admissibility.
+
 ## Reading The Result
 
 The positive cases are modest but meaningful:
