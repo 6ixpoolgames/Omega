@@ -1,3 +1,4 @@
+import Mathlib.Data.Finset.Max
 import OmegaProper.Decision.AmbiguityFamily
 
 /-!
@@ -384,6 +385,154 @@ theorem liftedReach_terminalModel_realizes_fixedModelReach
           F.Step i _ (policy _) _ :=
         liftedStep_terminalModel_realizes_step F hLift hFinishPossible
       exact FixedModelReach.step hFixedPrev hConcrete
+
+/-! ### Finite model-set view and infinite lifted traces -/
+
+/--
+Finite view of an information state's possible models. The core state keeps
+`possible` as a predicate; this view is only for finite stabilization arguments.
+-/
+noncomputable def possibleFinset
+    (F : AmbFamily State Action)
+    (info : InfoState F) : Finset F.Model := by
+  classical
+  exact Finset.univ.filter info.possible
+
+theorem mem_possibleFinset_iff
+    (F : AmbFamily State Action)
+    (info : InfoState F)
+    (i : F.Model) :
+    i ∈ possibleFinset F info <-> info.possible i := by
+  classical
+  simp [possibleFinset]
+
+theorem possibleFinset_nonempty_iff
+    (F : AmbFamily State Action)
+    (info : InfoState F) :
+    (possibleFinset F info).Nonempty <-> RemainingNonempty info := by
+  constructor
+  · intro h
+    rcases h with ⟨i, hi⟩
+    exact ⟨i, (mem_possibleFinset_iff F info i).mp hi⟩
+  · intro h
+    rcases h with ⟨i, hi⟩
+    exact ⟨i, (mem_possibleFinset_iff F info i).mpr hi⟩
+
+theorem liftedStep_possibleFinset_subset
+    (F : AmbFamily State Action)
+    {info next : InfoState F}
+    {a : Action}
+    (hLift : LiftedStep F info a next) :
+    possibleFinset F next ⊆ possibleFinset F info := by
+  intro i hi
+  exact (mem_possibleFinset_iff F info i).mpr
+    (liftedStep_remaining_sub F hLift i
+      ((mem_possibleFinset_iff F next i).mp hi))
+
+/-- If finite sets descend one step at a time, later sets are subsets of earlier sets. -/
+theorem finset_descending_subset
+    {α : Type u} [DecidableEq α]
+    (S : Nat -> Finset α)
+    (hDesc : forall n, S (n + 1) ⊆ S n)
+    {m n : Nat}
+    (hmn : m ≤ n) :
+    S n ⊆ S m := by
+  induction hmn with
+  | refl =>
+      intro x hx
+      exact hx
+  | step hmn ih =>
+      intro x hx
+      exact ih (hDesc _ hx)
+
+/--
+A descending nonempty sequence of finite subsets of a finite type has a model
+that remains present forever.
+-/
+theorem descending_nonempty_finset_has_persistent_member
+    {α : Type u} [Fintype α] [DecidableEq α]
+    (S : Nat -> Finset α)
+    (hDesc : forall n, S (n + 1) ⊆ S n)
+    (hNonempty : forall n, (S n).Nonempty) :
+    exists i : α, forall n, i ∈ S n := by
+  classical
+  by_contra hNone
+  have hNoPersistent : forall i : α, Not (forall n, i ∈ S n) := by
+    intro i hAll
+    exact hNone ⟨i, hAll⟩
+  have hDrops : forall i : α, exists n, i ∉ S n := by
+    intro i
+    simpa [not_forall] using hNoPersistent i
+  let drop : α -> Nat := fun i => Nat.find (hDrops i)
+  have hImageNonempty : (Finset.univ.image drop).Nonempty := by
+    rcases hNonempty 0 with ⟨i, _hi⟩
+    exact ⟨drop i, by
+      apply Finset.mem_image.mpr
+      exact ⟨i, by simp, rfl⟩⟩
+  let bound : Nat := (Finset.univ.image drop).max' hImageNonempty
+  have hDropLeBound : forall i : α, drop i ≤ bound := by
+    intro i
+    have hi : drop i ∈ Finset.univ.image drop := by
+      apply Finset.mem_image.mpr
+      exact ⟨i, by simp, rfl⟩
+    exact (Finset.univ.image drop).le_max' (drop i) hi
+  have hNoAtBoundSucc : forall i : α, i ∉ S (bound + 1) := by
+    intro i hi
+    have hDropNot : i ∉ S (drop i) := Nat.find_spec (hDrops i)
+    have hSubset : S (bound + 1) ⊆ S (drop i) := by
+      exact finset_descending_subset S hDesc
+        (Nat.le_trans (hDropLeBound i) (Nat.le_succ bound))
+    exact hDropNot (hSubset hi)
+  rcases hNonempty (bound + 1) with ⟨i, hi⟩
+  exact hNoAtBoundSucc i hi
+
+/-- An infinite lifted trace with explicitly recorded actions. -/
+structure InfiniteLiftedTrace
+    (F : AmbFamily State Action) where
+  info : Nat -> InfoState F
+  action : Nat -> Action
+  step : forall n,
+    LiftedStep F (info n) (action n) (info (n + 1))
+
+theorem infiniteLiftedTrace_possibleFinset_descends
+    (F : AmbFamily State Action)
+    (trace : InfiniteLiftedTrace F) :
+    forall n,
+      possibleFinset F (trace.info (n + 1)) ⊆
+        possibleFinset F (trace.info n) := by
+  intro n
+  exact liftedStep_possibleFinset_subset F (trace.step n)
+
+/--
+Fixed-model realizer theorem: every infinite lifted trace whose information
+states remain nonempty has one fixed model that realizes every observed step.
+
+This is intentionally weaker than the full fixed-world correspondence theorem:
+it extracts a fixed-model realizer for the concrete trace.
+-/
+theorem infiniteLiftedTrace_has_fixedModelRealizer
+    (F : AmbFamily State Action)
+    (trace : InfiniteLiftedTrace F)
+    (hNonempty : forall n, RemainingNonempty (trace.info n)) :
+    exists i : F.Model,
+      forall n,
+        F.Step i (trace.info n).state (trace.action n)
+          (trace.info (n + 1)).state := by
+  classical
+  let S : Nat -> Finset F.Model := fun n => possibleFinset F (trace.info n)
+  have hDesc : forall n, S (n + 1) ⊆ S n := by
+    intro n
+    exact infiniteLiftedTrace_possibleFinset_descends F trace n
+  have hNonemptyFin : forall n, (S n).Nonempty := by
+    intro n
+    exact (possibleFinset_nonempty_iff F (trace.info n)).mpr (hNonempty n)
+  rcases descending_nonempty_finset_has_persistent_member S hDesc hNonemptyFin with
+    ⟨i, hPersistent⟩
+  exact ⟨i, by
+    intro n
+    exact liftedStep_terminalModel_realizes_step F (trace.step n)
+      ((mem_possibleFinset_iff F (trace.info (n + 1)) i).mp
+        (hPersistent (n + 1)))⟩
 
 end AdaptiveFixedWorld
 end Decision

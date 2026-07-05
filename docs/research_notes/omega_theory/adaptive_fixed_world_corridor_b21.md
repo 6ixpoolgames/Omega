@@ -1,11 +1,11 @@
 # Adaptive Fixed-World Corridor B2.1
 
-Status: Lean lift checkpoint / retained Python witness checkpoint / next theorem seam
+Status: Lean lift and strictness checkpoint / retained Python witness checkpoint / next theorem seam
 Scope: finite unknown-but-fixed possibilistic ambiguity with observation-driven
 model identification
-Claim boundary: not landed Lean, not a fixed-world correspondence theorem, not
-stochastic, not POMDP theory, not value, not agency, not valuerhood, not moral
-standing, not Omega validation
+Claim boundary: not a full fixed-world correspondence theorem, not stochastic,
+not POMDP theory, not value, not agency, not valuerhood, not moral standing,
+not Omega validation
 
 ## Purpose
 
@@ -62,8 +62,9 @@ if i* remains possible and i* can produce the observed successor,
 then i* remains possible after sound_update.
 ```
 
-This pilot is not a theorem. It fixes the finite witness geometry before the
-Lean correspondence theorem is attempted.
+The learnable and unlearnable cases now also have Lean strictness witnesses.
+The fake-update phantom corridor remains retained as a Python witness until the
+update-certification surface is formalized.
 
 ## Core Object
 
@@ -205,7 +206,28 @@ liftedReach_terminalModel_realizes_fixedModelReach:
   realizes the concrete state transitions of that reach.
 ```
 
-This is still below the full fixed-world correspondence theorem.
+The finite-model stabilization layer also landed:
+
+```text
+possibleFinset:
+  a finite view of an InfoState's remaining possible models, without changing
+  the core predicate representation.
+
+descending_nonempty_finset_has_persistent_member:
+  a descending nonempty sequence of finite subsets of a finite model type has
+  one model that remains present forever.
+
+InfiniteLiftedTrace:
+  an infinite lifted trace with explicitly recorded actions.
+
+infiniteLiftedTrace_has_fixedModelRealizer:
+  every infinite lifted trace whose information states remain nonempty has one
+  fixed model that realizes every observed concrete transition.
+```
+
+This is still below the full fixed-world correspondence theorem: it extracts a
+fixed-model realizer for a lifted trace, but does not yet prove the full
+policy-level iff for fixed-world persistence.
 
 ## Expected Theorem Shape
 
@@ -225,9 +247,8 @@ The expected proof route is now:
 
 ```text
 1. use the landed lifted-system reduction;
-2. extend the finite play-correspondence lemmas to the infinite/stabilized
-   setting;
-3. prove finite remaining-model stabilization for infinite lifted traces;
+2. use the landed finite-set stabilization and fixed-model realizer theorem;
+3. add the policy-level fixed-world persistence statement;
 4. transport the existing switching containment/memorylessness results.
 ```
 
@@ -258,7 +279,7 @@ When M_remaining is a singleton, AdaptiveKernel reduces to the known-model
 kernel.
 ```
 
-## Strictness Witness Target
+## Landed Strictness Witnesses
 
 The first retained witness is tiny:
 
@@ -282,6 +303,24 @@ Reading:
 ```text
 some ambiguity is destructive;
 some ambiguity is learnable.
+```
+
+The Lean witness file is:
+
+```text
+formal/lean/OmegaProper/Decision/AdaptiveFixedWorldExamples.lean
+```
+
+It proves:
+
+```text
+W_learnable_adaptive_strictness:
+  the concrete start is outside switching RVK while the information-state start
+  is inside AdaptiveKernel.
+
+W_unlearnable_adaptive_exclusion:
+  unsafe/unavailable identification does not put the full unknown information
+  state inside AdaptiveKernel.
 ```
 
 ## Certification Surface
@@ -313,8 +352,8 @@ expected to be conservative; over-eliminating updates are unsafe.
 This note does not claim:
 
 ```text
-the adaptive kernel has landed in Lean;
-the fixed-world theorem is proved;
+the full fixed-world iff theorem is proved;
+the fake-update phantom corridor is formalized in Lean;
 the observation interface is empirically valid;
 all uncertainty is learnable;
 learning is value;
