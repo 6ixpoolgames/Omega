@@ -25,7 +25,7 @@ Switching finite-prefix trajectory guarantees are equivalent to stationary
 fixed-point guarantees.
 Adaptive fixed-world ambiguity is represented by an information-state lift,
 with sound update, fixed-model realization, strictness witnesses, and a
-policy-level fixed-point correspondence.
+policy-level fixed-point / finite-bad-prefix correspondence.
 ODT1 compares.
 Deterministic Blackwell factorization simulates policies.
 Stochastic garbling simulates randomized policies.
@@ -169,6 +169,9 @@ terminal possible models realize finite lifted traces;
 finite possible-model stabilization;
 nonempty infinite lifted traces have a fixed-model realizer;
 stationary information-state policy guarantees exist exactly on AdaptiveKernel;
+finite lifted bad-prefix guarantees exist exactly on AdaptiveKernel;
+sound finite fixed-world reach from a policy-kernel state remains inside that
+policy kernel;
 learnable ambiguity strictness witness;
 unlearnable/unsafe-identification exclusion witness;
 fake-update phantom corridor witness outside sound update.
@@ -177,9 +180,10 @@ fake-update phantom corridor witness outside sound update.
 Boundary:
 
 ```text
-This is a policy-level fixed-point and lifted-trace checkpoint. It is not yet
-a fully packaged trajectory/maximal fixed-world semantics theorem, not POMDP
-theory, not agency, not value, and not a general theory of deception.
+This is a policy-level fixed-point, finite-refutation, and lifted-trace
+checkpoint. It is not yet a fully packaged maximal fixed-world trajectory
+semantics theorem, not POMDP theory, not agency, not value, and not a general
+theory of deception.
 ```
 
 ### ODT1 Structural Dominance

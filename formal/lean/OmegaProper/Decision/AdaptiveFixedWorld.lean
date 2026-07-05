@@ -12,8 +12,10 @@ states. The adaptive kernel is not a new fixed-point theory: it is the existing
 `RobustCorridor` of the lifted decision structure with remaining-model
 enabledness folded into `Allowed`.
 
-This file does not prove the full fixed-world correspondence theorem. It does
-not define stochastic risk, value, agency, identity, moral standing, or Omega
+This file proves the policy-level fixed-point correspondence and the matching
+finite-bad-prefix safety semantics for the lifted information-state system. It
+does not package a full maximal fixed-world trajectory semantics. It does not
+define stochastic risk, value, agency, identity, moral standing, or Omega
 validation.
 -/
 
@@ -640,6 +642,371 @@ theorem adaptivePolicyGuarantee_implies_adaptiveKernel
   adaptivePolicyKernel_sub_adaptiveKernel F Allowed Requirement policy
     info hInfo
 
+/-! ### Finite bad-prefix semantics for adaptive policies -/
+
+/-- A finite policy-following trace in the lifted information-state system. -/
+structure FiniteAdaptivePolicyTrace
+    (F : AmbFamily State Action)
+    (policy : AdaptivePolicy F)
+    (start : InfoState F)
+    (len : Nat) where
+  info : Nat -> InfoState F
+  starts : info 0 = start
+  step : forall n, n < len ->
+    LiftedStep F (info n) (policy (info n)) (info (n + 1))
+
+/-- No lifted successor for the policy action. -/
+def AdaptiveDeadlocked
+    (F : AmbFamily State Action)
+    (policy : AdaptivePolicy F)
+    (info : InfoState F) : Prop :=
+  Not (exists next, LiftedStep F info (policy info) next)
+
+/-- A lifted bad information state: outside constraint, requirement, or allowedness. -/
+def AdaptiveBadInfo
+    (F : AmbFamily State Action)
+    (Allowed : State -> Action -> Prop)
+    (Requirement : State -> Prop)
+    (policy : AdaptivePolicy F)
+    (info : InfoState F) : Prop :=
+  Not ((liftedDecision F).Constraint info) \/
+    Not (liftedRequirement F Requirement info) \/
+    Not (liftedAllowed F Allowed info (policy info))
+
+/-- A finite adaptive bad prefix: bad state along the trace or deadlock at the endpoint. -/
+def BadFiniteAdaptiveTrace
+    (F : AmbFamily State Action)
+    (Allowed : State -> Action -> Prop)
+    (Requirement : State -> Prop)
+    (policy : AdaptivePolicy F)
+    {start : InfoState F} {len : Nat}
+    (tr : FiniteAdaptivePolicyTrace F policy start len) : Prop :=
+  (exists n, n <= len /\
+    AdaptiveBadInfo F Allowed Requirement policy (tr.info n)) \/
+    AdaptiveDeadlocked F policy (tr.info len)
+
+/--
+Adaptive trajectory guarantee as absence of finite bad prefixes in the lifted
+information-state system.
+
+This is still a finite-refutation safety semantics, not a maximal trajectory
+object.
+-/
+def AdaptiveTrajectoryGuarantees
+    (F : AmbFamily State Action)
+    (Allowed : State -> Action -> Prop)
+    (Requirement : State -> Prop)
+    (policy : AdaptivePolicy F)
+    (start : InfoState F) : Prop :=
+  forall len,
+    forall tr : FiniteAdaptivePolicyTrace F policy start len,
+      Not (BadFiniteAdaptiveTrace F Allowed Requirement policy tr)
+
+/-- Length-zero adaptive trace at one information state. -/
+def singletonAdaptiveTrace
+    (F : AmbFamily State Action)
+    (policy : AdaptivePolicy F)
+    (info : InfoState F) :
+    FiniteAdaptivePolicyTrace F policy info 0 where
+  info := fun _ => info
+  starts := rfl
+  step := by
+    intro n hn
+    exact False.elim (Nat.not_lt_zero n hn)
+
+theorem adaptiveTrajectoryGuarantee_constraint
+    (F : AmbFamily State Action)
+    (Allowed : State -> Action -> Prop)
+    (Requirement : State -> Prop)
+    (policy : AdaptivePolicy F)
+    {info : InfoState F}
+    (h : AdaptiveTrajectoryGuarantees F Allowed Requirement policy info) :
+    (liftedDecision F).Constraint info := by
+  by_contra hBad
+  exact h 0 (singletonAdaptiveTrace F policy info)
+    (Or.inl <| Exists.intro 0
+      (And.intro (Nat.le_refl 0) (Or.inl hBad)))
+
+theorem adaptiveTrajectoryGuarantee_requirement
+    (F : AmbFamily State Action)
+    (Allowed : State -> Action -> Prop)
+    (Requirement : State -> Prop)
+    (policy : AdaptivePolicy F)
+    {info : InfoState F}
+    (h : AdaptiveTrajectoryGuarantees F Allowed Requirement policy info) :
+    liftedRequirement F Requirement info := by
+  by_contra hBad
+  exact h 0 (singletonAdaptiveTrace F policy info)
+    (Or.inl <| Exists.intro 0
+      (And.intro (Nat.le_refl 0) (Or.inr (Or.inl hBad))))
+
+theorem adaptiveTrajectoryGuarantee_allowed
+    (F : AmbFamily State Action)
+    (Allowed : State -> Action -> Prop)
+    (Requirement : State -> Prop)
+    (policy : AdaptivePolicy F)
+    {info : InfoState F}
+    (h : AdaptiveTrajectoryGuarantees F Allowed Requirement policy info) :
+    liftedAllowed F Allowed info (policy info) := by
+  by_contra hBad
+  exact h 0 (singletonAdaptiveTrace F policy info)
+    (Or.inl <| Exists.intro 0
+      (And.intro (Nat.le_refl 0) (Or.inr (Or.inr hBad))))
+
+theorem adaptiveTrajectoryGuarantee_enabled
+    (F : AmbFamily State Action)
+    (Allowed : State -> Action -> Prop)
+    (Requirement : State -> Prop)
+    (policy : AdaptivePolicy F)
+    {info : InfoState F}
+    (h : AdaptiveTrajectoryGuarantees F Allowed Requirement policy info) :
+    exists next, LiftedStep F info (policy info) next := by
+  by_contra hDead
+  exact h 0 (singletonAdaptiveTrace F policy info) (Or.inr hDead)
+
+/-- Prepend one lifted policy step to a finite adaptive trace. -/
+def prependAdaptiveTrace
+    (F : AmbFamily State Action)
+    (policy : AdaptivePolicy F)
+    {info next : InfoState F} {len : Nat}
+    (hStep : LiftedStep F info (policy info) next)
+    (tr : FiniteAdaptivePolicyTrace F policy next len) :
+    FiniteAdaptivePolicyTrace F policy info (len + 1) where
+  info
+    | 0 => info
+    | n + 1 => tr.info n
+  starts := rfl
+  step := by
+    intro n hn
+    cases n with
+    | zero =>
+        change LiftedStep F info (policy info) (tr.info 0)
+        rw [tr.starts]
+        exact hStep
+    | succ n =>
+        have hnTail : n < len := by
+          exact Nat.succ_lt_succ_iff.mp hn
+        simpa using tr.step n hnTail
+
+theorem bad_adaptive_prepend_of_bad
+    (F : AmbFamily State Action)
+    (Allowed : State -> Action -> Prop)
+    (Requirement : State -> Prop)
+    (policy : AdaptivePolicy F)
+    {info next : InfoState F} {len : Nat}
+    (hStep : LiftedStep F info (policy info) next)
+    {tr : FiniteAdaptivePolicyTrace F policy next len}
+    (hBad : BadFiniteAdaptiveTrace F Allowed Requirement policy tr) :
+    BadFiniteAdaptiveTrace F Allowed Requirement policy
+      (prependAdaptiveTrace F policy hStep tr) := by
+  cases hBad with
+  | inl hState =>
+      rcases hState with ⟨n, hn, hBadInfo⟩
+      exact Or.inl ⟨n + 1, Nat.succ_le_succ hn, by
+        simpa [prependAdaptiveTrace] using hBadInfo⟩
+  | inr hDead =>
+      exact Or.inr (by simpa [prependAdaptiveTrace] using hDead)
+
+theorem adaptiveTrajectoryGuarantee_step
+    (F : AmbFamily State Action)
+    (Allowed : State -> Action -> Prop)
+    (Requirement : State -> Prop)
+    (policy : AdaptivePolicy F)
+    {info next : InfoState F}
+    (h : AdaptiveTrajectoryGuarantees F Allowed Requirement policy info)
+    (hStep : LiftedStep F info (policy info) next) :
+    AdaptiveTrajectoryGuarantees F Allowed Requirement policy next := by
+  intro len tr hBad
+  exact h (len + 1) (prependAdaptiveTrace F policy hStep tr)
+    (bad_adaptive_prepend_of_bad F Allowed Requirement policy hStep hBad)
+
+theorem adaptiveTrajectoryGuarantee_postfixed
+    (F : AmbFamily State Action)
+    (Allowed : State -> Action -> Prop)
+    (Requirement : State -> Prop)
+    (policy : AdaptivePolicy F) :
+    Postfixed (adaptivePolicyKernelOp F Allowed Requirement policy)
+      (AdaptiveTrajectoryGuarantees F Allowed Requirement policy) := by
+  intro info h
+  exact ⟨
+    adaptiveTrajectoryGuarantee_constraint F Allowed Requirement policy h,
+    adaptiveTrajectoryGuarantee_requirement F Allowed Requirement policy h,
+    ⟨adaptiveTrajectoryGuarantee_allowed F Allowed Requirement policy h,
+      adaptiveTrajectoryGuarantee_enabled F Allowed Requirement policy h,
+      by
+        intro next hStep
+        exact adaptiveTrajectoryGuarantee_step
+          F Allowed Requirement policy h hStep⟩⟩
+
+theorem adaptiveTrajectoryGuarantee_implies_policyKernel
+    (F : AmbFamily State Action)
+    (Allowed : State -> Action -> Prop)
+    (Requirement : State -> Prop)
+    (policy : AdaptivePolicy F) :
+    PSub (AdaptiveTrajectoryGuarantees F Allowed Requirement policy)
+      (AdaptivePolicyKernel F Allowed Requirement policy) :=
+  postfixed_le_gfp
+    (adaptiveTrajectoryGuarantee_postfixed F Allowed Requirement policy)
+
+theorem adaptivePolicyKernel_lifted_constraint
+    (F : AmbFamily State Action)
+    (Allowed : State -> Action -> Prop)
+    (Requirement : State -> Prop)
+    (policy : AdaptivePolicy F)
+    {info : InfoState F}
+    (hInfo : AdaptivePolicyKernel F Allowed Requirement policy info) :
+    (liftedDecision F).Constraint info := by
+  exact ((adaptivePolicyKernel_fixed F Allowed Requirement policy).left
+    info hInfo).left
+
+theorem adaptivePolicyKernel_lifted_requirement
+    (F : AmbFamily State Action)
+    (Allowed : State -> Action -> Prop)
+    (Requirement : State -> Prop)
+    (policy : AdaptivePolicy F)
+    {info : InfoState F}
+    (hInfo : AdaptivePolicyKernel F Allowed Requirement policy info) :
+    liftedRequirement F Requirement info := by
+  exact ((adaptivePolicyKernel_fixed F Allowed Requirement policy).left
+    info hInfo).right.left
+
+theorem adaptivePolicyKernel_policy_allowed
+    (F : AmbFamily State Action)
+    (Allowed : State -> Action -> Prop)
+    (Requirement : State -> Prop)
+    (policy : AdaptivePolicy F)
+    {info : InfoState F}
+    (hInfo : AdaptivePolicyKernel F Allowed Requirement policy info) :
+    liftedAllowed F Allowed info (policy info) := by
+  exact (adaptivePolicyKernel_action_safe F Allowed Requirement policy hInfo).left
+
+theorem adaptivePolicyKernel_step_closed
+    (F : AmbFamily State Action)
+    (Allowed : State -> Action -> Prop)
+    (Requirement : State -> Prop)
+    (policy : AdaptivePolicy F)
+    {info next : InfoState F}
+    (hInfo : AdaptivePolicyKernel F Allowed Requirement policy info)
+    (hStep : LiftedStep F info (policy info) next) :
+    AdaptivePolicyKernel F Allowed Requirement policy next := by
+  exact (adaptivePolicyKernel_action_safe F Allowed Requirement policy
+    hInfo).right.right next hStep
+
+theorem adaptivePolicyKernel_liftedReach_closed
+    (F : AmbFamily State Action)
+    (Allowed : State -> Action -> Prop)
+    (Requirement : State -> Prop)
+    (policy : AdaptivePolicy F)
+    {start finish : InfoState F}
+    (hStart : AdaptivePolicyKernel F Allowed Requirement policy start)
+    (hReach : LiftedReach F policy start finish) :
+    AdaptivePolicyKernel F Allowed Requirement policy finish := by
+  induction hReach with
+  | refl =>
+      exact hStart
+  | step hPrev hStep ih =>
+      exact adaptivePolicyKernel_step_closed
+        F Allowed Requirement policy ih hStep
+
+theorem adaptivePolicyKernel_soundFixedWorldReach_closed
+    (F : AmbFamily State Action)
+    (Allowed : State -> Action -> Prop)
+    (Requirement : State -> Prop)
+    (policy : AdaptivePolicy F)
+    {actual : F.Model}
+    {start finish : InfoState F}
+    (hStartPossible : start.possible actual)
+    (hStart : AdaptivePolicyKernel F Allowed Requirement policy start)
+    (hReach : SoundFixedWorldReach F policy actual start finish) :
+    AdaptivePolicyKernel F Allowed Requirement policy finish := by
+  exact adaptivePolicyKernel_liftedReach_closed F Allowed Requirement policy
+    hStart (soundFixedWorldReach_to_liftedReach F policy
+      hStartPossible hReach)
+
+theorem finiteAdaptiveTrace_info_in_policyKernel
+    (F : AmbFamily State Action)
+    (Allowed : State -> Action -> Prop)
+    (Requirement : State -> Prop)
+    (policy : AdaptivePolicy F)
+    {start : InfoState F} {len : Nat}
+    (tr : FiniteAdaptivePolicyTrace F policy start len)
+    (hStart : AdaptivePolicyKernel F Allowed Requirement policy start) :
+    forall n, n <= len ->
+      AdaptivePolicyKernel F Allowed Requirement policy (tr.info n) := by
+  intro n hn
+  induction n with
+  | zero =>
+      simpa [tr.starts] using hStart
+  | succ n ih =>
+      have hnPrev : n <= len := Nat.le_trans (Nat.le_succ n) hn
+      have hnStep : n < len := Nat.lt_of_succ_le hn
+      exact adaptivePolicyKernel_step_closed F Allowed Requirement policy
+        (ih hnPrev) (tr.step n hnStep)
+
+theorem adaptivePolicyKernel_no_bad_finiteTrace
+    (F : AmbFamily State Action)
+    (Allowed : State -> Action -> Prop)
+    (Requirement : State -> Prop)
+    (policy : AdaptivePolicy F)
+    {start : InfoState F}
+    (hStart : AdaptivePolicyKernel F Allowed Requirement policy start) :
+    AdaptiveTrajectoryGuarantees F Allowed Requirement policy start := by
+  intro len tr hBad
+  cases hBad with
+  | inl hState =>
+      rcases hState with ⟨n, hn, hBadInfo⟩
+      have hKernelN :=
+        finiteAdaptiveTrace_info_in_policyKernel
+          F Allowed Requirement policy tr hStart n hn
+      cases hBadInfo with
+      | inl hNoConstraint =>
+          exact hNoConstraint
+            (adaptivePolicyKernel_lifted_constraint
+              F Allowed Requirement policy hKernelN)
+      | inr hRest =>
+          cases hRest with
+          | inl hNoRequirement =>
+              exact hNoRequirement
+                (adaptivePolicyKernel_lifted_requirement
+                  F Allowed Requirement policy hKernelN)
+          | inr hNoAllowed =>
+              exact hNoAllowed
+                (adaptivePolicyKernel_policy_allowed
+                  F Allowed Requirement policy hKernelN)
+  | inr hDead =>
+      have hKernelEnd :=
+        finiteAdaptiveTrace_info_in_policyKernel
+          F Allowed Requirement policy tr hStart len (Nat.le_refl len)
+      rcases adaptivePolicyKernel_action_safe
+          F Allowed Requirement policy hKernelEnd with
+        ⟨_hAllowed, hEnabled, _hSafe⟩
+      exact hDead hEnabled
+
+theorem adaptivePolicyKernel_iff_adaptiveTrajectoryGuarantees
+    (F : AmbFamily State Action)
+    (Allowed : State -> Action -> Prop)
+    (Requirement : State -> Prop)
+    (policy : AdaptivePolicy F)
+    (info : InfoState F) :
+    AdaptivePolicyKernel F Allowed Requirement policy info <->
+      AdaptiveTrajectoryGuarantees F Allowed Requirement policy info := by
+  constructor
+  · exact adaptivePolicyKernel_no_bad_finiteTrace
+      F Allowed Requirement policy
+  · exact adaptiveTrajectoryGuarantee_implies_policyKernel
+      F Allowed Requirement policy info
+
+theorem adaptivePolicyGuarantee_iff_adaptiveTrajectoryGuarantees
+    (F : AmbFamily State Action)
+    (Allowed : State -> Action -> Prop)
+    (Requirement : State -> Prop)
+    (policy : AdaptivePolicy F)
+    (info : InfoState F) :
+    AdaptivePolicyGuarantees F Allowed Requirement policy info <->
+      AdaptiveTrajectoryGuarantees F Allowed Requirement policy info :=
+  adaptivePolicyKernel_iff_adaptiveTrajectoryGuarantees
+    F Allowed Requirement policy info
+
 noncomputable section
 
 /--
@@ -728,6 +1095,34 @@ theorem exists_adaptivePolicyGuarantees_iff_adaptiveKernel
     exact ⟨adaptiveKernelPolicy F Allowed Requirement,
       adaptiveKernel_sub_adaptivePolicyKernel F Allowed Requirement
         info hInfo⟩
+
+/--
+Finite-bad-prefix assembly theorem: existence of a stationary adaptive policy
+with no finite lifted bad prefixes is equivalent to adaptive-kernel membership.
+-/
+theorem exists_adaptiveTrajectoryGuarantees_iff_adaptiveKernel
+    (F : AmbFamily State Action)
+    (Allowed : State -> Action -> Prop)
+    (Requirement : State -> Prop)
+    [Inhabited Action]
+    (info : InfoState F) :
+    (exists policy : AdaptivePolicy F,
+      AdaptiveTrajectoryGuarantees F Allowed Requirement policy info) <->
+        AdaptiveKernel F Allowed Requirement info := by
+  constructor
+  · intro h
+    rcases h with ⟨policy, hPolicy⟩
+    exact adaptivePolicyGuarantee_implies_adaptiveKernel
+      F Allowed Requirement policy
+      ((adaptivePolicyGuarantee_iff_adaptiveTrajectoryGuarantees
+        F Allowed Requirement policy info).mpr hPolicy)
+  · intro hInfo
+    rcases (exists_adaptivePolicyGuarantees_iff_adaptiveKernel
+        F Allowed Requirement info).mpr hInfo with
+      ⟨policy, hPolicy⟩
+    exact ⟨policy,
+      (adaptivePolicyGuarantee_iff_adaptiveTrajectoryGuarantees
+        F Allowed Requirement policy info).mp hPolicy⟩
 
 end
 

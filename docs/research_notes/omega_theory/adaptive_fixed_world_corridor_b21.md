@@ -302,19 +302,48 @@ exists_adaptivePolicyGuarantees_iff_adaptiveKernel:
   AdaptiveKernel states.
 ```
 
-This is still below the full trajectory/maximal fixed-world correspondence
-theorem: it proves the policy-level fixed-point iff over the lifted
-information-state system, and the fixed-model realizer extracts one concrete
-model for nonempty infinite lifted traces. It does not yet package a standalone
-fixed-world trajectory semantics and prove it equivalent to the fixed point.
-
-## Expected Theorem Shape
-
-The target theorem is:
+The finite-bad-prefix assembly has also landed:
 
 ```text
-There exists a policy that guarantees persistence in every unknown-but-fixed
-model consistent with the initial information state
+FiniteAdaptivePolicyTrace:
+  finite policy-following trace in the lifted information-state system.
+
+AdaptiveBadInfo:
+  outside lifted constraint, lifted requirement, or lifted allowedness.
+
+AdaptiveDeadlocked:
+  no lifted successor exists for the policy action.
+
+BadFiniteAdaptiveTrace:
+  bad information state along the trace or deadlock at the endpoint.
+
+AdaptiveTrajectoryGuarantees:
+  no finite lifted bad prefix.
+
+adaptivePolicyGuarantee_iff_adaptiveTrajectoryGuarantees:
+  fixed-point policy guarantee iff finite-bad-prefix guarantee.
+
+exists_adaptiveTrajectoryGuarantees_iff_adaptiveKernel:
+  some stationary adaptive policy has no finite lifted bad prefixes exactly
+  from AdaptiveKernel states.
+
+adaptivePolicyKernel_soundFixedWorldReach_closed:
+  sound finite fixed-world reach from a policy-kernel state remains inside the
+  policy kernel.
+```
+
+This is still below a full trajectory/maximal fixed-world correspondence
+theorem: it proves the finite-refutation safety semantics over the lifted
+information-state system, and the fixed-model realizer extracts one concrete
+model for nonempty infinite lifted traces. It does not yet package maximal
+fixed-world trajectory semantics as a standalone object.
+
+## Assembly Status
+
+The landed finite-bad-prefix theorem gives the current clean statement:
+
+```text
+There exists a stationary adaptive policy with no finite lifted bad prefixes
 iff
 the initial information state lies in AdaptiveKernel.
 ```
@@ -322,14 +351,11 @@ the initial information state lies in AdaptiveKernel.
 This is an adaptive safety-game / information-state theorem. It is not the same
 as the switching RVK theorem.
 
-The expected proof route is now:
+The remaining optional packaging target is:
 
 ```text
-1. use the landed lifted-system reduction;
-2. use the landed finite-set stabilization and fixed-model realizer theorem;
-3. use the landed policy-level fixed-point correspondence;
-4. if needed, package a trajectory-level fixed-world persistence semantics and
-   prove the remaining equivalence.
+package a trajectory-level/maximal fixed-world persistence semantics and prove
+that it matches the finite-refutation/lifted-kernel theorem.
 ```
 
 ## Relation To Existing Corridors

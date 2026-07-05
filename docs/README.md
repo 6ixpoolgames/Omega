@@ -29,8 +29,9 @@ B2:
 
 B2.1:
   information-state adaptive corridors for unknown-but-fixed ambiguity,
-  including sound update, fixed-model realization, policy correspondence,
-  learnable/unlearnable strictness, and fake-update phantom safety.
+  including sound update, fixed-model realization, policy and finite-bad-prefix
+  correspondence, learnable/unlearnable strictness, and fake-update phantom
+  safety.
 
 ODT1:
   value-parametric dominance and Blackwell-shaped comparison bridges.

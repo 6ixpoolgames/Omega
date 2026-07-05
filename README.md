@@ -140,7 +140,7 @@ learning:
   sound update; fabricated model elimination can create phantom safety.
 ```
 
-The newest B2.1 checkpoint is important: the repo now has a Lean information-state lift for fixed-world ambiguity, strictness witnesses for learnable and unlearnable ambiguity, a fake-update phantom corridor witness, an infinite fixed-model realizer, and a policy-level theorem:
+The newest B2.1 checkpoint is important: the repo now has a Lean information-state lift for fixed-world ambiguity, strictness witnesses for learnable and unlearnable ambiguity, a fake-update phantom corridor witness, an infinite fixed-model realizer, and policy/finite-bad-prefix theorems:
 
 ```text
 some stationary information-state policy guarantees from an information state
@@ -148,7 +148,7 @@ iff
 that information state lies in AdaptiveKernel.
 ```
 
-This is still claim-bounded. It is a policy-level fixed-point correspondence over the lifted information-state system, not yet a fully packaged trajectory/maximal fixed-world semantics theorem.
+This is still claim-bounded. It is a policy-level and finite-refutation correspondence over the lifted information-state system, not yet a fully packaged maximal fixed-world trajectory semantics theorem.
 
 ## Decision-Theory Surface
 
@@ -267,7 +267,7 @@ These are not claims that value or agency has been solved. They are constraints 
 Near-term work should now prefer:
 
 1. A B2.1 theorem map and documentation cleanup.
-2. The full trajectory/maximal fixed-world semantics assembly, if needed for a paper-style theorem statement.
+2. Maximal fixed-world trajectory semantics, only if needed for a paper-style theorem statement.
 3. Sound observation-informativeness monotonicity: certified better observations should not shrink the adaptive corridor.
 4. A general guard theorem for process-coherence attribution.
 5. Recovery/irreversibility welds for unsafe identification and forbidden probes.
