@@ -4,16 +4,115 @@
 [![Baseline Witness Smoke](https://github.com/6ixpoolgames/Omega/actions/workflows/baseline-witness-smoke.yml/badge.svg?branch=master)](https://github.com/6ixpoolgames/Omega/actions/workflows/baseline-witness-smoke.yml)
 [![Validation Router](https://github.com/6ixpoolgames/Omega/actions/workflows/validation-router.yml/badge.svg?branch=master)](https://github.com/6ixpoolgames/Omega/actions/workflows/validation-router.yml)
 
-Omega is a research program about alignment, abstraction integrity, and value-bearing continuation.
+Omega is a research program for treating alignment as the problem of
+preserving the corridor of compatible, value-bearing futures.
 
-The repo is not a completed theory of value, agency, identity, moral standing, or Omega validation. It is a formal toolbench for a lower question:
+The repo is the formal toolbench for that program. It proves small, auditable
+theorems about when abstractions can be trusted, when proxies fail, when
+decision procedures have certified routes, when corridors confine persistence,
+and when update rules fabricate safety by deleting the world that would refute
+them.
+
+If the long-term goal is to mark the safe path for intelligent agency, the
+first problem is not drawing the path. It is proving that the map is not lying.
+
+## The Thesis
+
+Alignment is not only an objective-selection problem. It is also an
+abstraction-integrity and continuation problem.
+
+Any intelligent system acts through models, metrics, summaries, observations,
+boundaries, policies, update rules, and compressed presentations of the world.
+Those presentations can fail in several dangerous ways:
+
+- They can merge states whose consequences are different.
+- They can make two futures look equally viable when one has lost a necessary
+  distinction.
+- They can create phantom reachability or phantom viability that is not present
+  in the exact system.
+- They can preserve a proxy while destroying the target the proxy was supposed
+  to protect.
+- They can update the system's information state by excluding the true model
+  and then certify behavior only inside the false remaining world.
+
+Omega studies the formal conditions under which those failures can be detected
+or ruled out.
+
+## Value Requires Valuers
+
+Value does not float freely in the universe. Value requires valuers, or at
+least value-capable trajectories: systems able to encounter, preserve, revise,
+compare, create, and be affected by what matters. If no possible future
+contains valuers, then no possible future contains realized value.
+
+That makes the central alignment problem deeper than choosing the right reward
+function. Before asking which futures are good, we have to ask what makes
+value-bearing futures possible at all. The target is the substrate of
+compatible continuations in which valuers can arise, persist, interact, and
+mature without destroying the conditions that make future value possible.
+
+This is the object Omega is trying to track: not a single utopia, final state,
+or utility function, but the viable corridor of value-bearing continuation. The
+project starts below value because the preservation problem starts below value.
+
+## Alpha-Omega In Plain English
+
+Alpha-Omega is the project's name for studying that object from both ends.
+
+Alpha is the primitive end. It asks what must be true before valuers are even on
+the table: relation, distinction, asymmetry, consequence, and the conditions
+under which a difference can matter because erasing it changes what can follow.
+
+Omega is the terminal ambition. It asks what it would mean to preserve the
+richest compatible continuation of the value-bearing substrate: the shared
+corridor in which many value-capable trajectories can remain possible without
+collapse, capture, or irreversible loss.
+
+The current effective-layer map is deliberately staged:
+
+```text
+Alpha constrains Continuation.
+Continuation constrains Agent.
+Agent constrains Valuer.
+None of the upward maps is canonical by default.
+```
+
+So Alpha is not a separate toy theory and Omega is not a mystical endpoint.
+Alpha studies the seed conditions of consequence-bearing mattering. Omega
+studies the possible maximal compatible development of that mattering into
+value-bearing continuation. The repo's job is to make every bridge in that
+tower explicit enough to audit.
+
+## From Intuition To Formal Machinery
+
+The formal stack asks what has to be true for that ambition not to collapse
+into poetry.
+
+A difference must be consequence-bearing. A proposed abstraction must not erase
+consequence-separated states. A proxy must not be trusted when the target
+changes while the proxy stays fixed. A viability or reachability claim must
+survive exact checking, because bad presentations can fabricate possible
+futures or hide irreversible loss. A decision procedure must justify itself
+through certified routes. A learning process must update its information state
+without deleting the true model that generated the evidence.
+
+All of these are pieces of one question:
 
 ```text
 When can a representation, policy, update rule, or decision surface be trusted
 not to erase, fabricate, or hide continuation-relevant structure?
 ```
 
-The current center of gravity is the decision/corridor stack. It combines certified map use, robust viability corridors, deterministic and stochastic Blackwell-shaped comparison bridges, registered arbitration scaffolding, and an adaptive fixed-world learning layer.
+The current center of gravity is the decision/corridor stack. It combines
+certified map use, robust viability corridors, deterministic and stochastic
+Blackwell-shaped comparison bridges, registered arbitration scaffolding, and an
+adaptive fixed-world learning layer.
+
+This is already useful as a constraint-based alignment floor. Before solving
+value, agency, or Omega, the repo can formally reject unsafe maps of
+continuation. A representation is not admissible merely because it is useful or
+predictive; it has to preserve the consequence-bearing facts it is being used
+to reason about.
 
 ## Current Reading
 
