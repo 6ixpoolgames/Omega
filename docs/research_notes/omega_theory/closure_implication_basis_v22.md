@@ -12,7 +12,7 @@ Omega validation
 ## Purpose
 
 Closure v2.1.5 attached every retained surplus fact to a named finite guard
-theorem. Closure v2.2 asks:
+rule. Closure v2.2 asks:
 
 ```text
 After known guard consequences are accounted for, are there classifier-only or
@@ -122,11 +122,22 @@ v2.1:
   surplus attributes to fixed process-coherence/profile-fiber rules;
 
 v2.1.5:
-  every surplus fact is proof-backed by named finite guard theorems;
+  every surplus fact is backed by named finite guard rules;
 
 v2.2:
   implication rows over the retained families are fully guard-accounted.
 ```
+
+The process-coherence guard now has a named Lean spine theorem:
+
+```text
+formal/lean/OmegaProper/Trajectory/ObservedWordMonotonicity.lean
+processCoherence_entails_boundedObservedProfileInclusion
+```
+
+The v2.2 implication rows remain finite adapter-key rows. They become global
+theorem instances only after their generated fact keys are mapped to the Lean
+theorem's hypotheses.
 
 ## Repricing
 

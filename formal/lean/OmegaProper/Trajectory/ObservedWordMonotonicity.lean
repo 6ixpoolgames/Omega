@@ -236,6 +236,30 @@ theorem observedLanguage_subset_of_observedViablePathLift
   exact hLift n x word hWord
 
 /--
+Named guard theorem for closure-attribution use: representative-wise
+process-coherent transport entails bounded observed-profile inclusion at every
+finite horizon.
+-/
+theorem processCoherence_entails_boundedObservedProfileInclusion
+    {DX : Dyn.{u}}
+    {DQ : Dyn.{v}}
+    {present : DX.State -> DQ.State}
+    {safeX : DX.State -> Prop}
+    {safeQ : DQ.State -> Prop}
+    {observeX : DX.State -> W}
+    {observeQ : DQ.State -> W}
+    (hTransport :
+      StrongObservedWordTransport
+        DX DQ present safeX safeQ observeX observeQ)
+    (n : Nat)
+    (x : DX.State) :
+    forall word,
+      ObservedExtendableSafeLanguageAt DQ safeQ observeQ n (present x) word ->
+        ObservedExtendableSafeLanguageAt DX safeX observeX n x word := by
+  exact observedLanguage_subset_of_observedViablePathLift
+    (strongObservedWordTransport_observedViablePathLift hTransport) n x
+
+/--
 Finite count corollary: once an implementation has retained finite word sets,
 language inclusion implies cardinal monotonicity.
 -/

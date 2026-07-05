@@ -12,6 +12,7 @@ import OmegaProper.Decision.TrajectoryBridge
 import OmegaProper.Decision.TrajectoryBridgeExamples
 import OmegaProper.Decision.TrajectoryConverse
 import OmegaProper.Decision.TrajectoryConverseExamples
+import OmegaProper.Decision.AdaptiveFixedWorld
 import OmegaProper.Decision.Dominance
 import OmegaProper.Decision.DominanceExamples
 import OmegaProper.Decision.DominanceAcceptance

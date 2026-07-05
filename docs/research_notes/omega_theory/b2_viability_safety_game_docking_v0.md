@@ -141,6 +141,12 @@ monotonicity of fixed points under strengthened constraints.
 
 Omega should not claim novelty for those.
 
+Canonical reference points include Aubin-style viability kernels, Ramadge-Wonham
+supervisory control, safety games and memoryless safety determinacy, and the
+subset construction for imperfect-information safety games associated with Reif
+and later treatments such as Chatterjee-Doyen-Henzinger. B2/B2.1 should cite
+that ancestry directly when written for outside readers.
+
 ## What Is Project-Specific
 
 The project-specific pieces are:

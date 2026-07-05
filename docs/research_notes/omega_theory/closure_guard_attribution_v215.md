@@ -1,8 +1,8 @@
 # Closure Guard Attribution v2.1.5
 
-Status: retained finite proof-attribution result / closure consolidation
+Status: retained finite rule-attribution result / closure consolidation
 checkpoint
-Scope: proof-backed attribution over current Closure v2.1 current and held-out
+Scope: rule-backed attribution over current Closure v2.1 current and held-out
 families
 Claim boundary: not global invariance, not natural admissibility, not a modal
 fixed-point theorem, not a canonical implication basis, not agency, not
@@ -19,10 +19,10 @@ Can the Closure v2 surplus be classified by fixed attribution rules?
 Closure v2.1.5 answers the next question:
 
 ```text
-Are those attributions proof-backed by named finite guard theorems?
+Are those attributions backed by named finite guard rules?
 ```
 
-The guard-theorem note is:
+The finite guard-rule note is:
 
 ```text
 closure_guard_theorem_v215.md
@@ -62,12 +62,12 @@ The retained run reports:
 ```text
 case_count: 204
 surplus_fact_count: 2567
-theorem_backed_fact_count: 2567
+rule_backed_fact_count: 2567
 classifier_only_fact_count: 0
 residual_fact_count: 0
 ```
 
-Guard theorem counts:
+Guard rule counts:
 
 ```text
 closure.guard.globally_valid_surplus: 754
@@ -83,7 +83,7 @@ closure.guard.step_lifting_implies_bounded_path_lifting: 444
 The key result is:
 
 ```text
-every retained v2.1 surplus fact is theorem-backed;
+every retained v2.1 surplus fact is rule-backed;
 no surplus fact remains classifier-only;
 no surplus fact remains residual.
 ```
@@ -108,7 +108,7 @@ This supports the current reading:
 ```text
 Closure v2 rediscovered a finite shadow of process-coherence invariance.
 Closure v2.1 classified it.
-Closure v2.1.5 proof-backed the classification.
+Closure v2.1.5 rule-backed the classification.
 ```
 
 It does not yet produce unexplained new closure structure.
@@ -133,6 +133,19 @@ The implication-basis pass did not reveal classifier-only or residual rows over
 the retained families, so larger sweeps should be framed as residual search,
 not as calibration of the current fact language.
 
+After this retained pass, the process-coherence side also has a named Lean
+spine theorem:
+
+```text
+formal/lean/OmegaProper/Trajectory/ObservedWordMonotonicity.lean
+processCoherence_entails_boundedObservedProfileInclusion
+```
+
+That theorem proves bounded observed-profile language inclusion under the
+strong process-coherence transport contract. The retained Closure v2.1.5 rows
+are still finite adapter-key attributions until each generated key-level row is
+mapped to that theorem's hypotheses.
+
 ## Nonclaims
 
 This note does not claim:
@@ -154,5 +167,7 @@ Omega validation.
 ## Public Compression
 
 Closure v2.1.5 turns Closure v2.1 from classifier attribution into
-proof-attribution: all 2,567 retained surplus facts are attached to named
-finite guard theorems, with zero classifier-only and zero residual facts.
+rule-attribution: all 2,567 retained surplus facts are attached to named finite
+guard rules, with zero classifier-only and zero residual facts. The
+process-coherence guard now has a Lean theorem spine, but the retained
+adapter-key rows remain finite attributions.
