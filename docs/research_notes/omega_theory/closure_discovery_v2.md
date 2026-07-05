@@ -177,6 +177,11 @@ Update: Closure v2.1.5 guard attribution is recorded in
 attaches every retained surplus fact to a named finite guard theorem and
 explicit hypothesis facts, with zero classifier-only and zero residual facts.
 
+Update: Closure v2.2 implication-basis extraction is recorded in
+[`closure_implication_basis_v22.md`](closure_implication_basis_v22.md). It
+extracts minimal seed and guard antecedents for the retained implication rows,
+with zero classifier-only or residual rows over the current v2.1.5 families.
+
 ## What Changed Relative To V0
 
 V0 answered:

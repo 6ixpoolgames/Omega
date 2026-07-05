@@ -115,20 +115,23 @@ It does not yet produce unexplained new closure structure.
 
 ## Next Step
 
-Now the project can safely choose between:
+Closure v2.2 has now landed the first guarded implication-basis pass:
 
 ```text
-implication-basis extraction:
-  compute minimal seed -> consequence bases after known guard theorems are
-  accounted for;
+closure_implication_basis_v22.md
+```
 
+After v2.2, the project can safely choose between:
+
+```text
 residual search:
   run larger or stratified held-out families and retain only classifier-only
   or residual facts as new signal.
 ```
 
-The implication-basis pass is now less likely to waste work rediscovering the
-known process-coherence guard.
+The implication-basis pass did not reveal classifier-only or residual rows over
+the retained families, so larger sweeps should be framed as residual search,
+not as calibration of the current fact language.
 
 ## Nonclaims
 

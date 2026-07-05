@@ -32,6 +32,11 @@ This is the first formal bridge from the decision floor to controlled
 viability. It is not yet the full Gradient Ethics bridge because
 `Requirement` remains supplied/certified rather than derived.
 
+The fixed-point skeleton is classical viability / safety-game mathematics. The
+Omega-specific role is the certified decision use around it: declared
+requirements, presentation-sound justification, ODT0 Gate G2, and explicit
+conditional-normativity accounting.
+
 ## Lean Surface
 
 Files:
@@ -224,6 +229,17 @@ policy-class compatibility
 This pass is possibilistic and worst-case. A stochastic version needs an
 explicit risk criterion or ambiguity-set semantics. That belongs after the
 deterministic corridor and abstraction-reflection theorem are stable.
+
+### Adaptive Fixed-World Ambiguity
+
+The ambiguity-family `RVK` extension uses switching/shared-action robust
+semantics. Unknown-but-fixed worlds whose model identity can be learned require
+an information-state corridor over `(state, remaining_models)`. That B2.1 seam
+is recorded in:
+
+```text
+adaptive_fixed_world_corridor_b21.md
+```
 
 ### Full Gradient Ethics Bridge
 

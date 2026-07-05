@@ -249,6 +249,13 @@ The finite relational source-parity layer has its own retained-output path:
 python -m omega.validation.finite_relational_source_parity
 ```
 
+The adaptive fixed-world corridor B2.1 witness pack has its own retained-output
+path:
+
+```bash
+python -m omega.validation.finite_relational_adaptive_fixed_world_corridor
+```
+
 The operational-causal-diamond agency-layer pilot has its own retained-output
 path:
 
@@ -576,6 +583,16 @@ report at
 [finite_relational_closure_guard_v215/report.md](research_notes/validation_results/finite_relational_closure_guard_v215/report.md)
 and
 [finite_relational_closure_guard_v215/summary.json](research_notes/validation_results/finite_relational_closure_guard_v215/summary.json).
+Finite relational closure implication basis v2.2 retains a guard-accounted
+implication report at
+[finite_relational_closure_implication_basis_v22/report.md](research_notes/validation_results/finite_relational_closure_implication_basis_v22/report.md)
+and
+[finite_relational_closure_implication_basis_v22/summary.json](research_notes/validation_results/finite_relational_closure_implication_basis_v22/summary.json).
+Finite relational adaptive fixed-world corridor B2.1 retains a three-witness
+report at
+[finite_relational_adaptive_fixed_world_corridor_b21/20260705_175110/report.md](research_notes/validation_results/finite_relational_adaptive_fixed_world_corridor_b21/20260705_175110/report.md)
+and
+[finite_relational_adaptive_fixed_world_corridor_b21/20260705_175110/summary.json](research_notes/validation_results/finite_relational_adaptive_fixed_world_corridor_b21/20260705_175110/summary.json).
 The operational-causal-diamond agency-layer pilot retains a human-readable note
 and machine-readable summary at
 [agency_diamond_midscale_v0.md](research_notes/validation_results/agency_diamond_midscale_v0.md)

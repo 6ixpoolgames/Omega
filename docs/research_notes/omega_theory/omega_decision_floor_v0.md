@@ -96,6 +96,16 @@ greatest controlled invariant set, no memoryless worst-case policy can guarantee
 indefinite preservation of `K`. Stronger planning models should restate this
 with their own policy class.
 
+When the corridor is instantiated by the ambiguity-family `RVK`, the relevant
+semantics is switching / stepwise adversarial ambiguity: all declared model
+successors remain live at every step. Unknown-but-fixed ambiguity with
+observation-driven model identification should instead supply an adaptive
+information-state corridor. The B2.1 roadmap is:
+
+```text
+docs/research_notes/omega_theory/adaptive_fixed_world_corridor_b21.md
+```
+
 ## Register
 
 The register contains only declared and retained decision-useful surfaces:

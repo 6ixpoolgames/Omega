@@ -185,6 +185,37 @@ def attribute_closure_v2_case(case: ClosureV2Case) -> ClosureAttributionCase:
     return ClosureAttributionCase(case=case, attributions=tuple(attributions))
 
 
+def closure_v2_facts_entail(
+    case: ClosureV2Case,
+    antecedent_fact_keys: tuple[str, ...],
+    consequent_fact_key: str,
+) -> bool:
+    """Check finite-presentation entailment inside one Closure v2 case.
+
+    The check is nonvacuous: at least one generated presentation must satisfy
+    the antecedent facts.
+    """
+
+    fact_by_key = {fact.key: fact for fact in case.facts}
+    missing = set(antecedent_fact_keys) | {consequent_fact_key}
+    missing -= set(fact_by_key)
+    if missing:
+        raise ValueError(f"closure v2 entailment facts missing: {sorted(missing)}")
+    presentations = _all_partition_mappings(case.states)
+    admissible = [
+        mapping
+        for mapping in presentations
+        if all(
+            _fact_holds(case.states, case.edges, mapping, fact_by_key[key])
+            for key in antecedent_fact_keys
+        )
+    ]
+    return bool(admissible) and all(
+        _fact_holds(case.states, case.edges, mapping, fact_by_key[consequent_fact_key])
+        for mapping in admissible
+    )
+
+
 def _attribute_surplus_fact(
     case: ClosureV2Case,
     fact_by_key: dict[str, ClosureV2Fact],

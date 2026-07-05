@@ -1,0 +1,192 @@
+{
+  "basis_kind_counts": {
+    "globally_valid": 6,
+    "process_coherence_profile_guard": 1,
+    "profile_fiber_visibility_guard": 4,
+    "step_to_path_guard": 3
+  },
+  "case_id": "step_lifting_seed_01",
+  "classifier_only_count": 0,
+  "edge_count": 1,
+  "guard_antecedent_size_counts": {
+    "0": 6,
+    "1": 8
+  },
+  "implication_count": 14,
+  "implications": [
+    {
+      "basis_kind": "globally_valid",
+      "bucket": "globally_valid",
+      "consequent_fact": "profile:constant_all",
+      "guard_antecedent_facts": [],
+      "proof_status": "guard_verified",
+      "seed_antecedent_facts": [],
+      "theorem_id": "closure.guard.globally_valid_surplus"
+    },
+    {
+      "basis_kind": "globally_valid",
+      "bucket": "globally_valid",
+      "consequent_fact": "profile:extendable_safe_prefix_count:h=1",
+      "guard_antecedent_facts": [],
+      "proof_status": "guard_verified",
+      "seed_antecedent_facts": [],
+      "theorem_id": "closure.guard.globally_valid_surplus"
+    },
+    {
+      "basis_kind": "globally_valid",
+      "bucket": "globally_valid",
+      "consequent_fact": "profile:observed_words:goal_status:h=1",
+      "guard_antecedent_facts": [],
+      "proof_status": "guard_verified",
+      "seed_antecedent_facts": [],
+      "theorem_id": "closure.guard.globally_valid_surplus"
+    },
+    {
+      "basis_kind": "globally_valid",
+      "bucket": "globally_valid",
+      "consequent_fact": "profile:observed_words:goal_status:h=2",
+      "guard_antecedent_facts": [],
+      "proof_status": "guard_verified",
+      "seed_antecedent_facts": [],
+      "theorem_id": "closure.guard.globally_valid_surplus"
+    },
+    {
+      "basis_kind": "process_coherence_profile_guard",
+      "bucket": "bounded_process_coherence_invariance",
+      "consequent_fact": "profile:safe_prefix_count:h=1",
+      "guard_antecedent_facts": [
+        "struct:step_lifting"
+      ],
+      "proof_status": "guard_verified",
+      "seed_antecedent_facts": [
+        "struct:step_lifting"
+      ],
+      "theorem_id": "closure.guard.process_coherence_entails_bounded_profile_invariance"
+    },
+    {
+      "basis_kind": "globally_valid",
+      "bucket": "globally_valid",
+      "consequent_fact": "profile:safe_prefix_count:h=2",
+      "guard_antecedent_facts": [],
+      "proof_status": "guard_verified",
+      "seed_antecedent_facts": [],
+      "theorem_id": "closure.guard.globally_valid_surplus"
+    },
+    {
+      "basis_kind": "globally_valid",
+      "bucket": "globally_valid",
+      "consequent_fact": "profile:viability:safe_all",
+      "guard_antecedent_facts": [],
+      "proof_status": "guard_verified",
+      "seed_antecedent_facts": [],
+      "theorem_id": "closure.guard.globally_valid_surplus"
+    },
+    {
+      "basis_kind": "step_to_path_guard",
+      "bucket": "step_implies_path_lifting",
+      "consequent_fact": "struct:path_lifting:h=1",
+      "guard_antecedent_facts": [
+        "struct:step_lifting"
+      ],
+      "proof_status": "guard_verified",
+      "seed_antecedent_facts": [
+        "struct:step_lifting"
+      ],
+      "theorem_id": "closure.guard.step_lifting_implies_bounded_path_lifting"
+    },
+    {
+      "basis_kind": "step_to_path_guard",
+      "bucket": "step_implies_path_lifting",
+      "consequent_fact": "struct:path_lifting:h=2",
+      "guard_antecedent_facts": [
+        "struct:step_lifting"
+      ],
+      "proof_status": "guard_verified",
+      "seed_antecedent_facts": [
+        "struct:step_lifting"
+      ],
+      "theorem_id": "closure.guard.step_lifting_implies_bounded_path_lifting"
+    },
+    {
+      "basis_kind": "step_to_path_guard",
+      "bucket": "step_implies_path_lifting",
+      "consequent_fact": "struct:path_lifting:h=3",
+      "guard_antecedent_facts": [
+        "struct:step_lifting"
+      ],
+      "proof_status": "guard_verified",
+      "seed_antecedent_facts": [
+        "struct:step_lifting"
+      ],
+      "theorem_id": "closure.guard.step_lifting_implies_bounded_path_lifting"
+    },
+    {
+      "basis_kind": "profile_fiber_visibility_guard",
+      "bucket": "profile_fiber_separation",
+      "consequent_fact": "visible:a->b",
+      "guard_antecedent_facts": [
+        "profile:safe_prefix_count:h=1"
+      ],
+      "proof_status": "guard_verified",
+      "seed_antecedent_facts": [
+        "struct:step_lifting"
+      ],
+      "theorem_id": "closure.guard.profile_fiber_separation_reflects_visibility"
+    },
+    {
+      "basis_kind": "profile_fiber_visibility_guard",
+      "bucket": "profile_fiber_separation",
+      "consequent_fact": "visible:a->c",
+      "guard_antecedent_facts": [
+        "profile:safe_prefix_count:h=1"
+      ],
+      "proof_status": "guard_verified",
+      "seed_antecedent_facts": [
+        "struct:step_lifting"
+      ],
+      "theorem_id": "closure.guard.profile_fiber_separation_reflects_visibility"
+    },
+    {
+      "basis_kind": "profile_fiber_visibility_guard",
+      "bucket": "profile_fiber_separation",
+      "consequent_fact": "visible:b->a",
+      "guard_antecedent_facts": [
+        "profile:safe_prefix_count:h=1"
+      ],
+      "proof_status": "guard_verified",
+      "seed_antecedent_facts": [
+        "struct:step_lifting"
+      ],
+      "theorem_id": "closure.guard.profile_fiber_separation_reflects_visibility"
+    },
+    {
+      "basis_kind": "profile_fiber_visibility_guard",
+      "bucket": "profile_fiber_separation",
+      "consequent_fact": "visible:c->a",
+      "guard_antecedent_facts": [
+        "profile:safe_prefix_count:h=1"
+      ],
+      "proof_status": "guard_verified",
+      "seed_antecedent_facts": [
+        "struct:step_lifting"
+      ],
+      "theorem_id": "closure.guard.profile_fiber_separation_reflects_visibility"
+    }
+  ],
+  "output": "docs\\research_notes\\validation_results\\finite_relational_closure_implication_basis_v22\\current_v2_attribution\\representatives\\step_lifting_seed_01",
+  "residual_count": 0,
+  "seed_antecedent_size_counts": {
+    "0": 6,
+    "1": 8
+  },
+  "seed_fact_keys": [
+    "struct:step_lifting"
+  ],
+  "state_count": 3,
+  "theorem_counts": {
+    "closure.guard.globally_valid_surplus": 6,
+    "closure.guard.process_coherence_entails_bounded_profile_invariance": 1,
+    "closure.guard.profile_fiber_separation_reflects_visibility": 4,
+    "closure.guard.step_lifting_implies_bounded_path_lifting": 3
+  }
+}

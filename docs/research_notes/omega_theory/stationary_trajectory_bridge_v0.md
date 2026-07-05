@@ -2,7 +2,8 @@
 
 Status: Lean theorem note / B2 positive trajectory bridge
 Scope: stationary-policy infinite traces for finite possibilistic
-ambiguity-family robust viability
+ambiguity-family robust viability under shared-action / switching robust
+semantics
 Claim boundary: positive bridge only; not maximal finite deadlock semantics, not
 the converse from trajectories to fixed points, not stochastic, not a
 derivation that persistence is required, not value, not agency, not
@@ -33,6 +34,11 @@ RVK
 The theorem is intentionally one-way. It extracts infinite traces from a
 closed-loop kernel; it does not try to characterize all possible maximal finite
 or infinite trajectories.
+
+The extracted traces are per declared model, but the guarantee being witnessed
+is still the shared-action robust guarantee. This note does not characterize
+unknown-but-fixed adaptive learning, where observations can shrink the remaining
+model set.
 
 ## Landed Lean Surface
 
@@ -72,7 +78,8 @@ start:
 This note does not formalize the converse theorem. It does not yet say that an
 externally supplied trajectory property implies fixed-point membership. It also
 does not define maximal finite trajectories or prove a deadlocked maximal
-trajectory witness from every non-RVK state.
+trajectory witness from every non-RVK state. It does not cover adaptive
+fixed-world identification.
 
 ## Next Step
 

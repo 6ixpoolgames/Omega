@@ -1,0 +1,212 @@
+[
+  {
+    "basis_kind": "globally_valid",
+    "bucket": "globally_valid",
+    "consequent_fact": "profile:constant_all",
+    "guard_antecedent_facts": [],
+    "proof_status": "guard_verified",
+    "seed_antecedent_facts": [],
+    "theorem_id": "closure.guard.globally_valid_surplus"
+  },
+  {
+    "basis_kind": "globally_valid",
+    "bucket": "globally_valid",
+    "consequent_fact": "profile:extendable_safe_prefix_count:h=1",
+    "guard_antecedent_facts": [],
+    "proof_status": "guard_verified",
+    "seed_antecedent_facts": [],
+    "theorem_id": "closure.guard.globally_valid_surplus"
+  },
+  {
+    "basis_kind": "globally_valid",
+    "bucket": "globally_valid",
+    "consequent_fact": "profile:observed_words:goal_status:h=1",
+    "guard_antecedent_facts": [],
+    "proof_status": "guard_verified",
+    "seed_antecedent_facts": [],
+    "theorem_id": "closure.guard.globally_valid_surplus"
+  },
+  {
+    "basis_kind": "globally_valid",
+    "bucket": "globally_valid",
+    "consequent_fact": "profile:observed_words:goal_status:h=2",
+    "guard_antecedent_facts": [],
+    "proof_status": "guard_verified",
+    "seed_antecedent_facts": [],
+    "theorem_id": "closure.guard.globally_valid_surplus"
+  },
+  {
+    "basis_kind": "process_coherence_profile_guard",
+    "bucket": "bounded_process_coherence_invariance",
+    "consequent_fact": "profile:safe_prefix_count:h=1",
+    "guard_antecedent_facts": [
+      "struct:step_lifting"
+    ],
+    "proof_status": "guard_verified",
+    "seed_antecedent_facts": [
+      "struct:step_lifting"
+    ],
+    "theorem_id": "closure.guard.process_coherence_entails_bounded_profile_invariance"
+  },
+  {
+    "basis_kind": "globally_valid",
+    "bucket": "globally_valid",
+    "consequent_fact": "profile:safe_prefix_count:h=2",
+    "guard_antecedent_facts": [],
+    "proof_status": "guard_verified",
+    "seed_antecedent_facts": [],
+    "theorem_id": "closure.guard.globally_valid_surplus"
+  },
+  {
+    "basis_kind": "globally_valid",
+    "bucket": "globally_valid",
+    "consequent_fact": "profile:viability:safe_all",
+    "guard_antecedent_facts": [],
+    "proof_status": "guard_verified",
+    "seed_antecedent_facts": [],
+    "theorem_id": "closure.guard.globally_valid_surplus"
+  },
+  {
+    "basis_kind": "step_to_path_guard",
+    "bucket": "step_implies_path_lifting",
+    "consequent_fact": "struct:path_lifting:h=1",
+    "guard_antecedent_facts": [
+      "struct:step_lifting"
+    ],
+    "proof_status": "guard_verified",
+    "seed_antecedent_facts": [
+      "struct:step_lifting"
+    ],
+    "theorem_id": "closure.guard.step_lifting_implies_bounded_path_lifting"
+  },
+  {
+    "basis_kind": "step_to_path_guard",
+    "bucket": "step_implies_path_lifting",
+    "consequent_fact": "struct:path_lifting:h=2",
+    "guard_antecedent_facts": [
+      "struct:step_lifting"
+    ],
+    "proof_status": "guard_verified",
+    "seed_antecedent_facts": [
+      "struct:step_lifting"
+    ],
+    "theorem_id": "closure.guard.step_lifting_implies_bounded_path_lifting"
+  },
+  {
+    "basis_kind": "step_to_path_guard",
+    "bucket": "step_implies_path_lifting",
+    "consequent_fact": "struct:path_lifting:h=3",
+    "guard_antecedent_facts": [
+      "struct:step_lifting"
+    ],
+    "proof_status": "guard_verified",
+    "seed_antecedent_facts": [
+      "struct:step_lifting"
+    ],
+    "theorem_id": "closure.guard.step_lifting_implies_bounded_path_lifting"
+  },
+  {
+    "basis_kind": "profile_fiber_visibility_guard",
+    "bucket": "profile_fiber_separation",
+    "consequent_fact": "visible:a->b",
+    "guard_antecedent_facts": [
+      "profile:safe_prefix_count:h=1"
+    ],
+    "proof_status": "guard_verified",
+    "seed_antecedent_facts": [
+      "struct:step_lifting"
+    ],
+    "theorem_id": "closure.guard.profile_fiber_separation_reflects_visibility"
+  },
+  {
+    "basis_kind": "profile_fiber_visibility_guard",
+    "bucket": "profile_fiber_separation",
+    "consequent_fact": "visible:a->c",
+    "guard_antecedent_facts": [
+      "profile:safe_prefix_count:h=1"
+    ],
+    "proof_status": "guard_verified",
+    "seed_antecedent_facts": [
+      "struct:step_lifting"
+    ],
+    "theorem_id": "closure.guard.profile_fiber_separation_reflects_visibility"
+  },
+  {
+    "basis_kind": "profile_fiber_visibility_guard",
+    "bucket": "profile_fiber_separation",
+    "consequent_fact": "visible:b->a",
+    "guard_antecedent_facts": [
+      "profile:safe_prefix_count:h=1"
+    ],
+    "proof_status": "guard_verified",
+    "seed_antecedent_facts": [
+      "struct:step_lifting"
+    ],
+    "theorem_id": "closure.guard.profile_fiber_separation_reflects_visibility"
+  },
+  {
+    "basis_kind": "profile_fiber_visibility_guard",
+    "bucket": "profile_fiber_separation",
+    "consequent_fact": "visible:b->d",
+    "guard_antecedent_facts": [
+      "profile:safe_prefix_count:h=1"
+    ],
+    "proof_status": "guard_verified",
+    "seed_antecedent_facts": [
+      "struct:step_lifting"
+    ],
+    "theorem_id": "closure.guard.profile_fiber_separation_reflects_visibility"
+  },
+  {
+    "basis_kind": "profile_fiber_visibility_guard",
+    "bucket": "profile_fiber_separation",
+    "consequent_fact": "visible:c->a",
+    "guard_antecedent_facts": [
+      "profile:safe_prefix_count:h=1"
+    ],
+    "proof_status": "guard_verified",
+    "seed_antecedent_facts": [
+      "struct:step_lifting"
+    ],
+    "theorem_id": "closure.guard.profile_fiber_separation_reflects_visibility"
+  },
+  {
+    "basis_kind": "profile_fiber_visibility_guard",
+    "bucket": "profile_fiber_separation",
+    "consequent_fact": "visible:c->d",
+    "guard_antecedent_facts": [
+      "profile:safe_prefix_count:h=1"
+    ],
+    "proof_status": "guard_verified",
+    "seed_antecedent_facts": [
+      "struct:step_lifting"
+    ],
+    "theorem_id": "closure.guard.profile_fiber_separation_reflects_visibility"
+  },
+  {
+    "basis_kind": "profile_fiber_visibility_guard",
+    "bucket": "profile_fiber_separation",
+    "consequent_fact": "visible:d->b",
+    "guard_antecedent_facts": [
+      "profile:safe_prefix_count:h=1"
+    ],
+    "proof_status": "guard_verified",
+    "seed_antecedent_facts": [
+      "struct:step_lifting"
+    ],
+    "theorem_id": "closure.guard.profile_fiber_separation_reflects_visibility"
+  },
+  {
+    "basis_kind": "profile_fiber_visibility_guard",
+    "bucket": "profile_fiber_separation",
+    "consequent_fact": "visible:d->c",
+    "guard_antecedent_facts": [
+      "profile:safe_prefix_count:h=1"
+    ],
+    "proof_status": "guard_verified",
+    "seed_antecedent_facts": [
+      "struct:step_lifting"
+    ],
+    "theorem_id": "closure.guard.profile_fiber_separation_reflects_visibility"
+  }
+]

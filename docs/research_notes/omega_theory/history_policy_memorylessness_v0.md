@@ -2,7 +2,8 @@
 
 Status: Lean theorem note / B2 fixed-point memorylessness checkpoint
 Scope: history-policy guarantee kernels for finite possibilistic
-ambiguity-family robust viability
+ambiguity-family robust viability under shared-action / switching robust
+semantics
 Claim boundary: not trajectory/maximality semantics, not stochastic, not a
 derivation that persistence is required, not value, not agency, not
 valuerhood, not moral standing, not Omega validation
@@ -31,7 +32,13 @@ exists history policy guaranteeing from x
 ```
 
 So no amount of finite-history conditioning permits guaranteed persistence from
-outside the ambiguity-family RVK.
+outside the ambiguity-family RVK under this switching/shared-action robust
+semantics.
+
+This does not say learning is useless in an unknown-but-fixed world. If model
+identity is fixed and observations can refine the remaining model set, the
+right state space is an adaptive information state `(state, remaining_models)`,
+not the switching RVK state alone.
 
 ## Landed Lean Surface
 
@@ -70,13 +77,17 @@ start:
 The failure at `start` is not lack of memory. It is lack of one action that is
 safe and enabled across the ambiguity family.
 
+This is a switching robust failure. A separate B2.1 witness should test the
+opposite phenomenon: a fixed model can be safely identified by a probe, so an
+adaptive fixed-world corridor can exceed the switching RVK.
+
 ## Nonclaims
 
 This note does not formalize infinite trajectories or maximal finite
 deadlock-failure semantics. It does not prove that persistence is required or
 that the declared constraint/requirement/ambiguity family is correct. It only
 proves that fixed-point history-policy guarantees collapse to the already
-defined RVK.
+defined switching RVK. It does not cover adaptive fixed-world identification.
 
 ## Next Step
 

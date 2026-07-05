@@ -22,12 +22,14 @@ odt_markov_categorical_blackwell_positioning_v0.md
 omega_decision_blackwell_conservativity_v0.md
 omega_decision_stochastic_blackwell_v0.md
 omega_decision_arbitration_v0.md
+b2_viability_safety_game_docking_v0.md
 robust_continuation_corridor_v0.md
 ambiguity_family_rvk_reduction_v0.md
 stationary_containment_v0.md
 history_policy_memorylessness_v0.md
 stationary_trajectory_bridge_v0.md
 switching_trajectory_converse_v0.md
+adaptive_fixed_world_corridor_b21.md
 alpha_agency_underdetermination_v0.md
 operational_causal_diamond_agency_v0.md
 finite_deformer_profile_checkpoint_v0.md
@@ -66,6 +68,7 @@ closure_attribution_protocol_v21.md
 closure_attribution_v21.md
 closure_guard_theorem_v215.md
 closure_guard_attribution_v215.md
+closure_implication_basis_v22.md
 robust_recovery_ambiguity_sets_v0.md
 prior_relative_recovery_v0.md
 bridge_claims_ledger_v0.md

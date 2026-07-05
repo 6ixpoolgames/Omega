@@ -2,7 +2,7 @@
 
 Status: Lean theorem note / B2 Batch A checkpoint
 Scope: finite nonempty possibilistic ambiguity families with shared state,
-action, and constraint sets
+action, and constraint sets under shared-action / switching robust semantics
 Claim boundary: not the full containment theorem, not stochastic, not a
 derivation that persistence is required, not value, not agency, not
 valuerhood, not moral standing, not Omega validation
@@ -35,6 +35,19 @@ The universal model quantifier is therefore represented as an admissibility
 transformation: the action must be available and enabled in every model, while
 the merged transition relation collects every possible successor from every
 model.
+
+## Semantic Boundary
+
+This is the corridor for stepwise or switching ambiguity:
+
+```text
+one shared action must survive every declared model's possible successors.
+```
+
+It is not the adaptive corridor for an unknown-but-fixed model whose identity
+can be learned over time. That fixed-world reading needs an information-state
+kernel over `(state, remaining_models)`, recorded separately in
+[`adaptive_fixed_world_corridor_b21.md`](adaptive_fixed_world_corridor_b21.md).
 
 ## Landed Lean Surface
 

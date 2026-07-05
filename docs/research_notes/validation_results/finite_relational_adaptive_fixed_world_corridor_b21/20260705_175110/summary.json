@@ -1,0 +1,139 @@
+{
+  "case_count": 3,
+  "diagnostics": [
+    {
+      "adaptive_kernel": [
+        "p0|{m0}",
+        "p1|{m1}",
+        "s|{m0,m1}",
+        "s|{m0}",
+        "s|{m1}"
+      ],
+      "case_id": "learnable_ambiguity",
+      "description": "A safe probe reveals the fixed model; switching ambiguity rejects the start, but the lifted adaptive kernel admits it.",
+      "epistemically_load_bearing_actions": [
+        "probe"
+      ],
+      "fake_kernel": [
+        "p0|{m0}",
+        "s|{m0}"
+      ],
+      "fake_update_failure": false,
+      "fake_update_truth_preservation_failures": 24,
+      "frozen_kernel": [
+        "p0|{m0}",
+        "p1|{m1}",
+        "s|{m0}",
+        "s|{m1}"
+      ],
+      "learnable_gap": true,
+      "model_ids": [
+        "m0",
+        "m1"
+      ],
+      "singleton_start_membership": {
+        "m0": true,
+        "m1": true
+      },
+      "sound_update_truth_preservation_failures": 0,
+      "start": "s",
+      "start_in_adaptive_kernel": true,
+      "start_in_frozen_kernel": false,
+      "start_in_switching_kernel": false,
+      "switching_kernel": [],
+      "unlearnable_gap": false
+    },
+    {
+      "adaptive_kernel": [
+        "p0|{m0}",
+        "s|{m0}",
+        "s|{m1}"
+      ],
+      "case_id": "unlearnable_ambiguity",
+      "description": "Each singleton model has a safe sustaining action, but no shared safe action or safe probe exists before identification.",
+      "epistemically_load_bearing_actions": [],
+      "fake_kernel": [
+        "p0|{m0}",
+        "s|{m0}",
+        "s|{m1}"
+      ],
+      "fake_update_failure": false,
+      "fake_update_truth_preservation_failures": 18,
+      "frozen_kernel": [
+        "p0|{m0}",
+        "s|{m0}",
+        "s|{m1}"
+      ],
+      "learnable_gap": false,
+      "model_ids": [
+        "m0",
+        "m1"
+      ],
+      "singleton_start_membership": {
+        "m0": true,
+        "m1": true
+      },
+      "sound_update_truth_preservation_failures": 0,
+      "start": "s",
+      "start_in_adaptive_kernel": false,
+      "start_in_frozen_kernel": false,
+      "start_in_switching_kernel": false,
+      "switching_kernel": [],
+      "unlearnable_gap": true
+    },
+    {
+      "adaptive_kernel": [
+        "p0|{m0}",
+        "p1|{m0}",
+        "p1|{m1}",
+        "s|{m0,m1}",
+        "s|{m0}",
+        "s|{m1}"
+      ],
+      "case_id": "fake_update_phantom_corridor",
+      "description": "A fabricating update maps the m1-only observation p1 to m0, creating a fake corridor state whose m0 policy fails in true m1.",
+      "epistemically_load_bearing_actions": [
+        "probe"
+      ],
+      "fake_kernel": [
+        "p0|{m0}",
+        "p1|{m0}",
+        "p1|{m1}",
+        "s|{m0,m1}",
+        "s|{m0}",
+        "s|{m1}"
+      ],
+      "fake_update_failure": true,
+      "fake_update_truth_preservation_failures": 24,
+      "frozen_kernel": [
+        "p0|{m0}",
+        "p1|{m0}",
+        "p1|{m1}",
+        "s|{m0}",
+        "s|{m1}"
+      ],
+      "learnable_gap": false,
+      "model_ids": [
+        "m0",
+        "m1"
+      ],
+      "singleton_start_membership": {
+        "m0": true,
+        "m1": true
+      },
+      "sound_update_truth_preservation_failures": 0,
+      "start": "s",
+      "start_in_adaptive_kernel": true,
+      "start_in_frozen_kernel": false,
+      "start_in_switching_kernel": false,
+      "switching_kernel": [],
+      "unlearnable_gap": false
+    }
+  ],
+  "fake_update_case_count": 1,
+  "learnable_case_count": 1,
+  "run_root": "C:\\Users\\paolo\\Documents\\New project\\docs\\research_notes\\validation_results\\finite_relational_adaptive_fixed_world_corridor_b21\\20260705_175110",
+  "status": "PASS",
+  "truth_preservation_failure_count": 0,
+  "unlearnable_case_count": 1
+}

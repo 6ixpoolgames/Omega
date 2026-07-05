@@ -2,7 +2,8 @@
 
 Status: Lean theorem note / B2 stationary checkpoint
 Scope: fixed-point stationary-policy containment for finite possibilistic
-ambiguity-family robust viability
+ambiguity-family robust viability under shared-action / switching robust
+semantics
 Claim boundary: not the full trajectory theorem, not stochastic, not a
 derivation that persistence is required, not value, not agency, not
 valuerhood, not moral standing, not Omega validation
@@ -39,6 +40,22 @@ inside `RVK`.
 Conversely, `RVK` itself supplies one stationary policy that guarantees from
 every `RVK` state simultaneously, by choosing the RVK-preserving shared action
 at each RVK state.
+
+## Switching Boundary
+
+The containment statement is for the shared-action robust corridor. It should
+not be read as a theorem about every uncertainty model:
+
+```text
+switching / stepwise adversarial ambiguity:
+  covered here by RVK.
+
+unknown-but-fixed ambiguity with learning:
+  not covered here; it needs an adaptive information-state corridor.
+```
+
+The adaptive seam is recorded in
+[`adaptive_fixed_world_corridor_b21.md`](adaptive_fixed_world_corridor_b21.md).
 
 ## Landed Lean Surface
 
