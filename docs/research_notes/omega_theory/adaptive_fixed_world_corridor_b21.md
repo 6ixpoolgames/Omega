@@ -67,6 +67,65 @@ strictness witnesses. The fake-update witness remains deliberately outside
 `soundUpdate`: it formalizes what goes wrong when model elimination is
 fabricated rather than certified.
 
+## Interpretation: Certified Learning And Deception Surface
+
+B2.1 is the first place where the corridor stack has an explicit epistemic
+state. The remaining-model set is not just a diagnostic label; it is a register
+field that the dynamics update.
+
+That makes update soundness load-bearing:
+
+```text
+sound update:
+  evidence never eliminates a true model that could have produced the observed
+  successor.
+
+fabricated update:
+  the true model can be deleted from the register, making a false information
+  state look safe.
+```
+
+The fake-update witness is therefore the learning-layer analogue of phantom
+viability. Its structure is:
+
+```text
+true world:
+  the model actually governing the run.
+
+fake world:
+  the model retained by the corrupted update.
+
+trust-fake action:
+  safe in the fake world, unsafe in the excluded true world.
+
+phantom corridor:
+  the lifted kernel admits the corrupted information state, but the action
+  selected from that state fails in the true model.
+```
+
+This is an anti-deception certification surface in a narrow technical sense:
+the theorem stack can distinguish sound evidence-processing from an update
+that excludes the actual world and then certifies behavior only in the flattering
+remaining model. It is not a general theory of deception, intent, adversarial
+manipulation, or agency. It is the finite corridor anatomy of a corrupted
+model-identification update.
+
+The positive side is equally important. The extracted `adaptiveKernelPolicy`
+is the repo's first certified learner surface in the fixed-point sense:
+
+```text
+it acts on information states;
+it may probe;
+it soundly updates the remaining model set;
+it branches on learned information;
+and it remains inside the adaptive corridor exactly where the kernel says a
+guaranteeing policy exists.
+```
+
+This does not make the policy an agent, valuer, or moral subject. It is a toy
+shielded learner: a small formal object that can learn which fixed model it is
+in without using an update rule that lies to itself about the corridor.
+
 ## Core Object
 
 Let:

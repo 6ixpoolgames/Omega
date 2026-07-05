@@ -16,6 +16,15 @@ The short version:
 Layer A is currently a continuation-map integrity discipline.
 ```
 
+July 2026 update:
+
+```text
+The active theorem front has moved into the decision/corridor/adaptive-learning
+stack. Layer A remains the map-integrity floor, but the live public path now
+runs through ODT0 licensing, B2 robust corridors, B2.1 adaptive fixed-world
+learning, ODT1 comparison bridges, and the ODT2 registered-arbitration scaffold.
+```
+
 June 25, 2026 reorientation:
 
 ```text

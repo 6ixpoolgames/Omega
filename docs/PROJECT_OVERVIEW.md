@@ -45,19 +45,38 @@ A difference must be consequence-bearing. A proposed abstraction must not erase 
 
 That is why the repo focuses on sound quotients, non-factorization, clique soundness, support-disjoint recovery, fixed-point reachability and viability, reflection contracts, phantom-reachability examples, hidden-loss examples, and loss-aware presentation contracts.
 
-## Proto-Teleology
+## Current Formal Center
 
-Proto-teleology is the current milestone.
+Proto-teleology is no longer the current roadmap banner. It remains a useful
+foundation: consequence-bearing distinction before value, purpose, or agency.
+The live formal center has moved upward into the decision/corridor and
+adaptive-learning stack.
 
-It is not purpose, intention, agency, morality, or value. It is directed consequence:
+The current stack asks:
 
 ```text
-A difference matters when erasing it changes what can follow.
+Which certified maps can justify decisions?
+Which actions preserve declared continuation corridors?
+When does ambiguity require robust caution?
+When can fixed-world ambiguity be safely learned?
+When can fabricated model updates create phantom safety?
 ```
 
-This matters because it gives us a weak alignment constraint before we have a full theory of value. If an abstraction hides irreversible loss, fabricates reachability, or merges consequence-separated states, it is already unsafe as a map of the corridor.
+The B2.1 adaptive fixed-world layer is the newest checkpoint. It treats the
+remaining possible model set as an information state, uses sound update to keep
+true models from being eliminated by their own observations, and proves a
+policy-level fixed-point correspondence:
 
-That is the practical bridge to Gradient Ethics, also described as value preservation under uncertainty. Under uncertainty and irreversibility, preserving the conditions for future value-bearing continuation is not a complete moral theory, but it is a structural safety constraint.
+```text
+some stationary information-state policy guarantees from an information state
+iff
+that information state lies in AdaptiveKernel.
+```
+
+This does not prove value, agency, or a full fixed-world trajectory semantics.
+It does show that certified learning has become part of the corridor story:
+some ambiguity contracts the corridor, some ambiguity can be safely learned, and
+fabricated model elimination can create phantom safety.
 
 ## Constraint-Based Alignment Floor
 
@@ -140,6 +159,10 @@ It does prove and test pieces of the lower machinery needed before those claims 
 ## Useful Entry Points
 
 - [README](../README.md): the public front door.
+- [Docs Front Door](README.md): curated current documentation path.
+- [Active Surface Area](research_notes/omega_theory/active_surface_area_v0.md): current branch-control map.
+- [Omega Decision Stack Checkpoint](research_notes/omega_theory/omega_decision_stack_checkpoint_v0.md): ODT/B2 decision-stack overview.
+- [Adaptive Fixed-World Corridor B2.1](research_notes/omega_theory/adaptive_fixed_world_corridor_b21.md): current adaptive-learning seam.
 - [Omega Lite Worked Examples](OMEGA_LITE_WORKED_EXAMPLES.md): small examples for the core failure modes.
 - [Omega Formalism Primer](OMEGA_FORMALISM_PRIMER.md): older but still useful conceptual orientation.
 - [External Reader Guide](EXTERNAL_READER_GUIDE.md): guide for outside reviewers.

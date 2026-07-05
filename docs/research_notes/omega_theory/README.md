@@ -7,86 +7,61 @@ Claim boundary: navigation only; not empirical validation, not theorem closure, 
 This folder contains dense theory-side notes for the Omega / Reachable Futures
 project. It is not the first-contact onboarding layer.
 
-Start with:
+Start with the curated docs front door:
 
 ```text
 ../../../README.md
-effective_layers_realization_forgetting_emergence_v0.md
+../../README.md
 active_surface_area_v0.md
-omega_decision_floor_v0.md
-omega_decision_dominance_v0.md
 omega_decision_stack_checkpoint_v0.md
-odt_adjacency_and_delta_v0.md
-odt_supervisory_control_docking_v0.md
-odt_markov_categorical_blackwell_positioning_v0.md
-omega_decision_blackwell_conservativity_v0.md
-omega_decision_stochastic_blackwell_v0.md
-omega_decision_arbitration_v0.md
-b2_viability_safety_game_docking_v0.md
-robust_continuation_corridor_v0.md
-ambiguity_family_rvk_reduction_v0.md
-stationary_containment_v0.md
-history_policy_memorylessness_v0.md
-stationary_trajectory_bridge_v0.md
-switching_trajectory_converse_v0.md
 adaptive_fixed_world_corridor_b21.md
-alpha_agency_underdetermination_v0.md
-operational_causal_diamond_agency_v0.md
-finite_deformer_profile_checkpoint_v0.md
-closure_deformer_consolidation_checkpoint_v0.md
-deformer_profile_theorem_extraction_v0.md
-contextual_future_fields_and_holonomy_v0.md
-coarse_fine_nonreflection_v0.md
-layer_a_theorem_spine_v0.md
-current_theory_posture_v0.md
-constraint_based_alignment_floor_v0.md
-alphaomega_continuation_proto_teleology_v0.md
-../../VALUER_FORMAL_TARGET_V0.md
-../../OMEGA_COMPATIBLE_VALUER_TRAJECTORY_SPACE_V0.md
-../../OMEGA_FORMALISM_PRIMER.md
-alpha_primitive_core_v0.md
-alpha_primitive_derived_surfaces_v0.md
-laws_of_form_adjacency_v0.md
-adapter_provenance_v0.md
-audit_response_roadmap_v0.md
-finite_relational_adapter_design_v0.md
-lean_compression_checkpoint_v0.md
-dynamic_presentation_equivariance_v0.md
-viable_trajectory_count_v0.md
-useful_information_and_constraint_selection_v0.md
-declaration_budget_and_transport_profiles_v0.md
-deterministic_pre_stochastic_layer_v0.md
-stochastic_recovery_characterization_v0.md
-stochastic_recovery_theorem_spine_v0.md
-stochastic_recovery_formalization_v0.md
-recovery_layer_checkpoint_v0.md
-coarsening_permanence_v0.md
-presentation_fact_closure_v0.md
-closure_discovery_v0.md
-closure_discovery_v2.md
-closure_attribution_protocol_v21.md
-closure_attribution_v21.md
-closure_guard_theorem_v215.md
-closure_guard_attribution_v215.md
-closure_implication_basis_v22.md
-robust_recovery_ambiguity_sets_v0.md
-prior_relative_recovery_v0.md
-bridge_claims_ledger_v0.md
-stochastic_continuation_loss_v0.md
-policy_conditioned_stochastic_dynamics_v0.md
-invariant_profile_compression_v0.md
-primitive_exposure_realization_bridge_v0.md
-presentation_soundness_pattern_v0.md
-continuation_deformation_nonfactorization_v0.md
-ai_proxy_failure_nonfactorization_v0.md
-approximation_contract_v0.md
-carrier_semantics_compression_v0.md
-compression_guardrails_v0.md
-alpha_omega_unification_map_v0.md
-omega_primitive_calculus_v0_lean_root_skeleton.md
-theory_arm_map_v0.md
-omega_formal_core_v0_2_future_distinction_dynamics.md
+b2_viability_safety_game_docking_v0.md
+effective_layers_realization_forgetting_emergence_v0.md
 ```
+
+Then use the current stack clusters:
+
+```text
+Decision and corridor:
+  omega_decision_floor_v0.md
+  robust_continuation_corridor_v0.md
+  ambiguity_family_rvk_reduction_v0.md
+  stationary_containment_v0.md
+  history_policy_memorylessness_v0.md
+  stationary_trajectory_bridge_v0.md
+  switching_trajectory_converse_v0.md
+  adaptive_fixed_world_corridor_b21.md
+
+Dominance and arbitration:
+  omega_decision_dominance_v0.md
+  omega_decision_blackwell_conservativity_v0.md
+  omega_decision_stochastic_blackwell_v0.md
+  omega_decision_arbitration_v0.md
+  odt_adjacency_and_delta_v0.md
+  odt_supervisory_control_docking_v0.md
+  odt_markov_categorical_blackwell_positioning_v0.md
+
+Closure and deformer checkpoints:
+  closure_discovery_v2.md
+  closure_attribution_protocol_v21.md
+  closure_attribution_v21.md
+  closure_guard_theorem_v215.md
+  closure_guard_attribution_v215.md
+  closure_implication_basis_v22.md
+  operational_causal_diamond_agency_v0.md
+  finite_deformer_profile_checkpoint_v0.md
+  deformer_profile_theorem_extraction_v0.md
+
+Foundational orientation:
+  current_theory_posture_v0.md
+  constraint_based_alignment_floor_v0.md
+  layer_a_theorem_spine_v0.md
+  alpha_primitive_core_v0.md
+  alphaomega_continuation_proto_teleology_v0.md
+```
+
+The rest of this folder is retained for provenance, paper drafting, or older
+branch context. Do not infer current priority from file count.
 
 ## Current Stack
 

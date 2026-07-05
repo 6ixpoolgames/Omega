@@ -1,21 +1,26 @@
 # Public Results Index
 
-This index is for outside readers who want to understand the current empirical state of the Omega / Reachable Futures repository without reading every historical artifact.
+This index is for outside readers who want retained empirical and instrument
+results without reading every historical artifact.
 
-For the project pitch and current formal stack, start with:
+This is no longer the current project front door. For the current formal stack,
+start with:
 
 ```text
 README.md
-docs/OMEGA_FORMALISM_PRIMER.md
-docs/BASELINE_WITNESS_SUITE_V0.md
-docs/ADVERSARIAL_REVIEW_GUIDE.md
+docs/README.md
+docs/research_notes/omega_theory/active_surface_area_v0.md
+docs/research_notes/omega_theory/omega_decision_stack_checkpoint_v0.md
+docs/research_notes/omega_theory/adaptive_fixed_world_corridor_b21.md
+docs/CLAIMS_LEDGER.md
 ```
 
-The repository contains many exploratory runs. The current active branch is a
-clean **Future Field Atlas** rebuild over the RFS-MB0 horizon-transport lessons:
-raw reachable-frontier topology first, response labels last. Older VAL0/VAL1/RFS0
-results remain useful for provenance and failure analysis, but they are not the
-current validation center.
+The repository contains many exploratory runs. Future Field Atlas, VAL0/VAL1,
+RFS-MB0, agency-diamond, and baseline-witness outputs remain useful for
+provenance, failure analysis, and instrument design. They are not the current
+formal center. The live center is the decision/corridor/adaptive-learning stack:
+ODT0 licensing, robust continuation corridors, B2/B2.1 ambiguity handling,
+ODT1 comparison bridges, and the ODT2 registered-arbitration scaffold.
 
 ## Claim boundary
 
@@ -33,7 +38,7 @@ holdout readiness
 graph-channel causality
 ```
 
-The current claim is modest:
+The current empirical-result claim is modest:
 
 > Future Field Atlas can measure reconstructible finite future-field topology
 > under lawful transition substrates. Current rank-order-boundary coupled
@@ -48,7 +53,7 @@ The current claim is modest:
 > closed transports, law checks, and theorem-transfer status for formal-arm
 > consumption. Historical treatment names are documentation-only translation aids.
 
-The latest state is an atlas posture: retained coupled outputs are now mapped
+The retained atlas posture is: coupled outputs are mapped
 with a substrate morphology postprocessor before designing the next operator.
 The current rank-order-boundary branch is the positive mechanism result:
 pair005, pair012, pair014, and pair026 are high-residual / joint-restrictive
@@ -146,44 +151,32 @@ unclassified dynamic-surplus bucket is empty.
 
 ## Best onboarding path
 
-Start here:
+For the current formal project, start here:
 
 1. [`README.md`](../README.md)
-2. [`OMEGA_FORMALISM_PRIMER.md`](OMEGA_FORMALISM_PRIMER.md)
-3. [`EXTERNAL_READER_GUIDE.md`](EXTERNAL_READER_GUIDE.md)
-4. [`research_notes/omega_theory/alpha_primitive_core_v0.md`](research_notes/omega_theory/alpha_primitive_core_v0.md)
-5. [`research_notes/omega_theory/alpha_omega_unification_map_v0.md`](research_notes/omega_theory/alpha_omega_unification_map_v0.md)
-6. [`research_notes/omega_theory/README.md`](research_notes/omega_theory/README.md)
-7. [`research_notes/validation_results/future_field_atlas/future_field_atlas_formal_adapter_conformance_package_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_formal_adapter_conformance_package_result.md)
-8. [`research_notes/validation_results/stochastic_distinction_channel/stochastic_thresholded_prob_non_erasure_result.md`](research_notes/validation_results/stochastic_distinction_channel/stochastic_thresholded_prob_non_erasure_result.md)
-9. [`research_notes/validation_results/stochastic_distinction_channel/stochastic_channel_theorem_transfer_audit_result.md`](research_notes/validation_results/stochastic_distinction_channel/stochastic_channel_theorem_transfer_audit_result.md)
-10. [`research_notes/validation_results/stochastic_distinction_channel/stochastic_distinction_channel_fixed_policy_result.md`](research_notes/validation_results/stochastic_distinction_channel/stochastic_distinction_channel_fixed_policy_result.md)
-11. [`research_notes/validation_results/baseline_witnesses/same_reachability_different_recovery_v0.md`](research_notes/validation_results/baseline_witnesses/same_reachability_different_recovery_v0.md)
-12. [`research_notes/validation_results/baseline_witnesses/same_entropy_different_recovery_profile_v0.md`](research_notes/validation_results/baseline_witnesses/same_entropy_different_recovery_profile_v0.md)
-13. [`research_notes/validation_results/baseline_witnesses/same_frontier_morphology_different_loss_profile_v0.md`](research_notes/validation_results/baseline_witnesses/same_frontier_morphology_different_loss_profile_v0.md)
-14. [`research_notes/validation_results/baseline_witnesses/same_mutual_information_different_declared_recovery_v0.md`](research_notes/validation_results/baseline_witnesses/same_mutual_information_different_declared_recovery_v0.md)
-15. [`research_notes/validation_results/baseline_witnesses/same_observation_rank_different_declared_recovery_v0.md`](research_notes/validation_results/baseline_witnesses/same_observation_rank_different_declared_recovery_v0.md)
-16. [`research_notes/validation_results/baseline_witnesses/same_control_reach_different_declared_recovery_v0.md`](research_notes/validation_results/baseline_witnesses/same_control_reach_different_declared_recovery_v0.md)
-17. [`research_notes/validation_results/baseline_witnesses/same_intervention_effect_different_declared_recovery_v0.md`](research_notes/validation_results/baseline_witnesses/same_intervention_effect_different_declared_recovery_v0.md)
-18. [`research_notes/validation_results/baseline_witnesses/same_optimized_success_different_declared_recovery_v0.md`](research_notes/validation_results/baseline_witnesses/same_optimized_success_different_declared_recovery_v0.md)
-19. [`research_notes/validation_results/baseline_witnesses/same_viability_kernel_different_declared_recovery_v0.md`](research_notes/validation_results/baseline_witnesses/same_viability_kernel_different_declared_recovery_v0.md)
-20. [`research_notes/validation_results/baseline_witnesses/same_marginal_success_different_joint_success_v0.md`](research_notes/validation_results/baseline_witnesses/same_marginal_success_different_joint_success_v0.md)
-21. [`research_notes/validation_results/baseline_witnesses/same_compression_score_different_merge_soundness_v0.md`](research_notes/validation_results/baseline_witnesses/same_compression_score_different_merge_soundness_v0.md)
-22. [`research_notes/validation_results/baseline_witnesses/same_chain_evidence_different_class_soundness_v0.md`](research_notes/validation_results/baseline_witnesses/same_chain_evidence_different_class_soundness_v0.md)
-23. [`research_notes/validation_results/baseline_witnesses/same_coarse_bisimulation_different_consequence_profile_v0.md`](research_notes/validation_results/baseline_witnesses/same_coarse_bisimulation_different_consequence_profile_v0.md)
-24. [`research_notes/omega_theory/probabilistic_channel_presentation_v0.md`](research_notes/omega_theory/probabilistic_channel_presentation_v0.md)
-25. [`research_notes/validation_results/stochastic_distinction_channel/stochastic_distinction_channel_tightening_result.md`](research_notes/validation_results/stochastic_distinction_channel/stochastic_distinction_channel_tightening_result.md)
-26. [`research_notes/validation_results/future_field_atlas/future_field_atlas_formal_interface_distinction_panel_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_formal_interface_distinction_panel_result.md)
-27. [`research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_class_expansion_result.md)
-28. [`research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_rank_order_boundary_visualization_note.md)
-29. [`research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_substrate_morphology_atlas_result.md)
-30. [`FUTURE_FIELD_ATLAS_GLOSSARY.md`](FUTURE_FIELD_ATLAS_GLOSSARY.md)
+2. [`Docs README`](README.md)
+3. [`CLAIMS_LEDGER.md`](CLAIMS_LEDGER.md)
+4. [`research_notes/omega_theory/active_surface_area_v0.md`](research_notes/omega_theory/active_surface_area_v0.md)
+5. [`research_notes/omega_theory/omega_decision_stack_checkpoint_v0.md`](research_notes/omega_theory/omega_decision_stack_checkpoint_v0.md)
+6. [`research_notes/omega_theory/adaptive_fixed_world_corridor_b21.md`](research_notes/omega_theory/adaptive_fixed_world_corridor_b21.md)
+7. [`research_notes/omega_theory/b2_viability_safety_game_docking_v0.md`](research_notes/omega_theory/b2_viability_safety_game_docking_v0.md)
+8. [`research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md`](research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
 
-## Current live branch
+For retained empirical and instrument results, then read:
+
+1. [`BASELINE_WITNESS_SUITE_V0.md`](BASELINE_WITNESS_SUITE_V0.md)
+2. [`ADVERSARIAL_REVIEW_GUIDE.md`](ADVERSARIAL_REVIEW_GUIDE.md)
+3. [`FUTURE_FIELD_ATLAS_GLOSSARY.md`](FUTURE_FIELD_ATLAS_GLOSSARY.md)
+4. [`research_notes/validation_results/future_field_atlas/future_field_atlas_formal_adapter_conformance_package_result.md`](research_notes/validation_results/future_field_atlas/future_field_atlas_formal_adapter_conformance_package_result.md)
+5. [`research_notes/validation_results/stochastic_distinction_channel/stochastic_thresholded_prob_non_erasure_result.md`](research_notes/validation_results/stochastic_distinction_channel/stochastic_thresholded_prob_non_erasure_result.md)
+6. [`research_notes/validation_results/stochastic_distinction_channel/stochastic_channel_theorem_transfer_audit_result.md`](research_notes/validation_results/stochastic_distinction_channel/stochastic_channel_theorem_transfer_audit_result.md)
+7. [`research_notes/validation_results/contextual_future_fields_v0/report.md`](research_notes/validation_results/contextual_future_fields_v0/report.md)
+
+## Retained empirical branch
 
 ### Future Field Atlas and stochastic channel bridge
 
-The current empirical branch has two front-door instruments:
+The retained empirical branch has two major instruments:
 
 ```text
 Future Field Atlas:

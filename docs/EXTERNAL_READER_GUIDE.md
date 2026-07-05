@@ -49,24 +49,69 @@ complete value theory exists.
 ## 1. What Changed Recently
 
 Earlier public summaries over-centered future fields, distinction transport,
-and Future Field Atlas. Those remain useful, but they are no longer the
-conceptual front door.
+Future Field Atlas, and proto-teleological seed language. Those remain useful
+as foundation and provenance, but they are no longer the conceptual front door.
 
 The current front door is:
 
 ```text
-continuation, not time;
-consequence-induced separation, not labels;
-primitive nondegeneracy, not decorative fields;
-proto-teleological seed, not purpose or value.
+effective layers, not direct Alpha-to-value derivation;
+certified presentations and updates, not trusted summaries by default;
+robust corridors, not unconstrained optimization;
+adaptive fixed-world learning, not only switching ambiguity.
 ```
 
-The important correction is that "future" is now treated as the temporal
-adapter of a more general notion: continuation. A continuation can be a
-transition, path, derivation, completion, composition, deformation, or other
+The important correction is twofold. First, "future" is treated as the
+temporal adapter of a more general notion: continuation. A continuation can be
+a transition, path, derivation, completion, composition, deformation, or other
 admissible unfolding supplied by a substrate.
 
+Second, the corridor stack now has an epistemic surface. Under stepwise
+adversarial ambiguity, robust viability is conservative. Under
+unknown-but-fixed ambiguity, sound update can sometimes convert uncertainty
+into information. The B2.1 adaptive fixed-world layer formalizes this with an
+information-state lift, strictness witnesses, a fake-update phantom corridor,
+and a policy-level fixed-point correspondence.
+
 ## 2. Current Checked Formal Stack
+
+The current decision/corridor stack is the fastest route into the checked
+formal work:
+
+```text
+ODT0:
+  certified licensing and corridor gates.
+
+B2:
+  robust continuation corridors as classical viability/safety-game fixed
+  points.
+
+B2.1:
+  fixed-world information states, sound update, adaptive kernels, fixed-model
+  realization, policy-level correspondence, and fake-update guardrails.
+
+ODT1:
+  value-parametric dominance and deterministic/stochastic Blackwell-shaped
+  comparison bridges.
+
+ODT2:
+  registered least-violation arbitration scaffold.
+```
+
+Relevant files:
+
+```text
+formal/lean/OmegaProper/Decision/License.lean
+formal/lean/OmegaProper/Decision/RobustCorridor.lean
+formal/lean/OmegaProper/Decision/AmbiguityFamily.lean
+formal/lean/OmegaProper/Decision/Containment.lean
+formal/lean/OmegaProper/Decision/TrajectoryConverse.lean
+formal/lean/OmegaProper/Decision/AdaptiveFixedWorld.lean
+formal/lean/OmegaProper/Decision/Dominance.lean
+formal/lean/OmegaProper/Decision/BlackwellDeterministic.lean
+formal/lean/OmegaProper/Decision/BlackwellStochastic.lean
+formal/lean/OmegaProper/Decision/Arbitration.lean
+```
 
 The current primitive floor is `AlphaCore`:
 

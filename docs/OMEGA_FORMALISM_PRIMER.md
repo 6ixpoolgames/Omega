@@ -1,6 +1,6 @@
 # Omega Formalism Primer
 
-Status: public onboarding / current best formalism
+Status: public onboarding / older conceptual primer
 Scope: compact bridge from the repository README to the dense theory notes
 Claim boundary: formal orientation only; not empirical validation, not value detection, not valuer detection, not agency detection, not identity detection, and not Omega validation
 
@@ -31,6 +31,14 @@ When does a difference matter because erasing it changes what can follow?
 
 That technical sense of "mattering" precedes value. Value enters only later,
 when consequence-bearing structures can support robust valuer-like trajectories.
+
+Current orientation note:
+
+```text
+This primer is still useful for Alpha/continuation vocabulary, but it is not
+the current theorem-map front door. For the current ODT/B2/B2.1 stack, start
+with docs/README.md and the adaptive fixed-world corridor note.
+```
 
 ## Continuation, Not Time
 
@@ -169,7 +177,8 @@ pairwise consequence-compatible.
 
 ## Proto-Teleological Seed
 
-The newest formal hinge is the narrowly scoped proto-teleological seed.
+The narrowly scoped proto-teleological seed is retained as lower-stack
+foundation, not as the current roadmap hinge.
 
 It means only:
 

@@ -23,6 +23,9 @@ History-dependent fixed-point guarantees collapse to the same corridor.
 Stationary guarantees extract per-model infinite policy traces.
 Switching finite-prefix trajectory guarantees are equivalent to stationary
 fixed-point guarantees.
+Adaptive fixed-world ambiguity is represented by an information-state lift,
+with sound update, fixed-model realization, strictness witnesses, and a
+policy-level fixed-point correspondence.
 ODT1 compares.
 Deterministic Blackwell factorization simulates policies.
 Stochastic garbling simulates randomized policies.
@@ -138,6 +141,45 @@ stationary fixed-point guarantees extract per-model infinite policy traces
 staying inside PolicyKernel, Constraint, Requirement, and RVK.
 absence of finite bad prefixes under switching-adversary model choices is
 equivalent to stationary fixed-point guarantee.
+```
+
+### Adaptive Fixed-World Corridor B2.1
+
+Lean files:
+
+```text
+formal/lean/OmegaProper/Decision/AdaptiveFixedWorld.lean
+formal/lean/OmegaProper/Decision/AdaptiveFixedWorldExamples.lean
+```
+
+Documentation:
+
+```text
+adaptive_fixed_world_corridor_b21.md
+```
+
+Landed content:
+
+```text
+information states as concrete state plus remaining possible models;
+sound successor-state update;
+adaptive kernel as ordinary robust corridor over the lifted system;
+finite fixed-world reach induces lifted reach;
+terminal possible models realize finite lifted traces;
+finite possible-model stabilization;
+nonempty infinite lifted traces have a fixed-model realizer;
+stationary information-state policy guarantees exist exactly on AdaptiveKernel;
+learnable ambiguity strictness witness;
+unlearnable/unsafe-identification exclusion witness;
+fake-update phantom corridor witness outside sound update.
+```
+
+Boundary:
+
+```text
+This is a policy-level fixed-point and lifted-trace checkpoint. It is not yet
+a fully packaged trajectory/maximal fixed-world semantics theorem, not POMDP
+theory, not agency, not value, and not a general theory of deception.
 ```
 
 ### ODT1 Structural Dominance
