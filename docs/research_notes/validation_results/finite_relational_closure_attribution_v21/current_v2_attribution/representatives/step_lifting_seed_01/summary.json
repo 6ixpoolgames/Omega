@@ -1,0 +1,117 @@
+{
+  "admissible_presentation_count": 2,
+  "attribution_bucket_counts": {
+    "bounded_process_coherence_invariance": 1,
+    "globally_valid": 6,
+    "profile_fiber_separation": 4,
+    "step_implies_path_lifting": 3
+  },
+  "attributions": [
+    {
+      "bucket": "globally_valid",
+      "fact_key": "profile:constant_all",
+      "support_fact": null
+    },
+    {
+      "bucket": "globally_valid",
+      "fact_key": "profile:extendable_safe_prefix_count:h=1",
+      "support_fact": null
+    },
+    {
+      "bucket": "globally_valid",
+      "fact_key": "profile:observed_words:goal_status:h=1",
+      "support_fact": null
+    },
+    {
+      "bucket": "globally_valid",
+      "fact_key": "profile:observed_words:goal_status:h=2",
+      "support_fact": null
+    },
+    {
+      "bucket": "bounded_process_coherence_invariance",
+      "fact_key": "profile:safe_prefix_count:h=1",
+      "support_fact": "struct:step_lifting"
+    },
+    {
+      "bucket": "globally_valid",
+      "fact_key": "profile:safe_prefix_count:h=2",
+      "support_fact": null
+    },
+    {
+      "bucket": "globally_valid",
+      "fact_key": "profile:viability:safe_all",
+      "support_fact": null
+    },
+    {
+      "bucket": "step_implies_path_lifting",
+      "fact_key": "struct:path_lifting:h=1",
+      "support_fact": "struct:step_lifting"
+    },
+    {
+      "bucket": "step_implies_path_lifting",
+      "fact_key": "struct:path_lifting:h=2",
+      "support_fact": "struct:step_lifting"
+    },
+    {
+      "bucket": "step_implies_path_lifting",
+      "fact_key": "struct:path_lifting:h=3",
+      "support_fact": "struct:step_lifting"
+    },
+    {
+      "bucket": "profile_fiber_separation",
+      "fact_key": "visible:a->b",
+      "support_fact": "profile:safe_prefix_count:h=1"
+    },
+    {
+      "bucket": "profile_fiber_separation",
+      "fact_key": "visible:a->c",
+      "support_fact": "profile:safe_prefix_count:h=1"
+    },
+    {
+      "bucket": "profile_fiber_separation",
+      "fact_key": "visible:b->a",
+      "support_fact": "profile:safe_prefix_count:h=1"
+    },
+    {
+      "bucket": "profile_fiber_separation",
+      "fact_key": "visible:c->a",
+      "support_fact": "profile:safe_prefix_count:h=1"
+    }
+  ],
+  "case_id": "step_lifting_seed_01",
+  "classification": "unclassified_dynamic_profile_surplus",
+  "closure_fact_count": 15,
+  "dynamic_surplus_facts": [
+    "profile:safe_prefix_count:h=1",
+    "struct:path_lifting:h=1",
+    "struct:path_lifting:h=2",
+    "struct:path_lifting:h=3"
+  ],
+  "edge_count": 1,
+  "globally_valid_surplus_facts": [
+    "profile:constant_all",
+    "profile:extendable_safe_prefix_count:h=1",
+    "profile:observed_words:goal_status:h=1",
+    "profile:observed_words:goal_status:h=2",
+    "profile:safe_prefix_count:h=2",
+    "profile:viability:safe_all"
+  ],
+  "output": "docs\\research_notes\\validation_results\\finite_relational_closure_attribution_v21\\current_v2_attribution\\representatives\\step_lifting_seed_01",
+  "presentation_universe_count": 5,
+  "residual_count": 0,
+  "residual_facts": [],
+  "seed_determined_dynamic_profile_surplus_facts": [],
+  "seed_fact_keys": [
+    "struct:step_lifting"
+  ],
+  "seed_forced_structural_surplus_facts": [
+    "struct:path_lifting:h=1",
+    "struct:path_lifting:h=2",
+    "struct:path_lifting:h=3"
+  ],
+  "state_count": 3,
+  "surplus_fact_count": 14,
+  "unclassified_dynamic_profile_surplus_facts": [
+    "profile:safe_prefix_count:h=1"
+  ]
+}

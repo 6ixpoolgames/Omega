@@ -62,6 +62,8 @@ coarsening_permanence_v0.md
 presentation_fact_closure_v0.md
 closure_discovery_v0.md
 closure_discovery_v2.md
+closure_attribution_protocol_v21.md
+closure_attribution_v21.md
 robust_recovery_ambiguity_sets_v0.md
 prior_relative_recovery_v0.md
 bridge_claims_ledger_v0.md

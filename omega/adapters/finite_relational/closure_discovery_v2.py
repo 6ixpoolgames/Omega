@@ -182,6 +182,23 @@ def closure_discovery_v2_summary() -> dict[str, object]:
     }
 
 
+def closure_v2_case_from_edges(
+    *,
+    case_id: str,
+    states: tuple[str, ...],
+    edges: tuple[Pair, ...],
+    seed_fact_keys: tuple[str, ...],
+) -> ClosureV2Case:
+    """Build one closure-v2 case from explicit finite graph data."""
+
+    return _closure_v2_case(
+        case_id=case_id,
+        states=states,
+        edges=edges,
+        seed_fact_keys=seed_fact_keys,
+    )
+
+
 def _step_lifting_seed_family() -> ClosureV2Family:
     states = ("a", "b", "c")
     cases = tuple(

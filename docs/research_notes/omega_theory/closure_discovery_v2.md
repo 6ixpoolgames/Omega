@@ -163,6 +163,14 @@ it does not identify natural admissibility;
 it does not certify global invariance.
 ```
 
+Update: Closure v2.1 attribution is recorded in
+[`closure_attribution_protocol_v21.md`](closure_attribution_protocol_v21.md)
+and [`closure_attribution_v21.md`](closure_attribution_v21.md). The fixed
+classifier attributes all 120 current-v2 unclassified dynamic-profile surplus
+facts to bounded process-coherence invariance and reports zero residual facts
+across current and held-out samples. This reads v2 as instrument calibration
+for process-coherence invariance, not as unexplained new closure structure.
+
 ## What Changed Relative To V0
 
 V0 answered:
