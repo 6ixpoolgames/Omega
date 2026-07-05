@@ -338,6 +338,41 @@ information-state system, and the fixed-model realizer extracts one concrete
 model for nonempty infinite lifted traces. It does not yet package maximal
 fixed-world trajectory semantics as a standalone object.
 
+The observation-parametric monotonicity layer has also landed:
+
+```text
+observedUpdate:
+  updates possible models by deterministic observation of the concrete
+  successor.
+
+ObservedAdaptiveKernel:
+  robust corridor of the observation-parametric lifted information-state
+  system.
+
+observedAdaptiveKernel_mono_of_factorization:
+  if a coarse observation factors through a finer observation, any coarser
+  observed adaptive-kernel certificate transports to a nonempty finer
+  information state that refines it.
+```
+
+The theorem lives in:
+
+```text
+formal/lean/OmegaProper/Decision/AdaptiveObservation.lean
+docs/research_notes/omega_theory/adaptive_observation_informativeness_v0.md
+```
+
+Reading:
+
+```text
+certified finer deterministic observation cannot shrink the adaptive
+fixed-world corridor.
+```
+
+The hypothesis matters. The fake-update phantom witness remains the warning
+case: fabricated model elimination can still create phantom safety if the
+observation/update contract is unsound.
+
 ## Assembly Status
 
 The landed finite-bad-prefix theorem gives the current clean statement:

@@ -5,7 +5,8 @@ Scope: ODT0 licensing, robust corridor instantiation, ambiguity-family robust
 viability reduction, stationary fixed-point containment, history-policy
 memorylessness, positive stationary trajectory bridge, switching finite-prefix
 trajectory converse, ODT1 dominance, finite acceptance bridges, deterministic
-and stochastic Blackwell-shaped conservativity, and ODT2 registered arbitration
+and stochastic Blackwell-shaped conservativity, adaptive observation
+informativeness, and ODT2 registered arbitration
 Claim boundary: not complete decision theory, not final value, not aggregation,
 not arbitration, not agency, not identity, not valuerhood, not moral standing,
 not probability-aware risk handling, not full stochastic Blackwell theorem, not
@@ -26,6 +27,8 @@ fixed-point guarantees.
 Adaptive fixed-world ambiguity is represented by an information-state lift,
 with sound update, fixed-model realization, strictness witnesses, and a
 policy-level fixed-point / finite-bad-prefix correspondence.
+Deterministic observation factorization transports observed adaptive-kernel
+certificates to finer information states.
 ODT1 compares.
 Deterministic Blackwell factorization simulates policies.
 Stochastic garbling simulates randomized policies.
@@ -150,12 +153,14 @@ Lean files:
 ```text
 formal/lean/OmegaProper/Decision/AdaptiveFixedWorld.lean
 formal/lean/OmegaProper/Decision/AdaptiveFixedWorldExamples.lean
+formal/lean/OmegaProper/Decision/AdaptiveObservation.lean
 ```
 
 Documentation:
 
 ```text
 adaptive_fixed_world_corridor_b21.md
+adaptive_observation_informativeness_v0.md
 ```
 
 Landed content:
@@ -172,6 +177,9 @@ stationary information-state policy guarantees exist exactly on AdaptiveKernel;
 finite lifted bad-prefix guarantees exist exactly on AdaptiveKernel;
 sound finite fixed-world reach from a policy-kernel state remains inside that
 policy kernel;
+deterministic finer observations do not shrink the observed adaptive corridor
+when the coarser observation factors through them and the finer information
+state refines the coarser one;
 learnable ambiguity strictness witness;
 unlearnable/unsafe-identification exclusion witness;
 fake-update phantom corridor witness outside sound update.

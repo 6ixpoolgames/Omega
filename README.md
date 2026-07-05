@@ -137,10 +137,11 @@ corridors:
 
 learning:
   unknown-but-fixed ambiguity can sometimes be converted into information by
-  sound update; fabricated model elimination can create phantom safety.
+  sound update; certified finer observations weakly widen the adaptive
+  corridor; fabricated model elimination can create phantom safety.
 ```
 
-The newest B2.1 checkpoint is important: the repo now has a Lean information-state lift for fixed-world ambiguity, strictness witnesses for learnable and unlearnable ambiguity, a fake-update phantom corridor witness, an infinite fixed-model realizer, and policy/finite-bad-prefix theorems:
+The newest B2.1 checkpoint is important: the repo now has a Lean information-state lift for fixed-world ambiguity, strictness witnesses for learnable and unlearnable ambiguity, a fake-update phantom corridor witness, an infinite fixed-model realizer, policy/finite-bad-prefix theorems, and a deterministic observation-informativeness theorem:
 
 ```text
 some stationary information-state policy guarantees from an information state
@@ -149,6 +150,11 @@ that information state lies in AdaptiveKernel.
 ```
 
 This is still claim-bounded. It is a policy-level and finite-refutation correspondence over the lifted information-state system, not yet a fully packaged maximal fixed-world trajectory semantics theorem.
+
+The observation theorem adds the first direct weld to Blackwell-shaped
+comparison: when a coarse observation factors through a finer deterministic
+observation, any coarse-safe adaptive information state has a nonempty
+fine-safe refinement.
 
 ## Decision-Theory Surface
 
@@ -181,11 +187,12 @@ Headline notes:
 5. [Stochastic Blackwell Forward Bridge](docs/research_notes/omega_theory/omega_decision_stochastic_blackwell_v0.md)
 6. [Omega Decision Arbitration v0](docs/research_notes/omega_theory/omega_decision_arbitration_v0.md)
 7. [Adaptive Fixed-World Corridor B2.1](docs/research_notes/omega_theory/adaptive_fixed_world_corridor_b21.md)
+8. [Adaptive Observation Informativeness v0](docs/research_notes/omega_theory/adaptive_observation_informativeness_v0.md)
 
-The proved layer is still partial. Hypothesized next behavior includes sound
-observation-informativeness monotonicity, unsafe-identification/no-go results,
-and eventually endogenous register updates. None of this currently claims final
-value, agency, moral standing, or a complete decision theory.
+The proved layer is still partial. Hypothesized next behavior includes
+unsafe-identification/no-go results and eventually endogenous register updates.
+None of this currently claims final value, agency, moral standing, or a
+complete decision theory.
 
 ## Start Here
 
@@ -196,9 +203,10 @@ For the current docs front door:
 3. [Claims Ledger](docs/CLAIMS_LEDGER.md)
 4. [Omega Decision Stack Checkpoint](docs/research_notes/omega_theory/omega_decision_stack_checkpoint_v0.md)
 5. [Adaptive Fixed-World Corridor B2.1](docs/research_notes/omega_theory/adaptive_fixed_world_corridor_b21.md)
-6. [B2 Viability / Safety-Game Docking](docs/research_notes/omega_theory/b2_viability_safety_game_docking_v0.md)
-7. [Effective Layers](docs/research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
-8. [Omega Theory Notes Index](docs/research_notes/omega_theory/README.md)
+6. [Adaptive Observation Informativeness v0](docs/research_notes/omega_theory/adaptive_observation_informativeness_v0.md)
+7. [B2 Viability / Safety-Game Docking](docs/research_notes/omega_theory/b2_viability_safety_game_docking_v0.md)
+8. [Effective Layers](docs/research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
+9. [Omega Theory Notes Index](docs/research_notes/omega_theory/README.md)
 
 For first-contact narrative:
 
@@ -235,10 +243,11 @@ Decision stack entry points:
 5. [Containment](formal/lean/OmegaProper/Decision/Containment.lean)
 6. [Trajectory Converse](formal/lean/OmegaProper/Decision/TrajectoryConverse.lean)
 7. [Adaptive Fixed World](formal/lean/OmegaProper/Decision/AdaptiveFixedWorld.lean)
-8. [ODT1 Dominance](formal/lean/OmegaProper/Decision/Dominance.lean)
-9. [Deterministic Blackwell](formal/lean/OmegaProper/Decision/BlackwellDeterministic.lean)
-10. [Stochastic Blackwell](formal/lean/OmegaProper/Decision/BlackwellStochastic.lean)
-11. [ODT2 Arbitration](formal/lean/OmegaProper/Decision/Arbitration.lean)
+8. [Adaptive Observation](formal/lean/OmegaProper/Decision/AdaptiveObservation.lean)
+9. [ODT1 Dominance](formal/lean/OmegaProper/Decision/Dominance.lean)
+10. [Deterministic Blackwell](formal/lean/OmegaProper/Decision/BlackwellDeterministic.lean)
+11. [Stochastic Blackwell](formal/lean/OmegaProper/Decision/BlackwellStochastic.lean)
+12. [ODT2 Arbitration](formal/lean/OmegaProper/Decision/Arbitration.lean)
 
 Trajectory/recovery entry points:
 
@@ -255,6 +264,7 @@ The strongest current results are deliberately conditional and finite:
 - Robust corridors: controlled viability kernels provide the fixed-point floor for persistence under declared constraints.
 - Switching ambiguity: shared-action robust viability reduces to an existing robust corridor over a merged system, and per-model corridor intersection can overstate safety.
 - Fixed-world learning: information-state adaptive kernels distinguish learnable ambiguity from switching ambiguity and expose fake-update phantom corridors.
+- Observation informativeness: deterministic finer observations do not shrink the adaptive corridor when the coarser observation factors through them and the fine information state refines the coarse one.
 - ODT1 comparison: Hoare/Smyth/Plotkin dominance over licensed outcome surfaces has failure certificates and monotone-valuation acceptance theorems.
 - Blackwell-shaped bridges: deterministic factorization is equivalent to policy simulation; finite rational stochastic garbling compiles randomized policies in the forward direction.
 - ODT2 scaffold: least-violation arbitration exists only relative to a declared finite frontier and violation score.
@@ -268,11 +278,10 @@ Near-term work should now prefer:
 
 1. A B2.1 theorem map and documentation cleanup.
 2. Maximal fixed-world trajectory semantics, only if needed for a paper-style theorem statement.
-3. Sound observation-informativeness monotonicity: certified better observations should not shrink the adaptive corridor.
-4. A general guard theorem for process-coherence attribution.
-5. Recovery/irreversibility welds for unsafe identification and forbidden probes.
-6. Endogenous register updates only after the observation/update layer is sound.
-7. Plural corridor composition after the epistemic/register layer is stable.
+3. A general guard theorem for process-coherence attribution.
+4. Recovery/irreversibility welds for unsafe identification and forbidden probes.
+5. Endogenous register updates only after the observation/update layer is sound.
+6. Plural corridor composition after the epistemic/register layer is stable.
 
 ## Claim Boundary
 

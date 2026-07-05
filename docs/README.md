@@ -14,7 +14,8 @@ This page is the current docs entry point. Older notes remain in the tree for pr
 4. [Claims Ledger](CLAIMS_LEDGER.md)
 5. [Omega Decision Stack Checkpoint](research_notes/omega_theory/omega_decision_stack_checkpoint_v0.md)
 6. [Adaptive Fixed-World Corridor B2.1](research_notes/omega_theory/adaptive_fixed_world_corridor_b21.md)
-7. [Effective Layers](research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
+7. [Adaptive Observation Informativeness v0](research_notes/omega_theory/adaptive_observation_informativeness_v0.md)
+8. [Effective Layers](research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
 
 ## Current Formal Center
 
@@ -30,8 +31,8 @@ B2:
 B2.1:
   information-state adaptive corridors for unknown-but-fixed ambiguity,
   including sound update, fixed-model realization, policy and finite-bad-prefix
-  correspondence, learnable/unlearnable strictness, and fake-update phantom
-  safety.
+  correspondence, learnable/unlearnable strictness, fake-update phantom
+  safety, and deterministic observation-informativeness monotonicity.
 
 ODT1:
   value-parametric dominance and Blackwell-shaped comparison bridges.
@@ -51,10 +52,11 @@ Use these notes for the current stack:
 7. [Stationary Trajectory Bridge v0](research_notes/omega_theory/stationary_trajectory_bridge_v0.md)
 8. [Switching Trajectory Converse v0](research_notes/omega_theory/switching_trajectory_converse_v0.md)
 9. [Adaptive Fixed-World Corridor B2.1](research_notes/omega_theory/adaptive_fixed_world_corridor_b21.md)
-10. [Omega Decision Dominance v0](research_notes/omega_theory/omega_decision_dominance_v0.md)
-11. [Omega Decision Blackwell Conservativity v0](research_notes/omega_theory/omega_decision_blackwell_conservativity_v0.md)
-12. [Omega Decision Stochastic Blackwell v0](research_notes/omega_theory/omega_decision_stochastic_blackwell_v0.md)
-13. [Omega Decision Arbitration v0](research_notes/omega_theory/omega_decision_arbitration_v0.md)
+10. [Adaptive Observation Informativeness v0](research_notes/omega_theory/adaptive_observation_informativeness_v0.md)
+11. [Omega Decision Dominance v0](research_notes/omega_theory/omega_decision_dominance_v0.md)
+12. [Omega Decision Blackwell Conservativity v0](research_notes/omega_theory/omega_decision_blackwell_conservativity_v0.md)
+13. [Omega Decision Stochastic Blackwell v0](research_notes/omega_theory/omega_decision_stochastic_blackwell_v0.md)
+14. [Omega Decision Arbitration v0](research_notes/omega_theory/omega_decision_arbitration_v0.md)
 
 ## B2.1 Reading
 
@@ -70,6 +72,11 @@ fabricated model elimination can create phantom safety.
 The fake-update witness is the learning-layer analogue of phantom viability: if an update rule excludes the true model, a policy can appear certified inside the false information state while failing in the excluded world.
 
 The positive side is also important: the extracted `adaptiveKernelPolicy` is a tiny certified learner in the fixed-point sense. It probes, updates, and branches inside the lifted information-state corridor. This is not agency or value, but it is a clean safe-learning surface.
+
+The observation-informativeness theorem adds the first direct bridge from this
+adaptive kernel to Blackwell-shaped comparison: when a coarse deterministic
+observation factors through a finer one, the finer observation cannot shrink
+the adaptive corridor for a nonempty refined information state.
 
 ## Retained But Not Front Door
 

@@ -15,6 +15,7 @@ Start with the curated docs front door:
 active_surface_area_v0.md
 omega_decision_stack_checkpoint_v0.md
 adaptive_fixed_world_corridor_b21.md
+adaptive_observation_informativeness_v0.md
 b2_viability_safety_game_docking_v0.md
 effective_layers_realization_forgetting_emergence_v0.md
 ```
@@ -31,6 +32,7 @@ Decision and corridor:
   stationary_trajectory_bridge_v0.md
   switching_trajectory_converse_v0.md
   adaptive_fixed_world_corridor_b21.md
+  adaptive_observation_informativeness_v0.md
 
 Dominance and arbitration:
   omega_decision_dominance_v0.md
