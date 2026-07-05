@@ -1,4 +1,4 @@
-"""Retained validation for Closure v2.1 attribution."""
+"""Retained validation for Closure v2.1.5 guard-theorem attribution."""
 
 from __future__ import annotations
 
@@ -16,33 +16,31 @@ from omega.validation._common import timestamped_run_root
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Run Closure v2.1 attribution and held-out checks."
+        description="Run Closure v2.1.5 guard-theorem attribution."
     )
     parser.add_argument(
         "--out-root",
         type=Path,
-        default=Path(".tmp/finite_relational_closure_attribution_v21"),
+        default=Path(".tmp/finite_relational_closure_guard_v215"),
     )
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
-    result = run_finite_relational_closure_attribution_v21(out_root=args.out_root)
+    result = run_finite_relational_closure_guard_v215(out_root=args.out_root)
     print(json.dumps(result, indent=2, sort_keys=True, default=str))
 
 
-def run_finite_relational_closure_attribution_v21(
+def run_finite_relational_closure_guard_v215(
     *,
-    out_root: Path = Path(".tmp/finite_relational_closure_attribution_v21"),
+    out_root: Path = Path(".tmp/finite_relational_closure_guard_v215"),
 ) -> dict[str, Any]:
     run_root = timestamped_run_root(out_root)
-    return retain_finite_relational_closure_attribution_v21(run_root)
+    return retain_finite_relational_closure_guard_v215(run_root)
 
 
-def retain_finite_relational_closure_attribution_v21(
-    out_dir: Path,
-) -> dict[str, Any]:
+def retain_finite_relational_closure_guard_v215(out_dir: Path) -> dict[str, Any]:
     out_dir.mkdir(parents=True, exist_ok=True)
     families = generate_closure_attribution_v21()
     family_summaries = []
@@ -65,7 +63,7 @@ def retain_finite_relational_closure_attribution_v21(
 
     aggregate = _aggregate_family_summaries(family_summaries)
     result = {
-        "status": "PASS",
+        "status": _status_from_aggregate(aggregate),
         "run_root": str(out_dir),
         "family_count": len(families),
         "case_count": sum(len(family.cases) for family in families),
@@ -79,101 +77,80 @@ def retain_finite_relational_closure_attribution_v21(
 
 
 def render_report(result: dict[str, Any]) -> str:
-    bucket_counts = result["aggregate"]["bucket_counts"]
+    aggregate = result["aggregate"]
+    theorem_counts = aggregate["theorem_counts"]
     lines = [
-        "# Finite Relational Closure Attribution v2.1",
+        "# Finite Relational Closure Guard Attribution v2.1.5",
         "",
         f"Status: {result['status']}",
         "",
         "## Headline",
         "",
         f"- Cases: {result['case_count']}",
+        f"- Surplus facts: {aggregate['surplus_fact_count']}",
+        f"- Theorem-backed facts: {aggregate['theorem_backed_fact_count']}",
+        f"- Classifier-only facts: {aggregate['classifier_only_fact_count']}",
         f"- Residual cases: {result['residual_case_count']}",
-        f"- Residual facts: {result['aggregate']['residual_fact_count']}",
+        f"- Residual facts: {aggregate['residual_fact_count']}",
         (
-            "- Bounded process-coherence attributions: "
-            f"{bucket_counts.get('bounded_process_coherence_invariance', 0)}"
+            "- Process-coherence profile guard facts: "
+            f"{theorem_counts.get('closure.guard.process_coherence_entails_bounded_profile_invariance', 0)}"
         ),
         (
-            "- Step-implies-path attributions: "
-            f"{bucket_counts.get('step_implies_path_lifting', 0)}"
+            "- Step-to-path guard facts: "
+            f"{theorem_counts.get('closure.guard.step_lifting_implies_bounded_path_lifting', 0)}"
         ),
         "",
-        "## Family Breakdown",
+        "## Guard Theorems",
         "",
-        "| family | cases | residual cases | residual facts |",
-        "| --- | ---: | ---: | ---: |",
+        "| theorem | count |",
+        "| --- | ---: |",
     ]
-    for family in result["families"]:
-        lines.append(
-            "| {family_id} | {case_count} | {residual_case_count} | "
-            "{residual_fact_count} |".format(
-                residual_fact_count=family["aggregate"]["residual_fact_count"],
-                **family,
-            )
-        )
+    for theorem_id, count in theorem_counts.items():
+        lines.append(f"| `{theorem_id}` | {count} |")
     lines.extend(
         [
             "",
-            "## Attribution Buckets",
+            "## Family Breakdown",
             "",
-            "| bucket | count |",
-            "| --- | ---: |",
+            "| family | cases | theorem-backed | classifier-only | residual facts |",
+            "| --- | ---: | ---: | ---: | ---: |",
         ]
     )
-    for bucket, count in bucket_counts.items():
-        lines.append(f"| {bucket} | {count} |")
+    for family in result["families"]:
+        aggregate = family["aggregate"]
+        lines.append(
+            "| {family_id} | {case_count} | {theorem_backed_fact_count} | "
+            "{classifier_only_fact_count} | {residual_fact_count} |".format(
+                family_id=family["family_id"],
+                case_count=family["case_count"],
+                theorem_backed_fact_count=aggregate["theorem_backed_fact_count"],
+                classifier_only_fact_count=aggregate["classifier_only_fact_count"],
+                residual_fact_count=aggregate["residual_fact_count"],
+            )
+        )
     lines.extend(
         [
             "",
             "## Read",
             "",
             (
-                "The fixed classifier attributes all current-v2 and held-out "
-                "surplus facts. The current-v2 dynamic-profile facts that were "
-                "previously unclassified are attributed to bounded "
-                "process-coherence invariance under step lifting."
+                "Closure v2.1.5 adds proof attribution to the v2.1 classifier. "
+                "Each surplus fact is now attached to a named finite guard "
+                "theorem and the hypothesis facts used by that theorem."
             ),
             "",
             (
-                "This is a calibration result. It supports the interpretation "
-                "that Closure v2 found the finite shadow of a known "
-                "process-coherence invariance pattern, not yet unexplained new "
-                "closure structure."
+                "The process-coherence bucket is no longer merely a label: the "
+                "runner verifies, for each case, that every generated "
+                "presentation satisfying the support fact also satisfies the "
+                "attributed bounded profile or visibility fact."
             ),
             "",
-            "## Representatives",
-            "",
-        ]
-    )
-    for family in result["families"]:
-        lines.append(f"### {family['family_id']}")
-        lines.append("")
-        lines.append(family["description"])
-        lines.append("")
-        for case in family["representative_cases"]:
-            buckets = ", ".join(
-                f"{bucket}={count}"
-                for bucket, count in case["attribution_bucket_counts"].items()
-            )
-            residuals = ", ".join(case["residual_facts"]) or "none"
-            lines.append(
-                "- `{case_id}`: residuals {residuals}; buckets {buckets}".format(
-                    residuals=residuals,
-                    buckets=buckets,
-                    **case,
-                )
-            )
-        lines.append("")
-    lines.extend(
-        [
-            "## Claim Boundary",
-            "",
             (
-                "Closure v2.1 is a finite attribution pilot. It does not prove "
-                "global invariance, natural admissibility, a modal fixed-point "
-                "theorem, agency, identity, value, valuerhood, moral standing, "
-                "or Omega validation."
+                "This remains a finite guard pass over the generated Closure v2 "
+                "fact language. It is not a global modal fixed-point theorem or "
+                "a natural-admissibility theorem."
             ),
             "",
         ]
@@ -229,10 +206,23 @@ def _aggregate_family_summaries(
         "proof_status_counts": dict(sorted(proof_status_counts.items())),
         "residual_fact_keys": dict(sorted(residual_fact_keys.items())),
         "claim_boundary": (
-            "Closure v2.1 attribution only. The classifier is finite and "
-            "operational; it is not a formal modal fixed-point theorem."
+            "Closure v2.1.5 guard attribution only. The guard checks are finite "
+            "proof obligations over generated presentations; they are not a "
+            "global modal fixed-point theorem."
         ),
     }
+
+
+def _status_from_aggregate(aggregate: dict[str, object]) -> str:
+    if int(aggregate["residual_fact_count"]) != 0:
+        return "FAIL_RESIDUAL_FACTS"
+    if int(aggregate["classifier_only_fact_count"]) != 0:
+        return "FAIL_CLASSIFIER_ONLY_FACTS"
+    if int(aggregate["theorem_backed_fact_count"]) != int(
+        aggregate["surplus_fact_count"]
+    ):
+        return "FAIL_THEOREM_BACKING_MISMATCH"
+    return "PASS"
 
 
 def _write_json(path: Path, value: object) -> None:

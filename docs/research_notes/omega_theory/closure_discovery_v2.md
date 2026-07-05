@@ -171,6 +171,12 @@ facts to bounded process-coherence invariance and reports zero residual facts
 across current and held-out samples. This reads v2 as instrument calibration
 for process-coherence invariance, not as unexplained new closure structure.
 
+Update: Closure v2.1.5 guard attribution is recorded in
+[`closure_guard_theorem_v215.md`](closure_guard_theorem_v215.md) and
+[`closure_guard_attribution_v215.md`](closure_guard_attribution_v215.md). It
+attaches every retained surplus fact to a named finite guard theorem and
+explicit hypothesis facts, with zero classifier-only and zero residual facts.
+
 ## What Changed Relative To V0
 
 V0 answered:

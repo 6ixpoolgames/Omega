@@ -64,6 +64,8 @@ closure_discovery_v0.md
 closure_discovery_v2.md
 closure_attribution_protocol_v21.md
 closure_attribution_v21.md
+closure_guard_theorem_v215.md
+closure_guard_attribution_v215.md
 robust_recovery_ambiguity_sets_v0.md
 prior_relative_recovery_v0.md
 bridge_claims_ledger_v0.md

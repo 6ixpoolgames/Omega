@@ -571,6 +571,11 @@ attribution report at
 [finite_relational_closure_attribution_v21/report.md](research_notes/validation_results/finite_relational_closure_attribution_v21/report.md)
 and
 [finite_relational_closure_attribution_v21/summary.json](research_notes/validation_results/finite_relational_closure_attribution_v21/summary.json).
+Finite relational closure guard attribution v2.1.5 retains a proof-attribution
+report at
+[finite_relational_closure_guard_v215/report.md](research_notes/validation_results/finite_relational_closure_guard_v215/report.md)
+and
+[finite_relational_closure_guard_v215/summary.json](research_notes/validation_results/finite_relational_closure_guard_v215/summary.json).
 The operational-causal-diamond agency-layer pilot retains a human-readable note
 and machine-readable summary at
 [agency_diamond_midscale_v0.md](research_notes/validation_results/agency_diamond_midscale_v0.md)

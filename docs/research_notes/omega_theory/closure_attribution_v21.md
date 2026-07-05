@@ -154,11 +154,19 @@ the observed surplus is attributable to fixed process-coherence / profile-fiber
 rules, including held-out n=4 samples.
 ```
 
-Therefore the closure branch is live, but the next target is not more sweeps.
-The next target is theorem extraction or an implication-basis classifier:
+After v2.1.5:
 
 ```text
-prove or mechanize the process-coherence invariance principle;
+every retained surplus fact is attached to a named finite guard theorem and
+explicit hypothesis facts; no classifier-only or residual facts remain in the
+retained proof-attribution run.
+```
+
+Therefore the closure branch is live, but the next target is not more sweeps.
+The next target is an implication-basis classifier or residual search after
+known guard theorems are accounted for:
+
+```text
 then search for residual surplus after known-theory attribution.
 ```
 

@@ -36,12 +36,20 @@ class ClosureAttribution:
     fact_key: str
     bucket: str
     support_fact: str | None = None
+    theorem_id: str | None = None
+    hypothesis_facts: tuple[str, ...] = ()
+    proof_status: str = "classifier_only"
+    proof_kind: str | None = None
 
     def summary(self) -> dict[str, object]:
         return {
             "fact_key": self.fact_key,
             "bucket": self.bucket,
             "support_fact": self.support_fact,
+            "theorem_id": self.theorem_id,
+            "hypothesis_facts": list(self.hypothesis_facts),
+            "proof_status": self.proof_status,
+            "proof_kind": self.proof_kind,
         }
 
 
@@ -187,23 +195,46 @@ def _attribute_surplus_fact(
     fact_key: str,
 ) -> ClosureAttribution:
     if fact_key in globally_valid:
-        return ClosureAttribution(fact_key, "globally_valid")
+        return _guarded_attribution(
+            fact_key,
+            "globally_valid",
+            theorem_id="closure.guard.globally_valid_surplus",
+            hypothesis_facts=(),
+            proof_kind="all_generated_presentations_verify_conclusion",
+        )
     if fact_key in seed_determined:
-        return ClosureAttribution(fact_key, "seed_determined_profile")
-    if _step_implies_path_lifting(fact_key, closure):
-        return ClosureAttribution(
+        return _guarded_attribution(
+            fact_key,
+            "seed_determined_profile",
+            theorem_id="closure.guard.seed_profile_functionality",
+            hypothesis_facts=case.seed_fact_keys,
+            proof_kind="profile_functionality_over_seed_fibers",
+        )
+    fact = fact_by_key[fact_key]
+    if _step_implies_path_lifting(fact_key, closure) and _guard_entails(
+        case,
+        fact_by_key,
+        "struct:step_lifting",
+        fact,
+    ):
+        return _guarded_attribution(
             fact_key,
             "step_implies_path_lifting",
             support_fact="struct:step_lifting",
+            theorem_id="closure.guard.step_lifting_implies_bounded_path_lifting",
+            hypothesis_facts=("struct:step_lifting",),
+            proof_kind="finite_support_entailment",
         )
     if fact_key in seed_forced_structural:
         support = _first_present_process_support(closure)
-        return ClosureAttribution(
+        return _guarded_attribution(
             fact_key,
             "seed_forced_structural",
             support_fact=support,
+            theorem_id="closure.guard.seed_forced_structural",
+            hypothesis_facts=() if support is None else (support,),
+            proof_kind="closure_structural_support",
         )
-    fact = fact_by_key[fact_key]
     if fact.kind == "visible_pair":
         support = _visible_pair_support(
             fact_key,
@@ -217,23 +248,56 @@ def _attribute_surplus_fact(
                 if support in set(case.seed_fact_keys)
                 else "profile_fiber_separation"
             )
-            return ClosureAttribution(fact_key, bucket, support_fact=support)
+            return _guarded_attribution(
+                fact_key,
+                bucket,
+                support_fact=support,
+                theorem_id="closure.guard.profile_fiber_separation_reflects_visibility",
+                hypothesis_facts=(support,),
+                proof_kind="profile_fiber_separation",
+            )
         process_support = _bounded_process_coherence_support(case, fact)
         if process_support is not None:
-            return ClosureAttribution(
+            return _guarded_attribution(
                 fact_key,
                 "process_coherence_separation",
                 support_fact=process_support,
+                theorem_id="closure.guard.process_coherence_entails_visibility",
+                hypothesis_facts=(process_support,),
+                proof_kind="finite_support_entailment",
             )
     if fact.is_profile and fact.dynamic:
         support = _bounded_process_coherence_support(case, fact)
         if support is not None:
-            return ClosureAttribution(
+            return _guarded_attribution(
                 fact_key,
                 "bounded_process_coherence_invariance",
                 support_fact=support,
+                theorem_id="closure.guard.process_coherence_entails_bounded_profile_invariance",
+                hypothesis_facts=(support,),
+                proof_kind="finite_support_entailment",
             )
     return ClosureAttribution(fact_key, "residual")
+
+
+def _guarded_attribution(
+    fact_key: str,
+    bucket: str,
+    *,
+    theorem_id: str,
+    hypothesis_facts: tuple[str, ...],
+    proof_kind: str,
+    support_fact: str | None = None,
+) -> ClosureAttribution:
+    return ClosureAttribution(
+        fact_key=fact_key,
+        bucket=bucket,
+        support_fact=support_fact,
+        theorem_id=theorem_id,
+        hypothesis_facts=hypothesis_facts,
+        proof_status="guard_verified",
+        proof_kind=proof_kind,
+    )
 
 
 def _visible_pair_support(
@@ -284,6 +348,16 @@ def _bounded_process_coherence_support(
         if _support_entails_fact(case, support, fact):
             return support_key
     return None
+
+
+def _guard_entails(
+    case: ClosureV2Case,
+    fact_by_key: dict[str, ClosureV2Fact],
+    support_key: str,
+    fact: ClosureV2Fact,
+) -> bool:
+    support = fact_by_key.get(support_key)
+    return support is not None and _support_entails_fact(case, support, fact)
 
 
 def _support_entails_fact(
@@ -587,10 +661,15 @@ def _aggregate_attribution_cases(
 ) -> dict[str, object]:
     bucket_counts: Counter[str] = Counter()
     support_counts: Counter[str] = Counter()
+    theorem_counts: Counter[str] = Counter()
+    proof_status_counts: Counter[str] = Counter()
     residual_facts: Counter[str] = Counter()
     for case in cases:
         for attribution in case.attributions:
             bucket_counts[attribution.bucket] += 1
+            proof_status_counts[attribution.proof_status] += 1
+            if attribution.theorem_id is not None:
+                theorem_counts[attribution.theorem_id] += 1
             if attribution.support_fact is not None:
                 support_counts[attribution.support_fact] += 1
             if attribution.bucket == "residual":
@@ -599,6 +678,10 @@ def _aggregate_attribution_cases(
         "surplus_fact_count": sum(bucket_counts.values()),
         "bucket_counts": dict(sorted(bucket_counts.items())),
         "support_counts": dict(sorted(support_counts.items())),
+        "theorem_counts": dict(sorted(theorem_counts.items())),
+        "proof_status_counts": dict(sorted(proof_status_counts.items())),
+        "theorem_backed_fact_count": sum(theorem_counts.values()),
+        "classifier_only_fact_count": proof_status_counts.get("classifier_only", 0),
         "residual_fact_count": sum(residual_facts.values()),
         "residual_fact_keys": dict(sorted(residual_facts.items())),
         "case_count": len(cases),
