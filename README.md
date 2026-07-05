@@ -150,6 +150,43 @@ that information state lies in AdaptiveKernel.
 
 This is still claim-bounded. It is a policy-level fixed-point correspondence over the lifted information-state system, not yet a fully packaged trajectory/maximal fixed-world semantics theorem.
 
+## Decision-Theory Surface
+
+The decision-facing stack is currently grouped under the working title
+"Omega Decision Theory" in the notes. Treat that as a working label, not a
+finished doctrine.
+
+The stack already behaves differently from several familiar decision-theory
+templates:
+
+- It licenses before it ranks: a proposed action must route through certified
+  facts and preserve the declared corridor before comparison matters.
+- It compares licensed outcome surfaces by value-parametric dominance rather
+  than forcing a scalar best action.
+- It treats observation quality as part of the decision surface: deterministic
+  factorization and finite rational stochastic garbling compile policies in
+  Blackwell-shaped ways.
+- It keeps arbitration registered: least-violation choice exists only relative
+  to declared frontier and violation data, not as a source of moral authority.
+- It now has a fixed-world learning surface: sound information-state update can
+  widen what is safely maintainable, while fabricated model elimination can
+  create phantom safety.
+
+Headline notes:
+
+1. [Omega Decision Stack Checkpoint](docs/research_notes/omega_theory/omega_decision_stack_checkpoint_v0.md)
+2. [Omega Decision Floor v0](docs/research_notes/omega_theory/omega_decision_floor_v0.md)
+3. [Omega Decision Dominance v0](docs/research_notes/omega_theory/omega_decision_dominance_v0.md)
+4. [Deterministic Blackwell Conservativity](docs/research_notes/omega_theory/omega_decision_blackwell_conservativity_v0.md)
+5. [Stochastic Blackwell Forward Bridge](docs/research_notes/omega_theory/omega_decision_stochastic_blackwell_v0.md)
+6. [Omega Decision Arbitration v0](docs/research_notes/omega_theory/omega_decision_arbitration_v0.md)
+7. [Adaptive Fixed-World Corridor B2.1](docs/research_notes/omega_theory/adaptive_fixed_world_corridor_b21.md)
+
+The proved layer is still partial. Hypothesized next behavior includes sound
+observation-informativeness monotonicity, unsafe-identification/no-go results,
+and eventually endogenous register updates. None of this currently claims final
+value, agency, moral standing, or a complete decision theory.
+
 ## Start Here
 
 For the current docs front door:
