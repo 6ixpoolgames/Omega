@@ -462,6 +462,204 @@ theorem W_unlearnable_adaptive_exclusion :
 
 end Unlearnable
 
+namespace FakeUpdate
+
+inductive Model where
+  | trueWorld
+  | fakeWorld
+deriving DecidableEq
+
+instance : Fintype Model where
+  elems := {Model.trueWorld, Model.fakeWorld}
+  complete := by
+    intro i
+    cases i <;> simp
+
+inductive State where
+  | start
+  | safe
+  | bad
+deriving DecidableEq
+
+inductive Action where
+  | trustFake
+deriving DecidableEq
+
+def Step : Model -> State -> Action -> State -> Prop
+  | Model.trueWorld, State.start, Action.trustFake, State.bad => True
+  | Model.fakeWorld, State.start, Action.trustFake, State.safe => True
+  | Model.fakeWorld, State.safe, Action.trustFake, State.safe => True
+  | _, State.bad, Action.trustFake, State.bad => True
+  | _, _, _, _ => False
+
+def Constraint : State -> Prop
+  | State.bad => False
+  | _ => True
+
+def F : AmbFamily State Action where
+  Model := Model
+  modelFinite := inferInstance
+  modelNonempty := ⟨Model.trueWorld⟩
+  Step := Step
+  Constraint := Constraint
+
+def Allowed (_ : State) (_ : Action) : Prop := True
+
+def Requirement (_ : State) : Prop := True
+
+abbrev AK : InfoState F -> Prop :=
+  AdaptiveKernel F Allowed Requirement
+
+def allModels (_ : Model) : Prop := True
+
+def onlyFake : Model -> Prop
+  | Model.trueWorld => False
+  | Model.fakeWorld => True
+
+def fullStart : InfoState F where
+  state := State.start
+  possible := allModels
+
+/--
+An intentionally unsound "identification" update. It is not `soundUpdate` and
+is not used by the core lift; it is a witness for fabricated model elimination.
+-/
+def fakeUpdate (_info : InfoState F) (_a : Action) (_observed : State) :
+    Model -> Prop :=
+  onlyFake
+
+def fakeStart : InfoState F where
+  state := State.start
+  possible := fakeUpdate fullStart Action.trustFake State.safe
+
+def fakeSafe : InfoState F where
+  state := State.safe
+  possible := onlyFake
+
+theorem fakeUpdate_drops_true_model :
+    fullStart.possible Model.trueWorld /\
+      Not (fakeUpdate fullStart Action.trustFake State.safe Model.trueWorld) := by
+  exact ⟨trivial, by simp [fakeUpdate, onlyFake]⟩
+
+theorem fakeStart_excludes_true_model :
+    Not (fakeStart.possible Model.trueWorld) := by
+  simp [fakeStart, fakeUpdate, onlyFake]
+
+private theorem info_eq_fakeSafe
+    {info : InfoState F}
+    (hState : info.state = State.safe)
+    (hPossible : forall j : Model, info.possible j <-> onlyFake j) :
+    info = fakeSafe := by
+  cases info with
+  | mk state possible =>
+      dsimp at hState hPossible
+      subst state
+      simp [fakeSafe]
+      funext j
+      exact propext (hPossible j)
+
+private theorem fakeStart_good :
+    fakeStart = fakeStart \/ fakeStart = fakeSafe := by
+  exact Or.inl rfl
+
+private theorem fake_good_postfixed :
+    Postfixed
+      (robustCorridorOp (liftedDecision F) (liftedAllowed F Allowed)
+        (liftedRequirement F Requirement))
+      (fun info => info = fakeStart \/ info = fakeSafe) := by
+  intro info hInfo
+  rcases hInfo with hStart | hSafe
+  · subst info
+    refine ⟨?_, trivial, Action.trustFake, ?_, ?_, ?_⟩
+    · exact ⟨by simp [fakeStart, F, Constraint],
+        ⟨Model.fakeWorld, by simp [fakeStart, fakeUpdate, onlyFake]⟩⟩
+    · constructor
+      · trivial
+      · intro i hi
+        cases i
+        · have hFalse : False := by
+            simp [fakeStart, fakeUpdate, onlyFake] at hi
+          exact False.elim hFalse
+        · exact ⟨State.safe, by simp [F, Step, fakeStart]⟩
+    · exact ⟨fakeSafe, Model.fakeWorld, State.safe,
+        by simp [fakeStart, fakeUpdate, onlyFake],
+        by simp [F, Step, fakeStart],
+        rfl,
+        (by
+          intro j
+          cases j <;>
+            simp [fakeSafe, onlyFake, soundUpdate, fakeStart, fakeUpdate, F, Step])⟩
+    · intro next hLift
+      right
+      rcases hLift with ⟨i, observed, hi, hStep, hNextState, hNextPossible⟩
+      have hiFake : i = Model.fakeWorld := by
+        cases i
+        · have hFalse : False := by
+            simp [fakeStart, fakeUpdate, onlyFake] at hi
+          exact False.elim hFalse
+        · rfl
+      cases hiFake
+      cases observed <;> simp [F, Step, fakeStart] at hStep
+      exact info_eq_fakeSafe hNextState (by
+        intro j
+        cases j <;>
+          simp [onlyFake, soundUpdate, fakeStart, fakeUpdate,
+            F, Step, hNextPossible])
+  · subst info
+    refine ⟨?_, trivial, Action.trustFake, ?_, ?_, ?_⟩
+    · exact ⟨by simp [fakeSafe, F, Constraint],
+        ⟨Model.fakeWorld, by simp [fakeSafe, onlyFake]⟩⟩
+    · constructor
+      · trivial
+      · intro i hi
+        cases i
+        · have hFalse : False := by
+            simp [fakeSafe, onlyFake] at hi
+          exact False.elim hFalse
+        · exact ⟨State.safe, by simp [F, Step, fakeSafe]⟩
+    · exact ⟨fakeSafe, Model.fakeWorld, State.safe,
+        by simp [fakeSafe, onlyFake],
+        by simp [F, Step, fakeSafe],
+        rfl,
+        (by
+          intro j
+          cases j <;>
+            simp [fakeSafe, onlyFake, soundUpdate, F, Step])⟩
+    · intro next hLift
+      right
+      rcases hLift with ⟨i, observed, hi, hStep, hNextState, hNextPossible⟩
+      have hiFake : i = Model.fakeWorld := by
+        cases i
+        · have hFalse : False := by
+            simp [fakeSafe, onlyFake] at hi
+          exact False.elim hFalse
+        · rfl
+      cases hiFake
+      cases observed <;> simp [F, Step, fakeSafe] at hStep
+      exact info_eq_fakeSafe hNextState (by
+        intro j
+        cases j <;>
+          simp [fakeSafe, onlyFake, soundUpdate, F, Step, hNextPossible])
+
+theorem fakeStart_in_adaptiveKernel :
+    AK fakeStart :=
+  postfixed_le_gfp fake_good_postfixed fakeStart fakeStart_good
+
+theorem excluded_true_model_trustFake_exits_constraint :
+    F.Step Model.trueWorld fakeStart.state Action.trustFake State.bad /\
+      Not (F.Constraint State.bad) := by
+  exact ⟨by simp [F, Step, fakeStart], by simp [F, Constraint]⟩
+
+theorem W_fake_update_phantom_corridor :
+    Not (fakeStart.possible Model.trueWorld) /\
+      AK fakeStart /\
+      F.Step Model.trueWorld fakeStart.state Action.trustFake State.bad /\
+      Not (F.Constraint State.bad) := by
+  exact ⟨fakeStart_excludes_true_model, fakeStart_in_adaptiveKernel,
+    excluded_true_model_trustFake_exits_constraint⟩
+
+end FakeUpdate
+
 end AdaptiveFixedWorldExamples
 end Decision
 end OmegaProper

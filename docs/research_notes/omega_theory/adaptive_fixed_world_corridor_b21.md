@@ -62,9 +62,10 @@ if i* remains possible and i* can produce the observed successor,
 then i* remains possible after sound_update.
 ```
 
-The learnable and unlearnable cases now also have Lean strictness witnesses.
-The fake-update phantom corridor remains retained as a Python witness until the
-update-certification surface is formalized.
+The learnable, unlearnable, and fake-update phantom cases now also have Lean
+strictness witnesses. The fake-update witness remains deliberately outside
+`soundUpdate`: it formalizes what goes wrong when model elimination is
+fabricated rather than certified.
 
 ## Core Object
 
@@ -321,6 +322,11 @@ W_learnable_adaptive_strictness:
 W_unlearnable_adaptive_exclusion:
   unsafe/unavailable identification does not put the full unknown information
   state inside AdaptiveKernel.
+
+W_fake_update_phantom_corridor:
+  a fake information state that has dropped the true model can lie inside
+  AdaptiveKernel, while the action selected for the fake remaining model exits
+  the declared constraint in the excluded true model.
 ```
 
 ## Certification Surface
@@ -353,7 +359,7 @@ This note does not claim:
 
 ```text
 the full fixed-world iff theorem is proved;
-the fake-update phantom corridor is formalized in Lean;
+fake-update is part of the sound lifted update relation;
 the observation interface is empirically valid;
 all uncertainty is learnable;
 learning is value;
