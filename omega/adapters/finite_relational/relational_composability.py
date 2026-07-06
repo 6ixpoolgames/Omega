@@ -66,6 +66,7 @@ class CoupledEnsemble:
 class CompatibilityProfile:
     compatible_pairs: tuple[tuple[str, str], ...]
     compatible_pair_count: int
+    degree_sequence: tuple[int, ...]
     component_sizes: tuple[int, ...]
     max_compatible_component_size: int
     isolated_valuer_count: int
@@ -76,6 +77,7 @@ class CompatibilityProfile:
         return {
             "compatible_pairs": [list(pair) for pair in self.compatible_pairs],
             "compatible_pair_count": self.compatible_pair_count,
+            "degree_sequence": list(self.degree_sequence),
             "component_sizes": list(self.component_sizes),
             "max_compatible_component_size": self.max_compatible_component_size,
             "isolated_valuer_count": self.isolated_valuer_count,
@@ -88,6 +90,10 @@ def normalized_pair(left: str, right: str) -> tuple[str, str]:
     if left <= right:
         return (left, right)
     return (right, left)
+
+
+def normalized_pairs(pairs: tuple[tuple[str, str], ...]) -> tuple[tuple[str, str], ...]:
+    return tuple(sorted(normalized_pair(left, right) for left, right in pairs))
 
 
 def compatible_pair_ensemble() -> CoupledEnsemble:
@@ -129,6 +135,55 @@ def duplicate_compatible_pair_ensemble() -> CoupledEnsemble:
     )
 
 
+def six_vector_surface() -> tuple[ValuerVector, ...]:
+    return (
+        ValuerVector("v0", (1, 0)),
+        ValuerVector("v1", (0, 1)),
+        ValuerVector("v2", (1, 1)),
+        ValuerVector("v3", (1, 0)),
+        ValuerVector("v4", (0, 1)),
+        ValuerVector("v5", (1, 1)),
+    )
+
+
+def two_triangles_ensemble() -> CoupledEnsemble:
+    axes = axes_ab()
+    return CoupledEnsemble(
+        ensemble_id="two_triangles_same_degree",
+        axes=axes,
+        vectors=six_vector_surface(),
+        compatible_pairs=normalized_pairs(
+            (
+                ("v0", "v1"),
+                ("v0", "v2"),
+                ("v1", "v2"),
+                ("v3", "v4"),
+                ("v3", "v5"),
+                ("v4", "v5"),
+            )
+        ),
+    )
+
+
+def six_cycle_ensemble() -> CoupledEnsemble:
+    axes = axes_ab()
+    return CoupledEnsemble(
+        ensemble_id="six_cycle_same_degree",
+        axes=axes,
+        vectors=six_vector_surface(),
+        compatible_pairs=normalized_pairs(
+            (
+                ("v0", "v1"),
+                ("v1", "v2"),
+                ("v2", "v3"),
+                ("v3", "v4"),
+                ("v4", "v5"),
+                ("v5", "v0"),
+            )
+        ),
+    )
+
+
 def compatibility_profile(ensemble: CoupledEnsemble) -> CompatibilityProfile:
     ids = tuple(vector.vector_id for vector in ensemble.vectors)
     adjacency = {vector_id: set() for vector_id in ids}
@@ -161,9 +216,11 @@ def compatibility_profile(ensemble: CoupledEnsemble) -> CompatibilityProfile:
     required_pair_count = len(ids) * (len(ids) - 1) // 2
     component_sizes = tuple(sorted(sizes, reverse=True))
     isolated = sum(1 for size in component_sizes if size == 1)
+    degree_sequence = tuple(sorted((len(adjacency[vector_id]) for vector_id in ids), reverse=True))
     return CompatibilityProfile(
         compatible_pairs=ensemble.compatible_pairs,
         compatible_pair_count=len(ensemble.compatible_pairs),
+        degree_sequence=degree_sequence,
         component_sizes=component_sizes,
         max_compatible_component_size=max(component_sizes, default=0),
         isolated_valuer_count=isolated,
@@ -221,8 +278,27 @@ def identical_coupling_control() -> dict[str, Any]:
     }
 
 
+def graph_structure_robustness_witness() -> dict[str, Any]:
+    comparison = compare_coupled_ensembles(two_triangles_ensemble(), six_cycle_ensemble())
+    left_profile = comparison["left_compatibility_profile"]
+    right_profile = comparison["right_compatibility_profile"]
+    return {
+        **comparison,
+        "same_compatible_pair_count": (
+            left_profile["compatible_pair_count"] == right_profile["compatible_pair_count"]
+        ),
+        "same_degree_sequence": left_profile["degree_sequence"] == right_profile["degree_sequence"],
+        "component_structure_separates": left_profile["component_sizes"] != right_profile["component_sizes"],
+        "read": (
+            "same full vector census, pure span, edge count, and degree sequence; "
+            "different compatibility component structure"
+        ),
+    }
+
+
 def relational_composability_summary() -> dict[str, Any]:
     candidate = compatible_vs_blocked_witness()
+    robustness = graph_structure_robustness_witness()
     control = identical_coupling_control()
     negative_controls_pass = control["full_vectors_and_coupling_determine_profile"]
     separated = (
@@ -231,12 +307,20 @@ def relational_composability_summary() -> dict[str, Any]:
         and candidate["span_equivalent"]
         and not candidate["span_rank_separates"]
         and candidate["compatibility_separates"]
+        and robustness["marginal_scalar_controls_equal"]
+        and robustness["full_vector_census_equal"]
+        and robustness["span_equivalent"]
+        and not robustness["span_rank_separates"]
+        and robustness["same_compatible_pair_count"]
+        and robustness["same_degree_sequence"]
+        and robustness["component_structure_separates"]
         and negative_controls_pass
     )
     return {
         "protocol_doc": PROTOCOL_DOC,
         "verdict": "separated" if separated else "reduces-or-ill-posed",
         "candidate_pair": candidate,
+        "graph_structure_robustness": robustness,
         "negative_controls": {
             "identical_coupling": control,
             "negative_controls_pass": negative_controls_pass,
@@ -286,6 +370,7 @@ def relational_control_rows(summary: dict[str, Any]) -> list[dict[str, Any]]:
 
 def compatibility_profile_rows(summary: dict[str, Any]) -> list[dict[str, Any]]:
     candidate = summary["candidate_pair"]
+    robustness = summary["graph_structure_robustness"]
     return [
         {
             "ensemble_id": candidate["left"],
@@ -294,5 +379,13 @@ def compatibility_profile_rows(summary: dict[str, Any]) -> list[dict[str, Any]]:
         {
             "ensemble_id": candidate["right"],
             **candidate["right_compatibility_profile"],
+        },
+        {
+            "ensemble_id": robustness["left"],
+            **robustness["left_compatibility_profile"],
+        },
+        {
+            "ensemble_id": robustness["right"],
+            **robustness["right_compatibility_profile"],
         },
     ]

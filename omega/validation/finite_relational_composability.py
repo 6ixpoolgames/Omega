@@ -57,9 +57,12 @@ def retain_finite_relational_composability(out_dir: Path) -> dict[str, Any]:
 
 def render_report(result: dict[str, Any]) -> str:
     pair = result["candidate_pair"]
+    robustness = result["graph_structure_robustness"]
     controls = result["negative_controls"]
     left_profile = pair["left_compatibility_profile"]
     right_profile = pair["right_compatibility_profile"]
+    robustness_left = robustness["left_compatibility_profile"]
+    robustness_right = robustness["right_compatibility_profile"]
     lines = [
         "# Relational Composability v0 Report",
         "",
@@ -83,6 +86,18 @@ def render_report(result: dict[str, Any]) -> str:
         f"- Right compatible pair count: {right_profile['compatible_pair_count']}",
         f"- Left max component size: {left_profile['max_compatible_component_size']}",
         f"- Right max component size: {right_profile['max_compatible_component_size']}",
+        "",
+        "## Graph-Structure Robustness",
+        "",
+        f"- Left: `{robustness['left']}`",
+        f"- Right: `{robustness['right']}`",
+        f"- Full vector census equal: {robustness['full_vector_census_equal']}",
+        f"- Pure span equivalent: {robustness['span_equivalent']}",
+        f"- Compatible pair count equal: {robustness['same_compatible_pair_count']}",
+        f"- Degree sequence equal: {robustness['same_degree_sequence']}",
+        f"- Left component sizes: {robustness_left['component_sizes']}",
+        f"- Right component sizes: {robustness_right['component_sizes']}",
+        f"- Component structure separates: {robustness['component_structure_separates']}",
         "",
         "## Negative Controls",
         "",

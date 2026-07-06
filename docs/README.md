@@ -71,9 +71,10 @@ Ensemble span:
   surplus.
 
 Relational composability:
-  finite coupling instrument separating declared compatibility profiles while
-  holding full individual vector census and pure span fixed. This is coupling
-  structure, not plurality theory or value.
+  finite registered compatibility-profile instrument separating declared
+  coupling profiles while holding full individual vector census and pure span
+  fixed. This is registered coupling structure, not derived compatibility,
+  plurality theory, or value.
 
 Future-field culling:
   scalar field-measure, population optimum, strong vacancy, and value-substrate

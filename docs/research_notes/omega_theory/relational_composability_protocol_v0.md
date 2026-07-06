@@ -20,6 +20,16 @@ compatibility?
 This is a coupling-instrument sprint. It does not define population value,
 standing, plurality, agency, or aggregation.
 
+More precise v0 claim language:
+
+```text
+registered compatibility-profile separation
+```
+
+Relational Composability v0 does not derive compatibility from individual
+profiles. It shows that once coupling data is registered, full individual
+profiles and pure span do not determine the joint compatibility profile.
+
 ## Relation To Ensemble Span
 
 Ensemble span v0 showed that orientation can separate after marginal scalar
@@ -58,6 +68,21 @@ CompatibilityProfile:
 
 The compatibility relation is registered data. The sprint does not claim the
 relation is morally correct or complete.
+
+## Register Liability
+
+Compatibility relations are registered structure:
+
+```text
+undeclared compatibility is invisible to the instrument;
+overdeclared compatibility can counterfeit composability;
+corrupted compatibility can create phantom composability;
+adapter choice controls which coupling facts the instrument can see.
+```
+
+This is the coupling-layer analogue of recovery-register liability. A
+compatibility edge is not morally or ontologically given merely because it is
+present in the registered relation.
 
 ## Verdicts
 
@@ -118,6 +143,40 @@ max compatible component size: 2 vs 1
 all vectors jointly compatible: true vs false
 ```
 
+## Robustness Witness
+
+The hardening pass adds a stronger graph-structure witness:
+
+```text
+same full vector census;
+same pure span;
+same compatible-pair count;
+same degree sequence;
+different component structure.
+```
+
+Concrete pair:
+
+```text
+two disjoint triangles
+vs
+one six-cycle
+```
+
+Both have six nodes, six compatibility edges, and degree sequence:
+
+```text
+[2, 2, 2, 2, 2, 2]
+```
+
+They differ in component structure:
+
+```text
+[3, 3]
+vs
+[6]
+```
+
 ## Negative Control
 
 If the full vector census and compatibility relation are identical, this
@@ -129,6 +188,24 @@ same full vector census + same coupling -> same compatibility profile
 
 This blocks an overread. Relational composability v0 is not hidden value or
 population ethics; it is a finite registered-coupling profile.
+
+## Typed Coupling TODO
+
+Binary compatibility is intentionally thin. A future typed-coupling pass should
+use declared labels such as:
+
+```text
+repair-compatible;
+translation-compatible;
+co-learning-compatible;
+joint-corridor-compatible;
+interference;
+capture-risk;
+redundancy.
+```
+
+These are registered coupling labels, not moral labels. They should not be used
+as value, standing, or plurality claims without a separate bridge.
 
 ## Kill Condition
 

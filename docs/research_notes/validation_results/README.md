@@ -27,6 +27,8 @@ For the project pitch and current formalism, read:
   robustness output for the ensemble-span pilot.
 - `relational_composability_v0/` contains the retained finite coupling
   instrument output for the compatible-vs-blocked pair pilot.
+- `relational_composability_v01/` contains the retained hardening output for
+  the same-edge-count / same-degree-sequence graph-structure witness.
 
 Start with:
 

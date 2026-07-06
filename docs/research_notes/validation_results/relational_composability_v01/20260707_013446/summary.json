@@ -1,0 +1,641 @@
+{
+  "candidate_pair": {
+    "compatibility_profiles_equal": false,
+    "compatibility_separates": true,
+    "full_vector_census_equal": true,
+    "left": "compatible_pair_AB",
+    "left_compatibility_profile": {
+      "all_vectors_jointly_compatible": true,
+      "compatible_pair_count": 1,
+      "compatible_pairs": [
+        [
+          "vA",
+          "vB"
+        ]
+      ],
+      "component_sizes": [
+        2
+      ],
+      "coupling_matrix": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "degree_sequence": [
+        1,
+        1
+      ],
+      "isolated_valuer_count": 0,
+      "max_compatible_component_size": 2
+    },
+    "left_span_profile": {
+      "axis_supports": {
+        "A": 1,
+        "B": 1
+      },
+      "full_vector_census": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "gram_determinant": 1,
+      "gram_matrix": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "logdet_proxy": "0.000000",
+      "rank": 2
+    },
+    "marginal_scalar_controls_equal": true,
+    "read": "same individual vector census and pure span; different declared compatibility relation",
+    "right": "blocked_pair_AB",
+    "right_compatibility_profile": {
+      "all_vectors_jointly_compatible": false,
+      "compatible_pair_count": 0,
+      "compatible_pairs": [],
+      "component_sizes": [
+        1,
+        1
+      ],
+      "coupling_matrix": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "degree_sequence": [
+        0,
+        0
+      ],
+      "isolated_valuer_count": 2,
+      "max_compatible_component_size": 1
+    },
+    "right_span_profile": {
+      "axis_supports": {
+        "A": 1,
+        "B": 1
+      },
+      "full_vector_census": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "gram_determinant": 1,
+      "gram_matrix": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "logdet_proxy": "0.000000",
+      "rank": 2
+    },
+    "span_equivalent": true,
+    "span_rank_separates": false
+  },
+  "graph_structure_robustness": {
+    "compatibility_profiles_equal": false,
+    "compatibility_separates": true,
+    "component_structure_separates": true,
+    "full_vector_census_equal": true,
+    "left": "two_triangles_same_degree",
+    "left_compatibility_profile": {
+      "all_vectors_jointly_compatible": false,
+      "compatible_pair_count": 6,
+      "compatible_pairs": [
+        [
+          "v0",
+          "v1"
+        ],
+        [
+          "v0",
+          "v2"
+        ],
+        [
+          "v1",
+          "v2"
+        ],
+        [
+          "v3",
+          "v4"
+        ],
+        [
+          "v3",
+          "v5"
+        ],
+        [
+          "v4",
+          "v5"
+        ]
+      ],
+      "component_sizes": [
+        3,
+        3
+      ],
+      "coupling_matrix": [
+        [
+          1,
+          1,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          1,
+          1
+        ]
+      ],
+      "degree_sequence": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "isolated_valuer_count": 0,
+      "max_compatible_component_size": 3
+    },
+    "left_span_profile": {
+      "axis_supports": {
+        "A": 4,
+        "B": 4
+      },
+      "full_vector_census": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "gram_determinant": 0,
+      "gram_matrix": [
+        [
+          1,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          1,
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          2,
+          1,
+          1,
+          2
+        ],
+        [
+          1,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          1,
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          2,
+          1,
+          1,
+          2
+        ]
+      ],
+      "logdet_proxy": "singular",
+      "rank": 2
+    },
+    "marginal_scalar_controls_equal": true,
+    "read": "same full vector census, pure span, edge count, and degree sequence; different compatibility component structure",
+    "right": "six_cycle_same_degree",
+    "right_compatibility_profile": {
+      "all_vectors_jointly_compatible": false,
+      "compatible_pair_count": 6,
+      "compatible_pairs": [
+        [
+          "v0",
+          "v1"
+        ],
+        [
+          "v0",
+          "v5"
+        ],
+        [
+          "v1",
+          "v2"
+        ],
+        [
+          "v2",
+          "v3"
+        ],
+        [
+          "v3",
+          "v4"
+        ],
+        [
+          "v4",
+          "v5"
+        ]
+      ],
+      "component_sizes": [
+        6
+      ],
+      "coupling_matrix": [
+        [
+          1,
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          1,
+          1
+        ]
+      ],
+      "degree_sequence": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "isolated_valuer_count": 0,
+      "max_compatible_component_size": 6
+    },
+    "right_span_profile": {
+      "axis_supports": {
+        "A": 4,
+        "B": 4
+      },
+      "full_vector_census": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "gram_determinant": 0,
+      "gram_matrix": [
+        [
+          1,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          1,
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          2,
+          1,
+          1,
+          2
+        ],
+        [
+          1,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          1,
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          2,
+          1,
+          1,
+          2
+        ]
+      ],
+      "logdet_proxy": "singular",
+      "rank": 2
+    },
+    "same_compatible_pair_count": true,
+    "same_degree_sequence": true,
+    "span_equivalent": true,
+    "span_rank_separates": false
+  },
+  "negative_controls": {
+    "identical_coupling": {
+      "compatibility_profiles_equal": true,
+      "compatibility_separates": false,
+      "full_vector_census_equal": true,
+      "full_vectors_and_coupling_determine_profile": true,
+      "left": "compatible_pair_AB",
+      "left_compatibility_profile": {
+        "all_vectors_jointly_compatible": true,
+        "compatible_pair_count": 1,
+        "compatible_pairs": [
+          [
+            "vA",
+            "vB"
+          ]
+        ],
+        "component_sizes": [
+          2
+        ],
+        "coupling_matrix": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "degree_sequence": [
+          1,
+          1
+        ],
+        "isolated_valuer_count": 0,
+        "max_compatible_component_size": 2
+      },
+      "left_span_profile": {
+        "axis_supports": {
+          "A": 1,
+          "B": 1
+        },
+        "full_vector_census": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "gram_determinant": 1,
+        "gram_matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "logdet_proxy": "0.000000",
+        "rank": 2
+      },
+      "marginal_scalar_controls_equal": true,
+      "read": "same full vector census and same coupling cannot be separated by this instrument",
+      "right": "duplicate_compatible_pair_AB",
+      "right_compatibility_profile": {
+        "all_vectors_jointly_compatible": true,
+        "compatible_pair_count": 1,
+        "compatible_pairs": [
+          [
+            "vA",
+            "vB"
+          ]
+        ],
+        "component_sizes": [
+          2
+        ],
+        "coupling_matrix": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "degree_sequence": [
+          1,
+          1
+        ],
+        "isolated_valuer_count": 0,
+        "max_compatible_component_size": 2
+      },
+      "right_span_profile": {
+        "axis_supports": {
+          "A": 1,
+          "B": 1
+        },
+        "full_vector_census": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "gram_determinant": 1,
+        "gram_matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "logdet_proxy": "0.000000",
+        "rank": 2
+      },
+      "span_equivalent": true,
+      "span_rank_separates": false
+    },
+    "negative_controls_pass": true
+  },
+  "not_claimed": [
+    "value",
+    "standing",
+    "agency",
+    "plurality theory",
+    "population ethics",
+    "aggregation",
+    "population optimum",
+    "Omega validation"
+  ],
+  "protocol_doc": "docs/research_notes/omega_theory/relational_composability_protocol_v0.md",
+  "run_root": "C:\\Users\\paolo\\Documents\\New project\\docs\\research_notes\\validation_results\\relational_composability_v01\\20260707_013446",
+  "status": "PASS",
+  "verdict": "separated"
+}

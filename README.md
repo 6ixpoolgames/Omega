@@ -344,7 +344,7 @@ The strongest current results are deliberately conditional and finite:
 - Termination supremum: contracting a top declared fact loss-dominates every other contraction profile over that per-valuer fact order.
 - Colonization-axis discovery: a finite preregistered audit found cross-scale certified viable-refinement separation after matching ordinary viability/language/entropy controls.
 - Ensemble span: redundant and orthogonal ensembles can match marginal scalar census while differing in exact span rank/order; a larger three-axis robustness case preserves the separation, and full-vector-census controls block relational-surplus overread.
-- Relational composability: ensembles can hold the same individual vectors and pure span fixed while a declared compatibility relation changes the joint profile.
+- Relational composability: ensembles can hold the same individual vectors and pure span fixed while a registered compatibility relation changes the joint profile; this does not derive compatibility from individual profiles.
 - ODT1 comparison: Hoare/Smyth/Plotkin dominance over licensed outcome surfaces has failure certificates and monotone-valuation acceptance theorems.
 - Blackwell-shaped bridges: deterministic factorization is equivalent to policy simulation; finite rational stochastic garbling compiles randomized policies in the forward direction.
 - ODT2 scaffold: least-violation arbitration exists only relative to a declared finite frontier and violation score.

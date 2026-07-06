@@ -5,8 +5,11 @@ from omega.adapters.finite_relational.relational_composability import (
     compatibility_profile,
     compatible_pair_ensemble,
     compatible_vs_blocked_witness,
+    graph_structure_robustness_witness,
     identical_coupling_control,
     relational_composability_summary,
+    six_cycle_ensemble,
+    two_triangles_ensemble,
 )
 from omega.future_field_atlas.util import read_csv
 from omega.validation.finite_relational_composability import (
@@ -47,6 +50,25 @@ def test_identical_coupling_control_prevents_overreading() -> None:
     assert control["full_vectors_and_coupling_determine_profile"] is True
 
 
+def test_graph_structure_robustness_holds_edge_count_and_degree_fixed() -> None:
+    witness = graph_structure_robustness_witness()
+    two_triangles = compatibility_profile(two_triangles_ensemble())
+    six_cycle = compatibility_profile(six_cycle_ensemble())
+
+    assert witness["full_vector_census_equal"] is True
+    assert witness["span_equivalent"] is True
+    assert witness["span_rank_separates"] is False
+    assert witness["same_compatible_pair_count"] is True
+    assert witness["same_degree_sequence"] is True
+    assert two_triangles.compatible_pair_count == 6
+    assert six_cycle.compatible_pair_count == 6
+    assert two_triangles.degree_sequence == (2, 2, 2, 2, 2, 2)
+    assert six_cycle.degree_sequence == (2, 2, 2, 2, 2, 2)
+    assert two_triangles.component_sizes == (3, 3)
+    assert six_cycle.component_sizes == (6,)
+    assert witness["component_structure_separates"] is True
+
+
 def test_relational_composability_summary_retains_separated_verdict() -> None:
     summary = relational_composability_summary()
 
@@ -55,6 +77,9 @@ def test_relational_composability_summary_retains_separated_verdict() -> None:
     assert summary["candidate_pair"]["full_vector_census_equal"] is True
     assert summary["candidate_pair"]["span_equivalent"] is True
     assert summary["candidate_pair"]["compatibility_separates"] is True
+    assert summary["graph_structure_robustness"]["same_compatible_pair_count"] is True
+    assert summary["graph_structure_robustness"]["same_degree_sequence"] is True
+    assert summary["graph_structure_robustness"]["component_structure_separates"] is True
     assert summary["negative_controls"]["negative_controls_pass"] is True
     assert "population ethics" in summary["not_claimed"]
     assert "plurality theory" in summary["not_claimed"]
@@ -74,9 +99,10 @@ def test_relational_composability_validation_retains_report(tmp_path: Path) -> N
     assert {row["holds"] for row in control_rows} == {"True"}
 
     profile_rows = read_csv(run_root / "compatibility_profiles.csv")
-    assert {row["compatible_pair_count"] for row in profile_rows} == {"0", "1"}
+    assert {row["compatible_pair_count"] for row in profile_rows} == {"0", "1", "6"}
 
     report = render_report(result)
     assert "Relational Composability v0 Report" in report
     assert "Verdict: separated" in report
     assert "Pure span equivalent: True" in report
+    assert "Graph-Structure Robustness" in report

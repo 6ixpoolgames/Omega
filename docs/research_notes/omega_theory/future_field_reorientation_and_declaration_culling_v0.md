@@ -272,7 +272,7 @@ Landed formal follow-up:
 1. ExpansionProfile / ExpansionDominates mirror order;
 2. termination-supremum over per-valuer declared fact orders;
 3. ensemble-span finite instrument for joint-tier orientation;
-4. relational-composability finite instrument for joint-tier coupling.
+4. relational-composability finite instrument for registered joint-tier coupling.
 ```
 
 Remaining formal / experimental queue:
@@ -303,8 +303,8 @@ is registered. The per-valuer expansion mirror and termination-supremum target
 now live as declared-profile theorem layers. Ensemble span gives a retained
 finite joint-tier orientation instrument: redundant and orthogonal ensembles
 can match marginal scalar summaries while differing in exact span rank/order.
-Relational composability gives a retained finite coupling instrument: full
-individual vector census and pure span can be held fixed while declared
-compatibility profiles differ. What remains live is sharper: test typed
-couplings, NOLP/compensation, and no-static-configuration claims only as
+Relational composability gives a retained finite registered-coupling
+instrument: full individual vector census and pure span can be held fixed while
+declared compatibility profiles differ. What remains live is sharper: test
+typed couplings, NOLP/compensation, and no-static-configuration claims only as
 theorem targets rather than foundations.
