@@ -20,6 +20,8 @@ recovery_frame_irreversibility_weld_v0.md
 recovery_aware_corridor_v0.md
 phantom_recoverability_gate_v0.md
 recovery_reflection_and_loss_dominance_v0.md
+expansion_dominance_v0.md
+termination_supremum_v0.md
 colonization_axis_protocol_v0.md
 colonization_axis_report_v0.md
 future_field_reorientation_and_declaration_culling_v0.md
@@ -45,6 +47,8 @@ Decision and corridor:
   recovery_aware_corridor_v0.md
   phantom_recoverability_gate_v0.md
   recovery_reflection_and_loss_dominance_v0.md
+  expansion_dominance_v0.md
+  termination_supremum_v0.md
 
 Dominance and arbitration:
   omega_decision_dominance_v0.md

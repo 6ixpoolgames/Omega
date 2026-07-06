@@ -194,7 +194,7 @@ global presentation invariance.
 The future-field reorientation checkpoint then culls the tempting overreach:
 scalar field-measure, fraction-of-field foreclosure, strong vacancy, population
 optimum, and "value-substrate field theory" language are not foundations.
-Per-valuer expansion is a theorem target; cross-valuer comparison and
+Per-valuer expansion is now a declared theorem layer; cross-valuer comparison and
 directive force remain registered debt.
 
 The substrate/deformer checkpoint adds the missing branch-control language:
@@ -239,6 +239,8 @@ Headline notes:
 10. [Colonization Axis Report v0](docs/research_notes/omega_theory/colonization_axis_report_v0.md)
 11. [Future-Field Reorientation and Declaration Culling v0](docs/research_notes/omega_theory/future_field_reorientation_and_declaration_culling_v0.md)
 12. [Substrate Classes and Large Deformers v0](docs/research_notes/omega_theory/substrate_classes_and_large_deformers_v0.md)
+13. [Expansion Dominance v0](docs/research_notes/omega_theory/expansion_dominance_v0.md)
+14. [Termination Supremum v0](docs/research_notes/omega_theory/termination_supremum_v0.md)
 
 The proved layer is still partial. Hypothesized next behavior includes
 unsafe-identification/no-go results and eventually endogenous register updates.
@@ -263,9 +265,11 @@ For the current docs front door:
 12. [Colonization Axis Report v0](docs/research_notes/omega_theory/colonization_axis_report_v0.md)
 13. [Future-Field Reorientation and Declaration Culling v0](docs/research_notes/omega_theory/future_field_reorientation_and_declaration_culling_v0.md)
 14. [Substrate Classes and Large Deformers v0](docs/research_notes/omega_theory/substrate_classes_and_large_deformers_v0.md)
-15. [B2 Viability / Safety-Game Docking](docs/research_notes/omega_theory/b2_viability_safety_game_docking_v0.md)
-16. [Effective Layers](docs/research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
-17. [Omega Theory Notes Index](docs/research_notes/omega_theory/README.md)
+15. [Expansion Dominance v0](docs/research_notes/omega_theory/expansion_dominance_v0.md)
+16. [Termination Supremum v0](docs/research_notes/omega_theory/termination_supremum_v0.md)
+17. [B2 Viability / Safety-Game Docking](docs/research_notes/omega_theory/b2_viability_safety_game_docking_v0.md)
+18. [Effective Layers](docs/research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
+19. [Omega Theory Notes Index](docs/research_notes/omega_theory/README.md)
 
 For first-contact narrative:
 
@@ -309,6 +313,8 @@ Decision stack entry points:
 12. [ODT2 Arbitration](formal/lean/OmegaProper/Decision/Arbitration.lean)
 13. [Recovery-Aware Corridor](formal/lean/OmegaProper/Decision/RecoveryAwareCorridor.lean)
 14. [Nonrecoverable-Loss Dominance](formal/lean/OmegaProper/Decision/NonrecoverableLossDominance.lean)
+15. [Expansion Dominance](formal/lean/OmegaProper/Decision/ExpansionDominance.lean)
+16. [Termination Supremum](formal/lean/OmegaProper/Decision/TerminationSupremum.lean)
 
 Trajectory/recovery entry points:
 
@@ -328,6 +334,8 @@ The strongest current results are deliberately conditional and finite:
 - Observation informativeness: deterministic finer observations do not shrink the adaptive corridor when the coarser observation factors through them and the fine information state refines the coarse one.
 - Recovery gates: recovery-frame reflection preserves recovery-aware licenses, while corrupted recovery frames can create phantom licenses.
 - Declared loss profiles: nonrecoverable-loss profiles form a down-closed inclusion order with failure certificates and a monotone-valuation bridge.
+- Declared expansion profiles: expansion profiles form the gain-side mirror order with failure certificates and a monotone-valuation bridge, without creating an expansion gate.
+- Termination supremum: contracting a top declared fact loss-dominates every other contraction profile over that per-valuer fact order.
 - Colonization-axis discovery: a finite preregistered audit found cross-scale certified viable-refinement separation after matching ordinary viability/language/entropy controls.
 - ODT1 comparison: Hoare/Smyth/Plotkin dominance over licensed outcome surfaces has failure certificates and monotone-valuation acceptance theorems.
 - Blackwell-shaped bridges: deterministic factorization is equivalent to policy simulation; finite rational stochastic garbling compiles randomized policies in the forward direction.
@@ -340,14 +348,11 @@ These are not claims that value or agency has been solved. They are constraints 
 
 Near-term work should now prefer:
 
-1. A B2.1 theorem map and documentation cleanup.
-2. `ExpansionProfile` / `ExpansionDominates` before any per-valuer lushness claim.
-3. A termination-supremum theorem over per-valuer declared fact orders.
-4. Independent colonization-axis pair or audited `ColonizationOrder.lean` before any cross-scale lushness claim.
-5. An ensemble-span pilot before any joint-tier value language.
-6. NOLP / compensation claims only after the expansion mirror is stable.
-7. Endogenous register/no-laundering after recovery-frame reflection and NOLP are typed.
-8. Plural corridor composition, quantum, or large-deformer relativity only after those interfaces are stable.
+1. Independent colonization-axis pair or audited `ColonizationOrder.lean` before any cross-scale lushness claim.
+2. An ensemble-span pilot before any joint-tier value language.
+3. NOLP / compensation claims only after the expansion mirror has been audited.
+4. Endogenous register/no-laundering after recovery-frame reflection and NOLP are typed.
+5. Plural corridor composition, quantum, or large-deformer relativity only after those interfaces are stable.
 
 ## Claim Boundary
 

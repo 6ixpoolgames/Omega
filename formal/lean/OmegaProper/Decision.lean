@@ -23,6 +23,9 @@ import OmegaProper.Decision.RecoveryAwareCorridorPhantom
 import OmegaProper.Decision.RecoveryLossStress
 import OmegaProper.Decision.NonrecoverableLossDominance
 import OmegaProper.Decision.NonrecoverableLossDominanceExamples
+import OmegaProper.Decision.ExpansionDominance
+import OmegaProper.Decision.ExpansionDominanceExamples
+import OmegaProper.Decision.TerminationSupremum
 import OmegaProper.Decision.Dominance
 import OmegaProper.Decision.DominanceExamples
 import OmegaProper.Decision.DominanceAcceptance

@@ -49,6 +49,11 @@ Recovery weld:
   licenses. Recovery-frame reflection is the positive twin; declared
   nonrecoverable-loss profiles now have a down-closed partial order.
 
+Expansion mirror:
+  declared expansion profiles now have a gain-side comparison order with
+  failure certificates and a monotone-valuation bridge. This is not an
+  expansion gate.
+
 ODT1:
   value-parametric dominance and Blackwell-shaped comparison bridges.
 
@@ -61,8 +66,8 @@ Colonization axis:
 
 Future-field culling:
   scalar field-measure, population optimum, strong vacancy, and value-substrate
-  field-theory language are not foundations; per-valuer expansion is a theorem
-  target, while cross-valuer comparison and directive force remain registered
+  field-theory language are not foundations; per-valuer expansion is a declared
+  theorem layer, while cross-valuer comparison and directive force remain registered
   debt.
 
 Substrate / deformer taxonomy:
@@ -96,6 +101,8 @@ Use these notes for the current stack:
 20. [Colonization Axis Report v0](research_notes/omega_theory/colonization_axis_report_v0.md)
 21. [Future-Field Reorientation and Declaration Culling v0](research_notes/omega_theory/future_field_reorientation_and_declaration_culling_v0.md)
 22. [Substrate Classes and Large Deformers v0](research_notes/omega_theory/substrate_classes_and_large_deformers_v0.md)
+23. [Expansion Dominance v0](research_notes/omega_theory/expansion_dominance_v0.md)
+24. [Termination Supremum v0](research_notes/omega_theory/termination_supremum_v0.md)
 
 ## B2.1 Reading
 

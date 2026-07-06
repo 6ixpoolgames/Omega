@@ -266,14 +266,19 @@ Documentation / hygiene:
 3. keep vacancy split into weak candidate corollary and strong standing debt.
 ```
 
-Formal / experimental:
+Landed formal follow-up:
 
 ```text
 1. ExpansionProfile / ExpansionDominates mirror order;
-2. termination-supremum theorem target;
-3. ensemble-span pilot for the joint tier;
-4. optional no-static-configuration probe, explicitly as a regime search;
-5. CompensationClaim / NOLP only after the mirror order is stable.
+2. termination-supremum over per-valuer declared fact orders.
+```
+
+Remaining formal / experimental queue:
+
+```text
+1. ensemble-span pilot for the joint tier;
+2. optional no-static-configuration probe, explicitly as a regime search;
+3. CompensationClaim / NOLP only after the mirror order is audited.
 ```
 
 Quarantined:
@@ -292,6 +297,7 @@ terminal-object metaphysics.
 The new future-field language is useful only after culling. The current stack
 does not need a scalar field measure to block aggregation monsters: the
 order-level floor is already incomparable across valuers until a common order
-is registered. What remains live is sharper: prove the per-valuer expansion
-mirror, instrument the joint tier, and treat relativity/quantum/deformer
-language as theorem targets rather than foundations.
+is registered. The per-valuer expansion mirror and termination-supremum target
+now live as declared-profile theorem layers; what remains live is sharper:
+instrument the joint tier, and treat relativity/quantum/deformer language as
+theorem targets rather than foundations.
