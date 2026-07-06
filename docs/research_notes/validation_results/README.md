@@ -29,6 +29,8 @@ For the project pitch and current formalism, read:
   instrument output for the compatible-vs-blocked pair pilot.
 - `relational_composability_v01/` contains the retained hardening output for
   the same-edge-count / same-degree-sequence graph-structure witness.
+- `joint_recovery_compatibility_v0/` contains the retained finite bridge output
+  for recovery-grounded compatibility after individual recovery is held fixed.
 
 Start with:
 

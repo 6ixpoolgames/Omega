@@ -76,6 +76,11 @@ Relational composability:
   fixed. This is registered coupling structure, not derived compatibility,
   plurality theory, or value.
 
+Joint recovery compatibility:
+  finite bridge instrument separating joint recovery under coupling while
+  holding individual vectors, pure span, and individual recovery profiles
+  fixed. This is recovery-grounded coupling, not plurality theory or value.
+
 Future-field culling:
   scalar field-measure, population optimum, strong vacancy, and value-substrate
   field-theory language are not foundations; per-valuer expansion is a declared
@@ -119,6 +124,8 @@ Use these notes for the current stack:
 26. [Ensemble Span Report v0](research_notes/omega_theory/ensemble_span_report_v0.md)
 27. [Relational Composability Protocol v0](research_notes/omega_theory/relational_composability_protocol_v0.md)
 28. [Relational Composability Report v0](research_notes/omega_theory/relational_composability_report_v0.md)
+29. [Joint Recovery Compatibility Protocol v0](research_notes/omega_theory/joint_recovery_compatibility_protocol_v0.md)
+30. [Joint Recovery Compatibility Report v0](research_notes/omega_theory/joint_recovery_compatibility_report_v0.md)
 
 ## B2.1 Reading
 

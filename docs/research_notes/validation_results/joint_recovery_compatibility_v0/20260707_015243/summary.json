@@ -1,0 +1,468 @@
+{
+  "candidate_pair": {
+    "full_vector_census_equal": true,
+    "individual_recovery_profiles_equal": true,
+    "joint_recovery_separates": true,
+    "left": "compatible_joint_recovery",
+    "left_joint_recovery_compatible": true,
+    "left_recovery_profile": {
+      "all_individual_recovery_succeeds": true,
+      "individually_recovered_fact_ids": [
+        "A_recovery_fact",
+        "B_recovery_fact"
+      ],
+      "joint_missing_fact_ids": [],
+      "joint_recovered_fact_ids": [
+        "A_recovery_fact",
+        "B_recovery_fact"
+      ],
+      "joint_recovery_succeeds": true,
+      "participant_profiles": [
+        {
+          "individually_recovered": [
+            "A_recovery_fact"
+          ],
+          "individually_succeeds": true,
+          "participant_id": "vA",
+          "required_facts": [
+            "A_recovery_fact"
+          ]
+        },
+        {
+          "individually_recovered": [
+            "B_recovery_fact"
+          ],
+          "individually_succeeds": true,
+          "participant_id": "vB",
+          "required_facts": [
+            "B_recovery_fact"
+          ]
+        }
+      ],
+      "required_fact_ids": [
+        "A_recovery_fact",
+        "B_recovery_fact"
+      ]
+    },
+    "left_span_profile": {
+      "axis_supports": {
+        "A": 1,
+        "B": 1
+      },
+      "full_vector_census": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "gram_determinant": 1,
+      "gram_matrix": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "logdet_proxy": "0.000000",
+      "rank": 2
+    },
+    "marginal_scalar_controls_equal": true,
+    "read": "same individual recovery profiles and vector/span surface; different joint recovery under coupling",
+    "right": "interfering_joint_recovery",
+    "right_joint_recovery_compatible": false,
+    "right_recovery_profile": {
+      "all_individual_recovery_succeeds": true,
+      "individually_recovered_fact_ids": [
+        "A_recovery_fact",
+        "B_recovery_fact"
+      ],
+      "joint_missing_fact_ids": [
+        "B_recovery_fact"
+      ],
+      "joint_recovered_fact_ids": [
+        "A_recovery_fact"
+      ],
+      "joint_recovery_succeeds": false,
+      "participant_profiles": [
+        {
+          "individually_recovered": [
+            "A_recovery_fact"
+          ],
+          "individually_succeeds": true,
+          "participant_id": "vA",
+          "required_facts": [
+            "A_recovery_fact"
+          ]
+        },
+        {
+          "individually_recovered": [
+            "B_recovery_fact"
+          ],
+          "individually_succeeds": true,
+          "participant_id": "vB",
+          "required_facts": [
+            "B_recovery_fact"
+          ]
+        }
+      ],
+      "required_fact_ids": [
+        "A_recovery_fact",
+        "B_recovery_fact"
+      ]
+    },
+    "right_span_profile": {
+      "axis_supports": {
+        "A": 1,
+        "B": 1
+      },
+      "full_vector_census": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "gram_determinant": 1,
+      "gram_matrix": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "logdet_proxy": "0.000000",
+      "rank": 2
+    },
+    "span_equivalent": true,
+    "span_rank_separates": false
+  },
+  "negative_controls": {
+    "identical_joint_recovery": {
+      "full_vector_census_equal": true,
+      "individual_recovery_profiles_equal": true,
+      "joint_recovery_separates": false,
+      "left": "compatible_joint_recovery",
+      "left_joint_recovery_compatible": true,
+      "left_recovery_profile": {
+        "all_individual_recovery_succeeds": true,
+        "individually_recovered_fact_ids": [
+          "A_recovery_fact",
+          "B_recovery_fact"
+        ],
+        "joint_missing_fact_ids": [],
+        "joint_recovered_fact_ids": [
+          "A_recovery_fact",
+          "B_recovery_fact"
+        ],
+        "joint_recovery_succeeds": true,
+        "participant_profiles": [
+          {
+            "individually_recovered": [
+              "A_recovery_fact"
+            ],
+            "individually_succeeds": true,
+            "participant_id": "vA",
+            "required_facts": [
+              "A_recovery_fact"
+            ]
+          },
+          {
+            "individually_recovered": [
+              "B_recovery_fact"
+            ],
+            "individually_succeeds": true,
+            "participant_id": "vB",
+            "required_facts": [
+              "B_recovery_fact"
+            ]
+          }
+        ],
+        "required_fact_ids": [
+          "A_recovery_fact",
+          "B_recovery_fact"
+        ]
+      },
+      "left_span_profile": {
+        "axis_supports": {
+          "A": 1,
+          "B": 1
+        },
+        "full_vector_census": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "gram_determinant": 1,
+        "gram_matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "logdet_proxy": "0.000000",
+        "rank": 2
+      },
+      "marginal_scalar_controls_equal": true,
+      "read": "same individual recovery and same joint recovery cannot be separated by this instrument",
+      "right": "duplicate_compatible_joint_recovery",
+      "right_joint_recovery_compatible": true,
+      "right_recovery_profile": {
+        "all_individual_recovery_succeeds": true,
+        "individually_recovered_fact_ids": [
+          "A_recovery_fact",
+          "B_recovery_fact"
+        ],
+        "joint_missing_fact_ids": [],
+        "joint_recovered_fact_ids": [
+          "A_recovery_fact",
+          "B_recovery_fact"
+        ],
+        "joint_recovery_succeeds": true,
+        "participant_profiles": [
+          {
+            "individually_recovered": [
+              "A_recovery_fact"
+            ],
+            "individually_succeeds": true,
+            "participant_id": "vA",
+            "required_facts": [
+              "A_recovery_fact"
+            ]
+          },
+          {
+            "individually_recovered": [
+              "B_recovery_fact"
+            ],
+            "individually_succeeds": true,
+            "participant_id": "vB",
+            "required_facts": [
+              "B_recovery_fact"
+            ]
+          }
+        ],
+        "required_fact_ids": [
+          "A_recovery_fact",
+          "B_recovery_fact"
+        ]
+      },
+      "right_span_profile": {
+        "axis_supports": {
+          "A": 1,
+          "B": 1
+        },
+        "full_vector_census": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "gram_determinant": 1,
+        "gram_matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "logdet_proxy": "0.000000",
+        "rank": 2
+      },
+      "same_individual_and_joint_recovery_determine_profile": true,
+      "span_equivalent": true,
+      "span_rank_separates": false
+    },
+    "individual_difference": {
+      "full_vector_census_equal": true,
+      "individual_recovery_profiles_equal": false,
+      "joint_recovery_separates": false,
+      "left": "interfering_joint_recovery",
+      "left_joint_recovery_compatible": false,
+      "left_recovery_profile": {
+        "all_individual_recovery_succeeds": true,
+        "individually_recovered_fact_ids": [
+          "A_recovery_fact",
+          "B_recovery_fact"
+        ],
+        "joint_missing_fact_ids": [
+          "B_recovery_fact"
+        ],
+        "joint_recovered_fact_ids": [
+          "A_recovery_fact"
+        ],
+        "joint_recovery_succeeds": false,
+        "participant_profiles": [
+          {
+            "individually_recovered": [
+              "A_recovery_fact"
+            ],
+            "individually_succeeds": true,
+            "participant_id": "vA",
+            "required_facts": [
+              "A_recovery_fact"
+            ]
+          },
+          {
+            "individually_recovered": [
+              "B_recovery_fact"
+            ],
+            "individually_succeeds": true,
+            "participant_id": "vB",
+            "required_facts": [
+              "B_recovery_fact"
+            ]
+          }
+        ],
+        "required_fact_ids": [
+          "A_recovery_fact",
+          "B_recovery_fact"
+        ]
+      },
+      "left_span_profile": {
+        "axis_supports": {
+          "A": 1,
+          "B": 1
+        },
+        "full_vector_census": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "gram_determinant": 1,
+        "gram_matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "logdet_proxy": "0.000000",
+        "rank": 2
+      },
+      "marginal_scalar_controls_equal": true,
+      "not_credited_as_joint_only": true,
+      "read": "if individual recovery differs, separation is not credited as joint-only",
+      "right": "individual_failure_not_joint_only",
+      "right_joint_recovery_compatible": false,
+      "right_recovery_profile": {
+        "all_individual_recovery_succeeds": false,
+        "individually_recovered_fact_ids": [
+          "A_recovery_fact"
+        ],
+        "joint_missing_fact_ids": [
+          "B_recovery_fact"
+        ],
+        "joint_recovered_fact_ids": [
+          "A_recovery_fact"
+        ],
+        "joint_recovery_succeeds": false,
+        "participant_profiles": [
+          {
+            "individually_recovered": [
+              "A_recovery_fact"
+            ],
+            "individually_succeeds": true,
+            "participant_id": "vA",
+            "required_facts": [
+              "A_recovery_fact"
+            ]
+          },
+          {
+            "individually_recovered": [],
+            "individually_succeeds": false,
+            "participant_id": "vB",
+            "required_facts": [
+              "B_recovery_fact"
+            ]
+          }
+        ],
+        "required_fact_ids": [
+          "A_recovery_fact",
+          "B_recovery_fact"
+        ]
+      },
+      "right_span_profile": {
+        "axis_supports": {
+          "A": 1,
+          "B": 1
+        },
+        "full_vector_census": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "gram_determinant": 1,
+        "gram_matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "logdet_proxy": "0.000000",
+        "rank": 2
+      },
+      "span_equivalent": true,
+      "span_rank_separates": false
+    },
+    "negative_controls_pass": true
+  },
+  "not_claimed": [
+    "value",
+    "standing",
+    "agency",
+    "plurality theory",
+    "moral aggregation",
+    "patienthood",
+    "population optimum",
+    "Omega validation"
+  ],
+  "protocol_doc": "docs/research_notes/omega_theory/joint_recovery_compatibility_protocol_v0.md",
+  "run_root": "C:\\Users\\paolo\\Documents\\New project\\docs\\research_notes\\validation_results\\joint_recovery_compatibility_v0\\20260707_015243",
+  "status": "PASS",
+  "verdict": "separated"
+}

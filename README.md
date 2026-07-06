@@ -243,6 +243,7 @@ Headline notes:
 14. [Termination Supremum v0](docs/research_notes/omega_theory/termination_supremum_v0.md)
 15. [Ensemble Span Report v0](docs/research_notes/omega_theory/ensemble_span_report_v0.md)
 16. [Relational Composability Report v0](docs/research_notes/omega_theory/relational_composability_report_v0.md)
+17. [Joint Recovery Compatibility Report v0](docs/research_notes/omega_theory/joint_recovery_compatibility_report_v0.md)
 
 The proved layer is still partial. Hypothesized next behavior includes
 unsafe-identification/no-go results and eventually endogenous register updates.
@@ -273,9 +274,11 @@ For the current docs front door:
 18. [Ensemble Span Report v0](docs/research_notes/omega_theory/ensemble_span_report_v0.md)
 19. [Relational Composability Protocol v0](docs/research_notes/omega_theory/relational_composability_protocol_v0.md)
 20. [Relational Composability Report v0](docs/research_notes/omega_theory/relational_composability_report_v0.md)
-21. [B2 Viability / Safety-Game Docking](docs/research_notes/omega_theory/b2_viability_safety_game_docking_v0.md)
-22. [Effective Layers](docs/research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
-23. [Omega Theory Notes Index](docs/research_notes/omega_theory/README.md)
+21. [Joint Recovery Compatibility Protocol v0](docs/research_notes/omega_theory/joint_recovery_compatibility_protocol_v0.md)
+22. [Joint Recovery Compatibility Report v0](docs/research_notes/omega_theory/joint_recovery_compatibility_report_v0.md)
+23. [B2 Viability / Safety-Game Docking](docs/research_notes/omega_theory/b2_viability_safety_game_docking_v0.md)
+24. [Effective Layers](docs/research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
+25. [Omega Theory Notes Index](docs/research_notes/omega_theory/README.md)
 
 For first-contact narrative:
 
@@ -345,6 +348,7 @@ The strongest current results are deliberately conditional and finite:
 - Colonization-axis discovery: a finite preregistered audit found cross-scale certified viable-refinement separation after matching ordinary viability/language/entropy controls.
 - Ensemble span: redundant and orthogonal ensembles can match marginal scalar census while differing in exact span rank/order; a larger three-axis robustness case preserves the separation, and full-vector-census controls block relational-surplus overread.
 - Relational composability: ensembles can hold the same individual vectors and pure span fixed while a registered compatibility relation changes the joint profile; this does not derive compatibility from individual profiles.
+- Joint recovery compatibility: cases can hold individual vectors, pure span, and individual recovery profiles fixed while joint recovery under coupling separates.
 - ODT1 comparison: Hoare/Smyth/Plotkin dominance over licensed outcome surfaces has failure certificates and monotone-valuation acceptance theorems.
 - Blackwell-shaped bridges: deterministic factorization is equivalent to policy simulation; finite rational stochastic garbling compiles randomized policies in the forward direction.
 - ODT2 scaffold: least-violation arbitration exists only relative to a declared finite frontier and violation score.
@@ -356,9 +360,9 @@ These are not claims that value or agency has been solved. They are constraints 
 
 Near-term work should now prefer:
 
-1. Audit ensemble-span robustness and relational-composability v0 before building compensation or plurality theory on them.
+1. Audit ensemble-span robustness, relational-composability v0, and joint-recovery compatibility before building compensation or plurality theory on them.
 2. Independent colonization-axis pair or audited `ColonizationOrder.lean` before any cross-scale lushness claim.
-3. NOLP / compensation claims only after the expansion mirror and joint-tier instruments have been audited.
+3. NOLP / compensation claims only after the expansion mirror, joint-tier instruments, and joint-recovery compatibility have been audited.
 4. Endogenous register/no-laundering after recovery-frame reflection and NOLP are typed.
 5. Plural corridor composition, quantum, or large-deformer relativity only after those interfaces are stable.
 

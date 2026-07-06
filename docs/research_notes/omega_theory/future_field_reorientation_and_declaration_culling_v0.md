@@ -272,15 +272,16 @@ Landed formal follow-up:
 1. ExpansionProfile / ExpansionDominates mirror order;
 2. termination-supremum over per-valuer declared fact orders;
 3. ensemble-span finite instrument for joint-tier orientation;
-4. relational-composability finite instrument for registered joint-tier coupling.
+4. relational-composability finite instrument for registered joint-tier coupling;
+5. joint-recovery compatibility finite bridge for recovery-grounded coupling.
 ```
 
 Remaining formal / experimental queue:
 
 ```text
-1. larger typed-coupling families;
+1. phantom composability or larger typed-coupling families;
 2. optional no-static-configuration probe, explicitly as a regime search;
-3. CompensationClaim / NOLP only after the mirror/span/coupling layers are audited.
+3. CompensationClaim / NOLP only after the mirror/span/coupling/recovery-compatibility layers are audited.
 ```
 
 Quarantined:
@@ -305,6 +306,8 @@ finite joint-tier orientation instrument: redundant and orthogonal ensembles
 can match marginal scalar summaries while differing in exact span rank/order.
 Relational composability gives a retained finite registered-coupling
 instrument: full individual vector census and pure span can be held fixed while
-declared compatibility profiles differ. What remains live is sharper: test
-typed couplings, NOLP/compensation, and no-static-configuration claims only as
-theorem targets rather than foundations.
+declared compatibility profiles differ. Joint recovery compatibility then
+grounds one such coupling distinction in recovery behavior: individual recovery
+can be fixed while joint recovery under coupling separates. What remains live
+is sharper: test phantom composability, typed couplings, NOLP/compensation, and
+no-static-configuration claims only as theorem targets rather than foundations.
