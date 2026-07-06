@@ -17,7 +17,8 @@ This page is the current docs entry point. Older notes remain in the tree for pr
 7. [Adaptive Observation Informativeness v0](research_notes/omega_theory/adaptive_observation_informativeness_v0.md)
 8. [Recovery Frame / Irreversibility Weld v0](research_notes/omega_theory/recovery_frame_irreversibility_weld_v0.md)
 9. [Recovery-Aware Corridor v0](research_notes/omega_theory/recovery_aware_corridor_v0.md)
-10. [Effective Layers](research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
+10. [Phantom Recoverability Gate v0](research_notes/omega_theory/phantom_recoverability_gate_v0.md)
+11. [Effective Layers](research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
 
 ## Current Formal Center
 
@@ -39,7 +40,9 @@ B2.1:
 Recovery weld:
   bounded repair reachability, nonrecoverable contraction, correction-register
   collapse, phantom recoverability, and a recovery-aware corridor gate that
-  rejects actions with nonrecoverable-loss successors.
+  rejects actions with nonrecoverable-loss successors, plus a phantom
+  recoverability witness showing corrupted recovery facts can create phantom
+  licenses.
 
 ODT1:
   value-parametric dominance and Blackwell-shaped comparison bridges.
@@ -62,10 +65,11 @@ Use these notes for the current stack:
 10. [Adaptive Observation Informativeness v0](research_notes/omega_theory/adaptive_observation_informativeness_v0.md)
 11. [Recovery Frame / Irreversibility Weld v0](research_notes/omega_theory/recovery_frame_irreversibility_weld_v0.md)
 12. [Recovery-Aware Corridor v0](research_notes/omega_theory/recovery_aware_corridor_v0.md)
-13. [Omega Decision Dominance v0](research_notes/omega_theory/omega_decision_dominance_v0.md)
-14. [Omega Decision Blackwell Conservativity v0](research_notes/omega_theory/omega_decision_blackwell_conservativity_v0.md)
-15. [Omega Decision Stochastic Blackwell v0](research_notes/omega_theory/omega_decision_stochastic_blackwell_v0.md)
-16. [Omega Decision Arbitration v0](research_notes/omega_theory/omega_decision_arbitration_v0.md)
+13. [Phantom Recoverability Gate v0](research_notes/omega_theory/phantom_recoverability_gate_v0.md)
+14. [Omega Decision Dominance v0](research_notes/omega_theory/omega_decision_dominance_v0.md)
+15. [Omega Decision Blackwell Conservativity v0](research_notes/omega_theory/omega_decision_blackwell_conservativity_v0.md)
+16. [Omega Decision Stochastic Blackwell v0](research_notes/omega_theory/omega_decision_stochastic_blackwell_v0.md)
+17. [Omega Decision Arbitration v0](research_notes/omega_theory/omega_decision_arbitration_v0.md)
 
 ## B2.1 Reading
 
@@ -97,6 +101,12 @@ The recovery-aware corridor then makes this decision-relevant: when bounded
 recoverability is the declared local requirement, an action whose successor has
 nonrecoverable contraction of that declared fact cannot be licensed against the
 corresponding robust corridor.
+
+The phantom-recoverability gate witness adds the audit warning: a corrupted
+recovery frame can make that same action licensable by counterfeiting
+recoverability. Undeclared vulnerable structure is invisible to the gate;
+overdeclared structure can paralyze it; corrupted declared structure can
+launder it.
 
 ## Retained But Not Front Door
 

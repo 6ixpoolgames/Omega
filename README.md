@@ -173,6 +173,11 @@ load-bearing for the decision floor: if bounded recoverability is the declared
 local requirement, an action whose successor nonrecoverably contracts the
 declared fact cannot be licensed against that corridor.
 
+The phantom-recoverability checkpoint adds the corresponding warning: a
+corrupted recovery frame can counterfeit recoverability and license what the
+true recovery-aware corridor refuses. The gate is only as strong as the
+declared and certified recovery register.
+
 ## Decision-Theory Surface
 
 The decision-facing stack is currently grouped under the working title
@@ -223,9 +228,10 @@ For the current docs front door:
 6. [Adaptive Observation Informativeness v0](docs/research_notes/omega_theory/adaptive_observation_informativeness_v0.md)
 7. [Recovery Frame / Irreversibility Weld v0](docs/research_notes/omega_theory/recovery_frame_irreversibility_weld_v0.md)
 8. [Recovery-Aware Corridor v0](docs/research_notes/omega_theory/recovery_aware_corridor_v0.md)
-9. [B2 Viability / Safety-Game Docking](docs/research_notes/omega_theory/b2_viability_safety_game_docking_v0.md)
-10. [Effective Layers](docs/research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
-11. [Omega Theory Notes Index](docs/research_notes/omega_theory/README.md)
+9. [Phantom Recoverability Gate v0](docs/research_notes/omega_theory/phantom_recoverability_gate_v0.md)
+10. [B2 Viability / Safety-Game Docking](docs/research_notes/omega_theory/b2_viability_safety_game_docking_v0.md)
+11. [Effective Layers](docs/research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
+12. [Omega Theory Notes Index](docs/research_notes/omega_theory/README.md)
 
 For first-contact narrative:
 

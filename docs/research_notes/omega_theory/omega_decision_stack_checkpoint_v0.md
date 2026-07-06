@@ -186,6 +186,8 @@ learnable ambiguity strictness witness;
 unlearnable/unsafe-identification exclusion witness;
 fake-update phantom corridor witness outside sound update.
 recovery-aware corridor gate rejecting nonrecoverable-loss successors.
+phantom recovery facts can create licenses that the true recovery-aware gate
+refuses.
 ```
 
 Boundary:
@@ -206,6 +208,7 @@ formal/lean/OmegaProper/Decision/RecoveryFrame.lean
 formal/lean/OmegaProper/Decision/RecoveryFrameExamples.lean
 formal/lean/OmegaProper/Decision/RecoveryAwareCorridor.lean
 formal/lean/OmegaProper/Decision/RecoveryAwareCorridorExamples.lean
+formal/lean/OmegaProper/Decision/RecoveryAwareCorridorPhantom.lean
 ```
 
 Documentation:
@@ -213,6 +216,7 @@ Documentation:
 ```text
 recovery_frame_irreversibility_weld_v0.md
 recovery_aware_corridor_v0.md
+phantom_recoverability_gate_v0.md
 valuer_profile_and_comparative_patienthood_v0.md
 vortical_deformer_profile_b21_docking_v0.md
 observer_loop_closure_and_sound_update_v0.md
@@ -236,6 +240,7 @@ recovery-aware corridor instantiation with RecoverableUpTo as Requirement;
 nonrecoverable-loss successors cannot be licensed against that corridor;
 same-task-success / collapse-unlicensed witness;
 forbidden-probe witness.
+phantom recoverability / phantom-license witness.
 ```
 
 Boundary:

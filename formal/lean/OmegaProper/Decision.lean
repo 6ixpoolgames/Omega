@@ -19,6 +19,7 @@ import OmegaProper.Decision.RecoveryFrame
 import OmegaProper.Decision.RecoveryFrameExamples
 import OmegaProper.Decision.RecoveryAwareCorridor
 import OmegaProper.Decision.RecoveryAwareCorridorExamples
+import OmegaProper.Decision.RecoveryAwareCorridorPhantom
 import OmegaProper.Decision.Dominance
 import OmegaProper.Decision.DominanceExamples
 import OmegaProper.Decision.DominanceAcceptance

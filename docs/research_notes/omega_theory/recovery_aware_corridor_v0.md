@@ -16,6 +16,15 @@ cannot be licensed against that corridor.
 
 This turns recovery loss from a standalone witness into an ODT0 gate failure.
 
+The first strictness extension has also landed:
+
+```text
+phantom_recoverability_gate_v0.md
+```
+
+It shows that a corrupted recovery frame can counterfeit recoverability and
+license what the true recovery-aware corridor refuses.
+
 ## Lean Surface
 
 Formal files:
@@ -129,6 +138,19 @@ recovery-aware corridor.
 ```
 
 That is stronger than a standalone warning and weaker than a moral theory.
+
+## Register Adequacy Liability
+
+The gate quantifies over declared recovery facts. Therefore:
+
+```text
+undeclared vulnerable structure is invisible to the gate;
+overdeclared vulnerable structure can paralyze the floor;
+corrupted recovery facts can create phantom licenses.
+```
+
+This is not a bug in the theorem. It is the registry-first contract made
+explicit.
 
 ## Nonclaims
 
