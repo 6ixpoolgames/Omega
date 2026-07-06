@@ -57,6 +57,7 @@ def retain_finite_relational_ensemble_span(out_dir: Path) -> dict[str, Any]:
 
 def render_report(result: dict[str, Any]) -> str:
     pair = result["candidate_pair"]
+    robustness = result["larger_rank_robustness"]
     diminishing = result["diminishing_returns"]
     controls = result["negative_controls"]
     lines = [
@@ -76,6 +77,16 @@ def render_report(result: dict[str, Any]) -> str:
         f"- Left includes right: {pair['left_span_includes_right']}",
         f"- Right includes left: {pair['right_span_includes_left']}",
         f"- Full vector census equal: {pair['full_vector_census_equal']}",
+        "",
+        "## Larger Rank Robustness",
+        "",
+        f"- Left: `{robustness['left']}`",
+        f"- Right: `{robustness['right']}`",
+        f"- Marginal scalar controls equal: {robustness['marginal_scalar_controls_equal']}",
+        f"- Left rank: {robustness['left_span_profile']['rank']}",
+        f"- Right rank: {robustness['right_span_profile']['rank']}",
+        f"- Left includes right: {robustness['left_span_includes_right']}",
+        f"- Right includes left: {robustness['right_span_includes_left']}",
         "",
         "## Diminishing Returns",
         "",

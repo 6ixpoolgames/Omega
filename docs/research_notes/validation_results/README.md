@@ -23,6 +23,10 @@ For the project pitch and current formalism, read:
   `finite_relational_adapter/` subfolder.
 - `ensemble_span_v0/` contains the retained finite joint-tier instrument output
   for the redundant-vs-orthogonal ensemble-span pilot.
+- `ensemble_span_robustness_v0/` contains the retained larger three-axis
+  robustness output for the ensemble-span pilot.
+- `relational_composability_v0/` contains the retained finite coupling
+  instrument output for the compatible-vs-blocked pair pilot.
 
 Start with:
 

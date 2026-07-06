@@ -24,6 +24,12 @@ Retained run:
 docs/research_notes/validation_results/ensemble_span_v0/20260707_010015/
 ```
 
+Robustness retained run:
+
+```text
+docs/research_notes/validation_results/ensemble_span_robustness_v0/20260707_012053/
+```
+
 Retained files:
 
 ```text
@@ -119,6 +125,46 @@ rank gain = 1
 The added vector has the same individual L1 norm in both additions. The
 difference is orientation relative to the existing ensemble span.
 
+## Larger Rank Robustness
+
+The post-audit robustness variant uses three axes and three vectors.
+
+Coplanar ensemble:
+
+```text
+coplanar_rank2_AB_AplusB = {A, B, A+B}
+```
+
+Full-rank ensemble:
+
+```text
+full_rank3_AB_2C = {A, B, 2C}
+```
+
+Matched marginal scalar controls:
+
+```text
+valuer_count: 3 = 3
+vector_dimension: 3 = 3
+per_valuer_l1_norms: [1, 1, 2] = [1, 1, 2]
+total_l1_amount: 4 = 4
+max_individual_l1_norm: 2 = 2
+```
+
+Span separation:
+
+```text
+rank(coplanar_rank2_AB_AplusB) = 2
+rank(full_rank3_AB_2C) = 3
+
+span(full_rank3_AB_2C) includes span(coplanar_rank2_AB_AplusB)
+span(coplanar_rank2_AB_AplusB) does not include span(full_rank3_AB_2C)
+```
+
+This keeps the claim at the instrument level: the separation survives a larger
+finite family, but it remains orientation/span rather than relational
+composability.
+
 ## Negative Controls
 
 Identical-vector control:
@@ -196,10 +242,10 @@ Omega validation.
 The next possible directions are:
 
 ```text
-1. independent ensemble-span variants with more axes and non-unit vectors;
-2. relational composability as a separate coupling instrument;
-3. NOLP / CompensationClaim after the expansion mirror has external audit;
-4. endogenous register/no-laundering after compensation is typed.
+1. relational composability as a separate coupling instrument;
+2. NOLP / CompensationClaim after the expansion mirror and joint-tier
+   instruments have external audit;
+3. endogenous register/no-laundering after compensation is typed.
 ```
 
 Do not use this result to rank populations or patients. It is a finite

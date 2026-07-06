@@ -66,8 +66,14 @@ Colonization axis:
 
 Ensemble span:
   finite joint-tier instrument separating redundant from orthogonal ensembles
-  after matching marginal scalar summaries. This is orientation coverage, not
-  population value or relational surplus.
+  after matching marginal scalar summaries, with a larger three-axis robustness
+  case. This is orientation coverage, not population value or relational
+  surplus.
+
+Relational composability:
+  finite coupling instrument separating declared compatibility profiles while
+  holding full individual vector census and pure span fixed. This is coupling
+  structure, not plurality theory or value.
 
 Future-field culling:
   scalar field-measure, population optimum, strong vacancy, and value-substrate
@@ -110,6 +116,8 @@ Use these notes for the current stack:
 24. [Termination Supremum v0](research_notes/omega_theory/termination_supremum_v0.md)
 25. [Ensemble Span Protocol v0](research_notes/omega_theory/ensemble_span_protocol_v0.md)
 26. [Ensemble Span Report v0](research_notes/omega_theory/ensemble_span_report_v0.md)
+27. [Relational Composability Protocol v0](research_notes/omega_theory/relational_composability_protocol_v0.md)
+28. [Relational Composability Report v0](research_notes/omega_theory/relational_composability_report_v0.md)
 
 ## B2.1 Reading
 

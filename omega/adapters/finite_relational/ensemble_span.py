@@ -87,6 +87,10 @@ def axes_ab() -> tuple[Axis, Axis]:
     return (Axis("A"), Axis("B"))
 
 
+def axes_abc() -> tuple[Axis, Axis, Axis]:
+    return (Axis("A"), Axis("B"), Axis("C"))
+
+
 def redundant_ensemble() -> Ensemble:
     axes = axes_ab()
     return Ensemble(
@@ -140,6 +144,32 @@ def orthogonal_addition_ensemble() -> Ensemble:
         vectors=(
             ValuerVector("d1", (1, 0)),
             ValuerVector("d2", (0, 1)),
+        ),
+    )
+
+
+def coplanar_rank2_ensemble() -> Ensemble:
+    axes = axes_abc()
+    return Ensemble(
+        ensemble_id="coplanar_rank2_AB_AplusB",
+        axes=axes,
+        vectors=(
+            ValuerVector("p1", (1, 0, 0)),
+            ValuerVector("p2", (0, 1, 0)),
+            ValuerVector("p3", (1, 1, 0)),
+        ),
+    )
+
+
+def full_rank3_ensemble() -> Ensemble:
+    axes = axes_abc()
+    return Ensemble(
+        ensemble_id="full_rank3_AB_2C",
+        axes=axes,
+        vectors=(
+            ValuerVector("f1", (1, 0, 0)),
+            ValuerVector("f2", (0, 1, 0)),
+            ValuerVector("f3", (0, 0, 2)),
         ),
     )
 
@@ -239,8 +269,8 @@ def matrix_rank(rows: tuple[tuple[int, ...], ...]) -> int:
                 continue
             factor = matrix[row][col]
             matrix[row] = [
-                value - factor * pivot_value
-                for value, pivot_value in zip(matrix[row], matrix[pivot_row])
+                value - factor * pivot_component
+                for value, pivot_component in zip(matrix[row], matrix[pivot_row])
             ]
         rank += 1
         pivot_row += 1
@@ -320,6 +350,19 @@ def redundant_vs_orthogonal_witness() -> dict[str, Any]:
     }
 
 
+def larger_rank_robustness_witness() -> dict[str, Any]:
+    coplanar = coplanar_rank2_ensemble()
+    full_rank = full_rank3_ensemble()
+    comparison = compare_ensembles(coplanar, full_rank)
+    return {
+        **comparison,
+        "read": (
+            "three-axis robustness case: same marginal scalar census; "
+            "rank-2 coplanar ensemble differs from rank-3 ensemble"
+        ),
+    }
+
+
 def diminishing_returns_witness() -> dict[str, Any]:
     base = base_ensemble()
     correlated = correlated_addition_ensemble()
@@ -382,6 +425,7 @@ def full_vector_census_control() -> dict[str, Any]:
 
 def ensemble_span_summary() -> dict[str, Any]:
     candidate = redundant_vs_orthogonal_witness()
+    robustness = larger_rank_robustness_witness()
     diminishing = diminishing_returns_witness()
     identical_control = identical_vectors_control()
     census_control = full_vector_census_control()
@@ -397,12 +441,17 @@ def ensemble_span_summary() -> dict[str, Any]:
         and not candidate["full_vector_census_equal"]
         and diminishing["correlated_rank_gain"] == 0
         and diminishing["orthogonal_rank_gain"] > 0
+        and robustness["marginal_scalar_controls_equal"]
+        and robustness["rank_separates"]
+        and robustness["right_span_includes_left"]
+        and not robustness["left_span_includes_right"]
         and negative_controls_pass
     )
     return {
         "protocol_doc": PROTOCOL_DOC,
         "verdict": "separated" if separated else "reduces-or-ill-posed",
         "candidate_pair": candidate,
+        "larger_rank_robustness": robustness,
         "diminishing_returns": diminishing,
         "negative_controls": {
             "identical_vectors": identical_control,

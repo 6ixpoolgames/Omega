@@ -2,12 +2,15 @@ from pathlib import Path
 
 from omega.adapters.finite_relational.ensemble_span import (
     compare_ensembles,
+    coplanar_rank2_ensemble,
     correlated_addition_ensemble,
     determinant,
     diminishing_returns_witness,
     ensemble_span_summary,
+    full_rank3_ensemble,
     full_vector_census_control,
     identical_vectors_control,
+    larger_rank_robustness_witness,
     marginal_controls_match,
     marginal_summary,
     matrix_rank,
@@ -70,6 +73,18 @@ def test_diminishing_returns_witness_separates_orientation_gain() -> None:
     assert span_profile(orthogonal_addition_ensemble()).rank == 2
 
 
+def test_larger_rank_robustness_witness_separates_after_matched_controls() -> None:
+    witness = larger_rank_robustness_witness()
+
+    assert marginal_controls_match(coplanar_rank2_ensemble(), full_rank3_ensemble())
+    assert witness["marginal_scalar_controls_equal"] is True
+    assert witness["left_span_profile"]["rank"] == 2
+    assert witness["right_span_profile"]["rank"] == 3
+    assert witness["rank_separates"] is True
+    assert witness["left_span_includes_right"] is False
+    assert witness["right_span_includes_left"] is True
+
+
 def test_negative_controls_prevent_overreading() -> None:
     identical = identical_vectors_control()
     full_census = full_vector_census_control()
@@ -97,6 +112,8 @@ def test_ensemble_span_summary_retains_separated_verdict() -> None:
     assert summary["verdict"] == "separated"
     assert summary["candidate_pair"]["marginal_scalar_controls_equal"] is True
     assert summary["candidate_pair"]["rank_separates"] is True
+    assert summary["larger_rank_robustness"]["marginal_scalar_controls_equal"] is True
+    assert summary["larger_rank_robustness"]["rank_separates"] is True
     assert summary["negative_controls"]["negative_controls_pass"] is True
     assert "population ethics" in summary["not_claimed"]
     assert "relational surplus" in summary["not_claimed"]

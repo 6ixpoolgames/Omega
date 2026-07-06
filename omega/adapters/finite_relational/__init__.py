@@ -68,6 +68,9 @@ from omega.adapters.finite_relational.ensemble_span import (
     span_includes,
     span_profile,
 )
+from omega.adapters.finite_relational.relational_composability import (
+    relational_composability_summary,
+)
 from omega.adapters.finite_relational.derived_graph import (
     compile_derived_graph,
     compile_derived_graph_path,
@@ -333,6 +336,7 @@ __all__ = [
     "presentation_fact_derive_closure_facts",
     "presentation_fact_closure_facts",
     "randomized_success_by_source",
+    "relational_composability_summary",
     "recoverable_targets",
     "robust_randomized_success_by_channel",
     "robust_policy_hit_by_kernel",
