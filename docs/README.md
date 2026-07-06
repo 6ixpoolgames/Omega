@@ -22,7 +22,8 @@ This page is the current docs entry point. Older notes remain in the tree for pr
 12. [Colonization Axis Report v0](research_notes/omega_theory/colonization_axis_report_v0.md)
 13. [Future-Field Reorientation and Declaration Culling v0](research_notes/omega_theory/future_field_reorientation_and_declaration_culling_v0.md)
 14. [Substrate Classes and Large Deformers v0](research_notes/omega_theory/substrate_classes_and_large_deformers_v0.md)
-15. [Effective Layers](research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
+15. [Does The Loop Close Soundly?](public/does_the_loop_close_soundly_v0.md)
+16. [Effective Layers](research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
 
 ## Current Formal Center
 
@@ -88,6 +89,11 @@ Joint-tier reduction audit:
   compatibility is treated as a recovery-grounded bridge rather than an
   independent axis.
 
+Order sampling / NOLP:
+  declared fact-order sensitivity is now a retained harness. CompensationClaim
+  v0 is same-frame only: nonrecoverable contraction is refused unless a
+  complete certified compensation cover is registered.
+
 Future-field culling:
   scalar field-measure, population optimum, strong vacancy, and value-substrate
   field-theory language are not foundations; per-valuer expansion is a declared
@@ -135,6 +141,11 @@ Use these notes for the current stack:
 30. [Joint Recovery Compatibility Report v0](research_notes/omega_theory/joint_recovery_compatibility_report_v0.md)
 31. [Joint-Tier Reduction Audit Protocol v0](research_notes/omega_theory/joint_tier_reduction_audit_protocol_v0.md)
 32. [Joint-Tier Reduction Audit Report v0](research_notes/omega_theory/joint_tier_reduction_audit_report_v0.md)
+33. [Finite Lens Invariance Spine Spec v0](research_notes/omega_theory/finite_lens_invariance_spine_spec_v0.md)
+34. [Order Sampling Harness Protocol v0](research_notes/omega_theory/order_sampling_harness_protocol_v0.md)
+35. [Order Sampling Harness Report v0](research_notes/omega_theory/order_sampling_harness_report_v0.md)
+36. [CompensationClaim / NOLP Protocol v0](research_notes/omega_theory/compensation_claim_protocol_v0.md)
+37. [CompensationClaim / NOLP Report v0](research_notes/omega_theory/compensation_claim_report_v0.md)
 
 ## B2.1 Reading
 

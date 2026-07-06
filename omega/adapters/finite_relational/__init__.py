@@ -77,6 +77,12 @@ from omega.adapters.finite_relational.joint_recovery_compatibility import (
 from omega.adapters.finite_relational.joint_tier_reduction_audit import (
     joint_tier_reduction_audit_summary,
 )
+from omega.adapters.finite_relational.order_sampling import (
+    order_sampling_summary,
+)
+from omega.adapters.finite_relational.compensation_claim import (
+    compensation_claim_summary,
+)
 from omega.adapters.finite_relational.derived_graph import (
     compile_derived_graph,
     compile_derived_graph_path,
@@ -345,6 +351,8 @@ __all__ = [
     "relational_composability_summary",
     "joint_recovery_compatibility_summary",
     "joint_tier_reduction_audit_summary",
+    "order_sampling_summary",
+    "compensation_claim_summary",
     "recoverable_targets",
     "robust_randomized_success_by_channel",
     "robust_policy_hit_by_kernel",

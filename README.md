@@ -210,6 +210,12 @@ keeps the global lens-invariance debt explicit, and joint recovery
 compatibility is treated as a recovery-grounded bridge rather than a fresh
 independent axis.
 
+The order-sampling and CompensationClaim checkpoints then type the NOLP layer
+without opening population ethics: some loss/expansion comparisons are stable
+across sampled declared fact orders, others are order-content, and same-frame
+nonrecoverable contraction is refused unless a complete certified compensation
+cover is registered.
+
 ## Decision-Theory Surface
 
 The decision-facing stack is currently grouped under the working title
@@ -252,6 +258,9 @@ Headline notes:
 16. [Relational Composability Report v0](docs/research_notes/omega_theory/relational_composability_report_v0.md)
 17. [Joint Recovery Compatibility Report v0](docs/research_notes/omega_theory/joint_recovery_compatibility_report_v0.md)
 18. [Joint-Tier Reduction Audit Report v0](docs/research_notes/omega_theory/joint_tier_reduction_audit_report_v0.md)
+19. [Finite Lens Invariance Spine Spec v0](docs/research_notes/omega_theory/finite_lens_invariance_spine_spec_v0.md)
+20. [Order Sampling Harness Report v0](docs/research_notes/omega_theory/order_sampling_harness_report_v0.md)
+21. [CompensationClaim / NOLP Report v0](docs/research_notes/omega_theory/compensation_claim_report_v0.md)
 
 The proved layer is still partial. Hypothesized next behavior includes
 unsafe-identification/no-go results and eventually endogenous register updates.
@@ -286,9 +295,14 @@ For the current docs front door:
 22. [Joint Recovery Compatibility Report v0](docs/research_notes/omega_theory/joint_recovery_compatibility_report_v0.md)
 23. [Joint-Tier Reduction Audit Protocol v0](docs/research_notes/omega_theory/joint_tier_reduction_audit_protocol_v0.md)
 24. [Joint-Tier Reduction Audit Report v0](docs/research_notes/omega_theory/joint_tier_reduction_audit_report_v0.md)
-25. [B2 Viability / Safety-Game Docking](docs/research_notes/omega_theory/b2_viability_safety_game_docking_v0.md)
-26. [Effective Layers](docs/research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
-27. [Omega Theory Notes Index](docs/research_notes/omega_theory/README.md)
+25. [Finite Lens Invariance Spine Spec v0](docs/research_notes/omega_theory/finite_lens_invariance_spine_spec_v0.md)
+26. [Order Sampling Harness Protocol v0](docs/research_notes/omega_theory/order_sampling_harness_protocol_v0.md)
+27. [Order Sampling Harness Report v0](docs/research_notes/omega_theory/order_sampling_harness_report_v0.md)
+28. [CompensationClaim / NOLP Protocol v0](docs/research_notes/omega_theory/compensation_claim_protocol_v0.md)
+29. [CompensationClaim / NOLP Report v0](docs/research_notes/omega_theory/compensation_claim_report_v0.md)
+30. [B2 Viability / Safety-Game Docking](docs/research_notes/omega_theory/b2_viability_safety_game_docking_v0.md)
+31. [Effective Layers](docs/research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
+32. [Omega Theory Notes Index](docs/research_notes/omega_theory/README.md)
 
 For first-contact narrative:
 
@@ -296,6 +310,7 @@ For first-contact narrative:
 2. [External Reader Guide](docs/EXTERNAL_READER_GUIDE.md)
 3. [Omega Formalism Primer](docs/OMEGA_FORMALISM_PRIMER.md)
 4. [Omega Lite Worked Examples](docs/OMEGA_LITE_WORKED_EXAMPLES.md)
+5. [Does The Loop Close Soundly?](docs/public/does_the_loop_close_soundly_v0.md)
 
 For validation and contribution hygiene:
 
@@ -370,11 +385,16 @@ These are not claims that value or agency has been solved. They are constraints 
 
 Near-term work should now prefer:
 
-1. Audit ensemble-span robustness, relational-composability v0, and joint-recovery compatibility before building compensation or plurality theory on them.
-2. Independent colonization-axis pair or audited `ColonizationOrder.lean` before any cross-scale lushness claim.
-3. NOLP / compensation claims only after the expansion mirror, joint-tier instruments, and joint-recovery compatibility have been audited.
-4. Endogenous register/no-laundering after recovery-frame reflection and NOLP are typed.
-5. Plural corridor composition, quantum, or large-deformer relativity only after those interfaces are stable.
+1. Stale/static compensation certificates for self-extending registers, building
+   on same-frame CompensationClaim / NOLP v0.
+2. Endogenous register/no-laundering after recovery-frame reflection and NOLP
+   are typed.
+3. Independent colonization-axis pair or audited `ColonizationOrder.lean`
+   before any cross-scale lushness claim.
+4. Finite lens-invariance Lean theorem when the bounded grammar debt becomes
+   blocking.
+5. Plural corridor composition, quantum, or large-deformer relativity only
+   after those interfaces are stable.
 
 ## Claim Boundary
 

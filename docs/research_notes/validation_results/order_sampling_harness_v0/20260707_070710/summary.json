@@ -1,0 +1,123 @@
+{
+  "expansion_invariant_witness": {
+    "classification": "invariant_true",
+    "left": "expand_task_and_revision",
+    "mode": "expansion",
+    "right": "expand_task",
+    "rows": [
+      {
+        "left_closure": [
+          "revision",
+          "task"
+        ],
+        "order_id": "discrete",
+        "right_closure": [
+          "task"
+        ],
+        "verdict": true
+      },
+      {
+        "left_closure": [
+          "revision",
+          "task"
+        ],
+        "order_id": "task_below_revision_below_joint",
+        "right_closure": [
+          "task"
+        ],
+        "verdict": true
+      },
+      {
+        "left_closure": [
+          "joint",
+          "revision",
+          "task"
+        ],
+        "order_id": "task_below_joint_below_revision",
+        "right_closure": [
+          "task"
+        ],
+        "verdict": true
+      }
+    ]
+  },
+  "loss_dependency_witness": {
+    "classification": "dependent",
+    "left": "lose_local",
+    "mode": "loss",
+    "right": "lose_joint",
+    "rows": [
+      {
+        "left_closure": [
+          "local"
+        ],
+        "order_id": "discrete",
+        "right_closure": [
+          "joint"
+        ],
+        "verdict": false
+      },
+      {
+        "left_closure": [
+          "local"
+        ],
+        "order_id": "local_below_joint",
+        "right_closure": [
+          "joint",
+          "local"
+        ],
+        "verdict": false
+      },
+      {
+        "left_closure": [
+          "joint",
+          "local"
+        ],
+        "order_id": "joint_below_local",
+        "right_closure": [
+          "joint"
+        ],
+        "verdict": true
+      }
+    ]
+  },
+  "not_claimed": [
+    "correct fact order",
+    "value",
+    "standing",
+    "aggregation",
+    "arbitration",
+    "patienthood",
+    "Omega validation"
+  ],
+  "protocol_doc": "docs/research_notes/omega_theory/order_sampling_harness_protocol_v0.md",
+  "run_root": "C:\\Users\\paolo\\Documents\\New project\\docs\\research_notes\\validation_results\\order_sampling_harness_v0\\20260707_070710",
+  "sampled_order_classes": {
+    "three_fact_orders": [
+      "discrete",
+      "task_below_revision_below_joint",
+      "task_below_joint_below_revision"
+    ],
+    "two_fact_adjacent_pairs": [
+      [
+        "discrete",
+        "local_below_joint"
+      ],
+      [
+        "discrete",
+        "joint_below_local"
+      ],
+      [
+        "local_below_joint",
+        "joint_below_local"
+      ]
+    ],
+    "two_fact_orders": [
+      "discrete",
+      "local_below_joint",
+      "joint_below_local"
+    ]
+  },
+  "status": "PASS",
+  "verdict": "calibrated"
+}
