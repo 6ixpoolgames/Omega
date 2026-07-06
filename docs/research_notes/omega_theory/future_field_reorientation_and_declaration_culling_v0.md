@@ -273,15 +273,18 @@ Landed formal follow-up:
 2. termination-supremum over per-valuer declared fact orders;
 3. ensemble-span finite instrument for joint-tier orientation;
 4. relational-composability finite instrument for registered joint-tier coupling;
-5. joint-recovery compatibility finite bridge for recovery-grounded coupling.
+5. joint-recovery compatibility finite bridge for recovery-grounded coupling;
+6. joint-tier reduction audit with planted-null controls before NOLP.
 ```
 
 Remaining formal / experimental queue:
 
 ```text
-1. phantom composability or larger typed-coupling families;
-2. optional no-static-configuration probe, explicitly as a regime search;
-3. CompensationClaim / NOLP only after the mirror/span/coupling/recovery-compatibility layers are audited.
+1. CompensationClaim / NOLP after the retained mirror/span/coupling/recovery
+   and reduction-audit stack;
+2. phantom composability or larger typed-coupling families only if NOLP needs
+   them;
+3. optional no-static-configuration probe, explicitly as a regime search.
 ```
 
 Quarantined:
@@ -309,5 +312,7 @@ instrument: full individual vector census and pure span can be held fixed while
 declared compatibility profiles differ. Joint recovery compatibility then
 grounds one such coupling distinction in recovery behavior: individual recovery
 can be fixed while joint recovery under coupling separates. What remains live
-is sharper: test phantom composability, typed couplings, NOLP/compensation, and
-no-static-configuration claims only as theorem targets rather than foundations.
+is sharper: the joint-tier reduction audit has calibrated planted-null controls,
+so CompensationClaim / NOLP can now be typed without widening the instrument
+chain first. Phantom composability, typed couplings, and no-static-configuration
+claims remain theorem targets rather than foundations.

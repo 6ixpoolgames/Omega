@@ -31,6 +31,8 @@ For the project pitch and current formalism, read:
   the same-edge-count / same-degree-sequence graph-structure witness.
 - `joint_recovery_compatibility_v0/` contains the retained finite bridge output
   for recovery-grounded compatibility after individual recovery is held fixed.
+- `joint_tier_reduction_audit_v0/` contains the retained planted-null and
+  reduction-pressure audit before CompensationClaim / NOLP.
 
 Start with:
 
@@ -66,6 +68,7 @@ Start with:
 - `finite_relational_stochastic_continuation_v0.json`
 - `finite_relational_policy_dynamics_v0.json`
 - `ensemble_span_v0/20260707_010015/report.md`
+- `joint_tier_reduction_audit_v0/20260707_064631/report.md`
 - `agency_diamond_midscale_v0.md`
 - `agency_diamond_midscale_v0.json`
 - `agency_diamond_hardening_v1.md`

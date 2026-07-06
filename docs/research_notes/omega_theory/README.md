@@ -32,6 +32,8 @@ relational_composability_protocol_v0.md
 relational_composability_report_v0.md
 joint_recovery_compatibility_protocol_v0.md
 joint_recovery_compatibility_report_v0.md
+joint_tier_reduction_audit_protocol_v0.md
+joint_tier_reduction_audit_report_v0.md
 b2_viability_safety_game_docking_v0.md
 effective_layers_realization_forgetting_emergence_v0.md
 ```

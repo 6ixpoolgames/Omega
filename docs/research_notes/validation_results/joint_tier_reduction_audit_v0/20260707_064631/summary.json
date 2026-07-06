@@ -1,0 +1,116 @@
+{
+  "not_attacked_this_round": [
+    "ensemble_span independent-axis reduction",
+    "full global lens-invariance theorem",
+    "CompensationClaim / NOLP verdicts"
+  ],
+  "not_claimed": [
+    "value",
+    "standing",
+    "agency",
+    "population ethics",
+    "plurality theory",
+    "aggregation",
+    "patienthood",
+    "Omega validation"
+  ],
+  "planted_nulls": [
+    {
+      "evidence": {
+        "candidate_span_verdict": "separated",
+        "left_total_l1_amount": 2,
+        "note": "This is a planted reducible scalar, not the ensemble-span axis.",
+        "right_total_l1_amount": 2
+      },
+      "instrument": "ensemble_span",
+      "passes": true,
+      "planted_coordinate": "total_l1_amount",
+      "reduction_basis": "marginal_summary.total_l1_amount",
+      "verdict": "reduces"
+    },
+    {
+      "evidence": {
+        "compatibility_separates": true,
+        "left_pair_count": 1,
+        "note": "This planted coordinate is only edge count; it is not the v0.1 component-structure witness.",
+        "right_pair_count": 0
+      },
+      "instrument": "relational_composability",
+      "passes": true,
+      "planted_coordinate": "compatible_pair_count",
+      "reduction_basis": "CompatibilityProfile.compatible_pair_count",
+      "verdict": "reduces"
+    },
+    {
+      "evidence": {
+        "joint_recovery_separates": true,
+        "left_missing_count": 0,
+        "note": "This planted coordinate is a direct recovery-profile scalar.",
+        "right_missing_count": 1
+      },
+      "instrument": "joint_recovery_compatibility",
+      "passes": true,
+      "planted_coordinate": "joint_missing_fact_count",
+      "reduction_basis": "RecoveryProfile.joint_missing_fact_ids",
+      "verdict": "reduces"
+    },
+    {
+      "evidence": {
+        "control_panel_viable_state_count": 4,
+        "note": "This planted coordinate is a declared control-panel quantity, not colonization structure.",
+        "profile_max_chain_depth": 3,
+        "system": "branching_B"
+      },
+      "instrument": "colonization_axis",
+      "passes": true,
+      "planted_coordinate": "viable_state_count",
+      "reduction_basis": "colonization control_panel.viable_state_count",
+      "verdict": "reduces"
+    }
+  ],
+  "planted_nulls_pass": true,
+  "protocol_doc": "docs/research_notes/omega_theory/joint_tier_reduction_audit_protocol_v0.md",
+  "reduction_attempts": [
+    {
+      "evidence": {
+        "component_structure_separates": true,
+        "same_compatible_pair_count": true,
+        "same_degree_sequence": true,
+        "scope_note": "This does not prove independence from all graph summaries; it blocks the cheap pair-count and degree-sequence reductions already tested."
+      },
+      "hypothesis": "reduces to pure span plus edge count or degree sequence",
+      "passes": true,
+      "target": "relational_composability",
+      "verdict": "survives_simple_graph_scalar_reduction"
+    },
+    {
+      "evidence": {
+        "control_panel_equal": true,
+        "lens_debt": "Global lens invariance and sound-quotient-lattice reduction remain open.",
+        "scalar_shadow_equal": true,
+        "scalar_shadow_order_separates": true
+      },
+      "hypothesis": "reduces to control panel plus simple scalar chain shadows",
+      "passes": true,
+      "target": "colonization_axis",
+      "verdict": "survives_scalar_shadow_reduction_lens_debt_open"
+    },
+    {
+      "evidence": {
+        "individual_recovery_profiles_equal": true,
+        "joint_recovery_separates": true,
+        "left_joint_recovery_succeeds": true,
+        "right_joint_recovery_succeeds": false,
+        "scope_note": "This supports treating joint-recovery compatibility as a recovery-grounded bridge instrument, not as a new independent coordinate."
+      },
+      "hypothesis": "factors as coupling surface plus registered recovery labels",
+      "passes": true,
+      "target": "joint_recovery_compatibility",
+      "verdict": "bridge_not_independent_axis"
+    }
+  ],
+  "reduction_attempts_pass": true,
+  "run_root": "C:\\Users\\paolo\\Documents\\New project\\docs\\research_notes\\validation_results\\joint_tier_reduction_audit_v0\\20260707_064631",
+  "status": "PASS",
+  "verdict": "calibrated"
+}

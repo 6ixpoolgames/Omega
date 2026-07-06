@@ -61,6 +61,7 @@ quarantined:
 | Ensemble span v0 | retained | Finite joint-tier orientation instrument separating redundant from orthogonal ensembles after matching marginal scalar summaries; includes a larger three-axis robustness witness, diminishing-returns witness, and full-vector-census negative control. | Use as orientation/span instrument only; pure span does not capture coupling. | Population value, standing, aggregation, relational surplus, population optimum, agency, or Omega validation. |
 | Relational composability v0 | running/retained | Finite registered compatibility-profile instrument separating declared coupling profiles while full individual vector census and pure span are held fixed; hardening witness keeps edge count and degree sequence fixed while component structure differs. | Use as coupling/composability instrument only; next possible branch is typed-coupling labels, phantom composability, or corridor-linked plurality later. | Derived compatibility, population value, standing, plurality theory, aggregation, relational surplus as value, population optimum, agency, or Omega validation. |
 | Joint recovery compatibility v0 | running/retained | Finite bridge instrument separating joint recovery under coupling while full vector census, pure span, and individual recovery profiles are held fixed. | Use as recovery-grounded compatibility bridge only; next possible branch is phantom composability or NOLP/CompensationClaim. | Value, standing, plurality theory, moral aggregation, patienthood, population optimum, agency, or Omega validation. |
+| Joint-tier reduction audit v0 | retained | Calibration pass over recent joint-tier instruments: planted reducible coordinates reduce, relational composability survives pair-count/degree reductions, colonization keeps lens debt explicit, and joint recovery compatibility is demoted to bridge rather than independent axis. | Use as the pre-NOLP audit checkpoint; do not widen the instrument chain until NOLP/CompensationClaim is typed. | Value, standing, population ethics, plurality theory, aggregation, patienthood, or Omega validation. |
 | Observed-word/process coherence | active/formalized | Lean theorem surface for path lifting, language inclusion, and edge-image insufficiency. | Reuse for abstraction/process-truth claims. | Entropy, lushness, or value. |
 | Contextual future fields / compatibility thickness | open/running | Local/global obstruction, holonomy, PSD compatibility kernel pilots. | Keep pre-Hilbert until definitions stabilize. | Quantum mechanics, value density, Hilbert ontology. |
 | Future Field Atlas / RFS-MB0 | running/retained | Larger empirical/topological instrumentation and historical bridge outputs. | Treat as retained empirical branch; avoid coupling to new theory unless needed. | Omega validation or candidate promotion. |
@@ -160,6 +161,7 @@ adapter-supplied profile rows, not moral or agency facts.
 | Ensemble span v0 | closed finite instrument checkpoint | Redundant and orthogonal two-vector ensembles match marginal scalar census but differ in span rank/order; a three-axis robustness case repeats the separation with ranks 2 vs 3; correlated additions have no span gain while orthogonal additions do; full-vector-census control shows pure span is not relational composability. |
 | Relational composability v0 | closed finite instrument checkpoint | Compatible and blocked pair ensembles hold full individual vector census and pure span fixed while the declared compatibility relation separates component size, pair count, and joint-compatibility profile; two-triangles vs six-cycle hardening keeps edge count and degree sequence fixed while component structure differs. |
 | Joint recovery compatibility v0 | closed finite bridge checkpoint | Compatible and interfering coupling cases hold full vector census, pure span, and individual recovery profiles fixed while joint recovery succeeds in one case and fails in the other. |
+| Joint-tier reduction audit v0 | closed calibration checkpoint | Planted reducible coordinates reduce across ensemble span, relational composability, joint recovery compatibility, and colonization; relational composability survives cheap graph-scalar reductions, colonization keeps lens-invariance debt open, and joint recovery compatibility is treated as a recovery-grounded bridge. |
 | Colonization axis v0 | closed finite discovery checkpoint | Preregistered finite audit found a retained `separated` verdict: `branching_B` and `basin_F` match viable-state count, corridor membership, viable-word counts at horizons 1/2/3, recurrence count, own-maintenance score, entropy proxy, and leading-lambda proxy, while certified viable-refinement chains separate; demotion gauntlet passed in the finite harness. |
 | Future-field declaration culling v0 | closed docs checkpoint | Scalar field-measure, fraction-of-field foreclosure, broad richer-is-better, strong vacancy, and value-substrate field theory language were demoted or quarantined; per-valuer expansion, termination-supremum, marginal/joint tiers, and NOLP were recast as theorem targets. |
 | Adaptive fixed-world corridor B2.1 pilot | closed witness checkpoint | Three retained finite Python witnesses separate learnable ambiguity, unlearnable ambiguity, and fake model-elimination updates; sound update has zero truth-preservation failures over the retained cases. |
@@ -204,13 +206,12 @@ If any answer is unclear, keep the branch exploratory or documentation-only.
 Near-term work should prefer:
 
 ```text
-1. audit ensemble-span robustness, relational-composability v0, and joint
-   recovery compatibility v0;
-2. NOLP / CompensationClaim only after the expansion mirror, joint-tier
-   instruments, and joint recovery compatibility are audited;
-3. endogenous register/no-laundering after recovery-frame reflection and NOLP
+1. NOLP / CompensationClaim now that the expansion mirror, joint-tier
+   instruments, joint recovery compatibility, and planted-null reduction audit
+   are retained;
+2. endogenous register/no-laundering after recovery-frame reflection and NOLP
    are typed;
-4. only then plural corridor composition, quantum, large-deformer relativity,
+3. only then plural corridor composition, quantum, large-deformer relativity,
    or broader field-theory language.
 ```
 

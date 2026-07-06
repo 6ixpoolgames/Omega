@@ -203,6 +203,13 @@ futurism; quantum relevance changes preservation adapters, not moral standing;
 and technologies, platforms, civilizations, organisms, and memetic systems may
 be large deformers without thereby being valuers or agents.
 
+The joint-tier reduction audit then puts the newest instruments under pressure
+before NOLP: planted reducible coordinates reduce, relational composability
+survives the cheap pair-count and degree-sequence reductions, colonization
+keeps the global lens-invariance debt explicit, and joint recovery
+compatibility is treated as a recovery-grounded bridge rather than a fresh
+independent axis.
+
 ## Decision-Theory Surface
 
 The decision-facing stack is currently grouped under the working title
@@ -244,6 +251,7 @@ Headline notes:
 15. [Ensemble Span Report v0](docs/research_notes/omega_theory/ensemble_span_report_v0.md)
 16. [Relational Composability Report v0](docs/research_notes/omega_theory/relational_composability_report_v0.md)
 17. [Joint Recovery Compatibility Report v0](docs/research_notes/omega_theory/joint_recovery_compatibility_report_v0.md)
+18. [Joint-Tier Reduction Audit Report v0](docs/research_notes/omega_theory/joint_tier_reduction_audit_report_v0.md)
 
 The proved layer is still partial. Hypothesized next behavior includes
 unsafe-identification/no-go results and eventually endogenous register updates.
@@ -276,9 +284,11 @@ For the current docs front door:
 20. [Relational Composability Report v0](docs/research_notes/omega_theory/relational_composability_report_v0.md)
 21. [Joint Recovery Compatibility Protocol v0](docs/research_notes/omega_theory/joint_recovery_compatibility_protocol_v0.md)
 22. [Joint Recovery Compatibility Report v0](docs/research_notes/omega_theory/joint_recovery_compatibility_report_v0.md)
-23. [B2 Viability / Safety-Game Docking](docs/research_notes/omega_theory/b2_viability_safety_game_docking_v0.md)
-24. [Effective Layers](docs/research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
-25. [Omega Theory Notes Index](docs/research_notes/omega_theory/README.md)
+23. [Joint-Tier Reduction Audit Protocol v0](docs/research_notes/omega_theory/joint_tier_reduction_audit_protocol_v0.md)
+24. [Joint-Tier Reduction Audit Report v0](docs/research_notes/omega_theory/joint_tier_reduction_audit_report_v0.md)
+25. [B2 Viability / Safety-Game Docking](docs/research_notes/omega_theory/b2_viability_safety_game_docking_v0.md)
+26. [Effective Layers](docs/research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
+27. [Omega Theory Notes Index](docs/research_notes/omega_theory/README.md)
 
 For first-contact narrative:
 
