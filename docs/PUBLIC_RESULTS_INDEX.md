@@ -12,6 +12,7 @@ docs/README.md
 docs/research_notes/omega_theory/active_surface_area_v0.md
 docs/research_notes/omega_theory/omega_decision_stack_checkpoint_v0.md
 docs/research_notes/omega_theory/adaptive_fixed_world_corridor_b21.md
+docs/research_notes/omega_theory/recovery_frame_irreversibility_weld_v0.md
 docs/CLAIMS_LEDGER.md
 ```
 
@@ -20,7 +21,8 @@ RFS-MB0, agency-diamond, and baseline-witness outputs remain useful for
 provenance, failure analysis, and instrument design. They are not the current
 formal center. The live center is the decision/corridor/adaptive-learning stack:
 ODT0 licensing, robust continuation corridors, B2/B2.1 ambiguity handling,
-ODT1 comparison bridges, and the ODT2 registered-arbitration scaffold.
+recovery/irreversibility welds, ODT1 comparison bridges, and the ODT2
+registered-arbitration scaffold.
 
 ## Claim boundary
 
@@ -159,8 +161,9 @@ For the current formal project, start here:
 4. [`research_notes/omega_theory/active_surface_area_v0.md`](research_notes/omega_theory/active_surface_area_v0.md)
 5. [`research_notes/omega_theory/omega_decision_stack_checkpoint_v0.md`](research_notes/omega_theory/omega_decision_stack_checkpoint_v0.md)
 6. [`research_notes/omega_theory/adaptive_fixed_world_corridor_b21.md`](research_notes/omega_theory/adaptive_fixed_world_corridor_b21.md)
-7. [`research_notes/omega_theory/b2_viability_safety_game_docking_v0.md`](research_notes/omega_theory/b2_viability_safety_game_docking_v0.md)
-8. [`research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md`](research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
+7. [`research_notes/omega_theory/recovery_frame_irreversibility_weld_v0.md`](research_notes/omega_theory/recovery_frame_irreversibility_weld_v0.md)
+8. [`research_notes/omega_theory/b2_viability_safety_game_docking_v0.md`](research_notes/omega_theory/b2_viability_safety_game_docking_v0.md)
+9. [`research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md`](research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
 
 For retained empirical and instrument results, then read:
 

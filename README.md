@@ -139,6 +139,11 @@ learning:
   unknown-but-fixed ambiguity can sometimes be converted into information by
   sound update; certified finer observations weakly widen the adaptive
   corridor; fabricated model elimination can create phantom safety.
+
+recovery:
+  some losses are not merely local violations; they can destroy registered
+  correction or revision capacity in ways the declared repair surface cannot
+  recover.
 ```
 
 The newest B2.1 checkpoint is important: the repo now has a Lean information-state lift for fixed-world ambiguity, strictness witnesses for learnable and unlearnable ambiguity, a fake-update phantom corridor witness, an infinite fixed-model realizer, policy/finite-bad-prefix theorems, and a deterministic observation-informativeness theorem:
@@ -155,6 +160,13 @@ The observation theorem adds the first direct weld to Blackwell-shaped
 comparison: when a coarse observation factors through a finer deterministic
 observation, any coarse-safe adaptive information state has a nonempty
 fine-safe refinement.
+
+The newest recovery checkpoint adds a small Lean interface for bounded repair
+reachability and nonrecoverable contraction. It includes finite witnesses for
+ordinary state recovery, epistemic recovery, correction-register collapse, and
+phantom recoverability. Internally we keep the evocative alias
+`self-lobotomy` for the correction-register collapse pattern; formal prose uses
+`nonrecoverable revision-capacity loss`.
 
 ## Decision-Theory Surface
 
@@ -204,9 +216,10 @@ For the current docs front door:
 4. [Omega Decision Stack Checkpoint](docs/research_notes/omega_theory/omega_decision_stack_checkpoint_v0.md)
 5. [Adaptive Fixed-World Corridor B2.1](docs/research_notes/omega_theory/adaptive_fixed_world_corridor_b21.md)
 6. [Adaptive Observation Informativeness v0](docs/research_notes/omega_theory/adaptive_observation_informativeness_v0.md)
-7. [B2 Viability / Safety-Game Docking](docs/research_notes/omega_theory/b2_viability_safety_game_docking_v0.md)
-8. [Effective Layers](docs/research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
-9. [Omega Theory Notes Index](docs/research_notes/omega_theory/README.md)
+7. [Recovery Frame / Irreversibility Weld v0](docs/research_notes/omega_theory/recovery_frame_irreversibility_weld_v0.md)
+8. [B2 Viability / Safety-Game Docking](docs/research_notes/omega_theory/b2_viability_safety_game_docking_v0.md)
+9. [Effective Layers](docs/research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
+10. [Omega Theory Notes Index](docs/research_notes/omega_theory/README.md)
 
 For first-contact narrative:
 

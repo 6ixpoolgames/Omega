@@ -6,7 +6,8 @@ viability reduction, stationary fixed-point containment, history-policy
 memorylessness, positive stationary trajectory bridge, switching finite-prefix
 trajectory converse, ODT1 dominance, finite acceptance bridges, deterministic
 and stochastic Blackwell-shaped conservativity, adaptive observation
-informativeness, and ODT2 registered arbitration
+informativeness, bounded recovery / nonrecoverable contraction witnesses, and
+ODT2 registered arbitration
 Claim boundary: not complete decision theory, not final value, not aggregation,
 not arbitration, not agency, not identity, not valuerhood, not moral standing,
 not probability-aware risk handling, not full stochastic Blackwell theorem, not
@@ -29,6 +30,7 @@ with sound update, fixed-model realization, strictness witnesses, and a
 policy-level fixed-point / finite-bad-prefix correspondence.
 Deterministic observation factorization transports observed adaptive-kernel
 certificates to finer information states.
+Bounded recovery frames expose nonrecoverable contraction of declared facts.
 ODT1 compares.
 Deterministic Blackwell factorization simulates policies.
 Stochastic garbling simulates randomized policies.
@@ -192,6 +194,48 @@ This is a policy-level fixed-point, finite-refutation, and lifted-trace
 checkpoint. It is not yet a fully packaged maximal fixed-world trajectory
 semantics theorem, not POMDP theory, not agency, not value, and not a general
 theory of deception.
+```
+
+### Recovery / Irreversibility Weld
+
+Lean files:
+
+```text
+formal/lean/OmegaProper/Decision/RecoveryFrame.lean
+formal/lean/OmegaProper/Decision/RecoveryFrameExamples.lean
+```
+
+Documentation:
+
+```text
+recovery_frame_irreversibility_weld_v0.md
+valuer_profile_and_comparative_patienthood_v0.md
+vortical_deformer_profile_b21_docking_v0.md
+observer_loop_closure_and_sound_update_v0.md
+reward_is_not_utility_agency_profile_guardrail_v0.md
+```
+
+Landed content:
+
+```text
+bounded repair reachability under registered repair actions;
+recoverability within and up to a declared horizon;
+nonrecoverable contraction of a declared fact;
+fact-species tags for prefix/state/epistemic/lineage facts;
+declared correction-register surface;
+state recovery witness;
+epistemic recovery witness;
+correction-register collapse witness, with self-lobotomy retained as an
+internal alias;
+phantom recoverability witness.
+```
+
+Boundary:
+
+```text
+This is an irreversibility/recovery interface. It does not define harm,
+patienthood, value, moral standing, rights, agency, identity, lineage recovery,
+or a universal recovery theory.
 ```
 
 ### ODT1 Structural Dominance

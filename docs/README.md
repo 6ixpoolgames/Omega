@@ -15,7 +15,8 @@ This page is the current docs entry point. Older notes remain in the tree for pr
 5. [Omega Decision Stack Checkpoint](research_notes/omega_theory/omega_decision_stack_checkpoint_v0.md)
 6. [Adaptive Fixed-World Corridor B2.1](research_notes/omega_theory/adaptive_fixed_world_corridor_b21.md)
 7. [Adaptive Observation Informativeness v0](research_notes/omega_theory/adaptive_observation_informativeness_v0.md)
-8. [Effective Layers](research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
+8. [Recovery Frame / Irreversibility Weld v0](research_notes/omega_theory/recovery_frame_irreversibility_weld_v0.md)
+9. [Effective Layers](research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
 
 ## Current Formal Center
 
@@ -33,6 +34,10 @@ B2.1:
   including sound update, fixed-model realization, policy and finite-bad-prefix
   correspondence, learnable/unlearnable strictness, fake-update phantom
   safety, and deterministic observation-informativeness monotonicity.
+
+Recovery weld:
+  bounded repair reachability, nonrecoverable contraction, correction-register
+  collapse, and phantom recoverability.
 
 ODT1:
   value-parametric dominance and Blackwell-shaped comparison bridges.
@@ -53,10 +58,11 @@ Use these notes for the current stack:
 8. [Switching Trajectory Converse v0](research_notes/omega_theory/switching_trajectory_converse_v0.md)
 9. [Adaptive Fixed-World Corridor B2.1](research_notes/omega_theory/adaptive_fixed_world_corridor_b21.md)
 10. [Adaptive Observation Informativeness v0](research_notes/omega_theory/adaptive_observation_informativeness_v0.md)
-11. [Omega Decision Dominance v0](research_notes/omega_theory/omega_decision_dominance_v0.md)
-12. [Omega Decision Blackwell Conservativity v0](research_notes/omega_theory/omega_decision_blackwell_conservativity_v0.md)
-13. [Omega Decision Stochastic Blackwell v0](research_notes/omega_theory/omega_decision_stochastic_blackwell_v0.md)
-14. [Omega Decision Arbitration v0](research_notes/omega_theory/omega_decision_arbitration_v0.md)
+11. [Recovery Frame / Irreversibility Weld v0](research_notes/omega_theory/recovery_frame_irreversibility_weld_v0.md)
+12. [Omega Decision Dominance v0](research_notes/omega_theory/omega_decision_dominance_v0.md)
+13. [Omega Decision Blackwell Conservativity v0](research_notes/omega_theory/omega_decision_blackwell_conservativity_v0.md)
+14. [Omega Decision Stochastic Blackwell v0](research_notes/omega_theory/omega_decision_stochastic_blackwell_v0.md)
+15. [Omega Decision Arbitration v0](research_notes/omega_theory/omega_decision_arbitration_v0.md)
 
 ## B2.1 Reading
 
@@ -77,6 +83,12 @@ The observation-informativeness theorem adds the first direct bridge from this
 adaptive kernel to Blackwell-shaped comparison: when a coarse deterministic
 observation factors through a finer one, the finer observation cannot shrink
 the adaptive corridor for a nonempty refined information state.
+
+The recovery weld adds the first bounded repair interface for irreversibility:
+the repo can now distinguish ordinary fact recovery, epistemic recovery,
+nonrecoverable correction-register collapse, and phantom recoverability. The
+internal phrase `self-lobotomy` is retained for the correction-register collapse
+pattern; formal claims use `nonrecoverable revision-capacity loss`.
 
 ## Retained But Not Front Door
 

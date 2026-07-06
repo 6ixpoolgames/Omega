@@ -16,6 +16,7 @@ active_surface_area_v0.md
 omega_decision_stack_checkpoint_v0.md
 adaptive_fixed_world_corridor_b21.md
 adaptive_observation_informativeness_v0.md
+recovery_frame_irreversibility_weld_v0.md
 b2_viability_safety_game_docking_v0.md
 effective_layers_realization_forgetting_emergence_v0.md
 ```
@@ -33,6 +34,7 @@ Decision and corridor:
   switching_trajectory_converse_v0.md
   adaptive_fixed_world_corridor_b21.md
   adaptive_observation_informativeness_v0.md
+  recovery_frame_irreversibility_weld_v0.md
 
 Dominance and arbitration:
   omega_decision_dominance_v0.md
@@ -53,6 +55,11 @@ Closure and deformer checkpoints:
   operational_causal_diamond_agency_v0.md
   finite_deformer_profile_checkpoint_v0.md
   deformer_profile_theorem_extraction_v0.md
+  vortical_deformer_profile_b21_docking_v0.md
+  observer_loop_closure_and_sound_update_v0.md
+  reward_is_not_utility_agency_profile_guardrail_v0.md
+  causal_grain_selection_requires_presentation_soundness_v0.md
+  budgeted_integration_vs_deformer_profile_audit_v0.md
 
 Foundational orientation:
   current_theory_posture_v0.md
@@ -60,6 +67,7 @@ Foundational orientation:
   layer_a_theorem_spine_v0.md
   alpha_primitive_core_v0.md
   alphaomega_continuation_proto_teleology_v0.md
+  valuer_profile_and_comparative_patienthood_v0.md
 ```
 
 The rest of this folder is retained for provenance, paper drafting, or older

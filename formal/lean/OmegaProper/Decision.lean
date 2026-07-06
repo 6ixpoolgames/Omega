@@ -15,6 +15,8 @@ import OmegaProper.Decision.TrajectoryConverseExamples
 import OmegaProper.Decision.AdaptiveFixedWorld
 import OmegaProper.Decision.AdaptiveFixedWorldExamples
 import OmegaProper.Decision.AdaptiveObservation
+import OmegaProper.Decision.RecoveryFrame
+import OmegaProper.Decision.RecoveryFrameExamples
 import OmegaProper.Decision.Dominance
 import OmegaProper.Decision.DominanceExamples
 import OmegaProper.Decision.DominanceAcceptance
