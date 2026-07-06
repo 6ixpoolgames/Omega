@@ -20,6 +20,7 @@ recovery_frame_irreversibility_weld_v0.md
 recovery_aware_corridor_v0.md
 phantom_recoverability_gate_v0.md
 recovery_reflection_and_loss_dominance_v0.md
+colonization_axis_protocol_v0.md
 b2_viability_safety_game_docking_v0.md
 effective_layers_realization_forgetting_emergence_v0.md
 ```
@@ -66,6 +67,7 @@ Closure and deformer checkpoints:
   reward_is_not_utility_agency_profile_guardrail_v0.md
   causal_grain_selection_requires_presentation_soundness_v0.md
   budgeted_integration_vs_deformer_profile_audit_v0.md
+  colonization_axis_protocol_v0.md
 
 Foundational orientation:
   current_theory_posture_v0.md
