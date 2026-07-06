@@ -26,6 +26,8 @@ colonization_axis_protocol_v0.md
 colonization_axis_report_v0.md
 future_field_reorientation_and_declaration_culling_v0.md
 substrate_classes_and_large_deformers_v0.md
+ensemble_span_protocol_v0.md
+ensemble_span_report_v0.md
 b2_viability_safety_game_docking_v0.md
 effective_layers_realization_forgetting_emergence_v0.md
 ```
@@ -78,6 +80,8 @@ Closure and deformer checkpoints:
   colonization_axis_report_v0.md
   future_field_reorientation_and_declaration_culling_v0.md
   substrate_classes_and_large_deformers_v0.md
+  ensemble_span_protocol_v0.md
+  ensemble_span_report_v0.md
 
 Foundational orientation:
   current_theory_posture_v0.md

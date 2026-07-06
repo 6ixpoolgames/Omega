@@ -21,6 +21,8 @@ For the project pitch and current formalism, read:
   checkpoint summaries retained next to the validation docs while this branch
   stabilizes. If they grow, move them into a dedicated
   `finite_relational_adapter/` subfolder.
+- `ensemble_span_v0/` contains the retained finite joint-tier instrument output
+  for the redundant-vs-orthogonal ensemble-span pilot.
 
 Start with:
 
@@ -55,6 +57,7 @@ Start with:
 - `finite_relational_stochastic_recovery_v0.json`
 - `finite_relational_stochastic_continuation_v0.json`
 - `finite_relational_policy_dynamics_v0.json`
+- `ensemble_span_v0/20260707_010015/report.md`
 - `agency_diamond_midscale_v0.md`
 - `agency_diamond_midscale_v0.json`
 - `agency_diamond_hardening_v1.md`

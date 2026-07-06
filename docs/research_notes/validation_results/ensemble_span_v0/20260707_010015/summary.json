@@ -1,0 +1,217 @@
+{
+  "candidate_pair": {
+    "full_vector_census_equal": false,
+    "left": "redundant_AA",
+    "left_marginal_summary": {
+      "max_individual_l1_norm": 1,
+      "per_valuer_l1_norms": [
+        1,
+        1
+      ],
+      "total_l1_amount": 2,
+      "valuer_count": 2,
+      "vector_dimension": 2
+    },
+    "left_span_includes_right": false,
+    "left_span_profile": {
+      "axis_supports": {
+        "A": 2,
+        "B": 0
+      },
+      "full_vector_census": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "gram_determinant": 0,
+      "gram_matrix": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "logdet_proxy": "singular",
+      "rank": 1
+    },
+    "marginal_scalar_controls_equal": true,
+    "rank_separates": true,
+    "read": "same marginal scalar census; different ensemble orientation and span rank",
+    "right": "orthogonal_AB",
+    "right_marginal_summary": {
+      "max_individual_l1_norm": 1,
+      "per_valuer_l1_norms": [
+        1,
+        1
+      ],
+      "total_l1_amount": 2,
+      "valuer_count": 2,
+      "vector_dimension": 2
+    },
+    "right_span_includes_left": true,
+    "right_span_profile": {
+      "axis_supports": {
+        "A": 1,
+        "B": 1
+      },
+      "full_vector_census": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "gram_determinant": 1,
+      "gram_matrix": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "logdet_proxy": "0.000000",
+      "rank": 2
+    },
+    "span_equivalent": false
+  },
+  "diminishing_returns": {
+    "added_vector_l1_norms_equal": true,
+    "base": "base_A",
+    "base_rank": 1,
+    "correlated_addition": "correlated_A_plus_A",
+    "correlated_rank": 1,
+    "correlated_rank_gain": 0,
+    "orthogonal_addition": "orthogonal_A_plus_B",
+    "orthogonal_rank": 2,
+    "orthogonal_rank_gain": 1,
+    "read": "correlated addition has no rank gain; orthogonal addition has positive rank gain"
+  },
+  "negative_controls": {
+    "full_vector_census": {
+      "full_vector_census_determines_pure_span": true,
+      "full_vector_census_equal": true,
+      "left": "full_census_left_AB",
+      "left_marginal_summary": {
+        "max_individual_l1_norm": 1,
+        "per_valuer_l1_norms": [
+          1,
+          1
+        ],
+        "total_l1_amount": 2,
+        "valuer_count": 2,
+        "vector_dimension": 2
+      },
+      "left_span_includes_right": true,
+      "left_span_profile": {
+        "axis_supports": {
+          "A": 1,
+          "B": 1
+        },
+        "full_vector_census": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "gram_determinant": 1,
+        "gram_matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "logdet_proxy": "0.000000",
+        "rank": 2
+      },
+      "marginal_scalar_controls_equal": true,
+      "rank_separates": false,
+      "read": "same full vector census cannot be separated by pure span",
+      "right": "full_census_right_BA",
+      "right_marginal_summary": {
+        "max_individual_l1_norm": 1,
+        "per_valuer_l1_norms": [
+          1,
+          1
+        ],
+        "total_l1_amount": 2,
+        "valuer_count": 2,
+        "vector_dimension": 2
+      },
+      "right_span_includes_left": true,
+      "right_span_profile": {
+        "axis_supports": {
+          "A": 1,
+          "B": 1
+        },
+        "full_vector_census": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "gram_determinant": 1,
+        "gram_matrix": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "logdet_proxy": "0.000000",
+        "rank": 2
+      },
+      "span_equivalent": true
+    },
+    "identical_vectors": {
+      "all_vectors_identical": true,
+      "ensemble": "redundant_AA",
+      "rank": 1,
+      "rank_reduces_to_singleton_orientation": true,
+      "read": "identical vectors reduce span to one orientation"
+    },
+    "negative_controls_pass": true
+  },
+  "not_claimed": [
+    "value",
+    "standing",
+    "agency",
+    "population ethics",
+    "aggregation",
+    "relational surplus",
+    "population optimum",
+    "Omega validation"
+  ],
+  "protocol_doc": "docs/research_notes/omega_theory/ensemble_span_protocol_v0.md",
+  "run_root": "C:\\Users\\paolo\\Documents\\New project\\docs\\research_notes\\validation_results\\ensemble_span_v0\\20260707_010015",
+  "status": "PASS",
+  "verdict": "separated"
+}

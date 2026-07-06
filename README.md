@@ -241,6 +241,7 @@ Headline notes:
 12. [Substrate Classes and Large Deformers v0](docs/research_notes/omega_theory/substrate_classes_and_large_deformers_v0.md)
 13. [Expansion Dominance v0](docs/research_notes/omega_theory/expansion_dominance_v0.md)
 14. [Termination Supremum v0](docs/research_notes/omega_theory/termination_supremum_v0.md)
+15. [Ensemble Span Report v0](docs/research_notes/omega_theory/ensemble_span_report_v0.md)
 
 The proved layer is still partial. Hypothesized next behavior includes
 unsafe-identification/no-go results and eventually endogenous register updates.
@@ -267,9 +268,11 @@ For the current docs front door:
 14. [Substrate Classes and Large Deformers v0](docs/research_notes/omega_theory/substrate_classes_and_large_deformers_v0.md)
 15. [Expansion Dominance v0](docs/research_notes/omega_theory/expansion_dominance_v0.md)
 16. [Termination Supremum v0](docs/research_notes/omega_theory/termination_supremum_v0.md)
-17. [B2 Viability / Safety-Game Docking](docs/research_notes/omega_theory/b2_viability_safety_game_docking_v0.md)
-18. [Effective Layers](docs/research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
-19. [Omega Theory Notes Index](docs/research_notes/omega_theory/README.md)
+17. [Ensemble Span Protocol v0](docs/research_notes/omega_theory/ensemble_span_protocol_v0.md)
+18. [Ensemble Span Report v0](docs/research_notes/omega_theory/ensemble_span_report_v0.md)
+19. [B2 Viability / Safety-Game Docking](docs/research_notes/omega_theory/b2_viability_safety_game_docking_v0.md)
+20. [Effective Layers](docs/research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
+21. [Omega Theory Notes Index](docs/research_notes/omega_theory/README.md)
 
 For first-contact narrative:
 
@@ -337,6 +340,7 @@ The strongest current results are deliberately conditional and finite:
 - Declared expansion profiles: expansion profiles form the gain-side mirror order with failure certificates and a monotone-valuation bridge, without creating an expansion gate.
 - Termination supremum: contracting a top declared fact loss-dominates every other contraction profile over that per-valuer fact order.
 - Colonization-axis discovery: a finite preregistered audit found cross-scale certified viable-refinement separation after matching ordinary viability/language/entropy controls.
+- Ensemble span: redundant and orthogonal ensembles can match marginal scalar census while differing in exact span rank/order; full-vector-census controls block relational-surplus overread.
 - ODT1 comparison: Hoare/Smyth/Plotkin dominance over licensed outcome surfaces has failure certificates and monotone-valuation acceptance theorems.
 - Blackwell-shaped bridges: deterministic factorization is equivalent to policy simulation; finite rational stochastic garbling compiles randomized policies in the forward direction.
 - ODT2 scaffold: least-violation arbitration exists only relative to a declared finite frontier and violation score.
@@ -348,9 +352,9 @@ These are not claims that value or agency has been solved. They are constraints 
 
 Near-term work should now prefer:
 
-1. Independent colonization-axis pair or audited `ColonizationOrder.lean` before any cross-scale lushness claim.
-2. An ensemble-span pilot before any joint-tier value language.
-3. NOLP / compensation claims only after the expansion mirror has been audited.
+1. Audit ensemble-span v0 and decide whether to run an independent larger variant or move to relational composability.
+2. Independent colonization-axis pair or audited `ColonizationOrder.lean` before any cross-scale lushness claim.
+3. NOLP / compensation claims only after the expansion mirror and ensemble-span result have been audited.
 4. Endogenous register/no-laundering after recovery-frame reflection and NOLP are typed.
 5. Plural corridor composition, quantum, or large-deformer relativity only after those interfaces are stable.
 

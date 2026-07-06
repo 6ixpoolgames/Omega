@@ -63,6 +63,11 @@ from omega.adapters.finite_relational.colonization_axis import (
     colonization_axis_summary,
     colonization_refines,
 )
+from omega.adapters.finite_relational.ensemble_span import (
+    ensemble_span_summary,
+    span_includes,
+    span_profile,
+)
 from omega.adapters.finite_relational.derived_graph import (
     compile_derived_graph,
     compile_derived_graph_path,
@@ -281,6 +286,7 @@ __all__ = [
     "compose_coarse_decoder_through_fine",
     "deterministic_layer_summary",
     "distribution_after_horizon",
+    "ensemble_span_summary",
     "fraction_to_text",
     "function_recoverable_from_observation",
     "generate_adversarial_cases",
@@ -339,6 +345,8 @@ __all__ = [
     "source_parity_digest_json",
     "source_parity_summary",
     "sound_update",
+    "span_includes",
+    "span_profile",
     "reserved_ir_fields",
     "stochastic_recovery_summary",
     "stochastic_continuation_loss_summary",

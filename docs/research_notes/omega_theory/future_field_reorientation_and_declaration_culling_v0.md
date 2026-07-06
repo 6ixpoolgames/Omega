@@ -270,15 +270,16 @@ Landed formal follow-up:
 
 ```text
 1. ExpansionProfile / ExpansionDominates mirror order;
-2. termination-supremum over per-valuer declared fact orders.
+2. termination-supremum over per-valuer declared fact orders;
+3. ensemble-span finite instrument for the joint tier.
 ```
 
 Remaining formal / experimental queue:
 
 ```text
-1. ensemble-span pilot for the joint tier;
+1. independent ensemble-span variants or a relational-composability coupling instrument;
 2. optional no-static-configuration probe, explicitly as a regime search;
-3. CompensationClaim / NOLP only after the mirror order is audited.
+3. CompensationClaim / NOLP only after the mirror/span layers are audited.
 ```
 
 Quarantined:
@@ -298,6 +299,9 @@ The new future-field language is useful only after culling. The current stack
 does not need a scalar field measure to block aggregation monsters: the
 order-level floor is already incomparable across valuers until a common order
 is registered. The per-valuer expansion mirror and termination-supremum target
-now live as declared-profile theorem layers; what remains live is sharper:
-instrument the joint tier, and treat relativity/quantum/deformer language as
-theorem targets rather than foundations.
+now live as declared-profile theorem layers. Ensemble span gives a retained
+finite joint-tier orientation instrument: redundant and orthogonal ensembles
+can match marginal scalar summaries while differing in exact span rank/order.
+What remains live is sharper: test relational coupling beyond pure span, and
+treat relativity/quantum/deformer language as theorem targets rather than
+foundations.
