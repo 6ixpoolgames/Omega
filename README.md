@@ -191,6 +191,12 @@ retained finite audit found a separated signal. That makes colonization a live
 candidate descriptive coordinate, not a proof of lushness, value, standing, or
 global presentation invariance.
 
+The future-field reorientation checkpoint then culls the tempting overreach:
+scalar field-measure, fraction-of-field foreclosure, strong vacancy, population
+optimum, and "value-substrate field theory" language are not foundations.
+Per-valuer expansion is a theorem target; cross-valuer comparison and
+directive force remain registered debt.
+
 ## Decision-Theory Surface
 
 The decision-facing stack is currently grouped under the working title
@@ -225,6 +231,7 @@ Headline notes:
 8. [Adaptive Observation Informativeness v0](docs/research_notes/omega_theory/adaptive_observation_informativeness_v0.md)
 9. [Recovery Reflection and Nonrecoverable-Loss Dominance v0](docs/research_notes/omega_theory/recovery_reflection_and_loss_dominance_v0.md)
 10. [Colonization Axis Report v0](docs/research_notes/omega_theory/colonization_axis_report_v0.md)
+11. [Future-Field Reorientation and Declaration Culling v0](docs/research_notes/omega_theory/future_field_reorientation_and_declaration_culling_v0.md)
 
 The proved layer is still partial. Hypothesized next behavior includes
 unsafe-identification/no-go results and eventually endogenous register updates.
@@ -247,9 +254,10 @@ For the current docs front door:
 10. [Recovery Reflection and Nonrecoverable-Loss Dominance v0](docs/research_notes/omega_theory/recovery_reflection_and_loss_dominance_v0.md)
 11. [Colonization Axis Protocol v0](docs/research_notes/omega_theory/colonization_axis_protocol_v0.md)
 12. [Colonization Axis Report v0](docs/research_notes/omega_theory/colonization_axis_report_v0.md)
-13. [B2 Viability / Safety-Game Docking](docs/research_notes/omega_theory/b2_viability_safety_game_docking_v0.md)
-14. [Effective Layers](docs/research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
-15. [Omega Theory Notes Index](docs/research_notes/omega_theory/README.md)
+13. [Future-Field Reorientation and Declaration Culling v0](docs/research_notes/omega_theory/future_field_reorientation_and_declaration_culling_v0.md)
+14. [B2 Viability / Safety-Game Docking](docs/research_notes/omega_theory/b2_viability_safety_game_docking_v0.md)
+15. [Effective Layers](docs/research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
+16. [Omega Theory Notes Index](docs/research_notes/omega_theory/README.md)
 
 For first-contact narrative:
 
@@ -325,12 +333,13 @@ These are not claims that value or agency has been solved. They are constraints 
 Near-term work should now prefer:
 
 1. A B2.1 theorem map and documentation cleanup.
-2. Maximal fixed-world trajectory semantics, only if needed for a paper-style theorem statement.
-3. A general guard theorem for process-coherence attribution.
-4. Endogenous register/no-laundering updates after recovery-frame reflection.
-5. Independent colonization-axis pair or audited `ColonizationOrder.lean` before any lushness claim.
-6. Maximal fixed-world trajectory semantics only if needed for a paper-style theorem statement.
-7. Plural corridor composition after the epistemic/register layer is stable.
+2. `ExpansionProfile` / `BenefitDominates` before any per-valuer lushness claim.
+3. A termination-supremum theorem over per-valuer declared fact orders.
+4. Independent colonization-axis pair or audited `ColonizationOrder.lean` before any cross-scale lushness claim.
+5. An ensemble-span pilot before any joint-tier value language.
+6. NOLP / compensation claims only after the expansion mirror is stable.
+7. Endogenous register/no-laundering after recovery-frame reflection and NOLP are typed.
+8. Plural corridor composition, quantum, or large-deformer relativity only after those interfaces are stable.
 
 ## Claim Boundary
 
