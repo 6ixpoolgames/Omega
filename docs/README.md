@@ -21,7 +21,8 @@ This page is the current docs entry point. Older notes remain in the tree for pr
 11. [Recovery Reflection and Nonrecoverable-Loss Dominance v0](research_notes/omega_theory/recovery_reflection_and_loss_dominance_v0.md)
 12. [Colonization Axis Report v0](research_notes/omega_theory/colonization_axis_report_v0.md)
 13. [Future-Field Reorientation and Declaration Culling v0](research_notes/omega_theory/future_field_reorientation_and_declaration_culling_v0.md)
-14. [Effective Layers](research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
+14. [Substrate Classes and Large Deformers v0](research_notes/omega_theory/substrate_classes_and_large_deformers_v0.md)
+15. [Effective Layers](research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
 
 ## Current Formal Center
 
@@ -63,6 +64,12 @@ Future-field culling:
   field-theory language are not foundations; per-valuer expansion is a theorem
   target, while cross-valuer comparison and directive force remain registered
   debt.
+
+Substrate / deformer taxonomy:
+  continuation is oriented downstream dependence, not a commitment to open
+  futurism; substrate class changes preservation adapters rather than moral
+  class; large deformers include organisms, civilizations, technologies,
+  platforms, and memetic systems without implying agency or standing.
 ```
 
 Use these notes for the current stack:
@@ -88,6 +95,7 @@ Use these notes for the current stack:
 19. [Colonization Axis Protocol v0](research_notes/omega_theory/colonization_axis_protocol_v0.md)
 20. [Colonization Axis Report v0](research_notes/omega_theory/colonization_axis_report_v0.md)
 21. [Future-Field Reorientation and Declaration Culling v0](research_notes/omega_theory/future_field_reorientation_and_declaration_culling_v0.md)
+22. [Substrate Classes and Large Deformers v0](research_notes/omega_theory/substrate_classes_and_large_deformers_v0.md)
 
 ## B2.1 Reading
 

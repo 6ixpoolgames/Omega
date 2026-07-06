@@ -87,7 +87,7 @@ monotone valuation that treats those facts as goods.
 ```
 
 That is the mirror of nonrecoverable-loss dominance and should be formalized as
-`ExpansionProfile` / `BenefitDominates`.
+`ExpansionProfile` / `ExpansionDominates`.
 
 Across valuers:
 
@@ -227,6 +227,9 @@ destroying or classicalizing the quantum structure nonrecoverably contracts
 registered perception, correction, relation, memory, or value-contact capacity.
 ```
 
+Quantum relevance changes the preservation adapter, not moral standing by
+itself. The same rule applies to biological and artificial systems.
+
 ## Non-Omniscient Licensing Principle
 
 The strongest new theorem path is the non-omniscient licensing principle:
@@ -266,7 +269,7 @@ Documentation / hygiene:
 Formal / experimental:
 
 ```text
-1. ExpansionProfile / BenefitDominates mirror order;
+1. ExpansionProfile / ExpansionDominates mirror order;
 2. termination-supremum theorem target;
 3. ensemble-span pilot for the joint tier;
 4. optional no-static-configuration probe, explicitly as a regime search;

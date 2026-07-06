@@ -197,6 +197,12 @@ optimum, and "value-substrate field theory" language are not foundations.
 Per-valuer expansion is a theorem target; cross-valuer comparison and
 directive force remain registered debt.
 
+The substrate/deformer checkpoint adds the missing branch-control language:
+continuation is oriented downstream dependence, not a commitment to open
+futurism; quantum relevance changes preservation adapters, not moral standing;
+and technologies, platforms, civilizations, organisms, and memetic systems may
+be large deformers without thereby being valuers or agents.
+
 ## Decision-Theory Surface
 
 The decision-facing stack is currently grouped under the working title
@@ -232,6 +238,7 @@ Headline notes:
 9. [Recovery Reflection and Nonrecoverable-Loss Dominance v0](docs/research_notes/omega_theory/recovery_reflection_and_loss_dominance_v0.md)
 10. [Colonization Axis Report v0](docs/research_notes/omega_theory/colonization_axis_report_v0.md)
 11. [Future-Field Reorientation and Declaration Culling v0](docs/research_notes/omega_theory/future_field_reorientation_and_declaration_culling_v0.md)
+12. [Substrate Classes and Large Deformers v0](docs/research_notes/omega_theory/substrate_classes_and_large_deformers_v0.md)
 
 The proved layer is still partial. Hypothesized next behavior includes
 unsafe-identification/no-go results and eventually endogenous register updates.
@@ -255,9 +262,10 @@ For the current docs front door:
 11. [Colonization Axis Protocol v0](docs/research_notes/omega_theory/colonization_axis_protocol_v0.md)
 12. [Colonization Axis Report v0](docs/research_notes/omega_theory/colonization_axis_report_v0.md)
 13. [Future-Field Reorientation and Declaration Culling v0](docs/research_notes/omega_theory/future_field_reorientation_and_declaration_culling_v0.md)
-14. [B2 Viability / Safety-Game Docking](docs/research_notes/omega_theory/b2_viability_safety_game_docking_v0.md)
-15. [Effective Layers](docs/research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
-16. [Omega Theory Notes Index](docs/research_notes/omega_theory/README.md)
+14. [Substrate Classes and Large Deformers v0](docs/research_notes/omega_theory/substrate_classes_and_large_deformers_v0.md)
+15. [B2 Viability / Safety-Game Docking](docs/research_notes/omega_theory/b2_viability_safety_game_docking_v0.md)
+16. [Effective Layers](docs/research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
+17. [Omega Theory Notes Index](docs/research_notes/omega_theory/README.md)
 
 For first-contact narrative:
 
@@ -333,7 +341,7 @@ These are not claims that value or agency has been solved. They are constraints 
 Near-term work should now prefer:
 
 1. A B2.1 theorem map and documentation cleanup.
-2. `ExpansionProfile` / `BenefitDominates` before any per-valuer lushness claim.
+2. `ExpansionProfile` / `ExpansionDominates` before any per-valuer lushness claim.
 3. A termination-supremum theorem over per-valuer declared fact orders.
 4. Independent colonization-axis pair or audited `ColonizationOrder.lean` before any cross-scale lushness claim.
 5. An ensemble-span pilot before any joint-tier value language.
