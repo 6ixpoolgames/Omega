@@ -59,6 +59,10 @@ from omega.adapters.finite_relational.closure_implication_basis_v22 import (
     closure_implication_basis_v22_summary,
     generate_closure_implication_basis_v22,
 )
+from omega.adapters.finite_relational.colonization_axis import (
+    colonization_axis_summary,
+    colonization_refines,
+)
 from omega.adapters.finite_relational.derived_graph import (
     compile_derived_graph,
     compile_derived_graph_path,
@@ -301,6 +305,8 @@ __all__ = [
     "closure_v2_facts_entail",
     "closure_attribution_v21_summary",
     "closure_implication_basis_v22_summary",
+    "colonization_axis_summary",
+    "colonization_refines",
     "controlled_experiment_summary",
     "load_model",
     "load_model_path",

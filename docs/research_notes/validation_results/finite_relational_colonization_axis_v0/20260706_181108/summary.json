@@ -1,0 +1,146 @@
+{
+  "candidate_pair": {
+    "control_panel_equal": true,
+    "left": "branching_B",
+    "left_control_panel": {
+      "entropy_proxy_h3": 3.0,
+      "leading_lambda_proxy": "2",
+      "own_maintenance_score": 0,
+      "recurrence_class_count": 1,
+      "start_in_corridor": true,
+      "system_id": "branching_B",
+      "viable_state_count": 4,
+      "viable_word_counts": {
+        "1": 2,
+        "2": 4,
+        "3": 8
+      }
+    },
+    "left_profile": {
+      "certified_chain_count": 10,
+      "certified_partition_count": 5,
+      "chain_cell_count_signatures": [
+        "1-2",
+        "1-2",
+        "1-2",
+        "1-2-4",
+        "1-2-4",
+        "1-2-4",
+        "1-4",
+        "2-4",
+        "2-4",
+        "2-4"
+      ],
+      "has_two_level_surplus_chain": true,
+      "max_chain_depth": 3,
+      "system_id": "branching_B"
+    },
+    "left_refines_right": {
+      "left": "branching_B",
+      "left_signature": "1-2-4",
+      "matched_levels": [
+        {
+          "left_cells": 1,
+          "left_level": 0,
+          "right_cells": 1,
+          "right_level": 0
+        },
+        {
+          "left_cells": 2,
+          "left_level": 1,
+          "right_cells": 1,
+          "right_level": 0
+        },
+        {
+          "left_cells": 4,
+          "left_level": 2,
+          "right_cells": 4,
+          "right_level": 1
+        }
+      ],
+      "refines": true,
+      "right": "basin_F",
+      "right_signature": "1-4",
+      "strict_surplus": true
+    },
+    "right": "basin_F",
+    "right_control_panel": {
+      "entropy_proxy_h3": 3.0,
+      "leading_lambda_proxy": "2",
+      "own_maintenance_score": 0,
+      "recurrence_class_count": 1,
+      "start_in_corridor": true,
+      "system_id": "basin_F",
+      "viable_state_count": 4,
+      "viable_word_counts": {
+        "1": 2,
+        "2": 4,
+        "3": 8
+      }
+    },
+    "right_profile": {
+      "certified_chain_count": 1,
+      "certified_partition_count": 2,
+      "chain_cell_count_signatures": [
+        "1-4"
+      ],
+      "has_two_level_surplus_chain": false,
+      "max_chain_depth": 2,
+      "system_id": "basin_F"
+    },
+    "right_refines_left": {
+      "left": "basin_F",
+      "left_signature": "",
+      "matched_levels": [],
+      "refines": false,
+      "right": "branching_B",
+      "right_signature": "",
+      "strict_surplus": false
+    },
+    "state_bound_satisfied": true
+  },
+  "demotion_gauntlet": {
+    "converse_witness_attempt": {
+      "joint_behavior_differs": true,
+      "left": "branching_B",
+      "read": "same colonization profile does not determine a declared joint-behavior field",
+      "right": "branching_B_joint_variant",
+      "same_colonization_profile": true,
+      "same_control_panel": true
+    },
+    "gauntlet_passes": true,
+    "lens_presentation_audit": {
+      "presentation_relative_caveat": "v0 audits registered certified chains; it does not prove a global lens-invariance theorem",
+      "registered_chains_certified": true,
+      "strict_surplus_has_chain_transport": true
+    },
+    "scalar_shadow_check": {
+      "left_scalar": {
+        "level_count": 3,
+        "max_branching_ratio": 3.0
+      },
+      "left_signature": "1-3-6",
+      "order_separates": true,
+      "read": "chain order separates these signatures while level count and max branching ratio match",
+      "right_scalar": {
+        "level_count": 3,
+        "max_branching_ratio": 3.0
+      },
+      "right_signature": "1-2-6",
+      "scalar_equal": true
+    }
+  },
+  "not_claimed": [
+    "lushness",
+    "value",
+    "moral standing",
+    "agency",
+    "identity",
+    "global lens invariance theorem",
+    "Omega validation"
+  ],
+  "protocol_doc": "docs/research_notes/omega_theory/colonization_axis_protocol_v0.md",
+  "run_root": "C:\\Users\\paolo\\Documents\\New project\\docs\\research_notes\\validation_results\\finite_relational_colonization_axis_v0\\20260706_181108",
+  "status": "PASS",
+  "verdict": "separated"
+}
