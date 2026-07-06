@@ -13,6 +13,7 @@ docs/research_notes/omega_theory/active_surface_area_v0.md
 docs/research_notes/omega_theory/omega_decision_stack_checkpoint_v0.md
 docs/research_notes/omega_theory/adaptive_fixed_world_corridor_b21.md
 docs/research_notes/omega_theory/recovery_frame_irreversibility_weld_v0.md
+docs/research_notes/omega_theory/recovery_aware_corridor_v0.md
 docs/CLAIMS_LEDGER.md
 ```
 
@@ -162,8 +163,9 @@ For the current formal project, start here:
 5. [`research_notes/omega_theory/omega_decision_stack_checkpoint_v0.md`](research_notes/omega_theory/omega_decision_stack_checkpoint_v0.md)
 6. [`research_notes/omega_theory/adaptive_fixed_world_corridor_b21.md`](research_notes/omega_theory/adaptive_fixed_world_corridor_b21.md)
 7. [`research_notes/omega_theory/recovery_frame_irreversibility_weld_v0.md`](research_notes/omega_theory/recovery_frame_irreversibility_weld_v0.md)
-8. [`research_notes/omega_theory/b2_viability_safety_game_docking_v0.md`](research_notes/omega_theory/b2_viability_safety_game_docking_v0.md)
-9. [`research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md`](research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
+8. [`research_notes/omega_theory/recovery_aware_corridor_v0.md`](research_notes/omega_theory/recovery_aware_corridor_v0.md)
+9. [`research_notes/omega_theory/b2_viability_safety_game_docking_v0.md`](research_notes/omega_theory/b2_viability_safety_game_docking_v0.md)
+10. [`research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md`](research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
 
 For retained empirical and instrument results, then read:
 

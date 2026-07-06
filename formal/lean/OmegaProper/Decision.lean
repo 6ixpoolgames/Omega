@@ -17,6 +17,8 @@ import OmegaProper.Decision.AdaptiveFixedWorldExamples
 import OmegaProper.Decision.AdaptiveObservation
 import OmegaProper.Decision.RecoveryFrame
 import OmegaProper.Decision.RecoveryFrameExamples
+import OmegaProper.Decision.RecoveryAwareCorridor
+import OmegaProper.Decision.RecoveryAwareCorridorExamples
 import OmegaProper.Decision.Dominance
 import OmegaProper.Decision.DominanceExamples
 import OmegaProper.Decision.DominanceAcceptance

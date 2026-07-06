@@ -17,6 +17,7 @@ omega_decision_stack_checkpoint_v0.md
 adaptive_fixed_world_corridor_b21.md
 adaptive_observation_informativeness_v0.md
 recovery_frame_irreversibility_weld_v0.md
+recovery_aware_corridor_v0.md
 b2_viability_safety_game_docking_v0.md
 effective_layers_realization_forgetting_emergence_v0.md
 ```
@@ -35,6 +36,7 @@ Decision and corridor:
   adaptive_fixed_world_corridor_b21.md
   adaptive_observation_informativeness_v0.md
   recovery_frame_irreversibility_weld_v0.md
+  recovery_aware_corridor_v0.md
 
 Dominance and arbitration:
   omega_decision_dominance_v0.md

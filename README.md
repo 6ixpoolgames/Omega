@@ -168,6 +168,11 @@ phantom recoverability. Internally we keep the evocative alias
 `self-lobotomy` for the correction-register collapse pattern; formal prose uses
 `nonrecoverable revision-capacity loss`.
 
+The follow-on recovery-aware corridor checkpoint makes that interface
+load-bearing for the decision floor: if bounded recoverability is the declared
+local requirement, an action whose successor nonrecoverably contracts the
+declared fact cannot be licensed against that corridor.
+
 ## Decision-Theory Surface
 
 The decision-facing stack is currently grouped under the working title
@@ -217,9 +222,10 @@ For the current docs front door:
 5. [Adaptive Fixed-World Corridor B2.1](docs/research_notes/omega_theory/adaptive_fixed_world_corridor_b21.md)
 6. [Adaptive Observation Informativeness v0](docs/research_notes/omega_theory/adaptive_observation_informativeness_v0.md)
 7. [Recovery Frame / Irreversibility Weld v0](docs/research_notes/omega_theory/recovery_frame_irreversibility_weld_v0.md)
-8. [B2 Viability / Safety-Game Docking](docs/research_notes/omega_theory/b2_viability_safety_game_docking_v0.md)
-9. [Effective Layers](docs/research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
-10. [Omega Theory Notes Index](docs/research_notes/omega_theory/README.md)
+8. [Recovery-Aware Corridor v0](docs/research_notes/omega_theory/recovery_aware_corridor_v0.md)
+9. [B2 Viability / Safety-Game Docking](docs/research_notes/omega_theory/b2_viability_safety_game_docking_v0.md)
+10. [Effective Layers](docs/research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
+11. [Omega Theory Notes Index](docs/research_notes/omega_theory/README.md)
 
 For first-contact narrative:
 

@@ -185,6 +185,7 @@ state refines the coarser one;
 learnable ambiguity strictness witness;
 unlearnable/unsafe-identification exclusion witness;
 fake-update phantom corridor witness outside sound update.
+recovery-aware corridor gate rejecting nonrecoverable-loss successors.
 ```
 
 Boundary:
@@ -203,12 +204,15 @@ Lean files:
 ```text
 formal/lean/OmegaProper/Decision/RecoveryFrame.lean
 formal/lean/OmegaProper/Decision/RecoveryFrameExamples.lean
+formal/lean/OmegaProper/Decision/RecoveryAwareCorridor.lean
+formal/lean/OmegaProper/Decision/RecoveryAwareCorridorExamples.lean
 ```
 
 Documentation:
 
 ```text
 recovery_frame_irreversibility_weld_v0.md
+recovery_aware_corridor_v0.md
 valuer_profile_and_comparative_patienthood_v0.md
 vortical_deformer_profile_b21_docking_v0.md
 observer_loop_closure_and_sound_update_v0.md
@@ -228,6 +232,10 @@ epistemic recovery witness;
 correction-register collapse witness, with self-lobotomy retained as an
 internal alias;
 phantom recoverability witness.
+recovery-aware corridor instantiation with RecoverableUpTo as Requirement;
+nonrecoverable-loss successors cannot be licensed against that corridor;
+same-task-success / collapse-unlicensed witness;
+forbidden-probe witness.
 ```
 
 Boundary:

@@ -147,3 +147,13 @@ or continuation fact?
 ```
 
 That bridge is where irreversibility becomes load-bearing rather than merely named.
+
+The first bridge has now landed separately:
+
+```text
+recovery_aware_corridor_v0.md
+```
+
+It instantiates the robust corridor with `RecoverableUpTo` as the local
+requirement and proves that actions with nonrecoverable-loss successors cannot
+be licensed against that corridor.
