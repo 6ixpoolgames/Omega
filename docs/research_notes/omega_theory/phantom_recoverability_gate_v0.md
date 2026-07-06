@@ -15,6 +15,15 @@ what the true recovery-aware gate refuses.
 
 This is the recovery-layer analogue of phantom viability and fake-update phantom safety.
 
+The positive twin has now landed in:
+
+```text
+recovery_reflection_and_loss_dominance_v0.md
+```
+
+If the believed recovery frame reflects into the true frame, believed
+recovery-aware licenses transport to true recovery-aware licenses.
+
 ## Lean Surface
 
 Formal file:

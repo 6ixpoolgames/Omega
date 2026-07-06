@@ -20,10 +20,15 @@ The first strictness extension has also landed:
 
 ```text
 phantom_recoverability_gate_v0.md
+recovery_reflection_and_loss_dominance_v0.md
 ```
 
-It shows that a corrupted recovery frame can counterfeit recoverability and
-license what the true recovery-aware corridor refuses.
+Together these show both sides of the register-soundness boundary:
+
+```text
+corrupted recovery facts can counterfeit a license;
+recovery-frame reflection transports believed licenses to true licenses.
+```
 
 ## Lean Surface
 
@@ -32,6 +37,8 @@ Formal files:
 ```text
 formal/lean/OmegaProper/Decision/RecoveryAwareCorridor.lean
 formal/lean/OmegaProper/Decision/RecoveryAwareCorridorExamples.lean
+formal/lean/OmegaProper/Decision/RecoveryLossStress.lean
+formal/lean/OmegaProper/Decision/NonrecoverableLossDominance.lean
 ```
 
 Definitions:
@@ -75,6 +82,19 @@ NonrecoverableContraction
 ```
 
 The theorem is deliberately conditional. It does not say that all systems must preserve the fact. It says that if bounded recoverability of that declared fact is the corridor requirement, then nonrecoverable contraction cannot be licensed.
+
+## Positive Reflection Pair
+
+The positive register theorem is:
+
+```text
+recoveryFrame_reflection_preserves_license
+```
+
+If a believed recovery frame reflects into the true recovery frame, then a
+license against the believed recovery-aware corridor is a license against the
+true recovery-aware corridor. This is the positive twin of the phantom
+recoverability gate.
 
 ## Witnesses
 
@@ -147,6 +167,7 @@ The gate quantifies over declared recovery facts. Therefore:
 undeclared vulnerable structure is invisible to the gate;
 overdeclared vulnerable structure can paralyze the floor;
 corrupted recovery facts can create phantom licenses.
+declared fact orders control which nonrecoverable losses compare.
 ```
 
 This is not a bug in the theorem. It is the registry-first contract made

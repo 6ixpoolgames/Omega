@@ -6,8 +6,9 @@ viability reduction, stationary fixed-point containment, history-policy
 memorylessness, positive stationary trajectory bridge, switching finite-prefix
 trajectory converse, ODT1 dominance, finite acceptance bridges, deterministic
 and stochastic Blackwell-shaped conservativity, adaptive observation
-informativeness, bounded recovery / nonrecoverable contraction witnesses, and
-ODT2 registered arbitration
+informativeness, bounded recovery / nonrecoverable contraction witnesses,
+recovery-frame reflection, declared loss-profile dominance, and ODT2 registered
+arbitration
 Claim boundary: not complete decision theory, not final value, not aggregation,
 not arbitration, not agency, not identity, not valuerhood, not moral standing,
 not probability-aware risk handling, not full stochastic Blackwell theorem, not
@@ -31,6 +32,8 @@ policy-level fixed-point / finite-bad-prefix correspondence.
 Deterministic observation factorization transports observed adaptive-kernel
 certificates to finer information states.
 Bounded recovery frames expose nonrecoverable contraction of declared facts.
+Recovery-frame reflection blocks phantom recovery licenses.
+Declared nonrecoverable-loss profiles can be compared as a partial order.
 ODT1 compares.
 Deterministic Blackwell factorization simulates policies.
 Stochastic garbling simulates randomized policies.
@@ -209,6 +212,9 @@ formal/lean/OmegaProper/Decision/RecoveryFrameExamples.lean
 formal/lean/OmegaProper/Decision/RecoveryAwareCorridor.lean
 formal/lean/OmegaProper/Decision/RecoveryAwareCorridorExamples.lean
 formal/lean/OmegaProper/Decision/RecoveryAwareCorridorPhantom.lean
+formal/lean/OmegaProper/Decision/RecoveryLossStress.lean
+formal/lean/OmegaProper/Decision/NonrecoverableLossDominance.lean
+formal/lean/OmegaProper/Decision/NonrecoverableLossDominanceExamples.lean
 ```
 
 Documentation:
@@ -217,6 +223,7 @@ Documentation:
 recovery_frame_irreversibility_weld_v0.md
 recovery_aware_corridor_v0.md
 phantom_recoverability_gate_v0.md
+recovery_reflection_and_loss_dominance_v0.md
 valuer_profile_and_comparative_patienthood_v0.md
 vortical_deformer_profile_b21_docking_v0.md
 observer_loop_closure_and_sound_update_v0.md
@@ -241,6 +248,10 @@ nonrecoverable-loss successors cannot be licensed against that corridor;
 same-task-success / collapse-unlicensed witness;
 forbidden-probe witness.
 phantom recoverability / phantom-license witness.
+recovery-frame reflection preserving licenses from believed to true recovery-aware corridors.
+local-vs-joint sacrifice/cancer stress witness.
+declared nonrecoverable-loss dominance as down-closed profile inclusion.
+failure certificates and an ODT1 monotone-valuation bridge for loss profiles.
 ```
 
 Boundary:
@@ -248,7 +259,7 @@ Boundary:
 ```text
 This is an irreversibility/recovery interface. It does not define harm,
 patienthood, value, moral standing, rights, agency, identity, lineage recovery,
-or a universal recovery theory.
+patient-level ordering, or a universal recovery theory.
 ```
 
 ### ODT1 Structural Dominance

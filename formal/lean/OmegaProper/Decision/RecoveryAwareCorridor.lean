@@ -21,6 +21,7 @@ namespace Decision
 namespace RecoveryAwareCorridor
 
 open RecoveryFrame
+open Trajectory.PredicateFixpoint
 
 universe u v w
 
@@ -92,6 +93,66 @@ theorem action_with_nonrecoverable_successor_not_licensed
     (a := a)
     ⟨y, hStep, nonrecoverable_successor_not_corridor
       (D := D) (R := R) (Allowed := Allowed) hLoss⟩
+
+/--
+Recovery-frame reflection: every bounded recovery fact accepted by the believed
+frame is accepted by the true frame.
+
+This is the non-fabrication condition needed to transport recovery-aware
+licenses from a believed register to a true register.
+-/
+def RecoveryFrameReflects {State : Type u} {RepairAction : Type v}
+    (Believed True : RecoveryFrame State RepairAction) (h : Nat) : Prop :=
+  forall s, RecoveryRequirement Believed h s -> RecoveryRequirement True h s
+
+theorem recoveryAwareCorridor_reflects_of_recoveryFrameReflects
+    {D : DecisionStructure}
+    {RepairAction : Type v}
+    {Believed True : RecoveryFrame D.State RepairAction}
+    {Allowed : D.State -> D.Action -> Prop}
+    {h : Nat}
+    (hReflect : RecoveryFrameReflects Believed True h) :
+    PSub
+      (RecoveryAwareCorridor D Believed h Allowed)
+      (RecoveryAwareCorridor D True h Allowed) := by
+  intro x hx
+  rcases hx with ⟨p, hPost, hxP⟩
+  apply postfixed_le_gfp
+  · intro z hz
+    rcases hPost z hz with ⟨hConstraint, hReq, a, hAllowed, hEnabled, hSafe⟩
+    exact ⟨hConstraint, hReflect z hReq, a, hAllowed, hEnabled, hSafe⟩
+  · exact hxP
+
+/--
+If the believed recovery frame reflects into the true one, any license against
+the believed recovery-aware corridor is also a license against the true
+recovery-aware corridor.
+-/
+theorem recoveryFrame_reflection_preserves_license
+    {D : DecisionStructure}
+    {RepairAction : Type v}
+    {Believed True : RecoveryFrame D.State RepairAction}
+    {Allowed : D.State -> D.Action -> Prop}
+    {Available : CertifiedJustification -> Prop}
+    {quotientsCertified : Prop}
+    {h : Nat} {x : D.State} {a : D.Action}
+    (hReflect : RecoveryFrameReflects Believed True h)
+    (L :
+      LicensedVia D (RecoveryAwareCorridor D Believed h Allowed)
+        Available quotientsCertified x a) :
+    LicensedVia D (RecoveryAwareCorridor D True h Allowed)
+        Available quotientsCertified x a := by
+  rcases L with ⟨cert⟩
+  exact ⟨
+    { justification := cert.justification
+      route_available := cert.route_available
+      enabled := cert.enabled
+      corridor_safe := by
+        intro y hStep
+        exact recoveryAwareCorridor_reflects_of_recoveryFrameReflects
+          (D := D) (Believed := Believed) (True := True)
+          (Allowed := Allowed) hReflect y (cert.corridor_safe y hStep)
+      quotients_certified := cert.quotients_certified }⟩
 
 end RecoveryAwareCorridor
 end Decision

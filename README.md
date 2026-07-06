@@ -178,6 +178,12 @@ corrupted recovery frame can counterfeit recoverability and license what the
 true recovery-aware corridor refuses. The gate is only as strong as the
 declared and certified recovery register.
 
+The latest recovery checkpoint adds the positive twin and a scoped comparison
+surface: if a believed recovery frame reflects into the true frame, believed
+recovery-aware licenses remain true; declared nonrecoverable-loss profiles can
+be compared by down-closed inclusion; and a sacrifice/cancer stress witness
+shows why local self-loss is not the same thing as joint loss.
+
 ## Decision-Theory Surface
 
 The decision-facing stack is currently grouped under the working title
@@ -210,6 +216,7 @@ Headline notes:
 6. [Omega Decision Arbitration v0](docs/research_notes/omega_theory/omega_decision_arbitration_v0.md)
 7. [Adaptive Fixed-World Corridor B2.1](docs/research_notes/omega_theory/adaptive_fixed_world_corridor_b21.md)
 8. [Adaptive Observation Informativeness v0](docs/research_notes/omega_theory/adaptive_observation_informativeness_v0.md)
+9. [Recovery Reflection and Nonrecoverable-Loss Dominance v0](docs/research_notes/omega_theory/recovery_reflection_and_loss_dominance_v0.md)
 
 The proved layer is still partial. Hypothesized next behavior includes
 unsafe-identification/no-go results and eventually endogenous register updates.
@@ -229,9 +236,10 @@ For the current docs front door:
 7. [Recovery Frame / Irreversibility Weld v0](docs/research_notes/omega_theory/recovery_frame_irreversibility_weld_v0.md)
 8. [Recovery-Aware Corridor v0](docs/research_notes/omega_theory/recovery_aware_corridor_v0.md)
 9. [Phantom Recoverability Gate v0](docs/research_notes/omega_theory/phantom_recoverability_gate_v0.md)
-10. [B2 Viability / Safety-Game Docking](docs/research_notes/omega_theory/b2_viability_safety_game_docking_v0.md)
-11. [Effective Layers](docs/research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
-12. [Omega Theory Notes Index](docs/research_notes/omega_theory/README.md)
+10. [Recovery Reflection and Nonrecoverable-Loss Dominance v0](docs/research_notes/omega_theory/recovery_reflection_and_loss_dominance_v0.md)
+11. [B2 Viability / Safety-Game Docking](docs/research_notes/omega_theory/b2_viability_safety_game_docking_v0.md)
+12. [Effective Layers](docs/research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
+13. [Omega Theory Notes Index](docs/research_notes/omega_theory/README.md)
 
 For first-contact narrative:
 
@@ -273,6 +281,8 @@ Decision stack entry points:
 10. [Deterministic Blackwell](formal/lean/OmegaProper/Decision/BlackwellDeterministic.lean)
 11. [Stochastic Blackwell](formal/lean/OmegaProper/Decision/BlackwellStochastic.lean)
 12. [ODT2 Arbitration](formal/lean/OmegaProper/Decision/Arbitration.lean)
+13. [Recovery-Aware Corridor](formal/lean/OmegaProper/Decision/RecoveryAwareCorridor.lean)
+14. [Nonrecoverable-Loss Dominance](formal/lean/OmegaProper/Decision/NonrecoverableLossDominance.lean)
 
 Trajectory/recovery entry points:
 
@@ -290,6 +300,8 @@ The strongest current results are deliberately conditional and finite:
 - Switching ambiguity: shared-action robust viability reduces to an existing robust corridor over a merged system, and per-model corridor intersection can overstate safety.
 - Fixed-world learning: information-state adaptive kernels distinguish learnable ambiguity from switching ambiguity and expose fake-update phantom corridors.
 - Observation informativeness: deterministic finer observations do not shrink the adaptive corridor when the coarser observation factors through them and the fine information state refines the coarse one.
+- Recovery gates: recovery-frame reflection preserves recovery-aware licenses, while corrupted recovery frames can create phantom licenses.
+- Declared loss profiles: nonrecoverable-loss profiles form a down-closed inclusion order with failure certificates and a monotone-valuation bridge.
 - ODT1 comparison: Hoare/Smyth/Plotkin dominance over licensed outcome surfaces has failure certificates and monotone-valuation acceptance theorems.
 - Blackwell-shaped bridges: deterministic factorization is equivalent to policy simulation; finite rational stochastic garbling compiles randomized policies in the forward direction.
 - ODT2 scaffold: least-violation arbitration exists only relative to a declared finite frontier and violation score.
@@ -304,8 +316,8 @@ Near-term work should now prefer:
 1. A B2.1 theorem map and documentation cleanup.
 2. Maximal fixed-world trajectory semantics, only if needed for a paper-style theorem statement.
 3. A general guard theorem for process-coherence attribution.
-4. Recovery/irreversibility welds for unsafe identification and forbidden probes.
-5. Endogenous register updates only after the observation/update layer is sound.
+4. Endogenous register/no-laundering updates after recovery-frame reflection.
+5. Maximal fixed-world trajectory semantics only if needed for a paper-style theorem statement.
 6. Plural corridor composition after the epistemic/register layer is stable.
 
 ## Claim Boundary
