@@ -62,8 +62,8 @@ quarantined:
 | Relational composability v0 | running/retained | Finite registered compatibility-profile instrument separating declared coupling profiles while full individual vector census and pure span are held fixed; hardening witness keeps edge count and degree sequence fixed while component structure differs. | Use as coupling/composability instrument only; next possible branch is typed-coupling labels, phantom composability, or corridor-linked plurality later. | Derived compatibility, population value, standing, plurality theory, aggregation, relational surplus as value, population optimum, agency, or Omega validation. |
 | Joint recovery compatibility v0 | running/retained | Finite bridge instrument separating joint recovery under coupling while full vector census, pure span, and individual recovery profiles are held fixed. | Use as recovery-grounded compatibility bridge only; next possible branch is phantom composability or NOLP/CompensationClaim. | Value, standing, plurality theory, moral aggregation, patienthood, population optimum, agency, or Omega validation. |
 | Joint-tier reduction audit v0 | retained | Calibration pass over recent joint-tier instruments: planted reducible coordinates reduce, relational composability survives pair-count/degree reductions, colonization keeps lens debt explicit, and joint recovery compatibility is demoted to bridge rather than independent axis. | Use as the pre-NOLP audit checkpoint; do not widen the instrument chain until NOLP/CompensationClaim is typed. | Value, standing, population ethics, plurality theory, aggregation, patienthood, or Omega validation. |
-| Order sampling harness v0 | retained | Finite declared-order sensitivity harness: local-vs-joint loss comparison is order-dependent across sampled fact orders, while the task+revision expansion witness is invariant over the sampled orders. | Use before compensation or profile verdicts that depend on declared fact order. | Correct fact order, final value, standing, aggregation, arbitration, patienthood, or Omega validation. |
-| CompensationClaim / NOLP v0 | retained | Same-frame finite compensation harness: nonrecoverable contraction is refused unless a complete certified compensation cover is registered; incomplete, uncertified, and phantom-compensation cases are retained. | Use as the narrow refusal-first compensation floor; defer cross-valuer, stale-certificate, and register-growth compensation. | Value, standing, population ethics, aggregation, patienthood, cross-valuer compensation, correct compensation order, or Omega validation. |
+| Order sampling harness v0 | retained | Finite declared-order sensitivity harness: local-vs-joint loss comparison is order-dependent, adjacent order perturbation is fragile, soundness violation is pathological, and task+revision expansion is invariant over sampled orders. | Use before compensation or profile verdicts that depend on declared fact order. | Correct fact order, final value, standing, aggregation, arbitration, patienthood, or Omega validation. |
+| CompensationClaim / NOLP v0 | retained | Same-frame finite compensation harness: nonrecoverable contraction is refused unless a complete certified compensation cover is registered; verdicts carry stability labels; incomplete, uncertified, and phantom-compensation cases are retained under explicit kill conditions. | Use as the narrow refusal-first compensation floor; defer cross-valuer, stale-certificate, and register-growth compensation. | Value, standing, population ethics, aggregation, patienthood, cross-valuer compensation, correct compensation order, or Omega validation. |
 | Observed-word/process coherence | active/formalized | Lean theorem surface for path lifting, language inclusion, and edge-image insufficiency. | Reuse for abstraction/process-truth claims. | Entropy, lushness, or value. |
 | Contextual future fields / compatibility thickness | open/running | Local/global obstruction, holonomy, PSD compatibility kernel pilots. | Keep pre-Hilbert until definitions stabilize. | Quantum mechanics, value density, Hilbert ontology. |
 | Future Field Atlas / RFS-MB0 | running/retained | Larger empirical/topological instrumentation and historical bridge outputs. | Treat as retained empirical branch; avoid coupling to new theory unless needed. | Omega validation or candidate promotion. |
@@ -165,8 +165,9 @@ adapter-supplied profile rows, not moral or agency facts.
 | Joint recovery compatibility v0 | closed finite bridge checkpoint | Compatible and interfering coupling cases hold full vector census, pure span, and individual recovery profiles fixed while joint recovery succeeds in one case and fails in the other. |
 | Joint-tier reduction audit v0 | closed calibration checkpoint | Planted reducible coordinates reduce across ensemble span, relational composability, joint recovery compatibility, and colonization; relational composability survives cheap graph-scalar reductions, colonization keeps lens-invariance debt open, and joint recovery compatibility is treated as a recovery-grounded bridge. |
 | Finite lens invariance spine spec v0 | closed scoping checkpoint | The bounded lens theorem debt is specified: finite functional lenses should preserve/reflect the repo's atom/boolean/modal/reach/viability fact grammar, but no Lean theorem is claimed yet. |
-| Order sampling harness v0 | closed finite calibration checkpoint | Loss dominance over local-vs-joint facts is order-dependent across sampled declared fact orders; enriched expansion over task-only expansion is invariant in the sampled orders. |
-| CompensationClaim / NOLP v0 | closed finite harness checkpoint | Same-frame certified compensation can defeat the v0 refusal; complete-but-uncertified, certified-but-incomplete, and true-frame-uncovered phantom compensation cases are refused. |
+| Order sampling harness v0 | closed finite calibration checkpoint | Loss dominance over local-vs-joint facts is order-dependent across sampled declared fact orders, adjacent order perturbation is fragile, soundness violation is pathological, and enriched expansion over task-only expansion is invariant in the sampled orders. |
+| CompensationClaim / NOLP v0 | closed finite harness checkpoint | Same-frame certified compensation can defeat the v0 refusal; verdicts carry stability labels; complete-but-uncertified, certified-but-incomplete, and true-frame-uncovered phantom compensation cases are refused under explicit kill conditions. |
+| Static compensation certificate staleness protocol v0 | closed preregistration checkpoint | Preregisters the next NOLP extension: static certificates should fail when a soundly self-extending register adds a new relevant fact outside the certificate domain. |
 | Colonization axis v0 | closed finite discovery checkpoint | Preregistered finite audit found a retained `separated` verdict: `branching_B` and `basin_F` match viable-state count, corridor membership, viable-word counts at horizons 1/2/3, recurrence count, own-maintenance score, entropy proxy, and leading-lambda proxy, while certified viable-refinement chains separate; demotion gauntlet passed in the finite harness. |
 | Future-field declaration culling v0 | closed docs checkpoint | Scalar field-measure, fraction-of-field foreclosure, broad richer-is-better, strong vacancy, and value-substrate field theory language were demoted or quarantined; per-valuer expansion, termination-supremum, marginal/joint tiers, and NOLP were recast as theorem targets. |
 | Adaptive fixed-world corridor B2.1 pilot | closed witness checkpoint | Three retained finite Python witnesses separate learnable ambiguity, unlearnable ambiguity, and fake model-elimination updates; sound update has zero truth-preservation failures over the retained cases. |
@@ -205,6 +206,19 @@ Before promoting any branch, ask:
 ```
 
 If any answer is unclear, keep the branch exploratory or documentation-only.
+
+## Freeze Note
+
+No new joint-tier coordinate should be promoted until:
+
+```text
+order-sampling labels are attached to compensation claims;
+static-certificate staleness has at least a retained protocol;
+finite lens negative controls are recorded.
+```
+
+These are now satisfied for v0 hardening. The next move should still avoid new
+coordinate proliferation unless a downstream theorem forces it.
 
 ## Immediate Priority Order
 

@@ -92,6 +92,50 @@ structural induction for atoms, boolean, and modal cases;
 finite iteration for the named least/greatest fixed points.
 ```
 
+## Negative Controls
+
+The theorem must reject three tiny failure modes.
+
+### Forward Failure
+
+```text
+concrete:
+  s --a--> t
+
+abstract:
+  q(s) has no a-successor matching q(t)
+```
+
+The abstraction erases a concrete step. Any theorem that still preserves
+diamond facts across this map is too weak.
+
+### Back / Zig-Zag Failure
+
+```text
+abstract:
+  q(s) --a--> u
+
+concrete:
+  no concrete a-successor of s maps to u
+```
+
+The abstraction fabricates an abstract transition. Any theorem that still
+reflects reachability or viability through this map is too weak.
+
+### Atom-Respect Failure
+
+```text
+q(s) = q(t)
+P(s) = true
+P(t) = false
+```
+
+The predicate is not constant on q-fibers. Any theorem that transports atom
+truth without this hypothesis is too weak.
+
+These controls are preregistered because the lens theorem is meant to have
+teeth: a lens is not just any quotient.
+
 ## Consumers
 
 The theorem should discharge or sharply reduce:

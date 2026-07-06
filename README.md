@@ -261,6 +261,7 @@ Headline notes:
 19. [Finite Lens Invariance Spine Spec v0](docs/research_notes/omega_theory/finite_lens_invariance_spine_spec_v0.md)
 20. [Order Sampling Harness Report v0](docs/research_notes/omega_theory/order_sampling_harness_report_v0.md)
 21. [CompensationClaim / NOLP Report v0](docs/research_notes/omega_theory/compensation_claim_report_v0.md)
+22. [Static Compensation Certificate Staleness Protocol v0](docs/research_notes/omega_theory/static_compensation_certificate_staleness_protocol_v0.md)
 
 The proved layer is still partial. Hypothesized next behavior includes
 unsafe-identification/no-go results and eventually endogenous register updates.
@@ -300,9 +301,10 @@ For the current docs front door:
 27. [Order Sampling Harness Report v0](docs/research_notes/omega_theory/order_sampling_harness_report_v0.md)
 28. [CompensationClaim / NOLP Protocol v0](docs/research_notes/omega_theory/compensation_claim_protocol_v0.md)
 29. [CompensationClaim / NOLP Report v0](docs/research_notes/omega_theory/compensation_claim_report_v0.md)
-30. [B2 Viability / Safety-Game Docking](docs/research_notes/omega_theory/b2_viability_safety_game_docking_v0.md)
-31. [Effective Layers](docs/research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
-32. [Omega Theory Notes Index](docs/research_notes/omega_theory/README.md)
+30. [Static Compensation Certificate Staleness Protocol v0](docs/research_notes/omega_theory/static_compensation_certificate_staleness_protocol_v0.md)
+31. [B2 Viability / Safety-Game Docking](docs/research_notes/omega_theory/b2_viability_safety_game_docking_v0.md)
+32. [Effective Layers](docs/research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
+33. [Omega Theory Notes Index](docs/research_notes/omega_theory/README.md)
 
 For first-contact narrative:
 

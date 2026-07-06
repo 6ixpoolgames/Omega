@@ -57,6 +57,19 @@ In the Python v0 harness, the reflection condition is represented by an
 explicit `certified` field. Lean/reflection integration remains a later proof
 target.
 
+Every v0 verdict carries a stability label:
+
+```text
+order_invariant;
+order_dependent;
+fragile;
+pathological;
+not_sampled.
+```
+
+The same-frame v0 examples are marked `not_sampled`; cross-order compensation
+verdicts may not be promoted until they pass the order-sampling harness.
+
 ## NOLP v0
 
 NOLP here means:
@@ -91,6 +104,15 @@ phantom compensation:
   believed frame says covered;
   true frame has an uncovered nonrecoverable contraction;
   believed verdict licenses what true verdict refuses.
+```
+
+Kill conditions:
+
+```text
+if incomplete cover passes, fail;
+if uncertified cover passes, fail;
+if phantom compensation does not diverge, fail;
+if same-frame and cross-frame claims are mixed, fail.
 ```
 
 ## Explicitly Out Of Scope

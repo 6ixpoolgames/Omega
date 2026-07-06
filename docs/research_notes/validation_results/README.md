@@ -73,8 +73,8 @@ Start with:
 - `finite_relational_policy_dynamics_v0.json`
 - `ensemble_span_v0/20260707_010015/report.md`
 - `joint_tier_reduction_audit_v0/20260707_064631/report.md`
-- `order_sampling_harness_v0/20260707_070710/report.md`
-- `compensation_claim_v0/20260707_070710/report.md`
+- `order_sampling_harness_v0/20260707_073124/report.md`
+- `compensation_claim_v0/20260707_073124/report.md`
 - `agency_diamond_midscale_v0.md`
 - `agency_diamond_midscale_v0.json`
 - `agency_diamond_hardening_v1.md`

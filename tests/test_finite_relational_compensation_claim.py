@@ -22,6 +22,8 @@ def test_certified_same_frame_cover_defeats_nolp_refusal() -> None:
     assert verdict["certified"] is True
     assert verdict["certified_compensation"] is True
     assert verdict["nolp_refuses_contraction"] is False
+    assert verdict["stability_label"] == "not_sampled"
+    assert verdict["frame_scope"] == "same_frame"
 
 
 def test_uncertified_cover_is_refused() -> None:
@@ -60,6 +62,13 @@ def test_compensation_claim_summary_retains_nolp_v0() -> None:
 
     assert summary["protocol_doc"] == "docs/research_notes/omega_theory/compensation_claim_protocol_v0.md"
     assert summary["verdict"] == "retained"
+    assert summary["kill_conditions_pass"] is True
+    assert summary["kill_conditions"] == {
+        "incomplete_cover_refused": True,
+        "uncertified_cover_refused": True,
+        "phantom_compensation_diverges": True,
+        "same_frame_only": True,
+    }
     assert "same-frame nonrecoverable contraction is refused" in summary["nolp_v0_read"]
     assert "cross-valuer compensation" in summary["not_claimed"]
 
@@ -85,3 +94,4 @@ def test_compensation_claim_validation_retains_report(tmp_path: Path) -> None:
     report = render_report(result)
     assert "CompensationClaim / NOLP v0 Report" in report
     assert "Phantom compensation diverges: True" in report
+    assert "Kill conditions pass: True" in report

@@ -21,7 +21,7 @@ Validation command:
 Retained run:
 
 ```text
-docs/research_notes/validation_results/compensation_claim_v0/20260707_070710/
+docs/research_notes/validation_results/compensation_claim_v0/20260707_073124/
 ```
 
 Retained files:
@@ -46,6 +46,19 @@ compensation cover is registered.
 ```
 
 ## Cases
+
+Every v0 verdict carries:
+
+```text
+stability_label:
+  not_sampled
+
+frame_scope:
+  same_frame
+```
+
+Cross-order compensation verdicts are not promoted until they pass the
+order-sampling harness.
 
 ### Certified Same-Frame Cover
 
@@ -117,6 +130,17 @@ phantom compensation diverges: true
 
 This is the compensation-layer analogue of phantom recoverability: a corrupted
 cover register can counterfeit compensation.
+
+## Kill Conditions
+
+The retained run requires all four conditions:
+
+```text
+incomplete cover is refused;
+uncertified cover is refused;
+phantom compensation diverges;
+all v0 claims remain same-frame.
+```
 
 ## Relation To Order Sampling
 

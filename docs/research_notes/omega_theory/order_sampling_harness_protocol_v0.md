@@ -31,7 +31,17 @@ pathological:
 ```
 
 v0 implements the first two classes directly and records fragility/pathology as
-targets rather than claims.
+explicit classes in the finite harness.
+
+Kill conditions:
+
+```text
+if a verdict changes across sampled orders but is reported as invariant,
+  the harness fails;
+
+if an order induces an adapter/soundness violation,
+  the verdict must be pathological, not dependent.
+```
 
 ## Calibration Targets
 
@@ -49,6 +59,14 @@ expansion dominance:
 compensation:
   same-frame cover claims should be invariant only when coverage is explicit
   in every declared order sampled.
+
+fragility:
+  local-vs-joint loss comparison should be marked fragile when an adjacent
+  declared-order perturbation flips the verdict.
+
+pathology:
+  a declared order with a soundness-contract violation must be marked
+  pathological rather than treated as moral disagreement.
 ```
 
 ## Out Of Scope

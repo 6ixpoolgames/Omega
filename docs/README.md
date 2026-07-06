@@ -146,6 +146,7 @@ Use these notes for the current stack:
 35. [Order Sampling Harness Report v0](research_notes/omega_theory/order_sampling_harness_report_v0.md)
 36. [CompensationClaim / NOLP Protocol v0](research_notes/omega_theory/compensation_claim_protocol_v0.md)
 37. [CompensationClaim / NOLP Report v0](research_notes/omega_theory/compensation_claim_report_v0.md)
+38. [Static Compensation Certificate Staleness Protocol v0](research_notes/omega_theory/static_compensation_certificate_staleness_protocol_v0.md)
 
 ## B2.1 Reading
 

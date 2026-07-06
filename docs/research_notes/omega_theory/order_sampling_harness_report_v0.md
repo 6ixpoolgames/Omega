@@ -21,7 +21,7 @@ Validation command:
 Retained run:
 
 ```text
-docs/research_notes/validation_results/order_sampling_harness_v0/20260707_070710/
+docs/research_notes/validation_results/order_sampling_harness_v0/20260707_073124/
 ```
 
 Retained files:
@@ -67,6 +67,21 @@ local-vs-joint loss comparison is order-content unless the register supplies
 the connecting order.
 ```
 
+Fragility witness:
+
+```text
+lose_local vs lose_joint
+classification: fragile
+adjacent perturbation: local_below_joint <-> joint_below_local
+```
+
+Pathological-order witness:
+
+```text
+classification: pathological
+reason: sampled order carries a declared soundness-contract violation.
+```
+
 Expansion invariant witness:
 
 ```text
@@ -85,6 +100,10 @@ NOLP can now use order sampling as a guardrail:
 if a compensation verdict depends on the declared fact order, the verdict must
 be reported as order-dependent rather than treated as free structure.
 ```
+
+If a verdict flips under an adjacent perturbation, it is fragile. If a declared
+order violates a soundness contract, the output is pathological and belongs to
+adapter/register repair, not moral disagreement.
 
 ## Nonclaims
 

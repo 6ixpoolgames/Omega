@@ -55,6 +55,8 @@ def retain_finite_relational_order_sampling(out_dir: Path) -> dict[str, Any]:
 
 def render_report(result: dict[str, Any]) -> str:
     loss = result["loss_dependency_witness"]
+    fragile = result["loss_fragility_witness"]
+    pathological = result["pathological_order_witness"]
     expansion = result["expansion_invariant_witness"]
     lines = [
         "# Order Sampling Harness v0 Report",
@@ -66,13 +68,37 @@ def render_report(result: dict[str, Any]) -> str:
         "## Calibration Witnesses",
         "",
         f"- Loss comparison classification: {loss['classification']}",
+        f"- Fragility classification: {fragile['classification']}",
+        f"- Pathological-order classification: {pathological['classification']}",
         f"- Expansion comparison classification: {expansion['classification']}",
+        f"- Kill conditions pass: {result['kill_conditions_pass']}",
         "",
         "## Loss Dependency",
         "",
     ]
     for row in loss["rows"]:
         lines.append(f"- {row['order_id']}: {row['verdict']}")
+    lines.extend(
+        [
+            "",
+            "## Fragility",
+            "",
+        ]
+    )
+    for row in fragile["rows"]:
+        lines.append(f"- {row['order_id']}: {row['verdict']}")
+    lines.extend(
+        [
+            "",
+            "## Pathological Order",
+            "",
+        ]
+    )
+    for row in pathological["rows"]:
+        lines.append(
+            f"- {row['order_id']}: verdict={row['verdict']}, "
+            f"soundness_violation={row['soundness_violation']}"
+        )
     lines.extend(
         [
             "",

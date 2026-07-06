@@ -1,0 +1,95 @@
+{
+  "certified_same_frame_cover": {
+    "frame": "same_recovery_frame",
+    "read": "same-frame contraction has a complete certified cover",
+    "verdict": {
+      "certified": true,
+      "certified_compensation": true,
+      "claim_id": "certified_same_frame_cover",
+      "complete_cover": true,
+      "frame_scope": "same_frame",
+      "nolp_refuses_contraction": false,
+      "stability_label": "not_sampled",
+      "uncovered_facts": []
+    }
+  },
+  "incomplete_cover": {
+    "frame": "same_recovery_frame",
+    "read": "certified but incomplete cover does not defeat NOLP refusal",
+    "verdict": {
+      "certified": true,
+      "certified_compensation": false,
+      "claim_id": "incomplete_task_cover",
+      "complete_cover": false,
+      "frame_scope": "same_frame",
+      "nolp_refuses_contraction": true,
+      "stability_label": "not_sampled",
+      "uncovered_facts": [
+        "repair_capacity"
+      ]
+    }
+  },
+  "kill_conditions": {
+    "incomplete_cover_refused": true,
+    "phantom_compensation_diverges": true,
+    "same_frame_only": true,
+    "uncertified_cover_refused": true
+  },
+  "kill_conditions_pass": true,
+  "nolp_v0_read": "same-frame nonrecoverable contraction is refused unless a complete certified compensation cover is registered",
+  "not_claimed": [
+    "value",
+    "standing",
+    "aggregation",
+    "population ethics",
+    "patienthood",
+    "cross-valuer compensation",
+    "correct compensation order",
+    "Omega validation"
+  ],
+  "phantom_compensation": {
+    "believed_verdict": {
+      "certified": true,
+      "certified_compensation": true,
+      "claim_id": "believed_phantom_cover",
+      "complete_cover": true,
+      "frame_scope": "same_frame",
+      "nolp_refuses_contraction": false,
+      "stability_label": "not_sampled",
+      "uncovered_facts": []
+    },
+    "frame": "same_recovery_frame",
+    "phantom_compensation_diverges": true,
+    "read": "believed cover certifies compensation while true frame has an uncovered contraction",
+    "true_verdict": {
+      "certified": true,
+      "certified_compensation": false,
+      "claim_id": "true_uncovered_cover",
+      "complete_cover": false,
+      "frame_scope": "same_frame",
+      "nolp_refuses_contraction": true,
+      "stability_label": "not_sampled",
+      "uncovered_facts": [
+        "repair_capacity"
+      ]
+    }
+  },
+  "protocol_doc": "docs/research_notes/omega_theory/compensation_claim_protocol_v0.md",
+  "run_root": "C:\\Users\\paolo\\Documents\\New project\\docs\\research_notes\\validation_results\\compensation_claim_v0\\20260707_073124",
+  "status": "PASS",
+  "uncertified_cover": {
+    "frame": "same_recovery_frame",
+    "read": "complete but uncertified cover does not defeat NOLP refusal",
+    "verdict": {
+      "certified": false,
+      "certified_compensation": false,
+      "claim_id": "uncertified_same_frame_cover",
+      "complete_cover": true,
+      "frame_scope": "same_frame",
+      "nolp_refuses_contraction": true,
+      "stability_label": "not_sampled",
+      "uncovered_facts": []
+    }
+  },
+  "verdict": "retained"
+}

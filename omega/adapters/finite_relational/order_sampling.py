@@ -21,6 +21,7 @@ class FactOrder:
     order_id: str
     facts: tuple[str, ...]
     leq_pairs: frozenset[tuple[str, str]]
+    soundness_violation: bool = False
 
     def __post_init__(self) -> None:
         fact_set = set(self.facts)
@@ -60,6 +61,16 @@ def chain_order(facts: tuple[str, ...], order_id: str) -> FactOrder:
         for right in facts[idx + 1 :]:
             pairs.add((left, right))
     return FactOrder(order_id=order_id, facts=facts, leq_pairs=frozenset(pairs))
+
+
+def pathological_order(facts: tuple[str, ...]) -> FactOrder:
+    base = discrete_order(facts)
+    return FactOrder(
+        order_id="pathological_phantom_order",
+        facts=base.facts,
+        leq_pairs=base.leq_pairs,
+        soundness_violation=True,
+    )
 
 
 def two_fact_orders() -> tuple[FactOrder, ...]:
@@ -104,10 +115,21 @@ def expansion_dominates(left: Profile, right: Profile, order: FactOrder) -> bool
     return covered_expansion(right, order).issubset(covered_expansion(left, order))
 
 
-def classify_verdict(verdicts: tuple[bool, ...]) -> str:
+def classify_verdict(
+    verdicts: tuple[bool, ...],
+    rows: tuple[dict[str, Any], ...],
+    adjacent_pairs: tuple[tuple[str, str], ...],
+) -> str:
+    if any(row["soundness_violation"] for row in rows):
+        return "pathological"
     values = set(verdicts)
     if len(values) == 1:
         return "invariant_true" if True in values else "invariant_false"
+    verdict_by_order = {row["order_id"]: row["verdict"] for row in rows}
+    for left, right in adjacent_pairs:
+        if left in verdict_by_order and right in verdict_by_order:
+            if verdict_by_order[left] != verdict_by_order[right]:
+                return "fragile"
     return "dependent"
 
 
@@ -117,6 +139,7 @@ def sample_profile_verdict(
     orders: tuple[FactOrder, ...],
     *,
     mode: str,
+    adjacent_pairs: tuple[tuple[str, str], ...] = (),
 ) -> dict[str, Any]:
     if mode not in {"loss", "expansion"}:
         raise ValueError(f"unknown mode {mode!r}")
@@ -133,15 +156,18 @@ def sample_profile_verdict(
                 "verdict": verdict,
                 "left_closure": sorted(down_closed(left, order)),
                 "right_closure": sorted(down_closed(right, order)),
+                "soundness_violation": order.soundness_violation,
             }
         )
     verdicts = tuple(row["verdict"] for row in rows)
+    row_tuple = tuple(rows)
     return {
         "left": left.profile_id,
         "right": right.profile_id,
         "mode": mode,
-        "classification": classify_verdict(verdicts),
+        "classification": classify_verdict(verdicts, row_tuple, adjacent_pairs),
         "rows": rows,
+        "adjacent_pairs": [list(pair) for pair in adjacent_pairs],
     }
 
 
@@ -149,6 +175,29 @@ def loss_order_dependency_witness() -> dict[str, Any]:
     left = Profile("lose_local", frozenset({"local"}))
     right = Profile("lose_joint", frozenset({"joint"}))
     return sample_profile_verdict(left, right, two_fact_orders(), mode="loss")
+
+
+def loss_order_fragility_witness() -> dict[str, Any]:
+    left = Profile("lose_local", frozenset({"local"}))
+    right = Profile("lose_joint", frozenset({"joint"}))
+    return sample_profile_verdict(
+        left,
+        right,
+        two_fact_orders(),
+        mode="loss",
+        adjacent_pairs=(("local_below_joint", "joint_below_local"),),
+    )
+
+
+def pathological_order_witness() -> dict[str, Any]:
+    left = Profile("lose_local", frozenset({"local"}))
+    right = Profile("lose_joint", frozenset({"joint"}))
+    return sample_profile_verdict(
+        left,
+        right,
+        (pathological_order(("local", "joint")),),
+        mode="loss",
+    )
 
 
 def expansion_order_invariant_witness() -> dict[str, Any]:
@@ -163,16 +212,30 @@ def adjacent_order_pairs(orders: tuple[FactOrder, ...]) -> tuple[tuple[str, str]
 
 def order_sampling_summary() -> dict[str, Any]:
     loss = loss_order_dependency_witness()
+    fragile = loss_order_fragility_witness()
+    pathological = pathological_order_witness()
     expansion = expansion_order_invariant_witness()
+    kills = {
+        "order_flip_not_reported_invariant": loss["classification"] != "invariant_true",
+        "adjacent_flip_reported_fragile": fragile["classification"] == "fragile",
+        "soundness_violation_reported_pathological": pathological["classification"] == "pathological",
+    }
     calibrated = (
         loss["classification"] == "dependent"
+        and fragile["classification"] == "fragile"
+        and pathological["classification"] == "pathological"
         and expansion["classification"] == "invariant_true"
+        and all(kills.values())
     )
     return {
         "protocol_doc": PROTOCOL_DOC,
         "verdict": "calibrated" if calibrated else "review",
         "loss_dependency_witness": loss,
+        "loss_fragility_witness": fragile,
+        "pathological_order_witness": pathological,
         "expansion_invariant_witness": expansion,
+        "kill_conditions": kills,
+        "kill_conditions_pass": all(kills.values()),
         "sampled_order_classes": {
             "two_fact_orders": [order.order_id for order in two_fact_orders()],
             "three_fact_orders": [order.order_id for order in three_fact_orders()],
@@ -192,7 +255,12 @@ def order_sampling_summary() -> dict[str, Any]:
 
 def order_sampling_rows(summary: dict[str, Any]) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
-    for witness_key in ("loss_dependency_witness", "expansion_invariant_witness"):
+    for witness_key in (
+        "loss_dependency_witness",
+        "loss_fragility_witness",
+        "pathological_order_witness",
+        "expansion_invariant_witness",
+    ):
         witness = summary[witness_key]
         for row in witness["rows"]:
             rows.append(
@@ -204,6 +272,7 @@ def order_sampling_rows(summary: dict[str, Any]) -> list[dict[str, Any]]:
                     "classification": witness["classification"],
                     "order_id": row["order_id"],
                     "verdict": row["verdict"],
+                    "soundness_violation": row["soundness_violation"],
                 }
             )
     return rows

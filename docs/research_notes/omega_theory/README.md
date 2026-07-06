@@ -39,6 +39,8 @@ order_sampling_harness_protocol_v0.md
 order_sampling_harness_report_v0.md
 compensation_claim_protocol_v0.md
 compensation_claim_report_v0.md
+static_compensation_certificate_staleness_protocol_v0.md
+fable_reaudit_packet_20260707.md
 b2_viability_safety_game_docking_v0.md
 effective_layers_realization_forgetting_emergence_v0.md
 ```
@@ -84,6 +86,7 @@ Closure and deformer checkpoints:
   deformer_profile_theorem_extraction_v0.md
   vortical_deformer_profile_b21_docking_v0.md
   observer_loop_closure_and_sound_update_v0.md
+  does_the_loop_close_soundly_internal_bridge_v0.md
   reward_is_not_utility_agency_profile_guardrail_v0.md
   causal_grain_selection_requires_presentation_soundness_v0.md
   budgeted_integration_vs_deformer_profile_audit_v0.md
@@ -97,6 +100,17 @@ Closure and deformer checkpoints:
   relational_composability_report_v0.md
   joint_recovery_compatibility_protocol_v0.md
   joint_recovery_compatibility_report_v0.md
+  joint_tier_reduction_audit_protocol_v0.md
+  joint_tier_reduction_audit_report_v0.md
+  finite_lens_invariance_spine_spec_v0.md
+  order_sampling_harness_protocol_v0.md
+  order_sampling_harness_report_v0.md
+  compensation_claim_protocol_v0.md
+  compensation_claim_report_v0.md
+  static_compensation_certificate_staleness_protocol_v0.md
+
+Audit packets:
+  fable_reaudit_packet_20260707.md
 
 Foundational orientation:
   current_theory_posture_v0.md

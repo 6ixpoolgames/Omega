@@ -46,6 +46,7 @@ class CompensationClaim:
     expansion: Profile
     cover_pairs: frozenset[tuple[str, str]]
     certified: bool
+    frame_scope: str = "same_frame"
 
     def covers(self, lost_fact: str) -> bool:
         return any(left == lost_fact and right in self.expansion.facts for left, right in self.cover_pairs)
@@ -59,6 +60,8 @@ class CompensationVerdict:
     certified_compensation: bool
     nolp_refuses_contraction: bool
     uncovered_facts: tuple[str, ...]
+    stability_label: str
+    frame_scope: str
 
     def as_dict(self) -> dict[str, Any]:
         return {
@@ -68,6 +71,8 @@ class CompensationVerdict:
             "certified_compensation": self.certified_compensation,
             "nolp_refuses_contraction": self.nolp_refuses_contraction,
             "uncovered_facts": list(self.uncovered_facts),
+            "stability_label": self.stability_label,
+            "frame_scope": self.frame_scope,
         }
 
 
@@ -88,7 +93,12 @@ def down_closed(profile: Profile, frame: FactFrame) -> frozenset[str]:
     )
 
 
-def evaluate_compensation_claim(claim: CompensationClaim, frame: FactFrame) -> CompensationVerdict:
+def evaluate_compensation_claim(
+    claim: CompensationClaim,
+    frame: FactFrame,
+    *,
+    stability_label: str = "not_sampled",
+) -> CompensationVerdict:
     lost_facts = down_closed(claim.contraction, frame)
     uncovered = tuple(sorted(fact for fact in lost_facts if not claim.covers(fact)))
     complete = not uncovered
@@ -100,6 +110,8 @@ def evaluate_compensation_claim(claim: CompensationClaim, frame: FactFrame) -> C
         certified_compensation=certified_compensation,
         nolp_refuses_contraction=not certified_compensation,
         uncovered_facts=uncovered,
+        stability_label=stability_label,
+        frame_scope=claim.frame_scope,
     )
 
 
@@ -210,11 +222,33 @@ def phantom_compensation_witness() -> dict[str, Any]:
     }
 
 
+def kill_conditions(
+    certified: dict[str, Any],
+    uncertified: dict[str, Any],
+    incomplete: dict[str, Any],
+    phantom: dict[str, Any],
+) -> dict[str, bool]:
+    verdicts = [
+        certified["verdict"],
+        uncertified["verdict"],
+        incomplete["verdict"],
+        phantom["believed_verdict"],
+        phantom["true_verdict"],
+    ]
+    return {
+        "incomplete_cover_refused": incomplete["verdict"]["nolp_refuses_contraction"],
+        "uncertified_cover_refused": uncertified["verdict"]["nolp_refuses_contraction"],
+        "phantom_compensation_diverges": phantom["phantom_compensation_diverges"],
+        "same_frame_only": all(verdict["frame_scope"] == "same_frame" for verdict in verdicts),
+    }
+
+
 def compensation_claim_summary() -> dict[str, Any]:
     certified = certified_compensation_witness()
     uncertified = uncertified_compensation_witness()
     incomplete = incomplete_compensation_witness()
     phantom = phantom_compensation_witness()
+    kills = kill_conditions(certified, uncertified, incomplete, phantom)
     passes = (
         certified["verdict"]["certified_compensation"]
         and not certified["verdict"]["nolp_refuses_contraction"]
@@ -223,6 +257,7 @@ def compensation_claim_summary() -> dict[str, Any]:
         and not incomplete["verdict"]["certified_compensation"]
         and incomplete["verdict"]["nolp_refuses_contraction"]
         and phantom["phantom_compensation_diverges"]
+        and all(kills.values())
     )
     return {
         "protocol_doc": PROTOCOL_DOC,
@@ -231,6 +266,8 @@ def compensation_claim_summary() -> dict[str, Any]:
         "uncertified_cover": uncertified,
         "incomplete_cover": incomplete,
         "phantom_compensation": phantom,
+        "kill_conditions": kills,
+        "kill_conditions_pass": all(kills.values()),
         "nolp_v0_read": (
             "same-frame nonrecoverable contraction is refused unless a complete "
             "certified compensation cover is registered"
