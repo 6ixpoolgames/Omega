@@ -19,7 +19,8 @@ This page is the current docs entry point. Older notes remain in the tree for pr
 9. [Recovery-Aware Corridor v0](research_notes/omega_theory/recovery_aware_corridor_v0.md)
 10. [Phantom Recoverability Gate v0](research_notes/omega_theory/phantom_recoverability_gate_v0.md)
 11. [Recovery Reflection and Nonrecoverable-Loss Dominance v0](research_notes/omega_theory/recovery_reflection_and_loss_dominance_v0.md)
-12. [Effective Layers](research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
+12. [Colonization Axis Report v0](research_notes/omega_theory/colonization_axis_report_v0.md)
+13. [Effective Layers](research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
 
 ## Current Formal Center
 
@@ -51,6 +52,10 @@ ODT1:
 
 ODT2:
   registered least-violation arbitration scaffold only.
+
+Colonization axis:
+  retained finite discovery signal for cross-scale certified viable refinement,
+  explicitly not lushness, value, or global lens invariance.
 ```
 
 Use these notes for the current stack:
@@ -73,6 +78,8 @@ Use these notes for the current stack:
 16. [Omega Decision Blackwell Conservativity v0](research_notes/omega_theory/omega_decision_blackwell_conservativity_v0.md)
 17. [Omega Decision Stochastic Blackwell v0](research_notes/omega_theory/omega_decision_stochastic_blackwell_v0.md)
 18. [Omega Decision Arbitration v0](research_notes/omega_theory/omega_decision_arbitration_v0.md)
+19. [Colonization Axis Protocol v0](research_notes/omega_theory/colonization_axis_protocol_v0.md)
+20. [Colonization Axis Report v0](research_notes/omega_theory/colonization_axis_report_v0.md)
 
 ## B2.1 Reading
 

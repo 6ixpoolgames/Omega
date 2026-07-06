@@ -184,6 +184,13 @@ recovery-aware licenses remain true; declared nonrecoverable-loss profiles can
 be compared by down-closed inclusion; and a sacrifice/cancer stress witness
 shows why local self-loss is not the same thing as joint loss.
 
+The colonization-axis discovery checkpoint tests a separate question: whether
+cross-scale certified viable refinement has signal after ordinary viability,
+word-count, recurrence, entropy, and maintenance summaries are matched. The
+retained finite audit found a separated signal. That makes colonization a live
+candidate descriptive coordinate, not a proof of lushness, value, standing, or
+global presentation invariance.
+
 ## Decision-Theory Surface
 
 The decision-facing stack is currently grouped under the working title
@@ -217,6 +224,7 @@ Headline notes:
 7. [Adaptive Fixed-World Corridor B2.1](docs/research_notes/omega_theory/adaptive_fixed_world_corridor_b21.md)
 8. [Adaptive Observation Informativeness v0](docs/research_notes/omega_theory/adaptive_observation_informativeness_v0.md)
 9. [Recovery Reflection and Nonrecoverable-Loss Dominance v0](docs/research_notes/omega_theory/recovery_reflection_and_loss_dominance_v0.md)
+10. [Colonization Axis Report v0](docs/research_notes/omega_theory/colonization_axis_report_v0.md)
 
 The proved layer is still partial. Hypothesized next behavior includes
 unsafe-identification/no-go results and eventually endogenous register updates.
@@ -237,9 +245,11 @@ For the current docs front door:
 8. [Recovery-Aware Corridor v0](docs/research_notes/omega_theory/recovery_aware_corridor_v0.md)
 9. [Phantom Recoverability Gate v0](docs/research_notes/omega_theory/phantom_recoverability_gate_v0.md)
 10. [Recovery Reflection and Nonrecoverable-Loss Dominance v0](docs/research_notes/omega_theory/recovery_reflection_and_loss_dominance_v0.md)
-11. [B2 Viability / Safety-Game Docking](docs/research_notes/omega_theory/b2_viability_safety_game_docking_v0.md)
-12. [Effective Layers](docs/research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
-13. [Omega Theory Notes Index](docs/research_notes/omega_theory/README.md)
+11. [Colonization Axis Protocol v0](docs/research_notes/omega_theory/colonization_axis_protocol_v0.md)
+12. [Colonization Axis Report v0](docs/research_notes/omega_theory/colonization_axis_report_v0.md)
+13. [B2 Viability / Safety-Game Docking](docs/research_notes/omega_theory/b2_viability_safety_game_docking_v0.md)
+14. [Effective Layers](docs/research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
+15. [Omega Theory Notes Index](docs/research_notes/omega_theory/README.md)
 
 For first-contact narrative:
 
@@ -302,6 +312,7 @@ The strongest current results are deliberately conditional and finite:
 - Observation informativeness: deterministic finer observations do not shrink the adaptive corridor when the coarser observation factors through them and the fine information state refines the coarse one.
 - Recovery gates: recovery-frame reflection preserves recovery-aware licenses, while corrupted recovery frames can create phantom licenses.
 - Declared loss profiles: nonrecoverable-loss profiles form a down-closed inclusion order with failure certificates and a monotone-valuation bridge.
+- Colonization-axis discovery: a finite preregistered audit found cross-scale certified viable-refinement separation after matching ordinary viability/language/entropy controls.
 - ODT1 comparison: Hoare/Smyth/Plotkin dominance over licensed outcome surfaces has failure certificates and monotone-valuation acceptance theorems.
 - Blackwell-shaped bridges: deterministic factorization is equivalent to policy simulation; finite rational stochastic garbling compiles randomized policies in the forward direction.
 - ODT2 scaffold: least-violation arbitration exists only relative to a declared finite frontier and violation score.
@@ -317,8 +328,9 @@ Near-term work should now prefer:
 2. Maximal fixed-world trajectory semantics, only if needed for a paper-style theorem statement.
 3. A general guard theorem for process-coherence attribution.
 4. Endogenous register/no-laundering updates after recovery-frame reflection.
-5. Maximal fixed-world trajectory semantics only if needed for a paper-style theorem statement.
-6. Plural corridor composition after the epistemic/register layer is stable.
+5. Independent colonization-axis pair or audited `ColonizationOrder.lean` before any lushness claim.
+6. Maximal fixed-world trajectory semantics only if needed for a paper-style theorem statement.
+7. Plural corridor composition after the epistemic/register layer is stable.
 
 ## Claim Boundary
 
