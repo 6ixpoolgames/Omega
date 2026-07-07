@@ -26,6 +26,8 @@ import OmegaProper.Decision.NonrecoverableLossDominanceExamples
 import OmegaProper.Decision.ExpansionDominance
 import OmegaProper.Decision.ExpansionDominanceExamples
 import OmegaProper.Decision.TerminationSupremum
+import OmegaProper.Decision.CertificateStaleness
+import OmegaProper.Decision.AnswerableScope
 import OmegaProper.Decision.Dominance
 import OmegaProper.Decision.DominanceExamples
 import OmegaProper.Decision.DominanceAcceptance

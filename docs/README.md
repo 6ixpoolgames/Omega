@@ -6,6 +6,12 @@ Claim boundary: navigation only; not theorem closure, empirical validation, valu
 
 This page is the current docs entry point. Older notes remain in the tree for provenance, but the live path now runs through the decision/corridor/adaptive-learning stack rather than the early Future Field Atlas or proto-teleology framing.
 
+Closure status: Omega is being closed as the lab notebook and provenance
+archive for the successor spine. Start with
+[Omega Closeout v0](research_notes/omega_theory/omega_closeout_v0.md) and
+[Migration To Alpha v0](research_notes/omega_theory/migration_to_alpha_v0.md)
+when reading the repository historically.
+
 ## Read First
 
 1. [Repository README](../README.md)
@@ -23,7 +29,8 @@ This page is the current docs entry point. Older notes remain in the tree for pr
 13. [Future-Field Reorientation and Declaration Culling v0](research_notes/omega_theory/future_field_reorientation_and_declaration_culling_v0.md)
 14. [Substrate Classes and Large Deformers v0](research_notes/omega_theory/substrate_classes_and_large_deformers_v0.md)
 15. [Does The Loop Close Soundly?](public/does_the_loop_close_soundly_v0.md)
-16. [Effective Layers](research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
+16. [Omega Closeout v0](research_notes/omega_theory/omega_closeout_v0.md)
+17. [Effective Layers](research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
 
 ## Current Formal Center
 
@@ -92,7 +99,13 @@ Joint-tier reduction audit:
 Order sampling / NOLP:
   declared fact-order sensitivity is now a retained harness. CompensationClaim
   v0 is same-frame only: nonrecoverable contraction is refused unless a
-  complete certified compensation cover is registered.
+  complete certified compensation cover is registered. Static fixed-domain
+  certificate staleness is now proved in the narrow coverage sense.
+
+Answerable scope:
+  reachability-indexed answerable scope is typed as controllable-and-
+  foreclosable facts. This closes the time-orientation bridge without importing
+  blame, liability, agency, value, or moral responsibility.
 
 Future-field culling:
   scalar field-measure, population optimum, strong vacancy, and value-substrate
@@ -147,6 +160,10 @@ Use these notes for the current stack:
 36. [CompensationClaim / NOLP Protocol v0](research_notes/omega_theory/compensation_claim_protocol_v0.md)
 37. [CompensationClaim / NOLP Report v0](research_notes/omega_theory/compensation_claim_report_v0.md)
 38. [Static Compensation Certificate Staleness Protocol v0](research_notes/omega_theory/static_compensation_certificate_staleness_protocol_v0.md)
+39. [Static Compensation Certificate Staleness Report v0](research_notes/omega_theory/static_compensation_certificate_staleness_report_v0.md)
+40. [Answerable Scope v0](research_notes/omega_theory/answerable_scope_v0.md)
+41. [Omega Closeout v0](research_notes/omega_theory/omega_closeout_v0.md)
+42. [Migration To Alpha v0](research_notes/omega_theory/migration_to_alpha_v0.md)
 
 ## B2.1 Reading
 

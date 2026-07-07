@@ -4,6 +4,14 @@
 [![Baseline Witness Smoke](https://github.com/6ixpoolgames/Omega/actions/workflows/baseline-witness-smoke.yml/badge.svg?branch=master)](https://github.com/6ixpoolgames/Omega/actions/workflows/baseline-witness-smoke.yml)
 [![Validation Router](https://github.com/6ixpoolgames/Omega/actions/workflows/validation-router.yml/badge.svg?branch=master)](https://github.com/6ixpoolgames/Omega/actions/workflows/validation-router.yml)
 
+Closure status:
+Omega is being closed as the laboratory notebook for the project: the
+unrewritten record of protocols, witnesses, dead ends, demotions, and retained
+results. The successor spine is planned as `alpha`, where retained results will
+be refounded with provenance links back to this repo. See
+[Omega Closeout v0](docs/research_notes/omega_theory/omega_closeout_v0.md) and
+[Migration To Alpha v0](docs/research_notes/omega_theory/migration_to_alpha_v0.md).
+
 Omega is a research program for treating alignment as the problem of
 preserving the corridor of compatible, value-bearing futures.
 
@@ -214,7 +222,9 @@ The order-sampling and CompensationClaim checkpoints then type the NOLP layer
 without opening population ethics: some loss/expansion comparisons are stable
 across sampled declared fact orders, others are order-content, and same-frame
 nonrecoverable contraction is refused unless a complete certified compensation
-cover is registered.
+cover is registered. Static fixed-domain certificate staleness is now proved in
+the narrow coverage sense, and answerable scope is typed as
+controllable-and-foreclosable reach rather than moral responsibility.
 
 ## Decision-Theory Surface
 
@@ -262,6 +272,9 @@ Headline notes:
 20. [Order Sampling Harness Report v0](docs/research_notes/omega_theory/order_sampling_harness_report_v0.md)
 21. [CompensationClaim / NOLP Report v0](docs/research_notes/omega_theory/compensation_claim_report_v0.md)
 22. [Static Compensation Certificate Staleness Protocol v0](docs/research_notes/omega_theory/static_compensation_certificate_staleness_protocol_v0.md)
+23. [Static Compensation Certificate Staleness Report v0](docs/research_notes/omega_theory/static_compensation_certificate_staleness_report_v0.md)
+24. [Answerable Scope v0](docs/research_notes/omega_theory/answerable_scope_v0.md)
+25. [Omega Closeout v0](docs/research_notes/omega_theory/omega_closeout_v0.md)
 
 The proved layer is still partial. Hypothesized next behavior includes
 unsafe-identification/no-go results and eventually endogenous register updates.
@@ -302,9 +315,14 @@ For the current docs front door:
 28. [CompensationClaim / NOLP Protocol v0](docs/research_notes/omega_theory/compensation_claim_protocol_v0.md)
 29. [CompensationClaim / NOLP Report v0](docs/research_notes/omega_theory/compensation_claim_report_v0.md)
 30. [Static Compensation Certificate Staleness Protocol v0](docs/research_notes/omega_theory/static_compensation_certificate_staleness_protocol_v0.md)
-31. [B2 Viability / Safety-Game Docking](docs/research_notes/omega_theory/b2_viability_safety_game_docking_v0.md)
-32. [Effective Layers](docs/research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
-33. [Omega Theory Notes Index](docs/research_notes/omega_theory/README.md)
+31. [Static Compensation Certificate Staleness Report v0](docs/research_notes/omega_theory/static_compensation_certificate_staleness_report_v0.md)
+32. [Answerable Scope v0](docs/research_notes/omega_theory/answerable_scope_v0.md)
+33. [Omega Closeout v0](docs/research_notes/omega_theory/omega_closeout_v0.md)
+34. [Migration To Alpha v0](docs/research_notes/omega_theory/migration_to_alpha_v0.md)
+35. [Frozen Surface Area v0](docs/research_notes/omega_theory/frozen_surface_area_v0.md)
+36. [B2 Viability / Safety-Game Docking](docs/research_notes/omega_theory/b2_viability_safety_game_docking_v0.md)
+37. [Effective Layers](docs/research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
+38. [Omega Theory Notes Index](docs/research_notes/omega_theory/README.md)
 
 For first-contact narrative:
 

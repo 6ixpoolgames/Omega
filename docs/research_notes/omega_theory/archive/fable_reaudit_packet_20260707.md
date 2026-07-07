@@ -1,8 +1,13 @@
 # Fable Reaudit Packet 2026-07-07
 
-Status: audit packet / claim-boundary index
+Status: archived audit packet / deprecated after 2026-07-07
 Scope: changes since the joint-recovery compatibility checkpoint and questions for external audit
 Claim boundary: navigation only; not theorem closure, value, standing, patienthood, agency, identity, or Omega validation
+
+Archive note:
+This packet was a one-day audit handoff artifact. It is retained for provenance
+only and should not be used as a live navigation or review surface after
+2026-07-07.
 
 ## What Changed
 

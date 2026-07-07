@@ -40,7 +40,13 @@ order_sampling_harness_report_v0.md
 compensation_claim_protocol_v0.md
 compensation_claim_report_v0.md
 static_compensation_certificate_staleness_protocol_v0.md
-fable_reaudit_packet_20260707.md
+static_compensation_certificate_staleness_report_v0.md
+answerable_scope_v0.md
+public_loop_note_status_20260707.md
+omega_closeout_v0.md
+retained_results_manifest_v0.md
+migration_to_alpha_v0.md
+frozen_surface_area_v0.md
 b2_viability_safety_game_docking_v0.md
 effective_layers_realization_forgetting_emergence_v0.md
 ```
@@ -64,6 +70,8 @@ Decision and corridor:
   recovery_reflection_and_loss_dominance_v0.md
   expansion_dominance_v0.md
   termination_supremum_v0.md
+  static_compensation_certificate_staleness_report_v0.md
+  answerable_scope_v0.md
 
 Dominance and arbitration:
   omega_decision_dominance_v0.md
@@ -108,9 +116,11 @@ Closure and deformer checkpoints:
   compensation_claim_protocol_v0.md
   compensation_claim_report_v0.md
   static_compensation_certificate_staleness_protocol_v0.md
-
-Audit packets:
-  fable_reaudit_packet_20260707.md
+  omega_closeout_v0.md
+  retained_results_manifest_v0.md
+  migration_to_alpha_v0.md
+  frozen_surface_area_v0.md
+  public_loop_note_status_20260707.md
 
 Foundational orientation:
   current_theory_posture_v0.md

@@ -23,6 +23,14 @@ continuations of a self-extending register?
 This protocol preregisters the staleness target before any theorem or witness
 is built.
 
+Closure update:
+
+```text
+The narrow fixed-domain coverage theorem has landed in:
+docs/research_notes/omega_theory/static_compensation_certificate_staleness_report_v0.md
+formal/lean/OmegaProper/Decision/CertificateStaleness.lean
+```
+
 ## Objects
 
 ```text

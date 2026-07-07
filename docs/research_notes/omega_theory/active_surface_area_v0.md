@@ -64,6 +64,8 @@ quarantined:
 | Joint-tier reduction audit v0 | retained | Calibration pass over recent joint-tier instruments: planted reducible coordinates reduce, relational composability survives pair-count/degree reductions, colonization keeps lens debt explicit, and joint recovery compatibility is demoted to bridge rather than independent axis. | Use as the pre-NOLP audit checkpoint; do not widen the instrument chain until NOLP/CompensationClaim is typed. | Value, standing, population ethics, plurality theory, aggregation, patienthood, or Omega validation. |
 | Order sampling harness v0 | retained | Finite declared-order sensitivity harness: local-vs-joint loss comparison is order-dependent, adjacent order perturbation is fragile, soundness violation is pathological, and task+revision expansion is invariant over sampled orders. | Use before compensation or profile verdicts that depend on declared fact order. | Correct fact order, final value, standing, aggregation, arbitration, patienthood, or Omega validation. |
 | CompensationClaim / NOLP v0 | retained | Same-frame finite compensation harness: nonrecoverable contraction is refused unless a complete certified compensation cover is registered; verdicts carry stability labels; incomplete, uncertified, and phantom-compensation cases are retained under explicit kill conditions. | Use as the narrow refusal-first compensation floor; defer cross-valuer, stale-certificate, and register-growth compensation. | Value, standing, population ethics, aggregation, patienthood, cross-valuer compensation, correct compensation order, or Omega validation. |
+| Static certificate staleness v0 | retained Lean theorem | Fixed-domain static certificates fail to cover later register times when sound growth adds a fact outside the certificate domain. | Use as same-frame NOLP staleness bridge; keep replacement/rights language out of theorem claims. | Rights, replacement, cross-valuer compensation, value, standing, patienthood, or Omega validation. |
+| Answerable scope v0 | retained Lean bridge | Answerable scope is controllable-and-foreclosable reach scope; past/no-reach facts are excluded and scope is monotone in reach predicates. | Use as reachability-indexed bridge for time-orientation language. | Blame, liability, moral responsibility, agency, standing, value, or Omega validation. |
 | Observed-word/process coherence | active/formalized | Lean theorem surface for path lifting, language inclusion, and edge-image insufficiency. | Reuse for abstraction/process-truth claims. | Entropy, lushness, or value. |
 | Contextual future fields / compatibility thickness | open/running | Local/global obstruction, holonomy, PSD compatibility kernel pilots. | Keep pre-Hilbert until definitions stabilize. | Quantum mechanics, value density, Hilbert ontology. |
 | Future Field Atlas / RFS-MB0 | running/retained | Larger empirical/topological instrumentation and historical bridge outputs. | Treat as retained empirical branch; avoid coupling to new theory unless needed. | Omega validation or candidate promotion. |
@@ -127,7 +129,7 @@ adapter-supplied profile rows, not moral or agency facts.
 | Viable-language entropy / lushness | open/proposed | Which viable language or cross-scale refinement profile is presentation-stable and value-relevant? | Colonization-axis v0 found a finite registered-chain separation after matching ordinary viability/language/entropy controls; per-valuer richer-compatible-continuation is now a theorem target via the expansion mirror, while cross-valuer comparison and directive force remain declared/register debt. | Lushness as value, path count or entropy as value, expansion as mandatory, or population aggregation. |
 | Marginal / joint coordinate tiers | open/running | Which ensemble coordinates fail to factor through declared marginal summaries, full individual vector census, or individual recovery profiles? | Ensemble span v0 separates orientation after matching marginal scalar census; relational composability v0 separates coupling after fixing full vector census and pure span; joint recovery compatibility v0 separates joint recovery after fixing individual recovery. | Population value, standing, aggregation rule, plurality theory, or relational surplus as proven value. |
 | Future-field relativity / covariance | proposed | Which responsibility, priority, and harm claims are invariant or covariant across situated valuer frames? | Keep as an interpretation and theorem-target layer: reachability-indexed responsibility, priority relativity, and lens-mediated harm covariance. | God's-eye value frame, final priority order, moral tensor theory, or value substrate field theory. |
-| Compensation / NOLP extension | open | Can stale/static compensation certificates cover facts added later by a soundly self-extending register? | Same-frame CompensationClaim / NOLP v0 is retained; next test stale/static certificates under register growth. | Omniscient compensation, universal value order, cross-valuer compensation, or permission to trade away open-ended fields. |
+| Compensation / NOLP extension | closed for v0 / future generalization open | Static fixed-domain certificate staleness is now proved in the narrow coverage sense; broader dynamic-certificate or cross-valuer compensation remains future work. | Use the retained v0 theorem as Alpha migration input. | Omniscient compensation, universal value order, cross-valuer compensation, replacement, rights, or permission to trade away open-ended fields. |
 | Vortical agency | quarantined/proposed | Does feedback-essential self-maintenance survive no-self constraints? | Do not promote until deformer and lineage surfaces are theoremized. |
 
 ## Frozen / Closed Checkpoints
@@ -167,7 +169,8 @@ adapter-supplied profile rows, not moral or agency facts.
 | Finite lens invariance spine spec v0 | closed scoping checkpoint | The bounded lens theorem debt is specified: finite functional lenses should preserve/reflect the repo's atom/boolean/modal/reach/viability fact grammar, but no Lean theorem is claimed yet. |
 | Order sampling harness v0 | closed finite calibration checkpoint | Loss dominance over local-vs-joint facts is order-dependent across sampled declared fact orders, adjacent order perturbation is fragile, soundness violation is pathological, and enriched expansion over task-only expansion is invariant in the sampled orders. |
 | CompensationClaim / NOLP v0 | closed finite harness checkpoint | Same-frame certified compensation can defeat the v0 refusal; verdicts carry stability labels; complete-but-uncertified, certified-but-incomplete, and true-frame-uncovered phantom compensation cases are refused under explicit kill conditions. |
-| Static compensation certificate staleness protocol v0 | closed preregistration checkpoint | Preregisters the next NOLP extension: static certificates should fail when a soundly self-extending register adds a new relevant fact outside the certificate domain. |
+| Static compensation certificate staleness v0 | closed Lean checkpoint | Fixed-domain static certificates fail to cover later register times when register growth adds a fact outside the certificate domain; the theorem is coverage-only and not a rights/replacement claim. |
+| Answerable scope v0 | closed Lean bridge checkpoint | Reachability-indexed answerable scope is the intersection of controllable and foreclosable facts; no-reach/past facts are outside scope, and scope is monotone in reach predicates. |
 | Colonization axis v0 | closed finite discovery checkpoint | Preregistered finite audit found a retained `separated` verdict: `branching_B` and `basin_F` match viable-state count, corridor membership, viable-word counts at horizons 1/2/3, recurrence count, own-maintenance score, entropy proxy, and leading-lambda proxy, while certified viable-refinement chains separate; demotion gauntlet passed in the finite harness. |
 | Future-field declaration culling v0 | closed docs checkpoint | Scalar field-measure, fraction-of-field foreclosure, broad richer-is-better, strong vacancy, and value-substrate field theory language were demoted or quarantined; per-valuer expansion, termination-supremum, marginal/joint tiers, and NOLP were recast as theorem targets. |
 | Adaptive fixed-world corridor B2.1 pilot | closed witness checkpoint | Three retained finite Python witnesses separate learnable ambiguity, unlearnable ambiguity, and fake model-elimination updates; sound update has zero truth-preservation failures over the retained cases. |
@@ -222,16 +225,15 @@ coordinate proliferation unless a downstream theorem forces it.
 
 ## Immediate Priority Order
 
-Near-term work should prefer:
+Near-term work should prefer closure and migration:
 
 ```text
-1. stale/static compensation certificates for self-extending registers, only
-   after the same-frame CompensationClaim v0 floor;
-2. endogenous register/no-laundering after recovery-frame reflection and NOLP
-   are typed;
-3. finite lens-invariance Lean theorem when proof-debt becomes blocking;
-4. only then plural corridor composition, quantum, large-deformer relativity,
-   or broader field-theory language.
+1. validate the Omega closeout files and retained-verdict manifest;
+2. tag the frozen lab-notebook state;
+3. found Alpha on the finite lens guard theorem and generator spine;
+4. keep endogenous register, plural corridor composition, quantum,
+   large-deformer relativity, and broader field-theory language frozen until
+   Alpha pays the relevant prerequisites.
 ```
 
 This ordering keeps the project from widening faster than it can defend its
