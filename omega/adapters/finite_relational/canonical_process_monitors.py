@@ -1084,10 +1084,11 @@ def canonical_process_monitors_summary() -> dict[str, Any]:
                 "PM5_direct_emission_control",
                 "PM7_symmetric_copy_unresolved",
             ],
-            "risky_finite_result": [
+            "fixture_calibration": [
                 "PM6_property_relative_residue",
                 "PM8_family_classification",
             ],
+            "risky_prediction": [],
         },
         "categorical_interpretation": (
             "The passive monitor is a finite-set functor on the concrete path "
@@ -1112,12 +1113,17 @@ def canonical_process_monitors_summary() -> dict[str, Any]:
 
 def case_rows(summary: dict[str, Any]) -> list[dict[str, Any]]:
     correctness = set(summary["evidence_classification"]["instrument_correctness"])
+    calibration = set(summary["evidence_classification"]["fixture_calibration"])
     return [
         {
             "case": case,
             "passes": passes,
             "evidence_class": (
-                "instrument_correctness" if case in correctness else "risky_finite_result"
+                "instrument_correctness"
+                if case in correctness
+                else "fixture_calibration"
+                if case in calibration
+                else "unclassified"
             ),
         }
         for case, passes in summary["case_results"].items()

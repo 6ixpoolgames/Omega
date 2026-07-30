@@ -584,7 +584,10 @@ def bounded_behavioral_logic_summary() -> dict[str, Any]:
             "presentation": presentation,
         },
         "evidence_classification": {
-            "instrument_correctness": sorted(cases),
+            "theorem_regression": ["BL1_structural_state_parity"],
+            "instrument_correctness": sorted(
+                case for case in cases if case != "BL1_structural_state_parity"
+            ),
             "risky_prediction": [],
         },
         "predecessor_evidence_reclassification": {
@@ -617,11 +620,14 @@ def bounded_behavioral_logic_summary() -> dict[str, Any]:
 
 
 def case_rows(summary: dict[str, Any]) -> list[dict[str, Any]]:
+    theorem_regressions = set(summary["evidence_classification"]["theorem_regression"])
     return [
         {
             "case": case,
             "passes": passes,
-            "evidence_class": "instrument_correctness",
+            "evidence_class": (
+                "theorem_regression" if case in theorem_regressions else "instrument_correctness"
+            ),
         }
         for case, passes in summary["case_results"].items()
     ]

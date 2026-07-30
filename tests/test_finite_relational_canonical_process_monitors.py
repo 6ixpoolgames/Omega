@@ -142,13 +142,14 @@ def test_action_classes_must_be_total() -> None:
         incomplete.validate(system)
 
 
-def test_summary_separates_correctness_and_risky_finite_result() -> None:
+def test_summary_separates_correctness_and_fixture_calibration() -> None:
     summary = canonical_process_monitors_summary()
 
     assert summary["verdict"] == "retained"
     assert all(summary["case_results"].values())
     assert summary["cases"]["property_family_residue"]["classification"] == ("family-dependent")
-    assert "PM8_family_classification" in summary["evidence_classification"]["risky_finite_result"]
+    assert "PM8_family_classification" in summary["evidence_classification"]["fixture_calibration"]
+    assert summary["evidence_classification"]["risky_prediction"] == []
     assert "identity" in summary["not_claimed"]
 
 

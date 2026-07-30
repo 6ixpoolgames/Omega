@@ -111,8 +111,9 @@ def render_report(result: dict[str, Any]) -> str:
             "",
             "## Evidence Classification",
             "",
-            "All cases in this pass are instrument-correctness or finite "
-            "correspondence checks. The pass contains no discovery verdict.",
+            "BL1 is a regression for the bounded induction lemma. The remaining "
+            "cases are instrument-correctness or finite correspondence checks. "
+            "The pass contains no discovery verdict.",
             "",
             "The predecessor adaptive-versus-switching strictness result is "
             "classified separately as its risky retained result.",

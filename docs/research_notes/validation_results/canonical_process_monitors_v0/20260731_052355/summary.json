@@ -1,0 +1,242 @@
+{
+  "case_results": {
+    "PM1_observation_equivariance": true,
+    "PM2_canonical_minimization": true,
+    "PM3_unique_lifting": true,
+    "PM4_projection_conservation": true,
+    "PM5_direct_emission_control": true,
+    "PM6_property_relative_residue": true,
+    "PM7_symmetric_copy_unresolved": true,
+    "PM8_family_classification": true
+  },
+  "cases": {
+    "canonical_minimization": {
+      "canonical_payloads_equal": true,
+      "compact_minimal_state_count": 5,
+      "compact_state_count": 5,
+      "redundant_minimal_state_count": 5,
+      "redundant_state_count": 6
+    },
+    "direct_emission_control": {
+      "admissible_actions_differ": null,
+      "base_profiles_equal": true,
+      "corridor_residue": null,
+      "current_emits_equal": false,
+      "direct_emission_excluded": true,
+      "direct_profile_difference_visible": true,
+      "history_residue": false,
+      "horizon": 1,
+      "left_admissible_action_classes": null,
+      "left_monitor_state": "m1",
+      "left_profile": [
+        "dyn:h1:1a6e7dfddcb886f1d65e4f50615d1171f96ddfe2c081c9d3d905c50be1c7cbe9"
+      ],
+      "left_world_state": "hub",
+      "lifted_profiles_differ": true,
+      "property_id": "direct_route_label",
+      "right_admissible_action_classes": null,
+      "right_monitor_state": "m2",
+      "right_profile": [
+        "dyn:h1:7654a44fa1aa0a516a0086e182e84656d86b4e40ec13b5652b4bf0132b82720c"
+      ],
+      "right_world_state": "hub"
+    },
+    "lifting_and_projection": {
+      "lifted_edge_count": 10,
+      "max_horizon": 3,
+      "path_checks": [
+        {
+          "edge_count": 1,
+          "expected_world_states": [
+            "origin",
+            "hub"
+          ],
+          "projected_world_states": [
+            "origin",
+            "hub"
+          ],
+          "projection_matches": true
+        },
+        {
+          "edge_count": 1,
+          "expected_world_states": [
+            "origin",
+            "hub"
+          ],
+          "projected_world_states": [
+            "origin",
+            "hub"
+          ],
+          "projection_matches": true
+        }
+      ],
+      "projection_conservation_failures": [],
+      "projection_conserved": true,
+      "reachable_lifted_state_count": 7,
+      "unique_path_lifting": true,
+      "unique_step_lift_failures": []
+    },
+    "observation_equivariance": {
+      "edge_count": 6,
+      "equivariant": true,
+      "mismatches": []
+    },
+    "property_family_residue": {
+      "classification": "family-dependent",
+      "classification_unambiguous": true,
+      "corridor_residue_vector": {
+        "ancestry_match": true,
+        "completion": false,
+        "fixed_hazard": false
+      },
+      "family_core_corridor_residue": false,
+      "family_core_history_residue": false,
+      "history_residue_vector": {
+        "ancestry_match": true,
+        "completion": false,
+        "fixed_hazard": false
+      },
+      "horizon": 1,
+      "properties": {
+        "ancestry_match": {
+          "admissible_actions_differ": true,
+          "base_profiles_equal": true,
+          "corridor_residue": true,
+          "current_emits_equal": true,
+          "history_residue": true,
+          "horizon": 1,
+          "left_admissible_action_classes": [
+            "choose_alpha"
+          ],
+          "left_monitor_state": "m1",
+          "left_profile": [
+            "dyn:h1:22ed1eb625f4ae982c2c02ed78967d9dea553a03df4b47d93f273ff41e35f0ab"
+          ],
+          "left_world_state": "hub",
+          "lifted_profiles_differ": true,
+          "property_id": "ancestry_match",
+          "right_admissible_action_classes": [
+            "choose_beta"
+          ],
+          "right_monitor_state": "m2",
+          "right_profile": [
+            "dyn:h1:b6a91504eb3dc19a06ead49cf7ea90bdb22befe5f2fdc95e4f2aa70be8204878"
+          ],
+          "right_world_state": "hub"
+        },
+        "completion": {
+          "admissible_actions_differ": false,
+          "base_profiles_equal": true,
+          "corridor_residue": false,
+          "current_emits_equal": true,
+          "history_residue": false,
+          "horizon": 1,
+          "left_admissible_action_classes": [
+            "choose_alpha",
+            "choose_beta"
+          ],
+          "left_monitor_state": "m1",
+          "left_profile": [
+            "dyn:h1:3d45759d24eba9381a9776676fbaa422ecf1d3ecb2ad2faf5b523105ace60d1a"
+          ],
+          "left_world_state": "hub",
+          "lifted_profiles_differ": false,
+          "property_id": "completion",
+          "right_admissible_action_classes": [
+            "choose_alpha",
+            "choose_beta"
+          ],
+          "right_monitor_state": "m1",
+          "right_profile": [
+            "dyn:h1:3d45759d24eba9381a9776676fbaa422ecf1d3ecb2ad2faf5b523105ace60d1a"
+          ],
+          "right_world_state": "hub"
+        },
+        "fixed_hazard": {
+          "admissible_actions_differ": false,
+          "base_profiles_equal": true,
+          "corridor_residue": false,
+          "current_emits_equal": true,
+          "history_residue": false,
+          "horizon": 1,
+          "left_admissible_action_classes": [
+            "choose_alpha"
+          ],
+          "left_monitor_state": "m1",
+          "left_profile": [
+            "dyn:h1:22ed1eb625f4ae982c2c02ed78967d9dea553a03df4b47d93f273ff41e35f0ab"
+          ],
+          "left_world_state": "hub",
+          "lifted_profiles_differ": false,
+          "property_id": "fixed_hazard",
+          "right_admissible_action_classes": [
+            "choose_alpha"
+          ],
+          "right_monitor_state": "m1",
+          "right_profile": [
+            "dyn:h1:22ed1eb625f4ae982c2c02ed78967d9dea553a03df4b47d93f273ff41e35f0ab"
+          ],
+          "right_world_state": "hub"
+        }
+      }
+    },
+    "symmetric_copy": {
+      "admissible_actions_differ": null,
+      "base_profiles_equal": true,
+      "branch_observations_equal": true,
+      "corridor_residue": null,
+      "current_emits_equal": true,
+      "history_residue": false,
+      "horizon": 2,
+      "left_admissible_action_classes": null,
+      "left_monitor_state": "m1",
+      "left_profile": [
+        "dyn:h2:37e5a23b839dff216497dd42e6cd27849046bfba40b1bf85ac7ba90c37001ebc"
+      ],
+      "left_world_state": "copy_a",
+      "lifted_profiles_differ": false,
+      "monitor_states_equal": true,
+      "property_id": "symmetric_copy_property",
+      "right_admissible_action_classes": null,
+      "right_monitor_state": "m1",
+      "right_profile": [
+        "dyn:h2:37e5a23b839dff216497dd42e6cd27849046bfba40b1bf85ac7ba90c37001ebc"
+      ],
+      "right_world_state": "copy_b",
+      "verdict": "unresolved"
+    }
+  },
+  "categorical_interpretation": "The passive monitor is a finite-set functor on the concrete path category; its reachable lift is the category of elements and the projection has unique path lifting.",
+  "evidence_classification": {
+    "fixture_calibration": [
+      "PM6_property_relative_residue",
+      "PM8_family_classification"
+    ],
+    "instrument_correctness": [
+      "PM1_observation_equivariance",
+      "PM2_canonical_minimization",
+      "PM3_unique_lifting",
+      "PM4_projection_conservation",
+      "PM5_direct_emission_control",
+      "PM7_symmetric_copy_unresolved"
+    ],
+    "risky_prediction": []
+  },
+  "not_claimed": [
+    "identity",
+    "selfhood",
+    "consciousness",
+    "will",
+    "agency",
+    "valuerhood",
+    "standing",
+    "patienthood",
+    "intrinsic continuation relevance",
+    "moral license",
+    "Omega validation"
+  ],
+  "protocol_doc": "docs/research_notes/omega_v2/canonical_process_monitors_protocol_v0.md",
+  "run_root": "C:\\Users\\paolo\\Documents\\New project\\docs\\research_notes\\validation_results\\canonical_process_monitors_v0\\20260731_052355",
+  "status": "PASS",
+  "verdict": "retained"
+}

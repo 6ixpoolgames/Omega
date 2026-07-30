@@ -167,7 +167,7 @@ Retained run:
 Retained output:
 
 ```text
-docs/research_notes/validation_results/canonical_process_monitors_v0/20260731_040223/
+docs/research_notes/validation_results/canonical_process_monitors_v0/20260731_052355/
 ```
 
 ## Verdict
@@ -176,14 +176,15 @@ docs/research_notes/validation_results/canonical_process_monitors_v0/20260731_04
 retained
 ```
 
-All eight preregistered correctness and classification cases passed. The risky
-finite result is:
+All eight preregistered correctness and classification cases passed. The
+retained family classification is:
 
 ```text
 family-dependent
 ```
 
-not family-core.
+not family-core. A post-run audit reclassifies this vector as fixture
+calibration rather than risky evidence.
 
 ## Results
 
@@ -294,8 +295,25 @@ family-core corridor residue: false
 classification: family-dependent
 ```
 
-History can alter future obligations relative to a declared property. This run
-does not retain a property-family-invariant process distinction.
+The vector is fixed by the declared fixtures:
+
+```text
+ancestry_match:
+  directly requires the continuation branch to match route history;
+
+completion and fixed_hazard:
+  mention no historical predicate and assign the same obligation after both
+  routes.
+```
+
+The positive ancestry row is therefore the declaration unfolding. The two
+negative history-blind rows are finite consistency checks: in this fixture,
+history does not alter the corridor for either non-historical obligation. The
+family intersection is also analytically empty because it includes
+history-blind members.
+
+This run does not test whether substrate history can alter a corridor under a
+family composed only of non-historical properties.
 
 ### Symmetric copy
 
@@ -331,7 +349,7 @@ direct-emission exclusion;
 symmetric-copy non-separation.
 ```
 
-Risky finite result:
+Fixture calibration:
 
 ```text
 the per-property history/corridor residue vector;
@@ -339,7 +357,34 @@ the family-dependent classification;
 the absence of a family-core residue.
 ```
 
-The empty family-core result is retained rather than repaired away.
+Risky theory-discovery results:
+
+```text
+none.
+```
+
+The original protocol preregistered the vector as risky. Post-run audit found
+that both its positive and family-core outcomes were fixed by property
+selection. The retained data are unchanged; only their evidential price is
+corrected.
+
+## Property-Order Caution
+
+`HistoryResidue` combines clauses with different variance under property
+refinement:
+
+```text
+future lifted-profile separation:
+  may become easier as a property distinguishes more futures;
+
+equal current emissions:
+  may become harder as a property distinguishes more current monitor states.
+```
+
+Residue is therefore not monotone in property fineness. A pair may gain, lose,
+and regain residue along a refinement chain. No threshold statistic is
+licensed without a separate theorem or an explicitly non-monotone
+classification.
 
 ## What Landed
 
@@ -360,7 +405,8 @@ declared finite-index property.
 
 ## Remaining Debt
 
-The property family remains declared.
+The property family remains declared. The declaration has been relocated from
+tracker design to property admission, not removed.
 
 The pilot does not derive:
 
@@ -369,7 +415,8 @@ which process properties deserve admission;
 which process facts establish operational identity;
 which history distinctions carry standing;
 an unbounded monitor for arbitrary persistence properties;
-a family-core residue beyond current-state behavior;
+history sensitivity under a family containing only non-historical properties;
+a property-family-invariant residue beyond current-state behavior;
 the joint product dynamics needed for generated non-flagness.
 ```
 
@@ -386,7 +433,8 @@ That is a later unification target, not a result of this pilot.
 ## Public Compression
 
 A finite trace property induces a canonical passive memory state. The resulting
-history lift has unique path lifting and cannot create physical capabilities,
-but it can change future admissible actions relative to that property. In the
-retained fixture the effect is ancestry-relative and does not survive the full
-declared property family. Symmetric copies remain unresolved.
+history lift has unique path lifting and cannot create physical capabilities.
+The retained family vector is calibration: the ancestry-sensitive property
+separates the routes by construction, while two history-blind properties do
+not. Whether history can affect non-historical obligations remains open.
+Symmetric copies remain unresolved.

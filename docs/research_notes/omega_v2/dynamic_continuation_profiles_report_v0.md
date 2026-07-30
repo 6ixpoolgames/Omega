@@ -453,8 +453,9 @@ bounded behavioral logic:
 
 canonical process monitors:
   derives passive memory from finite-index property automata, proves finite
-  unique lifting and projection conservation, and classifies the retained
-  process residue as property-dependent rather than family-core.
+  unique lifting and projection conservation. Its first property-family residue
+  vector is fixture calibration; history sensitivity under non-historical
+  obligations remains open.
 ```
 
 These results do not yet move the comparison root to a certified operational

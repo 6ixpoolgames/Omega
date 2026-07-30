@@ -136,7 +136,7 @@ Retained run:
 Retained output:
 
 ```text
-docs/research_notes/validation_results/bounded_behavioral_logic_v0/20260731_035533/
+docs/research_notes/validation_results/bounded_behavioral_logic_v0/20260731_052541/
 ```
 
 ## Verdict
@@ -151,7 +151,25 @@ All five finite correspondence and instrument-correctness cases passed.
 
 ### Structural refinement parity
 
-The run checked:
+The equivalence is structural rather than empirical:
+
+```text
+alternating_refines_h(x,z)
+iff
+signature_refines(B_h(x), B_h(z)).
+```
+
+Proof is by induction on `h`. At depth zero, both sides are inclusion of the
+declared positive atoms. At depth `h+1`, `B_(h+1)` records exactly the
+action-effect sets used by `alternating_refines`: each left action effect must
+be matched by one right action effect, and every right outcome must refine some
+left outcome. The induction hypothesis identifies each recursive state test
+with refinement of its depth-`h` successor signature. Deduplication of equal
+effects changes neither existential action matching nor universal outcome
+matching.
+
+The executable run is retained as a regression for the two implementations. It
+checked:
 
 ```text
 484 ordered state pairs
@@ -165,6 +183,8 @@ alternating-refinement implementation agreed on every pair:
 ```text
 mismatches: 0
 ```
+
+This count is not independent evidence for the relation.
 
 ### Derived basis parity
 
@@ -297,8 +317,11 @@ process/root selection;
 the need for a general presentation-transport theorem.
 ```
 
-The exact modal fragment is described extensionally here. No ATL identity is
-claimed without a theorem matching the action and outcome quantifiers.
+The exact modal fragment is described extensionally here. The retained
+`force(or {...})` clause has the expected shape of a one-step coalition-next
+modality applied to a disjunction of successor characteristics, but no ATL
+identity is claimed without a translation theorem matching the action and
+outcome quantifiers.
 
 ## Public Compression
 

@@ -87,6 +87,9 @@ def test_summary_separates_correctness_from_discovery() -> None:
 
     assert summary["verdict"] == "retained"
     assert all(summary["case_results"].values())
+    assert summary["evidence_classification"]["theorem_regression"] == [
+        "BL1_structural_state_parity"
+    ]
     assert summary["evidence_classification"]["risky_prediction"] == []
     assert summary["predecessor_evidence_reclassification"]["risky_retained_result"] == [
         "adaptive fixed-world behavior strictly refines switching behavior"

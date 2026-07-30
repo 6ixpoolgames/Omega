@@ -152,8 +152,11 @@ def render_report(result: dict[str, Any]) -> str:
             "exclusion, and the symmetric-copy result are instrument controls.",
             "",
             "The per-property residue vector and family classification are the "
-            "risky finite result. They remain relative to the declared property "
-            "automata.",
+            "fixture calibration. The ancestry property encodes route matching, "
+            "while the other two properties are history-blind, so the retained "
+            "family-dependent vector was fixed by the declared property family.",
+            "",
+            "Risky predictions retained: none.",
             "",
             "## Claim Boundary",
             "",
