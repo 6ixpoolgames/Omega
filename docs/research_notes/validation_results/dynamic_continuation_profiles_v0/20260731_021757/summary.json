@@ -1,0 +1,182 @@
+{
+  "bridge": "dynamic fingerprints populate the retained jointly realizable family profile without hand-named attributes",
+  "case_results": {
+    "action_outcome_quantifier": true,
+    "deformation": true,
+    "delayed_divergence": true,
+    "duplicate_action": true,
+    "duplicate_outcome": true,
+    "lushness_bridge": true,
+    "novel_branch": true,
+    "presentation": true,
+    "switching_adaptive": true
+  },
+  "cases": {
+    "action_outcome_quantifier": {
+      "choice_flattened_successors": [
+        "dyn:h0:0f0997ba0feb26f4cadae225089c18b28fbbb0668331e1d2d87ae4ee0c243d6b",
+        "dyn:h0:65607b57a20f1dcfa50f3bf656971a5ef56b2c89b0d63960289969af0e466b1a"
+      ],
+      "choice_strictly_refines_risk": true,
+      "flattened_successors_equal": true,
+      "horizon": 1,
+      "nested_types_equal": false,
+      "risk_flattened_successors": [
+        "dyn:h0:0f0997ba0feb26f4cadae225089c18b28fbbb0668331e1d2d87ae4ee0c243d6b",
+        "dyn:h0:65607b57a20f1dcfa50f3bf656971a5ef56b2c89b0d63960289969af0e466b1a"
+      ],
+      "risk_to_choice_verdict": "right_refines"
+    },
+    "deformation": {
+      "all_four_retained": true,
+      "horizon": 1,
+      "verdicts": {
+        "contraction": "contraction",
+        "equivalent": "equivalent",
+        "expansion": "expansion",
+        "mixed": "mixed"
+      }
+    },
+    "delayed_divergence": {
+      "fingerprints_equal_by_horizon": {
+        "0": true,
+        "1": true,
+        "2": false,
+        "3": false,
+        "4": false
+      },
+      "first_separation_depth": 2,
+      "max_horizon": 4
+    },
+    "duplicate_action": {
+      "base_action_count": 2,
+      "duplicate_action_count": 3,
+      "horizon": 3,
+      "raw_action_count_changes": true,
+      "root_types_equal": true
+    },
+    "duplicate_outcome": {
+      "base_edge_count": 2,
+      "base_profile": [
+        "dyn:h3:f1e3abdd0e40b877796ec544b97f490a7f1b4cb4b65740b55b1223be89bd6d91"
+      ],
+      "duplicate_edge_count": 4,
+      "duplicate_profile": [
+        "dyn:h3:f1e3abdd0e40b877796ec544b97f490a7f1b4cb4b65740b55b1223be89bd6d91"
+      ],
+      "horizon": 3,
+      "profiles_equal": true,
+      "raw_edge_count_changes": true,
+      "root_types_equal": true
+    },
+    "lushness_bridge": {
+      "attributes_are_dynamic_fingerprints": true,
+      "duplicate_base_profile": [
+        "dyn:h3:f1e3abdd0e40b877796ec544b97f490a7f1b4cb4b65740b55b1223be89bd6d91"
+      ],
+      "duplicate_extended_profile": [
+        "dyn:h3:f1e3abdd0e40b877796ec544b97f490a7f1b4cb4b65740b55b1223be89bd6d91"
+      ],
+      "duplicate_family_profile_equal": true,
+      "horizon": 3,
+      "novel_base_profile": [
+        "dyn:h3:98eac892095771ef583dff6d8b1637287750d720647ba8d7cea81ea7ed5fc4aa"
+      ],
+      "novel_extended_profile": [
+        "dyn:h3:608b7324e085d7d6ee0b5c98b29c80db1c5b1ed2a5a4343ae308dea82e8b1468",
+        "dyn:h3:98eac892095771ef583dff6d8b1637287750d720647ba8d7cea81ea7ed5fc4aa"
+      ],
+      "novel_family_profile_strict": true,
+      "novel_family_profile_verdict": "right_refines"
+    },
+    "novel_branch": {
+      "base_profile": [
+        "dyn:h2:014a7613fa366167be44dc1b640bbedb6f944b757995d8fe906a56a8749b5381"
+      ],
+      "extension_profile": [
+        "dyn:h2:014a7613fa366167be44dc1b640bbedb6f944b757995d8fe906a56a8749b5381",
+        "dyn:h2:5635aeb46739a9c896c0e419cd9503f28c7cc6c29279f0e2655618d9d0a3535b"
+      ],
+      "extension_strictly_refines": true,
+      "horizon": 2,
+      "profile_verdict": "right_refines",
+      "state_verdict": "right_refines",
+      "strict_new_capabilities": [
+        "dyn:h2:5635aeb46739a9c896c0e419cd9503f28c7cc6c29279f0e2655618d9d0a3535b"
+      ]
+    },
+    "presentation": {
+      "action_relabeling_preserves_profile": true,
+      "action_relabeling_preserves_type": true,
+      "atom_respect_failure_count": 1,
+      "atom_respect_failures": [
+        {
+          "abstract_atoms": [
+            "good"
+          ],
+          "abstract_state": "merged",
+          "concrete_atoms": [
+            "bad"
+          ],
+          "concrete_state": "concrete_bad"
+        }
+      ],
+      "horizon": 3,
+      "state_relabeling_preserves_profile": true,
+      "state_relabeling_preserves_type": true,
+      "unsound_abstraction_rejected": true,
+      "unsound_merge_changes_bad_type": true
+    },
+    "switching_adaptive": {
+      "case_id": "learnable_ambiguity",
+      "first_strict_horizon": 2,
+      "information_state_atoms_excluded": true,
+      "max_horizon": 4,
+      "physical_atom_grammar": [
+        "requirement",
+        "safe"
+      ],
+      "same_action_switching_merge": true,
+      "sound_information_state_lift": true,
+      "sound_update_truth_preservation_failures": 0,
+      "status": "adaptive-strictly-refines-switching",
+      "verdicts_by_horizon": {
+        "0": "equivalent",
+        "1": "equivalent",
+        "2": "right_refines",
+        "3": "right_refines",
+        "4": "right_refines"
+      }
+    }
+  },
+  "negative_controls": {
+    "action_relabeling_invariant": true,
+    "atom_respect_failure_visible": true,
+    "duplicate_branch_idempotent": true,
+    "effect_equivalent_action_idempotent": true,
+    "flat_union_not_control_type": true,
+    "negative_controls_pass": true,
+    "profile_identifiers_exclude_state_action_tokens": true,
+    "raw_counts_not_primary": true,
+    "state_relabeling_invariant": true
+  },
+  "not_claimed": [
+    "value",
+    "valuerhood",
+    "standing",
+    "agency",
+    "autonomy",
+    "patienthood",
+    "universal lushness",
+    "thermodynamic law",
+    "moral licensing",
+    "paperclipper defeat",
+    "Omega validation"
+  ],
+  "primary_instrument": "bounded behavioral down-sets under alternating simulation",
+  "protocol_doc": "docs/research_notes/omega_v2/dynamic_continuation_profiles_protocol_v0.md",
+  "remaining_debt": "positive atoms, process boundaries, comparison basis, and horizon remain explicit instrumentation inputs",
+  "run_root": "docs\\research_notes\\validation_results\\dynamic_continuation_profiles_v0\\20260731_021757",
+  "status": "PASS",
+  "verdict": "retained"
+}
