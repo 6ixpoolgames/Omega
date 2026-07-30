@@ -1,0 +1,97 @@
+{
+  "case_results": {
+    "BL1_structural_state_parity": true,
+    "BL2_derived_basis_parity": true,
+    "BL3_characteristic_correspondence": true,
+    "BL4_grammar_adequacy": true,
+    "BL5_presentation_control": true
+  },
+  "cases": {
+    "characteristic_correspondence": {
+      "correspondence": true,
+      "disjunctive_certificate_count": 2,
+      "horizon": 2,
+      "mismatches": [],
+      "ordered_type_pairs": 256,
+      "semantic_type_count": 16
+    },
+    "derived_basis_parity": {
+      "duplicate_representatives_removed": 6,
+      "horizon": 2,
+      "mismatches": [],
+      "parity": true,
+      "representative_count": 22,
+      "semantic_type_count": 16
+    },
+    "grammar_adequacy": {
+      "conjunction_extension_count": 9,
+      "conjunction_only_mismatches": [
+        {
+          "left_state": "source_ab",
+          "logic_order": true,
+          "right_state": "outsider_c",
+          "signature_order": false
+        }
+      ],
+      "conjunction_only_sufficient": false,
+      "disjunction_required_on_fixture": true,
+      "full_extension_count": 80,
+      "full_grammar_mismatches": [],
+      "full_grammar_recovers_preorder": true,
+      "horizon": 1,
+      "target_multi_outcome_mismatch_present": true
+    },
+    "presentation": {
+      "certificate_truth_preserved": true,
+      "horizon": 2,
+      "profiles_equal": true,
+      "signatures_equal": true
+    },
+    "structural_state_parity": {
+      "horizon": 2,
+      "mismatches": [],
+      "ordered_state_pairs": 484,
+      "parity": true
+    }
+  },
+  "evidence_classification": {
+    "instrument_correctness": [
+      "BL1_structural_state_parity",
+      "BL2_derived_basis_parity",
+      "BL3_characteristic_correspondence",
+      "BL4_grammar_adequacy",
+      "BL5_presentation_control"
+    ],
+    "risky_prediction": []
+  },
+  "not_claimed": [
+    "general ATL completeness",
+    "general modal completeness",
+    "value",
+    "valuerhood",
+    "agency",
+    "standing",
+    "identity",
+    "moral license",
+    "Omega validation"
+  ],
+  "predecessor_evidence_reclassification": {
+    "instrument_correctness": [
+      "duplicate resistance",
+      "effect-equivalent action resistance",
+      "novel-branch strictness",
+      "delayed-divergence depth",
+      "action/outcome quantifier control",
+      "deformation classification",
+      "presentation controls",
+      "lushness bridge plumbing"
+    ],
+    "risky_retained_result": [
+      "adaptive fixed-world behavior strictly refines switching behavior"
+    ]
+  },
+  "protocol_doc": "docs/research_notes/omega_v2/bounded_behavioral_logic_protocol_v0.md",
+  "run_root": "C:\\Users\\paolo\\Documents\\New project\\docs\\research_notes\\validation_results\\bounded_behavioral_logic_v0\\20260731_035533",
+  "status": "PASS",
+  "verdict": "retained"
+}

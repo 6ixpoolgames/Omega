@@ -108,6 +108,35 @@ intersection of indirect-utility rankings over a declared family of possible
 preferences
 ```
 
+## Evidence Reclassification
+
+All six retained cases in this pilot are instrument-correctness or consistency
+checks.
+
+In particular:
+
+```text
+pairwise shadow:
+  confirms that the declared compatibility complex distinguishes a filled
+  triangle from a hand-declared hollow triangle. It does not show that
+  non-flagness emerges from underlying dynamics.
+
+excisive paperclipper:
+  confirms that the declared cooperative attribute profile strictly contains
+  the declared excisive profile while a local paperclip score reverses the
+  comparison. It does not independently derive those attributes.
+```
+
+The pilot therefore has:
+
+```text
+instrument-correctness results: 6
+risky theory-discovery results: 0
+```
+
+The later adaptive-versus-switching dynamics case is the first result in this
+post-freeze sequence classified as a risky finite separation.
+
 ## Results
 
 ### Duplicate resistance

@@ -149,6 +149,38 @@ All preregistered finite cases and negative controls passed. The adaptive case
 strictly separated rather than using the protocol's permitted non-separating
 exit.
 
+## Evidence Reclassification
+
+A later hardening pass separated instrument correctness from risky finite
+results.
+
+Instrument correctness:
+
+```text
+duplicate and effect-equivalent-action resistance;
+novel-branch strictness;
+delayed-divergence depth;
+action/outcome quantifier control;
+deformation classification;
+presentation controls;
+lushness bridge plumbing.
+```
+
+These cases show that the instrument implements its declared semantics. They
+are not independent evidence that the declared coordinates are intrinsically
+important.
+
+Risky retained result:
+
+```text
+the sound adaptive fixed-world lift strictly refines the switching system at
+the preregistered finite horizon while excluding information-state labels from
+the atom grammar.
+```
+
+This classification changes no retained output. It prices what each fixture
+actually establishes.
+
 ## Results
 
 ### Duplicate outcomes and actions
@@ -385,12 +417,12 @@ and presentation liabilities.
 
 ## Remaining Debt
 
-The next dynamics layers remain open:
+The next dynamics layers after the retained successor passes are:
 
 ```text
-process lift:
-  derive behavior on reidentifiable trajectory-pattern states rather than
-  hand-selected world-state roots.
+process semantics:
+  canonical finite property monitors and passive history lifts now exist, but
+  operational identity and property-family-invariant residue remain open.
 
 joint product dynamics:
   derive higher-order capability surplus from a coupled realization rather than
@@ -412,12 +444,22 @@ normative bridge:
   capability expansion as value by definition.
 ```
 
-The most direct successor is the **process lift**. A candidate pattern tracker
-can be composed with exact world dynamics, after which persistence,
-reconstruction, correction, and hidden divergence can be tested as properties
-of the lifted dynamics. That still would not prove valuerhood, but it would
-move the comparison root from an arbitrary world state toward the trajectory
-object the rebuilt theory intends.
+Two successor passes now partially pay the original debt:
+
+```text
+bounded behavioral logic:
+  derives the finite comparison universe from realized behavior types and
+  supplies positive forcing certificates.
+
+canonical process monitors:
+  derives passive memory from finite-index property automata, proves finite
+  unique lifting and projection conservation, and classifies the retained
+  process residue as property-dependent rather than family-core.
+```
+
+These results do not yet move the comparison root to a certified operational
+identity object. They make the remaining declaration explicit: the admitted
+process-property family.
 
 ## Public Compression
 
