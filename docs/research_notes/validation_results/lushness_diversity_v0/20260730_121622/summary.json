@@ -1,0 +1,170 @@
+{
+  "attribute_selection_debt": "the pilot does not derive which continuation attributes should be admitted or valued",
+  "case_results": {
+    "cardinality": true,
+    "duplicate": true,
+    "effective_freedom": true,
+    "nonfungible": true,
+    "pairwise": true,
+    "paperclipper": true
+  },
+  "cases": {
+    "cardinality": {
+      "cardinality_strict_but_profile_equal_for_duplicate": true,
+      "duplicate": {
+        "base_count": 1,
+        "base_profile": [
+          "correction",
+          "persistence"
+        ],
+        "duplicate_adds_no_profile": true,
+        "extension_count": 2,
+        "extension_profile": [
+          "correction",
+          "persistence"
+        ],
+        "profile_verdict": "equivalent",
+        "token_count_increases": true
+      },
+      "nonfungible": {
+        "base_count": 1,
+        "base_profile": [
+          "correction",
+          "persistence"
+        ],
+        "extension_count": 2,
+        "extension_profile": [
+          "correction",
+          "persistence",
+          "translation"
+        ],
+        "extension_strictly_refines": true,
+        "profile_verdict": "right_refines",
+        "strict_new_attributes": [
+          "translation"
+        ]
+      },
+      "same_count_different_profile_verdict": true,
+      "same_extension_count": true
+    },
+    "duplicate": {
+      "base_count": 1,
+      "base_profile": [
+        "correction",
+        "persistence"
+      ],
+      "duplicate_adds_no_profile": true,
+      "extension_count": 2,
+      "extension_profile": [
+        "correction",
+        "persistence"
+      ],
+      "profile_verdict": "equivalent",
+      "token_count_increases": true
+    },
+    "effective_freedom": {
+      "agreement": {
+        "effective_verdict": "right_refines",
+        "orders_agree": true,
+        "profile_verdict": "right_refines"
+      },
+      "coverage_only": {
+        "effective_verdict": "equivalent",
+        "orders_diverge": true,
+        "profile_verdict": "right_refines"
+      },
+      "preference_only": {
+        "effective_verdict": "right_refines",
+        "orders_diverge": true,
+        "profile_verdict": "equivalent"
+      },
+      "quantifier_boundary": "effective freedom is forall-preference/exists-option, not exists-joint-realization/forall-valuer"
+    },
+    "nonfungible": {
+      "base_count": 1,
+      "base_profile": [
+        "correction",
+        "persistence"
+      ],
+      "extension_count": 2,
+      "extension_profile": [
+        "correction",
+        "persistence",
+        "translation"
+      ],
+      "extension_strictly_refines": true,
+      "profile_verdict": "right_refines",
+      "strict_new_attributes": [
+        "translation"
+      ]
+    },
+    "pairwise": {
+      "filled_is_flag": true,
+      "filled_triple_profile": [
+        "a_continuation",
+        "b_continuation",
+        "c_continuation",
+        "triadic_coordination"
+      ],
+      "filled_triple_realizable": true,
+      "hollow_is_flag": false,
+      "hollow_triple_realizable": false,
+      "hollow_unrealizable_profile_rejected": true,
+      "one_skeletons_equal": true,
+      "singleton_pair_profiles_equal": true
+    },
+    "paperclipper": {
+      "cooperation_strictly_lusher": true,
+      "cooperative_profile": [
+        "controller_persistence",
+        "independent_correction",
+        "independent_peer_continuation",
+        "paperclip_production"
+      ],
+      "excisive_profile": [
+        "controller_persistence",
+        "paperclip_production"
+      ],
+      "paperclip_preference_verdict": "right_refines",
+      "paperclipper_prefers_excision": true,
+      "profile_verdict": "left_refines",
+      "same_attribute_grammar": true
+    }
+  },
+  "negative_controls": {
+    "negative_controls_pass": true,
+    "relabeling_preserves_profile": true,
+    "scalar_shadow": {
+      "left_heavy_value_left": 2,
+      "left_heavy_value_right": 1,
+      "primary_verdict": "incomparable",
+      "primary_verdict_remains_incomparable": true,
+      "right_heavy_value_left": 1,
+      "right_heavy_value_right": 2,
+      "scalar_order_flips": true
+    },
+    "submodularity": {
+      "joint_augmented_profile_submodular": false,
+      "joint_complementarity_kept_separate": true,
+      "marginal_profile_submodular": true
+    },
+    "unrealizable_profile_rejected": true
+  },
+  "not_claimed": [
+    "value",
+    "standing",
+    "autonomy",
+    "patienthood",
+    "population ethics",
+    "moral aggregation",
+    "universal lushness",
+    "paperclipper defeat",
+    "Omega validation"
+  ],
+  "primary_instrument": "profile inclusion over attributes of jointly realizable families",
+  "protocol_doc": "docs/research_notes/omega_v2/lushness_diversity_protocol_v0.md",
+  "run_root": "C:\\Users\\paolo\\Documents\\New project\\docs\\research_notes\\validation_results\\lushness_diversity_v0\\20260730_121622",
+  "separate_instrument": "intersection of indirect-utility rankings over declared preferences",
+  "status": "PASS",
+  "verdict": "retained"
+}
