@@ -137,6 +137,21 @@ risky theory-discovery results: 0
 The later adaptive-versus-switching dynamics case is the first result in this
 post-freeze sequence classified as a risky finite separation.
 
+### Successor result
+
+The later Generated Continuation Dynamics v0 pass pays the principal
+joint-realizability debt left by this pilot:
+
+```text
+docs/research_notes/omega_v2/generated_continuation_dynamics_report_v0.md
+```
+
+It derives a non-flag compatibility complex from exact shared-action robust
+kernels. Every pair in the retained three-component system has a nonempty
+joint continuation kernel while the triple kernel is empty. The original
+hand-declared hollow triangle remains calibration; the successor is the
+constructive strictness witness.
+
 ## Results
 
 ### Duplicate resistance

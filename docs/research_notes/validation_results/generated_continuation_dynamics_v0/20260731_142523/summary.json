@@ -1,0 +1,603 @@
+{
+  "case_results": {
+    "DD1_manifest": true,
+    "DD2_distributions": true,
+    "DD3_relabeling": true,
+    "DD4_duplicate_weighting": true,
+    "DD5_classifier_controls": true,
+    "DD6_horizon_rows": true,
+    "DD7_no_synthetic_reverse_edges": true,
+    "GN1_manifest": true,
+    "GN2_downward_closure": true,
+    "GN3_generated_nonflag": true,
+    "GN4_matched_filled_control": true,
+    "GN5_independent_action_negative_control": true,
+    "GN6_relabeling": true,
+    "GN7_deadlock": true,
+    "GN8_lushness_bridge": true
+  },
+  "compatibility": {
+    "all_family_count": 8,
+    "assignment_count": 216,
+    "bridge_faces_equal": true,
+    "deadlock_singleton_realizable": false,
+    "downward_closure_failures": [],
+    "filled": {
+      "allowed_actions": {
+        "A": [
+          "a0",
+          "a1"
+        ],
+        "B": [
+          "a0",
+          "a2"
+        ],
+        "C": [
+          "a0",
+          "a3"
+        ]
+      },
+      "assignment_id": "shared_A_a0-a1__B_a0-a2__C_a0-a3",
+      "is_flag": true,
+      "kernel_sizes": {
+        "A": 1,
+        "A+B": 1,
+        "A+B+C": 1,
+        "A+C": 1,
+        "B": 1,
+        "B+C": 1,
+        "C": 1,
+        "empty": 1
+      },
+      "maximal_faces": [
+        [
+          "A",
+          "B",
+          "C"
+        ]
+      ],
+      "one_skeleton": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "C"
+        ],
+        [
+          "B",
+          "C"
+        ]
+      ],
+      "realizable_families": [
+        [],
+        [
+          "A"
+        ],
+        [
+          "B"
+        ],
+        [
+          "C"
+        ],
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "C"
+        ],
+        [
+          "B",
+          "C"
+        ],
+        [
+          "A",
+          "B",
+          "C"
+        ]
+      ]
+    },
+    "filled_assignment_count": 102,
+    "hollow": {
+      "allowed_actions": {
+        "A": [
+          "a0",
+          "a1"
+        ],
+        "B": [
+          "a0",
+          "a2"
+        ],
+        "C": [
+          "a1",
+          "a2"
+        ]
+      },
+      "assignment_id": "shared_A_a0-a1__B_a0-a2__C_a1-a2",
+      "is_flag": false,
+      "kernel_sizes": {
+        "A": 1,
+        "A+B": 1,
+        "A+B+C": 0,
+        "A+C": 1,
+        "B": 1,
+        "B+C": 1,
+        "C": 1,
+        "empty": 1
+      },
+      "maximal_faces": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "C"
+        ],
+        [
+          "B",
+          "C"
+        ]
+      ],
+      "one_skeleton": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "C"
+        ],
+        [
+          "B",
+          "C"
+        ]
+      ],
+      "realizable_families": [
+        [],
+        [
+          "A"
+        ],
+        [
+          "B"
+        ],
+        [
+          "C"
+        ],
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "C"
+        ],
+        [
+          "B",
+          "C"
+        ]
+      ]
+    },
+    "hollow_assignment_count": 24,
+    "independent_action_triple_realizable": true,
+    "intersection_correspondence_failures": [],
+    "matched_control_panel": {
+      "action_alphabet_size": 4,
+      "allowed_action_counts": [
+        2,
+        2,
+        2
+      ],
+      "component_count": 3,
+      "one_skeleton": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "C"
+        ],
+        [
+          "B",
+          "C"
+        ]
+      ],
+      "pair_kernel_sizes": [
+        1,
+        1,
+        1
+      ],
+      "pairwise_common_action_counts": [
+        1,
+        1,
+        1
+      ],
+      "singleton_kernel_sizes": [
+        1,
+        1,
+        1
+      ]
+    },
+    "matched_filled_count": 24,
+    "relabeling_preserved": true
+  },
+  "deformation": {
+    "distribution_rows": [
+      {
+        "action_contraction_count": 5832,
+        "action_contraction_share": 0.16666666666666666,
+        "action_edge_count": 34992,
+        "action_equivalent_count": 23328,
+        "action_equivalent_share": 0.6666666666666666,
+        "action_expansion_count": 5832,
+        "action_expansion_share": 0.16666666666666666,
+        "action_mixed_count": 0,
+        "action_mixed_share": 0.0,
+        "generator_class": "complete",
+        "horizon": 0,
+        "mean_system_contraction_share": 0.16666666666666807,
+        "mean_system_equivalent_share": 0.666666666666666,
+        "mean_system_expansion_share": 0.16666666666666807,
+        "mean_system_mixed_share": 0.0,
+        "structural_contraction_count": 4860,
+        "structural_contraction_share": 0.16666666666666666,
+        "structural_edge_count": 29160,
+        "structural_equivalent_count": 19440,
+        "structural_equivalent_share": 0.6666666666666666,
+        "structural_expansion_count": 4860,
+        "structural_expansion_share": 0.16666666666666666,
+        "structural_mixed_count": 0,
+        "structural_mixed_share": 0.0,
+        "system_count": 5832,
+        "systems_with_contraction": 3699,
+        "systems_with_equivalent": 5808,
+        "systems_with_expansion": 3699,
+        "systems_with_mixed": 0
+      },
+      {
+        "action_contraction_count": 4644,
+        "action_contraction_share": 0.13271604938271606,
+        "action_edge_count": 34992,
+        "action_equivalent_count": 21492,
+        "action_equivalent_share": 0.6141975308641975,
+        "action_expansion_count": 5292,
+        "action_expansion_share": 0.15123456790123457,
+        "action_mixed_count": 3564,
+        "action_mixed_share": 0.10185185185185185,
+        "generator_class": "complete",
+        "horizon": 1,
+        "mean_system_contraction_share": 0.14691358024691414,
+        "mean_system_equivalent_share": 0.6136831275720184,
+        "mean_system_expansion_share": 0.1454732510288077,
+        "mean_system_mixed_share": 0.093930041152263,
+        "structural_contraction_count": 4320,
+        "structural_contraction_share": 0.14814814814814814,
+        "structural_edge_count": 29160,
+        "structural_equivalent_count": 17928,
+        "structural_equivalent_share": 0.6148148148148148,
+        "structural_expansion_count": 4320,
+        "structural_expansion_share": 0.14814814814814814,
+        "structural_mixed_count": 2592,
+        "structural_mixed_share": 0.08888888888888889,
+        "system_count": 5832,
+        "systems_with_contraction": 3303,
+        "systems_with_equivalent": 5664,
+        "systems_with_expansion": 3111,
+        "systems_with_mixed": 1188
+      },
+      {
+        "action_contraction_count": 4212,
+        "action_contraction_share": 0.12037037037037036,
+        "action_edge_count": 34992,
+        "action_equivalent_count": 21444,
+        "action_equivalent_share": 0.6128257887517147,
+        "action_expansion_count": 4896,
+        "action_expansion_share": 0.13991769547325103,
+        "action_mixed_count": 4440,
+        "action_mixed_share": 0.12688614540466392,
+        "generator_class": "complete",
+        "horizon": 2,
+        "mean_system_contraction_share": 0.13597393689986362,
+        "mean_system_equivalent_share": 0.611831275720167,
+        "mean_system_expansion_share": 0.1340192043895751,
+        "mean_system_mixed_share": 0.11817558299039774,
+        "structural_contraction_count": 4026,
+        "structural_contraction_share": 0.13806584362139918,
+        "structural_edge_count": 29160,
+        "structural_equivalent_count": 17880,
+        "structural_equivalent_share": 0.6131687242798354,
+        "structural_expansion_count": 4014,
+        "structural_expansion_share": 0.13765432098765432,
+        "structural_mixed_count": 3240,
+        "structural_mixed_share": 0.1111111111111111,
+        "system_count": 5832,
+        "systems_with_contraction": 3177,
+        "systems_with_equivalent": 5616,
+        "systems_with_expansion": 2805,
+        "systems_with_mixed": 1188
+      },
+      {
+        "action_contraction_count": 288,
+        "action_contraction_share": 0.16666666666666666,
+        "action_edge_count": 1728,
+        "action_equivalent_count": 1152,
+        "action_equivalent_share": 0.6666666666666666,
+        "action_expansion_count": 288,
+        "action_expansion_share": 0.16666666666666666,
+        "action_mixed_count": 0,
+        "action_mixed_share": 0.0,
+        "generator_class": "reversible",
+        "horizon": 0,
+        "mean_system_contraction_share": 0.16666666666666677,
+        "mean_system_equivalent_share": 0.6666666666666669,
+        "mean_system_expansion_share": 0.16666666666666674,
+        "mean_system_mixed_share": 0.0,
+        "structural_contraction_count": 240,
+        "structural_contraction_share": 0.16666666666666666,
+        "structural_edge_count": 1440,
+        "structural_equivalent_count": 960,
+        "structural_equivalent_share": 0.6666666666666666,
+        "structural_expansion_count": 240,
+        "structural_expansion_share": 0.16666666666666666,
+        "structural_mixed_count": 0,
+        "structural_mixed_share": 0.0,
+        "system_count": 288,
+        "systems_with_contraction": 192,
+        "systems_with_equivalent": 288,
+        "systems_with_expansion": 192,
+        "systems_with_mixed": 0
+      },
+      {
+        "action_contraction_count": 216,
+        "action_contraction_share": 0.125,
+        "action_edge_count": 1728,
+        "action_equivalent_count": 1032,
+        "action_equivalent_share": 0.5972222222222222,
+        "action_expansion_count": 240,
+        "action_expansion_share": 0.1388888888888889,
+        "action_mixed_count": 240,
+        "action_mixed_share": 0.1388888888888889,
+        "generator_class": "reversible",
+        "horizon": 1,
+        "mean_system_contraction_share": 0.13749999999999996,
+        "mean_system_equivalent_share": 0.5986111111111112,
+        "mean_system_expansion_share": 0.1361111111111111,
+        "mean_system_mixed_share": 0.12777777777777774,
+        "structural_contraction_count": 204,
+        "structural_contraction_share": 0.14166666666666666,
+        "structural_edge_count": 1440,
+        "structural_equivalent_count": 864,
+        "structural_equivalent_share": 0.6,
+        "structural_expansion_count": 204,
+        "structural_expansion_share": 0.14166666666666666,
+        "structural_mixed_count": 168,
+        "structural_mixed_share": 0.11666666666666667,
+        "system_count": 288,
+        "systems_with_contraction": 156,
+        "systems_with_equivalent": 276,
+        "systems_with_expansion": 156,
+        "systems_with_mixed": 72
+      },
+      {
+        "action_contraction_count": 192,
+        "action_contraction_share": 0.1111111111111111,
+        "action_edge_count": 1728,
+        "action_equivalent_count": 1032,
+        "action_equivalent_share": 0.5972222222222222,
+        "action_expansion_count": 204,
+        "action_expansion_share": 0.11805555555555555,
+        "action_mixed_count": 300,
+        "action_mixed_share": 0.1736111111111111,
+        "generator_class": "reversible",
+        "horizon": 2,
+        "mean_system_contraction_share": 0.12361111111111102,
+        "mean_system_equivalent_share": 0.5986111111111112,
+        "mean_system_expansion_share": 0.11388888888888876,
+        "mean_system_mixed_share": 0.16388888888888886,
+        "structural_contraction_count": 192,
+        "structural_contraction_share": 0.13333333333333333,
+        "structural_edge_count": 1440,
+        "structural_equivalent_count": 864,
+        "structural_equivalent_share": 0.6,
+        "structural_expansion_count": 180,
+        "structural_expansion_share": 0.125,
+        "structural_mixed_count": 204,
+        "structural_mixed_share": 0.14166666666666666,
+        "system_count": 288,
+        "systems_with_contraction": 144,
+        "systems_with_equivalent": 276,
+        "systems_with_expansion": 132,
+        "systems_with_mixed": 72
+      },
+      {
+        "action_contraction_count": 336,
+        "action_contraction_share": 0.12727272727272726,
+        "action_edge_count": 2640,
+        "action_equivalent_count": 1968,
+        "action_equivalent_share": 0.7454545454545455,
+        "action_expansion_count": 336,
+        "action_expansion_share": 0.12727272727272726,
+        "action_mixed_count": 0,
+        "action_mixed_share": 0.0,
+        "generator_class": "absorbing",
+        "horizon": 0,
+        "mean_system_contraction_share": 0.14363636363636373,
+        "mean_system_equivalent_share": 0.712727272727273,
+        "mean_system_expansion_share": 0.14363636363636373,
+        "mean_system_mixed_share": 0.0,
+        "structural_contraction_count": 284,
+        "structural_contraction_share": 0.142570281124498,
+        "structural_edge_count": 1992,
+        "structural_equivalent_count": 1424,
+        "structural_equivalent_share": 0.714859437751004,
+        "structural_expansion_count": 284,
+        "structural_expansion_share": 0.142570281124498,
+        "structural_mixed_count": 0,
+        "structural_mixed_share": 0.0,
+        "system_count": 440,
+        "systems_with_contraction": 227,
+        "systems_with_equivalent": 440,
+        "systems_with_expansion": 227,
+        "systems_with_mixed": 0
+      },
+      {
+        "action_contraction_count": 344,
+        "action_contraction_share": 0.1303030303030303,
+        "action_edge_count": 2640,
+        "action_equivalent_count": 1872,
+        "action_equivalent_share": 0.7090909090909091,
+        "action_expansion_count": 332,
+        "action_expansion_share": 0.12575757575757576,
+        "action_mixed_count": 92,
+        "action_mixed_share": 0.03484848484848485,
+        "generator_class": "absorbing",
+        "horizon": 1,
+        "mean_system_contraction_share": 0.15318181818181822,
+        "mean_system_equivalent_share": 0.6696969696969696,
+        "mean_system_expansion_share": 0.1390909090909091,
+        "mean_system_mixed_share": 0.03803030303030304,
+        "structural_contraction_count": 304,
+        "structural_contraction_share": 0.15261044176706828,
+        "structural_edge_count": 1992,
+        "structural_equivalent_count": 1340,
+        "structural_equivalent_share": 0.6726907630522089,
+        "structural_expansion_count": 276,
+        "structural_expansion_share": 0.13855421686746988,
+        "structural_mixed_count": 72,
+        "structural_mixed_share": 0.03614457831325301,
+        "system_count": 440,
+        "systems_with_contraction": 229,
+        "systems_with_equivalent": 440,
+        "systems_with_expansion": 193,
+        "systems_with_mixed": 44
+      },
+      {
+        "action_contraction_count": 344,
+        "action_contraction_share": 0.1303030303030303,
+        "action_edge_count": 2640,
+        "action_equivalent_count": 1872,
+        "action_equivalent_share": 0.7090909090909091,
+        "action_expansion_count": 332,
+        "action_expansion_share": 0.12575757575757576,
+        "action_mixed_count": 92,
+        "action_mixed_share": 0.03484848484848485,
+        "generator_class": "absorbing",
+        "horizon": 2,
+        "mean_system_contraction_share": 0.15318181818181822,
+        "mean_system_equivalent_share": 0.6696969696969696,
+        "mean_system_expansion_share": 0.1390909090909091,
+        "mean_system_mixed_share": 0.03803030303030304,
+        "structural_contraction_count": 304,
+        "structural_contraction_share": 0.15261044176706828,
+        "structural_edge_count": 1992,
+        "structural_equivalent_count": 1340,
+        "structural_equivalent_share": 0.6726907630522089,
+        "structural_expansion_count": 276,
+        "structural_expansion_share": 0.13855421686746988,
+        "structural_mixed_count": 72,
+        "structural_mixed_share": 0.03614457831325301,
+        "system_count": 440,
+        "systems_with_contraction": 229,
+        "systems_with_equivalent": 440,
+        "systems_with_expansion": 193,
+        "systems_with_mixed": 44
+      }
+    ],
+    "duplicate_action_control": {
+      "action_weight_changed": true,
+      "baseline_action_counts": {
+        "contraction": 0,
+        "equivalent": 3,
+        "expansion": 3,
+        "mixed": 0
+      },
+      "duplicated_action_counts": {
+        "contraction": 0,
+        "equivalent": 4,
+        "expansion": 5,
+        "mixed": 0
+      },
+      "horizon": 2,
+      "structural_verdicts_preserved": true,
+      "system_id": "generated_t001_m1"
+    },
+    "manifest": {
+      "action_count": 2,
+      "atom_mask_count": 8,
+      "class_counts": {
+        "absorbing": 440,
+        "complete": 5832,
+        "reversible": 288
+      },
+      "manifest_digest": "e0009b05e1837657012be9d9162bef10ef05e0a2522caa3c2026541129402c86",
+      "state_count": 3,
+      "transition_table_count": 729
+    },
+    "relabeling_control": {
+      "failures": [],
+      "preserved": true,
+      "system_id": "generated_t000_m1"
+    },
+    "retained_classifier_verdicts": [
+      "contraction",
+      "equivalent",
+      "expansion",
+      "mixed"
+    ],
+    "reverse_edge_control": {
+      "exact_pairs_equal_audited_pairs": true,
+      "missing_reverse_not_classified": true,
+      "missing_reverse_pair": [
+        "s0",
+        "s1"
+      ],
+      "synthetic_reverse_excluded": true,
+      "system_id": "generated_t000_m0"
+    }
+  },
+  "evidence_classification": {
+    "constructive_strictness": [
+      "GN3_generated_nonflag",
+      "GN4_matched_filled_control"
+    ],
+    "generator_correctness": [
+      "GN1_manifest",
+      "GN2_downward_closure",
+      "GN5_independent_action_negative_control",
+      "GN6_relabeling",
+      "GN7_deadlock",
+      "GN8_lushness_bridge",
+      "DD1_manifest",
+      "DD3_relabeling",
+      "DD4_duplicate_weighting",
+      "DD5_classifier_controls",
+      "DD6_horizon_rows",
+      "DD7_no_synthetic_reverse_edges"
+    ],
+    "risky_generated_result": [
+      "DD2_distributions"
+    ]
+  },
+  "not_claimed": [
+    "thermodynamic arrow",
+    "entropy production",
+    "physical degrees of freedom",
+    "universal deformation probabilities",
+    "value",
+    "valuerhood",
+    "agency",
+    "standing",
+    "identity",
+    "moral license",
+    "lushness",
+    "Omega validation"
+  ],
+  "protocol_doc": "docs/research_notes/omega_v2/generated_continuation_dynamics_protocol_v0.md",
+  "run_root": "C:\\Users\\paolo\\Documents\\New project\\docs\\research_notes\\validation_results\\generated_continuation_dynamics_v0\\20260731_142523",
+  "status": "PASS",
+  "verdict": "retained"
+}

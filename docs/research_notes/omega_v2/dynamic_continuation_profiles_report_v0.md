@@ -462,6 +462,18 @@ These results do not yet move the comparison root to a certified operational
 identity object. They make the remaining declaration explicit: the admitted
 process-property family.
 
+A later generated-dynamics audit also runs the deformation classifier over
+5,832 exhaustive three-state systems:
+
+```text
+docs/research_notes/omega_v2/generated_continuation_dynamics_report_v0.md
+```
+
+It finds no universal forward-expansion law. Its primary structural-edge and
+diagnostic action-edge distributions can disagree in direction, so any
+arrow-of-time claim still requires an independently justified orientation and
+duplication-resistant transition or trajectory measure.
+
 ## Public Compression
 
 A finite pilot derived duplicate-resistant continuation-capability profiles
