@@ -12,6 +12,11 @@ archive for the successor spine. Start with
 [Migration To Alpha v0](research_notes/omega_theory/migration_to_alpha_v0.md)
 when reading the repository historically.
 
+Post-freeze theory proposal:
+[Alpha-Omega Theory Proposal Handoff v0](ALPHA_OMEGA_THEORY_PROPOSAL_HANDOFF_V0.md)
+states the current mathematical architecture, terminology migration, theory
+intention, and first successor formalization program.
+
 ## Read First
 
 1. [Repository README](../README.md)
