@@ -17,6 +17,8 @@ proposal is recorded in the
 [Alpha-Omega Theory Proposal Handoff v0](docs/ALPHA_OMEGA_THEORY_PROPOSAL_HANDOFF_V0.md),
 and its first checked implementation is summarized in the
 [Alpha-Omega Foundation Report v0](docs/research_notes/omega_v2/alpha_omega_foundation_report_v0.md).
+The first clean migration-template implementation is the
+[Finite Controlled Markov Abstraction Report v0](docs/research_notes/omega_v2/finite_controlled_markov_abstraction_report_v0.md).
 
 Omega is a research program for treating alignment as the problem of
 preserving the corridor of compatible, value-bearing futures.

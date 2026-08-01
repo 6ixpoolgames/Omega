@@ -33,5 +33,8 @@ lean_lib Omega where
 lean_lib OmegaArchive where
   roots := #[`OmegaArchive]
 
+lean_lib OmegaV2 where
+  roots := #[`OmegaV2]
+
 lean_lib AlphaOmega where
   roots := #[`AlphaOmega]

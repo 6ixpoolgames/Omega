@@ -147,6 +147,14 @@ powershell -ExecutionPolicy Bypass -File scripts\setup\invoke_lake.ps1 build Ome
 .\.venv\Scripts\python.exe -m omega.validation.finite_relational_alpha_omega_foundation
 ```
 
+For the clean Finite Controlled Markov Abstraction v0 package:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\setup\invoke_lake.ps1 build OmegaV2
+.\.venv\Scripts\python.exe -m pytest tests\test_finite_relational_controlled_markov_abstraction.py -q
+.\.venv\Scripts\python.exe -m omega_v2.validation.controlled_markov_abstraction_v0
+```
+
 ## Reproducibility Smoke
 
 The baseline witness batch has a one-command reproduction path:

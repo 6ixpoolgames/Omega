@@ -16,6 +16,10 @@ retained. See
 [Alpha-Omega Foundation Protocol v0](research_notes/omega_v2/alpha_omega_foundation_protocol_v0.md)
 and
 [Alpha-Omega Foundation Report v0](research_notes/omega_v2/alpha_omega_foundation_report_v0.md).
+The first clean successor-package template is retained in the
+[Finite Controlled Markov Abstraction Protocol v0](research_notes/omega_v2/finite_controlled_markov_abstraction_protocol_v0.md)
+and
+[Finite Controlled Markov Abstraction Report v0](research_notes/omega_v2/finite_controlled_markov_abstraction_report_v0.md).
 
 ## 1. Purpose
 
