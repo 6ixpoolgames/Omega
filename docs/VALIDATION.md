@@ -139,6 +139,14 @@ pytest
 ruff check .
 ```
 
+For the post-freeze Alpha-Omega Foundation v0:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\setup\invoke_lake.ps1 build OmegaProper.Foundation
+.\.venv\Scripts\python.exe -m pytest tests\test_finite_relational_alpha_omega_foundation.py -q
+.\.venv\Scripts\python.exe -m omega.validation.finite_relational_alpha_omega_foundation
+```
+
 ## Reproducibility Smoke
 
 The baseline witness batch has a one-command reproduction path:

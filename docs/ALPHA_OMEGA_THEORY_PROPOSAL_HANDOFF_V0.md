@@ -11,6 +11,12 @@ Claim boundary: this document proposes the next formal spine. It is not a new
 validation result, a proof of valuerhood or value, a physical theory, a complete
 decision theory, or an Omega validation claim.
 
+Implementation update: the first finite foundation pass described here is now
+retained. See
+[Alpha-Omega Foundation Protocol v0](research_notes/omega_v2/alpha_omega_foundation_protocol_v0.md)
+and
+[Alpha-Omega Foundation Report v0](research_notes/omega_v2/alpha_omega_foundation_report_v0.md).
+
 ## 1. Purpose
 
 This document is intended to be understandable alongside the public repository

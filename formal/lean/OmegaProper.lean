@@ -2,6 +2,7 @@ import OmegaProper.Compatibility.JointPresentation
 import OmegaProper.BaselineWitnesses
 import OmegaProper.Decision
 import OmegaProper.EffectiveLayers
+import OmegaProper.Foundation
 import OmegaProper.Recovery
 import OmegaProper.Scaffolds.CompletionCounterexamples
 import OmegaProper.Scaffolds.FiniteMaximal

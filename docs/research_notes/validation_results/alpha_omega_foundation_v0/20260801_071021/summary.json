@@ -1,0 +1,745 @@
+{
+  "case_results": {
+    "biased_reciprocal_support": true,
+    "candidate_process_filtration": true,
+    "decorated_may_omega": true,
+    "directionally_null_reversible": true,
+    "finite_horizon_probabilistic_nonreturn": true,
+    "policy_induced_functional_contraction": true,
+    "presentation_contracts": true,
+    "residual_continuation_law": true,
+    "support_asymmetric_diagnostic": true,
+    "support_blindness": true
+  },
+  "directionality": {
+    "biased_reciprocal": {
+      "horizon": 3,
+      "kl_forward_to_reversed": 1.6479184330021646,
+      "kl_is_infinite": false,
+      "profile_id": "biased_reciprocal_support_cycle__directionality",
+      "reciprocal_support": true,
+      "reversal_convention": "identity-action_path-reversal",
+      "statistically_directional": true,
+      "support_mismatch_count": 0,
+      "total_variation": 0.6875
+    },
+    "null": {
+      "horizon": 3,
+      "kl_forward_to_reversed": 0.0,
+      "kl_is_infinite": false,
+      "profile_id": "directionally_null_cycle__directionality",
+      "reciprocal_support": true,
+      "reversal_convention": "identity-action_path-reversal",
+      "statistically_directional": false,
+      "support_mismatch_count": 0,
+      "total_variation": 0.0
+    },
+    "policy_contraction": {
+      "collapse_forecloses_live_support": true,
+      "collapse_path_support_size": 1,
+      "collapse_terminal_states": [
+        "sink"
+      ],
+      "live_viability_kernel": [
+        "left",
+        "open",
+        "right"
+      ],
+      "preserve_path_support_size": 2,
+      "preserve_terminal_states": [
+        "open"
+      ]
+    },
+    "probabilistic_nonreturn": {
+      "nonreturn_probability_at_horizon_2": "9/10",
+      "return_probability_at_horizon_2": "1/10",
+      "support_return_possible": true
+    },
+    "residual_continuation": {
+      "all_paths_start_at_prefix_end": true,
+      "path_count": 4,
+      "prefix_end": "s1",
+      "remaining_horizon": 2,
+      "total_probability": "1"
+    },
+    "reversal_round_trip": true,
+    "support_asymmetric_absorbing": {
+      "diagnostic_only": true,
+      "irreversible_pair_count": 3,
+      "irreversible_pairs": [
+        [
+          "open",
+          "sink"
+        ],
+        [
+          "left",
+          "sink"
+        ],
+        [
+          "right",
+          "sink"
+        ]
+      ]
+    }
+  },
+  "horizon": 3,
+  "kill_conditions": {
+    "bisimulation_missing_required_clause": false,
+    "duplicate_candidate_inflates_omega": false,
+    "fibers_replaced_by_graph": false,
+    "inconsistent_path_reversal": false,
+    "injected_label_creates_process_evidence": false,
+    "maximal_face_selected": false,
+    "pairwise_treated_as_joint": false,
+    "support_only_separates_equal_support": false,
+    "weights_discarded_before_directionality": false
+  },
+  "not_claimed": [
+    "value",
+    "standing",
+    "personhood",
+    "consciousness",
+    "moral agency",
+    "thermodynamic universality",
+    "preferred physical orientation",
+    "normative allegiance",
+    "lushness as an imperative",
+    "Omega as a realized moral object"
+  ],
+  "omega": {
+    "all_pairs_nonempty": true,
+    "all_singletons_nonempty": true,
+    "assignment_id": "shared_A_a0-a1__B_a0-a2__C_a1-a2",
+    "candidate_class_count": 3,
+    "downward_closure_failures": [],
+    "duplicate_omega": {
+      "candidate_classes": [
+        {
+          "class_id": "candidate:36d683f24ca56fbb",
+          "members": [
+            "B"
+          ],
+          "witness_ids": [
+            "history:a0",
+            "history:a2"
+          ]
+        },
+        {
+          "class_id": "candidate:ac6509244603702b",
+          "members": [
+            "A",
+            "A_copy"
+          ],
+          "witness_ids": [
+            "history:a0",
+            "history:a1"
+          ]
+        },
+        {
+          "class_id": "candidate:efebd9503bcff034",
+          "members": [
+            "C"
+          ],
+          "witness_ids": [
+            "history:a1",
+            "history:a2"
+          ]
+        }
+      ],
+      "compatible_families": [
+        [],
+        [
+          "candidate:36d683f24ca56fbb"
+        ],
+        [
+          "candidate:ac6509244603702b"
+        ],
+        [
+          "candidate:efebd9503bcff034"
+        ],
+        [
+          "candidate:36d683f24ca56fbb",
+          "candidate:ac6509244603702b"
+        ],
+        [
+          "candidate:36d683f24ca56fbb",
+          "candidate:efebd9503bcff034"
+        ],
+        [
+          "candidate:ac6509244603702b",
+          "candidate:efebd9503bcff034"
+        ]
+      ],
+      "downward_closure_failures": [],
+      "fibers": [
+        {
+          "family": [],
+          "nonempty": true,
+          "witness_ids": [
+            "history:a0",
+            "history:a1",
+            "history:a2",
+            "history:a3"
+          ]
+        },
+        {
+          "family": [
+            "candidate:36d683f24ca56fbb"
+          ],
+          "nonempty": true,
+          "witness_ids": [
+            "history:a0",
+            "history:a2"
+          ]
+        },
+        {
+          "family": [
+            "candidate:ac6509244603702b"
+          ],
+          "nonempty": true,
+          "witness_ids": [
+            "history:a0",
+            "history:a1"
+          ]
+        },
+        {
+          "family": [
+            "candidate:efebd9503bcff034"
+          ],
+          "nonempty": true,
+          "witness_ids": [
+            "history:a1",
+            "history:a2"
+          ]
+        },
+        {
+          "family": [
+            "candidate:36d683f24ca56fbb",
+            "candidate:ac6509244603702b"
+          ],
+          "nonempty": true,
+          "witness_ids": [
+            "history:a0"
+          ]
+        },
+        {
+          "family": [
+            "candidate:36d683f24ca56fbb",
+            "candidate:efebd9503bcff034"
+          ],
+          "nonempty": true,
+          "witness_ids": [
+            "history:a2"
+          ]
+        },
+        {
+          "family": [
+            "candidate:ac6509244603702b",
+            "candidate:efebd9503bcff034"
+          ],
+          "nonempty": true,
+          "witness_ids": [
+            "history:a1"
+          ]
+        },
+        {
+          "family": [
+            "candidate:36d683f24ca56fbb",
+            "candidate:ac6509244603702b",
+            "candidate:efebd9503bcff034"
+          ],
+          "nonempty": false,
+          "witness_ids": []
+        }
+      ],
+      "maximal_faces": [
+        [
+          "candidate:36d683f24ca56fbb",
+          "candidate:ac6509244603702b"
+        ],
+        [
+          "candidate:36d683f24ca56fbb",
+          "candidate:efebd9503bcff034"
+        ],
+        [
+          "candidate:ac6509244603702b",
+          "candidate:efebd9503bcff034"
+        ]
+      ],
+      "omega_id": "omega:shared_A_a0-a1__B_a0-a2__C_a1-a2__duplicate_A",
+      "restriction_failures": [],
+      "witness_ids": [
+        "history:a0",
+        "history:a1",
+        "history:a2",
+        "history:a3"
+      ]
+    },
+    "duplicate_quotient_class_count": 3,
+    "duplicate_raw_candidate_count": 4,
+    "duplicate_structural_payload_equal": true,
+    "expected_generated_assignment_id": "shared_A_a0-a1__B_a0-a2__C_a1-a2",
+    "greatest_face_exists": false,
+    "maximal_face_count": 3,
+    "maximal_faces": [
+      [
+        "candidate:36d683f24ca56fbb",
+        "candidate:ac6509244603702b"
+      ],
+      [
+        "candidate:36d683f24ca56fbb",
+        "candidate:efebd9503bcff034"
+      ],
+      [
+        "candidate:ac6509244603702b",
+        "candidate:efebd9503bcff034"
+      ]
+    ],
+    "omega": {
+      "candidate_classes": [
+        {
+          "class_id": "candidate:36d683f24ca56fbb",
+          "members": [
+            "B"
+          ],
+          "witness_ids": [
+            "history:a0",
+            "history:a2"
+          ]
+        },
+        {
+          "class_id": "candidate:ac6509244603702b",
+          "members": [
+            "A"
+          ],
+          "witness_ids": [
+            "history:a0",
+            "history:a1"
+          ]
+        },
+        {
+          "class_id": "candidate:efebd9503bcff034",
+          "members": [
+            "C"
+          ],
+          "witness_ids": [
+            "history:a1",
+            "history:a2"
+          ]
+        }
+      ],
+      "compatible_families": [
+        [],
+        [
+          "candidate:36d683f24ca56fbb"
+        ],
+        [
+          "candidate:ac6509244603702b"
+        ],
+        [
+          "candidate:efebd9503bcff034"
+        ],
+        [
+          "candidate:36d683f24ca56fbb",
+          "candidate:ac6509244603702b"
+        ],
+        [
+          "candidate:36d683f24ca56fbb",
+          "candidate:efebd9503bcff034"
+        ],
+        [
+          "candidate:ac6509244603702b",
+          "candidate:efebd9503bcff034"
+        ]
+      ],
+      "downward_closure_failures": [],
+      "fibers": [
+        {
+          "family": [],
+          "nonempty": true,
+          "witness_ids": [
+            "history:a0",
+            "history:a1",
+            "history:a2",
+            "history:a3"
+          ]
+        },
+        {
+          "family": [
+            "candidate:36d683f24ca56fbb"
+          ],
+          "nonempty": true,
+          "witness_ids": [
+            "history:a0",
+            "history:a2"
+          ]
+        },
+        {
+          "family": [
+            "candidate:ac6509244603702b"
+          ],
+          "nonempty": true,
+          "witness_ids": [
+            "history:a0",
+            "history:a1"
+          ]
+        },
+        {
+          "family": [
+            "candidate:efebd9503bcff034"
+          ],
+          "nonempty": true,
+          "witness_ids": [
+            "history:a1",
+            "history:a2"
+          ]
+        },
+        {
+          "family": [
+            "candidate:36d683f24ca56fbb",
+            "candidate:ac6509244603702b"
+          ],
+          "nonempty": true,
+          "witness_ids": [
+            "history:a0"
+          ]
+        },
+        {
+          "family": [
+            "candidate:36d683f24ca56fbb",
+            "candidate:efebd9503bcff034"
+          ],
+          "nonempty": true,
+          "witness_ids": [
+            "history:a2"
+          ]
+        },
+        {
+          "family": [
+            "candidate:ac6509244603702b",
+            "candidate:efebd9503bcff034"
+          ],
+          "nonempty": true,
+          "witness_ids": [
+            "history:a1"
+          ]
+        },
+        {
+          "family": [
+            "candidate:36d683f24ca56fbb",
+            "candidate:ac6509244603702b",
+            "candidate:efebd9503bcff034"
+          ],
+          "nonempty": false,
+          "witness_ids": []
+        }
+      ],
+      "maximal_faces": [
+        [
+          "candidate:36d683f24ca56fbb",
+          "candidate:ac6509244603702b"
+        ],
+        [
+          "candidate:36d683f24ca56fbb",
+          "candidate:efebd9503bcff034"
+        ],
+        [
+          "candidate:ac6509244603702b",
+          "candidate:efebd9503bcff034"
+        ]
+      ],
+      "omega_id": "omega:shared_A_a0-a1__B_a0-a2__C_a1-a2",
+      "restriction_failures": [],
+      "witness_ids": [
+        "history:a0",
+        "history:a1",
+        "history:a2",
+        "history:a3"
+      ]
+    },
+    "pair_fibers": {
+      "A+B": [
+        "history:a0"
+      ],
+      "A+C": [
+        "history:a1"
+      ],
+      "B+C": [
+        "history:a2"
+      ]
+    },
+    "raw_candidate_count": 3,
+    "restriction_failures": [],
+    "singleton_fibers": {
+      "A": [
+        "history:a0",
+        "history:a1"
+      ],
+      "B": [
+        "history:a0",
+        "history:a2"
+      ],
+      "C": [
+        "history:a1",
+        "history:a2"
+      ]
+    },
+    "triple_empty": true,
+    "triple_fiber": []
+  },
+  "presentations": {
+    "atom_failure": {
+      "action_bijective": true,
+      "action_surjective": true,
+      "atom_failure_count": 1,
+      "atom_failures": [
+        {
+          "abstract_atoms": [],
+          "abstract_state": "q",
+          "concrete_atoms": [
+            "live"
+          ],
+          "concrete_state": "x"
+        }
+      ],
+      "atom_respects": false,
+      "back": true,
+      "back_failure_count": 0,
+      "back_failures": [],
+      "forward": true,
+      "forward_failure_count": 0,
+      "forward_failures": [],
+      "forward_simulation": false,
+      "functional_bisimulation": false,
+      "isomorphism": false,
+      "presentation_id": "atom_failure",
+      "reflection": false,
+      "state_bijective": true,
+      "state_surjective": true
+    },
+    "back_failure": {
+      "action_bijective": true,
+      "action_surjective": true,
+      "atom_failure_count": 0,
+      "atom_failures": [],
+      "atom_respects": true,
+      "back": false,
+      "back_failure_count": 1,
+      "back_failures": [
+        {
+          "abstract_edge": [
+            "q",
+            "go",
+            "r"
+          ],
+          "concrete_source": "x"
+        }
+      ],
+      "forward": true,
+      "forward_failure_count": 0,
+      "forward_failures": [],
+      "forward_simulation": true,
+      "functional_bisimulation": false,
+      "isomorphism": false,
+      "presentation_id": "back_failure",
+      "reflection": false,
+      "state_bijective": true,
+      "state_surjective": true
+    },
+    "bisimilar_duplicate": {
+      "action_bijective": true,
+      "action_surjective": true,
+      "atom_failure_count": 0,
+      "atom_failures": [],
+      "atom_respects": true,
+      "back": true,
+      "back_failure_count": 0,
+      "back_failures": [],
+      "forward": true,
+      "forward_failure_count": 0,
+      "forward_failures": [],
+      "forward_simulation": true,
+      "functional_bisimulation": true,
+      "isomorphism": false,
+      "presentation_id": "bisimilar_duplicate_quotient",
+      "reflection": true,
+      "state_bijective": false,
+      "state_surjective": true
+    },
+    "exact_relabeling": {
+      "action_bijective": true,
+      "action_surjective": true,
+      "atom_failure_count": 0,
+      "atom_failures": [],
+      "atom_respects": true,
+      "back": true,
+      "back_failure_count": 0,
+      "back_failures": [],
+      "forward": true,
+      "forward_failure_count": 0,
+      "forward_failures": [],
+      "forward_simulation": true,
+      "functional_bisimulation": true,
+      "isomorphism": true,
+      "presentation_id": "exact_relabeling",
+      "reflection": true,
+      "state_bijective": true,
+      "state_surjective": true
+    },
+    "forward_failure": {
+      "action_bijective": true,
+      "action_surjective": true,
+      "atom_failure_count": 0,
+      "atom_failures": [],
+      "atom_respects": true,
+      "back": true,
+      "back_failure_count": 0,
+      "back_failures": [],
+      "forward": false,
+      "forward_failure_count": 1,
+      "forward_failures": [
+        {
+          "concrete_edge": [
+            "x",
+            "go",
+            "y"
+          ],
+          "missing_abstract_edge": [
+            "q",
+            "go",
+            "r"
+          ]
+        }
+      ],
+      "forward_simulation": false,
+      "functional_bisimulation": false,
+      "isomorphism": false,
+      "presentation_id": "forward_failure",
+      "reflection": true,
+      "state_bijective": true,
+      "state_surjective": true
+    },
+    "weighted_grain_hidden": {
+      "abstract_directionality": {
+        "horizon": 3,
+        "kl_forward_to_reversed": 0.0,
+        "kl_is_infinite": false,
+        "profile_id": "collapsed_cycle_kernel__directionality",
+        "reciprocal_support": true,
+        "reversal_convention": "identity-action_path-reversal",
+        "statistically_directional": false,
+        "support_mismatch_count": 0,
+        "total_variation": 0.0
+      },
+      "concrete_directionality": {
+        "horizon": 3,
+        "kl_forward_to_reversed": 1.6479184330021646,
+        "kl_is_infinite": false,
+        "profile_id": "presentation_biased_cycle__directionality",
+        "reciprocal_support": true,
+        "reversal_convention": "identity-action_path-reversal",
+        "statistically_directional": true,
+        "support_mismatch_count": 0,
+        "total_variation": 0.6875
+      },
+      "presentation": {
+        "action_bijective": true,
+        "action_surjective": true,
+        "atom_failure_count": 0,
+        "atom_failures": [],
+        "atom_respects": true,
+        "back": true,
+        "back_failure_count": 0,
+        "back_failures": [],
+        "forward": true,
+        "forward_failure_count": 0,
+        "forward_failures": [],
+        "forward_simulation": true,
+        "functional_bisimulation": true,
+        "isomorphism": false,
+        "presentation_id": "support_bisimulation_hides_weighted_grain",
+        "reflection": true,
+        "state_bijective": false,
+        "state_surjective": true
+      },
+      "support_bisimulation_passes": true,
+      "weighted_directionality_changes": true
+    }
+  },
+  "primary_claim": "Finite oriented path laws, support-only continuation operators, presentation contracts, process feature profiles, and a witness-retaining May-Omega object coexist in one audited adapter.",
+  "processes": {
+    "effectful_memoryless": {
+      "causal_deformer": true,
+      "controller_id": "effectful_memoryless",
+      "endogenous_record_selector": false,
+      "persistent_closed_loop": true,
+      "reachable_memory_count": 1,
+      "reachable_node_count": 5,
+      "valuer_declared": false
+    },
+    "injected_label": {
+      "causal_deformer": false,
+      "controller_id": "presentation_injected_agent_label",
+      "endogenous_record_selector": false,
+      "persistent_closed_loop": true,
+      "reachable_memory_count": 1,
+      "reachable_node_count": 1,
+      "valuer_declared": false
+    },
+    "injected_label_changes_features": false,
+    "passive": {
+      "causal_deformer": false,
+      "controller_id": "passive_pattern",
+      "endogenous_record_selector": false,
+      "persistent_closed_loop": true,
+      "reachable_memory_count": 1,
+      "reachable_node_count": 1,
+      "valuer_declared": false
+    },
+    "record_sensitive": {
+      "causal_deformer": true,
+      "controller_id": "record_sensitive_selector",
+      "endogenous_record_selector": true,
+      "persistent_closed_loop": true,
+      "reachable_memory_count": 3,
+      "reachable_node_count": 9,
+      "valuer_declared": false
+    }
+  },
+  "protocol_doc": "docs/research_notes/omega_v2/alpha_omega_foundation_protocol_v0.md",
+  "run_root": "docs\\research_notes\\validation_results\\alpha_omega_foundation_v0\\20260801_071021",
+  "status": "PASS",
+  "support_blindness": {
+    "all_support_observables_equal": true,
+    "balanced_directionality": {
+      "horizon": 3,
+      "kl_forward_to_reversed": 0.0,
+      "kl_is_infinite": false,
+      "profile_id": "support_blind_balanced__directionality",
+      "reciprocal_support": true,
+      "reversal_convention": "identity-action_path-reversal",
+      "statistically_directional": false,
+      "support_mismatch_count": 0,
+      "total_variation": 0.0
+    },
+    "biased_directionality": {
+      "horizon": 3,
+      "kl_forward_to_reversed": 1.6479184330021646,
+      "kl_is_infinite": false,
+      "profile_id": "support_blind_biased__directionality",
+      "reciprocal_support": true,
+      "reversal_convention": "identity-action_path-reversal",
+      "statistically_directional": true,
+      "support_mismatch_count": 0,
+      "total_variation": 0.6875
+    },
+    "checked_horizons": 4,
+    "directionality_separates": true,
+    "predecessor_failures": [],
+    "reachability_failures": [],
+    "subset_count": 8,
+    "support_equivalent": true,
+    "viability_failures": []
+  },
+  "verdict": "retained"
+}

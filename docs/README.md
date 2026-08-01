@@ -17,25 +17,34 @@ Post-freeze theory proposal:
 states the current mathematical architecture, terminology migration, theory
 intention, and first successor formalization program.
 
+The first post-freeze foundation pass is now retained. Read the
+[Alpha-Omega Foundation Protocol v0](research_notes/omega_v2/alpha_omega_foundation_protocol_v0.md)
+for its preregistered boundary and the
+[Alpha-Omega Foundation Report v0](research_notes/omega_v2/alpha_omega_foundation_report_v0.md)
+for the checked Lean spine, finite fixtures, negative controls, and remaining
+debt.
+
 ## Read First
 
 1. [Repository README](../README.md)
-2. [Project Overview](PROJECT_OVERVIEW.md)
-3. [Active Surface Area](research_notes/omega_theory/active_surface_area_v0.md)
-4. [Claims Ledger](CLAIMS_LEDGER.md)
-5. [Omega Decision Stack Checkpoint](research_notes/omega_theory/omega_decision_stack_checkpoint_v0.md)
-6. [Adaptive Fixed-World Corridor B2.1](research_notes/omega_theory/adaptive_fixed_world_corridor_b21.md)
-7. [Adaptive Observation Informativeness v0](research_notes/omega_theory/adaptive_observation_informativeness_v0.md)
-8. [Recovery Frame / Irreversibility Weld v0](research_notes/omega_theory/recovery_frame_irreversibility_weld_v0.md)
-9. [Recovery-Aware Corridor v0](research_notes/omega_theory/recovery_aware_corridor_v0.md)
-10. [Phantom Recoverability Gate v0](research_notes/omega_theory/phantom_recoverability_gate_v0.md)
-11. [Recovery Reflection and Nonrecoverable-Loss Dominance v0](research_notes/omega_theory/recovery_reflection_and_loss_dominance_v0.md)
-12. [Colonization Axis Report v0](research_notes/omega_theory/colonization_axis_report_v0.md)
-13. [Future-Field Reorientation and Declaration Culling v0](research_notes/omega_theory/future_field_reorientation_and_declaration_culling_v0.md)
-14. [Substrate Classes and Large Deformers v0](research_notes/omega_theory/substrate_classes_and_large_deformers_v0.md)
-15. [Does The Loop Close Soundly?](public/does_the_loop_close_soundly_v0.md)
-16. [Omega Closeout v0](research_notes/omega_theory/omega_closeout_v0.md)
-17. [Effective Layers](research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
+2. [Alpha-Omega Theory Proposal Handoff v0](ALPHA_OMEGA_THEORY_PROPOSAL_HANDOFF_V0.md)
+3. [Alpha-Omega Foundation Report v0](research_notes/omega_v2/alpha_omega_foundation_report_v0.md)
+4. [Project Overview](PROJECT_OVERVIEW.md)
+5. [Active Surface Area](research_notes/omega_theory/active_surface_area_v0.md)
+6. [Claims Ledger](CLAIMS_LEDGER.md)
+7. [Omega Decision Stack Checkpoint](research_notes/omega_theory/omega_decision_stack_checkpoint_v0.md)
+8. [Adaptive Fixed-World Corridor B2.1](research_notes/omega_theory/adaptive_fixed_world_corridor_b21.md)
+9. [Adaptive Observation Informativeness v0](research_notes/omega_theory/adaptive_observation_informativeness_v0.md)
+10. [Recovery Frame / Irreversibility Weld v0](research_notes/omega_theory/recovery_frame_irreversibility_weld_v0.md)
+11. [Recovery-Aware Corridor v0](research_notes/omega_theory/recovery_aware_corridor_v0.md)
+12. [Phantom Recoverability Gate v0](research_notes/omega_theory/phantom_recoverability_gate_v0.md)
+13. [Recovery Reflection and Nonrecoverable-Loss Dominance v0](research_notes/omega_theory/recovery_reflection_and_loss_dominance_v0.md)
+14. [Colonization Axis Report v0](research_notes/omega_theory/colonization_axis_report_v0.md)
+15. [Future-Field Reorientation and Declaration Culling v0](research_notes/omega_theory/future_field_reorientation_and_declaration_culling_v0.md)
+16. [Substrate Classes and Large Deformers v0](research_notes/omega_theory/substrate_classes_and_large_deformers_v0.md)
+17. [Does The Loop Close Soundly?](public/does_the_loop_close_soundly_v0.md)
+18. [Omega Closeout v0](research_notes/omega_theory/omega_closeout_v0.md)
+19. [Effective Layers](research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
 
 ## Current Formal Center
 
