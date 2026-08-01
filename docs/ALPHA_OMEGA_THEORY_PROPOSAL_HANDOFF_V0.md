@@ -396,6 +396,17 @@ statistical directional asymmetry
 
 Not every system instantiates every rung.
 
+The retained finite
+[directional-asymmetry capability experiment](research_notes/omega_v2/directional_asymmetry_capability_report_v0.md)
+sharpens this boundary. Passive path-reversal asymmetry is not sufficient for
+causal action influence or record-sensitive selection. Conversely,
+state-dependent selection among reversal-paired bijective primitive actions
+can induce a noninjective closed-loop map without a pre-biased action family.
+An independent directional coordinate does not alter the matched controller's
+operational profile. Whether process-level asymmetry is necessary, or whether
+a physically coupled directional resource enables stronger capability,
+remains unresolved.
+
 ## 6. Presentations and Observer Relativity
 
 ### 6.1 Exact systems and presentations

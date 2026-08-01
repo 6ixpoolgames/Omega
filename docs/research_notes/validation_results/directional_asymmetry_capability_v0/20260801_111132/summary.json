@@ -1,0 +1,2188 @@
+{
+  "case_results": {
+    "DA1_passive_asymmetry_not_sufficient": true,
+    "DA2_reversal_paired_census_complete": true,
+    "DA3_reversible_primitives_allow_functional_noninvertibility": true,
+    "DA4_matched_record_selector_control": true,
+    "DA5_independent_bias_does_not_change_profile": true
+  },
+  "claim_boundary": "Finite operational countermodels only; not Alpha, valuerhood, agency, standing, value, moral license, Omega compatibility, or a physical arrow-of-time result.",
+  "dependencies": {
+    "experiment": [
+      "initial law",
+      "controller",
+      "finite horizon"
+    ],
+    "interpretation": [
+      "operational feature definitions"
+    ],
+    "measurement": [
+      "action involution",
+      "path reversal",
+      "branch-fidelity event"
+    ],
+    "model": [
+      "finite states",
+      "finite actions",
+      "exact transition kernel"
+    ]
+  },
+  "horizon": 3,
+  "hypothesis_verdicts": {
+    "coupled_enabling": "unresolved",
+    "independent_enabling": "rejected_in_matched_product_control",
+    "necessity": "rejected_for_declared_operational_features",
+    "sufficiency": "rejected"
+  },
+  "kill_conditions": {
+    "census_not_exhaustive": false,
+    "directionality_control_does_not_separate": false,
+    "feature_vector_changes_under_independent_product": false,
+    "matched_surface_changes_beyond_phase_bias": false,
+    "passive_control_has_synthetic_selection": false,
+    "primitive_reversal_contract_fails": false
+  },
+  "matched_record_selector": {
+    "all_matched_controls_hold": true,
+    "balanced": {
+      "baseline_branch_fidelity": "1/2",
+      "baseline_profile": {
+        "causal_action_influence": true,
+        "closed_loop_persistence": true,
+        "controller_id": "record_ignoring_selector",
+        "reachable_memory_count": 3,
+        "reachable_memory_states": [
+          "'neutral'",
+          "'saw_a'",
+          "'saw_b'"
+        ],
+        "reachable_state_count": 13,
+        "record_sensitive_selection": false,
+        "selected_action_count": 2,
+        "selected_actions": [
+          "'swap_a'",
+          "'swap_b'"
+        ]
+      },
+      "branch_fidelity_advantage": "1/2",
+      "capability_horizon": 2,
+      "clockwise_probability": "1/2",
+      "counterclockwise_probability": "1/2",
+      "directionality": {
+        "comparison": {
+          "kl_is_infinite": false,
+          "kl_left_to_right": 0.0,
+          "support_equal": true,
+          "total_variation": "0"
+        },
+        "forward_path_count": 72,
+        "reverse_path_count": 72
+      },
+      "directionality_horizon": 3,
+      "matched_surface_signature": {
+        "actions": [
+          "swap_a",
+          "swap_b",
+          "hold"
+        ],
+        "baseline_controller": {
+          "initial_memory": "neutral",
+          "memory_states": [
+            "neutral",
+            "saw_a",
+            "saw_b"
+          ],
+          "observation_rows": [
+            [
+              "('A', 0)",
+              "A"
+            ],
+            [
+              "('A', 1)",
+              "A"
+            ],
+            [
+              "('A', 2)",
+              "A"
+            ],
+            [
+              "('B', 0)",
+              "B"
+            ],
+            [
+              "('B', 1)",
+              "B"
+            ],
+            [
+              "('B', 2)",
+              "B"
+            ],
+            [
+              "('H', 0)",
+              "H"
+            ],
+            [
+              "('H', 1)",
+              "H"
+            ],
+            [
+              "('H', 2)",
+              "H"
+            ]
+          ],
+          "policy_rows": [
+            [
+              "neutral",
+              "A",
+              "swap_a"
+            ],
+            [
+              "neutral",
+              "B",
+              "swap_b"
+            ],
+            [
+              "neutral",
+              "H",
+              "swap_a"
+            ],
+            [
+              "saw_a",
+              "A",
+              "swap_a"
+            ],
+            [
+              "saw_a",
+              "B",
+              "swap_b"
+            ],
+            [
+              "saw_a",
+              "H",
+              "swap_a"
+            ],
+            [
+              "saw_b",
+              "A",
+              "swap_a"
+            ],
+            [
+              "saw_b",
+              "B",
+              "swap_b"
+            ],
+            [
+              "saw_b",
+              "H",
+              "swap_a"
+            ]
+          ],
+          "update_rows": [
+            [
+              "neutral",
+              "A",
+              "saw_a"
+            ],
+            [
+              "neutral",
+              "B",
+              "saw_b"
+            ],
+            [
+              "neutral",
+              "H",
+              "neutral"
+            ],
+            [
+              "saw_a",
+              "A",
+              "saw_a"
+            ],
+            [
+              "saw_a",
+              "B",
+              "saw_b"
+            ],
+            [
+              "saw_a",
+              "H",
+              "saw_a"
+            ],
+            [
+              "saw_b",
+              "A",
+              "saw_a"
+            ],
+            [
+              "saw_b",
+              "B",
+              "saw_b"
+            ],
+            [
+              "saw_b",
+              "H",
+              "saw_b"
+            ]
+          ]
+        },
+        "branch_fidelity_event": "initial_world_branch_equals_final_world_branch",
+        "capability_horizon": 2,
+        "initial_world_rows": [
+          [
+            "('A', 0)",
+            "1/2"
+          ],
+          [
+            "('B', 0)",
+            "1/2"
+          ]
+        ],
+        "selector_controller": {
+          "initial_memory": "neutral",
+          "memory_states": [
+            "neutral",
+            "saw_a",
+            "saw_b"
+          ],
+          "observation_rows": [
+            [
+              "('A', 0)",
+              "A"
+            ],
+            [
+              "('A', 1)",
+              "A"
+            ],
+            [
+              "('A', 2)",
+              "A"
+            ],
+            [
+              "('B', 0)",
+              "B"
+            ],
+            [
+              "('B', 1)",
+              "B"
+            ],
+            [
+              "('B', 2)",
+              "B"
+            ],
+            [
+              "('H', 0)",
+              "H"
+            ],
+            [
+              "('H', 1)",
+              "H"
+            ],
+            [
+              "('H', 2)",
+              "H"
+            ]
+          ],
+          "policy_rows": [
+            [
+              "neutral",
+              "A",
+              "swap_a"
+            ],
+            [
+              "neutral",
+              "B",
+              "swap_b"
+            ],
+            [
+              "neutral",
+              "H",
+              "swap_a"
+            ],
+            [
+              "saw_a",
+              "A",
+              "swap_a"
+            ],
+            [
+              "saw_a",
+              "B",
+              "swap_b"
+            ],
+            [
+              "saw_a",
+              "H",
+              "swap_a"
+            ],
+            [
+              "saw_b",
+              "A",
+              "swap_a"
+            ],
+            [
+              "saw_b",
+              "B",
+              "swap_b"
+            ],
+            [
+              "saw_b",
+              "H",
+              "swap_b"
+            ]
+          ],
+          "update_rows": [
+            [
+              "neutral",
+              "A",
+              "saw_a"
+            ],
+            [
+              "neutral",
+              "B",
+              "saw_b"
+            ],
+            [
+              "neutral",
+              "H",
+              "neutral"
+            ],
+            [
+              "saw_a",
+              "A",
+              "saw_a"
+            ],
+            [
+              "saw_a",
+              "B",
+              "saw_b"
+            ],
+            [
+              "saw_a",
+              "H",
+              "saw_a"
+            ],
+            [
+              "saw_b",
+              "A",
+              "saw_a"
+            ],
+            [
+              "saw_b",
+              "B",
+              "saw_b"
+            ],
+            [
+              "saw_b",
+              "H",
+              "saw_b"
+            ]
+          ]
+        },
+        "states": [
+          "('A', 0)",
+          "('A', 1)",
+          "('A', 2)",
+          "('B', 0)",
+          "('B', 1)",
+          "('B', 2)",
+          "('H', 0)",
+          "('H', 1)",
+          "('H', 2)"
+        ],
+        "transition_support": [
+          [
+            "('A', 0)",
+            "swap_a",
+            "('H', 1)"
+          ],
+          [
+            "('A', 0)",
+            "swap_a",
+            "('H', 2)"
+          ],
+          [
+            "('A', 0)",
+            "swap_b",
+            "('A', 1)"
+          ],
+          [
+            "('A', 0)",
+            "swap_b",
+            "('A', 2)"
+          ],
+          [
+            "('A', 0)",
+            "hold",
+            "('A', 1)"
+          ],
+          [
+            "('A', 0)",
+            "hold",
+            "('A', 2)"
+          ],
+          [
+            "('A', 1)",
+            "swap_a",
+            "('H', 2)"
+          ],
+          [
+            "('A', 1)",
+            "swap_a",
+            "('H', 0)"
+          ],
+          [
+            "('A', 1)",
+            "swap_b",
+            "('A', 2)"
+          ],
+          [
+            "('A', 1)",
+            "swap_b",
+            "('A', 0)"
+          ],
+          [
+            "('A', 1)",
+            "hold",
+            "('A', 2)"
+          ],
+          [
+            "('A', 1)",
+            "hold",
+            "('A', 0)"
+          ],
+          [
+            "('A', 2)",
+            "swap_a",
+            "('H', 0)"
+          ],
+          [
+            "('A', 2)",
+            "swap_a",
+            "('H', 1)"
+          ],
+          [
+            "('A', 2)",
+            "swap_b",
+            "('A', 0)"
+          ],
+          [
+            "('A', 2)",
+            "swap_b",
+            "('A', 1)"
+          ],
+          [
+            "('A', 2)",
+            "hold",
+            "('A', 0)"
+          ],
+          [
+            "('A', 2)",
+            "hold",
+            "('A', 1)"
+          ],
+          [
+            "('B', 0)",
+            "swap_a",
+            "('B', 1)"
+          ],
+          [
+            "('B', 0)",
+            "swap_a",
+            "('B', 2)"
+          ],
+          [
+            "('B', 0)",
+            "swap_b",
+            "('H', 1)"
+          ],
+          [
+            "('B', 0)",
+            "swap_b",
+            "('H', 2)"
+          ],
+          [
+            "('B', 0)",
+            "hold",
+            "('B', 1)"
+          ],
+          [
+            "('B', 0)",
+            "hold",
+            "('B', 2)"
+          ],
+          [
+            "('B', 1)",
+            "swap_a",
+            "('B', 2)"
+          ],
+          [
+            "('B', 1)",
+            "swap_a",
+            "('B', 0)"
+          ],
+          [
+            "('B', 1)",
+            "swap_b",
+            "('H', 2)"
+          ],
+          [
+            "('B', 1)",
+            "swap_b",
+            "('H', 0)"
+          ],
+          [
+            "('B', 1)",
+            "hold",
+            "('B', 2)"
+          ],
+          [
+            "('B', 1)",
+            "hold",
+            "('B', 0)"
+          ],
+          [
+            "('B', 2)",
+            "swap_a",
+            "('B', 0)"
+          ],
+          [
+            "('B', 2)",
+            "swap_a",
+            "('B', 1)"
+          ],
+          [
+            "('B', 2)",
+            "swap_b",
+            "('H', 0)"
+          ],
+          [
+            "('B', 2)",
+            "swap_b",
+            "('H', 1)"
+          ],
+          [
+            "('B', 2)",
+            "hold",
+            "('B', 0)"
+          ],
+          [
+            "('B', 2)",
+            "hold",
+            "('B', 1)"
+          ],
+          [
+            "('H', 0)",
+            "swap_a",
+            "('A', 1)"
+          ],
+          [
+            "('H', 0)",
+            "swap_a",
+            "('A', 2)"
+          ],
+          [
+            "('H', 0)",
+            "swap_b",
+            "('B', 1)"
+          ],
+          [
+            "('H', 0)",
+            "swap_b",
+            "('B', 2)"
+          ],
+          [
+            "('H', 0)",
+            "hold",
+            "('H', 1)"
+          ],
+          [
+            "('H', 0)",
+            "hold",
+            "('H', 2)"
+          ],
+          [
+            "('H', 1)",
+            "swap_a",
+            "('A', 2)"
+          ],
+          [
+            "('H', 1)",
+            "swap_a",
+            "('A', 0)"
+          ],
+          [
+            "('H', 1)",
+            "swap_b",
+            "('B', 2)"
+          ],
+          [
+            "('H', 1)",
+            "swap_b",
+            "('B', 0)"
+          ],
+          [
+            "('H', 1)",
+            "hold",
+            "('H', 2)"
+          ],
+          [
+            "('H', 1)",
+            "hold",
+            "('H', 0)"
+          ],
+          [
+            "('H', 2)",
+            "swap_a",
+            "('A', 0)"
+          ],
+          [
+            "('H', 2)",
+            "swap_a",
+            "('A', 1)"
+          ],
+          [
+            "('H', 2)",
+            "swap_b",
+            "('B', 0)"
+          ],
+          [
+            "('H', 2)",
+            "swap_b",
+            "('B', 1)"
+          ],
+          [
+            "('H', 2)",
+            "hold",
+            "('H', 0)"
+          ],
+          [
+            "('H', 2)",
+            "hold",
+            "('H', 1)"
+          ]
+        ]
+      },
+      "operational_signature": [
+        14,
+        3,
+        2,
+        true,
+        true,
+        true
+      ],
+      "policy_deformation_total_variation": "1/2",
+      "selector_branch_fidelity": "1",
+      "selector_profile": {
+        "causal_action_influence": true,
+        "closed_loop_persistence": true,
+        "controller_id": "record_sensitive_selector",
+        "reachable_memory_count": 3,
+        "reachable_memory_states": [
+          "'neutral'",
+          "'saw_a'",
+          "'saw_b'"
+        ],
+        "reachable_state_count": 14,
+        "record_sensitive_selection": true,
+        "selected_action_count": 2,
+        "selected_actions": [
+          "'swap_a'",
+          "'swap_b'"
+        ]
+      },
+      "system_id": "record_selector_phase_1_2"
+    },
+    "balanced_directionally_null": true,
+    "biased": {
+      "baseline_branch_fidelity": "1/2",
+      "baseline_profile": {
+        "causal_action_influence": true,
+        "closed_loop_persistence": true,
+        "controller_id": "record_ignoring_selector",
+        "reachable_memory_count": 3,
+        "reachable_memory_states": [
+          "'neutral'",
+          "'saw_a'",
+          "'saw_b'"
+        ],
+        "reachable_state_count": 13,
+        "record_sensitive_selection": false,
+        "selected_action_count": 2,
+        "selected_actions": [
+          "'swap_a'",
+          "'swap_b'"
+        ]
+      },
+      "branch_fidelity_advantage": "1/2",
+      "capability_horizon": 2,
+      "clockwise_probability": "3/4",
+      "counterclockwise_probability": "1/4",
+      "directionality": {
+        "comparison": {
+          "kl_is_infinite": false,
+          "kl_left_to_right": 1.6479184330021646,
+          "support_equal": true,
+          "total_variation": "11/16"
+        },
+        "forward_path_count": 72,
+        "reverse_path_count": 72
+      },
+      "directionality_horizon": 3,
+      "matched_surface_signature": {
+        "actions": [
+          "swap_a",
+          "swap_b",
+          "hold"
+        ],
+        "baseline_controller": {
+          "initial_memory": "neutral",
+          "memory_states": [
+            "neutral",
+            "saw_a",
+            "saw_b"
+          ],
+          "observation_rows": [
+            [
+              "('A', 0)",
+              "A"
+            ],
+            [
+              "('A', 1)",
+              "A"
+            ],
+            [
+              "('A', 2)",
+              "A"
+            ],
+            [
+              "('B', 0)",
+              "B"
+            ],
+            [
+              "('B', 1)",
+              "B"
+            ],
+            [
+              "('B', 2)",
+              "B"
+            ],
+            [
+              "('H', 0)",
+              "H"
+            ],
+            [
+              "('H', 1)",
+              "H"
+            ],
+            [
+              "('H', 2)",
+              "H"
+            ]
+          ],
+          "policy_rows": [
+            [
+              "neutral",
+              "A",
+              "swap_a"
+            ],
+            [
+              "neutral",
+              "B",
+              "swap_b"
+            ],
+            [
+              "neutral",
+              "H",
+              "swap_a"
+            ],
+            [
+              "saw_a",
+              "A",
+              "swap_a"
+            ],
+            [
+              "saw_a",
+              "B",
+              "swap_b"
+            ],
+            [
+              "saw_a",
+              "H",
+              "swap_a"
+            ],
+            [
+              "saw_b",
+              "A",
+              "swap_a"
+            ],
+            [
+              "saw_b",
+              "B",
+              "swap_b"
+            ],
+            [
+              "saw_b",
+              "H",
+              "swap_a"
+            ]
+          ],
+          "update_rows": [
+            [
+              "neutral",
+              "A",
+              "saw_a"
+            ],
+            [
+              "neutral",
+              "B",
+              "saw_b"
+            ],
+            [
+              "neutral",
+              "H",
+              "neutral"
+            ],
+            [
+              "saw_a",
+              "A",
+              "saw_a"
+            ],
+            [
+              "saw_a",
+              "B",
+              "saw_b"
+            ],
+            [
+              "saw_a",
+              "H",
+              "saw_a"
+            ],
+            [
+              "saw_b",
+              "A",
+              "saw_a"
+            ],
+            [
+              "saw_b",
+              "B",
+              "saw_b"
+            ],
+            [
+              "saw_b",
+              "H",
+              "saw_b"
+            ]
+          ]
+        },
+        "branch_fidelity_event": "initial_world_branch_equals_final_world_branch",
+        "capability_horizon": 2,
+        "initial_world_rows": [
+          [
+            "('A', 0)",
+            "1/2"
+          ],
+          [
+            "('B', 0)",
+            "1/2"
+          ]
+        ],
+        "selector_controller": {
+          "initial_memory": "neutral",
+          "memory_states": [
+            "neutral",
+            "saw_a",
+            "saw_b"
+          ],
+          "observation_rows": [
+            [
+              "('A', 0)",
+              "A"
+            ],
+            [
+              "('A', 1)",
+              "A"
+            ],
+            [
+              "('A', 2)",
+              "A"
+            ],
+            [
+              "('B', 0)",
+              "B"
+            ],
+            [
+              "('B', 1)",
+              "B"
+            ],
+            [
+              "('B', 2)",
+              "B"
+            ],
+            [
+              "('H', 0)",
+              "H"
+            ],
+            [
+              "('H', 1)",
+              "H"
+            ],
+            [
+              "('H', 2)",
+              "H"
+            ]
+          ],
+          "policy_rows": [
+            [
+              "neutral",
+              "A",
+              "swap_a"
+            ],
+            [
+              "neutral",
+              "B",
+              "swap_b"
+            ],
+            [
+              "neutral",
+              "H",
+              "swap_a"
+            ],
+            [
+              "saw_a",
+              "A",
+              "swap_a"
+            ],
+            [
+              "saw_a",
+              "B",
+              "swap_b"
+            ],
+            [
+              "saw_a",
+              "H",
+              "swap_a"
+            ],
+            [
+              "saw_b",
+              "A",
+              "swap_a"
+            ],
+            [
+              "saw_b",
+              "B",
+              "swap_b"
+            ],
+            [
+              "saw_b",
+              "H",
+              "swap_b"
+            ]
+          ],
+          "update_rows": [
+            [
+              "neutral",
+              "A",
+              "saw_a"
+            ],
+            [
+              "neutral",
+              "B",
+              "saw_b"
+            ],
+            [
+              "neutral",
+              "H",
+              "neutral"
+            ],
+            [
+              "saw_a",
+              "A",
+              "saw_a"
+            ],
+            [
+              "saw_a",
+              "B",
+              "saw_b"
+            ],
+            [
+              "saw_a",
+              "H",
+              "saw_a"
+            ],
+            [
+              "saw_b",
+              "A",
+              "saw_a"
+            ],
+            [
+              "saw_b",
+              "B",
+              "saw_b"
+            ],
+            [
+              "saw_b",
+              "H",
+              "saw_b"
+            ]
+          ]
+        },
+        "states": [
+          "('A', 0)",
+          "('A', 1)",
+          "('A', 2)",
+          "('B', 0)",
+          "('B', 1)",
+          "('B', 2)",
+          "('H', 0)",
+          "('H', 1)",
+          "('H', 2)"
+        ],
+        "transition_support": [
+          [
+            "('A', 0)",
+            "swap_a",
+            "('H', 1)"
+          ],
+          [
+            "('A', 0)",
+            "swap_a",
+            "('H', 2)"
+          ],
+          [
+            "('A', 0)",
+            "swap_b",
+            "('A', 1)"
+          ],
+          [
+            "('A', 0)",
+            "swap_b",
+            "('A', 2)"
+          ],
+          [
+            "('A', 0)",
+            "hold",
+            "('A', 1)"
+          ],
+          [
+            "('A', 0)",
+            "hold",
+            "('A', 2)"
+          ],
+          [
+            "('A', 1)",
+            "swap_a",
+            "('H', 2)"
+          ],
+          [
+            "('A', 1)",
+            "swap_a",
+            "('H', 0)"
+          ],
+          [
+            "('A', 1)",
+            "swap_b",
+            "('A', 2)"
+          ],
+          [
+            "('A', 1)",
+            "swap_b",
+            "('A', 0)"
+          ],
+          [
+            "('A', 1)",
+            "hold",
+            "('A', 2)"
+          ],
+          [
+            "('A', 1)",
+            "hold",
+            "('A', 0)"
+          ],
+          [
+            "('A', 2)",
+            "swap_a",
+            "('H', 0)"
+          ],
+          [
+            "('A', 2)",
+            "swap_a",
+            "('H', 1)"
+          ],
+          [
+            "('A', 2)",
+            "swap_b",
+            "('A', 0)"
+          ],
+          [
+            "('A', 2)",
+            "swap_b",
+            "('A', 1)"
+          ],
+          [
+            "('A', 2)",
+            "hold",
+            "('A', 0)"
+          ],
+          [
+            "('A', 2)",
+            "hold",
+            "('A', 1)"
+          ],
+          [
+            "('B', 0)",
+            "swap_a",
+            "('B', 1)"
+          ],
+          [
+            "('B', 0)",
+            "swap_a",
+            "('B', 2)"
+          ],
+          [
+            "('B', 0)",
+            "swap_b",
+            "('H', 1)"
+          ],
+          [
+            "('B', 0)",
+            "swap_b",
+            "('H', 2)"
+          ],
+          [
+            "('B', 0)",
+            "hold",
+            "('B', 1)"
+          ],
+          [
+            "('B', 0)",
+            "hold",
+            "('B', 2)"
+          ],
+          [
+            "('B', 1)",
+            "swap_a",
+            "('B', 2)"
+          ],
+          [
+            "('B', 1)",
+            "swap_a",
+            "('B', 0)"
+          ],
+          [
+            "('B', 1)",
+            "swap_b",
+            "('H', 2)"
+          ],
+          [
+            "('B', 1)",
+            "swap_b",
+            "('H', 0)"
+          ],
+          [
+            "('B', 1)",
+            "hold",
+            "('B', 2)"
+          ],
+          [
+            "('B', 1)",
+            "hold",
+            "('B', 0)"
+          ],
+          [
+            "('B', 2)",
+            "swap_a",
+            "('B', 0)"
+          ],
+          [
+            "('B', 2)",
+            "swap_a",
+            "('B', 1)"
+          ],
+          [
+            "('B', 2)",
+            "swap_b",
+            "('H', 0)"
+          ],
+          [
+            "('B', 2)",
+            "swap_b",
+            "('H', 1)"
+          ],
+          [
+            "('B', 2)",
+            "hold",
+            "('B', 0)"
+          ],
+          [
+            "('B', 2)",
+            "hold",
+            "('B', 1)"
+          ],
+          [
+            "('H', 0)",
+            "swap_a",
+            "('A', 1)"
+          ],
+          [
+            "('H', 0)",
+            "swap_a",
+            "('A', 2)"
+          ],
+          [
+            "('H', 0)",
+            "swap_b",
+            "('B', 1)"
+          ],
+          [
+            "('H', 0)",
+            "swap_b",
+            "('B', 2)"
+          ],
+          [
+            "('H', 0)",
+            "hold",
+            "('H', 1)"
+          ],
+          [
+            "('H', 0)",
+            "hold",
+            "('H', 2)"
+          ],
+          [
+            "('H', 1)",
+            "swap_a",
+            "('A', 2)"
+          ],
+          [
+            "('H', 1)",
+            "swap_a",
+            "('A', 0)"
+          ],
+          [
+            "('H', 1)",
+            "swap_b",
+            "('B', 2)"
+          ],
+          [
+            "('H', 1)",
+            "swap_b",
+            "('B', 0)"
+          ],
+          [
+            "('H', 1)",
+            "hold",
+            "('H', 2)"
+          ],
+          [
+            "('H', 1)",
+            "hold",
+            "('H', 0)"
+          ],
+          [
+            "('H', 2)",
+            "swap_a",
+            "('A', 0)"
+          ],
+          [
+            "('H', 2)",
+            "swap_a",
+            "('A', 1)"
+          ],
+          [
+            "('H', 2)",
+            "swap_b",
+            "('B', 0)"
+          ],
+          [
+            "('H', 2)",
+            "swap_b",
+            "('B', 1)"
+          ],
+          [
+            "('H', 2)",
+            "hold",
+            "('H', 0)"
+          ],
+          [
+            "('H', 2)",
+            "hold",
+            "('H', 1)"
+          ]
+        ]
+      },
+      "operational_signature": [
+        14,
+        3,
+        2,
+        true,
+        true,
+        true
+      ],
+      "policy_deformation_total_variation": "1/2",
+      "selector_branch_fidelity": "1",
+      "selector_profile": {
+        "causal_action_influence": true,
+        "closed_loop_persistence": true,
+        "controller_id": "record_sensitive_selector",
+        "reachable_memory_count": 3,
+        "reachable_memory_states": [
+          "'neutral'",
+          "'saw_a'",
+          "'saw_b'"
+        ],
+        "reachable_state_count": 14,
+        "record_sensitive_selection": true,
+        "selected_action_count": 2,
+        "selected_actions": [
+          "'swap_a'",
+          "'swap_b'"
+        ]
+      },
+      "system_id": "record_selector_phase_3_4"
+    },
+    "biased_directionally_nonzero": true,
+    "branch_fidelity_unchanged": true,
+    "matched_surface": {
+      "actions_equal": true,
+      "baseline_controller_equal": true,
+      "branch_fidelity_event_equal": true,
+      "initial_world_record_law_equal": true,
+      "phase_probabilities_differ": true,
+      "selector_controller_equal": true,
+      "state_space_equal": true,
+      "transition_support_equal": true
+    },
+    "operational_signature_unchanged": true,
+    "policy_deformation_unchanged": true
+  },
+  "passive_asymmetry": {
+    "directionality": {
+      "comparison": {
+        "kl_is_infinite": false,
+        "kl_left_to_right": 1.6479184330021646,
+        "support_equal": true,
+        "total_variation": "11/16"
+      },
+      "forward_path_count": 24,
+      "reverse_path_count": 24
+    },
+    "features": {
+      "causal_action_influence": false,
+      "closed_loop_persistence": true,
+      "controller_id": "passive_singleton",
+      "reachable_memory_count": 1,
+      "reachable_memory_states": [
+        "'m'"
+      ],
+      "reachable_state_count": 3,
+      "record_sensitive_selection": false,
+      "selected_action_count": 1,
+      "selected_actions": [
+        "'advance'"
+      ]
+    },
+    "horizon": 3,
+    "system_id": "passive_biased_cycle"
+  },
+  "protocol_doc": "docs/research_notes/omega_v2/directional_asymmetry_capability_protocol_v0.md",
+  "reversible_action_census": {
+    "all_primitive_actions_bijective": true,
+    "all_reversal_contracts_hold": true,
+    "all_reverse_pair_distances_zero": true,
+    "expected_permutation_count": 6,
+    "expected_policy_count": 48,
+    "first_qualifying_witness": {
+      "actions_have_distinct_effects": true,
+      "closed_loop_image_size": 2,
+      "closed_loop_injective": false,
+      "closed_loop_targets": "1|2|1",
+      "permutation": "120",
+      "permutation_id": "permutation_120",
+      "policy": "forward|forward|reverse",
+      "primitive_actions_bijective": true,
+      "qualifying_noninvertible_selector": true,
+      "reversal_contract_holds": true,
+      "reverse_pair_total_variation": "0",
+      "uses_both_actions": true
+    },
+    "manifest_digest": "f112cb529f12d2c5386e514120c6d3d72a8ba1a36dbba835a7fe9577a259a287",
+    "permutation_count": 6,
+    "permutations": [
+      {
+        "action_targets_are_bijective": true,
+        "inverse": [
+          0,
+          1,
+          2
+        ],
+        "permutation": [
+          0,
+          1,
+          2
+        ],
+        "permutation_id": "permutation_012",
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0"
+      },
+      {
+        "action_targets_are_bijective": true,
+        "inverse": [
+          0,
+          2,
+          1
+        ],
+        "permutation": [
+          0,
+          2,
+          1
+        ],
+        "permutation_id": "permutation_021",
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0"
+      },
+      {
+        "action_targets_are_bijective": true,
+        "inverse": [
+          1,
+          0,
+          2
+        ],
+        "permutation": [
+          1,
+          0,
+          2
+        ],
+        "permutation_id": "permutation_102",
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0"
+      },
+      {
+        "action_targets_are_bijective": true,
+        "inverse": [
+          2,
+          0,
+          1
+        ],
+        "permutation": [
+          1,
+          2,
+          0
+        ],
+        "permutation_id": "permutation_120",
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0"
+      },
+      {
+        "action_targets_are_bijective": true,
+        "inverse": [
+          1,
+          2,
+          0
+        ],
+        "permutation": [
+          2,
+          0,
+          1
+        ],
+        "permutation_id": "permutation_201",
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0"
+      },
+      {
+        "action_targets_are_bijective": true,
+        "inverse": [
+          2,
+          1,
+          0
+        ],
+        "permutation": [
+          2,
+          1,
+          0
+        ],
+        "permutation_id": "permutation_210",
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0"
+      }
+    ],
+    "policy_count": 48,
+    "qualifying_witness_count": 12,
+    "rows": [
+      {
+        "actions_have_distinct_effects": false,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "0|1|2",
+        "permutation": "012",
+        "permutation_id": "permutation_012",
+        "policy": "forward|forward|forward",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": false
+      },
+      {
+        "actions_have_distinct_effects": false,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "0|1|2",
+        "permutation": "012",
+        "permutation_id": "permutation_012",
+        "policy": "forward|forward|reverse",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": false,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "0|1|2",
+        "permutation": "012",
+        "permutation_id": "permutation_012",
+        "policy": "forward|reverse|forward",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": false,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "0|1|2",
+        "permutation": "012",
+        "permutation_id": "permutation_012",
+        "policy": "forward|reverse|reverse",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": false,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "0|1|2",
+        "permutation": "012",
+        "permutation_id": "permutation_012",
+        "policy": "reverse|forward|forward",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": false,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "0|1|2",
+        "permutation": "012",
+        "permutation_id": "permutation_012",
+        "policy": "reverse|forward|reverse",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": false,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "0|1|2",
+        "permutation": "012",
+        "permutation_id": "permutation_012",
+        "policy": "reverse|reverse|forward",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": false,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "0|1|2",
+        "permutation": "012",
+        "permutation_id": "permutation_012",
+        "policy": "reverse|reverse|reverse",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": false
+      },
+      {
+        "actions_have_distinct_effects": false,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "0|2|1",
+        "permutation": "021",
+        "permutation_id": "permutation_021",
+        "policy": "forward|forward|forward",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": false
+      },
+      {
+        "actions_have_distinct_effects": false,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "0|2|1",
+        "permutation": "021",
+        "permutation_id": "permutation_021",
+        "policy": "forward|forward|reverse",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": false,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "0|2|1",
+        "permutation": "021",
+        "permutation_id": "permutation_021",
+        "policy": "forward|reverse|forward",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": false,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "0|2|1",
+        "permutation": "021",
+        "permutation_id": "permutation_021",
+        "policy": "forward|reverse|reverse",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": false,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "0|2|1",
+        "permutation": "021",
+        "permutation_id": "permutation_021",
+        "policy": "reverse|forward|forward",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": false,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "0|2|1",
+        "permutation": "021",
+        "permutation_id": "permutation_021",
+        "policy": "reverse|forward|reverse",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": false,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "0|2|1",
+        "permutation": "021",
+        "permutation_id": "permutation_021",
+        "policy": "reverse|reverse|forward",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": false,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "0|2|1",
+        "permutation": "021",
+        "permutation_id": "permutation_021",
+        "policy": "reverse|reverse|reverse",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": false
+      },
+      {
+        "actions_have_distinct_effects": false,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "1|0|2",
+        "permutation": "102",
+        "permutation_id": "permutation_102",
+        "policy": "forward|forward|forward",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": false
+      },
+      {
+        "actions_have_distinct_effects": false,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "1|0|2",
+        "permutation": "102",
+        "permutation_id": "permutation_102",
+        "policy": "forward|forward|reverse",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": false,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "1|0|2",
+        "permutation": "102",
+        "permutation_id": "permutation_102",
+        "policy": "forward|reverse|forward",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": false,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "1|0|2",
+        "permutation": "102",
+        "permutation_id": "permutation_102",
+        "policy": "forward|reverse|reverse",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": false,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "1|0|2",
+        "permutation": "102",
+        "permutation_id": "permutation_102",
+        "policy": "reverse|forward|forward",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": false,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "1|0|2",
+        "permutation": "102",
+        "permutation_id": "permutation_102",
+        "policy": "reverse|forward|reverse",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": false,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "1|0|2",
+        "permutation": "102",
+        "permutation_id": "permutation_102",
+        "policy": "reverse|reverse|forward",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": false,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "1|0|2",
+        "permutation": "102",
+        "permutation_id": "permutation_102",
+        "policy": "reverse|reverse|reverse",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": false
+      },
+      {
+        "actions_have_distinct_effects": true,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "1|2|0",
+        "permutation": "120",
+        "permutation_id": "permutation_120",
+        "policy": "forward|forward|forward",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": false
+      },
+      {
+        "actions_have_distinct_effects": true,
+        "closed_loop_image_size": 2,
+        "closed_loop_injective": false,
+        "closed_loop_targets": "1|2|1",
+        "permutation": "120",
+        "permutation_id": "permutation_120",
+        "policy": "forward|forward|reverse",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": true,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": true,
+        "closed_loop_image_size": 2,
+        "closed_loop_injective": false,
+        "closed_loop_targets": "1|0|0",
+        "permutation": "120",
+        "permutation_id": "permutation_120",
+        "policy": "forward|reverse|forward",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": true,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": true,
+        "closed_loop_image_size": 2,
+        "closed_loop_injective": false,
+        "closed_loop_targets": "1|0|1",
+        "permutation": "120",
+        "permutation_id": "permutation_120",
+        "policy": "forward|reverse|reverse",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": true,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": true,
+        "closed_loop_image_size": 2,
+        "closed_loop_injective": false,
+        "closed_loop_targets": "2|2|0",
+        "permutation": "120",
+        "permutation_id": "permutation_120",
+        "policy": "reverse|forward|forward",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": true,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": true,
+        "closed_loop_image_size": 2,
+        "closed_loop_injective": false,
+        "closed_loop_targets": "2|2|1",
+        "permutation": "120",
+        "permutation_id": "permutation_120",
+        "policy": "reverse|forward|reverse",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": true,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": true,
+        "closed_loop_image_size": 2,
+        "closed_loop_injective": false,
+        "closed_loop_targets": "2|0|0",
+        "permutation": "120",
+        "permutation_id": "permutation_120",
+        "policy": "reverse|reverse|forward",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": true,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": true,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "2|0|1",
+        "permutation": "120",
+        "permutation_id": "permutation_120",
+        "policy": "reverse|reverse|reverse",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": false
+      },
+      {
+        "actions_have_distinct_effects": true,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "2|0|1",
+        "permutation": "201",
+        "permutation_id": "permutation_201",
+        "policy": "forward|forward|forward",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": false
+      },
+      {
+        "actions_have_distinct_effects": true,
+        "closed_loop_image_size": 2,
+        "closed_loop_injective": false,
+        "closed_loop_targets": "2|0|0",
+        "permutation": "201",
+        "permutation_id": "permutation_201",
+        "policy": "forward|forward|reverse",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": true,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": true,
+        "closed_loop_image_size": 2,
+        "closed_loop_injective": false,
+        "closed_loop_targets": "2|2|1",
+        "permutation": "201",
+        "permutation_id": "permutation_201",
+        "policy": "forward|reverse|forward",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": true,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": true,
+        "closed_loop_image_size": 2,
+        "closed_loop_injective": false,
+        "closed_loop_targets": "2|2|0",
+        "permutation": "201",
+        "permutation_id": "permutation_201",
+        "policy": "forward|reverse|reverse",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": true,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": true,
+        "closed_loop_image_size": 2,
+        "closed_loop_injective": false,
+        "closed_loop_targets": "1|0|1",
+        "permutation": "201",
+        "permutation_id": "permutation_201",
+        "policy": "reverse|forward|forward",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": true,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": true,
+        "closed_loop_image_size": 2,
+        "closed_loop_injective": false,
+        "closed_loop_targets": "1|0|0",
+        "permutation": "201",
+        "permutation_id": "permutation_201",
+        "policy": "reverse|forward|reverse",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": true,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": true,
+        "closed_loop_image_size": 2,
+        "closed_loop_injective": false,
+        "closed_loop_targets": "1|2|1",
+        "permutation": "201",
+        "permutation_id": "permutation_201",
+        "policy": "reverse|reverse|forward",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": true,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": true,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "1|2|0",
+        "permutation": "201",
+        "permutation_id": "permutation_201",
+        "policy": "reverse|reverse|reverse",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": false
+      },
+      {
+        "actions_have_distinct_effects": false,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "2|1|0",
+        "permutation": "210",
+        "permutation_id": "permutation_210",
+        "policy": "forward|forward|forward",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": false
+      },
+      {
+        "actions_have_distinct_effects": false,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "2|1|0",
+        "permutation": "210",
+        "permutation_id": "permutation_210",
+        "policy": "forward|forward|reverse",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": false,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "2|1|0",
+        "permutation": "210",
+        "permutation_id": "permutation_210",
+        "policy": "forward|reverse|forward",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": false,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "2|1|0",
+        "permutation": "210",
+        "permutation_id": "permutation_210",
+        "policy": "forward|reverse|reverse",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": false,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "2|1|0",
+        "permutation": "210",
+        "permutation_id": "permutation_210",
+        "policy": "reverse|forward|forward",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": false,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "2|1|0",
+        "permutation": "210",
+        "permutation_id": "permutation_210",
+        "policy": "reverse|forward|reverse",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": false,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "2|1|0",
+        "permutation": "210",
+        "permutation_id": "permutation_210",
+        "policy": "reverse|reverse|forward",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": true
+      },
+      {
+        "actions_have_distinct_effects": false,
+        "closed_loop_image_size": 3,
+        "closed_loop_injective": true,
+        "closed_loop_targets": "2|1|0",
+        "permutation": "210",
+        "permutation_id": "permutation_210",
+        "policy": "reverse|reverse|reverse",
+        "primitive_actions_bijective": true,
+        "qualifying_noninvertible_selector": false,
+        "reversal_contract_holds": true,
+        "reverse_pair_total_variation": "0",
+        "uses_both_actions": false
+      }
+    ],
+    "state_count": 3
+  },
+  "run_root": "docs\\research_notes\\validation_results\\directional_asymmetry_capability_v0\\20260801_111132",
+  "status": "retained",
+  "verdict": "asymmetry_not_necessary_or_sufficient_for_declared_features"
+}

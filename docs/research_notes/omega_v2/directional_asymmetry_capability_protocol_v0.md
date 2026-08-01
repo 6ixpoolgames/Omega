@@ -311,3 +311,13 @@ If all required controls retain, the strongest licensed conclusion is:
 > controller operation.
 
 This is a boundary result, not a completed account of Alpha-capable dynamics.
+
+## Post-Run Scope Clarification
+
+Added after the preregistered run during implementation review:
+
+The necessity hypothesis in this protocol concerns a **pre-existing
+directionally biased substrate**. It does not ask whether the realized
+controller/world closed loop itself acquires directional asymmetry. The latter
+question remains separate and unresolved. The retained report and canonical
+validation run use hypothesis labels that preserve this distinction.
