@@ -19,6 +19,10 @@ and its first checked implementation is summarized in the
 [Alpha-Omega Foundation Report v0](docs/research_notes/omega_v2/alpha_omega_foundation_report_v0.md).
 The first clean migration-template implementation is the
 [Finite Controlled Markov Abstraction Report v0](docs/research_notes/omega_v2/finite_controlled_markov_abstraction_report_v0.md).
+The clean realization layer is summarized in the
+[May and Robust Realization Report v0](docs/research_notes/omega_v2/robust_omega_report_v0.md);
+it separates existence of a joint realization from one-policy robustness
+across a declared environment scope.
 
 Omega is a research program for treating alignment as the problem of
 preserving the corridor of compatible, value-bearing futures.

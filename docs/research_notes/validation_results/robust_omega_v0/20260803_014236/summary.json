@@ -1,0 +1,130 @@
+{
+  "case_results": {
+    "candidate_antitonicity": true,
+    "empty_environment_scope_rejected": true,
+    "environment_antitonicity": true,
+    "environment_sensitivity": true,
+    "generated_run_crosscheck": true,
+    "legacy_may_parity": true,
+    "may_but_not_robust": true,
+    "may_duplicate_invariance": true,
+    "multivalued_outcome_table_rejected": true,
+    "partial_outcome_table_rejected": true,
+    "restriction_laws": true,
+    "robust_duplicate_invariance": true,
+    "robust_hollow_triangle": true,
+    "robust_implies_may": true,
+    "robust_positive_control": true
+  },
+  "claim_boundary": "Finite deterministic May/Robust realization only; not candidate correctness, empirical robustness, identity, agency, valuerhood, standing, value, moral license, universal Omega, or selection of a maximal face.",
+  "environment_sensitivity": {
+    "calm_policy_ids": [
+      "policy_fragile"
+    ],
+    "candidate_classes_stable": true,
+    "environment_antitone_failures": [],
+    "full_policy_ids": [],
+    "generated_runs_match": true,
+    "may_compatible": true,
+    "robust_calm": true,
+    "robust_full": false
+  },
+  "kill_conditions": {
+    "candidate_antitonicity_failed": false,
+    "candidate_duplicate_changed_payload": false,
+    "empty_environment_scope_admitted": false,
+    "environment_antitonicity_failed": false,
+    "generated_run_table_mismatch": false,
+    "legacy_may_parity_failed": false,
+    "multivalued_outcome_table_admitted": false,
+    "pair_triple_scope_mismatch": false,
+    "partial_outcome_table_admitted": false,
+    "robust_without_may": false,
+    "robust_witnesses_discarded": false
+  },
+  "may_migration": {
+    "downward_closure_failures": [],
+    "duplicate_invariant": true,
+    "duplicate_quotient_candidate_count": 3,
+    "duplicate_raw_candidate_count": 4,
+    "duplicate_structural_digest": "b79cd2f3be3a4b98047055a0776bfe4411109ca0502678d75d14bc00560e8e28",
+    "greatest_face_exists": false,
+    "legacy_parity": true,
+    "legacy_structural_digest": "b79cd2f3be3a4b98047055a0776bfe4411109ca0502678d75d14bc00560e8e28",
+    "maximal_face_count": 3,
+    "pair_fibers": {
+      "AB": [
+        "history:a0"
+      ],
+      "AC": [
+        "history:a1"
+      ],
+      "BC": [
+        "history:a2"
+      ]
+    },
+    "quotient_candidate_count": 3,
+    "raw_candidate_count": 3,
+    "restriction_failures": [],
+    "structural_digest": "b79cd2f3be3a4b98047055a0776bfe4411109ca0502678d75d14bc00560e8e28",
+    "triple_witness_ids": []
+  },
+  "protocol_doc": "docs/research_notes/omega_v2/robust_omega_protocol_v0.md",
+  "robust_hollow_triangle": {
+    "all_pairs_robust": true,
+    "candidate_antitone_failures": [],
+    "duplicate_invariant": true,
+    "environment_ids": [
+      "north",
+      "south"
+    ],
+    "generated_runs_match": true,
+    "pair_policy_ids": {
+      "AB": [
+        "policy_ab"
+      ],
+      "AC": [
+        "policy_ac"
+      ],
+      "BC": [
+        "policy_bc"
+      ]
+    },
+    "restriction_failures": [],
+    "robust_implies_may_failures": [],
+    "robust_maximal_face_count": 3,
+    "triple_policy_ids": [],
+    "triple_robust": false
+  },
+  "robust_positive_control": {
+    "generated_runs_match": true,
+    "triple_environment_runs": [
+      {
+        "environment_runs": [
+          {
+            "environment_id": "north",
+            "witness_id": "run:robust_triangle_positive:policy_abc:north"
+          },
+          {
+            "environment_id": "south",
+            "witness_id": "run:robust_triangle_positive:policy_abc:south"
+          }
+        ],
+        "policy_id": "policy_abc"
+      }
+    ],
+    "triple_policy_ids": [
+      "policy_abc"
+    ],
+    "triple_robust": true
+  },
+  "run_root": "docs\\research_notes\\validation_results\\robust_omega_v0\\20260803_014236",
+  "semantics": {
+    "environment_quantifier": "forall",
+    "environment_scope_nonempty": true,
+    "policy_quantifier": "exists",
+    "run_semantics": "one_deterministic_finite_run_per_policy_environment"
+  },
+  "status": "retained",
+  "verdict": "finite_may_and_robust_realization_core_retained"
+}

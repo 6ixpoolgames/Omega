@@ -1,0 +1,17 @@
+case,policy_id,environment_id,witness_id,path_states,path_actions
+environment_sensitivity,policy_fragile,calm,run:environment_sensitivity:policy_fragile:calm,start->ab,fragile
+environment_sensitivity,policy_fragile,stress,run:environment_sensitivity:policy_fragile:stress,start->a,fragile
+robust_hollow_triangle,policy_ab,north,run:robust_hollow_triangle:policy_ab:north,start->ab,choose_ab
+robust_hollow_triangle,policy_ab,south,run:robust_hollow_triangle:policy_ab:south,start->ab,choose_ab
+robust_hollow_triangle,policy_ac,north,run:robust_hollow_triangle:policy_ac:north,start->ac,choose_ac
+robust_hollow_triangle,policy_ac,south,run:robust_hollow_triangle:policy_ac:south,start->ac,choose_ac
+robust_hollow_triangle,policy_bc,north,run:robust_hollow_triangle:policy_bc:north,start->bc,choose_bc
+robust_hollow_triangle,policy_bc,south,run:robust_hollow_triangle:policy_bc:south,start->bc,choose_bc
+robust_positive_control,policy_ab,north,run:robust_triangle_positive:policy_ab:north,start->ab,choose_ab
+robust_positive_control,policy_ab,south,run:robust_triangle_positive:policy_ab:south,start->ab,choose_ab
+robust_positive_control,policy_ac,north,run:robust_triangle_positive:policy_ac:north,start->ac,choose_ac
+robust_positive_control,policy_ac,south,run:robust_triangle_positive:policy_ac:south,start->ac,choose_ac
+robust_positive_control,policy_bc,north,run:robust_triangle_positive:policy_bc:north,start->bc,choose_bc
+robust_positive_control,policy_bc,south,run:robust_triangle_positive:policy_bc:south,start->bc,choose_bc
+robust_positive_control,policy_abc,north,run:robust_triangle_positive:policy_abc:north,start->abc,choose_abc
+robust_positive_control,policy_abc,south,run:robust_triangle_positive:policy_abc:south,start->abc,choose_abc
