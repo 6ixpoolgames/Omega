@@ -27,6 +27,10 @@ The clean process-boundary audit is summarized in the
 [Process Interface Identifiability Report v0](docs/research_notes/omega_v2/process_interface_identifiability_report_v0.md);
 it retains every evidence-compatible minimal interface rather than selecting
 one from an injected label.
+The follow-on
+[Process Interface Transport Report v0](docs/research_notes/omega_v2/process_interface_transport_report_v0.md)
+checks whether those retained families survive relabeling, refinement, merge,
+or cross-cutting changes of component factorization.
 
 Omega is a research program for treating alignment as the problem of
 preserving the corridor of compatible, value-bearing futures.

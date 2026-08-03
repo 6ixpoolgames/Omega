@@ -1,0 +1,24 @@
+source_factorization_id,target_factorization_id,audit_exact,row_kind,source_block_id,source_members,target_block_ids,target_members,missing_source_members,added_target_members
+fine_components,fine_components_relabeled,True,transport,inside_block,"[""inside""]","[""alpha""]","[""inside""]",[],[]
+fine_components,fine_components_relabeled,True,transport,aux_block,"[""aux""]","[""beta""]","[""aux""]",[],[]
+fine_components,fine_components_relabeled,True,transport,outside_block,"[""outside""]","[""gamma""]","[""outside""]",[],[]
+fine_components_relabeled,fine_components,True,transport,alpha,"[""inside""]","[""inside_block""]","[""inside""]",[],[]
+fine_components_relabeled,fine_components,True,transport,beta,"[""aux""]","[""aux_block""]","[""aux""]",[],[]
+fine_components_relabeled,fine_components,True,transport,gamma,"[""outside""]","[""outside_block""]","[""outside""]",[],[]
+coarse_core,fine_components,True,transport,core,"[""inside"", ""aux""]","[""inside_block"", ""aux_block""]","[""inside"", ""aux""]",[],[]
+coarse_core,fine_components,True,transport,environment,"[""outside""]","[""outside_block""]","[""outside""]",[],[]
+fine_components,coarse_core,False,transport,outside_block,"[""outside""]","[""environment""]","[""outside""]",[],[]
+fine_components,coarse_core,False,failure,inside_block,"[""inside""]","[""core""]","[""inside"", ""aux""]","[""inside""]","[""aux""]"
+fine_components,coarse_core,False,failure,aux_block,"[""aux""]","[""core""]","[""inside"", ""aux""]","[""aux""]","[""inside""]"
+fine_components,fine_components,True,transport,inside_block,"[""inside""]","[""inside_block""]","[""inside""]",[],[]
+fine_components,fine_components,True,transport,aux_block,"[""aux""]","[""aux_block""]","[""aux""]",[],[]
+fine_components,fine_components,True,transport,outside_block,"[""outside""]","[""outside_block""]","[""outside""]",[],[]
+coarse_symmetric_pair,fine_symmetric_pair,True,transport,pair,"[""left"", ""right""]","[""left"", ""right""]","[""left"", ""right""]",[],[]
+coarse_symmetric_pair,fine_symmetric_pair,True,transport,sink,"[""sink""]","[""sink""]","[""sink""]",[],[]
+fine_symmetric_pair,coarse_symmetric_pair,False,transport,sink,"[""sink""]","[""sink""]","[""sink""]",[],[]
+fine_symmetric_pair,coarse_symmetric_pair,False,failure,left,"[""left""]","[""pair""]","[""left"", ""right""]","[""left""]","[""right""]"
+fine_symmetric_pair,coarse_symmetric_pair,False,failure,right,"[""right""]","[""pair""]","[""left"", ""right""]","[""right""]","[""left""]"
+crosscut_source,crosscut_target,False,failure,ab,"[""a"", ""b""]","[""ac"", ""bd""]","[""a"", ""b"", ""c"", ""d""]","[""a"", ""b""]","[""c"", ""d""]"
+crosscut_source,crosscut_target,False,failure,cd,"[""c"", ""d""]","[""ac"", ""bd""]","[""a"", ""b"", ""c"", ""d""]","[""c"", ""d""]","[""a"", ""b""]"
+crosscut_target,crosscut_source,False,failure,ac,"[""a"", ""c""]","[""ab"", ""cd""]","[""a"", ""b"", ""c"", ""d""]","[""a"", ""c""]","[""b"", ""d""]"
+crosscut_target,crosscut_source,False,failure,bd,"[""b"", ""d""]","[""ab"", ""cd""]","[""a"", ""b"", ""c"", ""d""]","[""b"", ""d""]","[""a"", ""c""]"

@@ -1,0 +1,27 @@
+system_id,factorization_id,query_id,evidence_mode,status,classification,minimal,block_interface,primitive_interface,persistent_variation,internal_influence,incoming_influence,outgoing_influence,latent_state_multiplicity,record_acquisition,record_sensitive_outflow,continuation_influence
+factorization_refinement_system,coarse_core,record_bearing_continuation_interface,interventional,IDENTIFIED,certified,True,"[""core""]","[""inside"", ""aux""]",True,True,True,True,True,True,True,True
+factorization_refinement_system,coarse_core,record_bearing_continuation_interface,interventional,IDENTIFIED,rejected,False,"[""environment""]","[""outside""]",True,True,True,True,True,True,False,True
+factorization_refinement_system,fine_components,record_bearing_continuation_interface,interventional,IDENTIFIED,certified,True,"[""inside_block""]","[""inside""]",True,True,True,True,True,True,True,True
+factorization_refinement_system,fine_components,record_bearing_continuation_interface,interventional,IDENTIFIED,rejected,False,"[""aux_block""]","[""aux""]",False,False,False,False,False,False,False,False
+factorization_refinement_system,fine_components,record_bearing_continuation_interface,interventional,IDENTIFIED,rejected,False,"[""outside_block""]","[""outside""]",True,True,True,True,True,True,False,True
+factorization_refinement_system,fine_components,record_bearing_continuation_interface,interventional,IDENTIFIED,certified,False,"[""inside_block"", ""aux_block""]","[""inside"", ""aux""]",True,True,True,True,True,True,True,True
+factorization_refinement_system,fine_components,record_bearing_continuation_interface,interventional,IDENTIFIED,rejected,False,"[""inside_block"", ""outside_block""]","[""inside"", ""outside""]",True,True,False,False,True,False,False,False
+factorization_refinement_system,fine_components,record_bearing_continuation_interface,interventional,IDENTIFIED,rejected,False,"[""aux_block"", ""outside_block""]","[""aux"", ""outside""]",True,True,True,True,True,True,False,True
+factorization_refinement_system,fine_components_relabeled,record_bearing_continuation_interface,interventional,IDENTIFIED,certified,True,"[""alpha""]","[""inside""]",True,True,True,True,True,True,True,True
+factorization_refinement_system,fine_components_relabeled,record_bearing_continuation_interface,interventional,IDENTIFIED,rejected,False,"[""beta""]","[""aux""]",False,False,False,False,False,False,False,False
+factorization_refinement_system,fine_components_relabeled,record_bearing_continuation_interface,interventional,IDENTIFIED,rejected,False,"[""gamma""]","[""outside""]",True,True,True,True,True,True,False,True
+factorization_refinement_system,fine_components_relabeled,record_bearing_continuation_interface,interventional,IDENTIFIED,certified,False,"[""alpha"", ""beta""]","[""inside"", ""aux""]",True,True,True,True,True,True,True,True
+factorization_refinement_system,fine_components_relabeled,record_bearing_continuation_interface,interventional,IDENTIFIED,rejected,False,"[""alpha"", ""gamma""]","[""inside"", ""outside""]",True,True,False,False,True,False,False,False
+factorization_refinement_system,fine_components_relabeled,record_bearing_continuation_interface,interventional,IDENTIFIED,rejected,False,"[""beta"", ""gamma""]","[""aux"", ""outside""]",True,True,True,True,True,True,False,True
+several_refined_minima,coarse_symmetric_pair,persistent_causal_outflow,interventional,IDENTIFIED,certified,True,"[""pair""]","[""left"", ""right""]",True,True,False,True,True,False,False,True
+several_refined_minima,coarse_symmetric_pair,persistent_causal_outflow,interventional,IDENTIFIED,rejected,False,"[""sink""]","[""sink""]",True,False,True,False,False,False,False,False
+several_refined_minima,fine_symmetric_pair,persistent_causal_outflow,interventional,SET_IDENTIFIED,certified,True,"[""left""]","[""left""]",True,False,True,True,False,False,False,True
+several_refined_minima,fine_symmetric_pair,persistent_causal_outflow,interventional,SET_IDENTIFIED,certified,True,"[""right""]","[""right""]",True,False,True,True,False,False,False,True
+several_refined_minima,fine_symmetric_pair,persistent_causal_outflow,interventional,SET_IDENTIFIED,rejected,False,"[""sink""]","[""sink""]",True,False,True,False,False,False,False,False
+several_refined_minima,fine_symmetric_pair,persistent_causal_outflow,interventional,SET_IDENTIFIED,certified,False,"[""left"", ""right""]","[""left"", ""right""]",True,True,False,True,True,False,False,True
+several_refined_minima,fine_symmetric_pair,persistent_causal_outflow,interventional,SET_IDENTIFIED,certified,False,"[""left"", ""sink""]","[""left"", ""sink""]",True,True,True,True,True,True,True,True
+several_refined_minima,fine_symmetric_pair,persistent_causal_outflow,interventional,SET_IDENTIFIED,certified,False,"[""right"", ""sink""]","[""right"", ""sink""]",True,True,True,True,True,True,True,True
+crosscut_rotation,crosscut_source,persistent_variation_only,interventional,SET_IDENTIFIED,certified,True,"[""ab""]","[""a"", ""b""]",True,True,True,True,True,True,True,True
+crosscut_rotation,crosscut_source,persistent_variation_only,interventional,SET_IDENTIFIED,certified,True,"[""cd""]","[""c"", ""d""]",True,True,True,True,True,True,True,True
+crosscut_rotation,crosscut_target,persistent_variation_only,interventional,SET_IDENTIFIED,certified,True,"[""ac""]","[""a"", ""c""]",True,False,True,True,True,True,True,True
+crosscut_rotation,crosscut_target,persistent_variation_only,interventional,SET_IDENTIFIED,certified,True,"[""bd""]","[""b"", ""d""]",True,False,True,True,True,True,True,True

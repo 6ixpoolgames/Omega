@@ -1,0 +1,815 @@
+{
+  "case_results": {
+    "annotation_invariance": true,
+    "block_relabeling_invariant": true,
+    "crosscut_failure_witnessed": true,
+    "crosscut_obstructed": true,
+    "observation_does_not_override_crosscut": true,
+    "observational_transport_unresolved": true,
+    "partition_validation": true,
+    "query_mismatch_obstructed": true,
+    "reverse_merge_detected": true,
+    "several_refined_minima_retained": true,
+    "strict_refinement_detected": true
+  },
+  "claim_boundary": "Finite factorization-relative interface transport only; not identity, agency, valuerhood, consciousness, patienthood, standing, value, responsibility, moral license, or Omega validation.",
+  "crosscut": {
+    "forward_audit": {
+      "exact": false,
+      "failures": [
+        {
+          "added_target_members": [
+            "c",
+            "d"
+          ],
+          "missing_source_members": [
+            "a",
+            "b"
+          ],
+          "overlapping_target_block_ids": [
+            "ac",
+            "bd"
+          ],
+          "overlapping_target_members": [
+            "a",
+            "b",
+            "c",
+            "d"
+          ],
+          "source_block_id": "ab",
+          "source_members": [
+            "a",
+            "b"
+          ]
+        },
+        {
+          "added_target_members": [
+            "a",
+            "b"
+          ],
+          "missing_source_members": [
+            "c",
+            "d"
+          ],
+          "overlapping_target_block_ids": [
+            "ac",
+            "bd"
+          ],
+          "overlapping_target_members": [
+            "a",
+            "b",
+            "c",
+            "d"
+          ],
+          "source_block_id": "cd",
+          "source_members": [
+            "c",
+            "d"
+          ]
+        }
+      ],
+      "source_factorization_id": "crosscut_source",
+      "target_factorization_id": "crosscut_target",
+      "transports": []
+    },
+    "reverse_audit": {
+      "exact": false,
+      "failures": [
+        {
+          "added_target_members": [
+            "b",
+            "d"
+          ],
+          "missing_source_members": [
+            "a",
+            "c"
+          ],
+          "overlapping_target_block_ids": [
+            "ab",
+            "cd"
+          ],
+          "overlapping_target_members": [
+            "a",
+            "b",
+            "c",
+            "d"
+          ],
+          "source_block_id": "ac",
+          "source_members": [
+            "a",
+            "c"
+          ]
+        },
+        {
+          "added_target_members": [
+            "a",
+            "c"
+          ],
+          "missing_source_members": [
+            "b",
+            "d"
+          ],
+          "overlapping_target_block_ids": [
+            "ab",
+            "cd"
+          ],
+          "overlapping_target_members": [
+            "a",
+            "b",
+            "c",
+            "d"
+          ],
+          "source_block_id": "bd",
+          "source_members": [
+            "b",
+            "d"
+          ]
+        }
+      ],
+      "source_factorization_id": "crosscut_target",
+      "target_factorization_id": "crosscut_source",
+      "transports": []
+    },
+    "same_observational_signature": true,
+    "source_ab_saturation": {
+      "added_members": [
+        "c",
+        "d"
+      ],
+      "exact": false,
+      "requested_members": [
+        "a",
+        "b"
+      ],
+      "saturated_members": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "target_blocks": [
+        "ac",
+        "bd"
+      ]
+    },
+    "source_result": {
+      "certified_block_interfaces": [
+        [
+          "ab"
+        ],
+        [
+          "cd"
+        ]
+      ],
+      "evidence_mode": "interventional",
+      "factorization_id": "crosscut_source",
+      "horizon": 4,
+      "query_id": "persistent_variation_only",
+      "rejected_block_interfaces": [],
+      "retained_minimal_block_interfaces": [
+        [
+          "ab"
+        ],
+        [
+          "cd"
+        ]
+      ],
+      "retained_minimal_primitive_interfaces": [
+        [
+          "a",
+          "b"
+        ],
+        [
+          "c",
+          "d"
+        ]
+      ],
+      "status": "SET_IDENTIFIED",
+      "system_id": "crosscut_rotation",
+      "unresolved_block_interfaces": []
+    },
+    "target_result": {
+      "certified_block_interfaces": [
+        [
+          "ac"
+        ],
+        [
+          "bd"
+        ]
+      ],
+      "evidence_mode": "interventional",
+      "factorization_id": "crosscut_target",
+      "horizon": 4,
+      "query_id": "persistent_variation_only",
+      "rejected_block_interfaces": [],
+      "retained_minimal_block_interfaces": [
+        [
+          "ac"
+        ],
+        [
+          "bd"
+        ]
+      ],
+      "retained_minimal_primitive_interfaces": [
+        [
+          "a",
+          "c"
+        ],
+        [
+          "b",
+          "d"
+        ]
+      ],
+      "status": "SET_IDENTIFIED",
+      "system_id": "crosscut_rotation",
+      "unresolved_block_interfaces": []
+    },
+    "transport": {
+      "forward_exact": false,
+      "forward_failure_count": 2,
+      "reason": "no_exact_family_transport",
+      "reverse_exact": false,
+      "reverse_failure_count": 2,
+      "source_evidence_mode": "interventional",
+      "source_factorization_id": "crosscut_source",
+      "source_horizon": 4,
+      "source_minimal_interfaces": [
+        [
+          "a",
+          "b"
+        ],
+        [
+          "c",
+          "d"
+        ]
+      ],
+      "source_query_id": "persistent_variation_only",
+      "status": "OBSTRUCTED",
+      "target_evidence_mode": "interventional",
+      "target_factorization_id": "crosscut_target",
+      "target_horizon": 4,
+      "target_minimal_interfaces": [
+        [
+          "a",
+          "c"
+        ],
+        [
+          "b",
+          "d"
+        ]
+      ],
+      "target_query_id": "persistent_variation_only",
+      "target_saturations": [
+        {
+          "added_members": [
+            "c",
+            "d"
+          ],
+          "exact": false,
+          "requested_members": [
+            "a",
+            "b"
+          ],
+          "saturated_members": [
+            "a",
+            "b",
+            "c",
+            "d"
+          ],
+          "target_blocks": [
+            "ac",
+            "bd"
+          ]
+        },
+        {
+          "added_members": [
+            "a",
+            "b"
+          ],
+          "exact": false,
+          "requested_members": [
+            "c",
+            "d"
+          ],
+          "saturated_members": [
+            "a",
+            "b",
+            "c",
+            "d"
+          ],
+          "target_blocks": [
+            "ac",
+            "bd"
+          ]
+        }
+      ]
+    }
+  },
+  "horizon": 4,
+  "kill_conditions": {
+    "crosscut_called_exact": false,
+    "invalid_partition_accepted": false,
+    "merge_reported_exact_forward": false,
+    "observational_causality_claimed": false,
+    "query_mismatch_called_invariant": false,
+    "refined_representative_selected": false,
+    "refinement_not_decomposable": false,
+    "relabeling_changed_family": false,
+    "saturation_silently_accepted": false
+  },
+  "partition_validation": {
+    "empty_block_rejected": true,
+    "omission_rejected": true,
+    "overlap_rejected": true
+  },
+  "protocol_doc": "docs/research_notes/omega_v2/process_interface_transport_protocol_v0.md",
+  "refinement": {
+    "annotation_transport": {
+      "forward_exact": true,
+      "forward_failure_count": 0,
+      "reason": "equal_concrete_minimal_families",
+      "reverse_exact": true,
+      "reverse_failure_count": 0,
+      "source_evidence_mode": "interventional",
+      "source_factorization_id": "fine_components",
+      "source_horizon": 4,
+      "source_minimal_interfaces": [
+        [
+          "inside"
+        ]
+      ],
+      "source_query_id": "record_bearing_continuation_interface",
+      "status": "INVARIANT",
+      "target_evidence_mode": "interventional",
+      "target_factorization_id": "fine_components",
+      "target_horizon": 4,
+      "target_minimal_interfaces": [
+        [
+          "inside"
+        ]
+      ],
+      "target_query_id": "record_bearing_continuation_interface",
+      "target_saturations": [
+        {
+          "added_members": [],
+          "exact": true,
+          "requested_members": [
+            "inside"
+          ],
+          "saturated_members": [
+            "inside"
+          ],
+          "target_blocks": [
+            "inside_block"
+          ]
+        }
+      ]
+    },
+    "coarse_result": {
+      "certified_block_interfaces": [
+        [
+          "core"
+        ]
+      ],
+      "evidence_mode": "interventional",
+      "factorization_id": "coarse_core",
+      "horizon": 4,
+      "query_id": "record_bearing_continuation_interface",
+      "rejected_block_interfaces": [
+        [
+          "environment"
+        ]
+      ],
+      "retained_minimal_block_interfaces": [
+        [
+          "core"
+        ]
+      ],
+      "retained_minimal_primitive_interfaces": [
+        [
+          "inside",
+          "aux"
+        ]
+      ],
+      "status": "IDENTIFIED",
+      "system_id": "factorization_refinement_system",
+      "unresolved_block_interfaces": []
+    },
+    "fine_result": {
+      "certified_block_interfaces": [
+        [
+          "inside_block"
+        ],
+        [
+          "inside_block",
+          "aux_block"
+        ]
+      ],
+      "evidence_mode": "interventional",
+      "factorization_id": "fine_components",
+      "horizon": 4,
+      "query_id": "record_bearing_continuation_interface",
+      "rejected_block_interfaces": [
+        [
+          "aux_block"
+        ],
+        [
+          "outside_block"
+        ],
+        [
+          "inside_block",
+          "outside_block"
+        ],
+        [
+          "aux_block",
+          "outside_block"
+        ]
+      ],
+      "retained_minimal_block_interfaces": [
+        [
+          "inside_block"
+        ]
+      ],
+      "retained_minimal_primitive_interfaces": [
+        [
+          "inside"
+        ]
+      ],
+      "status": "IDENTIFIED",
+      "system_id": "factorization_refinement_system",
+      "unresolved_block_interfaces": []
+    },
+    "merged_transport": {
+      "forward_exact": false,
+      "forward_failure_count": 2,
+      "reason": "target_merges_source_minimal_interfaces",
+      "reverse_exact": true,
+      "reverse_failure_count": 0,
+      "source_evidence_mode": "interventional",
+      "source_factorization_id": "fine_components",
+      "source_horizon": 4,
+      "source_minimal_interfaces": [
+        [
+          "inside"
+        ]
+      ],
+      "source_query_id": "record_bearing_continuation_interface",
+      "status": "MERGED",
+      "target_evidence_mode": "interventional",
+      "target_factorization_id": "coarse_core",
+      "target_horizon": 4,
+      "target_minimal_interfaces": [
+        [
+          "inside",
+          "aux"
+        ]
+      ],
+      "target_query_id": "record_bearing_continuation_interface",
+      "target_saturations": [
+        {
+          "added_members": [
+            "aux"
+          ],
+          "exact": false,
+          "requested_members": [
+            "inside"
+          ],
+          "saturated_members": [
+            "inside",
+            "aux"
+          ],
+          "target_blocks": [
+            "core"
+          ]
+        }
+      ]
+    },
+    "observational_transport": {
+      "forward_exact": true,
+      "forward_failure_count": 0,
+      "reason": "causal_features_unknown",
+      "reverse_exact": false,
+      "reverse_failure_count": 2,
+      "source_evidence_mode": "observational",
+      "source_factorization_id": "coarse_core",
+      "source_horizon": 4,
+      "source_minimal_interfaces": [
+        [
+          "inside",
+          "aux"
+        ],
+        [
+          "outside"
+        ]
+      ],
+      "source_query_id": "record_bearing_continuation_interface",
+      "status": "UNRESOLVED",
+      "target_evidence_mode": "observational",
+      "target_factorization_id": "fine_components",
+      "target_horizon": 4,
+      "target_minimal_interfaces": [
+        [
+          "inside"
+        ],
+        [
+          "outside"
+        ]
+      ],
+      "target_query_id": "record_bearing_continuation_interface",
+      "target_saturations": [
+        {
+          "added_members": [],
+          "exact": true,
+          "requested_members": [
+            "inside",
+            "aux"
+          ],
+          "saturated_members": [
+            "inside",
+            "aux"
+          ],
+          "target_blocks": [
+            "inside_block",
+            "aux_block"
+          ]
+        },
+        {
+          "added_members": [],
+          "exact": true,
+          "requested_members": [
+            "outside"
+          ],
+          "saturated_members": [
+            "outside"
+          ],
+          "target_blocks": [
+            "outside_block"
+          ]
+        }
+      ]
+    },
+    "query_mismatch": {
+      "forward_exact": true,
+      "forward_failure_count": 0,
+      "reason": "query_mismatch",
+      "reverse_exact": true,
+      "reverse_failure_count": 0,
+      "source_evidence_mode": "interventional",
+      "source_factorization_id": "fine_components",
+      "source_horizon": 4,
+      "source_minimal_interfaces": [
+        [
+          "inside"
+        ]
+      ],
+      "source_query_id": "record_bearing_continuation_interface",
+      "status": "OBSTRUCTED",
+      "target_evidence_mode": "interventional",
+      "target_factorization_id": "fine_components",
+      "target_horizon": 4,
+      "target_minimal_interfaces": [
+        [
+          "inside"
+        ],
+        [
+          "outside"
+        ]
+      ],
+      "target_query_id": "persistent_causal_outflow",
+      "target_saturations": [
+        {
+          "added_members": [],
+          "exact": true,
+          "requested_members": [
+            "inside"
+          ],
+          "saturated_members": [
+            "inside"
+          ],
+          "target_blocks": [
+            "inside_block"
+          ]
+        }
+      ]
+    },
+    "refined_transport": {
+      "forward_exact": true,
+      "forward_failure_count": 0,
+      "reason": "target_exposes_strictly_smaller_minimal_interfaces",
+      "reverse_exact": false,
+      "reverse_failure_count": 2,
+      "source_evidence_mode": "interventional",
+      "source_factorization_id": "coarse_core",
+      "source_horizon": 4,
+      "source_minimal_interfaces": [
+        [
+          "inside",
+          "aux"
+        ]
+      ],
+      "source_query_id": "record_bearing_continuation_interface",
+      "status": "REFINED",
+      "target_evidence_mode": "interventional",
+      "target_factorization_id": "fine_components",
+      "target_horizon": 4,
+      "target_minimal_interfaces": [
+        [
+          "inside"
+        ]
+      ],
+      "target_query_id": "record_bearing_continuation_interface",
+      "target_saturations": [
+        {
+          "added_members": [],
+          "exact": true,
+          "requested_members": [
+            "inside",
+            "aux"
+          ],
+          "saturated_members": [
+            "inside",
+            "aux"
+          ],
+          "target_blocks": [
+            "inside_block",
+            "aux_block"
+          ]
+        }
+      ]
+    },
+    "relabel_transport": {
+      "forward_exact": true,
+      "forward_failure_count": 0,
+      "reason": "equal_concrete_minimal_families",
+      "reverse_exact": true,
+      "reverse_failure_count": 0,
+      "source_evidence_mode": "interventional",
+      "source_factorization_id": "fine_components",
+      "source_horizon": 4,
+      "source_minimal_interfaces": [
+        [
+          "inside"
+        ]
+      ],
+      "source_query_id": "record_bearing_continuation_interface",
+      "status": "INVARIANT",
+      "target_evidence_mode": "interventional",
+      "target_factorization_id": "fine_components_relabeled",
+      "target_horizon": 4,
+      "target_minimal_interfaces": [
+        [
+          "inside"
+        ]
+      ],
+      "target_query_id": "record_bearing_continuation_interface",
+      "target_saturations": [
+        {
+          "added_members": [],
+          "exact": true,
+          "requested_members": [
+            "inside"
+          ],
+          "saturated_members": [
+            "inside"
+          ],
+          "target_blocks": [
+            "alpha"
+          ]
+        }
+      ]
+    }
+  },
+  "run_root": "docs\\research_notes\\validation_results\\process_interface_transport_v0\\20260803_143204",
+  "several_minima": {
+    "coarse_result": {
+      "certified_block_interfaces": [
+        [
+          "pair"
+        ]
+      ],
+      "evidence_mode": "interventional",
+      "factorization_id": "coarse_symmetric_pair",
+      "horizon": 4,
+      "query_id": "persistent_causal_outflow",
+      "rejected_block_interfaces": [
+        [
+          "sink"
+        ]
+      ],
+      "retained_minimal_block_interfaces": [
+        [
+          "pair"
+        ]
+      ],
+      "retained_minimal_primitive_interfaces": [
+        [
+          "left",
+          "right"
+        ]
+      ],
+      "status": "IDENTIFIED",
+      "system_id": "several_refined_minima",
+      "unresolved_block_interfaces": []
+    },
+    "fine_result": {
+      "certified_block_interfaces": [
+        [
+          "left"
+        ],
+        [
+          "right"
+        ],
+        [
+          "left",
+          "right"
+        ],
+        [
+          "left",
+          "sink"
+        ],
+        [
+          "right",
+          "sink"
+        ]
+      ],
+      "evidence_mode": "interventional",
+      "factorization_id": "fine_symmetric_pair",
+      "horizon": 4,
+      "query_id": "persistent_causal_outflow",
+      "rejected_block_interfaces": [
+        [
+          "sink"
+        ]
+      ],
+      "retained_minimal_block_interfaces": [
+        [
+          "left"
+        ],
+        [
+          "right"
+        ]
+      ],
+      "retained_minimal_primitive_interfaces": [
+        [
+          "left"
+        ],
+        [
+          "right"
+        ]
+      ],
+      "status": "SET_IDENTIFIED",
+      "system_id": "several_refined_minima",
+      "unresolved_block_interfaces": []
+    },
+    "transport": {
+      "forward_exact": true,
+      "forward_failure_count": 0,
+      "reason": "target_exposes_strictly_smaller_minimal_interfaces",
+      "reverse_exact": false,
+      "reverse_failure_count": 2,
+      "source_evidence_mode": "interventional",
+      "source_factorization_id": "coarse_symmetric_pair",
+      "source_horizon": 4,
+      "source_minimal_interfaces": [
+        [
+          "left",
+          "right"
+        ]
+      ],
+      "source_query_id": "persistent_causal_outflow",
+      "status": "REFINED",
+      "target_evidence_mode": "interventional",
+      "target_factorization_id": "fine_symmetric_pair",
+      "target_horizon": 4,
+      "target_minimal_interfaces": [
+        [
+          "left"
+        ],
+        [
+          "right"
+        ]
+      ],
+      "target_query_id": "persistent_causal_outflow",
+      "target_saturations": [
+        {
+          "added_members": [],
+          "exact": true,
+          "requested_members": [
+            "left",
+            "right"
+          ],
+          "saturated_members": [
+            "left",
+            "right"
+          ],
+          "target_blocks": [
+            "left",
+            "right"
+          ]
+        }
+      ]
+    }
+  },
+  "status": "retained",
+  "verdict": "finite_process_interface_transport_classified"
+}
