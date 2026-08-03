@@ -31,6 +31,10 @@ The follow-on
 [Process Interface Transport Report v0](docs/research_notes/omega_v2/process_interface_transport_report_v0.md)
 checks whether those retained families survive relabeling, refinement, merge,
 or cross-cutting changes of component factorization.
+The
+[Robust Joint Separation Report v0](docs/research_notes/omega_v2/robust_joint_separation_report_v0.md)
+then isolates a nonempty joint-realization triple that is pairwise Robust but
+not jointly Robust across one fixed environment scope.
 
 Omega is a research program for treating alignment as the problem of
 preserving the corridor of compatible, value-bearing futures.

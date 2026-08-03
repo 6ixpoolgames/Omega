@@ -1,0 +1,113 @@
+{
+  "case_results": {
+    "all_pairs_robust": true,
+    "complete_run_evidence": true,
+    "duplicate_invariance": true,
+    "environment_scope_isolates_failure": true,
+    "full_triple_not_robust": true,
+    "may_triple_nonempty": true,
+    "north_triple_robust": true,
+    "pair_policy_sets_exact": true,
+    "pair_triple_scope_match": true,
+    "positive_control": true,
+    "structural_laws": true
+  },
+  "claim_boundary": "Finite deterministic lookup-table separation only; not dynamic control, empirical robustness, candidate correctness, identity, agency, valuerhood, standing, value, moral license, or Omega validation.",
+  "kill_conditions": {
+    "duplicate_changed_payload": false,
+    "full_triple_robust": false,
+    "may_triple_empty": false,
+    "north_triple_not_robust": false,
+    "pair_not_robust": false,
+    "pair_policy_set_changed": false,
+    "pair_triple_scope_mismatch": false,
+    "positive_control_failed": false,
+    "run_evidence_discarded": false,
+    "scope_failed_to_isolate": false,
+    "structural_law_failed": false
+  },
+  "positive": {
+    "complete_run_evidence": true,
+    "may_payload_matches_strict": true,
+    "triple_policy_ids": [
+      "p_abc"
+    ],
+    "triple_robust": true,
+    "triple_runs": [
+      {
+        "environment_runs": [
+          {
+            "environment_id": "north",
+            "witness_id": "w_abc"
+          },
+          {
+            "environment_id": "south",
+            "witness_id": "w_abc"
+          }
+        ],
+        "policy_id": "p_abc"
+      }
+    ]
+  },
+  "protocol_doc": "docs/research_notes/omega_v2/robust_joint_separation_protocol_v0.md",
+  "run_root": "docs\\research_notes\\validation_results\\robust_joint_separation_v0\\20260803_192323",
+  "semantics": {
+    "may": "exists_joint_realization_witness",
+    "robust": "exists_one_policy_forall_declared_environments",
+    "run_model": "total_deterministic_lookup_table"
+  },
+  "status": "retained",
+  "strict": {
+    "all_pairs_robust": true,
+    "candidate_antitone_failures": [],
+    "complete_full_run_evidence": true,
+    "complete_north_run_evidence": true,
+    "duplicate_may_invariant": true,
+    "duplicate_quotient_candidate_count": 3,
+    "duplicate_raw_candidate_count": 4,
+    "duplicate_robust_invariant": true,
+    "environment_antitone_failures": [],
+    "full_triple_policy_ids": [],
+    "full_triple_robust": false,
+    "may_downward_closure_failures": [],
+    "may_restriction_failures": [],
+    "may_scope_invariant": true,
+    "may_triple_nonempty": true,
+    "may_triple_witness_ids": [
+      "w_abc"
+    ],
+    "north_triple_policy_ids": [
+      "p_try"
+    ],
+    "north_triple_robust": true,
+    "north_triple_runs": [
+      {
+        "environment_runs": [
+          {
+            "environment_id": "north",
+            "witness_id": "w_abc"
+          }
+        ],
+        "policy_id": "p_try"
+      }
+    ],
+    "pair_policy_ids": {
+      "AB": [
+        "p_ab",
+        "p_try"
+      ],
+      "AC": [
+        "p_ac"
+      ],
+      "BC": [
+        "p_bc"
+      ]
+    },
+    "pair_triple_scope_match": true,
+    "robust_implies_may_failures": [],
+    "robust_maximal_face_count": 3,
+    "robust_restriction_failures": []
+  },
+  "summary_digest": "189a08b58d46f25e8be66a2176b3b96034af4da54445a890aac1360189148fd5",
+  "verdict": "joint_realizability_does_not_imply_joint_robust_securability"
+}

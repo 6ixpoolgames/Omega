@@ -47,6 +47,11 @@ Its factorization-transport follow-on is the
 and
 [Process Interface Transport Report v0](research_notes/omega_v2/process_interface_transport_report_v0.md).
 
+The strict May-versus-Robust follow-on is the
+[Robust Joint Separation Protocol v0](research_notes/omega_v2/robust_joint_separation_protocol_v0.md)
+and
+[Robust Joint Separation Report v0](research_notes/omega_v2/robust_joint_separation_report_v0.md).
+
 ## Read First
 
 1. [Repository README](../README.md)
@@ -56,22 +61,23 @@ and
 5. [May and Robust Realization Report v0](research_notes/omega_v2/robust_omega_report_v0.md)
 6. [Process Interface Identifiability Report v0](research_notes/omega_v2/process_interface_identifiability_report_v0.md)
 7. [Process Interface Transport Report v0](research_notes/omega_v2/process_interface_transport_report_v0.md)
-8. [Project Overview](PROJECT_OVERVIEW.md)
-9. [Active Surface Area](research_notes/omega_theory/active_surface_area_v0.md)
-10. [Claims Ledger](CLAIMS_LEDGER.md)
-11. [Omega Decision Stack Checkpoint](research_notes/omega_theory/omega_decision_stack_checkpoint_v0.md)
-12. [Adaptive Fixed-World Corridor B2.1](research_notes/omega_theory/adaptive_fixed_world_corridor_b21.md)
-13. [Adaptive Observation Informativeness v0](research_notes/omega_theory/adaptive_observation_informativeness_v0.md)
-14. [Recovery Frame / Irreversibility Weld v0](research_notes/omega_theory/recovery_frame_irreversibility_weld_v0.md)
-15. [Recovery-Aware Corridor v0](research_notes/omega_theory/recovery_aware_corridor_v0.md)
-16. [Phantom Recoverability Gate v0](research_notes/omega_theory/phantom_recoverability_gate_v0.md)
-17. [Recovery Reflection and Nonrecoverable-Loss Dominance v0](research_notes/omega_theory/recovery_reflection_and_loss_dominance_v0.md)
-18. [Colonization Axis Report v0](research_notes/omega_theory/colonization_axis_report_v0.md)
-19. [Future-Field Reorientation and Declaration Culling v0](research_notes/omega_theory/future_field_reorientation_and_declaration_culling_v0.md)
-20. [Substrate Classes and Large Deformers v0](research_notes/omega_theory/substrate_classes_and_large_deformers_v0.md)
-21. [Does The Loop Close Soundly?](public/does_the_loop_close_soundly_v0.md)
-22. [Omega Closeout v0](research_notes/omega_theory/omega_closeout_v0.md)
-23. [Effective Layers](research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
+8. [Robust Joint Separation Report v0](research_notes/omega_v2/robust_joint_separation_report_v0.md)
+9. [Project Overview](PROJECT_OVERVIEW.md)
+10. [Active Surface Area](research_notes/omega_theory/active_surface_area_v0.md)
+11. [Claims Ledger](CLAIMS_LEDGER.md)
+12. [Omega Decision Stack Checkpoint](research_notes/omega_theory/omega_decision_stack_checkpoint_v0.md)
+13. [Adaptive Fixed-World Corridor B2.1](research_notes/omega_theory/adaptive_fixed_world_corridor_b21.md)
+14. [Adaptive Observation Informativeness v0](research_notes/omega_theory/adaptive_observation_informativeness_v0.md)
+15. [Recovery Frame / Irreversibility Weld v0](research_notes/omega_theory/recovery_frame_irreversibility_weld_v0.md)
+16. [Recovery-Aware Corridor v0](research_notes/omega_theory/recovery_aware_corridor_v0.md)
+17. [Phantom Recoverability Gate v0](research_notes/omega_theory/phantom_recoverability_gate_v0.md)
+18. [Recovery Reflection and Nonrecoverable-Loss Dominance v0](research_notes/omega_theory/recovery_reflection_and_loss_dominance_v0.md)
+19. [Colonization Axis Report v0](research_notes/omega_theory/colonization_axis_report_v0.md)
+20. [Future-Field Reorientation and Declaration Culling v0](research_notes/omega_theory/future_field_reorientation_and_declaration_culling_v0.md)
+21. [Substrate Classes and Large Deformers v0](research_notes/omega_theory/substrate_classes_and_large_deformers_v0.md)
+22. [Does The Loop Close Soundly?](public/does_the_loop_close_soundly_v0.md)
+23. [Omega Closeout v0](research_notes/omega_theory/omega_closeout_v0.md)
+24. [Effective Layers](research_notes/omega_theory/effective_layers_realization_forgetting_emergence_v0.md)
 
 ## Current Formal Center
 
