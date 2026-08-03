@@ -1,0 +1,18 @@
+case,source_component,target_component,source_state,intervened_state,source_next_value,intervened_next_value
+identified,inside,inside,"[0, 0]","[1, 0]",0,1
+identified,inside,outside,"[0, 0]","[1, 0]",1,0
+identified,outside,inside,"[1, 0]","[1, 1]",1,0
+identified,outside,outside,"[0, 0]","[0, 1]",1,0
+set_identified,left,right,"[0, 0]","[1, 0]",0,1
+set_identified,right,left,"[0, 0]","[0, 1]",0,1
+common_driver,driver,driver,"[0, 0, 0]","[1, 0, 0]",1,0
+common_driver,driver,left,"[0, 0, 0]","[1, 0, 0]",0,1
+common_driver,driver,right,"[0, 0, 0]","[1, 0, 0]",0,1
+copied_record,source,source,"[0, 0, 0]","[1, 0, 0]",1,0
+copied_record,source,copy,"[0, 0, 0]","[1, 0, 0]",0,1
+copied_record,source,output,"[0, 0, 0]","[1, 0, 0]",0,1
+observational_left,inside,inside,"[0, 0]","[1, 0]",1,0
+observational_left,outside,outside,"[0, 0]","[0, 1]",0,1
+observational_right,inside,inside,"[0, 0]","[1, 0]",1,0
+observational_right,inside,outside,"[0, 1]","[1, 1]",0,1
+observational_right,outside,outside,"[1, 0]","[1, 1]",0,1

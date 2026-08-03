@@ -23,6 +23,10 @@ The clean realization layer is summarized in the
 [May and Robust Realization Report v0](docs/research_notes/omega_v2/robust_omega_report_v0.md);
 it separates existence of a joint realization from one-policy robustness
 across a declared environment scope.
+The clean process-boundary audit is summarized in the
+[Process Interface Identifiability Report v0](docs/research_notes/omega_v2/process_interface_identifiability_report_v0.md);
+it retains every evidence-compatible minimal interface rather than selecting
+one from an injected label.
 
 Omega is a research program for treating alignment as the problem of
 preserving the corridor of compatible, value-bearing futures.
