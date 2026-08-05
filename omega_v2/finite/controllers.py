@@ -12,6 +12,7 @@ from omega_v2.finite.model import (
     ControlledMarkovSystem,
     DeterministicPolicy,
     FiniteDistribution,
+    FinitePath,
     StateT,
 )
 
@@ -136,6 +137,90 @@ class CompiledClosedLoop(Generic[StateT, MemoryT]):
 
     system: ControlledMarkovSystem[ClosedLoopState[StateT, MemoryT], str]
     policy: DeterministicPolicy[ClosedLoopState[StateT, MemoryT], str]
+
+
+@dataclass(frozen=True)
+class DeterministicControllerRun(
+    Generic[StateT, ActionT, ObservationT, MemoryT]
+):
+    """One exact finite controller trajectory through a deterministic system."""
+
+    controller_id: str
+    world_path: FinitePath[StateT, ActionT]
+    observations: tuple[ObservationT, ...]
+    memory_states: tuple[MemoryT, ...]
+
+    def __post_init__(self) -> None:
+        if not self.controller_id:
+            raise ValueError("controller_id must be nonempty")
+        if len(self.observations) != self.world_path.horizon:
+            raise ValueError("one observation is required per selected action")
+        if len(self.memory_states) != self.world_path.horizon + 1:
+            raise ValueError("a horizon-n run requires n + 1 memory states")
+
+    @property
+    def action_sequence(self) -> tuple[ActionT, ...]:
+        return self.world_path.actions
+
+
+def deterministic_controller_rollout(
+    system: ControlledMarkovSystem[StateT, ActionT],
+    controller: FiniteStateController[
+        StateT,
+        ActionT,
+        ObservationT,
+        MemoryT,
+    ],
+    *,
+    initial_state: StateT,
+    horizon: int,
+) -> DeterministicControllerRun[
+    StateT,
+    ActionT,
+    ObservationT,
+    MemoryT,
+]:
+    """Generate one exact run, refusing selected rows that are not point masses."""
+
+    if horizon < 0:
+        raise ValueError("controller rollout horizon must be nonnegative")
+    system.require_state(initial_state)
+    controller.validate(system)
+
+    world_states = [initial_state]
+    actions: list[ActionT] = []
+    observations: list[ObservationT] = []
+    memory_states = [controller.initial_memory]
+    current_world = initial_state
+    current_memory = controller.initial_memory
+
+    for _step in range(horizon):
+        observation = controller.observe(current_world)
+        selected_action = controller.action(current_memory, observation)
+        next_memory = controller.update(current_memory, observation)
+        distribution = system.distribution(current_world, selected_action)
+        if len(distribution.rows) != 1 or distribution.rows[0][1] != 1:
+            raise ValueError(
+                "deterministic controller rollout requires point-mass rows"
+            )
+        next_world = distribution.rows[0][0]
+
+        observations.append(observation)
+        actions.append(selected_action)
+        memory_states.append(next_memory)
+        world_states.append(next_world)
+        current_world = next_world
+        current_memory = next_memory
+
+    return DeterministicControllerRun(
+        controller_id=controller.controller_id,
+        world_path=FinitePath(
+            states=tuple(world_states),
+            actions=tuple(actions),
+        ),
+        observations=tuple(observations),
+        memory_states=tuple(memory_states),
+    )
 
 
 def compile_closed_loop(

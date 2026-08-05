@@ -1,0 +1,170 @@
+{
+  "case_results": {
+    "behavior_classes_complete": true,
+    "behavior_reduction_preserves_verdicts": true,
+    "candidate_membership_trajectory_extensional": true,
+    "complete_run_evidence": true,
+    "controller_enumeration_complete": true,
+    "generated_runs_match_compiled_closed_loop": true,
+    "generated_runs_match_fresh_rollout": true,
+    "positive_full_triple_robust": true,
+    "strict_action_sequence_shared": true,
+    "strict_each_environment_triple": true,
+    "strict_full_triple_not_robust": true,
+    "strict_may_triple_nonempty": true,
+    "strict_observation_stream_shared": true,
+    "strict_pair_sequences_match": true,
+    "strict_pair_triple_scope_match": true,
+    "strict_pairwise_robust": true,
+    "strict_positive_may_support_match": true,
+    "strict_singleton_scopes_restore_triple": true,
+    "structural_laws_pass": true
+  },
+  "claim_boundary": "Finite exact separation under a completely enumerated bounded deterministic controller class. Not a claim about the correct controller, environment, or candidate classes; partial observation in general; stochastic or empirical robustness; identity; agency; valuerhood; standing; value; moral compatibility; or universal Omega.",
+  "kill_conditions": {
+    "action_sequence_differs_across_environments": false,
+    "behavior_class_count_mismatch": false,
+    "behavior_reduction_changed_verdict": false,
+    "candidate_membership_not_trajectory_extensional": false,
+    "closed_loop_compilation_mismatch": false,
+    "controller_count_mismatch": false,
+    "controller_enumeration_partial": false,
+    "generated_run_table_mismatch": false,
+    "observation_stream_differs": false,
+    "pair_triple_scope_mismatch": false,
+    "positive_control_failed": false,
+    "run_evidence_discarded": false,
+    "strict_environment_triple_missing": false,
+    "strict_full_triple_robust": false,
+    "strict_pair_not_robust": false,
+    "strict_singleton_scope_failed": false,
+    "structural_law_failed": false
+  },
+  "positive": {
+    "behavior_reduction_may_invariant": true,
+    "behavior_reduction_robust_invariant": true,
+    "compiled_rollout_match": true,
+    "complete_run_evidence": true,
+    "fresh_rollout_match": true,
+    "may_support": {
+      "A": true,
+      "AB": true,
+      "ABC": true,
+      "AC": true,
+      "B": true,
+      "BC": true,
+      "C": true,
+      "empty": true
+    },
+    "robust_support": {
+      "A": true,
+      "AB": true,
+      "ABC": true,
+      "AC": true,
+      "B": true,
+      "BC": true,
+      "C": true,
+      "empty": true
+    },
+    "triple_sequences": [
+      "xy"
+    ]
+  },
+  "protocol_doc": "docs/research_notes/omega_v2/generated_controller_robust_separation_protocol_v0.md",
+  "run_root": "docs\\research_notes\\validation_results\\generated_controller_robust_separation_v0\\20260805_030108",
+  "semantics": {
+    "candidate_semantics": "terminal trajectory fact membership",
+    "controller_class": "all total deterministic controllers over two memory states, one observation, and three actions",
+    "controller_quantifier": "exists",
+    "environment_quantifier": "forall",
+    "horizon": 2
+  },
+  "status": "retained",
+  "strict": {
+    "behavior_class_count": 9,
+    "behavior_reduction_may_invariant": true,
+    "behavior_reduction_north_robust_invariant": true,
+    "behavior_reduction_robust_invariant": true,
+    "behavior_reduction_south_robust_invariant": true,
+    "candidate_antitone_failures": [],
+    "candidate_membership_extensional": true,
+    "compiled_rollout_match": true,
+    "complete_run_evidence": true,
+    "controller_count": 36,
+    "fresh_rollout_match": true,
+    "full_triple_sequences": [],
+    "may_downward_closure_failures": [],
+    "may_restriction_failures": [],
+    "may_support": {
+      "A": true,
+      "AB": true,
+      "ABC": true,
+      "AC": true,
+      "B": true,
+      "BC": true,
+      "C": true,
+      "empty": true
+    },
+    "may_triple_witness_count": 4,
+    "north_environment_antitone_failures": [],
+    "north_robust_support": {
+      "A": true,
+      "AB": true,
+      "ABC": true,
+      "AC": true,
+      "B": true,
+      "BC": true,
+      "C": true,
+      "empty": true
+    },
+    "north_triple_sequences": [
+      "xy"
+    ],
+    "pair_sequences": {
+      "AB": [
+        "xy",
+        "yx"
+      ],
+      "AC": [
+        "xz",
+        "zx"
+      ],
+      "BC": [
+        "yz",
+        "zy"
+      ]
+    },
+    "pair_triple_scope_match": true,
+    "robust_implies_may_failures": [],
+    "robust_restriction_failures": [],
+    "robust_support": {
+      "A": true,
+      "AB": true,
+      "ABC": false,
+      "AC": true,
+      "B": true,
+      "BC": true,
+      "C": true,
+      "empty": true
+    },
+    "same_action_sequence_across_environments": true,
+    "shared_observation_stream": true,
+    "south_environment_antitone_failures": [],
+    "south_robust_support": {
+      "A": true,
+      "AB": true,
+      "ABC": true,
+      "AC": true,
+      "B": true,
+      "BC": true,
+      "C": true,
+      "empty": true
+    },
+    "south_triple_sequences": [
+      "yx"
+    ]
+  },
+  "strict_positive_may_support_match": true,
+  "summary_digest": "abbf4ce3786b022763aadfff012d9fec977a5380cf686e9a04685dbd5a92a073",
+  "verdict": "generated_controller_joint_realizability_does_not_imply_joint_robust_securability"
+}
