@@ -3,6 +3,7 @@ import OmegaV2.Finite.Abstraction
 import OmegaV2.Finite.Continuation
 import OmegaV2.Finite.Identifiability
 import OmegaV2.Finite.InterfaceTransport
+import OmegaV2.Finite.ProjectedOrder
 import OmegaV2.Finite.Realization
 
 /-!

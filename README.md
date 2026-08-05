@@ -17,6 +17,13 @@ proposal is recorded in the
 [Alpha-Omega Theory Proposal Handoff v0](docs/ALPHA_OMEGA_THEORY_PROPOSAL_HANDOFF_V0.md),
 and its first checked implementation is summarized in the
 [Alpha-Omega Foundation Report v0](docs/research_notes/omega_v2/alpha_omega_foundation_report_v0.md).
+The current bottom-up restructuring and its unresolved declarations are
+recorded in the
+[Alpha-Omega Fundamental Theory Ledger v0](docs/research_notes/omega_v2/alpha_omega_fundamental_theory_ledger_v0.md).
+The first implementation below the controller and Markov layers is the
+[Projected-Sector Floor Report v0](docs/research_notes/omega_v2/projected_sector_floor_report_v0.md);
+it derives projection-relative order and separate support-level sector
+diagnostics without treating them as identity, agency, valuerhood, or value.
 The first clean migration-template implementation is the
 [Finite Controlled Markov Abstraction Report v0](docs/research_notes/omega_v2/finite_controlled_markov_abstraction_report_v0.md).
 The clean realization layer is summarized in the
