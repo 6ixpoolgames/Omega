@@ -55,6 +55,17 @@ them.
 If the long-term goal is to mark the safe path for intelligent agency, the
 first problem is not drawing the path. It is proving that the map is not lying.
 
+## Cosmology Packet v2
+
+The September 2026 [Omega Cosmology v2 packet](docs/cosmology/v2/README.md)
+presents the current conceptual synthesis, including perspective, awareness,
+agency, lushness, Gradient Ethics, and theological reconstruction. A
+[complete single-file edition](docs/cosmology/v2/OMEGA_COSMOLOGY_V2_COMPLETE.md)
+includes the references, formal appendices, and claim ledger. This conceptual
+edition is distinct from the checked `omega_v2` / `OmegaV2` implementation;
+its metaphysical commitments and open conjectures do not change the formal
+claims recorded above.
+
 ## The Thesis
 
 Alignment is not only an objective-selection problem. It is also an

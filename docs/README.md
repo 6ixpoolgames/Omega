@@ -65,6 +65,15 @@ Its generated-controller upgrade is the
 and
 [Generated-Controller Robust Separation Report v0](research_notes/omega_v2/generated_controller_robust_separation_report_v0.md).
 
+## Cosmology Packet v2
+
+For the September 2026 conceptual synthesis, start with
+[Omega Cosmology v2](cosmology/v2/README.md) or the
+[complete packet](cosmology/v2/OMEGA_COSMOLOGY_V2_COMPLETE.md).
+The packet covers the cosmology and ethical motivation, with explicit
+references and claim status. Its version number is separate from the
+`omega_v2` / `OmegaV2` formal implementation.
+
 ## Read First
 
 1. [Repository README](../README.md)
