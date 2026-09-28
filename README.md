@@ -53,6 +53,10 @@ identifies the proposed bounded continuation graph with a conventional
 probabilistic quotient and states its controller-preservation assumptions.
 Its [control-panel report](docs/research_notes/omega_v2/continuation_equivalence_audit_report_v0.md)
 records exact baselines, adversarial controls, and the remaining experiment gap.
+The [frame-information audit](docs/research_notes/omega_v2/frame_information_audit_v0.md)
+separates verification histories from currently accessible controller records.
+Its [report](docs/research_notes/omega_v2/frame_information_audit_report_v0.md)
+checks erasure, sealed archives, and retrieval with explicit time and cost.
 
 Omega is a research program for treating alignment as the problem of
 preserving the corridor of compatible, value-bearing futures.
