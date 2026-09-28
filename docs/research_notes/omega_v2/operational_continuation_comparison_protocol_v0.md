@@ -104,4 +104,3 @@ Motivation: Omega Cosmology v3.1 Parts 02-04, 08, 11-12, 14 and the
 28 September 2026 lushness-deformation addendum, especially its distributed-access
 and branch-selection cautions. The new code operationalizes these cautions.
 The interpretation remains conditional on the declared model and test frame.
-
