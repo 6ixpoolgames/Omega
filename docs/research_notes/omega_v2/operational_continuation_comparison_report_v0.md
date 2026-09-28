@@ -13,6 +13,10 @@ Proposed next experiment: [continuation prediction pilot](continuation_predictio
 This is a draft contract for a candidate, matched baselines, and an independently
 evaluated workload; it records no new experimental result.
 
+The first implementation step is now recorded separately in the
+[C1 equivalence and control-panel audit](continuation_equivalence_audit_report_v0.md).
+The draft pilot remains a proposal for a later independently frozen workload.
+
 - [Definitions and claim boundary](operational_continuation_comparison_v0.md)
 - [Acceptance protocol](operational_continuation_comparison_protocol_v0.md),
   committed before implementation at `354be7e`

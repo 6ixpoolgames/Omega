@@ -48,6 +48,11 @@ adds five finite cases separating taskwise achievement from uniform response
 emulation under local observations, shared resources, costs, and deadlines.
 Its [retained report](docs/research_notes/omega_v2/operational_continuation_comparison_report_v0.md)
 records the witnesses and comparison limits.
+The [C1 equivalence audit](docs/research_notes/omega_v2/continuation_equivalence_audit_v0.md)
+identifies the proposed bounded continuation graph with a conventional
+probabilistic quotient and states its controller-preservation assumptions.
+Its [control-panel report](docs/research_notes/omega_v2/continuation_equivalence_audit_report_v0.md)
+records exact baselines, adversarial controls, and the remaining experiment gap.
 
 Omega is a research program for treating alignment as the problem of
 preserving the corridor of compatible, value-bearing futures.
