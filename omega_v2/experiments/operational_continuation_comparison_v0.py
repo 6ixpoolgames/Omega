@@ -1,4 +1,4 @@
-"""Five fully specified finite acceptance cases; exact arithmetic, no fitted score."""
+"""Five finite comparison cases and boundary controls; exact arithmetic."""
 
 from __future__ import annotations
 
@@ -17,6 +17,7 @@ from omega_v2.finite.operational_continuation import (
 )
 
 PROTOCOL = "docs/research_notes/omega_v2/operational_continuation_comparison_protocol_v0.md"
+TERMINATION_PROTOCOL = "docs/research_notes/omega_v2/operational_continuation_termination_protocol_v0.md"
 BASE_REVISION = "506ef363a3f27ec4713617089f4f7f3caf8a7d9c"
 F = Fraction
 CERTAIN = F(1)
@@ -178,6 +179,55 @@ def history_experiment(alarm: bool) -> Experiment:
     )
 
 
+def partial_cutoff_experiment(*, horizon=2, budget=2) -> Experiment:
+    """A fast terminal branch and a slow branch cut off before its final tick."""
+    successors = {
+        "start": {"done": F(1, 3), "slow1": F(2, 3)},
+        "slow1": {"slow2": F(1)}, "slow2": {"done": F(1)}, "done": {"done": F(1)},
+    }
+    system, costs = _world(
+        "partial-cutoff", ["start"], (("step",),), lambda s, _a: successors[s],
+        lambda s, _a, _t: int(s != "done"),
+    )
+    observation = {s: s for s in system.states}
+    teams = reactive_teams((observation,), ({s: ("step",) for s in system.states},))
+    return Experiment(
+        "partial-cutoff", system, {"trial": FiniteDistribution.point_mass("start")},
+        teams, frozenset({"done"}), costs, horizon, budget,
+    )
+
+
+def terminal_stop_experiment() -> Experiment:
+    """An expensive terminal self-loop must never be executed after stopping."""
+    system, costs = _world(
+        "terminal-stop", ["start"], (("step",),), lambda _s, _a: {"done": F(1)},
+        lambda s, _a, _t: 1 if s == "start" else 7,
+    )
+    observation = {s: s for s in system.states}
+    teams = reactive_teams((observation,), ({s: ("step",) for s in system.states},))
+    return Experiment(
+        "terminal-stop", system, {"trial": FiniteDistribution.point_mass("start")},
+        teams, frozenset({"done"}), costs, 3, 1,
+    )
+
+
+def _termination_summary(evaluated):
+    # Both fixtures declare exactly one team and one input. An inadmissible
+    # team must produce failed gates, not an indexing error in the reporter.
+    responses = next(iter(evaluated.laws.values()), {})
+    law = responses.get("trial")
+    rows = () if law is None else law.rows
+    return {
+        "admitted_policy_count": len(evaluated.laws),
+        "total_mass": fraction_text(sum((p for _r, p in rows), F(0))),
+        "completed_mass": fraction_text(sum((p for r, p in rows if not r.censored), F(0))),
+        "censored_mass": fraction_text(sum((p for r, p in rows if r.censored), F(0))),
+        "runs": sorted(
+            [[r.path.end, fraction_text(p), r.elapsed, r.cost, r.censored] for r, p in rows]
+        ),
+    }
+
+
 def _weights(inputs):
     # Explicitly registered fair preparation, not a prior over controller programs.
     return FiniteDistribution(tuple((q, F(1, len(inputs))) for q in inputs))
@@ -303,6 +353,13 @@ def run_experiment():
         controls["failed_setup"], _weights(("trial",)),
         {"service": lambda _q, r: r.path.end[3] == 1},
     )["service"]
+    termination_controls = {}
+    for name, experiment in (
+        ("partial_cutoff", partial_cutoff_experiment()),
+        ("terminal_stop", terminal_stop_experiment()),
+    ):
+        controls[name] = evaluate(experiment)
+        termination_controls[name] = _termination_summary(controls[name])
     passive = [
         profile_verdict({"E": F(p, 20), "not_E": 1 - F(p, 20)},
                         {"E": F(q, 20), "not_E": 1 - F(q, 20)})
@@ -340,13 +397,24 @@ def run_experiment():
     gate("passive_incomparable_pairs", passive.count("incomparable"), 420)
     gate("build_horizon_budget_profile", [r["service"] for r in build_bounds],
          [None, "0", "0", None, "0", "1"])
+    partial = termination_controls["partial_cutoff"]
+    gate("partial_cutoff.total_mass", partial["total_mass"], "1")
+    gate("partial_cutoff.completed_mass", partial["completed_mass"], "1/3")
+    gate("partial_cutoff.censored_mass", partial["censored_mass"], "2/3")
+    gate("partial_cutoff.runs", partial["runs"],
+         [["done", "1/3", 1, 1, False], ["slow2", "2/3", 2, 2, True]])
+    terminal = termination_controls["terminal_stop"]
+    gate("terminal_stop.runs", terminal["runs"], [["done", "1", 1, 1, False]])
+    gate("terminal_stop.admissible", terminal["admitted_policy_count"], 1)
     return {
         "status": "PASS" if all(g["passed"] for g in gates) else "FAIL",
         "protocol": PROTOCOL, "base_revision": BASE_REVISION,
+        "supplemental_protocols": [TERMINATION_PROTOCOL],
         "claim_boundary": "Known finite acceptance cases; no value or lushness validation.",
         "cases": cases, "gates": gates, "build_bounds": build_bounds,
         "unsound_branchwise_guess": fraction_text(branchwise),
         "probabilistic_setup_success": fraction_text(failed_setup),
+        "termination_controls": termination_controls,
         "_control_evidence": controls,
         "passive_counts": {v: passive.count(v) for v in (
             "equivalent", "left_strict", "right_strict", "incomparable"

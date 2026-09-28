@@ -1,3 +1,4 @@
+import inspect
 import json
 from dataclasses import replace
 from fractions import Fraction
@@ -10,9 +11,12 @@ from omega_v2.experiments.operational_continuation_comparison_v0 import (
     build_experiment,
     choice_experiment,
     history_experiment,
+    partial_cutoff_experiment,
     repair_experiment,
     run_experiment,
+    terminal_stop_experiment,
 )
+from omega_v2.finite import operational_continuation as core
 from omega_v2.finite.controllers import FiniteStateController
 from omega_v2.finite.model import ControlledMarkovSystem, FiniteDistribution
 from omega_v2.finite.operational_continuation import (
@@ -161,6 +165,88 @@ def test_terminal_projection_does_not_preserve_history():
         project(a, frame="history", readout=history),
         project(b, frame="history", readout=history),
     )["status"] == "fails"
+
+
+def test_mixed_completion_and_cutoff_keep_unconditional_mass_and_histories():
+    e = partial_cutoff_experiment()
+    law = rollout(e, e.teams[0], "trial")
+    assert len(law.rows) == 2
+    by_end = {run.path.end: (run, mass) for run, mass in law.rows}
+    fast, fast_mass = by_end["done"]
+    slow, slow_mass = by_end["slow2"]
+    assert (fast_mass, slow_mass) == (F(1, 3), F(2, 3))
+    assert fast.path.states == ("start", "done")
+    assert (fast.elapsed, fast.cost, fast.censored) == (1, 1, False)
+    assert fast.observations == (("start",),)
+    assert fast.memories == ((0, 0),)
+    assert slow.path.states == ("start", "slow1", "slow2")
+    assert (slow.elapsed, slow.cost, slow.censored) == (2, 2, True)
+    assert slow.observations == (("start", "slow1"),)
+    assert slow.memories == ((0, 0, 0),)
+    assert achievement(evaluate(e), FiniteDistribution.point_mass("trial"), {
+        "completed": lambda _q, r: not r.censored,
+        "unfinished": lambda _q, r: r.censored,
+    }) == {"completed": F(1, 3), "unfinished": F(2, 3)}
+
+    # The unfinished branch is a delayed completion, not an absorbing failure.
+    longer = partial_cutoff_experiment(horizon=3, budget=3)
+    completed = rollout(longer, longer.teams[0], "trial")
+    assert all(r.path.end == "done" and not r.censored for r in completed.support)
+    assert {(r.elapsed, r.cost): p for r, p in completed.rows} == {
+        (1, 1): F(1, 3), (3, 3): F(2, 3)
+    }
+
+
+def test_terminal_stop_prevents_later_actions_memory_updates_and_charges():
+    e = terminal_stop_experiment()
+    assert e.costs["done", ("step",), "done"] == 7
+    law = rollout(e, e.teams[0], "trial")
+    assert len(law.rows) == 1
+    run, mass = law.rows[0]
+    assert mass == 1
+    assert run.path.states == ("start", "done")
+    assert run.path.actions == (("step",),)
+    assert (run.elapsed, run.cost, run.censored) == (1, 1, False)
+    assert run.observations == (("start",),)
+    assert run.memories == ((0, 0),)
+    evaluated = evaluate(e)
+    assert len(evaluated.laws) == 1 and not evaluated.rejected
+
+
+@pytest.mark.parametrize("mutation,failed_gate", [
+    ("condition_on_completion", "partial_cutoff.completed_mass"),
+    ("continue_after_terminal", "terminal_stop.admissible"),
+])
+def test_termination_controls_reject_targeted_mutants(tmp_path, monkeypatch, mutation, failed_gate):
+    source = inspect.getsource(core.rollout)
+    if mutation == "condition_on_completion":
+        original = "    return FiniteDistribution.from_mapping(paths)"
+        replacement = """    finished = {run: p for run, p in paths.items() if not run.censored}
+    if finished:
+        total = sum(finished.values(), Fraction(0))
+        paths = {run: p / total for run, p in finished.items()}
+    return FiniteDistribution.from_mapping(paths)"""
+    else:
+        original = """            if state in experiment.terminals:
+                extended[run] = extended.get(run, Fraction(0)) + mass
+                continue
+"""
+        replacement = ""
+    assert source.count(original) == 1, "mutation must replace exactly one intended code block"
+    namespace = dict(core.__dict__)
+    mutated = compile(source.replace(original, replacement), f"<mutation:{mutation}>", "exec")
+    exec(mutated, namespace)  # noqa: S102 - isolated mutation of trusted local test target
+    monkeypatch.setattr(core, "rollout", namespace["rollout"])
+
+    out_dir = tmp_path / mutation
+    assert runner.main(["--out-dir", str(out_dir)]) == 1
+    summary = json.loads((out_dir / "summary.json").read_text())
+    assert summary["status"] == "FAIL"
+    supplemental = ("partial_cutoff.", "terminal_stop.")
+    original_gates = [g for g in summary["gates"] if not g["name"].startswith(supplemental)]
+    assert len(original_gates) == 34 and all(g["passed"] for g in original_gates)
+    failures = {g["name"] for g in summary["gates"] if not g["passed"]}
+    assert failed_gate in failures
 
 
 def test_relabeling_and_controller_aliases_preserve_response():

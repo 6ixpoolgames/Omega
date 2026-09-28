@@ -10,7 +10,11 @@ import sys
 from datetime import UTC, datetime
 from pathlib import Path
 
-from omega_v2.experiments.operational_continuation_comparison_v0 import PROTOCOL, run_experiment
+from omega_v2.experiments.operational_continuation_comparison_v0 import (
+    PROTOCOL,
+    TERMINATION_PROTOCOL,
+    run_experiment,
+)
 from omega_v2.finite.model import fraction_text
 from omega_v2.finite.operational_continuation import team_id
 from omega_v2.validation.artifacts import write_json
@@ -18,6 +22,7 @@ from omega_v2.validation.artifacts import write_json
 ROOT = Path(__file__).resolve().parents[2]
 SOURCES = (
     PROTOCOL,
+    TERMINATION_PROTOCOL,
     "omega_v2/finite/model.py",
     "omega_v2/finite/controllers.py",
     "omega_v2/finite/operational_continuation.py",
