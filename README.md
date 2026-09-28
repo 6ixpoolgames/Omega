@@ -57,9 +57,14 @@ Current prose uses **BCG** for this graph; historical C1 labels and API names
 remain reproducible and are separate from the primer's conjecture C1.
 The [audit follow-up contract](docs/research_notes/omega_v2/continuation_audit_followup_protocol_v0.md)
 adds memory-only information and retained interface/budget checks.
+Its [follow-up report](docs/research_notes/omega_v2/continuation_audit_followup_report_v0.md)
+records the expanded checks and deliberate-fault results.
 The next research priority is the
 [minimal recovery dynamics panel](docs/research_notes/omega_v2/recovery_dynamics_protocol_v0.md);
 graph-speed benchmarking remains optional engineering.
+The [recovery report](docs/research_notes/omega_v2/recovery_dynamics_report_v0.md)
+records 14 exact worlds separating refusal, noisy reset, external overwrite,
+broken recovery and competing death, including exact long-run waiting times.
 The [frame-information audit](docs/research_notes/omega_v2/frame_information_audit_v0.md)
 separates verification histories from currently accessible controller records.
 Its [report](docs/research_notes/omega_v2/frame_information_audit_report_v0.md)

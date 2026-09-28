@@ -1,0 +1,276 @@
+{
+  "mutations": [
+    {
+      "artifact_sha256": {
+        "evidence.json": "08778b2601dc328e1718c9d485345afae6f5345e6cfd741bdd01e60c23a6b806",
+        "provenance.json": "ec9c6116fbf86a499b54ed927051f1234e17e9aff4c5f784ae3cca64a10331d3",
+        "report.md": "aebfc1e2899b371f4e0c8af25dabe48641efb0c4554b519e90958cc4e7b09778",
+        "summary.json": "1be344fa547e9dc4c209b645d4a2222cc73a11267b5a1445922bc1380075ab2c"
+      },
+      "exit_code": 1,
+      "expected_failure": "memory_only.c1_exact",
+      "failed_gates": [
+        {
+          "expected": true,
+          "name": "memory_only.c1_exact",
+          "observed": false,
+          "passed": false
+        },
+        {
+          "expected": true,
+          "name": "memory_only.quotient_exact",
+          "observed": false,
+          "passed": false
+        },
+        {
+          "expected": {
+            "mapping": [
+              [
+                1,
+                {
+                  "rational": [
+                    1,
+                    1
+                  ]
+                }
+              ]
+            ]
+          },
+          "name": "c1.memory_only.input_1",
+          "observed": {
+            "mapping": [
+              [
+                0,
+                {
+                  "rational": [
+                    1,
+                    1
+                  ]
+                }
+              ]
+            ]
+          },
+          "passed": false
+        },
+        {
+          "expected": {
+            "mapping": [
+              [
+                1,
+                {
+                  "rational": [
+                    1,
+                    1
+                  ]
+                }
+              ]
+            ]
+          },
+          "name": "quotient.memory_only.input_1",
+          "observed": {
+            "mapping": [
+              [
+                0,
+                {
+                  "rational": [
+                    1,
+                    1
+                  ]
+                }
+              ]
+            ]
+          },
+          "passed": false
+        }
+      ],
+      "mutation": "updated_memory_action",
+      "recipe": {
+        "function": "predict_graph",
+        "mutated_sha256": "b9c9a4f24b574bf885fe362811afa3434fc3e48a237ad15b9eb1402192afd1e5",
+        "new": "c.action(c.update(m[-1], o), o)",
+        "old": "c.action(m[-1], o)",
+        "source_sha256": "a957f435a961be44ac7ad00c9af48f0eab7bc1d7666d4192c93dab438b198591"
+      },
+      "status": "FAIL"
+    },
+    {
+      "artifact_sha256": {
+        "evidence.json": "a15fc1722f306dfee1771f21c5cb62833c1608e9724d60a5c948447dff56fef8",
+        "provenance.json": "ec9c6116fbf86a499b54ed927051f1234e17e9aff4c5f784ae3cca64a10331d3",
+        "report.md": "4ae312303147f5fbe22590110f4d00b617ff5d695e4a5024fbfc597d66031e97",
+        "summary.json": "94a3a65b31c3dfe12a27072fa629a75760fe55346cf998b758c7545e64c66d2d"
+      },
+      "exit_code": 1,
+      "expected_failure": "later_input_over_budget.c1_exact",
+      "failed_gates": [
+        {
+          "expected": true,
+          "name": "later_input_over_budget.c1_exact",
+          "observed": false,
+          "passed": false
+        },
+        {
+          "expected": true,
+          "name": "later_input_over_budget.quotient_exact",
+          "observed": false,
+          "passed": false
+        },
+        {
+          "expected": true,
+          "name": "later_input_over_budget.memoized_exact",
+          "observed": false,
+          "passed": false
+        },
+        {
+          "expected": {
+            "c0-0": 2
+          },
+          "name": "c1.later_input_over_budget.rejected",
+          "observed": {},
+          "passed": false
+        },
+        {
+          "expected": false,
+          "name": "c1.later_input_over_budget.no_admitted",
+          "observed": true,
+          "passed": false
+        },
+        {
+          "expected": {
+            "c0-0": 2
+          },
+          "name": "quotient.later_input_over_budget.rejected",
+          "observed": {},
+          "passed": false
+        },
+        {
+          "expected": false,
+          "name": "quotient.later_input_over_budget.no_admitted",
+          "observed": true,
+          "passed": false
+        },
+        {
+          "expected": {
+            "c0-0": 2
+          },
+          "name": "memoized.later_input_over_budget.rejected",
+          "observed": {},
+          "passed": false
+        },
+        {
+          "expected": false,
+          "name": "memoized.later_input_over_budget.no_admitted",
+          "observed": true,
+          "passed": false
+        }
+      ],
+      "mutation": "first_input_budget",
+      "recipe": {
+        "function": "_admit",
+        "mutated_sha256": "dd0167377f197a439c13a794faf900a380cce1961b178352bafc34755759c680",
+        "new": "for law in tuple(laws.values())[:1]",
+        "old": "for law in laws.values()",
+        "source_sha256": "71c4efd5348e345c8adb2e5e1c2c37d71f86c29b5e2b26e556e679567a2fda6d"
+      },
+      "status": "FAIL"
+    },
+    {
+      "artifact_sha256": {
+        "evidence.json": "030353d9d0dd31628f3c910c4c4ecb80295b1669a5b820f588c7e85a200c7edb",
+        "provenance.json": "ec9c6116fbf86a499b54ed927051f1234e17e9aff4c5f784ae3cca64a10331d3",
+        "report.md": "1bb375e94036b7b1dec49897368b7933dae8093265872049938dcb69a929b3bd",
+        "summary.json": "d6d190fa4b7e8949e09d941945b2638c09a746c46d20a31e6e275bd183712aaa"
+      },
+      "exit_code": 1,
+      "expected_failure": "memory_only.memoized_exact",
+      "failed_gates": [
+        {
+          "expected": true,
+          "name": "memory_only.memoized_exact",
+          "observed": false,
+          "passed": false
+        },
+        {
+          "expected": {
+            "mapping": [
+              [
+                1,
+                {
+                  "rational": [
+                    1,
+                    1
+                  ]
+                }
+              ]
+            ]
+          },
+          "name": "memoized.memory_only.input_1",
+          "observed": {
+            "mapping": [
+              [
+                0,
+                {
+                  "rational": [
+                    1,
+                    1
+                  ]
+                }
+              ]
+            ]
+          },
+          "passed": false
+        }
+      ],
+      "mutation": "memoryless_cache",
+      "recipe": {
+        "replacement_decorator": "def memoryless_cache(function):\n    values = {}\n\n    def wrapper(state, h, memories, *args, **kwargs):\n        key = (state, h)\n        if key not in values:\n            values[key] = function(state, h, memories, *args, **kwargs)\n        return values[key]\n\n    wrapper.cache_info = lambda: SimpleNamespace(currsize=len(values))\n    wrapper.cache_clear = values.clear\n    return wrapper\n",
+        "target": "continuation_prediction.cache"
+      },
+      "status": "FAIL"
+    },
+    {
+      "artifact_sha256": {
+        "evidence.json": "e0f10caa8b2645691425f974d802b11c0dbe83c8e376683b4070cd4e7ccfa57d",
+        "provenance.json": "ec9c6116fbf86a499b54ed927051f1234e17e9aff4c5f784ae3cca64a10331d3",
+        "report.md": "844a1a58f154b707b20af0fbd6c255fd82beee1a49720beff7c72bd9e9efcbad",
+        "summary.json": "c094efd4197c55e64a6a08b1b75c356989d634a33ffffb27827ca6673ee54f74"
+      },
+      "exit_code": 1,
+      "expected_failure": "interface.c1.reject_incompatible",
+      "failed_gates": [
+        {
+          "expected": true,
+          "name": "interface.c1.reject_incompatible",
+          "observed": false,
+          "passed": false
+        },
+        {
+          "expected": true,
+          "name": "interface.quotient.reject_incompatible",
+          "observed": false,
+          "passed": false
+        },
+        {
+          "expected": true,
+          "name": "interface.reference.reject_incompatible",
+          "observed": false,
+          "passed": false
+        },
+        {
+          "expected": true,
+          "name": "interface.memoized.reject_incompatible",
+          "observed": false,
+          "passed": false
+        }
+      ],
+      "mutation": "skip_interface",
+      "recipe": {
+        "replacement": "lambda *_args: None",
+        "target": "Interface.validate"
+      },
+      "status": "FAIL"
+    }
+  ],
+  "revision": "870e02de23e8a191672d2a76d73fdb085c3b7869",
+  "scope": "compact complete failure-gate records; full failed runs remain in ignored local output"
+}
