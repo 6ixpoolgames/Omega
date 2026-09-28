@@ -1,0 +1,1479 @@
+{
+  "base_revision": "506ef363a3f27ec4713617089f4f7f3caf8a7d9c",
+  "build_bounds": [
+    {
+      "admitted_policies": 0,
+      "budget": 0,
+      "censored_mass_per_policy": {},
+      "horizon": 1,
+      "service": null
+    },
+    {
+      "admitted_policies": 2,
+      "budget": 1,
+      "censored_mass_per_policy": {
+        "c0-0": "1",
+        "c0-1": "1"
+      },
+      "horizon": 1,
+      "service": "0"
+    },
+    {
+      "admitted_policies": 2,
+      "budget": 2,
+      "censored_mass_per_policy": {
+        "c0-0": "1",
+        "c0-1": "1"
+      },
+      "horizon": 1,
+      "service": "0"
+    },
+    {
+      "admitted_policies": 0,
+      "budget": 0,
+      "censored_mass_per_policy": {},
+      "horizon": 2,
+      "service": null
+    },
+    {
+      "admitted_policies": 1,
+      "budget": 1,
+      "censored_mass_per_policy": {
+        "c0-1": "0"
+      },
+      "horizon": 2,
+      "service": "0"
+    },
+    {
+      "admitted_policies": 2,
+      "budget": 2,
+      "censored_mass_per_policy": {
+        "c0-0": "0",
+        "c0-1": "0"
+      },
+      "horizon": 2,
+      "service": "1"
+    }
+  ],
+  "cases": {
+    "bit": {
+      "achievement_order": "left_strict",
+      "frame": "bit-output",
+      "input_weights": {
+        "0": "1/2",
+        "1": "1/2"
+      },
+      "left": {
+        "admitted_policy_count": 8,
+        "budget": 2,
+        "context": "revealed-bit",
+        "distinct_response_count": 4,
+        "horizon": 2,
+        "projected_responses": {
+          "c0-0|c1-0": {
+            "0": [
+              {
+                "probability": "1",
+                "response": "0"
+              }
+            ],
+            "1": [
+              {
+                "probability": "1",
+                "response": "0"
+              }
+            ]
+          },
+          "c0-0|c1-1": {
+            "0": [
+              {
+                "probability": "1",
+                "response": "0"
+              }
+            ],
+            "1": [
+              {
+                "probability": "1",
+                "response": "1"
+              }
+            ]
+          },
+          "c0-0|c1-2": {
+            "0": [
+              {
+                "probability": "1",
+                "response": "0"
+              }
+            ],
+            "1": [
+              {
+                "probability": "1",
+                "response": "0"
+              }
+            ]
+          },
+          "c0-0|c1-3": {
+            "0": [
+              {
+                "probability": "1",
+                "response": "0"
+              }
+            ],
+            "1": [
+              {
+                "probability": "1",
+                "response": "1"
+              }
+            ]
+          },
+          "c0-0|c1-4": {
+            "0": [
+              {
+                "probability": "1",
+                "response": "1"
+              }
+            ],
+            "1": [
+              {
+                "probability": "1",
+                "response": "0"
+              }
+            ]
+          },
+          "c0-0|c1-5": {
+            "0": [
+              {
+                "probability": "1",
+                "response": "1"
+              }
+            ],
+            "1": [
+              {
+                "probability": "1",
+                "response": "1"
+              }
+            ]
+          },
+          "c0-0|c1-6": {
+            "0": [
+              {
+                "probability": "1",
+                "response": "1"
+              }
+            ],
+            "1": [
+              {
+                "probability": "1",
+                "response": "0"
+              }
+            ]
+          },
+          "c0-0|c1-7": {
+            "0": [
+              {
+                "probability": "1",
+                "response": "1"
+              }
+            ],
+            "1": [
+              {
+                "probability": "1",
+                "response": "1"
+              }
+            ]
+          }
+        },
+        "rejected_over_budget": {}
+      },
+      "left_emulates_right": {
+        "failures": {},
+        "status": "holds",
+        "witnesses": {
+          "c0-0|c1-0": "c0-0|c1-0",
+          "c0-0|c1-1": "c0-0|c1-0",
+          "c0-0|c1-2": "c0-0|c1-5",
+          "c0-0|c1-3": "c0-0|c1-5",
+          "c0-0|c1-4": "c0-0|c1-0",
+          "c0-0|c1-5": "c0-0|c1-0",
+          "c0-0|c1-6": "c0-0|c1-5",
+          "c0-0|c1-7": "c0-0|c1-5"
+        }
+      },
+      "left_profile": {
+        "guess": "1"
+      },
+      "right": {
+        "admitted_policy_count": 8,
+        "budget": 2,
+        "context": "hidden-bit",
+        "distinct_response_count": 2,
+        "horizon": 2,
+        "projected_responses": {
+          "c0-0|c1-0": {
+            "0": [
+              {
+                "probability": "1",
+                "response": "0"
+              }
+            ],
+            "1": [
+              {
+                "probability": "1",
+                "response": "0"
+              }
+            ]
+          },
+          "c0-0|c1-1": {
+            "0": [
+              {
+                "probability": "1",
+                "response": "0"
+              }
+            ],
+            "1": [
+              {
+                "probability": "1",
+                "response": "0"
+              }
+            ]
+          },
+          "c0-0|c1-2": {
+            "0": [
+              {
+                "probability": "1",
+                "response": "1"
+              }
+            ],
+            "1": [
+              {
+                "probability": "1",
+                "response": "1"
+              }
+            ]
+          },
+          "c0-0|c1-3": {
+            "0": [
+              {
+                "probability": "1",
+                "response": "1"
+              }
+            ],
+            "1": [
+              {
+                "probability": "1",
+                "response": "1"
+              }
+            ]
+          },
+          "c0-0|c1-4": {
+            "0": [
+              {
+                "probability": "1",
+                "response": "0"
+              }
+            ],
+            "1": [
+              {
+                "probability": "1",
+                "response": "0"
+              }
+            ]
+          },
+          "c0-0|c1-5": {
+            "0": [
+              {
+                "probability": "1",
+                "response": "0"
+              }
+            ],
+            "1": [
+              {
+                "probability": "1",
+                "response": "0"
+              }
+            ]
+          },
+          "c0-0|c1-6": {
+            "0": [
+              {
+                "probability": "1",
+                "response": "1"
+              }
+            ],
+            "1": [
+              {
+                "probability": "1",
+                "response": "1"
+              }
+            ]
+          },
+          "c0-0|c1-7": {
+            "0": [
+              {
+                "probability": "1",
+                "response": "1"
+              }
+            ],
+            "1": [
+              {
+                "probability": "1",
+                "response": "1"
+              }
+            ]
+          }
+        },
+        "rejected_over_budget": {}
+      },
+      "right_emulates_left": {
+        "failures": {
+          "c0-0|c1-1": {
+            "c0-0|c1-0": "1",
+            "c0-0|c1-1": "1",
+            "c0-0|c1-2": "0",
+            "c0-0|c1-3": "0",
+            "c0-0|c1-4": "1",
+            "c0-0|c1-5": "1",
+            "c0-0|c1-6": "0",
+            "c0-0|c1-7": "0"
+          },
+          "c0-0|c1-3": {
+            "c0-0|c1-0": "1",
+            "c0-0|c1-1": "1",
+            "c0-0|c1-2": "0",
+            "c0-0|c1-3": "0",
+            "c0-0|c1-4": "1",
+            "c0-0|c1-5": "1",
+            "c0-0|c1-6": "0",
+            "c0-0|c1-7": "0"
+          },
+          "c0-0|c1-4": {
+            "c0-0|c1-0": "0",
+            "c0-0|c1-1": "0",
+            "c0-0|c1-2": "1",
+            "c0-0|c1-3": "1",
+            "c0-0|c1-4": "0",
+            "c0-0|c1-5": "0",
+            "c0-0|c1-6": "1",
+            "c0-0|c1-7": "1"
+          },
+          "c0-0|c1-6": {
+            "c0-0|c1-0": "0",
+            "c0-0|c1-1": "0",
+            "c0-0|c1-2": "1",
+            "c0-0|c1-3": "1",
+            "c0-0|c1-4": "0",
+            "c0-0|c1-5": "0",
+            "c0-0|c1-6": "1",
+            "c0-0|c1-7": "1"
+          }
+        },
+        "status": "fails",
+        "witnesses": {
+          "c0-0|c1-0": "c0-0|c1-0",
+          "c0-0|c1-2": "c0-0|c1-0",
+          "c0-0|c1-5": "c0-0|c1-2",
+          "c0-0|c1-7": "c0-0|c1-2"
+        }
+      },
+      "right_profile": {
+        "guess": "1/2"
+      }
+    },
+    "build_savings": {
+      "achievement_order": "incomparable",
+      "frame": "service-and-cost",
+      "input_weights": {
+        "trial": "1"
+      },
+      "left": {
+        "admitted_policy_count": 2,
+        "budget": 2,
+        "context": "build",
+        "distinct_response_count": 2,
+        "horizon": 2,
+        "projected_responses": {
+          "c0-0": {
+            "trial": [
+              {
+                "probability": "1",
+                "response": "(1, 2)"
+              }
+            ]
+          },
+          "c0-1": {
+            "trial": [
+              {
+                "probability": "1",
+                "response": "(0, 1)"
+              }
+            ]
+          }
+        },
+        "rejected_over_budget": {}
+      },
+      "left_emulates_right": {
+        "failures": {
+          "c0-1": {
+            "c0-0": "trial",
+            "c0-1": "trial"
+          }
+        },
+        "status": "fails",
+        "witnesses": {
+          "c0-0": "c0-1"
+        }
+      },
+      "left_profile": {
+        "service": "1",
+        "zero_expenditure": "0"
+      },
+      "right": {
+        "admitted_policy_count": 2,
+        "budget": 2,
+        "context": "wait",
+        "distinct_response_count": 2,
+        "horizon": 2,
+        "projected_responses": {
+          "c0-0": {
+            "trial": [
+              {
+                "probability": "1",
+                "response": "(0, 1)"
+              }
+            ]
+          },
+          "c0-1": {
+            "trial": [
+              {
+                "probability": "1",
+                "response": "(0, 0)"
+              }
+            ]
+          }
+        },
+        "rejected_over_budget": {}
+      },
+      "right_emulates_left": {
+        "failures": {
+          "c0-0": {
+            "c0-0": "trial",
+            "c0-1": "trial"
+          }
+        },
+        "status": "fails",
+        "witnesses": {
+          "c0-1": "c0-0"
+        }
+      },
+      "right_profile": {
+        "service": "0",
+        "zero_expenditure": "1"
+      }
+    },
+    "build_service": {
+      "achievement_order": "left_strict",
+      "frame": "service-output",
+      "input_weights": {
+        "trial": "1"
+      },
+      "left": {
+        "admitted_policy_count": 2,
+        "budget": 2,
+        "context": "build",
+        "distinct_response_count": 2,
+        "horizon": 2,
+        "projected_responses": {
+          "c0-0": {
+            "trial": [
+              {
+                "probability": "1",
+                "response": "1"
+              }
+            ]
+          },
+          "c0-1": {
+            "trial": [
+              {
+                "probability": "1",
+                "response": "0"
+              }
+            ]
+          }
+        },
+        "rejected_over_budget": {}
+      },
+      "left_emulates_right": {
+        "failures": {},
+        "status": "holds",
+        "witnesses": {
+          "c0-0": "c0-1",
+          "c0-1": "c0-1"
+        }
+      },
+      "left_profile": {
+        "service": "1"
+      },
+      "right": {
+        "admitted_policy_count": 2,
+        "budget": 2,
+        "context": "wait",
+        "distinct_response_count": 1,
+        "horizon": 2,
+        "projected_responses": {
+          "c0-0": {
+            "trial": [
+              {
+                "probability": "1",
+                "response": "0"
+              }
+            ]
+          },
+          "c0-1": {
+            "trial": [
+              {
+                "probability": "1",
+                "response": "0"
+              }
+            ]
+          }
+        },
+        "rejected_over_budget": {}
+      },
+      "right_emulates_left": {
+        "failures": {
+          "c0-0": {
+            "c0-0": "trial",
+            "c0-1": "trial"
+          }
+        },
+        "status": "fails",
+        "witnesses": {
+          "c0-1": "c0-0"
+        }
+      },
+      "right_profile": {
+        "service": "0"
+      }
+    },
+    "choice": {
+      "achievement_order": "left_strict",
+      "frame": "binary-output",
+      "input_weights": {
+        "trial": "1"
+      },
+      "left": {
+        "admitted_policy_count": 3,
+        "budget": 1,
+        "context": "selector",
+        "distinct_response_count": 3,
+        "horizon": 1,
+        "projected_responses": {
+          "c0-0": {
+            "trial": [
+              {
+                "probability": "1",
+                "response": "0"
+              }
+            ]
+          },
+          "c0-1": {
+            "trial": [
+              {
+                "probability": "1",
+                "response": "1"
+              }
+            ]
+          },
+          "c0-2": {
+            "trial": [
+              {
+                "probability": "1/2",
+                "response": "0"
+              },
+              {
+                "probability": "1/2",
+                "response": "1"
+              }
+            ]
+          }
+        },
+        "rejected_over_budget": {}
+      },
+      "left_emulates_right": {
+        "failures": {},
+        "status": "holds",
+        "witnesses": {
+          "c0-0": "c0-2"
+        }
+      },
+      "left_profile": {
+        "one": "1",
+        "zero": "1"
+      },
+      "right": {
+        "admitted_policy_count": 1,
+        "budget": 1,
+        "context": "coin",
+        "distinct_response_count": 1,
+        "horizon": 1,
+        "projected_responses": {
+          "c0-0": {
+            "trial": [
+              {
+                "probability": "1/2",
+                "response": "0"
+              },
+              {
+                "probability": "1/2",
+                "response": "1"
+              }
+            ]
+          }
+        },
+        "rejected_over_budget": {}
+      },
+      "right_emulates_left": {
+        "failures": {
+          "c0-0": {
+            "c0-0": "trial"
+          },
+          "c0-1": {
+            "c0-0": "trial"
+          }
+        },
+        "status": "fails",
+        "witnesses": {
+          "c0-2": "c0-0"
+        }
+      },
+      "right_profile": {
+        "one": "1/2",
+        "zero": "1/2"
+      }
+    },
+    "choice_without_coin": {
+      "achievement_order": "left_strict",
+      "frame": "binary-output",
+      "input_weights": {
+        "trial": "1"
+      },
+      "left": {
+        "admitted_policy_count": 2,
+        "budget": 1,
+        "context": "no_coin",
+        "distinct_response_count": 2,
+        "horizon": 1,
+        "projected_responses": {
+          "c0-0": {
+            "trial": [
+              {
+                "probability": "1",
+                "response": "0"
+              }
+            ]
+          },
+          "c0-1": {
+            "trial": [
+              {
+                "probability": "1",
+                "response": "1"
+              }
+            ]
+          }
+        },
+        "rejected_over_budget": {}
+      },
+      "left_emulates_right": {
+        "failures": {
+          "c0-0": {
+            "c0-0": "trial",
+            "c0-1": "trial"
+          }
+        },
+        "status": "fails",
+        "witnesses": {}
+      },
+      "left_profile": {
+        "one": "1",
+        "zero": "1"
+      },
+      "right": {
+        "admitted_policy_count": 1,
+        "budget": 1,
+        "context": "coin",
+        "distinct_response_count": 1,
+        "horizon": 1,
+        "projected_responses": {
+          "c0-0": {
+            "trial": [
+              {
+                "probability": "1/2",
+                "response": "0"
+              },
+              {
+                "probability": "1/2",
+                "response": "1"
+              }
+            ]
+          }
+        },
+        "rejected_over_budget": {}
+      },
+      "right_emulates_left": {
+        "failures": {
+          "c0-0": {
+            "c0-0": "trial"
+          },
+          "c0-1": {
+            "c0-0": "trial"
+          }
+        },
+        "status": "fails",
+        "witnesses": {}
+      },
+      "right_profile": {
+        "one": "1/2",
+        "zero": "1/2"
+      }
+    },
+    "history_endpoint": {
+      "achievement_order": "equivalent",
+      "frame": "terminal-time-cost",
+      "input_weights": {
+        "trial": "1"
+      },
+      "left": {
+        "admitted_policy_count": 1,
+        "budget": 2,
+        "context": "alarm-history",
+        "distinct_response_count": 1,
+        "horizon": 2,
+        "projected_responses": {
+          "c0-0": {
+            "trial": [
+              {
+                "probability": "1",
+                "response": "('done', 2, 2)"
+              }
+            ]
+          }
+        },
+        "rejected_over_budget": {}
+      },
+      "left_emulates_right": {
+        "failures": {},
+        "status": "holds",
+        "witnesses": {
+          "c0-0": "c0-0"
+        }
+      },
+      "left_profile": {
+        "complete": "1"
+      },
+      "right": {
+        "admitted_policy_count": 1,
+        "budget": 2,
+        "context": "clear-history",
+        "distinct_response_count": 1,
+        "horizon": 2,
+        "projected_responses": {
+          "c0-0": {
+            "trial": [
+              {
+                "probability": "1",
+                "response": "('done', 2, 2)"
+              }
+            ]
+          }
+        },
+        "rejected_over_budget": {}
+      },
+      "right_emulates_left": {
+        "failures": {},
+        "status": "holds",
+        "witnesses": {
+          "c0-0": "c0-0"
+        }
+      },
+      "right_profile": {
+        "complete": "1"
+      }
+    },
+    "history_full": {
+      "achievement_order": "incomparable",
+      "frame": "signal-history-time-cost",
+      "input_weights": {
+        "trial": "1"
+      },
+      "left": {
+        "admitted_policy_count": 1,
+        "budget": 2,
+        "context": "alarm-history",
+        "distinct_response_count": 1,
+        "horizon": 2,
+        "projected_responses": {
+          "c0-0": {
+            "trial": [
+              {
+                "probability": "1",
+                "response": "(('start', 'alarm', 'done'), 2, 2)"
+              }
+            ]
+          }
+        },
+        "rejected_over_budget": {}
+      },
+      "left_emulates_right": {
+        "failures": {
+          "c0-0": {
+            "c0-0": "trial"
+          }
+        },
+        "status": "fails",
+        "witnesses": {}
+      },
+      "left_profile": {
+        "alarm_occurred": "1",
+        "clear_occurred": "0"
+      },
+      "right": {
+        "admitted_policy_count": 1,
+        "budget": 2,
+        "context": "clear-history",
+        "distinct_response_count": 1,
+        "horizon": 2,
+        "projected_responses": {
+          "c0-0": {
+            "trial": [
+              {
+                "probability": "1",
+                "response": "(('start', 'clear', 'done'), 2, 2)"
+              }
+            ]
+          }
+        },
+        "rejected_over_budget": {}
+      },
+      "right_emulates_left": {
+        "failures": {
+          "c0-0": {
+            "c0-0": "trial"
+          }
+        },
+        "status": "fails",
+        "witnesses": {}
+      },
+      "right_profile": {
+        "alarm_occurred": "0",
+        "clear_occurred": "1"
+      }
+    },
+    "repair_joint": {
+      "achievement_order": "left_strict",
+      "frame": "repair-output",
+      "input_weights": {
+        "trial": "1"
+      },
+      "left": {
+        "admitted_policy_count": 4,
+        "budget": 2,
+        "context": "repair-2",
+        "distinct_response_count": 4,
+        "horizon": 1,
+        "projected_responses": {
+          "c0-0|c1-0": {
+            "trial": [
+              {
+                "probability": "1",
+                "response": "(0, 0)"
+              }
+            ]
+          },
+          "c0-0|c1-1": {
+            "trial": [
+              {
+                "probability": "1",
+                "response": "(0, 1)"
+              }
+            ]
+          },
+          "c0-1|c1-0": {
+            "trial": [
+              {
+                "probability": "1",
+                "response": "(1, 0)"
+              }
+            ]
+          },
+          "c0-1|c1-1": {
+            "trial": [
+              {
+                "probability": "1",
+                "response": "(1, 1)"
+              }
+            ]
+          }
+        },
+        "rejected_over_budget": {}
+      },
+      "left_emulates_right": {
+        "failures": {},
+        "status": "holds",
+        "witnesses": {
+          "c0-0|c1-0": "c0-0|c1-0",
+          "c0-0|c1-1": "c0-0|c1-1",
+          "c0-1|c1-0": "c0-1|c1-0",
+          "c0-1|c1-1": "c0-0|c1-0"
+        }
+      },
+      "left_profile": {
+        "both": "1",
+        "first": "1",
+        "second": "1"
+      },
+      "right": {
+        "admitted_policy_count": 4,
+        "budget": 2,
+        "context": "repair-1",
+        "distinct_response_count": 3,
+        "horizon": 1,
+        "projected_responses": {
+          "c0-0|c1-0": {
+            "trial": [
+              {
+                "probability": "1",
+                "response": "(0, 0)"
+              }
+            ]
+          },
+          "c0-0|c1-1": {
+            "trial": [
+              {
+                "probability": "1",
+                "response": "(0, 1)"
+              }
+            ]
+          },
+          "c0-1|c1-0": {
+            "trial": [
+              {
+                "probability": "1",
+                "response": "(1, 0)"
+              }
+            ]
+          },
+          "c0-1|c1-1": {
+            "trial": [
+              {
+                "probability": "1",
+                "response": "(0, 0)"
+              }
+            ]
+          }
+        },
+        "rejected_over_budget": {}
+      },
+      "right_emulates_left": {
+        "failures": {
+          "c0-1|c1-1": {
+            "c0-0|c1-0": "trial",
+            "c0-0|c1-1": "trial",
+            "c0-1|c1-0": "trial",
+            "c0-1|c1-1": "trial"
+          }
+        },
+        "status": "fails",
+        "witnesses": {
+          "c0-0|c1-0": "c0-0|c1-0",
+          "c0-0|c1-1": "c0-0|c1-1",
+          "c0-1|c1-0": "c0-1|c1-0"
+        }
+      },
+      "right_profile": {
+        "both": "0",
+        "first": "1",
+        "second": "1"
+      }
+    },
+    "repair_marginals": {
+      "achievement_order": "equivalent",
+      "frame": "repair-output",
+      "input_weights": {
+        "trial": "1"
+      },
+      "left": {
+        "admitted_policy_count": 4,
+        "budget": 2,
+        "context": "repair-2",
+        "distinct_response_count": 4,
+        "horizon": 1,
+        "projected_responses": {
+          "c0-0|c1-0": {
+            "trial": [
+              {
+                "probability": "1",
+                "response": "(0, 0)"
+              }
+            ]
+          },
+          "c0-0|c1-1": {
+            "trial": [
+              {
+                "probability": "1",
+                "response": "(0, 1)"
+              }
+            ]
+          },
+          "c0-1|c1-0": {
+            "trial": [
+              {
+                "probability": "1",
+                "response": "(1, 0)"
+              }
+            ]
+          },
+          "c0-1|c1-1": {
+            "trial": [
+              {
+                "probability": "1",
+                "response": "(1, 1)"
+              }
+            ]
+          }
+        },
+        "rejected_over_budget": {}
+      },
+      "left_emulates_right": {
+        "failures": {},
+        "status": "holds",
+        "witnesses": {
+          "c0-0|c1-0": "c0-0|c1-0",
+          "c0-0|c1-1": "c0-0|c1-1",
+          "c0-1|c1-0": "c0-1|c1-0",
+          "c0-1|c1-1": "c0-0|c1-0"
+        }
+      },
+      "left_profile": {
+        "first": "1",
+        "second": "1"
+      },
+      "right": {
+        "admitted_policy_count": 4,
+        "budget": 2,
+        "context": "repair-1",
+        "distinct_response_count": 3,
+        "horizon": 1,
+        "projected_responses": {
+          "c0-0|c1-0": {
+            "trial": [
+              {
+                "probability": "1",
+                "response": "(0, 0)"
+              }
+            ]
+          },
+          "c0-0|c1-1": {
+            "trial": [
+              {
+                "probability": "1",
+                "response": "(0, 1)"
+              }
+            ]
+          },
+          "c0-1|c1-0": {
+            "trial": [
+              {
+                "probability": "1",
+                "response": "(1, 0)"
+              }
+            ]
+          },
+          "c0-1|c1-1": {
+            "trial": [
+              {
+                "probability": "1",
+                "response": "(0, 0)"
+              }
+            ]
+          }
+        },
+        "rejected_over_budget": {}
+      },
+      "right_emulates_left": {
+        "failures": {
+          "c0-1|c1-1": {
+            "c0-0|c1-0": "trial",
+            "c0-0|c1-1": "trial",
+            "c0-1|c1-0": "trial",
+            "c0-1|c1-1": "trial"
+          }
+        },
+        "status": "fails",
+        "witnesses": {
+          "c0-0|c1-0": "c0-0|c1-0",
+          "c0-0|c1-1": "c0-0|c1-1",
+          "c0-1|c1-0": "c0-1|c1-0"
+        }
+      },
+      "right_profile": {
+        "first": "1",
+        "second": "1"
+      }
+    }
+  },
+  "claim_boundary": "Known finite acceptance cases; no value or lushness validation.",
+  "gates": [
+    {
+      "expected": "left_strict",
+      "name": "bit.achievement",
+      "observed": "left_strict",
+      "passed": true
+    },
+    {
+      "expected": "left_strict",
+      "name": "choice.achievement",
+      "observed": "left_strict",
+      "passed": true
+    },
+    {
+      "expected": "left_strict",
+      "name": "choice_without_coin.achievement",
+      "observed": "left_strict",
+      "passed": true
+    },
+    {
+      "expected": "equivalent",
+      "name": "repair_marginals.achievement",
+      "observed": "equivalent",
+      "passed": true
+    },
+    {
+      "expected": "left_strict",
+      "name": "repair_joint.achievement",
+      "observed": "left_strict",
+      "passed": true
+    },
+    {
+      "expected": "left_strict",
+      "name": "build_service.achievement",
+      "observed": "left_strict",
+      "passed": true
+    },
+    {
+      "expected": "incomparable",
+      "name": "build_savings.achievement",
+      "observed": "incomparable",
+      "passed": true
+    },
+    {
+      "expected": "equivalent",
+      "name": "history_endpoint.achievement",
+      "observed": "equivalent",
+      "passed": true
+    },
+    {
+      "expected": "incomparable",
+      "name": "history_full.achievement",
+      "observed": "incomparable",
+      "passed": true
+    },
+    {
+      "expected": "holds",
+      "name": "bit.left_emulates_right",
+      "observed": "holds",
+      "passed": true
+    },
+    {
+      "expected": "fails",
+      "name": "bit.right_emulates_left",
+      "observed": "fails",
+      "passed": true
+    },
+    {
+      "expected": "holds",
+      "name": "choice.left_emulates_right",
+      "observed": "holds",
+      "passed": true
+    },
+    {
+      "expected": "fails",
+      "name": "choice.right_emulates_left",
+      "observed": "fails",
+      "passed": true
+    },
+    {
+      "expected": "fails",
+      "name": "choice_without_coin.left_emulates_right",
+      "observed": "fails",
+      "passed": true
+    },
+    {
+      "expected": "fails",
+      "name": "choice_without_coin.right_emulates_left",
+      "observed": "fails",
+      "passed": true
+    },
+    {
+      "expected": "holds",
+      "name": "repair_marginals.left_emulates_right",
+      "observed": "holds",
+      "passed": true
+    },
+    {
+      "expected": "fails",
+      "name": "repair_marginals.right_emulates_left",
+      "observed": "fails",
+      "passed": true
+    },
+    {
+      "expected": "holds",
+      "name": "repair_joint.left_emulates_right",
+      "observed": "holds",
+      "passed": true
+    },
+    {
+      "expected": "fails",
+      "name": "repair_joint.right_emulates_left",
+      "observed": "fails",
+      "passed": true
+    },
+    {
+      "expected": "holds",
+      "name": "build_service.left_emulates_right",
+      "observed": "holds",
+      "passed": true
+    },
+    {
+      "expected": "fails",
+      "name": "build_service.right_emulates_left",
+      "observed": "fails",
+      "passed": true
+    },
+    {
+      "expected": "fails",
+      "name": "build_savings.left_emulates_right",
+      "observed": "fails",
+      "passed": true
+    },
+    {
+      "expected": "fails",
+      "name": "build_savings.right_emulates_left",
+      "observed": "fails",
+      "passed": true
+    },
+    {
+      "expected": "holds",
+      "name": "history_endpoint.left_emulates_right",
+      "observed": "holds",
+      "passed": true
+    },
+    {
+      "expected": "holds",
+      "name": "history_endpoint.right_emulates_left",
+      "observed": "holds",
+      "passed": true
+    },
+    {
+      "expected": "fails",
+      "name": "history_full.left_emulates_right",
+      "observed": "fails",
+      "passed": true
+    },
+    {
+      "expected": "fails",
+      "name": "history_full.right_emulates_left",
+      "observed": "fails",
+      "passed": true
+    },
+    {
+      "expected": "1/2",
+      "name": "hidden_guess",
+      "observed": "1/2",
+      "passed": true
+    },
+    {
+      "expected": "1",
+      "name": "revealed_guess",
+      "observed": "1",
+      "passed": true
+    },
+    {
+      "expected": "1",
+      "name": "invalid_branchwise_optimization",
+      "observed": "1",
+      "passed": true
+    },
+    {
+      "expected": "1/2",
+      "name": "failed_setup_keeps_failure",
+      "observed": "1/2",
+      "passed": true
+    },
+    {
+      "expected": 21,
+      "name": "passive_equal_pairs",
+      "observed": 21,
+      "passed": true
+    },
+    {
+      "expected": 420,
+      "name": "passive_incomparable_pairs",
+      "observed": 420,
+      "passed": true
+    },
+    {
+      "expected": [
+        null,
+        "0",
+        "0",
+        null,
+        "0",
+        "1"
+      ],
+      "name": "build_horizon_budget_profile",
+      "observed": [
+        null,
+        "0",
+        "0",
+        null,
+        "0",
+        "1"
+      ],
+      "passed": true
+    },
+    {
+      "expected": "1",
+      "name": "partial_cutoff.total_mass",
+      "observed": "1",
+      "passed": true
+    },
+    {
+      "expected": "1/3",
+      "name": "partial_cutoff.completed_mass",
+      "observed": "1/3",
+      "passed": true
+    },
+    {
+      "expected": "2/3",
+      "name": "partial_cutoff.censored_mass",
+      "observed": "2/3",
+      "passed": true
+    },
+    {
+      "expected": [
+        [
+          "done",
+          "1/3",
+          1,
+          1,
+          false
+        ],
+        [
+          "slow2",
+          "2/3",
+          2,
+          2,
+          true
+        ]
+      ],
+      "name": "partial_cutoff.runs",
+      "observed": [
+        [
+          "done",
+          "1/3",
+          1,
+          1,
+          false
+        ],
+        [
+          "slow2",
+          "2/3",
+          2,
+          2,
+          true
+        ]
+      ],
+      "passed": true
+    },
+    {
+      "expected": [
+        [
+          "done",
+          "1",
+          1,
+          1,
+          false
+        ]
+      ],
+      "name": "terminal_stop.runs",
+      "observed": [
+        [
+          "done",
+          "1",
+          1,
+          1,
+          false
+        ]
+      ],
+      "passed": true
+    },
+    {
+      "expected": 1,
+      "name": "terminal_stop.admissible",
+      "observed": 1,
+      "passed": true
+    }
+  ],
+  "passive_counts": {
+    "equivalent": 21,
+    "incomparable": 420,
+    "left_strict": 0,
+    "right_strict": 0
+  },
+  "probabilistic_setup_success": "1/2",
+  "protocol": "docs/research_notes/omega_v2/operational_continuation_comparison_protocol_v0.md",
+  "status": "PASS",
+  "supplemental_protocols": [
+    "docs/research_notes/omega_v2/operational_continuation_termination_protocol_v0.md"
+  ],
+  "termination_controls": {
+    "partial_cutoff": {
+      "admitted_policy_count": 1,
+      "censored_mass": "2/3",
+      "completed_mass": "1/3",
+      "runs": [
+        [
+          "done",
+          "1/3",
+          1,
+          1,
+          false
+        ],
+        [
+          "slow2",
+          "2/3",
+          2,
+          2,
+          true
+        ]
+      ],
+      "total_mass": "1"
+    },
+    "terminal_stop": {
+      "admitted_policy_count": 1,
+      "censored_mass": "0",
+      "completed_mass": "1",
+      "runs": [
+        [
+          "done",
+          "1",
+          1,
+          1,
+          false
+        ]
+      ],
+      "total_mass": "1"
+    }
+  },
+  "unsound_branchwise_guess": "1"
+}

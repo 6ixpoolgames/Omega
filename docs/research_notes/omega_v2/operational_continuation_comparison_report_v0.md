@@ -4,6 +4,11 @@ Status: retained exact finite comparison instrument.
 
 Date: 2026-09-28.
 
+Follow-up: the [termination-control audit](operational_continuation_termination_report_v0.md)
+adds mixed-cutoff and costly-terminal fixtures plus targeted mutation checks.
+The extended run passes 40 gates and the full suite passes 642 tests. The
+original 34-gate results below remain the record of the initial implementation.
+
 - [Definitions and claim boundary](operational_continuation_comparison_v0.md)
 - [Acceptance protocol](operational_continuation_comparison_protocol_v0.md),
   committed before implementation at `354be7e`

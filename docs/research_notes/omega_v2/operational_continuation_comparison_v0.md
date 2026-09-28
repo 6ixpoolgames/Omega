@@ -184,6 +184,11 @@ past local observations cannot reveal it. General finite-memory controllers
 are supported by the evaluator and tested separately, but their unbounded
 search space is not exhausted. The catalogue boundary remains explicit.
 
+The [termination-control follow-up](operational_continuation_termination_report_v0.md)
+adds mixed completed/censored paths and a terminal state with costly outgoing
+transitions. Targeted mutations verify that the runner detects loss of censored
+mass and execution after stopping. These extend coverage of the stated semantics.
+
 ## 5. Why a broad comparison can collapse
 
 For two *fixed passive probability laws* P and Q, requiring
