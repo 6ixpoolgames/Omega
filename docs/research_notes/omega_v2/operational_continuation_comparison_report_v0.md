@@ -9,6 +9,10 @@ adds mixed-cutoff and costly-terminal fixtures plus targeted mutation checks.
 The extended run passes 40 gates and the full suite passes 642 tests. The
 original 34-gate results below remain the record of the initial implementation.
 
+Proposed next experiment: [continuation prediction pilot](continuation_prediction_pilot_protocol_v0.md).
+This is a draft contract for a candidate, matched baselines, and an independently
+evaluated workload; it records no new experimental result.
+
 - [Definitions and claim boundary](operational_continuation_comparison_v0.md)
 - [Acceptance protocol](operational_continuation_comparison_protocol_v0.md),
   committed before implementation at `354be7e`
