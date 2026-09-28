@@ -7,7 +7,7 @@ import hashlib
 import json
 import platform
 import sys
-from dataclasses import fields, is_dataclass
+from dataclasses import fields, is_dataclass, replace
 from datetime import UTC, datetime
 from fractions import Fraction
 from pathlib import Path
@@ -24,6 +24,7 @@ from omega_v2.validation.operational_continuation_comparison_v0 import ROOT, _gi
 
 SOURCES = (
     PROTOCOL,
+    "docs/research_notes/omega_v2/continuation_audit_followup_protocol_v0.md",
     "docs/research_notes/omega_v2/continuation_prediction_pilot_protocol_v0.md",
     "omega_v2/finite/model.py", "omega_v2/finite/controllers.py",
     "omega_v2/finite/operational_continuation.py",
@@ -127,6 +128,24 @@ def run_audit():
         base = evidence[original]["graphs"]["c1"]
         pulled_back = tuple({(s, bit): layer[s] for s in layer for bit in (0, 1)} for layer in base.decoding)
         gate(f"{extended}.partition_invariance", predictor.same_partitions(graph.decoding, pulled_back))
+    fixture = panel["live"]
+    e, interface = fixture.experiment, fixture.interface
+    incompatible = replace(e.teams[0][0], observation_rows=tuple((s, "ready") for s in e.system.states),
+                           policy_rows=((0, "ready", 0),), update_rows=((0, "ready", 0),))
+    invalid = replace(e, teams=((incompatible,),))
+    failures = {}
+    for method, function in (("c1", predictor.build_c1), ("quotient", predictor.build_quotient),
+                             ("reference", predictor.reference_prediction), ("memoized", predictor.predict_memoized)):
+        try:
+            function(invalid, interface)
+        except ValueError as error:
+            failures[method] = str(error)
+        else:
+            failures[method] = None
+        gate(f"interface.{method}.reject_incompatible", failures[method] is not None
+             and "share" in failures[method])
+    evidence["invalid_shared_interface"] = {"experiment": invalid, "interface": interface,
+                                            "rejections": failures}
     summary = {"status": "PASS" if all(g["passed"] for g in gates) else "FAIL",
                "scope": "public development controls; no held-out or efficiency claim",
                "cases": cases, "gates": gates}
@@ -134,7 +153,7 @@ def run_audit():
 
 
 def render_report(summary):
-    lines = ["# C1 equivalence audit v0", "", f"Status: {summary['status']}",
+    lines = ["# Bounded continuation graph equivalence audit v0", "", f"Status: {summary['status']}",
              f"Gates: {sum(g['passed'] for g in summary['gates'])}/{len(summary['gates'])}", "",
              "Public development controls. No independent experiment, novelty, efficiency,",
              "or lushness result. Exact predictions, models, graphs, and certificates are",
@@ -154,7 +173,10 @@ def retain(out_dir: Path):
     out_dir.mkdir(parents=True, exist_ok=False)
     summary, evidence = run_audit()
     write_json(out_dir / "summary.json", encode(summary))
-    write_json(out_dir / "evidence.json", encode(evidence))
+    (out_dir / "evidence.json").write_text("{\n" + ",\n".join(
+        "  " + json.dumps(name) + ": " + json.dumps(encode(evidence[name]), sort_keys=True, separators=(",", ":"))
+        for name in sorted(evidence)
+    ) + "\n}\n", encoding="utf-8")
     write_json(out_dir / "provenance.json", {
         "revision": _git("rev-parse", "HEAD"), "git_status": _git("status", "--porcelain"),
         "source_git_status": _git("status", "--porcelain", "--", *SOURCES),

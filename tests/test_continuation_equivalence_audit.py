@@ -5,6 +5,7 @@ import json
 from dataclasses import replace
 from fractions import Fraction
 from itertools import product
+from types import SimpleNamespace
 
 import pytest
 
@@ -163,6 +164,10 @@ def test_control_panel_and_accounting_pass():
 
 
 MUTATIONS = {
+    "updated_memory_action": ("predict_graph", "c.action(m[-1], o)",
+                             "c.action(c.update(m[-1], o), o)", "memory_only.c1_exact"),
+    "first_input_budget": ("_admit", "for law in laws.values()",
+                           "for law in tuple(laws.values())[:1]", "later_input_over_budget.c1_exact"),
     "hidden_input_selection": ("best_probability", "    return scores[witness], witness", """    oracle = sum((weight * max(sum((p for t, p in laws[q].rows if task(q, t)), F(0))
                   for laws in prediction.laws.values()) for q, weight in weights.rows), F(0))
     return oracle, witness""", "c1.hidden_bit"),
@@ -181,6 +186,35 @@ MUTATIONS = {
     "erase_edge_cost": ("build_c1", "key = (e.costs[s, action, t], decoding[h - 1][t])",
                          "key = (0, decoding[h - 1][t])", "cost_distinction.partitions"),
 }
+
+
+def memoryless_cache(function):
+    values = {}
+
+    def wrapper(state, h, memories, *args, **kwargs):
+        key = (state, h)
+        if key not in values:
+            values[key] = function(state, h, memories, *args, **kwargs)
+        return values[key]
+
+    wrapper.cache_info = lambda: SimpleNamespace(currsize=len(values))
+    wrapper.cache_clear = values.clear
+    return wrapper
+
+
+@pytest.mark.parametrize("mutation,failed_gate", [
+    ("memoryless_cache", "memory_only.memoized_exact"),
+    ("skip_interface", "interface.c1.reject_incompatible"),
+])
+def test_followup_mutants_fail_retained_runner(tmp_path, monkeypatch, mutation, failed_gate):
+    if mutation == "memoryless_cache":
+        monkeypatch.setattr(core, "cache", memoryless_cache)
+    else:
+        monkeypatch.setattr(core.Interface, "validate", lambda *_args: None)
+    output = tmp_path / mutation
+    assert runner.main(["--out-dir", str(output)]) == 1
+    summary = json.loads((output / "summary.json").read_text())
+    assert failed_gate in {g["name"] for g in summary["gates"] if not g["passed"]}
 
 
 @pytest.mark.parametrize("mutation", MUTATIONS)

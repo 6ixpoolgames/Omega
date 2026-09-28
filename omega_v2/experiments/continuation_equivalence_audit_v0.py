@@ -96,11 +96,11 @@ def seed_case(active: bool, *, horizon=2, budget=2) -> Case:
     return case(e, lambda s: s[2])
 
 
-def memory_case() -> Case:
+def memory_case(*, erase_world=False, clear_after_act=False) -> Case:
     def step(s, a):
         phase, bit, _guess = s
         if phase == 0:
-            return {(1, bit, -1): F(1)}
+            return {(1, -1 if erase_world else bit, -1): F(1)}
         if phase == 1:
             return {(2, bit, a[0]): F(1)}
         return {s: F(1)}
@@ -111,7 +111,8 @@ def memory_case() -> Case:
     observations = tuple(dict.fromkeys(obs.values()))
     controller = FiniteStateController(
         "remember", (0, 1), 0, tuple(obs.items()),
-        tuple((m, o, o[1] if o[0] == "seen" else m) for m in (0, 1) for o in observations),
+        tuple((m, o, o[1] if o[0] == "seen" else 0 if clear_after_act else m)
+              for m in (0, 1) for o in observations),
         tuple((m, o, m if o[0] == "act" else 0) for m in (0, 1) for o in observations),
     )
     e = Experiment("remember-bit", system,
@@ -154,6 +155,10 @@ def control_panel() -> dict[str, Case]:
         live.experiment, horizon=0, preparations={"trial": FiniteDistribution.point_mass(("done", 0))}
     ))
     panel["cost_distinction"] = cost_distinction_case()
+    panel["later_input_over_budget"] = replace(panel["cost_distinction"], experiment=replace(
+        panel["cost_distinction"].experiment, budget=1
+    ))
+    panel["memory_only"] = memory_case(erase_world=True, clear_after_act=True)
     panel["nuisance_partial_cutoff"] = nuisance_extension(panel["partial_cutoff"])
     return panel
 
@@ -216,6 +221,13 @@ def known_answer_gates(predictions) -> tuple[list[dict], dict]:
     gate("zero_horizon", score("zero_horizon", lambda _q, t: t.censored and t.cost == t.elapsed == 0), F(1))
     gate("zero_horizon_terminal", score("zero_horizon_terminal", lambda _q, t: not t.censored and t.cost == 0), F(1))
     gate("empty_admissible", score("empty_admissible", lambda _q, _t: True), None)
+    later = predictions["later_input_over_budget"]
+    gate("later_input_over_budget.rejected", dict(later.rejected), {"c0-0": 2})
+    gate("later_input_over_budget.no_admitted", bool(later.laws), False)
+    for q in ("0", "1"):
+        gate(f"memory_only.input_{q}", predictions["memory_only"].laws["remember"][q].pushforward(
+            lambda t: t.atoms[-1]
+        ).mass_map, {int(q): F(1)})
     for name, expected in (("alarm_history", F(1)), ("clear_history", F(0))):
         gate(name, score(name, lambda _q, t: "alarm" in t.atoms), expected)
     identification = identification_control()

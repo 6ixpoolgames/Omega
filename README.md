@@ -48,11 +48,18 @@ adds five finite cases separating taskwise achievement from uniform response
 emulation under local observations, shared resources, costs, and deadlines.
 Its [retained report](docs/research_notes/omega_v2/operational_continuation_comparison_report_v0.md)
 records the witnesses and comparison limits.
-The [C1 equivalence audit](docs/research_notes/omega_v2/continuation_equivalence_audit_v0.md)
+The [bounded continuation graph equivalence audit](docs/research_notes/omega_v2/continuation_equivalence_audit_v0.md)
 identifies the proposed bounded continuation graph with a conventional
 probabilistic quotient and states its controller-preservation assumptions.
 Its [control-panel report](docs/research_notes/omega_v2/continuation_equivalence_audit_report_v0.md)
 records exact baselines, adversarial controls, and the remaining experiment gap.
+Current prose uses **BCG** for this graph; historical C1 labels and API names
+remain reproducible and are separate from the primer's conjecture C1.
+The [audit follow-up contract](docs/research_notes/omega_v2/continuation_audit_followup_protocol_v0.md)
+adds memory-only information and retained interface/budget checks.
+The next research priority is the
+[minimal recovery dynamics panel](docs/research_notes/omega_v2/recovery_dynamics_protocol_v0.md);
+graph-speed benchmarking remains optional engineering.
 The [frame-information audit](docs/research_notes/omega_v2/frame_information_audit_v0.md)
 separates verification histories from currently accessible controller records.
 Its [report](docs/research_notes/omega_v2/frame_information_audit_report_v0.md)
