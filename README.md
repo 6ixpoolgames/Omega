@@ -65,6 +65,9 @@ graph-speed benchmarking remains optional engineering.
 The [recovery report](docs/research_notes/omega_v2/recovery_dynamics_report_v0.md)
 records 14 exact worlds separating refusal, noisy reset, external overwrite,
 broken recovery and competing death, including exact long-run waiting times.
+The [suppression and persistence report](docs/research_notes/omega_v2/recovery_suppression_report_v0.md)
+adds 20 worlds with explicit token stocks, replenishment, seal failure and relapse.
+It separates first reset, current correction and eventual permanent correction.
 The [frame-information audit](docs/research_notes/omega_v2/frame_information_audit_v0.md)
 separates verification histories from currently accessible controller records.
 Its [report](docs/research_notes/omega_v2/frame_information_audit_report_v0.md)
