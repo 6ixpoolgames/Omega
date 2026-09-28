@@ -48,6 +48,12 @@ adds five finite cases separating taskwise achievement from uniform response
 emulation under local observations, shared resources, costs, and deadlines.
 Its [retained report](docs/research_notes/omega_v2/operational_continuation_comparison_report_v0.md)
 records the witnesses and comparison limits.
+The [joint future-requirements decision experiment](docs/research_notes/omega_v2/lushness_decision_report_v0.md)
+adds a public prototype comparing joint capacity with matched baselines under
+explicit ethical commitments. It retains tradeoffs, per-agent losses, and a
+failure on revised requirements; independent evaluation remains pending.
+The [evaluator handoff](docs/research_notes/omega_v2/lushness_decision_evaluator_handoff_v0.md)
+separates frozen choices from independently supplied evaluation requirements.
 The [bounded continuation graph equivalence audit](docs/research_notes/omega_v2/continuation_equivalence_audit_v0.md)
 identifies the proposed bounded continuation graph with a conventional
 probabilistic quotient and states its controller-preservation assumptions.
