@@ -43,6 +43,12 @@ The
 then isolates a nonempty joint-realization triple that is pairwise Robust but
 not jointly Robust across one fixed environment scope.
 
+The [Operational Continuation Comparison](docs/research_notes/omega_v2/operational_continuation_comparison_v0.md)
+adds five finite cases separating taskwise achievement from uniform response
+emulation under local observations, shared resources, costs, and deadlines.
+Its [retained report](docs/research_notes/omega_v2/operational_continuation_comparison_report_v0.md)
+records the witnesses and comparison limits.
+
 Omega is a research program for treating alignment as the problem of
 preserving the corridor of compatible, value-bearing futures.
 
