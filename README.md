@@ -59,6 +59,11 @@ records the subsequent proposal to retain causality, joint compatibility,
 and composition in the field object itself. It states the unresolved physical
 realization relation and the next specification milestone before migration to
 OmegaCosmology; it adds no experimental result or cosmology release.
+The [first finite concurrent contract](docs/research_notes/omega_v2/finite_concurrent_continuation_contract_v0.md)
+derives three worked mechanisms from one stochastic token system and gives
+ordinary preservation and composition proofs for direct autonomous-subsystem
+embeddings, with background resource costs retained. General physical
+realization and a lushness comparison remain open.
 The [bounded continuation graph equivalence audit](docs/research_notes/omega_v2/continuation_equivalence_audit_v0.md)
 identifies the proposed bounded continuation graph with a conventional
 probabilistic quotient and states its controller-preservation assumptions.

@@ -6,6 +6,12 @@ Status: conceptual specification and migration checkpoint. The construction
 and physical realization relation below remain proposals. This note adds no
 implementation, experiment, proof-assistant result, or cosmology release.
 
+Follow-up: the [finite concurrent continuation contract](finite_concurrent_continuation_contract_v0.md)
+attempts the bounded milestone below with one-shot stochastic token dynamics,
+three analytic examples, and a direct autonomous-subsystem realization
+preorder with explicit resource overhead. Its restricted result does not
+close the general physical-realization question stated in this candidate.
+
 Provenance: the field-first discussion following the September 29 discovery
 and field packets, including the review of the concurrent-geometry proposal.
 Existing executable work is identified separately below.
