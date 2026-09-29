@@ -54,6 +54,11 @@ explicit ethical commitments. It retains tradeoffs, per-agent losses, and a
 failure on revised requirements; independent evaluation remains pending.
 The [evaluator handoff](docs/research_notes/omega_v2/lushness_decision_evaluator_handoff_v0.md)
 separates frozen choices from independently supplied evaluation requirements.
+The [continuation field candidate](docs/research_notes/omega_v2/continuation_field_candidate_v0.md)
+records the subsequent proposal to retain causality, joint compatibility,
+and composition in the field object itself. It states the unresolved physical
+realization relation and the next specification milestone before migration to
+OmegaCosmology; it adds no experimental result or cosmology release.
 The [bounded continuation graph equivalence audit](docs/research_notes/omega_v2/continuation_equivalence_audit_v0.md)
 identifies the proposed bounded continuation graph with a conventional
 probabilistic quotient and states its controller-preservation assumptions.
