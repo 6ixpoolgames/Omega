@@ -64,6 +64,26 @@ derives three worked mechanisms from one stochastic token system and gives
 ordinary preservation and composition proofs for direct autonomous-subsystem
 embeddings, with background resource costs retained. General physical
 realization and a lushness comparison remain open.
+The [Shannon and multiscale-profile proposal](docs/research_notes/omega_v2/lushness_shannon_multiscale_profile_proposal_v0.md)
+records a subsequent candidate volume/profile construction, its claimed
+justification, and analytic limits. It is an unadopted proposal with no new
+simulation or empirical result.
+The [weighted timing-volume counterexample](docs/research_notes/omega_v2/timing_volume_counterexample_report_v0.md)
+rejects the next proposed volume as a complete comparison: one common physical
+relay/assembly dynamics gives identical profiles despite record loss, delayed
+recovery and different downstream access. A frozen contract, analytic proof,
+reproducible calculation and full process evidence accompany the failure.
+The [quantum frame-profile probe](docs/research_notes/omega_v2/quantum_frame_profile_report_v0.md)
+then tests labelled mutual-information profiles of a small quantum process.
+They detect record loss and delayed repair, while averaging over fragment size
+hides routing and can increase under recorded blockage. The frozen calculation
+retains the noise, physical source laws, quantum coherences and analytical
+collisions; the profile remains a diagnostic, not a complete lushness measure.
+The [quantum record-structure follow-up](docs/research_notes/omega_v2/quantum_record_structure_report_v0.md)
+compares broadcast and independent records using the same source bank, and
+localized versus spread records under matched circuit budgets. It distinguishes
+content, distributed access and costed recovery; even the labelled correlation
+profile can increase while local source readability declines.
 The [bounded continuation graph equivalence audit](docs/research_notes/omega_v2/continuation_equivalence_audit_v0.md)
 identifies the proposed bounded continuation graph with a conventional
 probabilistic quotient and states its controller-preservation assumptions.
