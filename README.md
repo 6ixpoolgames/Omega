@@ -11,6 +11,10 @@ Latest exploratory runs: [local physical flow](docs/research_notes/omega_v2/loca
 and [finite fuel with repairable coupling](docs/research_notes/omega_v2/fuel_flow_report_v0.md).
 They retain all-frame response laws, resource use and residual dynamics,
 including crossings between early and later access. They do not select a lushness scalar.
+The [thermal and mobile-binding follow-up](docs/research_notes/omega_v2/thermal_binding_report_v0.md)
+compares dispersion and assembly under one particle dynamics; its
+[assessment](docs/research_notes/omega_v2/thermal_binding_assessment_2026-10-03.md)
+records the mobility-dependent reversal, proximity control and mixed profiles.
 
 [![Lean AlphaOmega](https://github.com/6ixpoolgames/Omega/actions/workflows/lean-alphaomega.yml/badge.svg?branch=master)](https://github.com/6ixpoolgames/Omega/actions/workflows/lean-alphaomega.yml)
 [![Baseline Witness Smoke](https://github.com/6ixpoolgames/Omega/actions/workflows/baseline-witness-smoke.yml/badge.svg?branch=master)](https://github.com/6ixpoolgames/Omega/actions/workflows/baseline-witness-smoke.yml)

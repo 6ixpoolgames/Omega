@@ -8,6 +8,8 @@ The subsequent instruction to implement and push produced the bounded joint-cont
 
 The later instruction to develop the flow form and run its finite-fuel follow-up produced two independent local adapters, their full numerical evidence and reports in Part 14. These are new classical calculations, not replications of Opus's unavailable flow code. The follow-up retains reversible reactions, a finite fuel inventory, native breakdown-conditioned continuation and all-frame profiles. Six focused tests and lint passed. This adds evidence about dynamic access and its costs without replacing the exploratory aggregation or declaring a complete lushness extent.
 
+The subsequent thermal/binding follow-up adds seven preparations of the existing fuel apparatus and four preparations at each of two mobility settings of an 800-state spatial model. Raw kernels, laws and frame profiles are preserved. Its assessment records that the original crossing does not survive the sampled equal-fuel and equal-free-energy brackets, and that a dispersed preparation can exceed assembled response under faster motion. Nine focused checks across the three flow adapters passed. These findings do not constitute a gas defeat, a quantum model or a new selection of lushness extent.
+
 ## Baseline and authority
 
 This development edition revises [Omega Cosmology v3.1](../v3.1-source/OMEGA_COSMOLOGY_V3_1_COMPLETE.md), retrieved from the originator's Drive on 3 October 2026. The [source record](../v3.1-source/README.md) identifies the file and extraction. The source snapshot remains unchanged.

@@ -21,6 +21,7 @@ Exploration does not require freezing a winner or preregistering every revision.
 | [Short structural probe](../../research_notes/omega_v2/structural_probe_10min_report_v0.md) | Matched information and exhibited bills can leave different bounded access; matched content can leave different repairability; correlated inputs change Syn's meaning | 100,000 sampled programs, not exhaustive search or physical-world trials |
 | [Local flow](../../research_notes/omega_v2/local_flow_report_v0.md) | Held information, extra prediction and native-event response can disagree under one explicit stochastic dynamics | Maintained reservoirs; response contrast is not a physical decoder or an ethical sign |
 | [Finite fuel and coupling repair](../../research_notes/omega_v2/fuel_flow_report_v0.md) | Assembly, damage, reversal and depletion change residual response; early and later comparisons can cross | Twelve finite classical laws, 24 preparations; stored-energy matching is not free-energy matching; implicit bath |
+| [Thermal and mobile binding](../../research_notes/omega_v2/thermal_binding_report_v0.md) | Matching conventions change the earlier crossing; common-law dispersed and assembled preparations give mixed response profiles and a mobility-dependent reversal | Tiny reactive lattice gas; contact control matters; no open-ended construction or overall gas/structure verdict |
 | [Decision prototype](../../research_notes/omega_v2/lushness_decision_report_v0.md) | Declared guards and requirement scores exhibit useful behavior and tradeoffs, including failure on revised plans | Not validation on independently authored unknown requirements |
 | [Audit of the chemistry/context claims](../../research_notes/omega_v2/opus_context_access_audit_2026-10-02.md) | Identifies unsupported extensions, including the asserted common thermal tail | Chemistry simulator and raw runs unavailable |
 
@@ -61,6 +62,8 @@ The [first aggregation prototype](../../research_notes/omega_v2/frame_aggregatio
 ## Next implementation sequence
 
 The new local-flow and finite-fuel adapters implement an autonomous classical slice of executions, restart and physical coupling changes. They retain joint generators and actual residual laws rather than independently optimized outputs. Six focused checks cover the two adapters; this does not complete the gate-language atlas, quantum extension or encompassing aggregation below.
+
+The [mobile-binding assessment](../../research_notes/omega_v2/thermal_binding_assessment_2026-10-03.md) extends this to identical moving particles, reversible bonds and finite fuel. Three additional focused checks cover physical reversal, accounting, spatial reflection and the declared observation family. Proximity accounts for most of one sampled assembly advantage, while faster mobility reverses that coordinate. The all-frame profile remains mixed. Recursive catalytic construction is not supplied by this transport model.
 
 **First: executions and restart.** Implement the data model of Part 12, §M with one small finite gate language. Retain actual preparation, source law, controller records, environmental correlations, bill components and branch outcomes. Check direct prefix-plus-suffix execution against restarting from the saved residual. Deadline truncation retains unfinished probability and ongoing environment dynamics.
 
