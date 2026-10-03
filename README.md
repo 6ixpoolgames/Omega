@@ -15,6 +15,10 @@ The [thermal and mobile-binding follow-up](docs/research_notes/omega_v2/thermal_
 compares dispersion and assembly under one particle dynamics; its
 [assessment](docs/research_notes/omega_v2/thermal_binding_assessment_2026-10-03.md)
 records the mobility-dependent reversal, proximity control and mixed profiles.
+The [catalytic continuation run](docs/research_notes/omega_v2/catalytic_binding_report_v0.md)
+adds reversible construction that enables further construction. More first
+occurrences coexist with faster reversal, mixed propagation and a separation
+between first restoration and later retention.
 
 [![Lean AlphaOmega](https://github.com/6ixpoolgames/Omega/actions/workflows/lean-alphaomega.yml/badge.svg?branch=master)](https://github.com/6ixpoolgames/Omega/actions/workflows/lean-alphaomega.yml)
 [![Baseline Witness Smoke](https://github.com/6ixpoolgames/Omega/actions/workflows/baseline-witness-smoke.yml/badge.svg?branch=master)](https://github.com/6ixpoolgames/Omega/actions/workflows/baseline-witness-smoke.yml)

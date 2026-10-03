@@ -2561,6 +2561,7 @@ Exploration does not require freezing a winner or preregistering every revision.
 | [Local flow](../../research_notes/omega_v2/local_flow_report_v0.md) | Held information, extra prediction and native-event response can disagree under one explicit stochastic dynamics | Maintained reservoirs; response contrast is not a physical decoder or an ethical sign |
 | [Finite fuel and coupling repair](../../research_notes/omega_v2/fuel_flow_report_v0.md) | Assembly, damage, reversal and depletion change residual response; early and later comparisons can cross | Twelve finite classical laws, 24 preparations; stored-energy matching is not free-energy matching; implicit bath |
 | [Thermal and mobile binding](../../research_notes/omega_v2/thermal_binding_report_v0.md) | Matching conventions change the earlier crossing; common-law dispersed and assembled preparations give mixed response profiles and a mobility-dependent reversal | Tiny reactive lattice gas; contact control matters; no open-ended construction or overall gas/structure verdict |
+| [Catalytic continuation](../../research_notes/omega_v2/catalytic_binding_report_v0.md) | Reversible catalytic reuse raises first construction much more than later occupancy; spatial response profiles cross; first restoration and retention separate | Three 1,792-state classical laws; catalytic mechanism stipulated; dense finite substrate and implicit bath; no gas defeat or scalar extent |
 | [Decision prototype](../../research_notes/omega_v2/lushness_decision_report_v0.md) | Declared guards and requirement scores exhibit useful behavior and tradeoffs, including failure on revised plans | Not validation on independently authored unknown requirements |
 | [Audit of the chemistry/context claims](../../research_notes/omega_v2/opus_context_access_audit_2026-10-02.md) | Identifies unsupported extensions, including the asserted common thermal tail | Chemistry simulator and raw runs unavailable |
 
@@ -2603,6 +2604,8 @@ The [first aggregation prototype](../../research_notes/omega_v2/frame_aggregatio
 The new local-flow and finite-fuel adapters implement an autonomous classical slice of executions, restart and physical coupling changes. They retain joint generators and actual residual laws rather than independently optimized outputs. Six focused checks cover the two adapters; this does not complete the gate-language atlas, quantum extension or encompassing aggregation below.
 
 The [mobile-binding assessment](../../research_notes/omega_v2/thermal_binding_assessment_2026-10-03.md) extends this to identical moving particles, reversible bonds and finite fuel. Three additional focused checks cover physical reversal, accounting, spatial reflection and the declared observation family. Proximity accounts for most of one sampled assembly advantage, while faster mobility reverses that coordinate. The all-frame profile remains mixed. Recursive catalytic construction is not supplied by this transport model.
+
+The subsequent [catalytic extension](../../research_notes/omega_v2/catalytic_binding_report_v0.md) supplies a small explicit mechanism: an aligned bonded pair accelerates a neighboring reversible bond reaction, whose product can assist another. Both directions receive the same kinetic factor. This is a declared physical mechanism, not an independently discovered generativity law. Three more focused checks cover its reversibility, resource accounting, spatial symmetries and the physical marginal of the cascade monitor. Actual laws, 74-frame native-event responses and breakdown-conditioned residuals are retained. Stronger assistance increases formation and reversal; later access and retention do not inherit a monotone improvement. This is an extension of the experimental substrate, not completion of the adopted aggregation.
 
 **First: executions and restart.** Implement the data model of Part 12, §M with one small finite gate language. Retain actual preparation, source law, controller records, environmental correlations, bill components and branch outcomes. Check direct prefix-plus-suffix execution against restarting from the saved residual. Deadline truncation retains unfinished probability and ongoing environment dynamics.
 
@@ -2932,6 +2935,16 @@ the local artifacts identify its actual provenance, without inventing a
 second independent replication.
 
 ## Authorship and interpretation
+
+The [4 October catalytic follow-up](../../research_notes/omega_v2/catalytic_binding_report_v0.md)
+adds three finite reversible particle laws and their raw kernels, channel rates,
+residual distributions, bills and propagation/recovery profiles. It extends
+the mobile substrate to local conformation-dependent catalysis without changing
+the equilibrium law. Twelve focused checks across this and the earlier
+spatial/fuel/local-flow adapters passed. Its 38-second numerical run establishes
+the reported finite comparisons, not an empirical chemistry result, a gas
+defeat or an open-ended-generativity theorem. The report distinguishes the
+stipulated catalytic mechanism from its measured downstream consequences.
 
 The program's motivating commitments and current clarifications come from the originator. Codex prepared this revision and its local probes. Opus and Grok supplied proposals, objections and reports recorded in the research trail. Assistant agreement is not independent evidence. Citations identify borrowed machinery, not endorsement by its authors.
 

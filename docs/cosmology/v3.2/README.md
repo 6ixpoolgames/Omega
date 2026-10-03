@@ -16,6 +16,9 @@ The subsequent [local-flow](../../research_notes/omega_v2/local_flow_report_v0.m
 [finite-fuel](../../research_notes/omega_v2/fuel_flow_report_v0.md) runs add explicit
 coupling, damage, repair and resource dynamics. They retain crossings between
 early and later access and the distinction between turnover and residual access.
+The [October 4 catalytic extension](../../research_notes/omega_v2/catalytic_binding_report_v0.md)
+adds composition-dependent construction, spatial response and native-breakage
+follow-up. It retains the resulting crossings without selecting a lushness scalar.
 
 Start with [Orientation](00_ORIENTATION.md), [Lushness](04_LUSHNESS.md),
 [new worked examples](11_WORKED_EXAMPLES.md), and the

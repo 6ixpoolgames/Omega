@@ -53,7 +53,7 @@ class SpatialBinding:
         )
         moves = [
             (start, size, delta)
-            for size in (1, 2, 3)
+            for size in range(1, self.particles + 1)
             for start in range(6 - size)
             for delta in (-1, 1)
             if 0 <= start + delta and start + size + delta <= 5
