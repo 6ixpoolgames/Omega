@@ -1,5 +1,12 @@
 # Omega
 
+**Current development edition:** [Omega Cosmology v3.2](docs/cosmology/v3.2/README.md)
+integrates the recursive physical-access candidate, frame corrections,
+quantum counterexamples and [October 3 structural probe](docs/research_notes/omega_v2/structural_probe_10min_report_v0.md).
+Its [claim ledger](docs/cosmology/v3.2/14_RESEARCH_AND_CLAIMS.md) separates checked
+finite results from the still-open lushness comparison and ethical bridge.
+The historical closeout and successor plans below remain part of the record.
+
 [![Lean AlphaOmega](https://github.com/6ixpoolgames/Omega/actions/workflows/lean-alphaomega.yml/badge.svg?branch=master)](https://github.com/6ixpoolgames/Omega/actions/workflows/lean-alphaomega.yml)
 [![Baseline Witness Smoke](https://github.com/6ixpoolgames/Omega/actions/workflows/baseline-witness-smoke.yml/badge.svg?branch=master)](https://github.com/6ixpoolgames/Omega/actions/workflows/baseline-witness-smoke.yml)
 [![Validation Router](https://github.com/6ixpoolgames/Omega/actions/workflows/validation-router.yml/badge.svg?branch=master)](https://github.com/6ixpoolgames/Omega/actions/workflows/validation-router.yml)

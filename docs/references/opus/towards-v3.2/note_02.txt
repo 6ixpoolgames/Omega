@@ -1,0 +1,131 @@
+How the comparison works: frames, branch volume, the tally and bills
+Prepared by Claude (Anthropic), 3 October 2026. Part of the "Towards v3.2" notes. This document explains the machinery with small worked examples. Terms are defined in the orientation document.
+What the comparison is for
+The foundations say that, if you care about value, you should protect and grow the richness of organized possibility. To act on that you need a way to compare two arrangements of the world, or two actions, and say which leaves more of it. This document describes the comparison the program has converged on, how it was arrived at, and what it does and does not capture. The notes sometimes call it the comparison engine.
+A small world to think with
+Most of the examples use the same toy world. There are three random sources, which can be pictured as coins: s, f1 and f2. Each lands heads (1) or tails (0) independently. There are also a few memory registers, initially blank, that can be written by simple logic gates: a copy gate (write a copy of one bit into a register), a two-input gate such as AND or exclusive-or (XOR), and conditional versions of these. A "program" is a short sequence of such gates. The question is always: after the program runs, how much of the world's possible branching can different parts of the world tell apart?
+Distinctions, records and frames
+A distinction is a difference between ways the world can be, such as s landing heads versus tails. The events that settle distinctions, here the coin landings, are called points. Random noise events are points too, and the program counts them: noise is consequential, not something to be filtered out.
+A record is a physical state correlated with a distinction, such as a register holding a copy of s. A frame is any set of registers taken together as a vantage point. A frame need not be a mind. A single register is a frame, a pair of registers is a frame, and so is every larger subset.
+Branch volume
+With three fair coins there are eight equally likely branches (HHH, HHT and so on), which is 3 bits of branching. A frame's branch volume measures how many of those branches it can tell apart, weighted by their probabilities, in bits. Technically it is the information the frame's records carry about the points. It is normalized against the whole: the ultimate frame, which tells every branch apart, has volume 1, and a frame's volume is 2 raised to the power of (its information minus the total).
+Frame holds
+	Information about the coins
+	Normalized volume
+	Nothing
+	0 bits
+	1/8
+	A copy of s
+	1 bit
+	1/4
+	s XOR f1 (whether s and f1 match)
+	1 bit, a different bit
+	1/4
+	Copies of s and f1
+	2 bits
+	1/2
+	Copies of all three
+	3 bits
+	1
+	An early version of this readout counted every gate write as a new point. That double-counted copies: writing s into five registers seemed to create five new distinctions. The correction, which the originator stated as the rule that "weights enter once", is that only random events are points. Writing a record does not create a distinction; it makes an existing one accessible somewhere new. Each frame is credited with the joint information it holds about the points, so a frame holding five copies of s holds 1 bit, not 5.
+Branch points and the chain rule
+Suppose the world splits on coin s, and an agent can do the same thing on either branch: record f1 and f2, but only when s came up heads, or only when it came up tails. The information a frame gains splits exactly into two parts, by the chain rule of information theory:
+* a branch term: does the frame know which way s went?
+* a residual for each branch: what the frame learns inside that branch, weighted by the branch's probability.
+This is the originator's formulation: the weight of each branch is normalized against the frame as it was before the branches diverged. The consequence is intuitive and exact. Doing the same thing on the more probable branch is worth more, in proportion to that branch's weight.
+Probability that s is heads
+	Act on the less likely branch
+	Act on the more likely branch
+	0.5
+	-1.00
+	-1.00 (tie, by symmetry)
+	0.2
+	-1.60
+	-0.40
+	0.05
+	-1.90
+	-0.10
+	The numbers are the frame's normalized volume in log terms (0 would mean it resolves everything; f1 and f2 are fair). These were computed exactly in an eleven-qubit quantum simulation, where they matched hand-derived formulas to nine decimal places.
+Why the whole cannot rank options by itself
+A natural first idea is to ask the ultimate frame directly: which option leaves the world's whole future richer? Under reversible dynamics, which is what fundamental physics provides, the answer is always a tie. Reversible dynamics never create or destroy distinctions globally; they only move them around. Every distinction survives somewhere, so every option's complete future still resolves everything, with volume 1. In the quantum simulation this held exactly for every option tested.
+This does not mean nothing differs between options. It means the differences are in how possibility is distributed and accessible inside the world, not in the total.
+Arbitration from the ultimate frame: the tally
+An exchange in the discussions is worth recording, because the confusion is a natural one. After establishing that the whole ties, the analysis concluded that some smaller frame had to do the comparing, and pointed out that different frames can disagree. In one example, an option that put a record into "my" registers looked better from my frame, while an option that put the record into the surrounding environment looked better from the frame of "me plus my surroundings":
+Frame doing the weighing
+	Concentrate the record in my registers
+	Spread it into the environment
+	My registers
+	-0.40
+	-0.72
+	My registers plus the environment
+	-0.40
+	0.00
+	That seemed to make the choice of frame an extra ethical commitment: judge from "me", and you get one answer; judge from "us", and you get the other. The originator objected that nothing sits above the ultimate frame, that every branch within it has volume less than 1, and that arbitration should therefore happen there. That objection was right.
+The ultimate frame cannot rank options by its own resolving power, which is always complete. It can rank them by tallying what every bounded perspective inside the world can resolve, with each branch weighted by its share of the whole. No perspective is privileged in this tally; every one counts. In the example above, the tally over all 63 possible frames of the six registers came out as follows.
+Coin probabilities (s; f1 and f2)
+	Concentrate
+	Spread
+	Winner
+	0.5; 0.5
+	84.7
+	112.0
+	Spread
+	0.2; 0.2
+	72.5
+	80.9
+	Spread
+	0.05; 0.2
+	57.9
+	60.0
+	Spread
+	Spreading also won at every frame size separately (one register, two, three and so on, with a single tie among one-register frames in one setting), so this is dominance rather than a weighted judgment. Two consequences follow. The question "which frame decides?" dissolves: the deciding agent chooses the act, and the ultimate frame's tally scores it. And the anti-selfishness argument gains a precise form: an act can win from the agent's own frame and lose on the whole's tally.
+The counting problem, and counting each distinction once
+The tally as just described adds up, over every subset of registers, what that subset can resolve. That works when the number of registers is fixed. When it can vary, it has a serious flaw, which simple arithmetic shows.
+* Ten registers, each holding a different fair coin: the sum over all subsets is 10 × 29 = 5,120.
+* Thirteen registers, all holding copies of one fair coin: every one of the 213 − 1 subsets holds that one bit, so the sum is 8,191.
+Three extra copies beat ten-fold diversity, because the number of subsets grows exponentially with the number of registers and swamps what the registers actually hold. This is the population problem of ethics appearing inside the machinery, and it would make the theory reward a growing monoculture of copies.
+The fix was agreed in earlier discussions and applies the "weights enter once" rule one level up. Count each distinction once, and credit it according to the cheapest perspective that can reach it, meaning the smallest frame at the lowest access cost. Under this rule:
+* copies add nothing, because the distinction was already reachable;
+* diversity adds, because new distinctions count;
+* integration adds, because combining information inside one system makes joint distinctions reachable cheaply, while scattering the same pieces across many systems makes them reachable only expensively.
+The count-once rule has not yet been implemented and re-run. The results reported elsewhere that depend on the tally were computed with the number of registers held fixed, where the flaw does not bite, but they should be re-checked.
+Bills: why holding information is not the same as having access
+Two arrangements can hold exactly the same information and still differ greatly in what they let you do next. The program captures this with bills: the number of further steps needed to deliver some use of the information, such as putting a particular function of the coins into a fresh register where something else can read it.
+The clearest example compares literal copies of the three coins with an invertible recoding of them. Both hold all 3 bits; both split the eight branches into the same eight cells.
+Delivery requested
+	From copies (s, f1, f2)
+	From the recoding (s, s XOR f1, s XOR f1 XOR f2)
+	f1
+	1 step
+	2 steps
+	f2
+	1 step
+	2 steps
+	f1 AND f2
+	1 step
+	3 steps
+	Parity of all three
+	3 steps
+	1 step
+	s XOR f1
+	2 steps
+	1 step
+	Across all 256 possible yes/no functions of the three coins, 93 cost differently with the original gate set and 78 with a gate set made symmetric by adding NOT and negative-control gates. Neither arrangement is better across the board.
+Three further facts came out of this line of work.
+* Count summaries are blind to it, provably. For any invertible encoding, the number of deliveries achievable within a given number of steps is the same, because re-encoding just permutes which deliveries are cheap. A summary that counts deliverable functions cannot see which ones became cheap.
+* The effect comes from locality. It arises because each gate touches at most three bits. If arbitrary three-bit transformations were available in one step, the copies-versus-recoding difference would vanish. Physical interactions are local and involve few bodies at a time, so the effect is real for physics, and its size depends on the interaction set.
+* It depends on who has access. If the original coins stay readable afterwards, the copies mostly duplicate what is already available. The recoding was then cheaper for 54 deliveries and the copies for only 3.
+Across the whole population of short programs, pairs holding equal information differed in later access about 97% of the time, and still about 97% when their preparation costs were also matched. An independent probe by Astra reached the same conclusion with its own code.
+Bills therefore need to enter the tally. The program treats time, energy and distance as reducible to graph topology, so bills are counted as steps in the causal graph.
+Dominance, incomparability and arbitration
+The comparison produces a profile, not a single number: what is resolvable at each frame size, within each bill, at each time. Option A dominates option B if it is at least as good in every cell and better in at least one. Often neither dominates. In one circuit study, adding a little random noise added distinctions (the noisy version dominated its noiseless twin in 58 of 60 cases) but also made every arrangement incomparable with every other. Incomparability is a legitimate output. The decision theory uses only supported comparisons (ODT1) and falls back on an explicit arbitration rule only when a choice is forced (ODT2).
+Quantum branch points
+A question raised in the discussions was whether quantum mechanics is needed for any of this, or whether a classical model would do. The answer from an exact eleven-qubit simulation is that quantum mechanics is needed to say what a branch is, but not to weigh branches once they exist.
+* A branch exists only while a record of it survives. When the environment records which way a quantum coin went, the coin's state becomes mixed and the branches are split. If that only record is erased by reversing the interaction, the branches recombine, and the coin returns to a single pure state. If a second, redundant record exists, erasing one record does not undo the split.
+* Branch weights are Born weights, the squared amplitudes of quantum mechanics.
+* The right measure is the Holevo quantity, which counts what a frame can learn about the branches. The quantum mutual information double-counts entanglement: in the simulation, a copied coin gave a mutual information of 2H against the correct value H.
+* Once branches are recorded, weighing them is classical bookkeeping. In the simulation every frame's state stayed exactly classical, with off-diagonal terms exactly zero, because every interaction respected the recorded basis.
+One stipulation remains: the simulation declared which basis defines the branches. The natural next step is to let the dynamics pick it, by rotating the recording interaction and seeing which basis gets recorded redundantly in the environment. That is the idea behind quantum Darwinism.
+The full object, and why single numbers are projections
+The complete output of the comparison is an atlas. For each arrangement or action it records what can be delivered, at what bill, with what probability, and what state is left behind for further steps. That leftover state is called the residual, and it must include everything needed to continue, including correlations with the environment. Following a design brief from Codex, Claude built a first version of this atlas, and Codex independently reproduced its population counts and worked examples. Its checks included that running a prefix and then a suffix gives the same result as saving the state after the prefix and restarting from it.
+Any single number summarizing the atlas loses information. A second example besides the invertible encodings: a probability-weighted timing measure, studied by Codex, gave exactly the same value to four arrangements whose records, downstream access and recovery behaviour all differed. Single numbers are still needed for arbitration when choices are forced, but they should be treated as projections of the atlas, chosen deliberately, not as the thing itself.
