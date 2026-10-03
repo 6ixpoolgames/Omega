@@ -2,7 +2,7 @@
 
 ## The current milestone
 
-Build and inspect a finite recursive access atlas under one common physical dynamics. Represent joint response, physical bills and full residual continuation. Then investigate extent candidates on it.
+Build and inspect a finite recursive access atlas under one common physical dynamics. Represent joint response, physical bills and full residual continuation. The adopted exploratory comparison is now Opus's normalized frame-volume and encompassing count-once access aggregation (Part 04). Make its remaining finite choices executable and probe it with small exploratory runs.
 
 This is a bounded implementation of a field-first hypothesis. A set of independently solved task scores is not the atlas. Neither a preferred ecology nor a preferred ethical verdict is an acceptance condition.
 
@@ -39,12 +39,13 @@ atlas, scratch-register and eleven-qubit results remain unverified here.
 | P32-02 | More possibility of value motivates expansion of its substrate | Working assumption; realized-value bridge open |
 | D32-01 | The field retains weighted continuation, joint compatibility and recursive physical access | Proposed representation |
 | D32-02 | Response, bill and full residual form the finite access-atlas record | Finite specification in Part 12, §M; integrated implementation pending |
+| D32-03 | Normalized frame volume and encompassing count-once/cheapest-access aggregation | Adopted exploratory candidate; first bounded joint-content envelope implemented, full cross-frame arbitration pending |
 | R32-01 | Matched information/partition and exhibited preparation bills need not fix bounded downstream access | Verified finite witness, Example 19 |
 | R32-02 | Matched content and Syn need not fix recovery from a local loss | Verified finite witness, Example 20 |
 | R32-03 | Syn = TC(X|F) − TC(X) for the stated finite classical variables | Algebraic identity, Example 21 |
 | R32-04 | Particular occurrence/correlation profiles can miss or misorder specified access | Retained analytic/numerical counterexamples |
 | O32-01 | One coherent physical realization relation across histories, budgets and interfaces | Open beyond existing restricted cases |
-| O32-02 | An extent of the field adequate as lushness | Open |
+| O32-02 | Adequacy of the adopted aggregation as lushness | Open; adoption does not establish adequacy |
 | O32-03 | Gas, replicators or excisive controllers are universally less lush | Not established; no required winner |
 | O32-04 | A finite atlas demonstrates unbounded generativity | Not established |
 | O32-05 | Protections and a complete ODT follow from the selected lushness comparison | Open; no comparison selected |
@@ -52,6 +53,8 @@ atlas, scratch-register and eleven-qubit results remain unverified here.
 | C32-02 | Phenomenal and theological interpretations | Conjectures retained separately from physical evidence |
 
 The elementary inherited lemmas in Part 12 retain their stated model assumptions. Their inclusion does not mean all source mathematics or all historical repository results were reverified in this release.
+
+The [first aggregation prototype](../../research_notes/omega_v2/frame_aggregation_report_v0.md) adds eighteen small preparations/loss cases under three source laws and a targeted depth-three follow-up. Joint content avoids treating copies as independent sources; loss-conditioned outputs preserve their recovery effects. Equal aggregate profiles can still conceal different specific response costs. Four focused checks cover normalization, signed Syn, joint execution budgets, route replay and record permutation. The new [Opus flow note](../../research_notes/omega_v2/opus_flow_note_2026-10-03.md) records the separately supplied, unreplicated flow results and their interpretive limits.
 
 ## Next implementation sequence
 

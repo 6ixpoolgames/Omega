@@ -45,6 +45,8 @@ When support, probability, recovery, and horizon matter differently, keep them v
 
 ## ODT2: explicit arbitration
 
+The 3 October exploratory adoption in Part 04 selects Opus's encompassing-frame aggregation as the working structural arbitration candidate. Normalized local volumes, actual branch weights and cost/horizon profiles feed that investigation. Its count-once implementation is pending. The fallback procedures below remain available where the candidate comparison is incomplete or a bounded decision still requires arbitration.
+
 Action sometimes requires choosing from a finite frontier of incomparable options. Arbitration can use a negotiated priority, a voting rule, a fairness criterion, a lottery, or a registered score. The authority and rationale for the rule are recorded.
 
 If every candidate breaches some requirement, an emergency rule may compare violations. That is a decision under conflict, not a retroactive declaration that all requirements were met. Recording the breach supports later repair and institutional learning.

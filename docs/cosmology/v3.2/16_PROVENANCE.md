@@ -1,5 +1,11 @@
 # 16 — Provenance and edition changes
 
+## Exploratory adoption update — 3 October 2026
+
+After publication, the originator requested adopting Opus's volume/frame aggregation economically for exploration. Parts 04, 08 and 14 now select normalized frame volume and count-once/cheapest-access aggregation as the working comparison. This supersedes the earlier editorial decision to leave aggregation unadopted. No simulation, implemented count-once result or new validation claim is created by this update. The relationship of signed Syn to lushness remains a hypothesis to explore through structural consequences.
+
+The subsequent instruction to implement and push produced the bounded joint-content prototype, source/program evidence and report linked from Parts 04 and 14. This is a narrow executable interpretation with a retained aggregation collision, not completion of the count-once proposal. The later flow report supplied during this work is preserved with a short interpretation note; its underlying runs were not independently reproduced.
+
 ## Baseline and authority
 
 This development edition revises [Omega Cosmology v3.1](../v3.1-source/OMEGA_COSMOLOGY_V3_1_COMPLETE.md), retrieved from the originator's Drive on 3 October 2026. The [source record](../v3.1-source/README.md) identifies the file and extraction. The source snapshot remains unchanged.

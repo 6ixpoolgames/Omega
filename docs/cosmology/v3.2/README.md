@@ -8,7 +8,9 @@ The candidate is recursive physical access geometry: weighted joint
 continuation, its implementation bills, and the residual access it leaves.
 This version integrates the frame corrections, quantum and timing
 counterexamples, composition findings and October 3 structural probe.
-The lushness extent and its general ethical/decision bridge remain open.
+The working comparison is now Opus's normalized frame-volume and encompassing count-once access aggregation, adopted for exploration on 3 October. Its cross-frame implementation, adequacy and general ethical/decision bridge remain open. Part 04 gives the local formula and remaining choices.
+
+The [first bounded aggregation run](../../research_notes/omega_v2/frame_aggregation_report_v0.md) is now available: joint-content and access-frontier profiles, route evidence, signed Syn and local-loss cases. Its maximum-volume profile still misses a particular routing difference. Full all-frame aggregation remains unfinished.
 
 Start with [Orientation](00_ORIENTATION.md), [Lushness](04_LUSHNESS.md),
 [new worked examples](11_WORKED_EXAMPLES.md), and the

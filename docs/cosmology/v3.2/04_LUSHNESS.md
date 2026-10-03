@@ -10,6 +10,17 @@ The candidate carrier is the continuation field of Parts 01–03 and Part 12, §
 
 The whole field is the reference. The finite access atlas is a proposed presentation of its operational structure. The current atlas schema is not yet an implemented universal extractor or an extent functional.
 
+**Exploratory adoption — 3 October 2026.** At the originator's direction, adopt Opus's normalized frame volume and encompassing-frame count-once/cheapest-access aggregation as the working comparison. Adoption selects what to explore; it is not a validation claim. In the finite classical setting, with distinction variable X and physical records R_phi:
+
+    ell_phi = I(X; R_phi) - H(X)
+    V_phi = 2^ell_phi.
+
+The encompassing frame has V = 1 when it resolves X completely. A frame with no information has V = 2^(-H(X)), not zero. Branch weights use the existing conditioned law and information chain rule; exponentiation does not turn that chain rule into an arithmetic average of volumes. A quantum extension must specify the recorded ensemble and physical instruments.
+
+Use the encompassing view of access across frames, vector budgets and horizons. The working aggregation credits distinct joint content once through its feasible cheapest-access routes, retaining a profile and dominance where available. A scalar arbitration choice must be stated when needed. How overlapping joint distinctions and access routes enter that aggregate is the next finite implementation choice, not a reason to postpone exploration. The raw subset-information tally remains a baseline. This update adopts the construction; it does not implement or run it.
+
+**First implementation, same day.** The [bounded aggregation prototype](../../research_notes/omega_v2/frame_aggregation_report_v0.md) now implements a narrow version: joint delivered information, a partition-to-access-frontier catalog, and a maximum jointly deliverable volume at each frame/budget cell. It does not sum separately feasible deliveries or assume a distribution on programs. Eighteen preparations/loss cases under three source laws are evaluated within a two-gate language, with a targeted three-gate follow-up. Its envelope ties two distinct access structures under fair inputs; the route catalog still distinguishes them. This is a limitation of that compression, not a completed all-frame arbitration rule.
+
 ## What probability does and does not supply
 
 The underlying physical law and frame conditioning supply weights. For a fixed physically implemented protocol, all its outcomes retain their weight, including failure and noncompletion. A rare route has its actual small weight; a conditional success does not make its preparation certain.
@@ -60,6 +71,8 @@ Synergy and hierarchy are useful diagnostics of this organization. In the determ
 
 For independent sources it is conditional total correlation. Inherited dependence can make it negative. It must not be clipped or called harmful composition for that reason. Conditional routing can also improve a small record's information while this Syn is zero. The atlas must therefore keep the joint laws and transformations from which both diagnostics are extracted.
 
+Correlation between Syn and lushness is a hypothesis to investigate, not an assumption of the aggregation. Positive, zero and negative values remain. Assess their structural consequences under actual dynamics rather than assigning a verdict from the sign or a mechanism's name.
+
 Repeated reuse, construction amortization and maintenance under depletion are promising questions for this architecture. The latest short run did not test them. A witnessed composition is not yet evidence of open-ended generativity.
 
 ## Harms and recovery are deformations of the same object
@@ -98,7 +111,7 @@ For free-choice models, a faithful resource-preserving realization can transfer 
 
 Part 12, §I preserves the earlier mathematical calculations for diagnostic use. In particular, its rare-event bound L_cov ≤ βp is a fact about that bounded-feature construction, not a universal treatment of low probabilities.
 
-## Aggregating frames: the new tally proposal
+## Adopted aggregation: baseline and open implementation choices
 
 The later Opus notes propose summing what every subset of registers knows,
 then replacing that sum with a rule crediting each distinction through its
@@ -118,7 +131,7 @@ No canonical set of independent “distinctions,” measure over frames, or
 common minimum of frame size and vector bill follows from the slogan.
 The [new-notes audit](../../research_notes/omega_v2/opus_towards_v3_2_assessment_audit_2026-10-03.md)
 records the promising reported ethics sweep and these unresolved choices.
-They remain leads within this candidate, not a replacement for the field.
+The count-once/cheapest-access proposal is now adopted as the exploratory candidate. The audit's earlier decision to leave it unadopted is superseded; its implementation questions remain. Keep feasible Pareto frontiers where bills have no common minimum, and retain all physical access and recovery relations in the atlas so the aggregate can be assessed against them. Small versioned calculations can proceed without a uniqueness theorem or a large validation campaign.
 
 ## Gas remains a live comparison
 
@@ -130,9 +143,9 @@ A useful next comparison places organization, dispersal, replication, noise and 
 
 ## The open mathematical task
 
-Write the current ambition as L[𝔉], where 𝔉 is the recursive continuation field. L is deliberately not given a formula here. It might prove to be a profile, an order, a volume-like functional, or a family requiring further structure.
+Write the encompassing comparison as L[𝔉]. The selected exploratory construction is the normalized frame-volume profile and count-once access aggregation above. The local volume has a formula; the complete cross-frame aggregation still needs a finite executable specification. This is a concrete working candidate with open choices, rather than an absence of a candidate.
 
-The task is to find an informative comparison that respects the field's weights, composition and finite consequences, has defensible redescription behavior, and earns a connection to the possibility of value. Asymptotic spectra, physical realization orders and information quantities can contribute, but no fixed combination of them has been selected.
+The task is to implement this aggregation economically and examine composition, obstruction and recovery. Adequacy as lushness and generalization beyond the finite domain remain open. Preserve revisions and failures without assuming correlation with Syn or requiring a preferred kind of structure to win.
 
 A richer carrier does not itself solve this task. A successful finite atlas would make the next failures informative: we could identify exactly which relation a proposed extent discards and whether retaining it repairs the claim without imposing a desired winner.
 
