@@ -19,6 +19,10 @@ The [catalytic continuation run](docs/research_notes/omega_v2/catalytic_binding_
 adds reversible construction that enables further construction. More first
 occurrences coexist with faster reversal, mixed propagation and a separation
 between first restoration and later retention.
+The [production-history follow-up](docs/research_notes/omega_v2/catalytic_history_report_v0.md)
+follows catalytic descendants through movement and loss of the original bond.
+It finds continued production after original loss, without a clear overall
+persistence gain from stronger catalysis.
 
 [![Lean AlphaOmega](https://github.com/6ixpoolgames/Omega/actions/workflows/lean-alphaomega.yml/badge.svg?branch=master)](https://github.com/6ixpoolgames/Omega/actions/workflows/lean-alphaomega.yml)
 [![Baseline Witness Smoke](https://github.com/6ixpoolgames/Omega/actions/workflows/baseline-witness-smoke.yml/badge.svg?branch=master)](https://github.com/6ixpoolgames/Omega/actions/workflows/baseline-witness-smoke.yml)

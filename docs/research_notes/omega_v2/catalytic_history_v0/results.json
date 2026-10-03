@@ -1,0 +1,2200 @@
+{
+  "schema": "catalytic-history-v0",
+  "date": "2026-10-04",
+  "cuts": [
+    0,
+    1,
+    2,
+    5,
+    10,
+    20,
+    50
+  ],
+  "models": {
+    "0": {
+      "parameters": {
+        "capacity": 3,
+        "mobility": 1.0,
+        "mu": 4.0,
+        "assembly": 0.25,
+        "thermal_bond": 0.02,
+        "spin_noise": 0.05,
+        "exchange": 1.0,
+        "catalytic_barrier_reduction": 0
+      },
+      "physical_state_count": 1792,
+      "history_state_count": 2560,
+      "event_channels": [
+        "flip_0",
+        "flip_1",
+        "flip_2",
+        "flip_3",
+        "flip_4",
+        "exchange_0_1",
+        "exchange_1_2",
+        "exchange_2_3",
+        "exchange_3_4",
+        "thermal_bond_0_1",
+        "thermal_bond_1_2",
+        "thermal_bond_2_3",
+        "thermal_bond_3_4",
+        "fuel_bond_0_1",
+        "fuel_bond_1_2",
+        "fuel_bond_2_3",
+        "fuel_bond_3_4",
+        "move_0_1_1",
+        "move_1_1_-1",
+        "move_1_1_1",
+        "move_2_1_-1",
+        "move_2_1_1",
+        "move_3_1_-1",
+        "move_3_1_1",
+        "move_4_1_-1",
+        "move_0_2_1",
+        "move_1_2_-1",
+        "move_1_2_1",
+        "move_2_2_-1",
+        "move_2_2_1",
+        "move_3_2_-1",
+        "move_0_3_1",
+        "move_1_3_-1",
+        "move_1_3_1",
+        "move_2_3_-1",
+        "move_0_4_1",
+        "move_1_4_-1",
+        "catalytic_bond_0_via_1",
+        "catalytic_bond_1_via_0",
+        "catalytic_bond_1_via_2",
+        "catalytic_bond_2_via_1",
+        "catalytic_bond_2_via_3",
+        "catalytic_bond_3_via_2"
+      ],
+      "history_state_columns": [
+        "physical_state_index",
+        "original_bond_mask",
+        "descendant_bond_mask",
+        "history_flag"
+      ],
+      "history_flag_meanings": [
+        "no_descendant_yet",
+        "descendant_born",
+        "descendant_has_assisted_formation"
+      ],
+      "resource_columns": [
+        "fuel_assembly",
+        "fuel_disassembly",
+        "thermal_assembly",
+        "thermal_disassembly",
+        "translation",
+        "spin_exchange",
+        "catalytic_assembly_subset",
+        "catalytic_disassembly_subset"
+      ],
+      "history_count_columns": [
+        "original_assisted_formations",
+        "descendant_assisted_formations",
+        "original_assisted_reversals",
+        "descendant_assisted_reversals",
+        "original_dissolutions",
+        "descendant_dissolutions"
+      ],
+      "rows": [
+        {
+          "cut": 0,
+          "original_survival": 1.0,
+          "descendant_presence": 0.0,
+          "descendants_after_original_loss": 0.0,
+          "production_lineage_presence": 1.0,
+          "original_bond_time": 0.0,
+          "production_lineage_time": 0.0,
+          "post_original_descendant_time": 0.0,
+          "ever_descendant": 0.0,
+          "ever_descendant_assisted_formation": 0.0,
+          "descendant_bonds_mean": 0.0,
+          "aligned_descendant_bonds_mean": 0.0,
+          "physical_snapshot": {
+            "fuel_mean": 2.0,
+            "bonds_mean": 1.0,
+            "stored_energy": 12.0,
+            "free_energy_nats": 12.608874812260801,
+            "activity": 4.103194533308078,
+            "occupied_sites": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              0.0
+            ],
+            "tetramer_probability": 0.0,
+            "bond_probabilities": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "catalytic_formation_rate": 0.0,
+            "catalytic_reversal_rate": 0.0
+          },
+          "resource_profile": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "history_event_counts": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "cut": 1,
+          "original_survival": 0.6240057745577706,
+          "descendant_presence": 0.0,
+          "descendants_after_original_loss": 0.0,
+          "production_lineage_presence": 0.6240057745577706,
+          "original_bond_time": 0.8047252797779363,
+          "production_lineage_time": 0.8047252797779363,
+          "post_original_descendant_time": 0.0,
+          "ever_descendant": 0.0,
+          "ever_descendant_assisted_formation": 0.0,
+          "descendant_bonds_mean": 0.0,
+          "aligned_descendant_bonds_mean": 0.0,
+          "physical_snapshot": {
+            "fuel_mean": 1.6468919551694332,
+            "bonds_mean": 1.1887214186312645,
+            "stored_energy": 11.3424534952028,
+            "free_energy_nats": 8.970266969842974,
+            "activity": 3.997154992956865,
+            "occupied_sites": [
+              0.9637001432475292,
+              0.9845893297388817,
+              0.8759828184099132,
+              0.7341795219512215,
+              0.44154818665244644
+            ],
+            "tetramer_probability": 0.01628152635765128,
+            "bond_probabilities": [
+              0.6667307682605618,
+              0.2778033701756857,
+              0.1850772449865073,
+              0.059110035208510124
+            ],
+            "catalytic_formation_rate": 0.0,
+            "catalytic_reversal_rate": 0.0
+          },
+          "resource_profile": [
+            0.7690175190259589,
+            0.41590947419539565,
+            0.004298875014556419,
+            0.16868550121385695,
+            1.1375613728296192,
+            1.364843218238397,
+            0.0,
+            0.0
+          ],
+          "history_event_counts": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.37599422544222927,
+            0.0
+          ],
+          "original_gone_descendants_present_followup": {
+            "conditioning_probability": 0.0,
+            "present": false,
+            "rows": []
+          }
+        },
+        {
+          "cut": 2,
+          "original_survival": 0.3665989813424814,
+          "descendant_presence": 0.0,
+          "descendants_after_original_loss": 0.0,
+          "production_lineage_presence": 0.3665989813424814,
+          "original_bond_time": 1.2898559222712331,
+          "production_lineage_time": 1.2898559222712331,
+          "post_original_descendant_time": 0.0,
+          "ever_descendant": 0.0,
+          "ever_descendant_assisted_formation": 0.0,
+          "descendant_bonds_mean": 0.0,
+          "aligned_descendant_bonds_mean": 0.0,
+          "physical_snapshot": {
+            "fuel_mean": 1.5257816530740702,
+            "bonds_mean": 1.14082644431553,
+            "stored_energy": 10.666432389558405,
+            "free_energy_nats": 7.68515322159111,
+            "activity": 3.9329874066746813,
+            "occupied_sites": [
+              0.8998219406032919,
+              0.9443183178154672,
+              0.8405396058135483,
+              0.7578501602693414,
+              0.55746997549834
+            ],
+            "tetramer_probability": 0.016346217734378478,
+            "bond_probabilities": [
+              0.47133116678179954,
+              0.3264572699566283,
+              0.22051454997174189,
+              0.12252345760536042
+            ],
+            "catalytic_formation_rate": 0.0,
+            "catalytic_reversal_rate": 0.0
+          },
+          "resource_profile": [
+            1.391926187816381,
+            0.9177078408904632,
+            0.008066434847287826,
+            0.34145833745768406,
+            2.315327117317113,
+            2.6453675104579393,
+            0.0,
+            0.0
+          ],
+          "history_event_counts": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.6334010186575216,
+            0.0
+          ]
+        },
+        {
+          "cut": 5,
+          "original_survival": 0.06778570865570932,
+          "descendant_presence": 0.0,
+          "descendants_after_original_loss": 0.0,
+          "production_lineage_presence": 0.06778570865570932,
+          "original_bond_time": 1.8248634099289982,
+          "production_lineage_time": 1.8248634099289982,
+          "post_original_descendant_time": 0.0,
+          "ever_descendant": 0.0,
+          "ever_descendant_assisted_formation": 0.0,
+          "descendant_bonds_mean": 0.0,
+          "aligned_descendant_bonds_mean": 0.0,
+          "physical_snapshot": {
+            "fuel_mean": 1.2685975783123193,
+            "bonds_mean": 0.948012569280972,
+            "stored_energy": 8.866440590373164,
+            "free_energy_nats": 5.49568962235001,
+            "activity": 3.8601892255876615,
+            "occupied_sites": [
+              0.7950497712483237,
+              0.8670256372471644,
+              0.8372475830135581,
+              0.8113364476758368,
+              0.6893405608151227
+            ],
+            "tetramer_probability": 0.009877354565718739,
+            "bond_probabilities": [
+              0.26308127776815715,
+              0.2652007934977897,
+              0.23245769707039693,
+              0.18727280094462712
+            ],
+            "catalytic_formation_rate": 0.0,
+            "catalytic_reversal_rate": 0.0
+          },
+          "resource_profile": [
+            3.1143836496480115,
+            2.382981227960322,
+            0.020127878255205938,
+            0.8035177306619115,
+            5.945419100308755,
+            6.4367580311233,
+            0.0,
+            0.0
+          ],
+          "history_event_counts": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.93221429134429,
+            0.0
+          ],
+          "original_gone_descendants_present_followup": {
+            "conditioning_probability": 0.0,
+            "present": false,
+            "rows": []
+          }
+        },
+        {
+          "cut": 10,
+          "original_survival": 0.0036077785831435836,
+          "descendant_presence": 0.0,
+          "descendants_after_original_loss": 0.0,
+          "production_lineage_presence": 0.0036077785831435836,
+          "original_bond_time": 1.9350399268319411,
+          "production_lineage_time": 1.9350399268319411,
+          "post_original_descendant_time": 0.0,
+          "ever_descendant": 0.0,
+          "ever_descendant_assisted_formation": 0.0,
+          "descendant_bonds_mean": 0.0,
+          "aligned_descendant_bonds_mean": 0.0,
+          "physical_snapshot": {
+            "fuel_mean": 0.9402704259072261,
+            "bonds_mean": 0.6966423040304104,
+            "stored_energy": 6.547650919750548,
+            "free_energy_nats": 3.3827730519152004,
+            "activity": 3.7278065745397617,
+            "occupied_sites": [
+              0.7663367333718327,
+              0.8309305698797841,
+              0.8277640734919272,
+              0.8232046219388989,
+              0.75176400131757
+            ],
+            "tetramer_probability": 0.004099855848671183,
+            "bond_probabilities": [
+              0.1704001041681035,
+              0.1830775371300649,
+              0.1799694318056847,
+              0.1631952309265571
+            ],
+            "catalytic_formation_rate": 0.0,
+            "catalytic_reversal_rate": 0.0
+          },
+          "resource_profile": [
+            5.594002444382189,
+            4.534272870289413,
+            0.04289730201416198,
+            1.405984572076534,
+            12.423740889732743,
+            12.681247284092464,
+            0.0,
+            0.0
+          ],
+          "history_event_counts": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9963922214168585,
+            0.0
+          ]
+        },
+        {
+          "cut": 20,
+          "original_survival": 9.363043678752726e-06,
+          "descendant_presence": 0.0,
+          "descendants_after_original_loss": 0.0,
+          "production_lineage_presence": 9.363043678752726e-06,
+          "original_bond_time": 1.9410798666647349,
+          "production_lineage_time": 1.9410798666647349,
+          "post_original_descendant_time": 0.0,
+          "ever_descendant": 0.0,
+          "ever_descendant_assisted_formation": 0.0,
+          "descendant_bonds_mean": 0.0,
+          "aligned_descendant_bonds_mean": 0.0,
+          "physical_snapshot": {
+            "fuel_mean": 0.526467360590211,
+            "bonds_mean": 0.38701867873161755,
+            "stored_energy": 3.6539441572873157,
+            "free_energy_nats": 1.3053853382862803,
+            "activity": 3.471707885436768,
+            "occupied_sites": [
+              0.7786138516716985,
+              0.8142978476453866,
+              0.8146226049305872,
+              0.8141362502234794,
+              0.7783294455288425
+            ],
+            "tetramer_probability": 0.0007725818090635098,
+            "bond_probabilities": [
+              0.09459742075267584,
+              0.09896510971142891,
+              0.09893319039491884,
+              0.0945229578725939
+            ],
+            "catalytic_formation_rate": 0.0,
+            "catalytic_reversal_rate": 0.0
+          },
+          "resource_profile": [
+            9.171101707093209,
+            7.697569067683439,
+            0.09527408088583986,
+            2.18178804156402,
+            26.499138628142653,
+            24.981460775171186,
+            0.0,
+            0.0
+          ],
+          "history_event_counts": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.9999906369563248,
+            0.0
+          ],
+          "original_gone_descendants_present_followup": {
+            "conditioning_probability": 0.0,
+            "present": false,
+            "rows": []
+          }
+        },
+        {
+          "cut": 50,
+          "original_survival": 1.0810822433232654e-12,
+          "descendant_presence": 0.0,
+          "descendants_after_original_loss": 0.0,
+          "production_lineage_presence": 1.0810822433232654e-12,
+          "original_bond_time": 1.9410958539383318,
+          "production_lineage_time": 1.9410958539383318,
+          "post_original_descendant_time": 0.0,
+          "ever_descendant": 0.0,
+          "ever_descendant_assisted_formation": 0.0,
+          "descendant_bonds_mean": 0.0,
+          "aligned_descendant_bonds_mean": 0.0,
+          "physical_snapshot": {
+            "fuel_mean": 0.12573673356626508,
+            "bonds_mean": 0.09487214287605807,
+            "stored_energy": 0.8824355057692923,
+            "free_energy_nats": 0.05900711369619816,
+            "activity": 3.1330157904478932,
+            "occupied_sites": [
+              0.795051974709953,
+              0.8032784100315954,
+              0.8033392347890337,
+              0.803278408417948,
+              0.7950519720514131
+            ],
+            "tetramer_probability": 1.83978062396475e-05,
+            "bond_probabilities": [
+              0.02358803133071589,
+              0.023848040213826728,
+              0.023848040149949692,
+              0.02358803118156593
+            ],
+            "catalytic_formation_rate": 0.0,
+            "catalytic_reversal_rate": 0.0
+          },
+          "resource_profile": [
+            13.622979658725734,
+            11.74871639229205,
+            0.2758838550026023,
+            3.0552749785602455,
+            72.37744660827519,
+            61.300194649816646,
+            0.0,
+            0.0
+          ],
+          "history_event_counts": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.999999999998916,
+            0.0
+          ]
+        }
+      ],
+      "checks": {
+        "lumping_error": 1.7763568394002505e-15,
+        "physical_marginal_error": 4.5102810375396984e-17,
+        "mass_error": 1.3322676295501878e-14,
+        "occupation_mass_error": 5.613287612504791e-13,
+        "root_accounting_error": 3.552713678800501e-15,
+        "descendant_accounting_error": 0.0,
+        "resource_accounting_error": 4.973799150320701e-14
+      },
+      "runtime_seconds": 0.6932452999753878
+    },
+    "1": {
+      "parameters": {
+        "capacity": 3,
+        "mobility": 1.0,
+        "mu": 4.0,
+        "assembly": 0.25,
+        "thermal_bond": 0.02,
+        "spin_noise": 0.05,
+        "exchange": 1.0,
+        "catalytic_barrier_reduction": 1
+      },
+      "physical_state_count": 1792,
+      "history_state_count": 12864,
+      "event_channels": [
+        "flip_0",
+        "flip_1",
+        "flip_2",
+        "flip_3",
+        "flip_4",
+        "exchange_0_1",
+        "exchange_1_2",
+        "exchange_2_3",
+        "exchange_3_4",
+        "thermal_bond_0_1",
+        "thermal_bond_1_2",
+        "thermal_bond_2_3",
+        "thermal_bond_3_4",
+        "fuel_bond_0_1",
+        "fuel_bond_1_2",
+        "fuel_bond_2_3",
+        "fuel_bond_3_4",
+        "move_0_1_1",
+        "move_1_1_-1",
+        "move_1_1_1",
+        "move_2_1_-1",
+        "move_2_1_1",
+        "move_3_1_-1",
+        "move_3_1_1",
+        "move_4_1_-1",
+        "move_0_2_1",
+        "move_1_2_-1",
+        "move_1_2_1",
+        "move_2_2_-1",
+        "move_2_2_1",
+        "move_3_2_-1",
+        "move_0_3_1",
+        "move_1_3_-1",
+        "move_1_3_1",
+        "move_2_3_-1",
+        "move_0_4_1",
+        "move_1_4_-1",
+        "catalytic_bond_0_via_1",
+        "catalytic_bond_1_via_0",
+        "catalytic_bond_1_via_2",
+        "catalytic_bond_2_via_1",
+        "catalytic_bond_2_via_3",
+        "catalytic_bond_3_via_2"
+      ],
+      "history_state_columns": [
+        "physical_state_index",
+        "original_bond_mask",
+        "descendant_bond_mask",
+        "history_flag"
+      ],
+      "history_flag_meanings": [
+        "no_descendant_yet",
+        "descendant_born",
+        "descendant_has_assisted_formation"
+      ],
+      "resource_columns": [
+        "fuel_assembly",
+        "fuel_disassembly",
+        "thermal_assembly",
+        "thermal_disassembly",
+        "translation",
+        "spin_exchange",
+        "catalytic_assembly_subset",
+        "catalytic_disassembly_subset"
+      ],
+      "history_count_columns": [
+        "original_assisted_formations",
+        "descendant_assisted_formations",
+        "original_assisted_reversals",
+        "descendant_assisted_reversals",
+        "original_dissolutions",
+        "descendant_dissolutions"
+      ],
+      "rows": [
+        {
+          "cut": 0,
+          "original_survival": 1.0,
+          "descendant_presence": 0.0,
+          "descendants_after_original_loss": 0.0,
+          "production_lineage_presence": 1.0,
+          "original_bond_time": 0.0,
+          "production_lineage_time": 0.0,
+          "post_original_descendant_time": 0.0,
+          "ever_descendant": 0.0,
+          "ever_descendant_assisted_formation": 0.0,
+          "descendant_bonds_mean": 0.0,
+          "aligned_descendant_bonds_mean": 0.0,
+          "physical_snapshot": {
+            "fuel_mean": 2.0,
+            "bonds_mean": 1.0,
+            "stored_energy": 12.0,
+            "free_energy_nats": 12.608874812260801,
+            "activity": 4.532764990422838,
+            "occupied_sites": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              0.0
+            ],
+            "tetramer_probability": 0.0,
+            "bond_probabilities": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "catalytic_formation_rate": 0.4295704571147612,
+            "catalytic_reversal_rate": 0.0
+          },
+          "resource_profile": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "history_event_counts": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "cut": 1,
+          "original_survival": 0.5663640407889987,
+          "descendant_presence": 0.11531994181916971,
+          "descendants_after_original_loss": 0.05333951132729061,
+          "production_lineage_presence": 0.6197035521162895,
+          "original_bond_time": 0.7763104984593971,
+          "production_lineage_time": 0.8023030071872739,
+          "post_original_descendant_time": 0.025992508727877024,
+          "ever_descendant": 0.20111592407496642,
+          "ever_descendant_assisted_formation": 0.020894321905826522,
+          "descendant_bonds_mean": 0.12460776753453928,
+          "aligned_descendant_bonds_mean": 0.06641906516753757,
+          "physical_snapshot": {
+            "fuel_mean": 1.599730035404471,
+            "bonds_mean": 1.2284452182173948,
+            "stored_energy": 11.312701014487464,
+            "free_energy_nats": 8.851365685475585,
+            "activity": 4.499546191333623,
+            "occupied_sites": [
+              0.9610333824818755,
+              0.9809851725747221,
+              0.8876785182639886,
+              0.7322524157156121,
+              0.4380505109637951
+            ],
+            "tetramer_probability": 0.021204382515731257,
+            "bond_probabilities": [
+              0.6292444225617952,
+              0.34277568264063474,
+              0.19809616465574845,
+              0.05832894835921637
+            ],
+            "catalytic_formation_rate": 0.26405858028595486,
+            "catalytic_reversal_rate": 0.24230836635728287
+          },
+          "resource_profile": [
+            1.0481439092157085,
+            0.6478739446201744,
+            0.0041724798447748835,
+            0.17599722622290906,
+            1.1227253480779384,
+            1.3667420951096838,
+            0.3123337740890204,
+            0.19261201258302327
+          ],
+          "history_event_counts": [
+            0.21752721951713633,
+            0.023829064061878878,
+            0.08140779144822673,
+            0.03597429966685881,
+            0.4336359592109992,
+            0.11674851604447627
+          ],
+          "original_gone_descendants_present_followup": {
+            "conditioning_probability": 0.05333951132729061,
+            "present": true,
+            "rows": [
+              {
+                "lag": 1,
+                "first_descendant_assisted_formation_probability": 0.2746300435449427,
+                "original_survival": 0.0,
+                "descendant_presence": 0.5896300104327086,
+                "descendants_after_original_loss": 0.5896300104327086,
+                "production_lineage_presence": 0.5896300104327086,
+                "original_bond_time": 0.0,
+                "production_lineage_time": 0.7779505401398962,
+                "post_original_descendant_time": 0.7779505401398962,
+                "ever_descendant": 1.0,
+                "ever_descendant_assisted_formation": 0.47613895448214827,
+                "descendant_bonds_mean": 0.6984975931309518,
+                "aligned_descendant_bonds_mean": 0.42650011849111397,
+                "physical_snapshot": {
+                  "fuel_mean": 1.4701863687069987,
+                  "bonds_mean": 1.1847817098457685,
+                  "stored_energy": 10.619872314211069,
+                  "free_energy_nats": 7.770711576953557,
+                  "activity": 4.3030314677166235,
+                  "occupied_sites": [
+                    0.8966300143377668,
+                    0.9009339591184498,
+                    0.929025252687018,
+                    0.7459662569175415,
+                    0.5274445169392276
+                  ],
+                  "tetramer_probability": 0.01781146009652995,
+                  "bond_probabilities": [
+                    0.3066019950329243,
+                    0.4676202787583174,
+                    0.30259841670604226,
+                    0.10796101934848457
+                  ],
+                  "catalytic_formation_rate": 0.32702458376853827,
+                  "catalytic_reversal_rate": 0.3240321717981002
+                },
+                "resource_profile": [
+                  0.9570387525603249,
+                  0.9343202559778363,
+                  0.003621499822235811,
+                  0.18639757076607819,
+                  1.101367431624337,
+                  0.9746263801327498,
+                  0.39832528469095807,
+                  0.3801109006890206
+                ],
+                "history_event_counts": [
+                  0.0,
+                  0.33946671588708177,
+                  0.0,
+                  0.2670786889748976,
+                  0.0,
+                  0.7940209576083467
+                ]
+              },
+              {
+                "lag": 5,
+                "first_descendant_assisted_formation_probability": 0.381803543270153,
+                "original_survival": 0.0,
+                "descendant_presence": 0.06428091590970152,
+                "descendants_after_original_loss": 0.06428091590970152,
+                "production_lineage_presence": 0.06428091590970152,
+                "original_bond_time": 0.0,
+                "production_lineage_time": 1.7371868374167547,
+                "post_original_descendant_time": 1.7371868374167547,
+                "ever_descendant": 1.0000000000000004,
+                "ever_descendant_assisted_formation": 0.5488734547983138,
+                "descendant_bonds_mean": 0.07305812828735231,
+                "aligned_descendant_bonds_mean": 0.03998850133566707,
+                "physical_snapshot": {
+                  "fuel_mean": 1.1773445157061504,
+                  "bonds_mean": 0.8906655835560086,
+                  "stored_energy": 8.272040397048634,
+                  "free_energy_nats": 4.925980724013109,
+                  "activity": 4.05019627365787,
+                  "occupied_sites": [
+                    0.7804525443034976,
+                    0.8513077997856152,
+                    0.8395680422000827,
+                    0.8183940161175851,
+                    0.7102775975932212
+                  ],
+                  "tetramer_probability": 0.008594240409534978,
+                  "bond_probabilities": [
+                    0.2275543605185619,
+                    0.24499806724486017,
+                    0.2294195757759357,
+                    0.18869358001665135
+                  ],
+                  "catalytic_formation_rate": 0.16361926915283154,
+                  "catalytic_reversal_rate": 0.1548965860609229
+                },
+                "resource_profile": [
+                  4.0840718393412025,
+                  3.7685114897578567,
+                  0.02001076121694515,
+                  0.7897448114513951,
+                  5.950054558632658,
+                  5.380844151424072,
+                  1.3023545078981993,
+                  1.2481559495233587
+                ],
+                "history_event_counts": [
+                  0.0,
+                  0.655956920598947,
+                  0.0,
+                  0.5458420658266694,
+                  0.0,
+                  1.735950627163801
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "cut": 2,
+          "original_survival": 0.2973606156021724,
+          "descendant_presence": 0.09782943121027629,
+          "descendants_after_original_loss": 0.06711429975401892,
+          "production_lineage_presence": 0.36447491535619136,
+          "original_bond_time": 1.1942722446484897,
+          "production_lineage_time": 1.2839405845067424,
+          "post_original_descendant_time": 0.0896683398582533,
+          "ever_descendant": 0.2551576723740563,
+          "ever_descendant_assisted_formation": 0.044027995050206936,
+          "descendant_bonds_mean": 0.10949652908870901,
+          "aligned_descendant_bonds_mean": 0.05992381804560812,
+          "physical_snapshot": {
+            "fuel_mean": 1.5009072839293274,
+            "bonds_mean": 1.1546446024107269,
+            "stored_energy": 10.622207545360219,
+            "free_energy_nats": 7.603597247146667,
+            "activity": 4.3843213663617835,
+            "occupied_sites": [
+              0.8978743422305145,
+              0.9380693843208473,
+              0.8526779116148386,
+              0.7582217553950376,
+              0.5531566064387619
+            ],
+            "tetramer_probability": 0.017958941682106974,
+            "bond_probabilities": [
+              0.4420910455789677,
+              0.3529564404598526,
+              0.23646891378309726,
+              0.12312820258880963
+            ],
+            "catalytic_formation_rate": 0.23321345198688773,
+            "catalytic_reversal_rate": 0.21971198284960053
+          },
+          "resource_profile": [
+            1.9015779642745336,
+            1.4024852482038617,
+            0.007892890010062532,
+            0.3523410036700075,
+            2.2850722034187494,
+            2.652019766154099,
+            0.5596848891048272,
+            0.4245420914701809
+          ],
+          "history_event_counts": [
+            0.29502502736965736,
+            0.057719121650037904,
+            0.13750044908834577,
+            0.07565899055060943,
+            0.7026393843978266,
+            0.24324761993098587
+          ]
+        },
+        {
+          "cut": 5,
+          "original_survival": 0.04157186556720546,
+          "descendant_presence": 0.03131515905756208,
+          "descendants_after_original_loss": 0.02767302462990532,
+          "production_lineage_presence": 0.0692448901971108,
+          "original_bond_time": 1.5856010341707711,
+          "production_lineage_time": 1.820589869698769,
+          "post_original_descendant_time": 0.23498883552799854,
+          "ever_descendant": 0.2905127170890922,
+          "ever_descendant_assisted_formation": 0.07059804010595533,
+          "descendant_bonds_mean": 0.03558763088147966,
+          "aligned_descendant_bonds_mean": 0.019052469560441376,
+          "physical_snapshot": {
+            "fuel_mean": 1.2531131610997595,
+            "bonds_mean": 0.9499042411974932,
+            "stored_energy": 8.81206960918901,
+            "free_energy_nats": 5.439315280489318,
+            "activity": 4.185882638054777,
+            "occupied_sites": [
+              0.7942310940189143,
+              0.8644220213711046,
+              0.8399806059990617,
+              0.8123704759648339,
+              0.6889958026460861
+            ],
+            "tetramer_probability": 0.01032263434859008,
+            "bond_probabilities": [
+              0.25738157482949786,
+              0.2662573648683055,
+              0.2376354541428671,
+              0.18862984735682292
+            ],
+            "catalytic_formation_rate": 0.16817242914024924,
+            "catalytic_reversal_rate": 0.15846176870322393
+          },
+          "resource_profile": [
+            4.1996370366469025,
+            3.4527501977466977,
+            0.0199339755683452,
+            0.816916573271091,
+            5.9031343478570735,
+            6.450388073385585,
+            1.1569927126126565,
+            0.9867137326753034
+          ],
+          "history_event_counts": [
+            0.35904908566890453,
+            0.11456545252926284,
+            0.1844068348752964,
+            0.13373798010983654,
+            0.9584281344327952,
+            0.4380269073166861
+          ],
+          "original_gone_descendants_present_followup": {
+            "conditioning_probability": 0.02767302462990532,
+            "present": true,
+            "rows": [
+              {
+                "lag": 1,
+                "first_descendant_assisted_formation_probability": 0.1937799050901008,
+                "original_survival": 0.0,
+                "descendant_presence": 0.5709792928989796,
+                "descendants_after_original_loss": 0.5709792928989796,
+                "production_lineage_presence": 0.5709792928989796,
+                "original_bond_time": 0.0,
+                "production_lineage_time": 0.7660242851568742,
+                "post_original_descendant_time": 0.7660242851568742,
+                "ever_descendant": 0.9999999999999993,
+                "ever_descendant_assisted_formation": 0.7552931722074037,
+                "descendant_bonds_mean": 0.6555380877133883,
+                "aligned_descendant_bonds_mean": 0.3554655648615926,
+                "physical_snapshot": {
+                  "fuel_mean": 1.3737788870618586,
+                  "bonds_mean": 1.1426367749367277,
+                  "stored_energy": 10.065662647994346,
+                  "free_energy_nats": 6.782445442049744,
+                  "activity": 4.302820063247972,
+                  "occupied_sites": [
+                    0.7647435627553983,
+                    0.8528059884515127,
+                    0.892935162219528,
+                    0.8133914016884508,
+                    0.6761238848851078
+                  ],
+                  "tetramer_probability": 0.016464086873378293,
+                  "bond_probabilities": [
+                    0.2568815799028374,
+                    0.35844751853178997,
+                    0.32398091333573836,
+                    0.2033267631663618
+                  ],
+                  "catalytic_formation_rate": 0.2528292614641829,
+                  "catalytic_reversal_rate": 0.2500640834829347
+                },
+                "resource_profile": [
+                  0.789098733712842,
+                  0.8813815982507948,
+                  0.0035679425850748602,
+                  0.18522527483055706,
+                  1.1226508281869871,
+                  1.1776069889261291,
+                  0.28734207899296416,
+                  0.29603374260326115
+                ],
+                "history_event_counts": [
+                  0.0,
+                  0.2309909464413197,
+                  0.0,
+                  0.1993773317079241,
+                  0.0,
+                  0.7275791660539003
+                ]
+              },
+              {
+                "lag": 5,
+                "first_descendant_assisted_formation_probability": 0.2919298899947905,
+                "original_survival": 0.0,
+                "descendant_presence": 0.057346822536494445,
+                "descendants_after_original_loss": 0.057346822536494445,
+                "production_lineage_presence": 0.057346822536494445,
+                "original_bond_time": 0.0,
+                "production_lineage_time": 1.6653322884025237,
+                "post_original_descendant_time": 1.6653322884025237,
+                "ever_descendant": 1.0000000000000004,
+                "ever_descendant_assisted_formation": 0.7848255543235418,
+                "descendant_bonds_mean": 0.06446519258849878,
+                "aligned_descendant_bonds_mean": 0.03343446479737568,
+                "physical_snapshot": {
+                  "fuel_mean": 1.117405572579377,
+                  "bonds_mean": 0.8430636916936473,
+                  "stored_energy": 7.8418770570920975,
+                  "free_energy_nats": 4.499755658055026,
+                  "activity": 4.043026531021449,
+                  "occupied_sites": [
+                    0.7573454346273834,
+                    0.837168592263672,
+                    0.836423591816499,
+                    0.8288768966845926,
+                    0.7401854846078544
+                  ],
+                  "tetramer_probability": 0.007495804866215058,
+                  "bond_probabilities": [
+                    0.20274344622293997,
+                    0.22523693617979798,
+                    0.22151032366856413,
+                    0.19357298562234518
+                  ],
+                  "catalytic_formation_rate": 0.14122896214009645,
+                  "catalytic_reversal_rate": 0.13356513911658383
+                },
+                "resource_profile": [
+                  3.6788902980131906,
+                  3.5147998480686606,
+                  0.020410335496553467,
+                  0.7580140654676,
+                  6.054717801737829,
+                  5.969127476002826,
+                  1.033754818061862,
+                  1.0099695522977152
+                ],
+                "history_event_counts": [
+                  0.0,
+                  0.47144430974797197,
+                  0.0,
+                  0.41017038931684846,
+                  0.0,
+                  1.5591054244854465
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "cut": 10,
+          "original_survival": 0.0014433200074181756,
+          "descendant_presence": 0.0025502019825040336,
+          "descendants_after_original_loss": 0.0024355728067761485,
+          "production_lineage_presence": 0.003878892814194323,
+          "original_bond_time": 1.6456602733933168,
+          "production_lineage_time": 1.934810312475272,
+          "post_original_descendant_time": 0.28915003908195536,
+          "ever_descendant": 0.2940043204418846,
+          "ever_descendant_assisted_formation": 0.07504371732764263,
+          "descendant_bonds_mean": 0.0028721888233647036,
+          "aligned_descendant_bonds_mean": 0.0014872982477885767,
+          "physical_snapshot": {
+            "fuel_mean": 0.9287542014043643,
+            "bonds_mean": 0.6948336168164277,
+            "stored_energy": 6.4943512728831685,
+            "free_energy_nats": 3.3388873978388824,
+            "activity": 3.911535606870438,
+            "occupied_sites": [
+              0.7661349344646865,
+              0.8304953225379607,
+              0.8281834883715403,
+              0.8231979017407021,
+              0.7519883528851128
+            ],
+            "tetramer_probability": 0.004234436508660291,
+            "bond_probabilities": [
+              0.1691290526775013,
+              0.18290361293452856,
+              0.1801997452893628,
+              0.16260120591503513
+            ],
+            "catalytic_formation_rate": 0.09593056854172517,
+            "catalytic_reversal_rate": 0.09077995031192168
+          },
+          "resource_profile": [
+            7.2965298678288,
+            6.225284069233153,
+            0.042713023924970436,
+            1.4191252057041803,
+            12.382126972137435,
+            12.697033023746515,
+            1.800833502938894,
+            1.5946648886139416
+          ],
+          "history_event_counts": [
+            0.36799371813404447,
+            0.13100652374811775,
+            0.19088201411936798,
+            0.14929585010878682,
+            0.9985566799925786,
+            0.49612805305880064
+          ]
+        },
+        {
+          "cut": 20,
+          "original_survival": 1.5561048841130102e-06,
+          "descendant_presence": 9.580900762277584e-06,
+          "descendants_after_original_loss": 9.45882273181439e-06,
+          "production_lineage_presence": 1.10149276159274e-05,
+          "original_bond_time": 1.6477769746499635,
+          "production_lineage_time": 1.9414100109641608,
+          "post_original_descendant_time": 0.29363303631419696,
+          "ever_descendant": 0.29407366830402454,
+          "ever_descendant_assisted_formation": 0.0751990245009932,
+          "descendant_bonds_mean": 1.0748767406710413e-05,
+          "aligned_descendant_bonds_mean": 5.433049107803028e-06,
+          "physical_snapshot": {
+            "fuel_mean": 0.519958773985123,
+            "bonds_mean": 0.38418764631135455,
+            "stored_energy": 3.61658568118591,
+            "free_energy_nats": 1.2828450263145692,
+            "activity": 3.5298702965190847,
+            "occupied_sites": [
+              0.7787466439092087,
+              0.8141462733912983,
+              0.8146402427586809,
+              0.8139922333816741,
+              0.7784746065591293
+            ],
+            "tetramer_probability": 0.0007853927239142601,
+            "bond_probabilities": [
+              0.09377715777101946,
+              0.09836466191738237,
+              0.09833617451386292,
+              0.09370965210908985
+            ],
+            "catalytic_formation_rate": 0.03157886777815517,
+            "catalytic_reversal_rate": 0.030070510645989527
+          },
+          "resource_profile": [
+            11.413238175307663,
+            9.933196949292844,
+            0.09515591341178367,
+            2.1910094931152884,
+            26.46750747050747,
+            24.99713492866691,
+            2.378047806885701,
+            2.142334552301284
+          ],
+          "history_event_counts": [
+            0.36828949684710904,
+            0.1321507812337831,
+            0.19109594066946617,
+            0.15033378823305915,
+            0.9999984438951081,
+            0.500429529313484
+          ],
+          "original_gone_descendants_present_followup": {
+            "conditioning_probability": 9.45882273181439e-06,
+            "present": true,
+            "rows": [
+              {
+                "lag": 1,
+                "first_descendant_assisted_formation_probability": 0.14870947682409508,
+                "original_survival": 0.0,
+                "descendant_presence": 0.5606525423692145,
+                "descendants_after_original_loss": 0.5606525423692145,
+                "production_lineage_presence": 0.5606525423692145,
+                "original_bond_time": 0.0,
+                "production_lineage_time": 0.759166182473864,
+                "post_original_descendant_time": 0.759166182473864,
+                "ever_descendant": 0.9999999999999998,
+                "ever_descendant_assisted_formation": 0.9680363803193882,
+                "descendant_bonds_mean": 0.6299774675235575,
+                "aligned_descendant_bonds_mean": 0.3185558528004826,
+                "physical_snapshot": {
+                  "fuel_mean": 1.3311415165174467,
+                  "bonds_mean": 1.1282204498831576,
+                  "stored_energy": 9.837447865602416,
+                  "free_energy_nats": 6.3420973215799545,
+                  "activity": 4.270677891198858,
+                  "occupied_sites": [
+                    0.7254220579698551,
+                    0.8488230063542582,
+                    0.8583955611313913,
+                    0.8462859329104176,
+                    0.7210734416340754
+                  ],
+                  "tetramer_probability": 0.01999902687990305,
+                  "bond_probabilities": [
+                    0.25665486913898333,
+                    0.31033365662776463,
+                    0.3081153389557678,
+                    0.25311658516064167
+                  ],
+                  "catalytic_formation_rate": 0.21325147768556404,
+                  "catalytic_reversal_rate": 0.20744548461098913
+                },
+                "resource_profile": [
+                  0.7049134455401889,
+                  0.8249100338954342,
+                  0.00356318839444814,
+                  0.18455880560724316,
+                  1.1186977453370628,
+                  1.2713994047681483,
+                  0.2324862613560785,
+                  0.2379714300132644
+                ],
+                "history_event_counts": [
+                  0.0,
+                  0.17407889892360254,
+                  0.0,
+                  0.1510145043220534,
+                  0.0,
+                  0.6673025128991275
+                ]
+              },
+              {
+                "lag": 5,
+                "first_descendant_assisted_formation_probability": 0.23633001451497593,
+                "original_survival": 0.0,
+                "descendant_presence": 0.05649462428777251,
+                "descendants_after_original_loss": 0.05649462428777251,
+                "production_lineage_presence": 0.05649462428777251,
+                "original_bond_time": 0.0,
+                "production_lineage_time": 1.6354801778482964,
+                "post_original_descendant_time": 1.6354801778482964,
+                "ever_descendant": 1.0000000000000007,
+                "ever_descendant_assisted_formation": 0.9714663521078915,
+                "descendant_bonds_mean": 0.06363760246327611,
+                "aligned_descendant_bonds_mean": 0.031989013475055644,
+                "physical_snapshot": {
+                  "fuel_mean": 1.091097331090809,
+                  "bonds_mean": 0.8241220902566773,
+                  "stored_energy": 7.660877685389944,
+                  "free_energy_nats": 4.292480282307476,
+                  "activity": 4.037420081781783,
+                  "occupied_sites": [
+                    0.7502946194015516,
+                    0.8330068334545006,
+                    0.8347790547494188,
+                    0.8325424776512501,
+                    0.749377014743283
+                  ],
+                  "tetramer_probability": 0.008738907251658913,
+                  "bond_probabilities": [
+                    0.194329314800507,
+                    0.218085869301,
+                    0.21787805617963257,
+                    0.1938288499755375
+                  ],
+                  "catalytic_formation_rate": 0.13156767248426948,
+                  "catalytic_reversal_rate": 0.12406640525465516
+                },
+                "resource_profile": [
+                  3.451171184686679,
+                  3.331123587615282,
+                  0.020580844118790954,
+                  0.7457190063847067,
+                  6.074846778226421,
+                  6.280218470517629,
+                  0.9011388588003187,
+                  0.8719121662824277
+                ],
+                "history_event_counts": [
+                  0.0,
+                  0.3727091335896735,
+                  0.0,
+                  0.3234259731740105,
+                  0.0,
+                  1.4322726126254797
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "cut": 50,
+          "original_survival": 1.0900468818277702e-14,
+          "descendant_presence": 1.3427833779637526e-12,
+          "descendants_after_original_loss": 1.3412768611527012e-12,
+          "production_lineage_presence": 1.3521773299709787e-12,
+          "original_bond_time": 1.6477792618210167,
+          "production_lineage_time": 1.9414290525273818,
+          "post_original_descendant_time": 0.29364979070636554,
+          "ever_descendant": 0.2940736946429677,
+          "ever_descendant_assisted_formation": 0.07519918361593461,
+          "descendant_bonds_mean": 1.5816011925761274e-12,
+          "aligned_descendant_bonds_mean": 7.916790545507249e-13,
+          "physical_snapshot": {
+            "fuel_mean": 0.12465373046095268,
+            "bonds_mean": 0.09416456321619315,
+            "stored_energy": 0.8752731747085835,
+            "free_energy_nats": 0.05751221055242488,
+            "activity": 3.136374865314357,
+            "occupied_sites": [
+              0.7950894614839447,
+              0.8032515635186392,
+              0.8033179540766962,
+              0.8032515619766332,
+              0.7950894589440841
+            ],
+            "tetramer_probability": 1.8272675282403424e-05,
+            "bond_probabilities": [
+              0.023408051011926542,
+              0.023674230694772803,
+              0.023674230635772193,
+              0.0234080508737216
+            ],
+            "catalytic_formation_rate": 0.0021813225527757395,
+            "catalytic_reversal_rate": 0.0021221782701733114
+          },
+          "resource_profile": [
+            16.11906546777918,
+            14.243719198240182,
+            0.2758875659291218,
+            3.0570692722519786,
+            72.36417677455515,
+            61.31364833347063,
+            2.677358617282234,
+            2.428975188587865
+          ],
+          "history_event_counts": [
+            0.36828980654598076,
+            0.13215465282095817,
+            0.19109616478762909,
+            0.15033718964191858,
+            0.9999999999999839,
+            0.500444459365358
+          ]
+        }
+      ],
+      "checks": {
+        "lumping_error": 2.6645352591003757e-15,
+        "physical_marginal_error": 2.1510571102112408e-16,
+        "mass_error": 3.219646771412954e-15,
+        "occupation_mass_error": 4.973799150320701e-14,
+        "root_accounting_error": 7.882583474838611e-15,
+        "descendant_accounting_error": 3.164135620181696e-15,
+        "resource_accounting_error": 5.861977570020827e-14
+      },
+      "runtime_seconds": 2.7031115000136197
+    },
+    "2": {
+      "parameters": {
+        "capacity": 3,
+        "mobility": 1.0,
+        "mu": 4.0,
+        "assembly": 0.25,
+        "thermal_bond": 0.02,
+        "spin_noise": 0.05,
+        "exchange": 1.0,
+        "catalytic_barrier_reduction": 2
+      },
+      "physical_state_count": 1792,
+      "history_state_count": 12864,
+      "event_channels": [
+        "flip_0",
+        "flip_1",
+        "flip_2",
+        "flip_3",
+        "flip_4",
+        "exchange_0_1",
+        "exchange_1_2",
+        "exchange_2_3",
+        "exchange_3_4",
+        "thermal_bond_0_1",
+        "thermal_bond_1_2",
+        "thermal_bond_2_3",
+        "thermal_bond_3_4",
+        "fuel_bond_0_1",
+        "fuel_bond_1_2",
+        "fuel_bond_2_3",
+        "fuel_bond_3_4",
+        "move_0_1_1",
+        "move_1_1_-1",
+        "move_1_1_1",
+        "move_2_1_-1",
+        "move_2_1_1",
+        "move_3_1_-1",
+        "move_3_1_1",
+        "move_4_1_-1",
+        "move_0_2_1",
+        "move_1_2_-1",
+        "move_1_2_1",
+        "move_2_2_-1",
+        "move_2_2_1",
+        "move_3_2_-1",
+        "move_0_3_1",
+        "move_1_3_-1",
+        "move_1_3_1",
+        "move_2_3_-1",
+        "move_0_4_1",
+        "move_1_4_-1",
+        "catalytic_bond_0_via_1",
+        "catalytic_bond_1_via_0",
+        "catalytic_bond_1_via_2",
+        "catalytic_bond_2_via_1",
+        "catalytic_bond_2_via_3",
+        "catalytic_bond_3_via_2"
+      ],
+      "history_state_columns": [
+        "physical_state_index",
+        "original_bond_mask",
+        "descendant_bond_mask",
+        "history_flag"
+      ],
+      "history_flag_meanings": [
+        "no_descendant_yet",
+        "descendant_born",
+        "descendant_has_assisted_formation"
+      ],
+      "resource_columns": [
+        "fuel_assembly",
+        "fuel_disassembly",
+        "thermal_assembly",
+        "thermal_disassembly",
+        "translation",
+        "spin_exchange",
+        "catalytic_assembly_subset",
+        "catalytic_disassembly_subset"
+      ],
+      "history_count_columns": [
+        "original_assisted_formations",
+        "descendant_assisted_formations",
+        "original_assisted_reversals",
+        "descendant_assisted_reversals",
+        "original_dissolutions",
+        "descendant_dissolutions"
+      ],
+      "rows": [
+        {
+          "cut": 0,
+          "original_survival": 1.0,
+          "descendant_presence": 0.0,
+          "descendants_after_original_loss": 0.0,
+          "production_lineage_presence": 1.0,
+          "original_bond_time": 0.0,
+          "production_lineage_time": 0.0,
+          "post_original_descendant_time": 0.0,
+          "ever_descendant": 0.0,
+          "ever_descendant_assisted_formation": 0.0,
+          "descendant_bonds_mean": 0.0,
+          "aligned_descendant_bonds_mean": 0.0,
+          "physical_snapshot": {
+            "fuel_mean": 2.0,
+            "bonds_mean": 1.0,
+            "stored_energy": 12.0,
+            "free_energy_nats": 12.608874812260801,
+            "activity": 5.70045855804074,
+            "occupied_sites": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              0.0
+            ],
+            "tetramer_probability": 0.0,
+            "bond_probabilities": [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "catalytic_formation_rate": 1.5972640247326628,
+            "catalytic_reversal_rate": 0.0
+          },
+          "resource_profile": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "history_event_counts": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "cut": 1,
+          "original_survival": 0.4615805097283439,
+          "descendant_presence": 0.22481827090600748,
+          "descendants_after_original_loss": 0.1472008992098532,
+          "production_lineage_presence": 0.6087814089381969,
+          "original_bond_time": 0.7081993591192016,
+          "production_lineage_time": 0.7958517940110034,
+          "post_original_descendant_time": 0.08765243489180194,
+          "ever_descendant": 0.43768198160961236,
+          "ever_descendant_assisted_formation": 0.12805440248827177,
+          "descendant_bonds_mean": 0.269268531324098,
+          "aligned_descendant_bonds_mean": 0.15073819482208334,
+          "physical_snapshot": {
+            "fuel_mean": 1.5755939242623818,
+            "bonds_mean": 1.245916782706469,
+            "stored_energy": 11.286042827875406,
+            "free_energy_nats": 8.762856636829222,
+            "activity": 5.936615112331873,
+            "occupied_sites": [
+              0.9593187721321434,
+              0.9756214770630156,
+              0.8960771197770263,
+              0.7366242722000937,
+              0.4323583588277197
+            ],
+            "tetramer_probability": 0.022528627683268396,
+            "bond_probabilities": [
+              0.5850843064632864,
+              0.37782351320256025,
+              0.2212918577045143,
+              0.061717105336107976
+            ],
+            "catalytic_formation_rate": 0.9863888586674288,
+            "catalytic_reversal_rate": 0.9674319744647117
+          },
+          "resource_profile": [
+            1.817597587522599,
+            1.393191511784975,
+            0.00406365985198212,
+            0.1825529528831313,
+            1.1020822872011231,
+            1.3699089809622977,
+            1.112498937473517,
+            0.9032154656470671
+          ],
+          "history_event_counts": [
+            0.6248386000031275,
+            0.23497674592160922,
+            0.3483555774759758,
+            0.2859222983721377,
+            0.5384194902716547,
+            0.5905468146006372
+          ],
+          "original_gone_descendants_present_followup": {
+            "conditioning_probability": 0.1472008992098532,
+            "present": true,
+            "rows": [
+              {
+                "lag": 1,
+                "first_descendant_assisted_formation_probability": 0.5599002299491314,
+                "original_survival": 0.0,
+                "descendant_presence": 0.6026588445000145,
+                "descendants_after_original_loss": 0.6026588445000145,
+                "production_lineage_presence": 0.6026588445000145,
+                "original_bond_time": 0.0,
+                "production_lineage_time": 0.7855144860501302,
+                "post_original_descendant_time": 0.7855144860501302,
+                "ever_descendant": 0.9999999999999998,
+                "ever_descendant_assisted_formation": 0.8140324993612065,
+                "descendant_bonds_mean": 0.7665432264474068,
+                "aligned_descendant_bonds_mean": 0.48317993444117174,
+                "physical_snapshot": {
+                  "fuel_mean": 1.4718888138766757,
+                  "bonds_mean": 1.207103966347991,
+                  "stored_energy": 10.715971120898672,
+                  "free_energy_nats": 7.860742369462039,
+                  "activity": 6.0098464660589475,
+                  "occupied_sites": [
+                    0.893636411560667,
+                    0.9112084657286096,
+                    0.9026235794294714,
+                    0.7666121009828321,
+                    0.5259194422984195
+                  ],
+                  "tetramer_probability": 0.019896503105168266,
+                  "bond_probabilities": [
+                    0.3574849029394789,
+                    0.4171217028745656,
+                    0.3027216261934105,
+                    0.12977573434053633
+                  ],
+                  "catalytic_formation_rate": 1.2048233633712433,
+                  "catalytic_reversal_rate": 1.1918918237217804
+                },
+                "resource_profile": [
+                  1.984392961746021,
+                  2.0040786854167223,
+                  0.0035526444253714327,
+                  0.19158820524925968,
+                  1.0826061077402103,
+                  0.9375691104410694,
+                  1.4349738196063573,
+                  1.4299195802550968
+                ],
+                "history_event_counts": [
+                  0.0,
+                  1.1986390323161882,
+                  0.0,
+                  1.1312829825758484,
+                  0.0,
+                  1.7230765382519408
+                ]
+              },
+              {
+                "lag": 5,
+                "first_descendant_assisted_formation_probability": 0.6280184806881716,
+                "original_survival": 0.0,
+                "descendant_presence": 0.0688651060929627,
+                "descendants_after_original_loss": 0.0688651060929627,
+                "production_lineage_presence": 0.0688651060929627,
+                "original_bond_time": 0.0,
+                "production_lineage_time": 1.7861329510196402,
+                "post_original_descendant_time": 1.7861329510196402,
+                "ever_descendant": 1.0000000000000018,
+                "ever_descendant_assisted_formation": 0.8407293843004858,
+                "descendant_bonds_mean": 0.08270338599220206,
+                "aligned_descendant_bonds_mean": 0.045579958534114284,
+                "physical_snapshot": {
+                  "fuel_mean": 1.1815062427822194,
+                  "bonds_mean": 0.9015135636264558,
+                  "stored_energy": 8.3320792256347,
+                  "free_energy_nats": 4.9876164588740695,
+                  "activity": 4.939388645356576,
+                  "occupied_sites": [
+                    0.7790401786399513,
+                    0.8515316429868672,
+                    0.83920753811082,
+                    0.8200189030777111,
+                    0.7102017371846522
+                  ],
+                  "tetramer_probability": 0.009085983154510525,
+                  "bond_probabilities": [
+                    0.22972193057381057,
+                    0.24685837530630303,
+                    0.23257655010357034,
+                    0.19235670764277218
+                  ],
+                  "catalytic_formation_rate": 0.617660022227948,
+                  "catalytic_reversal_rate": 0.6033582818633656
+                },
+                "resource_profile": [
+                  7.586643382173407,
+                  7.3159465347496235,
+                  0.01979670459474611,
+                  0.8038052392346309,
+                  5.902046626639659,
+                  5.246826734367933,
+                  4.8213627892923565,
+                  4.748209335739479
+                ],
+                "history_event_counts": [
+                  0.0,
+                  2.375278677969491,
+                  0.0,
+                  2.2511794842563337,
+                  0.0,
+                  3.5835560243604325
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "cut": 2,
+          "original_survival": 0.2124919873180659,
+          "descendant_presence": 0.17622280632450577,
+          "descendants_after_original_loss": 0.1444989011143702,
+          "production_lineage_presence": 0.356990888432436,
+          "original_bond_time": 1.0283422036512018,
+          "production_lineage_time": 1.2678596358988712,
+          "post_original_descendant_time": 0.23951743224766958,
+          "ever_descendant": 0.4931895971908632,
+          "ever_descendant_assisted_formation": 0.18680485904575506,
+          "descendant_bonds_mean": 0.21537548851877072,
+          "aligned_descendant_bonds_mean": 0.11974731632448245,
+          "physical_snapshot": {
+            "fuel_mean": 1.488201431163949,
+            "bonds_mean": 1.1593508544684765,
+            "stored_energy": 10.590209142529705,
+            "free_energy_nats": 7.548635266160105,
+            "activity": 5.63902969318937,
+            "occupied_sites": [
+              0.8967057947456467,
+              0.9323139312764481,
+              0.8583711014439572,
+              0.7633047210695881,
+              0.5493044514643596
+            ],
+            "tetramer_probability": 0.01838332001135716,
+            "bond_probabilities": [
+              0.42055563952743913,
+              0.3590100438985896,
+              0.25120482065402944,
+              0.12858035038841933
+            ],
+            "catalytic_formation_rate": 0.8649793420945613,
+            "catalytic_reversal_rate": 0.8451039131888964
+          },
+          "resource_profile": [
+            3.339451198171706,
+            2.827652629335654,
+            0.007777441291925901,
+            0.3602251556594983,
+            2.2505926870402457,
+            2.6601669789170335,
+            2.034825992054169,
+            1.8066201171513303
+          ],
+          "history_event_counts": [
+            0.8126231517476428,
+            0.4859580915151653,
+            0.5015804912593098,
+            0.5482720271551643,
+            0.7875080126819343,
+            1.0832057547440388
+          ]
+        },
+        {
+          "cut": 5,
+          "original_survival": 0.022111265010284174,
+          "descendant_presence": 0.049400781816248046,
+          "descendants_after_original_loss": 0.04667504899365278,
+          "production_lineage_presence": 0.06878631400393695,
+          "original_bond_time": 1.2805045955695502,
+          "production_lineage_time": 1.7958524651959382,
+          "post_original_descendant_time": 0.5153478696263881,
+          "ever_descendant": 0.5201851626450363,
+          "ever_descendant_assisted_formation": 0.22896947017692426,
+          "descendant_bonds_mean": 0.05981096609743531,
+          "aligned_descendant_bonds_mean": 0.031555279713180756,
+          "physical_snapshot": {
+            "fuel_mean": 1.2436818083670345,
+            "bonds_mean": 0.9504391959339025,
+            "stored_energy": 8.77648401720375,
+            "free_energy_nats": 5.402674639706781,
+            "activity": 5.075122979671217,
+            "occupied_sites": [
+              0.7933658217534324,
+              0.8627433529374624,
+              0.8408027663459099,
+              0.8137349158466758,
+              0.6893531431165227
+            ],
+            "tetramer_probability": 0.010513772195721135,
+            "bond_probabilities": [
+              0.2541267517844499,
+              0.2653883461633222,
+              0.2403427432554989,
+              0.19058135473063187
+            ],
+            "catalytic_formation_rate": 0.6160533579994387,
+            "catalytic_reversal_rate": 0.6007478276748808
+          },
+          "resource_profile": [
+            7.225924781023741,
+            6.469606589390797,
+            0.019818113636264317,
+            0.8256971093353309,
+            5.860677907825565,
+            6.4634013134252495,
+            4.232073326395782,
+            3.949441320075511
+          ],
+          "history_event_counts": [
+            0.9424835764576658,
+            0.8329066554607494,
+            0.6076882694818357,
+            0.8926329568732564,
+            0.9778887349897147,
+            1.7155792658209792
+          ],
+          "original_gone_descendants_present_followup": {
+            "conditioning_probability": 0.04667504899365278,
+            "present": true,
+            "rows": [
+              {
+                "lag": 1,
+                "first_descendant_assisted_formation_probability": 0.4134711504050239,
+                "original_survival": 0.0,
+                "descendant_presence": 0.5752833187831145,
+                "descendants_after_original_loss": 0.5752833187831145,
+                "production_lineage_presence": 0.5752833187831145,
+                "original_bond_time": 0.0,
+                "production_lineage_time": 0.7686952253596623,
+                "post_original_descendant_time": 0.7686952253596623,
+                "ever_descendant": 1.0000000000000009,
+                "ever_descendant_assisted_formation": 0.9444274377807061,
+                "descendant_bonds_mean": 0.6965760553498632,
+                "aligned_descendant_bonds_mean": 0.370905472768415,
+                "physical_snapshot": {
+                  "fuel_mean": 1.3655362441125436,
+                  "bonds_mean": 1.1406843901029902,
+                  "stored_energy": 10.024882536862135,
+                  "free_energy_nats": 6.708286798256621,
+                  "activity": 5.559279466490379,
+                  "occupied_sites": [
+                    0.761559407463558,
+                    0.8616528554313742,
+                    0.8678983435908816,
+                    0.8259971733251313,
+                    0.6828922201890567
+                  ],
+                  "tetramer_probability": 0.016774440866496952,
+                  "bond_probabilities": [
+                    0.27856589306946977,
+                    0.33140554343267836,
+                    0.3063512836732953,
+                    0.22436166992754725
+                  ],
+                  "catalytic_formation_rate": 0.8779133385132853,
+                  "catalytic_reversal_rate": 0.8663814898329395
+                },
+                "resource_profile": [
+                  1.482541519291621,
+                  1.570580918688856,
+                  0.0035710836177377317,
+                  0.1845090754413538,
+                  1.1197551335089275,
+                  1.2005822361171756,
+                  0.982694925315962,
+                  0.9856855548734863
+                ],
+                "history_event_counts": [
+                  0.0,
+                  0.7842061657463616,
+                  0.0,
+                  0.7428395585229908,
+                  0.0,
+                  1.3097039984123877
+                ]
+              },
+              {
+                "lag": 5,
+                "first_descendant_assisted_formation_probability": 0.49856971874540545,
+                "original_survival": 0.0,
+                "descendant_presence": 0.05886008997177748,
+                "descendants_after_original_loss": 0.05886008997177748,
+                "production_lineage_presence": 0.05886008997177748,
+                "original_bond_time": 0.0,
+                "production_lineage_time": 1.6811663259850131,
+                "post_original_descendant_time": 1.6811663259850131,
+                "ever_descendant": 1.0000000000000022,
+                "ever_descendant_assisted_formation": 0.9520420567259865,
+                "descendant_bonds_mean": 0.06974836622611809,
+                "aligned_descendant_bonds_mean": 0.03576837216202964,
+                "physical_snapshot": {
+                  "fuel_mean": 1.1084601496489284,
+                  "bonds_mean": 0.8421308274908677,
+                  "stored_energy": 7.802363908559183,
+                  "free_energy_nats": 4.46273955138458,
+                  "activity": 4.7858584968059255,
+                  "occupied_sites": [
+                    0.7565215553162121,
+                    0.8368899333299482,
+                    0.8358306435548917,
+                    0.8295692564423283,
+                    0.7411886113566303
+                  ],
+                  "tetramer_probability": 0.007598044069556867,
+                  "bond_probabilities": [
+                    0.2022481524262604,
+                    0.2243809518454968,
+                    0.22124658594576346,
+                    0.19425513727334684
+                  ],
+                  "catalytic_formation_rate": 0.511406108465666,
+                  "catalytic_reversal_rate": 0.4992563398971003
+                },
+                "resource_profile": [
+                  6.271814624469084,
+                  6.1027779294027065,
+                  0.020405053687515644,
+                  0.7569727025868731,
+                  6.0506190703482785,
+                  6.044547404182475,
+                  3.644247552356161,
+                  3.5895721223850625
+                ],
+                "history_event_counts": [
+                  0.0,
+                  1.6354225238436573,
+                  0.0,
+                  1.5498694399634703,
+                  0.0,
+                  2.7877480456334407
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "cut": 10,
+          "original_survival": 0.0004886305422475899,
+          "descendant_presence": 0.0035117435910770644,
+          "descendants_after_original_loss": 0.0034585191767207515,
+          "production_lineage_presence": 0.00394714971896834,
+          "original_bond_time": 1.3089922717300437,
+          "production_lineage_time": 1.9101682003190932,
+          "post_original_descendant_time": 0.6011759285890488,
+          "ever_descendant": 0.5216594747580527,
+          "ever_descendant_assisted_formation": 0.23333750259927755,
+          "descendant_bonds_mean": 0.004172415492020398,
+          "aligned_descendant_bonds_mean": 0.00212280693021568,
+          "physical_snapshot": {
+            "fuel_mean": 0.9216614566302286,
+            "bonds_mean": 0.6934781190700103,
+            "stored_energy": 6.4605583028009566,
+            "free_energy_nats": 3.311199097554585,
+            "activity": 4.41594792323273,
+            "occupied_sites": [
+              0.7659576444067855,
+              0.8302165553769445,
+              0.8283554939404647,
+              0.8232478725769676,
+              0.752222433698846
+            ],
+            "tetramer_probability": 0.0042915919915096626,
+            "bond_probabilities": [
+              0.1683343254540164,
+              0.18264728778074107,
+              0.18021821372050428,
+              0.16227829211474853
+            ],
+            "catalytic_formation_rate": 0.3506100377442747,
+            "catalytic_reversal_rate": 0.34247139839775104
+          },
+          "resource_profile": [
+            12.01814675708055,
+            10.93980821371077,
+            0.04260686501405332,
+            1.4274672893138234,
+            12.340504108265346,
+            12.711521568158522,
+            6.587557383260574,
+            6.248215397984411
+          ],
+          "history_event_counts": [
+            0.9557486219543183,
+            0.9188239804400948,
+            0.6184626327133222,
+            0.9756145926263574,
+            0.9995113694577518,
+            1.8704001869023952
+          ]
+        },
+        {
+          "cut": 20,
+          "original_survival": 2.0899827394757088e-07,
+          "descendant_presence": 1.1356894985846338e-05,
+          "descendants_after_original_loss": 1.1336163998348314e-05,
+          "production_lineage_presence": 1.1545162272295885e-05,
+          "original_bond_time": 1.3096258946485007,
+          "production_lineage_time": 1.9169254547609367,
+          "post_original_descendant_time": 0.6072995601124355,
+          "ever_descendant": 0.5216707169596945,
+          "ever_descendant_assisted_formation": 0.23342405658430862,
+          "descendant_bonds_mean": 1.3469918009911375e-05,
+          "aligned_descendant_bonds_mean": 6.745199366353979e-06,
+          "physical_snapshot": {
+            "fuel_mean": 0.5159720870195167,
+            "bonds_mean": 0.38238128266912375,
+            "stored_energy": 3.5934134787545617,
+            "free_energy_nats": 1.268929502006719,
+            "activity": 3.6939383264856023,
+            "occupied_sites": [
+              0.778831385895425,
+              0.8140532817409649,
+              0.8146403536976319,
+              0.8139053812895012,
+              0.7785695973764863
+            ],
+            "tetramer_probability": 0.0007889624812881402,
+            "bond_probabilities": [
+              0.09326363827010484,
+              0.09797135044996154,
+              0.09794526326955526,
+              0.09320103067950194
+            ],
+            "catalytic_formation_rate": 0.11513887580163712,
+            "catalytic_reversal_rate": 0.11276457530024464
+          },
+          "resource_profile": [
+            17.641841735745288,
+            16.157813822764865,
+            0.09509353700401892,
+            2.1967401673153844,
+            26.432371882972888,
+            25.011818683417204,
+            8.69493476372615,
+            8.30898452273663
+          ],
+          "history_event_counts": [
+            0.9560211402673181,
+            0.9241747759212315,
+            0.6186835373377987,
+            0.9807127226048569,
+            0.9999997910017275,
+            1.880182446270536
+          ],
+          "original_gone_descendants_present_followup": {
+            "conditioning_probability": 1.1336163998348314e-05,
+            "present": true,
+            "rows": [
+              {
+                "lag": 1,
+                "first_descendant_assisted_formation_probability": 0.34915589908691014,
+                "original_survival": 0.0,
+                "descendant_presence": 0.5606395468256854,
+                "descendants_after_original_loss": 0.5606395468256854,
+                "production_lineage_presence": 0.5606395468256854,
+                "original_bond_time": 0.0,
+                "production_lineage_time": 0.7591479990332471,
+                "post_original_descendant_time": 0.7591479990332471,
+                "ever_descendant": 1.0,
+                "ever_descendant_assisted_formation": 0.997763988478565,
+                "descendant_bonds_mean": 0.6659644541977531,
+                "aligned_descendant_bonds_mean": 0.3335299753286931,
+                "physical_snapshot": {
+                  "fuel_mean": 1.3073923135797063,
+                  "bonds_mean": 1.1104219934403774,
+                  "stored_energy": 9.671257228080336,
+                  "free_energy_nats": 6.183484229197901,
+                  "activity": 5.344381186452217,
+                  "occupied_sites": [
+                    0.7263462751906236,
+                    0.8500962315036917,
+                    0.8497808988411364,
+                    0.8488972527109646,
+                    0.7248793417535838
+                  ],
+                  "tetramer_probability": 0.018723955047292226,
+                  "bond_probabilities": [
+                    0.25830701046277155,
+                    0.29832292259328513,
+                    0.29737680459991445,
+                    0.25641525578440627
+                  ],
+                  "catalytic_formation_rate": 0.751781253047684,
+                  "catalytic_reversal_rate": 0.7393439023161104
+                },
+                "resource_profile": [
+                  1.290185933351669,
+                  1.4035045865885305,
+                  0.0036088214427048983,
+                  0.18124522834147191,
+                  1.1270247202032917,
+                  1.2764125631226215,
+                  0.8198906179489591,
+                  0.8205689811722167
+                ],
+                "history_event_counts": [
+                  0.0,
+                  0.6327397190285217,
+                  0.0,
+                  0.5980787906702885,
+                  0.0,
+                  1.1531392549884238
+                ]
+              },
+              {
+                "lag": 5,
+                "first_descendant_assisted_formation_probability": 0.4353528028285616,
+                "original_survival": 0.0,
+                "descendant_presence": 0.05653285163418862,
+                "descendants_after_original_loss": 0.05653285163418862,
+                "production_lineage_presence": 0.05653285163418862,
+                "original_bond_time": 0.0,
+                "production_lineage_time": 1.635580005077693,
+                "post_original_descendant_time": 1.635580005077693,
+                "ever_descendant": 1.000000000000002,
+                "ever_descendant_assisted_formation": 0.998002582828524,
+                "descendant_bonds_mean": 0.06765579949127637,
+                "aligned_descendant_bonds_mean": 0.03383505678297452,
+                "physical_snapshot": {
+                  "fuel_mean": 1.0692813249230637,
+                  "bonds_mean": 0.8124384615579114,
+                  "stored_energy": 7.526879145923901,
+                  "free_energy_nats": 4.179457421655207,
+                  "activity": 4.703538118874366,
+                  "occupied_sites": [
+                    0.7508323244876334,
+                    0.8323035627363881,
+                    0.834264889378021,
+                    0.8321196924355462,
+                    0.75047953096242
+                  ],
+                  "tetramer_probability": 0.008336037488322578,
+                  "bond_probabilities": [
+                    0.19151335874896533,
+                    0.2148434403909366,
+                    0.21476334598568725,
+                    0.19131831643232222
+                  ],
+                  "catalytic_formation_rate": 0.46794201875079355,
+                  "catalytic_reversal_rate": 0.4564458105087589
+                },
+                "resource_profile": [
+                  5.71449639097229,
+                  5.589704055552514,
+                  0.020743676562563273,
+                  0.7344746040004417,
+                  6.105643305706798,
+                  6.297031778911264,
+                  3.1909043271963364,
+                  3.135838593978379
+                ],
+                "history_event_counts": [
+                  0.0,
+                  1.3655543573554942,
+                  0.0,
+                  1.2904859221645952,
+                  0.0,
+                  2.4842625480218783
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "cut": 50,
+          "original_survival": 1.3932830568272694e-16,
+          "descendant_presence": 1.381813795388149e-12,
+          "descendants_after_original_loss": 1.3817833521976627e-12,
+          "production_lineage_presence": 1.3819226805033455e-12,
+          "original_bond_time": 1.3096261624748478,
+          "production_lineage_time": 1.916945470047035,
+          "post_original_descendant_time": 0.6073193075721874,
+          "ever_descendant": 0.5216707175720712,
+          "ever_descendant_assisted_formation": 0.23342408841628853,
+          "descendant_bonds_mean": 1.777118759876279e-12,
+          "aligned_descendant_bonds_mean": 8.882191083148661e-13,
+          "physical_snapshot": {
+            "fuel_mean": 0.12399467445958189,
+            "bonds_mean": 0.0937313800026937,
+            "stored_energy": 0.8709042178491022,
+            "free_energy_nats": 0.056607991997441,
+            "activity": 3.1473663365789992,
+            "occupied_sites": [
+              0.7951124015238579,
+              0.8032351675146258,
+              0.8033048658477122,
+              0.8032351660318648,
+              0.7951123990819281
+            ],
+            "tetramer_probability": 1.8146413695245797e-05,
+            "bond_probabilities": [
+              0.02329782863001565,
+              0.02356786146410563,
+              0.023567861408698914,
+              0.02329782849987349
+            ],
+            "catalytic_formation_rate": 0.007982756440106875,
+            "catalytic_reversal_rate": 0.007889795104830214
+          },
+          "resource_profile": [
+            23.11154047755574,
+            21.23553515201551,
+            0.27590105830844214,
+            3.0581750038461513,
+            72.34041431627767,
+            61.32709919466096,
+            9.785925654355308,
+            9.38006101013397
+          ],
+          "history_event_counts": [
+            0.9560212467584688,
+            0.9241913073045012,
+            0.6186836235213261,
+            0.9807283569213643,
+            0.9999999999999961,
+            1.8802125540611767
+          ]
+        }
+      ],
+      "checks": {
+        "lumping_error": 7.105427357601002e-15,
+        "physical_marginal_error": 9.020562075079397e-17,
+        "mass_error": 2.6645352591003757e-15,
+        "occupation_mass_error": 8.526512829121202e-14,
+        "root_accounting_error": 3.774758283725532e-15,
+        "descendant_accounting_error": 1.5987211554602254e-14,
+        "resource_accounting_error": 1.8829382497642655e-13
+      },
+      "runtime_seconds": 3.522568100015633
+    }
+  },
+  "runtime_seconds": 6.929945499985479,
+  "source_hashes": {
+    "omega_v2\\validation\\catalytic_history_v0.py": "96b5f88cfc8a8d88453f8c891ac3e341c14f57aada54ff74955bb5d9df3f4e0c",
+    "omega_v2\\finite\\spatial_binding.py": "e2a921d71c29a8cffa11f4adcecbb4331fe6d30526ac026f72f02312c7debbf8",
+    "omega_v2\\finite\\catalytic_binding.py": "ee430d982b02e0cea2759f983fcbea1ae4bc9783f89df9ff87a3979b8adee999",
+    "omega_v2\\finite\\catalytic_history.py": "c18ea6324deffce7b3599fdb15161bf1cd1eb65499467854d1a357dc501108ae"
+  }
+}

@@ -87,6 +87,14 @@ stipulated catalytic mechanism from its measured downstream consequences.
 
 The program's motivating commitments and current clarifications come from the originator. Codex prepared this revision and its local probes. Opus and Grok supplied proposals, objections and reports recorded in the research trail. Assistant agreement is not independent evidence. Citations identify borrowed machinery, not endorsement by its authors.
 
+The subsequent [production-history run](../../research_notes/omega_v2/catalytic_history_report_v0.md)
+uses an exact observer of those unchanged catalytic laws. Historical marks
+follow actual catalytic production and physical movement, without affecting
+reaction rates. Six focused model/observer checks passed; the run took seven
+seconds. It distinguishes original survival, descendant continuation,
+historical production and finite integrated persistence. No lineage-based
+definition of lushness or biological inheritance claim is adopted.
+
 The edition's finite claims can be checked without accepting its metaphysical interpretation. Its ethical and cosmological ambitions remain visible precisely so that the research can test their connection to the construction rather than silently replacing them with an easier target.
 
 ---

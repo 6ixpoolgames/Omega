@@ -19,6 +19,9 @@ early and later access and the distinction between turnover and residual access.
 The [October 4 catalytic extension](../../research_notes/omega_v2/catalytic_binding_report_v0.md)
 adds composition-dependent construction, spatial response and native-breakage
 follow-up. It retains the resulting crossings without selecting a lushness scalar.
+The [history observer](../../research_notes/omega_v2/catalytic_history_report_v0.md)
+then follows production through moving descendants while preserving exactly
+the same physical law. Lineage persistence remains a diagnostic, not lushness.
 
 Start with [Orientation](00_ORIENTATION.md), [Lushness](04_LUSHNESS.md),
 [new worked examples](11_WORKED_EXAMPLES.md), and the
