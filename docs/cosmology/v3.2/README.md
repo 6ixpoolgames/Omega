@@ -12,6 +12,11 @@ The working comparison is now Opus's normalized frame-volume and encompassing co
 
 The [first bounded aggregation run](../../research_notes/omega_v2/frame_aggregation_report_v0.md) is now available: joint-content and access-frontier profiles, route evidence, signed Syn and local-loss cases. Its maximum-volume profile still misses a particular routing difference. Full all-frame aggregation remains unfinished.
 
+The subsequent [local-flow](../../research_notes/omega_v2/local_flow_report_v0.md) and
+[finite-fuel](../../research_notes/omega_v2/fuel_flow_report_v0.md) runs add explicit
+coupling, damage, repair and resource dynamics. They retain crossings between
+early and later access and the distinction between turnover and residual access.
+
 Start with [Orientation](00_ORIENTATION.md), [Lushness](04_LUSHNESS.md),
 [new worked examples](11_WORKED_EXAMPLES.md), and the
 [finite formal specification](12_FORMAL_CORE.md).

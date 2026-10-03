@@ -19,6 +19,8 @@ Exploration does not require freezing a winner or preregistering every revision.
 | [Quantum record follow-up](../../research_notes/omega_v2/quantum_record_structure_report_v0.md) | Content, distribution, spreading and costed recovery differ; correlation-profile dominance need not improve local source access | Small driven circuits, not a thermal bath |
 | [Synergy assessment](../../research_notes/omega_v2/opus_synergy_assessment_2026-10-03.md) | Independent reconstruction matches reported endpoint counts and selected examples; hierarchy and Syn describe different features | Full reported population analyses not independently replicated |
 | [Short structural probe](../../research_notes/omega_v2/structural_probe_10min_report_v0.md) | Matched information and exhibited bills can leave different bounded access; matched content can leave different repairability; correlated inputs change Syn's meaning | 100,000 sampled programs, not exhaustive search or physical-world trials |
+| [Local flow](../../research_notes/omega_v2/local_flow_report_v0.md) | Held information, extra prediction and native-event response can disagree under one explicit stochastic dynamics | Maintained reservoirs; response contrast is not a physical decoder or an ethical sign |
+| [Finite fuel and coupling repair](../../research_notes/omega_v2/fuel_flow_report_v0.md) | Assembly, damage, reversal and depletion change residual response; early and later comparisons can cross | Twelve finite classical laws, 24 preparations; stored-energy matching is not free-energy matching; implicit bath |
 | [Decision prototype](../../research_notes/omega_v2/lushness_decision_report_v0.md) | Declared guards and requirement scores exhibit useful behavior and tradeoffs, including failure on revised plans | Not validation on independently authored unknown requirements |
 | [Audit of the chemistry/context claims](../../research_notes/omega_v2/opus_context_access_audit_2026-10-02.md) | Identifies unsupported extensions, including the asserted common thermal tail | Chemistry simulator and raw runs unavailable |
 
@@ -48,7 +50,7 @@ atlas, scratch-register and eleven-qubit results remain unverified here.
 | O32-02 | Adequacy of the adopted aggregation as lushness | Open; adoption does not establish adequacy |
 | O32-03 | Gas, replicators or excisive controllers are universally less lush | Not established; no required winner |
 | O32-04 | A finite atlas demonstrates unbounded generativity | Not established |
-| O32-05 | Protections and a complete ODT follow from the selected lushness comparison | Open; no comparison selected |
+| O32-05 | Protections and a complete ODT follow from the selected lushness comparison | Open; the adopted exploratory comparison does not establish this bridge |
 | C32-01 | Ultimate-frame comparison closes regression of normalized weighting | Intended construction; not a completeness theorem for the finite order |
 | C32-02 | Phenomenal and theological interpretations | Conjectures retained separately from physical evidence |
 
@@ -57,6 +59,8 @@ The elementary inherited lemmas in Part 12 retain their stated model assumptions
 The [first aggregation prototype](../../research_notes/omega_v2/frame_aggregation_report_v0.md) adds eighteen small preparations/loss cases under three source laws and a targeted depth-three follow-up. Joint content avoids treating copies as independent sources; loss-conditioned outputs preserve their recovery effects. Equal aggregate profiles can still conceal different specific response costs. Four focused checks cover normalization, signed Syn, joint execution budgets, route replay and record permutation. The new [Opus flow note](../../research_notes/omega_v2/opus_flow_note_2026-10-03.md) records the separately supplied, unreplicated flow results and their interpretive limits.
 
 ## Next implementation sequence
+
+The new local-flow and finite-fuel adapters implement an autonomous classical slice of executions, restart and physical coupling changes. They retain joint generators and actual residual laws rather than independently optimized outputs. Six focused checks cover the two adapters; this does not complete the gate-language atlas, quantum extension or encompassing aggregation below.
 
 **First: executions and restart.** Implement the data model of Part 12, §M with one small finite gate language. Retain actual preparation, source law, controller records, environmental correlations, bill components and branch outcomes. Check direct prefix-plus-suffix execution against restarting from the saved residual. Deadline truncation retains unfinished probability and ongoing environment dynamics.
 
@@ -70,7 +74,7 @@ The [implementation brief](../../research_notes/omega_v2/claude_recursive_access
 
 ## Compute and stopping
 
-The latest run used ten workers on shallow sampled programs, with eight source assignments analysed exactly per program. Primary computation took seconds; most work was interpretation and verification. Larger enumeration is not automatically the next useful evidence.
+The shallow structural run used ten workers, with eight source assignments analysed exactly per program. The later local-flow and finite-fuel sweeps took seconds with a single numerical worker. Most work was interpretation and verification. Larger enumeration is not automatically the next useful evidence.
 
 Use up to ten workers for the next local probe, keep numerical-library threading bounded, and estimate prefix/state growth before increasing depth. Separate simulation coverage from decoder coverage. An exhausted bound supports a claim only within that bound; a failed sampled search supports no nonexistence theorem.
 

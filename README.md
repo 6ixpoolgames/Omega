@@ -7,6 +7,11 @@ Its [claim ledger](docs/cosmology/v3.2/14_RESEARCH_AND_CLAIMS.md) separates chec
 finite results from the still-open lushness comparison and ethical bridge.
 The historical closeout and successor plans below remain part of the record.
 
+Latest exploratory runs: [local physical flow](docs/research_notes/omega_v2/local_flow_report_v0.md)
+and [finite fuel with repairable coupling](docs/research_notes/omega_v2/fuel_flow_report_v0.md).
+They retain all-frame response laws, resource use and residual dynamics,
+including crossings between early and later access. They do not select a lushness scalar.
+
 [![Lean AlphaOmega](https://github.com/6ixpoolgames/Omega/actions/workflows/lean-alphaomega.yml/badge.svg?branch=master)](https://github.com/6ixpoolgames/Omega/actions/workflows/lean-alphaomega.yml)
 [![Baseline Witness Smoke](https://github.com/6ixpoolgames/Omega/actions/workflows/baseline-witness-smoke.yml/badge.svg?branch=master)](https://github.com/6ixpoolgames/Omega/actions/workflows/baseline-witness-smoke.yml)
 [![Validation Router](https://github.com/6ixpoolgames/Omega/actions/workflows/validation-router.yml/badge.svg?branch=master)](https://github.com/6ixpoolgames/Omega/actions/workflows/validation-router.yml)
