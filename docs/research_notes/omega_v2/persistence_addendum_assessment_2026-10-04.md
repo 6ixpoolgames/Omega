@@ -78,3 +78,11 @@ declare that redundancy must win. Present readouts are insufficient for a
 whole-field ranking, but sufficient to begin identifying what the dynamics
 make accessible and what particular failures change. This is a proposed next
 probe, not a result already obtained in the pilot.
+
+Follow-up: the [native-failure probe](lattice_damage_report_v0.md) has now run
+on all 384 pilot cuts, with the chemistry unchanged. It separates first repair,
+deadline bond occupancy and alternate connection, and retains spatial effects.
+The broad sample selected only five currently working-template failures;
+the catalytic-dependency claim therefore still needs a targeted conditional
+sample. This updates the proposed-next-probe status without upgrading the
+philosophical claims above.

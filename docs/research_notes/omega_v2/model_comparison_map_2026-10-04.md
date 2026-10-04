@@ -267,6 +267,9 @@ for 384 trajectories at 16/36 particles. Bond and fuel energies are separated;
 all physical reverse pathways and the finite ideal pool are retained.
 No lushness aggregation was added. The philosophical direction assessment is
 [recorded separately](persistence_addendum_assessment_2026-10-04.md).
+The subsequent [native bond-failure run](lattice_damage_report_v0.md) keeps
+those physical rules unchanged and compares residual trajectories after a
+thermal break with the same event skipped.
 
 ## Primary sources
 
