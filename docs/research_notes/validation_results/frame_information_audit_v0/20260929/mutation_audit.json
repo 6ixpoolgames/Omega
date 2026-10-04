@@ -1,0 +1,1870 @@
+{
+  "all_caught": true,
+  "mutations": [
+    {
+      "caught": true,
+      "exit_code": 1,
+      "expected_failing_gate": "erased.c1.best_guess",
+      "failed_gates": [
+        {
+          "expected": true,
+          "name": "erased.c1.exact_laws",
+          "observed": false,
+          "passed": false
+        },
+        {
+          "expected": {
+            "rational": [
+              1,
+              2
+            ]
+          },
+          "name": "erased.c1.best_guess",
+          "observed": {
+            "rational": [
+              1,
+              1
+            ]
+          },
+          "passed": false
+        },
+        {
+          "expected": true,
+          "name": "erased.c1.reference_witness",
+          "observed": false,
+          "passed": false
+        },
+        {
+          "expected": true,
+          "name": "erased.quotient.exact_laws",
+          "observed": false,
+          "passed": false
+        },
+        {
+          "expected": {
+            "rational": [
+              1,
+              2
+            ]
+          },
+          "name": "erased.quotient.best_guess",
+          "observed": {
+            "rational": [
+              1,
+              1
+            ]
+          },
+          "passed": false
+        },
+        {
+          "expected": true,
+          "name": "erased.quotient.reference_witness",
+          "observed": false,
+          "passed": false
+        },
+        {
+          "expected": true,
+          "name": "sealed.c1.exact_laws",
+          "observed": false,
+          "passed": false
+        },
+        {
+          "expected": {
+            "rational": [
+              1,
+              2
+            ]
+          },
+          "name": "sealed.c1.best_guess",
+          "observed": {
+            "rational": [
+              1,
+              1
+            ]
+          },
+          "passed": false
+        },
+        {
+          "expected": true,
+          "name": "sealed.c1.reference_witness",
+          "observed": false,
+          "passed": false
+        },
+        {
+          "expected": true,
+          "name": "sealed.quotient.exact_laws",
+          "observed": false,
+          "passed": false
+        },
+        {
+          "expected": {
+            "rational": [
+              1,
+              2
+            ]
+          },
+          "name": "sealed.quotient.best_guess",
+          "observed": {
+            "rational": [
+              1,
+              1
+            ]
+          },
+          "passed": false
+        },
+        {
+          "expected": true,
+          "name": "sealed.quotient.reference_witness",
+          "observed": false,
+          "passed": false
+        },
+        {
+          "expected": true,
+          "name": "retrieve.c1.exact_laws",
+          "observed": false,
+          "passed": false
+        },
+        {
+          "expected": true,
+          "name": "retrieve.c1.reference_witness",
+          "observed": false,
+          "passed": false
+        },
+        {
+          "expected": true,
+          "name": "retrieve.quotient.exact_laws",
+          "observed": false,
+          "passed": false
+        },
+        {
+          "expected": true,
+          "name": "retrieve.quotient.reference_witness",
+          "observed": false,
+          "passed": false
+        },
+        {
+          "expected": true,
+          "name": "short_deadline.c1.exact_laws",
+          "observed": false,
+          "passed": false
+        },
+        {
+          "expected": {
+            "rational": [
+              1,
+              2
+            ]
+          },
+          "name": "short_deadline.c1.best_guess",
+          "observed": {
+            "rational": [
+              1,
+              1
+            ]
+          },
+          "passed": false
+        },
+        {
+          "expected": true,
+          "name": "short_deadline.c1.reference_witness",
+          "observed": false,
+          "passed": false
+        },
+        {
+          "expected": true,
+          "name": "short_deadline.quotient.exact_laws",
+          "observed": false,
+          "passed": false
+        },
+        {
+          "expected": {
+            "rational": [
+              1,
+              2
+            ]
+          },
+          "name": "short_deadline.quotient.best_guess",
+          "observed": {
+            "rational": [
+              1,
+              1
+            ]
+          },
+          "passed": false
+        },
+        {
+          "expected": true,
+          "name": "short_deadline.quotient.reference_witness",
+          "observed": false,
+          "passed": false
+        },
+        {
+          "expected": true,
+          "name": "low_budget.c1.exact_laws",
+          "observed": false,
+          "passed": false
+        },
+        {
+          "expected": {
+            "rational": [
+              1,
+              2
+            ]
+          },
+          "name": "low_budget.c1.best_guess",
+          "observed": {
+            "rational": [
+              1,
+              1
+            ]
+          },
+          "passed": false
+        },
+        {
+          "expected": true,
+          "name": "low_budget.c1.reference_witness",
+          "observed": false,
+          "passed": false
+        },
+        {
+          "expected": true,
+          "name": "low_budget.quotient.exact_laws",
+          "observed": false,
+          "passed": false
+        },
+        {
+          "expected": {
+            "rational": [
+              1,
+              2
+            ]
+          },
+          "name": "low_budget.quotient.best_guess",
+          "observed": {
+            "rational": [
+              1,
+              1
+            ]
+          },
+          "passed": false
+        },
+        {
+          "expected": true,
+          "name": "low_budget.quotient.reference_witness",
+          "observed": false,
+          "passed": false
+        }
+      ],
+      "function": "predict_graph",
+      "gate_count": 352,
+      "mutated_sha256": "6bf712096f5afd0e84aeef7d146759c2ce878b8eae0cbd05672f18f17bb918a4",
+      "mutation": "recover_old_memory",
+      "original_sha256": "a957f435a961be44ac7ad00c9af48f0eab7bc1d7666d4192c93dab438b198591",
+      "replacement": {
+        "new": "(c.action(next((old for old in reversed(m) if old in (0, 1)), m[-1]), o) if o == ('guess',) else c.action(m[-1], o)) for c, m, o in zip(",
+        "old": "c.action(m[-1], o) for c, m, o in zip("
+      },
+      "target": "predictor"
+    },
+    {
+      "caught": true,
+      "exit_code": 1,
+      "expected_failing_gate": "erased.reference.best_guess",
+      "failed_gates": [
+        {
+          "expected": {
+            "rational": [
+              1,
+              2
+            ]
+          },
+          "name": "erased.reference.best_guess",
+          "observed": {
+            "rational": [
+              1,
+              1
+            ]
+          },
+          "passed": false
+        },
+        {
+          "expected": false,
+          "name": "erased.reference.accessible_forward.after_refines_before",
+          "observed": true,
+          "passed": false
+        },
+        {
+          "expected": false,
+          "name": "erased.reference.accessible_forward.tower_holds_for_readout",
+          "observed": true,
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "rational": [
+                1,
+                2
+              ]
+            }
+          ],
+          "name": "erased.reference.accessible_posterior",
+          "observed": [
+            {
+              "rational": [
+                0,
+                1
+              ]
+            },
+            {
+              "rational": [
+                1,
+                1
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "rational": [
+                1,
+                2
+              ]
+            }
+          ],
+          "name": "erased.reference.after_read_posterior",
+          "observed": [
+            {
+              "rational": [
+                0,
+                1
+              ]
+            },
+            {
+              "rational": [
+                1,
+                1
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": {
+            "rational": [
+              1,
+              2
+            ]
+          },
+          "name": "erased.c1.best_guess",
+          "observed": {
+            "rational": [
+              1,
+              1
+            ]
+          },
+          "passed": false
+        },
+        {
+          "expected": false,
+          "name": "erased.c1.accessible_forward.after_refines_before",
+          "observed": true,
+          "passed": false
+        },
+        {
+          "expected": false,
+          "name": "erased.c1.accessible_forward.tower_holds_for_readout",
+          "observed": true,
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "rational": [
+                1,
+                2
+              ]
+            }
+          ],
+          "name": "erased.c1.accessible_posterior",
+          "observed": [
+            {
+              "rational": [
+                0,
+                1
+              ]
+            },
+            {
+              "rational": [
+                1,
+                1
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "rational": [
+                1,
+                2
+              ]
+            }
+          ],
+          "name": "erased.c1.after_read_posterior",
+          "observed": [
+            {
+              "rational": [
+                0,
+                1
+              ]
+            },
+            {
+              "rational": [
+                1,
+                1
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": {
+            "rational": [
+              1,
+              2
+            ]
+          },
+          "name": "erased.quotient.best_guess",
+          "observed": {
+            "rational": [
+              1,
+              1
+            ]
+          },
+          "passed": false
+        },
+        {
+          "expected": false,
+          "name": "erased.quotient.accessible_forward.after_refines_before",
+          "observed": true,
+          "passed": false
+        },
+        {
+          "expected": false,
+          "name": "erased.quotient.accessible_forward.tower_holds_for_readout",
+          "observed": true,
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "rational": [
+                1,
+                2
+              ]
+            }
+          ],
+          "name": "erased.quotient.accessible_posterior",
+          "observed": [
+            {
+              "rational": [
+                0,
+                1
+              ]
+            },
+            {
+              "rational": [
+                1,
+                1
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "rational": [
+                1,
+                2
+              ]
+            }
+          ],
+          "name": "erased.quotient.after_read_posterior",
+          "observed": [
+            {
+              "rational": [
+                0,
+                1
+              ]
+            },
+            {
+              "rational": [
+                1,
+                1
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": {
+            "rational": [
+              1,
+              2
+            ]
+          },
+          "name": "erased.memoized.best_guess",
+          "observed": {
+            "rational": [
+              1,
+              1
+            ]
+          },
+          "passed": false
+        },
+        {
+          "expected": false,
+          "name": "erased.memoized.accessible_forward.after_refines_before",
+          "observed": true,
+          "passed": false
+        },
+        {
+          "expected": false,
+          "name": "erased.memoized.accessible_forward.tower_holds_for_readout",
+          "observed": true,
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "rational": [
+                1,
+                2
+              ]
+            }
+          ],
+          "name": "erased.memoized.accessible_posterior",
+          "observed": [
+            {
+              "rational": [
+                0,
+                1
+              ]
+            },
+            {
+              "rational": [
+                1,
+                1
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "rational": [
+                1,
+                2
+              ]
+            }
+          ],
+          "name": "erased.memoized.after_read_posterior",
+          "observed": [
+            {
+              "rational": [
+                0,
+                1
+              ]
+            },
+            {
+              "rational": [
+                1,
+                1
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": {
+            "rational": [
+              1,
+              2
+            ]
+          },
+          "name": "sealed.reference.best_guess",
+          "observed": {
+            "rational": [
+              1,
+              1
+            ]
+          },
+          "passed": false
+        },
+        {
+          "expected": false,
+          "name": "sealed.reference.accessible_forward.after_refines_before",
+          "observed": true,
+          "passed": false
+        },
+        {
+          "expected": false,
+          "name": "sealed.reference.accessible_forward.tower_holds_for_readout",
+          "observed": true,
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "rational": [
+                1,
+                2
+              ]
+            }
+          ],
+          "name": "sealed.reference.accessible_posterior",
+          "observed": [
+            {
+              "rational": [
+                0,
+                1
+              ]
+            },
+            {
+              "rational": [
+                1,
+                1
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "rational": [
+                1,
+                2
+              ]
+            }
+          ],
+          "name": "sealed.reference.after_read_posterior",
+          "observed": [
+            {
+              "rational": [
+                0,
+                1
+              ]
+            },
+            {
+              "rational": [
+                1,
+                1
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": {
+            "rational": [
+              1,
+              2
+            ]
+          },
+          "name": "sealed.c1.best_guess",
+          "observed": {
+            "rational": [
+              1,
+              1
+            ]
+          },
+          "passed": false
+        },
+        {
+          "expected": false,
+          "name": "sealed.c1.accessible_forward.after_refines_before",
+          "observed": true,
+          "passed": false
+        },
+        {
+          "expected": false,
+          "name": "sealed.c1.accessible_forward.tower_holds_for_readout",
+          "observed": true,
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "rational": [
+                1,
+                2
+              ]
+            }
+          ],
+          "name": "sealed.c1.accessible_posterior",
+          "observed": [
+            {
+              "rational": [
+                0,
+                1
+              ]
+            },
+            {
+              "rational": [
+                1,
+                1
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "rational": [
+                1,
+                2
+              ]
+            }
+          ],
+          "name": "sealed.c1.after_read_posterior",
+          "observed": [
+            {
+              "rational": [
+                0,
+                1
+              ]
+            },
+            {
+              "rational": [
+                1,
+                1
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": {
+            "rational": [
+              1,
+              2
+            ]
+          },
+          "name": "sealed.quotient.best_guess",
+          "observed": {
+            "rational": [
+              1,
+              1
+            ]
+          },
+          "passed": false
+        },
+        {
+          "expected": false,
+          "name": "sealed.quotient.accessible_forward.after_refines_before",
+          "observed": true,
+          "passed": false
+        },
+        {
+          "expected": false,
+          "name": "sealed.quotient.accessible_forward.tower_holds_for_readout",
+          "observed": true,
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "rational": [
+                1,
+                2
+              ]
+            }
+          ],
+          "name": "sealed.quotient.accessible_posterior",
+          "observed": [
+            {
+              "rational": [
+                0,
+                1
+              ]
+            },
+            {
+              "rational": [
+                1,
+                1
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "rational": [
+                1,
+                2
+              ]
+            }
+          ],
+          "name": "sealed.quotient.after_read_posterior",
+          "observed": [
+            {
+              "rational": [
+                0,
+                1
+              ]
+            },
+            {
+              "rational": [
+                1,
+                1
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": {
+            "rational": [
+              1,
+              2
+            ]
+          },
+          "name": "sealed.memoized.best_guess",
+          "observed": {
+            "rational": [
+              1,
+              1
+            ]
+          },
+          "passed": false
+        },
+        {
+          "expected": false,
+          "name": "sealed.memoized.accessible_forward.after_refines_before",
+          "observed": true,
+          "passed": false
+        },
+        {
+          "expected": false,
+          "name": "sealed.memoized.accessible_forward.tower_holds_for_readout",
+          "observed": true,
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "rational": [
+                1,
+                2
+              ]
+            }
+          ],
+          "name": "sealed.memoized.accessible_posterior",
+          "observed": [
+            {
+              "rational": [
+                0,
+                1
+              ]
+            },
+            {
+              "rational": [
+                1,
+                1
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "rational": [
+                1,
+                2
+              ]
+            }
+          ],
+          "name": "sealed.memoized.after_read_posterior",
+          "observed": [
+            {
+              "rational": [
+                0,
+                1
+              ]
+            },
+            {
+              "rational": [
+                1,
+                1
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": false,
+          "name": "retrieve.reference.accessible_forward.after_refines_before",
+          "observed": true,
+          "passed": false
+        },
+        {
+          "expected": false,
+          "name": "retrieve.reference.accessible_forward.tower_holds_for_readout",
+          "observed": true,
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "rational": [
+                1,
+                2
+              ]
+            }
+          ],
+          "name": "retrieve.reference.accessible_posterior",
+          "observed": [
+            {
+              "rational": [
+                0,
+                1
+              ]
+            },
+            {
+              "rational": [
+                1,
+                1
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": false,
+          "name": "retrieve.c1.accessible_forward.after_refines_before",
+          "observed": true,
+          "passed": false
+        },
+        {
+          "expected": false,
+          "name": "retrieve.c1.accessible_forward.tower_holds_for_readout",
+          "observed": true,
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "rational": [
+                1,
+                2
+              ]
+            }
+          ],
+          "name": "retrieve.c1.accessible_posterior",
+          "observed": [
+            {
+              "rational": [
+                0,
+                1
+              ]
+            },
+            {
+              "rational": [
+                1,
+                1
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": false,
+          "name": "retrieve.quotient.accessible_forward.after_refines_before",
+          "observed": true,
+          "passed": false
+        },
+        {
+          "expected": false,
+          "name": "retrieve.quotient.accessible_forward.tower_holds_for_readout",
+          "observed": true,
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "rational": [
+                1,
+                2
+              ]
+            }
+          ],
+          "name": "retrieve.quotient.accessible_posterior",
+          "observed": [
+            {
+              "rational": [
+                0,
+                1
+              ]
+            },
+            {
+              "rational": [
+                1,
+                1
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": false,
+          "name": "retrieve.memoized.accessible_forward.after_refines_before",
+          "observed": true,
+          "passed": false
+        },
+        {
+          "expected": false,
+          "name": "retrieve.memoized.accessible_forward.tower_holds_for_readout",
+          "observed": true,
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "rational": [
+                1,
+                2
+              ]
+            }
+          ],
+          "name": "retrieve.memoized.accessible_posterior",
+          "observed": [
+            {
+              "rational": [
+                0,
+                1
+              ]
+            },
+            {
+              "rational": [
+                1,
+                1
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": {
+            "rational": [
+              1,
+              2
+            ]
+          },
+          "name": "short_deadline.reference.best_guess",
+          "observed": {
+            "rational": [
+              1,
+              1
+            ]
+          },
+          "passed": false
+        },
+        {
+          "expected": {
+            "rational": [
+              1,
+              2
+            ]
+          },
+          "name": "short_deadline.c1.best_guess",
+          "observed": {
+            "rational": [
+              1,
+              1
+            ]
+          },
+          "passed": false
+        },
+        {
+          "expected": {
+            "rational": [
+              1,
+              2
+            ]
+          },
+          "name": "short_deadline.quotient.best_guess",
+          "observed": {
+            "rational": [
+              1,
+              1
+            ]
+          },
+          "passed": false
+        },
+        {
+          "expected": {
+            "rational": [
+              1,
+              2
+            ]
+          },
+          "name": "short_deadline.memoized.best_guess",
+          "observed": {
+            "rational": [
+              1,
+              1
+            ]
+          },
+          "passed": false
+        },
+        {
+          "expected": {
+            "rational": [
+              1,
+              2
+            ]
+          },
+          "name": "low_budget.reference.best_guess",
+          "observed": {
+            "rational": [
+              1,
+              1
+            ]
+          },
+          "passed": false
+        },
+        {
+          "expected": {
+            "rational": [
+              1,
+              2
+            ]
+          },
+          "name": "low_budget.c1.best_guess",
+          "observed": {
+            "rational": [
+              1,
+              1
+            ]
+          },
+          "passed": false
+        },
+        {
+          "expected": {
+            "rational": [
+              1,
+              2
+            ]
+          },
+          "name": "low_budget.quotient.best_guess",
+          "observed": {
+            "rational": [
+              1,
+              1
+            ]
+          },
+          "passed": false
+        },
+        {
+          "expected": {
+            "rational": [
+              1,
+              2
+            ]
+          },
+          "name": "low_budget.memoized.best_guess",
+          "observed": {
+            "rational": [
+              1,
+              1
+            ]
+          },
+          "passed": false
+        }
+      ],
+      "function": "memory_update",
+      "gate_count": 352,
+      "mutated_sha256": "190002dbecdfd71079c8db0ed4ede16b0e491c13d66370cb28e9aee7d0af81d0",
+      "mutation": "bypass_reset",
+      "original_sha256": "b27b54722cd4f7db2e5426f3853b62e4b71f9c98c6fc0b5a67589d2d06769aaa",
+      "replacement": {
+        "new": "        return memory",
+        "old": "        return BLANK"
+      },
+      "target": "fixture"
+    },
+    {
+      "caught": true,
+      "exit_code": 1,
+      "expected_failing_gate": "low_budget.reference.best_guess",
+      "failed_gates": [
+        {
+          "expected": [
+            {
+              "tuple": [
+                5,
+                6,
+                false
+              ]
+            }
+          ],
+          "name": "remember.reference.read_time_cost",
+          "observed": [
+            {
+              "tuple": [
+                5,
+                5,
+                false
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "tuple": [
+                5,
+                6,
+                false
+              ]
+            }
+          ],
+          "name": "remember.c1.read_time_cost",
+          "observed": [
+            {
+              "tuple": [
+                5,
+                5,
+                false
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "tuple": [
+                5,
+                6,
+                false
+              ]
+            }
+          ],
+          "name": "remember.quotient.read_time_cost",
+          "observed": [
+            {
+              "tuple": [
+                5,
+                5,
+                false
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "tuple": [
+                5,
+                6,
+                false
+              ]
+            }
+          ],
+          "name": "remember.memoized.read_time_cost",
+          "observed": [
+            {
+              "tuple": [
+                5,
+                5,
+                false
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "tuple": [
+                5,
+                6,
+                false
+              ]
+            }
+          ],
+          "name": "erased.reference.read_time_cost",
+          "observed": [
+            {
+              "tuple": [
+                5,
+                5,
+                false
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "tuple": [
+                5,
+                6,
+                false
+              ]
+            }
+          ],
+          "name": "erased.c1.read_time_cost",
+          "observed": [
+            {
+              "tuple": [
+                5,
+                5,
+                false
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "tuple": [
+                5,
+                6,
+                false
+              ]
+            }
+          ],
+          "name": "erased.quotient.read_time_cost",
+          "observed": [
+            {
+              "tuple": [
+                5,
+                5,
+                false
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "tuple": [
+                5,
+                6,
+                false
+              ]
+            }
+          ],
+          "name": "erased.memoized.read_time_cost",
+          "observed": [
+            {
+              "tuple": [
+                5,
+                5,
+                false
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "tuple": [
+                5,
+                6,
+                false
+              ]
+            }
+          ],
+          "name": "sealed.reference.read_time_cost",
+          "observed": [
+            {
+              "tuple": [
+                5,
+                5,
+                false
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "tuple": [
+                5,
+                6,
+                false
+              ]
+            }
+          ],
+          "name": "sealed.c1.read_time_cost",
+          "observed": [
+            {
+              "tuple": [
+                5,
+                5,
+                false
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "tuple": [
+                5,
+                6,
+                false
+              ]
+            }
+          ],
+          "name": "sealed.quotient.read_time_cost",
+          "observed": [
+            {
+              "tuple": [
+                5,
+                5,
+                false
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "tuple": [
+                5,
+                6,
+                false
+              ]
+            }
+          ],
+          "name": "sealed.memoized.read_time_cost",
+          "observed": [
+            {
+              "tuple": [
+                5,
+                5,
+                false
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "tuple": [
+                5,
+                6,
+                false
+              ]
+            }
+          ],
+          "name": "retrieve.reference.read_time_cost",
+          "observed": [
+            {
+              "tuple": [
+                5,
+                5,
+                false
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "tuple": [
+                5,
+                6,
+                false
+              ]
+            }
+          ],
+          "name": "retrieve.c1.read_time_cost",
+          "observed": [
+            {
+              "tuple": [
+                5,
+                5,
+                false
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "tuple": [
+                5,
+                6,
+                false
+              ]
+            }
+          ],
+          "name": "retrieve.quotient.read_time_cost",
+          "observed": [
+            {
+              "tuple": [
+                5,
+                5,
+                false
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "tuple": [
+                5,
+                6,
+                false
+              ]
+            }
+          ],
+          "name": "retrieve.memoized.read_time_cost",
+          "observed": [
+            {
+              "tuple": [
+                5,
+                5,
+                false
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "tuple": [
+                4,
+                5,
+                true
+              ]
+            }
+          ],
+          "name": "short_deadline.reference.read_time_cost",
+          "observed": [
+            {
+              "tuple": [
+                4,
+                4,
+                true
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "tuple": [
+                4,
+                5,
+                true
+              ]
+            }
+          ],
+          "name": "short_deadline.c1.read_time_cost",
+          "observed": [
+            {
+              "tuple": [
+                4,
+                4,
+                true
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "tuple": [
+                4,
+                5,
+                true
+              ]
+            }
+          ],
+          "name": "short_deadline.quotient.read_time_cost",
+          "observed": [
+            {
+              "tuple": [
+                4,
+                4,
+                true
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": [
+            {
+              "tuple": [
+                4,
+                5,
+                true
+              ]
+            }
+          ],
+          "name": "short_deadline.memoized.read_time_cost",
+          "observed": [
+            {
+              "tuple": [
+                4,
+                4,
+                true
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": {
+            "rational": [
+              1,
+              2
+            ]
+          },
+          "name": "low_budget.reference.best_guess",
+          "observed": {
+            "rational": [
+              1,
+              1
+            ]
+          },
+          "passed": false
+        },
+        {
+          "expected": 8,
+          "name": "low_budget.reference.rejected_count",
+          "observed": 0,
+          "passed": false
+        },
+        {
+          "expected": {
+            "retrieve:000": 6,
+            "retrieve:001": 6,
+            "retrieve:010": 6,
+            "retrieve:011": 6,
+            "retrieve:100": 6,
+            "retrieve:101": 6,
+            "retrieve:110": 6,
+            "retrieve:111": 6
+          },
+          "name": "low_budget.reference.rejected_read_costs",
+          "observed": {},
+          "passed": false
+        },
+        {
+          "expected": [],
+          "name": "low_budget.reference.read_time_cost",
+          "observed": [
+            {
+              "tuple": [
+                5,
+                5,
+                false
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": {
+            "rational": [
+              1,
+              2
+            ]
+          },
+          "name": "low_budget.c1.best_guess",
+          "observed": {
+            "rational": [
+              1,
+              1
+            ]
+          },
+          "passed": false
+        },
+        {
+          "expected": 8,
+          "name": "low_budget.c1.rejected_count",
+          "observed": 0,
+          "passed": false
+        },
+        {
+          "expected": {
+            "retrieve:000": 6,
+            "retrieve:001": 6,
+            "retrieve:010": 6,
+            "retrieve:011": 6,
+            "retrieve:100": 6,
+            "retrieve:101": 6,
+            "retrieve:110": 6,
+            "retrieve:111": 6
+          },
+          "name": "low_budget.c1.rejected_read_costs",
+          "observed": {},
+          "passed": false
+        },
+        {
+          "expected": [],
+          "name": "low_budget.c1.read_time_cost",
+          "observed": [
+            {
+              "tuple": [
+                5,
+                5,
+                false
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": {
+            "rational": [
+              1,
+              2
+            ]
+          },
+          "name": "low_budget.quotient.best_guess",
+          "observed": {
+            "rational": [
+              1,
+              1
+            ]
+          },
+          "passed": false
+        },
+        {
+          "expected": 8,
+          "name": "low_budget.quotient.rejected_count",
+          "observed": 0,
+          "passed": false
+        },
+        {
+          "expected": {
+            "retrieve:000": 6,
+            "retrieve:001": 6,
+            "retrieve:010": 6,
+            "retrieve:011": 6,
+            "retrieve:100": 6,
+            "retrieve:101": 6,
+            "retrieve:110": 6,
+            "retrieve:111": 6
+          },
+          "name": "low_budget.quotient.rejected_read_costs",
+          "observed": {},
+          "passed": false
+        },
+        {
+          "expected": [],
+          "name": "low_budget.quotient.read_time_cost",
+          "observed": [
+            {
+              "tuple": [
+                5,
+                5,
+                false
+              ]
+            }
+          ],
+          "passed": false
+        },
+        {
+          "expected": {
+            "rational": [
+              1,
+              2
+            ]
+          },
+          "name": "low_budget.memoized.best_guess",
+          "observed": {
+            "rational": [
+              1,
+              1
+            ]
+          },
+          "passed": false
+        },
+        {
+          "expected": 8,
+          "name": "low_budget.memoized.rejected_count",
+          "observed": 0,
+          "passed": false
+        },
+        {
+          "expected": {
+            "retrieve:000": 6,
+            "retrieve:001": 6,
+            "retrieve:010": 6,
+            "retrieve:011": 6,
+            "retrieve:100": 6,
+            "retrieve:101": 6,
+            "retrieve:110": 6,
+            "retrieve:111": 6
+          },
+          "name": "low_budget.memoized.rejected_read_costs",
+          "observed": {},
+          "passed": false
+        },
+        {
+          "expected": [],
+          "name": "low_budget.memoized.read_time_cost",
+          "observed": [
+            {
+              "tuple": [
+                5,
+                5,
+                false
+              ]
+            }
+          ],
+          "passed": false
+        }
+      ],
+      "function": "operation_cost",
+      "gate_count": 352,
+      "mutated_sha256": "d25f9ceb5c306ca7d3c4c3fd0141626eadbaa3d762b49253a18ab5f15cd754eb",
+      "mutation": "omit_retrieval_charge",
+      "original_sha256": "87de549bf5277b16dce270e632fb023abc580beb5793f6a14b193c3c6bfed71b",
+      "replacement": {
+        "new": "return 1",
+        "old": "return 2 if state[0] == \"access\" and action == (\"retrieve\",) else 1"
+      },
+      "target": "fixture"
+    }
+  ],
+  "revision": "9d2ac37343524be676d3d95d8bfb26f5948169e1",
+  "scope": "public deliberate faults in execution or the fixture contract; expected FAIL"
+}
