@@ -7,6 +7,34 @@ run.
 Entries are organized in rough reverse chronological order, with the most recent
 patch notes at the top.
 
+## 2026-10-05
+
+### Possibility-volume proposal review and log checkpoint
+
+User requested publication of the logs and a recommendation on repairing the
+recent proposals. Added
+[the consolidated review](research_notes/omega_v2/continuation_extent_recommendation_2026-10-05.md)
+alongside seven Sol proposal assessments and the recent local corridor,
+template-failure and trajectory-covering protocol/result logs.
+
+Recommendation: retain native frame-conditioned history laws and compute a
+finite covering profile using simultaneous physically located local and joint
+record tolerances. Preserve observation maps, joint feasibility, absolute
+timing, and the distinction between accumulated history and later residual
+continuation. Do not sum separate frame counts or add fitted property weights.
+The proposed joint-neighborhood implementation has not been run.
+
+The smooth pullback-volume proposal remains a restricted comparison: intrinsic
+dimension and multiplicity need the area formula; jump histories need not be
+smooth; cumulative history volume does not contract on reconvergence. Its
+linear version is the observability Gramian. Singleton histories and reliable
+construction remain explicit limitations of a pure path-diversity extent.
+
+This is a documentation-only checkpoint. Reports describe completed local
+experiments; their pending implementation changes and raw archives are not
+included in this log-only publication. No new simulations or physics changes
+were made for the review, and no lushness measure was adopted.
+
 ## 2026-06-25
 
 ### Finite Deformer Profile Checkpoint
