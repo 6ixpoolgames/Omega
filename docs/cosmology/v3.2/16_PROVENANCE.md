@@ -97,4 +97,6 @@ definition of lushness or biological inheritance claim is adopted.
 
 The edition's finite claims can be checked without accepting its metaphysical interpretation. Its ethical and cosmological ambitions remain visible precisely so that the research can test their connection to the construction rather than silently replacing them with an easier target.
 
+The [historical frame-volume attempt](../../research_notes/omega_v2/active_thermal_volume_report_v0.md), also on 4 October, applies the adopted local formula to sampled histories of the same catalytic laws. It includes exact equilibrium, an equal-energy/free-energy dispersed preparation, aligned/misaligned matched seeds and naturally reached ready cuts. The 79-second run retains all profiles, source-law and kernel provenance, resources and refinement comparisons. Three focused tests and lint cover the new readout. No new physical generator, imposed winner or noise quotient was introduced. The result leaves thermal/active profiles mixed and exposes within-preparation normalization and temporal-restriction limits; it does not complete physical frame aggregation or validate the proposed value bridge.
+
 ---

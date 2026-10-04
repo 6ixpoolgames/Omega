@@ -23,6 +23,12 @@ The [production-history follow-up](docs/research_notes/omega_v2/catalytic_histor
 follows catalytic descendants through movement and loss of the original bond.
 It finds continued production after original loss, without a clear overall
 persistence gain from stronger catalysis.
+The [historical frame-volume attempt](docs/research_notes/omega_v2/active_thermal_volume_report_v0.md)
+now applies the adopted local comparison to all coordinate subsets of sampled
+continuation histories. Active and thermal profiles cross; intermediate
+observations change rankings, and normalized shares can increase while joint
+history entropy decreases. These are retained limits of this finite application,
+not a generativity or thermal victory.
 
 [![Lean AlphaOmega](https://github.com/6ixpoolgames/Omega/actions/workflows/lean-alphaomega.yml/badge.svg?branch=master)](https://github.com/6ixpoolgames/Omega/actions/workflows/lean-alphaomega.yml)
 [![Baseline Witness Smoke](https://github.com/6ixpoolgames/Omega/actions/workflows/baseline-witness-smoke.yml/badge.svg?branch=master)](https://github.com/6ixpoolgames/Omega/actions/workflows/baseline-witness-smoke.yml)

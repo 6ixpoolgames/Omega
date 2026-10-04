@@ -22,6 +22,11 @@ follow-up. It retains the resulting crossings without selecting a lushness scala
 The [history observer](../../research_notes/omega_v2/catalytic_history_report_v0.md)
 then follows production through moving descendants while preserving exactly
 the same physical law. Lineage persistence remains a diagnostic, not lushness.
+The [historical frame-volume run](../../research_notes/omega_v2/active_thermal_volume_report_v0.md)
+applies the adopted local formula to finite restrictions of those histories.
+It retains mixed thermal/active comparisons, a temporal-refinement reversal
+and normalization effects. This is an observational implementation; physical
+record acquisition and encompassing aggregation remain unfinished.
 
 Start with [Orientation](00_ORIENTATION.md), [Lushness](04_LUSHNESS.md),
 [new worked examples](11_WORKED_EXAMPLES.md), and the

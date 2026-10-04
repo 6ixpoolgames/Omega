@@ -654,6 +654,10 @@ Use the encompassing view of access across frames, vector budgets and horizons. 
 
 ## What probability does and does not supply
 
+**Historical application — 4 October 2026.** The [active/thermal run](../../research_notes/omega_v2/active_thermal_volume_report_v0.md) applies the adopted formula to complete physical states at two declared times, with every coordinate subset as a projected historical frame. Because these projections are functions of that sampled history, log2 V = H(R) - H(X). Joint information counts copies once; a vector coverage envelope records the best joint observation at each footprint. This is an observational restriction, not a costed physical decoder or a free archive available at the final cut.
+
+Across three unchanged catalytic laws and ten preparations, normalized profiles cross. Adding a middle observation reverses some comparisons over the same duration. Some normalized advantages accompany less joint history information and already occur with catalysis absent. The exact decomposition delta log2 V = delta H(R) - delta H(X) identifies the normalization contribution. Within-preparation shares therefore do not by themselves complete an absolute comparison of the historical fields. This leaves the adopted candidate in exploration; it neither replaces it with raw entropy nor supplies a generativity-versus-thermal verdict. The encompassing comparison must relate compatible historical restrictions and physical access without discarding the finite developments between endpoints.
+
 The underlying physical law and frame conditioning supply weights. For a fixed physically implemented protocol, all its outcomes retain their weight, including failure and noncompletion. A rare route has its actual small weight; a conditional success does not make its preparation certain.
 
 There is no missing license to choose a convenient prior over programs. Enumerating 1,000 possible implementations does not make them equiprobable futures. Their selection can itself be an embodied physical process, with a law determined by its state, records and couplings.
@@ -692,6 +696,8 @@ Recovery gives a related but different failure. The banks (u, u AND v, v) and (u
 ## Composition and generativity
 
 Composition can establish a coupling, maintain an apparatus, change a reaction environment, or route distinctions into further physical use. The microscopic laws can remain fixed. New organization need not add a Hilbert-space factor or produce behavior unpredicted by the complete initial physics.
+
+The originator's 4 October clarification identifies **reduced cost of access** as a mechanism by which generative composition can support lushness. A catalyst can make a subsequent transformation accessible sooner under the same primitive laws. In the current finite adapter it reduces a kinetic barrier while preserving the forward fuel debit and accelerating reversal too. The proposed benefit must therefore be assessed through the residual physical access/resource profile, including construction and maintenance. More history entropy is not required by this mechanism, and an observational entropy envelope does not test it completely. Cheaper access remains a facilitating feature, not a replacement definition of lushness.
 
 The candidate represents this by restarting from the actual residual after a prefix, with the apparatus, resources and correlations it leaves. A chain is genuinely compositional only where these boundaries match. Separate best-case answers cannot be glued into a nonexistent joint execution.
 
@@ -2563,6 +2569,7 @@ Exploration does not require freezing a winner or preregistering every revision.
 | [Thermal and mobile binding](../../research_notes/omega_v2/thermal_binding_report_v0.md) | Matching conventions change the earlier crossing; common-law dispersed and assembled preparations give mixed response profiles and a mobility-dependent reversal | Tiny reactive lattice gas; contact control matters; no open-ended construction or overall gas/structure verdict |
 | [Catalytic continuation](../../research_notes/omega_v2/catalytic_binding_report_v0.md) | Reversible catalytic reuse raises first construction much more than later occupancy; spatial response profiles cross; first restoration and retention separate | Three 1,792-state classical laws; catalytic mechanism stipulated; dense finite substrate and implicit bath; no gas defeat or scalar extent |
 | [Catalytic production history](../../research_notes/omega_v2/catalytic_history_report_v0.md) | Descendants can continue production after original loss; accounting for them mostly offsets shorter original survival as catalysis increases | Exact history observer of the same laws; pathway ancestry, not template heredity; finite lifetime diagnostic is not lushness |
+| [Historical frame volume](../../research_notes/omega_v2/active_thermal_volume_report_v0.md) | Normalized active/thermal profiles cross; intermediate observations can reverse rankings; larger local shares need not mean more joint historical information | All coordinate subsets at two cuts, small frames at three; observational footprint is not physical decoder cost; no overall gas or generativity verdict |
 | [Decision prototype](../../research_notes/omega_v2/lushness_decision_report_v0.md) | Declared guards and requirement scores exhibit useful behavior and tradeoffs, including failure on revised plans | Not validation on independently authored unknown requirements |
 | [Audit of the chemistry/context claims](../../research_notes/omega_v2/opus_context_access_audit_2026-10-02.md) | Identifies unsupported extensions, including the asserted common thermal tail | Chemistry simulator and raw runs unavailable |
 
@@ -2583,7 +2590,7 @@ atlas, scratch-register and eleven-qubit results remain unverified here.
 | P32-02 | More possibility of value motivates expansion of its substrate | Working assumption; realized-value bridge open |
 | D32-01 | The field retains weighted continuation, joint compatibility and recursive physical access | Proposed representation |
 | D32-02 | Response, bill and full residual form the finite access-atlas record | Finite specification in Part 12, §M; integrated implementation pending |
-| D32-03 | Normalized frame volume and encompassing count-once/cheapest-access aggregation | Adopted exploratory candidate; first bounded joint-content envelope implemented, full cross-frame arbitration pending |
+| D32-03 | Normalized frame volume and encompassing count-once/cheapest-access aggregation | Adopted exploratory candidate; bounded gate envelope and sampled-history observational application implemented, full physical cross-frame arbitration pending |
 | R32-01 | Matched information/partition and exhibited preparation bills need not fix bounded downstream access | Verified finite witness, Example 19 |
 | R32-02 | Matched content and Syn need not fix recovery from a local loss | Verified finite witness, Example 20 |
 | R32-03 | Syn = TC(X|F) − TC(X) for the stated finite classical variables | Algebraic identity, Example 21 |
@@ -2611,6 +2618,8 @@ The subsequent [catalytic extension](../../research_notes/omega_v2/catalytic_bin
 The [production-history observer](../../research_notes/omega_v2/catalytic_history_report_v0.md) follows original and descendant bonds through physical motion and dissolution. At strong catalysis, descendants can continue construction after the original disappears. Across the three kinetic settings, however, lineage lifetime nearly ties or falls slightly below the no-assistance baseline. The observer's physical marginal is unchanged; lineage marks do not change rates or supply a scoring bonus. Reach and robustness can facilitate lushness but do not define it. The report uses **resource profile** for the separate consumption, return and activity accounts. Historical data fields retain their original names.
 
 **First: executions and restart.** Implement the data model of Part 12, §M with one small finite gate language. Retain actual preparation, source law, controller records, environmental correlations, bill components and branch outcomes. Check direct prefix-plus-suffix execution against restarting from the saved residual. Deadline truncation retains unfinished probability and ongoing environment dynamics.
+
+The later [historical-volume application](../../research_notes/omega_v2/active_thermal_volume_report_v0.md) takes an additional observational slice: 60 preparation/window cases, all 1,024 coordinate subsets at two times, and a middle-time refinement for small frames. Three focused checks cover direct history enumeration, joint content, relabeling and normalization. The numerical run took 79 seconds. It locates a comparison issue rather than resolving the implementation sequence: a larger normalized local share can result from a smaller represented whole, and an endpoint restriction can conceal consequential intermediate history. Explicit record acquisition and a common encompassing comparison remain necessary before treating these profiles as a whole-field lushness result.
 
 **Second: joint physical response.** Require one witness for simultaneous deliveries, with a shared resource case where separate feasibility fails. Add the existing equal-content access and recovery witnesses. Extend from diagonal states to coherent inputs through explicitly available instruments. Virtual Choi references are not free hardware.
 
@@ -2960,5 +2969,7 @@ historical production and finite integrated persistence. No lineage-based
 definition of lushness or biological inheritance claim is adopted.
 
 The edition's finite claims can be checked without accepting its metaphysical interpretation. Its ethical and cosmological ambitions remain visible precisely so that the research can test their connection to the construction rather than silently replacing them with an easier target.
+
+The [historical frame-volume attempt](../../research_notes/omega_v2/active_thermal_volume_report_v0.md), also on 4 October, applies the adopted local formula to sampled histories of the same catalytic laws. It includes exact equilibrium, an equal-energy/free-energy dispersed preparation, aligned/misaligned matched seeds and naturally reached ready cuts. The 79-second run retains all profiles, source-law and kernel provenance, resources and refinement comparisons. Three focused tests and lint cover the new readout. No new physical generator, imposed winner or noise quotient was introduced. The result leaves thermal/active profiles mixed and exposes within-preparation normalization and temporal-restriction limits; it does not complete physical frame aggregation or validate the proposed value bridge.
 
 ---

@@ -23,6 +23,10 @@ Use the encompassing view of access across frames, vector budgets and horizons. 
 
 ## What probability does and does not supply
 
+**Historical application — 4 October 2026.** The [active/thermal run](../../research_notes/omega_v2/active_thermal_volume_report_v0.md) applies the adopted formula to complete physical states at two declared times, with every coordinate subset as a projected historical frame. Because these projections are functions of that sampled history, log2 V = H(R) - H(X). Joint information counts copies once; a vector coverage envelope records the best joint observation at each footprint. This is an observational restriction, not a costed physical decoder or a free archive available at the final cut.
+
+Across three unchanged catalytic laws and ten preparations, normalized profiles cross. Adding a middle observation reverses some comparisons over the same duration. Some normalized advantages accompany less joint history information and already occur with catalysis absent. The exact decomposition delta log2 V = delta H(R) - delta H(X) identifies the normalization contribution. Within-preparation shares therefore do not by themselves complete an absolute comparison of the historical fields. This leaves the adopted candidate in exploration; it neither replaces it with raw entropy nor supplies a generativity-versus-thermal verdict. The encompassing comparison must relate compatible historical restrictions and physical access without discarding the finite developments between endpoints.
+
 The underlying physical law and frame conditioning supply weights. For a fixed physically implemented protocol, all its outcomes retain their weight, including failure and noncompletion. A rare route has its actual small weight; a conditional success does not make its preparation certain.
 
 There is no missing license to choose a convenient prior over programs. Enumerating 1,000 possible implementations does not make them equiprobable futures. Their selection can itself be an embodied physical process, with a law determined by its state, records and couplings.
@@ -61,6 +65,8 @@ Recovery gives a related but different failure. The banks (u, u AND v, v) and (u
 ## Composition and generativity
 
 Composition can establish a coupling, maintain an apparatus, change a reaction environment, or route distinctions into further physical use. The microscopic laws can remain fixed. New organization need not add a Hilbert-space factor or produce behavior unpredicted by the complete initial physics.
+
+The originator's 4 October clarification identifies **reduced cost of access** as a mechanism by which generative composition can support lushness. A catalyst can make a subsequent transformation accessible sooner under the same primitive laws. In the current finite adapter it reduces a kinetic barrier while preserving the forward fuel debit and accelerating reversal too. The proposed benefit must therefore be assessed through the residual physical access/resource profile, including construction and maintenance. More history entropy is not required by this mechanism, and an observational entropy envelope does not test it completely. Cheaper access remains a facilitating feature, not a replacement definition of lushness.
 
 The candidate represents this by restarting from the actual residual after a prefix, with the apparatus, resources and correlations it leaves. A chain is genuinely compositional only where these boundaries match. Separate best-case answers cannot be glued into a nonexistent joint execution.
 
