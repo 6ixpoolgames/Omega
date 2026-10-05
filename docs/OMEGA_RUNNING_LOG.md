@@ -9,6 +9,64 @@ patch notes at the top.
 
 ## 2026-10-05
 
+### Residual atlas, local fuel and mobility implemented together
+
+The user authorized the three recommendations simultaneously, followed by a
+push. Added a history-to-residual atlas, reversible ideal compartment fuel,
+and a mobility exponent retaining gamma=1 as the old default. The crossed
+probe retains individual and combined effects. No template saturation,
+rotation, boundary change or new lushness coefficient was introduced.
+[Protocol](research_notes/omega_v2/lattice_refinement_protocol_v0.md) and
+[report](research_notes/omega_v2/lattice_refinement_report_v0.md).
+
+Two shared 768-state and eight local 2,560-state generators verify matched
+equilibrium and conditional rate averaging. The largest catalytic projected
+endpoint TV discrepancy falls from .222142 at transport .05 to .000762338
+at 400. The unbound two-fuel-binding probability by T1 is .174092 without
+catalysis versus .325966 with it at slow transport, compared with shared-pool
+.175875/.362281. Local supply matters; this particular construction effect
+survives it. Finite transport is not an exactly lumpable shared-pool process.
+
+The mobile panel crosses b=0/2, gamma=1/.5 and shared/local transport .1/1/10,
+with four preparations and 48 histories each: 3,072 histories / 467,127 events.
+Faster mobility increases movement in the displayed seeded comparisons, but
+endpoint assembly differences are small relative to Monte Carlo error. The
+thermal control is sampled equilibrium and may already contain assemblies;
+this is not a categorical gas comparison. Ten workers, roughly 23 seconds
+per run. A final reproducibility rerun includes source snapshots and JSON
+replay support; no physical rule was changed between these two runs.
+
+The atlas retains all prefixes, event timing, rule provenance, native densities,
+and full local-resource residual states. Chemistry depth-two prefixes share
+70 residuals (153/161 prefix nodes at b0/b2); this is storage reuse, not volume.
+Thirty focused tests and lint pass, including route balance, exact limit,
+renaming, reconvergence and serialized event replay. Generated data remain
+local and ignored; only code and written artifacts are included in publication.
+
+### Sol modelling refinement assessed
+
+Read the supplied modelling conversation against the preserved brief, current
+chemistry, exact residual atlas, Alpha files and primary sources. The concrete
+recommendation is a history-to-residual atlas on the unchanged law, followed
+by compartment fuel with a derived well-mixed limit and a mobility sensitivity
+comparison. [Assessment and design](research_notes/omega_v2/sol_modelling_refinement_assessment_2026-10-05.md).
+
+Separate description equivalence, residual sharing and bounded frame
+projection. Equal complete Markov state under the same law already suffices
+for residual equality; prefixes and physical occurrences remain. Decoherence
+does not identify distinct records or select a unique quotient. Local fuel is
+a physical extension, not a harmless redescription. Derived ideal-compartment
+weights and reversible reaction rates recover the existing binomial inventory
+and F/B rates in a specified fast-mixing limit. Corrected Damkohler orientation,
+prefactor versus actual waiting-time language, saturation in template count,
+and the missing system-entropy term in Sol's entropy-production formula.
+
+The recalled September primitive revision was not located in the bounded
+local history search; current Primitive.lean is not treated as proof of current
+Alpha canon. Preserve the user's Alpha-below-physics clarification. No physics
+implementation, simulation, commit or push in this assessment. Exploration
+remains revisable and raw simulation outputs remain local/ignored.
+
 ### Research probe publication checkpoint
 
 The user requested a push after the exact residual-alternatives run, then

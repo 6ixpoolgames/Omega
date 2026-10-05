@@ -24,6 +24,7 @@ class Parameters:
     switching: float = 0.2
     thermal_binding: float = 0.2
     fuel_binding: float = 0.5
+    mobility_exponent: float = 1.0
 
     def __post_init__(self):
         if self.side < 2 or not 1 <= self.particles <= self.side**2 or self.capacity < 1:
@@ -31,7 +32,8 @@ class Parameters:
         if any(not np.isfinite(v) for v in asdict(self).values()):
             raise ValueError("Finite parameters required")
         if min(self.bond_strength, self.catalytic_barrier, self.diffusion,
-               self.switching, self.thermal_binding, self.fuel_binding) < 0:
+               self.switching, self.thermal_binding, self.fuel_binding,
+               self.mobility_exponent) < 0:
             raise ValueError("Nonnegative strengths and kinetic prefactors required")
 
 
@@ -202,7 +204,8 @@ class LatticeChemistry:
                               and ((x, y) not in occupied or occupied[(x, y)] in members)
                               for x, y in targets)
                 if allowed and p.diffusion:
-                    result.append(Event("move", component, p.diffusion / len(component), direction))
+                    result.append(Event("move", component,
+                                        p.diffusion / len(component)**p.mobility_exponent, direction))
         return result
 
     def apply(self, state, event):
