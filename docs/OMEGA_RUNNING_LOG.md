@@ -9,6 +9,81 @@ patch notes at the top.
 
 ## 2026-10-05
 
+### Research probe publication checkpoint
+
+The user requested a push after the exact residual-alternatives run, then
+clarified that generated outputs must stay out of Git. This checkpoint
+publishes the implementation, protocols, assessments and reports for the
+corridor, working-template failure, path-covering, naive causal-count and exact
+residual probes on `codex/operational-continuation-comparison`. Generated
+trajectory archives, probability arrays and machine summaries remain local and
+are ignored by Git. These remain exploratory instruments; publication does not
+upgrade a count into a selected lushness measure. All 28 focused tests and
+focused lint checks passed.
+
+### Exact residual alternatives completed
+
+Followed user authorization to count continuations still available at a cut.
+Added an exact four-particle/full-2x2 enumeration using the unchanged native
+chemistry, all state/channel rates, support/ordered-prefix counts and native
+time laws. Eight generators (512/1,280 states), seven preparations, four cuts
+and three lags produced 224 cut and 672 residual rows in 2.41 seconds, with
+eight jobs under the ten-process cap. Jump-depth overflow retains its full
+probability. Positions cannot move in this invariant class; no gas result.
+
+[Report](research_notes/omega_v2/lattice_residual_report_v0.md),
+[protocol](research_notes/omega_v2/lattice_residual_protocol_v0.md) and
+the locally generated `research_notes/omega_v2/lattice_residual_v0/summary.json`.
+
+For initially unbound particles, catalysis has no effect on the first-event
+law, but a first binding can create the template for a second. At capacity4,
+binding2 and fuel2, next-two-fuel-binding probability byT1 rises .062260 to
+.155075; .105525 is carried by newly created templates. The matched adjacent
+and opposite two-bond preparations have equal E/F/bondcount/support profiles
+but .346834 versus .098421 on the same timed joint event. Their residual
+comparison reverses after early consumption. Shared fuel cap1 forbids two
+consecutive fuel bindings but permits thermal-first construction routes.
+
+Support counts miss kinetics; marked sequences count parallel channels and
+interleavings; summing native prefix weights collapses to 1+mean event count.
+Retain these as diagnostic limits rather than filtering thermal outcomes.
+Four focused tests and lint passed; mass error below5.4e-14, detailed balance
+below4.4e-19. An independent waiting-time decomposition agrees with the native
+generator within5.4e-14. Generated states, channels and probabilities remain
+local; code and written results are published. Next is this short residual law
+at mobile-lattice cuts.
+
+### Naive causal-count probe completed
+
+User requested the naive count with thermal continuation and dead ends retained.
+Added physical rule-provenance replay, five focused tests, a ten-process runner,
+and complete preparation/time/graph contrasts. Replayed 7,776 histories plus
+1,728 new dilute histories: 9,504 total, 2,507,339 native events, 30.32 seconds.
+No physical generator change. Full shared-fuel graph and a diagnostic projection
+omitting only fuel-register edges are both archived. No history was discarded.
+
+[Report](research_notes/omega_v2/naive_causal_count_report_v0.md) and
+[protocol](research_notes/omega_v2/naive_causal_count_protocol_v0.md).
+The primary count C is events plus ancestor-descendant pairs; cone, route,
+fork/merger and depth/breadth profiles accompany it. These are realized
+provenance expectations, not an exhaustive multiway volume or dimension.
+
+At side12/binding0/barrier0, dispersed fueled C / equilibrium C crosses from
+1.293 at T1 to .679 at T20. The early excess requires no catalytic channel but
+does not isolate generativity from preparation and mobility. Thermal motion
+has extensive causal ancestry of its own. Stronger-binding cells often favor
+the dispersed fueled preparation, but their thermal baseline is assembled.
+At T20, higher C occurs in 21/27 original cells (18 when fuel edges omitted)
+and 3/9 dilute cells, all the latter at binding2. Refueled equilibrium loses
+C at T20 in all cells despite common early advantages. Route means and mean
+log-routes can rank preparations differently; neither measures independent
+dimensions. Catalytic changes are mixed and often within estimated errors.
+
+Five focused tests passed; lint passed; all replayed final states matched.
+Generated source hashes, per-history graphs and new trajectories remain local.
+Code and written results are published. Next: small exact residual-alternative
+comparison under the same physical rules, alongside this naive baseline.
+
 ### Possibility-volume proposal review and log checkpoint
 
 User requested publication of the logs and a recommendation on repairing the

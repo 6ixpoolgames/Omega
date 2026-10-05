@@ -72,19 +72,22 @@ def profiles(observations, coordinates):
 
 
 def work(task):
-    path, replicates, out = task
+    path, replicates, out, *options = task
+    templates_only = bool(options and options[0])
     started = time.perf_counter()
     source = json.loads(gzip.decompress(Path(path).read_bytes()))
     config, replicate = source["configuration_id"], source["replicate"]
     model = LatticeChemistry(Parameters(**source["parameters"]))
     before = state_at(model, source, 5)
     sampling_seed = 2_000_000 + config * 100 + replicate
-    failure = native_failure(model, before, sampling_seed)
+    failure = native_failure(model, before, sampling_seed, templates_only=templates_only)
     result = {"configuration_id": config, "source_replicate": replicate,
               "parameters": source["parameters"], "preparation": source["preparation"],
               "source_trajectory": Path(path).name, "source_cut": 5,
               "source_sha256": hashlib.sha256(Path(path).read_bytes()).hexdigest(),
-              "failure_sampling_seed": sampling_seed, "total_hazard": failure["total_hazard"]}
+              "failure_sampling_seed": sampling_seed, "total_hazard": failure["total_hazard"],
+              "all_thermal_failure_hazard": failure["all_thermal_failure_hazard"],
+              "failure_class": "working_template" if templates_only else "all_thermal"}
     if failure["selected"] is None:
         result.update({"eligible": False, "cuts": [], "events": 0})
         return result
@@ -97,7 +100,8 @@ def work(task):
     for arm_id, (arm, initial) in enumerate((("broken", failure["after"]), ("skipped", before))):
         trajectories[arm], observations[arm] = [], []
         for r in range(replicates):
-            seed = int(np.random.SeedSequence([20261004, config, replicate, arm_id, r]).generate_state(1)[0])
+            seed = int(np.random.SeedSequence([20261005 if templates_only else 20261004,
+                                              config, replicate, arm_id, r]).generate_state(1)[0])
             trajectory = model.simulate(initial, seed, cuts=CUTS)
             trajectories[arm].append(trajectory)
             observations[arm].append(observe(model, trajectory, pair, coordinates, CUTS))
@@ -155,6 +159,7 @@ def main():
     parser.add_argument("--replicates", type=int, default=32)
     parser.add_argument("--out", type=Path, default=OUT)
     parser.add_argument("--limit", type=int, default=0, help="Explicitly limited runtime pilot")
+    parser.add_argument("--templates-only", action="store_true")
     args = parser.parse_args()
     if not 1 <= args.workers <= 10 or args.replicates < 4 or args.limit < 0:
         parser.error("Use 1-10 workers, at least four continuations per arm, nonnegative limit")
@@ -162,13 +167,14 @@ def main():
     if (args.out/"manifest.json").exists():
         raise RuntimeError("Output exists; use a new directory")
     source_summary = json.loads((SOURCE/"summary.json").read_text(encoding="utf-8"))
-    tasks = [(str(SOURCE/r["trajectory"]), args.replicates, str(args.out))
+    tasks = [(str(SOURCE/r["trajectory"]), args.replicates, str(args.out), args.templates_only)
              for r in source_summary["runs"]]
     if args.limit:
         tasks = tasks[:args.limit]
     manifest = {"source": "../lattice_chemistry_v0", "source_cut": 5, "lags": CUTS,
                 "replicates_per_arm": args.replicates, "workers": args.workers,
                 "source_contexts": len(tasks), "limit": args.limit,
+                "failure_class": "working_template" if args.templates_only else "all_thermal",
                 "source_sha256": {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
                                   for p in (Path(__file__),
                                             ROOT/"omega_v2/finite/lattice_damage.py",
@@ -194,6 +200,8 @@ def main():
         if group:
             groups[name] = summarize(group)
     result = {"runtime_seconds": time.perf_counter()-start, "contexts": rows, "groups": groups,
+              "selected_class_native_flux_share": sum(r["total_hazard"] for r in rows)
+              / sum(r["all_thermal_failure_hazard"] for r in rows),
               "configurations": {str(c): summarize([r for r in rows if r["configuration_id"] == c])
                                  for c in sorted({r["configuration_id"] for r in rows})}}
     (args.out/"summary.json").write_text(json.dumps(result, indent=2), encoding="utf-8")

@@ -40,7 +40,7 @@ def connected(state, pair, exclude_pair=False):
     return False
 
 
-def native_failure(model, before, seed):
+def native_failure(model, before, seed, templates_only=False):
     """Sample an edge conditional on a thermal break at this state.
 
     Keep the state's total hazard for flux-weighted averaging across states.
@@ -48,9 +48,14 @@ def native_failure(model, before, seed):
     """
     candidates = [e for e in model.events(before)
                   if e.kind == "thermal" and e.members in before.bonds]
+    all_hazard = sum(e.rate for e in candidates)
+    if templates_only:
+        active = {e.catalyst for e in model.events(before)
+                  if e.kind == "catalytic" and e.members not in before.bonds}
+        candidates = [e for e in candidates if e.members in active]
     total = sum(e.rate for e in candidates)
     if total == 0:
-        return {"total_hazard": 0.0, "selected": None}
+        return {"total_hazard": 0.0, "all_thermal_failure_hazard": all_hazard, "selected": None}
     weights = np.array([e.rate for e in candidates]) / total
     e = candidates[int(np.random.default_rng(seed).choice(len(candidates), p=weights))]
     after = before.copy()
@@ -59,7 +64,8 @@ def native_failure(model, before, seed):
     lost_targets = [x for x in model.events(before)
                     if x.kind == "catalytic" and x.catalyst == e.members
                     and x.members not in before.bonds]
-    return {"total_hazard": total, "selected": e, "after": after,
+    return {"total_hazard": total, "all_thermal_failure_hazard": all_hazard,
+            "selected": e, "after": after,
             "edge_probability_given_state": e.rate / total,
             "is_bridge": not connected(after, e.members),
             "template_targets_before": len(lost_targets),
