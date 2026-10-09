@@ -1,11 +1,19 @@
 # Omega
 
-**Current development edition:** [Omega Cosmology v3.2](docs/cosmology/v3.2/README.md)
-integrates the recursive physical-access candidate, frame corrections,
-quantum counterexamples and [October 3 structural probe](docs/research_notes/omega_v2/structural_probe_10min_report_v0.md).
-Its [claim ledger](docs/cosmology/v3.2/14_RESEARCH_AND_CLAIMS.md) separates checked
-finite results from the still-open lushness comparison and ethical bridge.
-The historical closeout and successor plans below remain part of the record.
+**Current full draft:** [Omega Cosmology v4](docs/cosmology/v4/README.md),
+9 October 2026. [Read the complete manuscript](docs/cosmology/v4/OMEGA_COSMOLOGY_V4_COMPLETE.md).
+It consolidates physical possibility, classical weighted breadth, the open quantum
+comparison, Gradient Ethics, consciousness and the Alpha–Omega interpretation.
+GE's bridge is value requiring valuers together with conditional normativity;
+the adequacy of lushness as its substrate proxy remains a research question.
+[v3.2](docs/cosmology/v3.2/README.md), earlier editions and the historical closeout
+plans below remain part of the record.
+
+**Quantum working platform (October 9):**
+[Quantum continuation foundation](docs/quantum/README.md) consolidates the native
+physical object, classical calibration, quantum claim boundaries and next
+compatibility audit. It is the current entry point for quantum research alongside
+the v4 draft. Earlier exploratory runs below remain the research record.
 
 Latest exploratory runs: [local physical flow](docs/research_notes/omega_v2/local_flow_report_v0.md)
 and [finite fuel with repairable coupling](docs/research_notes/omega_v2/fuel_flow_report_v0.md).
