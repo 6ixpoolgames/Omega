@@ -4,9 +4,14 @@
 
 9 October 2026. [Read the complete manuscript](OMEGA_COSMOLOGY_V4_COMPLETE.md).
 
-[Current Drive reading copy](https://drive.google.com/file/d/1lPV6vP3RKK2UwXA6B6o2XHNW3RrqTfa8/view).
-This revision incorporates the approved assessment of Opus v1.2 and was verified
-by readback. The earlier Drive draft is preserved separately.
+[Published ODT-revised reading copy](https://drive.google.com/file/d/1lPV6vP3RKK2UwXA6B6o2XHNW3RrqTfa8/view).
+The repository draft now adds a front claims ledger, clearer accepted calibrations,
+restored intellectual connections and a tighter narrative. These editorial
+revisions are included here; the Drive reading copy remains the earlier ODT revision.
+
+[Physics research extract](OMEGA_V4_PHYSICAL_PROGRAMME.md): generated from the
+same chapter sources for readers focusing on the physical programme. The full
+edition retains the integrated ethical and cosmological argument.
 
 This edition gives the programme a fresh foundation and a legible north star:
 characterize physical possibility, understand how composition reshapes it, and

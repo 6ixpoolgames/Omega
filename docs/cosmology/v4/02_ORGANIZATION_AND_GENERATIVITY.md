@@ -9,9 +9,8 @@ its members discover and build. These are instances of the same recursive
 relation: an outcome becomes a condition of further outcomes.
 
 **Generativity** is the proposed physical mechanism by which such organization
-can expand lushness. It is not defined as whatever makes a chosen score rise.
-Construction, maintenance and changes in available transformations can be
-identified independently, then tested for their effects on breadth.
+can expand lushness. Identify construction, maintenance and changes in available
+transformations independently, then test their effects on breadth.
 
 A short-lived event can open important continuation without reproducing or
 maintaining itself. Persistence enlarges the opportunity for reuse and further
@@ -63,17 +62,14 @@ the same pathway. A product that catalyzes a different transformation can expand
 the repertoire of enabled processes. Networks can then support one another,
 subject to resource supply, inhibition, transport and loss.
 
-These are increasingly demanding mechanism tests, not an ethical hierarchy.
-An experiment should distinguish gross activity, retained enabling conditions,
+These mechanism tests distinguish gross activity, retained enabling conditions,
 their reuse, and the production of new enabling functions. The breadth readout
 stays unchanged while those mechanisms are examined. Otherwise the experiment
 would award the mechanism the benefit it was meant to test.
 
 Autocatalytic chemistry and constructor-theoretic ideas supply neighboring
-languages for such questions [R9, R10]. Specifying catalytic functions in a model
-is a legitimate physical assumption. It is not evidence that those functions
-emerged from more elementary molecular dynamics. Declaring this difference
-allows a small model to establish a mechanism without claiming an origin of life.
+languages for such questions [R9, R10]. Specified catalytic functions let a small model isolate a mechanism. Explaining
+how those functions emerge from molecular dynamics is a further origin question.
 
 ## Joint organization, cooperation and competition
 
@@ -111,8 +107,7 @@ repair. Apparatus, control, time and remaining correlations matter.
 First return, correction at a deadline and continued correction are different
 readouts. Repair can also arrive after an irreversible loss. A model that records
 only eventual reset can therefore miss the consequence it was meant to assess.
-The project retains finite witnesses of these distinctions; they constrain
-recovery claims without constituting a universal theory of harm.
+The retained finite witnesses make these distinctions testable.
 
 ## Persistence without moral authority
 

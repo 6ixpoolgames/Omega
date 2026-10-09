@@ -51,3 +51,11 @@ The proposed demiurge connection remains underspecified in the source discussion
 **R18.** Chandra, A. K., Raghavan, P., Ruzzo, W. L., Smolensky, R., and Tiwari, P. (1989/1997). [*The Electrical Resistance of a Graph Captures Its Commute and Cover Times*](https://homes.cs.washington.edu/~ruzzo/papers/resist.pdf). Supports specified resistance/random-walk relations, not a universal claim that increased coupling improves every hitting time or physical resource cost.
 
 The immediate ODT revision source is the originator-supplied *Omega Decision Theory: rebuild draft v1.2* (Opus, 9 October 2026). Its lineage and implementation architecture informs chapter 06. Its branching-only conclusion, automatic present-edit/CDT identification and proposed access-density definition are not adopted as established results. The latest-divergence rule is retained as a testable candidate.
+
+## Control, future-path entropy and classical records
+
+**R19.** Klyubin, A. S., Polani, D., and Nehaniv, C. L. (2005). [*Empowerment: A universal agent-centric measure of control*](https://doi.org/10.1109/CEC.2005.1554676); and (2008), [*Keep Your Options Open: An Information-Based Driving Principle for Sensorimotor Systems*](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0004018). Action-to-observation channel capacity. A longstanding agency/access neighbour in this programme, including finite assistance and operator-control comparisons.
+
+**R20.** Wissner-Gross, A. D., and Freer, C. E. (2013). [*Causal Entropic Forces*](https://doi.org/10.1103/PhysRevLett.110.168702). A proposed relation between future-path entropy gradients and adaptive behavior. Relevant to the mechanism question; the native laws in Omega's probes do not acquire an entropy-maximizing force by definition.
+
+**R21.** Zurek, W. H. (2009). [*Quantum Darwinism*](https://arxiv.org/abs/0903.5082). Environment-mediated proliferation of records of selected system states. Relevant to physical classical-family selection, with record redundancy distinguished from independent alternative breadth.

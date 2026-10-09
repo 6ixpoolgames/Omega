@@ -48,6 +48,22 @@ valuers, and normativity is conditional on valuing**. Alpha–Omega cosmology th
 offers a wider interpretation of the same picture. Accepting that interpretation
 is not a prerequisite for either the physical inquiry or Gradient Ethics.
 
+## Claims at a glance
+
+| Status | What v4 claims |
+| --- | --- |
+| **Established mathematics** | Classical complete-history breadth is exp H, with the entropy chain rule and independent-product composition. A certain classical future has breadth one. Quantum histories require coherent amplitude composition; supplied decoherent families admit classical probabilities. |
+| **Finite evidence** | Configuration changes access and weighted breadth in the tested models. Some preparations exceed specified references; transport and resolution can reverse the advantage. The FHP invariant audit narrows the gas comparison. Quantum probes expose checkpoint dependence and distinguish recording, leakage and erasure. |
+| **Adopted definitions and commitments** | Native physical development is the carrier. Frames express situated descriptions and weights. Lushness means effective weighted breadth; generativity is a proposed cause of its increase. Deterministic classical breadth one and noise contributing breadth are accepted calibrations. GE starts from value requiring valuers and conditional normativity. |
+| **Research hypotheses** | Generative organization can produce sustained or regenerating breadth advantages. Lushness can serve as a substrate proxy for possible value. Physical decision lineages can constrain counterfactual matching. These claims need mechanism and adversarial tests. |
+| **Interpretive proposals** | Block–Everett completion and Alpha–Logos–Omega provide the cosmological interpretation. Cosmopsychism is the proposed economical bridge across κ; functionalism remains compatible. Vortical identity approaching a singularity is a downstream possibility. |
+| **Open constructions** | General quantum breadth, native history selection, justified cross-frame comparisons, unique ODT matching, and the relation between physical organization and experience. |
+
+This ledger governs the manuscript. Chapter 08 records evidence and failure
+boundaries; chapter 09 states mathematical assumptions. The main argument retains
+qualifications where they change an inference, without repeating the status of
+the whole programme after every claim.
+
 ## The motivating difference
 
 Compare dispersed materials with a workshop made from those materials. Both obey
@@ -85,8 +101,7 @@ partial comparison can be a useful intermediate answer.
 The ethical project asks how physical changes bear on the conditions of valuation.
 Under uncertainty about unfamiliar or future values, lushness is proposed as a
 substrate proxy. Better knowledge should support more discriminating steering.
-This is not an assertion that every increase in stochastic variety is realized
-goodness, or that the latest calculated entropy is the ethical target.
+The research tests how faithfully that proxy tracks opportunities for value.
 
 ## What this draft commits to
 
@@ -105,17 +120,8 @@ rule and an inadequate ethical proxy are different failures. Keeping all the
 physics beside a poor scalar does not vindicate the scalar. Equally, a failed
 scalar does not erase the physical object or make its characterization pointless.
 
-## What has been earned
+## Reading the argument
 
-Finite models demonstrate that equal current information, event counts or local
-marginals can conceal differences in access, repair and joint continuation.
-Some specified preparations produce greater classical breadth than specified
-references. Other comparisons reverse, and an invariant audit weakened an
-earlier gas interpretation. Quantum tests preserve interference correctly while
-showing that several attractive entropy constructions depend on analytical
-history choices. These are useful constraints, not a completed theory of lushness.
-
-This draft presents that foundation positively and keeps its ambition visible.
 Chapters 01–03 develop the physical object, generativity and breadth. Chapter 04
 states Gradient Ethics and its conditional bridge. Chapters 05–06 treat
 individuals, consciousness and decision. Chapter 07 develops Alpha–Omega as an
@@ -154,14 +160,12 @@ capabilities of the system.
 
 The object retains the full time-ordered physical development. A process that
 creates a record and subsequently reverses the interaction can share an endpoint
-with an idle process while having different intervening relations. Keeping those
-relations does not mean every difference must receive a different scalar size.
-It means the carrier must not erase them before the comparison is specified.
+with an idle process while having different intervening relations. The carrier preserves those relations so that a later comparison can decide
+which differences matter.
 
 For the actual universe, this motivates the universal quantum state evolving
-under its law, or the appropriate field-theoretic formulation. Finite adapters
-do not establish that the universal state is practically representable, or that
-a preferred global time slicing exists.
+under its law, or the appropriate field-theoretic formulation. Representing that universal development requires addressing computational
+limits and the choice of spacetime sections.
 
 ## Physical perspective and descriptive frame
 
@@ -288,9 +292,8 @@ its members discover and build. These are instances of the same recursive
 relation: an outcome becomes a condition of further outcomes.
 
 **Generativity** is the proposed physical mechanism by which such organization
-can expand lushness. It is not defined as whatever makes a chosen score rise.
-Construction, maintenance and changes in available transformations can be
-identified independently, then tested for their effects on breadth.
+can expand lushness. Identify construction, maintenance and changes in available
+transformations independently, then test their effects on breadth.
 
 A short-lived event can open important continuation without reproducing or
 maintaining itself. Persistence enlarges the opportunity for reuse and further
@@ -342,17 +345,14 @@ the same pathway. A product that catalyzes a different transformation can expand
 the repertoire of enabled processes. Networks can then support one another,
 subject to resource supply, inhibition, transport and loss.
 
-These are increasingly demanding mechanism tests, not an ethical hierarchy.
-An experiment should distinguish gross activity, retained enabling conditions,
+These mechanism tests distinguish gross activity, retained enabling conditions,
 their reuse, and the production of new enabling functions. The breadth readout
 stays unchanged while those mechanisms are examined. Otherwise the experiment
 would award the mechanism the benefit it was meant to test.
 
 Autocatalytic chemistry and constructor-theoretic ideas supply neighboring
-languages for such questions [R9, R10]. Specifying catalytic functions in a model
-is a legitimate physical assumption. It is not evidence that those functions
-emerged from more elementary molecular dynamics. Declaring this difference
-allows a small model to establish a mechanism without claiming an origin of life.
+languages for such questions [R9, R10]. Specified catalytic functions let a small model isolate a mechanism. Explaining
+how those functions emerge from molecular dynamics is a further origin question.
 
 ## Joint organization, cooperation and competition
 
@@ -390,8 +390,7 @@ repair. Apparatus, control, time and remaining correlations matter.
 First return, correction at a deadline and continued correction are different
 readouts. Repair can also arrive after an irreversible loss. A model that records
 only eventual reset can therefore miss the consequence it was meant to assess.
-The project retains finite witnesses of these distinctions; they constrain
-recovery claims without constituting a universal theory of harm.
+The retained finite witnesses make these distinctions testable.
 
 ## Persistence without moral authority
 
@@ -509,13 +508,25 @@ For continuous-time models sampled at interval Δt, K=exp(ΔtQ) defines a sample
 sequence law. It omits intervening events. No resolution-independent continuous
 path entropy follows without further work.
 
-## What this calibration does and does not promise
+## Determinism and the meaning of breadth
 
 A deterministic classical machine receives one unit of alternative breadth even
-if its internal organization is elaborate. Repeated stochastic activity can
-produce unbounded cumulative path breadth on a small state space. These follow
-from the definition. They are neither bugs nor proofs that the proxy succeeds
-as the substrate comparison GE ultimately needs.
+if its internal organization is elaborate. This is an accepted calibration:
+one complete future is one alternative. The machine's causal organization remains
+in the development, and its response to changed physical conditions can still be
+studied. Breadth from an exact root and controllability across varied conditions
+answer different questions.
+
+This fits an intuition of freedom as genuinely open alternatives. It leaves room
+for separate accounts of reasons-responsive agency under determinism. Quantum
+unitarity is a further distinction: deterministic evolution of a universal
+wavefunction does not imply a single classical outcome.
+
+Repeated stochastic activity can produce unbounded cumulative path breadth on a
+small state space. That behavior is also part of the adopted calibration. The
+empirical question is whether generative configurations produce additional
+downstream breadth under matched physical conditions, and whether that breadth
+is a useful proxy for opportunities for value.
 
 Noise is not removed to protect a preferred answer. Instead, experiments must
 ask whether generative arrangements produce additional breadth under matched
@@ -525,6 +536,31 @@ systematic failure on the intended comparison remains a reason for revision.
 Independent classical systems multiply breadth because their joint entropy
 adds. Coupled systems require the actual joint law. Sums or products of marginal
 scores cannot substitute for shared-resource and higher-order dependence.
+
+## Breadth and controllable influence
+
+Empowerment measures the capacity of a specified action-to-future-observation
+channel, typically maxₚ₍ₐ₎ I(A;Y). It asks how much distinguishable influence an
+embedded controller can exercise. Lushness asks about the native weighted
+continuation of the encompassing physical system [R19].
+
+The distinction matters in both directions. Independent output noise adds no
+action information to an unchanged empowerment channel, while it can add path
+breadth. Conversely, channel capacity optimizes over input distributions rather
+than retaining the actual native distribution of a present. It needs an action
+boundary, output frame and implementation assumptions. Equal capacities can hide
+different transformation repertoires and compositional dependencies.
+
+Omega uses empowerment as an agency/access diagnostic. The physical carrier and
+frame construction retain the controller, its resources and its effects on other
+loci, so increasing one controller's influence can be compared with the wider
+continuation it changes. This motivates keeping empowerment alongside lushness.
+
+Empowerment and causal entropic forces were already intellectual resources in
+v2; empowerment also informed v3.2 and a finite decision control. Causal entropic
+forces investigate behavior driven by future-path entropy gradients [R20]. The
+shared question is how future accessibility shapes organization; Omega's native
+breadth readout does not postulate an extra entropy-maximizing physical force.
 
 ## The thermal baseline
 
@@ -568,6 +604,13 @@ but can change when a purely analytical checkpoint is added. A conditional
 record-mixture entropy need not be the entropy of the actual reduced state.
 Bounds alone do not cure these representation dependencies.
 
+Quantum Darwinism offers a physical route to classical distinctions through
+their redundant recording in an environment [R21]. It is a candidate resource
+for the family-selection problem. Replicating the same record can strengthen
+its accessibility and stability without creating a new independent alternative.
+Whole-development breadth must also handle coherent intervals and recombination,
+so record selection is one part of the quantum construction.
+
 ## Coherence, records and the proposed limits
 
 The intuition of one coherent direction and many distinguishable classical
@@ -608,7 +651,7 @@ Gradient Ethics begins with two commitments. **Value requires valuers:** value d
 
 These commitments provide the bridge from physical possibility to ethics. If someone values a person's flourishing, that commitment gives them reasons concerning the bodily, social and environmental conditions of that flourishing. Discovering that those conditions depend on other people or unfamiliar organisms can extend the practical reach of the commitment. The dependencies were real before they were understood. A better physical and social model can therefore correct an agent's account of what their own commitments require.
 
-The dependence claim is a philosophical premise, not an experimental finding about entropy. “Valuer” is also a term whose scope needs clarification: a system's functional sensitivity to outcomes does not by itself establish conscious experience, moral standing or the authority of its preferences. GE investigates these relationships instead of silently identifying them.
+The scope of “valuer” needs clarification: a system's functional sensitivity to outcomes does not by itself establish conscious experience, moral standing or the authority of its preferences. GE investigates these relationships instead of silently identifying them.
 
 An agent's concern for some value does not logically entail equal concern for all valuers. GE adopts a broader orientation: the possibility of value warrants consideration, including where a bounded evaluator has not yet recognized its form. This makes its inclusive ambition explicit. It does not prove that an agent with wholly different commitments must be motivated by it. Justification, motivation and the ability to enforce a judgment are separate matters.
 
@@ -620,7 +663,7 @@ We know some things we value and remain uncertain about much else: which systems
 
 Lushness is the proposed substrate proxy. It concerns effective weighted breadth of continuation; it does not already mean valuable continuation. This matters because the proxy must be allowed to disagree with ethical expectations. Random branching can have large classical breadth. A reliable achievement can initially reduce breadth by concentrating weight on a desired result. A future test may establish that a candidate breadth is insufficient for ethical judgment even while it remains a useful physical quantity.
 
-The research ambition is stronger than merely listing these limitations. It asks whether structures commonly associated with value—cooperation, learning, maintenance, recovery and open-ended construction—systematically create or preserve greater consequential possibility across relevant frames and horizons. If they do, that would give the proxy an explanatory basis. If they do not, its role must change. Adding a reward for those structures would not establish the hypothesis.
+The research asks whether structures commonly associated with value—cooperation, learning, maintenance, recovery and open-ended construction—systematically create or preserve greater consequential possibility across relevant frames and horizons. If they do, that would give the proxy an explanatory basis. If they do not, its role must change. Adding a reward for those structures would not establish the hypothesis.
 
 As value becomes better characterized, situated evaluation can become more selective. The same physical futuresfield contains continuations of different significance to its inhabitants. A frame may expose consequences relevant to a valuer that a coarser description misses. Improving the frame means improving the representation of those consequences and the grounds for comparison. It does not authorize changing weights until a preferred answer appears.
 
@@ -657,9 +700,9 @@ Rights-like protections are proposed responses to recurring vulnerabilities in r
 | Exit and association | Alternative relationships and routes out of destructive control. |
 | Repair and restitution | Restoration of capacities and conditions damaged by action. |
 
-This is a research account of why such protections matter, not a derivation of a complete legal code. Scope, conflicts and exceptions need argument. A protection can be invoked by an actor who is destroying others' ability to continue. Defense or containment can then be justified by the same concern for valuers and their conditions, with the consequences and errors of enforcement included.
+The account explains protections through recurring dependencies and vulnerabilities. Their scope, conflicts and exceptions require further argument. A protection can be invoked by an actor who is destroying others' ability to continue. Defense or containment can then be justified by the same concern for valuers and their conditions, with the consequences and errors of enforcement included.
 
-Justice concerns the terms under which coupled valuers coexist, interfere and resolve conflict. It includes attention to unequal power and to the reliability of institutions claiming to act for the whole. Virtues can be investigated as durable policies: honesty supports usable signals, humility supports correction, courage enables necessary action under risk, prudence attends to delayed effects, and restraint limits avoidable foreclosure. These are hypotheses connecting ethical practice to consequential structure. The present experiments have not derived them.
+Justice concerns the terms under which coupled valuers coexist, interfere and resolve conflict. It includes attention to unequal power and to the reliability of institutions claiming to act for the whole. Virtues can be investigated as durable policies: honesty supports usable signals, humility supports correction, courage enables necessary action under risk, prudence attends to delayed effects, and restraint limits avoidable foreclosure. Testing these connections would explain which practices preserve valuable conditions across different regimes.
 
 ## Sacrifice, urgency and bounded judgment
 
@@ -681,11 +724,11 @@ The programme's ethical ambition is thus conditional and self-revising. Valuing 
 
 A whirlpool persists while its water changes. An organism replaces molecules; a person learns, forgets and changes their capacities. These examples suggest that an individual is not simply a fixed inventory of material or a pattern that can be copied. It is an organized trajectory: a physically realized process whose organization is maintained and transformed through causal history.
 
-This is the programme’s working interpretation of identity, not a theorem of physics. A pattern describes what can recur; a trajectory tracks how a particular occurrence is produced, sustained and changed. Two systems may match in every currently measured function and still have different origins. A record can guide reconstruction of a lost function without establishing that the original individual continued. The account therefore keeps several questions separate: what function is present, what organization is maintained, what causal lineage connects events, whether the same individual persists, and whether experience is continuous.
+In this trajectory interpretation of identity, a pattern describes what can recur; a trajectory tracks how a particular occurrence is produced, sustained and changed. Two systems may match in every currently measured function and still have different origins. A record can guide reconstruction of a lost function without establishing that the original individual continued. The account therefore keeps several questions separate: what function is present, what organization is maintained, what causal lineage connects events, whether the same individual persists, and whether experience is continuous.
 
 These distinctions matter in familiar cases. Ordinary growth changes the person’s material and character while preserving an ongoing trajectory. A pause in activity need not end that trajectory if the organization that maintains it remains intact. A copied pattern can support a capable successor without thereby sharing the source’s history. A repair may restore a function, preserve lineage, or plausibly restore the individual; those are different achievements. The trajectory view gives a reason to treat destructive scanning and reconstruction as replacement rather than survival, but that verdict is philosophical and remains open to challenge.
 
-Vortices make the idea of persistence through change vivid. In particular physical settings, circulation or topological winding can provide a stable description across transformations. Such invariants identify a class of structures under specified conditions; they do not by themselves identify one individual. A vortex is a useful image for maintained organization, not a universal template for persons, nor proof that every identity has a hidden centre. A crystal, an organism and a computational process may require quite different accounts of what is preserved.
+Vortices make the idea of persistence through change vivid. In particular physical settings, circulation or topological winding can provide a stable description across transformations. Such invariants identify classes of maintained organization. Tracking a particular individual also requires its physical occurrence and lineage. A crystal, an organism and a computational process may require quite different accounts of what is preserved.
 
 The originator also entertains a stronger possibility: as identity becomes more densely organized within the futuresfield—the structure of physical possibility and continuation—its development might approach a singularity-like limit. This remains an open research ambition. “Density,” “vortex” and “singularity” need mathematical and physical definitions before the proposal can yield dynamics. Its relation to consciousness is speculative and awaits a characterization of the futuresfield and its universal possibility structure. No fixed threshold, gravitational claim, or equation of singularity with identity or consciousness follows. The idea is downstream of the physical programme; the programme does not depend on it.
 
@@ -695,15 +738,15 @@ The functional account begins with a practical feature of living systems: percep
 
 This proposal has a second, equally important side. Consciousness, in its functional role, also engineers and reconfigures the disparate embodied causal processes that compose an individual. It coordinates processes that deform the individual’s continuation—sensory pathways, bodily regulation, memory, learned response and action—so that their combined organization can guide what happens next. “Engineering” here means a physically realized capacity to organize, recruit, inhibit or alter processes, not a separate inner operator. There is no homunculus outside the body performing integration. The coordinator is the organized activity of the processes themselves, and can be distributed across them.
 
-The proposal extends functionalist accounts of mind. It connects the temporal integration of perception with the organization of embodied control, rather than reducing consciousness to a clock, a stream of reports, or a single information measure. This functional description can be investigated by studying causal organization and its effects on behaviour and internal regulation. It does not settle whether the organization is accompanied by experience, or why it should feel like anything from within.
+The proposal extends functionalist accounts of mind. It connects the temporal integration of perception with the organization of embodied control, rather than reducing consciousness to a clock, a stream of reports, or a single information measure. The functional description can be investigated through causal organization, behaviour and internal regulation. Its relation to experience is the κ question developed below.
 
-Several lines of research motivate parts of this picture. Eagleman and Sejnowski’s work on postdiction examines how later-arriving information can alter the perceptual interpretation of an earlier event. This supports the idea that the experienced present is assembled over time rather than read off from a single instant. Their result concerns temporal perception; it does not establish that temporal integration is sufficient for phenomenal consciousness. [Eagleman and Sejnowski (2000)](https://pubmed.ncbi.nlm.nih.gov/10720334/)
+Several lines of research motivate parts of this picture. Eagleman and Sejnowski’s work on postdiction examines how later-arriving information can alter the perceptual interpretation of an earlier event. This supports the idea that the experienced present is assembled over time rather than read off from a single instant. [Eagleman and Sejnowski (2000)](https://pubmed.ncbi.nlm.nih.gov/10720334/)
 
-Dehaene, Kerszberg and Changeux model access to consciousness through a neuronal global-workspace architecture, in which distributed processing can make selected information broadly available. Their model links conscious access with coordination among specialized processes. It is a theoretical model of cognitive architecture, not a demonstration that workspace access explains phenomenal character. [Dehaene, Kerszberg and Changeux (1998)](https://pubmed.ncbi.nlm.nih.gov/9826734/)
+Dehaene, Kerszberg and Changeux model access to consciousness through a neuronal global-workspace architecture, in which distributed processing can make selected information broadly available. Their model links conscious access with coordination among specialized processes. [Dehaene, Kerszberg and Changeux (1998)](https://pubmed.ncbi.nlm.nih.gov/9826734/)
 
-Seth, Suzuki and Critchley develop an interoceptive predictive account in which perception of the body involves predictions and prediction errors. This work helps connect experience to the regulation and interpretation of bodily signals. It provides a theoretical framework for embodied perception, not a settled account of all consciousness. [Seth, Suzuki and Critchley (2012)](https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2011.00395/full)
+Seth, Suzuki and Critchley develop an interoceptive predictive account in which perception of the body involves predictions and prediction errors. This work helps connect experience to the regulation and interpretation of bodily signals. [Seth, Suzuki and Critchley (2012)](https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2011.00395/full)
 
-Taken together, these sources offer component evidence and models: temporal integration, broad availability, and bodily regulation are plausible parts of the machinery. They do not show that every system with these functions is conscious, that these components are jointly sufficient, or that phenomenal experience has been explained. The distinction is central. The functional proposal is a substantive research direction; the claim that it captures or produces experience remains a further theoretical question.
+Together, these sources motivate three components: temporal integration, broad availability and bodily regulation. They support investigating the proposed coordination architecture. Whether that architecture constitutes phenomenal experience remains open.
 
 ## Physical perspectives and phenomenal experience
 
@@ -719,7 +762,7 @@ The proposal also keeps phenomenal continuity distinct from trajectory identity.
 
 ## What follows for inquiry
 
-The functional and phenomenal questions can be pursued without waiting for a metaphysical resolution. Researchers can test whether particular forms of temporal integration and embodied reconfiguration explain perception, control and continuity. They can compare systems by their causal organization while remaining careful about what those comparisons establish. Evidence that a component contributes to conscious access is not, without further argument, evidence that it constitutes experience.
+The functional and phenomenal questions can be pursued without waiting for a metaphysical resolution. Researchers can test whether particular forms of temporal integration and embodied reconfiguration explain perception, control and continuity. They can compare systems by their causal organization while remaining careful about what those comparisons establish. Tests should distinguish contributions to conscious access from claims about phenomenal experience.
 
 Nor does the account require that every physical perspective be globally aware, or that awareness selects one branch of a completed quantum history. A block-Everett interpretation, if adopted, describes physical development without an external spotlight choosing which occurrence becomes real. Phenomenal habitation remains an additional hypothesis. No claim of quantum immortality follows: survival of some physical continuation would not establish numerical identity, phenomenal continuity, or the irrelevance of losses across other continuations.
 
@@ -833,13 +876,13 @@ The central hypothesis is that physical organization and its lawful implementati
 
 The physical programme describes one reality through its lawful continuations, their composition, and the situated frames from which parts of that development can be encountered. The Alpha–Omega proposal gives this account a wider interpretation. It names a possible relation between generative possibility, lawful realization, and completed manifestation. It does not add a new force to the physical model, and Gradient Ethics does not depend on accepting it.
 
-This distinction keeps the interpretive ambition in view without making it carry a premise it was not asked to supply. The ethical bridge is that value requires valuers, together with conditional normativity: where valuing exists, reasons for action arise conditionally from what valuers care about and from the consequences that follow. Questions about the scope and adequacy of lushness as a substrate proxy remain open, but the ethical project does not wait for a cosmic theology. Alpha–Omega interprets the physical and ethical programme within a proposed account of reality as a whole.
+The ethical bridge remains value requiring valuers together with conditional normativity. Alpha–Omega places the physical and ethical programme within a proposed account of reality as a whole.
 
 ## One reality, differentiated within itself
 
 The preferred metaphysical picture begins with one fundamental reality whose multiplicity is internal. Organisms, fields, histories, and perspectives are real differentiations of that reality, not independent substances later assembled from outside. Unity here does not mean sameness. Relations produce determinate structure, and structures can maintain boundaries, enter into exchanges, and acquire different histories.
 
-This proposal is more than the claim that everything is made of one kind of ingredient. It treats the whole as fundamental and its discernible components as relationally specified within it. That is an economical metaphysical orientation, not a proof that reality has only one substance, that it is self-sufficient, or that it is good. The [v2 account of reality and perspective](../v2/01_REALITY_COMPLETION_AND_PERSPECTIVE.md) develops the distinction between a common substrate and the stronger whole-first interpretation.
+This whole-first interpretation treats discernible components as relationally specified within one fundamental reality. Unity, self-sufficiency and goodness are separate questions. The [v2 account of reality and perspective](../v2/01_REALITY_COMPLETION_AND_PERSPECTIVE.md) develops the distinction between a common substrate and the stronger whole-first interpretation.
 
 Aquinas and Spinoza are important philosophical interlocutors, but the connections are reconstructions. Aquinas's account of divine simplicity presses a sharper question than whether the world has one underlying reality: can a relationally differentiated whole be simple in the strict sense that excludes real composition? Omega's preferred picture does not silently claim to meet that standard. Aquinas's account of eternity also offers a comparison for a whole not successively acquiring its history. Spinoza is a neighbour for substance monism and, in a different connection, for conatus: the persistence or striving of a finite thing. Omega's treatment of persistence as a condition of continuation does not adopt Spinoza's complete metaphysics or derive value from persistence alone. These are proposed links that clarify both resemblance and departure.
 
@@ -849,19 +892,19 @@ Omega adopts a block–Everett interpretation as its working picture: one comple
 
 The block is therefore not a frozen present. It is a complete structure whose internal relations include temporal order, causal influence, records, and asymmetries of access. A situated observer encounters only a bounded region and reconstructs more of the whole from within. There is no view from outside the completed reality merely because a theory represents the entire history.
 
-The distinction among three scopes remains essential. **Formal admissibility** concerns what follows under a specified model and its rules. **Actual physical realization** concerns what belongs to the physical world. **Habitation** concerns where experience occurs. The block–Everett interpretation proposes how these relate; finite quantum probes do not prove that every formal alternative is physically actual, or that every actual perspective is inhabited. The coupling between physical organization and experience remains a separate question.
+The distinction among three scopes remains essential. **Formal admissibility** concerns what follows under a specified model and its rules. **Actual physical realization** concerns what belongs to the physical world. **Habitation** concerns where experience occurs. Relating these three scopes is the cosmological task. κ names the remaining question about physical organization and experience.
 
-Cosmopsychism has a specific proposed role at that boundary: it is the bridge past κ, the unresolved relation between physical organization and experience, that currently appears to require the fewest additional assumptions. This is a parsimony rationale, not a minimality theorem. A fully functionalist account remains compatible. Chapter [05](#chapter-05) treats the functional proposal: consciousness as physically realized temporal integration and coordination of the processes composing an individual, not an inner controller. The cosmopsychist proposal and the functional account are distinct options; neither is established by the other.
+Cosmopsychism has a specific proposed role at that boundary: it is the bridge past κ, the unresolved relation between physical organization and experience, that currently appears to require the fewest additional assumptions. The preference rests on a parsimony rationale; a fully functionalist account remains compatible. Chapter [05](#chapter-05) treats the functional proposal: consciousness as physically realized temporal integration and coordination of the processes composing an individual, not an inner controller. The functional account and the cosmopsychist proposal address different explanatory levels.
 
 ## Alpha, Logos, and Omega
 
 **Alpha** names the broad horizon of generative possibility: distinctions that can be made, relations that can obtain, and orientations through which consequences become structured. It is an ambition to generalize beyond our present physical model, not a demonstrated space containing every possible law. **Logos** names lawful articulation: the particular grammar under which a world is realized. **Omega** names the completed manifestation of that realization, considered as a whole.
 
-The sequence is interpretive, not a derivation from quantum field theory. QFT is the preferred physical direction for characterizing our world; it does not derive Alpha, establish a universal Logos, or show that every formally possible law is realized. The current physical programme asks what structures and continuations our models support. The larger proposal asks whether such realized structure can be understood as one instance of a more general relation between possibility, law, and manifestation.
+QFT is the preferred physical direction for characterizing our world. Alpha–Logos–Omega extends the interpretation beyond that physical description, asking how realized structure relates to possibility, law and manifestation.
 
 This also sets the intended scope of “ultimate frame.” It names the encompassing comparison at which the regression of situated normalization would close. It is not an external chooser evaluating the world from beyond it. Present frame constructions provide the actual apparatus for describing situated weighting and access; the ultimate-frame role remains an intended closure, not a completed mathematical order. A formal description of closure would still need to show how comparisons across frames are justified.
 
-The word **demiurge** has been proposed as a philosophical link, but the local source record does not specify a detailed correspondence. A minimal candidate analogy is that a lawful realization shapes determinate material according to an intelligible order. That is only a provisional editorial reading of the Alpha–Logos relation, not an established mapping, a claim that a cosmic agent exists, or an endorsement of a source tradition. A more exact comparison requires the intended proposal to be stated and tested against the relevant historical account.
+The proposed **demiurge** connection is still underspecified. A provisional analogy concerns lawful realization shaping determinate material through intelligible order. A developed correspondence requires a closer account of the intended relation to the historical tradition; the present analogy posits no cosmic agent.
 
 ## Ground, manifestation, and the veil
 
@@ -887,7 +930,7 @@ Judgment can be understood as the completed relational truth of a trajectory: wh
 
 The proposal is deliberately non-excisive at the level of creation and communion. A unity achieved by deleting its participants would miss the point of communion. Yet this preference is not a theorem that reality must be good, or that every loss is compensated by a larger whole. It names the theological and ethical orientation the project is trying to make intelligible while leaving its adequacy open to argument.
 
-Alpha–Omega thus gives the programme a broad horizon: one internally differentiated reality, lawful realization, situated life, and a completed manifestation whose inhabitants still change from within. The physical work can advance without settling whether this horizon is ultimately true. The ethical bridge can operate without it. Its ambition is interpretive: to ask whether physics, value, and theology can be understood together without confusing a model with actuality, completion with stasis, unity with homogeneity, or hope with proof.
+Alpha–Omega thus gives the programme a broad horizon: one internally differentiated reality, lawful realization, situated life, and a completed manifestation whose inhabitants still change from within. Its ambition is to understand physics, value and theology together while preserving the distinctions among formal description, actuality, experience and ultimate ground.
 
 Further reading: [Aquinas, *Summa Theologiae*, I, q. 3](https://www.newadvent.org/summa/1003.htm) and [q. 10](https://www.newadvent.org/summa/1010.htm); [Spinoza, *Ethics*, Parts I and III](https://www.gutenberg.org/ebooks/3800); [Plotinus, *Enneads*, especially V](https://classics.mit.edu/Plotinus/enneads.html); [Pseudo-Dionysius, *Mystical Theology* and *Divine Names*](https://www.ccel.org/ccel/rolt/dionysius.html); [Wolfram, “Why Does the Universe Exist?”](https://writings.stephenwolfram.com/2021/04/why-does-the-universe-exist-some-perspectives-from-our-physics-project/).
 
@@ -897,7 +940,7 @@ Further reading: [Aquinas, *Summa Theologiae*, I, q. 3](https://www.newadvent.or
 
 # 08 — Evidence, limitations and the next programme
 
-The programme has made progress by separating the physical object from its proposed measurements. Failed candidates remain evidence: they identify distinctions a future construction must preserve or explicitly choose not to measure. They do not establish that a universal lushness scalar exists, and they do not negate the usefulness of characterizing continuation itself.
+Separating the physical object from its proposed measurements has produced both positive results and useful failures. This chapter records their scope and identifies the next discriminating tests.
 
 ## What the finite work supports
 
@@ -933,7 +976,9 @@ The [quantum platform](../../quantum/README.md) specifies the cleaned convention
 
 The first is a **compatibility construction or obstruction** for quantum breadth. Fix the native physical process and compare equivalent descriptions, identity checkpoints, actual record extensions, inert ancillas, independent copies and erasure. Either exhibit a justified comparison surviving those tests or show precisely which proposed requirements conflict. The existing [compatibility audit](../../quantum/COMPATIBILITY_AUDIT.md) is a specification for that work, not its completed result.
 
-The second is **mechanism identification in generative classical systems**. Use a lawful model in which products can enable subsequent transformations, account for resources and compare matched preparations. Separate ongoing activity from retained enabling. Test whether the advantage persists after the initiating arrangement is removed, whether descendants enable further descendants, and which physical boundaries end the effect. This can establish conditional generativity even if no quantum scalar is ready.
+The second is **mechanism identification in generative classical systems**, beginning with a noise/activity control. Use a lawful model in which products can enable subsequent transformations. Match resources, initial branching, observation resolution and a declared noise/activity budget as closely as the model permits; report residual mismatches. Compare later breadth and retained enabling, including whether the advantage persists after the initiating arrangement is removed and whether descendants enable further descendants.
+
+Matching complete path entropy would force equal perplexity by definition. It cannot test for an additional property inside the same statistic. Match specified inputs or an early-time control instead, then let later development differ. Thermodynamic entropy production is a separate physical quantity and, when available, should be reported separately from Shannon path entropy. A failure to outperform the control limits the proposed generativity mechanism; systematic conflict with independently justified value comparisons challenges the ethical proxy.
 
 The third is a **local field-theoretic adapter**. Begin with a regulated, explicit model and native interactions. Specify constraints, state, boundaries, local observables and resolution. Check how continuum or coarse-graining changes affect the claimed quantities. Circuit readouts provide calibration tests; they do not dictate the field's ontology. A QFT adapter should earn physical consistency before it is used to make cosmological or ethical claims.
 
@@ -1177,6 +1222,14 @@ The proposed demiurge connection remains underspecified in the source discussion
 
 The immediate ODT revision source is the originator-supplied *Omega Decision Theory: rebuild draft v1.2* (Opus, 9 October 2026). Its lineage and implementation architecture informs chapter 06. Its branching-only conclusion, automatic present-edit/CDT identification and proposed access-density definition are not adopted as established results. The latest-divergence rule is retained as a testable candidate.
 
+## Control, future-path entropy and classical records
+
+**R19.** Klyubin, A. S., Polani, D., and Nehaniv, C. L. (2005). [*Empowerment: A universal agent-centric measure of control*](https://doi.org/10.1109/CEC.2005.1554676); and (2008), [*Keep Your Options Open: An Information-Based Driving Principle for Sensorimotor Systems*](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0004018). Action-to-observation channel capacity. A longstanding agency/access neighbour in this programme, including finite assistance and operator-control comparisons.
+
+**R20.** Wissner-Gross, A. D., and Freer, C. E. (2013). [*Causal Entropic Forces*](https://doi.org/10.1103/PhysRevLett.110.168702). A proposed relation between future-path entropy gradients and adaptive behavior. Relevant to the mechanism question; the native laws in Omega's probes do not acquire an entropy-maximizing force by definition.
+
+**R21.** Zurek, W. H. (2009). [*Quantum Darwinism*](https://arxiv.org/abs/0903.5082). Environment-mediated proliferation of records of selected system states. Relevant to physical classical-family selection, with record redundancy distinguished from independent alternative breadth.
+
 ---
 
 <a id="chapter-11"></a>
@@ -1222,8 +1275,10 @@ Chapters 04, 08 and 09 distinguish first access from maintenance and regeneratio
 
 ## Reproduction and publication
 
-The numbered Markdown chapters are the editable source. `scripts/build_cosmology_v4.py` produces `OMEGA_COSMOLOGY_V4_COMPLETE.md`; its check mode detects a stale combined edition. `scripts/check_cosmology_v4.py` checks the edition's local links, reference identifiers and chapter completeness. A small publication record reports the resulting word count and content hash.
+The subsequent editorial pass adds a front claims ledger and consolidates repeated scope disclaimers, particularly in the consciousness and cosmological chapters. It restores empowerment and causal entropic forces from earlier editions and adds quantum Darwinism as a resource for physical record selection. Deterministic classical breadth one is stated as an accepted calibration. The proposed generativity control matches specified resources and early noise/activity conditions rather than complete path entropy, which would force a perplexity tie. A physics-focused review copy is generated from the same sources. These changes refine exposition and the research specification; they add no experimental findings.
 
-The publication package contains the manuscript and compact supporting protocols, reports and implementation. Raw numerical output arrays, generated run directories and attachments are excluded. This ODT-revised edition supersedes the earlier Drive reading copy; publication records distinguish their source hashes and links. The originator authorized publication of both the revised Drive copy and repository source after reviewing the ODT rebuild. Existing editions and proposals are preserved.
+The numbered Markdown chapters are the editable source. `scripts/build_cosmology_v4.py` produces `OMEGA_COSMOLOGY_V4_COMPLETE.md` and `OMEGA_V4_PHYSICAL_PROGRAMME.md`; its check mode detects stale generated copies. `scripts/check_cosmology_v4.py` checks local links, reference identifiers and chapter completeness. A small publication record reports the resulting word count and content hash.
+
+The publication package contains the manuscript and compact supporting protocols, reports and implementation. Raw numerical output arrays, generated run directories and attachments are excluded. The ODT revision was published to Drive and the repository; the subsequent editorial pass is included in this repository edition. The Drive reading copy remains the ODT revision. Publication records distinguish source hashes and links so each reading copy's revision is clear. Existing editions and proposals are preserved.
 
 Future revisions should state whether they change the carrier, a readout, a comparison rule, an empirical claim or an interpretive commitment. That distinction is how the programme can evolve without its latest successful calculation silently becoming its ontology.

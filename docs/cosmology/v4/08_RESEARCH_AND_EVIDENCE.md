@@ -1,6 +1,6 @@
 # 08 — Evidence, limitations and the next programme
 
-The programme has made progress by separating the physical object from its proposed measurements. Failed candidates remain evidence: they identify distinctions a future construction must preserve or explicitly choose not to measure. They do not establish that a universal lushness scalar exists, and they do not negate the usefulness of characterizing continuation itself.
+Separating the physical object from its proposed measurements has produced both positive results and useful failures. This chapter records their scope and identifies the next discriminating tests.
 
 ## What the finite work supports
 
@@ -36,7 +36,9 @@ The [quantum platform](../../quantum/README.md) specifies the cleaned convention
 
 The first is a **compatibility construction or obstruction** for quantum breadth. Fix the native physical process and compare equivalent descriptions, identity checkpoints, actual record extensions, inert ancillas, independent copies and erasure. Either exhibit a justified comparison surviving those tests or show precisely which proposed requirements conflict. The existing [compatibility audit](../../quantum/COMPATIBILITY_AUDIT.md) is a specification for that work, not its completed result.
 
-The second is **mechanism identification in generative classical systems**. Use a lawful model in which products can enable subsequent transformations, account for resources and compare matched preparations. Separate ongoing activity from retained enabling. Test whether the advantage persists after the initiating arrangement is removed, whether descendants enable further descendants, and which physical boundaries end the effect. This can establish conditional generativity even if no quantum scalar is ready.
+The second is **mechanism identification in generative classical systems**, beginning with a noise/activity control. Use a lawful model in which products can enable subsequent transformations. Match resources, initial branching, observation resolution and a declared noise/activity budget as closely as the model permits; report residual mismatches. Compare later breadth and retained enabling, including whether the advantage persists after the initiating arrangement is removed and whether descendants enable further descendants.
+
+Matching complete path entropy would force equal perplexity by definition. It cannot test for an additional property inside the same statistic. Match specified inputs or an early-time control instead, then let later development differ. Thermodynamic entropy production is a separate physical quantity and, when available, should be reported separately from Shannon path entropy. A failure to outperform the control limits the proposed generativity mechanism; systematic conflict with independently justified value comparisons challenges the ethical proxy.
 
 The third is a **local field-theoretic adapter**. Begin with a regulated, explicit model and native interactions. Specify constraints, state, boundaries, local observables and resolution. Check how continuum or coarse-graining changes affect the claimed quantities. Circuit readouts provide calibration tests; they do not dictate the field's ontology. A QFT adapter should earn physical consistency before it is used to make cosmological or ethical claims.
 

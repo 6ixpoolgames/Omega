@@ -10,6 +10,7 @@ from urllib.parse import quote
 ROOT = Path(__file__).resolve().parents[1]
 EDITION = ROOT / "docs/cosmology/v4"
 OUTPUT = EDITION / "OMEGA_COSMOLOGY_V4_COMPLETE.md"
+PHYSICS_OUTPUT = EDITION / "OMEGA_V4_PHYSICAL_PROGRAMME.md"
 REPO_URL = "https://github.com/6ixpoolgames/Omega/blob/codex/operational-continuation-comparison/"
 
 
@@ -41,6 +42,40 @@ def build() -> str:
     )
 
 
+def build_physics() -> str:
+    """Derive a physics review copy without duplicating editable source."""
+    chapters = sorted(EDITION.glob("[0-9][0-9]_*.md"))
+    parts = [chapters[i].read_text(encoding="utf-8").strip() for i in (1, 2, 3)]
+    evidence = chapters[8].read_text(encoding="utf-8").split(
+        "## What would count as success", 1
+    )[0].strip()
+    formal = chapters[9].read_text(encoding="utf-8").split(
+        "## F. Decision implementations and matching", 1
+    )[0].strip()
+    refs = chapters[10].read_text(encoding="utf-8")
+    selected = []
+    for paragraph in refs.split("\n\n"):
+        match = re.match(r"\*\*R(\d+)\.", paragraph)
+        if match and int(match.group(1)) in {*range(1, 11), 18, 19, 20, 21}:
+            selected.append(paragraph.strip())
+    parts += [evidence, formal, "# Selected references\n\n" + "\n\n".join(selected)]
+    return (
+        "# Omega v4 — physical programme\n\n"
+        "**Research extract · 9 October 2026**\n\n"
+        "Characterizing how physical organization reshapes weighted continuation.\n\n"
+        "This review copy draws directly from the [full v4 manuscript]"
+        "(OMEGA_COSMOLOGY_V4_COMPLETE.md): chapters 01–03, the physical research "
+        "agenda, formal core A–E and their references. Edit the numbered source "
+        "chapters and rebuild both copies together.\n\n"
+        "**Claim status:** classical history perplexity and its identities are "
+        "established mathematics. Reported advantages and quantum obstructions "
+        "are finite-model findings. Native development is the adopted carrier; "
+        "general quantum breadth and sustained generative advantage remain "
+        "research questions.\n\n---\n\n"
+        + "\n\n---\n\n".join(parts) + "\n"
+    )
+
+
 def drive_export(content: str) -> str:
     def expand(match: re.Match[str]) -> str:
         label, target = match.groups()
@@ -62,11 +97,15 @@ def main() -> None:
     parser.add_argument("--drive-export", type=Path)
     args = parser.parse_args()
     content = build()
+    physics = build_physics()
     if args.check:
         if not OUTPUT.exists() or OUTPUT.read_text(encoding="utf-8") != content:
             raise SystemExit("Combined edition is missing or stale.")
+        if not PHYSICS_OUTPUT.exists() or PHYSICS_OUTPUT.read_text(encoding="utf-8") != physics:
+            raise SystemExit("Physical programme extract is missing or stale.")
     else:
         OUTPUT.write_text(content, encoding="utf-8", newline="\n")
+        PHYSICS_OUTPUT.write_text(physics, encoding="utf-8", newline="\n")
     if args.drive_export:
         args.drive_export.parent.mkdir(parents=True, exist_ok=True)
         args.drive_export.write_text(drive_export(content), encoding="utf-8", newline="\n")

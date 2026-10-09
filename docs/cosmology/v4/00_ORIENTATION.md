@@ -19,6 +19,22 @@ valuers, and normativity is conditional on valuing**. Alpha–Omega cosmology th
 offers a wider interpretation of the same picture. Accepting that interpretation
 is not a prerequisite for either the physical inquiry or Gradient Ethics.
 
+## Claims at a glance
+
+| Status | What v4 claims |
+| --- | --- |
+| **Established mathematics** | Classical complete-history breadth is exp H, with the entropy chain rule and independent-product composition. A certain classical future has breadth one. Quantum histories require coherent amplitude composition; supplied decoherent families admit classical probabilities. |
+| **Finite evidence** | Configuration changes access and weighted breadth in the tested models. Some preparations exceed specified references; transport and resolution can reverse the advantage. The FHP invariant audit narrows the gas comparison. Quantum probes expose checkpoint dependence and distinguish recording, leakage and erasure. |
+| **Adopted definitions and commitments** | Native physical development is the carrier. Frames express situated descriptions and weights. Lushness means effective weighted breadth; generativity is a proposed cause of its increase. Deterministic classical breadth one and noise contributing breadth are accepted calibrations. GE starts from value requiring valuers and conditional normativity. |
+| **Research hypotheses** | Generative organization can produce sustained or regenerating breadth advantages. Lushness can serve as a substrate proxy for possible value. Physical decision lineages can constrain counterfactual matching. These claims need mechanism and adversarial tests. |
+| **Interpretive proposals** | Block–Everett completion and Alpha–Logos–Omega provide the cosmological interpretation. Cosmopsychism is the proposed economical bridge across κ; functionalism remains compatible. Vortical identity approaching a singularity is a downstream possibility. |
+| **Open constructions** | General quantum breadth, native history selection, justified cross-frame comparisons, unique ODT matching, and the relation between physical organization and experience. |
+
+This ledger governs the manuscript. Chapter 08 records evidence and failure
+boundaries; chapter 09 states mathematical assumptions. The main argument retains
+qualifications where they change an inference, without repeating the status of
+the whole programme after every claim.
+
 ## The motivating difference
 
 Compare dispersed materials with a workshop made from those materials. Both obey
@@ -56,8 +72,7 @@ partial comparison can be a useful intermediate answer.
 The ethical project asks how physical changes bear on the conditions of valuation.
 Under uncertainty about unfamiliar or future values, lushness is proposed as a
 substrate proxy. Better knowledge should support more discriminating steering.
-This is not an assertion that every increase in stochastic variety is realized
-goodness, or that the latest calculated entropy is the ethical target.
+The research tests how faithfully that proxy tracks opportunities for value.
 
 ## What this draft commits to
 
@@ -76,17 +91,8 @@ rule and an inadequate ethical proxy are different failures. Keeping all the
 physics beside a poor scalar does not vindicate the scalar. Equally, a failed
 scalar does not erase the physical object or make its characterization pointless.
 
-## What has been earned
+## Reading the argument
 
-Finite models demonstrate that equal current information, event counts or local
-marginals can conceal differences in access, repair and joint continuation.
-Some specified preparations produce greater classical breadth than specified
-references. Other comparisons reverse, and an invariant audit weakened an
-earlier gas interpretation. Quantum tests preserve interference correctly while
-showing that several attractive entropy constructions depend on analytical
-history choices. These are useful constraints, not a completed theory of lushness.
-
-This draft presents that foundation positively and keeps its ambition visible.
 Chapters 01–03 develop the physical object, generativity and breadth. Chapter 04
 states Gradient Ethics and its conditional bridge. Chapters 05–06 treat
 individuals, consciousness and decision. Chapter 07 develops Alpha–Omega as an

@@ -92,13 +92,25 @@ For continuous-time models sampled at interval Δt, K=exp(ΔtQ) defines a sample
 sequence law. It omits intervening events. No resolution-independent continuous
 path entropy follows without further work.
 
-## What this calibration does and does not promise
+## Determinism and the meaning of breadth
 
 A deterministic classical machine receives one unit of alternative breadth even
-if its internal organization is elaborate. Repeated stochastic activity can
-produce unbounded cumulative path breadth on a small state space. These follow
-from the definition. They are neither bugs nor proofs that the proxy succeeds
-as the substrate comparison GE ultimately needs.
+if its internal organization is elaborate. This is an accepted calibration:
+one complete future is one alternative. The machine's causal organization remains
+in the development, and its response to changed physical conditions can still be
+studied. Breadth from an exact root and controllability across varied conditions
+answer different questions.
+
+This fits an intuition of freedom as genuinely open alternatives. It leaves room
+for separate accounts of reasons-responsive agency under determinism. Quantum
+unitarity is a further distinction: deterministic evolution of a universal
+wavefunction does not imply a single classical outcome.
+
+Repeated stochastic activity can produce unbounded cumulative path breadth on a
+small state space. That behavior is also part of the adopted calibration. The
+empirical question is whether generative configurations produce additional
+downstream breadth under matched physical conditions, and whether that breadth
+is a useful proxy for opportunities for value.
 
 Noise is not removed to protect a preferred answer. Instead, experiments must
 ask whether generative arrangements produce additional breadth under matched
@@ -108,6 +120,31 @@ systematic failure on the intended comparison remains a reason for revision.
 Independent classical systems multiply breadth because their joint entropy
 adds. Coupled systems require the actual joint law. Sums or products of marginal
 scores cannot substitute for shared-resource and higher-order dependence.
+
+## Breadth and controllable influence
+
+Empowerment measures the capacity of a specified action-to-future-observation
+channel, typically maxₚ₍ₐ₎ I(A;Y). It asks how much distinguishable influence an
+embedded controller can exercise. Lushness asks about the native weighted
+continuation of the encompassing physical system [R19].
+
+The distinction matters in both directions. Independent output noise adds no
+action information to an unchanged empowerment channel, while it can add path
+breadth. Conversely, channel capacity optimizes over input distributions rather
+than retaining the actual native distribution of a present. It needs an action
+boundary, output frame and implementation assumptions. Equal capacities can hide
+different transformation repertoires and compositional dependencies.
+
+Omega uses empowerment as an agency/access diagnostic. The physical carrier and
+frame construction retain the controller, its resources and its effects on other
+loci, so increasing one controller's influence can be compared with the wider
+continuation it changes. This motivates keeping empowerment alongside lushness.
+
+Empowerment and causal entropic forces were already intellectual resources in
+v2; empowerment also informed v3.2 and a finite decision control. Causal entropic
+forces investigate behavior driven by future-path entropy gradients [R20]. The
+shared question is how future accessibility shapes organization; Omega's native
+breadth readout does not postulate an extra entropy-maximizing physical force.
 
 ## The thermal baseline
 
@@ -150,6 +187,13 @@ diagonal discards interference. Entropy of its spectrum retains some overlap
 but can change when a purely analytical checkpoint is added. A conditional
 record-mixture entropy need not be the entropy of the actual reduced state.
 Bounds alone do not cure these representation dependencies.
+
+Quantum Darwinism offers a physical route to classical distinctions through
+their redundant recording in an environment [R21]. It is a candidate resource
+for the family-selection problem. Replicating the same record can strengthen
+its accessibility and stability without creating a new independent alternative.
+Whole-development breadth must also handle coherent intervals and recombination,
+so record selection is one part of the quantum construction.
 
 ## Coherence, records and the proposed limits
 

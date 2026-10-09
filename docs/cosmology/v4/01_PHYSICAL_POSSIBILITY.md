@@ -24,14 +24,12 @@ capabilities of the system.
 
 The object retains the full time-ordered physical development. A process that
 creates a record and subsequently reverses the interaction can share an endpoint
-with an idle process while having different intervening relations. Keeping those
-relations does not mean every difference must receive a different scalar size.
-It means the carrier must not erase them before the comparison is specified.
+with an idle process while having different intervening relations. The carrier preserves those relations so that a later comparison can decide
+which differences matter.
 
 For the actual universe, this motivates the universal quantum state evolving
-under its law, or the appropriate field-theoretic formulation. Finite adapters
-do not establish that the universal state is practically representable, or that
-a preferred global time slicing exists.
+under its law, or the appropriate field-theoretic formulation. Representing that universal development requires addressing computational
+limits and the choice of spacetime sections.
 
 ## Physical perspective and descriptive frame
 

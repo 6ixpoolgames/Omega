@@ -6,7 +6,7 @@ Gradient Ethics begins with two commitments. **Value requires valuers:** value d
 
 These commitments provide the bridge from physical possibility to ethics. If someone values a person's flourishing, that commitment gives them reasons concerning the bodily, social and environmental conditions of that flourishing. Discovering that those conditions depend on other people or unfamiliar organisms can extend the practical reach of the commitment. The dependencies were real before they were understood. A better physical and social model can therefore correct an agent's account of what their own commitments require.
 
-The dependence claim is a philosophical premise, not an experimental finding about entropy. “Valuer” is also a term whose scope needs clarification: a system's functional sensitivity to outcomes does not by itself establish conscious experience, moral standing or the authority of its preferences. GE investigates these relationships instead of silently identifying them.
+The scope of “valuer” needs clarification: a system's functional sensitivity to outcomes does not by itself establish conscious experience, moral standing or the authority of its preferences. GE investigates these relationships instead of silently identifying them.
 
 An agent's concern for some value does not logically entail equal concern for all valuers. GE adopts a broader orientation: the possibility of value warrants consideration, including where a bounded evaluator has not yet recognized its form. This makes its inclusive ambition explicit. It does not prove that an agent with wholly different commitments must be motivated by it. Justification, motivation and the ability to enforce a judgment are separate matters.
 
@@ -18,7 +18,7 @@ We know some things we value and remain uncertain about much else: which systems
 
 Lushness is the proposed substrate proxy. It concerns effective weighted breadth of continuation; it does not already mean valuable continuation. This matters because the proxy must be allowed to disagree with ethical expectations. Random branching can have large classical breadth. A reliable achievement can initially reduce breadth by concentrating weight on a desired result. A future test may establish that a candidate breadth is insufficient for ethical judgment even while it remains a useful physical quantity.
 
-The research ambition is stronger than merely listing these limitations. It asks whether structures commonly associated with value—cooperation, learning, maintenance, recovery and open-ended construction—systematically create or preserve greater consequential possibility across relevant frames and horizons. If they do, that would give the proxy an explanatory basis. If they do not, its role must change. Adding a reward for those structures would not establish the hypothesis.
+The research asks whether structures commonly associated with value—cooperation, learning, maintenance, recovery and open-ended construction—systematically create or preserve greater consequential possibility across relevant frames and horizons. If they do, that would give the proxy an explanatory basis. If they do not, its role must change. Adding a reward for those structures would not establish the hypothesis.
 
 As value becomes better characterized, situated evaluation can become more selective. The same physical futuresfield contains continuations of different significance to its inhabitants. A frame may expose consequences relevant to a valuer that a coarser description misses. Improving the frame means improving the representation of those consequences and the grounds for comparison. It does not authorize changing weights until a preferred answer appears.
 
@@ -55,9 +55,9 @@ Rights-like protections are proposed responses to recurring vulnerabilities in r
 | Exit and association | Alternative relationships and routes out of destructive control. |
 | Repair and restitution | Restoration of capacities and conditions damaged by action. |
 
-This is a research account of why such protections matter, not a derivation of a complete legal code. Scope, conflicts and exceptions need argument. A protection can be invoked by an actor who is destroying others' ability to continue. Defense or containment can then be justified by the same concern for valuers and their conditions, with the consequences and errors of enforcement included.
+The account explains protections through recurring dependencies and vulnerabilities. Their scope, conflicts and exceptions require further argument. A protection can be invoked by an actor who is destroying others' ability to continue. Defense or containment can then be justified by the same concern for valuers and their conditions, with the consequences and errors of enforcement included.
 
-Justice concerns the terms under which coupled valuers coexist, interfere and resolve conflict. It includes attention to unequal power and to the reliability of institutions claiming to act for the whole. Virtues can be investigated as durable policies: honesty supports usable signals, humility supports correction, courage enables necessary action under risk, prudence attends to delayed effects, and restraint limits avoidable foreclosure. These are hypotheses connecting ethical practice to consequential structure. The present experiments have not derived them.
+Justice concerns the terms under which coupled valuers coexist, interfere and resolve conflict. It includes attention to unequal power and to the reliability of institutions claiming to act for the whole. Virtues can be investigated as durable policies: honesty supports usable signals, humility supports correction, courage enables necessary action under risk, prudence attends to delayed effects, and restraint limits avoidable foreclosure. Testing these connections would explain which practices preserve valuable conditions across different regimes.
 
 ## Sacrifice, urgency and bounded judgment
 

@@ -6,14 +6,15 @@ import hashlib
 import json
 import re
 
-from build_cosmology_v4 import EDITION, OUTPUT, ROOT, build
+from build_cosmology_v4 import EDITION, OUTPUT, PHYSICS_OUTPUT, ROOT, build, build_physics
 
 
 def main() -> None:
     expected = build()
     assert OUTPUT.read_text(encoding="utf-8") == expected, "Stale reading edition"
+    assert PHYSICS_OUTPUT.read_text(encoding="utf-8") == build_physics(), "Stale physics extract"
     files = sorted(EDITION.glob("[0-9][0-9]_*.md"))
-    files += [EDITION / "README.md", OUTPUT]
+    files += [EDITION / "README.md", OUTPUT, PHYSICS_OUTPUT]
     files += sorted((ROOT / "docs/quantum").glob("*.md"))
     missing = []
     link_count = 0
@@ -43,6 +44,7 @@ def main() -> None:
         "direct_local_links_checked": link_count,
         "reference_entries": len(defined),
         "combined_matches_sources": True,
+        "physics_extract_matches_sources": True,
         "new_numerical_experiments": False,
     }
     (EDITION / "publication_checks.json").write_text(
