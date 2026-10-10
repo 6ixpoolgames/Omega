@@ -1,224 +1,237 @@
 # 03 — Lushness and weighted continuation breadth
 
-## What lushness names
+## Size within the futuresfield
 
-Lushness is the intended effective weighted extent of continuation. The word
-evokes a rich shape because composition changes the possibilities within that
-shape. It is not an additional score for complexity, persistence or organization.
-Those features matter through the continuation they produce.
+Lushness names the effective weighted extent of continuation. Its lush shape
+comes from the physical composition of possibilities: what can follow, with
+what weight, and how one development enables others. Generativity changes that
+shape by changing the continuation law experienced from a present.
 
-The original image of possibility volume remains useful. Ordinary geometric
-volume, however, is not mandatory. An effective number, scale-dependent profile
-or justified comparison can express size without being an additive measure on
-sets. The task is to specify what is measured and preserve its physical meaning
-across equivalent descriptions.
+Extent can be expressed as an effective number, a profile across horizons and
+scales, or a justified partial comparison. A literal geometric volume is one
+possible realization. The essential requirement is that equivalent descriptions
+of the same physical development yield a consistent comparison.
 
-Probability and breadth answer different questions. Probability assigns total
-weight one to an exhaustive set of alternatives. A distribution evenly spread
-over a million genuine alternatives and a distribution concentrated on one can
-both be normalized. Normalization does not erase their difference.
+Probability supplies weighting. An exhaustive set of alternatives has total
+probability one, whether that weight is spread evenly across a million histories
+or concentrated on a single history. An effective breadth captures their
+unequal spread while preserving the native normalization.
 
-## The classical calibration
+## Classical complete-development breadth
 
 At a declared classical resolution, let h=(x₁,…,xₙ) be a complete future sequence
-from a sufficient root x. Its physical law supplies pₓ(h). The current candidate is
+from sufficient root x, with physical probability pₓ(h). The calibration is
 
 \[
 L_x(n)=\exp H(p_x),\qquad H(p)=-\sum_h p(h)\log p(h).
 \]
 
-Natural logarithms give the displayed exponential; with bits use 2 to the entropy
-in bits. This is Shannon effective diversity, often called perplexity [R6]. It
-counts alternatives by their physical weighting: N equiprobable histories give
-L=N, while one certain history gives L=1.
+This is Shannon effective diversity, or perplexity [R6]. Natural logarithms give
+the exponential displayed; entropy in bits uses 2 as its base. N equiprobable
+histories give L=N. Three equally weighted alternatives give L=3, whereas weights
+(.9,.05,.05) give approximately 1.48. Both have support three and total weight one.
 
-For three equally weighted states, L=3. For weights (.9,.05,.05), L is about
-1.48. Both distributions have support three and probability mass one. Their
-effective breadth differs without unnormalized probability or extra multipliers.
-
-For an extension e of history h, p(h,e)=p(h)q(e|h). The chain rule gives
+For a history extension e, p(h,e)=p(h)q(e|h). The chain rule gives
 
 \[
 \log L(n+1)-\log L(n)=\sum_h p(h)H(q(\cdot|h)).
 \]
 
-Successive fair binary developments therefore give L(n)=2ⁿ. A terminal outcome
-keeps its existing probability and can be extended deterministically by an
-absorbing symbol. Removing it and renormalizing survivors conditions on survival;
-that is another question, not an increase in the original branch's probability.
+Successive fair binary developments give L(n)=2ⁿ. A terminal outcome can retain
+its mass through a deterministic absorbing continuation, contributing zero new
+entropy. Renormalizing the remaining branches instead evaluates continuation
+conditioned on survival.
 
-## Rooting, reconvergence and horizon
+The physical resolution determines the alternatives. Distinct update labels
+that describe one physical event belong to one alternative; different physical
+developments may remain distinct even when they have the same endpoint. For
+uniformly selected events, log M equals the conditional event entropy. Identifying
+that quantity with resolved state-history entropy additionally requires that the
+state description distinguish those events, or that the physical history retain
+their additional distinctions explicitly.
 
-If x→a→c and x→b→c are distinct resolved classical histories, they remain distinct
-from root x even though their later residual law at c agrees. Freshly rooting at
-c produces the same continuation query in both cases. Original-root complete
-breadth and new-root residual breadth are related but not interchangeable.
+Concurrency requires the same discipline. If two update strings are merely
+serial descriptions of one concurrent physical development, their ordering
+must not manufacture alternatives. If their timing or intermediate interactions
+are physically different, the distinction can matter. The native adapter and
+its physical equivalence determine which case holds. Fixed synchronous updates
+and sampled CTMC histories provide explicit finite conventions; they do not
+already solve relativistic refoliation invariance.
 
-Consequently, cumulative classical history breadth cannot decrease under ordinary
-extension. Damage can reduce its later growth relative to another preparation.
-An early advantage can remain in the cumulative total after fresh advantages
-have disappeared. Both profiles matter when asking whether organization continues
-to generate additional breadth.
+## Present rooting and horizon
 
-Horizon dependence is information about the development. It need not be collapsed
-into a single lifetime integral or growth exponent. Infinite completion retains
-finite episodes even when an asymptotic statistic forgets them. Where limits
-diverge or rankings cross, the profile should report that fact.
+Suppose x→a→c and x→b→c are two resolved developments. Their prefixes remain
+different from root x. At c their residual continuation agrees. Thus the same
+physical process supports both an original-root complete-history question and
+a fresh question from its later present.
 
-## How configuration enters the classical calculation
+Cumulative classical history breadth grows or remains constant under ordinary
+extension. Damage can slow its subsequent growth relative to another
+preparation. Earlier excess can remain in the total after the fresh advantage
+has disappeared. Horizon profiles expose these differences and any ranking
+crossovers without compressing them into one lifetime statistic.
 
-For a finite homogeneous Markov kernel K, write g(x)=H(K(x,·)). Then
+The workshop illustrates the distinction. Construction may first concentrate
+weight on a reliable product, then enable many later developments. Saturation
+can end construction while leaving a larger operating repertoire. Investment,
+compounding and the retained benefit each occupy a different part of the profile.
+
+## Configuration, references and mixing
+
+For a finite homogeneous Markov kernel K, let g(x)=H(K(x,·)). Then
 
 \[
-\ell_n(x):=\log L_x(n)=\sum_{t=0}^{n-1}(K^tg)(x).
+\ell_n(x):=\log L_x(n)=\sum_{t=0}^{n-1}(K^t g)(x).
 \]
 
-The state controls the next conditional branching, while dynamics determines
-which such states are visited. This is the direct mathematical connection
-between organization and the candidate. A catalyst, repair or construction
-can change the future distribution of states with different branching laws.
-Whether the result is larger must be calculated.
-
-For a specified stationary reference π, the difference from the average of
-separately rooted reference scores is
+Configuration determines immediate branching; dynamics determines which
+configurations are subsequently visited. This makes the effect of catalysis,
+repair and construction on classical breadth calculable under one native law.
+For a stationary reference π, the preparation excess is
 
 \[
 \Delta\ell_n(x)=\sum_{t=0}^{n-1}(\delta_xK^t-\pi)g.
 \]
 
-This reference does not add entropy of uncertainty about the starting state.
-Initial uncertainty, dynamic branching and coarse observation must be separated.
-For continuous-time models sampled at interval Δt, K=exp(ΔtQ) defines a sampled
-sequence law. It omits intervening events. No resolution-independent continuous
-path entropy follows without further work.
+The reference averages separately rooted logbreadths. It keeps uncertainty about
+the initial root separate from subsequent branching. For a continuous-time model
+sampled at interval Δt, K=exp(ΔtQ) describes the sampled sequence; an event-resolved
+history requires its timing and event resolution as well.
 
-## Determinism and the meaning of breadth
+If K is finite, irreducible and aperiodic, the excess converges to a constant
+c(x), and ℓₙ(x)=nh+c(x)+o(1), with h=πg. A multiplicative breadth advantage
+exp c(x) can remain while the extra growth rate vanishes. Fresh-continuation
+advantages decay as the preparation mixes. Chapter 09 proves these statements.
 
-A deterministic classical machine receives one unit of alternative breadth even
-if its internal organization is elaborate. This is an accepted calibration:
-one complete future is one alternative. The machine's causal organization remains
-in the development, and its response to changed physical conditions can still be
-studied. Breadth from an exact root and controllability across varied conditions
-answer different questions.
+Finite compounding and long metastable episodes remain meaningful under this
+boundary. Indefinitely accumulating preparation advantage requires dynamics
+that escape common finite mixing. Distinct persistent sectors, unbounded
+configuration spaces or suitably non-forgetting dynamics may permit it.
+External drive alone is insufficient: driven systems can also mix under a
+fixed law. These are conditions on the claim being tested, not requirements
+that useful generativity last forever.
 
-This fits an intuition of freedom as genuinely open alternatives. It leaves room
-for separate accounts of reasons-responsive agency under determinism. Quantum
-unitarity is a further distinction: deterministic evolution of a universal
-wavefunction does not imply a single classical outcome.
+## Calibration and joint structure
 
-Repeated stochastic activity can produce unbounded cumulative path breadth on a
-small state space. That behavior is also part of the adopted calibration. The
-empirical question is whether generative configurations produce additional
-downstream breadth under matched physical conditions, and whether that breadth
-is a useful proxy for opportunities for value.
+A deterministic exact classical root has one complete alternative and therefore
+breadth one, however elaborate its development. Its internal causal organization
+remains in the physical object. This calibration fits freedom understood as open
+alternatives while leaving reasons-responsive agency a separate question.
+Deterministic quantum unitary evolution likewise describes a different object
+from a single classical outcome.
 
-Noise is not removed to protect a preferred answer. Instead, experiments must
-ask whether generative arrangements produce additional breadth under matched
-physical conditions, and why. A tie between different structures is permissible;
-systematic failure on the intended comparison remains a reason for revision.
+Repeated stochastic activity can generate unbounded cumulative path breadth in
+a small state space. Noise therefore counts. The mechanism inquiry asks what
+organization adds under matched conditions; the ethical inquiry asks how the
+resulting breadth serves as a proxy for valuer-supporting substrate.
 
-Independent classical systems multiply breadth because their joint entropy
-adds. Coupled systems require the actual joint law. Sums or products of marginal
-scores cannot substitute for shared-resource and higher-order dependence.
+Independent systems multiply breadth because their joint entropy adds. Coupled
+systems use the actual joint law. Shared resources, correlations and higher-order
+compatibility can alter both the marginals and the combined developments.
+Composition is represented in that law rather than awarded an additional score.
 
-## Breadth and controllable influence
+## Thermal substrate
 
-Empowerment measures the capacity of a specified action-to-future-observation
-channel, typically maxₚ₍ₐ₎ I(A;Y). It asks how much distinguishable influence an
-embedded controller can exercise. Lushness asks about the native weighted
-continuation of the encompassing physical system [R19].
+Thermal continuation supplies a baseline profile matched to law, material and
+energy resources, boundaries, horizon and resolution. It remains substrate even
+where it contains little organized enabling. Gas is permitted to lead a
+comparison. The vacuum-like analogy names this baseline role; a thermal gas is
+a different physical object from the QFT vacuum.
 
-The distinction matters in both directions. Independent output noise adds no
-action information to an unchanged empowerment channel, while it can add path
-breadth. Conversely, channel capacity optimizes over input distributions rather
-than retaining the actual native distribution of a present. It needs an action
-boundary, output frame and implementation assumptions. Equal capacities can hide
-different transformation repertoires and compositional dependencies.
+Positive excess over a justified reference establishes an advantage at those
+coordinates. Its magnitude, duration and regeneration are separate findings.
+A within-sector reference tests preparation advantage inside that sector;
+matched preparations reaching different sectors test the effect of organization
+on the long-run regime. The reference must state which comparison is intended.
+Chapter 08 connects these questions to the finite evidence.
 
-Omega uses empowerment as an agency/access diagnostic. The physical carrier and
-frame construction retain the controller, its resources and its effects on other
-loci, so increasing one controller's influence can be compared with the wider
-continuation it changes. This motivates keeping empowerment alongside lushness.
+## Influence as a diagnostic
 
-Empowerment and causal entropic forces were already intellectual resources in
-v2; empowerment also informed v3.2 and a finite decision control. Causal entropic
-forces investigate behavior driven by future-path entropy gradients [R20]. The
-shared question is how future accessibility shapes organization; Omega's native
-breadth readout does not postulate an extra entropy-maximizing physical force.
+Empowerment measures a specified action-to-observation channel's capacity,
+typically maxₚ₍ₐ₎ I(A;Y) [R19]. It describes controllable influence from an
+embedded process. Lushness concerns the encompassing native continuation,
+including processes outside a preselected controller boundary.
 
-## The thermal baseline
+Independent output noise can add breadth without conveying action information.
+Channel capacity also optimizes over input distributions, while native breadth
+uses the actual physical weights. Empowerment is therefore useful alongside
+lushness for diagnosing agency and access. The encompassing frame retains the
+controller's resources and its effects on other processes.
 
-Thermal continuation supplies the reference level, not a demand that gas lose.
-The baseline is a profile matched to law, conserved quantities, material and
-energy resources, boundaries, horizon and resolution. Calling it vacuum-like
-expresses its conceptual role; it does not identify thermal gas with the QFT vacuum.
+Causal entropic forces investigate behavior driven by future-path entropy
+gradients [R20]. This supplies another connection to how accessibility shapes
+organization. Omega's mechanism tests instead ask what the stipulated physical
+law generates, with breadth as the readout of that development.
 
-A positive excess on some part of a matched profile demonstrates an advantage
-for that candidate and regime. Its size, duration and ability to regenerate are
-different findings. A transient contribution remains real even if a thermal
-reference later outlasts it. A broad ensemble spanning different invariant
-sectors, however, is not automatically the correct comparator for an exact root.
-Chapter 08 records where this distinction changed the interpretation of a probe.
+## Coherent continuation
 
-## Why the quantum case needs more than path probabilities
-
-Quantum evolution retains coherent relationships among contributions. In a
-specified history description, class operators Cα give
+Quantum developments combine through amplitudes. In a specified history
+representation, class operators Cα define
 
 \[
 D_{\alpha\beta}=\operatorname{Tr}(C_\alpha\rho_\Sigma C_\beta^\dagger).
 \]
 
-The diagonal gives self-weights; off-diagonal entries retain interference. For
-coarse alternatives A, amplitudes combine through C_A=Σα∈A Cα before weighting.
-In general D(A,A) is not an additive classical probability measure on arbitrary
-history sets. Decoherent-histories theory supplies the conditions under which
-a chosen family admits classical probabilities [R1, R2].
+Diagonal entries give self-weights and off-diagonal entries retain interference.
+Coarse alternatives combine their class operators before weighting. Decoherent
+history families admit classical probabilities under the relevant conditions
+[R1, R2]; coherent regions retain the fuller relational object.
 
-An idle qubit prepared in |0〉 illustrates the remaining issue. A one-cut Z
-description has one occupied outcome; a one-cut X description has two equally
-weighted outcomes. Both are mathematically legitimate questions. A scalar
-independent of the question cannot agree with both classical readouts merely
-because each family decoheres. Actual apparatus can make a question physical,
-but silently inserting apparatus changes the native development.
+The key construction problem is selecting a physically justified comparison.
+For an idle |0〉 qubit, Z and X questions yield different outcome breadths. Actual
+reader interactions can make those questions physical. Merely choosing a
+mathematical partition leaves the native process unchanged. A universal breadth
+cannot agree with all such readouts while also ignoring their distinction.
 
-The existing tests make the problem concrete. Entropy of a history matrix's
-diagonal discards interference. Entropy of its spectrum retains some overlap
-but can change when a purely analytical checkpoint is added. A conditional
-record-mixture entropy need not be the entropy of the actual reduced state.
-Bounds alone do not cure these representation dependencies.
+Environmental recording supplies one route toward stable classical distinctions.
+Quantum Darwinism studies their redundant availability in environmental records
+[R21]. Copies of a record can improve accessibility and persistence without
+adding independent alternatives. Coherent intervals, leakage and recombination
+remain part of the full continuation.
 
-Quantum Darwinism offers a physical route to classical distinctions through
-their redundant recording in an environment [R21]. It is a candidate resource
-for the family-selection problem. Replicating the same record can strengthen
-its accessibility and stability without creating a new independent alternative.
-Whole-development breadth must also handle coherent intervals and recombination,
-so record selection is one part of the quantum construction.
-
-## Coherence, records and the proposed limits
-
-The intuition of one coherent direction and many distinguishable classical
-alternatives motivates conditional limits. For a fixed physically justified
-family with weights p and a fixed calibration, investigate
+For a fixed justified family, weights and calibration, the proposed bounds
 
 \[
-1\leq L_Q\leq\exp H(p).
+1\le L_Q\le\exp H(p)
 \]
 
-One is the chosen unit for a single effective continuation. It is not a theorem
-that every globally pure state has extent one. The upper comparison is the
-fully distinguishable classical version of those same weighted alternatives,
-not a ceiling across all frames, preparations and horizons.
+compare a single effective direction with the fully distinguishable classical
+version of the same weighted alternatives. Global purity alone does not select
+the lower value. A common unitary preserves branch-vector inner products;
+marker reversal can leave environmental records intact; conditional erasure can
+reveal complementary fringes while the unconditioned distribution has none.
+These distinctions belong in the physical construction of a quantum comparison.
 
-Record formation, leakage and erasure must be represented physically. A common
-global unitary preserves branch-vector inner products. Undoing a marker locally
-does not remove a record leaked elsewhere. Conditional eraser outcomes can show
-complementary fringes whose unconditioned mixture has none. These facts prevent
-a naive universal story in which global quantum extent must always go 1→2→1.
+The research objective is breadth or a justified ordering compatible with native
+dynamics, composition, equivalent descriptions and the classical calibration.
+The futuresfield remains the object throughout. A base measure or algebraic
+reference can help construct its extent, while a successful comparison need
+not first acquire a literal volume element.
 
-The present open task is to construct a breadth or comparison that respects
-the native process, equivalent descriptions, physical composition and the
-justified classical boundary. A base measure or native development algebra may
-help, but naming one does not select it. Coherent regions remain in Omega even
-when no accepted scalar describes their breadth. The field is the physical
-object; its measurement remains research.
+## The remaining construction and its next test
+
+The open quantum task is to define which comparisons are intrinsic to the
+native development and which are relative to a physically specified interface.
+Equivalent descriptions must transform state, law, interaction structure and
+readout together. Merely inserting an analytical checkpoint cannot create a
+new physical alternative. A later physical record, in contrast, can make a
+previously unavailable distinction accessible. These are different operations
+on the same formal ingredients.
+
+The next compatibility audit uses the existing idle, echo, record-extension and
+eraser fixtures. It checks description invariance, independent composition,
+sufficient-present rerooting and classical history extension jointly. A
+record-based lower certificate must concern a compatible restriction of the
+same comparison used for the upper bound. Failure to find such a record gives
+no general zero or one assignment to the coherent region. Bounds alone cannot
+choose a quantum extent: a proposed construction must also pass the invariance
+and physical-provenance checks.
+
+A reference-geometry route remains available if the physics supplies a common
+ruler whose transformation and composition are justified. Finite algebraic
+closure alone can lose timing, coupling strength and accessibility, so the next
+step on that route would be an explicit native prescription retaining them,
+tested on the same fixtures. A larger field simulation is useful once it answers
+a defined physical question that these fixtures cannot resolve. The immediate
+deliverable is a scoped construction, a demonstrated incompatibility among
+requirements, or a precise missing physical input.

@@ -17,6 +17,23 @@ For a finite closed quantum adapter,
 
 The local algebras, constraints, Hamiltonian and sufficient present define the physical model. An equivalent representation transforms these together. A restriction to a subsystem can omit environmental memory, so its reduced state alone need not be sufficient for further prediction. A process-tensor description can retain multitime operational dependence once its intervention slots are specified [R3]. Those slots describe questions or actual operations; they do not create all physical possibility by definition.
 
+A physical present frame is \(F_\Sigma=(\Sigma,\rho_\Sigma)\) together with the
+native specification needed to evolve it. The cut is a physical hypersurface,
+or the declared finite-model analogue. A frame description restricts, represents
+or conditions this object. The complete development retains the propagator
+family \(\{U(t,s):\Sigma\le s\le t\le T\}\), with its interactions and composition,
+not just \(U(T,\Sigma)\). Idle and out-and-back evolution can share that endpoint.
+Changing coordinates transforms state, observables and law consistently.
+
+An operational composition can be represented by a prefix joint law
+\(J(r,y,b,t\mid x)\) for accessible record r, sufficient residual state y,
+resource bill b and elapsed time t. A suffix may depend on r, not on inaccessible
+knowledge of y held only by the analyst. Its law is integrated against J, with
+the remaining deadline and resource stock updated. Failed and unfinished
+prefixes retain their mass and physical residual. A proposed compression is
+sufficient only for the interfaces and future compositions it demonstrably
+preserves.
+
 ## B. Classical history breadth
 
 For a discrete Markov law K and exact root x₀,
@@ -64,6 +81,67 @@ F_x(m,n)=(K^m\ell_n)(x).
 
 This is an expectation of separately rooted queries. In general exp F is a geometric mean of their breadths, not their arithmetic mean. It does not include entropy of uncertainty over the new root. A reference must respect conserved quantities, sectors, boundaries and preparation assumptions relevant to the comparison.
 
+### Finite mixing bounds the preparation advantage
+
+**Proposition.** Let K be a fixed finite irreducible, aperiodic stochastic kernel,
+π its stationary law, g(x)=H(K(x,·)) and h=πg. Then
+
+\[
+c(x)=\sum_{t=0}^{\infty}(\delta_xK^t-\pi)g,\qquad
+\ell_n(x)=nh+c(x)+O(r^n),\quad 0<r<1.
+\]
+
+**Proof.** Finite irreducible, aperiodic chains converge geometrically [R22]:
+there are C<∞ and 0<r<1 with supₓ‖δₓKᵗ−π‖TV≤Crᵗ. Since g is bounded,
+
+\[
+|(\delta_xK^t-\pi)g|\le 2C\|g\|_\infty r^t,
+\qquad
+|\Delta\ell_n(x)-c(x)|\le
+\frac{2C\|g\|_\infty r^n}{1-r}.
+\]
+
+Absolute summability proves the assertion. Reversibility and detailed balance
+are not assumptions. The constants depend on K; they need not remain bounded
+when system size or a physical parameter changes.
+
+Consequently Lₓ(n)/exp(nh)→exp c(x), and for two preparations
+Lₓ(n)/Lᵧ(n)→exp(c(x)−c(y)). The ratio need not approach one. The denominator
+exp(nh) is the geometric mean of separately rooted stationary breadths, not
+the arithmetic mean or the breadth of a mixed initial root.
+
+The excess next-step production tends to zero. More strongly, for fresh
+continuation Fₓ(m,n)=Kᵐℓₙ(x),
+
+\[
+|F_x(m,n)-nh|
+\le\frac{2C\|g\|_\infty r^m(1-r^n)}{1-r}
+\le\frac{2C\|g\|_\infty r^m}{1-r}.
+\]
+
+Thus fresh advantages decay even uniformly over the future window n. The
+reactive probe's reported fresh-window comparison is this kind of query;
+its eventual convergence is conditional on the sampled chain satisfying the
+stated assumptions, not established by its finite-window result alone.
+
+For a common time-dependent sequence Kₜ on a fixed finite state space,
+let gₜ(x)=H(Kₜ(x,·)). Two preparation laws μₜ,νₜ obey
+
+\[
+\Delta\ell_n=\sum_{t=0}^{n-1}(\mu_t-\nu_t)g_t.
+\]
+
+If Σₜ‖μₜ−νₜ‖TV<∞, their log-breadth difference still converges because
+gₜ≤log|X|. Time dependence therefore does not itself guarantee escape.
+A finite irreducible periodic chain also shares an asymptotic entropy rate,
+although the bounded offset can oscillate rather than converge.
+
+Distinct closed classes can carry different entropy rates, but a cross-class
+advantage is not an advantage against the preparation's own class-conditioned
+stationary reference. Infinite state spaces, growing finite-size limits and
+non-forgetting driven laws require their own analysis; none guarantees a
+positive generative advantage merely by escaping this proposition.
+
 ## D. Quantum history functional
 
 For exhaustive orthogonal projective alternatives at declared cuts,
@@ -98,6 +176,13 @@ For unit cells it reduces to perplexity. For uniform occupation relative to thos
 
 A finite algebra ⊕ₐMₙₐ admits traces τ(A)=ΣₐwₐTr(Aₐ). Choosing weights, native generators and history composition remains additional work. An abstract algebra can ignore inert representation multiplicity, but algebraic closure can also erase coupling strength, timing and reachability. Acting with every observable is not the same as native evolution. No τ-based formulation is required by v4, and the finite trace cannot be carried unmodified into general local QFT.
 
+This route remains open. Its next obligation is a native prescription that
+preserves equivalent descriptions, timing and coupling strength, excludes inert
+bookkeeping, and reproduces the declared classical unit-alternative limit.
+Testing that prescription on record extension and coherent erasure precedes
+promoting any resulting entropy to quantum lushness. A broader field-theoretic
+construction must separately justify its continuum or regulated reference.
+
 ## F. Decision implementations and matching
 
 Write J for a physical decision lineage and m for a justified matching rule. Schematically,
@@ -109,7 +194,7 @@ Write J for a physical decision lineage and m for a justified matching rule. Sch
 \{\Omega^m_\pi:\pi\in\Pi_m\}.
 \]
 
-Here CF is a construction to be supplied, not an oracle already defined by physics. Πₘ contains implementations admissible under the matching assumptions. The evaluation relation is also explicit. For finite nonempty sets and a strict partial preference, maximal elements exist; an infinite plan space needs additional existence conditions. A family of justified matching rules can yield different maximal sets, which must be reported rather than silently collapsed into one answer.
+Here CF is a construction to be supplied, not an oracle already defined by physics. Πₘ contains implementations admissible under the matching assumptions. The evaluation relation is explicit; in this programme it is the intended lushness ordering, provisionally partial where the comparison is unresolved. For finite nonempty sets and a strict partial preference, maximal elements exist; an infinite plan space needs additional existence conditions. A family of justified matching rules can yield different maximal sets, which must be reported rather than silently collapsed into one answer.
 
 Classically, selecting histories by a plan gives P(Y|π occurs). An implemented alternative gives the law generated by its physical realization under the declared matching. Equality requires justification. Native branch support alone is neither an implementation certificate nor a proof of causal control. In continuous spaces, nonzero support of an event or neighborhood must not be confused with positive probability of every individual trajectory.
 
@@ -139,6 +224,15 @@ Effective resistance and relaxation spectra provide related but narrower access 
 
 Equal endpoint laws give equal endpoint-only readouts. Convergence of laws implies convergence of a readout only under suitable continuity and integrability conditions. Neither statement erases distinctions in complete developments or mandates a particular cumulative score.
 
+For a controlled finite model, a viability set collects states from which an
+available policy keeps declared requirements satisfied against the specified
+disturbances. Existence of a separate successful action for each hidden state
+does not supply an executable selector. Full-state feedback and partial
+observation therefore require different state descriptions and proof obligations.
+Robust joint recovery needs one policy for the joint requirements; separate or
+pairwise guarantees alone do not establish it. These are scoped tools for
+implementation and maintenance, not alternative definitions of lushness.
+
 ## H. Terms and claim status
 
 | Term | Meaning in v4 |
@@ -146,18 +240,29 @@ Equal endpoint laws give equal endpoint-only readouts. Convergence of laws impli
 | Native development | The physical state and law evolving with declared interactions, resources and boundaries. |
 | Futuresfield | Physical possibility and its relational continuation, including quantum coherence; no added substance. |
 | Perspective | Situated physical access and influence of a process. |
-| Frame | A declared description or conditioning within the encompassing object. |
+| Physical present frame | An admissible present hypersurface with its physical state; finite models use an update cut. |
+| Frame description | A representation, restriction or conditioning of that physical frame and its continuation. |
 | Lushness | Intended effective weighted extent/breadth of continuation; a classical calibration exists, general quantum comparison remains open. |
 | Generativity | Producing or maintaining conditions that enable further continuation, proposed to increase lushness in some regimes. |
+| Access | A witnessed route to an outcome or capability, with native weight, time, information and physical resources. |
+| Joint feasibility | Existence of one lawful realization of a combination; separate witnesses do not establish it. |
+| Readiness | Present availability of enabling conditions, distinguished from the route and bill for producing them. |
+| Deformer | An organized process that changes surrounding continuation. |
+| Agency | Feedback and internal organization systematically modulating a process's effects; not a gate to possible valuerhood. |
+| Persistence filter | Native conditions determining which processes continue to have consequences. |
+| Recovery | Restoration of a declared function or organization by a physical route; existential, probabilistic and robust claims differ. |
+| Individual trajectory | A particular causally maintained and transformed organization; pattern matching alone does not establish identity. |
 | Residual continuation | What follows from the sufficient present at a new cut. |
 | Reconvergence | Agreement of later state or residual law; it need not erase distinct original-root prefixes. |
 | Physical occurrence | A particular realization, distinct from an isomorphic description or matching residual law. |
 | Valuer | A process through which distinctions matter; functional, phenomenal and ethical scope must be distinguished. |
+| Potential-valuer admission | Every consequential process remains eligible under uncertainty; admission establishes neither actual valuation nor equal moral weight. |
 | Conditional normativity | Reasons whose force depends on valuing and its consequential conditions. |
 | Decision lineage | Physical organization carrying the evaluated decision through the relevant interval. |
 | Implementation | A lawful, resource-accounted realization of a plan or control. |
 | Counterfactual matching | The declared treatment of varied and shared conditions when implementations are compared. |
 | Anchor | A section proposed to root a comparison; its uniqueness and selection remain open. |
+| Focus | A specified future question represented, where applicable, by an effect or test; analytical focus does not implement an intervention. |
 | κ | Placeholder for the relation between physical organization and experience, not an established mechanism. |
 | Alpha / Logos / Omega | Interpretive possibility / lawful articulation / completed manifestation. |
 | Ultimate frame | Intended encompassing closure of comparison, not an external chooser or a computed universal ordering. |

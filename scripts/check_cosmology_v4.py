@@ -15,6 +15,8 @@ def main() -> None:
     assert PHYSICS_OUTPUT.read_text(encoding="utf-8") == build_physics(), "Stale physics extract"
     files = sorted(EDITION.glob("[0-9][0-9]_*.md"))
     files += [EDITION / "README.md", OUTPUT, PHYSICS_OUTPUT]
+    files += [EDITION / "REWRITE_CONTROL.md"]
+    files += sorted((EDITION / "audits").glob("*.md"))
     files += sorted((ROOT / "docs/quantum").glob("*.md"))
     missing = []
     link_count = 0
@@ -33,10 +35,19 @@ def main() -> None:
     defined = set(re.findall(r"\*\*(R\d+)\.", references))
     cited = set(re.findall(r"\bR\d+\b", expected))
     assert cited <= defined, f"Undefined references: {cited - defined}"
+    physics = PHYSICS_OUTPUT.read_text(encoding="utf-8")
+    physics_defined = set(re.findall(r"\*\*(R\d+)\.", physics))
+    physics_cited = set(re.findall(r"\bR\d+\b", physics))
+    assert physics_cited <= physics_defined, "Missing physics-extract references"
+    for path in sorted(EDITION.glob("[0-9][0-9]_*.md")):
+        text = path.read_text(encoding="utf-8")
+        assert not re.search(r"^\+=", text, re.MULTILINE), f"Patch artifact in {path}"
+        assert text.count(r"\[") == text.count(r"\]"), f"Unpaired math block in {path}"
+        assert not re.search(r"^##[^\n]*\n\s*\n##", text, re.MULTILINE), f"Empty section in {path}"
     assert expected.count('<a id="chapter-') == 12
     record = {
         "edition": "Omega Cosmology v4 full draft",
-        "date": "2026-10-09",
+        "date": "2026-10-10",
         "chapters": 12,
         "word_count_whitespace": len(expected.split()),
         "bytes": OUTPUT.stat().st_size,

@@ -2,12 +2,16 @@
 
 **Physical possibility, situated value and the Alpha–Omega interpretation**
 
-9 October 2026. [Read the complete manuscript](OMEGA_COSMOLOGY_V4_COMPLETE.md).
+10 October 2026. [Read the complete manuscript](OMEGA_COSMOLOGY_V4_COMPLETE.md).
 
-[Published ODT-revised reading copy](https://drive.google.com/file/d/1lPV6vP3RKK2UwXA6B6o2XHNW3RrqTfa8/view).
-The repository draft now adds a front claims ledger, clearer accepted calibrations,
-restored intellectual connections and a tighter narrative. These editorial
-revisions are included here; the Drive reading copy remains the earlier ODT revision.
+[Drive reading copy](https://drive.google.com/file/d/1lPV6vP3RKK2UwXA6B6o2XHNW3RrqTfa8/view).
+This edition is the staged chapter-by-chapter rewrite around the programme's
+physical, ethical and interpretive spine. It includes the finite-mixing boundary
+and the adversarial ethical-proxy criterion. Commit `829d0da` remains the
+previous editorial edition.
+
+[Source coverage and review](REWRITE_CONTROL.md) records the chapter audits,
+retained developments and treatment of superseded formulas.
 
 [Physics research extract](OMEGA_V4_PHYSICAL_PROGRAMME.md): generated from the
 same chapter sources for readers focusing on the physical programme. The full

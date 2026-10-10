@@ -1,22 +1,22 @@
 # 07 — Alpha–Omega and the interpretive horizon
 
-The physical programme describes one reality through its lawful continuations, their composition, and the situated frames from which parts of that development can be encountered. The Alpha–Omega proposal gives this account a wider interpretation. It names a possible relation between generative possibility, lawful realization, and completed manifestation. It does not add a new force to the physical model, and Gradient Ethics does not depend on accepting it.
+The physical programme describes reality through its lawful continuations, their composition, and the situated frames from which development can be encountered. Alpha–Omega interprets that account at a wider metaphysical scale, proposing a relation among generative possibility, lawful realization and completed manifestation. It adds an interpretive horizon; the ethical bridge remains value requiring valuers together with conditional normativity, so Gradient Ethics does not depend on Alpha–Omega.
 
-The ethical bridge remains value requiring valuers together with conditional normativity. Alpha–Omega places the physical and ethical programme within a proposed account of reality as a whole.
+The connections to philosophical and theological traditions are research hooks for later work as the physical foundations mature. They orient downstream inquiry rather than serve as evidence for the finite probes.
 
 ## One reality, differentiated within itself
 
-The preferred metaphysical picture begins with one fundamental reality whose multiplicity is internal. Organisms, fields, histories, and perspectives are real differentiations of that reality, not independent substances later assembled from outside. Unity here does not mean sameness. Relations produce determinate structure, and structures can maintain boundaries, enter into exchanges, and acquire different histories.
+The preferred metaphysical picture begins with one fundamental reality whose multiplicity is internal. Organisms, fields, histories, and perspectives are real differentiations of that reality. Unity does not mean sameness: relations produce determinate structures that maintain boundaries, enter exchanges, and acquire distinct histories.
 
 This whole-first interpretation treats discernible components as relationally specified within one fundamental reality. Unity, self-sufficiency and goodness are separate questions. The [v2 account of reality and perspective](../v2/01_REALITY_COMPLETION_AND_PERSPECTIVE.md) develops the distinction between a common substrate and the stronger whole-first interpretation.
 
-Aquinas and Spinoza are important philosophical interlocutors, but the connections are reconstructions. Aquinas's account of divine simplicity presses a sharper question than whether the world has one underlying reality: can a relationally differentiated whole be simple in the strict sense that excludes real composition? Omega's preferred picture does not silently claim to meet that standard. Aquinas's account of eternity also offers a comparison for a whole not successively acquiring its history. Spinoza is a neighbour for substance monism and, in a different connection, for conatus: the persistence or striving of a finite thing. Omega's treatment of persistence as a condition of continuation does not adopt Spinoza's complete metaphysics or derive value from persistence alone. These are proposed links that clarify both resemblance and departure.
+Aquinas and Spinoza are important interlocutors for proposed, reconstructive comparisons. Aquinas's divine simplicity raises whether a relationally differentiated whole could meet the strict standard that excludes real composition; Omega's preferred picture leaves that question open. His account of eternity also offers a comparison for a whole that does not successively acquire its history. Spinoza is a neighbour for substance monism and, separately, for conatus—the persistence or striving of a finite thing. Omega treats persistence as a condition of continuation, without adopting Spinoza's complete metaphysics or deriving value from persistence alone. These links clarify both resemblance and departure.
 
 ## Completion without a final instant
 
-Omega adopts a block–Everett interpretation as its working picture: one completed reality contains internally differentiated events and the correlated alternatives of its quantum history. “Completed” does not mean that the cosmos reached a last moment and stopped. Nor does it make change unreal. Events occur in temporal relations; organisms develop, remember, act, and die. A local process can change irreversibly even when the total history is considered as a whole.
+Omega adopts a block–Everett interpretation as its working picture: one completed reality contains internally differentiated events and the correlated alternatives of its quantum history. Completion means the whole history is considered together, while temporal relations within it still describe development, memory, action, death and irreversible local change.
 
-The block is therefore not a frozen present. It is a complete structure whose internal relations include temporal order, causal influence, records, and asymmetries of access. A situated observer encounters only a bounded region and reconstructs more of the whole from within. There is no view from outside the completed reality merely because a theory represents the entire history.
+The block is a complete structure whose internal relations include temporal order, causal influence, records, and asymmetries of access. A situated observer encounters a bounded region and reconstructs more of the whole from within; representing the full history does not confer an external viewpoint.
 
 The distinction among three scopes remains essential. **Formal admissibility** concerns what follows under a specified model and its rules. **Actual physical realization** concerns what belongs to the physical world. **Habitation** concerns where experience occurs. Relating these three scopes is the cosmological task. κ names the remaining question about physical organization and experience.
 
@@ -28,9 +28,31 @@ Cosmopsychism has a specific proposed role at that boundary: it is the bridge pa
 
 QFT is the preferred physical direction for characterizing our world. Alpha–Logos–Omega extends the interpretation beyond that physical description, asking how realized structure relates to possibility, law and manifestation.
 
+The proposed general engine is **gradient and filter**: oriented differences
+permit developments while laws, constraints and conditions of persistence select
+what occurs and continues. A literal mathematical gradient requires its function
+and geometry. Alpha need not impose one potential, a gradient-descent algorithm
+or universal fluid dynamics on every realization. Its generalization becomes
+substantive when an explicit map preserves the composition and consequence of
+the physical case. Recovering recursive construction, maintenance and joint
+feasibility is a first obligation for such a map.
+
+Completed manifestation and the aspiration to maximal lushness are distinct.
+The first names the object; the second asks about a comparison within or among
+lawful objects. A maximum might be unattained, or several continuations might
+remain incomparable under a bounded account. The persistence filter constrains
+viable corridors without establishing a cosmic march toward a champion. Finite
+flourishing and loss remain part of completion regardless of the final state.
+
 This also sets the intended scope of “ultimate frame.” It names the encompassing comparison at which the regression of situated normalization would close. It is not an external chooser evaluating the world from beyond it. Present frame constructions provide the actual apparatus for describing situated weighting and access; the ultimate-frame role remains an intended closure, not a completed mathematical order. A formal description of closure would still need to show how comparisons across frames are justified.
 
 The proposed **demiurge** connection is still underspecified. A provisional analogy concerns lawful realization shaping determinate material through intelligible order. A developed correspondence requires a closer account of the intended relation to the historical tradition; the present analogy posits no cosmic agent.
+
+The next interpretive work is therefore specific: state which sense of formative
+ordering the analogy intends, compare it with the relevant source tradition and
+show which further premises would be required. The same method applies to the
+Aquinas and Spinoza connections. Similar vocabulary locates a question; an
+explicit correspondence establishes how far the analogy can carry an argument.
 
 ## Ground, manifestation, and the veil
 
@@ -52,7 +74,7 @@ A stronger interpretation may propose that awareness is divine participation exp
 
 Communion names integration that sustains participants and their value-capable continuation without erasing their differences. Coordination can make a plurality more coherent while preserving identity, correction, and further generation. Love may be read as active concern for another's continuation and development; justice as the terms that protect and coordinate such continuation. These are structural interpretations of familiar virtues, not exhaustive definitions of religious traditions.
 
-Judgment can be understood as the completed relational truth of a trajectory: what it did to the continuations of those it affected. Redemption can name recovery of generative capacity after contraction. Heaven and hell can serve as images of sustained generative communion and terminal solitude, respectively. “Terminal solitude” is the severe limit case in which a trajectory is closed off from the continuation of others. These interpretations make the consequences of action matter within a completed whole; they do not establish postmortem destinations, cosmic punishment, or guaranteed recovery.
+Judgment can be understood as the completed relational truth of a trajectory: what it did to the continuations of those it affected. Redemption can name recovery of generative capacity after contraction. Heaven and hell can serve as images of sustained generative communion and terminal solitude, respectively. “Terminal solitude” names a severe closure of value-capable continuation and regeneration in the relevant regime. Solitude or a single outer boundary alone does not establish that closure: one organization could sustain rich internal plurality and generativity. These interpretations make the consequences of action matter within a completed whole; they do not establish postmortem destinations, cosmic punishment, or guaranteed recovery.
 
 The proposal is deliberately non-excisive at the level of creation and communion. A unity achieved by deleting its participants would miss the point of communion. Yet this preference is not a theorem that reality must be good, or that every loss is compensated by a larger whole. It names the theological and ethical orientation the project is trying to make intelligible while leaving its adequacy open to argument.
 

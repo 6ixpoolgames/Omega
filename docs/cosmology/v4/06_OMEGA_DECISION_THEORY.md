@@ -2,7 +2,7 @@
 
 Omega Decision Theory (ODT) asks which physically realizable variations of an embedded decision process correspond to choosing differently, and how their complete consequences should be compared. Its ambition extends beyond an audit checklist. It seeks a decision theory grounded in the physical organization of the decision itself. The counterfactual construction needed to complete that theory remains open.
 
-The futuresfield is prior to the decision problem. Organisms, controllers, institutions, plans and evaluators are structures within native development. An action menu describes a situated part of physical possibility; it does not define that possibility. Generic ODT studies implementation, counterfactual dependence and comparison. GE-ODT applies Gradient Ethics' conditional commitments to the resulting continuations. Neither an evaluation nor counterfactual semantics is supplied merely by naming the physical carrier.
+The futuresfield is prior to the decision problem. Organisms, controllers, institutions, plans and evaluators are structures within native development. An action menu describes a situated part of physical possibility; it does not define that possibility. ODT studies implementation, counterfactual dependence and comparison in service of the programme's intended arbitrator: lushness of the resulting continuation. GE supplies the conditional reason for using that substrate comparison. The implementation machinery can be described abstractly, but its intended evaluation here is not an unspecified external objective. Completing the lushness comparison is therefore central to completing ODT; counterfactual matching is a separate construction it also needs.
 
 ## Decision lineage, information and plans
 
@@ -26,7 +26,16 @@ An admissible implementation needs a witness: a model of how the proposed change
 
 Locality constrains implementation; it does not justify instantaneously replacing a register while omitting the required apparatus and correlations. A costly sequence reaching a state is not evidence for a free present edit to that state. Equivalent descriptions must not add options. A coarse quotient must preserve the relevant implementation and consequence distinctions, not merely an endpoint law.
 
-These requirements constrain implementable alternatives. They do not yet supply a universal criterion for endogenous control, lineage boundaries or minimal deformation. Those remain construction problems for finite models before becoming claims about agents generally.
+The construction problem is to determine endogenous control, lineage boundaries and which surrounding changes an implementation requires. Finite models can address it by representing the controller, alternatives and apparatus explicitly, then checking which distinctions survive changes of description. A declaration of minimal deformation needs a physical criterion; mere register count depends on representation.
+
+An abstract model also owes a connection to its physical implementation. A
+simulation relation can supply one sufficient form of evidence: each proposed
+operation has a concrete counterpart preserving the continuation property being
+claimed. The obligation differs for existence of a route, success with a stated
+probability, and reliable recovery across adversarial disturbances. An optimistic
+abstraction that retains one successful route cannot establish robust recovery.
+This is where joint feasibility, accessible information and the full resource
+bill become requirements on a decision argument.
 
 ## Counterfactual matching and anchors
 
@@ -34,7 +43,7 @@ A **matching rule** m identifies the physical variations instantiating compared 
 
 An **anchor** is a proposed section rooting the compared implementations. Present-edit matching asks for alternatives lawful from that section onward. History-consistent matching additionally requires an appropriate lawful common past. The first does not guarantee implementability; the second does not always select one section.
 
-The proposed **latest history-consistent divergence** is worth testing. It seeks the organization actually carrying the alternative, avoiding both unnecessarily remote variation and an artificial final-act substitution. A policy formed before a prediction can have different dependence from a fresh decision afterward.
+The proposed **latest history-consistent divergence** seeks the latest admissible section at which the compared lineage alternatives separate under the chosen history-consistency requirements. It follows the organization carrying the alternative while limiting unrelated earlier variation. A policy formed before a prediction can have different dependence from a fresh decision afterward.
 
 This is a candidate matching rule, not a theorem. Several incomparable sections may qualify; continuous settings may have no latest qualifying point. Remote divergence can carry unrelated differences, and matching them away may require an additional choice. These ambiguities must remain visible.
 
@@ -52,7 +61,7 @@ An implementation can legitimately change shared causes or earlier records where
 
 ## Complete-continuation comparison
 
-For each admissible matching rule m and plan π, let Ωᵐπ denote the resulting complete continuation object. An evaluation relation ≽ compares these objects. It can be partial, and a quantum continuation can retain coherence without becoming a classical branch distribution. Generic ODT does not identify ≽ with lushness or moral value.
+For each admissible matching rule m and plan π, let Ωᵐπ denote the resulting complete continuation object. The intended evaluation relation ≽ is the justified lushness comparison of these objects. It may presently be partial, and a quantum continuation can retain coherence without becoming a classical branch distribution. Lushness supplies ODT's substantive arbitrator as a proxy for valuer-supporting substrate; a particular entropy diagnostic is not automatically the completed comparison.
 
 Consequences include transient achievements, information, waiting, losses, recovery and effects on other systems. A shared endpoint does not make intervening developments equal. This does not prescribe summing an arbitrary score at every time step: the full object comes first, and a cumulative statistic needs its own justification. Finite horizons expose a comparison profile. An uninformative or divergent infinite limit does not settle it.
 
@@ -64,7 +73,7 @@ Information needs no separate bonus. An observe-then-act plan contains its appar
 
 Value, value-capable substrate and lushness remain distinct. Lushness retains its meaning as weighted breadth. Access, persistence, resources and influence can explain or diagnose a comparison without becoming an unannounced replacement definition.
 
-An access profile can describe reaching a declared physical target by a deadline, arrival times and resource costs at a specified reliability. Selecting targets by control capacity divided by free energy is one proposed experimental proxy. It is not an established definition of valuer prerequisites. Sweeping its threshold does not establish the appropriateness of its boundary, denominator or controllability assumptions.
+An access profile can describe reaching a declared physical target by a deadline, arrival times and resource costs at a specified reliability. The target must earn its relation to the question being asked. A proposed route uses organized control and resource requirements to identify candidate enabling structures. Its next test is whether those structures actually maintain or generate further continuation, including controls with equally strong influence but destructive consequences. Threshold sensitivity alone would not establish that they characterize valuer prerequisites.
 
 First arrival differs from maintenance and regeneration. If τ is first arrival, integrating P(τ≤t) up to T measures expected time remaining after arrival, even if the target immediately disappears. It does not measure continued occupancy or retained enabling. Chapter 09 gives the identity and separate diagnostics. These are forward queries from one root, not time-averaged substitutes for the present.
 
@@ -72,17 +81,44 @@ Noise can obstruct access or enable exploration and escape. Routing an existing 
 
 ## Bounded judgment: ODT0–ODT2
 
-The earlier architecture remains the practical layer:
+Bounded ODT uses three practical stages:
 
 1. **ODT0 — License:** check whether implementation, matching and consequence models support the requirements justified in the situation.
 2. **ODT1 — Compare:** retain supported comparisons and their dependence on scope, matching, horizon and unresolved effects.
 3. **ODT2 — Arbitrate:** where action remains necessary despite incomparability, state the authority and rationale of the rule used.
 
-Demonstrated violation differs from insufficient justification. Emergency compromise does not prove every requirement was met. Arbitration can use institutions, negotiated priorities, lotteries or declared scores without claiming a uniquely correct physical exchange rate. This layer does not settle every counterfactual or Pascal-style problem.
+Demonstrated violation differs from insufficient justification. Emergency compromise does not prove every requirement was met. Where lushness cannot yet settle a necessary decision, institutions, negotiated priorities, lotteries or declared scores can provide provisional procedures. These manage incomplete knowledge; they do not replace lushness as the programme's intended substantive arbitrator. This layer does not settle every counterfactual or Pascal-style problem.
 
 Consider repairing a shared water system. A fast proprietary controller, a slower distributed repair and further investigation produce different continuations of supply, health, knowledge and dependency. ODT represents how each plan is implemented and how environmental conditions are matched, compares supported consequences, and handles urgent unresolved tradeoffs. Neither plurality nor speed is an automatic bonus.
 
 Stable preferences support a limited consistency result. If every voluntary revision strictly improves the evaluated complete plan, strict preference is transitive and irreflexive, and pure resource loss is strictly worse, a finite sequence cannot return to the original plan with only an additional loss. This is a conditional preference theorem, not a physical derivation of rationality. Plans can contain learning; changes in beliefs or evaluation between revisions require separate dynamic-consistency analysis.
+
+## Optimization, uncertainty and correction
+
+For one exact numerical objective and fixed action set, restricting to a nonempty
+subset cannot increase the attainable maximum. A protection can agree with that
+maximum or improve a bounded decision maker's performance under error. When
+adopting a protection changes trust, coordination or others' responses, it changes
+the continuation being evaluated and must be represented as an implemented plan.
+The programme seeks sound optimization of the encompassing object, while treating
+its current measurements as fallible.
+
+Three sources of sensitivity should remain distinguishable: changes in physical
+circumstances, changes in the proposed comparison, and changes in available
+information or approximation. Map the boundaries at which the recommendation
+changes. Counting how many parameter settings favor an option is not a probability
+of correctness without a justified measure on that parameter space. The same
+discipline applies to rare, high-stakes outcomes: retain their native weights,
+the evidence for their consequences and the possibility of counting incompatible
+scenarios twice. No automatic cutoff or solution to Pascal-style problems follows.
+
+For alignment and governance, these obligations expose errors a powerful optimizer
+can otherwise exploit: treating an inaccessible repair as available, replacing a
+participant's requirements with convenient records, or combining separately
+feasible promises that cannot be delivered together. Evaluating the construction,
+information, control and maintenance relations helps diagnose such errors. Their
+ethical significance remains grounded in the affected continuation, including
+the system's capacity to discover and correct its own mistakes.
 
 ## Research status
 

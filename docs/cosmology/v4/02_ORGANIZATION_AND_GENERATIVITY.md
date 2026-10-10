@@ -1,128 +1,245 @@
 # 02 — Organization that changes what follows
 
-## From an outcome to an enabling condition
+## Outcomes that become enabling conditions
 
-A catalyst changes the timing and weight of later reactions. A record can guide
-the construction of a tool. A tool can produce components for another tool.
-A community can maintain the material and informational conditions under which
-its members discover and build. These are instances of the same recursive
-relation: an outcome becomes a condition of further outcomes.
+A catalyst changes subsequent reaction rates. A record guides construction.
+A tool makes components for another tool. A community maintains the material
+and informational conditions through which its members discover and build.
+Each exemplifies a recursive relation: an outcome becomes a condition of
+further outcomes.
 
-**Generativity** is the proposed physical mechanism by which such organization
-can expand lushness. Identify construction, maintenance and changes in available
-transformations independently, then test their effects on breadth.
+**Generativity** is the mechanism proposed to expand lushness through such
+organization. Its investigation follows two steps: identify construction,
+maintenance and changes in enabled transformations, then measure their effect
+on weighted continuation. The mechanism and its breadth consequence are thus
+independently examinable.
 
-A short-lived event can open important continuation without reproducing or
-maintaining itself. Persistence enlarges the opportunity for reuse and further
-construction; it is not a prerequisite for a contribution to have occurred.
+## Access under the native law
 
-## Accessibility under fixed laws
+Construction makes lawful transformations more accessible. If a nebula can
+develop into a civilization, that civilization's developments already belong
+to the nebula's encompassing continuation. At the later present, their
+conditional accessibility has changed: their reliability, timing, material
+requirements and dependence on favorable accidents.
 
-Construction does not introduce possibilities outside the encompassing law.
-If a nebula can develop into a civilization, the civilization's subsequent
-lawful developments already belong to that larger continuation. What differs
-at the later present is their conditional accessibility: reliability, time,
-resource requirements, coupling and the dependence on favorable accidents.
+The workshop embodies this change. Prepared tools and usable records can make
+transformations routine that dispersed materials would rarely undergo within
+the same interval. Even where eventual support agrees, different barriers and
+couplings give different finite-time laws.
 
-This difference makes a factory physically important even when eventual support
-sets coincide. A high barrier and a low barrier can permit the same transition
-while producing very different finite-time laws. Accessibility is supplied by
-those laws and their embodied conditions, not by assigning a favorable adjective
-to an endpoint.
+An access claim specifies a physical route. It includes preparation, the records
+available to the apparatus, operating resources, elapsed time and the state left
+for subsequent use. If preparation succeeds with probability p and use succeeds
+with conditional probability q, the whole route succeeds with probability pq.
+Repeated setup attempts change that probability only if failed attempts leave
+retryable states and enough time and feedstock remain. A list of successful
+programs is useful to an analyst; deploying the right one requires an embodied
+selector with the necessary information.
 
-Nor does better access to one outcome necessarily increase immediate breadth.
-Making a fair binary outcome certain reduces its entropy. A reliable constructor
-may nevertheless enable much broader later development. The subsequent gain
-must be demonstrated; it cannot be inferred from reliability alone.
+The physical bill is a profile. Work, feedstock consumption, peak occupied space,
+apparatus time and returned stocks have different composition rules. Sequential
+expenditures can add while peak space takes a maximum; stocks can replenish.
+Taking the best entry in each column from different implementations need not
+describe any implementable combination. Access machinery retains the whole
+witness so later processes inherit its actual residual conditions.
 
-## Construction, maintenance and dependence
+Access and immediate breadth have distinct roles. Making a fair binary outcome
+certain reduces its branching entropy. A reliable constructor can nonetheless
+enable broader later developments. The horizon profile reveals whether that
+later gain occurs and how it compares with the investment required.
 
-Three relationships should be identified separately. **Construction** produces
-conditions for further processes. **Maintenance** sustains or restores such
-conditions. **Dependence** means that a specified physical change alters a
-downstream law. Removing a catalyst can demonstrate dependence without showing
-how that catalyst was constructed or maintained.
+## A witnessed causal ladder
 
-Dependence comparisons require care about what changes. Removing a component
-also changes its matter, energy, geometry and correlations. A matched control
-should state which of these are held fixed and which cannot be. There is no
-universal, context-free intervention called “remove only its contribution.”
+The programme follows a distinction into progressively richer physical uses:
+an initial difference affects a later response; a record carries it; an apparatus
+uses it; that apparatus produces another transformation; several processes
+maintain one another's enabling conditions. This is a sequence of questions
+that can branch, cycle or fail at any stage. Each step is checked through the
+joint native law.
 
-An **enabling witness** follows the actual physical sequence: preparation,
-production of a relevant condition, and the subsequent transformation. It keeps
-failures, delays and residuals. If a device is merely assumed ready at the start,
-the result is a readiness claim; it does not prove an affordable route from raw
-materials to that device.
+Several finite witnesses make these distinctions concrete:
 
-## Compounding is stronger than repeated activity
+* **Information and use.** Two three-record encodings reveal exactly the same
+  source distinctions and have matched exhibited preparation counts. In the
+  declared reversible gate panel, one exposes a target through one operation
+  while the other requires two. The difference follows from the allowed gate
+  functions, rather than a penalty assigned to an awkward encoding.
+* **Information and repair.** The banks (u, u AND v, v) and (u, u, v) both
+  determine the same pair (u,v). After a known-position erasure, one bank allows
+  exact reconstruction at one of its three positions; the other allows it at
+  two. These counts describe repairable locations, not a presumed distribution
+  of physical faults. A parity encoding can protect all three locations when
+  its preparation and decoder are available.
+* **Activity and coupling.** Intact, damaged, erased and cycling arrangements
+  can share the same fuel-limited event-count law while differing in whether
+  an upstream distinction reaches a downstream response. Timing and occurrence
+  alone then omit a consequential relationship.
+* **Retention and construction.** Two distinct triggers can produce the same
+  catalyst, losing all information about which trigger occurred. That catalyst
+  can nevertheless enable a later input to control a later output. Loss of
+  information about the trigger and creation of a new channel concern different
+  physical relationships.
 
-Repeated catalyst use can increase the number of reactions without producing
-new catalytic capability. A reaction that creates more catalyst can amplify
-the same pathway. A product that catalyzes a different transformation can expand
-the repertoire of enabled processes. Networks can then support one another,
-subject to resource supply, inhibition, transport and loss.
+The [structural witnesses](../../research_notes/omega_v2/structural_probe_10min_report_v0.md)
+and [coupling witness](../../research_notes/omega_v2/timing_volume_counterexample_report_v0.md)
+establish these distinctions in their stated models. They show why organization
+must remain in the carrier and why a selected information or occurrence summary
+does not exhaust it. The breadth hypothesis asks how those retained mechanisms
+change the probabilities of complete developments.
 
-These mechanism tests distinguish gross activity, retained enabling conditions,
-their reuse, and the production of new enabling functions. The breadth readout
-stays unchanged while those mechanisms are examined. Otherwise the experiment
-would award the mechanism the benefit it was meant to test.
+## Construction, maintenance and compounding
 
-Autocatalytic chemistry and constructor-theoretic ideas supply neighboring
-languages for such questions [R9, R10]. Specified catalytic functions let a small model isolate a mechanism. Explaining
-how those functions emerge from molecular dynamics is a further origin question.
+Construction produces conditions for further processes. Maintenance sustains
+or restores them. Dependence identifies how a specified physical change alters
+a downstream law. An **enabling witness** follows preparation, production and
+the subsequent transformation, retaining its failures, delays and residuals.
+A ready-made device establishes readiness; following its production establishes
+a construction route.
 
-## Joint organization, cooperation and competition
+For a realized prefix with outcome/residual law J(r,y|x), followed by a
+record-dependent implemented continuation, the chance of a later event E is
 
-Composition can yield a capability absent from every isolated component. A
-shared supplier can also obstruct otherwise successful processes. Cooperation
-and competition are descriptions of these interactions, whose effects need not
-be uniformly beneficial or harmful across frames.
+\[
+P_x(E)=\sum_{r,y}J(r,y\mid x)P_y^{\text{continuation}(r)}(E).
+\]
 
-Independent replication may spread a robust capability. Specialized cooperation
-may open additional transformations while becoming vulnerable to a missing
-partner. Redundant copies can protect against local failure or collapse together
-under a shared disturbance. The actual continuation decides which difference
-matters. Neither diversity nor unity receives a fixed bonus.
+The deadline and remaining resources in the second factor include what the
+prefix consumed. Failure and unfinished cases stay in the sum with their actual
+residuals. This elementary conditioning identity supplies the compositional
+link: construction changes the distribution of situations from which later
+development proceeds. A dependence experiment compares that whole route with a
+physically specified replacement under matched conditions.
 
-A proposed engineered singleton should therefore be compared by what it really
-retains and generates. If it can reproduce all the relevant complementary
-continuation of a plurality, its single outer boundary is not itself an objection.
-If domination removes independent trajectories whose contributions it cannot
-reproduce, those losses remain in the encompassing account. The task is demanding
-precisely because informational similarity alone does not prove physical
-substitutability, identity or equal valuation.
+Several kinds of growth can then be distinguished. Reusing a catalyst supports
+more reactions. Producing more catalyst amplifies a pathway. Producing a catalyst
+for another transformation expands the enabled repertoire. Products that build
+further constructors can compound that expansion across generations, subject
+to resource supply, transport, inhibition and loss. Autocatalytic chemistry and
+constructor theory offer neighboring approaches to these questions [R9, R10].
 
-## Damage and recovery from the present
+Compounding can have a lasting legacy after construction stops. A workshop may
+finish expanding yet retain more usable machinery. The generative episode,
+subsequent retained capability and indefinitely open-ended growth are distinct
+physical achievements. Finite models can establish the first two. Chapter 03
+explains the mixing conditions that limit persistent preparation advantages.
 
-Damage changes future conditions. A broken coupling, unavailable resource or
-lost local record can obstruct continuation even when the past remains part of
-the complete development. Recovery is a physical route that restores a specified
-capability or organization from the resulting present.
+## Joint organization
 
-Function, lineage and numerical identity are distinct recovery targets. A copy
-can restore information without restoring the original occurrence. Likewise,
-the global reversibility of a microscopic law does not supply a locally feasible
-repair. Apparatus, control, time and remaining correlations matter.
+Physical composition determines whether capabilities complement or obstruct
+one another. Independent replication can distribute a robust function.
+Specialization can open transformations that require several partners.
+Redundancy can protect against local failure while remaining vulnerable to a
+shared disturbance. Cooperation and competition describe these relations;
+their effects depend on the actual continuation.
 
-First return, correction at a deadline and continued correction are different
-readouts. Repair can also arrive after an irreversible loss. A model that records
-only eventual reset can therefore miss the consequence it was meant to assess.
-The retained finite witnesses make these distinctions testable.
+The same comparison applies to an engineered singleton and a plurality. The
+relevant questions concern which complementary developments each can retain
+and generate, at what cost, and with what vulnerability. A common outer boundary
+does not settle those questions. Nor does matching information establish that
+one physical occurrence can substitute for another in identity or valuation.
 
-## Persistence without moral authority
+Mechanism controls must preserve this specificity. Removing a component changes
+matter, energy, geometry and correlations. A controlled comparison states which
+of those are matched. To distinguish recursive enabling from durability, for
+example, compare products that enable new constructors with equally durable
+products that support the same use operations but cannot construct further.
+The native law then determines whether recursion creates additional breadth.
 
-Selection filters what remains under particular dynamics. It can favor repair,
-cooperation, exploitation, rapid reproduction or stable inactivity. Persistence
-reveals a corridor of viable continuation, not an ethically privileged champion.
+An economical derived organization graph can record construction, maintenance,
+information, control and lineage relations, together with joint feasibility.
+Its edges inherit physical contexts, witnesses, outcome laws and resource bills;
+the labels describe demonstrated roles rather than primitive forces or rewards.
+Multi-source relations are necessary where several conditions jointly enable a
+process. Two independently tested edges do not establish that their operations
+can run together.
 
-The stronger hypothesis is that some organizations maintain and recursively
-expand enabling conditions, thereby producing a sustained or regenerating
-breadth advantage over matched alternatives. This remains informative even if
-it holds only in some regimes. It does not require gas to lose everywhere, or
-a finite resource-limited episode to last forever.
+Higher-order predictions need appropriate evidence. A function supported by
+either of two components and a function independent of both can agree in the
+intact case and after every single removal, yet disagree when both are removed.
+Likewise, sufficient information at one location does not supply an actuator at
+another. These distinctions constrain what can be inferred from pairwise graphs,
+single knockouts or information summaries. A graph of mutual dependence becomes
+a maintenance model only when its cycles have jointly feasible supply and loss.
 
-The next mechanistic experiments should expose boundaries: when transport
-erases an organizational advantage, when reversal dominates construction,
-when resource exhaustion ends it, and whether products continue enabling after
-the original structure disappears. These questions explain a measured advantage
-rather than accumulating favorable examples.
+## Damage and recovery
+
+Damage changes the present and its future continuation. Losing a machine can
+remove transformations; losing a design can make recovery depend on rediscovery;
+losing a supplier can disable several otherwise intact processes. The same
+physical account includes the possibilities for repair.
+
+Recovery requires an implementable route, with apparatus, control, time and
+remaining correlations. Restoring a function, continuing an individual's
+lineage and reproducing a matching pattern answer different questions. First
+return, correction by a deadline and maintained recovery likewise describe
+different achievements. An eventual reset can arrive after important losses.
+
+A transient intervention can still open continuation that would otherwise be
+unavailable. Persistence permits reuse and additional construction, but a
+contribution can matter within a finite episode. The encompassing development
+retains that episode when later conditions change.
+
+## From mechanism to synthesis
+
+Finite witnesses support the causal direction in principle: arrangement changes
+access, access changes the continuation law, and that law changes weighted
+breadth. Recursive production extends the same mechanism by making enabling
+conditions into products. The next synthesis connects those links across
+richer physical systems and separates compounding from activity and storage.
+
+The productive questions concern boundaries as well as successes: when does
+transport erase an advantage, when does reversal overwhelm construction, when
+do resources run out, and what do descendants retain after the initiating
+structure disappears? Selection may favor cooperation, exploitation, repair
+or inactivity in different regimes. Lushness compares the resulting possibility;
+GE supplies the reasons for asking how it supports value.
+
+## The filter, agency and higher organization
+
+The **persistence filter** is the native selection of what remains capable of
+consequence. Reproduction, inheritance and differential survival can change a
+population; a nonreplicating organization can also grow or maintain itself.
+The relevant unit can be a lineage, an institution or a pattern sustained through
+replacement of its components. A sterile replicator, an exploiter and a
+cooperative constructor can each pass particular filters. Their effects on the
+encompassing field determine the comparison.
+
+A **deformer** changes surrounding continuation through its organization.
+Agency is a further case in which feedback and internal organization systematically
+modulate those effects. A system can learn, revise its own mechanisms or engineer
+its environment. Ashby's requisite-variety perspective clarifies a fork in this
+development: regulation can improve by increasing appropriate responses or by
+suppressing the variation it must face [R24]. Both can accomplish a local task;
+their consequences for other processes and later correction can differ greatly.
+
+Integration can constrain component behavior while expanding the joint repertoire.
+Mutually supporting cycles therefore need a joint realization, with resource
+supply and losses, before they count as a self-maintaining organization. The
+vortex image captures pattern persistence through throughput. Its extension to
+individuality and consciousness is developed in chapter 05, with those additional
+claims explicitly separated from the physical recurrence.
+
+## The next discriminating construction
+
+The reactive probe provides a concrete mechanism-level foothold: local placement
+changes subsequent sampled-history breadth under an autocatalytic law, and the
+effect weakens or reverses as transport removes that advantage. Its four-molecule
+system has a fixed reaction repertoire. The next construction should let products
+enable further transformations within one fixed chemistry, while retaining
+physical accounting and the same breadth definition.
+
+A stochastic adaptation of polymer autocatalysis is a concrete next route [R25]. The intended
+comparison separates recursive enabling from equally durable nonconstructive
+storage, reversible turnover and comparable stochastic activity. The law and
+network are fixed before ranking preparations; varying the chemistry requires
+reporting the ensemble rather than selecting a winning realization. Alongside
+breadth, follow which products actually enable later events and what survives
+after construction. These are explanatory readouts of the mechanism.
+
+The open extraction problem is to represent this structure economically enough
+to predict joint effects. Predictive causal models describe residual behavior;
+information decompositions examine joint dependence; constructor and reaction
+network formalisms describe production and maintenance. No one of these supplies
+the entire comparison. A compact representation earns its use by preserving
+relevant composed predictions under stated error and resource bounds. The full
+native model remains the reference against which that claim is checked.

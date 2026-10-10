@@ -1,48 +1,115 @@
-# 11 — Edition provenance and revision record
+# 11 — Sources, evidence and stewardship
 
-**Edition:** Omega Cosmology v4, full draft, 9 October 2026.
+**Edition:** Omega Cosmology v4, staged manuscript rewrite, 10 October 2026.
 
-**Status:** a fresh synthesis for review. It records adopted commitments, established mathematics, finite evidence and open proposals. It is not a claim that the general quantum extent or ethical adjudicator has been solved.
+This edition presents one argument across twelve standalone chapters: native
+physical continuation, its compositional development, lushness as weighted
+extent, and the conditional ethical reasons for sustaining the substrate of
+value. Individuals, consciousness and Alpha–Omega extend its research horizon.
+The front claims ledger distinguishes the status of these parts.
 
-The originator supplied the programme, research direction and successive corrections. This manuscript was assembled with Codex assistance, including smaller delegated reviews of the consciousness and interpretive chapters. The originator remains the authority on intended definitions; mathematical and empirical claims remain accountable to evidence.
+The originator supplies the programme and its intended definitions. Codex has
+assisted with formulation, source review, finite implementations and drafting.
+Sol and Opus supplied proposals and criticism; other contributions remain
+attributed in the research record. Agreement among assistants is not independent
+evidence. A definition's authority comes from the intended programme; a
+mathematical or empirical claim remains answerable to its argument and evidence.
 
-## Source lineage
+## The source architecture
 
-The draft draws on the existing [v2](../v2/README.md) and [v3.2](../v3.2/README.md) editions, the [v4 foundation review](../v4-preparation/FOUNDATION_REVIEW.md), the finite research reports and the [cleaned quantum platform](../../quantum/README.md). Earlier editions remain unchanged as historical documents. Their active proposals are not all current commitments.
+The source lineage includes the standalone [v2 edition](../v2/README.md), the
+preserved [v3.1 source](../v3.1-source/README.md), the expanded
+[v3.2 edition](../v3.2/README.md), the
+[foundation review](../v4-preparation/FOUNDATION_REVIEW.md), and the project's
+research protocols, reports and audits. These records remain available without
+turning the present manuscript into a chronology of revisions.
 
-The author's clarifications governing this edition include:
+Current physical conventions are consolidated in the
+[quantum platform](../../quantum/README.md). The
+[effective-breadth brief](../../research_notes/omega_v2/effective_breadth_pivot_2026-10-09.md)
+records why literal geometric volume is optional, while the
+[field-theoretic brief](../../research_notes/omega_v2/qft_foundation_pivot_2026-10-09.md)
+states the physical direction beyond finite circuits. The supplied ODT v1.2
+proposal informs the implementation and lineage questions in chapter 06; its
+counterfactual claims receive their own argument rather than authority by adoption.
 
-- the bridge to GE is value requiring valuers together with conditional normativity;
-- Alpha–Omega is an interpretive layer rather than a prerequisite for that bridge;
-- cosmopsychism is proposed as an economical bridge across κ, compatible with a fully functionalist alternative;
-- consciousness functionally combines temporal coordination with embodied organization and reconfiguration;
-- vortical identity and a possible singularity remain speculative downstream dynamics;
-- lushness continues to name effective weighted extent, with generativity investigated as a cause;
-- native physical continuation precedes analyst-selected observations or decision menus;
-- QFT is the preferred next physical direction, while finite circuits remain calibration tools.
+The source chapters preserve the governing commitments:
 
-## Changes from earlier formulations
+- a physical frame is a present hypersurface and sufficient state, with
+  descriptions and conditioning derived from it;
+- native development precedes selected features, observations and action menus;
+- lushness names effective weighted breadth, and generativity changes it through
+  the law rather than an added reward;
+- gas, noise and transient processes remain part of the substrate;
+- value requires valuers, and conditional normativity supplies the ethical bridge;
+- the substrate supporting valuers thereby supports value; lushness is its proxy
+  under uncertainty and ODT's intended arbitrator;
+- identity, consciousness and cosmological interpretation retain their distinct
+  physical, functional and speculative questions.
 
-The [effective-breadth pivot](../../research_notes/omega_v2/effective_breadth_pivot_2026-10-09.md) removes the requirement that lushness first acquire a literal geometric volume element. A measure Λ or trace τ remains an optional construction. The [QFT pivot](../../research_notes/omega_v2/qft_foundation_pivot_2026-10-09.md) places local field dynamics ahead of promoting any finite history matrix to a universal physical object.
+The [rewrite control and chapter audits](REWRITE_CONTROL.md) document how this
+edition maps those commitments and earlier developments into the new chapters.
+They separate source coverage, mathematical/evidential verification and coherent
+exposition. That record is editorial provenance, not another physical result.
 
-The older normalized frame-volume aggregation and access-atlas proposals remain historical instruments. They no longer lead the definition. Complete classical history perplexity is the present calibration; quantum extension and justified cross-frame comparison remain open. Global purity is not identified with extent one, and proposed lower/classical-upper bounds apply only under matched physical family and calibration assumptions.
+## Preserving results without preserving obsolete definitions
 
-This edition corrects an earlier tendency to describe the ethical bridge as wholly missing. Its premises are now explicit. The unresolved tasks are their scope and application, the adequacy of lushness as a proxy, and the decision rules justified under incomplete knowledge.
+The manuscript retains mechanisms and counterexamples that remain relevant to
+the current construction. Replaced formulas are left in their historical sources.
+An unresolved route appears with its surviving question, obstruction and next
+construction or test. This lets readers distinguish an active research direction
+from an abandoned definition without having to reconstruct the conversation.
 
-No new numerical experiment was commissioned for drafting v4. Publication checks validate source consistency, links and the existing implementation tests; they do not convert a proposed compatibility audit into a completed scientific result.
+For example, access and recovery witnesses remain useful after an information
+summary fails. Quantum checkpoint failures constrain a future extent even though
+the failed formulas no longer lead the exposition. An optional algebraic reference
+measure is still open because its native generators, timing and physical
+equivalence have not been supplied. Classical complete-history perplexity has a
+precise present role; that role does not settle its universal quantum extension
+or its adequacy as a value proxy.
 
-## ODT rebuild after the first reading copy
+## Evidence and reproduction
 
-Following the supplied Opus ODT v1.2 proposal and the originator's approval of its assessment, chapter 06 now starts from physical decision lineages, implementable plans and complete continuations. Counterfactual matching remains an explicit open construction. Latest history-consistent divergence is a hypothesis, and ODT0–ODT2 remains the bounded operational layer. The deterministic-state observation is retained without the unsupported conclusion that distinctive decision theory requires a branching global law.
+Chapter 08 connects each current numerical claim to a compact report. The
+reports identify model, protocol, scope, implementation and retained evidence.
+Exact finite enumeration, floating-point propagation and sampling are different
+forms of evidence. A successful implementation check supports the calculation
+it checks, not the entire cosmology.
 
-Chapters 04, 08 and 09 distinguish first access from maintenance and regeneration, retain access-density targets as experimental proxies, and add the counterfactual and access probes. Neither lushness nor valuerhood is redefined by those diagnostics. The formal appendix records the first-hitting integral's actual meaning. This is a conceptual revision, with no new numerical probes.
+Externally supplied reports remain attributed and unreproduced until their
+engines and evidence support replication. In particular, the supplied compounding
+toy is assessed as a proposed mechanism and reported result; its missing source
+files prevent treating it as a verified repository run. Its specified resource,
+event-identity and durable-control audits are part of the next work.
 
-## Reproduction and publication
+This rewrite introduces no numerical experiment. Its mathematical work verifies
+the stated finite-mixing implication and other identities under their declared
+assumptions. The review does not claim to rerun every archived experiment or
+independently validate every inherited source. Chapter audits name what was
+checked, and open scientific claims remain open.
 
-The subsequent editorial pass adds a front claims ledger and consolidates repeated scope disclaimers, particularly in the consciousness and cosmological chapters. It restores empowerment and causal entropic forces from earlier editions and adds quantum Darwinism as a resource for physical record selection. Deterministic classical breadth one is stated as an accepted calibration. The proposed generativity control matches specified resources and early noise/activity conditions rather than complete path entropy, which would force a perplexity tie. A physics-focused review copy is generated from the same sources. These changes refine exposition and the research specification; they add no experimental findings.
+## Editable sources and reading copies
 
-The numbered Markdown chapters are the editable source. `scripts/build_cosmology_v4.py` produces `OMEGA_COSMOLOGY_V4_COMPLETE.md` and `OMEGA_V4_PHYSICAL_PROGRAMME.md`; its check mode detects stale generated copies. `scripts/check_cosmology_v4.py` checks local links, reference identifiers and chapter completeness. A small publication record reports the resulting word count and content hash.
+The numbered Markdown chapters are the editable manuscript. The builder produces
+the [complete reading edition](OMEGA_COSMOLOGY_V4_COMPLETE.md) and
+[physical research extract](OMEGA_V4_PHYSICAL_PROGRAMME.md) from those sources.
+The extract gives the physical programme an independent route to review while
+the full manuscript retains its ethical and interpretive purpose.
 
-The publication package contains the manuscript and compact supporting protocols, reports and implementation. Raw numerical output arrays, generated run directories and attachments are excluded. The ODT revision was published to Drive and the repository; the subsequent editorial pass is included in this repository edition. The Drive reading copy remains the ODT revision. Publication records distinguish source hashes and links so each reading copy's revision is clear. Existing editions and proposals are preserved.
+The build and checking scripts verify chapter structure, local links, reference
+identifiers and agreement of the generated copies with their sources. The
+[check record](publication_checks.json) records their scope and the manuscript
+hash. Such checks cannot certify the philosophical synthesis or substitute for
+substantive source review.
 
-Future revisions should state whether they change the carrier, a readout, a comparison rule, an empirical claim or an interpretive commitment. That distinction is how the programme can evolve without its latest successful calculation silently becoming its ontology.
+The staged rewrite is published to the research branch and the existing Drive
+reading copy. Publication metadata identifies this edition and preserves the
+earlier editorial edition at commit 829d0da as its predecessor. The publication
+contains the chapters, audit map and compact supporting reports. Raw output
+arrays, generated run directories and attachments are excluded from Git.
+
+Future work can develop the physical carrier, its measurements, comparison rules,
+mechanism evidence and interpretations at different rates. Keeping their roles
+visible allows a stronger synthesis without making a successful diagnostic carry
+more than it establishes. The north star remains the same: characterize physical
+possibility and learn how its organization supports further possibility and value.

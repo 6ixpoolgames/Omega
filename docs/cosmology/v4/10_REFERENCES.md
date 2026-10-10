@@ -59,3 +59,17 @@ The immediate ODT revision source is the originator-supplied *Omega Decision The
 **R20.** Wissner-Gross, A. D., and Freer, C. E. (2013). [*Causal Entropic Forces*](https://doi.org/10.1103/PhysRevLett.110.168702). A proposed relation between future-path entropy gradients and adaptive behavior. Relevant to the mechanism question; the native laws in Omega's probes do not acquire an entropy-maximizing force by definition.
 
 **R21.** Zurek, W. H. (2009). [*Quantum Darwinism*](https://arxiv.org/abs/0903.5082). Environment-mediated proliferation of records of selected system states. Relevant to physical classical-family selection, with record redundancy distinguished from independent alternative breadth.
+
+## Finite-state convergence
+
+**R22.** Levin, D. A., and Peres, Y., with contributions by Wilmer, E. L. (2017). [*Markov Chains and Mixing Times*, second edition](https://pages.uoregon.edu/dlevin/MARKOV/). Theorem 4.9 supplies geometric convergence for finite irreducible, aperiodic chains. Chapter 09 derives the preparation-dependent breadth bound from this convergence and the entropy chain rule.
+
+**R23.** Höhn, P. A., Russo, A., and Smith, A. R. (2023, preprint). [*Matter relative to quantum hypersurfaces*](https://arxiv.org/abs/2308.12912). Relational scalar-field states on hypersurfaces and transformations between hypersurface descriptions; a connection for the programme's physical present frames. Its extension of the Page–Wootters construction supplies a specific link between relational time and the field description, without making experienced time a consequence of that construction.
+
+## Organization and open psychophysical routes
+
+**R24.** Ashby, W. R. (1956). [*An Introduction to Cybernetics*](https://ashby.info/Ashby-Introduction-to-Cybernetics.pdf), especially chapter 11. Requisite variety relates regulation to the disturbances and outcomes being regulated. It supports a mechanism analysis, not an ethical preference for centralization or plurality.
+
+**R25.** Farmer, J. D., Kauffman, S. A., and Packard, N. H. (1986). [*Autocatalytic replication of polymers*](https://oms-inet.files.svdcdn.com/production/files/autocatalyticreplication.pdf). Products participate in catalytic reaction networks. The proposed stochastic, resource-accounted implementation would adapt this model; the published construction is not a derivation of catalytic chemistry from molecular microphysics.
+
+**R26.** Page, D. N. (2001). [*Mindless Sensationalism: A Quantum Framework for Consciousness*](https://arxiv.org/abs/quant-ph/0108039). Relates conscious-perception measures to quantum expectation values of positive awareness operators. The operator assignment is additional psychophysical structure, not an already established physical identification of awareness.

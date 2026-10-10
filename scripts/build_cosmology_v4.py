@@ -32,7 +32,7 @@ def build() -> str:
     return (
         "# Omega Cosmology v4\n\n"
         "**Physical possibility, situated value and the Alpha–Omega interpretation**\n\n"
-        "Full draft · 9 October 2026\n\n"
+        "Staged manuscript rewrite · 10 October 2026 · Local draft\n\n"
         "A self-contained synthesis for review. The classical calibration is explicit; "
         "general quantum breadth remains open. The ethical bridge is value requiring "
         "valuers together with conditional normativity. Alpha–Omega supplies an "
@@ -56,12 +56,12 @@ def build_physics() -> str:
     selected = []
     for paragraph in refs.split("\n\n"):
         match = re.match(r"\*\*R(\d+)\.", paragraph)
-        if match and int(match.group(1)) in {*range(1, 11), 18, 19, 20, 21}:
+        if match and int(match.group(1)) in {*range(1, 11), 18, 19, 20, 21, 22, 23, 24, 25}:
             selected.append(paragraph.strip())
     parts += [evidence, formal, "# Selected references\n\n" + "\n\n".join(selected)]
     return (
         "# Omega v4 — physical programme\n\n"
-        "**Research extract · 9 October 2026**\n\n"
+        "**Research extract · 10 October 2026 · Local draft**\n\n"
         "Characterizing how physical organization reshapes weighted continuation.\n\n"
         "This review copy draws directly from the [full v4 manuscript]"
         "(OMEGA_COSMOLOGY_V4_COMPLETE.md): chapters 01–03, the physical research "
