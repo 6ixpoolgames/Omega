@@ -1,5 +1,43 @@
 # Omega
 
+**Current full draft:** [Omega Cosmology v4](docs/cosmology/v4/README.md),
+9 October 2026. [Read the complete manuscript](docs/cosmology/v4/OMEGA_COSMOLOGY_V4_COMPLETE.md).
+It consolidates physical possibility, classical weighted breadth, the open quantum
+comparison, Gradient Ethics, consciousness and the Alpha–Omega interpretation.
+GE's bridge is value requiring valuers together with conditional normativity;
+the adequacy of lushness as its substrate proxy remains a research question.
+[v3.2](docs/cosmology/v3.2/README.md), earlier editions and the historical closeout
+plans below remain part of the record.
+
+**Quantum working platform (October 9):**
+[Quantum continuation foundation](docs/quantum/README.md) consolidates the native
+physical object, classical calibration, quantum claim boundaries and next
+compatibility audit. It is the current entry point for quantum research alongside
+the v4 draft. Earlier exploratory runs below remain the research record.
+
+Latest exploratory runs: [local physical flow](docs/research_notes/omega_v2/local_flow_report_v0.md)
+and [finite fuel with repairable coupling](docs/research_notes/omega_v2/fuel_flow_report_v0.md).
+They retain all-frame response laws, resource use and residual dynamics,
+including crossings between early and later access. They do not select a lushness scalar.
+The [thermal and mobile-binding follow-up](docs/research_notes/omega_v2/thermal_binding_report_v0.md)
+compares dispersion and assembly under one particle dynamics; its
+[assessment](docs/research_notes/omega_v2/thermal_binding_assessment_2026-10-03.md)
+records the mobility-dependent reversal, proximity control and mixed profiles.
+The [catalytic continuation run](docs/research_notes/omega_v2/catalytic_binding_report_v0.md)
+adds reversible construction that enables further construction. More first
+occurrences coexist with faster reversal, mixed propagation and a separation
+between first restoration and later retention.
+The [production-history follow-up](docs/research_notes/omega_v2/catalytic_history_report_v0.md)
+follows catalytic descendants through movement and loss of the original bond.
+It finds continued production after original loss, without a clear overall
+persistence gain from stronger catalysis.
+The [historical frame-volume attempt](docs/research_notes/omega_v2/active_thermal_volume_report_v0.md)
+now applies the adopted local comparison to all coordinate subsets of sampled
+continuation histories. Active and thermal profiles cross; intermediate
+observations change rankings, and normalized shares can increase while joint
+history entropy decreases. These are retained limits of this finite application,
+not a generativity or thermal victory.
+
 [![Lean AlphaOmega](https://github.com/6ixpoolgames/Omega/actions/workflows/lean-alphaomega.yml/badge.svg?branch=master)](https://github.com/6ixpoolgames/Omega/actions/workflows/lean-alphaomega.yml)
 [![Baseline Witness Smoke](https://github.com/6ixpoolgames/Omega/actions/workflows/baseline-witness-smoke.yml/badge.svg?branch=master)](https://github.com/6ixpoolgames/Omega/actions/workflows/baseline-witness-smoke.yml)
 [![Validation Router](https://github.com/6ixpoolgames/Omega/actions/workflows/validation-router.yml/badge.svg?branch=master)](https://github.com/6ixpoolgames/Omega/actions/workflows/validation-router.yml)
@@ -42,6 +80,72 @@ The
 [Robust Joint Separation Report v0](docs/research_notes/omega_v2/robust_joint_separation_report_v0.md)
 then isolates a nonempty joint-realization triple that is pairwise Robust but
 not jointly Robust across one fixed environment scope.
+
+The [Operational Continuation Comparison](docs/research_notes/omega_v2/operational_continuation_comparison_v0.md)
+adds five finite cases separating taskwise achievement from uniform response
+emulation under local observations, shared resources, costs, and deadlines.
+Its [retained report](docs/research_notes/omega_v2/operational_continuation_comparison_report_v0.md)
+records the witnesses and comparison limits.
+The [joint future-requirements decision experiment](docs/research_notes/omega_v2/lushness_decision_report_v0.md)
+adds a public prototype comparing joint capacity with matched baselines under
+explicit ethical commitments. It retains tradeoffs, per-agent losses, and a
+failure on revised requirements; independent evaluation remains pending.
+The [evaluator handoff](docs/research_notes/omega_v2/lushness_decision_evaluator_handoff_v0.md)
+separates frozen choices from independently supplied evaluation requirements.
+The [continuation field candidate](docs/research_notes/omega_v2/continuation_field_candidate_v0.md)
+records the subsequent proposal to retain causality, joint compatibility,
+and composition in the field object itself. It states the unresolved physical
+realization relation and the next specification milestone before migration to
+OmegaCosmology; it adds no experimental result or cosmology release.
+The [first finite concurrent contract](docs/research_notes/omega_v2/finite_concurrent_continuation_contract_v0.md)
+derives three worked mechanisms from one stochastic token system and gives
+ordinary preservation and composition proofs for direct autonomous-subsystem
+embeddings, with background resource costs retained. General physical
+realization and a lushness comparison remain open.
+The [Shannon and multiscale-profile proposal](docs/research_notes/omega_v2/lushness_shannon_multiscale_profile_proposal_v0.md)
+records a subsequent candidate volume/profile construction, its claimed
+justification, and analytic limits. It is an unadopted proposal with no new
+simulation or empirical result.
+The [weighted timing-volume counterexample](docs/research_notes/omega_v2/timing_volume_counterexample_report_v0.md)
+rejects the next proposed volume as a complete comparison: one common physical
+relay/assembly dynamics gives identical profiles despite record loss, delayed
+recovery and different downstream access. A frozen contract, analytic proof,
+reproducible calculation and full process evidence accompany the failure.
+The [quantum frame-profile probe](docs/research_notes/omega_v2/quantum_frame_profile_report_v0.md)
+then tests labelled mutual-information profiles of a small quantum process.
+They detect record loss and delayed repair, while averaging over fragment size
+hides routing and can increase under recorded blockage. The frozen calculation
+retains the noise, physical source laws, quantum coherences and analytical
+collisions; the profile remains a diagnostic, not a complete lushness measure.
+The [quantum record-structure follow-up](docs/research_notes/omega_v2/quantum_record_structure_report_v0.md)
+compares broadcast and independent records using the same source bank, and
+localized versus spread records under matched circuit budgets. It distinguishes
+content, distributed access and costed recovery; even the labelled correlation
+profile can increase while local source readability declines.
+The [bounded continuation graph equivalence audit](docs/research_notes/omega_v2/continuation_equivalence_audit_v0.md)
+identifies the proposed bounded continuation graph with a conventional
+probabilistic quotient and states its controller-preservation assumptions.
+Its [control-panel report](docs/research_notes/omega_v2/continuation_equivalence_audit_report_v0.md)
+records exact baselines, adversarial controls, and the remaining experiment gap.
+Current prose uses **BCG** for this graph; historical C1 labels and API names
+remain reproducible and are separate from the primer's conjecture C1.
+The [audit follow-up contract](docs/research_notes/omega_v2/continuation_audit_followup_protocol_v0.md)
+adds memory-only information and retained interface/budget checks.
+Its [follow-up report](docs/research_notes/omega_v2/continuation_audit_followup_report_v0.md)
+records the expanded checks and deliberate-fault results.
+The next research priority is the
+[minimal recovery dynamics panel](docs/research_notes/omega_v2/recovery_dynamics_protocol_v0.md);
+graph-speed benchmarking remains optional engineering.
+The [recovery report](docs/research_notes/omega_v2/recovery_dynamics_report_v0.md)
+records 14 exact worlds separating refusal, noisy reset, external overwrite,
+broken recovery and competing death, including exact long-run waiting times.
+The [suppression and persistence report](docs/research_notes/omega_v2/recovery_suppression_report_v0.md)
+adds 20 worlds with explicit token stocks, replenishment, seal failure and relapse.
+It separates first reset, current correction and eventual permanent correction.
+The [frame-information audit](docs/research_notes/omega_v2/frame_information_audit_v0.md)
+separates verification histories from currently accessible controller records.
+Its [report](docs/research_notes/omega_v2/frame_information_audit_report_v0.md)
+checks erasure, sealed archives, and retrieval with explicit time and cost.
 
 Omega is a research program for treating alignment as the problem of
 preserving the corridor of compatible, value-bearing futures.

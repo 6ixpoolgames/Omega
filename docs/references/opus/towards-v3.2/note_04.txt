@@ -1,0 +1,151 @@
+Ethics: thought experiments and rival theories
+Prepared by Claude (Anthropic), 3 October 2026. Part of the "Towards v3.2" notes. This document tests Gradient Ethics (GE) against the standard thought experiments of moral philosophy and compares it with established theories. The judgments are Claude's, informed by discussion with the originator; where a verdict depends on unfinished work, that is stated.
+How to read the verdicts
+For each case the document gives GE's likely verdict, how strong the answer is, and what it rests on. Three things that are not yet finished come up repeatedly:
+* the count-once rule for adding up value across perspectives;
+* the time-extended version of the comparison, where things must persist;
+* the hypothesis that inner experience shows up physically as internal continuation structure.
+"Strong" means the answer follows from results or from the definitions. "Partial" means there is a principled answer that depends on one of the unfinished pieces or leaves a residue.
+Strong answers
+The paperclip maximizer and monoculture
+The worry: an agent that converts everything into copies of one thing, such as paperclips or itself. GE rejects this. Under the count-once rule, copies add nothing new, and in the exhaustive small-world sweep no monoculture was ever optimal. One honest note: before the count-once rule, the way of adding up value over perspectives could reward copies when the number of perspectives grew (thirteen copies of one coin outscored ten different coins). So this strong answer depends on implementing the count-once rule, which was agreed in earlier discussions.
+Pascal's mugging and fanaticism
+The worry: someone offers an astronomically large payoff with a tiny probability, and expected-value reasoning says to pay. GE resists for two reasons that come from its definitions. First, lushness is measured in bits, the logarithm of volume, so a payoff a million times larger adds only about 20 bits. Second, physics caps what can be delivered at all: the information any region can hold is limited by its boundary area, and for the observable universe that limit is around 10122 bits. A mugger offering the maximum conceivable payoff with probability below about 1 in 10120 cannot outweigh even a modest sure gain of 100 bits. Few ethical theories have a principled physical bound of this kind.
+Newcomb's problem and counterfactual mugging
+In Newcomb's problem, a highly reliable predictor has put a million dollars in an opaque box only if it predicted you would take that box alone; a transparent box holds a thousand dollars. Do you take one box or both? Causal decision theory says both, since the money is already placed. Evidential and functional theories say one.
+The framework answers through its account of identity, worked out with the originator in September 2026. Identity is the physical trajectory, not the pattern. The predictor simulates your type but does not instantiate you. Your action and the prediction are both read off the same organization: the predictor scanned your trajectory's state, and your later action expresses that state. Choosing is being the policy that was read. So the framework one-boxes, without claiming that the simulation is you and without any backwards causation.
+The comparison machinery fits this cleanly. The box's content is a record, made earlier, of the same distinction your action expresses, just as two registers can hold copies of the same coin. One-boxing and a full box lie on the same branch; two-boxing and an empty box lie on another. You cannot move your action to a different branch without moving the record with it. Arbitration over branches picks the one-box branch. The 3.1 edition warned against claiming a Newcomb result without stating the decision-theoretic assumptions. The key assumption, that your choice is a function of the organization that was read with no independent randomness, is supplied by the identity account.
+In counterfactual mugging, a predictor asks you to pay a small sum because a coin landed tails, having committed to reward you handsomely if it had landed heads and it predicts you would have paid. Because your trajectory across branches is you, the policy chosen across branches is what matters, and that policy pays. The framework is natively "updateless", close to the intuition behind updateless decision theory.
+Partial answers
+The utility monster
+Nozick's worry: a being so efficient at turning resources into value that a maximizing ethics would give it everything. GE resists a monster that gets there by destroying others' distinctions (the non-excision result) and resists concentration in general through the whole's tally, which favoured spreading over concentrating in the small-world tests. The residue: the count-once rule favours integration, because joint distinctions are cheap to reach inside one integrated system. A non-destructive integrated system that absorbed everyone's distinctions as well might therefore score well. What limits it is physics: integration costs grow with size through latency and capacity limits. See the dial discussed under the repugnant conclusion.
+The repugnant conclusion
+Parfit's problem: for any population of very good lives, a total view prefers some much larger population of lives barely worth living. GE's version of the danger appeared directly in its machinery. Adding up what every subset of perspectives can resolve grows exponentially with the number of perspectives, so a large population of thin perspectives, even copies, can outscore a smaller rich one.
+The answer, agreed in discussions a few days before these notes, is to count each distinction once, credited by the cheapest perspective that can reach it. Then the comparison becomes an explicit trade-off rather than a head count:
+
+
+	Many thin, diverse lives
+	Fewer rich, integrated lives
+	Distinct distinctions in total
+	More
+	Fewer
+	Distinctions reachable cheaply, within small frames
+	Few
+	Many
+	Lushness per unit of resources
+	Lower
+	Higher, if internal composition grows faster than linearly with size
+	Under dominance the two are incomparable, because each wins on a different part of the profile, and the choice goes to arbitration openly. Under finite resources, rich integrated lives are the better use of what is available. In the abstract limit, with unlimited resources, a large enough population of thin lives can still win. GE does not escape the impossibility theorems of population ethics (Arrhenius), which show that no ordering of populations satisfies all of a short list of plausible conditions. What it does is turn a hidden head count into a visible trade-off between distinctness and integration.
+The repugnant conclusion and the utility monster are two ends of one dial. Too much distinctness, scattered thin, is the first; too much integration, concentrated in one, is the second. In GE the dial is set by physics: integration is favoured until its own costs (latency, capacity) exceed the costs of coordinating separate systems.
+Omelas
+In Ursula Le Guin's story, a city's happiness depends on one child kept in misery, and everyone knows it. Most people feel the bargain is wrong in kind. GE has two answers, from two different discussions.
+* Bounded agents never hold the licence. Sacrificing the child could only be justified by an exact, solved lushness calculation. No bounded agent ever holds one. So the licence is never available to any actual agent, and realistic Omelas-type bargains leave lushness on the table: any physically realizable way of getting the city's goods without the suffering dominates the bargain. The originator accepted that in the purely stipulated case, where the dependence is magical and certain, a maximizing view would bite the bullet.
+* Suffering shows up as structure. If the relation between physical organization and experience runs through internal continuation structure, then the child's suffering registers as the collapse of a large enclosed structure. A mind is not one register; it is a vast internal space of possibilities, and its collapse counts in proportion. The harm also spreads, because everyone in Omelas knows: their own internal structures are deformed by that knowledge, and the people who walk away are frames registering it.
+What remains is a trade-off rather than a prohibition, but a heavy one, and in practice never licensed. Deontological and contractualist theories forbid the bargain outright, and many people will prefer that answer.
+The footbridge and the transplant surgeon
+Pushing one person off a footbridge to stop a trolley that would kill five, or killing one healthy patient to supply organs for five. Locally, an outcome-based view says yes. GE's likely answer is two-level. Rights-like protections (of bodily continuity, reliable evidence, correction, participation, exit and recovery) protect interactions between agents that local calculation predictably overlooks. A world where doctors may harvest patients is one where trust collapses and many perspectives lose access to care. As a policy, then, do not push and do not harvest. This depends on the time-extended comparison, which has not been run.
+Killing versus letting die
+Forecast: gratuitous destruction is never optimal (no destroying program was ever optimal in the static sweep), while letting some lineages die under severe scarcity can be (triage). This is not a deontological constraint: destroying one as the means to preserve more is allowed. If the time-extended run confirms triage while still forbidding pointless destruction, GE will have reproduced part of the intuition from structure.
+The experience machine and wireheading
+Nozick's machine gives you any experiences you like, disconnected from the world. Forecast: GE rejects it. A plugged-in frame shares little joint information with other frames, and a fixed reward signal holds almost no distinctions. Engagement with a shared world creates far more jointly accessible structure.
+Infinite ethics
+Infinite populations or infinite time make sums diverge and comparisons collapse. GE normalizes everything against the ultimate frame, whose volume is 1, which keeps individual volumes bounded. Adding up over infinitely many perspectives still needs a measure over frames. The count-once rule should help, since it counts distinctions rather than perspectives, but this has not been worked out.
+Demandingness
+GE is a maximizing view, so it is demanding, as utilitarianism is. One mitigation is forecast rather than shown: an agent that fails to maintain itself stops being a generative locus, so self-maintenance should appear as part of the optimum, in the same way prudence does.
+Conventional answers
+* Trolley (switch case): divert the trolley; five continuations outweigh one.
+* The drowning child and distance: GE counts all perspectives impartially, so distance does not reduce anyone's moral weight. Once access costs enter the tally, nearness can matter only through cost: it is cheaper and more reliable to help someone close by.
+Contestable or open
+* The veil of ignorance: the whole's tally resembles Harsanyi's average over positions rather than Rawls's priority for the worst-off. It favours diversity, not equality as such. Rawlsians will object.
+* The presumptuous philosopher: if typicality were weighted by lushness, one could become confident from the armchair that we live in a lush cosmology. Open; the suggested fix is to weight typicality within a cosmology only.
+* Disneyland with no children: a measure of possibility might value a richly generative universe with no one in it to experience anything. This was deferred. If the relation between physics and experience becomes understood, it would add the missing dimension. Meanwhile, a fallback counts lushness only through the experienced presents that perspectives actually construct.
+Scorecard
+Case
+	Strength
+	Rests on
+	Paperclip maximizer, monoculture
+	Strong
+	Count-once rule
+	Pascal's mugging
+	Strong
+	Definitions and physical bounds
+	Newcomb, counterfactual mugging
+	Strong
+	Identity as trajectory
+	Utility monster
+	Partial
+	Count-once rule plus access costs
+	Repugnant conclusion
+	Partial
+	Count-once rule plus access costs
+	Omelas
+	Partial
+	Boundedness; experience as internal structure
+	Footbridge, transplant
+	Partial
+	Time-extended comparison
+	Killing versus letting die
+	Partial
+	Time-extended comparison
+	Experience machine
+	Partial
+	Forecast
+	Infinite ethics
+	Partial
+	Normalization; a measure over frames
+	Trolley (switch), drowning child
+	Answered
+	Conventional
+	Veil of ignorance
+	Contestable
+	Harsanyi-like aggregation
+	Presumptuous philosopher, Disneyland with no children
+	Open
+	Not yet addressed
+	GE among rival theories
+This comparison is lopsided by nature: centuries-old theories against a candidate that has been under formal testing for weeks. It still helps to see where GE's distinctive features help and where they cost.
+Theory
+	Where GE does better
+	Where GE does worse
+	Total utilitarianism
+	Resists the utility monster, monoculture and fanaticism; counts structure rather than one currency of welfare
+	Utilitarianism is simpler and has working tools (quality-adjusted life years, cost-benefit analysis). GE must still show it is not utilitarianism with information as the currency; division of labour and anti-monoculture are its best evidence
+	Average and prioritarian views
+	Avoids both averaging and head counting by making the trade-off explicit
+	Prioritarians weight the worst-off directly; GE has no priority weighting and no valence
+	Kantian deontology
+	Derives anti-destruction and rights-like protections instead of positing them
+	Deontology forbids Omelas and the transplant outright; GE only weighs heavily against them
+	Contractualism (Rawls, Scanlon)
+	Covers beings who cannot contract: future generations, ecosystems, artificial minds
+	Justifiability to each person is a stronger account of fairness
+	Virtue ethics
+	Virtues appear as structural policies (prudence as a hedge, division of labour) rather than as a list
+	Far better guidance for individual lives today
+	Capability approach (Sen, Nussbaum)
+	Very close in spirit, valuing real access to valuable possibilities; GE adds physics, costs and composition, and needs no stipulated list of capabilities
+	The capability approach has decades of field use, such as development indices; GE has none
+	Information ethics (Floridi), the closest predecessor
+	Floridi treats the degradation of informational entities as the basic evil; GE makes this computable, situated in perspectives, cost-aware and count-once
+	GE must credit Floridi and answer the standing objection that such views give moral worth to rocks, its own "Disneyland with no children" case
+	Empowerment and AI impact measures
+	Inclusive across perspectives; single-agent empowerment is selfish by construction, while GE's tally produced division of labour and non-excision
+	These have working implementations and public benchmarks; GE has small model worlds
+	Overall
+Criterion
+	Rating
+	Formal explicitness and computability
+	Top tier: few ethical theories can be run exactly in a model world and checked by independent implementations
+	Scope (non-human, artificial, future, cosmic)
+	Top tier, by construction
+	Thought-experiment scorecard
+	Strong on fanaticism, monoculture and decision paradoxes; middling on aggregation cases
+	Grounding
+	On a par: conditional and explicit about its premises
+	Testability
+	Unusually high: its claims can fail in simulation
+	Guidance for action today
+	Weak: needs compiled heuristics and validated simplifications
+	Maturity
+	Lowest: no peer review yet, small-world evidence, unfinished pieces
+	In summary, GE is the most formally explicit and broadest in scope of these theories, and the only one that turns its norms into falsifiable outputs of a computable comparison. Its distinctive results (anti-monoculture, division of labour, fanaticism bounded by physics, decisions grounded in identity) are real advantages over utilitarianism and over single-agent empowerment, if they survive at larger scales. It is behind on maturity, on the treatment of suffering, and on usability today.
