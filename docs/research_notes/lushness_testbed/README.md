@@ -14,16 +14,25 @@ historical copies; subsequent revisions belong here.
 - [Foundation contract](testbed-foundation-contract.md)
 - [Opus issue assessment](OPUS_ISSUE_ASSESSMENT_r1.md)
 
-The main substrate and workflow remain design drafts. The first binding
-calibration is implemented and passed: [results](calibration/RESULTS_r1.md),
+The first two finite research slices are implemented and completed:
+[assembly and controlled-access results](access_results/RESULTS_r1.md),
+[assembly protocol](assembly/PROTOCOL.json), and
+[controller model](controlled/MODEL.md). The controller run enumerates 81 local
+policy pairs on 144 states; it does not yet implement population growth,
+self-subject optimization or a thermal gas ensemble. Randomness is retained;
+Rule A remains deferred. [Reproduction](access_results/REPRODUCE.md).
+
+The initial binding calibration is implemented and passed: [results](calibration/RESULTS_r1.md),
 [frozen engineering protocol](calibration/PROTOCOL.json), and
 [reproduction](calibration/REPRODUCE.md). BioNetGen 0.8.7 / engine 2.9.3 was
 verified locally against hand-derived population-state generators and sampling.
-This is not yet the three-arm assembly comparison or a controller experiment.
+It remains the independent engine/symmetry calibration underneath both slices.
 
 Implemented workflow pieces: capped process-tree execution, frozen manifests,
 source snapshots, compact machine/human reports and final artifact verification.
-General caching, eviction, schemas/indexing and optimizer integration remain open.
+The new slices add finite controller enumeration, thermodynamic ledgers,
+functional reconstruction surveys and automated registered-outcome scoring.
+General caching, eviction, indexing and larger optimizer classes remain open.
 
 Generated outputs will live under the already ignored
 `results/local_runs/lushness_testbed/`. Source, specifications and compact retained

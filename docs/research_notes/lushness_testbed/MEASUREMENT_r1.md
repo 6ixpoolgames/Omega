@@ -20,6 +20,21 @@ one resolved outcome. Audit the mapping; do not automatically add log2(2) entrop
 Both engines must implement the same rates including volume/combinatorial factors.
 Q is a generator, not a normalized row probability and not a list of species.
 
+"Physical randomness" means stochastic variation represented in the modeled
+world, including controller decisions. It does not mean quantum-certified or
+microscopically simulated randomness. A software pseudorandom draw can sample a
+physical model law. Conversely, a random solver seed or shuffled numerical index
+does not add a physical alternative. Fixed-seed reproducibility of the calculation
+does not turn the stipulated stochastic world into a deterministic world.
+
+Decision entropy is included through the declared joint physical history. For a
+resolved decision A and subsequent state Y, H(A,Y|x) = H(A|x) + H(Y|A,x).
+If A is omitted from the readout, H(Y|x) = H(A,Y|x) - H(A|Y,x). Thus an automatic
+extra H(A|x) can double count or count information omitted from the declared grain.
+Transient decision records missed between sample times are a resolution loss,
+not grounds to declare their underlying randomness unreal. No persistence/value
+test is imposed on their admission at a grain that resolves them.
+
 ## 2. Primary finite-resolution history breadth
 
 For observation cadence delta, obtain P_delta = exp(delta Q). This is the CTMC

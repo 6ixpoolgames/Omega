@@ -1,6 +1,8 @@
 # Lushness optimizer test bed: foundation contract
 
-**Draft for design audit — 13 October 2026. No new world or experiments implemented.**
+**Design contract — 13 October 2026.** The first finite assembly/controller slices
+are implemented; [results and scope](access_results/RESULTS_r1.md) record which
+larger obligations remain open.
 
 Initial implementation direction: [BioNetGen substrate specification](INITIAL_SPEC_r1.md),
 [measurement contract](MEASUREMENT_r1.md), and

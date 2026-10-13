@@ -1,0 +1,307 @@
+{
+  "assembly": [
+    [
+      "dimer_feedback",
+      {
+        "assembled_bits": 302.8224843297038,
+        "assembled_minus_unassembled_bits": -0.1993372838137475,
+        "delta": 0.25,
+        "horizon": 64,
+        "same_law_stationary_conditional_baseline_bits": 302.87558231246317,
+        "unassembled_bits": 303.02182161351755
+      }
+    ],
+    [
+      "metastable_slow_reversible",
+      {
+        "assembled_bits": 14.295138627234993,
+        "assembled_minus_unassembled_bits": -7.518113157716295,
+        "delta": 0.25,
+        "horizon": 64,
+        "same_law_stationary_conditional_baseline_bits": 16.13693102751889,
+        "unassembled_bits": 21.813251784951287
+      }
+    ],
+    [
+      "reversible_base",
+      {
+        "assembled_bits": 278.8879479786358,
+        "assembled_minus_unassembled_bits": -0.31810153255406703,
+        "delta": 0.25,
+        "horizon": 64,
+        "same_law_stationary_conditional_baseline_bits": 279.0239357130188,
+        "unassembled_bits": 279.20604951118986
+      }
+    ]
+  ],
+  "winner": {
+    "policy": [
+      0.0,
+      0.5,
+      0.0,
+      0.5
+    ],
+    "profiles": {
+      "1": [
+        9.467481895503832,
+        5.775237540623527
+      ],
+      "4": [
+        30.663193054000818,
+        24.553228066800365
+      ],
+      "16": [
+        107.92478585236945,
+        99.03047192682828
+      ],
+      "64": [
+        401.5857120908749,
+        392.24941678981236
+      ]
+    },
+    "row_error": 3.3306690738754696e-16,
+    "rate_bits_per_time": 6.086008335902215,
+    "offset_bits": [
+      12.085579585971,
+      2.749707464527414
+    ],
+    "stationary_conditional_bits": {
+      "1": 6.086008335902215,
+      "4": 24.34403334360886,
+      "16": 97.37613337443544,
+      "64": 389.50453349774176
+    },
+    "communicating_classes": 1,
+    "stationary_residual": 1.5178830414797062e-16,
+    "poisson_residual": 1.2323475573339238e-14
+  },
+  "best_deterministic": {
+    "policy": [
+      0.0,
+      1.0,
+      0.0,
+      1.0
+    ],
+    "profiles": {
+      "1": [
+        9.565007237674806,
+        5.77317271222389
+      ],
+      "4": [
+        31.26150751493765,
+        24.85037178763178
+      ],
+      "16": [
+        102.40092502304282,
+        96.06500877387207
+      ],
+      "64": [
+        373.3597163727476,
+        367.3389407110708
+      ]
+    },
+    "row_error": 2.220446049250313e-16,
+    "rate_bits_per_time": 5.638593765534966,
+    "offset_bits": [
+      12.487893060563065,
+      6.467740611689366
+    ],
+    "stationary_conditional_bits": {
+      "1": 5.638593765534966,
+      "4": 22.554375062139865,
+      "16": 90.21750024855946,
+      "64": 360.87000099423784
+    },
+    "communicating_classes": 1,
+    "stationary_residual": 2.8080836267374565e-16,
+    "poisson_residual": 6.106226635438361e-15
+  },
+  "registered_outcomes": {
+    "B1": {
+      "status": "pass",
+      "maximum_generator_error": 4.440892098500626e-16
+    },
+    "B2": {
+      "status": "pass",
+      "closed_balance_error": 4.336808689942018e-19
+    },
+    "B3": {
+      "status": "pass",
+      "maximum_energy_residual": 2.1316282072803006e-14
+    },
+    "B4": {
+      "status": "strict_stochastic_grid_advantage",
+      "rate_gap": 0.44741457036724874
+    },
+    "B5": {
+      "status": "adversarial_hit",
+      "active_total_difference": -0.08509602970087682
+    },
+    "B6": {
+      "status": "reported_all_roots",
+      "minimum_offset_advantage": 4.486676044329243,
+      "maximum_offset_advantage": 16.37182714849567,
+      "finite_positive": 324,
+      "finite_negative": 0
+    },
+    "B7": {
+      "status": "same_unique_rate_winner",
+      "optimal_sets": [
+        {
+          "speed": 1.0,
+          "cadence": 0.25,
+          "rate_optimal_policies": [
+            [
+              0.0,
+              0.5,
+              0.0,
+              0.5
+            ]
+          ],
+          "overlap_primary": [
+            [
+              0.0,
+              0.5,
+              0.0,
+              0.5
+            ]
+          ]
+        },
+        {
+          "speed": 1.0,
+          "cadence": 0.125,
+          "rate_optimal_policies": [
+            [
+              0.0,
+              0.5,
+              0.0,
+              0.5
+            ]
+          ],
+          "overlap_primary": [
+            [
+              0.0,
+              0.5,
+              0.0,
+              0.5
+            ]
+          ]
+        },
+        {
+          "speed": 1.0,
+          "cadence": 0.5,
+          "rate_optimal_policies": [
+            [
+              0.0,
+              0.5,
+              0.0,
+              0.5
+            ]
+          ],
+          "overlap_primary": [
+            [
+              0.0,
+              0.5,
+              0.0,
+              0.5
+            ]
+          ]
+        },
+        {
+          "speed": 0.5,
+          "cadence": 0.25,
+          "rate_optimal_policies": [
+            [
+              0.0,
+              0.5,
+              0.0,
+              0.5
+            ]
+          ],
+          "overlap_primary": [
+            [
+              0.0,
+              0.5,
+              0.0,
+              0.5
+            ]
+          ]
+        },
+        {
+          "speed": 2,
+          "cadence": 0.25,
+          "rate_optimal_policies": [
+            [
+              0.0,
+              0.5,
+              0.0,
+              0.5
+            ]
+          ],
+          "overlap_primary": [
+            [
+              0.0,
+              0.5,
+              0.0,
+              0.5
+            ]
+          ]
+        }
+      ]
+    },
+    "B8": {
+      "status": "not_hit",
+      "winner_active_disparity": 3.3306690738754696e-16
+    }
+  },
+  "finite_winners": {
+    "1": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "4": [
+      0.5,
+      1.0,
+      0.5,
+      1.0
+    ],
+    "16": [
+      0.0,
+      0.5,
+      0.0,
+      0.5
+    ],
+    "64": [
+      0.0,
+      0.5,
+      0.0,
+      0.5
+    ]
+  },
+  "rate_chain_rule": {
+    "next_body_fuel_given_full_previous": 5.545668022834766,
+    "next_gate_given_next_body_fuel_and_full_previous": 0.5403403130674478
+  },
+  "profiles": {
+    "assembly": {
+      "exit_code": 0,
+      "cap_reason": null,
+      "wall_seconds": 7.106065500003751,
+      "wall_cap_seconds": 120,
+      "job_memory_cap_bytes": 1073741824,
+      "peak_job_bytes": 147050496,
+      "output_bytes": 201474
+    },
+    "controlled": {
+      "exit_code": 0,
+      "cap_reason": null,
+      "wall_seconds": 9.043105300050229,
+      "wall_cap_seconds": 120,
+      "job_memory_cap_bytes": 1073741824,
+      "peak_job_bytes": 129810432,
+      "output_bytes": 716812
+    }
+  }
+}

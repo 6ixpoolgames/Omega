@@ -1,8 +1,9 @@
 # Access and lushness optimizer test bed: initial specification
 
-Status: DESIGN DRAFT, 2026-10-13. No new simulator, installation, experiment,
-commit or publication is authorized by this document. The user authorized this
-specification. Its numerical protocol must be frozen before scientific execution.
+Status: DESIGN ENVELOPE, 2026-10-13. User "Go both" authorized the first A/B
+implementations and runs. [Results](access_results/RESULTS_r1.md) distinguish
+implemented scope from this larger design; executable protocols live in assembly/
+and controlled/. This document itself grants no commit or publication permission.
 
 Governing brief: v4 and subsequent user clarifications; see
 [foundation contract](testbed-foundation-contract.md). Working repository: original Omega, active branch codex/operational-continuation-comparison. The new-repository launch is deferred.
@@ -160,11 +161,20 @@ commands as free agency. Gates modify native access because of their physical
 state. The rule set includes gate-switch execution. Fixed passive operation is a
 feasible controller. Communication and extra memory are subsequent costed variants.
 
-First search a finite class of deterministic local response tables. Native
-chemistry remains stochastic. Declare the local observation predicates and table
-size before search. Report best-found versus certified-best explicitly. Add
-physically implemented stochastic controllers later; never append entropy of
-abstract action labels to the objective.
+Use deterministic local response tables as an engineering reference, and include
+stochastic response tables in the first substantive optimizer comparison. Native
+decision randomness counts under the user's null measurement hypothesis, alongside
+chemical and thermal randomness. A declared coarse stochastic controller/register
+is a sufficient model: microscopic randomizer hardware need not be simulated.
+Declare its information, timing, outcomes and cost assumptions, including any
+idealized zero cost, rather than silently excluding decision randomness.
+
+Declare the observation predicates, table size and probability parameterization
+before search; report best-found versus certified-best explicitly. Randomness in
+numerical search or redundant action names is not additional world branching.
+Where distinct decisions have a resolved physical/register trace, count it once
+in the joint history. If only the resulting world state is retained, evaluate its
+mixture law instead of adding an extra action-entropy term without justification.
 
 Compare policies from the same full physical root and hardware boundary. Include
 passive and simple maintenance/transfer baselines, but do not limit discovery to
@@ -188,6 +198,21 @@ Continuous-time event type/timing and finer physical distinctions are separately
 audited. No claim that BioNetGen's reaction IDs select the fundamental grain.
 Keep thermal/stochastic branching; a proposed persistence-filtered Rule A readout
 is optional and not a replacement objective.
+
+This unfiltered treatment is the initial/null measurement hypothesis. The
+statistical null for a particular comparison still needs an explicit effect and
+test. Rule A is an optional overlay: if tested, freeze its retention definition,
+scales and criteria before that test; otherwise explicitly defer it. A later
+overlay is a new experiment and cannot retroactively rescue the primary result.
+Counting randomness does not prove that faster dispersal always wins: destruction
+can change later access, resource use and branching in either direction.
+
+For the next scientific fixture, anchor the cadence to a declared common physical
+reference timescale before ranking policies, and sweep fixed multiples of it.
+Do not recompute a separate ruler for each policy or arm. Reference relaxation is
+one candidate only where it is well-defined; a frozen/absorbing arm may not supply
+the required relaxation scale. This does not alter the completed engineering
+calibration or claim that its cadence was physically fundamental.
 
 Report the horizon profile. Apply v4 rate-first/offset-second comparison only when
 its hypotheses and numerical residuals are established. Distinct policies/laws
@@ -241,5 +266,6 @@ scientific execution until the unresolved numerical fields are supplied.
 - [Kappa reference guide](https://kappalanguage.org/static/manual.pdf): alternative
   graph-rewrite semantics and CTMC backend; symmetry conventions require audit.
 
-Sources checked 2026-10-13. No empirical parameter calibration or local engine
-compatibility test has yet been performed for this new substrate.
+Sources checked 2026-10-13. Local engine/generator compatibility has now been
+tested for binding, assembly and three controller settings. Empirical physical
+parameter calibration remains open.
