@@ -17,6 +17,9 @@ def main():
         elif kind=='controlled':
             from omega_v2.testbed.controlled_slice import run
             run(out)
+        elif kind in ('access_extension','extension_smoke'):
+            from omega_v2.testbed.access_extension import run
+            run(out,int(sys.argv[3]),smoke=kind=='extension_smoke')
         else:
             from omega_v2.testbed.controlled_slice import engine_check, generator, SPEC, energy, STATES
             import numpy as np

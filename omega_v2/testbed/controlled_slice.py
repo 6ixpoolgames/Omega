@@ -73,10 +73,15 @@ def channels(policy, parameters, speed=1.):
         pair(state(0, 1, 0), state(2, 0, 0), (c,), 'build', parameters['build'])
         pair(state(1, 1, 0), state(2, 0, 0), (c,), 'repair', parameters['repair'])
         for b in range(3):
-            p = policy[2*c+int(b == 2)] if policy is not None else None
-            if p is not None:
-                pair(state(b, 1, 0), state(b, 0, 1), (c,), 'switch_export', parameters['switch']*p)
-                pair(state(b, 1, 1), state(b, 0, 0), (c,), 'switch_service', parameters['switch']*(1-p))
+            response = policy[2*c+int(b == 2)] if policy is not None else None
+            if response is not None:
+                # Scalar legacy bias p means weights (service=1-p,export=p).
+                # Explicit pairs also permit idle (0,0), without a fictitious fee.
+                service, export = response if isinstance(response,(tuple,list)) else (1-response,response)
+                if service<0 or export<0 or service+export>1+1e-12:
+                    raise ValueError('Response weights must be nonnegative and sum at most one')
+                pair(state(b, 1, 0), state(b, 0, 1), (c,), 'switch_export', parameters['switch']*export)
+                pair(state(b, 1, 1), state(b, 0, 0), (c,), 'switch_service', parameters['switch']*service)
         # One reversible exchange pathway controlled by each end. Both may open.
         for bc, bo, go in product(range(3), range(3), range(2)):
             a = [(0, 0, 0), (0, 0, 0)]

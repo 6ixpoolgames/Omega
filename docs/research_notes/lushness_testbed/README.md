@@ -7,6 +7,14 @@ historical copies; subsequent revisions belong here.
 
 ## Design packet
 
+The next registered extension is also implemented:
+[enabling/control/Rule A results](access_extension/report/RESULTS_r1.md),
+[protocol](access_extension/PROTOCOL.json),
+[reproduction and automatic interpretation](access_extension/report/REPRODUCE.md).
+It exhaustively searches1296 policy pairs at four capture benefits, with a
+complete same-law energy-shell preparation reference. Rule A is a declared
+predictive-retention diagnostic, not a replacement for unfiltered breadth.
+
 - [Initial substrate specification](INITIAL_SPEC_r1.md)
 - [Measurement contract](MEASUREMENT_r1.md)
 - [Reusable experiment workflow](experiment-workflow.md)

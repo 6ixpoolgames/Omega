@@ -71,12 +71,23 @@ limit is assumed. Absolute values across grains are not interchangeable.
 | Embedded jump chain | r(x,y)=Q(x,y)/q(x) over state-changing exits | Conditional outcome breadth per jump; separate activity |
 | Timing | Exit rates, waiting distributions, counts per physical horizon | Primary timing diagnostics |
 | Marked event history | Law over physically declared event marks/times | Requires separate likelihood/grain contract |
-| Persistence/Rule A | Retained distinctions under an explicit memory/readout test | Optional, not defined or selected by this draft |
+| Persistence/Rule A | Retained distinctions under an explicit memory/readout test | Optional RuleA-R1 predictive-retention profile now defined for the access extension; no primary admission gate |
 
 Fixed-jump and fixed-time horizons are different queries. Continuous waiting-time
 entropy is differential, unit-dependent; do not add it to discrete jump entropy
 and call the result a canonical number of futures. If timing is binned, specify
 the bin rule and a joint outcome/timing law, including multiple jumps per bin.
+
+The access-extension [protocol](access_extension/PROTOCOL.json) specifies the
+optional RuleA-R1 readout: I(X_delta;X_(delta+tau)|X_0=x), averaged over declared
+known-root preparations. It reports the information in a next-step distinction
+still recoverable at a later sample, across frozen physical lags. It retains
+propagated distinctions and can include slow gate correlations. It has no
+persistence threshold, no useful-structure bonus, and no claim to a unique Rule A.
+Its bits at overlapping lags are never summed into history volume. The automated
+interpretation reports disagreements with unfiltered breadth; a higher value
+does not itself establish protection or organization. Previous experiment verdicts
+are unchanged. [Definition and limits](access_extension/MODEL.md).
 
 Source attribution (chemistry, physical controller noise, stochastic costs,
 arbitration) uses an explicit joint history/event model or named ablation. Marginal

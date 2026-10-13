@@ -1,0 +1,56 @@
+{
+  "id": "controlled-access-extension-r1",
+  "status": "frozen_before_scientific_ranking",
+  "date": "2026-10-13",
+  "base_model": "../controlled/MODEL.md",
+  "extension_model": "MODEL.md",
+  "base_parameters_from": "../controlled/PROTOCOL.json",
+  "active_capture_factors": [1, 3, 6, 12],
+  "responses": {"idle": [0,0], "service": [1,0], "mix25": [0.75,0.25], "mix50": [0.5,0.5], "mix75": [0.25,0.75], "export": [0,1]},
+  "policy_coordinates": ["left_inactive", "left_active", "right_inactive", "right_active"],
+  "controller_count": 1296,
+  "primary_cadence": 0.25,
+  "sensitivity_cadences": [0.125, 0.5],
+  "cadence_scope": "primary complete search; sensitivity only on algorithmically selected diagnostic policies, not reoptimized whole grid",
+  "horizons": [1, 4, 16, 64],
+  "objective": "unfiltered whole-world conditional sampled path entropy; rate then organized-root offset, ties within1e-9",
+  "matched_preparation_reference": {
+    "support": "all full states with both gates service and total modeled energy4",
+    "weights": "uniform across physically resolved states in that energy shell",
+    "include_organized_state": true,
+    "report": "mean conditional bits and centered offsets; do not add preparation entropy",
+    "limits": "complete randomized reference within this finite adapter, not a molecular gas ensemble"
+  },
+  "rule_a": {
+    "id": "RuleA-R1-predictive-retention",
+    "role": "optional diagnostic overlay; never primary reward",
+    "definition": "I(X_delta; X_(delta+tau) | X_0=x), averaged over declared roots if needed",
+    "lags": [0, 0.25, 1, 4, 16, 64],
+    "reference_clock": "common base time, unchanged across capture factors and policies",
+    "units": "bits per next stochastic distinction, not cumulative history volume",
+    "policy_scope": "selected diagnostic policies only; no full Rule A optimization claim",
+    "root_queries": ["organized", "disassembled", "matched_shell", "stationary"],
+    "threshold": "none; retain complete lag profile",
+    "audits": ["tau0 equals next-step entropy", "nonnegative within1e-10", "Markov data-processing monotonicity within1e-10", "state relabeling covariance"],
+    "limitations": "retains predictive information, not welfare or organization itself; gate memory counts; no overlapping-lag summation"
+  },
+  "diagnostic_policy_selection": [
+    "unfiltered rate/offset winner",
+    "best deterministic-or-idle response policy",
+    "maximum stationary functioning policy as descriptive benchmark only",
+    "all idle", "all service", "all mix50", "all export",
+    "prior adaptive (service,mix50,service,mix50)"
+  ],
+  "predictions": [
+    {"id":"E1", "kind":"engineering", "criterion":"all protocol policies counted; restricted reachable chains irreducible; probability/Poisson/energy residuals <=declared tolerances"},
+    {"id":"E2", "kind":"open_outcome", "criterion":"report organized-minus-matched-shell finite and offset advantages at every capture factor; retain negative signs"},
+    {"id":"E3", "kind":"open_outcome", "criterion":"report winner policy/functioning as capture benefit rises; no assumed monotonicity"},
+    {"id":"E4", "kind":"adversarial", "criterion":"winner stationary active total lower than all-service by >1e-8 counts as maintenance trade-off"},
+    {"id":"E5", "kind":"overlay", "criterion":"report whether unfiltered winner also maximizes retained predictive bits among selected policies at each lag/root; identify mismatches without changing primary verdict"},
+    {"id":"E6", "kind":"sensitivity", "criterion":"report selected-policy ranking flips across cadences; do not infer unchanged global optimum from candidate-only checks"},
+    {"id":"E7", "kind":"engineering", "criterion":"legacy coarse policies reproduce prior finite-state generators; idle has no gate transitions and no fictitious cost"}
+  ],
+  "tolerances": {"probability": 1e-10, "stationarity": 1e-10, "poisson": 1e-9, "energy": 1e-8, "rank": 1e-9},
+  "limits_per_factor": {"wall_seconds":120, "memory_mib":1024, "output_mib":256, "numeric_threads":1},
+  "not_implemented": ["population growth", "new capacity sites", "controller memory", "self-subject history optimization", "lineage identity", "real molecular gas", "full-grid Rule A optimizer"]
+}
