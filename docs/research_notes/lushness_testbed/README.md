@@ -7,6 +7,24 @@ historical copies; subsequent revisions belong here.
 
 ## Design packet
 
+Next implementation handoff: [modular channel-loss and recovery extension](CHANNEL_EXTENSION_SPEC_r1.md).
+The extension now has [implemented modules and scope](channel_extension/MODEL_AND_IMPLEMENTATION.md),
+[engineering evidence](channel_extension/engineering_report/RESULTS.md), and
+[reproduction commands](channel_extension/REPRODUCE.md). It adds material trapping,
+damage controls, reducible-chain analysis and frozen-source execution. Its
+scientific protocol remains a draft. Functioning margin is a survey; channel
+closure requires its own prospective optimizer test. Rule A remains parked.
+
+Paid population expansion now has an engineering implementation and capped smoke:
+[model](growing_population/MODEL.md),
+[smoke results](growing_population/SMOKE_RESULTS_r1.md), and
+[reproduction](growing_population/REPRODUCE.md).
+This verifies paid recursive assistance and sparse population/resource propagation;
+The first [controlled growth comparison](growing_population/comparison_report/RESULTS_r1.md)
+is also completed:36 shared local tables under four mechanism settings, with
+matched randomized preparations. Its scope and adverse outcomes are retained.
+Rule A was parked for that comparison.
+
 The next registered extension is also implemented:
 [enabling/control/Rule A results](access_extension/report/RESULTS_r1.md),
 [protocol](access_extension/PROTOCOL.json),

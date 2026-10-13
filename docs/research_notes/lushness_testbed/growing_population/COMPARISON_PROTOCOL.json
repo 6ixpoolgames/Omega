@@ -1,0 +1,42 @@
+{
+  "id":"controlled-growing-substrate-r1",
+  "status":"frozen_before_scientific_ranking",
+  "date":"2026-10-13",
+  "inventory":[3,1],
+  "parameters_from":"SMOKE_PROTOCOL.json",
+  "mechanism_arms":{
+    "full":{"capture_benefit":6,"assisted_birth":0.4},
+    "no_assistance":{"capture_benefit":6,"assisted_birth":0},
+    "no_capture_benefit":{"capture_benefit":1,"assisted_birth":0.4},
+    "neither":{"capture_benefit":1,"assisted_birth":0}
+  },
+  "controller_responses":{"idle":[0,0],"service":[1,0],"mix25":[0.75,0.25],"mix50":[0.5,0.5],"mix75":[0.25,0.75],"export":[0,1]},
+  "controller_class":"36 shared local response tables: own inactive/active entry; same table installed at each compartment, independent native executions",
+  "controller_scope":"complete enumeration within shared-table class; no independent-table or unrestricted optimum claim",
+  "primary_objective":"unfiltered sampled full declared count-history entropy: long-run rate first, distributed-seed root offset second, ties1e-9",
+  "clock":{"primary_cadence":0.25,"sensitivity_cadences":[0.125,0.5],"horizons":[1,4,16,64]},
+  "roots":{
+    "distributed_seed":[[0,1,2,0],[0,0,1,0]],
+    "concentrated_seed":[[0,1,3,0],[0,0,0,0]],
+    "unassembled":[[0,0,3,0],[0,0,1,0]]
+  },
+  "reference":{"energy":8,"gates":"service at both endpoints","support":"all legal counted states in same energy shell","weights":"multinomial body degeneracy times binomial carrier degeneracy","quantity":"mean conditional future bits, no initial-prior entropy added","scope":"matched randomized coarse preparation reference, not molecular gas"},
+  "matching":"same inventory,energy,temperature,drive,hardware and controller inside each mechanism law; ablations explicitly different laws",
+  "registered_outcomes":[
+    {"id":"G1","kind":"engineering","criterion":"36 policies per arm, exact reachable-class restriction, stationary/Poisson/ledger residuals pass"},
+    {"id":"G2","kind":"open_outcome","criterion":"report seed-minus-reference finite/offset signs for every controller; retain negative findings"},
+    {"id":"G3","kind":"growth","criterion":"report built/active occupation and construction/loss closures; >one built unit atT64 is net seed expansion, not a growth-rate theorem"},
+    {"id":"G4","kind":"adversarial","criterion":"winner stationary functioning below best-functioning or passive fixed-service policy counts as instrumental maintenance trade-off"},
+    {"id":"G5","kind":"mechanism","criterion":"full versus assistance/capture ablations at each fixed table and at separately optimized tables; rates, function and births reported; no attribution to organization beyond modeled kinetics"},
+    {"id":"G6","kind":"sensitivity","criterion":"selected-candidate cadence and switching-bill2 ranking comparisons; not full-grid reoptimization"},
+    {"id":"G7","kind":"sampling","criterion":"10000 primary-winner sampled count histories throughT4 agree with exact information expectation within6 standard errors"}
+  ],
+  "survey_selection":["primary rate/offset winner","best deterministic-or-idle table","maximum stationary active benchmark","all idle","all service","all mix50","prior adaptive service/mix50"],
+  "survey":"every horizon: net population, gross paid/basal/assisted/thermal construction, losses, energy/work/heat/switching; probability at least3 built units and first reaching3; population is coarse functional apparatus, not agent identity",
+  "counterfactual_scope":"factorial enabling contrast and fixed-controller contrasts; no activity-matched noise control claimed",
+  "rule_a":"parked, no computation or filtering",
+  "seed":261013,
+  "limits_per_arm":{"wall_seconds":120,"memory_mib":1024,"output_mib":256,"numeric_threads":1},
+  "tolerances":{"probability":1e-10,"stationarity":1e-10,"poisson":1e-9,"ledger":1e-8,"rank":1e-9},
+  "not_implemented":["molecular gas","open-ended growth","independent local policy search","self-subject optimization","lineage identity","activity-matched extra-noise world","6400-state entropy optimization"]
+}
