@@ -61,3 +61,7 @@ def test_registered_outcomes_score_negative_results():
     result=score_outcomes({'gap':-2},[{'id':'prediction','metric':'gap','operator':'ge','threshold':0},
                                    {'id':'report','metric':'gap','operator':'record'}])
     assert result[0]['status']=='fail' and result[1]['value']==-2
+
+
+def test_interpretation_does_not_turn_roundoff_into_channel_tension():
+    assert interpret_channel({'winner_closure':.7+1e-14,'benchmark_closure':.7})==[]

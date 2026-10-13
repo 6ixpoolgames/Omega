@@ -5,6 +5,7 @@ from datetime import datetime,timezone
 import hashlib
 import importlib.metadata
 import json
+import re
 from pathlib import Path
 import sys
 import uuid
@@ -18,9 +19,16 @@ from omega_v2.testbed.experiments.channel_comparison import validate_protocol
 
 def main():
     parser=argparse.ArgumentParser()
-    parser.add_argument('mode',choices=['smoke','profile','scientific'])
+    parser.add_argument('mode',choices=['smoke','profile','preflight','scientific'])
     parser.add_argument('--arm',choices=['uniform_absorbing','worn_absorbing','worn_reversible'],default='uniform_absorbing')
     parser.add_argument('--protocol',type=Path)
+    parser.add_argument('--actuation',choices=['legacy','embodied'],default='legacy')
+    parser.add_argument('--basal-rate',type=float,default=0.)
+    parser.add_argument('--shock-mode',choices=['disabled','independent','correlated'],default='disabled')
+    parser.add_argument('--hazard',type=float,default=0.)
+    parser.add_argument('--hit-probability',type=float,default=1.)
+    parser.add_argument('--trap-energy',type=float)
+    parser.add_argument('--seconds',type=int)
     args=parser.parse_args()
     spec=ROOT/'docs/research_notes/lushness_testbed/channel_extension'
     if args.mode=='scientific':
@@ -31,16 +39,23 @@ def main():
     else:
         protocol=json.loads((spec/'ENGINEERING_PROTOCOL.json').read_text())
         damage=protocol['damage_arms'][args.arm]
-        config={'mode':args.mode,'engineering':{'inventory':[3,1] if args.mode=='profile' else [1,1],
-            'damage':damage,'max_dense_bytes':protocol['max_dense_bytes']},'engineering_protocol':protocol}
-        limits=protocol['limits']
+        damage=dict(damage)
+        if args.trap_energy is not None:damage['energy']=args.trap_energy
+        config={'mode':args.mode,'engineering':{'inventory':[3,1] if args.mode in ('profile','preflight') else [1,1],
+            'damage':damage,'max_dense_bytes':protocol['max_dense_bytes'],
+            'actuation':{'mode':args.actuation,'basal_rate':args.basal_rate},
+            'shocks':{'enabled':args.shock_mode!='disabled','mode':'independent' if args.shock_mode=='disabled' else args.shock_mode,'hazard':args.hazard,'p':args.hit_probability}},'engineering_protocol':protocol}
+        limits=dict(protocol['limits'])
+        if args.seconds is not None:limits['wall_seconds']=args.seconds
+        config['engineering_caps']=limits
     config['runtime']={'python':sys.version,'packages':{k:importlib.metadata.version(k) for k in ('numpy','scipy')}}
-    runid='channel-'+args.mode+'-'+args.arm+'-'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'-'+uuid.uuid4().hex[:6]
+    label=re.sub(r'[^a-zA-Z0-9_.-]','-',protocol['id']) if args.mode=='scientific' else args.arm
+    runid='channel-'+args.mode+'-'+label+'-'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'-'+uuid.uuid4().hex[:6]
     out=ROOT/'results/local_runs/lushness_testbed'/runid
     files=list((ROOT/'omega_v2/testbed').rglob('*.py'))+[ROOT/'omega_v2/__init__.py']
     files += [ROOT/'scripts'/name for name in ('channel_comparison_worker.py','run_channel_comparison.py',
               'report_channel_comparison.py','run_bng_binding_calibration.py')]
-    files += list(spec.glob('*.json'))
+    files += list(spec.rglob('*.json'))
     relative=[p.relative_to(ROOT).as_posix() for p in files if p.is_file()]
     manifest=freeze_bundle(ROOT,out,relative,config)
     # Source groups keep report/readout edits out of the physical operator key.

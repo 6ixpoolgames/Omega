@@ -1,3 +1,5 @@
+> Subsequent status (2026-10-13): the full preflight and seven frozen scientific grids are complete. See [SCIENTIFIC_ASSESSMENT_r1.md](SCIENTIFIC_ASSESSMENT_r1.md). The engineering-stage next-run gates below are historical.
+
 # Reproduction and next-run gate
 
 From the Omega root using its `.venv/Scripts/python.exe`:

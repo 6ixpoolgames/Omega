@@ -7,6 +7,8 @@ from math import comb, exp, factorial, isfinite
 
 from .. import growing_population as g
 from ..contracts import Event, RuleModule, WorldSpec
+from .actuation import ActuationSpec, module as actuation_module
+from .shocks import ShockSpec, module as shocks_module
 from .damage import module as damage_module
 from .material_sink import MaterialSink, local_energy, precursor
 
@@ -66,7 +68,7 @@ def _degeneracy(state, inventories):
     return value
 
 
-def _growth_events(state, inventories, policy, params):
+def _growth_events(state, inventories, policy, params, actuation):
     def emit(c, family, target, rate, work=0., increments=None):
         if rate == 0:
             return
@@ -94,6 +96,8 @@ def _growth_events(state, inventories, policy, params):
             for j, delta in enumerate((dw, da, dd, df, dg)):
                 target[c][j] += delta
             return target
+
+        command_factor = actuation.availability(a, m)
 
         if p: emit(c, 'disassembly', change(dw=1), params.disassembly*p*exp(-.5),
                    increments={'gross_thermal_reconstruction': 1.})
@@ -139,17 +143,17 @@ def _growth_events(state, inventories, policy, params):
             if gate == 0:
                 if f >= k:
                     emit(c, 'switch_export', change(df=-k, dg=1),
-                         params.switch*export*comb(f, k)/denom*exp(k))
+                         params.switch*export*comb(f, k)/denom*exp(k)*command_factor)
                 if f+k <= m:
                     emit(c, 'switch_service', change(df=k, dg=1),
-                         params.switch*service*comb(m-f, k)/denom*exp(-k))
+                         params.switch*service*comb(m-f, k)/denom*exp(-k)*command_factor)
             else:
                 if f >= k:
                     emit(c, 'switch_service', change(df=-k, dg=-1),
-                         params.switch*service*comb(f, k)/denom*exp(k))
+                         params.switch*service*comb(f, k)/denom*exp(k)*command_factor)
                 if f+k <= m:
                     emit(c, 'switch_export', change(df=k, dg=-1),
-                         params.switch*export*comb(m-f, k)/denom*exp(-k))
+                         params.switch*export*comb(m-f, k)/denom*exp(-k)*command_factor)
 
     open_gates = sum(x[4] for x in state)
     if open_gates:
@@ -165,7 +169,7 @@ def _growth_events(state, inventories, policy, params):
 
 
 def build_world(inventories=(1, 1), policy=None, params=g.DEFAULT, damage=None,
-                max_states=10000):
+                max_states=10000, actuation=None, shocks=None):
     """Build a finite versioned growth world with optional material damage.
 
     State coordinates are per compartment ``(w,a,d,f,g)``. Disabled damage
@@ -176,6 +180,13 @@ def build_world(inventories=(1, 1), policy=None, params=g.DEFAULT, damage=None,
     sink = damage if damage is not None else MaterialSink(enabled=False)
     if not isinstance(sink, MaterialSink):
         raise TypeError('damage must be a MaterialSink configuration')
+    actuator = actuation if actuation is not None else ActuationSpec()
+    shock = shocks if shocks is not None else ShockSpec()
+    if not isinstance(shock,ShockSpec):raise TypeError('shocks must be a ShockSpec configuration')
+    if shock.enabled and shock.hazard>0 and not sink.enabled:
+        raise ValueError('Shock W->D requires declared material-D state and energy')
+    if not isinstance(actuator, ActuationSpec):
+        raise TypeError('actuation must be an ActuationSpec configuration')
     count = 1
     for m in inv:
         count *= ((m+1)*(m+2)//2*(m+1)*2 if not sink.enabled
@@ -202,15 +213,22 @@ def build_world(inventories=(1, 1), policy=None, params=g.DEFAULT, damage=None,
     def usable(state): return sum(m-x[2] for m, x in zip(inv, state))
     def fuel(state): return sum(x[3] for x in state)
     def lost(state): return sum(x[2] for x in state)
-    modules = [RuleModule('growth', '2',
-                          lambda state: _growth_events(state, inv, responses, params),
+    growth_version = '3' if actuator.mode == 'embodied' else '2'
+    modules = [RuleModule('growth', growth_version,
+                          lambda state: _growth_events(state, inv, responses, params, actuator),
                           requires=('material-PWA-D',),
                           provides=('growth-events',))]
     modules.append(damage_module(inv, sink))
+    modules.append(shocks_module(inv,shock,sink.energy))
+    gate_module = actuation_module(actuator)
+    if gate_module is not None:
+        modules.append(gate_module)
     fields = ('material-PWA-D', 'local-fuel', 'gate', 'controller')
     metadata = {'inventory': inv, 'inventories': inv, 'carrier_capacities': inv,
                 'parameters': asdict(params), 'params': asdict(params),
                 'policy': responses, 'material_sink': asdict(sink), 'damage': asdict(sink),
+                'actuation': asdict(actuator),
+                'shocks': asdict(shock),
                 'boundary_assumption': sink.boundary if sink.enabled and sink.mode == 'absorbing' else None,
                 'fields': fields}
     return WorldSpec('growing-population-with-material-D', '2', states, validate, energy,

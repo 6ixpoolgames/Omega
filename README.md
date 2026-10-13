@@ -604,3 +604,9 @@ results/
 ## License
 
 This repository is licensed under the MIT License. See [LICENSE](LICENSE).
+
+## Channel-loss experiment
+
+The [first scientific assessment](docs/research_notes/lushness_testbed/channel_extension/SCIENTIFIC_ASSESSMENT_r1.md) reports seven complete policy grids, shallow-well prediction failures, closure/recovery diagnostics and the surviving-controller limitation. Raw outputs remain local.
+
+The [embodied-control and matched-shocks upgrade](docs/research_notes/lushness_testbed/channel_extension/embodiment_shocks/ASSESSMENT.md) tests whether servicing becomes instrumentally useful, resolves the gate-tail sensitivity, and reports conditional reserve alongside function availability.

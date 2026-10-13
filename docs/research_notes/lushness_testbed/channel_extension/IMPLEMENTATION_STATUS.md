@@ -1,3 +1,5 @@
+> Subsequent status (2026-10-13): the full preflight and seven frozen scientific grids are complete. See [SCIENTIFIC_ASSESSMENT_r1.md](SCIENTIFIC_ASSESSMENT_r1.md). The engineering-stage next-run gates below are historical.
+
 # Implementation and validation status — 13 October 2026
 
 The handoff's five implementation milestones are complete at their stated scope:

@@ -40,16 +40,17 @@ class ReadoutRegistry:
 def interpret_channel(result):
     """Descriptive findings, with no survival reward or automatic ethical label."""
     findings = []
+    tolerance=result.get('comparison_tolerance',1e-9)
     if result.get("channel_empty", False):
         findings.append({"status": "open_outcome", "id": "no_exact_closure",
                          "text": "No structural closure in this law; inspect deadline recovery."})
-    if result.get("winner_active", float("inf")) < result.get("benchmark_active", -float("inf")):
+    if result.get("winner_active", float("inf")) < result.get("benchmark_active", -float("inf"))-tolerance:
         findings.append({"status": "open_outcome", "id": "margin_tradeoff",
                          "text": "Breadth winner retains less functioning capacity; a margin trade-off."})
-    if result.get("winner_closure", -float("inf")) > result.get("benchmark_closure", float("inf")):
+    if result.get("winner_closure", -float("inf")) > result.get("benchmark_closure", float("inf"))+tolerance:
         findings.append({"status": "open_outcome", "id": "closure_tension",
                          "text": "Breadth and apparatus-channel protection diverge in this comparison."})
-    if result.get("seed_excess", 0) < 0:
+    if result.get("seed_excess", 0) < -tolerance:
         findings.append({"status": "open_outcome", "id": "negative_preparation_result",
                          "text": "The seed is behind its matched coarse reference."})
     return findings
