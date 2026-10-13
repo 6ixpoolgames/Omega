@@ -1,0 +1,37 @@
+{
+  "id": "bng-binding-calibration-r1",
+  "status": "engineering_protocol",
+  "scope": "adapter and measurement calibration only; no generativity or ethical result",
+  "upstream": {
+    "repository": "https://github.com/RuleWorld/BNGTutorial",
+    "commit": "d74f5e415b533bb4bb470d024b5dafb03a4261e1",
+    "path": "BAB/BAB.bngl",
+    "sha256": "4840d467473149f7cbb1ac74b115ce8cca7807cbdfcc9bcdcc975a3eb105b08f",
+    "adaptation": "independently authored binding fixture; A=1, B=2, ka=1, kd=1; network generation only; left/right and homodimer controls",
+    "upstream_original": "A=100, B=100, ka=0.01, kd=1; ODE example",
+    "redistribution": "upstream original retained only in ignored local provenance; no license inferred"
+  },
+  "package_version": "0.8.7",
+  "engine_version": "2.9.3",
+  "primary_cadence": 0.25,
+  "sensitivity_cadences": [0.125, 0.5, 1.0],
+  "physical_horizon": 4.0,
+  "endpoint_horizon": 1.0,
+  "own_ssa_samples": 10000,
+  "own_ssa_seed": 1729,
+  "upstream_ssa_samples": 256,
+  "upstream_ssa_seeds": {"start": 10001, "stop_exclusive": 10257},
+  "generator_tolerance": 1e-12,
+  "numerical_tolerance": 1e-10,
+  "sampling_gate": "each category error <= 6*sqrt(p*(1-p)/N) + 1/N; diagnostic not a universal confidence guarantee",
+  "predictions": [
+    {"id": "P1", "test": "symmetric Q matches hand birth/death rates (2-n)^2, n", "criterion": "max absolute error <= generator_tolerance"},
+    {"id": "P2", "test": "resolved Q matches two physical sites and projects onto symmetric Q", "criterion": "max absolute error <= generator_tolerance"},
+    {"id": "P3", "test": "homodimer forward and reverse population rates equal 1", "criterion": "max absolute error <= generator_tolerance"},
+    {"id": "P4", "test": "both samplers agree with computed endpoint distribution", "criterion": "sampling_gate passes all categories"},
+    {"id": "P5", "test": "passive relabeling and representational channel splitting preserve sampled-history entropy", "criterion": "absolute error <= numerical_tolerance"},
+    {"id": "P6", "test": "resolved site-history entropy is strictly above occupancy-history entropy", "criterion": "positive difference at every preregistered cadence; sensitivity result not an invariance"}
+  ],
+  "caps": {"wall_seconds": 120, "job_memory_mib": 1024, "output_mib": 256, "threads": 1},
+  "retention": "all compact evidence/source bundles retained; raw outputs local; no automatic deletion"
+}

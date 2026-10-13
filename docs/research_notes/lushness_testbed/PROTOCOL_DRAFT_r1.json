@@ -1,0 +1,92 @@
+{
+  "schema_version": "omega-experiment-draft/1",
+  "protocol_id": "access-assembly-optimizer-r1",
+  "status": "draft_not_executable",
+  "created": "2026-10-13",
+  "spec": "INITIAL_SPEC_r1.md",
+  "measurement_contract": "MEASUREMENT_r1.md",
+  "workflow": "experiment-workflow.md",
+  "engine": {
+    "preferred": "BioNetGen",
+    "version": null,
+    "upstream_model": null,
+    "source_hash": null,
+    "independent_check": "BioNetGen SSA against compiled population-state generator",
+    "later_alternative": "Kappa or NFsim after equivalence audit"
+  },
+  "fixtures": [
+    {
+      "id": "A",
+      "role": "assembly_and_measurement_calibration",
+      "engineering_inventory_targets": [2, 3, 4],
+      "arms": ["reversible", "frozen_accidents", "assembly_feedback"],
+      "physical_parameters": null,
+      "root_preparations": null,
+      "disordered_reference": null,
+      "limits": "finite assembly; no claim of open-ended growth or optimizer ethics"
+    },
+    {
+      "id": "B",
+      "role": "controlled_access_policy_discovery",
+      "compartments": 2,
+      "population": "coarse installed counts; operational condition reported",
+      "lineage": "deferred",
+      "controller_class": "finite deterministic local response tables with physical gates",
+      "operation_rules": null,
+      "observation_table": null,
+      "cost_table": null,
+      "physical_parameters": null
+    }
+  ],
+  "measurement": {
+    "version": "r1",
+    "primary": "conditional_entropy_of_sampled_full_declared_configurations",
+    "units": "bits",
+    "transition_law": "P_delta = exp(delta * Q)",
+    "delta": null,
+    "sensitivity_deltas": null,
+    "horizons": null,
+    "jump_chain": "secondary with explicit jump/time horizon",
+    "waiting_time": "rates and distributions; no unreferenced differential-entropy breadth",
+    "fine_physical_lift": "only where justified and audited",
+    "rule_a": "optional_undefined_not_primary",
+    "preparation_entropy_added": false,
+    "abstract_action_entropy_added": false
+  },
+  "predictions": [],
+  "predictions_status": "must be specified with hit criteria before freeze; no invented pass conditions",
+  "search": {
+    "controller_enumeration_limit": null,
+    "search_budget": null,
+    "training_seeds": null,
+    "evaluation_seeds": null,
+    "random_generator": null
+  },
+  "engineering_limits": {
+    "wall_seconds": 120,
+    "process_tree_memory_mib": 1024,
+    "output_mib": 256,
+    "workers": 1,
+    "numeric_threads": 1
+  },
+  "retention": {
+    "disposable_cache_budget_gib": 5,
+    "prune_target_gib": 4,
+    "optional_expiry_days": 14,
+    "mode": "dry_run_until_safety_and_rebuild_tests_pass",
+    "rebuild_audit_every_completed_batches": 10,
+    "protect_cited_artifacts": true,
+    "raw_outputs_in_git": false,
+    "automatic_commit_or_push": false
+  },
+  "freeze_requirements": [
+    "Pinned upstream model, engine and source bundle",
+    "Complete rules and parameter units with thermodynamic scope",
+    "Physical grain, multiplicity map, cadence and horizons",
+    "Comparator preparations and law-change classifications",
+    "Executable predictions, hit criteria and numerical tolerances",
+    "Controller class, feasible operation costs and information restrictions for fixture B",
+    "Seed plan, solver settings, resource caps and artifact manifest",
+    "Canonical input hash recorded before scientific execution"
+  ]
+}

@@ -1,0 +1,24 @@
+# Omega calibration, independently authored from the official BAB mechanism.
+# One bivalent A, two B; ka=1/(molecule*time), kd=1/time. Normalized toy units.
+# Original example/provenance and parameter changes are in PROTOCOL.json.
+begin model
+begin parameters
+ ka 1
+ kd 1
+end parameters
+begin molecule types
+ A(b,b)
+ B(a)
+end molecule types
+begin seed species
+ A(b,b) 1
+ B(a) 2
+end seed species
+begin observables
+ Molecules Bonds A(b!1).B(a!1)
+end observables
+begin reaction rules
+ A(b) + B(a) <-> A(b!1).B(a!1) ka,kd
+end reaction rules
+end model
+generate_network({overwrite=>1})
