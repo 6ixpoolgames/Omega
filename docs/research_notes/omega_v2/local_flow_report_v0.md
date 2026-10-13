@@ -62,6 +62,6 @@ The relay has only five links. Only those sites and listed lags are evaluated; n
 
     .venv/Scripts/python.exe -m omega_v2.validation.local_flow_v0
 
-[Profiles and model declarations](local_flow_v0/profiles.json) · [Generators and kernels](local_flow_v0/kernels.npz)
+[Profiles and model declarations](local_flow_v0/profiles.json) · [Rebuild generators and kernels](../../implementation/artifact_reconstruction/README.md)
 
 Stochastic-thermodynamic reference: [Horowitz and Esposito](https://arxiv.org/abs/1402.3276). The earlier [flow-note assessment](opus_flow_note_2026-10-03.md) explains the motivation.

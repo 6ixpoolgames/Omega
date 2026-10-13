@@ -95,6 +95,6 @@ Reproduce:
 
 [Results, definitions, parameters and source hashes](catalytic_history_v0/results.json)
 
-[b=0 history law](catalytic_history_v0/barrier_0_histories.npz) · [b=1 history law](catalytic_history_v0/barrier_1_histories.npz) · [b=2 history law](catalytic_history_v0/barrier_2_histories.npz)
+[Rebuild b=0, b=1 and b=2 history laws](../../implementation/artifact_reconstruction/README.md). The caches were retired after exact array reconstruction; the results above are unchanged.
 
 The NPZ evidence retains the reachable history states, native channel-resolved transitions, sparse generator, initial law, residual laws, occupation integrals, conditional follow-ups and resource/event rates. These suffice to reproduce the finite histories' probabilities without sampled trajectories. The underlying physical rates are unchanged from the preceding run.

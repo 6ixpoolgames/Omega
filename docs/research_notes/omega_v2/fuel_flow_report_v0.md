@@ -88,4 +88,4 @@ Reproduce:
 
     .venv/Scripts/python.exe -m omega_v2.validation.fuel_flow_v0
 
-[All profiles and declarations](fuel_flow_v0/profiles.json) · [Generators, reaction maps and kernels](fuel_flow_v0/kernels.npz) · [Preceding maintained-reservoir run](local_flow_report_v0.md)
+[All profiles and declarations](fuel_flow_v0/profiles.json) · [Rebuild generators, reaction maps and kernels](../../implementation/artifact_reconstruction/README.md) · [Preceding maintained-reservoir run](local_flow_report_v0.md)

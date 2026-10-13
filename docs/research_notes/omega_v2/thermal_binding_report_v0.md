@@ -100,6 +100,6 @@ Runtime: 22.40 seconds with one numerical worker. Maximum detailed-balance resid
 
     .venv/Scripts/python.exe -m omega_v2.validation.thermal_binding_v0
 
-[All profiles, laws and parameters](thermal_binding_v0/profiles.json) · [Thermal kernels](thermal_binding_v0/thermal_kernels.npz) · [Slow-motion kernels](thermal_binding_v0/mobile_0.1_kernels.npz) · [Fast-motion kernels](thermal_binding_v0/mobile_1.0_kernels.npz)
+[All profiles, laws and parameters](thermal_binding_v0/profiles.json) · [Rebuild thermal, slow-motion and fast-motion kernels](../../implementation/artifact_reconstruction/README.md). The original thermal model source is retained for reconstruction.
 
 [Preceding fuel/coupling run](fuel_flow_report_v0.md)

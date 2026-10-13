@@ -121,7 +121,7 @@ Reproduce:
 
 [Profiles, actual laws, bills, monitor results and source hashes](catalytic_binding_v0/profiles.json) · [Comparison counts](catalytic_binding_v0/comparison_summary.json)
 
-[No-assistance kernels](catalytic_binding_v0/barrier_0_kernels.npz) · [b=1 kernels](catalytic_binding_v0/barrier_1_kernels.npz) · [b=2 kernels](catalytic_binding_v0/barrier_2_kernels.npz)
+[Rebuild no-assistance, b=1 and b=2 kernels](../../implementation/artifact_reconstruction/README.md). The caches were retired after exact array reconstruction; the results above are unchanged.
 
 NPZ files retain states, channel rates/targets, reward rates, sparse Q, equilibrium and exact numerical transition kernels at both lags. No simulated sample trajectories or fitted parameters are substituted for these laws.
 
