@@ -1,0 +1,2893 @@
+{
+  "adverse": {
+    "E1": "Winner stationary exposure increases with hazard within a consequence arm",
+    "S1": "Positive-to-negative winner lead against idle/service/export/best nonrandom across audited cadences"
+  },
+  "cases": [
+    {
+      "block_rows": 64,
+      "cadence": 0.25,
+      "candidates": [
+        {
+          "id": "constant-idle",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "idle",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "service",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix25-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix25",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix50-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix50",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix75-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix75",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-export-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "export",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix25-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix25",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix50-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix50",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix75-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix75",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-export-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "export",
+          "threshold": 3,
+          "version": "1"
+        }
+      ],
+      "deadline": 64,
+      "hardware_energy": 1.0,
+      "hazard": 0.02,
+      "horizons": [
+        1,
+        4,
+        16,
+        64,
+        256
+      ],
+      "id": "harm-r1-fast-h0.02-dt0.25",
+      "inventory": [
+        3,
+        1
+      ],
+      "max_kernel_bytes": 268435456,
+      "mode": "fast",
+      "params": {
+        "assisted_birth": 0.4,
+        "build": 0.3,
+        "capture": 0.04,
+        "capture_benefit": 6.0,
+        "chemical_potential": 4.0,
+        "disassembly": 0.08,
+        "exchange": 0.4,
+        "fuel_bath": 0.04,
+        "repair": 0.5,
+        "switch": 0.15,
+        "switch_tokens": 1,
+        "wear": 0.04
+      },
+      "present_root": [
+        [
+          0,
+          2,
+          0,
+          2,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "primary": "complete conditional history bits at each horizon",
+      "rank_tolerance": 1e-08,
+      "registration": "docs/research_notes/lushness_testbed/structural_harm/PROTOCOL.json",
+      "slow_factor": 0.1,
+      "status": "frozen_before_scientific_ranking"
+    },
+    {
+      "block_rows": 64,
+      "cadence": 0.125,
+      "candidates": [
+        {
+          "id": "constant-idle",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "idle",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "service",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix25-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix25",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix50-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix50",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix75-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix75",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-export-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "export",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix25-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix25",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix50-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix50",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix75-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix75",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-export-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "export",
+          "threshold": 3,
+          "version": "1"
+        }
+      ],
+      "deadline": 64,
+      "hardware_energy": 1.0,
+      "hazard": 0.02,
+      "horizons": [
+        1,
+        4,
+        16,
+        64,
+        256
+      ],
+      "id": "harm-r1-fast-h0.02-dt0.125",
+      "inventory": [
+        3,
+        1
+      ],
+      "max_kernel_bytes": 268435456,
+      "mode": "fast",
+      "params": {
+        "assisted_birth": 0.4,
+        "build": 0.3,
+        "capture": 0.04,
+        "capture_benefit": 6.0,
+        "chemical_potential": 4.0,
+        "disassembly": 0.08,
+        "exchange": 0.4,
+        "fuel_bath": 0.04,
+        "repair": 0.5,
+        "switch": 0.15,
+        "switch_tokens": 1,
+        "wear": 0.04
+      },
+      "present_root": [
+        [
+          0,
+          2,
+          0,
+          2,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "primary": "complete conditional history bits at each horizon",
+      "rank_tolerance": 1e-08,
+      "registration": "docs/research_notes/lushness_testbed/structural_harm/PROTOCOL.json",
+      "slow_factor": 0.1,
+      "status": "frozen_before_scientific_ranking"
+    },
+    {
+      "block_rows": 64,
+      "cadence": 0.5,
+      "candidates": [
+        {
+          "id": "constant-idle",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "idle",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "service",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix25-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix25",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix50-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix50",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix75-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix75",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-export-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "export",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix25-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix25",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix50-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix50",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix75-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix75",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-export-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "export",
+          "threshold": 3,
+          "version": "1"
+        }
+      ],
+      "deadline": 64,
+      "hardware_energy": 1.0,
+      "hazard": 0.02,
+      "horizons": [
+        1,
+        4,
+        16,
+        64,
+        256
+      ],
+      "id": "harm-r1-fast-h0.02-dt0.5",
+      "inventory": [
+        3,
+        1
+      ],
+      "max_kernel_bytes": 268435456,
+      "mode": "fast",
+      "params": {
+        "assisted_birth": 0.4,
+        "build": 0.3,
+        "capture": 0.04,
+        "capture_benefit": 6.0,
+        "chemical_potential": 4.0,
+        "disassembly": 0.08,
+        "exchange": 0.4,
+        "fuel_bath": 0.04,
+        "repair": 0.5,
+        "switch": 0.15,
+        "switch_tokens": 1,
+        "wear": 0.04
+      },
+      "present_root": [
+        [
+          0,
+          2,
+          0,
+          2,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "primary": "complete conditional history bits at each horizon",
+      "rank_tolerance": 1e-08,
+      "registration": "docs/research_notes/lushness_testbed/structural_harm/PROTOCOL.json",
+      "slow_factor": 0.1,
+      "status": "frozen_before_scientific_ranking"
+    },
+    {
+      "block_rows": 64,
+      "cadence": 0.25,
+      "candidates": [
+        {
+          "id": "constant-idle",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "idle",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "service",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix25-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix25",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix50-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix50",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix75-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix75",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-export-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "export",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix25-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix25",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix50-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix50",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix75-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix75",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-export-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "export",
+          "threshold": 3,
+          "version": "1"
+        }
+      ],
+      "deadline": 64,
+      "hardware_energy": 1.0,
+      "hazard": 0.04,
+      "horizons": [
+        1,
+        4,
+        16,
+        64,
+        256
+      ],
+      "id": "harm-r1-fast-h0.04-dt0.25",
+      "inventory": [
+        3,
+        1
+      ],
+      "max_kernel_bytes": 268435456,
+      "mode": "fast",
+      "params": {
+        "assisted_birth": 0.4,
+        "build": 0.3,
+        "capture": 0.04,
+        "capture_benefit": 6.0,
+        "chemical_potential": 4.0,
+        "disassembly": 0.08,
+        "exchange": 0.4,
+        "fuel_bath": 0.04,
+        "repair": 0.5,
+        "switch": 0.15,
+        "switch_tokens": 1,
+        "wear": 0.04
+      },
+      "present_root": [
+        [
+          0,
+          2,
+          0,
+          2,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "primary": "complete conditional history bits at each horizon",
+      "rank_tolerance": 1e-08,
+      "registration": "docs/research_notes/lushness_testbed/structural_harm/PROTOCOL.json",
+      "slow_factor": 0.1,
+      "status": "frozen_before_scientific_ranking"
+    },
+    {
+      "block_rows": 64,
+      "cadence": 0.25,
+      "candidates": [
+        {
+          "id": "constant-idle",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "idle",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "service",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix25-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix25",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix50-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix50",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix75-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix75",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-export-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "export",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix25-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix25",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix50-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix50",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix75-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix75",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-export-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "export",
+          "threshold": 3,
+          "version": "1"
+        }
+      ],
+      "deadline": 64,
+      "hardware_energy": 1.0,
+      "hazard": 0.02,
+      "horizons": [
+        1,
+        4,
+        16,
+        64,
+        256
+      ],
+      "id": "harm-r1-slow-h0.02-dt0.25",
+      "inventory": [
+        3,
+        1
+      ],
+      "max_kernel_bytes": 268435456,
+      "mode": "slow",
+      "params": {
+        "assisted_birth": 0.4,
+        "build": 0.3,
+        "capture": 0.04,
+        "capture_benefit": 6.0,
+        "chemical_potential": 4.0,
+        "disassembly": 0.08,
+        "exchange": 0.4,
+        "fuel_bath": 0.04,
+        "repair": 0.5,
+        "switch": 0.15,
+        "switch_tokens": 1,
+        "wear": 0.04
+      },
+      "present_root": [
+        [
+          0,
+          2,
+          0,
+          2,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "primary": "complete conditional history bits at each horizon",
+      "rank_tolerance": 1e-08,
+      "registration": "docs/research_notes/lushness_testbed/structural_harm/PROTOCOL.json",
+      "slow_factor": 0.1,
+      "status": "frozen_before_scientific_ranking"
+    },
+    {
+      "block_rows": 64,
+      "cadence": 0.125,
+      "candidates": [
+        {
+          "id": "constant-idle",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "idle",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "service",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix25-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix25",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix50-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix50",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix75-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix75",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-export-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "export",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix25-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix25",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix50-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix50",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix75-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix75",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-export-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "export",
+          "threshold": 3,
+          "version": "1"
+        }
+      ],
+      "deadline": 64,
+      "hardware_energy": 1.0,
+      "hazard": 0.02,
+      "horizons": [
+        1,
+        4,
+        16,
+        64,
+        256
+      ],
+      "id": "harm-r1-slow-h0.02-dt0.125",
+      "inventory": [
+        3,
+        1
+      ],
+      "max_kernel_bytes": 268435456,
+      "mode": "slow",
+      "params": {
+        "assisted_birth": 0.4,
+        "build": 0.3,
+        "capture": 0.04,
+        "capture_benefit": 6.0,
+        "chemical_potential": 4.0,
+        "disassembly": 0.08,
+        "exchange": 0.4,
+        "fuel_bath": 0.04,
+        "repair": 0.5,
+        "switch": 0.15,
+        "switch_tokens": 1,
+        "wear": 0.04
+      },
+      "present_root": [
+        [
+          0,
+          2,
+          0,
+          2,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "primary": "complete conditional history bits at each horizon",
+      "rank_tolerance": 1e-08,
+      "registration": "docs/research_notes/lushness_testbed/structural_harm/PROTOCOL.json",
+      "slow_factor": 0.1,
+      "status": "frozen_before_scientific_ranking"
+    },
+    {
+      "block_rows": 64,
+      "cadence": 0.5,
+      "candidates": [
+        {
+          "id": "constant-idle",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "idle",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "service",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix25-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix25",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix50-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix50",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix75-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix75",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-export-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "export",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix25-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix25",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix50-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix50",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix75-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix75",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-export-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "export",
+          "threshold": 3,
+          "version": "1"
+        }
+      ],
+      "deadline": 64,
+      "hardware_energy": 1.0,
+      "hazard": 0.02,
+      "horizons": [
+        1,
+        4,
+        16,
+        64,
+        256
+      ],
+      "id": "harm-r1-slow-h0.02-dt0.5",
+      "inventory": [
+        3,
+        1
+      ],
+      "max_kernel_bytes": 268435456,
+      "mode": "slow",
+      "params": {
+        "assisted_birth": 0.4,
+        "build": 0.3,
+        "capture": 0.04,
+        "capture_benefit": 6.0,
+        "chemical_potential": 4.0,
+        "disassembly": 0.08,
+        "exchange": 0.4,
+        "fuel_bath": 0.04,
+        "repair": 0.5,
+        "switch": 0.15,
+        "switch_tokens": 1,
+        "wear": 0.04
+      },
+      "present_root": [
+        [
+          0,
+          2,
+          0,
+          2,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "primary": "complete conditional history bits at each horizon",
+      "rank_tolerance": 1e-08,
+      "registration": "docs/research_notes/lushness_testbed/structural_harm/PROTOCOL.json",
+      "slow_factor": 0.1,
+      "status": "frozen_before_scientific_ranking"
+    },
+    {
+      "block_rows": 64,
+      "cadence": 0.25,
+      "candidates": [
+        {
+          "id": "constant-idle",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "idle",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "service",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix25-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix25",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix50-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix50",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix75-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix75",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-export-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "export",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix25-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix25",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix50-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix50",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix75-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix75",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-export-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "export",
+          "threshold": 3,
+          "version": "1"
+        }
+      ],
+      "deadline": 64,
+      "hardware_energy": 1.0,
+      "hazard": 0.04,
+      "horizons": [
+        1,
+        4,
+        16,
+        64,
+        256
+      ],
+      "id": "harm-r1-slow-h0.04-dt0.25",
+      "inventory": [
+        3,
+        1
+      ],
+      "max_kernel_bytes": 268435456,
+      "mode": "slow",
+      "params": {
+        "assisted_birth": 0.4,
+        "build": 0.3,
+        "capture": 0.04,
+        "capture_benefit": 6.0,
+        "chemical_potential": 4.0,
+        "disassembly": 0.08,
+        "exchange": 0.4,
+        "fuel_bath": 0.04,
+        "repair": 0.5,
+        "switch": 0.15,
+        "switch_tokens": 1,
+        "wear": 0.04
+      },
+      "present_root": [
+        [
+          0,
+          2,
+          0,
+          2,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "primary": "complete conditional history bits at each horizon",
+      "rank_tolerance": 1e-08,
+      "registration": "docs/research_notes/lushness_testbed/structural_harm/PROTOCOL.json",
+      "slow_factor": 0.1,
+      "status": "frozen_before_scientific_ranking"
+    },
+    {
+      "block_rows": 64,
+      "cadence": 0.25,
+      "candidates": [
+        {
+          "id": "constant-idle",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "idle",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "service",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix25-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix25",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix50-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix50",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix75-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix75",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-export-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "export",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix25-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix25",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix50-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix50",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix75-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix75",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-export-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "export",
+          "threshold": 3,
+          "version": "1"
+        }
+      ],
+      "deadline": 64,
+      "hardware_energy": 1.0,
+      "hazard": 0.02,
+      "horizons": [
+        1,
+        4,
+        16,
+        64,
+        256
+      ],
+      "id": "harm-r1-hardware_loss-h0.02-dt0.25",
+      "inventory": [
+        3,
+        1
+      ],
+      "max_kernel_bytes": 268435456,
+      "mode": "hardware_loss",
+      "params": {
+        "assisted_birth": 0.4,
+        "build": 0.3,
+        "capture": 0.04,
+        "capture_benefit": 6.0,
+        "chemical_potential": 4.0,
+        "disassembly": 0.08,
+        "exchange": 0.4,
+        "fuel_bath": 0.04,
+        "repair": 0.5,
+        "switch": 0.15,
+        "switch_tokens": 1,
+        "wear": 0.04
+      },
+      "present_root": [
+        [
+          0,
+          2,
+          0,
+          2,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "primary": "complete conditional history bits at each horizon",
+      "rank_tolerance": 1e-08,
+      "registration": "docs/research_notes/lushness_testbed/structural_harm/PROTOCOL.json",
+      "slow_factor": 0.1,
+      "status": "frozen_before_scientific_ranking"
+    },
+    {
+      "block_rows": 64,
+      "cadence": 0.125,
+      "candidates": [
+        {
+          "id": "constant-idle",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "idle",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "service",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix25-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix25",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix50-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix50",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix75-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix75",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-export-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "export",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix25-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix25",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix50-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix50",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix75-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix75",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-export-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "export",
+          "threshold": 3,
+          "version": "1"
+        }
+      ],
+      "deadline": 64,
+      "hardware_energy": 1.0,
+      "hazard": 0.02,
+      "horizons": [
+        1,
+        4,
+        16,
+        64,
+        256
+      ],
+      "id": "harm-r1-hardware_loss-h0.02-dt0.125",
+      "inventory": [
+        3,
+        1
+      ],
+      "max_kernel_bytes": 268435456,
+      "mode": "hardware_loss",
+      "params": {
+        "assisted_birth": 0.4,
+        "build": 0.3,
+        "capture": 0.04,
+        "capture_benefit": 6.0,
+        "chemical_potential": 4.0,
+        "disassembly": 0.08,
+        "exchange": 0.4,
+        "fuel_bath": 0.04,
+        "repair": 0.5,
+        "switch": 0.15,
+        "switch_tokens": 1,
+        "wear": 0.04
+      },
+      "present_root": [
+        [
+          0,
+          2,
+          0,
+          2,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "primary": "complete conditional history bits at each horizon",
+      "rank_tolerance": 1e-08,
+      "registration": "docs/research_notes/lushness_testbed/structural_harm/PROTOCOL.json",
+      "slow_factor": 0.1,
+      "status": "frozen_before_scientific_ranking"
+    },
+    {
+      "block_rows": 64,
+      "cadence": 0.5,
+      "candidates": [
+        {
+          "id": "constant-idle",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "idle",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "service",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix25-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix25",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix50-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix50",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix75-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix75",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-export-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "export",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix25-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix25",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix50-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix50",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix75-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix75",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-export-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "export",
+          "threshold": 3,
+          "version": "1"
+        }
+      ],
+      "deadline": 64,
+      "hardware_energy": 1.0,
+      "hazard": 0.02,
+      "horizons": [
+        1,
+        4,
+        16,
+        64,
+        256
+      ],
+      "id": "harm-r1-hardware_loss-h0.02-dt0.5",
+      "inventory": [
+        3,
+        1
+      ],
+      "max_kernel_bytes": 268435456,
+      "mode": "hardware_loss",
+      "params": {
+        "assisted_birth": 0.4,
+        "build": 0.3,
+        "capture": 0.04,
+        "capture_benefit": 6.0,
+        "chemical_potential": 4.0,
+        "disassembly": 0.08,
+        "exchange": 0.4,
+        "fuel_bath": 0.04,
+        "repair": 0.5,
+        "switch": 0.15,
+        "switch_tokens": 1,
+        "wear": 0.04
+      },
+      "present_root": [
+        [
+          0,
+          2,
+          0,
+          2,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "primary": "complete conditional history bits at each horizon",
+      "rank_tolerance": 1e-08,
+      "registration": "docs/research_notes/lushness_testbed/structural_harm/PROTOCOL.json",
+      "slow_factor": 0.1,
+      "status": "frozen_before_scientific_ranking"
+    },
+    {
+      "block_rows": 64,
+      "cadence": 0.25,
+      "candidates": [
+        {
+          "id": "constant-idle",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "idle",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "service",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "constant-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 1,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix25-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix25",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix50-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix50",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-mix75-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix75",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-2-export-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "export",
+          "threshold": 2,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix25",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix25",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix25-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix25",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix50",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix50",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix50-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix50",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix75",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "mix75",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-mix75-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "mix75",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-export",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": false,
+          "surplus": "export",
+          "threshold": 3,
+          "version": "1"
+        },
+        {
+          "id": "reserve-3-export-worn-service",
+          "observation": "local-active-worn-counts",
+          "service_if_worn": true,
+          "surplus": "export",
+          "threshold": 3,
+          "version": "1"
+        }
+      ],
+      "deadline": 64,
+      "hardware_energy": 1.0,
+      "hazard": 0.04,
+      "horizons": [
+        1,
+        4,
+        16,
+        64,
+        256
+      ],
+      "id": "harm-r1-hardware_loss-h0.04-dt0.25",
+      "inventory": [
+        3,
+        1
+      ],
+      "max_kernel_bytes": 268435456,
+      "mode": "hardware_loss",
+      "params": {
+        "assisted_birth": 0.4,
+        "build": 0.3,
+        "capture": 0.04,
+        "capture_benefit": 6.0,
+        "chemical_potential": 4.0,
+        "disassembly": 0.08,
+        "exchange": 0.4,
+        "fuel_bath": 0.04,
+        "repair": 0.5,
+        "switch": 0.15,
+        "switch_tokens": 1,
+        "wear": 0.04
+      },
+      "present_root": [
+        [
+          0,
+          2,
+          0,
+          2,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "primary": "complete conditional history bits at each horizon",
+      "rank_tolerance": 1e-08,
+      "registration": "docs/research_notes/lushness_testbed/structural_harm/PROTOCOL.json",
+      "slow_factor": 0.1,
+      "status": "frozen_before_scientific_ranking"
+    }
+  ],
+  "created_utc": "2026-10-13T20:54:25.556399+00:00",
+  "grain_scope": "Cadence only; full declared physical count state with hardware",
+  "limitations": [
+    "Coarse count states, not microscopic thermal baseline",
+    "Hardware loss disables powered repair only; substitutes remain",
+    "Fast/slow contrast changes paired repair law; pre-fault root matches",
+    "Left adaptation only; right capacity one",
+    "External one-way faults are not equilibrium thermal events",
+    "Same boundary prescription does not imply equal accepted work",
+    "Apparatus not established valuers; no protection reward; randomness counts"
+  ],
+  "limits": {
+    "batch_seconds": 2400,
+    "case_seconds": 600,
+    "memory_bytes": 1073741824,
+    "output_bytes": 33554432
+  },
+  "predictions": {
+    "C1": "At least one primary horizon has different winning response between fast and hardware_loss at hazard .02",
+    "H1": "Service response never decreases over adjacent horizons; strict increases counted separately",
+    "R1": "At least one mode/horizon shows greater service response when hazard rises .02 to .04"
+  },
+  "rate_scope": "Secondary sustained breadth diagnostic; no offset estimate in this batch",
+  "recovery_scope": "Restore original left active reserve >=2; firsthit/endpoint/retention distinct",
+  "root_scope": "Same pre-fault physical root; post_fault conditional on one left fault is diagnostic",
+  "schema": "omega-structural-harm/1",
+  "service_order": "Pointwise service coefficient on feasible active>0 left (a,w), capacity3",
+  "status": "frozen_before_scientific_ranking",
+  "tie_scoring": "Compare all tied winner pairs; mixed or incomparable outcomes retained"
+}

@@ -11,6 +11,7 @@ from .actuation import ActuationSpec, module as actuation_module
 from .shocks import ShockSpec, module as shocks_module
 from .damage import module as damage_module
 from .material_sink import MaterialSink, local_energy, precursor
+from ..controllers.reserve import ReservePolicy
 
 
 def _inventory(inventories):
@@ -136,7 +137,8 @@ def _growth_events(state, inventories, policy, params, actuation):
             if a and f < m:
                 emit(c, 'repair', change(dw=1, da=-1, df=1), params.repair*a*(m-f)/m*exp(-.5))
 
-        service, export = policy[2*c+int(a > 0)]
+        service, export = (policy.response(state[c]) if isinstance(policy, ReservePolicy)
+                           else policy[2*c+int(a > 0)])
         k = params.switch_tokens
         if k <= m:
             denom = comb(m, k)
@@ -176,7 +178,7 @@ def build_world(inventories=(1, 1), policy=None, params=g.DEFAULT, damage=None,
     still uses this adapter's extended state schema, with ``d`` constrained to 0.
     """
     inv = _inventory(inventories)
-    responses = _policy(policy)
+    responses = policy if isinstance(policy, ReservePolicy) else _policy(policy)
     sink = damage if damage is not None else MaterialSink(enabled=False)
     if not isinstance(sink, MaterialSink):
         raise TypeError('damage must be a MaterialSink configuration')
@@ -187,6 +189,8 @@ def build_world(inventories=(1, 1), policy=None, params=g.DEFAULT, damage=None,
         raise ValueError('Shock W->D requires declared material-D state and energy')
     if not isinstance(actuator, ActuationSpec):
         raise TypeError('actuation must be an ActuationSpec configuration')
+    if isinstance(responses, ReservePolicy) and actuator.mode != 'embodied':
+        raise ValueError('Reserve policies require embodied actuation')
     count = 1
     for m in inv:
         count *= ((m+1)*(m+2)//2*(m+1)*2 if not sink.enabled
@@ -213,7 +217,8 @@ def build_world(inventories=(1, 1), policy=None, params=g.DEFAULT, damage=None,
     def usable(state): return sum(m-x[2] for m, x in zip(inv, state))
     def fuel(state): return sum(x[3] for x in state)
     def lost(state): return sum(x[2] for x in state)
-    growth_version = '3' if actuator.mode == 'embodied' else '2'
+    growth_version = ('4' if isinstance(responses, ReservePolicy) else
+                      '3' if actuator.mode == 'embodied' else '2')
     modules = [RuleModule('growth', growth_version,
                           lambda state: _growth_events(state, inv, responses, params, actuator),
                           requires=('material-PWA-D',),
@@ -226,7 +231,8 @@ def build_world(inventories=(1, 1), policy=None, params=g.DEFAULT, damage=None,
     fields = ('material-PWA-D', 'local-fuel', 'gate', 'controller')
     metadata = {'inventory': inv, 'inventories': inv, 'carrier_capacities': inv,
                 'parameters': asdict(params), 'params': asdict(params),
-                'policy': responses, 'material_sink': asdict(sink), 'damage': asdict(sink),
+                'policy': responses.manifest() if isinstance(responses, ReservePolicy) else responses,
+                'material_sink': asdict(sink), 'damage': asdict(sink),
                 'actuation': asdict(actuator),
                 'shocks': asdict(shock),
                 'boundary_assumption': sink.boundary if sink.enabled and sink.mode == 'absorbing' else None,

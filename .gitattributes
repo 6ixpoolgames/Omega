@@ -1,3 +1,7 @@
 # Hooks and the byte-audited historical source must survive Windows checkout.
 .githooks/* text eol=lf
 docs/implementation/artifact_reconstruction/spatial_binding_thermal_20261003.py text eol=lf
+# Preserve frozen registrations' exact bytes: result hashes use raw-byte SHA-256.
+docs/research_notes/lushness_testbed/reserve_batch_r1/*.json -text
+docs/research_notes/lushness_testbed/maintained_resource/*.json -text
+docs/research_notes/lushness_testbed/structural_harm/*.json -text

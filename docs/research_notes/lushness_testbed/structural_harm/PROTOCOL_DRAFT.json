@@ -1,0 +1,26 @@
+{
+  "schema": "omega-structural-harm/1",
+  "status": "draft_engineering_gate",
+  "arms": ["fast", "slow", "hardware_loss"],
+  "hazard": [0.02, 0.04],
+  "primary_cadence": 0.25,
+  "audit_cadences": [0.125, 0.5],
+  "horizons": [1, 4, 16, 64, 256],
+  "hardware_energy": 1.0,
+  "slow_factor": 0.1,
+  "smoke_inventory": [1, 1],
+  "science_inventory_proposed": [3, 1],
+  "objective": "complete sampled physical state conditional history entropy; hardware included",
+  "science_gate": "freeze exact candidate list, roots, budget and executable scoring before rankings",
+  "predictions": [
+    "Longer horizons increase servicing relative to short horizons",
+    "Losing powered repair hardware changes the winning response more than slowing paired repair",
+    "Higher fault hazard increases service response in at least one consequence arm"
+  ],
+  "adverse_outcomes": [
+    "No winning response change across consequence arms",
+    "Higher hazard increases exposure",
+    "Registered winner-minus-baseline sign reverses across audited cadences"
+  ],
+  "limits": {"smoke_seconds": 120, "smoke_memory_bytes": 1073741824, "smoke_output_bytes": 33554432}
+}

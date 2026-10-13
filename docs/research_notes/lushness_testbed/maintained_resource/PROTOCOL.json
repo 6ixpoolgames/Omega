@@ -1,0 +1,48 @@
+{
+  "id": "maintained-locked-resource-v1",
+  "version": "1.0",
+  "status": "frozen_before_scientific_ranking",
+  "adapter": "omega_v2.testbed.maintained_resource",
+  "scope": "bounded driven mechanism toy; not established chemistry or open-ended expansion",
+  "states": 16,
+  "roots": {
+    "organized": [1, 1, 0],
+    "unorganized": [1, 0, 1],
+    "matched_ablation": [1, 1, 0]
+  },
+  "cadences": [0.125, 0.25, 0.5],
+  "horizons": [1, 4, 16, 64],
+  "parameters": {
+    "beta": 1.0,
+    "resource_inlet": 0.03,
+    "locked_export": 0.008,
+    "waste_export": 0.02,
+    "carrier_recharge": 0.04,
+    "carrier_export": 0.006,
+    "basal_release": 0.002,
+    "paid_release": 0.05,
+    "downstream_use": 0.04,
+    "maintenance": 0.015
+  },
+  "fixed_cases": [
+    {"id": "capable_organized", "law": "paid_path_enabled", "root": "organized", "state": [1, 1, 0]},
+    {"id": "capable_unorganized", "law": "paid_path_enabled", "root": "unorganized", "state": [1, 0, 1]},
+    {"id": "ablated_matched", "law": "both_paid_directions_removed", "root": "matched_ablation", "state": [1, 1, 0]}
+  ],
+  "primary": "complete sampled count-state history entropy profiles at all fixed horizons; capable organized versus matched paid-path ablation",
+  "secondary": ["same-law organized versus unorganized finite profiles",
+                "stationary sampled-state entropy rate by cadence",
+                "unlock/use first passage", "downstream utilization", "maintenance and apparatus availability",
+                "accepted and offered boundary fluxes", "net work and stored fuel-energy consumption"],
+  "separate_mechanism_criterion": "stationary entropy-rate difference (capable minus ablated) is positive at each of the three fixed cadences; report sign without tuning or reranking",
+  "tolerances": {"generator_mass": 1e-10, "energy_ledger": 1e-9, "stationary_residual": 1e-9},
+  "boundary_matching": "same source/sink/recharge/outlet rates, temperature, state space, capacities, root energy, and all non-paid reactions; accepted flux and work may differ with occupancy",
+  "caps": {"states": 32, "seconds": 120, "memory_bytes": 1073741824, "output_bytes": 268435456},
+  "notes": [
+    "This file was frozen before scientific execution following the passing engineering and capped-smoke gates.",
+    "No result-driven parameter tuning, case selection, or winner-only reporting.",
+    "Both laws were checked to have one recurrent class; same-law root rates share the same generator.",
+    "Ablation removes the complete paired paid-release pathway, not all resource access or apparatus dynamics.",
+    "All outputs concern a bounded mechanism toy, not measured chemistry or open-ended expansion."
+  ]
+}
