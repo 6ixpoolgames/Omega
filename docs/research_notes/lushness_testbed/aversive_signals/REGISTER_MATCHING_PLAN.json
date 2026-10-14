@@ -1,0 +1,102 @@
+{
+  "caps": {
+    "memory": 536870912,
+    "output_cap": 16777216,
+    "seconds": 120
+  },
+  "fit_uses_entropy": false,
+  "horizon": 64.0,
+  "parents": [
+    {
+      "arms": [
+        "E",
+        "A",
+        "B",
+        "C",
+        "N"
+      ],
+      "family": "W1",
+      "id": "W1-00",
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.25,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.15,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.020000000000000004,
+        "struggle_cost": 0.5
+      },
+      "root": [
+        8,
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "arms": [
+        "E",
+        "A",
+        "B",
+        "C",
+        "N"
+      ],
+      "family": "W1",
+      "id": "W1-08",
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.25,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.15,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.020000000000000004,
+        "struggle_cost": 1.0
+      },
+      "root": [
+        8,
+        0,
+        0,
+        1,
+        1
+      ]
+    }
+  ],
+  "relative_tolerance": 1e-06,
+  "selection": "known first-batch counterexamples, explanatory follow-up",
+  "status": "frozen_before_physical_matching",
+  "targets": [
+    "signal_occupancy_time",
+    "physical_signal_switch_count"
+  ]
+}

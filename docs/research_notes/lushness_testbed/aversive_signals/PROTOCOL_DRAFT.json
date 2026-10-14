@@ -1,0 +1,74 @@
+{
+  "id": "central-wager-w1-w2-engineering",
+  "version": "1",
+  "status": "engineering_only_unfrozen",
+  "layer": "oracle",
+  "arms": [
+    "E",
+    "A",
+    "B",
+    "C",
+    "N",
+    "D",
+    "E_prime",
+    "N_prime"
+  ],
+  "engineering_parameters": {
+    "energy_cap": 4.0,
+    "quantum": 0.5,
+    "forage_cost": 0.5,
+    "food_yield": 2.0,
+    "struggle_cost": 1.0,
+    "signal_energy": 0.5,
+    "metabolism": 0.4,
+    "signal_upkeep": 0.1,
+    "attempt_rate": 0.6,
+    "normal_escape": 0.1,
+    "escape_bias": 0.7,
+    "escape_success": 0.8,
+    "forage_outside": 0.8,
+    "forage_hazard": 0.5,
+    "hazard_foraging_factor": 0.5,
+    "hazard_damage_rate": 0.15,
+    "hazard_on": 0.1,
+    "hazard_off": 0.2,
+    "patch_rate": 0.2,
+    "signal_hit": 0.8,
+    "signal_hijack": 0.2,
+    "signal_off": 0.3
+  },
+  "rare_hazard_parameters": {
+    "hazard_on": 0.002,
+    "hazard_damage_rate": 0.015
+  },
+  "smoke_cadence": 0.25,
+  "scientific_horizons_proposed": [
+    16,
+    64,
+    256,
+    1024
+  ],
+  "scientific_cadences_proposed": [
+    0.125,
+    0.25,
+    0.5
+  ],
+  "scientific_parameter_grid": null,
+  "physiological_cost_anchors": null,
+  "T_threshold": null,
+  "D_threshold": null,
+  "suffering_index_definition": null,
+  "lushness_tolerance": null,
+  "kill_rules": null,
+  "scientific_budget": null,
+  "comparison_order": null,
+  "merged_signal_measurement": "full-hidden-state conditioning lower bound and last-observation upper bound; exact short-prefix validation",
+  "coordinate_decomposition_order": [
+    "hazard",
+    "patch",
+    "energy",
+    "location",
+    "signal"
+  ],
+  "scientific_execution_allowed": false
+}

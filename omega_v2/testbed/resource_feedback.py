@@ -111,7 +111,7 @@ def _events(state, p: ResourceFeedbackParameters):
                      "basal_release", "paired-basal-release", (0,))
         if apparatus and charged:
             yield paired((USABLE, apparatus, charged - 1), p.rates["fueled_access"],
-                         "fueled_access", "paired-fueled-access", (0, 2),
+                         "fueled_access", "paired-fueled-access", (0, 1, 2),
                          mass=float(apparatus * charged),
                          increments={"access_fuel_cost": 1.0})
     elif resource == USABLE:
@@ -119,7 +119,7 @@ def _events(state, p: ResourceFeedbackParameters):
                      "basal_release", "paired-basal-release", (0,))
         if apparatus and spent:
             yield paired((LOCKED, apparatus, charged + 1), p.rates["fueled_access"],
-                         "fueled_access", "paired-fueled-access", (0, 2),
+                         "fueled_access", "paired-fueled-access", (0, 1, 2),
                          mass=float(apparatus * spent),
                          increments={"access_fuel_cost": -1.0})
         yield paired((WASTE, apparatus, charged), p.rates["downstream_thermal"],
@@ -168,13 +168,13 @@ def _events(state, p: ResourceFeedbackParameters):
                        p.rates['feedback']*(float(apparatus) if p.feedback == "catalytic" else 1.0))
         if resource == USABLE and spent and coefficient:
             yield paired((WASTE, apparatus, charged + 1), coefficient,
-                         "resource_feedback", "paired-resource-feedback", (0, 2),
+                         "resource_feedback", "paired-resource-feedback", (0, 1, 2),
                          mass=float(spent),
                          increments={"net_feedback_fuel": 1.0,
                                      "gross_feedback_forward": 1.0})
         if resource == WASTE and charged and coefficient:
             yield paired((USABLE, apparatus, charged - 1), coefficient,
-                         "resource_feedback", "paired-resource-feedback", (0, 2),
+                         "resource_feedback", "paired-resource-feedback", (0, 1, 2),
                          mass=float(charged),
                          increments={"net_feedback_fuel": -1.0,
                                      "gross_feedback_reverse": 1.0})
