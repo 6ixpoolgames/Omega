@@ -1,0 +1,3051 @@
+{
+  "T6": "completed temporal_profile/RESULTS.md; analytic estimate plus exact verification",
+  "arms": [
+    "R0",
+    "I0",
+    "RX",
+    "IX"
+  ],
+  "cadences": [
+    0.125,
+    0.25,
+    0.5
+  ],
+  "calibration_fits": {
+    "C1-s0.15-w0.02": {
+      "fit": {
+        "evaluations": 7,
+        "history_entropy_used": false,
+        "noise_on": 0.3276303397089343,
+        "noise_retain": 0.7314997730512078,
+        "relative_error": 3.3491622918972283e-12,
+        "root_moments_are_pooled": true,
+        "success": true,
+        "target_activation_count": 0.3657193785087825,
+        "target_signal_time": 0.5913945401603495
+      },
+      "input_hash": "f0ef6b6926067ba7c5610e9ea2b8310cad022394f4321d753ef8f7df3649b446",
+      "law": {
+        "id": "C1-s0.15-w0.02",
+        "kind": "primary",
+        "parameters": {
+          "contrast": 0.8,
+          "coupling": 0.0,
+          "decay": 0.1,
+          "flicker_off": 0.36126583291983255,
+          "flicker_on": 0.05871485218977088,
+          "mobility": 0.1,
+          "movement_cost": 0.5,
+          "supply_rate": 0.15
+        },
+        "parent": null,
+        "physiology": {
+          "attempt_rate": 0.6,
+          "energy_cap": 4.0,
+          "escape_bias": 0.7,
+          "escape_success": 0.8,
+          "food_yield": 2.0,
+          "forage_cost": 0.5,
+          "forage_hazard": 0.5,
+          "forage_outside": 0.8,
+          "hazard_damage_rate": 0.15,
+          "hazard_foraging_factor": 0.5,
+          "hazard_off": 0.2,
+          "hazard_on": 0.1,
+          "metabolism": 0.4,
+          "normal_escape": 0.1,
+          "patch_rate": 0.2,
+          "quantum": 0.5,
+          "signal_energy": 0.5,
+          "signal_hijack": 0.2,
+          "signal_hit": 0.8,
+          "signal_off": 0.3,
+          "signal_upkeep": 0.02,
+          "struggle_cost": 0.5
+        },
+        "renewal": {
+          "apparatus_energy": 1.0,
+          "assisted_harvest": 0.98,
+          "autocatalytic_gain": 2.0,
+          "basal_harvest": 0.02,
+          "beta": 1.0,
+          "capacity": 1,
+          "construction_cost": 1.5,
+          "construction_rate": 0.08,
+          "hardware_upkeep": 0.02,
+          "repair_enabled": true,
+          "wear_rate": 0.02
+        },
+        "roots": [
+          [
+            8,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          [
+            8,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1
+          ]
+        ],
+        "sensor": {
+          "error": 0.1,
+          "noise_on": 0.2,
+          "noise_retain": 0.5,
+          "read_cost": 0.5,
+          "refresh_rate": 0.2
+        }
+      },
+      "source_hash": "3e71f31a02bcdc9b2596312dc15b8751a128e807b336e2f9ee17525487730b2f"
+    },
+    "C1-s0.15-w0.08": {
+      "fit": {
+        "evaluations": 8,
+        "history_entropy_used": false,
+        "noise_on": 0.3285672135682245,
+        "noise_retain": 0.805139759181586,
+        "relative_error": 1.1478498775654527e-14,
+        "root_moments_are_pooled": true,
+        "success": true,
+        "target_activation_count": 0.3133318615252524,
+        "target_signal_time": 0.5126264458026046
+      },
+      "input_hash": "0d56b8fcc4483be73888a5cd1d9eda49301482a118c945b7124c76fa31d2becd",
+      "law": {
+        "id": "C1-s0.15-w0.08",
+        "kind": "primary",
+        "parameters": {
+          "contrast": 0.8,
+          "coupling": 0.0,
+          "decay": 0.1,
+          "flicker_off": 0.36126583291983255,
+          "flicker_on": 0.05871485218977088,
+          "mobility": 0.1,
+          "movement_cost": 0.5,
+          "supply_rate": 0.15
+        },
+        "parent": null,
+        "physiology": {
+          "attempt_rate": 0.6,
+          "energy_cap": 4.0,
+          "escape_bias": 0.7,
+          "escape_success": 0.8,
+          "food_yield": 2.0,
+          "forage_cost": 0.5,
+          "forage_hazard": 0.5,
+          "forage_outside": 0.8,
+          "hazard_damage_rate": 0.15,
+          "hazard_foraging_factor": 0.5,
+          "hazard_off": 0.2,
+          "hazard_on": 0.1,
+          "metabolism": 0.4,
+          "normal_escape": 0.1,
+          "patch_rate": 0.2,
+          "quantum": 0.5,
+          "signal_energy": 0.5,
+          "signal_hijack": 0.2,
+          "signal_hit": 0.8,
+          "signal_off": 0.3,
+          "signal_upkeep": 0.02,
+          "struggle_cost": 0.5
+        },
+        "renewal": {
+          "apparatus_energy": 1.0,
+          "assisted_harvest": 0.98,
+          "autocatalytic_gain": 2.0,
+          "basal_harvest": 0.02,
+          "beta": 1.0,
+          "capacity": 1,
+          "construction_cost": 1.5,
+          "construction_rate": 0.08,
+          "hardware_upkeep": 0.02,
+          "repair_enabled": true,
+          "wear_rate": 0.08
+        },
+        "roots": [
+          [
+            8,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          [
+            8,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1
+          ]
+        ],
+        "sensor": {
+          "error": 0.1,
+          "noise_on": 0.2,
+          "noise_retain": 0.5,
+          "read_cost": 0.5,
+          "refresh_rate": 0.2
+        }
+      },
+      "source_hash": "3e71f31a02bcdc9b2596312dc15b8751a128e807b336e2f9ee17525487730b2f"
+    },
+    "C1-s0.3-w0.02": {
+      "fit": {
+        "evaluations": 6,
+        "history_entropy_used": false,
+        "noise_on": 0.33619905781137327,
+        "noise_retain": 0.5766655728068447,
+        "relative_error": 1.3834518939309701e-14,
+        "root_moments_are_pooled": true,
+        "success": true,
+        "target_activation_count": 0.4303981684110641,
+        "target_signal_time": 0.6741017485149106
+      },
+      "input_hash": "d4c45c9b9732f59f18ac48988db99059b471de4d29bcc06d8eff635220900b5f",
+      "law": {
+        "id": "C1-s0.3-w0.02",
+        "kind": "primary",
+        "parameters": {
+          "contrast": 0.8,
+          "coupling": 0.0,
+          "decay": 0.1,
+          "flicker_off": 0.36126583291983255,
+          "flicker_on": 0.05871485218977088,
+          "mobility": 0.1,
+          "movement_cost": 0.5,
+          "supply_rate": 0.3
+        },
+        "parent": null,
+        "physiology": {
+          "attempt_rate": 0.6,
+          "energy_cap": 4.0,
+          "escape_bias": 0.7,
+          "escape_success": 0.8,
+          "food_yield": 2.0,
+          "forage_cost": 0.5,
+          "forage_hazard": 0.5,
+          "forage_outside": 0.8,
+          "hazard_damage_rate": 0.15,
+          "hazard_foraging_factor": 0.5,
+          "hazard_off": 0.2,
+          "hazard_on": 0.1,
+          "metabolism": 0.4,
+          "normal_escape": 0.1,
+          "patch_rate": 0.2,
+          "quantum": 0.5,
+          "signal_energy": 0.5,
+          "signal_hijack": 0.2,
+          "signal_hit": 0.8,
+          "signal_off": 0.3,
+          "signal_upkeep": 0.02,
+          "struggle_cost": 0.5
+        },
+        "renewal": {
+          "apparatus_energy": 1.0,
+          "assisted_harvest": 0.98,
+          "autocatalytic_gain": 2.0,
+          "basal_harvest": 0.02,
+          "beta": 1.0,
+          "capacity": 1,
+          "construction_cost": 1.5,
+          "construction_rate": 0.08,
+          "hardware_upkeep": 0.02,
+          "repair_enabled": true,
+          "wear_rate": 0.02
+        },
+        "roots": [
+          [
+            8,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          [
+            8,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1
+          ]
+        ],
+        "sensor": {
+          "error": 0.1,
+          "noise_on": 0.2,
+          "noise_retain": 0.5,
+          "read_cost": 0.5,
+          "refresh_rate": 0.2
+        }
+      },
+      "source_hash": "3e71f31a02bcdc9b2596312dc15b8751a128e807b336e2f9ee17525487730b2f"
+    },
+    "C1-s0.3-w0.08": {
+      "fit": {
+        "evaluations": 6,
+        "history_entropy_used": false,
+        "noise_on": 0.33739294455976965,
+        "noise_retain": 0.6166028623860013,
+        "relative_error": 3.0271797085819494e-12,
+        "root_moments_are_pooled": true,
+        "success": true,
+        "target_activation_count": 0.367796849684518,
+        "target_signal_time": 0.5767764828560764
+      },
+      "input_hash": "1d52acf61dcce8b5ceb329a8d3b09b1a608b9886919885ab2243777a03b41e15",
+      "law": {
+        "id": "C1-s0.3-w0.08",
+        "kind": "primary",
+        "parameters": {
+          "contrast": 0.8,
+          "coupling": 0.0,
+          "decay": 0.1,
+          "flicker_off": 0.36126583291983255,
+          "flicker_on": 0.05871485218977088,
+          "mobility": 0.1,
+          "movement_cost": 0.5,
+          "supply_rate": 0.3
+        },
+        "parent": null,
+        "physiology": {
+          "attempt_rate": 0.6,
+          "energy_cap": 4.0,
+          "escape_bias": 0.7,
+          "escape_success": 0.8,
+          "food_yield": 2.0,
+          "forage_cost": 0.5,
+          "forage_hazard": 0.5,
+          "forage_outside": 0.8,
+          "hazard_damage_rate": 0.15,
+          "hazard_foraging_factor": 0.5,
+          "hazard_off": 0.2,
+          "hazard_on": 0.1,
+          "metabolism": 0.4,
+          "normal_escape": 0.1,
+          "patch_rate": 0.2,
+          "quantum": 0.5,
+          "signal_energy": 0.5,
+          "signal_hijack": 0.2,
+          "signal_hit": 0.8,
+          "signal_off": 0.3,
+          "signal_upkeep": 0.02,
+          "struggle_cost": 0.5
+        },
+        "renewal": {
+          "apparatus_energy": 1.0,
+          "assisted_harvest": 0.98,
+          "autocatalytic_gain": 2.0,
+          "basal_harvest": 0.02,
+          "beta": 1.0,
+          "capacity": 1,
+          "construction_cost": 1.5,
+          "construction_rate": 0.08,
+          "hardware_upkeep": 0.02,
+          "repair_enabled": true,
+          "wear_rate": 0.08
+        },
+        "roots": [
+          [
+            8,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          [
+            8,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1
+          ]
+        ],
+        "sensor": {
+          "error": 0.1,
+          "noise_on": 0.2,
+          "noise_retain": 0.5,
+          "read_cost": 0.5,
+          "refresh_rate": 0.2
+        }
+      },
+      "source_hash": "3e71f31a02bcdc9b2596312dc15b8751a128e807b336e2f9ee17525487730b2f"
+    },
+    "C1-s0.6-w0.02": {
+      "fit": {
+        "evaluations": 7,
+        "history_entropy_used": false,
+        "noise_on": 0.3496303987650387,
+        "noise_retain": 0.3865524165551949,
+        "relative_error": 3.3280833703575745e-14,
+        "root_moments_are_pooled": true,
+        "success": true,
+        "target_activation_count": 0.5328047368133555,
+        "target_signal_time": 0.8139652402380559
+      },
+      "input_hash": "02c7f34f1ab81657c04363d12c8d6013004e2488a9966e9b54baaf911ef225b7",
+      "law": {
+        "id": "C1-s0.6-w0.02",
+        "kind": "primary",
+        "parameters": {
+          "contrast": 0.8,
+          "coupling": 0.0,
+          "decay": 0.1,
+          "flicker_off": 0.36126583291983255,
+          "flicker_on": 0.05871485218977088,
+          "mobility": 0.1,
+          "movement_cost": 0.5,
+          "supply_rate": 0.6
+        },
+        "parent": null,
+        "physiology": {
+          "attempt_rate": 0.6,
+          "energy_cap": 4.0,
+          "escape_bias": 0.7,
+          "escape_success": 0.8,
+          "food_yield": 2.0,
+          "forage_cost": 0.5,
+          "forage_hazard": 0.5,
+          "forage_outside": 0.8,
+          "hazard_damage_rate": 0.15,
+          "hazard_foraging_factor": 0.5,
+          "hazard_off": 0.2,
+          "hazard_on": 0.1,
+          "metabolism": 0.4,
+          "normal_escape": 0.1,
+          "patch_rate": 0.2,
+          "quantum": 0.5,
+          "signal_energy": 0.5,
+          "signal_hijack": 0.2,
+          "signal_hit": 0.8,
+          "signal_off": 0.3,
+          "signal_upkeep": 0.02,
+          "struggle_cost": 0.5
+        },
+        "preparation_roots": [
+          [
+            6,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          [
+            8,
+            1,
+            0,
+            1,
+            1,
+            0,
+            0
+          ],
+          [
+            6,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1
+          ],
+          [
+            8,
+            1,
+            0,
+            1,
+            0,
+            1,
+            0
+          ]
+        ],
+        "renewal": {
+          "apparatus_energy": 1.0,
+          "assisted_harvest": 0.98,
+          "autocatalytic_gain": 2.0,
+          "basal_harvest": 0.02,
+          "beta": 1.0,
+          "capacity": 1,
+          "construction_cost": 1.5,
+          "construction_rate": 0.08,
+          "hardware_upkeep": 0.02,
+          "repair_enabled": true,
+          "wear_rate": 0.02
+        },
+        "roots": [
+          [
+            8,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          [
+            8,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1
+          ]
+        ],
+        "sensor": {
+          "error": 0.1,
+          "noise_on": 0.2,
+          "noise_retain": 0.5,
+          "read_cost": 0.5,
+          "refresh_rate": 0.2
+        }
+      },
+      "source_hash": "3e71f31a02bcdc9b2596312dc15b8751a128e807b336e2f9ee17525487730b2f"
+    },
+    "C1-s0.6-w0.08": {
+      "fit": {
+        "evaluations": 7,
+        "history_entropy_used": false,
+        "noise_on": 0.35234194871839053,
+        "noise_retain": 0.37486716437516576,
+        "relative_error": 2.5289301417064374e-13,
+        "root_moments_are_pooled": true,
+        "success": true,
+        "target_activation_count": 0.44969476669164943,
+        "target_signal_time": 0.6804639083497275
+      },
+      "input_hash": "00dd900fdf96a71afce834c2f1d5183e4f637424460d1e9c0d082e3ea0608e10",
+      "law": {
+        "id": "C1-s0.6-w0.08",
+        "kind": "primary",
+        "parameters": {
+          "contrast": 0.8,
+          "coupling": 0.0,
+          "decay": 0.1,
+          "flicker_off": 0.36126583291983255,
+          "flicker_on": 0.05871485218977088,
+          "mobility": 0.1,
+          "movement_cost": 0.5,
+          "supply_rate": 0.6
+        },
+        "parent": null,
+        "physiology": {
+          "attempt_rate": 0.6,
+          "energy_cap": 4.0,
+          "escape_bias": 0.7,
+          "escape_success": 0.8,
+          "food_yield": 2.0,
+          "forage_cost": 0.5,
+          "forage_hazard": 0.5,
+          "forage_outside": 0.8,
+          "hazard_damage_rate": 0.15,
+          "hazard_foraging_factor": 0.5,
+          "hazard_off": 0.2,
+          "hazard_on": 0.1,
+          "metabolism": 0.4,
+          "normal_escape": 0.1,
+          "patch_rate": 0.2,
+          "quantum": 0.5,
+          "signal_energy": 0.5,
+          "signal_hijack": 0.2,
+          "signal_hit": 0.8,
+          "signal_off": 0.3,
+          "signal_upkeep": 0.02,
+          "struggle_cost": 0.5
+        },
+        "renewal": {
+          "apparatus_energy": 1.0,
+          "assisted_harvest": 0.98,
+          "autocatalytic_gain": 2.0,
+          "basal_harvest": 0.02,
+          "beta": 1.0,
+          "capacity": 1,
+          "construction_cost": 1.5,
+          "construction_rate": 0.08,
+          "hardware_upkeep": 0.02,
+          "repair_enabled": true,
+          "wear_rate": 0.08
+        },
+        "roots": [
+          [
+            8,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          [
+            8,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1
+          ]
+        ],
+        "sensor": {
+          "error": 0.1,
+          "noise_on": 0.2,
+          "noise_retain": 0.5,
+          "read_cost": 0.5,
+          "refresh_rate": 0.2
+        }
+      },
+      "source_hash": "3e71f31a02bcdc9b2596312dc15b8751a128e807b336e2f9ee17525487730b2f"
+    },
+    "C1-s1.2-w0.02": {
+      "fit": {
+        "evaluations": 7,
+        "history_entropy_used": false,
+        "noise_on": 0.35414033609632356,
+        "noise_retain": 0.24306045537953516,
+        "relative_error": 1.0186741662961244e-10,
+        "root_moments_are_pooled": true,
+        "success": true,
+        "target_activation_count": 0.6520760298857201,
+        "target_signal_time": 0.9880679668167602
+      },
+      "input_hash": "2ea421a93ab622fa0341f6677200f0ef0cb3345f2a719c1fcd86934e0edfd8ae",
+      "law": {
+        "id": "C1-s1.2-w0.02",
+        "kind": "primary",
+        "parameters": {
+          "contrast": 0.8,
+          "coupling": 0.0,
+          "decay": 0.1,
+          "flicker_off": 0.36126583291983255,
+          "flicker_on": 0.05871485218977088,
+          "mobility": 0.1,
+          "movement_cost": 0.5,
+          "supply_rate": 1.2
+        },
+        "parent": null,
+        "physiology": {
+          "attempt_rate": 0.6,
+          "energy_cap": 4.0,
+          "escape_bias": 0.7,
+          "escape_success": 0.8,
+          "food_yield": 2.0,
+          "forage_cost": 0.5,
+          "forage_hazard": 0.5,
+          "forage_outside": 0.8,
+          "hazard_damage_rate": 0.15,
+          "hazard_foraging_factor": 0.5,
+          "hazard_off": 0.2,
+          "hazard_on": 0.1,
+          "metabolism": 0.4,
+          "normal_escape": 0.1,
+          "patch_rate": 0.2,
+          "quantum": 0.5,
+          "signal_energy": 0.5,
+          "signal_hijack": 0.2,
+          "signal_hit": 0.8,
+          "signal_off": 0.3,
+          "signal_upkeep": 0.02,
+          "struggle_cost": 0.5
+        },
+        "renewal": {
+          "apparatus_energy": 1.0,
+          "assisted_harvest": 0.98,
+          "autocatalytic_gain": 2.0,
+          "basal_harvest": 0.02,
+          "beta": 1.0,
+          "capacity": 1,
+          "construction_cost": 1.5,
+          "construction_rate": 0.08,
+          "hardware_upkeep": 0.02,
+          "repair_enabled": true,
+          "wear_rate": 0.02
+        },
+        "roots": [
+          [
+            8,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          [
+            8,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1
+          ]
+        ],
+        "sensor": {
+          "error": 0.1,
+          "noise_on": 0.2,
+          "noise_retain": 0.5,
+          "read_cost": 0.5,
+          "refresh_rate": 0.2
+        }
+      },
+      "source_hash": "3e71f31a02bcdc9b2596312dc15b8751a128e807b336e2f9ee17525487730b2f"
+    },
+    "C1-s1.2-w0.08": {
+      "fit": {
+        "evaluations": 8,
+        "history_entropy_used": false,
+        "noise_on": 0.3577448354366877,
+        "noise_retain": 0.1874067399101026,
+        "relative_error": 3.637828981029746e-14,
+        "root_moments_are_pooled": true,
+        "success": true,
+        "target_activation_count": 0.5371314961560305,
+        "target_signal_time": 0.8001557825830059
+      },
+      "input_hash": "a3bdd28f789df784c1446f1ed32162161a7469f5604ca0dad456a537745da690",
+      "law": {
+        "id": "C1-s1.2-w0.08",
+        "kind": "primary",
+        "parameters": {
+          "contrast": 0.8,
+          "coupling": 0.0,
+          "decay": 0.1,
+          "flicker_off": 0.36126583291983255,
+          "flicker_on": 0.05871485218977088,
+          "mobility": 0.1,
+          "movement_cost": 0.5,
+          "supply_rate": 1.2
+        },
+        "parent": null,
+        "physiology": {
+          "attempt_rate": 0.6,
+          "energy_cap": 4.0,
+          "escape_bias": 0.7,
+          "escape_success": 0.8,
+          "food_yield": 2.0,
+          "forage_cost": 0.5,
+          "forage_hazard": 0.5,
+          "forage_outside": 0.8,
+          "hazard_damage_rate": 0.15,
+          "hazard_foraging_factor": 0.5,
+          "hazard_off": 0.2,
+          "hazard_on": 0.1,
+          "metabolism": 0.4,
+          "normal_escape": 0.1,
+          "patch_rate": 0.2,
+          "quantum": 0.5,
+          "signal_energy": 0.5,
+          "signal_hijack": 0.2,
+          "signal_hit": 0.8,
+          "signal_off": 0.3,
+          "signal_upkeep": 0.02,
+          "struggle_cost": 0.5
+        },
+        "renewal": {
+          "apparatus_energy": 1.0,
+          "assisted_harvest": 0.98,
+          "autocatalytic_gain": 2.0,
+          "basal_harvest": 0.02,
+          "beta": 1.0,
+          "capacity": 1,
+          "construction_cost": 1.5,
+          "construction_rate": 0.08,
+          "hardware_upkeep": 0.02,
+          "repair_enabled": true,
+          "wear_rate": 0.08
+        },
+        "roots": [
+          [
+            8,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          [
+            8,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1
+          ]
+        ],
+        "sensor": {
+          "error": 0.1,
+          "noise_on": 0.2,
+          "noise_retain": 0.5,
+          "read_cost": 0.5,
+          "refresh_rate": 0.2
+        }
+      },
+      "source_hash": "3e71f31a02bcdc9b2596312dc15b8751a128e807b336e2f9ee17525487730b2f"
+    },
+    "C1-s2.4-w0.02": {
+      "fit": {
+        "evaluations": 7,
+        "history_entropy_used": false,
+        "noise_on": 0.3363254875001343,
+        "noise_retain": 0.16207125172280126,
+        "relative_error": 1.0937578703735917e-11,
+        "root_moments_are_pooled": true,
+        "success": true,
+        "target_activation_count": 0.7403532448357446,
+        "target_signal_time": 1.1229945624475866
+      },
+      "input_hash": "0aa99433855c41cbc72d38b0a9a4ed1052bf5414c6c9b0e39ff34b453cdc1cf2",
+      "law": {
+        "id": "C1-s2.4-w0.02",
+        "kind": "primary",
+        "parameters": {
+          "contrast": 0.8,
+          "coupling": 0.0,
+          "decay": 0.1,
+          "flicker_off": 0.36126583291983255,
+          "flicker_on": 0.05871485218977088,
+          "mobility": 0.1,
+          "movement_cost": 0.5,
+          "supply_rate": 2.4
+        },
+        "parent": null,
+        "physiology": {
+          "attempt_rate": 0.6,
+          "energy_cap": 4.0,
+          "escape_bias": 0.7,
+          "escape_success": 0.8,
+          "food_yield": 2.0,
+          "forage_cost": 0.5,
+          "forage_hazard": 0.5,
+          "forage_outside": 0.8,
+          "hazard_damage_rate": 0.15,
+          "hazard_foraging_factor": 0.5,
+          "hazard_off": 0.2,
+          "hazard_on": 0.1,
+          "metabolism": 0.4,
+          "normal_escape": 0.1,
+          "patch_rate": 0.2,
+          "quantum": 0.5,
+          "signal_energy": 0.5,
+          "signal_hijack": 0.2,
+          "signal_hit": 0.8,
+          "signal_off": 0.3,
+          "signal_upkeep": 0.02,
+          "struggle_cost": 0.5
+        },
+        "renewal": {
+          "apparatus_energy": 1.0,
+          "assisted_harvest": 0.98,
+          "autocatalytic_gain": 2.0,
+          "basal_harvest": 0.02,
+          "beta": 1.0,
+          "capacity": 1,
+          "construction_cost": 1.5,
+          "construction_rate": 0.08,
+          "hardware_upkeep": 0.02,
+          "repair_enabled": true,
+          "wear_rate": 0.02
+        },
+        "roots": [
+          [
+            8,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          [
+            8,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1
+          ]
+        ],
+        "sensor": {
+          "error": 0.1,
+          "noise_on": 0.2,
+          "noise_retain": 0.5,
+          "read_cost": 0.5,
+          "refresh_rate": 0.2
+        }
+      },
+      "source_hash": "3e71f31a02bcdc9b2596312dc15b8751a128e807b336e2f9ee17525487730b2f"
+    },
+    "C1-s2.4-w0.08": {
+      "fit": {
+        "evaluations": 8,
+        "history_entropy_used": false,
+        "noise_on": 0.33881732345921456,
+        "noise_retain": 0.08073264230570884,
+        "relative_error": 5.831189105129381e-13,
+        "root_moments_are_pooled": true,
+        "success": true,
+        "target_activation_count": 0.5892692209539686,
+        "target_signal_time": 0.8763926389554553
+      },
+      "input_hash": "96be43bc1b3af5e4070dc0760a3ef28865de3b412727e9c63f7f28ac69cd8939",
+      "law": {
+        "id": "C1-s2.4-w0.08",
+        "kind": "primary",
+        "parameters": {
+          "contrast": 0.8,
+          "coupling": 0.0,
+          "decay": 0.1,
+          "flicker_off": 0.36126583291983255,
+          "flicker_on": 0.05871485218977088,
+          "mobility": 0.1,
+          "movement_cost": 0.5,
+          "supply_rate": 2.4
+        },
+        "parent": null,
+        "physiology": {
+          "attempt_rate": 0.6,
+          "energy_cap": 4.0,
+          "escape_bias": 0.7,
+          "escape_success": 0.8,
+          "food_yield": 2.0,
+          "forage_cost": 0.5,
+          "forage_hazard": 0.5,
+          "forage_outside": 0.8,
+          "hazard_damage_rate": 0.15,
+          "hazard_foraging_factor": 0.5,
+          "hazard_off": 0.2,
+          "hazard_on": 0.1,
+          "metabolism": 0.4,
+          "normal_escape": 0.1,
+          "patch_rate": 0.2,
+          "quantum": 0.5,
+          "signal_energy": 0.5,
+          "signal_hijack": 0.2,
+          "signal_hit": 0.8,
+          "signal_off": 0.3,
+          "signal_upkeep": 0.02,
+          "struggle_cost": 0.5
+        },
+        "renewal": {
+          "apparatus_energy": 1.0,
+          "assisted_harvest": 0.98,
+          "autocatalytic_gain": 2.0,
+          "basal_harvest": 0.02,
+          "beta": 1.0,
+          "capacity": 1,
+          "construction_cost": 1.5,
+          "construction_rate": 0.08,
+          "hardware_upkeep": 0.02,
+          "repair_enabled": true,
+          "wear_rate": 0.08
+        },
+        "roots": [
+          [
+            8,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          [
+            8,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1
+          ]
+        ],
+        "sensor": {
+          "error": 0.1,
+          "noise_on": 0.2,
+          "noise_retain": 0.5,
+          "read_cost": 0.5,
+          "refresh_rate": 0.2
+        }
+      },
+      "source_hash": "3e71f31a02bcdc9b2596312dc15b8751a128e807b336e2f9ee17525487730b2f"
+    },
+    "C2-s0.3-w0.02": {
+      "fit": {
+        "evaluations": 6,
+        "history_entropy_used": false,
+        "noise_on": 0.34034036931150424,
+        "noise_retain": 0.520144483199432,
+        "relative_error": 2.857361995979143e-13,
+        "root_moments_are_pooled": true,
+        "success": true,
+        "target_activation_count": 0.5393049814297892,
+        "target_signal_time": 0.7065352536628755
+      },
+      "input_hash": "62212cfaa18079fdc009ca81d45a96e27cd8ef56013ef4d399bf8dafff92c128",
+      "law": {
+        "id": "C2-s0.3-w0.02",
+        "kind": "primary",
+        "parameters": {
+          "contrast": 0.8,
+          "coupling": 0.0,
+          "decay": 0.1,
+          "flicker_off": 0.36126583291983255,
+          "flicker_on": 0.05871485218977088,
+          "mobility": 0.1,
+          "movement_cost": 0.5,
+          "supply_rate": 0.3
+        },
+        "parent": null,
+        "physiology": {
+          "attempt_rate": 0.6,
+          "energy_cap": 4.0,
+          "escape_bias": 0.7,
+          "escape_success": 0.8,
+          "food_yield": 2.0,
+          "forage_cost": 0.5,
+          "forage_hazard": 0.5,
+          "forage_outside": 0.8,
+          "hazard_damage_rate": 0.15,
+          "hazard_foraging_factor": 0.5,
+          "hazard_off": 0.2,
+          "hazard_on": 0.1,
+          "metabolism": 0.4,
+          "normal_escape": 0.1,
+          "patch_rate": 0.2,
+          "quantum": 0.5,
+          "signal_energy": 0.5,
+          "signal_hijack": 0.2,
+          "signal_hit": 0.8,
+          "signal_off": 0.3,
+          "signal_upkeep": 0.02,
+          "struggle_cost": 0.5
+        },
+        "renewal": {
+          "apparatus_energy": 1.0,
+          "assisted_harvest": 0.98,
+          "autocatalytic_gain": 2.0,
+          "basal_harvest": 0.02,
+          "beta": 1.0,
+          "capacity": 2,
+          "construction_cost": 1.5,
+          "construction_rate": 0.08,
+          "hardware_upkeep": 0.02,
+          "repair_enabled": true,
+          "wear_rate": 0.02
+        },
+        "roots": [
+          [
+            8,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          [
+            8,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1
+          ]
+        ],
+        "sensor": {
+          "error": 0.1,
+          "noise_on": 0.2,
+          "noise_retain": 0.5,
+          "read_cost": 0.5,
+          "refresh_rate": 0.2
+        }
+      },
+      "source_hash": "3e71f31a02bcdc9b2596312dc15b8751a128e807b336e2f9ee17525487730b2f"
+    },
+    "C2-s0.6-w0.02": {
+      "fit": {
+        "evaluations": 7,
+        "history_entropy_used": false,
+        "noise_on": 0.3684823626505159,
+        "noise_retain": 0.37662860517842245,
+        "relative_error": 1.1874115044988792e-13,
+        "root_moments_are_pooled": true,
+        "success": true,
+        "target_activation_count": 0.7544023139199146,
+        "target_signal_time": 0.9770690753269383
+      },
+      "input_hash": "bbdf2bff11e0e87d576dd51e3081289c47b0accd90207ea2326423b9d515ed19",
+      "law": {
+        "id": "C2-s0.6-w0.02",
+        "kind": "primary",
+        "parameters": {
+          "contrast": 0.8,
+          "coupling": 0.0,
+          "decay": 0.1,
+          "flicker_off": 0.36126583291983255,
+          "flicker_on": 0.05871485218977088,
+          "mobility": 0.1,
+          "movement_cost": 0.5,
+          "supply_rate": 0.6
+        },
+        "parent": null,
+        "physiology": {
+          "attempt_rate": 0.6,
+          "energy_cap": 4.0,
+          "escape_bias": 0.7,
+          "escape_success": 0.8,
+          "food_yield": 2.0,
+          "forage_cost": 0.5,
+          "forage_hazard": 0.5,
+          "forage_outside": 0.8,
+          "hazard_damage_rate": 0.15,
+          "hazard_foraging_factor": 0.5,
+          "hazard_off": 0.2,
+          "hazard_on": 0.1,
+          "metabolism": 0.4,
+          "normal_escape": 0.1,
+          "patch_rate": 0.2,
+          "quantum": 0.5,
+          "signal_energy": 0.5,
+          "signal_hijack": 0.2,
+          "signal_hit": 0.8,
+          "signal_off": 0.3,
+          "signal_upkeep": 0.02,
+          "struggle_cost": 0.5
+        },
+        "preparation_roots": [
+          [
+            6,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          [
+            8,
+            1,
+            0,
+            1,
+            1,
+            0,
+            0
+          ],
+          [
+            6,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1
+          ],
+          [
+            8,
+            1,
+            0,
+            1,
+            0,
+            1,
+            0
+          ]
+        ],
+        "renewal": {
+          "apparatus_energy": 1.0,
+          "assisted_harvest": 0.98,
+          "autocatalytic_gain": 2.0,
+          "basal_harvest": 0.02,
+          "beta": 1.0,
+          "capacity": 2,
+          "construction_cost": 1.5,
+          "construction_rate": 0.08,
+          "hardware_upkeep": 0.02,
+          "repair_enabled": true,
+          "wear_rate": 0.02
+        },
+        "roots": [
+          [
+            8,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          [
+            8,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1
+          ]
+        ],
+        "sensor": {
+          "error": 0.1,
+          "noise_on": 0.2,
+          "noise_retain": 0.5,
+          "read_cost": 0.5,
+          "refresh_rate": 0.2
+        }
+      },
+      "source_hash": "3e71f31a02bcdc9b2596312dc15b8751a128e807b336e2f9ee17525487730b2f"
+    },
+    "C2-s1.2-w0.02": {
+      "fit": {
+        "evaluations": 7,
+        "history_entropy_used": false,
+        "noise_on": 0.39055840497452443,
+        "noise_retain": 0.31663681356551904,
+        "relative_error": 7.45735541992336e-12,
+        "root_moments_are_pooled": true,
+        "success": true,
+        "target_activation_count": 1.0739834791923126,
+        "target_signal_time": 1.4158428040833106
+      },
+      "input_hash": "8a83d789d1bf62fb98cc865ae48d5943c0f6f39a0f6e077c5d3b044aa82350c0",
+      "law": {
+        "id": "C2-s1.2-w0.02",
+        "kind": "primary",
+        "parameters": {
+          "contrast": 0.8,
+          "coupling": 0.0,
+          "decay": 0.1,
+          "flicker_off": 0.36126583291983255,
+          "flicker_on": 0.05871485218977088,
+          "mobility": 0.1,
+          "movement_cost": 0.5,
+          "supply_rate": 1.2
+        },
+        "parent": null,
+        "physiology": {
+          "attempt_rate": 0.6,
+          "energy_cap": 4.0,
+          "escape_bias": 0.7,
+          "escape_success": 0.8,
+          "food_yield": 2.0,
+          "forage_cost": 0.5,
+          "forage_hazard": 0.5,
+          "forage_outside": 0.8,
+          "hazard_damage_rate": 0.15,
+          "hazard_foraging_factor": 0.5,
+          "hazard_off": 0.2,
+          "hazard_on": 0.1,
+          "metabolism": 0.4,
+          "normal_escape": 0.1,
+          "patch_rate": 0.2,
+          "quantum": 0.5,
+          "signal_energy": 0.5,
+          "signal_hijack": 0.2,
+          "signal_hit": 0.8,
+          "signal_off": 0.3,
+          "signal_upkeep": 0.02,
+          "struggle_cost": 0.5
+        },
+        "renewal": {
+          "apparatus_energy": 1.0,
+          "assisted_harvest": 0.98,
+          "autocatalytic_gain": 2.0,
+          "basal_harvest": 0.02,
+          "beta": 1.0,
+          "capacity": 2,
+          "construction_cost": 1.5,
+          "construction_rate": 0.08,
+          "hardware_upkeep": 0.02,
+          "repair_enabled": true,
+          "wear_rate": 0.02
+        },
+        "roots": [
+          [
+            8,
+            1,
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          [
+            8,
+            1,
+            0,
+            1,
+            0,
+            1,
+            1
+          ]
+        ],
+        "sensor": {
+          "error": 0.1,
+          "noise_on": 0.2,
+          "noise_retain": 0.5,
+          "read_cost": 0.5,
+          "refresh_rate": 0.2
+        }
+      },
+      "source_hash": "3e71f31a02bcdc9b2596312dc15b8751a128e807b336e2f9ee17525487730b2f"
+    }
+  },
+  "caps": {
+    "memory": 536870912,
+    "output_cap": 67108864,
+    "seconds": 180
+  },
+  "coordinate_order": [
+    3,
+    4,
+    5,
+    0,
+    1,
+    2,
+    6
+  ],
+  "coupling": 4.0,
+  "date": "2026-10-14",
+  "hidden_fields": [
+    0,
+    1,
+    3,
+    4,
+    5,
+    6
+  ],
+  "horizon_probe_estimate_multipliers": [
+    0.5,
+    1.0,
+    2.0
+  ],
+  "horizon_query_maximum": 4096,
+  "horizons": [
+    16,
+    64,
+    256,
+    1024
+  ],
+  "id": "paid-renewal-frontier",
+  "laws": [
+    {
+      "id": "C1-s0.15-w0.02",
+      "kind": "primary",
+      "parameters": {
+        "contrast": 0.8,
+        "coupling": 0.0,
+        "decay": 0.1,
+        "flicker_off": 0.36126583291983255,
+        "flicker_on": 0.05871485218977088,
+        "mobility": 0.1,
+        "movement_cost": 0.5,
+        "supply_rate": 0.15
+      },
+      "parent": null,
+      "physiology": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.7,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.15,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.02,
+        "struggle_cost": 0.5
+      },
+      "renewal": {
+        "apparatus_energy": 1.0,
+        "assisted_harvest": 0.98,
+        "autocatalytic_gain": 2.0,
+        "basal_harvest": 0.02,
+        "beta": 1.0,
+        "capacity": 1,
+        "construction_cost": 1.5,
+        "construction_rate": 0.08,
+        "hardware_upkeep": 0.02,
+        "repair_enabled": true,
+        "wear_rate": 0.02
+      },
+      "roots": [
+        [
+          8,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          8,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1
+        ]
+      ],
+      "sensor": {
+        "error": 0.1,
+        "noise_on": 0.3276303397089343,
+        "noise_retain": 0.7314997730512078,
+        "read_cost": 0.5,
+        "refresh_rate": 0.2
+      }
+    },
+    {
+      "id": "C1-s0.15-w0.08",
+      "kind": "primary",
+      "parameters": {
+        "contrast": 0.8,
+        "coupling": 0.0,
+        "decay": 0.1,
+        "flicker_off": 0.36126583291983255,
+        "flicker_on": 0.05871485218977088,
+        "mobility": 0.1,
+        "movement_cost": 0.5,
+        "supply_rate": 0.15
+      },
+      "parent": null,
+      "physiology": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.7,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.15,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.02,
+        "struggle_cost": 0.5
+      },
+      "renewal": {
+        "apparatus_energy": 1.0,
+        "assisted_harvest": 0.98,
+        "autocatalytic_gain": 2.0,
+        "basal_harvest": 0.02,
+        "beta": 1.0,
+        "capacity": 1,
+        "construction_cost": 1.5,
+        "construction_rate": 0.08,
+        "hardware_upkeep": 0.02,
+        "repair_enabled": true,
+        "wear_rate": 0.08
+      },
+      "roots": [
+        [
+          8,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          8,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1
+        ]
+      ],
+      "sensor": {
+        "error": 0.1,
+        "noise_on": 0.3285672135682245,
+        "noise_retain": 0.805139759181586,
+        "read_cost": 0.5,
+        "refresh_rate": 0.2
+      }
+    },
+    {
+      "id": "C1-s0.3-w0.02",
+      "kind": "primary",
+      "parameters": {
+        "contrast": 0.8,
+        "coupling": 0.0,
+        "decay": 0.1,
+        "flicker_off": 0.36126583291983255,
+        "flicker_on": 0.05871485218977088,
+        "mobility": 0.1,
+        "movement_cost": 0.5,
+        "supply_rate": 0.3
+      },
+      "parent": null,
+      "physiology": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.7,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.15,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.02,
+        "struggle_cost": 0.5
+      },
+      "renewal": {
+        "apparatus_energy": 1.0,
+        "assisted_harvest": 0.98,
+        "autocatalytic_gain": 2.0,
+        "basal_harvest": 0.02,
+        "beta": 1.0,
+        "capacity": 1,
+        "construction_cost": 1.5,
+        "construction_rate": 0.08,
+        "hardware_upkeep": 0.02,
+        "repair_enabled": true,
+        "wear_rate": 0.02
+      },
+      "roots": [
+        [
+          8,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          8,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1
+        ]
+      ],
+      "sensor": {
+        "error": 0.1,
+        "noise_on": 0.33619905781137327,
+        "noise_retain": 0.5766655728068447,
+        "read_cost": 0.5,
+        "refresh_rate": 0.2
+      }
+    },
+    {
+      "id": "C1-s0.3-w0.08",
+      "kind": "primary",
+      "parameters": {
+        "contrast": 0.8,
+        "coupling": 0.0,
+        "decay": 0.1,
+        "flicker_off": 0.36126583291983255,
+        "flicker_on": 0.05871485218977088,
+        "mobility": 0.1,
+        "movement_cost": 0.5,
+        "supply_rate": 0.3
+      },
+      "parent": null,
+      "physiology": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.7,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.15,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.02,
+        "struggle_cost": 0.5
+      },
+      "renewal": {
+        "apparatus_energy": 1.0,
+        "assisted_harvest": 0.98,
+        "autocatalytic_gain": 2.0,
+        "basal_harvest": 0.02,
+        "beta": 1.0,
+        "capacity": 1,
+        "construction_cost": 1.5,
+        "construction_rate": 0.08,
+        "hardware_upkeep": 0.02,
+        "repair_enabled": true,
+        "wear_rate": 0.08
+      },
+      "roots": [
+        [
+          8,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          8,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1
+        ]
+      ],
+      "sensor": {
+        "error": 0.1,
+        "noise_on": 0.33739294455976965,
+        "noise_retain": 0.6166028623860013,
+        "read_cost": 0.5,
+        "refresh_rate": 0.2
+      }
+    },
+    {
+      "id": "C1-s0.6-w0.02",
+      "kind": "primary",
+      "parameters": {
+        "contrast": 0.8,
+        "coupling": 0.0,
+        "decay": 0.1,
+        "flicker_off": 0.36126583291983255,
+        "flicker_on": 0.05871485218977088,
+        "mobility": 0.1,
+        "movement_cost": 0.5,
+        "supply_rate": 0.6
+      },
+      "parent": null,
+      "physiology": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.7,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.15,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.02,
+        "struggle_cost": 0.5
+      },
+      "preparation_roots": [
+        [
+          6,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          8,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          6,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1
+        ],
+        [
+          8,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0
+        ]
+      ],
+      "renewal": {
+        "apparatus_energy": 1.0,
+        "assisted_harvest": 0.98,
+        "autocatalytic_gain": 2.0,
+        "basal_harvest": 0.02,
+        "beta": 1.0,
+        "capacity": 1,
+        "construction_cost": 1.5,
+        "construction_rate": 0.08,
+        "hardware_upkeep": 0.02,
+        "repair_enabled": true,
+        "wear_rate": 0.02
+      },
+      "roots": [
+        [
+          8,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          8,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1
+        ]
+      ],
+      "sensor": {
+        "error": 0.1,
+        "noise_on": 0.3496303987650387,
+        "noise_retain": 0.3865524165551949,
+        "read_cost": 0.5,
+        "refresh_rate": 0.2
+      }
+    },
+    {
+      "id": "C1-s0.6-w0.08",
+      "kind": "primary",
+      "parameters": {
+        "contrast": 0.8,
+        "coupling": 0.0,
+        "decay": 0.1,
+        "flicker_off": 0.36126583291983255,
+        "flicker_on": 0.05871485218977088,
+        "mobility": 0.1,
+        "movement_cost": 0.5,
+        "supply_rate": 0.6
+      },
+      "parent": null,
+      "physiology": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.7,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.15,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.02,
+        "struggle_cost": 0.5
+      },
+      "renewal": {
+        "apparatus_energy": 1.0,
+        "assisted_harvest": 0.98,
+        "autocatalytic_gain": 2.0,
+        "basal_harvest": 0.02,
+        "beta": 1.0,
+        "capacity": 1,
+        "construction_cost": 1.5,
+        "construction_rate": 0.08,
+        "hardware_upkeep": 0.02,
+        "repair_enabled": true,
+        "wear_rate": 0.08
+      },
+      "roots": [
+        [
+          8,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          8,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1
+        ]
+      ],
+      "sensor": {
+        "error": 0.1,
+        "noise_on": 0.35234194871839053,
+        "noise_retain": 0.37486716437516576,
+        "read_cost": 0.5,
+        "refresh_rate": 0.2
+      }
+    },
+    {
+      "id": "C1-s1.2-w0.02",
+      "kind": "primary",
+      "parameters": {
+        "contrast": 0.8,
+        "coupling": 0.0,
+        "decay": 0.1,
+        "flicker_off": 0.36126583291983255,
+        "flicker_on": 0.05871485218977088,
+        "mobility": 0.1,
+        "movement_cost": 0.5,
+        "supply_rate": 1.2
+      },
+      "parent": null,
+      "physiology": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.7,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.15,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.02,
+        "struggle_cost": 0.5
+      },
+      "renewal": {
+        "apparatus_energy": 1.0,
+        "assisted_harvest": 0.98,
+        "autocatalytic_gain": 2.0,
+        "basal_harvest": 0.02,
+        "beta": 1.0,
+        "capacity": 1,
+        "construction_cost": 1.5,
+        "construction_rate": 0.08,
+        "hardware_upkeep": 0.02,
+        "repair_enabled": true,
+        "wear_rate": 0.02
+      },
+      "roots": [
+        [
+          8,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          8,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1
+        ]
+      ],
+      "sensor": {
+        "error": 0.1,
+        "noise_on": 0.35414033609632356,
+        "noise_retain": 0.24306045537953516,
+        "read_cost": 0.5,
+        "refresh_rate": 0.2
+      }
+    },
+    {
+      "id": "C1-s1.2-w0.08",
+      "kind": "primary",
+      "parameters": {
+        "contrast": 0.8,
+        "coupling": 0.0,
+        "decay": 0.1,
+        "flicker_off": 0.36126583291983255,
+        "flicker_on": 0.05871485218977088,
+        "mobility": 0.1,
+        "movement_cost": 0.5,
+        "supply_rate": 1.2
+      },
+      "parent": null,
+      "physiology": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.7,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.15,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.02,
+        "struggle_cost": 0.5
+      },
+      "renewal": {
+        "apparatus_energy": 1.0,
+        "assisted_harvest": 0.98,
+        "autocatalytic_gain": 2.0,
+        "basal_harvest": 0.02,
+        "beta": 1.0,
+        "capacity": 1,
+        "construction_cost": 1.5,
+        "construction_rate": 0.08,
+        "hardware_upkeep": 0.02,
+        "repair_enabled": true,
+        "wear_rate": 0.08
+      },
+      "roots": [
+        [
+          8,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          8,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1
+        ]
+      ],
+      "sensor": {
+        "error": 0.1,
+        "noise_on": 0.3577448354366877,
+        "noise_retain": 0.1874067399101026,
+        "read_cost": 0.5,
+        "refresh_rate": 0.2
+      }
+    },
+    {
+      "id": "C1-s2.4-w0.02",
+      "kind": "primary",
+      "parameters": {
+        "contrast": 0.8,
+        "coupling": 0.0,
+        "decay": 0.1,
+        "flicker_off": 0.36126583291983255,
+        "flicker_on": 0.05871485218977088,
+        "mobility": 0.1,
+        "movement_cost": 0.5,
+        "supply_rate": 2.4
+      },
+      "parent": null,
+      "physiology": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.7,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.15,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.02,
+        "struggle_cost": 0.5
+      },
+      "renewal": {
+        "apparatus_energy": 1.0,
+        "assisted_harvest": 0.98,
+        "autocatalytic_gain": 2.0,
+        "basal_harvest": 0.02,
+        "beta": 1.0,
+        "capacity": 1,
+        "construction_cost": 1.5,
+        "construction_rate": 0.08,
+        "hardware_upkeep": 0.02,
+        "repair_enabled": true,
+        "wear_rate": 0.02
+      },
+      "roots": [
+        [
+          8,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          8,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1
+        ]
+      ],
+      "sensor": {
+        "error": 0.1,
+        "noise_on": 0.3363254875001343,
+        "noise_retain": 0.16207125172280126,
+        "read_cost": 0.5,
+        "refresh_rate": 0.2
+      }
+    },
+    {
+      "id": "C1-s2.4-w0.08",
+      "kind": "primary",
+      "parameters": {
+        "contrast": 0.8,
+        "coupling": 0.0,
+        "decay": 0.1,
+        "flicker_off": 0.36126583291983255,
+        "flicker_on": 0.05871485218977088,
+        "mobility": 0.1,
+        "movement_cost": 0.5,
+        "supply_rate": 2.4
+      },
+      "parent": null,
+      "physiology": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.7,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.15,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.02,
+        "struggle_cost": 0.5
+      },
+      "renewal": {
+        "apparatus_energy": 1.0,
+        "assisted_harvest": 0.98,
+        "autocatalytic_gain": 2.0,
+        "basal_harvest": 0.02,
+        "beta": 1.0,
+        "capacity": 1,
+        "construction_cost": 1.5,
+        "construction_rate": 0.08,
+        "hardware_upkeep": 0.02,
+        "repair_enabled": true,
+        "wear_rate": 0.08
+      },
+      "roots": [
+        [
+          8,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          8,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1
+        ]
+      ],
+      "sensor": {
+        "error": 0.1,
+        "noise_on": 0.33881732345921456,
+        "noise_retain": 0.08073264230570884,
+        "read_cost": 0.5,
+        "refresh_rate": 0.2
+      }
+    },
+    {
+      "id": "C2-s0.3-w0.02",
+      "kind": "primary",
+      "parameters": {
+        "contrast": 0.8,
+        "coupling": 0.0,
+        "decay": 0.1,
+        "flicker_off": 0.36126583291983255,
+        "flicker_on": 0.05871485218977088,
+        "mobility": 0.1,
+        "movement_cost": 0.5,
+        "supply_rate": 0.3
+      },
+      "parent": null,
+      "physiology": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.7,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.15,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.02,
+        "struggle_cost": 0.5
+      },
+      "renewal": {
+        "apparatus_energy": 1.0,
+        "assisted_harvest": 0.98,
+        "autocatalytic_gain": 2.0,
+        "basal_harvest": 0.02,
+        "beta": 1.0,
+        "capacity": 2,
+        "construction_cost": 1.5,
+        "construction_rate": 0.08,
+        "hardware_upkeep": 0.02,
+        "repair_enabled": true,
+        "wear_rate": 0.02
+      },
+      "roots": [
+        [
+          8,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          8,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1
+        ]
+      ],
+      "sensor": {
+        "error": 0.1,
+        "noise_on": 0.34034036931150424,
+        "noise_retain": 0.520144483199432,
+        "read_cost": 0.5,
+        "refresh_rate": 0.2
+      }
+    },
+    {
+      "id": "C2-s0.6-w0.02",
+      "kind": "primary",
+      "parameters": {
+        "contrast": 0.8,
+        "coupling": 0.0,
+        "decay": 0.1,
+        "flicker_off": 0.36126583291983255,
+        "flicker_on": 0.05871485218977088,
+        "mobility": 0.1,
+        "movement_cost": 0.5,
+        "supply_rate": 0.6
+      },
+      "parent": null,
+      "physiology": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.7,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.15,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.02,
+        "struggle_cost": 0.5
+      },
+      "preparation_roots": [
+        [
+          6,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          8,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          6,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1
+        ],
+        [
+          8,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0
+        ]
+      ],
+      "renewal": {
+        "apparatus_energy": 1.0,
+        "assisted_harvest": 0.98,
+        "autocatalytic_gain": 2.0,
+        "basal_harvest": 0.02,
+        "beta": 1.0,
+        "capacity": 2,
+        "construction_cost": 1.5,
+        "construction_rate": 0.08,
+        "hardware_upkeep": 0.02,
+        "repair_enabled": true,
+        "wear_rate": 0.02
+      },
+      "roots": [
+        [
+          8,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          8,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1
+        ]
+      ],
+      "sensor": {
+        "error": 0.1,
+        "noise_on": 0.3684823626505159,
+        "noise_retain": 0.37662860517842245,
+        "read_cost": 0.5,
+        "refresh_rate": 0.2
+      }
+    },
+    {
+      "id": "C2-s1.2-w0.02",
+      "kind": "primary",
+      "parameters": {
+        "contrast": 0.8,
+        "coupling": 0.0,
+        "decay": 0.1,
+        "flicker_off": 0.36126583291983255,
+        "flicker_on": 0.05871485218977088,
+        "mobility": 0.1,
+        "movement_cost": 0.5,
+        "supply_rate": 1.2
+      },
+      "parent": null,
+      "physiology": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.7,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.15,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.02,
+        "struggle_cost": 0.5
+      },
+      "renewal": {
+        "apparatus_energy": 1.0,
+        "assisted_harvest": 0.98,
+        "autocatalytic_gain": 2.0,
+        "basal_harvest": 0.02,
+        "beta": 1.0,
+        "capacity": 2,
+        "construction_cost": 1.5,
+        "construction_rate": 0.08,
+        "hardware_upkeep": 0.02,
+        "repair_enabled": true,
+        "wear_rate": 0.02
+      },
+      "roots": [
+        [
+          8,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          8,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1
+        ]
+      ],
+      "sensor": {
+        "error": 0.1,
+        "noise_on": 0.39055840497452443,
+        "noise_retain": 0.31663681356551904,
+        "read_cost": 0.5,
+        "refresh_rate": 0.2
+      }
+    },
+    {
+      "id": "C1-s0.3-w0.02-repair0",
+      "kind": "repair_ablation",
+      "parameters": {
+        "contrast": 0.8,
+        "coupling": 0.0,
+        "decay": 0.1,
+        "flicker_off": 0.36126583291983255,
+        "flicker_on": 0.05871485218977088,
+        "mobility": 0.1,
+        "movement_cost": 0.5,
+        "supply_rate": 0.3
+      },
+      "parent": "C1-s0.3-w0.02",
+      "physiology": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.7,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.15,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.02,
+        "struggle_cost": 0.5
+      },
+      "renewal": {
+        "apparatus_energy": 1.0,
+        "assisted_harvest": 0.98,
+        "autocatalytic_gain": 2.0,
+        "basal_harvest": 0.02,
+        "beta": 1.0,
+        "capacity": 1,
+        "construction_cost": 1.5,
+        "construction_rate": 0.08,
+        "hardware_upkeep": 0.02,
+        "repair_enabled": false,
+        "wear_rate": 0.02
+      },
+      "roots": [
+        [
+          8,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          8,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1
+        ]
+      ],
+      "sensor": {
+        "error": 0.1,
+        "noise_on": 0.33619905781137327,
+        "noise_retain": 0.5766655728068447,
+        "read_cost": 0.5,
+        "refresh_rate": 0.2
+      }
+    },
+    {
+      "id": "C1-s0.6-w0.02-repair0",
+      "kind": "repair_ablation",
+      "parameters": {
+        "contrast": 0.8,
+        "coupling": 0.0,
+        "decay": 0.1,
+        "flicker_off": 0.36126583291983255,
+        "flicker_on": 0.05871485218977088,
+        "mobility": 0.1,
+        "movement_cost": 0.5,
+        "supply_rate": 0.6
+      },
+      "parent": "C1-s0.6-w0.02",
+      "physiology": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.7,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.15,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.02,
+        "struggle_cost": 0.5
+      },
+      "preparation_roots": [
+        [
+          6,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          8,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          6,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1
+        ],
+        [
+          8,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0
+        ]
+      ],
+      "renewal": {
+        "apparatus_energy": 1.0,
+        "assisted_harvest": 0.98,
+        "autocatalytic_gain": 2.0,
+        "basal_harvest": 0.02,
+        "beta": 1.0,
+        "capacity": 1,
+        "construction_cost": 1.5,
+        "construction_rate": 0.08,
+        "hardware_upkeep": 0.02,
+        "repair_enabled": false,
+        "wear_rate": 0.02
+      },
+      "roots": [
+        [
+          8,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          8,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1
+        ]
+      ],
+      "sensor": {
+        "error": 0.1,
+        "noise_on": 0.3496303987650387,
+        "noise_retain": 0.3865524165551949,
+        "read_cost": 0.5,
+        "refresh_rate": 0.2
+      }
+    },
+    {
+      "id": "C1-s1.2-w0.02-repair0",
+      "kind": "repair_ablation",
+      "parameters": {
+        "contrast": 0.8,
+        "coupling": 0.0,
+        "decay": 0.1,
+        "flicker_off": 0.36126583291983255,
+        "flicker_on": 0.05871485218977088,
+        "mobility": 0.1,
+        "movement_cost": 0.5,
+        "supply_rate": 1.2
+      },
+      "parent": "C1-s1.2-w0.02",
+      "physiology": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.7,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.15,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.02,
+        "struggle_cost": 0.5
+      },
+      "renewal": {
+        "apparatus_energy": 1.0,
+        "assisted_harvest": 0.98,
+        "autocatalytic_gain": 2.0,
+        "basal_harvest": 0.02,
+        "beta": 1.0,
+        "capacity": 1,
+        "construction_cost": 1.5,
+        "construction_rate": 0.08,
+        "hardware_upkeep": 0.02,
+        "repair_enabled": false,
+        "wear_rate": 0.02
+      },
+      "roots": [
+        [
+          8,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          8,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1
+        ]
+      ],
+      "sensor": {
+        "error": 0.1,
+        "noise_on": 0.35414033609632356,
+        "noise_retain": 0.24306045537953516,
+        "read_cost": 0.5,
+        "refresh_rate": 0.2
+      }
+    },
+    {
+      "id": "C2-s0.3-w0.02-gamma0",
+      "kind": "autocatalysis_ablation",
+      "parameters": {
+        "contrast": 0.8,
+        "coupling": 0.0,
+        "decay": 0.1,
+        "flicker_off": 0.36126583291983255,
+        "flicker_on": 0.05871485218977088,
+        "mobility": 0.1,
+        "movement_cost": 0.5,
+        "supply_rate": 0.3
+      },
+      "parent": "C2-s0.3-w0.02",
+      "physiology": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.7,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.15,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.02,
+        "struggle_cost": 0.5
+      },
+      "renewal": {
+        "apparatus_energy": 1.0,
+        "assisted_harvest": 0.98,
+        "autocatalytic_gain": 0.0,
+        "basal_harvest": 0.02,
+        "beta": 1.0,
+        "capacity": 2,
+        "construction_cost": 1.5,
+        "construction_rate": 0.08,
+        "hardware_upkeep": 0.02,
+        "repair_enabled": true,
+        "wear_rate": 0.02
+      },
+      "roots": [
+        [
+          8,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          8,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1
+        ]
+      ],
+      "sensor": {
+        "error": 0.1,
+        "noise_on": 0.34034036931150424,
+        "noise_retain": 0.520144483199432,
+        "read_cost": 0.5,
+        "refresh_rate": 0.2
+      }
+    },
+    {
+      "id": "C2-s0.6-w0.02-gamma0",
+      "kind": "autocatalysis_ablation",
+      "parameters": {
+        "contrast": 0.8,
+        "coupling": 0.0,
+        "decay": 0.1,
+        "flicker_off": 0.36126583291983255,
+        "flicker_on": 0.05871485218977088,
+        "mobility": 0.1,
+        "movement_cost": 0.5,
+        "supply_rate": 0.6
+      },
+      "parent": "C2-s0.6-w0.02",
+      "physiology": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.7,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.15,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.02,
+        "struggle_cost": 0.5
+      },
+      "preparation_roots": [
+        [
+          6,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          8,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          6,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1
+        ],
+        [
+          8,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0
+        ]
+      ],
+      "renewal": {
+        "apparatus_energy": 1.0,
+        "assisted_harvest": 0.98,
+        "autocatalytic_gain": 0.0,
+        "basal_harvest": 0.02,
+        "beta": 1.0,
+        "capacity": 2,
+        "construction_cost": 1.5,
+        "construction_rate": 0.08,
+        "hardware_upkeep": 0.02,
+        "repair_enabled": true,
+        "wear_rate": 0.02
+      },
+      "roots": [
+        [
+          8,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          8,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1
+        ]
+      ],
+      "sensor": {
+        "error": 0.1,
+        "noise_on": 0.3684823626505159,
+        "noise_retain": 0.37662860517842245,
+        "read_cost": 0.5,
+        "refresh_rate": 0.2
+      }
+    },
+    {
+      "id": "C2-s1.2-w0.02-gamma0",
+      "kind": "autocatalysis_ablation",
+      "parameters": {
+        "contrast": 0.8,
+        "coupling": 0.0,
+        "decay": 0.1,
+        "flicker_off": 0.36126583291983255,
+        "flicker_on": 0.05871485218977088,
+        "mobility": 0.1,
+        "movement_cost": 0.5,
+        "supply_rate": 1.2
+      },
+      "parent": "C2-s1.2-w0.02",
+      "physiology": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.7,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.15,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.02,
+        "struggle_cost": 0.5
+      },
+      "renewal": {
+        "apparatus_energy": 1.0,
+        "assisted_harvest": 0.98,
+        "autocatalytic_gain": 0.0,
+        "basal_harvest": 0.02,
+        "beta": 1.0,
+        "capacity": 2,
+        "construction_cost": 1.5,
+        "construction_rate": 0.08,
+        "hardware_upkeep": 0.02,
+        "repair_enabled": true,
+        "wear_rate": 0.02
+      },
+      "roots": [
+        [
+          8,
+          1,
+          0,
+          1,
+          1,
+          0,
+          1
+        ],
+        [
+          8,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1
+        ]
+      ],
+      "sensor": {
+        "error": 0.1,
+        "noise_on": 0.39055840497452443,
+        "noise_retain": 0.31663681356551904,
+        "read_cost": 0.5,
+        "refresh_rate": 0.2
+      }
+    }
+  ],
+  "operating_marker": {
+    "paid_construction_rate": 0.0001,
+    "stationary_functionality": 0.05
+  },
+  "pairs": [
+    [
+      "IX",
+      "R0"
+    ],
+    [
+      "IX",
+      "RX"
+    ],
+    [
+      "I0",
+      "R0"
+    ],
+    [
+      "IX",
+      "I0"
+    ],
+    [
+      "RX",
+      "R0"
+    ]
+  ],
+  "physical_temporal_band": null,
+  "predictions": {
+    "U1": "some interior capacity1 primary supply has pooled IX-R0 positive at all cadences T64",
+    "U2": "positive capacity1 region bounded by nonpositive supply endpoints at T64 primary cadence",
+    "U3": "high wear has fewer positive capacity1 primary supply points",
+    "U4": "paid repair has more positive points than repair ablation at the three low-wear supplies",
+    "U5": "capacity2 records ongoing hardware-assisted second-unit construction; compare gamma0"
+  },
+  "primary_cadence": 0.25,
+  "primary_horizon": 64,
+  "scope": "capacity1 sustenance, capacity2 bounded expansion; neither compounding against gas",
+  "status": "frozen_before_scientific_ranking",
+  "tolerances": {
+    "bits": 1e-05,
+    "physical": 1e-06,
+    "rate": 1e-08,
+    "residual": 1e-08
+  },
+  "version": "1"
+}

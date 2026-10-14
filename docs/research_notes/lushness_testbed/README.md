@@ -1,5 +1,29 @@
 # Lushness optimizer test bed
 
+Current interpretation: [variation, access and renewal synthesis](INTERPRETATION_SYNTHESIS_2026-10-15.md),
+aligned with the canonical Drive revision posture. It separates preparation,
+ongoing mechanism and ethical claims while retaining all adverse findings.
+
+Latest completed extension: [paid renewal frontier](renewal/RESULTS.md), including
+capacity1 self-maintenance, capacity2 bounded construction feedback, energy
+returns, horizon probes, repair/catalysis ablations and retained failure targets.
+The rate advantage explains delayed repayment: informed actuation wins in5 of19
+laws by T256 and13 by T1024, while all registered T64 frontier predictions fail.
+Construction assistance increases turnover rather than retained expansion.
+
+Latest matched-mechanism comparison: [paid sensing results](paid_sensing/RESULTS.md).
+Informative and stock-independent writing pay the same unit bills, with prior
+physical moment matching. Absolute candidate rankings remain in the report.
+
+Latest physical extension: [costed exploration results](exploration/RESULTS.md).
+Five candidate mechanisms run on stochastic resource stocks; the report separates
+blind register-driven movement, stock-aware access and independent flicker.
+
+Latest completed calibration: [temporal profile audit](temporal_profile/RESULTS.md).
+It reproduces the known signal reversals and brackets exact temporal crossings.
+The [costed-exploration design](temporal_profile/B_X_NEXT_SPEC_DRAFT.md) is the
+historical draft preceding the completed exploration slice linked above.
+
 Active design location as of 2026-10-13: the original Omega repository, branch
 `codex/operational-continuation-comparison`. Work on a separate repository is
 deferred. Drafts initially prepared in the sibling omega-cosmology folder are

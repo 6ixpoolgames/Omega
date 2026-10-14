@@ -1,5 +1,14 @@
 # First W1/W2 adversaries: scientific assessment
 
+Interpretation update,15October2026: the [temporal audit](../temporal_profile/RESULTS.md)
+has now located the crossings discussed below. The later matched-register,
+exploration, paid-sensing and renewal comparisons explain related mechanisms
+under separate laws. They retain these original functional counterexamples.
+The frozen stronger corridor criterion still has no kill, and K2 remains
+uninstantiated. This is local functional-proxy evidence, not a claim about
+phenomenal valence or the intertwined interpersonal subject. See the
+[cross-run synthesis](../INTERPRETATION_SYNTHESIS_2026-10-15.md).
+
 All 384 registered arm/cadence analyses completed, covering 32 parameter points
 and four horizons. The first slice yields two valid **adapter-relative functional
 K1 counterexamples** at the primary cadence and horizon. It yields no registered
@@ -113,8 +122,8 @@ a coarse physical controller, its tracking diagnostic is local, its cost ratios
 are model assumptions, and its background is not microscopic thermal physics.
 Those scope limits were registered before the run.
 
-The next useful diagnostic is the temporal crossover profile on these fixed
-pairs, under a separate registration. The next K2 model must separate an
+The temporal crossover profile on these fixed pairs was subsequently completed
+under a separate registration. The next K2 model must separate an
 external narrowing detector from signal-induced downstream narrowing while
 also providing a functional tracking comparator. W3 sensitivity design and W4
 domination remain unimplemented. Neither should be silently appended to this

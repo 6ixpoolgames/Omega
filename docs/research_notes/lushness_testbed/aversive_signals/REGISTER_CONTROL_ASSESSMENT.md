@@ -115,11 +115,16 @@ by these minimal controllers.
 
 ## Next physical boundary
 
-B_X should add costed movement between genuinely different resource patches,
-so register variation can alter access rather than only consume the common
-energy store. A maintained resource prescription is needed if a sustained-rate
-question is intended; the current mortal fixture cannot supply it. This is a
-separate new module, not a redefinition of B_R or a post-hoc repair of this batch.
+The subsequent [exploration](../exploration/RESULTS.md) batch added costed
+movement between resource patches. The [paid-sensing](../paid_sensing/RESULTS.md)
+batch then isolated informative from stock-independent writing, and the
+[renewal](../renewal/RESULTS.md) batch added ongoing physical operation. These
+are separate modules and laws, preserving this batch and its adverse findings.
+Its common mortality tail limits these comparisons to offsets, without implying
+that maintained variation or information cannot contribute a continuing rate.
+The15October interpretation follows the Drive revision posture: local physical
+mechanism evidence, not an interpersonal ethical verdict. See the
+[cross-run synthesis](../INTERPRETATION_SYNTHESIS_2026-10-15.md).
 Distinct effort bills and graded register levels are documented separately in
 REGISTER_EXTENSION_ROADMAP.md and require their own freezes.
 
