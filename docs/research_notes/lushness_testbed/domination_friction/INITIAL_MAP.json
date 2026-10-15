@@ -1,0 +1,406 @@
+{
+  "status": "initial mechanism map",
+  "scope": "24 fixed cases, two source supplies and two complementarity levels; not the full phi/cost/region sweep",
+  "cases": [
+    {
+      "id": "s0.04-k0-idle",
+      "parameters": {
+        "supply": 0.04,
+        "kappa": 0.0
+      },
+      "policy": {
+        "phi": 0
+      },
+      "roots": [
+        "device_present",
+        "ordinary_preparation",
+        "unassembled_preparation"
+      ]
+    },
+    {
+      "id": "s0.04-k0-access-block",
+      "parameters": {
+        "supply": 0.04,
+        "kappa": 0.0
+      },
+      "policy": {
+        "mode": "blocking",
+        "direction": "entry",
+        "region": [
+          0
+        ],
+        "phi": 0.5,
+        "cost": 1
+      },
+      "reference_id": "s0.04-k0-idle"
+    },
+    {
+      "id": "s0.04-k0-access-steer",
+      "parameters": {
+        "supply": 0.04,
+        "kappa": 0.0
+      },
+      "policy": {
+        "mode": "steering",
+        "direction": "entry",
+        "region": [
+          0
+        ],
+        "phi": 0.5,
+        "cost": 1
+      },
+      "reference_id": "s0.04-k0-idle"
+    },
+    {
+      "id": "s0.04-k0-construction-block",
+      "parameters": {
+        "supply": 0.04,
+        "kappa": 0.0
+      },
+      "policy": {
+        "mode": "blocking",
+        "direction": "entry",
+        "region": [
+          1
+        ],
+        "phi": 0.5,
+        "cost": 1
+      },
+      "reference_id": "s0.04-k0-idle"
+    },
+    {
+      "id": "s0.04-k0-trap-entry-steer",
+      "parameters": {
+        "supply": 0.04,
+        "kappa": 0.0
+      },
+      "policy": {
+        "mode": "steering",
+        "direction": "entry",
+        "region": [
+          2
+        ],
+        "phi": 0.5,
+        "cost": 1
+      },
+      "reference_id": "s0.04-k0-idle"
+    },
+    {
+      "id": "s0.04-k0-trap-exit-steer",
+      "parameters": {
+        "supply": 0.04,
+        "kappa": 0.0
+      },
+      "policy": {
+        "mode": "steering",
+        "direction": "exit",
+        "region": [
+          2
+        ],
+        "phi": 0.5,
+        "cost": 1
+      },
+      "reference_id": "s0.04-k0-idle"
+    },
+    {
+      "id": "s0.04-k1-idle",
+      "parameters": {
+        "supply": 0.04,
+        "kappa": 1.0
+      },
+      "policy": {
+        "phi": 0
+      },
+      "roots": [
+        "device_present",
+        "ordinary_preparation",
+        "unassembled_preparation"
+      ]
+    },
+    {
+      "id": "s0.04-k1-access-block",
+      "parameters": {
+        "supply": 0.04,
+        "kappa": 1.0
+      },
+      "policy": {
+        "mode": "blocking",
+        "direction": "entry",
+        "region": [
+          0
+        ],
+        "phi": 0.5,
+        "cost": 1
+      },
+      "reference_id": "s0.04-k1-idle"
+    },
+    {
+      "id": "s0.04-k1-access-steer",
+      "parameters": {
+        "supply": 0.04,
+        "kappa": 1.0
+      },
+      "policy": {
+        "mode": "steering",
+        "direction": "entry",
+        "region": [
+          0
+        ],
+        "phi": 0.5,
+        "cost": 1
+      },
+      "reference_id": "s0.04-k1-idle"
+    },
+    {
+      "id": "s0.04-k1-construction-block",
+      "parameters": {
+        "supply": 0.04,
+        "kappa": 1.0
+      },
+      "policy": {
+        "mode": "blocking",
+        "direction": "entry",
+        "region": [
+          1
+        ],
+        "phi": 0.5,
+        "cost": 1
+      },
+      "reference_id": "s0.04-k1-idle"
+    },
+    {
+      "id": "s0.04-k1-trap-entry-steer",
+      "parameters": {
+        "supply": 0.04,
+        "kappa": 1.0
+      },
+      "policy": {
+        "mode": "steering",
+        "direction": "entry",
+        "region": [
+          2
+        ],
+        "phi": 0.5,
+        "cost": 1
+      },
+      "reference_id": "s0.04-k1-idle"
+    },
+    {
+      "id": "s0.04-k1-trap-exit-steer",
+      "parameters": {
+        "supply": 0.04,
+        "kappa": 1.0
+      },
+      "policy": {
+        "mode": "steering",
+        "direction": "exit",
+        "region": [
+          2
+        ],
+        "phi": 0.5,
+        "cost": 1
+      },
+      "reference_id": "s0.04-k1-idle"
+    },
+    {
+      "id": "s0.12-k0-idle",
+      "parameters": {
+        "supply": 0.12,
+        "kappa": 0.0
+      },
+      "policy": {
+        "phi": 0
+      },
+      "roots": [
+        "device_present",
+        "ordinary_preparation",
+        "unassembled_preparation"
+      ]
+    },
+    {
+      "id": "s0.12-k0-access-block",
+      "parameters": {
+        "supply": 0.12,
+        "kappa": 0.0
+      },
+      "policy": {
+        "mode": "blocking",
+        "direction": "entry",
+        "region": [
+          0
+        ],
+        "phi": 0.5,
+        "cost": 1
+      },
+      "reference_id": "s0.12-k0-idle"
+    },
+    {
+      "id": "s0.12-k0-access-steer",
+      "parameters": {
+        "supply": 0.12,
+        "kappa": 0.0
+      },
+      "policy": {
+        "mode": "steering",
+        "direction": "entry",
+        "region": [
+          0
+        ],
+        "phi": 0.5,
+        "cost": 1
+      },
+      "reference_id": "s0.12-k0-idle"
+    },
+    {
+      "id": "s0.12-k0-construction-block",
+      "parameters": {
+        "supply": 0.12,
+        "kappa": 0.0
+      },
+      "policy": {
+        "mode": "blocking",
+        "direction": "entry",
+        "region": [
+          1
+        ],
+        "phi": 0.5,
+        "cost": 1
+      },
+      "reference_id": "s0.12-k0-idle"
+    },
+    {
+      "id": "s0.12-k0-trap-entry-steer",
+      "parameters": {
+        "supply": 0.12,
+        "kappa": 0.0
+      },
+      "policy": {
+        "mode": "steering",
+        "direction": "entry",
+        "region": [
+          2
+        ],
+        "phi": 0.5,
+        "cost": 1
+      },
+      "reference_id": "s0.12-k0-idle"
+    },
+    {
+      "id": "s0.12-k0-trap-exit-steer",
+      "parameters": {
+        "supply": 0.12,
+        "kappa": 0.0
+      },
+      "policy": {
+        "mode": "steering",
+        "direction": "exit",
+        "region": [
+          2
+        ],
+        "phi": 0.5,
+        "cost": 1
+      },
+      "reference_id": "s0.12-k0-idle"
+    },
+    {
+      "id": "s0.12-k1-idle",
+      "parameters": {
+        "supply": 0.12,
+        "kappa": 1.0
+      },
+      "policy": {
+        "phi": 0
+      },
+      "roots": [
+        "device_present",
+        "ordinary_preparation",
+        "unassembled_preparation"
+      ]
+    },
+    {
+      "id": "s0.12-k1-access-block",
+      "parameters": {
+        "supply": 0.12,
+        "kappa": 1.0
+      },
+      "policy": {
+        "mode": "blocking",
+        "direction": "entry",
+        "region": [
+          0
+        ],
+        "phi": 0.5,
+        "cost": 1
+      },
+      "reference_id": "s0.12-k1-idle"
+    },
+    {
+      "id": "s0.12-k1-access-steer",
+      "parameters": {
+        "supply": 0.12,
+        "kappa": 1.0
+      },
+      "policy": {
+        "mode": "steering",
+        "direction": "entry",
+        "region": [
+          0
+        ],
+        "phi": 0.5,
+        "cost": 1
+      },
+      "reference_id": "s0.12-k1-idle"
+    },
+    {
+      "id": "s0.12-k1-construction-block",
+      "parameters": {
+        "supply": 0.12,
+        "kappa": 1.0
+      },
+      "policy": {
+        "mode": "blocking",
+        "direction": "entry",
+        "region": [
+          1
+        ],
+        "phi": 0.5,
+        "cost": 1
+      },
+      "reference_id": "s0.12-k1-idle"
+    },
+    {
+      "id": "s0.12-k1-trap-entry-steer",
+      "parameters": {
+        "supply": 0.12,
+        "kappa": 1.0
+      },
+      "policy": {
+        "mode": "steering",
+        "direction": "entry",
+        "region": [
+          2
+        ],
+        "phi": 0.5,
+        "cost": 1
+      },
+      "reference_id": "s0.12-k1-idle"
+    },
+    {
+      "id": "s0.12-k1-trap-exit-steer",
+      "parameters": {
+        "supply": 0.12,
+        "kappa": 1.0
+      },
+      "policy": {
+        "mode": "steering",
+        "direction": "exit",
+        "region": [
+          2
+        ],
+        "phi": 0.5,
+        "cost": 1
+      },
+      "reference_id": "s0.12-k1-idle"
+    }
+  ]
+}

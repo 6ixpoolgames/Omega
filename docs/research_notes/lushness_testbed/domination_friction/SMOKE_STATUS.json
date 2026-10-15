@@ -1,0 +1,147 @@
+{
+  "cases": [
+    {
+      "configuration": {
+        "cadences": [
+          0.25
+        ],
+        "caps": {
+          "memory": 536870912,
+          "output_cap": 33554432,
+          "seconds": 120
+        },
+        "horizons": [
+          16,
+          64
+        ],
+        "id": "validation-1024",
+        "max_kernel_bytes": 167772160,
+        "mode": "smoke",
+        "parameters": {
+          "charge_capacity": 1
+        },
+        "policy": {
+          "phi": 0
+        },
+        "roots": [
+          "device_present"
+        ]
+      },
+      "id": "validation-1024",
+      "identity": "98e4915bc148ad81200cf4f5dffadcd75ca45f3f451088e1a59137cf273076ed",
+      "profile": {
+        "cap_reason": null,
+        "exit_code": 0,
+        "input_hash": "60dc400581f254c49dd30586582a50e5b7de15a277f52b1a0dc2f62917a68a2d",
+        "job_memory_cap_bytes": 536870912,
+        "output_bytes": 514389,
+        "peak_job_bytes": 192155648,
+        "wall_cap_seconds": 120,
+        "wall_seconds": 1.9512178000295535
+      },
+      "result_sha256": "d93c6eb0061207b239b0588667578df385a1e625bfaa34e49d793b5e6ed1e044",
+      "run": "C:\\Users\\paolo\\Documents\\ChatGPT\\Test\\Omega\\results\\local_runs\\lushness_testbed\\domination_friction\\98e4915bc148-20261014T231454445348Z",
+      "status": "complete"
+    },
+    {
+      "configuration": {
+        "cadences": [
+          0.25
+        ],
+        "caps": {
+          "memory": 536870912,
+          "output_cap": 33554432,
+          "seconds": 120
+        },
+        "horizons": [
+          16,
+          64,
+          256,
+          1024
+        ],
+        "id": "blocking-2304",
+        "max_kernel_bytes": 167772160,
+        "mode": "smoke",
+        "parameters": {},
+        "policy": {
+          "cost": 1,
+          "direction": "entry",
+          "mode": "blocking",
+          "region": [
+            0
+          ]
+        },
+        "roots": [
+          "device_present"
+        ]
+      },
+      "id": "blocking-2304",
+      "identity": "9b2bc8c18d6cdfa2ef43a9f843e1be9cc0a9c3ab4edb903c22c46f1dd2a6d67d",
+      "profile": {
+        "cap_reason": null,
+        "exit_code": 0,
+        "input_hash": "ad3e3db63803f92d79fbad752282d54cd86fcc03cc71f08adbbde17b59b17aa0",
+        "job_memory_cap_bytes": 536870912,
+        "output_bytes": 529262,
+        "peak_job_bytes": 378114048,
+        "wall_cap_seconds": 120,
+        "wall_seconds": 8.66951480001444
+      },
+      "result_sha256": "7412f1386618072e202c11901005899d0945539f2b06979837220d165908ae5b",
+      "run": "C:\\Users\\paolo\\Documents\\ChatGPT\\Test\\Omega\\results\\local_runs\\lushness_testbed\\domination_friction\\9b2bc8c18d6c-20261014T231456753895Z",
+      "status": "complete"
+    },
+    {
+      "configuration": {
+        "cadences": [
+          0.25
+        ],
+        "caps": {
+          "memory": 536870912,
+          "output_cap": 33554432,
+          "seconds": 120
+        },
+        "horizons": [
+          16,
+          64,
+          256,
+          1024
+        ],
+        "id": "steering-2304",
+        "max_kernel_bytes": 167772160,
+        "mode": "smoke",
+        "parameters": {
+          "kappa": 1.0
+        },
+        "policy": {
+          "cost": 1,
+          "direction": "exit",
+          "mode": "steering",
+          "region": [
+            2
+          ]
+        },
+        "roots": [
+          "device_present"
+        ]
+      },
+      "id": "steering-2304",
+      "identity": "67448b06dac6d70909202fb4f57cc990ffc7f2ca588131a439218911f7452516",
+      "profile": {
+        "cap_reason": null,
+        "exit_code": 0,
+        "input_hash": "4131bf79412d762c16038a7545bfa8f84813140cc937d88d67d297cb92f35275",
+        "job_memory_cap_bytes": 536870912,
+        "output_bytes": 529307,
+        "peak_job_bytes": 378949632,
+        "wall_cap_seconds": 120,
+        "wall_seconds": 8.576051299984101
+      },
+      "result_sha256": "fc3c6c8582457fbdc857d9f55bb3a508ae3b512830ce329935e70ae4e5894ee2",
+      "run": "C:\\Users\\paolo\\Documents\\ChatGPT\\Test\\Omega\\results\\local_runs\\lushness_testbed\\domination_friction\\67448b06dac6-20261014T231505757958Z",
+      "status": "complete"
+    }
+  ],
+  "mode": "smoke",
+  "status": "complete"
+}
