@@ -82,8 +82,45 @@ def first_passage(Q, initial, mask, horizon):
     return float(1-mass)
 
 
+def two_observation_rows(P, groups, future):
+    """Joint law of Y1,Y2 conditional on X0; no history pruning.
+
+    Its conditional entropy H(Y2|Y1,X0) tightens the one-observation lower
+    bound. Pooling this law by Y0 yields an upper bound conditioned on two
+    actual observations, without assuming their process is Markov.
+    """
+    n, g = future.shape
+    joint = np.empty((n, g, g))
+    for y in range(g):
+        mask = groups == y
+        joint[:, y, :] = P[:, mask] @ future[mask]
+    conditional = np.divide(joint, future[:, :, None], out=np.zeros_like(joint),
+                            where=future[:, :, None] > 0)
+    rows = np.sum(future*entropy_rows(conditional), axis=1)
+    if max(abs(joint.sum(axis=(1, 2))-1)) > 1e-9:
+        raise ArithmeticError('Two-observation probability mass failed')
+    return joint, rows
+
+
+def two_observation_bounds(groups, joint, rows, occupation_before_last,
+                           first_entropy, previous):
+    pooled = np.zeros((joint.shape[1], joint.shape[1], joint.shape[1]))
+    np.add.at(pooled, groups, occupation_before_last[:, None, None]*joint)
+    weights = pooled.sum(axis=2)
+    conditional = np.divide(pooled, weights[:, :, None], out=np.zeros_like(pooled),
+                            where=weights[:, :, None] > 0)
+    lower = max(previous['lower_bits'], float(first_entropy+occupation_before_last @ rows))
+    upper = min(previous['upper_bits'], float(first_entropy+np.sum(weights*entropy_rows(conditional))))
+    if lower > upper+1e-7:
+        raise ArithmeticError('Two-observation bounds inverted')
+    return {'lower_bits': lower, 'upper_bits': max(lower, upper),
+            'method': 'two-observation conditioning, intersected with one-observation bounds',
+            'one_observation_bounds': {k: previous[k] for k in ('lower_bits', 'upper_bits')},
+            'projected_process_assumed_markov': False}
+
+
 def profile(compiled, roots, cadences=(.125, .25, .5), horizons=(16, 64, 256, 1024),
-            max_kernel_bytes=160*1024**2):
+            max_kernel_bytes=160*1024**2, subject_depth=1):
     states, Q = compiled['states'], compiled['Q']
     solver = ClassQueries(Q)
     if len(solver.classes) != 1 or len(solver.transient):
@@ -126,6 +163,10 @@ def profile(compiled, roots, cadences=(.125, .25, .5), horizons=(16, 64, 256, 10
                                 ('background', B_FIELDS), ('DB', D_FIELDS+B_FIELDS),
                                 ('SB', S_FIELDS+B_FIELDS)):
             projections[subject] = projected_rows(P, states, fields)
+        if subject_depth not in (1, 2):
+            raise ValueError('Supported certified subject depths: 1 or 2')
+        tighter = {subject: two_observation_rows(P, *projections[subject][:2])
+                   for subject in ('D', 'S')} if subject_depth == 2 else {}
         row = {'profiles': {}, 'limiting_rate': sampled['class_rates'][0],
                'poisson_residual': sampled['poisson_residual'],
                'kernel_diagnostics': sampled['kernel_diagnostics']}
@@ -139,6 +180,14 @@ def profile(compiled, roots, cadences=(.125, .25, .5), horizons=(16, 64, 256, 10
                 full = float(solver.finite(sampled, time)[root])
                 subjects = {subject: projection_bounds(*projections[subject], occupations, full)
                             for subject in ('D', 'S', 'DS')}
+                if tighter:
+                    start = np.zeros(len(states))
+                    start[root] = 1.
+                    before_last = occupations-expm_multiply(Q.T*(time-cadence), start)
+                    for subject, (joint, lower_rows) in tighter.items():
+                        groups, _, single_rows = projections[subject]
+                        subjects[subject] = two_observation_bounds(
+                            groups, joint, lower_rows, before_last, single_rows[root], subjects[subject])
                 d, s, ds = (subjects[x] for x in ('D', 'S', 'DS'))
                 mi = {'lower_bits': max(0., d['lower_bits']+s['lower_bits']-ds['upper_bits']),
                       'upper_bits': min(d['upper_bits'], s['upper_bits'],

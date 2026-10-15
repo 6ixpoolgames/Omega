@@ -4,7 +4,15 @@
 Revised interpretations are labeled explicitly; original numerical outputs and
 forecast checklists remain available as provenance.
 
-Latest implemented experiment: [embodied friction on access](domination_friction/RESULTS.md),
+Latest completed expansion: [constraint Stage A — 470-case map](domination_stage_a/RESULTS.md),
+with [structural interpretation](domination_stage_a/INTERPRETATION.md),
+[implemented revisions](domination_stage_a/SPECIFICATION.md), and
+[reproduction](domination_stage_a/REPRODUCE.md). Paid whole-field choices favor
+trap avoidance; tighter subject bounds expose private/global conflicts at T256.
+Confinement has strength crossings, and a conservative field reproduces the
+access/trap distinction. Finite histories remain primary; rates are diagnostics.
+
+The preceding [embodied friction on access](domination_friction/RESULTS.md),
 with [structural interpretation](domination_friction/INTERPRETATION.md) and
 [physical model](domination_friction/MODEL.md). The first24-case map distinguishes
 resource/construction exclusion, trap confinement and steering away from the
@@ -150,3 +158,42 @@ General caching, eviction, indexing and larger optimizer classes remain open.
 Generated outputs will live under the already ignored
 `results/local_runs/lushness_testbed/`. Source, specifications and compact retained
 evidence stay separate. Nothing is committed or pushed without user instruction.
+
+## Fractional costs, discovery and Stage A follow-ups (15 October)
+
+The [B1 specification](domination_b1/SPECIFICATION.md) adds an exact fractional
+energy bank, paid physical discovery, an ordinary-agent law swap and paid sham
+actuation. The [updated follow-up interpretation](domination_b1/FOLLOWUP_INTERPRETATION.md)
+reports the completed activity/swap controls. [Additional Stage A summaries](domination_stage_a/UPDATED_FOLLOWUPS.md)
+cover the 297 S/global disagreements, 39 stable crossings and descriptive
+matched-fuel random-route controls. [C5 status](domination_b1/C5_STATUS.md)
+identifies the remaining appropriation/agency questions. All 28 fractional-cost
+and discovery cases are complete and verified: [results](domination_b1/RESULTS.md),
+[interpretation](domination_b1/INTERPRETATION.md). No dense kernels are retained
+or published. The [next mechanism design](domination_b1/NEXT_C5_MECHANISM.md)
+includes the user's ten-subject-units-per-controller population extension.
+
+The [completed priority C5 comparison](domination_b1/C5_RESULTS.md) resolves D-positive, S-negative and whole-negative rankings through T1024 across all tested clocks. The full discovery frontier remains separately tracked.
+
+## Corrected steering and matched exchange (15 October)
+
+Both new maps are complete: sixteen movement-only steering cases and eight
+finite-window matched-transfer cases. The [interpretation](continuation_controls/INTERPRETATION.md)
+separates exchange volume from net directional flow and records the absence of
+a steering sign crossing in the tested yield range. See the full
+[steering map](continuation_controls/steering/RESULTS.md),
+[flow map](continuation_controls/flow/RESULTS.md),
+[specification](continuation_controls/SPECIFICATION.md) and
+[reproduction record](continuation_controls/REPRODUCE.md). These are new physical
+adapter comparisons; the earlier unmatched rankings remain available.
+
+## Paid extraction module (15 October)
+
+The [resource-transfer module](resource_transfer/SPECIFICATION.md) adds embodied,
+paired and costed extraction without a population expansion. Its twelve-case
+map is complete and verified: [results](resource_transfer/RESULTS.md),
+[interpretation](resource_transfer/INTERPRETATION.md),
+[reproduction](resource_transfer/REPRODUCE.md). Extraction can give D a positive
+material return, while S's reduced stocks/function coexist with greater S and
+whole-field history breadth. The nominal cooperation pair runs in reverse on
+net in this regime, so it is not evidence about successful cooperative donation.

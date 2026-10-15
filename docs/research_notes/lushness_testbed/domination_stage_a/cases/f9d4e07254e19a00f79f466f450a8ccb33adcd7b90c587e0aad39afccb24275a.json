@@ -1,0 +1,1255 @@
+{
+  "analysis_seconds": 24.538747999991756,
+  "build_seconds": 1.0793973000254482,
+  "cadences": {
+    "0.125": {
+      "kernel_diagnostics": {
+        "kernel_mass": 7.105427357601002e-15,
+        "negative_probability": 0.0
+      },
+      "limiting_rate": 3.4134576975555952,
+      "poisson_residual": 3.795391778638191e-11,
+      "profiles": {
+        "device_present": {
+          "1024": {
+            "coordinate_orders": {
+              "background,D,S": {
+                "D": 1612.2184094499114,
+                "S": 1465.1795862760036,
+                "background": 529.8397176710162
+              },
+              "background,S,D": {
+                "D": 1610.5328396688196,
+                "S": 1466.8651560570954,
+                "background": 529.8397176710162
+              }
+            },
+            "coordinate_shares_are_not_subject_objectives": true,
+            "global_bits": 3607.237713396931,
+            "global_numerical_allowance": 4.109184945060406e-07,
+            "intertwining_bounds": {
+              "definition": "I(D history; S history | common exact initial frame)",
+              "joint_DS_excludes_background": true,
+              "lower_bits": 0.0,
+              "upper_bits": 15.846416095389031
+            },
+            "sampled_occupation_residual": 7.51892444790167e-13,
+            "subjects": {
+              "D": {
+                "lower_bits": 1679.9381342176378,
+                "method": "two-observation conditioning, intersected with one-observation bounds",
+                "one_observation_bounds": {
+                  "lower_bits": 1679.4515261556553,
+                  "upper_bits": 1687.2090824773684
+                },
+                "projected_process_assumed_markov": false,
+                "upper_bits": 1687.1104408678643
+              },
+              "DS": {
+                "lower_bits": 3212.4729886152186,
+                "method": "full-hidden-state conditioning lower / averaged projected conditional upper",
+                "projected_process_assumed_markov": false,
+                "upper_bits": 3225.7976477610828
+              },
+              "S": {
+                "lower_bits": 1533.5614909836675,
+                "method": "two-observation conditioning, intersected with one-observation bounds",
+                "one_observation_bounds": {
+                  "lower_bits": 1533.0875916120353,
+                  "upper_bits": 1541.308175418034
+                },
+                "projected_process_assumed_markov": false,
+                "upper_bits": 1541.2089638427433
+              }
+            }
+          },
+          "16": {
+            "coordinate_orders": {
+              "background,D,S": {
+                "D": 41.27508619887004,
+                "S": 34.43341215366447,
+                "background": 18.720402854441755
+              },
+              "background,S,D": {
+                "D": 40.65094643896759,
+                "S": 35.057551913566925,
+                "background": 18.720402854441755
+              }
+            },
+            "coordinate_shares_are_not_subject_objectives": true,
+            "global_bits": 94.42890120697626,
+            "global_numerical_allowance": 1.0485810147665688e-07,
+            "intertwining_bounds": {
+              "definition": "I(D history; S history | common exact initial frame)",
+              "joint_DS_excludes_background": true,
+              "lower_bits": 0.0,
+              "upper_bits": 1.2289485070775612
+            },
+            "sampled_occupation_residual": 3.5290520505881773e-13,
+            "subjects": {
+              "D": {
+                "lower_bits": 46.2472216884887,
+                "method": "two-observation conditioning, intersected with one-observation bounds",
+                "one_observation_bounds": {
+                  "lower_bits": 46.17908068992898,
+                  "upper_bits": 46.84590983927915
+                },
+                "projected_process_assumed_markov": false,
+                "upper_bits": 46.8362160921354
+              },
+              "DS": {
+                "lower_bits": 84.97802942640517,
+                "method": "full-hidden-state conditioning lower / averaged projected conditional upper",
+                "projected_process_assumed_markov": false,
+                "upper_bits": 85.85888982712879
+              },
+              "S": {
+                "lower_bits": 38.875911302831646,
+                "method": "two-observation conditioning, intersected with one-observation bounds",
+                "one_observation_bounds": {
+                  "lower_bits": 38.8217580430561,
+                  "upper_bits": 39.37903565032351
+                },
+                "projected_process_assumed_markov": false,
+                "upper_bits": 39.37076184134733
+              }
+            }
+          },
+          "256": {
+            "coordinate_orders": {
+              "background,D,S": {
+                "D": 440.96194301238586,
+                "S": 389.6695363988953,
+                "background": 150.29562638881382
+              },
+              "background,S,D": {
+                "D": 439.9857700302905,
+                "S": 390.64570938099064,
+                "background": 150.29562638881382
+              }
+            },
+            "coordinate_shares_are_not_subject_objectives": true,
+            "global_bits": 980.927105800095,
+            "global_numerical_allowance": 1.7772962362651014e-07,
+            "intertwining_bounds": {
+              "definition": "I(D history; S history | common exact initial frame)",
+              "joint_DS_excludes_background": true,
+              "lower_bits": 0.0,
+              "upper_bits": 5.989705478214432
+            },
+            "sampled_occupation_residual": 6.922133561335954e-13,
+            "subjects": {
+              "D": {
+                "lower_bits": 464.1169997210271,
+                "method": "two-observation conditioning, intersected with one-observation bounds",
+                "one_observation_bounds": {
+                  "lower_bits": 463.91030071378987,
+                  "upper_bits": 466.9009840348526
+                },
+                "projected_process_assumed_markov": false,
+                "upper_bits": 466.8628712253409
+              },
+              "DS": {
+                "lower_bits": 875.7840216699885,
+                "method": "full-hidden-state conditioning lower / averaged projected conditional upper",
+                "projected_process_assumed_markov": false,
+                "upper_bits": 880.4889643208655
+              },
+              "S": {
+                "lower_bits": 412.10175070744776,
+                "method": "two-observation conditioning, intersected with one-observation bounds",
+                "one_observation_bounds": {
+                  "lower_bits": 411.91367759185414,
+                  "upper_bits": 414.9461063423098
+                },
+                "projected_process_assumed_markov": false,
+                "upper_bits": 414.9108559228621
+              }
+            }
+          },
+          "64": {
+            "coordinate_orders": {
+              "background,D,S": {
+                "D": 134.74453171980696,
+                "S": 114.28286677929376,
+                "background": 49.735189521463255
+              },
+              "background,S,D": {
+                "D": 133.99275434276268,
+                "S": 115.03464415633802,
+                "background": 49.735189521463255
+              }
+            },
+            "coordinate_shares_are_not_subject_objectives": true,
+            "global_bits": 298.76258802056395,
+            "global_numerical_allowance": 1.1943240590662753e-07,
+            "intertwining_bounds": {
+              "definition": "I(D history; S history | common exact initial frame)",
+              "joint_DS_excludes_background": true,
+              "lower_bits": 0.0,
+              "upper_bits": 2.773134514306207
+            },
+            "sampled_occupation_residual": 7.38495419330687e-13,
+            "subjects": {
+              "D": {
+                "lower_bits": 144.92487278647357,
+                "method": "two-observation conditioning, intersected with one-observation bounds",
+                "one_observation_bounds": {
+                  "lower_bits": 144.808483729128,
+                  "upper_bits": 146.25355852375523
+                },
+                "projected_process_assumed_markov": false,
+                "upper_bits": 146.23453566189832
+              },
+              "DS": {
+                "lower_bits": 268.1372386376147,
+                "method": "full-hidden-state conditioning lower / averaged projected conditional upper",
+                "projected_process_assumed_markov": false,
+                "upper_bits": 270.19333040484514
+              },
+              "S": {
+                "lower_bits": 123.45557975585506,
+                "method": "two-observation conditioning, intersected with one-observation bounds",
+                "one_observation_bounds": {
+                  "lower_bits": 123.35869517864938,
+                  "upper_bits": 124.69151815531427
+                },
+                "projected_process_assumed_markov": false,
+                "upper_bits": 124.67583749002259
+              }
+            }
+          }
+        }
+      }
+    },
+    "0.25": {
+      "kernel_diagnostics": {
+        "kernel_mass": 6.5503158452884236e-15,
+        "negative_probability": 0.0
+      },
+      "limiting_rate": 2.9598546687445992,
+      "poisson_residual": 9.697131986285967e-12,
+      "profiles": {
+        "device_present": {
+          "1024": {
+            "coordinate_orders": {
+              "background,D,S": {
+                "D": 1401.3201195651263,
+                "S": 1271.4986393995987,
+                "background": 454.1355070309218
+              },
+              "background,S,D": {
+                "D": 1399.6280266022886,
+                "S": 1273.1907323624364,
+                "background": 454.1355070309218
+              }
+            },
+            "coordinate_shares_are_not_subject_objectives": true,
+            "global_bits": 3126.954265995647,
+            "global_numerical_allowance": 1.3971945261582732e-07,
+            "intertwining_bounds": {
+              "definition": "I(D history; S history | common exact initial frame)",
+              "joint_DS_excludes_background": true,
+              "lower_bits": 0.0,
+              "upper_bits": 14.922432735203984
+            },
+            "sampled_occupation_residual": 3.021209103476908e-12,
+            "subjects": {
+              "D": {
+                "lower_bits": 1455.3452386655658,
+                "method": "two-observation conditioning, intersected with one-observation bounds",
+                "one_observation_bounds": {
+                  "lower_bits": 1454.5056612549154,
+                  "upper_bits": 1461.8541675014562
+                },
+                "projected_process_assumed_markov": false,
+                "upper_bits": 1461.6798124858574
+              },
+              "DS": {
+                "lower_bits": 2780.24143826033,
+                "method": "full-hidden-state conditioning lower / averaged projected conditional upper",
+                "projected_process_assumed_markov": false,
+                "upper_bits": 2792.849532580495
+              },
+              "S": {
+                "lower_bits": 1326.6771883269707,
+                "method": "two-observation conditioning, intersected with one-observation bounds",
+                "one_observation_bounds": {
+                  "lower_bits": 1325.8566591016684,
+                  "upper_bits": 1333.6590167247984
+                },
+                "projected_process_assumed_markov": false,
+                "upper_bits": 1333.484058509677
+              }
+            }
+          },
+          "16": {
+            "coordinate_orders": {
+              "background,D,S": {
+                "D": 35.85090885910192,
+                "S": 29.936575487922582,
+                "background": 15.393880383842147
+              },
+              "background,S,D": {
+                "D": 35.24348975164554,
+                "S": 30.54399459537896,
+                "background": 15.393880383842147
+              }
+            },
+            "coordinate_shares_are_not_subject_objectives": true,
+            "global_bits": 81.18136473086665,
+            "global_numerical_allowance": 1.006206164471223e-07,
+            "intertwining_bounds": {
+              "definition": "I(D history; S history | common exact initial frame)",
+              "joint_DS_excludes_background": true,
+              "lower_bits": 0.0,
+              "upper_bits": 1.147422261637459
+            },
+            "sampled_occupation_residual": 2.537331672894383e-12,
+            "subjects": {
+              "D": {
+                "lower_bits": 39.6410147632084,
+                "method": "two-observation conditioning, intersected with one-observation bounds",
+                "one_observation_bounds": {
+                  "lower_bits": 39.528199123287564,
+                  "upper_bits": 40.14744985178076
+                },
+                "projected_process_assumed_markov": false,
+                "upper_bits": 40.13023795285551
+              },
+              "DS": {
+                "lower_bits": 72.87521727402478,
+                "method": "full-hidden-state conditioning lower / averaged projected conditional upper",
+                "projected_process_assumed_markov": false,
+                "upper_bits": 73.69551678585913
+              },
+              "S": {
+                "lower_bits": 33.478298936210045,
+                "method": "two-observation conditioning, intersected with one-observation bounds",
+                "one_observation_bounds": {
+                  "lower_bits": 33.38866671941495,
+                  "upper_bits": 33.90654488997952
+                },
+                "projected_process_assumed_markov": false,
+                "upper_bits": 33.89240158280673
+              }
+            }
+          },
+          "256": {
+            "coordinate_orders": {
+              "background,D,S": {
+                "D": 383.30436601544284,
+                "S": 338.44336011581646,
+                "background": 127.8693682471841
+              },
+              "background,S,D": {
+                "D": 382.33691398045585,
+                "S": 339.4108121508035,
+                "background": 127.8693682471841
+              }
+            },
+            "coordinate_shares_are_not_subject_objectives": true,
+            "global_bits": 849.6170943784434,
+            "global_numerical_allowance": 1.0992986315395683e-07,
+            "intertwining_bounds": {
+              "definition": "I(D history; S history | common exact initial frame)",
+              "joint_DS_excludes_background": true,
+              "lower_bits": 0.0,
+              "upper_bits": 5.640091837443492
+            },
+            "sampled_occupation_residual": 3.0214047884165145e-12,
+            "subjects": {
+              "D": {
+                "lower_bits": 401.5582500873075,
+                "method": "two-observation conditioning, intersected with one-observation bounds",
+                "one_observation_bounds": {
+                  "lower_bits": 401.20534150924277,
+                  "upper_bits": 404.0298677770086
+                },
+                "projected_process_assumed_markov": false,
+                "upper_bits": 403.9624675836662
+              },
+              "DS": {
+                "lower_bits": 757.2696417830606,
+                "method": "full-hidden-state conditioning lower / averaged projected conditional upper",
+                "projected_process_assumed_markov": false,
+                "upper_bits": 761.7089905180048
+              },
+              "S": {
+                "lower_bits": 356.45982459627805,
+                "method": "two-observation conditioning, intersected with one-observation bounds",
+                "one_observation_bounds": {
+                  "lower_bits": 356.13729028674015,
+                  "upper_bits": 359.0089698865883
+                },
+                "projected_process_assumed_markov": false,
+                "upper_bits": 358.94726603683796
+              }
+            }
+          },
+          "64": {
+            "coordinate_orders": {
+              "background,D,S": {
+                "D": 117.01377860429561,
+                "S": 99.29406347410372,
+                "background": 41.71282184854125
+              },
+              "background,S,D": {
+                "D": 116.27599615976806,
+                "S": 100.03184591863128,
+                "background": 41.71282184854125
+              }
+            },
+            "coordinate_shares_are_not_subject_objectives": true,
+            "global_bits": 258.0206639269406,
+            "global_numerical_allowance": 1.024824657884892e-07,
+            "intertwining_bounds": {
+              "definition": "I(D history; S history | common exact initial frame)",
+              "joint_DS_excludes_background": true,
+              "lower_bits": 0.0,
+              "upper_bits": 2.6061855301835806
+            },
+            "sampled_occupation_residual": 2.9278353016765762e-12,
+            "subjects": {
+              "D": {
+                "lower_bits": 124.91064603770977,
+                "method": "two-observation conditioning, intersected with one-observation bounds",
+                "one_observation_bounds": {
+                  "lower_bits": 124.71452699151455,
+                  "upper_bits": 126.07164268181427
+                },
+                "projected_process_assumed_markov": false,
+                "upper_bits": 126.03795568077169
+              },
+              "DS": {
+                "lower_bits": 231.12359350810672,
+                "method": "full-hidden-state conditioning lower / averaged projected conditional upper",
+                "projected_process_assumed_markov": false,
+                "upper_bits": 233.0546485040315
+              },
+              "S": {
+                "lower_bits": 106.62753759210264,
+                "method": "two-observation conditioning, intersected with one-observation bounds",
+                "one_observation_bounds": {
+                  "lower_bits": 106.46373108355026,
+                  "upper_bits": 107.71894966594077
+                },
+                "projected_process_assumed_markov": false,
+                "upper_bits": 107.69182335751863
+              }
+            }
+          }
+        }
+      }
+    },
+    "0.5": {
+      "kernel_diagnostics": {
+        "kernel_mass": 5.773159728050814e-15,
+        "negative_probability": 0.0
+      },
+      "limiting_rate": 2.488536784332143,
+      "poisson_residual": 4.751088411580895e-11,
+      "profiles": {
+        "device_present": {
+          "1024": {
+            "coordinate_orders": {
+              "background,D,S": {
+                "D": 1181.5965833847172,
+                "S": 1069.4536395535279,
+                "background": 377.1112831395608
+              },
+              "background,S,D": {
+                "D": 1179.920794568524,
+                "S": 1071.1294283697212,
+                "background": 377.1112831395608
+              }
+            },
+            "coordinate_shares_are_not_subject_objectives": true,
+            "global_bits": 2628.161506077806,
+            "global_numerical_allowance": 1.9730229066917672e-07,
+            "intertwining_bounds": {
+              "definition": "I(D history; S history | common exact initial frame)",
+              "joint_DS_excludes_background": true,
+              "lower_bits": 0.0,
+              "upper_bits": 13.320026835266617
+            },
+            "sampled_occupation_residual": 1.357169774783215e-12,
+            "subjects": {
+              "D": {
+                "lower_bits": 1222.0949650411646,
+                "method": "two-observation conditioning, intersected with one-observation bounds",
+                "one_observation_bounds": {
+                  "lower_bits": 1220.794868605998,
+                  "upper_bits": 1227.4097265115183
+                },
+                "projected_process_assumed_markov": false,
+                "upper_bits": 1227.1347551596527
+              },
+              "DS": {
+                "lower_bits": 2330.846044353714,
+                "method": "full-hidden-state conditioning lower / averaged projected conditional upper",
+                "projected_process_assumed_markov": false,
+                "upper_bits": 2342.1618933735954
+              },
+              "S": {
+                "lower_bits": 1111.5361738467868,
+                "method": "two-observation conditioning, intersected with one-observation bounds",
+                "one_observation_bounds": {
+                  "lower_bits": 1110.2558500119007,
+                  "upper_bits": 1117.3057932300862
+                },
+                "projected_process_assumed_markov": false,
+                "upper_bits": 1117.0313160293279
+              }
+            }
+          },
+          "16": {
+            "coordinate_orders": {
+              "background,D,S": {
+                "D": 30.190154737721333,
+                "S": 25.259660690131618,
+                "background": 12.023314564013521
+              },
+              "background,S,D": {
+                "D": 29.62135357804125,
+                "S": 25.8284618498117,
+                "background": 12.023314564013521
+              }
+            },
+            "coordinate_shares_are_not_subject_objectives": true,
+            "global_bits": 67.47312999186647,
+            "global_numerical_allowance": 1.0152034829170588e-07,
+            "intertwining_bounds": {
+              "definition": "I(D history; S history | common exact initial frame)",
+              "joint_DS_excludes_background": true,
+              "lower_bits": 0.0,
+              "upper_bits": 1.0075450829057147
+            },
+            "sampled_occupation_residual": 8.904318254954191e-13,
+            "subjects": {
+              "D": {
+                "lower_bits": 32.8262697496584,
+                "method": "two-observation conditioning, intersected with one-observation bounds",
+                "one_observation_bounds": {
+                  "lower_bits": 32.66434128193103,
+                  "upper_bits": 33.20064968720964
+                },
+                "projected_process_assumed_markov": false,
+                "upper_bits": 33.17315807867643
+              },
+              "DS": {
+                "lower_bits": 60.35794851918114,
+                "method": "full-hidden-state conditioning lower / averaged projected conditional upper",
+                "projected_process_assumed_markov": false,
+                "upper_bits": 61.071226141306774
+              },
+              "S": {
+                "lower_bits": 27.89245776448697,
+                "method": "two-observation conditioning, intersected with one-observation bounds",
+                "one_observation_bounds": {
+                  "lower_bits": 27.763825715306545,
+                  "upper_bits": 28.213160437922728
+                },
+                "projected_process_assumed_markov": false,
+                "upper_bits": 28.19233552341043
+              }
+            }
+          },
+          "256": {
+            "coordinate_orders": {
+              "background,D,S": {
+                "D": 323.2593835240733,
+                "S": 285.05346213648295,
+                "background": 105.0941770187928
+              },
+              "background,S,D": {
+                "D": 322.32318265107483,
+                "S": 285.98966300948143,
+                "background": 105.0941770187928
+              }
+            },
+            "coordinate_shares_are_not_subject_objectives": true,
+            "global_bits": 713.4070226793491,
+            "global_numerical_allowance": 1.2432557266729418e-07,
+            "intertwining_bounds": {
+              "definition": "I(D history; S history | common exact initial frame)",
+              "joint_DS_excludes_background": true,
+              "lower_bits": 0.0,
+              "upper_bits": 5.033879777793345
+            },
+            "sampled_occupation_residual": 1.3517823132017624e-12,
+            "subjects": {
+              "D": {
+                "lower_bits": 336.69180245165336,
+                "method": "two-observation conditioning, intersected with one-observation bounds",
+                "one_observation_bounds": {
+                  "lower_bits": 336.1554886381524,
+                  "upper_bits": 338.6839362592166
+                },
+                "projected_process_assumed_markov": false,
+                "upper_bits": 338.5773984171155
+              },
+              "DS": {
+                "lower_bits": 634.2225139707434,
+                "method": "full-hidden-state conditioning lower / averaged projected conditional upper",
+                "projected_process_assumed_markov": false,
+                "upper_bits": 638.1845308992595
+              },
+              "S": {
+                "lower_bits": 298.6852111676679,
+                "method": "two-observation conditioning, intersected with one-observation bounds",
+                "one_observation_bounds": {
+                  "lower_bits": 298.19034279670035,
+                  "upper_bits": 300.7744362916944
+                },
+                "projected_process_assumed_markov": false,
+                "upper_bits": 300.6789953314213
+              }
+            }
+          },
+          "64": {
+            "coordinate_orders": {
+              "background,D,S": {
+                "D": 98.54618875270671,
+                "S": 83.69069062361092,
+                "background": 33.581327527701326
+              },
+              "background,S,D": {
+                "D": 97.84488951735935,
+                "S": 84.39198985895828,
+                "background": 33.581327527701326
+              }
+            },
+            "coordinate_shares_are_not_subject_objectives": true,
+            "global_bits": 215.81820690401895,
+            "global_numerical_allowance": 1.0608139316682354e-07,
+            "intertwining_bounds": {
+              "definition": "I(D history; S history | common exact initial frame)",
+              "joint_DS_excludes_background": true,
+              "lower_bits": 0.0,
+              "upper_bits": 2.3173300810556157
+            },
+            "sampled_occupation_residual": 1.3316404728035136e-12,
+            "subjects": {
+              "D": {
+                "lower_bits": 104.2065469382305,
+                "method": "two-observation conditioning, intersected with one-observation bounds",
+                "one_observation_bounds": {
+                  "lower_bits": 103.91560600254863,
+                  "upper_bits": 105.11738523906044
+                },
+                "projected_process_assumed_markov": false,
+                "upper_bits": 105.06391175197602
+              },
+              "DS": {
+                "lower_bits": 192.76688025268533,
+                "method": "full-hidden-state conditioning lower / averaged projected conditional upper",
+                "projected_process_assumed_markov": false,
+                "upper_bits": 194.47449754652567
+              },
+              "S": {
+                "lower_bits": 89.1883677471521,
+                "method": "two-observation conditioning, intersected with one-observation bounds",
+                "one_observation_bounds": {
+                  "lower_bits": 88.94347485214922,
+                  "upper_bits": 90.06128080706415
+                },
+                "projected_process_assumed_markov": false,
+                "upper_bits": 90.0202985817649
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "case": "s0.12-k0-access_entry-blocking-p0.7-c1",
+  "energy_residual": 2.7478019859472624e-15,
+  "imported_source_paths": {
+    "omega_v2": "C:\\Users\\paolo\\Documents\\ChatGPT\\Test\\Omega\\results\\local_runs\\lushness_testbed\\domination_stage_a\\f9d4e07254e1-20261015T004357260519Z\\source\\omega_v2\\__init__.py",
+    "omega_v2.testbed": "C:\\Users\\paolo\\Documents\\ChatGPT\\Test\\Omega\\results\\local_runs\\lushness_testbed\\domination_stage_a\\f9d4e07254e1-20261015T004357260519Z\\source\\omega_v2\\testbed\\__init__.py",
+    "omega_v2.testbed.analysis": "C:\\Users\\paolo\\Documents\\ChatGPT\\Test\\Omega\\results\\local_runs\\lushness_testbed\\domination_stage_a\\f9d4e07254e1-20261015T004357260519Z\\source\\omega_v2\\testbed\\analysis\\__init__.py",
+    "omega_v2.testbed.analysis.blocked_entropy": "C:\\Users\\paolo\\Documents\\ChatGPT\\Test\\Omega\\results\\local_runs\\lushness_testbed\\domination_stage_a\\f9d4e07254e1-20261015T004357260519Z\\source\\omega_v2\\testbed\\analysis\\blocked_entropy.py",
+    "omega_v2.testbed.analysis.channel_access": "C:\\Users\\paolo\\Documents\\ChatGPT\\Test\\Omega\\results\\local_runs\\lushness_testbed\\domination_stage_a\\f9d4e07254e1-20261015T004357260519Z\\source\\omega_v2\\testbed\\analysis\\channel_access.py",
+    "omega_v2.testbed.analysis.class_queries": "C:\\Users\\paolo\\Documents\\ChatGPT\\Test\\Omega\\results\\local_runs\\lushness_testbed\\domination_stage_a\\f9d4e07254e1-20261015T004357260519Z\\source\\omega_v2\\testbed\\analysis\\class_queries.py",
+    "omega_v2.testbed.analysis.finite_classes": "C:\\Users\\paolo\\Documents\\ChatGPT\\Test\\Omega\\results\\local_runs\\lushness_testbed\\domination_stage_a\\f9d4e07254e1-20261015T004357260519Z\\source\\omega_v2\\testbed\\analysis\\finite_classes.py",
+    "omega_v2.testbed.analysis.friction_profile": "C:\\Users\\paolo\\Documents\\ChatGPT\\Test\\Omega\\results\\local_runs\\lushness_testbed\\domination_stage_a\\f9d4e07254e1-20261015T004357260519Z\\source\\omega_v2\\testbed\\analysis\\friction_profile.py",
+    "omega_v2.testbed.analysis.observed_history": "C:\\Users\\paolo\\Documents\\ChatGPT\\Test\\Omega\\results\\local_runs\\lushness_testbed\\domination_stage_a\\f9d4e07254e1-20261015T004357260519Z\\source\\omega_v2\\testbed\\analysis\\observed_history.py",
+    "omega_v2.testbed.analysis.signal_readouts": "C:\\Users\\paolo\\Documents\\ChatGPT\\Test\\Omega\\results\\local_runs\\lushness_testbed\\domination_stage_a\\f9d4e07254e1-20261015T004357260519Z\\source\\omega_v2\\testbed\\analysis\\signal_readouts.py",
+    "omega_v2.testbed.analysis.temporal_profile": "C:\\Users\\paolo\\Documents\\ChatGPT\\Test\\Omega\\results\\local_runs\\lushness_testbed\\domination_stage_a\\f9d4e07254e1-20261015T004357260519Z\\source\\omega_v2\\testbed\\analysis\\temporal_profile.py",
+    "omega_v2.testbed.compiler": "C:\\Users\\paolo\\Documents\\ChatGPT\\Test\\Omega\\results\\local_runs\\lushness_testbed\\domination_stage_a\\f9d4e07254e1-20261015T004357260519Z\\source\\omega_v2\\testbed\\compiler.py",
+    "omega_v2.testbed.contracts": "C:\\Users\\paolo\\Documents\\ChatGPT\\Test\\Omega\\results\\local_runs\\lushness_testbed\\domination_stage_a\\f9d4e07254e1-20261015T004357260519Z\\source\\omega_v2\\testbed\\contracts.py",
+    "omega_v2.testbed.domination_friction": "C:\\Users\\paolo\\Documents\\ChatGPT\\Test\\Omega\\results\\local_runs\\lushness_testbed\\domination_stage_a\\f9d4e07254e1-20261015T004357260519Z\\source\\omega_v2\\testbed\\domination_friction.py",
+    "omega_v2.testbed.workflow": "C:\\Users\\paolo\\Documents\\ChatGPT\\Test\\Omega\\results\\local_runs\\lushness_testbed\\domination_stage_a\\f9d4e07254e1-20261015T004357260519Z\\source\\omega_v2\\testbed\\workflow\\__init__.py",
+    "omega_v2.testbed.workflow.manifest": "C:\\Users\\paolo\\Documents\\ChatGPT\\Test\\Omega\\results\\local_runs\\lushness_testbed\\domination_stage_a\\f9d4e07254e1-20261015T004357260519Z\\source\\omega_v2\\testbed\\workflow\\manifest.py"
+  },
+  "imports_from_snapshot": true,
+  "input_hash": "b4fe7c3815446705aca7d3f53bcbcc2ecb061aee445845294a5a1b31a4c9ca93",
+  "metadata": {
+    "active_friction": "device AND working D apparatus AND affordable bill",
+    "constraint_scope": "targets S mobility; steering alternatives are actual S mobility/chemistry",
+    "energies": "packet2, apparatus1, charge1, device1, trap location -1",
+    "fields": [
+      "packet",
+      "D.location",
+      "D.apparatus",
+      "D.charge",
+      "S.location",
+      "S.apparatus",
+      "S.charge",
+      "D.friction"
+    ],
+    "friction_physics": "rejected or redirected attempts spend D fuel; no work reservoir",
+    "gas_scope": "unassembled count preparation, not microscopic gas",
+    "grain": "full physical compartment/count state",
+    "no_suffering_variable": true,
+    "parameters": {
+      "beta": 1.0,
+      "capture_assistance": 0.12,
+      "capture_basal": 0.008,
+      "charge_capacity": 2,
+      "construction": 0.04,
+      "construction_assistance": 0.5,
+      "d_capacity": 1,
+      "device_construction": 0.02,
+      "device_upkeep": 0.008,
+      "device_wear": 0.003,
+      "drive": true,
+      "field_location": 0,
+      "field_shift": 0.0,
+      "kappa": 0,
+      "mobility": 0.12,
+      "packet_export": 0.015,
+      "packet_thermal": 0.002,
+      "s_capacity": 1,
+      "supply": 0.12,
+      "thermal_assembly": 0.002,
+      "thermal_charge": 0.004,
+      "trap_mobility": 0.012,
+      "upkeep": 0.012
+    },
+    "policy": {
+      "cost": 1,
+      "direction": "entry",
+      "edges": [],
+      "mode": "blocking",
+      "phi": 0.7,
+      "region": [
+        0
+      ]
+    },
+    "steering_match": "total S state-changing exit rate at the same full physical state only",
+    "subjects": {
+      "D": [
+        1,
+        2,
+        3,
+        7
+      ],
+      "S": [
+        4,
+        5,
+        6
+      ],
+      "background": [
+        0
+      ]
+    },
+    "thermal_pairs": "mass action times exp(-beta delta energy/2)"
+  },
+  "mode": "survey",
+  "physical": {
+    "device_present": {
+      "1024": {
+        "average": {
+          "D.access": 0.18030993297793405,
+          "D.apparatus": 0.3853034590150276,
+          "D.charge": 0.7226235833365264,
+          "D.construction": 0.17773857448173236,
+          "D.friction": 0.37046996053465325,
+          "D.functional": 0.3853034590150276,
+          "D.location": 1.6393801340441176,
+          "D.trap": 0.46421291805859427,
+          "S.access": 0.17252406063591075,
+          "S.apparatus": 0.4217037960619191,
+          "S.charge": 0.8253536864206614,
+          "S.construction": 0.17923118484449088,
+          "S.functional": 0.4217037960619191,
+          "S.location": 1.6549518787281645,
+          "S.trap": 0.46901356967510044,
+          "S_event_rate": 0.1859826825364,
+          "friction_enabled": 0.07388043787231673,
+          "packet": 0.7587493546141543,
+          "suppressed_rate": 0.002420950089582769
+        },
+        "deadline": {
+          "D.access": 0.17487770452710363,
+          "D.apparatus": 0.33822968289110256,
+          "D.charge": 0.710578667254056,
+          "D.construction": 0.17487770452710363,
+          "D.friction": 0.31563089045762216,
+          "D.functional": 0.33822968289110256,
+          "D.location": 1.6502445909457277,
+          "D.trap": 0.47536688641865665,
+          "S.access": 0.169621992131833,
+          "S.apparatus": 0.36761944694086096,
+          "S.charge": 0.78583331765093,
+          "S.construction": 0.17561603275272925,
+          "S.functional": 0.36761944694086096,
+          "S.location": 1.660756015736269,
+          "S.trap": 0.47914594236267605,
+          "S_event_rate": 0.18079190881937285,
+          "friction_enabled": 0.05188229706325043,
+          "packet": 0.7687764815131399,
+          "suppressed_rate": 0.0015700511915436707
+        },
+        "destination_surprisal_bits": 1248.5521762487033,
+        "expected_jumps": 443.40066927901853,
+        "finite_term_bits": 2331.196457817073,
+        "first_passage": {
+          "S.access": 1.0,
+          "S.construction": 0.9999999993468922,
+          "S.trap": 0.9999999984099287
+        },
+        "horizon": 1024,
+        "integrated_energy_residual": -1.0658141036401503e-13,
+        "ledger": {
+          "D.assembly": 2.064568948897988,
+          "D.build": 6.674637873231324,
+          "D.capture": 13.262238637050537,
+          "D.charge": 8.053443925019549,
+          "D.device_build": 3.655696201631763,
+          "D.device_thermal": 3.049362352849159,
+          "D.device_upkeep": 5.684922103103162,
+          "D.move": 152.90920918674712,
+          "D.upkeep": 9.416249583067977,
+          "S.assembly": 2.142262060208428,
+          "S.build": 6.735849031822003,
+          "S.capture": 12.769216609882054,
+          "S.charge": 8.491979498114205,
+          "S.move": 149.2604278863878,
+          "S.upkeep": 11.04653183085911,
+          "accepted_work": 59.2897586100237,
+          "bath_heat": 38.880046296837264,
+          "blocked_attempt": 2.4790528917327554,
+          "build_D": 3.275157705127556,
+          "build_S": 3.4045203031698787,
+          "build_fuel_D": -0.12432246297621269,
+          "build_fuel_S": 0.07319157451775482,
+          "capture_D": 10.455741138547552,
+          "capture_S": 9.649729580505984,
+          "device_build": 1.8373652045812745,
+          "device_unbuild": 1.8183309970504886,
+          "device_upkeep": 0.653788158602248,
+          "drive_work": 35.98097843627689,
+          "export": 11.654390086873411,
+          "friction.block": 2.4790528917327554,
+          "friction_fuel": 2.4790528917327554,
+          "net_D.access": -0.8251222954729002,
+          "net_D.apparatus": -0.6617703171088997,
+          "net_D.charge": 0.710578667254099,
+          "net_D.construction": 0.17487770452709211,
+          "net_D.friction": -0.6843691095423781,
+          "net_D.functional": -0.6617703171088997,
+          "net_D.location": 1.6502445909458452,
+          "net_D.trap": 0.4753668864186657,
+          "net_S.access": -0.8303780078681746,
+          "net_S.apparatus": -0.6323805530591365,
+          "net_S.charge": -0.21416668234905045,
+          "net_S.construction": 0.17561603275272564,
+          "net_S.functional": -0.6323805530591365,
+          "net_S.location": 1.660756015736352,
+          "net_S.trap": 0.4791459423626959,
+          "net_S_event_rate": -0.3294105425066453,
+          "net_capture_D": 7.649243640044569,
+          "net_capture_S": 6.530242551129914,
+          "net_friction_enabled": 0.051882297063252314,
+          "net_packet": -0.2312235184868242,
+          "net_suppressed_rate": 0.0015700511915441237,
+          "packet_thermal": 4.405751266528207,
+          "reverse_capture_D": 2.806497498502984,
+          "reverse_capture_S": 3.11948702937607,
+          "source": 29.64487930501185,
+          "thermal_birth_D": 0.7635605473826508,
+          "thermal_birth_S": 0.7183449663157689,
+          "thermal_loss_D": 1.3010084015153378,
+          "thermal_loss_S": 1.4239170938926593,
+          "unbuild_D": 3.3994801681037687,
+          "unbuild_S": 3.3313287286521236,
+          "upkeep_D": 2.2045673869377724,
+          "upkeep_S": 4.015702317554069
+        },
+        "reference_time": 1.0,
+        "suppressed_attempts": 2.4790528917327554
+      },
+      "16": {
+        "average": {
+          "D.access": 0.40002841185873766,
+          "D.apparatus": 0.9014857900869692,
+          "D.charge": 0.5890604821949799,
+          "D.construction": 0.23583932601556376,
+          "D.friction": 0.9226852861510972,
+          "D.functional": 0.9014857900869692,
+          "D.location": 1.1999431762825203,
+          "D.trap": 0.12829293611013262,
+          "S.access": 0.36219797795749165,
+          "S.apparatus": 0.9276925202517284,
+          "S.charge": 1.1266167195898014,
+          "S.construction": 0.2540595363446564,
+          "S.functional": 0.9276925202517284,
+          "S.location": 1.275604044085012,
+          "S.trap": 0.12968294935319338,
+          "S_event_rate": 0.31395510012477423,
+          "friction_enabled": 0.37392079727843264,
+          "packet": 0.5411803377565205,
+          "suppressed_rate": 0.017217878573723894
+        },
+        "deadline": {
+          "D.access": 0.25782333391282625,
+          "D.apparatus": 0.8088558609318299,
+          "D.charge": 0.7197580652522231,
+          "D.construction": 0.2555272597128276,
+          "D.friction": 0.84810681242502,
+          "D.functional": 0.8088558609318299,
+          "D.location": 1.4843533321743414,
+          "D.trap": 0.23112214666151565,
+          "S.access": 0.20970901650455193,
+          "S.apparatus": 0.8548680222179712,
+          "S.charge": 1.1106982700949422,
+          "S.construction": 0.27775572813112803,
+          "S.functional": 0.8548680222179712,
+          "S.location": 1.58058196699089,
+          "S.trap": 0.23477952723318907,
+          "S_event_rate": 0.26039547466017904,
+          "friction_enabled": 0.33350706806844954,
+          "packet": 0.6045493132947203,
+          "suppressed_rate": 0.016546432432502128
+        },
+        "destination_surprisal_bits": 37.641304751980215,
+        "expected_jumps": 12.25372244539947,
+        "finite_term_bits": 59.17435041762869,
+        "first_passage": {
+          "S.access": 1.0,
+          "S.construction": 0.7823013636407559,
+          "S.trap": 0.27134468955904245
+        },
+        "horizon": 16,
+        "integrated_energy_residual": -1.7319479184152442e-14,
+        "ledger": {
+          "D.assembly": 0.049473621954557276,
+          "D.build": 0.20693590248426147,
+          "D.capture": 1.1542192619537797,
+          "D.charge": 0.11692637588944887,
+          "D.device_build": 0.10176817100878388,
+          "D.device_thermal": 0.07527094088810954,
+          "D.device_upkeep": 0.2115844933611315,
+          "D.move": 3.6681185382486015,
+          "D.upkeep": 0.3073645758981839,
+          "S.assembly": 0.050347619014473925,
+          "S.build": 0.16179961549152191,
+          "S.capture": 0.8509570817427377,
+          "S.charge": 0.15278148395285035,
+          "S.move": 3.387340432624802,
+          "S.upkeep": 0.4200553691700041,
+          "accepted_work": 1.7618675030149529,
+          "bath_heat": 2.416616957275083,
+          "blocked_attempt": 0.2754860571795823,
+          "build_D": 0.03072063224597798,
+          "build_S": 0.032104213853381,
+          "build_fuel_D": -0.1454946379923055,
+          "build_fuel_S": -0.09759118778475993,
+          "capture_D": 0.9678047583579814,
+          "capture_S": 0.5871973463522991,
+          "device_build": 0.010322062429937306,
+          "device_unbuild": 0.09144610857884658,
+          "device_upkeep": 0.004568713763621894,
+          "drive_work": 1.5021009408918229,
+          "export": 0.12988328106156494,
+          "friction.block": 0.2754860571795823,
+          "friction_fuel": 0.2754860571795823,
+          "net_D.access": -0.7421766660871723,
+          "net_D.apparatus": -0.19114413906816718,
+          "net_D.charge": 0.7197580652522241,
+          "net_D.construction": 0.2555272597128279,
+          "net_D.friction": -0.1518931875749772,
+          "net_D.functional": -0.19114413906816718,
+          "net_D.location": 1.4843533321743443,
+          "net_D.trap": 0.23112214666151576,
+          "net_S.access": -0.7902909834954459,
+          "net_S.apparatus": -0.14513197778202586,
+          "net_S.charge": 0.11069827009494529,
+          "net_S.construction": 0.2777557281311284,
+          "net_S.functional": -0.14513197778202586,
+          "net_S.location": 1.5805819669908925,
+          "net_S.trap": 0.23477952723318915,
+          "net_S_event_rate": -0.2498069766658421,
+          "net_capture_D": 0.781390254762183,
+          "net_capture_S": 0.3234376109618607,
+          "net_friction_enabled": 0.33350706806845015,
+          "net_packet": -0.3954506867052769,
+          "net_suppressed_rate": 0.01654643243250214,
+          "packet_thermal": 0.052475871967599313,
+          "reverse_capture_D": 0.18641450359579828,
+          "reverse_capture_S": 0.26375973539043845,
+          "source": 0.8809337515074764,
+          "thermal_birth_D": 0.0019120604393477818,
+          "thermal_birth_S": 0.0014034145086040234,
+          "thermal_loss_D": 0.047561561515209495,
+          "thermal_loss_S": 0.04894420450586989,
+          "unbuild_D": 0.17621527023828348,
+          "unbuild_S": 0.12969540163814092,
+          "upkeep_D": 0.000809320616779902,
+          "upkeep_S": 0.2253549630667201
+        },
+        "reference_time": 1.0,
+        "suppressed_attempts": 0.2754860571795823
+      },
+      "256": {
+        "average": {
+          "D.access": 0.19660626749062599,
+          "D.apparatus": 0.5127074917046455,
+          "D.charge": 0.7493088773235961,
+          "D.construction": 0.18632083350581924,
+          "D.friction": 0.5200063488095256,
+          "D.functional": 0.5127074917046455,
+          "D.location": 1.6067874650187355,
+          "D.trap": 0.4307520654977293,
+          "S.access": 0.1816736741336476,
+          "S.apparatus": 0.5644082918640974,
+          "S.charge": 0.9264378990826727,
+          "S.construction": 0.1900560174402321,
+          "S.functional": 0.5644082918640974,
+          "S.location": 1.6366526517326923,
+          "S.trap": 0.43821429098588205,
+          "S_event_rate": 0.20069199274214022,
+          "friction_enabled": 0.13584114456844532,
+          "packet": 0.7304436821270335,
+          "suppressed_rate": 0.004855112065642675
+        },
+        "deadline": {
+          "D.access": 0.17488144260514282,
+          "D.apparatus": 0.3720550370725466,
+          "D.charge": 0.7319666214829993,
+          "D.construction": 0.17488144260514282,
+          "D.friction": 0.3540802885844009,
+          "D.functional": 0.3720550370725466,
+          "D.location": 1.6502371147896882,
+          "D.trap": 0.47535567218455843,
+          "S.access": 0.16845674331621613,
+          "S.apparatus": 0.4127174721210789,
+          "S.charge": 0.8246705608131515,
+          "S.construction": 0.17566374057960069,
+          "S.functional": 0.4127174721210789,
+          "S.location": 1.6630865133675414,
+          "S.trap": 0.4802157755245694,
+          "S_event_rate": 0.18268345774236205,
+          "friction_enabled": 0.062433379402597425,
+          "packet": 0.7645487648945145,
+          "suppressed_rate": 0.0018794729727879163
+        },
+        "destination_surprisal_bits": 349.54335470432204,
+        "expected_jumps": 121.4136730615277,
+        "finite_term_bits": 631.302658011753,
+        "first_passage": {
+          "S.access": 1.0,
+          "S.construction": 0.9984857968346297,
+          "S.trap": 0.9936852792457221
+        },
+        "horizon": 256,
+        "integrated_energy_residual": -8.171241461241152e-14,
+        "ledger": {
+          "D.assembly": 0.5841252320000818,
+          "D.build": 1.9715883006674049,
+          "D.capture": 4.753882179062041,
+          "D.charge": 2.0418396120079274,
+          "D.device_build": 1.0595815480726671,
+          "D.device_thermal": 0.8820298706655785,
+          "D.device_upkeep": 2.0090308721219943,
+          "D.move": 40.26557298075046,
+          "D.upkeep": 3.0729152110659257,
+          "S.assembly": 0.6117128613155234,
+          "S.build": 1.9405130883155568,
+          "S.capture": 4.257782214242752,
+          "S.charge": 2.2308722683004945,
+          "S.move": 38.56810219067528,
+          "S.upkeep": 3.7681675191382844,
+          "accepted_work": 16.561540170114675,
+          "bath_heat": 13.682716629224903,
+          "blocked_attempt": 1.2429086888045249,
+          "build_D": 0.812558667446966,
+          "build_S": 0.8472014511123622,
+          "build_fuel_D": -0.34647096577347286,
+          "build_fuel_S": -0.24611018609083246,
+          "capture_D": 3.76201670407836,
+          "capture_S": 3.1165590675461745,
+          "device_build": 0.42425734863904396,
+          "device_unbuild": 0.6353241994336232,
+          "device_upkeep": 0.2600088125027059,
+          "drive_work": 10.951732691379062,
+          "export": 2.804903739367809,
+          "friction.block": 1.2429086888045249,
+          "friction_fuel": 1.2429086888045249,
+          "net_D.access": -0.8251185573948597,
+          "net_D.apparatus": -0.6279449629274476,
+          "net_D.charge": 0.7319666214830012,
+          "net_D.construction": 0.17488144260514454,
+          "net_D.friction": -0.6459197114155926,
+          "net_D.functional": -0.6279449629274476,
+          "net_D.location": 1.6502371147897232,
+          "net_D.trap": 0.4753556721845604,
+          "net_S.access": -0.8315432566837802,
+          "net_S.apparatus": -0.5872825278789136,
+          "net_S.charge": -0.1753294391868387,
+          "net_S.construction": 0.17566374057959977,
+          "net_S.functional": -0.5872825278789136,
+          "net_S.location": 1.6630865133675679,
+          "net_S.trap": 0.4802157755245734,
+          "net_S_event_rate": -0.32751899358365566,
+          "net_capture_D": 2.7701512290946804,
+          "net_capture_S": 1.9753359208495973,
+          "net_friction_enabled": 0.062433379402589445,
+          "net_packet": -0.2354512351054578,
+          "net_suppressed_rate": 0.0018794729727879076,
+          "packet_thermal": 1.0673745998960467,
+          "reverse_capture_D": 0.9918654749836805,
+          "reverse_capture_S": 1.1412231466965772,
+          "source": 8.280770085057338,
+          "thermal_birth_D": 0.1513256174230536,
+          "thermal_birth_S": 0.1352702597637213,
+          "thermal_loss_D": 0.4327996145770283,
+          "thermal_loss_S": 0.4764426015518021,
+          "unbuild_D": 1.159029633220439,
+          "unbuild_S": 1.0933116372031946,
+          "upkeep_D": 0.6045422948950793,
+          "upkeep_S": 1.4994550562574631
+        },
+        "reference_time": 1.0,
+        "suppressed_attempts": 1.2429086888045249
+      },
+      "64": {
+        "average": {
+          "D.access": 0.2576475123717299,
+          "D.apparatus": 0.7279332931471961,
+          "D.charge": 0.7288328952881857,
+          "D.construction": 0.21650577643364688,
+          "D.friction": 0.7633496072527974,
+          "D.functional": 0.7279332931471961,
+          "D.location": 1.484704975256514,
+          "D.trap": 0.30934093476096336,
+          "S.access": 0.2272304761200819,
+          "S.apparatus": 0.7795071122994599,
+          "S.charge": 1.0632875049396517,
+          "S.construction": 0.22816943559046615,
+          "S.functional": 0.7795071122994599,
+          "S.location": 1.54553904775981,
+          "S.trap": 0.3164306526989733,
+          "S_event_rate": 0.2438009867487142,
+          "friction_enabled": 0.2657739120924467,
+          "packet": 0.6549840073879611,
+          "suppressed_rate": 0.011031640905319372
+        },
+        "deadline": {
+          "D.access": 0.185920851316305,
+          "D.apparatus": 0.5779392264156514,
+          "D.charge": 0.7857902213708927,
+          "D.construction": 0.18592085128851146,
+          "D.friction": 0.6076861156681563,
+          "D.functional": 0.5779392264156514,
+          "D.location": 1.6281582973673583,
+          "D.trap": 0.4422374461066562,
+          "S.access": 0.16807241254555935,
+          "S.apparatus": 0.6416511868304297,
+          "S.charge": 0.9816394837510414,
+          "S.construction": 0.18913269249266418,
+          "S.functional": 0.6416511868304297,
+          "S.location": 1.6638551749088497,
+          "S.trap": 0.45366220246909644,
+          "S_event_rate": 0.19835802606509656,
+          "friction_enabled": 0.16529488922061586,
+          "packet": 0.7327742919506541,
+          "suppressed_rate": 0.005285095804182769
+        },
+        "destination_surprisal_bits": 112.41702564875487,
+        "expected_jumps": 37.713586094599655,
+        "finite_term_bits": 190.14376262237138,
+        "first_passage": {
+          "S.access": 1.0,
+          "S.construction": 0.9439757353735698,
+          "S.trap": 0.7181042439825986
+        },
+        "horizon": 64,
+        "integrated_energy_residual": -8.43769498715119e-14,
+        "ledger": {
+          "D.assembly": 0.17474251561674767,
+          "D.build": 0.6674457218178818,
+          "D.capture": 2.2204948138062024,
+          "D.charge": 0.5049968946875982,
+          "D.device_build": 0.3397795052103546,
+          "D.device_thermal": 0.2692005990321566,
+          "D.device_upkeep": 0.7361981492711598,
+          "D.move": 11.915335587956726,
+          "D.upkeep": 1.0534551737711426,
+          "S.assembly": 0.1816224836286845,
+          "S.build": 0.6071562259963078,
+          "S.capture": 1.7607744418617883,
+          "S.charge": 0.594229650906541,
+          "S.move": 11.101342876985754,
+          "S.upkeep": 1.3581374725386328,
+          "accepted_work": 5.299445646520718,
+          "bath_heat": 5.877521182974021,
+          "blocked_attempt": 0.7060250179404398,
+          "build_D": 0.1889415816284095,
+          "build_S": 0.19809677905793377,
+          "build_fuel_D": -0.28956255856106283,
+          "build_fuel_S": -0.21096266788044032,
+          "capture_D": 1.7908757995100197,
+          "capture_S": 1.2380163330145757,
+          "device_build": 0.0807742519391732,
+          "device_unbuild": 0.2590052532711814,
+          "device_upkeep": 0.0930466083977416,
+          "drive_work": 4.041876352335832,
+          "export": 0.6287846470924427,
+          "friction.block": 0.7060250179404398,
+          "friction_fuel": 0.7060250179404398,
+          "net_D.access": -0.8140791486836869,
+          "net_D.apparatus": -0.42206077358433425,
+          "net_D.charge": 0.7857902213708966,
+          "net_D.construction": 0.18592085128851427,
+          "net_D.friction": -0.3923138843318294,
+          "net_D.functional": -0.42206077358433425,
+          "net_D.location": 1.6281582973673738,
+          "net_D.trap": 0.442237446106657,
+          "net_S.access": -0.8319275874544303,
+          "net_S.apparatus": -0.35834881316955497,
+          "net_S.charge": -0.01836051624894009,
+          "net_S.construction": 0.18913269249266185,
+          "net_S.functional": -0.35834881316955497,
+          "net_S.location": 1.6638551749088655,
+          "net_S.trap": 0.45366220246909755,
+          "net_S_event_rate": -0.31184442526091993,
+          "net_capture_D": 1.3612567852138375,
+          "net_capture_S": 0.715258224167363,
+          "net_friction_enabled": 0.16529488922061747,
+          "net_packet": -0.2672257080493367,
+          "net_suppressed_rate": 0.005285095804182617,
+          "packet_thermal": 0.24414149321872672,
+          "reverse_capture_D": 0.42961901429618227,
+          "reverse_capture_S": 0.5227581088472126,
+          "source": 2.649722823260359,
+          "thermal_birth_D": 0.02112215029673816,
+          "thermal_birth_S": 0.017118169169784883,
+          "thermal_loss_D": 0.1536203653200095,
+          "thermal_loss_S": 0.16450431445889957,
+          "unbuild_D": 0.4785041401894723,
+          "unbuild_S": 0.4090594469383741,
+          "upkeep_D": 0.13394453589466176,
+          "upkeep_S": 0.6412419193562846
+        },
+        "reference_time": 1.0,
+        "suppressed_attempts": 0.7060250179404398
+      }
+    }
+  },
+  "states": 2304,
+  "subject_bounds_can_be_unresolved": true
+}

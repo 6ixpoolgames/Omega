@@ -118,7 +118,7 @@ def test_background_is_identical_and_all_reference_material_remains_in_law():
 
 def test_policy_validation_cap_and_idle_aliases():
     with pytest.raises(ValueError):
-        FrictionPolicy(mode='steering', direction='all', region=(0, 1, 2, 3))
+        FrictionPolicy(edges=((0, 0),))
     with pytest.raises(ValueError):
         build_world(policy=FrictionPolicy(cost=3))
     with pytest.raises(RuntimeError):

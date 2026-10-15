@@ -30,6 +30,7 @@ primary; rate and offset diagnose the continuation rather than replace it.
 | Same-law lattice preparations | Initial organization is transient in this adapter. At the settled horizon,2/14 unbound comparisons flip cadence and12/14 are negative throughout | [Updated horizon audit](same_law_gas/HORIZON_AUDIT.md), [physical limits](same_law_gas/MODEL_LIMITS_AND_NEXT_SLICE.md), [original maps](same_law_gas/COMPARISON_MAP.csv) |
 | Three successive enabling links with persistence | Demonstrated within the finite count chemistry; the guessed80%-funding gate was an inadequate surrogate, not a negation of the mechanism | [Updated assessment](robust_generativity/RESULTS.md), [updated structural interpretation](robust_generativity/INTERPRETATION.md), [original numbers/checklist](robust_generativity/SUMMARY.json) |
 | Unilateral friction on access | The first24-case map distinguishes access suppression and trap confinement from beneficial trap avoidance; D's own ranking remains partly unresolved | [Initial friction interpretation](domination_friction/INTERPRETATION.md), [full comparisons](domination_friction/COMPARISONS.json) |
+| Expanded constraint map | The470-case Stage A map resolves paid private/global conflicts atT256, finds strength crossings, and reproduces the access/trap distinction with a conservative field. Personal bounds still leave some horizons unresolved | [Stage A interpretation](domination_stage_a/INTERPRETATION.md), [full numerical map](domination_stage_a/RESULTS.md) |
 
 ## Specific corrections to carry forward
 
@@ -71,3 +72,28 @@ robust-generativity and friction batches. Older execution notes saying "not
 pushed" describe their original run status; they are retained as dated history.
 Only source, compact measurements, reports and figures are included. Large
 reconstructable kernels and local run bundles remain outside Git.
+
+## Additional Stage A controls and summaries
+
+[Updated descriptive follow-ups](domination_stage_a/UPDATED_FOLLOWUPS.md) retain
+the full original map and add target-level crossing/disagreement and random-route
+summaries. [Activity/swap controls](domination_b1/FOLLOWUP_INTERPRETATION.md)
+complete the requested ordinary-agent comparison at the law level. A paid sham
+can supply a private gain without restricting S; the ordinary auxiliary raises
+private and whole-field breadth. Query attribution does not subtract activity
+from lushness or uniquely decompose marginal-history entropy. These controls
+are local additions, not yet included in the earlier publication.
+
+## Fractional-cost and discovery batch: complete
+
+The [28-case report](domination_b1/RESULTS.md) and
+[interpretation](domination_b1/INTERPRETATION.md) resolve the cheap-exclusion
+subject conflict through T1024. D prefers strong exclusion within that small
+family while the whole prefers idle. This is a private breadth advantage;
+additional capture does not repay the intervention bill in the reported cases.
+All trap-steering comparisons are whole-positive at the tested clocks/horizons,
+but the mechanism redirects movement and chemistry and intercepts pocket return:
+it is not pure suppression of exploration. Some positive finite profiles have
+negative limiting-rate differences. Full signed maps and unresolved subject
+bounds remain visible. The next design adds actual extraction and a coarse
+ten-to-one population; no result from those new mechanisms is claimed yet.

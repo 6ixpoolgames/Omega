@@ -1,0 +1,55 @@
+{
+  "cases": [
+    {
+      "configuration": {
+        "block_rows": 128,
+        "cadences": [
+          0.125,
+          0.25,
+          0.5
+        ],
+        "caps": {
+          "memory": 1610612736,
+          "output_cap": 16777216,
+          "seconds": 900.0
+        },
+        "horizons": [
+          16,
+          64,
+          256,
+          1024
+        ],
+        "id": "smoke-full-clocks-tenth-grid",
+        "parameters": {
+          "d_energy_capacity": 3,
+          "d_energy_quantum": 0.1,
+          "discovery": true,
+          "kappa": 1
+        },
+        "policy": {
+          "cost": 0.3,
+          "phi": 0.55
+        }
+      },
+      "id": "smoke-full-clocks-tenth-grid",
+      "identity": "779b44a94e0cc45f198883893c91d51154c2c4b64569980b970e5c0b77299ca2",
+      "log_tail": "{\"stage\": \"compiled\", \"seconds\": 16.68194710003445}\n{\"stage\": \"stationarity\", \"seconds\": 16.686751600005664}\n{\"stage\": \"physical device_present T16\", \"seconds\": 58.97125030000461}\n{\"stage\": \"physical device_present T64\", \"seconds\": 60.05630330002168}\n{\"stage\": \"physical device_present T256\", \"seconds\": 62.472006600000896}\n{\"stage\": \"physical device_present T1024\", \"seconds\": 66.24208749999525}\n{\"stage\": \"full entropy all cadences\", \"seconds\": 75.02122220001183}\n",
+      "profile": {
+        "cap_reason": "wall_cap",
+        "exit_code": 124,
+        "input_hash": "4fc9f777c5ffff2dd639cafbd69beec0c5ec09785f1342adceadca0dc5d63b8c",
+        "job_memory_cap_bytes": 1610612736,
+        "output_bytes": 537453,
+        "peak_job_bytes": 650657792,
+        "wall_cap_seconds": 900.0,
+        "wall_seconds": 900.0991117000231
+      },
+      "run": "C:\\Users\\paolo\\Documents\\ChatGPT\\Test\\Omega\\results\\local_runs\\lushness_testbed\\domination_b1\\779b44a94e0c-20261015T023047413951Z",
+      "status": "incomplete"
+    }
+  ],
+  "elapsed_seconds": 900.7810000000172,
+  "mode": "full-smoke",
+  "source_hash": "3273f8b3ce235fee40612f7ba27d7508ab201137a67b94d538710cd9e578e17c",
+  "status": "incomplete"
+}

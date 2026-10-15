@@ -1,0 +1,153 @@
+{
+  "status": "validated_against_completed_exponential_smoke",
+  "finite_score_differences_bits": {
+    "16": 3.410605131648481e-13,
+    "64": 3.979039320256561e-13
+  },
+  "max_absolute_difference_bits": 3.979039320256561e-13,
+  "old_receipt": {
+    "configuration": {
+      "block_rows": 32,
+      "cadences": [
+        0.25
+      ],
+      "caps": {
+        "memory": 1610612736,
+        "output_cap": 16777216,
+        "seconds": 600.0
+      },
+      "horizons": [
+        16,
+        64
+      ],
+      "id": "smoke-tenth-grid",
+      "parameters": {
+        "d_energy_capacity": 3,
+        "d_energy_quantum": 0.1,
+        "discovery": true,
+        "kappa": 1
+      },
+      "policy": {
+        "cost": 0.3,
+        "phi": 0.55
+      }
+    },
+    "id": "smoke-tenth-grid",
+    "identity": "7ad93c8c12a23d660c36eeffbd42054437d46890d69e4aeabc508548c21a403c",
+    "profile": {
+      "cap_reason": null,
+      "exit_code": 0,
+      "input_hash": "f2fbbf426cd1f18e8d4c905277f1d2c27a81524bc574e4fb50522f6d35119baa",
+      "job_memory_cap_bytes": 1610612736,
+      "output_bytes": 558934,
+      "peak_job_bytes": 1089847296,
+      "wall_cap_seconds": 600.0,
+      "wall_seconds": 284.1703157000011
+    },
+    "result_sha256": "4c3eddd61ccb6790a5b1c81858bc07c55680f618acd5e8f18613a8f629ee43fc",
+    "run": "C:\\Users\\paolo\\Documents\\ChatGPT\\Test\\Omega\\results\\local_runs\\lushness_testbed\\domination_b1\\7ad93c8c12a2-20261015T022418843753Z",
+    "status": "complete"
+  },
+  "uniformized_receipt": {
+    "configuration": {
+      "block_rows": 128,
+      "cadences": [
+        0.125,
+        0.25,
+        0.5
+      ],
+      "caps": {
+        "memory": 3221225472,
+        "output_cap": 33554432,
+        "seconds": 900.0
+      },
+      "entropy_backend": "uniformized",
+      "horizons": [
+        16,
+        64,
+        256,
+        1024
+      ],
+      "id": "calibration-poisson-full-clocks-tenth-grid",
+      "parameters": {
+        "d_energy_capacity": 3,
+        "d_energy_quantum": 0.1,
+        "discovery": true,
+        "kappa": 1
+      },
+      "policy": {
+        "cost": 0.3,
+        "phi": 0.55
+      }
+    },
+    "id": "calibration-poisson-full-clocks-tenth-grid",
+    "identity": "f8b6cd1970287c196269ac878c02f2fdb332214a70d5d63192878747c7e02c83",
+    "profile": {
+      "cap_reason": null,
+      "exit_code": 0,
+      "input_hash": "759d42c493a6dfe2c602095533896cc2b0ec757b6f5ed26d2f95982dd9850d63",
+      "job_memory_cap_bytes": 3221225472,
+      "output_bytes": 599478,
+      "peak_job_bytes": 1218617344,
+      "wall_cap_seconds": 900.0,
+      "wall_seconds": 537.4912727999617
+    },
+    "result_sha256": "152105bd08953a8f9ab0d9fc37ba5afcd47cccf4aeb26c54120e03cad25b8b44",
+    "run": "C:\\Users\\paolo\\Documents\\ChatGPT\\Test\\Omega\\results\\local_runs\\lushness_testbed\\domination_b1\\f8b6cd197028-20261015T024236713216Z",
+    "status": "complete"
+  },
+  "all_clocks_completed": true,
+  "physical_law_changed": false,
+  "threaded_receipt": {
+    "configuration": {
+      "block_rows": 128,
+      "cadences": [
+        0.125,
+        0.25,
+        0.5
+      ],
+      "caps": {
+        "memory": 3221225472,
+        "output_cap": 33554432,
+        "seconds": 900.0
+      },
+      "entropy_backend": "uniformized",
+      "entropy_threads": 4,
+      "horizons": [
+        16,
+        64,
+        256,
+        1024
+      ],
+      "id": "calibration-poisson-full-clocks-tenth-grid",
+      "parameters": {
+        "d_energy_capacity": 3,
+        "d_energy_quantum": 0.1,
+        "discovery": true,
+        "kappa": 1
+      },
+      "policy": {
+        "cost": 0.3,
+        "phi": 0.55
+      }
+    },
+    "id": "calibration-poisson-full-clocks-tenth-grid",
+    "identity": "c2bf554a706c84c84ca49142b0cf9b307d019f604061d2569eb0dca316bc8b20",
+    "profile": {
+      "cap_reason": null,
+      "exit_code": 0,
+      "input_hash": "fe272f7608cf503c6adef78ed9c373edbcf72f348283844e90249566b54359b2",
+      "job_memory_cap_bytes": 3221225472,
+      "output_bytes": 601170,
+      "peak_job_bytes": 1223380992,
+      "wall_cap_seconds": 900.0,
+      "wall_seconds": 277.0457026999793
+    },
+    "result_sha256": "01ba5bcfcf217afebcdad8c4c853a789ae724caa2e760f60c3684fef0c5ce8dd",
+    "run": "C:\\Users\\paolo\\Documents\\ChatGPT\\Test\\Omega\\results\\local_runs\\lushness_testbed\\domination_b1\\c2bf554a706c-20261015T025127879602Z",
+    "status": "complete"
+  },
+  "threaded_vs_serial_max_error_bits": 0.0,
+  "threaded_vs_serial_comparisons": 12,
+  "threaded_wall_seconds": 277.0457026999793
+}

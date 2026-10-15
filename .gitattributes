@@ -54,3 +54,31 @@ docs/research_notes/lushness_testbed/domination_friction/**/*.json -text whitesp
 omega_v2/testbed/domination_friction.py -text whitespace=cr-at-eol
 omega_v2/testbed/analysis/friction_profile.py -text whitespace=cr-at-eol
 scripts/*domination_friction*.py -text whitespace=cr-at-eol
+
+# Stage A uses the same source/configuration and compact-result byte identities.
+scripts/*domination_stage_a*.py -text whitespace=cr-at-eol
+tests/test_domination_stage_a.py -text whitespace=cr-at-eol
+docs/research_notes/lushness_testbed/domination_stage_a/**/*.json -text whitespace=cr-at-eol
+docs/research_notes/lushness_testbed/domination_stage_a/*.json -text whitespace=cr-at-eol
+
+# Fractional bank and discovery run byte identities.
+omega_v2/testbed/energy_grid.py -text whitespace=cr-at-eol
+omega_v2/testbed/analysis/expanded_friction_profile.py -text whitespace=cr-at-eol
+omega_v2/testbed/analysis/friction_attribution.py -text whitespace=cr-at-eol
+omega_v2/testbed/analysis/streamed_history.py -text whitespace=cr-at-eol
+omega_v2/testbed/analysis/uniformized_entropy.py -text whitespace=cr-at-eol
+omega_v2/testbed/analysis/entropy_checkpoints.py -text whitespace=cr-at-eol
+scripts/*domination_b1*.py -text whitespace=cr-at-eol
+scripts/domination_structure_probe.py -text whitespace=cr-at-eol
+docs/research_notes/lushness_testbed/domination_b1/**/*.json -text whitespace=cr-at-eol
+docs/research_notes/lushness_testbed/domination_b1/*.json -text whitespace=cr-at-eol
+
+# Paired transfer and matched-flow records hash exact source/result bytes.
+omega_v2/testbed/resource_transfer.py -text whitespace=cr-at-eol
+omega_v2/testbed/analysis/flow_matching.py -text whitespace=cr-at-eol
+scripts/*resource_transfer*.py -text whitespace=cr-at-eol
+scripts/*continuation_controls*.py -text whitespace=cr-at-eol
+scripts/flow_calibration_worker.py -text whitespace=cr-at-eol
+docs/research_notes/lushness_testbed/resource_transfer/**/*.json -text whitespace=cr-at-eol
+docs/research_notes/lushness_testbed/resource_transfer/*.json -text whitespace=cr-at-eol
+docs/research_notes/lushness_testbed/continuation_controls/**/*.json -text whitespace=cr-at-eol

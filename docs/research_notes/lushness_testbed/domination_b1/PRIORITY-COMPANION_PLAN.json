@@ -1,0 +1,48 @@
+{
+  "caps": {
+    "memory": 3221225472,
+    "output_cap": 33554432,
+    "seconds": 900.0
+  },
+  "cases": [
+    {
+      "block_rows": 128,
+      "entropy_backend": "uniformized",
+      "entropy_threads": 4,
+      "id": "exclusion-idle",
+      "parameters": {
+        "d_energy_capacity": 3,
+        "d_energy_quantum": 0.1,
+        "discovery": true,
+        "kappa": 0,
+        "opportunity_yield": 1
+      },
+      "policy": {
+        "phi": 0
+      }
+    },
+    {
+      "block_rows": 128,
+      "entropy_backend": "uniformized",
+      "entropy_threads": 4,
+      "id": "exclusion-access-c0.1-p0.95",
+      "parameters": {
+        "d_energy_capacity": 3,
+        "d_energy_quantum": 0.1,
+        "discovery": true,
+        "kappa": 0,
+        "opportunity_yield": 1
+      },
+      "policy": {
+        "cost": 0.1,
+        "direction": "entry",
+        "mode": "blocking",
+        "phi": 0.95,
+        "region": [
+          0
+        ]
+      }
+    }
+  ],
+  "source_hash": "1449c792d18313900d65f17258a0f3afbb518b541554526e27a66b5a65153e98"
+}

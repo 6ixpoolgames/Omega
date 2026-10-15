@@ -34,7 +34,7 @@ def main(out):
     build_time = perf_counter()-start
     roots = {name: matched_roots()[name] for name in config['roots']}
     result = profile(compiled, roots, config['cadences'], config['horizons'],
-                     config['max_kernel_bytes'])
+                     config['max_kernel_bytes'], config.get('subject_depth', 1))
     result.update(input_hash=manifest['input_hash'], mode=config['mode'],
                   case=config['id'], build_seconds=build_time,
                   analysis_seconds=perf_counter()-start-build_time,
