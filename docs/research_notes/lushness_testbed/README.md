@@ -1,5 +1,67 @@
 # Lushness optimizer test bed
 
+**Current readings:** [Updated interpretations — 15 October 2026](UPDATED_INTERPRETATIONS_2026-10-15.md).
+Revised interpretations are labeled explicitly; original numerical outputs and
+forecast checklists remain available as provenance.
+
+Latest implemented experiment: [embodied friction on access](domination_friction/RESULTS.md),
+with [structural interpretation](domination_friction/INTERPRETATION.md) and
+[physical model](domination_friction/MODEL.md). The first24-case map distinguishes
+resource/construction exclusion, trap confinement and steering away from the
+trap under paid control. Whole-field and S comparisons resolve their distinct
+continuation effects; D's marginal ranking remains bounded and partly unresolved.
+The world uses2304 states, three cadences and four horizons throughT1024, with
+explicit device costs and retained stochastic background. Cost/strength expansion,
+chemical control, revolt and uncertain control are subsequent native modules.
+
+Latest combined result: [three-link compounding with persistence and lushness gains](robust_generativity/RESULTS.md).
+The completed 144-case study demonstrates paid successive enabling and retained
+expansion throughout its 12-setting shape grid, including sublinear feedback.
+Four distinct regimes combine compounding with majority functional uptime;
+all 40 shape/stress settings have positive T256 lushness differences against
+the unbound preparation and both main mechanism controls across three cadences.
+The [interpretation](robust_generativity/INTERPRETATION.md) explains the mechanism,
+stress dependence, energy funding and reference dependence.
+
+We report the physical evidence and its operating range. Provisional funding
+and recovery cutoffs remain historical diagnostics; missing them does not turn
+the demonstrated principle into a failed experiment. Original plans and numerical
+outputs remain available for reproduction. Regenerate the current results with
+`python scripts/report_robust_generativity_assessment.py`.
+
+This stage is finite, well-mixed count chemistry. Spatial gas replication,
+open-ended growth and interacting valuers remain separate research questions.
+See the [engineering report](robust_generativity/ENGINEERING.md),
+[physical/numerical contract](robust_generativity/PHYSICS_AND_NUMERICS.md) and
+[original design](robust_generativity/PROPOSED_SPEC_r1.md).
+
+Latest physical mechanism: [resource-funded compounding boundary](compounding/RESULTS.md).
+The new damage-separated model tests retained recursively enabling apparatus at
+capacities4/8/16/32, with explicit resource/recycling/bath funding and unchanged
+thermal assembly under the damage sweep. It is a bounded mechanism experiment,
+not a valuer-population or open-ended-growth claim.
+
+Latest same-law comparison: [thermal/dispersed preparation results](same_law_gas/RESULTS.md),
+with [implemented physical specification](same_law_gas/SPEC.md) and
+[horizon-sufficiency audit](same_law_gas/HORIZON_AUDIT.md).
+It adds actual positions, bonds and costed local fuel transport. All14 laws
+completed with naturally assembling thermal, initially unbound and arrangement
+references. AtT64 the seed wins12/14 thermal comparisons but3/14 unbound ones;
+all unbound offsets at cadence0.25 are negative. The original
+[design draft](compounding/SAME_LAW_GAS_COMPARISON_DRAFT_r1.md) remains historical.
+
+The [compounding activity reanalysis](compounding/ACTIVITY_REANALYSIS.md) retains
+rate-minus-basal capacity curves, temporal N/F and fixed-jump histories for all
+completed laws. A [ledger split and throughput companion](compounding/LEDGER_AND_THROUGHPUT_AMENDMENTS_DRAFT_r1.md)
+remains the design provenance. The [completed matched-work control](compounding/matched_throughput/RESULTS.md)
+finds positive finiteT64 and rate gains at all12 physical-flow-matched points.
+This is a mechanism comparison at equal stationary accepted work, not gas or
+equal event activity. Finite-history lushness remains primary; rate is diagnostic.
+
+The [kinetic review response](compounding/KINETIC_REVIEW_RESPONSE_AND_NEXT_CONTROLS.md)
+checks actual compounding coefficients and specifies sublinear feedback,
+crowding, product inhibition and cross-catalytic chemistry as future controls.
+
 Current interpretation: [variation, access and renewal synthesis](INTERPRETATION_SYNTHESIS_2026-10-15.md),
 aligned with the canonical Drive revision posture. It separates preparation,
 ongoing mechanism and ethical claims while retaining all adverse findings.
@@ -8,7 +70,8 @@ Latest completed extension: [paid renewal frontier](renewal/RESULTS.md), includi
 capacity1 self-maintenance, capacity2 bounded construction feedback, energy
 returns, horizon probes, repair/catalysis ablations and retained failure targets.
 The rate advantage explains delayed repayment: informed actuation wins in5 of19
-laws by T256 and13 by T1024, while all registered T64 frontier predictions fail.
+laws by T256 and13 by T1024, compared with none at T64. The initial forecast
+underestimated the repayment horizon.
 Construction assistance increases turnover rather than retained expansion.
 
 Latest matched-mechanism comparison: [paid sensing results](paid_sensing/RESULTS.md).

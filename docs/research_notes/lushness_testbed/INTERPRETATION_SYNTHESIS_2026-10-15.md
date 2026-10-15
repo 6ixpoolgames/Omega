@@ -1,20 +1,29 @@
 # Variation, access and renewal: interpretation synthesis
 
+**Updated interpretation — 15 October 2026.** This reading incorporates later
+mechanism evidence and the originator's reporting correction. Numerical results
+remain unchanged; earlier forecast/checklist labels are historical diagnostics.
+
 15 October 2026. This is a retrospective interpretation of completed experiments,
 including the previously unpushed temporal, exploration, paid-sensing and renewal
-batches. Their physical laws, recorded predictions, numerical results and scoring
-criteria are unchanged. Later evidence updates the causal account; it does not
-change an earlier failed prediction into a pass.
+batches, with the subsequent robust-compounding result linked below. Physical
+laws and numerical outputs are retained. Interpretation follows the physical
+evidence: provisional forecasts and numerical cutoffs help plan experiments,
+but missing a guessed threshold is not itself a failure of the principle being
+investigated. We revise inadequate operational tests and keep their provenance.
 
 ## Revision posture and claim scope
 
-The source posture is the canonical Drive
+The earlier revision posture was read from the canonical Drive
 [v4.1 revision ledger r6](https://drive.google.com/file/d/1KaDaw_nC18ZLKog0fHDHbtNTEsrb0eVu/view),
 read on15October2026; the file's observed modification time was
 14October2026,15:41:45UTC. The relevant entries are A1–A3, A12–A14 and B2–B8,
 together with the standing rulings and evidence rubric. The Drive chapters
-remain the canonical manuscript. This note updates experimental interpretation
-and provenance, not the manuscript or the Drive ledger.
+remain the canonical manuscript. Subsequent user instructions on 15 October
+supersede procedural readings that equated missed guesses with a failed
+principle. This note updates experimental interpretation and provenance,
+not the manuscript or the Drive ledger. The [updated interpretation index](UPDATED_INTERPRETATIONS_2026-10-15.md)
+identifies current readings and the retained original numerical reports.
 
 Lushness remains weighted continuation breadth. Access, generativity, maintenance
 and recovery explain how the physical continuation produces that breadth; they
@@ -24,8 +33,10 @@ register switching and thermal turnover. Rule A remains parked.
 Evidence is claim-specific. These models instantiate physical registers, energy
 costs, resource access and renewal, so their exact comparisons bear on those
 mechanisms and on the classical readout. They do not instantiate an intertwined
-population of valuers, interpersonal domination, phenomenal valence or a
-microscopic gas comparator. They therefore cannot settle those broader claims
+population with bilateral control, phenomenal valence or a microscopic gas
+comparator. The [later friction experiment](domination_friction/INTERPRETATION.md)
+adds a first unilateral-control comparison in a coupled world. The earlier
+single-register/renewal studies alone cannot settle those broader claims
 of the ethical wager. The functional aversive proxy's scoped counterexamples
 remain evidence about the particular functional interpretation tested.
 
@@ -38,12 +49,13 @@ inspection policy or arbitrary-policy optimality claim here.
 
 | Experiment | Physical comparison | Finding | Claim supported within scope |
 | --- | --- | --- | --- |
-| [Functional aversive adversaries](aversive_signals/FIRST_BATCH_ASSESSMENT.md) | Tracking obstructed response versus the same obstruction without the register | Two primary resolved A>B comparisons, with less food and shorter life; signs reverse at finer cadence | The unrestricted local functional ranking claim fails at those declared resolutions; no stronger corridor kill and no clean K2 verdict |
+| [Functional aversive adversaries](aversive_signals/FIRST_BATCH_ASSESSMENT.md) | Tracking obstructed response versus the same obstruction without the register | Two primary resolved A>B comparisons, with less food and shorter life; signs reverse at finer cadence | Resolved register variation supplies the local gain; matched-register controls separate it from futile response and functional aversion |
 | [Matched-register controls](aversive_signals/REGISTER_CONTROL_ASSESSMENT.md) | Paid independent variation, injury-linked variation and blocked response | Independent variation beats the inactive register below a cost frontier; removing blocked response helps | Physical variation can add breadth despite functional costs; the earlier gain was not specific to aversiveness |
 | [Temporal calibration](temporal_profile/RESULTS.md) | Fixed physical worlds, finer sampled timing | Exact adverse-pair crossings near0.142 and0.180, rather than leading estimates near0.103 and0.138 | Cadence reversals have an analytic activity/finite-term account, requiring exact finite-cadence verification |
 | [Costed exploration](exploration/RESULTS.md) | Randomly driven movement versus uncoupled variation and idealized stock-aware movement | Blind movement loses15/16; stock-aware movement wins14/16 against noise | Access can make action productive; mere coupling of variation to costly movement does not guarantee repayment |
 | [Paid sensing](paid_sensing/RESULTS.md) | Informative and stock-independent writers with the same unit sensing/action bills | Information-by-actuation interaction positive in all8 pooled groups; R0 still wins14/16 primary preparations | The benefit of information depends on actionable access and its costs; idealized free information was not necessary for the interaction |
 | [Paid renewal](renewal/RESULTS.md) | The same four mechanisms with renewable apparatus and continuing resource input | IX−R0 rate positive57/57; IX wins0/19 atT64,5/19 atT256 and13/19 atT1024 at cadence0.25 | Ongoing paid information/action can repay its initial deficit; the construction-assistance gain mainly increases turnover rather than retained expansion |
+| [Three-link compounding](robust_generativity/RESULTS.md) | Paid cyclic enabling, sublinear/proportional feedback, stress and mechanism ablations | Three-link completion with retained expansion in all12 shape settings; four distinct regimes with majority functional uptime; positive T256 seed–unbound and mechanism differences in all40 settings across three cadences | Compounding, persistence and positive lushness consequences coexist in this finite count chemistry; stress and resource profiles delimit the operating range |
 
 These counts are not independent samples from a population of universes.
 Preparations, aliases and mechanism ablations are disclosed in each report.
@@ -85,7 +97,7 @@ locates a candidate repayment scale. The full finite-history calculation
 determines whether that repayment has occurred at a particular horizon. In
 renewal, the progression from no IX wins atT64 to13 atT1024 is an actual
 best-of-four finite-history result, not a rate-first ranking substituted for
-lushness. The original T64 frontier predictions still fail.
+lushness. The initial T64 forecast underestimated the repayment timescale.
 
 Robust persistence determines whether the continuing return survives. A
 high-rate channel that is easily destroyed may lose to robust preservation
@@ -129,22 +141,25 @@ finite term nor a limiting rate is a substitute for the physical Omega structure
    cadences0.125/0.25/0.5 at the four tested horizons. Hidden-register bounds are
    retained separately. This is not a complete state-grain or quantum audit.
 
-## What remains open
+## What renewal prompted, and what remains open
 
-The next physical distinction is genuine damage versus reversible thermal
-turnover. The current wear parameter accelerates thermal assembly as well as
-disassembly, so it does not isolate a harmful increase in breakdown. The
-registered prediction about wear stays failed, with that structural limitation
-explicitly identified.
+Renewal's wear parameter accelerates thermal assembly as well as disassembly,
+so it did not isolate a harmful increase in breakdown. Its forecast about damage
+was therefore poorly operationalized. The subsequent
+[compounding experiment](compounding/RESULTS.md) separates damage from thermal
+reconstruction, and [three-type chemistry](robust_generativity/INTERPRETATION.md)
+measures retained compounding and persistence under stronger damage and material
+loss. Those results replace the earlier damage interpretation with actual
+structural comparisons.
 
-The resource-use loop also needs a sharper energetic attribution: captured
+The resource-use loop also prompted a sharper energetic attribution: captured
 resource energy, bath reconstruction and energy recovered by dismantling
-hardware must remain separately legible. A sustained rate increment from
+hardware remain separately legible in the later ledgers. A sustained rate increment from
 construction churn is real breadth under the standing randomness ruling,
 but it does not establish greater retained generative capacity.
 
-Open-ended compounding, an adequate disordered/thermal comparator, population
-intertwining and cross-scale composition remain research targets. The local
-mechanism evidence is already positive and adverse in informative ways. The
-next modules should expose the missing relations without adding rewards for
+Open-ended compounding, sustained spatial enabling against dispersed matter,
+population ecology and cross-scale composition remain research targets. The
+first friction map now adds coupled control and marginal subject histories.
+The next modules should expose missing relations without adding rewards for
 the behavior the programme hopes to find.
