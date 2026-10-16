@@ -93,3 +93,13 @@ scripts/run_c5_followups.py -text whitespace=cr-at-eol
 scripts/c5_crossover_worker.py -text whitespace=cr-at-eol
 scripts/run_c5_crossover_probe.py -text whitespace=cr-at-eol
 scripts/report_c5_crossover.py -text whitespace=cr-at-eol
+
+# Reactive policy histories, receipts and tabulations retain exact bytes.
+omega_v2/testbed/reactive_allocation.py -text whitespace=cr-at-eol
+omega_v2/testbed/analysis/policy_search_profile.py -text whitespace=cr-at-eol
+scripts/*c5_policy*.py -text whitespace=cr-at-eol
+tests/test_reactive_allocation.py -text whitespace=cr-at-eol
+docs/research_notes/lushness_testbed/c5_policy_search/**/*.json -text whitespace=cr-at-eol
+docs/research_notes/lushness_testbed/c5_policy_search/*.json -text whitespace=cr-at-eol
+docs/research_notes/lushness_testbed/c5_policy_search/*.csv -text whitespace=cr-at-eol
+docs/research_notes/lushness_testbed/c5_policy_search/SPECIFICATION.md -text whitespace=cr-at-eol

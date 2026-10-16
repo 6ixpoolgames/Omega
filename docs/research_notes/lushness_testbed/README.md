@@ -4,7 +4,16 @@
 Revised interpretations are labeled explicitly; original numerical outputs and
 forecast checklists remain available as provenance.
 
-Latest completed expansion: [constraint Stage A — 470-case map](domination_stage_a/RESULTS.md),
+Latest policy assay: [exhaustive paid reactive allocation — 36 tables](c5_policy_search/RESULTS.md),
+with [physical interpretation](c5_policy_search/INTERPRETATION.md) and
+[implementation scope](c5_policy_search/SPECIFICATION.md). At T256 the whole-field
+optimum adapts between donation and extraction with local apparatus count and
+beats every constant table at all three cadences. At T1024 the preferred table
+changes with cadence. Actual marginal-history bounds leave D's precise optimum
+unresolved. This fixed-contact count assay prepares the policy-search machinery;
+it does not include the spatial confinement/discovery channels.
+
+Preceding expansion: [constraint Stage A — 470-case map](domination_stage_a/RESULTS.md),
 with [structural interpretation](domination_stage_a/INTERPRETATION.md),
 [implemented revisions](domination_stage_a/SPECIFICATION.md), and
 [reproduction](domination_stage_a/REPRODUCE.md). Paid whole-field choices favor
