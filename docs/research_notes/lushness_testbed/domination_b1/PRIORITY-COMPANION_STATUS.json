@@ -1,0 +1,114 @@
+{
+  "cases": [
+    {
+      "configuration": {
+        "block_rows": 128,
+        "cadences": [
+          0.125,
+          0.25,
+          0.5
+        ],
+        "caps": {
+          "memory": 3221225472,
+          "output_cap": 33554432,
+          "seconds": 900.0
+        },
+        "entropy_backend": "uniformized",
+        "entropy_threads": 4,
+        "horizons": [
+          16,
+          64,
+          256,
+          1024
+        ],
+        "id": "exclusion-idle",
+        "parameters": {
+          "d_energy_capacity": 3,
+          "d_energy_quantum": 0.1,
+          "discovery": true,
+          "kappa": 0,
+          "opportunity_yield": 1
+        },
+        "policy": {
+          "phi": 0
+        }
+      },
+      "id": "exclusion-idle",
+      "identity": "50198d69c71c405936a98b0d7e904ac9a4c2dc1ccd8879b35cfc081cbcd6bb15",
+      "profile": {
+        "cap_reason": null,
+        "exit_code": 0,
+        "input_hash": "507baecaa84b6e1ee909c876ec151bf05598b766d41090274f6dd232e1ed5047",
+        "job_memory_cap_bytes": 3221225472,
+        "output_bytes": 588345,
+        "peak_job_bytes": 1216438272,
+        "wall_cap_seconds": 900.0,
+        "wall_seconds": 409.70502680004574
+      },
+      "result_sha256": "7c2181a07df1d6c1408edf3bbc40cf381908206e9548749fd2d1ba609b50a5e9",
+      "run": "C:\\Users\\paolo\\Documents\\ChatGPT\\Test\\Omega\\results\\local_runs\\lushness_testbed\\domination_b1\\50198d69c71c-20261015T032602443803Z",
+      "status": "complete"
+    },
+    {
+      "configuration": {
+        "block_rows": 128,
+        "cadences": [
+          0.125,
+          0.25,
+          0.5
+        ],
+        "caps": {
+          "memory": 3221225472,
+          "output_cap": 33554432,
+          "seconds": 900.0
+        },
+        "entropy_backend": "uniformized",
+        "entropy_threads": 4,
+        "horizons": [
+          16,
+          64,
+          256,
+          1024
+        ],
+        "id": "exclusion-access-c0.1-p0.95",
+        "parameters": {
+          "d_energy_capacity": 3,
+          "d_energy_quantum": 0.1,
+          "discovery": true,
+          "kappa": 0,
+          "opportunity_yield": 1
+        },
+        "policy": {
+          "cost": 0.1,
+          "direction": "entry",
+          "mode": "blocking",
+          "phi": 0.95,
+          "region": [
+            0
+          ]
+        }
+      },
+      "id": "exclusion-access-c0.1-p0.95",
+      "identity": "68fac0659904e2a5bf4c17dbbc15e770d3544e48a3298ae307c0b6b468413833",
+      "profile": {
+        "cap_reason": null,
+        "exit_code": 0,
+        "input_hash": "49288ba95cc3955573ae526893102da23d08086bf6f00285f0f19a94afede732",
+        "job_memory_cap_bytes": 3221225472,
+        "output_bytes": 589730,
+        "peak_job_bytes": 1219751936,
+        "wall_cap_seconds": 900.0,
+        "wall_seconds": 396.0685782000073
+      },
+      "result_sha256": "46b0407a19b7e3364e93f17279e0725e24f549b8a0f9ceb43070ad8e5bf1ee12",
+      "run": "C:\\Users\\paolo\\Documents\\ChatGPT\\Test\\Omega\\results\\local_runs\\lushness_testbed\\domination_b1\\68fac0659904-20261015T033253402153Z",
+      "status": "complete"
+    }
+  ],
+  "elapsed_seconds": 808.2969999999623,
+  "jobs": 1,
+  "mode": "priority-companion",
+  "source_hash": "1449c792d18313900d65f17258a0f3afbb518b541554526e27a66b5a65153e98",
+  "status": "complete",
+  "total_cases": 2
+}

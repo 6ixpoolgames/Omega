@@ -1,0 +1,1274 @@
+{
+  "all_144_frozen_outputs_verified": true,
+  "all_setting_positive_counts_T256": {
+    "all_assistance_off": 40,
+    "cut_C_to_A": 40,
+    "thermal": 0,
+    "unbound": 40
+  },
+  "funding_horizon_examples": {
+    "A-a1-k1-s0.6": {
+      "1024": {
+        "all_bank_expenditure": 72.31965068694304,
+        "external_spent_LB": 0.8361440601117822,
+        "gross_capture_spent_LB": 0.9310180984734989,
+        "initial_and_nonexternal_packet_budget": 6.861257313578983
+      },
+      "16": {
+        "all_bank_expenditure": 5.128766591998582,
+        "external_spent_LB": 0.0,
+        "gross_capture_spent_LB": 0.40669092891886177,
+        "initial_and_nonexternal_packet_budget": 3.012476985875841
+      },
+      "256": {
+        "all_bank_expenditure": 27.732013844953002,
+        "external_spent_LB": 0.7196133338572999,
+        "gross_capture_spent_LB": 0.8659690984342282,
+        "initial_and_nonexternal_packet_budget": 4.058740089536058
+      },
+      "4096": {
+        "all_bank_expenditure": 208.61241562052794,
+        "external_spent_LB": 0.8872048684078454,
+        "gross_capture_spent_LB": 0.9575718953842062,
+        "initial_and_nonexternal_packet_budget": 14.679435477573467
+      },
+      "64": {
+        "all_bank_expenditure": 12.255452728749637,
+        "external_spent_LB": 0.4793290722925776,
+        "gross_capture_spent_LB": 0.7354861193409845,
+        "initial_and_nonexternal_packet_budget": 3.1393205812378477
+      }
+    },
+    "A-a1-k1-s2.4": {
+      "1024": {
+        "all_bank_expenditure": 77.84327986047846,
+        "external_spent_LB": 0.8770181888471894,
+        "gross_capture_spent_LB": 0.93665903437756,
+        "initial_and_nonexternal_packet_budget": 4.642639029736203
+      },
+      "16": {
+        "all_bank_expenditure": 5.538736150275142,
+        "external_spent_LB": 0.0,
+        "gross_capture_spent_LB": 0.4502691508896003,
+        "initial_and_nonexternal_packet_budget": 3.0079832934807382
+      },
+      "256": {
+        "all_bank_expenditure": 28.922173482152132,
+        "external_spent_LB": 0.7538911418419392,
+        "gross_capture_spent_LB": 0.8729626251380416,
+        "initial_and_nonexternal_packet_budget": 3.4438060966670534
+      },
+      "4096": {
+        "all_bank_expenditure": 233.2303146259682,
+        "external_spent_LB": 0.9267072358376783,
+        "gross_capture_spent_LB": 0.9618201697723948,
+        "initial_and_nonexternal_packet_budget": 8.189400629034768
+      },
+      "64": {
+        "all_bank_expenditure": 12.926114309776741,
+        "external_spent_LB": 0.5122253759646476,
+        "gross_capture_spent_LB": 0.749850121585133,
+        "initial_and_nonexternal_packet_budget": 3.071564624722015
+      }
+    }
+  },
+  "irreversibility_contrasts_exploratory": [
+    {
+      "from": "B-a0.5-s0.15-R1",
+      "profiles": {
+        "1024": {
+          "all_negative": false,
+          "all_positive": true,
+          "cadences": {
+            "0.125": {
+              "delta_bits": 1.0226384242004087,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.07635339523748386,
+              "solver_allowance": 8.282457967188293e-07
+            },
+            "0.25": {
+              "delta_bits": 1.1686505499885698,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.06687120774370203,
+              "solver_allowance": 5.240452315367293e-07
+            },
+            "0.5": {
+              "delta_bits": 1.2988893502902101,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.05752497194864997,
+              "solver_allowance": 7.041596580213081e-07
+            }
+          },
+          "sign_flip": false
+        },
+        "16": {
+          "all_negative": false,
+          "all_positive": true,
+          "cadences": {
+            "0.125": {
+              "delta_bits": 0.18939253189857652,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.07635339523748386,
+              "solver_allowance": 2.0978235743711447e-07
+            },
+            "0.25": {
+              "delta_bits": 0.18987440471268258,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.06687120774370203,
+              "solver_allowance": 2.050395516648649e-07
+            },
+            "0.5": {
+              "delta_bits": 0.1902302851785862,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.05752497194864997,
+              "solver_allowance": 2.078576983045253e-07
+            }
+          },
+          "sign_flip": false
+        },
+        "256": {
+          "all_negative": false,
+          "all_positive": true,
+          "cadences": {
+            "0.125": {
+              "delta_bits": 1.1350301796356348,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.07635339523748386,
+              "solver_allowance": 3.5664717856189724e-07
+            },
+            "0.25": {
+              "delta_bits": 1.167965619183235,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.06687120774370203,
+              "solver_allowance": 2.8072294122030143e-07
+            },
+            "0.5": {
+              "delta_bits": 1.1933446304839492,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.05752497194864997,
+              "solver_allowance": 3.257985875469103e-07
+            }
+          },
+          "sign_flip": false
+        },
+        "4096": {
+          "all_negative": true,
+          "all_positive": false,
+          "cadences": {
+            "0.125": {
+              "delta_bits": -3.6014904536350514,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -0.07635339523748386,
+              "solver_allowance": 2.7394965064151618e-06
+            },
+            "0.25": {
+              "delta_bits": -2.4596247816525647,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -0.06687120774370203,
+              "solver_allowance": 1.5146363926352933e-06
+            },
+            "0.5": {
+              "delta_bits": -1.3880747002212956,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -0.05752497194864997,
+              "solver_allowance": 2.2320835574239025e-06
+            }
+          },
+          "sign_flip": false
+        },
+        "64": {
+          "all_negative": false,
+          "all_positive": true,
+          "cadences": {
+            "0.125": {
+              "delta_bits": 0.6770780441942748,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.07635339523748386,
+              "solver_allowance": 2.3913590272686117e-07
+            },
+            "0.25": {
+              "delta_bits": 0.6841214960833355,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.06687120774370203,
+              "solver_allowance": 2.201627123885828e-07
+            },
+            "0.5": {
+              "delta_bits": 0.6892822522407158,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.05752497194864997,
+              "solver_allowance": 2.3143456395182652e-07
+            }
+          },
+          "sign_flip": false
+        }
+      },
+      "to": "B-a0.5-s0.15-R3",
+      "uptime_difference": -0.026882563902976386
+    },
+    {
+      "from": "B-a0.5-s0.15-R3",
+      "profiles": {
+        "1024": {
+          "all_negative": true,
+          "all_positive": false,
+          "cadences": {
+            "0.125": {
+              "delta_bits": -2.6854148792688193,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -4.765077221691172e-13,
+              "solver_allowance": 1.3230179735033374e-06
+            },
+            "0.25": {
+              "delta_bits": -1.7487570199605216,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -4.2299497238218464e-13,
+              "solver_allowance": 5.421195060582249e-07
+            },
+            "0.5": {
+              "delta_bits": -0.8691462058093293,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -3.5205172110863714e-13,
+              "solver_allowance": 7.422839093327525e-07
+            }
+          },
+          "sign_flip": false
+        },
+        "16": {
+          "all_negative": false,
+          "all_positive": true,
+          "cadences": {
+            "0.125": {
+              "delta_bits": 0.35706997541365126,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -4.765077221691172e-13,
+              "solver_allowance": 2.1749138846431205e-07
+            },
+            "0.25": {
+              "delta_bits": 0.3591618278323949,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -4.2299497238218464e-13,
+              "solver_allowance": 2.0530889665562028e-07
+            },
+            "0.5": {
+              "delta_bits": 0.3608832742980894,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -3.5205172110863714e-13,
+              "solver_allowance": 2.0843838505212683e-07
+            }
+          },
+          "sign_flip": false
+        },
+        "256": {
+          "all_negative": false,
+          "all_positive": true,
+          "cadences": {
+            "0.125": {
+              "delta_bits": 0.9816701170137776,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -4.765077221691172e-13,
+              "solver_allowance": 4.800746625591932e-07
+            },
+            "0.25": {
+              "delta_bits": 1.2376909986155056,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -4.2299497238218464e-13,
+              "solver_allowance": 2.8508223459102736e-07
+            },
+            "0.5": {
+              "delta_bits": 1.4657150141579791,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -3.5205172110863714e-13,
+              "solver_allowance": 3.3514673619097194e-07
+            }
+          },
+          "sign_flip": false
+        },
+        "4096": {
+          "all_negative": true,
+          "all_positive": false,
+          "cadences": {
+            "0.125": {
+              "delta_bits": -44.504861931683536,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -4.765077221691172e-13,
+              "solver_allowance": 4.735581066278382e-06
+            },
+            "0.25": {
+              "delta_bits": -37.50007580281499,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -4.2299497238218464e-13,
+              "solver_allowance": 1.597127107338747e-06
+            },
+            "0.5": {
+              "delta_bits": -30.72478489491141,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -3.5205172110863714e-13,
+              "solver_allowance": 2.396287070432845e-06
+            }
+          },
+          "sign_flip": false
+        },
+        "64": {
+          "all_negative": false,
+          "all_positive": true,
+          "cadences": {
+            "0.125": {
+              "delta_bits": 1.216745069807871,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -4.765077221691172e-13,
+              "solver_allowance": 2.699761762137582e-07
+            },
+            "0.25": {
+              "delta_bits": 1.253444985469173,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -4.2299497238218464e-13,
+              "solver_allowance": 2.2124258102753628e-07
+            },
+            "0.5": {
+              "delta_bits": 1.2831719856665131,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -3.5205172110863714e-13,
+              "solver_allowance": 2.3376016897635447e-07
+            }
+          },
+          "sign_flip": false
+        }
+      },
+      "to": "B-a0.5-s0.15-R6",
+      "uptime_difference": -0.6035739889958229
+    },
+    {
+      "from": "B-a0.5-s0.6-R1",
+      "profiles": {
+        "1024": {
+          "all_negative": true,
+          "all_positive": false,
+          "cadences": {
+            "0.125": {
+              "delta_bits": -15.595182402046248,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -0.18074044775253828,
+              "solver_allowance": 2.943568920774851e-07
+            },
+            "0.25": {
+              "delta_bits": -12.705071397380038,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -0.15601086213809012,
+              "solver_allowance": 4.0844738468639433e-07
+            },
+            "0.5": {
+              "delta_bits": -9.905525295687312,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -0.13167246040526537,
+              "solver_allowance": 5.927906710998741e-07
+            }
+          },
+          "sign_flip": false
+        },
+        "16": {
+          "all_negative": false,
+          "all_positive": true,
+          "cadences": {
+            "0.125": {
+              "delta_bits": 0.19737078266169306,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.18074044775253828,
+              "solver_allowance": 2.0144018150183277e-07
+            },
+            "0.25": {
+              "delta_bits": 0.19867192225268582,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.15601086213809012,
+              "solver_allowance": 2.03228340278048e-07
+            },
+            "0.5": {
+              "delta_bits": 0.19983888212706802,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.13167246040526537,
+              "solver_allowance": 2.0611193957337357e-07
+            }
+          },
+          "sign_flip": false
+        },
+        "256": {
+          "all_negative": true,
+          "all_positive": false,
+          "cadences": {
+            "0.125": {
+              "delta_bits": -3.52430901737614,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -0.18074044775253828,
+              "solver_allowance": 2.2317297997933564e-07
+            },
+            "0.25": {
+              "delta_bits": -2.670431535464161,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -0.15601086213809012,
+              "solver_allowance": 2.5176258771610875e-07
+            },
+            "0.5": {
+              "delta_bits": -1.8507175725504794,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -0.13167246040526537,
+              "solver_allowance": 2.9788785093611806e-07
+            }
+          },
+          "sign_flip": false
+        },
+        "4096": {
+          "all_negative": true,
+          "all_positive": false,
+          "cadences": {
+            "0.125": {
+              "delta_bits": -80.05312069113506,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -0.18074044775253828,
+              "solver_allowance": 6.040671228722203e-07
+            },
+            "0.25": {
+              "delta_bits": -66.77730498647497,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -0.15601086213809012,
+              "solver_allowance": 1.0561420798969266e-06
+            },
+            "0.5": {
+              "delta_bits": -53.89486027683961,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -0.13167246040526537,
+              "solver_allowance": 1.7909909620859253e-06
+            }
+          },
+          "sign_flip": false
+        },
+        "64": {
+          "all_negative": false,
+          "all_positive": true,
+          "cadences": {
+            "0.125": {
+              "delta_bits": 0.4686680818712432,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.18074044775253828,
+              "solver_allowance": 2.0576722980483168e-07
+            },
+            "0.25": {
+              "delta_bits": 0.5316090619194256,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.15601086213809012,
+              "solver_allowance": 2.1291881827555907e-07
+            },
+            "0.5": {
+              "delta_bits": 0.5894453165775673,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.13167246040526537,
+              "solver_allowance": 2.2445259918160136e-07
+            }
+          },
+          "sign_flip": false
+        }
+      },
+      "to": "B-a0.5-s0.6-R3",
+      "uptime_difference": -1.042692832845539
+    },
+    {
+      "from": "B-a0.5-s0.6-R3",
+      "profiles": {
+        "1024": {
+          "all_negative": true,
+          "all_positive": false,
+          "cadences": {
+            "0.125": {
+              "delta_bits": -56.468358990357956,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -1.1790568521519162e-13,
+              "solver_allowance": 3.229274175784667e-07
+            },
+            "0.25": {
+              "delta_bits": -47.452590897893856,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -9.64783808399261e-14,
+              "solver_allowance": 3.8846498051061643e-07
+            },
+            "0.5": {
+              "delta_bits": -38.65570927963154,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -8.087974734394265e-14,
+              "solver_allowance": 6.160862259183773e-07
+            }
+          },
+          "sign_flip": false
+        },
+        "16": {
+          "all_negative": false,
+          "all_positive": true,
+          "cadences": {
+            "0.125": {
+              "delta_bits": 0.36623283371397974,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -1.1790568521519162e-13,
+              "solver_allowance": 2.018613444119353e-07
+            },
+            "0.25": {
+              "delta_bits": 0.3717434113913214,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -9.64783808399261e-14,
+              "solver_allowance": 2.028998673601288e-07
+            },
+            "0.5": {
+              "delta_bits": 0.3768966461806258,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -8.087974734394265e-14,
+              "solver_allowance": 2.0646227365087674e-07
+            }
+          },
+          "sign_flip": false
+        },
+        "256": {
+          "all_negative": true,
+          "all_positive": false,
+          "cadences": {
+            "0.125": {
+              "delta_bits": -18.43532941622709,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -1.1790568521519162e-13,
+              "solver_allowance": 2.300077829251677e-07
+            },
+            "0.25": {
+              "delta_bits": -15.175119150209184,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -9.64783808399261e-14,
+              "solver_allowance": 2.465689176110118e-07
+            },
+            "0.5": {
+              "delta_bits": -12.015355888140277,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -8.087974734394265e-14,
+              "solver_allowance": 3.035452303344009e-07
+            }
+          },
+          "sign_flip": false
+        },
+        "4096": {
+          "all_negative": true,
+          "all_positive": false,
+          "cadences": {
+            "0.125": {
+              "delta_bits": -260.8333810060021,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -1.1790568521519162e-13,
+              "solver_allowance": 7.38050244358601e-07
+            },
+            "0.25": {
+              "delta_bits": -222.6919103268624,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -9.64783808399261e-14,
+              "solver_allowance": 9.888888831075746e-07
+            },
+            "0.5": {
+              "delta_bits": -185.32055305806034,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -8.087974734394265e-14,
+              "solver_allowance": 1.894829776965889e-06
+            }
+          },
+          "sign_flip": false
+        },
+        "64": {
+          "all_negative": false,
+          "all_positive": false,
+          "cadences": {
+            "0.125": {
+              "delta_bits": -0.12238484071519906,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -1.1790568521519162e-13,
+              "solver_allowance": 2.0745669126445136e-07
+            },
+            "0.25": {
+              "delta_bits": 0.15437334800583358,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -9.64783808399261e-14,
+              "solver_allowance": 2.116080214329628e-07
+            },
+            "0.5": {
+              "delta_bits": 0.41223553687734693,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -8.087974734394265e-14,
+              "solver_allowance": 2.2585653719952562e-07
+            }
+          },
+          "sign_flip": true
+        }
+      },
+      "to": "B-a0.5-s0.6-R6",
+      "uptime_difference": -5.653496574349035
+    },
+    {
+      "from": "B-a1-s0.15-R1",
+      "profiles": {
+        "1024": {
+          "all_negative": false,
+          "all_positive": true,
+          "cadences": {
+            "0.125": {
+              "delta_bits": 1.0987489069810863,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.07598321472068226,
+              "solver_allowance": 1.2307925322194933e-06
+            },
+            "0.25": {
+              "delta_bits": 1.2359213512263523,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.06653180128005709,
+              "solver_allowance": 1.2682512413540124e-06
+            },
+            "0.5": {
+              "delta_bits": 1.3559894540899222,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.057221588785537236,
+              "solver_allowance": 3.564774265716551e-07
+            }
+          },
+          "sign_flip": false
+        },
+        "16": {
+          "all_negative": false,
+          "all_positive": true,
+          "cadences": {
+            "0.125": {
+              "delta_bits": 0.1897647177173809,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.07598321472068226,
+              "solver_allowance": 2.1608151301013549e-07
+            },
+            "0.25": {
+              "delta_bits": 0.19022563528604053,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.06653180128005709,
+              "solver_allowance": 2.166717481289724e-07
+            },
+            "0.5": {
+              "delta_bits": 0.19055631193099032,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.057221588785537236,
+              "solver_allowance": 2.0241730391259408e-07
+            }
+          },
+          "sign_flip": false
+        },
+        "256": {
+          "all_negative": false,
+          "all_positive": true,
+          "cadences": {
+            "0.125": {
+              "delta_bits": 1.1682740275091419,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.07598321472068226,
+              "solver_allowance": 4.5739799980328825e-07
+            },
+            "0.25": {
+              "delta_bits": 1.1974808704196676,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.06653180128005709,
+              "solver_allowance": 4.6682293203378337e-07
+            },
+            "0.5": {
+              "delta_bits": 1.218422039168388,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.057221588785537236,
+              "solver_allowance": 2.387822183256503e-07
+            }
+          },
+          "sign_flip": false
+        },
+        "4096": {
+          "all_negative": true,
+          "all_positive": false,
+          "cadences": {
+            "0.125": {
+              "delta_bits": -3.2848627197831775,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -0.07598321472068226,
+              "solver_allowance": 4.342378656979417e-06
+            },
+            "0.25": {
+              "delta_bits": -2.1780512511891175,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -0.06653180128005709,
+              "solver_allowance": 4.4883571769181115e-06
+            },
+            "0.5": {
+              "delta_bits": -1.1468703436153191,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -0.057221588785537236,
+              "solver_allowance": 8.474865585914813e-07
+            }
+          },
+          "sign_flip": false
+        },
+        "64": {
+          "all_negative": false,
+          "all_positive": true,
+          "cadences": {
+            "0.125": {
+              "delta_bits": 0.6805133346179844,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.07598321472068226,
+              "solver_allowance": 2.64330741622598e-07
+            },
+            "0.25": {
+              "delta_bits": 0.6873404320487566,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.06653180128005709,
+              "solver_allowance": 2.6669074061440085e-07
+            },
+            "0.5": {
+              "delta_bits": 0.6921238024585676,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.057221588785537236,
+              "solver_allowance": 2.096744834365836e-07
+            }
+          },
+          "sign_flip": false
+        }
+      },
+      "to": "B-a1-s0.15-R3",
+      "uptime_difference": -0.015231408174404493
+    },
+    {
+      "from": "B-a1-s0.15-R3",
+      "profiles": {
+        "1024": {
+          "all_negative": true,
+          "all_positive": false,
+          "cadences": {
+            "0.125": {
+              "delta_bits": -2.372579996962031,
+              "negative": true,
+              "positive": false,
+              "rate_difference": 1.8640644583456378e-13,
+              "solver_allowance": 9.113143851711356e-07
+            },
+            "0.25": {
+              "delta_bits": -1.4666201648121842,
+              "negative": true,
+              "positive": false,
+              "rate_difference": 1.5931700403370996e-13,
+              "solver_allowance": 1.3255064009674243e-06
+            },
+            "0.5": {
+              "delta_bits": -0.6217354503999104,
+              "negative": true,
+              "positive": false,
+              "rate_difference": 1.3916645613676337e-13,
+              "solver_allowance": 3.881771254375053e-07
+            }
+          },
+          "sign_flip": false
+        },
+        "16": {
+          "all_negative": false,
+          "all_positive": true,
+          "cadences": {
+            "0.125": {
+              "delta_bits": 0.358277521472246,
+              "negative": false,
+              "positive": true,
+              "rate_difference": 1.8640644583456378e-13,
+              "solver_allowance": 2.110706220718404e-07
+            },
+            "0.25": {
+              "delta_bits": 0.3602863681769577,
+              "negative": false,
+              "positive": true,
+              "rate_difference": 1.5931700403370996e-13,
+              "solver_allowance": 2.1754349754357064e-07
+            },
+            "0.5": {
+              "delta_bits": 0.36190818364701727,
+              "negative": false,
+              "positive": true,
+              "rate_difference": 1.3916645613676337e-13,
+              "solver_allowance": 2.0289088009086668e-07
+            }
+          },
+          "sign_flip": false
+        },
+        "256": {
+          "all_negative": false,
+          "all_positive": true,
+          "cadences": {
+            "0.125": {
+              "delta_bits": 1.1243320136997,
+              "negative": false,
+              "positive": true,
+              "rate_difference": 1.8640644583456378e-13,
+              "solver_allowance": 3.772962967550029e-07
+            },
+            "0.25": {
+              "delta_bits": 1.367043653500275,
+              "negative": false,
+              "positive": true,
+              "rate_difference": 1.5931700403370996e-13,
+              "solver_allowance": 4.808580177315889e-07
+            },
+            "0.5": {
+              "delta_bits": 1.5794219452560014,
+              "negative": false,
+              "positive": true,
+              "rate_difference": 1.3916645613676337e-13,
+              "solver_allowance": 2.4644222428851207e-07
+            }
+          },
+          "sign_flip": false
+        },
+        "4096": {
+          "all_negative": true,
+          "all_positive": false,
+          "cadences": {
+            "0.125": {
+              "delta_bits": -43.51282778614632,
+              "negative": true,
+              "positive": false,
+              "rate_difference": 1.8640644583456378e-13,
+              "solver_allowance": 3.0793247111025264e-06
+            },
+            "0.25": {
+              "delta_bits": -36.59864510346961,
+              "negative": true,
+              "positive": false,
+              "rate_difference": 1.5931700403370996e-13,
+              "solver_allowance": 4.7352148845267946e-06
+            },
+            "0.5": {
+              "delta_bits": -29.92623253269585,
+              "negative": true,
+              "positive": false,
+              "rate_difference": 1.3916645613676337e-13,
+              "solver_allowance": 9.912401542853331e-07
+            }
+          },
+          "sign_flip": false
+        },
+        "64": {
+          "all_negative": false,
+          "all_positive": true,
+          "cadences": {
+            "0.125": {
+              "delta_bits": 1.2299121300926572,
+              "negative": false,
+              "positive": true,
+              "rate_difference": 1.8640644583456378e-13,
+              "solver_allowance": 2.442908054676394e-07
+            },
+            "0.25": {
+              "delta_bits": 1.266031443041129,
+              "negative": false,
+              "positive": true,
+              "rate_difference": 1.5931700403370996e-13,
+              "solver_allowance": 2.701820930260055e-07
+            },
+            "0.5": {
+              "delta_bits": 1.2945569530858734,
+              "negative": false,
+              "positive": true,
+              "rate_difference": 1.3916645613676337e-13,
+              "solver_allowance": 2.11572927505199e-07
+            }
+          },
+          "sign_flip": false
+        }
+      },
+      "to": "B-a1-s0.15-R6",
+      "uptime_difference": -0.5882464878841596
+    },
+    {
+      "from": "B-a1-s0.6-R1",
+      "profiles": {
+        "1024": {
+          "all_negative": true,
+          "all_positive": false,
+          "cadences": {
+            "0.125": {
+              "delta_bits": -14.484865748367383,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -0.17885381074909046,
+              "solver_allowance": 4.4945750976002045e-07
+            },
+            "0.25": {
+              "delta_bits": -11.72085610715385,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -0.15431733953661153,
+              "solver_allowance": 1.0637321062821002e-06
+            },
+            "0.5": {
+              "delta_bits": -9.05787897642142,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -0.13019275203760405,
+              "solver_allowance": 5.272348294558469e-07
+            }
+          },
+          "sign_flip": false
+        },
+        "16": {
+          "all_negative": false,
+          "all_positive": true,
+          "cadences": {
+            "0.125": {
+              "delta_bits": 0.1982576173018913,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.17885381074909046,
+              "solver_allowance": 2.038591619194988e-07
+            },
+            "0.25": {
+              "delta_bits": 0.19952825928933748,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.15431733953661153,
+              "solver_allowance": 2.1346322556087034e-07
+            },
+            "0.5": {
+              "delta_bits": 0.20064943857110507,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.13019275203760405,
+              "solver_allowance": 2.050886678343298e-07
+            }
+          },
+          "sign_flip": false
+        },
+        "256": {
+          "all_negative": true,
+          "all_positive": false,
+          "cadences": {
+            "0.125": {
+              "delta_bits": -3.2563348929730864,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -0.17885381074909046,
+              "solver_allowance": 2.618936827900818e-07
+            },
+            "0.25": {
+              "delta_bits": -2.425076421325798,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -0.15431733953661153,
+              "solver_allowance": 4.1553575602073493e-07
+            },
+            "0.5": {
+              "delta_bits": -1.632594027547384,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -0.13019275203760405,
+              "solver_allowance": 2.815115477337258e-07
+            }
+          },
+          "sign_flip": false
+        },
+        "4096": {
+          "all_negative": true,
+          "all_positive": false,
+          "cadences": {
+            "0.125": {
+              "delta_bits": -75.93412314281568,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -0.17885381074909046,
+              "solver_allowance": 1.227954496635175e-06
+            },
+            "0.25": {
+              "delta_bits": -63.12666408452333,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -0.15431733953661153,
+              "solver_allowance": 3.6803537403149674e-06
+            },
+            "0.5": {
+              "delta_bits": -50.75256292931408,
+              "negative": true,
+              "positive": false,
+              "rate_difference": -0.13019275203760405,
+              "solver_allowance": 1.527957534158486e-06
+            }
+          },
+          "sign_flip": false
+        },
+        "64": {
+          "all_negative": false,
+          "all_positive": true,
+          "cadences": {
+            "0.125": {
+              "delta_bits": 0.48089693899993335,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.17885381074909046,
+              "solver_allowance": 2.1544400228190023e-07
+            },
+            "0.25": {
+              "delta_bits": 0.5445348247879451,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.15431733953661153,
+              "solver_allowance": 2.5385910959582184e-07
+            },
+            "0.5": {
+              "delta_bits": 0.6023702985649777,
+              "negative": false,
+              "positive": true,
+              "rate_difference": -0.13019275203760405,
+              "solver_allowance": 2.203593144565417e-07
+            }
+          },
+          "sign_flip": false
+        }
+      },
+      "to": "B-a1-s0.6-R3",
+      "uptime_difference": -1.0113829066521092
+    },
+    {
+      "from": "B-a1-s0.6-R3",
+      "profiles": {
+        "1024": {
+          "all_negative": true,
+          "all_positive": false,
+          "cadences": {
+            "0.125": {
+              "delta_bits": -54.82409706259841,
+              "negative": true,
+              "positive": false,
+              "rate_difference": 1.6497914145929826e-13,
+              "solver_allowance": 4.870947355404496e-07
+            },
+            "0.25": {
+              "delta_bits": -45.97226945616649,
+              "negative": true,
+              "positive": false,
+              "rate_difference": 1.3722356584366935e-13,
+              "solver_allowance": 1.2195713313621013e-06
+            },
+            "0.5": {
+              "delta_bits": -37.358000327217496,
+              "negative": true,
+              "positive": false,
+              "rate_difference": 1.0946799022804043e-13,
+              "solver_allowance": 5.313084562250879e-07
+            }
+          },
+          "sign_flip": false
+        },
+        "16": {
+          "all_negative": false,
+          "all_positive": true,
+          "cadences": {
+            "0.125": {
+              "delta_bits": 0.3689989854065061,
+              "negative": false,
+              "positive": true,
+              "rate_difference": 1.6497914145929826e-13,
+              "solver_allowance": 2.0441886982560645e-07
+            },
+            "0.25": {
+              "delta_bits": 0.3744004271441099,
+              "negative": false,
+              "positive": true,
+              "rate_difference": 1.3722356584366935e-13,
+              "solver_allowance": 2.1588208379458936e-07
+            },
+            "0.5": {
+              "delta_bits": 0.3793847512600905,
+              "negative": false,
+              "positive": true,
+              "rate_difference": 1.0946799022804043e-13,
+              "solver_allowance": 2.0513626784159892e-07
+            }
+          },
+          "sign_flip": false
+        },
+        "256": {
+          "all_negative": true,
+          "all_positive": false,
+          "cadences": {
+            "0.125": {
+              "delta_bits": -17.837467875302195,
+              "negative": true,
+              "positive": false,
+              "rate_difference": 1.6497914145929826e-13,
+              "solver_allowance": 2.7095709975146746e-07
+            },
+            "0.25": {
+              "delta_bits": -14.621769519486861,
+              "negative": true,
+              "positive": false,
+              "rate_difference": 1.3722356584366935e-13,
+              "solver_allowance": 4.542989340770241e-07
+            },
+            "0.5": {
+              "delta_bits": -11.51710277034681,
+              "negative": true,
+              "positive": false,
+              "rate_difference": 1.0946799022804043e-13,
+              "solver_allowance": 2.823342922728898e-07
+            }
+          },
+          "sign_flip": false
+        },
+        "4096": {
+          "all_negative": true,
+          "all_positive": false,
+          "cadences": {
+            "0.125": {
+              "delta_bits": -256.93030222410243,
+              "negative": true,
+              "positive": false,
+              "rate_difference": 1.6497914145929826e-13,
+              "solver_allowance": 1.4006403267150745e-06
+            },
+            "0.25": {
+              "delta_bits": -219.1610105222412,
+              "negative": true,
+              "positive": false,
+              "rate_difference": 1.3722356584366935e-13,
+              "solver_allowance": 4.316294846312485e-06
+            },
+            "0.5": {
+              "delta_bits": -182.20913679517662,
+              "negative": true,
+              "positive": false,
+              "rate_difference": 1.0946799022804043e-13,
+              "solver_allowance": 1.5567744190368103e-06
+            }
+          },
+          "sign_flip": false
+        },
+        "64": {
+          "all_negative": false,
+          "all_positive": false,
+          "cadences": {
+            "0.125": {
+              "delta_bits": -0.08738833993811568,
+              "negative": true,
+              "positive": false,
+              "rate_difference": 1.6497914145929826e-13,
+              "solver_allowance": 2.1768823842951405e-07
+            },
+            "0.25": {
+              "delta_bits": 0.19331537258699427,
+              "negative": false,
+              "positive": true,
+              "rate_difference": 1.3722356584366935e-13,
+              "solver_allowance": 2.635376148465372e-07
+            },
+            "0.5": {
+              "delta_bits": 0.4526656948002028,
+              "negative": false,
+              "positive": true,
+              "rate_difference": 1.0946799022804043e-13,
+              "solver_allowance": 2.2055277170676105e-07
+            }
+          },
+          "sign_flip": true
+        }
+      },
+      "to": "B-a1-s0.6-R6",
+      "uptime_difference": -5.782259479622017
+    }
+  ],
+  "irreversibility_gains_breadth_while_losing_uptime_T256": 4,
+  "max_residuals": {
+    "bank": 1.7905676941154525e-12,
+    "coordinate_sum": 5.282174697640585e-10,
+    "energy": 1.2278178473934531e-11,
+    "monitor_projection": 4.440892098500626e-16,
+    "sampled_poisson": 2.758078487818949e-10
+  },
+  "max_tail_bits_T4096": 3526.7236681233207,
+  "registered_summary_unchanged": true,
+  "status": "post_run_descriptive_not_registered_verdicts",
+  "tail_resolved_settings_T4096": 18,
+  "unique_C": 12,
+  "unique_C_R_positive_unbound_and_mechanism_without_funding_clause": [
+    "A-a0.5-k1-s2.4",
+    "A-a1-k0.1-s2.4",
+    "B-a1-s0.6-R0",
+    "A-a1-k1-s2.4"
+  ],
+  "unique_R": 4,
+  "unique_full_case_count": 36
+}

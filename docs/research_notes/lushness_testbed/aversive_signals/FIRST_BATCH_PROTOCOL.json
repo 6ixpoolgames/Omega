@@ -1,0 +1,1414 @@
+{
+  "K1": {
+    "comparison": "A minus B",
+    "main": "strict positive or compression at both grains, all three cadences, every T>=256, and offset limit",
+    "prerequisites": "A tracking, disposition and obstructed; B no signal"
+  },
+  "K2": {
+    "comparison": "D minus max(E_prime,N_prime)",
+    "functional_gain_rule": "any increase over the maximum comparator above tolerance vetoes clean K2; keep raw ranking",
+    "functional_gain_veto": [
+      "survival_at_deadline",
+      "food_input",
+      "escape_success"
+    ],
+    "main": "same full corridor as K1; clean functional proxy result only",
+    "prerequisites": "D low-MI nontracking and disposition; E_prime tracking and disposition; N_prime no signal"
+  },
+  "cadences": [
+    0.125,
+    0.25,
+    0.5
+  ],
+  "caps": {
+    "memory": 536870912,
+    "output_cap": 67108864,
+    "seconds": 600
+  },
+  "cases": [
+    {
+      "arms": [
+        "E",
+        "A",
+        "B",
+        "C",
+        "N"
+      ],
+      "family": "W1",
+      "id": "W1-00",
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.25,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.15,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.020000000000000004,
+        "struggle_cost": 0.5
+      },
+      "root": [
+        8,
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "arms": [
+        "E",
+        "A",
+        "B",
+        "C",
+        "N"
+      ],
+      "family": "W1",
+      "id": "W1-01",
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.25,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.6,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.020000000000000004,
+        "struggle_cost": 0.5
+      },
+      "root": [
+        8,
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "arms": [
+        "E",
+        "A",
+        "B",
+        "C",
+        "N"
+      ],
+      "family": "W1",
+      "id": "W1-02",
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.9,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.15,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.020000000000000004,
+        "struggle_cost": 0.5
+      },
+      "root": [
+        8,
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "arms": [
+        "E",
+        "A",
+        "B",
+        "C",
+        "N"
+      ],
+      "family": "W1",
+      "id": "W1-03",
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.9,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.6,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.020000000000000004,
+        "struggle_cost": 0.5
+      },
+      "root": [
+        8,
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "arms": [
+        "E",
+        "A",
+        "B",
+        "C",
+        "N"
+      ],
+      "family": "W1",
+      "id": "W1-04",
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.25,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.15,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.1,
+        "struggle_cost": 0.5
+      },
+      "root": [
+        8,
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "arms": [
+        "E",
+        "A",
+        "B",
+        "C",
+        "N"
+      ],
+      "family": "W1",
+      "id": "W1-05",
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.25,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.6,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.1,
+        "struggle_cost": 0.5
+      },
+      "root": [
+        8,
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "arms": [
+        "E",
+        "A",
+        "B",
+        "C",
+        "N"
+      ],
+      "family": "W1",
+      "id": "W1-06",
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.9,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.15,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.1,
+        "struggle_cost": 0.5
+      },
+      "root": [
+        8,
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "arms": [
+        "E",
+        "A",
+        "B",
+        "C",
+        "N"
+      ],
+      "family": "W1",
+      "id": "W1-07",
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.9,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.6,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.1,
+        "struggle_cost": 0.5
+      },
+      "root": [
+        8,
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "arms": [
+        "E",
+        "A",
+        "B",
+        "C",
+        "N"
+      ],
+      "family": "W1",
+      "id": "W1-08",
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.25,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.15,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.020000000000000004,
+        "struggle_cost": 1.0
+      },
+      "root": [
+        8,
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "arms": [
+        "E",
+        "A",
+        "B",
+        "C",
+        "N"
+      ],
+      "family": "W1",
+      "id": "W1-09",
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.25,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.6,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.020000000000000004,
+        "struggle_cost": 1.0
+      },
+      "root": [
+        8,
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "arms": [
+        "E",
+        "A",
+        "B",
+        "C",
+        "N"
+      ],
+      "family": "W1",
+      "id": "W1-10",
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.9,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.15,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.020000000000000004,
+        "struggle_cost": 1.0
+      },
+      "root": [
+        8,
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "arms": [
+        "E",
+        "A",
+        "B",
+        "C",
+        "N"
+      ],
+      "family": "W1",
+      "id": "W1-11",
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.9,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.6,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.020000000000000004,
+        "struggle_cost": 1.0
+      },
+      "root": [
+        8,
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "arms": [
+        "E",
+        "A",
+        "B",
+        "C",
+        "N"
+      ],
+      "family": "W1",
+      "id": "W1-12",
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.25,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.15,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.1,
+        "struggle_cost": 1.0
+      },
+      "root": [
+        8,
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "arms": [
+        "E",
+        "A",
+        "B",
+        "C",
+        "N"
+      ],
+      "family": "W1",
+      "id": "W1-13",
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.25,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.6,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.1,
+        "struggle_cost": 1.0
+      },
+      "root": [
+        8,
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "arms": [
+        "E",
+        "A",
+        "B",
+        "C",
+        "N"
+      ],
+      "family": "W1",
+      "id": "W1-14",
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.9,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.15,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.1,
+        "struggle_cost": 1.0
+      },
+      "root": [
+        8,
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "arms": [
+        "E",
+        "A",
+        "B",
+        "C",
+        "N"
+      ],
+      "family": "W1",
+      "id": "W1-15",
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.9,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.6,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.1,
+        "struggle_cost": 1.0
+      },
+      "root": [
+        8,
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "arms": [
+        "D",
+        "E_prime",
+        "N_prime"
+      ],
+      "family": "W2",
+      "id": "W2-00",
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.25,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.015,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.002,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.05,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.020000000000000004,
+        "struggle_cost": 0.5
+      },
+      "root": [
+        8,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "arms": [
+        "D",
+        "E_prime",
+        "N_prime"
+      ],
+      "family": "W2",
+      "id": "W2-01",
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.25,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.015,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.002,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.5,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.020000000000000004,
+        "struggle_cost": 0.5
+      },
+      "root": [
+        8,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "arms": [
+        "D",
+        "E_prime",
+        "N_prime"
+      ],
+      "family": "W2",
+      "id": "W2-02",
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.9,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.015,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.002,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.05,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.020000000000000004,
+        "struggle_cost": 0.5
+      },
+      "root": [
+        8,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "arms": [
+        "D",
+        "E_prime",
+        "N_prime"
+      ],
+      "family": "W2",
+      "id": "W2-03",
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.9,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.015,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.002,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.5,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.020000000000000004,
+        "struggle_cost": 0.5
+      },
+      "root": [
+        8,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "arms": [
+        "D",
+        "E_prime",
+        "N_prime"
+      ],
+      "family": "W2",
+      "id": "W2-04",
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.25,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.015,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.002,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.05,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.1,
+        "struggle_cost": 0.5
+      },
+      "root": [
+        8,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "arms": [
+        "D",
+        "E_prime",
+        "N_prime"
+      ],
+      "family": "W2",
+      "id": "W2-05",
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.25,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.015,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.002,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.5,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.1,
+        "struggle_cost": 0.5
+      },
+      "root": [
+        8,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "arms": [
+        "D",
+        "E_prime",
+        "N_prime"
+      ],
+      "family": "W2",
+      "id": "W2-06",
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.9,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.015,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.002,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.05,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.1,
+        "struggle_cost": 0.5
+      },
+      "root": [
+        8,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "arms": [
+        "D",
+        "E_prime",
+        "N_prime"
+      ],
+      "family": "W2",
+      "id": "W2-07",
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.9,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.015,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.002,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.5,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.1,
+        "struggle_cost": 0.5
+      },
+      "root": [
+        8,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "arms": [
+        "D",
+        "E_prime",
+        "N_prime"
+      ],
+      "family": "W2",
+      "id": "W2-08",
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.25,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.015,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.002,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.05,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.020000000000000004,
+        "struggle_cost": 1.0
+      },
+      "root": [
+        8,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "arms": [
+        "D",
+        "E_prime",
+        "N_prime"
+      ],
+      "family": "W2",
+      "id": "W2-09",
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.25,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.015,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.002,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.5,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.020000000000000004,
+        "struggle_cost": 1.0
+      },
+      "root": [
+        8,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "arms": [
+        "D",
+        "E_prime",
+        "N_prime"
+      ],
+      "family": "W2",
+      "id": "W2-10",
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.9,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.015,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.002,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.05,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.020000000000000004,
+        "struggle_cost": 1.0
+      },
+      "root": [
+        8,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "arms": [
+        "D",
+        "E_prime",
+        "N_prime"
+      ],
+      "family": "W2",
+      "id": "W2-11",
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.9,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.015,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.002,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.5,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.020000000000000004,
+        "struggle_cost": 1.0
+      },
+      "root": [
+        8,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "arms": [
+        "D",
+        "E_prime",
+        "N_prime"
+      ],
+      "family": "W2",
+      "id": "W2-12",
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.25,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.015,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.002,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.05,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.1,
+        "struggle_cost": 1.0
+      },
+      "root": [
+        8,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "arms": [
+        "D",
+        "E_prime",
+        "N_prime"
+      ],
+      "family": "W2",
+      "id": "W2-13",
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.25,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.015,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.002,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.5,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.1,
+        "struggle_cost": 1.0
+      },
+      "root": [
+        8,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "arms": [
+        "D",
+        "E_prime",
+        "N_prime"
+      ],
+      "family": "W2",
+      "id": "W2-14",
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.9,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.015,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.002,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.05,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.1,
+        "struggle_cost": 1.0
+      },
+      "root": [
+        8,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "arms": [
+        "D",
+        "E_prime",
+        "N_prime"
+      ],
+      "family": "W2",
+      "id": "W2-15",
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.9,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.015,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.002,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.5,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.1,
+        "struggle_cost": 1.0
+      },
+      "root": [
+        8,
+        0,
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "coordinate_order": [
+    3,
+    4,
+    0,
+    1,
+    2
+  ],
+  "date": "2026-10-14",
+  "grains": [
+    "resolved",
+    "signal_merged_bounds"
+  ],
+  "horizons": [
+    16,
+    64,
+    256,
+    1024
+  ],
+  "id": "central-wager-w1-w2-first-batch",
+  "interpretation": {
+    "corridor": "stronger registered main result; no flips or unresolved bounds permitted",
+    "cost_box": "positive-cost model assumptions, not empirically calibrated physiological universal bounds",
+    "no_hit": "survival of these targets in this finite model, not confirmation",
+    "noninstantiation": "report independently of ranking; no theory verdict",
+    "overlap": "unresolved, never automatically a compression tie",
+    "single_point": "valid adapter-relative functional counterexample if instantiated, independent of main robustness"
+  },
+  "layer": "oracle comparison of fixed native physiology, no bounded-agent uncertainty",
+  "main_kill_horizons": [
+    256,
+    1024
+  ],
+  "merged_limit": "offset bounds only when projection is injective on recurrent states and disjoint from transient states",
+  "merged_method": "conditioning lower; time-averaged conditional-entropy upper capped by full entropy; no Markov projection",
+  "primary": "complete conditional sampled-state history entropy; randomness counts",
+  "primary_cadence": 0.25,
+  "primary_horizon": 64,
+  "qualification": {
+    "disposition_threshold": 0.05,
+    "minimum_obstructed_index": 0.01,
+    "minimum_signal_fraction": 0.001,
+    "minimum_signal_time": 0.05,
+    "phenomenal_suffering_claim": false,
+    "suffering_index": "integral of active obstructed signal times positive affordable escape propensity shift",
+    "tracking": {
+      "decline_tolerance": 1e-06,
+      "definition": "signal MI with a future decrease of matched signal-disabled one-window energy/location breadth; positive direction required",
+      "direction_tolerance": 1e-06,
+      "mi_threshold_bits": 0.001,
+      "window": 1.0
+    }
+  },
+  "rate_role": "asymptotic diagnostic; no replacement of finite objective",
+  "scientific_execution_allowed": true,
+  "scope": "first bounded functional slice; not full r2 exhaustive grid or W3/W4",
+  "smoke_case_ids": [
+    "W1-15",
+    "W2-15"
+  ],
+  "sources": [
+    "COST_ANCHORS.md",
+    "FIRST_BATCH_SPEC.md"
+  ],
+  "status": "frozen_before_scientific_ranking",
+  "tolerances": {
+    "basis": "conservative numerical tolerance above engineering and exact-reference residuals; no scientific differences inspected",
+    "bits": 1e-05,
+    "physical_comparison": 1e-06,
+    "rate": 1e-09,
+    "residual": 1e-08
+  },
+  "version": "1"
+}

@@ -1,0 +1,49 @@
+{
+  "caps": {
+    "memory": 3221225472,
+    "output_cap": 33554432,
+    "seconds": 300.0
+  },
+  "cases": [
+    {
+      "block_rows": 96,
+      "cadences": [
+        0.25
+      ],
+      "entropy_backend": "uniformized",
+      "entropy_threads": 2,
+      "horizons": [
+        16,
+        64
+      ],
+      "id": "audit-controls-engineering-smoke",
+      "parameters": {
+        "charge_capacity": 2,
+        "d_energy_capacity": 3,
+        "d_energy_quantum": 0.5,
+        "discovery": true,
+        "kappa": 0
+      },
+      "policy": {
+        "cost": 0.5,
+        "edges": [
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            2
+          ]
+        ],
+        "mode": "steering",
+        "phi": 0.95
+      }
+    }
+  ],
+  "source_hash": "06967ed1e590187d1df2d290a1424ebf9c4598596069ffbed78bfb5bbbfa9a77"
+}

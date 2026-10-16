@@ -1,0 +1,238 @@
+{
+  "converged_at_last_query": true,
+  "horizons": [
+    {
+      "global_tail_oscillation": [
+        0.036095231118614526,
+        0.0797786852035302,
+        0.06790506265717673
+      ],
+      "horizon": 1024,
+      "sampled_poisson_accumulated_pair_error_bound": [
+        4.4138869270682335e-07,
+        1.632579369470477e-07,
+        3.9458609535358846e-07
+      ]
+    },
+    {
+      "global_tail_oscillation": [
+        7.012461332559956e-08,
+        4.927033943930059e-07,
+        5.287988391172414e-07
+      ],
+      "horizon": 4096,
+      "sampled_poisson_accumulated_pair_error_bound": [
+        1.7655547708272934e-06,
+        6.530317477881908e-07,
+        1.5783443814143538e-06
+      ]
+    }
+  ],
+  "input_hash": "3b24ec3353a882a91de295ad35dd7bf232e64bc2a99dac0de9c5f9be9d638dc0",
+  "last_horizon": 4096,
+  "law": {
+    "id": "N6-L7-b0.5-m1-weak",
+    "parameters": {
+      "assisted_build": 0.0,
+      "assisted_capture": 0.0,
+      "basal_build": 0.0001,
+      "basal_capture": 0.002,
+      "beta": 0.5,
+      "charge_leak": 0.002,
+      "damage": 0.005,
+      "mobility": 1.0,
+      "monomers": 6,
+      "packet_exchange": 0.05,
+      "sites": 7,
+      "supply": 0.6,
+      "thermal_join": 0.001,
+      "upkeep": 0.01
+    },
+    "scope": "three-assembly finite geometry"
+  },
+  "proof_scope": "Markov oscillation bound plus validated numerical residuals; not interval-arithmetic certification",
+  "rows": [
+    {
+      "actual_tail_bits": 0.0028899401152815956,
+      "all_root_tail_oscillation": 0.036095231118614526,
+      "cadence": 0.25,
+      "delta_bits": 26.748322125949084,
+      "delta_offset": 26.751212066064365,
+      "horizon": 1024,
+      "reference": "thermal",
+      "sampled_poisson_error_bound": 4.4138869270682335e-07
+    },
+    {
+      "actual_tail_bits": -0.015536654215896568,
+      "all_root_tail_oscillation": 0.036095231118614526,
+      "cadence": 0.25,
+      "delta_bits": -43.556368633605835,
+      "delta_offset": -43.571905287821735,
+      "horizon": 1024,
+      "reference": "unbound",
+      "sampled_poisson_error_bound": 4.4138869270682335e-07
+    },
+    {
+      "actual_tail_bits": 2.186172905626786e-05,
+      "all_root_tail_oscillation": 0.036095231118614526,
+      "cadence": 0.25,
+      "delta_bits": -0.26679586400146826,
+      "delta_offset": -0.266774002272412,
+      "horizon": 1024,
+      "reference": "arrangement",
+      "sampled_poisson_error_bound": 4.4138869270682335e-07
+    },
+    {
+      "actual_tail_bits": 0.024287836054830793,
+      "all_root_tail_oscillation": 0.0797786852035302,
+      "cadence": 0.125,
+      "delta_bits": 46.34135572949562,
+      "delta_offset": 46.36564356555045,
+      "horizon": 1024,
+      "reference": "thermal",
+      "sampled_poisson_error_bound": 1.632579369470477e-07
+    },
+    {
+      "actual_tail_bits": -0.0012986249787189158,
+      "all_root_tail_oscillation": 0.0797786852035302,
+      "cadence": 0.125,
+      "delta_bits": -69.86175707370307,
+      "delta_offset": -69.86305569868179,
+      "horizon": 1024,
+      "reference": "unbound",
+      "sampled_poisson_error_bound": 1.632579369470477e-07
+    },
+    {
+      "actual_tail_bits": -0.00012224332962659703,
+      "all_root_tail_oscillation": 0.0797786852035302,
+      "cadence": 0.125,
+      "delta_bits": -0.4987262889502669,
+      "delta_offset": -0.49884853227989345,
+      "horizon": 1024,
+      "reference": "arrangement",
+      "sampled_poisson_error_bound": 1.632579369470477e-07
+    },
+    {
+      "actual_tail_bits": -0.014633855867325761,
+      "all_root_tail_oscillation": 0.06790506265717673,
+      "cadence": 0.5,
+      "delta_bits": 11.012440366005409,
+      "delta_offset": 10.997806510138084,
+      "horizon": 1024,
+      "reference": "thermal",
+      "sampled_poisson_error_bound": 3.9458609535358846e-07
+    },
+    {
+      "actual_tail_bits": -0.02692003556825604,
+      "all_root_tail_oscillation": 0.06790506265717673,
+      "cadence": 0.5,
+      "delta_bits": -21.073180248704322,
+      "delta_offset": -21.100100284272578,
+      "horizon": 1024,
+      "reference": "unbound",
+      "sampled_poisson_error_bound": 3.9458609535358846e-07
+    },
+    {
+      "actual_tail_bits": 0.0001392303841002488,
+      "all_root_tail_oscillation": 0.06790506265717673,
+      "cadence": 0.5,
+      "delta_bits": -0.07062337859167324,
+      "delta_offset": -0.07048414820757298,
+      "horizon": 1024,
+      "reference": "arrangement",
+      "sampled_poisson_error_bound": 3.9458609535358846e-07
+    },
+    {
+      "actual_tail_bits": -1.72164453587934e-08,
+      "all_root_tail_oscillation": 7.012461332559956e-08,
+      "cadence": 0.25,
+      "delta_bits": 26.751212083280812,
+      "delta_offset": 26.751212066064365,
+      "horizon": 4096,
+      "reference": "thermal",
+      "sampled_poisson_error_bound": 1.7655547708272934e-06
+    },
+    {
+      "actual_tail_bits": -2.107546445569282e-08,
+      "all_root_tail_oscillation": 7.012461332559956e-08,
+      "cadence": 0.25,
+      "delta_bits": -43.57190526674627,
+      "delta_offset": -43.571905287821735,
+      "horizon": 4096,
+      "reference": "unbound",
+      "sampled_poisson_error_bound": 1.7655547708272934e-06
+    },
+    {
+      "actual_tail_bits": 1.3972806152238868e-10,
+      "all_root_tail_oscillation": 7.012461332559956e-08,
+      "cadence": 0.25,
+      "delta_bits": -0.26677400241214005,
+      "delta_offset": -0.266774002272412,
+      "horizon": 4096,
+      "reference": "arrangement",
+      "sampled_poisson_error_bound": 1.7655547708272934e-06
+    },
+    {
+      "actual_tail_bits": 1.2096409740329373e-07,
+      "all_root_tail_oscillation": 4.927033943930059e-07,
+      "cadence": 0.125,
+      "delta_bits": 46.365643444586354,
+      "delta_offset": 46.36564356555045,
+      "horizon": 4096,
+      "reference": "thermal",
+      "sampled_poisson_error_bound": 6.530317477881908e-07
+    },
+    {
+      "actual_tail_bits": 1.4807079264907885e-07,
+      "all_root_tail_oscillation": 4.927033943930059e-07,
+      "cadence": 0.125,
+      "delta_bits": -69.86305584675259,
+      "delta_offset": -69.86305569868179,
+      "horizon": 4096,
+      "reference": "unbound",
+      "sampled_poisson_error_bound": 6.530317477881908e-07
+    },
+    {
+      "actual_tail_bits": -9.817313408045064e-10,
+      "all_root_tail_oscillation": 4.927033943930059e-07,
+      "cadence": 0.125,
+      "delta_bits": -0.4988485312981621,
+      "delta_offset": -0.49884853227989345,
+      "horizon": 4096,
+      "reference": "arrangement",
+      "sampled_poisson_error_bound": 6.530317477881908e-07
+    },
+    {
+      "actual_tail_bits": -1.298260736600778e-07,
+      "all_root_tail_oscillation": 5.287988391172414e-07,
+      "cadence": 0.5,
+      "delta_bits": 10.997806639964157,
+      "delta_offset": 10.997806510138084,
+      "horizon": 4096,
+      "reference": "thermal",
+      "sampled_poisson_error_bound": 1.5783443814143538e-06
+    },
+    {
+      "actual_tail_bits": -1.589204515372535e-07,
+      "all_root_tail_oscillation": 5.287988391172414e-07,
+      "cadence": 0.5,
+      "delta_bits": -21.100100125352128,
+      "delta_offset": -21.100100284272578,
+      "horizon": 4096,
+      "reference": "unbound",
+      "sampled_poisson_error_bound": 1.5783443814143538e-06
+    },
+    {
+      "actual_tail_bits": 1.053656472986053e-09,
+      "all_root_tail_oscillation": 5.287988391172414e-07,
+      "cadence": 0.5,
+      "delta_bits": -0.07048414926122945,
+      "delta_offset": -0.07048414820757298,
+      "horizon": 4096,
+      "reference": "arrangement",
+      "sampled_poisson_error_bound": 1.5783443814143538e-06
+    }
+  ],
+  "scope": "retrospective finite-history continuation and numerical tail audit; original predictions unchanged",
+  "source_hash": "649cd97812c5ddc29c0d43d171d0cc710d1f7d950c345961c48f8ee10b2aaaab"
+}

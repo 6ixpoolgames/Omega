@@ -1,0 +1,84 @@
+{
+  "recorded_utc": "2026-10-01T16:37:29.414289+00:00",
+  "pytest": {
+    "command": ".venv/Scripts/python.exe -m pytest tests/test_quantum_record_structure.py tests/test_quantum_frame_profile.py -q",
+    "exit_code": 0,
+    "passed": 35,
+    "new": 16,
+    "prior_quantum": 19,
+    "duration_seconds": 0.57
+  },
+  "ruff": {
+    "command": ".venv/Scripts/python.exe -m ruff check omega_v2/experiments/quantum_record_structure_v0.py omega_v2/validation/quantum_record_structure_v0.py tests/test_quantum_record_structure.py",
+    "exit_code": 0,
+    "result": "All checks passed!"
+  },
+  "run": {
+    "command": ".venv/Scripts/python.exe -m omega_v2.validation.quantum_record_structure_v0",
+    "exit_code": 0,
+    "errors": {
+      "trace_error": 1.7763568394002505e-15,
+      "hermiticity_error": 3.1031676915590914e-17,
+      "negative_eigenvalue_magnitude": 1.5668215117073353e-16,
+      "choi_contraction": 2.220446049250313e-16,
+      "channel_trace": 5.551115123125783e-17,
+      "bath_whole_information": 1.021405182655144e-14,
+      "bath_spectrum": 1.7763568394002505e-15
+    }
+  },
+  "source_hashes_match": {
+    "docs/research_notes/omega_v2/quantum_record_structure_protocol_v0.md": true,
+    "omega_v2/finite/quantum_profile.py": true,
+    "omega_v2/experiments/quantum_record_structure_v0.py": true,
+    "omega_v2/validation/quantum_record_structure_v0.py": true,
+    "omega_v2/validation/quantum_frame_profile_v0.py": true,
+    "tests/test_quantum_record_structure.py": true
+  },
+  "evidence_sha256": "130f87a5c5f5c1b71118dcbe3176b2e5b6946065c1317b53b19e5df5764828a6",
+  "inventory": "Complete routing cases, boundaries, physical preparations, Choi fragments and bath fragments at every layer.",
+  "report_comparisons": {
+    "broadcast_minus_plural_by_cut": {
+      "3": {
+        "positive_fragments": 54,
+        "negative_fragments": 188,
+        "tied_fragments": 268,
+        "max_absolute_difference_bits": 3.9999999999999982,
+        "relation": "crossing"
+      },
+      "6": {
+        "positive_fragments": 286,
+        "negative_fragments": 84,
+        "tied_fragments": 140,
+        "max_absolute_difference_bits": 2.999999999999996,
+        "relation": "crossing"
+      },
+      "9": {
+        "positive_fragments": 392,
+        "negative_fragments": 96,
+        "tied_fragments": 22,
+        "max_absolute_difference_bits": 2.999999999999996,
+        "relation": "crossing"
+      }
+    },
+    "spreading_minus_echo_bath_at_depth8_fair": {
+      "positive_fragments": 14,
+      "negative_fragments": 0,
+      "tied_fragments": 0,
+      "max_absolute_difference_bits": 2.647963410706488,
+      "relation": "first_greater"
+    },
+    "spreading_minus_echo_source_bath_at_depth8_fair": {
+      "positive_fragments": 28,
+      "negative_fragments": 0,
+      "tied_fragments": 2,
+      "max_absolute_difference_bits": 3.3579833884362014,
+      "relation": "first_greater"
+    }
+  },
+  "implementation_notes": [
+    "Initial collection needed already-declared NetworkX; installed 3.7.",
+    "Final graph preparations retain complete density matrices.",
+    "Protocol and candidate were unchanged; physical results unchanged on final rerun."
+  ],
+  "scope": "Finite diagnostic probe, no full-repository suite, no commit or push."
+}

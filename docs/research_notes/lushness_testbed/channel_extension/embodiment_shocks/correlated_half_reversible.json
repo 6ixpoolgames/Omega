@@ -1,0 +1,200 @@
+{
+  "id": "embodiment-r1-correlated_half_reversible",
+  "version": "2",
+  "status": "frozen_before_scientific_ranking",
+  "world": {
+    "inventory": [
+      3,
+      1
+    ],
+    "params": {
+      "capture": 0.04,
+      "fuel_bath": 0.04,
+      "build": 0.3,
+      "repair": 0.5,
+      "wear": 0.04,
+      "disassembly": 0.08,
+      "switch": 0.15,
+      "exchange": 0.4,
+      "capture_benefit": 6.0,
+      "assisted_birth": 0.4,
+      "chemical_potential": 4.0,
+      "switch_tokens": 1
+    },
+    "damage": {
+      "mode": "reversible",
+      "rate": 0.04,
+      "energy": -1,
+      "exposure": [
+        0,
+        1,
+        0
+      ]
+    },
+    "actuation": {
+      "mode": "embodied",
+      "basal_rate": 0.003
+    },
+    "shocks": {
+      "enabled": true,
+      "mode": "correlated",
+      "hazard": 0.02,
+      "p": 0.5
+    }
+  },
+  "controllers": {
+    "responses": {
+      "idle": [
+        0,
+        0
+      ],
+      "service": [
+        1,
+        0
+      ],
+      "mix25": [
+        0.75,
+        0.25
+      ],
+      "mix50": [
+        0.5,
+        0.5
+      ],
+      "mix75": [
+        0.25,
+        0.75
+      ],
+      "export": [
+        0,
+        1
+      ]
+    },
+    "scope": "all36 shared local tables, exact kernel+ledger aliases retained; actuator law declared"
+  },
+  "measurement": {
+    "id": "sampled-count-history",
+    "version": "1",
+    "cadence": 0.25,
+    "max_dense_bytes": 805306368
+  },
+  "queries": {
+    "roots": {
+      "distributed_seed": [
+        [
+          0,
+          1,
+          0,
+          2,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0
+        ]
+      ],
+      "concentrated_seed": [
+        [
+          0,
+          1,
+          0,
+          3,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "unassembled": [
+        [
+          0,
+          0,
+          0,
+          3,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0
+        ]
+      ]
+    },
+    "reference_energy": 8,
+    "horizons": [
+      1,
+      4,
+      16,
+      64
+    ],
+    "rank_root": "distributed_seed",
+    "diagnostic_roots": {
+      "all_trapped_diagnostic": [
+        [
+          0,
+          0,
+          3,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          0
+        ]
+      ]
+    }
+  },
+  "analysis": {
+    "registered_outcomes": [
+      {
+        "id": "N1-numerics",
+        "metric": "max_residual",
+        "operator": "le",
+        "threshold": 1e-08
+      },
+      {
+        "id": "N2-breadth",
+        "metric": "winner_rate",
+        "operator": "record"
+      },
+      {
+        "id": "N3-closure",
+        "metric": "closure_probability",
+        "operator": "record"
+      },
+      {
+        "id": "N4-tail-spread",
+        "metric": "policy_rate_spread",
+        "operator": "record"
+      }
+    ],
+    "rank_tolerance": 1e-09,
+    "primary": "root-conditioned rate, then offset; native full count histories",
+    "channels": "structural all-action and fixed-policy closure reported separately",
+    "rule_a": "parked",
+    "reserve_probe_p": 0.5
+  },
+  "limits": {
+    "wall_seconds": 600,
+    "memory_mib": 1024,
+    "output_mib": 256,
+    "numeric_threads": 1
+  },
+  "date": "2026-10-13",
+  "calibration": "Fixed ratios before rankings; 1+1 smoke and fixed-controller3+1 preflight only. No policy outcomes selected parameters.",
+  "matching": "Same law, initial usable material, E8, gates0, carrier pools, beta1, mu4, fixed controller class and cadence within each root/reference comparison. Different exposure/boundary modes are explicit law contrasts.",
+  "survival_conditioning": false,
+  "scientific_question": "Does physically available actuation and matched correlated damage change native breadth optimization and access?",
+  "amendment": "embodiment_shocks/PREREGISTRATION.json"
+}

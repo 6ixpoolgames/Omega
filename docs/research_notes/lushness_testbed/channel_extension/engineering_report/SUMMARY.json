@@ -1,0 +1,1333 @@
+{
+  "results": [
+    {
+      "all_D_access_witness": null,
+      "all_D_recovery": {
+        "1.0": {
+          "endpoint_target_probability": 0.0,
+          "hit_probability": 4.440892098500626e-16,
+          "integrated_target_occupation": 0.0
+        },
+        "4.0": {
+          "endpoint_target_probability": 0.0,
+          "hit_probability": 0.0,
+          "integrated_target_occupation": 0.0
+        }
+      },
+      "analysis_seconds": 0.013326200016308576,
+      "audit_status": "pass",
+      "build_seconds": 0.03569320001406595,
+      "channels": {
+        "access_witness": [
+          160
+        ],
+        "additional_targets": {
+          "active_compartment_0": {
+            "access_witness": [
+              160
+            ],
+            "deadline_access": {
+              "1.0": {
+                "endpoint_target_probability": 0.8863335787896413,
+                "hit_probability": 1.0,
+                "integrated_target_occupation": 0.9433675070268421
+              },
+              "4.0": {
+                "endpoint_target_probability": 0.6318541635560077,
+                "hit_probability": 1.0,
+                "integrated_target_occupation": 3.1848360712589647
+              }
+            },
+            "policy_certificate": {
+              "closed": true,
+              "outgoing_positive_edge_count": 0,
+              "outgoing_positive_rate_sum": 0.0,
+              "state_count": 64
+            },
+            "policy_first_entry": {
+              "1": 0.03921056084767649,
+              "4": 0.147856211033789
+            },
+            "policy_states": 64,
+            "structural_certificate": {
+              "closed": true,
+              "outgoing_positive_edge_count": 0,
+              "outgoing_positive_rate_sum": 0.0,
+              "state_count": 64
+            },
+            "structural_first_entry": {
+              "1": 0.03921056084767649,
+              "4": 0.147856211033789
+            },
+            "structural_states": 64
+          },
+          "active_compartment_1": {
+            "access_witness": [
+              160,
+              162,
+              168
+            ],
+            "deadline_access": {
+              "1.0": {
+                "endpoint_target_probability": 0.013478043300627568,
+                "hit_probability": 0.016144619336081023,
+                "integrated_target_occupation": 0.004877807652269027
+              },
+              "4.0": {
+                "endpoint_target_probability": 0.10184142857236858,
+                "hit_probability": 0.15564562909328628,
+                "integrated_target_occupation": 0.17468229996411277
+              }
+            },
+            "policy_certificate": {
+              "closed": true,
+              "outgoing_positive_edge_count": 0,
+              "outgoing_positive_rate_sum": 0.0,
+              "state_count": 64
+            },
+            "policy_first_entry": {
+              "1": 0.0392105608476766,
+              "4": 0.147856211033789
+            },
+            "policy_states": 64,
+            "structural_certificate": {
+              "closed": true,
+              "outgoing_positive_edge_count": 0,
+              "outgoing_positive_rate_sum": 0.0,
+              "state_count": 64
+            },
+            "structural_first_entry": {
+              "1": 0.0392105608476766,
+              "4": 0.147856211033789
+            },
+            "structural_states": 64
+          },
+          "paid_construction": {
+            "access_witness": [
+              160,
+              162
+            ],
+            "deadline_access": {
+              "1.0": {
+                "endpoint_target_probability": 0.10411788646126295,
+                "hit_probability": 0.131167759669786,
+                "integrated_target_occupation": 0.055525983354289266
+              },
+              "4.0": {
+                "endpoint_target_probability": 0.21525014182527283,
+                "hit_probability": 0.4488558299413701,
+                "integrated_target_occupation": 0.5902118644203271
+              }
+            },
+            "policy_certificate": {
+              "closed": true,
+              "outgoing_positive_edge_count": 0,
+              "outgoing_positive_rate_sum": 0.0,
+              "state_count": 16
+            },
+            "policy_first_entry": {
+              "1": 0.0015374680819891795,
+              "4": 0.021861459141268913
+            },
+            "policy_states": 16,
+            "structural_certificate": {
+              "closed": true,
+              "outgoing_positive_edge_count": 0,
+              "outgoing_positive_rate_sum": 0.0,
+              "state_count": 16
+            },
+            "structural_first_entry": {
+              "1": 0.0015374680819891795,
+              "4": 0.021861459141268913
+            },
+            "structural_states": 16
+          }
+        },
+        "policy": {
+          "certificate": {
+            "closed": true,
+            "outgoing_positive_edge_count": 0,
+            "outgoing_positive_rate_sum": 0.0,
+            "state_count": 16
+          },
+          "first_entry": {
+            "1": 0.0015374680819891795,
+            "4": 0.021861459141268913
+          },
+          "quantifier": "fixed implemented policy",
+          "states": 16,
+          "target": "any active apparatus"
+        },
+        "recovery": {
+          "1.0": {
+            "endpoint_target_probability": 0.8878609547080124,
+            "hit_probability": 1.0,
+            "integrated_target_occupation": 0.9437756286441173
+          },
+          "4.0": {
+            "endpoint_target_probability": 0.6689596316291878,
+            "hit_probability": 1.0,
+            "integrated_target_occupation": 3.2334447766043968
+          }
+        },
+        "structural": {
+          "certificate": {
+            "closed": true,
+            "outgoing_positive_edge_count": 0,
+            "outgoing_positive_rate_sum": 0.0,
+            "state_count": 16
+          },
+          "first_entry": {
+            "1": 0.0015374680819891795,
+            "4": 0.021861459141268913
+          },
+          "quantifier": "all admissible actuator channels",
+          "states": 16,
+          "target": "any active apparatus"
+        }
+      },
+      "classes": [
+        16
+      ],
+      "closed_channel_thermal_rate": 2.3175051167272933,
+      "csr_bytes": 27524,
+      "dense_analysis_estimate_bytes": 4194304,
+      "dense_one_matrix_bytes": 524288,
+      "flux": {
+        "energy_residual": 6.661338147750939e-16,
+        "flows": {
+          "basal_build": 0.03691678250804505,
+          "bath_charge": 0.120621629893122,
+          "bath_heat": 1.0206240466217527,
+          "disassembly": 0.05340810596851523,
+          "drive_charge": 0.24433920833262862,
+          "drive_work": 0.3655069050275064,
+          "exchange": 0.005898698322729994,
+          "gross_basal_birth": 0.01680364137758007,
+          "gross_built_loss": 0.06688710811969718,
+          "gross_service_fuel": 0.039474083289585835,
+          "gross_sink_from_A": 0.037929812587164484,
+          "gross_sink_from_P": 0.03843330500066103,
+          "gross_sink_from_W": 0.002058004107528107,
+          "gross_sink_to_D": 0.07842112169535365,
+          "gross_switch_fuel": 0.09680859709061522,
+          "gross_thermal_reconstruction": 0.04662195567397557,
+          "net_active": -0.10018837790973117,
+          "net_built": -0.0034615110681415584,
+          "net_damage": 0.07842112169535365,
+          "net_energy": -0.6551171415942466,
+          "net_fuel": -0.04047026122212611,
+          "net_service_fuel": -0.0009711191054695043,
+          "net_switch_fuel": 0.04251110059950788,
+          "net_usable": -0.07842112169535365,
+          "repair": 0.043002503176596145,
+          "sink_a": 0.037929812587164484,
+          "sink_p": 0.03843330500066103,
+          "sink_w": 0.002058004107528107,
+          "switch_export": 0.08586211904928771,
+          "switch_service": 0.06524397453243484,
+          "switches": 0.15110609358172258,
+          "wear": 0.06378393139515783
+        },
+        "occupation": {
+          "active": 0.8998116220902692,
+          "built": 0.9965384889318588,
+          "damage": 0.0784211216953536,
+          "energy": 3.3448828584057546,
+          "fuel": 0.9595297387778741,
+          "usable": 1.9215788783046472
+        },
+        "population_residual": 2.706168622523819e-16
+      },
+      "imported_sources": {
+        "omega_v2": "omega_v2/__init__.py",
+        "omega_v2.testbed": "omega_v2/testbed/__init__.py",
+        "omega_v2.testbed.analysis": "omega_v2/testbed/analysis/__init__.py",
+        "omega_v2.testbed.analysis.channel_access": "omega_v2/testbed/analysis/channel_access.py",
+        "omega_v2.testbed.analysis.event_sequences": "omega_v2/testbed/analysis/event_sequences.py",
+        "omega_v2.testbed.analysis.finite_classes": "omega_v2/testbed/analysis/finite_classes.py",
+        "omega_v2.testbed.analysis.registry": "omega_v2/testbed/analysis/registry.py",
+        "omega_v2.testbed.compiler": "omega_v2/testbed/compiler.py",
+        "omega_v2.testbed.contracts": "omega_v2/testbed/contracts.py",
+        "omega_v2.testbed.experiments": "omega_v2/testbed/experiments/__init__.py",
+        "omega_v2.testbed.experiments.channel_comparison": "omega_v2/testbed/experiments/channel_comparison.py",
+        "omega_v2.testbed.growing_population": "omega_v2/testbed/growing_population.py",
+        "omega_v2.testbed.modules": "omega_v2/testbed/modules/__init__.py",
+        "omega_v2.testbed.modules.damage": "omega_v2/testbed/modules/damage.py",
+        "omega_v2.testbed.modules.growth": "omega_v2/testbed/modules/growth.py",
+        "omega_v2.testbed.modules.material_sink": "omega_v2/testbed/modules/material_sink.py",
+        "omega_v2.testbed.workflow": "omega_v2/testbed/workflow/__init__.py",
+        "omega_v2.testbed.workflow.manifest": "omega_v2/testbed/workflow/manifest.py"
+      },
+      "input_hash": "2788f717e500a23db49fee6fc1e0d761a54db22fe436a2b4f225692bf8548416",
+      "legacy_generator_error": 0.0,
+      "mode": "smoke",
+      "offdiagonal_edges": 1952,
+      "parameters": {
+        "boundary_assumption": "idealized_inaccessible_product",
+        "carrier_capacities": [
+          1,
+          1
+        ],
+        "damage": {
+          "boundary": "idealized_inaccessible_product",
+          "enabled": true,
+          "energy": -6,
+          "exposure": [
+            1,
+            1,
+            1
+          ],
+          "mode": "absorbing",
+          "rate": 0.04
+        },
+        "fields": [
+          "material-PWA-D",
+          "local-fuel",
+          "gate",
+          "controller"
+        ],
+        "inventories": [
+          1,
+          1
+        ],
+        "inventory": [
+          1,
+          1
+        ],
+        "material_sink": {
+          "boundary": "idealized_inaccessible_product",
+          "enabled": true,
+          "energy": -6,
+          "exposure": [
+            1,
+            1,
+            1
+          ],
+          "mode": "absorbing",
+          "rate": 0.04
+        },
+        "parameters": {
+          "assisted_birth": 0.4,
+          "build": 0.3,
+          "capture": 0.04,
+          "capture_benefit": 6.0,
+          "chemical_potential": 4.0,
+          "disassembly": 0.08,
+          "exchange": 0.4,
+          "fuel_bath": 0.04,
+          "repair": 0.5,
+          "switch": 0.15,
+          "switch_tokens": 1,
+          "wear": 0.04
+        },
+        "params": {
+          "assisted_birth": 0.4,
+          "build": 0.3,
+          "capture": 0.04,
+          "capture_benefit": 6.0,
+          "chemical_potential": 4.0,
+          "disassembly": 0.08,
+          "exchange": 0.4,
+          "fuel_bath": 0.04,
+          "repair": 0.5,
+          "switch": 0.15,
+          "switch_tokens": 1,
+          "wear": 0.04
+        },
+        "policy": [
+          [
+            1.0,
+            0.0
+          ],
+          [
+            0.75,
+            0.25
+          ],
+          [
+            1.0,
+            0.0
+          ],
+          [
+            0.75,
+            0.25
+          ]
+        ]
+      },
+      "residuals": {
+        "absorption": 8.881784197001252e-16,
+        "poisson": 7.349676423018536e-14,
+        "poisson_normalization": 1.1102230246251565e-16,
+        "projection": 6.661338147750939e-16,
+        "row_stochastic": 2.220446049250313e-16,
+        "stationarity": 9.194034422677078e-17
+      },
+      "row_residual": 7.494005416219807e-16,
+      "scope": "engineering only; no policy search",
+      "states": 256,
+      "thermal_balance": "not asserted for absorbing boundary idealization",
+      "two_assisted_events": {
+        "analytical_states": 768,
+        "physical_history_entropy_augmented": false,
+        "probability": 0.0,
+        "stages": 3
+      },
+      "uniform_null_error": 6.661338147750939e-16,
+      "worn_start_recovery": {
+        "1.0": {
+          "endpoint_target_probability": 0.4058029762279878,
+          "hit_probability": 0.5275630079469127,
+          "integrated_target_occupation": 0.25766451837743864
+        },
+        "4.0": {
+          "endpoint_target_probability": 0.511599890425094,
+          "hit_probability": 0.8448121995094301,
+          "integrated_target_occupation": 1.7224229062582705
+        }
+      }
+    },
+    {
+      "all_D_access_witness": null,
+      "all_D_recovery": {
+        "1.0": {
+          "endpoint_target_probability": 0.0,
+          "hit_probability": 2.220446049250313e-16,
+          "integrated_target_occupation": 0.0
+        },
+        "4.0": {
+          "endpoint_target_probability": 0.0,
+          "hit_probability": 4.440892098500626e-16,
+          "integrated_target_occupation": 0.0
+        }
+      },
+      "analysis_seconds": 0.01308699999935925,
+      "audit_status": "pass",
+      "build_seconds": 0.03282030002446845,
+      "channels": {
+        "access_witness": [
+          160
+        ],
+        "additional_targets": {
+          "active_compartment_0": {
+            "access_witness": [
+              160
+            ],
+            "deadline_access": {
+              "1.0": {
+                "endpoint_target_probability": 0.92228923662238,
+                "hit_probability": 1.0,
+                "integrated_target_occupation": 0.9620386284898845
+              },
+              "4.0": {
+                "endpoint_target_probability": 0.7375256456803718,
+                "hit_probability": 1.0,
+                "integrated_target_occupation": 3.426901552941686
+              }
+            },
+            "policy_certificate": {
+              "closed": true,
+              "outgoing_positive_edge_count": 0,
+              "outgoing_positive_rate_sum": 0.0,
+              "state_count": 64
+            },
+            "policy_first_entry": {
+              "1": 0.0011912361278021422,
+              "4": 0.013262842719888757
+            },
+            "policy_states": 64,
+            "structural_certificate": {
+              "closed": true,
+              "outgoing_positive_edge_count": 0,
+              "outgoing_positive_rate_sum": 0.0,
+              "state_count": 64
+            },
+            "structural_first_entry": {
+              "1": 0.0011912361278021422,
+              "4": 0.013262842719888757
+            },
+            "structural_states": 64
+          },
+          "active_compartment_1": {
+            "access_witness": [
+              160,
+              162,
+              168
+            ],
+            "deadline_access": {
+              "1.0": {
+                "endpoint_target_probability": 0.014008259148873638,
+                "hit_probability": 0.01655157842800492,
+                "integrated_target_occupation": 0.0050193204086743555
+              },
+              "4.0": {
+                "endpoint_target_probability": 0.11834412594133248,
+                "hit_probability": 0.17038696328154423,
+                "integrated_target_occupation": 0.19454138620125822
+              }
+            },
+            "policy_certificate": {
+              "closed": true,
+              "outgoing_positive_edge_count": 0,
+              "outgoing_positive_rate_sum": 0.0,
+              "state_count": 64
+            },
+            "policy_first_entry": {
+              "1": 0.0008966516978350381,
+              "4": 0.011253864905691469
+            },
+            "policy_states": 64,
+            "structural_certificate": {
+              "closed": true,
+              "outgoing_positive_edge_count": 0,
+              "outgoing_positive_rate_sum": 0.0,
+              "state_count": 64
+            },
+            "structural_first_entry": {
+              "1": 0.0008966516978350381,
+              "4": 0.011253864905691469
+            },
+            "structural_states": 64
+          },
+          "paid_construction": {
+            "access_witness": [
+              160,
+              162
+            ],
+            "deadline_access": {
+              "1.0": {
+                "endpoint_target_probability": 0.10827594647561523,
+                "hit_probability": 0.13380106636992029,
+                "integrated_target_occupation": 0.0569833979588185
+              },
+              "4.0": {
+                "endpoint_target_probability": 0.2497776512436585,
+                "hit_probability": 0.48041906742354035,
+                "integrated_target_occupation": 0.6482295889110119
+              }
+            },
+            "policy_certificate": {
+              "closed": true,
+              "outgoing_positive_edge_count": 0,
+              "outgoing_positive_rate_sum": 0.0,
+              "state_count": 16
+            },
+            "policy_first_entry": {
+              "1": 1.068146859628527e-06,
+              "4": 0.0001493924365854049
+            },
+            "policy_states": 16,
+            "structural_certificate": {
+              "closed": true,
+              "outgoing_positive_edge_count": 0,
+              "outgoing_positive_rate_sum": 0.0,
+              "state_count": 16
+            },
+            "structural_first_entry": {
+              "1": 1.068146859628527e-06,
+              "4": 0.0001493924365854049
+            },
+            "structural_states": 16
+          }
+        },
+        "policy": {
+          "certificate": {
+            "closed": true,
+            "outgoing_positive_edge_count": 0,
+            "outgoing_positive_rate_sum": 0.0,
+            "state_count": 16
+          },
+          "first_entry": {
+            "1": 1.068146859628527e-06,
+            "4": 0.0001493924365854049
+          },
+          "quantifier": "fixed implemented policy",
+          "states": 16,
+          "target": "any active apparatus"
+        },
+        "recovery": {
+          "1.0": {
+            "endpoint_target_probability": 0.923374378466181,
+            "hit_probability": 1.0,
+            "integrated_target_occupation": 0.9623231922607309
+          },
+          "4.0": {
+            "endpoint_target_probability": 0.7682804115329139,
+            "hit_probability": 1.0,
+            "integrated_target_occupation": 3.4655191903300686
+          }
+        },
+        "structural": {
+          "certificate": {
+            "closed": true,
+            "outgoing_positive_edge_count": 0,
+            "outgoing_positive_rate_sum": 0.0,
+            "state_count": 16
+          },
+          "first_entry": {
+            "1": 1.068146859628527e-06,
+            "4": 0.0001493924365854049
+          },
+          "quantifier": "all admissible actuator channels",
+          "states": 16,
+          "target": "any active apparatus"
+        }
+      },
+      "classes": [
+        16
+      ],
+      "closed_channel_thermal_rate": 2.3175051167272933,
+      "csr_bytes": 24452,
+      "dense_analysis_estimate_bytes": 4194304,
+      "dense_one_matrix_bytes": 524288,
+      "flux": {
+        "energy_residual": -3.3306690738754696e-16,
+        "flows": {
+          "basal_build": 0.03786530517484928,
+          "bath_charge": 0.12057426280284128,
+          "bath_heat": 0.49078182578712587,
+          "disassembly": 0.05443819252322368,
+          "drive_charge": 0.24699169483426098,
+          "drive_work": 0.36663172931351234,
+          "exchange": 0.005966594085451458,
+          "gross_basal_birth": 0.017249899992045216,
+          "gross_built_loss": 0.0295879831463697,
+          "gross_service_fuel": 0.04026268556399783,
+          "gross_sink_from_W": 0.0020878878256373524,
+          "gross_sink_to_D": 0.0020878878256373524,
+          "gross_switch_fuel": 0.098464496759968,
+          "gross_thermal_reconstruction": 0.04755350238529541,
+          "net_active": -0.06370250422874642,
+          "net_built": 0.035215419230970914,
+          "net_damage": 0.0020878878256373524,
+          "net_energy": -0.12415009647361372,
+          "net_fuel": -0.04156784226100696,
+          "net_service_fuel": -0.0011925117950885693,
+          "net_switch_fuel": 0.04417347506041926,
+          "net_usable": -0.0020878878256373524,
+          "repair": 0.043852577748234936,
+          "sink_w": 0.0020878878256373524,
+          "switch_export": 0.08750374930834011,
+          "switch_service": 0.06525176915117659,
+          "switches": 0.15275551845951668,
+          "wear": 0.06504272839423747
+        },
+        "occupation": {
+          "active": 0.9362974957712537,
+          "built": 1.0352154192309708,
+          "damage": 0.0020878878256373533,
+          "energy": 3.8758499035263863,
+          "fuel": 0.9584321577389929,
+          "usable": 1.9979121121743626
+        },
+        "population_residual": 0.0
+      },
+      "imported_sources": {
+        "omega_v2": "omega_v2/__init__.py",
+        "omega_v2.testbed": "omega_v2/testbed/__init__.py",
+        "omega_v2.testbed.analysis": "omega_v2/testbed/analysis/__init__.py",
+        "omega_v2.testbed.analysis.channel_access": "omega_v2/testbed/analysis/channel_access.py",
+        "omega_v2.testbed.analysis.event_sequences": "omega_v2/testbed/analysis/event_sequences.py",
+        "omega_v2.testbed.analysis.finite_classes": "omega_v2/testbed/analysis/finite_classes.py",
+        "omega_v2.testbed.analysis.registry": "omega_v2/testbed/analysis/registry.py",
+        "omega_v2.testbed.compiler": "omega_v2/testbed/compiler.py",
+        "omega_v2.testbed.contracts": "omega_v2/testbed/contracts.py",
+        "omega_v2.testbed.experiments": "omega_v2/testbed/experiments/__init__.py",
+        "omega_v2.testbed.experiments.channel_comparison": "omega_v2/testbed/experiments/channel_comparison.py",
+        "omega_v2.testbed.growing_population": "omega_v2/testbed/growing_population.py",
+        "omega_v2.testbed.modules": "omega_v2/testbed/modules/__init__.py",
+        "omega_v2.testbed.modules.damage": "omega_v2/testbed/modules/damage.py",
+        "omega_v2.testbed.modules.growth": "omega_v2/testbed/modules/growth.py",
+        "omega_v2.testbed.modules.material_sink": "omega_v2/testbed/modules/material_sink.py",
+        "omega_v2.testbed.workflow": "omega_v2/testbed/workflow/__init__.py",
+        "omega_v2.testbed.workflow.manifest": "omega_v2/testbed/workflow/manifest.py"
+      },
+      "input_hash": "c2ad2e9cc476c433a40e738059d8f2706242491cf1b62781f2046dccb6b1843e",
+      "legacy_generator_error": 0.0,
+      "mode": "smoke",
+      "offdiagonal_edges": 1696,
+      "parameters": {
+        "boundary_assumption": "idealized_inaccessible_product",
+        "carrier_capacities": [
+          1,
+          1
+        ],
+        "damage": {
+          "boundary": "idealized_inaccessible_product",
+          "enabled": true,
+          "energy": -6,
+          "exposure": [
+            0,
+            1,
+            0
+          ],
+          "mode": "absorbing",
+          "rate": 0.04
+        },
+        "fields": [
+          "material-PWA-D",
+          "local-fuel",
+          "gate",
+          "controller"
+        ],
+        "inventories": [
+          1,
+          1
+        ],
+        "inventory": [
+          1,
+          1
+        ],
+        "material_sink": {
+          "boundary": "idealized_inaccessible_product",
+          "enabled": true,
+          "energy": -6,
+          "exposure": [
+            0,
+            1,
+            0
+          ],
+          "mode": "absorbing",
+          "rate": 0.04
+        },
+        "parameters": {
+          "assisted_birth": 0.4,
+          "build": 0.3,
+          "capture": 0.04,
+          "capture_benefit": 6.0,
+          "chemical_potential": 4.0,
+          "disassembly": 0.08,
+          "exchange": 0.4,
+          "fuel_bath": 0.04,
+          "repair": 0.5,
+          "switch": 0.15,
+          "switch_tokens": 1,
+          "wear": 0.04
+        },
+        "params": {
+          "assisted_birth": 0.4,
+          "build": 0.3,
+          "capture": 0.04,
+          "capture_benefit": 6.0,
+          "chemical_potential": 4.0,
+          "disassembly": 0.08,
+          "exchange": 0.4,
+          "fuel_bath": 0.04,
+          "repair": 0.5,
+          "switch": 0.15,
+          "switch_tokens": 1,
+          "wear": 0.04
+        },
+        "policy": [
+          [
+            1.0,
+            0.0
+          ],
+          [
+            0.75,
+            0.25
+          ],
+          [
+            1.0,
+            0.0
+          ],
+          [
+            0.75,
+            0.25
+          ]
+        ]
+      },
+      "residuals": {
+        "absorption": 1.033895191682177e-15,
+        "poisson": 3.459454944731988e-13,
+        "poisson_normalization": 1.1102230246251565e-16,
+        "projection": 6.661338147750939e-16,
+        "row_stochastic": 3.3306690738754696e-16,
+        "stationarity": 9.194034422677078e-17
+      },
+      "row_residual": 7.494005416219807e-16,
+      "scope": "engineering only; no policy search",
+      "states": 256,
+      "thermal_balance": "not asserted for absorbing boundary idealization",
+      "two_assisted_events": {
+        "analytical_states": 768,
+        "physical_history_entropy_augmented": false,
+        "probability": 0.0,
+        "stages": 3
+      },
+      "worn_start_recovery": {
+        "1.0": {
+          "endpoint_target_probability": 0.4149790163401244,
+          "hit_probability": 0.5279166013350556,
+          "integrated_target_occupation": 0.2611845377028558
+        },
+        "4.0": {
+          "endpoint_target_probability": 0.5696875015007232,
+          "hit_probability": 0.8499843498224946,
+          "integrated_target_occupation": 1.8251272368868487
+        }
+      }
+    },
+    {
+      "all_D_access_witness": [
+        68,
+        76,
+        72
+      ],
+      "all_D_recovery": {
+        "1.0": {
+          "endpoint_target_probability": 2.2928098340298255e-06,
+          "hit_probability": 2.640048547108975e-06,
+          "integrated_target_occupation": 6.800802736286155e-07
+        },
+        "4.0": {
+          "endpoint_target_probability": 4.49433067143351e-05,
+          "hit_probability": 6.21591553848777e-05,
+          "integrated_target_occupation": 5.990702213305439e-05
+        }
+      },
+      "analysis_seconds": 0.012967500020749867,
+      "audit_status": "pass",
+      "build_seconds": 0.03417429997352883,
+      "channels": {
+        "access_witness": [
+          160
+        ],
+        "additional_targets": {
+          "active_compartment_0": {
+            "access_witness": [
+              160
+            ],
+            "deadline_access": {
+              "1.0": {
+                "endpoint_target_probability": 0.9222892387561145,
+                "hit_probability": 1.0,
+                "integrated_target_occupation": 0.9620386289506911
+              },
+              "4.0": {
+                "endpoint_target_probability": 0.7375258285394491,
+                "hit_probability": 1.0,
+                "integrated_target_occupation": 3.4269017378289357
+              }
+            },
+            "policy_certificate": {
+              "closed": true,
+              "outgoing_positive_edge_count": 0,
+              "outgoing_positive_rate_sum": 0.0,
+              "state_count": 0
+            },
+            "policy_first_entry": {
+              "1": 1.1102230246251565e-16,
+              "4": 2.220446049250313e-16
+            },
+            "policy_states": 0,
+            "structural_certificate": {
+              "closed": true,
+              "outgoing_positive_edge_count": 0,
+              "outgoing_positive_rate_sum": 0.0,
+              "state_count": 0
+            },
+            "structural_first_entry": {
+              "1": 1.1102230246251565e-16,
+              "4": 2.220446049250313e-16
+            },
+            "structural_states": 0
+          },
+          "active_compartment_1": {
+            "access_witness": [
+              160,
+              162,
+              168
+            ],
+            "deadline_access": {
+              "1.0": {
+                "endpoint_target_probability": 0.014008259365273402,
+                "hit_probability": 0.016551578654592558,
+                "integrated_target_occupation": 0.005019320448639461
+              },
+              "4.0": {
+                "endpoint_target_probability": 0.11834419410399494,
+                "hit_probability": 0.1703870381426118,
+                "integrated_target_occupation": 0.19454144184240701
+              }
+            },
+            "policy_certificate": {
+              "closed": true,
+              "outgoing_positive_edge_count": 0,
+              "outgoing_positive_rate_sum": 0.0,
+              "state_count": 0
+            },
+            "policy_first_entry": {
+              "1": 1.1102230246251565e-16,
+              "4": 2.220446049250313e-16
+            },
+            "policy_states": 0,
+            "structural_certificate": {
+              "closed": true,
+              "outgoing_positive_edge_count": 0,
+              "outgoing_positive_rate_sum": 0.0,
+              "state_count": 0
+            },
+            "structural_first_entry": {
+              "1": 1.1102230246251565e-16,
+              "4": 2.220446049250313e-16
+            },
+            "structural_states": 0
+          },
+          "paid_construction": {
+            "access_witness": [
+              160,
+              162
+            ],
+            "deadline_access": {
+              "1.0": {
+                "endpoint_target_probability": 0.10827594692319352,
+                "hit_probability": 0.13380106683846615,
+                "integrated_target_occupation": 0.05698339805124662
+              },
+              "4.0": {
+                "endpoint_target_probability": 0.24977771415888053,
+                "hit_probability": 0.4804191333907255,
+                "integrated_target_occupation": 0.6482296465328923
+              }
+            },
+            "policy_certificate": {
+              "closed": true,
+              "outgoing_positive_edge_count": 0,
+              "outgoing_positive_rate_sum": 0.0,
+              "state_count": 0
+            },
+            "policy_first_entry": {
+              "1": 1.1102230246251565e-16,
+              "4": 2.220446049250313e-16
+            },
+            "policy_states": 0,
+            "structural_certificate": {
+              "closed": true,
+              "outgoing_positive_edge_count": 0,
+              "outgoing_positive_rate_sum": 0.0,
+              "state_count": 0
+            },
+            "structural_first_entry": {
+              "1": 1.1102230246251565e-16,
+              "4": 2.220446049250313e-16
+            },
+            "structural_states": 0
+          }
+        },
+        "policy": {
+          "certificate": {
+            "closed": true,
+            "outgoing_positive_edge_count": 0,
+            "outgoing_positive_rate_sum": 0.0,
+            "state_count": 0
+          },
+          "first_entry": {
+            "1": 1.1102230246251565e-16,
+            "4": 2.220446049250313e-16
+          },
+          "quantifier": "fixed implemented policy",
+          "states": 0,
+          "target": "any active apparatus"
+        },
+        "recovery": {
+          "1.0": {
+            "endpoint_target_probability": 0.9233743805870547,
+            "hit_probability": 1.0,
+            "integrated_target_occupation": 0.9623231927194841
+          },
+          "4.0": {
+            "endpoint_target_probability": 0.7682805914072082,
+            "hit_probability": 1.0,
+            "integrated_target_occupation": 3.4655193720122677
+          }
+        },
+        "structural": {
+          "certificate": {
+            "closed": true,
+            "outgoing_positive_edge_count": 0,
+            "outgoing_positive_rate_sum": 0.0,
+            "state_count": 0
+          },
+          "first_entry": {
+            "1": 1.1102230246251565e-16,
+            "4": 2.220446049250313e-16
+          },
+          "quantifier": "all admissible actuator channels",
+          "states": 0,
+          "target": "any active apparatus"
+        }
+      },
+      "classes": [
+        256
+      ],
+      "closed_channel_thermal_rate": 2.3362922514168947,
+      "csr_bytes": 25988,
+      "dense_analysis_estimate_bytes": 4194304,
+      "dense_one_matrix_bytes": 524288,
+      "flux": {
+        "energy_residual": 5.551115123125783e-17,
+        "flows": {
+          "basal_build": 0.037865305334487745,
+          "bath_charge": 0.12057426276373583,
+          "bath_heat": 0.4907816485801841,
+          "disassembly": 0.05443819330762188,
+          "drive_charge": 0.2469916951141878,
+          "drive_work": 0.3666317304428343,
+          "exchange": 0.00596659409112893,
+          "gross_basal_birth": 0.017249900021949476,
+          "gross_built_loss": 0.02958798428725332,
+          "gross_service_fuel": 0.040262688065326624,
+          "gross_sink_from_W": 0.0020878880609283197,
+          "gross_sink_return_to_W": 2.604199624661338e-08,
+          "gross_sink_return_to_active": 0.0,
+          "gross_sink_return_to_built": 2.604199624661338e-08,
+          "gross_sink_to_D": 0.0020878880609283197,
+          "gross_switch_fuel": 0.09846449676692427,
+          "gross_thermal_reconstruction": 0.047553502393835156,
+          "net_active": -0.06370250187861225,
+          "net_built": 0.03521544417052756,
+          "net_damage": 0.002087862018932074,
+          "net_energy": -0.1241499181373496,
+          "net_fuel": -0.041567844157836216,
+          "net_service_fuel": -0.0011925095546402324,
+          "net_switch_fuel": 0.04417347505047757,
+          "net_usable": -0.002087862018932074,
+          "repair": 0.04385258035080574,
+          "return_w": 2.604199624661338e-08,
+          "sink_w": 0.0020878880609283197,
+          "switch_export": 0.0875037493148455,
+          "switch_service": 0.06525176916852554,
+          "switches": 0.15275551848337102,
+          "wear": 0.065042728569974
+        },
+        "occupation": {
+          "active": 0.9362974981213876,
+          "built": 1.0352154441705275,
+          "damage": 0.0020878620189320744,
+          "energy": 3.8758500818626502,
+          "fuel": 0.9584321558421637,
+          "usable": 1.9979121379810678
+        },
+        "population_residual": -6.938893903907228e-17
+      },
+      "imported_sources": {
+        "omega_v2": "omega_v2/__init__.py",
+        "omega_v2.testbed": "omega_v2/testbed/__init__.py",
+        "omega_v2.testbed.analysis": "omega_v2/testbed/analysis/__init__.py",
+        "omega_v2.testbed.analysis.channel_access": "omega_v2/testbed/analysis/channel_access.py",
+        "omega_v2.testbed.analysis.event_sequences": "omega_v2/testbed/analysis/event_sequences.py",
+        "omega_v2.testbed.analysis.finite_classes": "omega_v2/testbed/analysis/finite_classes.py",
+        "omega_v2.testbed.analysis.registry": "omega_v2/testbed/analysis/registry.py",
+        "omega_v2.testbed.compiler": "omega_v2/testbed/compiler.py",
+        "omega_v2.testbed.contracts": "omega_v2/testbed/contracts.py",
+        "omega_v2.testbed.experiments": "omega_v2/testbed/experiments/__init__.py",
+        "omega_v2.testbed.experiments.channel_comparison": "omega_v2/testbed/experiments/channel_comparison.py",
+        "omega_v2.testbed.growing_population": "omega_v2/testbed/growing_population.py",
+        "omega_v2.testbed.modules": "omega_v2/testbed/modules/__init__.py",
+        "omega_v2.testbed.modules.damage": "omega_v2/testbed/modules/damage.py",
+        "omega_v2.testbed.modules.growth": "omega_v2/testbed/modules/growth.py",
+        "omega_v2.testbed.modules.material_sink": "omega_v2/testbed/modules/material_sink.py",
+        "omega_v2.testbed.workflow": "omega_v2/testbed/workflow/__init__.py",
+        "omega_v2.testbed.workflow.manifest": "omega_v2/testbed/workflow/manifest.py"
+      },
+      "input_hash": "74dc120359a699de24fc8de2fbf920efc65ab321b5664d0d9c190ae42719646e",
+      "legacy_generator_error": 0.0,
+      "mode": "smoke",
+      "offdiagonal_edges": 1824,
+      "parameters": {
+        "boundary_assumption": null,
+        "carrier_capacities": [
+          1,
+          1
+        ],
+        "damage": {
+          "boundary": "idealized_inaccessible_product",
+          "enabled": true,
+          "energy": -6,
+          "exposure": [
+            0,
+            1,
+            0
+          ],
+          "mode": "reversible",
+          "rate": 0.04
+        },
+        "fields": [
+          "material-PWA-D",
+          "local-fuel",
+          "gate",
+          "controller"
+        ],
+        "inventories": [
+          1,
+          1
+        ],
+        "inventory": [
+          1,
+          1
+        ],
+        "material_sink": {
+          "boundary": "idealized_inaccessible_product",
+          "enabled": true,
+          "energy": -6,
+          "exposure": [
+            0,
+            1,
+            0
+          ],
+          "mode": "reversible",
+          "rate": 0.04
+        },
+        "parameters": {
+          "assisted_birth": 0.4,
+          "build": 0.3,
+          "capture": 0.04,
+          "capture_benefit": 6.0,
+          "chemical_potential": 4.0,
+          "disassembly": 0.08,
+          "exchange": 0.4,
+          "fuel_bath": 0.04,
+          "repair": 0.5,
+          "switch": 0.15,
+          "switch_tokens": 1,
+          "wear": 0.04
+        },
+        "params": {
+          "assisted_birth": 0.4,
+          "build": 0.3,
+          "capture": 0.04,
+          "capture_benefit": 6.0,
+          "chemical_potential": 4.0,
+          "disassembly": 0.08,
+          "exchange": 0.4,
+          "fuel_bath": 0.04,
+          "repair": 0.5,
+          "switch": 0.15,
+          "switch_tokens": 1,
+          "wear": 0.04
+        },
+        "policy": [
+          [
+            1.0,
+            0.0
+          ],
+          [
+            0.75,
+            0.25
+          ],
+          [
+            1.0,
+            0.0
+          ],
+          [
+            0.75,
+            0.25
+          ]
+        ]
+      },
+      "residuals": {
+        "absorption": 0.0,
+        "poisson": 2.708944180085382e-13,
+        "poisson_normalization": 2.886579864025407e-15,
+        "projection": 6.661338147750939e-16,
+        "row_stochastic": 2.220446049250313e-16,
+        "stationarity": 4.049870323359213e-17
+      },
+      "row_residual": 7.494005416219807e-16,
+      "scope": "engineering only; no policy search",
+      "states": 256,
+      "thermal_balance_residual": 1.734723475976807e-18,
+      "two_assisted_events": {
+        "analytical_states": 768,
+        "physical_history_entropy_augmented": false,
+        "probability": 0.0,
+        "stages": 3
+      },
+      "worn_start_recovery": {
+        "1.0": {
+          "endpoint_target_probability": 0.41497911961319645,
+          "hit_probability": 0.5279167181902925,
+          "integrated_target_occupation": 0.2611845673027094
+        },
+        "4.0": {
+          "endpoint_target_probability": 0.5696890522234763,
+          "hit_probability": 0.8499861636391732,
+          "integrated_target_occupation": 1.8251294999881007
+        }
+      }
+    },
+    {
+      "build_seconds": 0.469417100015562,
+      "csr_bytes": 380804,
+      "dense_analysis_estimate_bytes": 419430400,
+      "dense_one_matrix_bytes": 52428800,
+      "estimate_scope": "exponential cost only; excludes class solves/surveys/search overhead",
+      "estimated_36_exponentials_seconds": 157.00115519855171,
+      "exact_entropy_search": "not certified by timing pilot",
+      "exponential_seconds": 4.36114319995977,
+      "flux": {
+        "energy_residual": -6.217248937900877e-15,
+        "flows": {
+          "assisted_birth": 0.16265976385034203,
+          "basal_build": 0.7293050635265934,
+          "bath_charge": 0.31639811995473965,
+          "bath_heat": 2.261108985985076,
+          "disassembly": 0.14399157243920951,
+          "drive_charge": 0.5205239672729742,
+          "drive_work": 1.3782430680048205,
+          "exchange": 0.007668013943799803,
+          "gross_assisted_birth": 0.13488857990071904,
+          "gross_basal_birth": 0.5722221153629924,
+          "gross_built_loss": 0.25630816863804423,
+          "gross_service_fuel": 0.7873983456339725,
+          "gross_sink_from_A": 0.047656445838698026,
+          "gross_sink_from_P": 0.10364818059567663,
+          "gross_sink_from_W": 0.005537616956332388,
+          "gross_sink_to_D": 0.15684224339070715,
+          "gross_switch_fuel": 0.06303039709897236,
+          "gross_thermal_reconstruction": 0.12573159870941977,
+          "net_active": 0.32088159924212345,
+          "net_built": 0.5765341253350871,
+          "net_damage": 0.15684224339070715,
+          "net_energy": -0.8828659179802534,
+          "net_fuel": -0.41961409110661135,
+          "net_service_fuel": 0.4437515065552915,
+          "net_switch_fuel": 0.04112835630459308,
+          "net_usable": -0.15684224339070715,
+          "repair": 0.23908035733571822,
+          "sink_a": 0.047656445838698026,
+          "sink_p": 0.10364818059567663,
+          "sink_w": 0.005537616956332388,
+          "switch_export": 0.05727548101829569,
+          "switch_service": 0.02765695687505594,
+          "switches": 0.08493243789335155,
+          "wear": 0.08193093040599027
+        },
+        "occupation": {
+          "active": 1.3208815992421232,
+          "built": 1.5765341253350869,
+          "damage": 0.1568422433907071,
+          "energy": 7.117134082019743,
+          "fuel": 2.580385908893388,
+          "usable": 3.8431577566092905
+        }
+      },
+      "imported_sources": {
+        "omega_v2": "omega_v2/__init__.py",
+        "omega_v2.testbed": "omega_v2/testbed/__init__.py",
+        "omega_v2.testbed.analysis": "omega_v2/testbed/analysis/__init__.py",
+        "omega_v2.testbed.analysis.channel_access": "omega_v2/testbed/analysis/channel_access.py",
+        "omega_v2.testbed.analysis.finite_classes": "omega_v2/testbed/analysis/finite_classes.py",
+        "omega_v2.testbed.analysis.registry": "omega_v2/testbed/analysis/registry.py",
+        "omega_v2.testbed.compiler": "omega_v2/testbed/compiler.py",
+        "omega_v2.testbed.contracts": "omega_v2/testbed/contracts.py",
+        "omega_v2.testbed.experiments": "omega_v2/testbed/experiments/__init__.py",
+        "omega_v2.testbed.experiments.channel_comparison": "omega_v2/testbed/experiments/channel_comparison.py",
+        "omega_v2.testbed.growing_population": "omega_v2/testbed/growing_population.py",
+        "omega_v2.testbed.modules": "omega_v2/testbed/modules/__init__.py",
+        "omega_v2.testbed.modules.damage": "omega_v2/testbed/modules/damage.py",
+        "omega_v2.testbed.modules.growth": "omega_v2/testbed/modules/growth.py",
+        "omega_v2.testbed.modules.material_sink": "omega_v2/testbed/modules/material_sink.py",
+        "omega_v2.testbed.workflow": "omega_v2/testbed/workflow/__init__.py",
+        "omega_v2.testbed.workflow.manifest": "omega_v2/testbed/workflow/manifest.py"
+      },
+      "input_hash": "b52be76e5566e7dff5dfb65d8edba69f2b9b91cc46c8aa0afbc1459f72f6d1b2",
+      "mode": "profile",
+      "offdiagonal_edges": 28320,
+      "parameters": {
+        "boundary_assumption": "idealized_inaccessible_product",
+        "carrier_capacities": [
+          3,
+          1
+        ],
+        "damage": {
+          "boundary": "idealized_inaccessible_product",
+          "enabled": true,
+          "energy": -6,
+          "exposure": [
+            1,
+            1,
+            1
+          ],
+          "mode": "absorbing",
+          "rate": 0.04
+        },
+        "fields": [
+          "material-PWA-D",
+          "local-fuel",
+          "gate",
+          "controller"
+        ],
+        "inventories": [
+          3,
+          1
+        ],
+        "inventory": [
+          3,
+          1
+        ],
+        "material_sink": {
+          "boundary": "idealized_inaccessible_product",
+          "enabled": true,
+          "energy": -6,
+          "exposure": [
+            1,
+            1,
+            1
+          ],
+          "mode": "absorbing",
+          "rate": 0.04
+        },
+        "parameters": {
+          "assisted_birth": 0.4,
+          "build": 0.3,
+          "capture": 0.04,
+          "capture_benefit": 6.0,
+          "chemical_potential": 4.0,
+          "disassembly": 0.08,
+          "exchange": 0.4,
+          "fuel_bath": 0.04,
+          "repair": 0.5,
+          "switch": 0.15,
+          "switch_tokens": 1,
+          "wear": 0.04
+        },
+        "params": {
+          "assisted_birth": 0.4,
+          "build": 0.3,
+          "capture": 0.04,
+          "capture_benefit": 6.0,
+          "chemical_potential": 4.0,
+          "disassembly": 0.08,
+          "exchange": 0.4,
+          "fuel_bath": 0.04,
+          "repair": 0.5,
+          "switch": 0.15,
+          "switch_tokens": 1,
+          "wear": 0.04
+        },
+        "policy": [
+          [
+            1.0,
+            0.0
+          ],
+          [
+            0.75,
+            0.25
+          ],
+          [
+            1.0,
+            0.0
+          ],
+          [
+            0.75,
+            0.25
+          ]
+        ]
+      },
+      "row_residual": 1.7763568394002505e-15,
+      "scope": "engineering only; no policy search",
+      "states": 2560
+    }
+  ]
+}

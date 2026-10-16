@@ -1,0 +1,38 @@
+{
+  "cadences": [
+    0.25,
+    0.125,
+    0.5
+  ],
+  "caps": {
+    "memory": 536870912,
+    "output_cap": 33554432,
+    "seconds": 120
+  },
+  "extension_horizons": [
+    4096,
+    16384
+  ],
+  "known_original_outcomes": true,
+  "laws": [
+    "N6-L7-b0.5-m0.25-native",
+    "N6-L7-b0.5-m0.25-weak",
+    "N6-L7-b0.5-m1-native",
+    "N6-L7-b0.5-m1-weak",
+    "N6-L7-b1.5-m0.25-native",
+    "N6-L7-b1.5-m0.25-weak",
+    "N6-L7-b1.5-m1-native",
+    "N6-L7-b1.5-m1-weak",
+    "N6-L7-b3-m0.25-native",
+    "N6-L7-b3-m0.25-weak",
+    "N6-L7-b3-m1-native",
+    "N6-L7-b3-m1-weak",
+    "N4-L6-b3-m0.5-native",
+    "N4-L6-b3-m0.5-weak"
+  ],
+  "retrospective": true,
+  "rule": "all laws; stop extension only when global Markov tail oscillation plus Poisson residual bound is below1e-3bits",
+  "score": "no alteration of original preregistered predictions",
+  "status": "frozen_before_extension_queries",
+  "tail_tolerance_bits": 0.001
+}

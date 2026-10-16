@@ -1,0 +1,24 @@
+# Explicitly distinguished left/right sites; not anonymous molecule-ID entropy.
+begin model
+begin parameters
+ ka 1
+ kd 1
+end parameters
+begin molecule types
+ A(l,r)
+ B(a)
+end molecule types
+begin seed species
+ A(l,r) 1
+ B(a) 2
+end seed species
+begin observables
+ Molecules Left A(l!+)
+ Molecules Right A(r!+)
+end observables
+begin reaction rules
+ A(l) + B(a) <-> A(l!1).B(a!1) ka,kd
+ A(r) + B(a) <-> A(r!1).B(a!1) ka,kd
+end reaction rules
+end model
+generate_network({overwrite=>1})

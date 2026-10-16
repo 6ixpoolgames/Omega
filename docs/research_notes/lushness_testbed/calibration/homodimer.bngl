@@ -1,0 +1,20 @@
+# Checks identical-reactant falling factorial against engine's symmetry factor.
+begin model
+begin parameters
+ ka 1
+ kd 1
+end parameters
+begin molecule types
+ A(b)
+end molecule types
+begin seed species
+ A(b) 2
+end seed species
+begin observables
+ Molecules Free A(b)
+end observables
+begin reaction rules
+ A(b) + A(b) <-> A(b!1).A(b!1) ka,kd
+end reaction rules
+end model
+generate_network({overwrite=>1})

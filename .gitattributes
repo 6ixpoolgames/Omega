@@ -1,0 +1,105 @@
+# Hooks and the byte-audited historical source must survive Windows checkout.
+.githooks/* text eol=lf
+docs/implementation/artifact_reconstruction/spatial_binding_thermal_20261003.py text eol=lf
+# Preserve frozen registrations' exact bytes: result hashes use raw-byte SHA-256.
+docs/research_notes/lushness_testbed/reserve_batch_r1/*.json -text
+docs/research_notes/lushness_testbed/maintained_resource/*.json -text
+docs/research_notes/lushness_testbed/structural_harm/*.json -text
+# Preserve future feedback registrations and their raw-byte hashes.
+docs/research_notes/lushness_testbed/resource_feedback/*.json -text
+# Corrected shared-law catalysis registrations keep exact frozen bytes.
+docs/research_notes/lushness_testbed/corrected_catalysis/*.json -text
+# Oracle-controlled feedback registrations retain exact source hashes.
+docs/research_notes/lushness_testbed/controlled_feedback/*.json -text
+# Central-wager signal registrations preserve prospectively frozen bytes.
+docs/research_notes/lushness_testbed/aversive_signals/*.json -text
+docs/research_notes/lushness_testbed/temporal_profile/*.json -text
+docs/research_notes/lushness_testbed/exploration/*.json -text
+docs/research_notes/lushness_testbed/paid_sensing/*.json -text
+docs/research_notes/lushness_testbed/renewal/*.json -text
+docs/research_notes/lushness_testbed/renewal/laws/*.json -text
+# Frozen source receipts hash bytes, including the original line endings.
+omega_v2/__init__.py -text whitespace=cr-at-eol
+omega_v2/testbed/controlled_feedback.py -text whitespace=cr-at-eol
+omega_v2/testbed/modules/__init__.py -text whitespace=cr-at-eol
+omega_v2/testbed/modules/damage.py -text whitespace=cr-at-eol
+omega_v2/testbed/modules/material_sink.py -text whitespace=cr-at-eol
+scripts/paid_sensing_worker.py -text whitespace=cr-at-eol
+docs/research_notes/lushness_testbed/renewal/FROZEN_growing_population_test.txt -text
+docs/research_notes/lushness_testbed/compounding/*.json -text whitespace=cr-at-eol
+docs/research_notes/lushness_testbed/compounding/laws/*.json -text whitespace=cr-at-eol
+docs/research_notes/lushness_testbed/same_law_gas/**/*.json -text whitespace=cr-at-eol
+docs/research_notes/lushness_testbed/compounding/matched_throughput/**/*.json -text whitespace=cr-at-eol
+omega_v2/testbed/reactive_lattice.py -text whitespace=cr-at-eol
+omega_v2/testbed/analysis/same_law_profile.py -text whitespace=cr-at-eol
+omega_v2/testbed/compounding.py -text whitespace=cr-at-eol
+scripts/*reactive_lattice*.py -text whitespace=cr-at-eol
+scripts/*same_law*.py -text whitespace=cr-at-eol
+scripts/*throughput_match*.py -text whitespace=cr-at-eol
+scripts/*compounding*.py -text whitespace=cr-at-eol
+
+# Preserve byte identities for the robust-compounding frozen engineering bundle.
+omega_v2/testbed/robust_generativity.py -text whitespace=cr-at-eol
+omega_v2/testbed/analysis/class_queries.py -text whitespace=cr-at-eol
+omega_v2/testbed/analysis/generativity_*.py -text whitespace=cr-at-eol
+scripts/*robust_generativity*.py -text whitespace=cr-at-eol
+tests/test_robust_generativity.py -text whitespace=cr-at-eol
+tests/test_generativity_experiment.py -text whitespace=cr-at-eol
+docs/research_notes/lushness_testbed/robust_generativity/*.json -text whitespace=cr-at-eol
+docs/research_notes/lushness_testbed/robust_generativity/cases/*.json -text whitespace=cr-at-eol
+docs/research_notes/lushness_testbed/robust_generativity/*.md -text whitespace=cr-at-eol
+
+# Compact friction results and source receipts retain exact byte identities.
+docs/research_notes/lushness_testbed/domination_friction/**/*.json -text whitespace=cr-at-eol
+omega_v2/testbed/domination_friction.py -text whitespace=cr-at-eol
+omega_v2/testbed/analysis/friction_profile.py -text whitespace=cr-at-eol
+scripts/*domination_friction*.py -text whitespace=cr-at-eol
+
+# Stage A uses the same source/configuration and compact-result byte identities.
+scripts/*domination_stage_a*.py -text whitespace=cr-at-eol
+tests/test_domination_stage_a.py -text whitespace=cr-at-eol
+docs/research_notes/lushness_testbed/domination_stage_a/**/*.json -text whitespace=cr-at-eol
+docs/research_notes/lushness_testbed/domination_stage_a/*.json -text whitespace=cr-at-eol
+
+# Fractional bank and discovery run byte identities.
+omega_v2/testbed/energy_grid.py -text whitespace=cr-at-eol
+omega_v2/testbed/analysis/expanded_friction_profile.py -text whitespace=cr-at-eol
+omega_v2/testbed/analysis/friction_attribution.py -text whitespace=cr-at-eol
+omega_v2/testbed/analysis/streamed_history.py -text whitespace=cr-at-eol
+omega_v2/testbed/analysis/uniformized_entropy.py -text whitespace=cr-at-eol
+omega_v2/testbed/analysis/entropy_checkpoints.py -text whitespace=cr-at-eol
+scripts/*domination_b1*.py -text whitespace=cr-at-eol
+scripts/domination_structure_probe.py -text whitespace=cr-at-eol
+docs/research_notes/lushness_testbed/domination_b1/**/*.json -text whitespace=cr-at-eol
+docs/research_notes/lushness_testbed/domination_b1/*.json -text whitespace=cr-at-eol
+
+# Paired transfer and matched-flow records hash exact source/result bytes.
+omega_v2/testbed/resource_transfer.py -text whitespace=cr-at-eol
+omega_v2/testbed/analysis/flow_matching.py -text whitespace=cr-at-eol
+scripts/*resource_transfer*.py -text whitespace=cr-at-eol
+scripts/*continuation_controls*.py -text whitespace=cr-at-eol
+scripts/flow_calibration_worker.py -text whitespace=cr-at-eol
+docs/research_notes/lushness_testbed/resource_transfer/**/*.json -text whitespace=cr-at-eol
+docs/research_notes/lushness_testbed/resource_transfer/*.json -text whitespace=cr-at-eol
+docs/research_notes/lushness_testbed/continuation_controls/**/*.json -text whitespace=cr-at-eol
+
+# C5 physical-extension run byte identities.
+docs/research_notes/lushness_testbed/c5_upgrade/**/*.csv -text whitespace=cr-at-eol
+docs/research_notes/lushness_testbed/c5_upgrade/*.csv -text whitespace=cr-at-eol
+omega_v2/testbed/physical_extensions.py -text whitespace=cr-at-eol
+scripts/*c5_upgrade*.py -text whitespace=cr-at-eol
+docs/research_notes/lushness_testbed/c5_upgrade/**/*.json -text whitespace=cr-at-eol
+scripts/run_c5_followups.py -text whitespace=cr-at-eol
+scripts/c5_crossover_worker.py -text whitespace=cr-at-eol
+scripts/run_c5_crossover_probe.py -text whitespace=cr-at-eol
+scripts/report_c5_crossover.py -text whitespace=cr-at-eol
+
+# Reactive policy histories, receipts and tabulations retain exact bytes.
+omega_v2/testbed/reactive_allocation.py -text whitespace=cr-at-eol
+omega_v2/testbed/analysis/policy_search_profile.py -text whitespace=cr-at-eol
+scripts/*c5_policy*.py -text whitespace=cr-at-eol
+tests/test_reactive_allocation.py -text whitespace=cr-at-eol
+docs/research_notes/lushness_testbed/c5_policy_search/**/*.json -text whitespace=cr-at-eol
+docs/research_notes/lushness_testbed/c5_policy_search/*.json -text whitespace=cr-at-eol
+docs/research_notes/lushness_testbed/c5_policy_search/*.csv -text whitespace=cr-at-eol
+docs/research_notes/lushness_testbed/c5_policy_search/SPECIFICATION.md -text whitespace=cr-at-eol

@@ -1,0 +1,76 @@
+import math
+from math import comb
+
+import numpy as np
+
+from omega_v2.testbed import growing_population as counted
+from omega_v2.testbed.growing_reference import ReferenceParams, build_reference
+
+
+def test_labelled_fine_generator_lumps_to_histogram_generator():
+    inv, policy = (2, 1), (.25, .75, .5, .5)
+    fine = build_reference(inv, policy)
+    coarse = counted.build(inv, policy)
+    r = np.zeros((len(fine['states']), len(coarse['states'])))
+    for i, state in enumerate(fine['states']):
+        hist = tuple((body.count(1), body.count(2), f, g) for body, f, g in state)
+        r[i, coarse['index'][hist]] = 1.
+    residual = fine['Q'] @ r - r @ coarse['Q'].toarray()
+    assert np.max(np.abs(residual), initial=0.) < 1e-11
+
+
+def test_mu_zero_labelled_boltzmann_weight_lumps_to_histogram_degeneracy():
+    result = build_reference((1, 1), (.5, .5, .5, .5),
+                             params=ReferenceParams(chemical_potential=0.))
+    q = result['Q'].toarray()
+    energies = np.asarray([sum(sum(x == 1 for x in b)+2*sum(x == 2 for x in b)+2*f
+                                for b, f, g in s) for s in result['states']])
+    fuel_mult = np.asarray([math.prod(comb(1, f) for body, f, g in s)
+                            for s in result['states']])
+    pi = fuel_mult*np.exp(-energies); pi /= pi.sum()
+    assert np.max(np.abs(pi[:, None]*q-(pi[:, None]*q).T)) < 1e-12
+    projected = np.zeros(len(result['histograms']))
+    for weight, j in zip(pi, result['projection']):
+        projected[j] += weight
+    # Directly recover the declared coarse Boltzmann weights from labelled states.
+    expected = np.zeros_like(projected)
+    for s, j in zip(result['states'], result['projection']):
+        e = sum(sum(x == 1 for x in b)+2*sum(x == 2 for x in b)+2*f for b, f, g in s)
+        expected[j] += math.prod(comb(1, f) for body, f, g in s)*math.exp(-e)
+    expected /= expected.sum()
+    assert np.allclose(projected, expected, atol=1e-14)
+
+
+def test_inventory_one_mapping_matches_old_body_coordinates_when_assistance_absent():
+    p = counted.DEFAULT
+    no_assist = type(p)(capture=p.capture, fuel_bath=p.fuel_bath, build=p.build,
+                        repair=p.repair, wear=p.wear, disassembly=p.disassembly,
+                        switch=p.switch, exchange=p.exchange, capture_benefit=p.capture_benefit,
+                        assisted_birth=0., chemical_potential=p.chemical_potential)
+    fine = build_reference(1, (.3, .7, .4, .6), no_assist)
+    coarse = counted.build(1, (.3, .7, .4, .6), no_assist)
+    assert len(fine['states']) == len(coarse['states']) == 144
+    mapped = np.asarray([coarse['index'][tuple((body.count(1), body.count(2), f, g)
+                          for body, f, g in s)] for s in fine['states']])
+    assert len(set(mapped)) == len(mapped)
+    assert np.max(np.abs(fine['Q'].toarray()-coarse['Q'].toarray()[np.ix_(mapped, mapped)])) < 1e-11
+
+
+def test_assisted_birth_and_switch_bills_have_expected_fine_witnesses():
+    fine = build_reference((2, 1), ((0., 1.),)*4,
+                           params=ReferenceParams(switch_tokens=2))
+    idx = fine['index']
+    source = (((2, 0), 1, 0), ((0,), 0, 0))
+    target = (((2, 2), 0, 0), ((0,), 0, 0))
+    i, j = idx[source], idx[target]
+    assisted = [ev['rate'] for ev in fine['events']
+                if ev['source'] == source and ev['target'] == target
+                and ev['family'] == 'assisted_birth']
+    assert assisted == [.4*1/(2*2)]
+    # An export gate consumes two pooled carriers and contributes +2 energy.
+    source = (((0, 0), 2, 0), ((0,), 0, 0))
+    target = (((0, 0), 0, 1), ((0,), 0, 0))
+    i, j = idx[source], idx[target]
+    assert math.isclose(fine['Q'][i, j], .15*math.exp(2))
+    assert sum(x == 1 for x in target[0][0])+2*sum(x == 2 for x in target[0][0])+2*target[0][1] - (
+        sum(x == 1 for x in source[0][0])+2*sum(x == 2 for x in source[0][0])+2*source[0][1]) == -4

@@ -1,0 +1,51 @@
+{
+  "caps": {
+    "memory": 3221225472,
+    "output_cap": 33554432,
+    "seconds": 300
+  },
+  "cases": [
+    {
+      "block_rows": 128,
+      "cadences": [
+        0.25
+      ],
+      "entropy_backend": "uniformized",
+      "entropy_threads": 2,
+      "horizons": [
+        16,
+        64
+      ],
+      "id": "movement-smoke",
+      "parameters": {
+        "charge_capacity": 1,
+        "d_energy_capacity": 2,
+        "d_energy_quantum": 0.5,
+        "discovery": true,
+        "kappa": 1,
+        "opportunity_yield": 4
+      },
+      "policy": {
+        "cost": 0.5,
+        "edges": [
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            2
+          ]
+        ],
+        "mode": "steering",
+        "phi": 0.95,
+        "steering_scope": "movement_only"
+      }
+    }
+  ],
+  "source_hash": "53b289eb3e7e61656f2c48060e84f4b898e487bcac0df8ecc8d027f426b28e1a"
+}

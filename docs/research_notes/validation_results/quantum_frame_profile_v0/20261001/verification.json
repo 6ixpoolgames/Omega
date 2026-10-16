@@ -1,0 +1,33 @@
+{
+  "recorded_utc": "2026-10-01T05:11:08.994195+00:00",
+  "pytest": {
+    "command": ".venv/Scripts/python.exe -m pytest tests/test_quantum_frame_profile.py -q",
+    "exit_code": 0,
+    "passed": 19,
+    "duration_seconds": 0.28
+  },
+  "ruff": {
+    "command": ".venv/Scripts/python.exe -m ruff check omega_v2/finite/quantum_profile.py omega_v2/experiments/quantum_frame_profile_v0.py omega_v2/validation/quantum_frame_profile_v0.py tests/test_quantum_frame_profile.py",
+    "exit_code": 0,
+    "result": "All checks passed!"
+  },
+  "run": {
+    "command": ".venv/Scripts/python.exe -m omega_v2.validation.quantum_frame_profile_v0",
+    "exit_code": 0,
+    "representation_errors": {
+      "trace": 6.661338147750939e-16,
+      "causal_trace": 1.1102230246251565e-16,
+      "source_contraction": 3.3306690738754696e-16
+    }
+  },
+  "source_hashes_match_evidence": {
+    "docs/research_notes/omega_v2/quantum_frame_profile_protocol_v0.md": true,
+    "omega_v2/finite/quantum_profile.py": true,
+    "omega_v2/experiments/quantum_frame_profile_v0.py": true,
+    "omega_v2/validation/quantum_frame_profile_v0.py": true,
+    "tests/test_quantum_frame_profile.py": true
+  },
+  "artifact_inventory": "All six preparations, both horizons, four physical preparations per case, and all declared Choi fragments present.",
+  "evidence_sha256": "f648409a1878d33375ce4731978f5973e6a199d7a42590d8bd63ec4a1208880e",
+  "scope": "Targeted probe only; no full repository suite; no commit or push."
+}

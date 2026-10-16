@@ -1,0 +1,3572 @@
+{
+  "regimes": [
+    {
+      "capture_factor": 1,
+      "winner": {
+        "policy": [
+          "service",
+          "mix25",
+          "service",
+          "mix25"
+        ],
+        "rate": 5.366437005240367,
+        "offsets": {
+          "organized": 10.423588104280732,
+          "disassembled": 4.957105584114386,
+          "matched_shell": 4.0636161444319105
+        },
+        "stationary_active_total": 0.6016968699334471,
+        "states": 144,
+        "profiles": {
+          "1": {
+            "organized": 7.894392225830645,
+            "disassembled": 5.472329285071668,
+            "matched_shell": 5.901332863327375,
+            "stationary_conditional": 5.366437005240367
+          },
+          "4": {
+            "organized": 27.51245214618359,
+            "disassembled": 23.039322644966926,
+            "matched_shell": 23.091260885241148,
+            "stationary_conditional": 21.465748020961467
+          },
+          "16": {
+            "organized": 95.37536805296713,
+            "disassembled": 89.97669948999328,
+            "matched_shell": 89.26375018273558,
+            "stationary_conditional": 85.86299208384587
+          },
+          "64": {
+            "organized": 353.87316501535344,
+            "disassembled": 348.40566900570605,
+            "matched_shell": 347.51346837984835,
+            "stationary_conditional": 343.45196833538347
+          }
+        },
+        "residuals": {
+          "stationary": 1.1752751549742868e-16,
+          "poisson": 8.659739592076221e-15
+        }
+      },
+      "best_deterministic_or_idle": {
+        "policy": [
+          "service",
+          "service",
+          "service",
+          "service"
+        ],
+        "rate": 5.294248506829899,
+        "offsets": {
+          "organized": 9.12495882807949,
+          "disassembled": 4.280211348509217,
+          "matched_shell": 2.7988749282695133
+        },
+        "stationary_active_total": 0.6319828688870744,
+        "states": 144,
+        "profiles": {
+          "1": {
+            "organized": 7.946832157934607,
+            "disassembled": 5.4833973652869625,
+            "matched_shell": 5.768243296061785,
+            "stationary_conditional": 5.294248506829899
+          },
+          "4": {
+            "organized": 27.21451030223792,
+            "disassembled": 22.973461706393604,
+            "matched_shell": 22.52223541798539,
+            "stationary_conditional": 21.176994027319594
+          },
+          "16": {
+            "organized": 93.26094931764294,
+            "disassembled": 88.55625383660976,
+            "matched_shell": 87.1107859162856,
+            "stationary_conditional": 84.70797610927838
+          },
+          "64": {
+            "organized": 347.9516100011713,
+            "disassembled": 343.1080027058641,
+            "matched_shell": 341.62672001889564,
+            "stationary_conditional": 338.8319044371135
+          }
+        },
+        "residuals": {
+          "stationary": 7.762887554996212e-17,
+          "poisson": 6.661338147750939e-15
+        }
+      },
+      "service_rate": 5.294248506829899,
+      "service_active": 0.6319828688870744,
+      "idle_rate": 4.740375754732683,
+      "idle_active": 0.6595668155047615,
+      "functioning_benchmark": {
+        "policy": [
+          "idle",
+          "idle",
+          "idle",
+          "idle"
+        ],
+        "rate": 4.740375754732683,
+        "offsets": {
+          "organized": 9.437036701200794,
+          "disassembled": 4.804641567257909,
+          "matched_shell": 2.6644268151588872
+        },
+        "stationary_active_total": 0.6595668155047615,
+        "states": 36,
+        "profiles": {
+          "1": {
+            "organized": 7.35326699521563,
+            "disassembled": 5.350188801567859,
+            "matched_shell": 5.346761927740522,
+            "stationary_conditional": 4.740375754732683
+          },
+          "4": {
+            "organized": 25.381671043782738,
+            "disassembled": 21.713010911269848,
+            "matched_shell": 20.630334665174704,
+            "stationary_conditional": 18.96150301893073
+          },
+          "16": {
+            "organized": 85.01901752859565,
+            "disassembled": 80.57614820864927,
+            "matched_shell": 78.41797431065896,
+            "stationary_conditional": 75.84601207572292
+          },
+          "64": {
+            "organized": 312.82088598406256,
+            "disassembled": 308.1886727429347,
+            "matched_shell": 306.0484044004669,
+            "stationary_conditional": 303.3840483028917
+          }
+        },
+        "residuals": {
+          "stationary": 8.066464163292153e-17,
+          "poisson": 1.5543122344752192e-15
+        }
+      },
+      "winner_shell_offset_advantage": 6.359971959848822,
+      "minimum_grid_shell_offset_advantage": 5.456548235921607,
+      "finite_shell_signs": {
+        "positive": 5184,
+        "negative": 0,
+        "tie": 0
+      },
+      "least_favorable_reference_policy": [
+        "service",
+        "idle",
+        "service",
+        "idle"
+      ],
+      "protection_tradeoff": -0.03028599895362738,
+      "protection_tradeoff_percent": 4.792218340816928,
+      "rule_a_policy_scope": "algorithmically selected candidates, not complete-grid overlay optimization",
+      "rule_a_assessment": [
+        {
+          "root": "organized",
+          "lag": 0.0,
+          "primary_winner_bits": 2.1010140267160664,
+          "best_listed_bits": 2.13226402333225,
+          "best_listed_policies": [
+            [
+              "service",
+              "service",
+              "service",
+              "service"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "organized",
+          "lag": 0.25,
+          "primary_winner_bits": 1.1267809283817414,
+          "best_listed_bits": 1.1449753638878364,
+          "best_listed_policies": [
+            [
+              "service",
+              "service",
+              "service",
+              "service"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "organized",
+          "lag": 1.0,
+          "primary_winner_bits": 0.4549311029058227,
+          "best_listed_bits": 0.48991604458681426,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "organized",
+          "lag": 4.0,
+          "primary_winner_bits": 0.08526858464359677,
+          "best_listed_bits": 0.1379490767081215,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "organized",
+          "lag": 16.0,
+          "primary_winner_bits": 0.0022480116771639302,
+          "best_listed_bits": 0.015459093600278528,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "organized",
+          "lag": 64.0,
+          "primary_winner_bits": 1.8689578773489757e-08,
+          "best_listed_bits": 1.227302879858172e-05,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "disassembled",
+          "lag": 0.0,
+          "primary_winner_bits": 1.307887527967068,
+          "best_listed_bits": 2.1776447878042675,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "disassembled",
+          "lag": 0.25,
+          "primary_winner_bits": 0.7348524196468722,
+          "best_listed_bits": 1.2723861458483348,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "disassembled",
+          "lag": 1.0,
+          "primary_winner_bits": 0.3148686204562723,
+          "best_listed_bits": 0.6369183677979278,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "disassembled",
+          "lag": 4.0,
+          "primary_winner_bits": 0.05824816307465319,
+          "best_listed_bits": 0.19932286669329358,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "disassembled",
+          "lag": 16.0,
+          "primary_winner_bits": 0.0015690662135021682,
+          "best_listed_bits": 0.01823331801357586,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "disassembled",
+          "lag": 64.0,
+          "primary_winner_bits": 5.153418136671917e-09,
+          "best_listed_bits": 8.00465490069513e-06,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "matched_shell",
+          "lag": 0.0,
+          "primary_winner_bits": 1.4875154665166384,
+          "best_listed_bits": 1.805997794000558,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "matched_shell",
+          "lag": 0.25,
+          "primary_winner_bits": 0.828923044062754,
+          "best_listed_bits": 1.027108005510718,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "matched_shell",
+          "lag": 1.0,
+          "primary_winner_bits": 0.36246644139292444,
+          "best_listed_bits": 0.4967262316817181,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "matched_shell",
+          "lag": 4.0,
+          "primary_winner_bits": 0.07381541727046181,
+          "best_listed_bits": 0.1452533041725027,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "matched_shell",
+          "lag": 16.0,
+          "primary_winner_bits": 0.002059523495077875,
+          "best_listed_bits": 0.014100465971074838,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "matched_shell",
+          "lag": 64.0,
+          "primary_winner_bits": 1.7859575485168477e-08,
+          "best_listed_bits": 8.304302107631223e-06,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "stationary",
+          "lag": 0.0,
+          "primary_winner_bits": 1.341609251310092,
+          "best_listed_bits": 1.341609251310092,
+          "best_listed_policies": [
+            [
+              "service",
+              "mix25",
+              "service",
+              "mix25"
+            ]
+          ],
+          "primary_winner_among_best_listed": true
+        },
+        {
+          "root": "stationary",
+          "lag": 0.25,
+          "primary_winner_bits": 0.7701912610685218,
+          "best_listed_bits": 0.7701912610685218,
+          "best_listed_policies": [
+            [
+              "service",
+              "mix25",
+              "service",
+              "mix25"
+            ]
+          ],
+          "primary_winner_among_best_listed": true
+        },
+        {
+          "root": "stationary",
+          "lag": 1.0,
+          "primary_winner_bits": 0.35828486114782404,
+          "best_listed_bits": 0.3734157340076436,
+          "best_listed_policies": [
+            [
+              "mix50",
+              "mix50",
+              "mix50",
+              "mix50"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "stationary",
+          "lag": 4.0,
+          "primary_winner_bits": 0.08163154598303743,
+          "best_listed_bits": 0.08828160017139386,
+          "best_listed_policies": [
+            [
+              "mix50",
+              "mix50",
+              "mix50",
+              "mix50"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "stationary",
+          "lag": 16.0,
+          "primary_winner_bits": 0.003098569214604346,
+          "best_listed_bits": 0.005719620267354864,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "stationary",
+          "lag": 64.0,
+          "primary_winner_bits": 4.229885949001096e-08,
+          "best_listed_bits": 4.864364956615516e-06,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        }
+      ],
+      "rule_a_profiles": [
+        {
+          "policy": [
+            "export",
+            "export",
+            "export",
+            "export"
+          ],
+          "rule_a": {
+            "organized": {
+              "0.0": 2.044569454793482,
+              "0.25": 1.1014964796602986,
+              "1.0": 0.48991604458681426,
+              "4.0": 0.1379490767081215,
+              "16.0": 0.015459093600278528,
+              "64.0": 1.227302879858172e-05
+            },
+            "disassembled": {
+              "0.0": 2.1776447878042675,
+              "0.25": 1.2723861458483348,
+              "1.0": 0.6369183677979278,
+              "4.0": 0.19932286669329358,
+              "16.0": 0.01823331801357586,
+              "64.0": 8.00465490069513e-06
+            },
+            "matched_shell": {
+              "0.0": 1.805997794000558,
+              "0.25": 1.027108005510718,
+              "1.0": 0.4967262316817181,
+              "4.0": 0.1452533041725027,
+              "16.0": 0.014100465971074838,
+              "64.0": 8.304302107631223e-06
+            },
+            "stationary": {
+              "0.0": 1.1523940059070041,
+              "0.25": 0.6352259269231438,
+              "1.0": 0.29738141622526887,
+              "4.0": 0.07512835976910043,
+              "16.0": 0.005719620267354864,
+              "64.0": 4.864364956615516e-06
+            }
+          }
+        },
+        {
+          "policy": [
+            "idle",
+            "idle",
+            "idle",
+            "idle"
+          ],
+          "rule_a": {
+            "organized": {
+              "0.0": 1.9505698452479756,
+              "0.25": 1.0224662774035398,
+              "1.0": 0.39323168155602417,
+              "4.0": 0.06863807713176406,
+              "16.0": 0.0013499170669941662,
+              "64.0": 1.1731815519056e-09
+            },
+            "disassembled": {
+              "0.0": 1.2980222381757318,
+              "0.25": 0.727288849386116,
+              "1.0": 0.3074816958681805,
+              "4.0": 0.05271109106121319,
+              "16.0": 0.0009287696761708375,
+              "64.0": 7.545448710288838e-10
+            },
+            "matched_shell": {
+              "0.0": 1.3539413616073155,
+              "0.25": 0.7388689492085594,
+              "1.0": 0.30986628484570056,
+              "4.0": 0.05751744786709817,
+              "16.0": 0.0010382185155175527,
+              "64.0": 8.778385796048838e-10
+            },
+            "stationary": {
+              "0.0": 1.185093938683171,
+              "0.25": 0.6630635171130668,
+              "1.0": 0.2905376249420702,
+              "4.0": 0.05599164703124435,
+              "16.0": 0.0009995841684858628,
+              "64.0": 8.389186271598236e-10
+            }
+          }
+        },
+        {
+          "policy": [
+            "mix50",
+            "mix50",
+            "mix50",
+            "mix50"
+          ],
+          "rule_a": {
+            "organized": {
+              "0.0": 2.1102641273396756,
+              "0.25": 1.1441716963554027,
+              "1.0": 0.4887692323991777,
+              "4.0": 0.10716848306659266,
+              "16.0": 0.004652183093428519,
+              "64.0": 5.3186568926832933e-08
+            },
+            "disassembled": {
+              "0.0": 1.850294039438646,
+              "0.25": 1.1002531568976204,
+              "1.0": 0.5445725328690703,
+              "4.0": 0.13411931237834462,
+              "16.0": 0.004471738813742299,
+              "64.0": 5.281610615526233e-08
+            },
+            "matched_shell": {
+              "0.0": 1.6923892178584097,
+              "0.25": 0.9736164514755483,
+              "1.0": 0.46327633474074853,
+              "4.0": 0.10925859251420833,
+              "16.0": 0.0036492282751618976,
+              "64.0": 4.146788690206904e-08
+            },
+            "stationary": {
+              "0.0": 1.276552849376908,
+              "0.25": 0.7533974857027339,
+              "1.0": 0.3734157340076436,
+              "4.0": 0.08828160017139386,
+              "16.0": 0.0026685858417668127,
+              "64.0": 2.9508894499416435e-08
+            }
+          }
+        },
+        {
+          "policy": [
+            "service",
+            "mix25",
+            "service",
+            "mix25"
+          ],
+          "rule_a": {
+            "organized": {
+              "0.0": 2.1010140267160664,
+              "0.25": 1.1267809283817414,
+              "1.0": 0.4549311029058227,
+              "4.0": 0.08526858464359677,
+              "16.0": 0.0022480116771639302,
+              "64.0": 1.8689578773489757e-08
+            },
+            "disassembled": {
+              "0.0": 1.307887527967068,
+              "0.25": 0.7348524196468722,
+              "1.0": 0.3148686204562723,
+              "4.0": 0.05824816307465319,
+              "16.0": 0.0015690662135021682,
+              "64.0": 5.153418136671917e-09
+            },
+            "matched_shell": {
+              "0.0": 1.4875154665166384,
+              "0.25": 0.828923044062754,
+              "1.0": 0.36246644139292444,
+              "4.0": 0.07381541727046181,
+              "16.0": 0.002059523495077875,
+              "64.0": 1.7859575485168477e-08
+            },
+            "stationary": {
+              "0.0": 1.341609251310092,
+              "0.25": 0.7701912610685218,
+              "1.0": 0.35828486114782404,
+              "4.0": 0.08163154598303743,
+              "16.0": 0.003098569214604346,
+              "64.0": 4.229885949001096e-08
+            }
+          }
+        },
+        {
+          "policy": [
+            "service",
+            "mix50",
+            "service",
+            "mix50"
+          ],
+          "rule_a": {
+            "organized": {
+              "0.0": 2.065355095126047,
+              "0.25": 1.1051739352287215,
+              "1.0": 0.4461771981006981,
+              "4.0": 0.08998337878565543,
+              "16.0": 0.0032317780219113246,
+              "64.0": 3.460928610365954e-08
+            },
+            "disassembled": {
+              "0.0": 1.3062285955272768,
+              "0.25": 0.7336441919826064,
+              "1.0": 0.31393121914291333,
+              "4.0": 0.058779678057319096,
+              "16.0": 0.0017649222839288825,
+              "64.0": 9.41758671046955e-09
+            },
+            "matched_shell": {
+              "0.0": 1.5060667780881605,
+              "0.25": 0.8395952013127452,
+              "1.0": 0.36814149055394757,
+              "4.0": 0.07718441250286079,
+              "16.0": 0.0025661268227231693,
+              "64.0": 2.5665113256856387e-08
+            },
+            "stationary": {
+              "0.0": 1.3363403232040483,
+              "0.25": 0.7683374370949638,
+              "1.0": 0.3592691725129295,
+              "4.0": 0.08379740619883269,
+              "16.0": 0.003549229240644965,
+              "64.0": 4.3016163373607905e-08
+            }
+          }
+        },
+        {
+          "policy": [
+            "service",
+            "service",
+            "service",
+            "service"
+          ],
+          "rule_a": {
+            "organized": {
+              "0.0": 2.13226402333225,
+              "0.25": 1.1449753638878364,
+              "1.0": 0.46633350955875574,
+              "4.0": 0.0919806468398896,
+              "16.0": 0.002611507731064222,
+              "64.0": 1.0444628095740427e-07
+            },
+            "disassembled": {
+              "0.0": 1.3093931005684742,
+              "0.25": 0.7359209930540016,
+              "1.0": 0.315840343710851,
+              "4.0": 0.05835479425563328,
+              "16.0": 0.0016507486986157005,
+              "64.0": 5.6921962254818936e-08
+            },
+            "matched_shell": {
+              "0.0": 1.4546538128783892,
+              "0.25": 0.8048500421063494,
+              "1.0": 0.34688228613085914,
+              "4.0": 0.06914387787216791,
+              "16.0": 0.001980199876612798,
+              "64.0": 8.212866142720543e-08
+            },
+            "stationary": {
+              "0.0": 1.3235621267074746,
+              "0.25": 0.7534776564929287,
+              "1.0": 0.3438394602919004,
+              "4.0": 0.0758229557082066,
+              "16.0": 0.002898431791847703,
+              "64.0": 1.8142456428293484e-07
+            }
+          }
+        }
+      ],
+      "cadence_sensitivity": [
+        {
+          "cadence": 0.125,
+          "best_listed_policies": [
+            [
+              "service",
+              "mix25",
+              "service",
+              "mix25"
+            ]
+          ],
+          "primary_winner_among_best_listed": true
+        },
+        {
+          "cadence": 0.5,
+          "best_listed_policies": [
+            [
+              "service",
+              "mix25",
+              "service",
+              "mix25"
+            ]
+          ],
+          "primary_winner_among_best_listed": true
+        }
+      ],
+      "finite_winners": {
+        "1": [
+          "export",
+          "service",
+          "export",
+          "service"
+        ],
+        "4": [
+          "mix75",
+          "mix25",
+          "mix75",
+          "mix25"
+        ],
+        "16": [
+          "mix25",
+          "mix25",
+          "mix25",
+          "mix25"
+        ],
+        "64": [
+          "service",
+          "mix25",
+          "service",
+          "mix25"
+        ]
+      },
+      "winner_chain_rule_rate": {
+        "next_body_fuel_given_full_previous": 5.051420788650388,
+        "next_gate_given_next_body_fuel_and_full_previous": 0.3150162165899791
+      },
+      "winner_organized_T64": {
+        "drive_work": 30.13540697623986,
+        "bath_heat": 30.935961189665203,
+        "build": 6.739315685099049,
+        "repair": 7.549042089509028,
+        "wear": 2.854999475893324,
+        "dismantle": 3.7157552448056017,
+        "switches": 7.807807033038898,
+        "exchange": 4.750343373959187,
+        "fuel_spent_service": 0.7735057788323497,
+        "fuel_spent_switch": 1.4844270002699336,
+        "active_expected": [
+          0.3009906422167479,
+          0.30099064221674793
+        ],
+        "both_active": 0.08914011613600539,
+        "fuel_expected": [
+          0.38785524305255986,
+          0.3878552430525599
+        ],
+        "energy_change": -0.8005542134253396,
+        "first_law_residual": 3.552713678800501e-15
+      },
+      "winner_recovery_T64": {
+        "both_active_hit_by_horizon": 0.9203503494100062,
+        "both_active_at_horizon": 0.08916189331040297,
+        "meaning": "functional reconstruction; no claim about individual identity"
+      },
+      "registered_outcomes": {
+        "E1": "pass",
+        "E2": "all_grid_offsets_organized_ahead",
+        "E3": "reported_without_monotonicity_assumption",
+        "E4": "maintenance_tradeoff_hit",
+        "E5": "overlay_rank_disagreement",
+        "E6": "primary_winner_remains_best_listed",
+        "E7": "compiler_and_idle_regression_pass"
+      },
+      "audits": {
+        "max_stationarity_residual": 3.421742056364252e-16,
+        "max_poisson_residual": 6.372680161348399e-14,
+        "legacy_generator_error": 2.220446049250313e-16,
+        "idle_switch_rate": 0.0,
+        "reachable_state_counts": [
+          36,
+          72,
+          144
+        ],
+        "rule_a_nonnegative_and_monotone": "checked in diagnostic module at all known roots",
+        "resource_residual": 1.4210854715202004e-14
+      },
+      "execution": {
+        "exit_code": 0,
+        "cap_reason": null,
+        "wall_seconds": 5.516798700031359,
+        "wall_cap_seconds": 120,
+        "job_memory_cap_bytes": 1073741824,
+        "peak_job_bytes": 130596864,
+        "output_bytes": 2021283
+      }
+    },
+    {
+      "capture_factor": 3,
+      "winner": {
+        "policy": [
+          "service",
+          "mix50",
+          "service",
+          "mix50"
+        ],
+        "rate": 5.716617510631444,
+        "offsets": {
+          "organized": 11.555114378270874,
+          "disassembled": 4.078766035075919,
+          "matched_shell": 4.382076477514054
+        },
+        "stationary_active_total": 0.7207371403385573,
+        "states": 144,
+        "profiles": {
+          "1": {
+            "organized": 8.733085289739911,
+            "disassembled": 5.622705069397629,
+            "matched_shell": 6.344720734901793,
+            "stationary_conditional": 5.716617510631444
+          },
+          "4": {
+            "organized": 29.233068967944654,
+            "disassembled": 23.860941792491932,
+            "matched_shell": 24.521296001438557,
+            "stationary_conditional": 22.866470042525776
+          },
+          "16": {
+            "organized": 101.7179393165529,
+            "disassembled": 94.49437182684684,
+            "matched_shell": 94.95984712950131,
+            "stationary_conditional": 91.4658801701031
+          },
+          "64": {
+            "organized": 377.41574837174403,
+            "disassembled": 369.9383376232781,
+            "matched_shell": 370.2428022529185,
+            "stationary_conditional": 365.8635206804124
+          }
+        },
+        "residuals": {
+          "stationary": 4.2500725161431774e-17,
+          "poisson": 1.021405182655144e-14
+        }
+      },
+      "best_deterministic_or_idle": {
+        "policy": [
+          "service",
+          "export",
+          "service",
+          "export"
+        ],
+        "rate": 5.418377987055544,
+        "offsets": {
+          "organized": 12.190142401533645,
+          "disassembled": 6.7821243471502255,
+          "matched_shell": 6.6027786816770355
+        },
+        "stationary_active_total": 0.8067959026390439,
+        "states": 144,
+        "profiles": {
+          "1": {
+            "organized": 8.635155599449243,
+            "disassembled": 5.598820163762811,
+            "matched_shell": 6.44928655919358,
+            "stationary_conditional": 5.418377987055544
+          },
+          "4": {
+            "organized": 29.43180804884302,
+            "disassembled": 23.92682350145809,
+            "matched_shell": 24.816379986631535,
+            "stationary_conditional": 21.673511948222178
+          },
+          "16": {
+            "organized": 98.41539279710994,
+            "disassembled": 92.65311996564537,
+            "matched_shell": 92.71834538630179,
+            "stationary_conditional": 86.69404779288871
+          },
+          "64": {
+            "organized": 358.9708174102245,
+            "disassembled": 353.56124019592977,
+            "matched_shell": 353.3817396668808,
+            "stationary_conditional": 346.77619117155484
+          }
+        },
+        "residuals": {
+          "stationary": 9.020562075079397e-17,
+          "poisson": 3.9968028886505635e-15
+        }
+      },
+      "service_rate": 5.2833184696225635,
+      "service_active": 0.7898567053859271,
+      "idle_rate": 4.753427156137836,
+      "idle_active": 0.8357351231724617,
+      "functioning_benchmark": {
+        "policy": [
+          "idle",
+          "idle",
+          "idle",
+          "idle"
+        ],
+        "rate": 4.753427156137836,
+        "offsets": {
+          "organized": 9.137245551325204,
+          "disassembled": 4.49485158796128,
+          "matched_shell": 2.6499250249803312
+        },
+        "stationary_active_total": 0.8357351231724617,
+        "states": 36,
+        "profiles": {
+          "1": {
+            "organized": 8.130306184631829,
+            "disassembled": 5.499886086708207,
+            "matched_shell": 5.661103736909318,
+            "stationary_conditional": 4.753427156137836
+          },
+          "4": {
+            "organized": 25.784207673615903,
+            "disassembled": 22.127460368208983,
+            "matched_shell": 21.11633425123886,
+            "stationary_conditional": 19.013708624551345
+          },
+          "16": {
+            "organized": 84.88072990655786,
+            "disassembled": 80.5553697635796,
+            "matched_shell": 78.69247625271257,
+            "stationary_conditional": 76.05483449820538
+          },
+          "64": {
+            "organized": 313.3561587552134,
+            "disassembled": 308.71421675425,
+            "matched_shell": 306.8692543947575,
+            "stationary_conditional": 304.2193379928215
+          }
+        },
+        "residuals": {
+          "stationary": 6.461844948013606e-17,
+          "poisson": 1.5543122344752192e-15
+        }
+      },
+      "winner_shell_offset_advantage": 7.17303790075682,
+      "minimum_grid_shell_offset_advantage": 3.1478239946438933,
+      "finite_shell_signs": {
+        "positive": 5184,
+        "negative": 0,
+        "tie": 0
+      },
+      "least_favorable_reference_policy": [
+        "idle",
+        "export",
+        "idle",
+        "export"
+      ],
+      "protection_tradeoff": -0.06911956504736982,
+      "protection_tradeoff_percent": 8.750899318326066,
+      "rule_a_policy_scope": "algorithmically selected candidates, not complete-grid overlay optimization",
+      "rule_a_assessment": [
+        {
+          "root": "organized",
+          "lag": 0.0,
+          "primary_winner_bits": 2.4235796002565526,
+          "best_listed_bits": 2.472073949915224,
+          "best_listed_policies": [
+            [
+              "service",
+              "service",
+              "service",
+              "service"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "organized",
+          "lag": 0.25,
+          "primary_winner_bits": 1.2908692050584567,
+          "best_listed_bits": 1.3284722407746594,
+          "best_listed_policies": [
+            [
+              "mix50",
+              "mix50",
+              "mix50",
+              "mix50"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "organized",
+          "lag": 1.0,
+          "primary_winner_bits": 0.5181716585392246,
+          "best_listed_bits": 0.5795658278339699,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "organized",
+          "lag": 4.0,
+          "primary_winner_bits": 0.0998681115904887,
+          "best_listed_bits": 0.1725723589073871,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "organized",
+          "lag": 16.0,
+          "primary_winner_bits": 0.0021181308070596927,
+          "best_listed_bits": 0.021294930894310227,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "organized",
+          "lag": 64.0,
+          "primary_winner_bits": 5.604023911587319e-09,
+          "best_listed_bits": 1.7853622725994e-05,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "disassembled",
+          "lag": 0.0,
+          "primary_winner_bits": 1.3246676382501883,
+          "best_listed_bits": 2.1958050221544623,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "disassembled",
+          "lag": 0.25,
+          "primary_winner_bits": 0.7475153627808011,
+          "best_listed_bits": 1.2858625017673506,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "disassembled",
+          "lag": 1.0,
+          "primary_winner_bits": 0.3309955678221903,
+          "best_listed_bits": 0.6538079222471112,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "disassembled",
+          "lag": 4.0,
+          "primary_winner_bits": 0.06858802545510301,
+          "best_listed_bits": 0.2189383162348264,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "disassembled",
+          "lag": 16.0,
+          "primary_winner_bits": 0.002028448682174222,
+          "best_listed_bits": 0.02382353613069199,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "disassembled",
+          "lag": 64.0,
+          "primary_winner_bits": 2.487834827036295e-09,
+          "best_listed_bits": 1.775501027356796e-05,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "matched_shell",
+          "lag": 0.0,
+          "primary_winner_bits": 1.6141307919961323,
+          "best_listed_bits": 1.919205902820254,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "matched_shell",
+          "lag": 0.25,
+          "primary_winner_bits": 0.8934715305427547,
+          "best_listed_bits": 1.0850441142658718,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "matched_shell",
+          "lag": 1.0,
+          "primary_winner_bits": 0.3889661171507565,
+          "best_listed_bits": 0.5238294521235908,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "matched_shell",
+          "lag": 4.0,
+          "primary_winner_bits": 0.07901812689568788,
+          "best_listed_bits": 0.15934777761426366,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "matched_shell",
+          "lag": 16.0,
+          "primary_winner_bits": 0.0019297083794045378,
+          "best_listed_bits": 0.016889726653438464,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "matched_shell",
+          "lag": 64.0,
+          "primary_winner_bits": 5.701489724785347e-09,
+          "best_listed_bits": 1.2132059940994644e-05,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "stationary",
+          "lag": 0.0,
+          "primary_winner_bits": 1.429154377657861,
+          "best_listed_bits": 1.429154377657861,
+          "best_listed_policies": [
+            [
+              "service",
+              "mix50",
+              "service",
+              "mix50"
+            ]
+          ],
+          "primary_winner_among_best_listed": true
+        },
+        {
+          "root": "stationary",
+          "lag": 0.25,
+          "primary_winner_bits": 0.8120099915339464,
+          "best_listed_bits": 0.8120099915339464,
+          "best_listed_policies": [
+            [
+              "service",
+              "mix50",
+              "service",
+              "mix50"
+            ]
+          ],
+          "primary_winner_among_best_listed": true
+        },
+        {
+          "root": "stationary",
+          "lag": 1.0,
+          "primary_winner_bits": 0.3734646104689575,
+          "best_listed_bits": 0.38149525409281787,
+          "best_listed_policies": [
+            [
+              "mix50",
+              "mix50",
+              "mix50",
+              "mix50"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "stationary",
+          "lag": 4.0,
+          "primary_winner_bits": 0.08411069619263925,
+          "best_listed_bits": 0.08895821079217463,
+          "best_listed_policies": [
+            [
+              "mix50",
+              "mix50",
+              "mix50",
+              "mix50"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "stationary",
+          "lag": 16.0,
+          "primary_winner_bits": 0.0029134946450022885,
+          "best_listed_bits": 0.005973430910677172,
+          "best_listed_policies": [
+            [
+              "service",
+              "export",
+              "service",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "stationary",
+          "lag": 64.0,
+          "primary_winner_bits": 2.2705839930048757e-08,
+          "best_listed_bits": 5.5658349751204045e-06,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        }
+      ],
+      "rule_a_profiles": [
+        {
+          "policy": [
+            "export",
+            "export",
+            "export",
+            "export"
+          ],
+          "rule_a": {
+            "organized": {
+              "0.0": 2.418450271867336,
+              "0.25": 1.3001574582262974,
+              "1.0": 0.5795658278339699,
+              "4.0": 0.1725723589073871,
+              "16.0": 0.021294930894310227,
+              "64.0": 1.7853622725994e-05
+            },
+            "disassembled": {
+              "0.0": 2.1958050221544623,
+              "0.25": 1.2858625017673506,
+              "1.0": 0.6538079222471112,
+              "4.0": 0.2189383162348264,
+              "16.0": 0.02382353613069199,
+              "64.0": 1.775501027356796e-05
+            },
+            "matched_shell": {
+              "0.0": 1.919205902820254,
+              "0.25": 1.0850441142658718,
+              "1.0": 0.5238294521235908,
+              "4.0": 0.15934777761426366,
+              "16.0": 0.016889726653438464,
+              "64.0": 1.2132059940994644e-05
+            },
+            "stationary": {
+              "0.0": 1.1644424336588135,
+              "0.25": 0.6337448812572647,
+              "1.0": 0.2910284410647767,
+              "4.0": 0.0732306175389232,
+              "16.0": 0.005925055189173193,
+              "64.0": 5.5658349751204045e-06
+            }
+          }
+        },
+        {
+          "policy": [
+            "idle",
+            "idle",
+            "idle",
+            "idle"
+          ],
+          "rule_a": {
+            "organized": {
+              "0.0": 2.2972427322889577,
+              "0.25": 1.2027924160388248,
+              "1.0": 0.464488324680878,
+              "4.0": 0.07979151281099384,
+              "16.0": 0.0018270484020259659,
+              "64.0": 3.5479903459645357e-09
+            },
+            "disassembled": {
+              "0.0": 1.3161247898762682,
+              "0.25": 0.7409767571858275,
+              "1.0": 0.32443094723474264,
+              "4.0": 0.06194908811913713,
+              "16.0": 0.0015952703024044723,
+              "64.0": 3.1055087390541303e-09
+            },
+            "matched_shell": {
+              "0.0": 1.4576284420645285,
+              "0.25": 0.7906709780496106,
+              "1.0": 0.3307837292930509,
+              "4.0": 0.06182871205373308,
+              "16.0": 0.0014191291789485971,
+              "64.0": 2.7630104870723926e-09
+            },
+            "stationary": {
+              "0.0": 1.188356789034459,
+              "0.25": 0.659416444354012,
+              "1.0": 0.2855437615122817,
+              "4.0": 0.054790085520606775,
+              "16.0": 0.001255160259325193,
+              "64.0": 2.438734379964568e-09
+            }
+          }
+        },
+        {
+          "policy": [
+            "mix50",
+            "mix50",
+            "mix50",
+            "mix50"
+          ],
+          "rule_a": {
+            "organized": {
+              "0.0": 2.4676100921758435,
+              "0.25": 1.3284722407746594,
+              "1.0": 0.5583292504382351,
+              "4.0": 0.12280569553377774,
+              "16.0": 0.004899153499030362,
+              "64.0": 4.1031628761345473e-08
+            },
+            "disassembled": {
+              "0.0": 1.868354162450933,
+              "0.25": 1.1136434702230653,
+              "1.0": 0.5606418113389111,
+              "4.0": 0.147686200113748,
+              "16.0": 0.006298503111251463,
+              "64.0": 6.282519837697009e-08
+            },
+            "matched_shell": {
+              "0.0": 1.800087519492676,
+              "0.25": 1.0268064252874738,
+              "1.0": 0.48293266507837335,
+              "4.0": 0.11467010369710573,
+              "16.0": 0.004040873138768664,
+              "64.0": 3.6926330659881046e-08
+            },
+            "stationary": {
+              "0.0": 1.3465645340281478,
+              "0.25": 0.7847995943631831,
+              "1.0": 0.38149525409281787,
+              "4.0": 0.08895821079217463,
+              "16.0": 0.0026867317218180484,
+              "64.0": 2.5373286493520964e-08
+            }
+          }
+        },
+        {
+          "policy": [
+            "service",
+            "export",
+            "service",
+            "export"
+          ],
+          "rule_a": {
+            "organized": {
+              "0.0": 2.344556630141937,
+              "0.25": 1.2374904730118614,
+              "1.0": 0.5071617144634128,
+              "4.0": 0.1303936574350839,
+              "16.0": 0.008285823877542065,
+              "64.0": 6.430643928467816e-08
+            },
+            "disassembled": {
+              "0.0": 1.3209105268552395,
+              "0.25": 0.7446003347163008,
+              "1.0": 0.3298569761638763,
+              "4.0": 0.07375069870631368,
+              "16.0": 0.004460383178608751,
+              "64.0": 4.7247414869389104e-08
+            },
+            "matched_shell": {
+              "0.0": 1.6363184016778904,
+              "0.25": 0.9005632750354701,
+              "1.0": 0.39541364556943664,
+              "4.0": 0.09515452385356327,
+              "16.0": 0.005326227415620388,
+              "64.0": 6.217387460427659e-08
+            },
+            "stationary": {
+              "0.0": 1.3545944967638865,
+              "0.25": 0.7583105763919542,
+              "1.0": 0.34746744674345437,
+              "4.0": 0.08857874874900454,
+              "16.0": 0.005973430910677172,
+              "64.0": 1.9779643903019636e-07
+            }
+          }
+        },
+        {
+          "policy": [
+            "service",
+            "mix50",
+            "service",
+            "mix50"
+          ],
+          "rule_a": {
+            "organized": {
+              "0.0": 2.4235796002565526,
+              "0.25": 1.2908692050584567,
+              "1.0": 0.5181716585392246,
+              "4.0": 0.0998681115904887,
+              "16.0": 0.0021181308070596927,
+              "64.0": 5.604023911587319e-09
+            },
+            "disassembled": {
+              "0.0": 1.3246676382501883,
+              "0.25": 0.7475153627808011,
+              "1.0": 0.3309955678221903,
+              "4.0": 0.06858802545510301,
+              "16.0": 0.002028448682174222,
+              "64.0": 2.487834827036295e-09
+            },
+            "matched_shell": {
+              "0.0": 1.6141307919961323,
+              "0.25": 0.8934715305427547,
+              "1.0": 0.3889661171507565,
+              "4.0": 0.07901812689568788,
+              "16.0": 0.0019297083794045378,
+              "64.0": 5.701489724785347e-09
+            },
+            "stationary": {
+              "0.0": 1.429154377657861,
+              "0.25": 0.8120099915339464,
+              "1.0": 0.3734646104689575,
+              "4.0": 0.08411069619263925,
+              "16.0": 0.0029134946450022885,
+              "64.0": 2.2705839930048757e-08
+            }
+          }
+        },
+        {
+          "policy": [
+            "service",
+            "service",
+            "service",
+            "service"
+          ],
+          "rule_a": {
+            "organized": {
+              "0.0": 2.472073949915224,
+              "0.25": 1.322564819453559,
+              "1.0": 0.5379804805005799,
+              "4.0": 0.10130871372306416,
+              "16.0": 0.002887114623067788,
+              "64.0": 1.546535752794398e-07
+            },
+            "disassembled": {
+              "0.0": 1.3273053374407258,
+              "0.25": 0.7494990858519588,
+              "1.0": 0.3323975861623403,
+              "4.0": 0.06681424845226847,
+              "16.0": 0.0024725539453989143,
+              "64.0": 1.4190788899526297e-07
+            },
+            "matched_shell": {
+              "0.0": 1.5566670615258804,
+              "0.25": 0.8561039526243579,
+              "1.0": 0.3680421731592887,
+              "4.0": 0.07277884340364882,
+              "16.0": 0.0023857886202006684,
+              "64.0": 1.4332448816656296e-07
+            },
+            "stationary": {
+              "0.0": 1.320829617405641,
+              "0.25": 0.7436604487471752,
+              "1.0": 0.3331336979933922,
+              "4.0": 0.07070993947071538,
+              "16.0": 0.0027580376470269924,
+              "64.0": 2.3199184487542376e-07
+            }
+          }
+        }
+      ],
+      "cadence_sensitivity": [
+        {
+          "cadence": 0.125,
+          "best_listed_policies": [
+            [
+              "service",
+              "mix50",
+              "service",
+              "mix50"
+            ]
+          ],
+          "primary_winner_among_best_listed": true
+        },
+        {
+          "cadence": 0.5,
+          "best_listed_policies": [
+            [
+              "service",
+              "mix50",
+              "service",
+              "mix50"
+            ]
+          ],
+          "primary_winner_among_best_listed": true
+        }
+      ],
+      "finite_winners": {
+        "1": [
+          "export",
+          "mix50",
+          "export",
+          "mix50"
+        ],
+        "4": [
+          "mix75",
+          "mix75",
+          "mix75",
+          "mix75"
+        ],
+        "16": [
+          "service",
+          "mix50",
+          "mix25",
+          "mix50"
+        ],
+        "64": [
+          "service",
+          "mix50",
+          "service",
+          "mix50"
+        ]
+      },
+      "winner_chain_rule_rate": {
+        "next_body_fuel_given_full_previous": 5.293415643756006,
+        "next_gate_given_next_body_fuel_and_full_previous": 0.4232018668754388
+      },
+      "winner_organized_T64": {
+        "drive_work": 49.05289715142287,
+        "bath_heat": 49.48229610858314,
+        "build": 5.569896102416917,
+        "repair": 6.480559279725345,
+        "wear": 3.387847331919105,
+        "dismantle": 3.559273582463285,
+        "switches": 10.175187068990617,
+        "exchange": 6.855823721246523,
+        "fuel_spent_service": 1.454143440762458,
+        "fuel_spent_switch": 4.848383574757758,
+        "active_expected": [
+          0.36049394854489386,
+          0.3604939485448938
+        ],
+        "both_active": 0.13243846942882148,
+        "fuel_expected": [
+          0.42490433561927415,
+          0.4249043356192742
+        ],
+        "energy_change": -0.4293989571602932,
+        "first_law_residual": -2.1316282072803006e-14
+      },
+      "winner_recovery_T64": {
+        "both_active_hit_by_horizon": 0.9397139860520196,
+        "both_active_at_horizon": 0.13246299849872942,
+        "meaning": "functional reconstruction; no claim about individual identity"
+      },
+      "registered_outcomes": {
+        "E1": "pass",
+        "E2": "all_grid_offsets_organized_ahead",
+        "E3": "reported_without_monotonicity_assumption",
+        "E4": "maintenance_tradeoff_hit",
+        "E5": "overlay_rank_disagreement",
+        "E6": "primary_winner_remains_best_listed",
+        "E7": "compiler_and_idle_regression_pass"
+      },
+      "audits": {
+        "max_stationarity_residual": 2.90132501357121e-16,
+        "max_poisson_residual": 7.860379014346108e-14,
+        "legacy_generator_error": 4.440892098500626e-16,
+        "idle_switch_rate": 0.0,
+        "reachable_state_counts": [
+          36,
+          72,
+          144
+        ],
+        "rule_a_nonnegative_and_monotone": "checked in diagnostic module at all known roots",
+        "resource_residual": 2.842170943040401e-14
+      },
+      "execution": {
+        "exit_code": 0,
+        "cap_reason": null,
+        "wall_seconds": 4.990118300018366,
+        "wall_cap_seconds": 120,
+        "job_memory_cap_bytes": 1073741824,
+        "peak_job_bytes": 130797568,
+        "output_bytes": 2021022
+      }
+    },
+    {
+      "capture_factor": 6,
+      "winner": {
+        "policy": [
+          "service",
+          "mix50",
+          "service",
+          "mix50"
+        ],
+        "rate": 6.086008335902214,
+        "offsets": {
+          "organized": 12.08557958597099,
+          "disassembled": 2.7497074645274076,
+          "matched_shell": 3.7507099214245434
+        },
+        "stationary_active_total": 0.8331878204184348,
+        "states": 144,
+        "profiles": {
+          "1": {
+            "organized": 9.467481895503832,
+            "disassembled": 5.775237540623527,
+            "matched_shell": 6.676417139862459,
+            "stationary_conditional": 6.086008335902214
+          },
+          "4": {
+            "organized": 30.663193054000818,
+            "disassembled": 24.553228066800358,
+            "matched_shell": 25.572804084909183,
+            "stationary_conditional": 24.344033343608857
+          },
+          "16": {
+            "organized": 107.92478585236942,
+            "disassembled": 99.03047192682823,
+            "matched_shell": 100.18106040897729,
+            "stationary_conditional": 97.37613337443543
+          },
+          "64": {
+            "organized": 401.5857120908745,
+            "disassembled": 392.24941678981196,
+            "matched_shell": 393.251510800321,
+            "stationary_conditional": 389.5045334977417
+          }
+        },
+        "residuals": {
+          "stationary": 1.48318857196017e-16,
+          "poisson": 1.2434497875801753e-14
+        }
+      },
+      "best_deterministic_or_idle": {
+        "policy": [
+          "service",
+          "export",
+          "service",
+          "export"
+        ],
+        "rate": 5.6385937655349645,
+        "offsets": {
+          "organized": 12.487893060563067,
+          "disassembled": 6.467740611689371,
+          "matched_shell": 6.939319325372906
+        },
+        "stationary_active_total": 0.9246436004016316,
+        "states": 144,
+        "profiles": {
+          "1": {
+            "organized": 9.565007237674806,
+            "disassembled": 5.77317271222389,
+            "matched_shell": 6.850693671100569,
+            "stationary_conditional": 5.6385937655349645
+          },
+          "4": {
+            "organized": 31.26150751493765,
+            "disassembled": 24.85037178763178,
+            "matched_shell": 26.109662392909634,
+            "stationary_conditional": 22.554375062139858
+          },
+          "16": {
+            "organized": 102.40092502304282,
+            "disassembled": 96.06500877387207,
+            "matched_shell": 96.69724473038666,
+            "stationary_conditional": 90.21750024855943
+          },
+          "64": {
+            "organized": 373.3597163727475,
+            "disassembled": 367.33894071107073,
+            "matched_shell": 367.8104268802989,
+            "stationary_conditional": 360.8700009942377
+          }
+        },
+        "residuals": {
+          "stationary": 1.214306433183765e-16,
+          "poisson": 4.6629367034256575e-15
+        }
+      },
+      "service_rate": 5.3087135074980285,
+      "service_active": 0.9176998025738522,
+      "idle_rate": 4.832357532081517,
+      "idle_active": 0.9684143946841869,
+      "functioning_benchmark": {
+        "policy": [
+          "idle",
+          "idle",
+          "idle",
+          "idle"
+        ],
+        "rate": 4.832357532081517,
+        "offsets": {
+          "organized": 8.684609335347783,
+          "disassembled": 3.67737203185336,
+          "matched_shell": 2.153023537951128
+        },
+        "stationary_active_total": 0.9684143946841869,
+        "states": 36,
+        "profiles": {
+          "1": {
+            "organized": 8.662374467350222,
+            "disassembled": 5.631265378605192,
+            "matched_shell": 5.916059639415497,
+            "stationary_conditional": 4.832357532081517
+          },
+          "4": {
+            "organized": 25.791280749125765,
+            "disassembled": 22.317779642932866,
+            "matched_shell": 21.40921241131663,
+            "stationary_conditional": 19.329430128326067
+          },
+          "16": {
+            "organized": 85.60271856913022,
+            "disassembled": 81.05811004766177,
+            "matched_shell": 79.52527265073189,
+            "stationary_conditional": 77.31772051330427
+          },
+          "64": {
+            "organized": 317.95480025864407,
+            "disassembled": 312.94836661221177,
+            "matched_shell": 311.42400460968884,
+            "stationary_conditional": 309.27088205321706
+          }
+        },
+        "residuals": {
+          "stationary": 8.543513119185775e-17,
+          "poisson": 1.3322676295501878e-15
+        }
+      },
+      "winner_shell_offset_advantage": 8.334869664546446,
+      "minimum_grid_shell_offset_advantage": 1.3557301766581844,
+      "finite_shell_signs": {
+        "positive": 5184,
+        "negative": 0,
+        "tie": 0
+      },
+      "least_favorable_reference_policy": [
+        "idle",
+        "export",
+        "idle",
+        "export"
+      ],
+      "protection_tradeoff": -0.08451198215541744,
+      "protection_tradeoff_percent": 9.209109767528398,
+      "rule_a_policy_scope": "algorithmically selected candidates, not complete-grid overlay optimization",
+      "rule_a_assessment": [
+        {
+          "root": "organized",
+          "lag": 0.0,
+          "primary_winner_bits": 2.7707694203637225,
+          "best_listed_bits": 2.81358720317838,
+          "best_listed_policies": [
+            [
+              "mix50",
+              "mix50",
+              "mix50",
+              "mix50"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "organized",
+          "lag": 0.25,
+          "primary_winner_bits": 1.4136928796411796,
+          "best_listed_bits": 1.4496447494745688,
+          "best_listed_policies": [
+            [
+              "mix50",
+              "mix50",
+              "mix50",
+              "mix50"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "organized",
+          "lag": 1.0,
+          "primary_winner_bits": 0.540906537188734,
+          "best_listed_bits": 0.61892760266098,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "organized",
+          "lag": 4.0,
+          "primary_winner_bits": 0.10012132773466309,
+          "best_listed_bits": 0.1904697142940508,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "organized",
+          "lag": 16.0,
+          "primary_winner_bits": 0.0016275921068320542,
+          "best_listed_bits": 0.02342611163829922,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "organized",
+          "lag": 64.0,
+          "primary_winner_bits": 2.1293455887416712e-09,
+          "best_listed_bits": 1.9198319079372084e-05,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "disassembled",
+          "lag": 0.0,
+          "primary_winner_bits": 1.3452287741952584,
+          "best_listed_bits": 2.21618779046803,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "disassembled",
+          "lag": 0.25,
+          "primary_winner_bits": 0.7617718848478385,
+          "best_listed_bits": 1.2999009251234255,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "disassembled",
+          "lag": 1.0,
+          "primary_winner_bits": 0.34894354741902767,
+          "best_listed_bits": 0.6723696103054468,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "disassembled",
+          "lag": 4.0,
+          "primary_winner_bits": 0.07685532420699204,
+          "best_listed_bits": 0.23901509121987896,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "disassembled",
+          "lag": 16.0,
+          "primary_winner_bits": 0.002131314988466748,
+          "best_listed_bits": 0.029223632086396556,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "disassembled",
+          "lag": 64.0,
+          "primary_winner_bits": 2.823403733032137e-09,
+          "best_listed_bits": 2.4588677510095636e-05,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "matched_shell",
+          "lag": 0.0,
+          "primary_winner_bits": 1.7234081544746476,
+          "best_listed_bits": 2.035538559167021,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "matched_shell",
+          "lag": 0.25,
+          "primary_winner_bits": 0.9313400945612366,
+          "best_listed_bits": 1.1285477922586582,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "matched_shell",
+          "lag": 1.0,
+          "primary_winner_bits": 0.3977738118341579,
+          "best_listed_bits": 0.5397692556483233,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "matched_shell",
+          "lag": 4.0,
+          "primary_winner_bits": 0.07976884243653626,
+          "best_listed_bits": 0.1710678345829385,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "matched_shell",
+          "lag": 16.0,
+          "primary_winner_bits": 0.0017480370127435085,
+          "best_listed_bits": 0.019158526755794325,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "matched_shell",
+          "lag": 64.0,
+          "primary_winner_bits": 4.266120456897227e-09,
+          "best_listed_bits": 1.46573215746848e-05,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "stationary",
+          "lag": 0.0,
+          "primary_winner_bits": 1.5215020839755533,
+          "best_listed_bits": 1.5215020839755533,
+          "best_listed_policies": [
+            [
+              "service",
+              "mix50",
+              "service",
+              "mix50"
+            ]
+          ],
+          "primary_winner_among_best_listed": true
+        },
+        {
+          "root": "stationary",
+          "lag": 0.25,
+          "primary_winner_bits": 0.8363532826121196,
+          "best_listed_bits": 0.8363532826121196,
+          "best_listed_policies": [
+            [
+              "service",
+              "mix50",
+              "service",
+              "mix50"
+            ]
+          ],
+          "primary_winner_among_best_listed": true
+        },
+        {
+          "root": "stationary",
+          "lag": 1.0,
+          "primary_winner_bits": 0.3718682649095528,
+          "best_listed_bits": 0.38115074312427205,
+          "best_listed_policies": [
+            [
+              "mix50",
+              "mix50",
+              "mix50",
+              "mix50"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "stationary",
+          "lag": 4.0,
+          "primary_winner_bits": 0.08084190883855219,
+          "best_listed_bits": 0.08818605587587616,
+          "best_listed_policies": [
+            [
+              "mix50",
+              "mix50",
+              "mix50",
+              "mix50"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "stationary",
+          "lag": 16.0,
+          "primary_winner_bits": 0.002609009667026643,
+          "best_listed_bits": 0.006050676378092094,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "stationary",
+          "lag": 64.0,
+          "primary_winner_bits": 2.535924133553582e-08,
+          "best_listed_bits": 5.6555484818147325e-06,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        }
+      ],
+      "rule_a_profiles": [
+        {
+          "policy": [
+            "export",
+            "export",
+            "export",
+            "export"
+          ],
+          "rule_a": {
+            "organized": {
+              "0.0": 2.788134445446363,
+              "0.25": 1.440773623671491,
+              "1.0": 0.61892760266098,
+              "4.0": 0.1904697142940508,
+              "16.0": 0.02342611163829922,
+              "64.0": 1.9198319079372084e-05
+            },
+            "disassembled": {
+              "0.0": 2.21618779046803,
+              "0.25": 1.2999009251234255,
+              "1.0": 0.6723696103054468,
+              "4.0": 0.23901509121987896,
+              "16.0": 0.029223632086396556,
+              "64.0": 2.4588677510095636e-05
+            },
+            "matched_shell": {
+              "0.0": 2.035538559167021,
+              "0.25": 1.1285477922586582,
+              "1.0": 0.5397692556483233,
+              "4.0": 0.1710678345829385,
+              "16.0": 0.019158526755794325,
+              "64.0": 1.46573215746848e-05
+            },
+            "stationary": {
+              "0.0": 1.1692681598885686,
+              "0.25": 0.6243924304634532,
+              "1.0": 0.2810649314240784,
+              "4.0": 0.07139445375905161,
+              "16.0": 0.006050676378092094,
+              "64.0": 5.6555484818147325e-06
+            }
+          }
+        },
+        {
+          "policy": [
+            "idle",
+            "idle",
+            "idle",
+            "idle"
+          ],
+          "rule_a": {
+            "organized": {
+              "0.0": 2.627057300988098,
+              "0.25": 1.317036124132834,
+              "1.0": 0.48236249285303145,
+              "4.0": 0.08311218865368808,
+              "16.0": 0.002145858964650138,
+              "64.0": 6.339761604579053e-09
+            },
+            "disassembled": {
+              "0.0": 1.336181782993789,
+              "0.25": 0.7549675073920445,
+              "1.0": 0.34203453939795736,
+              "4.0": 0.06964750041748147,
+              "16.0": 0.0021848123273446873,
+              "64.0": 6.669942820280994e-09
+            },
+            "matched_shell": {
+              "0.0": 1.5609082406050696,
+              "0.25": 0.8257337795953161,
+              "1.0": 0.33881170973677166,
+              "4.0": 0.06502585951941653,
+              "16.0": 0.0017786537325399365,
+              "64.0": 5.4012532224589904e-09
+            },
+            "stationary": {
+              "0.0": 1.208089383020379,
+              "0.25": 0.6455594766184147,
+              "1.0": 0.26640588274355276,
+              "4.0": 0.05095188589595681,
+              "16.0": 0.001381756384425657,
+              "64.0": 4.200685865333356e-09
+            }
+          }
+        },
+        {
+          "policy": [
+            "mix50",
+            "mix50",
+            "mix50",
+            "mix50"
+          ],
+          "rule_a": {
+            "organized": {
+              "0.0": 2.81358720317838,
+              "0.25": 1.4496447494745688,
+              "1.0": 0.5793066751512912,
+              "4.0": 0.12964145230075275,
+              "16.0": 0.0052092657581575,
+              "64.0": 7.59315001985783e-08
+            },
+            "disassembled": {
+              "0.0": 1.8884797893510417,
+              "0.25": 1.1273849266176055,
+              "1.0": 0.5778276162429226,
+              "4.0": 0.16065577047637536,
+              "16.0": 0.007969418779030235,
+              "64.0": 1.3589151492965357e-07
+            },
+            "matched_shell": {
+              "0.0": 1.9089294398407848,
+              "0.25": 1.0639793473700074,
+              "1.0": 0.49109042327532276,
+              "4.0": 0.11934418669865188,
+              "16.0": 0.004659415091846308,
+              "64.0": 7.394511403191473e-08
+            },
+            "stationary": {
+              "0.0": 1.4163946960100837,
+              "0.25": 0.804979278443219,
+              "1.0": 0.38115074312427205,
+              "4.0": 0.08818605587587616,
+              "16.0": 0.002867250280197126,
+              "64.0": 4.739400131049943e-08
+            }
+          }
+        },
+        {
+          "policy": [
+            "service",
+            "export",
+            "service",
+            "export"
+          ],
+          "rule_a": {
+            "organized": {
+              "0.0": 2.716328124474111,
+              "0.25": 1.3809886246060894,
+              "1.0": 0.550142548793521,
+              "4.0": 0.13765653487003426,
+              "16.0": 0.005572763055266883,
+              "64.0": 1.3535707665823793e-08
+            },
+            "disassembled": {
+              "0.0": 1.3421637375576356,
+              "0.25": 0.7596331026114149,
+              "1.0": 0.3498092529308021,
+              "4.0": 0.08593657502291663,
+              "16.0": 0.004682552421671815,
+              "64.0": 1.1369533758909256e-08
+            },
+            "matched_shell": {
+              "0.0": 1.753428551731378,
+              "0.25": 0.9451989783145696,
+              "1.0": 0.4122188303579248,
+              "4.0": 0.09949038499046592,
+              "16.0": 0.004268371814489802,
+              "64.0": 1.544839578482282e-08
+            },
+            "stationary": {
+              "0.0": 1.4096484413837411,
+              "0.25": 0.7547583972426862,
+              "1.0": 0.33274534967933656,
+              "4.0": 0.08646158057821596,
+              "16.0": 0.004979846024986612,
+              "64.0": 7.376050921038495e-08
+            }
+          }
+        },
+        {
+          "policy": [
+            "service",
+            "mix50",
+            "service",
+            "mix50"
+          ],
+          "rule_a": {
+            "organized": {
+              "0.0": 2.7707694203637225,
+              "0.25": 1.4136928796411796,
+              "1.0": 0.540906537188734,
+              "4.0": 0.10012132773466309,
+              "16.0": 0.0016275921068320542,
+              "64.0": 2.1293455887416712e-09
+            },
+            "disassembled": {
+              "0.0": 1.3452287741952584,
+              "0.25": 0.7617718848478385,
+              "1.0": 0.34894354741902767,
+              "4.0": 0.07685532420699204,
+              "16.0": 0.002131314988466748,
+              "64.0": 2.823403733032137e-09
+            },
+            "matched_shell": {
+              "0.0": 1.7234081544746476,
+              "0.25": 0.9313400945612366,
+              "1.0": 0.3977738118341579,
+              "4.0": 0.07976884243653626,
+              "16.0": 0.0017480370127435085,
+              "64.0": 4.266120456897227e-09
+            },
+            "stationary": {
+              "0.0": 1.5215020839755533,
+              "0.25": 0.8363532826121196,
+              "1.0": 0.3718682649095528,
+              "4.0": 0.08084190883855219,
+              "16.0": 0.002609009667026643,
+              "64.0": 2.535924133553582e-08
+            }
+          }
+        },
+        {
+          "policy": [
+            "service",
+            "service",
+            "service",
+            "service"
+          ],
+          "rule_a": {
+            "organized": {
+              "0.0": 2.7932400640758326,
+              "0.25": 1.4338399897660747,
+              "1.0": 0.5567138251282744,
+              "4.0": 0.10265301211033506,
+              "16.0": 0.003229759032607582,
+              "64.0": 1.891337682025096e-07
+            },
+            "disassembled": {
+              "0.0": 1.3471151364269418,
+              "0.25": 0.7633520384834249,
+              "1.0": 0.34951581459956405,
+              "4.0": 0.07399079035315648,
+              "16.0": 0.0032469018811580597,
+              "64.0": 2.1286207552151382e-07
+            },
+            "matched_shell": {
+              "0.0": 1.657855897961317,
+              "0.25": 0.8906067129323217,
+              "1.0": 0.3763524389795645,
+              "4.0": 0.07524693226085477,
+              "16.0": 0.0028392901891781674,
+              "64.0": 1.898801219590851e-07
+            },
+            "stationary": {
+              "0.0": 1.3271783768745071,
+              "0.25": 0.7223183054409592,
+              "1.0": 0.3104456567191394,
+              "4.0": 0.06443983286801092,
+              "16.0": 0.0027304081076353665,
+              "64.0": 2.45321600411103e-07
+            }
+          }
+        }
+      ],
+      "cadence_sensitivity": [
+        {
+          "cadence": 0.125,
+          "best_listed_policies": [
+            [
+              "service",
+              "mix50",
+              "service",
+              "mix50"
+            ]
+          ],
+          "primary_winner_among_best_listed": true
+        },
+        {
+          "cadence": 0.5,
+          "best_listed_policies": [
+            [
+              "service",
+              "mix50",
+              "service",
+              "mix50"
+            ]
+          ],
+          "primary_winner_among_best_listed": true
+        }
+      ],
+      "finite_winners": {
+        "1": [
+          "export",
+          "export",
+          "export",
+          "export"
+        ],
+        "4": [
+          "mix75",
+          "mix75",
+          "mix75",
+          "mix75"
+        ],
+        "16": [
+          "service",
+          "mix50",
+          "mix25",
+          "mix50"
+        ],
+        "64": [
+          "service",
+          "mix50",
+          "service",
+          "mix50"
+        ]
+      },
+      "winner_chain_rule_rate": {
+        "next_body_fuel_given_full_previous": 5.545668022834767,
+        "next_gate_given_next_body_fuel_and_full_previous": 0.5403403130674478
+      },
+      "winner_organized_T64": {
+        "drive_work": 66.44349180661126,
+        "bath_heat": 66.41999492540586,
+        "build": 4.903789701180186,
+        "repair": 6.061377796649768,
+        "wear": 3.8754739039407746,
+        "dismantle": 3.3679529396543657,
+        "switches": 12.139506245632083,
+        "exchange": 7.4192749942891085,
+        "fuel_spent_service": 2.089461568188548,
+        "fuel_spent_switch": 7.42034168493064,
+        "active_expected": [
+          0.416743993456831,
+          0.41674399345683055
+        ],
+        "both_active": 0.18001333868546146,
+        "fuel_expected": [
+          0.48688627672592416,
+          0.486886276725924
+        ],
+        "energy_change": 0.02349688120539728,
+        "first_law_residual": 0.0
+      },
+      "winner_recovery_T64": {
+        "both_active_hit_by_horizon": 0.9578214012566144,
+        "both_active_at_horizon": 0.18002087942160158,
+        "meaning": "functional reconstruction; no claim about individual identity"
+      },
+      "registered_outcomes": {
+        "E1": "pass",
+        "E2": "all_grid_offsets_organized_ahead",
+        "E3": "reported_without_monotonicity_assumption",
+        "E4": "maintenance_tradeoff_hit",
+        "E5": "overlay_rank_disagreement",
+        "E6": "primary_winner_remains_best_listed",
+        "E7": "compiler_and_idle_regression_pass"
+      },
+      "audits": {
+        "max_stationarity_residual": 2.5565487227208195e-16,
+        "max_poisson_residual": 9.192646643896296e-14,
+        "legacy_generator_error": 4.440892098500626e-16,
+        "idle_switch_rate": 0.0,
+        "reachable_state_counts": [
+          36,
+          72,
+          144
+        ],
+        "rule_a_nonnegative_and_monotone": "checked in diagnostic module at all known roots",
+        "resource_residual": 2.842170943040401e-14
+      },
+      "execution": {
+        "exit_code": 0,
+        "cap_reason": null,
+        "wall_seconds": 5.299760200025048,
+        "wall_cap_seconds": 120,
+        "job_memory_cap_bytes": 1073741824,
+        "peak_job_bytes": 131731456,
+        "output_bytes": 2021462
+      }
+    },
+    {
+      "capture_factor": 12,
+      "winner": {
+        "policy": [
+          "service",
+          "mix50",
+          "service",
+          "mix50"
+        ],
+        "rate": 6.497574612550056,
+        "offsets": {
+          "organized": 12.30148047216783,
+          "disassembled": 1.1953418417621235,
+          "matched_shell": 2.8329115798181292
+        },
+        "stationary_active_total": 0.9524394207608688,
+        "states": 144,
+        "profiles": {
+          "1": {
+            "organized": 10.020346717205157,
+            "disassembled": 5.9336142336383055,
+            "matched_shell": 6.99337262986896,
+            "stationary_conditional": 6.497574612550056
+          },
+          "4": {
+            "organized": 32.10055613388595,
+            "disassembled": 25.24417325870313,
+            "matched_shell": 26.679617702687175,
+            "stationary_conditional": 25.990298450200225
+          },
+          "16": {
+            "organized": 114.62824511415428,
+            "disassembled": 104.13162187528826,
+            "matched_shell": 105.90167723487798,
+            "stationary_conditional": 103.9611938008009
+          },
+          "64": {
+            "organized": 428.14105687217693,
+            "disassembled": 417.0352479977831,
+            "matched_shell": 418.673775122604,
+            "stationary_conditional": 415.8447752032036
+          }
+        },
+        "residuals": {
+          "stationary": 1.5785983631388945e-16,
+          "poisson": 2.5979218776228663e-14
+        }
+      },
+      "best_deterministic_or_idle": {
+        "policy": [
+          "service",
+          "export",
+          "service",
+          "export"
+        ],
+        "rate": 5.864315137503337,
+        "offsets": {
+          "organized": 12.37646787143924,
+          "disassembled": 6.0030080903853404,
+          "matched_shell": 7.031972493706262
+        },
+        "stationary_active_total": 1.0239491763226987,
+        "states": 144,
+        "profiles": {
+          "1": {
+            "organized": 10.402998611783353,
+            "disassembled": 5.966262109878773,
+            "matched_shell": 7.264876535641209,
+            "stationary_conditional": 5.864315137503337
+          },
+          "4": {
+            "organized": 32.77103626443434,
+            "disassembled": 25.723164029406504,
+            "matched_shell": 27.341349835137017,
+            "stationary_conditional": 23.45726055001335
+          },
+          "16": {
+            "organized": 105.95581349244732,
+            "disassembled": 99.34464047078153,
+            "matched_shell": 100.48239797673524,
+            "stationary_conditional": 93.8290422000534
+          },
+          "64": {
+            "organized": 387.69324471727714,
+            "disassembled": 381.31943424583284,
+            "matched_shell": 382.3484166287178,
+            "stationary_conditional": 375.3161688002136
+          }
+        },
+        "residuals": {
+          "stationary": 1.4246416546459528e-16,
+          "poisson": 6.661338147750939e-15
+        }
+      },
+      "service_rate": 5.442465010811714,
+      "service_active": 1.034517380789786,
+      "idle_rate": 5.03152353100201,
+      "idle_active": 1.0848998555623897,
+      "functioning_benchmark": {
+        "policy": [
+          "idle",
+          "idle",
+          "idle",
+          "idle"
+        ],
+        "rate": 5.03152353100201,
+        "offsets": {
+          "organized": 8.234216291967702,
+          "disassembled": 2.241831144720555,
+          "matched_shell": 1.134768035071093
+        },
+        "stationary_active_total": 1.0848998555623897,
+        "states": 36,
+        "profiles": {
+          "1": {
+            "organized": 8.888823155345516,
+            "disassembled": 5.753859058364295,
+            "matched_shell": 6.117740565856617,
+            "stationary_conditional": 5.03152353100201
+          },
+          "4": {
+            "organized": 25.785938412695092,
+            "disassembled": 22.421607260306068,
+            "matched_shell": 21.72599764766069,
+            "stationary_conditional": 20.12609412400804
+          },
+          "16": {
+            "organized": 88.19846551726599,
+            "disassembled": 82.87996601210187,
+            "matched_shell": 81.78005107232264,
+            "stationary_conditional": 80.50437649603217
+          },
+          "64": {
+            "organized": 330.2506348716178,
+            "disassembled": 324.25960241122596,
+            "matched_shell": 323.15256026909606,
+            "stationary_conditional": 322.01750598412866
+          }
+        },
+        "residuals": {
+          "stationary": 2.7755575615628914e-17,
+          "poisson": 1.9984014443252818e-15
+        }
+      },
+      "winner_shell_offset_advantage": 9.468568892349701,
+      "minimum_grid_shell_offset_advantage": -0.17342832369708816,
+      "finite_shell_signs": {
+        "positive": 5184,
+        "negative": 0,
+        "tie": 0
+      },
+      "least_favorable_reference_policy": [
+        "idle",
+        "export",
+        "idle",
+        "export"
+      ],
+      "protection_tradeoff": -0.08207796002891721,
+      "protection_tradeoff_percent": 7.9339372690148595,
+      "rule_a_policy_scope": "algorithmically selected candidates, not complete-grid overlay optimization",
+      "rule_a_assessment": [
+        {
+          "root": "organized",
+          "lag": 0.0,
+          "primary_winner_bits": 3.1462941087448955,
+          "best_listed_bits": 3.205039984920552,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "organized",
+          "lag": 0.25,
+          "primary_winner_bits": 1.4477852056424512,
+          "best_listed_bits": 1.5040708590568466,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "organized",
+          "lag": 1.0,
+          "primary_winner_bits": 0.5254955544116982,
+          "best_listed_bits": 0.6205604228873787,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "organized",
+          "lag": 4.0,
+          "primary_winner_bits": 0.09634266844929495,
+          "best_listed_bits": 0.19926916859364674,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "organized",
+          "lag": 16.0,
+          "primary_winner_bits": 0.0013521391036626085,
+          "best_listed_bits": 0.02342987317073053,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "organized",
+          "lag": 64.0,
+          "primary_winner_bits": 2.0021042601570116e-09,
+          "best_listed_bits": 1.9671789888597857e-05,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "disassembled",
+          "lag": 0.0,
+          "primary_winner_bits": 1.373827350239095,
+          "best_listed_bits": 2.2448202868934537,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "disassembled",
+          "lag": 0.25,
+          "primary_winner_bits": 0.7794618383635912,
+          "best_listed_bits": 1.3176827529739739,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "disassembled",
+          "lag": 1.0,
+          "primary_winner_bits": 0.37072282282826396,
+          "best_listed_bits": 0.6963913554777212,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "disassembled",
+          "lag": 4.0,
+          "primary_winner_bits": 0.08469724867325645,
+          "best_listed_bits": 0.2616859270172256,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "disassembled",
+          "lag": 16.0,
+          "primary_winner_bits": 0.0022245111314038724,
+          "best_listed_bits": 0.03466026305024972,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "disassembled",
+          "lag": 64.0,
+          "primary_winner_bits": 4.344126836031137e-09,
+          "best_listed_bits": 3.020968803024715e-05,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "matched_shell",
+          "lag": 0.0,
+          "primary_winner_bits": 1.850931095880045,
+          "best_listed_bits": 2.175580789660176,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "matched_shell",
+          "lag": 0.25,
+          "primary_winner_bits": 0.9461956920032588,
+          "best_listed_bits": 1.1528305048088672,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "matched_shell",
+          "lag": 1.0,
+          "primary_winner_bits": 0.39768171709608274,
+          "best_listed_bits": 0.5486549097090814,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "matched_shell",
+          "lag": 4.0,
+          "primary_winner_bits": 0.08018564004172124,
+          "best_listed_bits": 0.18201657638360114,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "matched_shell",
+          "lag": 16.0,
+          "primary_winner_bits": 0.001682583166285112,
+          "best_listed_bits": 0.021066399684094406,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "matched_shell",
+          "lag": 64.0,
+          "primary_winner_bits": 4.852112933662056e-09,
+          "best_listed_bits": 1.6783832452516023e-05,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "stationary",
+          "lag": 0.0,
+          "primary_winner_bits": 1.624393653137514,
+          "best_listed_bits": 1.624393653137514,
+          "best_listed_policies": [
+            [
+              "service",
+              "mix50",
+              "service",
+              "mix50"
+            ]
+          ],
+          "primary_winner_among_best_listed": true
+        },
+        {
+          "root": "stationary",
+          "lag": 0.25,
+          "primary_winner_bits": 0.8314679067121875,
+          "best_listed_bits": 0.8314679067121875,
+          "best_listed_policies": [
+            [
+              "service",
+              "mix50",
+              "service",
+              "mix50"
+            ]
+          ],
+          "primary_winner_among_best_listed": true
+        },
+        {
+          "root": "stationary",
+          "lag": 1.0,
+          "primary_winner_bits": 0.3576424521597509,
+          "best_listed_bits": 0.37288986170629285,
+          "best_listed_policies": [
+            [
+              "mix50",
+              "mix50",
+              "mix50",
+              "mix50"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "stationary",
+          "lag": 4.0,
+          "primary_winner_bits": 0.0758544531214666,
+          "best_listed_bits": 0.08633040686649657,
+          "best_listed_policies": [
+            [
+              "mix50",
+              "mix50",
+              "mix50",
+              "mix50"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "stationary",
+          "lag": 16.0,
+          "primary_winner_bits": 0.002374779510026554,
+          "best_listed_bits": 0.006121648081804668,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        },
+        {
+          "root": "stationary",
+          "lag": 64.0,
+          "primary_winner_bits": 2.8008564497261494e-08,
+          "best_listed_bits": 5.6299743573641635e-06,
+          "best_listed_policies": [
+            [
+              "export",
+              "export",
+              "export",
+              "export"
+            ]
+          ],
+          "primary_winner_among_best_listed": false
+        }
+      ],
+      "rule_a_profiles": [
+        {
+          "policy": [
+            "export",
+            "export",
+            "export",
+            "export"
+          ],
+          "rule_a": {
+            "organized": {
+              "0.0": 3.205039984920552,
+              "0.25": 1.5040708590568466,
+              "1.0": 0.6205604228873787,
+              "4.0": 0.19926916859364674,
+              "16.0": 0.02342987317073053,
+              "64.0": 1.9671789888597857e-05
+            },
+            "disassembled": {
+              "0.0": 2.2448202868934537,
+              "0.25": 1.3176827529739739,
+              "1.0": 0.6963913554777212,
+              "4.0": 0.2616859270172256,
+              "16.0": 0.03466026305024972,
+              "64.0": 3.020968803024715e-05
+            },
+            "matched_shell": {
+              "0.0": 2.175580789660176,
+              "0.25": 1.1528305048088672,
+              "1.0": 0.5486549097090814,
+              "4.0": 0.18201657638360114,
+              "16.0": 0.021066399684094406,
+              "64.0": 1.6783832452516023e-05
+            },
+            "stationary": {
+              "0.0": 1.1751002809526159,
+              "0.25": 0.6054275306302626,
+              "1.0": 0.26856460658913833,
+              "4.0": 0.06972903861027087,
+              "16.0": 0.006121648081804668,
+              "64.0": 5.6299743573641635e-06
+            }
+          }
+        },
+        {
+          "policy": [
+            "idle",
+            "idle",
+            "idle",
+            "idle"
+          ],
+          "rule_a": {
+            "organized": {
+              "0.0": 2.96885214003658,
+              "0.25": 1.3326017843800608,
+              "1.0": 0.45625438320873046,
+              "4.0": 0.08369207232505493,
+              "16.0": 0.002362984798648604,
+              "64.0": 9.388395838527686e-09
+            },
+            "disassembled": {
+              "0.0": 1.363804878445826,
+              "0.25": 0.7721121735017094,
+              "1.0": 0.3627662661903561,
+              "4.0": 0.07720441620172558,
+              "16.0": 0.002802399365975816,
+              "64.0": 1.1778189978883802e-08
+            },
+            "matched_shell": {
+              "0.0": 1.6777574291443174,
+              "0.25": 0.8353786753342399,
+              "1.0": 0.3368393889014796,
+              "4.0": 0.06817026899987705,
+              "16.0": 0.0021405667699683217,
+              "64.0": 8.944205154293172e-09
+            },
+            "stationary": {
+              "0.0": 1.2578808827505026,
+              "0.25": 0.6117417487373263,
+              "1.0": 0.23679229917373723,
+              "4.0": 0.046833063380364,
+              "16.0": 0.0014588664492415442,
+              "64.0": 6.1306489699185904e-09
+            }
+          }
+        },
+        {
+          "policy": [
+            "mix50",
+            "mix50",
+            "mix50",
+            "mix50"
+          ],
+          "rule_a": {
+            "organized": {
+              "0.0": 3.1869264824416916,
+              "0.25": 1.4811676645347478,
+              "1.0": 0.5624913881701623,
+              "4.0": 0.13196985838915953,
+              "16.0": 0.005556187973709825,
+              "64.0": 1.5453081125826884e-07
+            },
+            "disassembled": {
+              "0.0": 1.916439862590004,
+              "0.25": 1.1443915611031559,
+              "1.0": 0.5992390528519103,
+              "4.0": 0.17470784986496035,
+              "16.0": 0.009964798292165788,
+              "64.0": 3.3284587708237723e-07
+            },
+            "matched_shell": {
+              "0.0": 2.0357830213426125,
+              "0.25": 1.077953521470589,
+              "1.0": 0.49084326776819037,
+              "4.0": 0.12399988250668947,
+              "16.0": 0.0054668396438651845,
+              "64.0": 1.6869213892434232e-07
+            },
+            "stationary": {
+              "0.0": 1.497135555645181,
+              "0.25": 0.8074990885157743,
+              "1.0": 0.37288986170629285,
+              "4.0": 0.08633040686649657,
+              "16.0": 0.003131420307605615,
+              "64.0": 1.0147307484610074e-07
+            }
+          }
+        },
+        {
+          "policy": [
+            "service",
+            "export",
+            "service",
+            "export"
+          ],
+          "rule_a": {
+            "organized": {
+              "0.0": 3.136990462497833,
+              "0.25": 1.4487902484216222,
+              "1.0": 0.5549481698640255,
+              "4.0": 0.1347240516440129,
+              "16.0": 0.0033197948080845308,
+              "64.0": 3.728485076237575e-09
+            },
+            "disassembled": {
+              "0.0": 1.3720792699833853,
+              "0.25": 0.77874821789087,
+              "1.0": 0.37456286696364627,
+              "4.0": 0.09759596927840342,
+              "16.0": 0.0042017764097694865,
+              "64.0": 2.9261242318057157e-09
+            },
+            "matched_shell": {
+              "0.0": 1.8946525607825595,
+              "0.25": 0.9709026534227858,
+              "1.0": 0.4210150636858847,
+              "4.0": 0.10148569748982206,
+              "16.0": 0.0032763493584447856,
+              "64.0": 4.351612958863882e-09
+            },
+            "stationary": {
+              "0.0": 1.4660787843758338,
+              "0.25": 0.7197845468404176,
+              "1.0": 0.3090881405516836,
+              "4.0": 0.08326558289791963,
+              "16.0": 0.003991751691439726,
+              "64.0": 3.0749611126323283e-08
+            }
+          }
+        },
+        {
+          "policy": [
+            "service",
+            "mix50",
+            "service",
+            "mix50"
+          ],
+          "rule_a": {
+            "organized": {
+              "0.0": 3.1462941087448955,
+              "0.25": 1.4477852056424512,
+              "1.0": 0.5254955544116982,
+              "4.0": 0.09634266844929495,
+              "16.0": 0.0013521391036626085,
+              "64.0": 2.0021042601570116e-09
+            },
+            "disassembled": {
+              "0.0": 1.373827350239095,
+              "0.25": 0.7794618383635912,
+              "1.0": 0.37072282282826396,
+              "4.0": 0.08469724867325645,
+              "16.0": 0.0022245111314038724,
+              "64.0": 4.344126836031137e-09
+            },
+            "matched_shell": {
+              "0.0": 1.850931095880045,
+              "0.25": 0.9461956920032588,
+              "1.0": 0.39768171709608274,
+              "4.0": 0.08018564004172124,
+              "16.0": 0.001682583166285112,
+              "64.0": 4.852112933662056e-09
+            },
+            "stationary": {
+              "0.0": 1.624393653137514,
+              "0.25": 0.8314679067121875,
+              "1.0": 0.3576424521597509,
+              "4.0": 0.0758544531214666,
+              "16.0": 0.002374779510026554,
+              "64.0": 2.8008564497261494e-08
+            }
+          }
+        },
+        {
+          "policy": [
+            "service",
+            "service",
+            "service",
+            "service"
+          ],
+          "rule_a": {
+            "organized": {
+              "0.0": 3.1211296072752166,
+              "0.25": 1.4451006601837881,
+              "1.0": 0.5306012767039054,
+              "4.0": 0.10089979780222258,
+              "16.0": 0.0034825459163405625,
+              "64.0": 2.0502664810351234e-07
+            },
+            "disassembled": {
+              "0.0": 1.3743207145008616,
+              "0.25": 0.7802613881536862,
+              "1.0": 0.36954153193714223,
+              "4.0": 0.08122260377052992,
+              "16.0": 0.004072090021908892,
+              "64.0": 2.762608133366484e-07
+            },
+            "matched_shell": {
+              "0.0": 1.7713694867842606,
+              "0.25": 0.8994587546174683,
+              "1.0": 0.3743177238752572,
+              "4.0": 0.07760796096164091,
+              "16.0": 0.0033092474878876343,
+              "64.0": 2.2625961870748057e-07
+            },
+            "stationary": {
+              "0.0": 1.3606162527029284,
+              "0.25": 0.6817287866312994,
+              "1.0": 0.2778863060511315,
+              "4.0": 0.05823735165599037,
+              "16.0": 0.002688728412270071,
+              "64.0": 2.3753845682190953e-07
+            }
+          }
+        }
+      ],
+      "cadence_sensitivity": [
+        {
+          "cadence": 0.125,
+          "best_listed_policies": [
+            [
+              "service",
+              "mix50",
+              "service",
+              "mix50"
+            ]
+          ],
+          "primary_winner_among_best_listed": true
+        },
+        {
+          "cadence": 0.5,
+          "best_listed_policies": [
+            [
+              "service",
+              "mix50",
+              "service",
+              "mix50"
+            ]
+          ],
+          "primary_winner_among_best_listed": true
+        }
+      ],
+      "finite_winners": {
+        "1": [
+          "export",
+          "export",
+          "export",
+          "export"
+        ],
+        "4": [
+          "mix75",
+          "mix75",
+          "mix75",
+          "mix75"
+        ],
+        "16": [
+          "mix25",
+          "mix50",
+          "service",
+          "mix50"
+        ],
+        "64": [
+          "service",
+          "mix50",
+          "service",
+          "mix50"
+        ]
+      },
+      "winner_chain_rule_rate": {
+        "next_body_fuel_given_full_previous": 5.783225748117597,
+        "next_gate_given_next_body_fuel_and_full_previous": 0.714348864432459
+      },
+      "winner_organized_T64": {
+        "drive_work": 85.47744807000197,
+        "bath_heat": 84.95468970409419,
+        "build": 4.238192376805179,
+        "repair": 5.674075723475287,
+        "wear": 4.3810457381251435,
+        "dismantle": 3.162092858231275,
+        "switches": 14.285727063390784,
+        "exchange": 7.436654429993017,
+        "fuel_spent_service": 2.7521658601950163,
+        "fuel_spent_switch": 10.225054882173191,
+        "active_expected": [
+          0.4763772994395211,
+          0.47637729943952145
+        ],
+        "both_active": 0.23640405504707543,
+        "fuel_expected": [
+          0.5575914321095989,
+          0.557591432109599
+        ],
+        "energy_change": 0.5227583659077881,
+        "first_law_residual": 1.4210854715202004e-14
+      },
+      "winner_recovery_T64": {
+        "both_active_hit_by_horizon": 0.9723946401282433,
+        "both_active_at_horizon": 0.23639202784487945,
+        "meaning": "functional reconstruction; no claim about individual identity"
+      },
+      "registered_outcomes": {
+        "E1": "pass",
+        "E2": "mixed_or_nonpositive_offset_signs",
+        "E3": "reported_without_monotonicity_assumption",
+        "E4": "maintenance_tradeoff_hit",
+        "E5": "overlay_rank_disagreement",
+        "E6": "primary_winner_remains_best_listed",
+        "E7": "compiler_and_idle_regression_pass"
+      },
+      "audits": {
+        "max_stationarity_residual": 3.5236570605778894e-16,
+        "max_poisson_residual": 9.325873406851315e-14,
+        "legacy_generator_error": 4.440892098500626e-16,
+        "idle_switch_rate": 0.0,
+        "reachable_state_counts": [
+          36,
+          72,
+          144
+        ],
+        "rule_a_nonnegative_and_monotone": "checked in diagnostic module at all known roots",
+        "resource_residual": 4.263256414560601e-14
+      },
+      "execution": {
+        "exit_code": 0,
+        "cap_reason": null,
+        "wall_seconds": 5.0885053999954835,
+        "wall_cap_seconds": 120,
+        "job_memory_cap_bytes": 1073741824,
+        "peak_job_bytes": 130723840,
+        "output_bytes": 2022455
+      }
+    }
+  ]
+}

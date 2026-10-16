@@ -1,0 +1,162 @@
+{
+  "arms": [
+    "B",
+    "B_R",
+    "A0",
+    "A"
+  ],
+  "cadences": [
+    0.5,
+    0.25,
+    0.125,
+    0.0625,
+    0.03125,
+    0.015625,
+    0.0078125,
+    0.00390625,
+    0.001953125
+  ],
+  "calibrations": [
+    "reproduce earlier coarse-cadence scores",
+    "compare exact pair difference with asymptotic estimate",
+    "test decreasing error along final four fine cadences",
+    "check finest sign against nondegenerate jump-count sign"
+  ],
+  "caps": {
+    "memory": 536870912,
+    "output_cap": 67108864,
+    "seconds": 600
+  },
+  "cases": [
+    {
+      "id": "W1-00-u0.05",
+      "off_rate": 0.36126583291983255,
+      "on_rate": 0.05871485218977088,
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.25,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.15,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.020000000000000004,
+        "struggle_cost": 0.5
+      },
+      "parent": "W1-00",
+      "root": [
+        8,
+        0,
+        0,
+        1,
+        1
+      ],
+      "upkeep_ratio": 0.05
+    },
+    {
+      "id": "W1-08-u0.05",
+      "off_rate": 0.3788246682822647,
+      "on_rate": 0.059502566736523335,
+      "parameters": {
+        "attempt_rate": 0.6,
+        "energy_cap": 4.0,
+        "escape_bias": 0.25,
+        "escape_success": 0.8,
+        "food_yield": 2.0,
+        "forage_cost": 0.5,
+        "forage_hazard": 0.5,
+        "forage_outside": 0.8,
+        "hazard_damage_rate": 0.15,
+        "hazard_foraging_factor": 0.5,
+        "hazard_off": 0.2,
+        "hazard_on": 0.1,
+        "metabolism": 0.4,
+        "normal_escape": 0.1,
+        "patch_rate": 0.2,
+        "quantum": 0.5,
+        "signal_energy": 0.5,
+        "signal_hijack": 0.2,
+        "signal_hit": 0.8,
+        "signal_off": 0.3,
+        "signal_upkeep": 0.020000000000000004,
+        "struggle_cost": 1.0
+      },
+      "parent": "W1-08",
+      "root": [
+        8,
+        0,
+        0,
+        1,
+        1
+      ],
+      "upkeep_ratio": 0.05
+    }
+  ],
+  "count_query": {
+    "horizon": 64,
+    "max_augmented_states": 100000,
+    "overflow": "retained; entropy uncertainty bounded analytically",
+    "tail_budget": 1e-10
+  },
+  "date": "2026-10-14",
+  "fixed_jump_counts": [
+    8,
+    32,
+    128
+  ],
+  "full_random_length_mark_timing_decomposition": "not computed",
+  "grid_is_physical_cutoff": false,
+  "hidden_signal": "conditioning bounds at .125/.25/.5; no projected Markov generator",
+  "horizons": [
+    64,
+    256
+  ],
+  "id": "signal-temporal-profile-audit",
+  "objective": "exact complete conditional sampled-history entropy; no subtraction",
+  "pairs": [
+    [
+      "A",
+      "B"
+    ],
+    [
+      "B_R",
+      "B"
+    ],
+    [
+      "A0",
+      "A"
+    ],
+    [
+      "A",
+      "B_R"
+    ]
+  ],
+  "physical_temporal_band": null,
+  "reference_time": 1.0,
+  "refinement": {
+    "max_iterations": 16,
+    "rule": "bisect integer sample count between adjacent opposite-sign grid points",
+    "same_sign_hidden_crossings": "not excluded"
+  },
+  "selection": "two known adverse points, explanatory calibration, not new blind kill search",
+  "smoke_case": "W1-00-u0.05",
+  "status": "frozen_before_new_profile_evaluation",
+  "tolerances": {
+    "bits": 1e-05,
+    "residual": 1e-08
+  },
+  "version": "1"
+}

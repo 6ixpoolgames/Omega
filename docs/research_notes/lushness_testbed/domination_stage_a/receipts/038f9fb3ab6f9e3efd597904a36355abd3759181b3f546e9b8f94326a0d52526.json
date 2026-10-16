@@ -1,0 +1,68 @@
+{
+  "configuration": {
+    "cadences": [
+      0.125,
+      0.25,
+      0.5
+    ],
+    "caps": {
+      "memory": 805306368,
+      "output_cap": 33554432,
+      "seconds": 150
+    },
+    "horizons": [
+      16,
+      64,
+      256,
+      1024
+    ],
+    "id": "random4-blocking-p0.55",
+    "max_kernel_bytes": 167772160,
+    "mode": "survey",
+    "parameters": {
+      "kappa": 1,
+      "supply": 0.12
+    },
+    "policy": {
+      "cost": 1,
+      "edges": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "mode": "blocking",
+      "phi": 0.55
+    },
+    "reference_id": "s0.12-k1-idle",
+    "roots": [
+      "device_present"
+    ],
+    "slice": "A3",
+    "subject_depth": 2,
+    "target": "random4"
+  },
+  "id": "random4-blocking-p0.55",
+  "identity": "038f9fb3ab6f9e3efd597904a36355abd3759181b3f546e9b8f94326a0d52526",
+  "profile": {
+    "cap_reason": null,
+    "exit_code": 0,
+    "input_hash": "4f70db52a9a068857459dfc43e6f60180cb7a068f1d5c15af34978660510ae1e",
+    "job_memory_cap_bytes": 805306368,
+    "output_bytes": 571408,
+    "peak_job_bytes": 539844608,
+    "wall_cap_seconds": 150,
+    "wall_seconds": 28.941333700029645
+  },
+  "result_sha256": "0828d32fdb79323c32bdaabaaa64f565c74f8b759c08fdef585ba4d098969cf3",
+  "run": "C:\\Users\\paolo\\Documents\\ChatGPT\\Test\\Omega\\results\\local_runs\\lushness_testbed\\domination_stage_a\\038f9fb3ab6f-20261015T011228693798Z",
+  "status": "complete"
+}

@@ -1,0 +1,211 @@
+{
+  "id": "channel-shallow-r1-depth-1",
+  "version": "1",
+  "status": "frozen_before_scientific_ranking",
+  "world": {
+    "inventory": [
+      3,
+      1
+    ],
+    "params": {
+      "capture": 0.04,
+      "fuel_bath": 0.04,
+      "build": 0.3,
+      "repair": 0.5,
+      "wear": 0.04,
+      "disassembly": 0.08,
+      "switch": 0.15,
+      "exchange": 0.4,
+      "capture_benefit": 6.0,
+      "assisted_birth": 0.4,
+      "chemical_potential": 4.0,
+      "switch_tokens": 1
+    },
+    "damage": {
+      "mode": "reversible",
+      "rate": 0.04,
+      "energy": -1,
+      "exposure": [
+        0,
+        1,
+        0
+      ]
+    }
+  },
+  "controllers": {
+    "responses": {
+      "idle": [
+        0,
+        0
+      ],
+      "service": [
+        1,
+        0
+      ],
+      "mix25": [
+        0.75,
+        0.25
+      ],
+      "mix50": [
+        0.5,
+        0.5
+      ],
+      "mix75": [
+        0.25,
+        0.75
+      ],
+      "export": [
+        0,
+        1
+      ]
+    },
+    "scope": "36 shared local inactive/active tables; observations own a>0; no memory"
+  },
+  "measurement": {
+    "id": "sampled-count-history",
+    "version": "1",
+    "cadence": 0.25,
+    "max_dense_bytes": 805306368
+  },
+  "queries": {
+    "roots": {
+      "distributed_seed": [
+        [
+          0,
+          1,
+          0,
+          2,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0
+        ]
+      ],
+      "concentrated_seed": [
+        [
+          0,
+          1,
+          0,
+          3,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "unassembled": [
+        [
+          0,
+          0,
+          0,
+          3,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0
+        ]
+      ]
+    },
+    "reference_energy": 8,
+    "horizons": [
+      1,
+      4,
+      16,
+      64
+    ],
+    "rank_root": "distributed_seed"
+  },
+  "analysis": {
+    "registered_outcomes": [
+      {
+        "id": "C1-numerics",
+        "metric": "max_residual",
+        "operator": "le",
+        "threshold": 1e-08
+      },
+      {
+        "id": "C2-seed-reference",
+        "metric": "seed_excess",
+        "operator": "record"
+      },
+      {
+        "id": "C3-closure-risk",
+        "metric": "closure_probability",
+        "operator": "record"
+      },
+      {
+        "id": "C4-functioning-margin",
+        "metric": "functioning_margin",
+        "operator": "record"
+      },
+      {
+        "id": "C5-native-rate",
+        "metric": "winner_rate",
+        "operator": "record"
+      },
+      {
+        "id": "C6-uniform-null",
+        "metric": "uniform_null_error",
+        "operator": "le",
+        "threshold": 1e-09
+      },
+      {
+        "id": "S1-usable-vs-service",
+        "metric": "usable_fraction_vs_service",
+        "operator": "gt",
+        "threshold": 0,
+        "tolerance": 1e-09
+      },
+      {
+        "id": "S2-usable-vs-export",
+        "metric": "usable_fraction_vs_export",
+        "operator": "gt",
+        "threshold": 0,
+        "tolerance": 1e-09
+      },
+      {
+        "id": "S3-usable-vs-idle",
+        "metric": "usable_fraction_vs_idle",
+        "operator": "record"
+      },
+      {
+        "id": "S4-first-return",
+        "metric": "firsthit_from_trap_at_horizon",
+        "operator": "record"
+      },
+      {
+        "id": "S4-retained-return",
+        "metric": "retained_from_trap_at_horizon",
+        "operator": "record"
+      }
+    ],
+    "rank_tolerance": 1e-09,
+    "primary": "root-conditioned rate, then offset; native full count histories",
+    "channels": "structural all-action and fixed-policy closure reported separately",
+    "rule_a": "parked"
+  },
+  "limits": {
+    "wall_seconds": 600,
+    "memory_mib": 1024,
+    "output_mib": 256,
+    "numeric_threads": 1
+  },
+  "date": "2026-10-13",
+  "calibration": "Depth range0,-1,-2,-4 from prospective Opus proposal; old-6 case retained as historical. Tiny software fixtures checked consistency; no shallow optimization scores used to choose depths.",
+  "matching": "Same law, initial usable material, E8, gates0, carrier pools, beta1, mu4, fixed controller class and cadence within each root/reference comparison. Different exposure/boundary modes are explicit law contrasts.",
+  "survival_conditioning": false,
+  "scientific_question": "Does the native breadth optimizer preserve a modeled enabling channel when margin can affect its loss? No ethical verdict by occupancy alone.",
+  "amendment": "PREDICTIONS_AMENDMENT_r1.md"
+}

@@ -1,0 +1,99 @@
+# Updated interpretations — 15 October 2026
+
+**Status: current interpretation update.** Physical models and retained numerical
+results are unchanged. This index distinguishes current scientific readings
+from original automatic forecast/checklist reports. It does not update Drive
+chapters or claim to reproduce an unseen later manuscript ledger.
+
+## Research posture
+
+Lead with demonstrated mechanisms, measured relationships and their operating
+range. Predictions and cutoffs help investigate those relationships. Missing a
+guessed funding fraction, stock target or repayment deadline is not itself a
+failure of the principle. Earlier plans and scores remain reproducible history;
+their procedural wording does not veto a better physical interpretation.
+
+Actual contrary observations remain visible. Paid independent variation can
+increase breadth despite reduced food or lifetime. Short-window damage gains
+and resolution-dependent orderings remain measurements to explain. No random
+event is subtracted, and Rule A remains parked. Finite-history lushness is
+primary; rate and offset diagnose the continuation rather than replace it.
+
+## Current reading by experiment
+
+| Experiment or question | Current interpretation | Retained numerical evidence |
+| --- | --- | --- |
+| Variation, paid sensing and renewal | [Updated synthesis](INTERPRETATION_SYNTHESIS_2026-10-15.md): information matters through actionable access; costs and repayment windows determine the winner | [Paid sensing](paid_sensing/RESULTS.md), [renewal](renewal/RESULTS.md) |
+| Independent register versus obstructed response | Matched registers separate variation from futile action; the local gain is not a special benefit of aversiveness | [Register controls](aversive_signals/REGISTER_CONTROL_ASSESSMENT.md), [temporal calibration](temporal_profile/RESULTS.md) |
+| Compounding and increased capacity | Paid recursive enabling retains more apparatus; increased activity is a physical consequence, not an entropy term to remove | [Compounding](compounding/RESULTS.md), [updated activity reading](compounding/ACTIVITY_REANALYSIS.md) |
+| Equal accepted external work | The loop retains more apparatus and increases breadth at all12 matched points; equal event activity is a different question | [Matched-work results](compounding/matched_throughput/RESULTS.md) |
+| Same-law lattice preparations | Initial organization is transient in this adapter. At the settled horizon,2/14 unbound comparisons flip cadence and12/14 are negative throughout | [Updated horizon audit](same_law_gas/HORIZON_AUDIT.md), [physical limits](same_law_gas/MODEL_LIMITS_AND_NEXT_SLICE.md), [original maps](same_law_gas/COMPARISON_MAP.csv) |
+| Three successive enabling links with persistence | Demonstrated within the finite count chemistry; the guessed80%-funding gate was an inadequate surrogate, not a negation of the mechanism | [Updated assessment](robust_generativity/RESULTS.md), [updated structural interpretation](robust_generativity/INTERPRETATION.md), [original numbers/checklist](robust_generativity/SUMMARY.json) |
+| Unilateral friction on access | The first24-case map distinguishes access suppression and trap confinement from beneficial trap avoidance; D's own ranking remains partly unresolved | [Initial friction interpretation](domination_friction/INTERPRETATION.md), [full comparisons](domination_friction/COMPARISONS.json) |
+| Expanded constraint map | The470-case Stage A map resolves paid private/global conflicts atT256, finds strength crossings, and reproduces the access/trap distinction with a conservative field. Personal bounds still leave some horizons unresolved | [Stage A interpretation](domination_stage_a/INTERPRETATION.md), [full numerical map](domination_stage_a/RESULTS.md) |
+
+## Specific corrections to carry forward
+
+- A fixed finite irreducible generator has a common limiting rate across roots.
+  A missing root-rate difference there is a theorem, not a failed capability
+  test. Mechanism/policy contrasts and growing or nonergodic worlds are different.
+- Short-horizon losses in sensing/renewal locate repayment costs. They do not
+  establish absence of the information-by-action mechanism or its later benefit.
+- Maximum retained stock is not the proposed objective. Protection is explained
+  by the continuation it preserves, with costs, repair and uncertainty represented.
+- Gross capture, external-source attribution, recycling and bath support are
+  distinct ledger questions. An arbitrary coverage cutoff does not define whether
+  a physical enabling loop exists. Initial resources are legitimate resources.
+- A small, numerically resolved difference still counts. A sign reversal across
+  resolutions is a different limitation from small magnitude.
+- Same-law thermal/dispersed comparisons retain the background and lawful
+  assembly. A reference already containing machinery is not a dilute gas.
+- Three-link completion, retention, persistence and lushness consequences are
+  separate physical observations whose conjunction can be measured on the same
+  paths. Stronger stress maps their operating range rather than erasing their
+  demonstration in regimes where they coexist.
+
+## Reading and reproducing the reports
+
+The original automatic report scripts reproduce historical checklists. The
+current robust-compounding assessment is generated by
+`scripts/report_robust_generativity_assessment.py`. Interpretation documents
+are explicitly labeled **Updated interpretation**; the new friction study is
+labeled **Initial interpretation**. Source/configuration snapshots, full signed
+maps and compact case outputs preserve the underlying evidence.
+
+The programme continues to test whether the consequences of access,
+generativity and preservation support the ethical wager. These experiments
+establish finite physical mechanisms and preferences under their stated laws;
+they do not make every remaining cosmological or ethical question automatic.
+
+Publication includes the previously pending compounding, spatial-preparation,
+robust-generativity and friction batches. Older execution notes saying "not
+pushed" describe their original run status; they are retained as dated history.
+Only source, compact measurements, reports and figures are included. Large
+reconstructable kernels and local run bundles remain outside Git.
+
+## Additional Stage A controls and summaries
+
+[Updated descriptive follow-ups](domination_stage_a/UPDATED_FOLLOWUPS.md) retain
+the full original map and add target-level crossing/disagreement and random-route
+summaries. [Activity/swap controls](domination_b1/FOLLOWUP_INTERPRETATION.md)
+complete the requested ordinary-agent comparison at the law level. A paid sham
+can supply a private gain without restricting S; the ordinary auxiliary raises
+private and whole-field breadth. Query attribution does not subtract activity
+from lushness or uniquely decompose marginal-history entropy. These controls
+are local additions, not yet included in the earlier publication.
+
+## Fractional-cost and discovery batch: complete
+
+The [28-case report](domination_b1/RESULTS.md) and
+[interpretation](domination_b1/INTERPRETATION.md) resolve the cheap-exclusion
+subject conflict through T1024. D prefers strong exclusion within that small
+family while the whole prefers idle. This is a private breadth advantage;
+additional capture does not repay the intervention bill in the reported cases.
+All trap-steering comparisons are whole-positive at the tested clocks/horizons,
+but the mechanism redirects movement and chemistry and intercepts pocket return:
+it is not pure suppression of exploration. Some positive finite profiles have
+negative limiting-rate differences. Full signed maps and unresolved subject
+bounds remain visible. The next design adds actual extraction and a coarse
+ten-to-one population; no result from those new mechanisms is claimed yet.

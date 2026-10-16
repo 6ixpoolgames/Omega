@@ -1,0 +1,98 @@
+{
+  "id": "embodiment-shocks-r1",
+  "version": "1",
+  "status": "frozen_before_scientific_ranking",
+  "selection": "trap -1 primary; h=.5*wear=.02, basal=.02*switch=.003, p=.5/1 chosen before rankings",
+  "objective": "same native count-history rate then offset; no RuleA or survival reward",
+  "reserve": "1-E[.5**A | A>0] under each winning stationary mixture; common hypothetical probe, independent of native shock clock",
+  "hypotheses": [
+    {
+      "id": "E1-service",
+      "lhs": "embodied_reversible",
+      "rhs": "legacy_reversible",
+      "metric": "active_service_weight",
+      "operator": "ge"
+    },
+    {
+      "id": "E2-common-tail",
+      "case": "embodied_absorbing",
+      "metric": "policy_rate_spread",
+      "operator": "le",
+      "threshold": 1e-09
+    },
+    {
+      "id": "E3-frozen-tail",
+      "case": "frozen_gate_absorbing",
+      "metric": "policy_rate_spread",
+      "operator": "gt",
+      "threshold": 1e-09
+    },
+    {
+      "id": "R1-half-reserve",
+      "lhs": "correlated_half_reversible",
+      "rhs": "independent_reversible",
+      "metric": "stationary_common_probe_reserve",
+      "operator": "ge"
+    },
+    {
+      "id": "R1-all-reserve",
+      "lhs": "correlated_all_reversible",
+      "rhs": "independent_reversible",
+      "metric": "stationary_common_probe_reserve",
+      "operator": "ge"
+    },
+    {
+      "id": "R2-exposure",
+      "lhs": "independent_reversible",
+      "rhs": "embodied_reversible",
+      "metric": "stationary_exposure",
+      "operator": "record",
+      "meaning": "increase is a mechanism flag; not automatically adverse"
+    },
+    {
+      "id": "R3-horizon",
+      "case": "embodied_absorbing",
+      "metric": "closure64_horizon1_minus_horizon64",
+      "operator": "ge",
+      "threshold": 0.0
+    }
+  ],
+  "tolerance": 1e-09,
+  "cases": [
+    {
+      "case": "legacy_reversible",
+      "file": "legacy_reversible.json",
+      "sha256": "45ac2fdc11c461ed8eeff36964056693ffdd11fbffcaedfedd904b3e5e4d0aa3"
+    },
+    {
+      "case": "embodied_reversible",
+      "file": "embodied_reversible.json",
+      "sha256": "66eb0eb5c2b71f685fa90d87e3ccc24ad3188b9c18a230a4395ae271e3d78670"
+    },
+    {
+      "case": "independent_reversible",
+      "file": "independent_reversible.json",
+      "sha256": "97deb4d9166ed4e580b1dfe338f194f4e9025d6a7e690265d2ae0cb23fe126db"
+    },
+    {
+      "case": "correlated_half_reversible",
+      "file": "correlated_half_reversible.json",
+      "sha256": "7da3a059813eb71d9fc6472ba5b3b4428532a502afbf1926651e1b14a38be93a"
+    },
+    {
+      "case": "correlated_all_reversible",
+      "file": "correlated_all_reversible.json",
+      "sha256": "e815e6d409104ba4f814a0a821b22faa1f648e87dc004bb3b497f981851d6d72"
+    },
+    {
+      "case": "embodied_absorbing",
+      "file": "embodied_absorbing.json",
+      "sha256": "cab9c1964f91bb62ce4451bdf8268c32b3db1c54acdb8ba77284f8f25be9b0b9"
+    },
+    {
+      "case": "frozen_gate_absorbing",
+      "file": "frozen_gate_absorbing.json",
+      "sha256": "c50101dac578004275d0eb55bc90fa141f5a3cb6321440f43a51fa88438e23d0"
+    }
+  ]
+}

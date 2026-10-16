@@ -1,0 +1,181 @@
+{
+  "schema": "omega-proposed-experiment/1",
+  "status": "draft_not_executable",
+  "engineering_authorization": "user-approved capped implementation/validation only; no scientific rankings",
+  "date": "2026-10-15",
+  "specification": "PROPOSED_SPEC_r1.md",
+  "adapter": "proposed-three-type-compounding-v1",
+  "scientific_layer": "oracle_mechanism_and_preparation_comparison",
+  "primary_objective": "complete conditional sampled physical-state history entropy",
+  "rate_role": "diagnostic of sustained contribution, not lexical moral ordering",
+  "claims": [
+    "C: paid three-link compounding with retained expansion",
+    "R: persistence or reconstruction over a specified physical window",
+    "L: complete finite-history difference from each matched reference",
+    "J: conjunction in one setting with a joint compounding-and-later-function path readout"
+  ],
+  "joint_claim_variants": {
+    "J_thermal": "C/R plus positive finite-history seed advantage over full same-law thermal reference",
+    "J_unbound": "C/R plus positive finite-history seed advantage over initially unbound same-law reference",
+    "J_mechanism": "C/R plus full mechanism beating both all-assistance-off and C-to-A-cut from matched seed/boundaries",
+    "strong_seed_connected": "add non-negligible depth-by64 and later-function joint path probability",
+    "warning": "these claims are distinct and may not be substituted for one another"
+  },
+  "physical_proposal": {
+    "fields": ["bank_quanta", "packet", "A", "B", "C", "unavailable_material"],
+    "primary_capacity": 6,
+    "engineering_capacities": [4, 6, 8],
+    "bank_quanta": 8,
+    "energy_quantum": 0.5,
+    "packet_energy": 3.0,
+    "apparatus_energy_each": 1.0,
+    "construction_cost": 2.0,
+    "beta": 6.0,
+    "cycle": ["A_assists_B", "B_assists_C", "C_assists_A"],
+    "capture_parent": "A",
+    "basal_capture": 0.002,
+    "assisted_capture_per_A": 0.1,
+    "capture_loss": 0.5,
+    "capture_reverse": "one reverse per native origin with h*exp[-beta*(packet_energy-loaded_energy)]",
+    "packet_decay": 0.05,
+    "packet_thermal_return": "packet_decay*exp(-beta*packet_energy)",
+    "basal_construction": 0.0001,
+    "assisted_construction": 0.008,
+    "thermal_construction": 0.00001,
+    "overhead_per_apparatus": 0.01,
+    "bank_leak": 0.002,
+    "unpowered_disassembly": 0.02,
+    "all_native_reverse_channels": true,
+    "reference_degeneracy": "M!/(P! A! B! C! D!)",
+    "equilibrium_check": "source and external damage off; full packet/bank chemistry; fixed-D sectors"
+  },
+  "roots": {
+    "seed": [6, 1, 1, 0, 0, 0],
+    "initially_unbound": [8, 1, 0, 0, 0, 0],
+    "matched_energy": 7.0,
+    "thermal_reference": "undriven equilibrium conditioned on H7,D0 with physical count multiplicity",
+    "reference_average": "average conditional known-root histories; no entropy of drawing root"
+  },
+  "mechanisms": [
+    "full",
+    "cut_A_to_B",
+    "cut_B_to_C",
+    "cut_C_to_A",
+    "cut_assisted_capture",
+    "all_assistance_off"
+  ],
+  "shape_batch": {
+    "capacity": 6,
+    "feedback_exponent": [0.5, 1.0],
+    "construction_assistance_multiplier": [0.1, 1.0],
+    "source_rate": [0.15, 0.6, 2.4],
+    "total_damage": 0.005,
+    "irreversible_fraction": 0.0,
+    "settings": 12,
+    "mechanisms": "all six",
+    "proposed_total_wall_seconds": 1800
+  },
+  "robustness_batch": {
+    "anchors": {
+      "feedback_exponent": [0.5, 1.0],
+      "construction_assistance_multiplier": 1.0,
+      "source_rate": [0.15, 0.6],
+      "selection": "all four fixed anchors, independent of lushness results"
+    },
+    "stress_settings": [
+      {"id": "R0", "damage": 0.005, "irreversible_fraction": 0.0, "pulse": false},
+      {"id": "R1", "damage": 0.02, "irreversible_fraction": 0.0, "pulse": false},
+      {"id": "R2", "damage": 0.08, "irreversible_fraction": 0.0, "pulse": false},
+      {"id": "R3", "damage": 0.02, "irreversible_fraction": 0.05, "pulse": false},
+      {"id": "R4", "damage": 0.02, "irreversible_fraction": 0.0, "pulse": true},
+      {"id": "R5", "damage": 0.02, "irreversible_fraction": 0.05, "pulse": true},
+      {"id": "R6", "damage": 0.02, "irreversible_fraction": 0.25, "pulse": false}
+    ],
+    "settings": 28,
+    "mechanisms": ["full", "all_assistance_off", "cut_C_to_A"],
+    "pulse_time": 64,
+    "pulse_kernel": "remove one B to usable precursor if present; otherwise identity; account released energy",
+    "recovery_delays": [16, 64, 128],
+    "proposed_total_wall_seconds": 2400
+  },
+  "compounding_witness": {
+    "depth_links": 3,
+    "sequence": ["A_assisted_paid_B", "new_B_assisted_paid_C", "new_C_assisted_paid_A"],
+    "method": "conservative uniqueness-guarded initial-seed query monitor; failure never restarts primary witness",
+    "physical_identity_labels_added": false,
+    "monitor_entropy_added": false,
+    "required_validation": "monitor projection exactly recovers physical Q; full transition table frozen before science",
+    "scope": "model-relative causal witness lower bound, not atomic genealogy from counts",
+    "monitor_contract": "MONITOR_CONTRACT.md",
+    "any_start_monitor": "non-overlapping lower-bound detected completion rate, reset to waiting on failure/completion, no same-event restart; not a population generation rate",
+    "companion_readouts": "native forward/reverse link fluxes, retained expansion, query failure mass"
+  },
+  "measurement": {
+    "primary_horizon": 256,
+    "startup_checkpoint": 64,
+    "primary_cadence": 0.25,
+    "horizons": [16, 64, 256, 1024, 4096],
+    "cadences": [0.125, 0.25, 0.5],
+    "coordinate_order": ["packet", "bank_quanta", "unavailable_material", "A", "B", "C"],
+    "irreducible_tail_diagnostic_tolerance_bits": 0.001,
+    "reducible_analysis": "class/projection and residual background; no irreducible shortcut",
+    "grain_scope": "chemical count-state grain; spatial gas claim requires Stage C"
+  },
+  "proposed_markers": {
+    "three_link_witness_probability": 0.01,
+    "witness_and_retained_expansion_probability": 0.01,
+    "strong_initial_seed_compounding_and_later_function_probability": 0.01,
+    "retained_expansion_count": 4,
+    "functional_loop_uptime_fraction": 0.5,
+    "maximum_structural_loop_closure_probability": 0.1,
+    "conditional_endpoint_recovery_at_delay64": 0.8,
+    "unconditional_pre_function_and_recovery_probability": 0.5,
+    "external_spent_funding_lower_bound_fraction": 0.8,
+    "maximum_thermal_forward_construction_fraction": 0.05,
+    "interpretation": "reporting benchmarks, not reward terms or eligibility filters"
+  },
+  "funding_diagnostic": {
+    "gross_capture": "may include initially stored, bath-return and reverse-capture packets",
+    "external_spent_lower_bound": "max(0,captured_bank_energy-end_bank_energy-initial_packet_energy-packet_bath_import-reverse_capture_packet_energy)/all_bank_expenditure",
+    "no_provenance_entropy": true,
+    "zero_source_control": "external funding must remain zero even with capture/recycling"
+  },
+  "proposed_tolerances": {"bits": 0.00001, "rate_or_physical": 0.00000001, "numerical_ledger": 0.0000001},
+  "initial_case_caps": {"wall_seconds": 120, "memory_bytes": 536870912, "output_bytes": 33554432, "kernel_bytes": 167772160},
+  "deferred_separate_freezes": {
+    "source_lifetime": [64, 256, 1024],
+    "source_window_queries": "closure time, twice and four times lifetime, with actual post-closure dynamics",
+    "spatial_same_law_replication": "positions/local fuel/contact, all native agitation, naturally assembling references, memory gate",
+    "matched_work_companion": "stationary accepted external work only; does not match activity, total bath import or finite cumulative work",
+    "whole_type_knockout": "remove all B into usable precursor; separate from primary one-B pulse",
+    "single_type_comparator": "matched catalytic strength; network robustness advantage not assumed"
+  },
+  "persistence_prediction": {
+    "tau_up": "unconditional expected integral of loop-function indicator over [0,W]",
+    "P7a": "larger tau_up predicted to associate with larger full-minus-ablated and seed-minus-unbound finite advantage within each fixed anchor; not a theorem",
+    "P7b": "separate window freeze: asymptotic T_cross=-delta_offset/delta_rate only for positive mechanism delta_rate and validated approximation; exact finite profiles score signs",
+    "same_Q_warning": "irreducible roots share rate: no rate-based T_cross for seed versus unbound",
+    "window_warning": "shutdown score is maintained prefix; post-shutdown dynamics require new propagation",
+    "scope": "restricted persistence/repayment hypothesis, not general field theorem"
+  },
+  "required_outputs": [
+    "full C/R/L/J component maps and filed predictions",
+    "joint completed-compounding and later-function probability",
+    "per-type and total stocks versus gross/reverse/thermal creation",
+    "arrival versus occupancy versus recovery versus structural closure",
+    "funding and complete material/energy balances",
+    "finite lushness, rate/offset and horizon-tail diagnostics",
+    "expected jumps, finite temporal term and fixed-jump diagnostics",
+    "accepted versus offered work, damage and reconstruction activity",
+    "all negative, grain-conditional and unresolved outcomes"
+  ],
+  "pending_before_freeze": [
+    "engineering validation of MONITOR_CONTRACT.md",
+    "multinomial balance and full reversible resource validation",
+    "pulse and sink accounting",
+    "reducible exact measurement backend",
+    "profiled compute budget and final numerical tolerances",
+    "marker confirmation and final prediction contract"
+  ],
+  "publication": "no commit, push or Drive change implied"
+}

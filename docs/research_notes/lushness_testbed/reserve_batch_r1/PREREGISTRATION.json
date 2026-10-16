@@ -1,0 +1,164 @@
+{
+  "id": "reserve-batch-r1",
+  "status": "frozen_before_scientific_ranking",
+  "date": "2026-10-14",
+  "primary": "complete conditional history bits at each physical horizon",
+  "secondary": "rate then offset; full failure/recovery/tail retained",
+  "horizons": [
+    1,
+    4,
+    16,
+    64,
+    256
+  ],
+  "primary_cadence": 0.25,
+  "tolerance": 1e-08,
+  "comparison": "same fixed-law policy family; law changes explicitly distinguished",
+  "adaptation_scope": "left compartment only; right capacity1 cannot resolve reserve/worn while active",
+  "predictions": [
+    {
+      "id": "A1",
+      "type": "strict_nonconstant_gain",
+      "laws": [
+        "independent_002",
+        "correlated_002",
+        "independent_004"
+      ],
+      "per": "each horizon",
+      "meaning": "a reachable nonconstant reserve/worn law strictly beats six constant controls"
+    },
+    {
+      "id": "A2",
+      "type": "risk_service_surface",
+      "lhs": "independent_004",
+      "rhs": "independent_002",
+      "per": "each horizon",
+      "meaning": "all tied winners have no lower service on common reachable active/worn states, with some strict increase"
+    },
+    {
+      "id": "A3",
+      "type": "correlation_service_surface",
+      "lhs": "correlated_002",
+      "rhs": "independent_002",
+      "per": "each horizon",
+      "meaning": "same pointwise service partial order as A2"
+    },
+    {
+      "id": "A4",
+      "type": "longer_horizon_service_surface",
+      "law_scope": "five primary laws",
+      "meaning": "successive horizon winners increase service; mixed/tied sets unresolved"
+    },
+    {
+      "id": "A5",
+      "type": "sentinel_reserve",
+      "lhs": "absorbing",
+      "rhs": "no_shock",
+      "metric": "active64",
+      "per": "each horizon winner",
+      "meaning": "absorbing winner holds more common-deadline active stock; mechanism contrast not isolated irreversibility"
+    },
+    {
+      "id": "D1",
+      "type": "exposure_diagnostic",
+      "lhs": "independent_004",
+      "rhs": "independent_002",
+      "metric": "stationary_exposure",
+      "meaning": "increase is an alert, not an ethical failure; fixed-policy replay retained"
+    },
+    {
+      "id": "S1",
+      "type": "fixed_pair_temporal_sign",
+      "laws": [
+        "no_shock",
+        "correlated_002"
+      ],
+      "cadences": [
+        0.125,
+        0.25,
+        0.5
+      ],
+      "comparators": [
+        "idle",
+        "service",
+        "export",
+        "best_nonrandom"
+      ],
+      "meaning": "fixed primary winner/control identities; certified positive-negative flip is sensitivity; tie loses strict robustness"
+    }
+  ],
+  "limits": {
+    "per_job_seconds": 600,
+    "memory_mib": 1024,
+    "output_mib": 256,
+    "numeric_threads": 1,
+    "concurrent_jobs": 1,
+    "total_batch_seconds": 3600
+  },
+  "selection": "Case range from draft before optimization;22declared18effective from smoke, no outcomes used to choose parameters.",
+  "cases": [
+    {
+      "id": "reserve-r1-no_shock-dt0.125",
+      "law_id": "no_shock",
+      "cadence": 0.125,
+      "file": "reserve-r1-no_shock-dt0.125.json",
+      "sha256": "88aaa3b354aa0ceafa60bdb2e35660c1cbc119e7b127d1d2a9ad4f2b2f5df4b5"
+    },
+    {
+      "id": "reserve-r1-no_shock-dt0.25",
+      "law_id": "no_shock",
+      "cadence": 0.25,
+      "file": "reserve-r1-no_shock-dt0.25.json",
+      "sha256": "c6d72c2b13e48e60149cf2b409edd926d3435e490d6a437ab752e70a97d881c6"
+    },
+    {
+      "id": "reserve-r1-no_shock-dt0.5",
+      "law_id": "no_shock",
+      "cadence": 0.5,
+      "file": "reserve-r1-no_shock-dt0.5.json",
+      "sha256": "be517d48b7c90df388e4b4ea2a38faf57bba4123f5ec97f285b9a49b472489f0"
+    },
+    {
+      "id": "reserve-r1-independent_002-dt0.25",
+      "law_id": "independent_002",
+      "cadence": 0.25,
+      "file": "reserve-r1-independent_002-dt0.25.json",
+      "sha256": "4ff49c78cf0ba155ca96548ec6be7cfa1d76306e4ac92f58c20887ca418254e5"
+    },
+    {
+      "id": "reserve-r1-correlated_002-dt0.125",
+      "law_id": "correlated_002",
+      "cadence": 0.125,
+      "file": "reserve-r1-correlated_002-dt0.125.json",
+      "sha256": "334b67e9faba58e89eb51bea0f524982d759e7a93ed9927b4d3abcd9b440c5ad"
+    },
+    {
+      "id": "reserve-r1-correlated_002-dt0.25",
+      "law_id": "correlated_002",
+      "cadence": 0.25,
+      "file": "reserve-r1-correlated_002-dt0.25.json",
+      "sha256": "938adb3a2f9b2382cc28319c0923783bca6a201030c9b75442a82dd0b6b8b238"
+    },
+    {
+      "id": "reserve-r1-correlated_002-dt0.5",
+      "law_id": "correlated_002",
+      "cadence": 0.5,
+      "file": "reserve-r1-correlated_002-dt0.5.json",
+      "sha256": "88ebd247f172009be1b9e7d02711608aeae3db4d9dc46a859a15846c08fa5311"
+    },
+    {
+      "id": "reserve-r1-independent_004-dt0.25",
+      "law_id": "independent_004",
+      "cadence": 0.25,
+      "file": "reserve-r1-independent_004-dt0.25.json",
+      "sha256": "b4b5ec8f952907f0e5cd36fdf6121da9e900f7ec8f752fc0a5f616c009e01ebb"
+    },
+    {
+      "id": "reserve-r1-absorbing-dt0.25",
+      "law_id": "absorbing",
+      "cadence": 0.25,
+      "file": "reserve-r1-absorbing-dt0.25.json",
+      "sha256": "d8ff75c7516c121f1326ea6629d5cb8f8a1243a3bdd51f9d17f387bcec309564"
+    }
+  ]
+}

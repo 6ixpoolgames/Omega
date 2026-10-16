@@ -1,0 +1,86 @@
+{
+  "schema_version": "omega-assembly-protocol/1",
+  "protocol_id": "fixture-a-three-arm-r1",
+  "status": "frozen_before_scientific_run",
+  "frozen_date": "2026-10-13",
+  "specification": "../INITIAL_SPEC_r1.md",
+  "measurement": "../MEASUREMENT_r1.md",
+  "engine": {
+    "name": "BioNetGen",
+    "package_version": "0.8.7",
+    "engine_version": "2.9.3",
+    "role": "generate the finite mass-action network; independent of Q construction"
+  },
+  "representation": {
+    "kind": "coarse_population_species",
+    "species": {"M": "free monomer", "D": "assembled dimer of two M units"},
+    "conserved_inventory": "M + 2 D",
+    "inventory_values": [2, 3, 4],
+    "grain": "one state is the complete pair of free-monomer and dimer counts; subunit positions, orientations and binding microstates are intentionally unresolved",
+    "catalyst": "In feedback reactions D is both a catalyst and a retained product molecule; the other D product is newly assembled from two M substrates. D is a distinct molecule from both M substrates.",
+    "scope": "coarse ideal-mixture mass-action adaptation, not a resolved molecular binding or spatial model"
+  },
+  "standard_state": {
+    "beta": 1.0,
+    "temperature": 1.0,
+    "energy_unit": "k_B T",
+    "standard_chemical_potentials": {"M": 0.0, "D": 0.0},
+    "activities": {"M": 1.0, "D": 1.0},
+    "equilibrium_measure": "pi(M,D) proportional to 1/(M! D!) on each fixed-inventory class",
+    "detailed_balance": "Every reversible channel pair uses forward/reverse coefficients with ratio a_D/a_M^2 = 1. No fuel or external drive is present."
+  },
+  "arms": {
+    "reversible_base": {
+      "association": "2 M <-> D; coefficients (forward, reverse) = (1, 1)",
+      "feedback": false
+    },
+    "metastable_slow_reversible": {
+      "association": "2 M <-> D; coefficients (forward, reverse) = (0.01, 0.01)",
+      "feedback": false,
+      "interpretation": "slow reversible trapping relative to the common observation clock, with the same equilibrium distribution as the base arm"
+    },
+    "dimer_feedback": {
+      "association": "2 M <-> D; coefficients (forward, reverse) = (1, 1)",
+      "feedback": "D + 2 M <-> 2 D; coefficients (forward, reverse) = (1, 1)",
+      "feedback_interpretation": "catalytic cycle; catalyst D is retained, substrates are two separate M molecules, and a second D is formed or consumed",
+      "equilibrium_preserved": true
+    }
+  },
+  "roots": {
+    "unassembled": "(M,D)=(N,0)",
+    "assembled": "(M,D)=(N mod 2, floor(N/2))",
+    "inventory_match": true,
+    "preparation_entropy_added": false
+  },
+  "measurement": {
+    "primary": "conditional entropy of sampled full declared (M,D) configuration histories in bits",
+    "transition": "P_delta = exp(delta Q)",
+    "primary_delta": 0.25,
+    "sensitivity_deltas": [0.125, 0.5],
+    "common_clock_anchor": "base-arm monomer dissociation coefficient 1.0 in the declared ideal time unit; held fixed across all arms and roots",
+    "horizons": [1, 4, 16, 64],
+    "same_law_stationary_baseline": "For each arm and inventory, compute the stationary distribution of that arm's Q and average conditional history breadth across stationary-root states. Do not add entropy of the initial stationary mixture. This baseline is reported separately and does not replace same-law assembled versus unassembled root contrasts.",
+    "rule_a": "deferred"
+  },
+  "audits": {
+    "inventory_conservation": "all reactions preserve M+2D",
+    "detailed_balance": "check pairwise stationary flux on every generated edge against pi proportional to 1/(M!D!)",
+    "engine_multiplicity": "compare BNG-generated reaction coefficients and falling-factorial propensities with hand-enumerated unit-inventory rates; never apply a second symmetry divisor",
+    "network": "compare generated reachable states and aggregated generator against independent hand enumeration for every arm and inventory",
+    "transition": "check stochastic rows, semigroup composition and finite history breadth",
+    "limits": "finite class, state cap 16 per case; no open-endedness or optimizer-ethics inference"
+  },
+  "scientific_predictions": [
+    {"claim": "The feedback arm has an additional reversible assembly route and may alter finite-horizon breadth from matched roots.", "classification": "directional possibility only; no ranking asserted"},
+    {"claim": "The slow arm retains the base equilibrium distribution but can differ at fixed physical horizons.", "classification": "expected kinetic distinction"},
+    {"claim": "Any arm or root ranking may depend on horizon and cadence.", "classification": "report every registered value and ranking flip"}
+  ],
+  "engineering_caps": {"state_cap": 16, "network_generations": 18, "wall_seconds": 120, "workers": 1},
+  "seeds": {
+    "own_ssa": 20261013,
+    "own_ssa_samples": 20000,
+    "official_engine_ssa_start": 20261013,
+    "official_engine_ssa_samples": 64,
+    "role": "engineering endpoint-distribution checks only; no new scientific statistic depends on seed"
+  }
+}

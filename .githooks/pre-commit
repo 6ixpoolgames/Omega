@@ -1,0 +1,18 @@
+#!/bin/sh
+set -eu
+
+repo_root=$(git rev-parse --show-toplevel)
+checker="$repo_root/scripts/check_repository_artifacts.py"
+
+if [ -x "$repo_root/.venv/Scripts/python.exe" ]; then
+    exec "$repo_root/.venv/Scripts/python.exe" "$checker"
+elif [ -x "$repo_root/.venv/bin/python" ]; then
+    exec "$repo_root/.venv/bin/python" "$checker"
+elif command -v python3 >/dev/null 2>&1; then
+    exec python3 "$checker"
+elif command -v python >/dev/null 2>&1; then
+    exec python "$checker"
+else
+    echo "Repository artifact guard requires Python; no supported interpreter was found." >&2
+    exit 1
+fi

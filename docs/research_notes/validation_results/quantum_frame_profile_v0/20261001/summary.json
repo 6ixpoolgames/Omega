@@ -1,0 +1,1563 @@
+{
+  "representation_errors": {
+    "trace": 6.661338147750939e-16,
+    "causal_trace": 1.1102230246251565e-16,
+    "source_contraction": 3.3306690738754696e-16
+  },
+  "intact_minus_other": {
+    "1": {
+      "damaged": {
+        "positive_fragments": 12,
+        "negative_fragments": 0,
+        "tied_fragments": 50,
+        "max_absolute_difference_bits": 1.9999999999999996,
+        "relation": "first_greater"
+      },
+      "erased": {
+        "positive_fragments": 60,
+        "negative_fragments": 0,
+        "tied_fragments": 2,
+        "max_absolute_difference_bits": 1.9999999999999996,
+        "relation": "first_greater"
+      },
+      "cycling": {
+        "positive_fragments": 4,
+        "negative_fragments": 0,
+        "tied_fragments": 58,
+        "max_absolute_difference_bits": 1.9999999999999996,
+        "relation": "first_greater"
+      },
+      "photocopier": {
+        "positive_fragments": 0,
+        "negative_fragments": 2,
+        "tied_fragments": 60,
+        "max_absolute_difference_bits": 1.9999999999999996,
+        "relation": "second_greater"
+      },
+      "common_delay": {
+        "positive_fragments": 8,
+        "negative_fragments": 42,
+        "tied_fragments": 12,
+        "max_absolute_difference_bits": 0.5827831343002573,
+        "relation": "crossing"
+      }
+    },
+    "2": {
+      "damaged": {
+        "positive_fragments": 768,
+        "negative_fragments": 0,
+        "tied_fragments": 3326,
+        "max_absolute_difference_bits": 1.9999999999999991,
+        "relation": "first_greater"
+      },
+      "erased": {
+        "positive_fragments": 4080,
+        "negative_fragments": 0,
+        "tied_fragments": 14,
+        "max_absolute_difference_bits": 3.9999999999999947,
+        "relation": "first_greater"
+      },
+      "cycling": {
+        "positive_fragments": 496,
+        "negative_fragments": 0,
+        "tied_fragments": 3598,
+        "max_absolute_difference_bits": 3.999999999999998,
+        "relation": "first_greater"
+      },
+      "photocopier": {
+        "positive_fragments": 0,
+        "negative_fragments": 252,
+        "tied_fragments": 3842,
+        "max_absolute_difference_bits": 3.999999999999998,
+        "relation": "second_greater"
+      },
+      "common_delay": {
+        "positive_fragments": 256,
+        "negative_fragments": 3742,
+        "tied_fragments": 96,
+        "max_absolute_difference_bits": 0.7219280948873636,
+        "relation": "crossing"
+      }
+    }
+  },
+  "rounds": {
+    "intact": [
+      {
+        "horizon": 5,
+        "choi_size_summary": [
+          {
+            "k": 1,
+            "count": 6,
+            "min_bits": 3.2034265038149176e-16,
+            "mean_bits": 1.6666666666666663,
+            "max_bits": 1.9999999999999998
+          },
+          {
+            "k": 2,
+            "count": 15,
+            "min_bits": 1.9999999999999998,
+            "mean_bits": 1.9999999999999998,
+            "max_bits": 1.9999999999999998
+          },
+          {
+            "k": 3,
+            "count": 20,
+            "min_bits": 1.9999999999999998,
+            "mean_bits": 1.9999999999999996,
+            "max_bits": 1.9999999999999998
+          },
+          {
+            "k": 4,
+            "count": 15,
+            "min_bits": 1.9999999999999998,
+            "mean_bits": 1.9999999999999998,
+            "max_bits": 1.9999999999999998
+          },
+          {
+            "k": 5,
+            "count": 6,
+            "min_bits": 3.2034265038149176e-16,
+            "mean_bits": 1.6666666666666667,
+            "max_bits": 1.9999999999999998
+          }
+        ],
+        "actual_p0_08": {
+          "sources": [
+            {
+              "source": "S1",
+              "source_entropy_bits": 0.7219280948873623,
+              "single_record_information_bits": {
+                "R1": 0.7219280948873623,
+                "M1": 0.7219280948873623,
+                "D1": 0.7219280948873623,
+                "K1": 0.0
+              },
+              "singleton_90_percent_readers": [
+                "R1",
+                "M1",
+                "D1"
+              ],
+              "downstream_information_bits": 0.7219280948873623,
+              "downstream_source_joint_law": [
+                0.8,
+                0.0,
+                0.0,
+                0.19999999999999996
+              ],
+              "source_equal_downstream_probability": 1.0,
+              "all_record_information_bits": 0.7219280948873623
+            }
+          ],
+          "record_pair_information_bits": {
+            "R1:M1": 0.7219280948873623,
+            "R1:D1": 0.7219280948873623,
+            "R1:K1": 0.0,
+            "M1:D1": 0.7219280948873623,
+            "M1:K1": 0.0,
+            "D1:K1": 0.0
+          }
+        }
+      },
+      {
+        "horizon": 10,
+        "choi_size_summary": [
+          {
+            "k": 1,
+            "count": 12,
+            "min_bits": 6.406853007629837e-16,
+            "mean_bits": 1.6666666666666636,
+            "max_bits": 1.9999999999999964
+          },
+          {
+            "k": 2,
+            "count": 66,
+            "min_bits": 6.406853007629837e-16,
+            "mean_bits": 2.727272727272723,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 3,
+            "count": 220,
+            "min_bits": 1.9999999999999964,
+            "mean_bits": 3.3636363636363593,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 4,
+            "count": 495,
+            "min_bits": 1.9999999999999964,
+            "mean_bits": 3.7171717171717122,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 5,
+            "count": 792,
+            "min_bits": -2.6842776007497065e-15,
+            "mean_bits": 3.8888888888888835,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 6,
+            "count": 924,
+            "min_bits": -2.6842776007497065e-15,
+            "mean_bits": 3.939393939393934,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 7,
+            "count": 792,
+            "min_bits": -2.6842776007497065e-15,
+            "mean_bits": 3.8888888888888835,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 8,
+            "count": 495,
+            "min_bits": 1.9999999999999964,
+            "mean_bits": 3.7171717171717127,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 9,
+            "count": 220,
+            "min_bits": 1.9999999999999964,
+            "mean_bits": 3.3636363636363593,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 10,
+            "count": 66,
+            "min_bits": 6.406853007629837e-16,
+            "mean_bits": 2.7272727272727235,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 11,
+            "count": 12,
+            "min_bits": 6.406853007629837e-16,
+            "mean_bits": 1.666666666666664,
+            "max_bits": 1.9999999999999964
+          }
+        ],
+        "actual_p0_08": {
+          "sources": [
+            {
+              "source": "S1",
+              "source_entropy_bits": 0.7219280948873623,
+              "single_record_information_bits": {
+                "R1": 0.7219280948873623,
+                "M1": 0.7219280948873623,
+                "D1": 0.7219280948873623,
+                "K1": 0.0,
+                "R2": 0.0,
+                "M2": 0.0,
+                "D2": 0.0,
+                "K2": 0.0
+              },
+              "singleton_90_percent_readers": [
+                "R1",
+                "M1",
+                "D1"
+              ],
+              "downstream_information_bits": 0.7219280948873623,
+              "downstream_source_joint_law": [
+                0.8,
+                0.0,
+                0.0,
+                0.19999999999999996
+              ],
+              "source_equal_downstream_probability": 1.0,
+              "all_record_information_bits": 0.7219280948873625
+            },
+            {
+              "source": "S2",
+              "source_entropy_bits": 0.7219280948873623,
+              "single_record_information_bits": {
+                "R1": 0.0,
+                "M1": 0.0,
+                "D1": 0.0,
+                "K1": 0.0,
+                "R2": 0.7219280948873623,
+                "M2": 0.7219280948873623,
+                "D2": 0.7219280948873623,
+                "K2": 0.0
+              },
+              "singleton_90_percent_readers": [
+                "R2",
+                "M2",
+                "D2"
+              ],
+              "downstream_information_bits": 0.7219280948873623,
+              "downstream_source_joint_law": [
+                0.8,
+                0.0,
+                0.0,
+                0.19999999999999996
+              ],
+              "source_equal_downstream_probability": 1.0,
+              "all_record_information_bits": 0.7219280948873625
+            }
+          ],
+          "record_pair_information_bits": {
+            "R1:M1": 0.7219280948873623,
+            "R1:D1": 0.7219280948873623,
+            "R1:K1": 0.0,
+            "R1:R2": 0.0,
+            "R1:M2": 0.0,
+            "R1:D2": 0.0,
+            "R1:K2": 0.0,
+            "M1:D1": 0.7219280948873623,
+            "M1:K1": 0.0,
+            "M1:R2": 0.0,
+            "M1:M2": 0.0,
+            "M1:D2": 0.0,
+            "M1:K2": 0.0,
+            "D1:K1": 0.0,
+            "D1:R2": 0.0,
+            "D1:M2": 0.0,
+            "D1:D2": 0.0,
+            "D1:K2": 0.0,
+            "K1:R2": 0.0,
+            "K1:M2": 0.0,
+            "K1:D2": 0.0,
+            "K1:K2": 0.0,
+            "R2:M2": 0.7219280948873623,
+            "R2:D2": 0.7219280948873623,
+            "R2:K2": 0.0,
+            "M2:D2": 0.7219280948873623,
+            "M2:K2": 0.0,
+            "D2:K2": 0.0
+          }
+        }
+      }
+    ],
+    "damaged": [
+      {
+        "horizon": 5,
+        "choi_size_summary": [
+          {
+            "k": 1,
+            "count": 6,
+            "min_bits": 3.2034265038149176e-16,
+            "mean_bits": 0.9999999999999999,
+            "max_bits": 1.9999999999999998
+          },
+          {
+            "k": 2,
+            "count": 15,
+            "min_bits": 3.2034265038149176e-16,
+            "mean_bits": 1.5999999999999999,
+            "max_bits": 1.9999999999999998
+          },
+          {
+            "k": 3,
+            "count": 20,
+            "min_bits": 3.2034265038149176e-16,
+            "mean_bits": 1.8,
+            "max_bits": 1.9999999999999998
+          },
+          {
+            "k": 4,
+            "count": 15,
+            "min_bits": 3.2034265038149176e-16,
+            "mean_bits": 1.6,
+            "max_bits": 1.9999999999999998
+          },
+          {
+            "k": 5,
+            "count": 6,
+            "min_bits": 3.2034265038149176e-16,
+            "mean_bits": 1.0000000000000002,
+            "max_bits": 1.9999999999999998
+          }
+        ],
+        "actual_p0_08": {
+          "sources": [
+            {
+              "source": "S1",
+              "source_entropy_bits": 0.7219280948873623,
+              "single_record_information_bits": {
+                "R1": 0.7219280948873623,
+                "M1": 0.0,
+                "D1": 0.0,
+                "K1": 0.0
+              },
+              "singleton_90_percent_readers": [
+                "R1"
+              ],
+              "downstream_information_bits": 0.0,
+              "downstream_source_joint_law": [
+                0.8,
+                0.0,
+                0.19999999999999996,
+                0.0
+              ],
+              "source_equal_downstream_probability": 0.8,
+              "all_record_information_bits": 0.7219280948873623
+            }
+          ],
+          "record_pair_information_bits": {
+            "R1:M1": 0.0,
+            "R1:D1": 0.0,
+            "R1:K1": 0.0,
+            "M1:D1": 0.0,
+            "M1:K1": 0.0,
+            "D1:K1": 0.0
+          }
+        }
+      },
+      {
+        "horizon": 10,
+        "choi_size_summary": [
+          {
+            "k": 1,
+            "count": 12,
+            "min_bits": 6.406853007629837e-16,
+            "mean_bits": 1.333333333333331,
+            "max_bits": 1.9999999999999964
+          },
+          {
+            "k": 2,
+            "count": 66,
+            "min_bits": 6.406853007629837e-16,
+            "mean_bits": 2.2727272727272694,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 3,
+            "count": 220,
+            "min_bits": -2.6842776007497065e-15,
+            "mean_bits": 2.909090909090905,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 4,
+            "count": 495,
+            "min_bits": -2.6842776007497065e-15,
+            "mean_bits": 3.3131313131313087,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 5,
+            "count": 792,
+            "min_bits": -2.6842776007497065e-15,
+            "mean_bits": 3.5353535353535306,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 6,
+            "count": 924,
+            "min_bits": -2.6842776007497065e-15,
+            "mean_bits": 3.606060606060601,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 7,
+            "count": 792,
+            "min_bits": -2.6842776007497065e-15,
+            "mean_bits": 3.5353535353535306,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 8,
+            "count": 495,
+            "min_bits": -2.6842776007497065e-15,
+            "mean_bits": 3.3131313131313087,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 9,
+            "count": 220,
+            "min_bits": -2.6842776007497065e-15,
+            "mean_bits": 2.909090909090905,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 10,
+            "count": 66,
+            "min_bits": 6.406853007629837e-16,
+            "mean_bits": 2.2727272727272694,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 11,
+            "count": 12,
+            "min_bits": 6.406853007629837e-16,
+            "mean_bits": 1.333333333333331,
+            "max_bits": 1.9999999999999964
+          }
+        ],
+        "actual_p0_08": {
+          "sources": [
+            {
+              "source": "S1",
+              "source_entropy_bits": 0.7219280948873623,
+              "single_record_information_bits": {
+                "R1": 0.7219280948873623,
+                "M1": 0.0,
+                "D1": 0.0,
+                "K1": 0.0,
+                "R2": 0.0,
+                "M2": 0.0,
+                "D2": 0.0,
+                "K2": 0.0
+              },
+              "singleton_90_percent_readers": [
+                "R1"
+              ],
+              "downstream_information_bits": 0.0,
+              "downstream_source_joint_law": [
+                0.8,
+                0.0,
+                0.19999999999999996,
+                0.0
+              ],
+              "source_equal_downstream_probability": 0.8,
+              "all_record_information_bits": 0.7219280948873625
+            },
+            {
+              "source": "S2",
+              "source_entropy_bits": 0.7219280948873623,
+              "single_record_information_bits": {
+                "R1": 0.0,
+                "M1": 0.0,
+                "D1": 0.0,
+                "K1": 0.0,
+                "R2": 0.7219280948873623,
+                "M2": 0.7219280948873623,
+                "D2": 0.7219280948873623,
+                "K2": 0.0
+              },
+              "singleton_90_percent_readers": [
+                "R2",
+                "M2",
+                "D2"
+              ],
+              "downstream_information_bits": 0.7219280948873623,
+              "downstream_source_joint_law": [
+                0.8,
+                0.0,
+                0.0,
+                0.19999999999999996
+              ],
+              "source_equal_downstream_probability": 1.0,
+              "all_record_information_bits": 0.7219280948873625
+            }
+          ],
+          "record_pair_information_bits": {
+            "R1:M1": 0.0,
+            "R1:D1": 0.0,
+            "R1:K1": 0.0,
+            "R1:R2": 0.0,
+            "R1:M2": 0.0,
+            "R1:D2": 0.0,
+            "R1:K2": 0.0,
+            "M1:D1": 0.0,
+            "M1:K1": 0.0,
+            "M1:R2": 0.0,
+            "M1:M2": 0.0,
+            "M1:D2": 0.0,
+            "M1:K2": 0.0,
+            "D1:K1": 0.0,
+            "D1:R2": 0.0,
+            "D1:M2": 0.0,
+            "D1:D2": 0.0,
+            "D1:K2": 0.0,
+            "K1:R2": 0.0,
+            "K1:M2": 0.0,
+            "K1:D2": 0.0,
+            "K1:K2": 0.0,
+            "R2:M2": 0.7219280948873623,
+            "R2:D2": 0.7219280948873623,
+            "R2:K2": 0.0,
+            "M2:D2": 0.7219280948873623,
+            "M2:K2": 0.0,
+            "D2:K2": 0.0
+          }
+        }
+      }
+    ],
+    "erased": [
+      {
+        "horizon": 5,
+        "choi_size_summary": [
+          {
+            "k": 1,
+            "count": 6,
+            "min_bits": 2.220446049250313e-16,
+            "mean_bits": 0.3333333333333333,
+            "max_bits": 1.0
+          },
+          {
+            "k": 2,
+            "count": 15,
+            "min_bits": 2.220446049250313e-16,
+            "mean_bits": 0.5333333333333333,
+            "max_bits": 1.0
+          },
+          {
+            "k": 3,
+            "count": 20,
+            "min_bits": 2.220446049250313e-16,
+            "mean_bits": 0.6,
+            "max_bits": 1.0
+          },
+          {
+            "k": 4,
+            "count": 15,
+            "min_bits": 2.220446049250313e-16,
+            "mean_bits": 0.5333333333333333,
+            "max_bits": 1.0
+          },
+          {
+            "k": 5,
+            "count": 6,
+            "min_bits": 2.220446049250313e-16,
+            "mean_bits": 0.3333333333333335,
+            "max_bits": 1.0
+          }
+        ],
+        "actual_p0_08": {
+          "sources": [
+            {
+              "source": "S1",
+              "source_entropy_bits": 0.7219280948873623,
+              "single_record_information_bits": {
+                "R1": 0.0,
+                "M1": 0.0,
+                "D1": 0.0,
+                "K1": 0.0
+              },
+              "singleton_90_percent_readers": [],
+              "downstream_information_bits": 0.0,
+              "downstream_source_joint_law": [
+                0.8,
+                0.0,
+                0.19999999999999996,
+                0.0
+              ],
+              "source_equal_downstream_probability": 0.8,
+              "all_record_information_bits": 0.0
+            }
+          ],
+          "record_pair_information_bits": {
+            "R1:M1": 0.0,
+            "R1:D1": 0.0,
+            "R1:K1": 0.0,
+            "M1:D1": 0.0,
+            "M1:K1": 0.0,
+            "D1:K1": 0.0
+          }
+        }
+      },
+      {
+        "horizon": 10,
+        "choi_size_summary": [
+          {
+            "k": 1,
+            "count": 12,
+            "min_bits": 4.440892098500626e-16,
+            "mean_bits": 0.33333333333333365,
+            "max_bits": 1.0000000000000004
+          },
+          {
+            "k": 2,
+            "count": 66,
+            "min_bits": 4.440892098500626e-16,
+            "mean_bits": 0.6060606060606064,
+            "max_bits": 1.9999999999999996
+          },
+          {
+            "k": 3,
+            "count": 220,
+            "min_bits": 4.440892098500626e-16,
+            "mean_bits": 0.8181818181818185,
+            "max_bits": 1.9999999999999996
+          },
+          {
+            "k": 4,
+            "count": 495,
+            "min_bits": 4.440892098500626e-16,
+            "mean_bits": 0.9696969696969698,
+            "max_bits": 1.9999999999999996
+          },
+          {
+            "k": 5,
+            "count": 792,
+            "min_bits": 4.440892098500626e-16,
+            "mean_bits": 1.060606060606061,
+            "max_bits": 1.9999999999999996
+          },
+          {
+            "k": 6,
+            "count": 924,
+            "min_bits": 4.440892098500626e-16,
+            "mean_bits": 1.0909090909090908,
+            "max_bits": 1.9999999999999996
+          },
+          {
+            "k": 7,
+            "count": 792,
+            "min_bits": 4.440892098500626e-16,
+            "mean_bits": 1.060606060606061,
+            "max_bits": 1.9999999999999996
+          },
+          {
+            "k": 8,
+            "count": 495,
+            "min_bits": 4.440892098500626e-16,
+            "mean_bits": 0.9696969696969697,
+            "max_bits": 1.9999999999999996
+          },
+          {
+            "k": 9,
+            "count": 220,
+            "min_bits": 4.440892098500626e-16,
+            "mean_bits": 0.8181818181818185,
+            "max_bits": 1.9999999999999996
+          },
+          {
+            "k": 10,
+            "count": 66,
+            "min_bits": 4.440892098500626e-16,
+            "mean_bits": 0.6060606060606064,
+            "max_bits": 1.9999999999999996
+          },
+          {
+            "k": 11,
+            "count": 12,
+            "min_bits": 4.440892098500626e-16,
+            "mean_bits": 0.33333333333333376,
+            "max_bits": 1.0000000000000004
+          }
+        ],
+        "actual_p0_08": {
+          "sources": [
+            {
+              "source": "S1",
+              "source_entropy_bits": 0.7219280948873623,
+              "single_record_information_bits": {
+                "R1": 0.0,
+                "M1": 0.0,
+                "D1": 0.0,
+                "K1": 0.0,
+                "R2": 0.0,
+                "M2": 0.0,
+                "D2": 0.0,
+                "K2": 0.0
+              },
+              "singleton_90_percent_readers": [],
+              "downstream_information_bits": 0.0,
+              "downstream_source_joint_law": [
+                0.8,
+                0.0,
+                0.19999999999999996,
+                0.0
+              ],
+              "source_equal_downstream_probability": 0.8,
+              "all_record_information_bits": 0.0
+            },
+            {
+              "source": "S2",
+              "source_entropy_bits": 0.7219280948873623,
+              "single_record_information_bits": {
+                "R1": 0.0,
+                "M1": 0.0,
+                "D1": 0.0,
+                "K1": 0.0,
+                "R2": 0.0,
+                "M2": 0.0,
+                "D2": 0.0,
+                "K2": 0.0
+              },
+              "singleton_90_percent_readers": [],
+              "downstream_information_bits": 0.0,
+              "downstream_source_joint_law": [
+                0.8,
+                0.0,
+                0.19999999999999996,
+                0.0
+              ],
+              "source_equal_downstream_probability": 0.8,
+              "all_record_information_bits": 0.0
+            }
+          ],
+          "record_pair_information_bits": {
+            "R1:M1": 0.0,
+            "R1:D1": 0.0,
+            "R1:K1": 0.0,
+            "R1:R2": 0.0,
+            "R1:M2": 0.0,
+            "R1:D2": 0.0,
+            "R1:K2": 0.0,
+            "M1:D1": 0.0,
+            "M1:K1": 0.0,
+            "M1:R2": 0.0,
+            "M1:M2": 0.0,
+            "M1:D2": 0.0,
+            "M1:K2": 0.0,
+            "D1:K1": 0.0,
+            "D1:R2": 0.0,
+            "D1:M2": 0.0,
+            "D1:D2": 0.0,
+            "D1:K2": 0.0,
+            "K1:R2": 0.0,
+            "K1:M2": 0.0,
+            "K1:D2": 0.0,
+            "K1:K2": 0.0,
+            "R2:M2": 0.0,
+            "R2:D2": 0.0,
+            "R2:K2": 0.0,
+            "M2:D2": 0.0,
+            "M2:K2": 0.0,
+            "D2:K2": 0.0
+          }
+        }
+      }
+    ],
+    "cycling": [
+      {
+        "horizon": 5,
+        "choi_size_summary": [
+          {
+            "k": 1,
+            "count": 6,
+            "min_bits": 3.2034265038149176e-16,
+            "mean_bits": 1.3333333333333333,
+            "max_bits": 1.9999999999999998
+          },
+          {
+            "k": 2,
+            "count": 15,
+            "min_bits": 3.2034265038149176e-16,
+            "mean_bits": 1.8666666666666665,
+            "max_bits": 1.9999999999999998
+          },
+          {
+            "k": 3,
+            "count": 20,
+            "min_bits": 1.9999999999999998,
+            "mean_bits": 1.9999999999999996,
+            "max_bits": 1.9999999999999998
+          },
+          {
+            "k": 4,
+            "count": 15,
+            "min_bits": 3.2034265038149176e-16,
+            "mean_bits": 1.8666666666666667,
+            "max_bits": 1.9999999999999998
+          },
+          {
+            "k": 5,
+            "count": 6,
+            "min_bits": 3.2034265038149176e-16,
+            "mean_bits": 1.3333333333333333,
+            "max_bits": 1.9999999999999998
+          }
+        ],
+        "actual_p0_08": {
+          "sources": [
+            {
+              "source": "S1",
+              "source_entropy_bits": 0.7219280948873623,
+              "single_record_information_bits": {
+                "R1": 0.7219280948873623,
+                "M1": 0.7219280948873623,
+                "D1": 0.0,
+                "K1": 0.0
+              },
+              "singleton_90_percent_readers": [
+                "R1",
+                "M1"
+              ],
+              "downstream_information_bits": 0.0,
+              "downstream_source_joint_law": [
+                0.8,
+                0.0,
+                0.19999999999999996,
+                0.0
+              ],
+              "source_equal_downstream_probability": 0.8,
+              "all_record_information_bits": 0.7219280948873623
+            }
+          ],
+          "record_pair_information_bits": {
+            "R1:M1": 0.7219280948873623,
+            "R1:D1": 0.0,
+            "R1:K1": 0.0,
+            "M1:D1": 0.0,
+            "M1:K1": 0.0,
+            "D1:K1": 0.0
+          }
+        }
+      },
+      {
+        "horizon": 10,
+        "choi_size_summary": [
+          {
+            "k": 1,
+            "count": 12,
+            "min_bits": 6.406853007629837e-16,
+            "mean_bits": 1.333333333333331,
+            "max_bits": 1.9999999999999964
+          },
+          {
+            "k": 2,
+            "count": 66,
+            "min_bits": 6.406853007629837e-16,
+            "mean_bits": 2.3030303030302997,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 3,
+            "count": 220,
+            "min_bits": 6.406853007629837e-16,
+            "mean_bits": 2.9818181818181775,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 4,
+            "count": 495,
+            "min_bits": -2.6842776007497065e-15,
+            "mean_bits": 3.4262626262626217,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 5,
+            "count": 792,
+            "min_bits": -2.6842776007497065e-15,
+            "mean_bits": 3.676767676767672,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 6,
+            "count": 924,
+            "min_bits": -2.6842776007497065e-15,
+            "mean_bits": 3.7575757575757525,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 7,
+            "count": 792,
+            "min_bits": -2.6842776007497065e-15,
+            "mean_bits": 3.676767676767672,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 8,
+            "count": 495,
+            "min_bits": -2.6842776007497065e-15,
+            "mean_bits": 3.4262626262626217,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 9,
+            "count": 220,
+            "min_bits": 6.406853007629837e-16,
+            "mean_bits": 2.9818181818181784,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 10,
+            "count": 66,
+            "min_bits": 6.406853007629837e-16,
+            "mean_bits": 2.3030303030302997,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 11,
+            "count": 12,
+            "min_bits": 6.406853007629837e-16,
+            "mean_bits": 1.3333333333333313,
+            "max_bits": 1.9999999999999964
+          }
+        ],
+        "actual_p0_08": {
+          "sources": [
+            {
+              "source": "S1",
+              "source_entropy_bits": 0.7219280948873623,
+              "single_record_information_bits": {
+                "R1": 0.7219280948873623,
+                "M1": 0.7219280948873623,
+                "D1": 0.0,
+                "K1": 0.0,
+                "R2": 0.0,
+                "M2": 0.0,
+                "D2": 0.0,
+                "K2": 0.0
+              },
+              "singleton_90_percent_readers": [
+                "R1",
+                "M1"
+              ],
+              "downstream_information_bits": 0.0,
+              "downstream_source_joint_law": [
+                0.8,
+                0.0,
+                0.19999999999999996,
+                0.0
+              ],
+              "source_equal_downstream_probability": 0.8,
+              "all_record_information_bits": 0.7219280948873625
+            },
+            {
+              "source": "S2",
+              "source_entropy_bits": 0.7219280948873623,
+              "single_record_information_bits": {
+                "R1": 0.0,
+                "M1": 0.0,
+                "D1": 0.0,
+                "K1": 0.0,
+                "R2": 0.7219280948873623,
+                "M2": 0.7219280948873623,
+                "D2": 0.0,
+                "K2": 0.0
+              },
+              "singleton_90_percent_readers": [
+                "R2",
+                "M2"
+              ],
+              "downstream_information_bits": 0.0,
+              "downstream_source_joint_law": [
+                0.8,
+                0.0,
+                0.19999999999999996,
+                0.0
+              ],
+              "source_equal_downstream_probability": 0.8,
+              "all_record_information_bits": 0.7219280948873625
+            }
+          ],
+          "record_pair_information_bits": {
+            "R1:M1": 0.7219280948873623,
+            "R1:D1": 0.0,
+            "R1:K1": 0.0,
+            "R1:R2": 0.0,
+            "R1:M2": 0.0,
+            "R1:D2": 0.0,
+            "R1:K2": 0.0,
+            "M1:D1": 0.0,
+            "M1:K1": 0.0,
+            "M1:R2": 0.0,
+            "M1:M2": 0.0,
+            "M1:D2": 0.0,
+            "M1:K2": 0.0,
+            "D1:K1": 0.0,
+            "D1:R2": 0.0,
+            "D1:M2": 0.0,
+            "D1:D2": 0.0,
+            "D1:K2": 0.0,
+            "K1:R2": 0.0,
+            "K1:M2": 0.0,
+            "K1:D2": 0.0,
+            "K1:K2": 0.0,
+            "R2:M2": 0.7219280948873623,
+            "R2:D2": 0.0,
+            "R2:K2": 0.0,
+            "M2:D2": 0.0,
+            "M2:K2": 0.0,
+            "D2:K2": 0.0
+          }
+        }
+      }
+    ],
+    "photocopier": [
+      {
+        "horizon": 5,
+        "choi_size_summary": [
+          {
+            "k": 1,
+            "count": 6,
+            "min_bits": 1.9999999999999998,
+            "mean_bits": 1.9999999999999998,
+            "max_bits": 1.9999999999999998
+          },
+          {
+            "k": 2,
+            "count": 15,
+            "min_bits": 1.9999999999999998,
+            "mean_bits": 1.9999999999999998,
+            "max_bits": 1.9999999999999998
+          },
+          {
+            "k": 3,
+            "count": 20,
+            "min_bits": 1.9999999999999998,
+            "mean_bits": 1.9999999999999996,
+            "max_bits": 1.9999999999999998
+          },
+          {
+            "k": 4,
+            "count": 15,
+            "min_bits": 1.9999999999999998,
+            "mean_bits": 1.9999999999999998,
+            "max_bits": 1.9999999999999998
+          },
+          {
+            "k": 5,
+            "count": 6,
+            "min_bits": 1.9999999999999998,
+            "mean_bits": 1.9999999999999998,
+            "max_bits": 1.9999999999999998
+          }
+        ],
+        "actual_p0_08": {
+          "sources": [
+            {
+              "source": "S1",
+              "source_entropy_bits": 0.7219280948873623,
+              "single_record_information_bits": {
+                "R1": 0.7219280948873623,
+                "M1": 0.7219280948873623,
+                "D1": 0.7219280948873623,
+                "K1": 0.7219280948873623
+              },
+              "singleton_90_percent_readers": [
+                "R1",
+                "M1",
+                "D1",
+                "K1"
+              ],
+              "downstream_information_bits": 0.7219280948873623,
+              "downstream_source_joint_law": [
+                0.8,
+                0.0,
+                0.0,
+                0.19999999999999996
+              ],
+              "source_equal_downstream_probability": 1.0,
+              "all_record_information_bits": 0.7219280948873623
+            }
+          ],
+          "record_pair_information_bits": {
+            "R1:M1": 0.7219280948873623,
+            "R1:D1": 0.7219280948873623,
+            "R1:K1": 0.7219280948873623,
+            "M1:D1": 0.7219280948873623,
+            "M1:K1": 0.7219280948873623,
+            "D1:K1": 0.7219280948873623
+          }
+        }
+      },
+      {
+        "horizon": 10,
+        "choi_size_summary": [
+          {
+            "k": 1,
+            "count": 12,
+            "min_bits": 1.9999999999999964,
+            "mean_bits": 1.9999999999999964,
+            "max_bits": 1.9999999999999964
+          },
+          {
+            "k": 2,
+            "count": 66,
+            "min_bits": 1.9999999999999964,
+            "mean_bits": 3.0909090909090864,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 3,
+            "count": 220,
+            "min_bits": 1.9999999999999964,
+            "mean_bits": 3.636363636363632,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 4,
+            "count": 495,
+            "min_bits": 1.9999999999999964,
+            "mean_bits": 3.878787878787873,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 5,
+            "count": 792,
+            "min_bits": 1.9999999999999964,
+            "mean_bits": 3.969696969696964,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 6,
+            "count": 924,
+            "min_bits": -2.6842776007497065e-15,
+            "mean_bits": 3.9913419913419856,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 7,
+            "count": 792,
+            "min_bits": 1.9999999999999964,
+            "mean_bits": 3.969696969696964,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 8,
+            "count": 495,
+            "min_bits": 1.9999999999999964,
+            "mean_bits": 3.878787878787873,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 9,
+            "count": 220,
+            "min_bits": 1.9999999999999964,
+            "mean_bits": 3.6363636363636314,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 10,
+            "count": 66,
+            "min_bits": 1.9999999999999964,
+            "mean_bits": 3.0909090909090864,
+            "max_bits": 3.999999999999995
+          },
+          {
+            "k": 11,
+            "count": 12,
+            "min_bits": 1.9999999999999964,
+            "mean_bits": 1.9999999999999964,
+            "max_bits": 1.9999999999999964
+          }
+        ],
+        "actual_p0_08": {
+          "sources": [
+            {
+              "source": "S1",
+              "source_entropy_bits": 0.7219280948873623,
+              "single_record_information_bits": {
+                "R1": 0.7219280948873623,
+                "M1": 0.7219280948873623,
+                "D1": 0.7219280948873623,
+                "K1": 0.7219280948873623,
+                "R2": 0.0,
+                "M2": 0.0,
+                "D2": 0.0,
+                "K2": 0.0
+              },
+              "singleton_90_percent_readers": [
+                "R1",
+                "M1",
+                "D1",
+                "K1"
+              ],
+              "downstream_information_bits": 0.7219280948873623,
+              "downstream_source_joint_law": [
+                0.8,
+                0.0,
+                0.0,
+                0.19999999999999996
+              ],
+              "source_equal_downstream_probability": 1.0,
+              "all_record_information_bits": 0.7219280948873625
+            },
+            {
+              "source": "S2",
+              "source_entropy_bits": 0.7219280948873623,
+              "single_record_information_bits": {
+                "R1": 0.0,
+                "M1": 0.0,
+                "D1": 0.0,
+                "K1": 0.0,
+                "R2": 0.7219280948873623,
+                "M2": 0.7219280948873623,
+                "D2": 0.7219280948873623,
+                "K2": 0.7219280948873623
+              },
+              "singleton_90_percent_readers": [
+                "R2",
+                "M2",
+                "D2",
+                "K2"
+              ],
+              "downstream_information_bits": 0.7219280948873623,
+              "downstream_source_joint_law": [
+                0.8,
+                0.0,
+                0.0,
+                0.19999999999999996
+              ],
+              "source_equal_downstream_probability": 1.0,
+              "all_record_information_bits": 0.7219280948873625
+            }
+          ],
+          "record_pair_information_bits": {
+            "R1:M1": 0.7219280948873623,
+            "R1:D1": 0.7219280948873623,
+            "R1:K1": 0.7219280948873623,
+            "R1:R2": 0.0,
+            "R1:M2": 0.0,
+            "R1:D2": 0.0,
+            "R1:K2": 0.0,
+            "M1:D1": 0.7219280948873623,
+            "M1:K1": 0.7219280948873623,
+            "M1:R2": 0.0,
+            "M1:M2": 0.0,
+            "M1:D2": 0.0,
+            "M1:K2": 0.0,
+            "D1:K1": 0.7219280948873623,
+            "D1:R2": 0.0,
+            "D1:M2": 0.0,
+            "D1:D2": 0.0,
+            "D1:K2": 0.0,
+            "K1:R2": 0.0,
+            "K1:M2": 0.0,
+            "K1:D2": 0.0,
+            "K1:K2": 0.0,
+            "R2:M2": 0.7219280948873623,
+            "R2:D2": 0.7219280948873623,
+            "R2:K2": 0.7219280948873623,
+            "M2:D2": 0.7219280948873623,
+            "M2:K2": 0.7219280948873623,
+            "D2:K2": 0.7219280948873623
+          }
+        }
+      }
+    ],
+    "common_delay": [
+      {
+        "horizon": 5,
+        "choi_size_summary": [
+          {
+            "k": 1,
+            "count": 6,
+            "min_bits": 0.5827831343002576,
+            "mean_bits": 1.687447387201597,
+            "max_bits": 1.9999999999999973
+          },
+          {
+            "k": 2,
+            "count": 15,
+            "min_bits": 1.770950594454666,
+            "mean_bits": 2.214772368123761,
+            "max_bits": 2.360964047443679
+          },
+          {
+            "k": 3,
+            "count": 20,
+            "min_bits": 1.770950594454666,
+            "mean_bits": 2.3019627021447775,
+            "max_bits": 2.360964047443679
+          },
+          {
+            "k": 4,
+            "count": 15,
+            "min_bits": 1.770950594454666,
+            "mean_bits": 2.2147723681237608,
+            "max_bits": 2.360964047443679
+          },
+          {
+            "k": 5,
+            "count": 6,
+            "min_bits": 0.5827831343002576,
+            "mean_bits": 1.687447387201597,
+            "max_bits": 1.9999999999999973
+          }
+        ],
+        "actual_p0_08": {
+          "sources": [
+            {
+              "source": "S1",
+              "source_entropy_bits": 0.7219280948873621,
+              "single_record_information_bits": {
+                "R1": 0.7219280948873621,
+                "M1": 0.4899239356630931,
+                "D1": 0.4899239356630931,
+                "K1": -2.220446049250313e-16
+              },
+              "singleton_90_percent_readers": [
+                "R1"
+              ],
+              "downstream_information_bits": 0.4899239356630931,
+              "downstream_source_joint_law": [
+                0.8000000000000002,
+                0.0,
+                0.039999999999999994,
+                0.15999999999999998
+              ],
+              "source_equal_downstream_probability": 0.9600000000000002,
+              "all_record_information_bits": 0.7219280948873621
+            }
+          ],
+          "record_pair_information_bits": {
+            "R1:M1": 0.4899239356630931,
+            "R1:D1": 0.4899239356630931,
+            "R1:K1": -2.220446049250313e-16,
+            "M1:D1": 0.6343095546405657,
+            "M1:K1": 0.05676707873067599,
+            "D1:K1": 0.05676707873067599
+          }
+        }
+      },
+      {
+        "horizon": 10,
+        "choi_size_summary": [
+          {
+            "k": 1,
+            "count": 12,
+            "min_bits": 0.7219280948873579,
+            "mean_bits": 1.7106382139661116,
+            "max_bits": 1.9999999999999931
+          },
+          {
+            "k": 2,
+            "count": 66,
+            "min_bits": 0.6882601183269188,
+            "mean_bits": 2.896051686171405,
+            "max_bits": 3.999999999999992
+          },
+          {
+            "k": 3,
+            "count": 220,
+            "min_bits": 1.7709505944546622,
+            "mean_bits": 3.665838101021365,
+            "max_bits": 4.721928094887354
+          },
+          {
+            "k": 4,
+            "count": 495,
+            "min_bits": 2.1009792502043165,
+            "mean_bits": 4.125807536253039,
+            "max_bits": 4.721928094887354
+          },
+          {
+            "k": 5,
+            "count": 792,
+            "min_bits": 0.5827831343002545,
+            "mean_bits": 4.364278776675466,
+            "max_bits": 4.721928094887354
+          },
+          {
+            "k": 6,
+            "count": 924,
+            "min_bits": 0.7219280948873588,
+            "mean_bits": 4.437469194691306,
+            "max_bits": 4.721928094887354
+          },
+          {
+            "k": 7,
+            "count": 792,
+            "min_bits": 0.5827831343002545,
+            "mean_bits": 4.364278776675466,
+            "max_bits": 4.721928094887354
+          },
+          {
+            "k": 8,
+            "count": 495,
+            "min_bits": 2.1009792502043165,
+            "mean_bits": 4.125807536253039,
+            "max_bits": 4.721928094887354
+          },
+          {
+            "k": 9,
+            "count": 220,
+            "min_bits": 1.7709505944546622,
+            "mean_bits": 3.665838101021366,
+            "max_bits": 4.721928094887354
+          },
+          {
+            "k": 10,
+            "count": 66,
+            "min_bits": 0.6882601183269188,
+            "mean_bits": 2.896051686171405,
+            "max_bits": 3.999999999999992
+          },
+          {
+            "k": 11,
+            "count": 12,
+            "min_bits": 0.7219280948873579,
+            "mean_bits": 1.7106382139661112,
+            "max_bits": 1.9999999999999931
+          }
+        ],
+        "actual_p0_08": {
+          "sources": [
+            {
+              "source": "S1",
+              "source_entropy_bits": 0.7219280948873622,
+              "single_record_information_bits": {
+                "R1": 0.7219280948873622,
+                "M1": 0.48992393566309334,
+                "D1": 0.48992393566309334,
+                "K1": 0.0,
+                "R2": -2.220446049250313e-16,
+                "M2": -2.220446049250313e-16,
+                "D2": -2.220446049250313e-16,
+                "K2": 0.0
+              },
+              "singleton_90_percent_readers": [
+                "R1"
+              ],
+              "downstream_information_bits": 0.48992393566309334,
+              "downstream_source_joint_law": [
+                0.8000000000000002,
+                0.0,
+                0.039999999999999994,
+                0.15999999999999998
+              ],
+              "source_equal_downstream_probability": 0.9600000000000002,
+              "all_record_information_bits": 0.7219280948873621
+            },
+            {
+              "source": "S2",
+              "source_entropy_bits": 0.7219280948873622,
+              "single_record_information_bits": {
+                "R1": -2.220446049250313e-16,
+                "M1": -2.220446049250313e-16,
+                "D1": -2.220446049250313e-16,
+                "K1": 0.0,
+                "R2": 0.7219280948873622,
+                "M2": 0.48992393566309334,
+                "D2": 0.48992393566309334,
+                "K2": 0.0
+              },
+              "singleton_90_percent_readers": [
+                "R2"
+              ],
+              "downstream_information_bits": 0.48992393566309334,
+              "downstream_source_joint_law": [
+                0.8000000000000002,
+                0.0,
+                0.039999999999999994,
+                0.15999999999999998
+              ],
+              "source_equal_downstream_probability": 0.9600000000000002,
+              "all_record_information_bits": 0.7219280948873621
+            }
+          ],
+          "record_pair_information_bits": {
+            "R1:M1": 0.48992393566309334,
+            "R1:D1": 0.48992393566309334,
+            "R1:K1": 0.0,
+            "R1:R2": -2.220446049250313e-16,
+            "R1:M2": -2.220446049250313e-16,
+            "R1:D2": -2.220446049250313e-16,
+            "R1:K2": 0.0,
+            "M1:D1": 0.6343095546405657,
+            "M1:K1": 0.05676707873067599,
+            "M1:R2": -2.220446049250313e-16,
+            "M1:M2": 0.0015570274671197204,
+            "M1:D2": 0.0015570274671197204,
+            "M1:K2": 0.05676707873067599,
+            "D1:K1": 0.05676707873067599,
+            "D1:R2": -2.220446049250313e-16,
+            "D1:M2": 0.0015570274671197204,
+            "D1:D2": 0.0015570274671197204,
+            "D1:K2": 0.05676707873067599,
+            "K1:R2": 0.0,
+            "K1:M2": 0.05676707873067599,
+            "K1:D2": 0.05676707873067599,
+            "K1:K2": 0.7219280948873623,
+            "R2:M2": 0.48992393566309334,
+            "R2:D2": 0.48992393566309334,
+            "R2:K2": 0.0,
+            "M2:D2": 0.6343095546405657,
+            "M2:K2": 0.05676707873067599,
+            "D2:K2": 0.05676707873067599
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "channel-extension-engineering-r1",
+  "status": "frozen_engineering_checks_only",
+  "date": "2026-10-13",
+  "scope": "one fixed controller, small engineering checks and a single larger exponential timing pilot; no optimization",
+  "controller": [[1,0],[0.75,0.25],[1,0],[0.75,0.25]],
+  "cadence": 0.25,
+  "damage_arms": {
+    "uniform_absorbing": {"mode":"absorbing","rate":0.04,"energy":-6,"exposure":[1,1,1]},
+    "worn_absorbing": {"mode":"absorbing","rate":0.04,"energy":-6,"exposure":[0,1,0]},
+    "worn_reversible": {"mode":"reversible","rate":0.04,"energy":-6,"exposure":[0,1,0]}
+  },
+  "max_dense_bytes": 805306368,
+  "limits": {"wall_seconds":120,"memory_mib":1024,"output_mib":256,"numeric_threads":1},
+  "scientific_verdict": "not evaluated"
+}

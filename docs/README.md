@@ -1,10 +1,20 @@
 # Omega Docs Front Door
 
+**Current full manuscript:** [Omega Cosmology v4](cosmology/v4/README.md),
+9 October 2026. [Complete reading edition](cosmology/v4/OMEGA_COSMOLOGY_V4_COMPLETE.md).
+
+**Current quantum research entry point, 2026-10-09:**
+[Quantum continuation foundation](quantum/README.md). Read this for the working
+formalism, evidence ledger, effective-breadth/QFT pivots and the next audit in
+support of v4. The decision-stack and closeout navigation below describes
+earlier project phases; it does not replace the current field-first programme.
+
 Status: current documentation navigation surface
 Scope: first-contact docs, current theorem spine, retained empirical results, and branch-control notes
 Claim boundary: navigation only; not theorem closure, empirical validation, value, agency, identity, moral standing, or Omega validation
 
-This page is the current docs entry point. Older notes remain in the tree for provenance, but the live path now runs through the decision/corridor/adaptive-learning stack rather than the early Future Field Atlas or proto-teleology framing.
+The navigation below preserves the earlier decision/corridor/adaptive-learning
+phase and its provenance. The current quantum path is linked above.
 
 Closure status: Omega is being closed as the lab notebook and provenance
 archive for the successor spine. Start with
