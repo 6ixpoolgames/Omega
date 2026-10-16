@@ -85,7 +85,7 @@ def main():
               'mechanism of private gain and materially profitable appropriation, not the first existence '
               'of a subject conflict. Apparatus channels remain functional controller proxies rather than '
               'established conscious valuers. Discovery, bilateral choice and self-defence are separate expansions.', '']
-    (DOC/'UPDATED_FOLLOWUPS.md').write_text('\n'.join(lines), encoding='utf-8')
+    (DOC/'UPDATED_FOLLOWUPS.md').write_text('> **Updated interpretation, 16 October 2026:** Historical `native_events` steering may redirect into chemistry. Exit/all steering is not mobility evidence; B1 also intercepted pocket returns. See [the audit correction](../C5_AUDIT_CORRECTIONS_2026-10-16.md) before using these rows. Original numerical results are retained.\n\n'+ '\n'.join(lines), encoding='utf-8')
     summary = {'S_whole_opposing_rows': len(disagreement), 'crossing_statuses': dict(statuses),
                'stable_brackets': len(stable), 'fuel_branch_comparisons_at_T256': sum(map(len,grouped_fuel.values()))}
     (DOC/'FOLLOWUP_SUMMARY.json').write_text(json.dumps(summary,indent=2)+'\n', encoding='utf-8')

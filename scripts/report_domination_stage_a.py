@@ -280,7 +280,7 @@ def main(mode='survey'):
                      f"{max(r['global_delta'] for r in points):+.3f} | "
                      f"{sum(r['D_sign'] != 0 for r in points)}/{len(points)} | "
                      f"{sum(r['S_sign'] == 1 for r in points)} / {sum(r['S_sign'] == -1 for r in points)} |")
-    (DOC/'RESULTS.md').write_text(f'''# Constraint Stage A — numerical map
+    (DOC/'RESULTS.md').write_text('> **Updated interpretation, 16 October 2026:** Historical `native_events` steering may redirect into chemistry. Exit/all steering is not mobility evidence; B1 also intercepted pocket returns. See [the audit correction](../C5_AUDIT_CORRECTIONS_2026-10-16.md) before using these rows. Original numerical results are retained.\n\n'+ f'''# Constraint Stage A — numerical map
 
 Status: **{status['status']}**. {len(loaded)}/{status['total']} cases retained;
 {len(rows)} case/horizon/cadence comparisons. Complete finite-history lushness is

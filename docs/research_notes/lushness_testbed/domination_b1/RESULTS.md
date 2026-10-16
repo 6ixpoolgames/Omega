@@ -1,5 +1,7 @@
 # Fractional-cost control and paid discovery
 
+> **Updated interpretation, 16 October 2026:** Historical `native_events` steering may redirect into chemistry. Exit/all steering is not mobility evidence; B1 also intercepted pocket returns. See [the audit correction](../C5_AUDIT_CORRECTIONS_2026-10-16.md) before using these rows. Original numerical results are retained.
+
 **COMPLETE: 28/28 distinct cases completed.**
 
 All comparisons use the 29,760-state adapter with the same bank capacity, energy grid, source, bath and preparation within each context. Finite physical-history lushness is primary; stationary rate, activity and stocks are explanatory readouts. The main map varies pocket yield, intervention bill and strength. The C5 companion varies the bill for resource-entry exclusion at κ=0, with the same shared-resource coupling.

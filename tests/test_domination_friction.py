@@ -46,7 +46,7 @@ def test_friction_is_embodied_and_native_processes_survive(mode, missing):
 
 @pytest.mark.parametrize('direction,loc', [('entry', BUILD), ('exit', TRAP)])
 def test_steering_matches_local_S_exit_rate_and_debits_each_intervention(direction, loc):
-    policy = FrictionPolicy(mode='steering', direction=direction,
+    policy = FrictionPolicy(mode='steering', steering_scope='native_events', direction=direction,
                             region=(ACCESS,) if direction == 'entry' else (TRAP,), cost=1)
     p = FrictionParameters()
     state = (1, ACCESS, 1, 2, loc, 1, 1, 1)
@@ -89,7 +89,7 @@ def test_dark_chemistry_obeys_canonical_detailed_balance_even_with_complementari
 
 def test_energy_ledgers_and_redirected_functional_reactions_are_retained():
     c = compile_world(build_world(policy=FrictionPolicy(
-        mode='steering', direction='exit', region=(TRAP,), cost=2)))
+        mode='steering', steering_scope='native_events', direction='exit', region=(TRAP,), cost=2)))
     assert max(abs(c['Q'] @ c['energy']-c['flows']['drive_work']
                    +c['flows']['bath_heat'])) < 1e-10
     s = (1, ACCESS, 1, 2, TRAP, 1, 1, 1)
@@ -125,7 +125,7 @@ def test_policy_validation_cap_and_idle_aliases():
         build_world(max_states=2303)
     a = compile_world(build_world(FrictionParameters(charge_capacity=1), FrictionPolicy(phi=0)))
     b = compile_world(build_world(FrictionParameters(charge_capacity=1),
-                                 FrictionPolicy(mode='steering', region=(TRAP,), phi=0)))
+                                 FrictionPolicy(mode='steering', steering_scope='native_events', region=(TRAP,), phi=0)))
     assert (a['Q']-b['Q']).nnz == 0
 
 

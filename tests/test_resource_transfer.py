@@ -77,5 +77,5 @@ def test_contact_prepayment_caps_and_stoichiometry():
 def test_bad_grids_and_invalid_costs_fail_instead_of_rounding():
     with pytest.raises(ValueError): build_world(parameters(), TransferPolicy(cost=.3))
     with pytest.raises(ValueError): TransferPolicy(cost=0)
-    with pytest.raises(ValueError): TransferPolicy(cost=1)
+    with pytest.raises(ValueError): TransferPolicy(cost=-1)
     with pytest.raises(RuntimeError): build_world(parameters(), TransferPolicy(), max_states=100)

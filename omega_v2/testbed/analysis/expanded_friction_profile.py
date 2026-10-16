@@ -24,7 +24,7 @@ def profile(world, compiled, roots, cadences, horizons, block_rows=32, progress=
             entropy_backend='exponential', entropy_threads=1, entropy_cache=None):
     states, Q = compiled['states'], compiled['Q']
     progress('stationarity')
-    solver = StreamedQueries(Q)
+    solver = StreamedQueries(Q,allow_transients=world.metadata.get('allow_transients',False))
     roots = {k: compiled['index'][tuple(v)] for k, v in roots.items()}
     result = {'states': len(states), 'metadata': compiled['metadata'], 'cadences': {},
               'physical': {}, 'subject_bounds_can_be_unresolved': True,
@@ -44,8 +44,10 @@ def profile(world, compiled, roots, cadences, horizons, block_rows=32, progress=
             ledger = {k: float(occupation @ v) for k, v in compiled['flows'].items()}
             deadline = {k: float(endpoint @ v) for k, v in compiled['observables'].items()}
             average = {k: float(occupation @ v/time) for k, v in compiled['observables'].items()}
+            arrival_keys=['S.access','S.construction','S.trap','S.discovered']+[
+                k for k in ('S.access_device','S.lost_material') if k in compiled['observables']]
             arrivals = {k: first_passage(Q, initial, compiled['observables'][k] > 0, time)
-                        for k in ('S.access', 'S.construction', 'S.trap', 'S.discovered')}
+                        for k in arrival_keys}
             result['physical'][name][str(time)] = {
                 'ledger': ledger, 'deadline': deadline, 'average': average,
                 'first_passage': arrivals, 'occupation_residual': residual,
@@ -70,11 +72,19 @@ def profile(world, compiled, roots, cadences, horizons, block_rows=32, progress=
     for cadence in cadences:
         sampled = solver.sampled(cadence, block_rows, entropy[cadence])
         progress(f'subject projections dt{cadence}')
-        projections = {subject: projection_future(Q, states, fields, cadence)
-                       for subject, fields in (('D', D_FIELDS), ('S', S_FIELDS), ('background', B_FIELDS))}
+        subjects=world.metadata.get('subjects',{'D':D_FIELDS,'S':S_FIELDS,'background':B_FIELDS})
+        projections = {subject: projection_future(Q, states, subjects[subject], cadence)
+                       for subject in ('D','S','background')}
         row = {'profiles': {}, 'limiting_rate': sampled['rate'],
                'poisson_residual': sampled['poisson_residual'],
                'kernel_diagnostics': sampled['diagnostics']}
+        row['subject_rate_bounds']={}
+        for subject in ('D','S'):
+            bounds=projection_bounds(*projections[subject],solver.pi,sampled['rate']*cadence)
+            row['subject_rate_bounds'][subject]={
+                'lower_bits_per_time':bounds['lower_bits']/cadence,
+                'upper_bits_per_time':bounds['upper_bits']/cadence,
+                'method':'stationary HMM conditioning bounds, not projected Markov entropy'}
         for name, root in roots.items():
             row['profiles'][name] = {}
             for time in horizons:

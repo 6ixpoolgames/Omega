@@ -73,7 +73,7 @@ def plan(mode):
         for cost in (.1, .3, 1.):
             for phi in (.55, .95):
                 cases.append(dict(id=f'{prefix}-trap-c{cost:g}-p{phi:g}', parameters=base,
-                    policy={'mode': 'steering', 'direction': 'entry', 'region': [2], 'phi': phi, 'cost': cost}))
+                    policy={'steering_scope':'native_events','mode': 'steering', 'direction': 'entry', 'region': [2], 'phi': phi, 'cost': cost}))
     base = {'discovery': True, 'opportunity_yield': 1, 'kappa': 0,
             'd_energy_capacity': 3, 'd_energy_quantum': .1}
     cases.append(dict(id='exclusion-idle', parameters=base, policy={'phi': 0}))

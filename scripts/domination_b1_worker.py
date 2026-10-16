@@ -18,7 +18,11 @@ def main(out):
     start = perf_counter()
     progress = lambda stage: print(json.dumps({'stage': stage, 'seconds': perf_counter()-start}), flush=True)
     parameters = FrictionParameters(**config['parameters'])
-    if 'transfer_policy' in config:
+    if 'extension' in config:
+        from omega_v2.testbed.physical_extensions import ExtensionSpec,build_world as extended_world,root as extended_root
+        world=extended_world(parameters,ExtensionSpec(**config['extension']),
+            FrictionPolicy(**config.get('policy',{'phi':0,'cost':0})),max_states=32000)
+    elif 'transfer_policy' in config:
         from omega_v2.testbed.resource_transfer import TransferPolicy, build_world as transfer_world
         world = transfer_world(parameters, TransferPolicy(**config['transfer_policy']), max_states=32000)
     else:
@@ -30,6 +34,8 @@ def main(out):
     if any(not Path(x).is_relative_to(source) for x in imports.values()):
         raise RuntimeError('Source escaped immutable snapshot')
     roots = {'device_present': matched_roots(parameters)['device_present']}
+    if 'extension' in config:
+        roots={'device_present':extended_root(world,parameters,config.get('preparation','balanced'))}
     cache=config.get('entropy_cache')
     if cache is not None:
         repository=out.parents[4]
@@ -40,7 +46,7 @@ def main(out):
             raise RuntimeError('Run root escaped declared local testbed')
         if not Path(cache).resolve().is_relative_to(allowed.resolve()):
             raise RuntimeError('Query cache must stay inside the declared local run root')
-    if len(world.states) <= 4000 and 'transfer_policy' not in config:
+    if len(world.states) <= 4000 and 'transfer_policy' not in config and 'extension' not in config:
         from omega_v2.testbed.analysis.friction_profile import profile as dense_profile
         from omega_v2.testbed.analysis.friction_attribution import activity_rows, integrate
         from omega_v2.testbed.analysis.class_queries import occupation_distribution
@@ -58,10 +64,10 @@ def main(out):
                          config.get('block_rows', 32), progress,
                          entropy_backend=config.get('entropy_backend', 'exponential'),
                          entropy_threads=config.get('entropy_threads', 1),entropy_cache=cache)
-    if 'transfer_policy' in config:
+    if 'D.owned_energy' in world.observables:
         from omega_v2.testbed.analysis.streamed_history import StreamedQueries
         import numpy as np
-        solver = StreamedQueries(compiled['Q'])
+        solver = StreamedQueries(compiled['Q'],allow_transients=world.metadata.get('allow_transients',False))
         result['stationary_ledger'] = {k: float(solver.pi @ v) for k, v in compiled['flows'].items()}
         result['stationary_observables'] = {k: float(solver.pi @ v) for k, v in compiled['observables'].items()}
         result['owned_energy_validation'] = {}

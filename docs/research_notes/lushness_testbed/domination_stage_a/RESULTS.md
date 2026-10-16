@@ -1,5 +1,7 @@
 # Constraint Stage A — numerical map
 
+> **Updated interpretation, 16 October 2026:** Historical `native_events` steering may redirect into chemistry. Exit/all steering is not mobility evidence; B1 also intercepted pocket returns. See [the audit correction](../C5_AUDIT_CORRECTIONS_2026-10-16.md) before using these rows. Original numerical results are retained.
+
 Status: **complete**. 470/470 cases retained;
 5592 case/horizon/cadence comparisons. Complete finite-history lushness is
 primary. Limiting rates and temporal asymptotic coefficients are diagnostics.

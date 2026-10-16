@@ -62,11 +62,11 @@ def entropy_stream_cadences(Q, cadences, block_rows=128):
 
 
 class StreamedQueries:
-    def __init__(self, Q):
+    def __init__(self, Q, allow_transients=False):
         self.q = _generator(Q)
         n = self.n = Q.shape[0]
         classes, _ = _closed_classes(self.q)
-        if len(classes) != 1 or len(classes[0]) != n:
+        if len(classes) != 1 or (len(classes[0]) != n and not allow_transients):
             raise ValueError('Streamed backend currently requires an irreducible law')
         self.seed = np.full(n, 1/n)
         self.transpose_factor = spilu((-self.q.T+.02*eye(n)).tocsc(),

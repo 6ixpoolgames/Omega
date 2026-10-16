@@ -1,5 +1,7 @@
 # What the expanded constraint map establishes
 
+> **Updated interpretation, 16 October 2026:** Historical `native_events` steering may redirect into chemistry. Exit/all steering is not mobility evidence; B1 also intercepted pocket returns. See [the audit correction](../C5_AUDIT_CORRECTIONS_2026-10-16.md) before using these rows. Original numerical results are retained.
+
 **Initial Stage A interpretation — 15 October 2026.** All 470 cases complete
 and verified. This extends the original 24-case map with strength, cost, target,
 random-control, preparation and conservative-field comparisons. The physical

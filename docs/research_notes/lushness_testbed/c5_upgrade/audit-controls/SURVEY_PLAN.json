@@ -1,0 +1,154 @@
+{
+  "caps": {
+    "memory": 3221225472,
+    "output_cap": 33554432,
+    "seconds": 900.0
+  },
+  "cases": [
+    {
+      "block_rows": 96,
+      "entropy_backend": "uniformized",
+      "entropy_threads": 2,
+      "id": "idle",
+      "parameters": {
+        "charge_capacity": 2,
+        "d_energy_capacity": 3,
+        "d_energy_quantum": 0.5,
+        "discovery": true,
+        "kappa": 0
+      },
+      "policy": {
+        "cost": 0,
+        "phi": 0
+      }
+    },
+    {
+      "block_rows": 96,
+      "entropy_backend": "uniformized",
+      "entropy_threads": 2,
+      "id": "blocking",
+      "parameters": {
+        "charge_capacity": 2,
+        "d_energy_capacity": 3,
+        "d_energy_quantum": 0.5,
+        "discovery": true,
+        "kappa": 0
+      },
+      "policy": {
+        "cost": 0.5,
+        "phi": 0.95
+      }
+    },
+    {
+      "block_rows": 96,
+      "entropy_backend": "uniformized",
+      "entropy_threads": 2,
+      "id": "driven-debit",
+      "parameters": {
+        "charge_capacity": 2,
+        "d_energy_capacity": 3,
+        "d_energy_quantum": 0.5,
+        "discovery": true,
+        "kappa": 0
+      },
+      "policy": {
+        "cost": 0.5,
+        "mode": "driven_debit",
+        "phi": 0.95
+      }
+    },
+    {
+      "block_rows": 96,
+      "entropy_backend": "uniformized",
+      "entropy_threads": 2,
+      "id": "ordinary",
+      "parameters": {
+        "charge_capacity": 2,
+        "d_energy_capacity": 3,
+        "d_energy_quantum": 0.5,
+        "device_role": "ordinary",
+        "discovery": true,
+        "kappa": 0
+      },
+      "policy": {
+        "cost": 0,
+        "phi": 0
+      }
+    },
+    {
+      "block_rows": 96,
+      "entropy_backend": "uniformized",
+      "entropy_threads": 2,
+      "id": "movement-access",
+      "parameters": {
+        "charge_capacity": 2,
+        "d_energy_capacity": 3,
+        "d_energy_quantum": 0.5,
+        "discovery": true,
+        "kappa": 0
+      },
+      "policy": {
+        "cost": 0.5,
+        "mode": "steering",
+        "phi": 0.95,
+        "region": [
+          0
+        ]
+      }
+    },
+    {
+      "block_rows": 96,
+      "entropy_backend": "uniformized",
+      "entropy_threads": 2,
+      "id": "movement-build",
+      "parameters": {
+        "charge_capacity": 2,
+        "d_energy_capacity": 3,
+        "d_energy_quantum": 0.5,
+        "discovery": true,
+        "kappa": 0
+      },
+      "policy": {
+        "cost": 0.5,
+        "mode": "steering",
+        "phi": 0.95,
+        "region": [
+          1
+        ]
+      }
+    },
+    {
+      "block_rows": 96,
+      "entropy_backend": "uniformized",
+      "entropy_threads": 2,
+      "id": "movement-trap",
+      "parameters": {
+        "charge_capacity": 2,
+        "d_energy_capacity": 3,
+        "d_energy_quantum": 0.5,
+        "discovery": true,
+        "kappa": 0
+      },
+      "policy": {
+        "cost": 0.5,
+        "edges": [
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            3,
+            2
+          ]
+        ],
+        "mode": "steering",
+        "phi": 0.95
+      }
+    }
+  ],
+  "source_hash": "06967ed1e590187d1df2d290a1424ebf9c4598596069ffbed78bfb5bbbfa9a77"
+}

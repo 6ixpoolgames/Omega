@@ -4,7 +4,7 @@ Location is a physical coarse compartment, not a moral state label. All native
 chemistry and background fluctuations survive in every preparation. Active
 blocking/steering is an explicitly driven, energy-spending intervention.
 """
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 from functools import lru_cache
 from itertools import product
 from math import comb, exp, isfinite, lgamma
@@ -29,9 +29,10 @@ class FrictionPolicy:
     phi: float = 0.5
     cost: float = 1
     edges: tuple[tuple[int, int], ...] = ()
-    steering_scope: str = 'native_events'
+    steering_scope: str = 'movement_only'
 
     def __post_init__(self):
+        if self.mode == 'driven_debit':object.__setattr__(self,'mode','sham')
         object.__setattr__(self, 'region', tuple(self.region))
         object.__setattr__(self, 'edges', tuple(sorted(tuple(x) for x in self.edges)))
         if self.mode not in ('blocking', 'steering', 'sham'):
@@ -100,6 +101,9 @@ class FrictionParameters:
     discovery_basal: float = .0002
     discovery_rate: float = .05
     opportunity_yield: float = 1.
+    s_energy_capacity: float | None = None
+    s_energy_quantum: float = 1.
+    field_locations: tuple[int, ...] = ()
 
     def __post_init__(self):
         for name in ('d_capacity', 's_capacity', 'charge_capacity'):
@@ -109,7 +113,8 @@ class FrictionParameters:
             raise ValueError('drive must be boolean')
         for name, value in asdict(self).items():
             if name in ('d_capacity', 's_capacity', 'charge_capacity', 'drive', 'field_location',
-                        'd_energy_capacity', 'd_energy_quantum', 'device_role', 'discovery'):
+                        'd_energy_capacity', 'd_energy_quantum', 's_energy_capacity',
+                        's_energy_quantum', 'field_locations', 'device_role', 'discovery'):
                 continue
             if name == 'field_shift':
                 if not isfinite(value):
@@ -122,11 +127,25 @@ class FrictionParameters:
         if self.device_role not in ('friction', 'ordinary', 'inert'):
             raise ValueError('Unknown physical role for device material')
         d_bank(self).ticks(1)
+        s_bank(self).ticks(1)
+        object.__setattr__(self,'field_locations',tuple(self.field_locations))
+        if len(set(self.field_locations))!=len(self.field_locations) or any(
+                type(x) is not int or x not in range(5 if self.discovery else 4) for x in self.field_locations):
+            raise ValueError('Distinct physical field locations required')
 
 
 def d_bank(p):
     return _bank(p.charge_capacity if p.d_energy_capacity is None else p.d_energy_capacity,
                  p.d_energy_quantum)
+
+
+def s_bank(p):
+    return _bank(p.charge_capacity if p.s_energy_capacity is None else p.s_energy_capacity,
+                 p.s_energy_quantum)
+
+
+def field_energy(state,p):
+    return p.field_shift*state[7]*(state[4] in (p.field_locations or (p.field_location,)))
 
 
 @lru_cache(maxsize=128)
@@ -150,7 +169,7 @@ def physical_energy(state, parameters):
     # A device-supported conservative potential. Formation/loss of the device
     # changes this energy too: it is never an uncharged instantaneous field.
     return (energy(state)-state[3]+d_bank(parameters).energy(state[3])
-            +parameters.field_shift*state[7]*(state[4] == parameters.field_location))
+            -state[6]+s_bank(parameters).energy(state[6])+field_energy(state,parameters))
 
 
 def projection(state, fields):
@@ -160,7 +179,7 @@ def projection(state, fields):
 def _degeneracy(s, p):
     return (comb(p.d_capacity, s[2])*comb(p.s_capacity, s[5])
             *charge_weight(d_bank(p).capacity, d_bank(p).energy(s[3]))
-            *comb(p.charge_capacity, s[6]))
+            *charge_weight(s_bank(p).capacity,s_bank(p).energy(s[6])))
 
 
 def _event(s, target, coefficient, p, family, mass=1., increments=None, work=0.,
@@ -193,7 +212,7 @@ def _background(s, p):
 def _chemistry(s, p):
     for name, li, ai, ei, cap in (('D', 1, 2, 3, p.d_capacity),
                                   ('S', 4, 5, 6, p.s_capacity)):
-        bank = d_bank(p) if name == 'D' else _bank(p.charge_capacity)
+        bank = d_bank(p) if name == 'D' else s_bank(p)
         loc, a, raw = s[li], s[ai], s[ei]
         e = bank.energy(raw)
         spent = float(bank.capacity)-e
@@ -234,7 +253,7 @@ def _chemistry(s, p):
                 if a:
                     yield _event(s, target, p.upkeep*a, p, name+'.upkeep', mass,
                                  {'upkeep_'+name: float(-delta)})
-        if name == 'D' and unit > 1:
+        if unit > 1:
             for step in (-1, 1):
                 if 0 <= raw+step <= bank.maximum:
                     target = _replace(s, {ei: raw+step})
@@ -242,7 +261,7 @@ def _chemistry(s, p):
                     density = (charge_weight(bank.capacity, bank.energy(raw+step))
                                /charge_weight(bank.capacity, e))**.5
                     k = p.fractional_bath*(.1/float(bank.quantum))**2
-                    yield _event(s, target, k, p, 'D.fractional_bath', density)
+                    yield _event(s, target, k, p, name+'.fractional_bath', density)
     bank = d_bank(p)
     unit = bank.ticks(1)
     if s[1] == BUILD:
@@ -263,10 +282,11 @@ def _chemistry(s, p):
         destination = DISCOVERED if forward else TRAP
         yield _event(s, _replace(s, {4: destination}), p.discovery_basal, p,
                      'S.discovery_basal', increments={'discoveries_basal': float(forward)})
-        if s[5] and (s[6] >= 1 if forward else s[6] < p.charge_capacity):
+        sbank=s_bank(p);sunit=sbank.ticks(1);se=sbank.energy(s[6])
+        if s[5] and (s[6] >= sunit if forward else s[6]+sunit <= sbank.maximum):
             delta = -1 if forward else 1
-            mass = s[6] if forward else p.charge_capacity-s[6]
-            yield _event(s, _replace(s, {4: destination, 6: s[6]+delta}),
+            mass = se if forward else float(sbank.capacity)-se
+            yield _event(s, _replace(s, {4: destination, 6: s[6]+delta*sunit}),
                          p.discovery_rate*s[5], p, 'S.discovery_paid', mass,
                          {'discoveries_paid': float(forward), 'discovery_fuel': float(-delta)})
 
@@ -357,12 +377,13 @@ def build_world(parameters=None, policy=None, max_states=4000):
     if any(location >= s_locations for location in policy.region) or any(
             max(edge) >= s_locations for edge in policy.edges):
         raise ValueError('Policy targets a location absent from the physical world')
-    count = 2*4*s_locations*(p.d_capacity+1)*(p.s_capacity+1)*(bank.maximum+1)*(p.charge_capacity+1)*2
+    sbank=s_bank(p)
+    count = 2*4*s_locations*(p.d_capacity+1)*(p.s_capacity+1)*(bank.maximum+1)*(sbank.maximum+1)*2
     if count > max_states:
         raise RuntimeError('Physical state cap exceeded; no inventory was truncated')
     states = tuple(product(range(2), range(4), range(p.d_capacity+1),
                            range(bank.maximum+1), range(s_locations), range(p.s_capacity+1),
-                           range(p.charge_capacity+1), range(2)))
+                           range(sbank.maximum+1), range(2)))
     state_set = frozenset(states)
 
     def validate(state):
@@ -372,6 +393,7 @@ def build_world(parameters=None, policy=None, max_states=4000):
 
     observables = {name: (lambda s, i=i: float(s[i])) for i, name in enumerate(FIELDS)}
     observables['D.charge'] = lambda s: bank.energy(s[3])
+    observables['S.charge'] = lambda s: sbank.energy(s[6])
     observables['S.discovered'] = lambda s: float(s[4] == DISCOVERED)
     for name, li, ai in (('D', 1, 2), ('S', 4, 5)):
         for region, location in (('access', ACCESS), ('construction', BUILD), ('trap', TRAP)):
@@ -383,15 +405,26 @@ def build_world(parameters=None, policy=None, max_states=4000):
     observables['S_event_rate'] = lambda s: sum(
         e.rate for m in (_mobility(s, p, policy), _background(s, p)) for e in m
         if projection(e.target, S_FIELDS) != projection(s, S_FIELDS))
+    def owned(s,subject):
+        if subject=='D':return bank.energy(s[3])+s[2]+s[7]-(s[1]==TRAP)
+        return sbank.energy(s[6])+s[5]-(s[4]==TRAP)+field_energy(s,p)
+    for subject in ('D','S'):
+        observables[subject+'.owned_energy']=lambda s,sub=subject:float(owned(s,sub))
+    def account(events,s):
+        for event in events:
+            ledger={sub+'_energy_by_family.'+event.family:float(owned(event.target,sub)-owned(s,sub))
+                    for sub in ('D','S')}
+            yield replace(event,increments={**event.increments,**ledger})
     return WorldSpec('domination-friction-count-world', '3', states, validate,
                      lambda s: physical_energy(s, p),
                      observables,
-                     (RuleModule('background', '1', lambda s: _background(s, p)),
-                      RuleModule('chemistry', '1', lambda s: (
-                          e for e in _chemistry(s, p) if e.family.startswith('D.'))),
-                      RuleModule('mobility-friction', '1', lambda s: _mobility(s, p, policy))),
+                     (RuleModule('background', '1', lambda s: account(_background(s, p),s)),
+                      RuleModule('chemistry', '1', lambda s: account((
+                          e for e in _chemistry(s, p) if e.family.startswith('D.')),s)),
+                      RuleModule('mobility-friction', '1', lambda s: account(_mobility(s, p, policy),s))),
                      {'fields': FIELDS, 'parameters': asdict(p), 'policy': asdict(policy),
                       'subjects': {'D': D_FIELDS, 'S': S_FIELDS, 'background': B_FIELDS},
+                      'sham_physics': 'driven one-way bank debit (legacy mode name sham)',
                       'grain': 'full physical compartment/count state',
                       'constraint_scope': 'targets S location changes, including discovery; steering alternatives are actual S events',
                       'friction_physics': 'rejected or redirected attempts spend D fuel; no work reservoir',
@@ -409,7 +442,7 @@ def build_world(parameters=None, policy=None, max_states=4000):
 
 def matched_roots(parameters=None):
     """All H=6 with identical shared packet and S. No excision action asserted."""
-    bank = d_bank(parameters or FrictionParameters())
-    return {'device_present': (1, ACCESS, 1, 0, ACCESS, 1, 1, 1),
-            'ordinary_preparation': (1, ACCESS, 1, bank.ticks(1), ACCESS, 1, 1, 0),
-            'unassembled_preparation': (1, NEUTRAL, 0, bank.ticks(2), ACCESS, 1, 1, 0)}
+    p=parameters or FrictionParameters();bank=d_bank(p);sb=s_bank(p).ticks(1)
+    return {'device_present': (1, ACCESS, 1, 0, ACCESS, 1, sb, 1),
+            'ordinary_preparation': (1, ACCESS, 1, bank.ticks(1), ACCESS, 1, sb, 0),
+            'unassembled_preparation': (1, NEUTRAL, 0, bank.ticks(2), ACCESS, 1, sb, 0)}

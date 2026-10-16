@@ -29,7 +29,7 @@ def main(out):
     config = manifest['config']
     start = perf_counter()
     world = build_world(FrictionParameters(**config['parameters']),
-                        FrictionPolicy(**config['policy']))
+                        FrictionPolicy(**{'steering_scope':'native_events',**config['policy']}))
     compiled = compile_world(world)
     build_time = perf_counter()-start
     roots = {name: matched_roots()[name] for name in config['roots']}

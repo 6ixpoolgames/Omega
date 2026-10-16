@@ -1,5 +1,7 @@
 # Updated interpretation: activity controls and ordinary-agent swap
 
+> **Updated interpretation, 16 October 2026:** Historical `native_events` steering may redirect into chemistry. Exit/all steering is not mobility evidence; B1 also intercepted pocket returns. See [the audit correction](../C5_AUDIT_CORRECTIONS_2026-10-16.md) before using these rows. Original numerical results are retained.
+
 15 October 2026. All 12 local follow-up cases completed. This adds new controls to Stage A; its original measurements and interpretation remain available.
 
 ## Actual law swap

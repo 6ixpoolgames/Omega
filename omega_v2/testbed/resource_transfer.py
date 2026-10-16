@@ -9,7 +9,7 @@ from math import exp, isfinite, sqrt
 from .contracts import RuleModule
 from .domination_friction import (
     FrictionParameters, FrictionPolicy, build_world as base_world, d_bank,
-    _degeneracy, _event, _replace)
+    _degeneracy, _event, _replace, s_bank)
 
 
 @dataclass(frozen=True)
@@ -21,10 +21,11 @@ class TransferPolicy:
     affinity: float = 0.
 
     def __post_init__(self):
+        if self.mode == 'bank_bath_exchange':object.__setattr__(self,'mode','sham')
         if self.mode not in ('passive', 'extract', 'cooperate', 'sham', 'ordinary'):
             raise ValueError('Unknown resource-transfer mode')
-        if not isfinite(self.cost) or not 0 < self.cost < 1:
-            raise ValueError('Handling bill must be strictly between zero and one')
+        if not isfinite(self.cost) or self.cost <= 0:
+            raise ValueError('Positive handling bill required; bank capacity is checked by adapter')
         if not isfinite(self.assistance) or self.assistance < 0:
             raise ValueError('Nonnegative catalytic assistance required')
         if not isfinite(self.basal) or self.basal <= 0:
@@ -35,6 +36,7 @@ class TransferPolicy:
 
 def transfer_events(state, p, policy):
     bank = d_bank(p)
+    sbank=s_bank(p);sunit=sbank.ticks(1)
     unit, bill = bank.ticks(1), bank.ticks(policy.cost)
     # Contact is physical. Spatial separation blocks both directions equally.
     if state[1] != state[4]:
@@ -45,10 +47,10 @@ def transfer_events(state, p, policy):
         # Forward extraction: D prepays c, receives 1; S loses 1.
         # Forward cooperation: D pays 1+c; S receives 1.
         delta_d = unit-bill if channel == 'extract' else -(unit+bill)
-        delta_s = -1 if channel == 'extract' else 1
+        delta_s = -sunit if channel == 'extract' else sunit
         for direction in (1, -1):
             ed, es = state[3]+direction*delta_d, state[6]+direction*delta_s
-            if not (0 <= ed <= bank.maximum and 0 <= es <= p.charge_capacity):
+            if not (0 <= ed <= bank.maximum and 0 <= es <= sbank.maximum):
                 continue
             # The pair includes a real prepayment gate. Its reverse is tested
             # against the corresponding forward source, so support is symmetric.
@@ -61,7 +63,7 @@ def transfer_events(state, p, policy):
                 channel+'_forward': float(direction == 1),
                 channel+'_reverse': float(direction == -1),
                 'transfer_D': direction*delta_d*float(bank.quantum),
-                'transfer_S': float(direction*delta_s),
+                'transfer_S': float(direction*delta_s*sbank.quantum),
                 channel+'_gross_bill': policy.cost if direction == 1 else 0.,
                 channel+'_reverse_refund': policy.cost if direction == -1 else 0.,
                 channel+'_net_bill': direction*policy.cost}
@@ -103,7 +105,7 @@ def build_world(parameters=None, policy=None, max_states=12000):
     observations['transfer_enabled'] = lambda s: float(s[2] > 0 and s[7] > 0 and s[1] == s[4])
     def owned_energy(s, subject):
         return (bank.energy(s[3])+s[2]+s[7]-(s[1] == 2)) if subject == 'D' else (
-            s[6]+s[5]-(s[4] == 2))
+            s_bank(p).energy(s[6])+s[5]-(s[4] == 2))
     for subject in ('D', 'S'):
         observations[subject+'.owned_energy'] = lambda s, subject=subject: float(owned_energy(s, subject))
     def accounted(module):
@@ -123,4 +125,6 @@ def build_world(parameters=None, policy=None, max_states=12000):
                        'transfer_scope': 'costed direct stored-resource transfer, not population or packet sequestration',
                        'transfer_thermodynamics': 'all added reactions paired and enabled in dark detailed-balance check',
                        'sham_scope': 'same catalytic coefficient, not equal realized fuel or event count',
+                       'mode_label': {'extract':'reversible receiver pathway','cooperate':'reversible donor pathway',
+                                      'sham':'reversible bank-bath exchange'}.get(policy.mode,policy.mode),
                        'bill_scope': 'handling loss dissipates to bath; reverse pathway restores it from bath'})

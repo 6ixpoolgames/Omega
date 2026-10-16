@@ -1,5 +1,17 @@
 # Embodied friction on access — implemented first slice
 
+## Interpretation update — 16 October 2026
+
+The original driver used `native_events` steering, allowing chemistry as an
+alternative to a targeted move. Any earlier wording implying exclusively
+movement alternatives is superseded. New defaults use `movement_only`; old
+frozen runs retain their original physics. See [the audit correction](../C5_AUDIT_CORRECTIONS_2026-10-16.md).
+The friction sham is a **driven one-way bank debit**, distinct from the transfer
+module's reversible bank/bath exchange. D/S banks were asymmetric in the historical
+fractional runs. Both now have independently declared capacity and quantum;
+new pump primary comparisons use equal banks. Every new friction run also
+checks a full per-subject owned-energy ledger, not just capture minus bill.
+
 15 October 2026. Model and measurement version 1.
 
 ## Physical carrier

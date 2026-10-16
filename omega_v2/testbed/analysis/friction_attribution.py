@@ -9,15 +9,16 @@ from ..domination_friction import D_FIELDS, projection
 
 
 def activity_rows(world):
+    fields=tuple(world.metadata.get('subjects',{}).get('D',D_FIELDS))
     n = len(world.states)
     rows = {kind: {name: np.zeros(n) for name in ('jumps', 'finite_bits', 'mark_bits')}
             for kind in ('friction', 'capture', 'other')}
     for i, state in enumerate(world.states):
         outcomes = {}
-        origin = projection(state, D_FIELDS)
+        origin = projection(state, fields)
         for module in world.modules:
             for event in module.events(state):
-                destination = projection(event.target, D_FIELDS)
+                destination = projection(event.target, fields)
                 if destination == origin or event.rate <= 0:
                     continue
                 family = ('friction' if event.family.startswith('friction.') else

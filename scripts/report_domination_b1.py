@@ -141,7 +141,7 @@ def followup():
               'returns. The fractional-bank/discovery extension tests smaller bills and changed '
               'access consequences. No result here establishes conscious valuer welfare or an '
               'optimized two-player appropriation game.', '']
-    (DOC/'FOLLOWUP_INTERPRETATION.md').write_text('\n'.join(lines),encoding='utf-8')
+    (DOC/'FOLLOWUP_INTERPRETATION.md').write_text('> **Updated interpretation, 16 October 2026:** Historical `native_events` steering may redirect into chemistry. Exit/all steering is not mobility evidence; B1 also intercepted pocket returns. See [the audit correction](../C5_AUDIT_CORRECTIONS_2026-10-16.md) before using these rows. Original numerical results are retained.\n\n'+ '\n'.join(lines),encoding='utf-8')
     return status, rows
 
 
@@ -305,7 +305,7 @@ def render_results(rows,choices,summary):
     if summary['status']!='complete':
         lines+=['Only completed cases enter this report. Conclusions about unfinished yields '
                 'or bills remain pending.', '']
-    (DOC/'RESULTS.md').write_text('\n'.join(lines),encoding='utf-8')
+    (DOC/'RESULTS.md').write_text('> **Updated interpretation, 16 October 2026:** Historical `native_events` steering may redirect into chemistry. Exit/all steering is not mobility evidence; B1 also intercepted pocket returns. See [the audit correction](../C5_AUDIT_CORRECTIONS_2026-10-16.md) before using these rows. Original numerical results are retained.\n\n'+ '\n'.join(lines),encoding='utf-8')
 
 
 if __name__ == '__main__':

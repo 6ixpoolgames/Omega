@@ -1,5 +1,16 @@
 # Paid extraction module: first physical slice
 
+## Terminology update — 16 October 2026
+
+The reaction names describe forward stoichiometry, not measured net direction.
+In the published regime the nominal cooperation pathway ran net toward D.
+Call it a reversible donor pathway, not evidence of cooperative help. The sham
+is **reversible bank/bath exchange**, distinct from friction's driven debit.
+The adapter now accepts any positive bill that the bank can accommodate,
+including bills of one or above. Original configurations and maps are unchanged.
+The [funded-pump extension](../c5_upgrade/SPECIFICATION.md) resolves a separate
+physical fuel store charged from D's bank; net direction remains measured.
+
 15 October 2026. User authorized extraction now to address D's material budget.
 The ten-to-one suggestion was a possible economy of scale, not a requirement to
 add population. Population remains deferred.

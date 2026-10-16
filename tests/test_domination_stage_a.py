@@ -15,7 +15,7 @@ from omega_v2.testbed.analysis.observed_history import exact_prefix_entropy, ent
 def test_explicit_edges_and_all_mobility_steer_have_real_alternatives():
     p = FrictionPolicy(edges=((0, 1), (2, 3)))
     assert p.targets(0, 1) and p.targets(2, 3) and not p.targets(1, 0)
-    world = build_world(policy=FrictionPolicy(mode='steering', direction='all', region=(0, 1, 2, 3)))
+    world = build_world(policy=FrictionPolicy(mode='steering', steering_scope='native_events', direction='all', region=(0, 1, 2, 3)))
     state = (1, 0, 1, 2, 0, 1, 1, 1)
     events = [e for m in world.modules for e in m.events(state)]
     redirected = [e for e in events if e.family == 'friction.steer']
